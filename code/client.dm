@@ -566,7 +566,7 @@
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
 
-	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkHiRes)))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
@@ -575,7 +575,7 @@
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkScreenAspect)))
 	else
 
 		set_splitter_orientation(0, splitter_value)

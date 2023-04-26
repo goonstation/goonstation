@@ -776,7 +776,7 @@ body
 	var/thetype = get_one_match(typename, /atom, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
 	if (thetype)
 		boutput(usr, "<span class='notice'><b>All instances of [thetype]: </b></span>")
-		var/list/all_instances = find_all_by_type(thetype, .proc/print_instance, src)
+		var/list/all_instances = find_all_by_type(thetype, PROC_REF(print_instance), src)
 		boutput(usr, "<span class='notice'>Found [length(all_instances)] instances total.</span>")
 	else
 		boutput(usr, "No type matches for [typename].")

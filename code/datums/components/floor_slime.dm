@@ -14,7 +14,7 @@ TYPEINFO(/datum/component/floor_slime)
 	. = ..()
 	if (!ismovable(src.parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, .proc/slime)
+	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, PROC_REF(slime))
 	src.reagent_id = reagent_id
 	src.slime_prob = slime_prob
 	src.slippery = slippery

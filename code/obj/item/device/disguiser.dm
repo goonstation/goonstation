@@ -74,7 +74,7 @@ TYPEINFO(/obj/item/device/disguiser)
 				number_of_devices += D
 		if (number_of_devices.len > 0)
 			return 0
-		RegisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE, .proc/deactivate)
+		RegisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE, PROC_REF(deactivate))
 		src.active = 1
 		src.icon_state = "enshield1"
 		src.change_appearance(user, 0)

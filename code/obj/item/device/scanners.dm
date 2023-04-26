@@ -571,7 +571,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		if (ismob(src.loc))
 			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
 			arrow?.change_target(src.target)
-		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, .proc/update_breach)
+		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, PROC_REF(update_breach))
 
 	///When our target is replaced (most likely no longer a breach), pick a new one
 	proc/update_breach(turf/replaced, turf/new_turf)

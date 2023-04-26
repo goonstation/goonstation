@@ -220,7 +220,7 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	src.holder.rp_word_filtering = !src.holder.rp_word_filtering
 	if(src.holder.rp_word_filtering)
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE, .proc/message_one_admin)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE, PROC_REF(message_one_admin))
 	else
 		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_SUSSY_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled RP word filter notifications [src.holder.rp_word_filtering ?"on":"off"]!</span>")
@@ -232,7 +232,7 @@ client/proc/toggle_ghost_respawns()
 	ADMIN_ONLY
 	src.holder.uncool_word_filtering = !src.holder.uncool_word_filtering
 	if(src.holder.uncool_word_filtering)
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, .proc/message_one_admin)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, PROC_REF(message_one_admin))
 	else
 		src.UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE)
 	boutput(usr, "<span class='notice'>Toggled uncool word filter notifications [src.holder.uncool_word_filtering ?"on":"off"]!</span>")

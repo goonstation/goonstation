@@ -30,8 +30,8 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 	src.enabled = enabled
 	src.light_name = "sl_comp_\ref[src]"
 
-	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, .proc/enable)
-	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, .proc/disable)
+	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, PROC_REF(enable))
+	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, PROC_REF(disable))
 
 /datum/component/loctargeting/simple_light/proc/update(var/new_enabled = NO_CHANGE)
 	if(new_enabled != NO_CHANGE)
@@ -114,8 +114,8 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 	src.enabled = enabled
 	src.light_name = "ml_comp_\ref[src]"
 
-	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, .proc/enable)
-	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, .proc/disable)
+	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, PROC_REF(enable))
+	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, PROC_REF(disable))
 
 /datum/component/loctargeting/sm_light/proc/update(var/new_enabled = NO_CHANGE)
 	if(new_enabled != NO_CHANGE)
@@ -199,8 +199,8 @@ TYPEINFO(/datum/component/loctargeting/medium_directional_light)
 	src.enabled = enabled
 	src.light_name = "dl_comp_\ref[src]"
 
-	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, .proc/enable)
-	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, .proc/disable)
+	RegisterSignal(src.parent, COMSIG_LIGHT_ENABLE, PROC_REF(enable))
+	RegisterSignal(src.parent, COMSIG_LIGHT_DISABLE, PROC_REF(disable))
 
 /datum/component/loctargeting/medium_directional_light/proc/update(var/new_enabled = NO_CHANGE)
 	if(new_enabled != NO_CHANGE)

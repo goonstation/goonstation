@@ -703,7 +703,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	New()
 		..()
 		if (src.mob)
-			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, .proc/flub)
+			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, PROC_REF(flub))
 
 	sight_modifier()
 		src.mob.see_in_dark = SEE_DARK_FULL
@@ -2223,7 +2223,7 @@ TYPEINFO(/datum/mutantrace/pug)
 					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
-		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	disposing()
 		if (ishuman(src.mob))

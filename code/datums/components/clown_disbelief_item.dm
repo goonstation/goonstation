@@ -11,8 +11,8 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 	..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, .proc/on_unequip)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(on_unequip))
 
 	src.disbelief_image = image('icons/effects/effects.dmi', null, "nothing")
 	src.disbelief_image.name = "\u200b" // zero width space

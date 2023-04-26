@@ -421,7 +421,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	New()
 		..()
 		if(src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)

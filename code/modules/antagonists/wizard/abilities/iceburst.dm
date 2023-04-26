@@ -117,7 +117,7 @@
 		src.health *= (rand(10,20)/10)
 
 		for(var/mob/M in src)
-			src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, .proc/PassiveCool)
+			src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(PassiveCool))
 
 	disposing()
 		processing_items.Remove(src)

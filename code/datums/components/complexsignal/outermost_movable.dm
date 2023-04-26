@@ -28,7 +28,7 @@
 	loc_crawl = loc_chain[length(loc_chain)].loc
 	while(ismovable(loc_crawl))
 		loc_chain += loc_crawl
-		src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_SET_LOC, .proc/on_loc_change)
+		src.RegisterSignal(loc_crawl, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
 		loc_crawl = loc_crawl.loc
 
 	var/atom/movable/new_outermost = src.get_outermost_movable()
@@ -43,7 +43,7 @@
 /datum/component/complexsignal/outermost_movable/Initialize()
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_loc_change)
+	src.RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_loc_change))
 	src.loc_chain = list(parent)
 	src.on_loc_change()
 	. = ..()

@@ -1331,7 +1331,7 @@ datum/achievementReward/ai_dwaine
 
 	/// [name, desc, callback]
 	var/contrib_rewards = list(
-		list("Silly Screams", "Crazy silly screams for your character!", .proc/sillyscream),
+		list("Silly Screams", "Crazy silly screams for your character!", PROC_REF(sillyscream)),
 	)
 
 	ui_state(mob/user)

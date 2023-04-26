@@ -1756,7 +1756,7 @@
 		. = ..()
 		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(track_paint))
 
 	onRemove()
 		. = ..()
@@ -2065,7 +2065,7 @@
 
 	onAdd()
 		..()
-		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, PROC_REF(reduce_duration_on_vomit))
 
 	onRemove()
 		..()

@@ -7,8 +7,8 @@
 		. = 0
 		if((slot in valid_slots) && istype(equipper, mobtype))
 			. = 1
-			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_BEGIN, .proc/on_block_begin, TRUE)
-			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_END, .proc/on_block_end, TRUE)
+			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_BEGIN, PROC_REF(on_block_begin), TRUE)
+			RegisterSignal(equipper, COMSIG_UNARMED_BLOCK_END, PROC_REF(on_block_end), TRUE)
 			var/obj/item/grab/block/B
 			if(istype(equipper.l_hand, /obj/item/grab/block))
 				B = equipper.l_hand

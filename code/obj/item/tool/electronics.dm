@@ -453,7 +453,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, .proc/pre_attackby)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis

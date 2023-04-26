@@ -672,8 +672,8 @@ TRAYS
 		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		food.event_handler_flags |= NO_MOUSEDROP_QOL
-		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
-		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
+		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, PROC_REF(indirect_pickup))
+		RegisterSignal(food, COMSIG_ATTACKHAND, PROC_REF(remove_contents))
 		src.UpdateIcon()
 		boutput(user, "You put [food] [src.is_plate ? "on" : "in"] \the [src].")
 

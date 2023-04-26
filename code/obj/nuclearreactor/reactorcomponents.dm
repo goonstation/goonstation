@@ -217,7 +217,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	pickup(mob/user)
 		. = ..()
 		if(src.mob_holding_temp_react(user, 1))
-			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, .proc/mob_holding_temp_react)
+			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, PROC_REF(mob_holding_temp_react))
 
 	dropped(mob/user)
 		. = ..()

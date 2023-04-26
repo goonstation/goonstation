@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/self_destruct)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(ismob(tracked_mob))
-		RegisterSignal(tracked_mob, COMSIG_MOB_DEATH, .proc/destruct)
+		RegisterSignal(tracked_mob, COMSIG_MOB_DEATH, PROC_REF(destruct))
 
 /datum/component/self_destruct/proc/destruct(datum/source)
 	var/obj/item/I = src.parent

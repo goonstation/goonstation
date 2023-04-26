@@ -27,9 +27,9 @@
 								CALLBACK(src, .some_proc_here)
 
 				proc defined on parent(of src) object (when the above doesn't apply):
-						.proc/procname
+						PROC_REF(procname)
 						Example:
-								CALLBACK(src, .proc/some_proc_here)
+								CALLBACK(src, PROC_REF(some_proc_here))
 
 				global proc while in another global proc:
 						.procname

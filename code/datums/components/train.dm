@@ -13,8 +13,8 @@ TYPEINFO(/datum/component/train)
 	src.cart = cart
 
 /datum/component/train/RegisterWithParent()
-	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_move)
-	RegisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE, .proc/on_cart_move)
+	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_move))
+	RegisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE, PROC_REF(on_cart_move))
 
 /datum/component/train/UnregisterFromParent()
 	UnregisterSignal(src.parent, COMSIG_MOVABLE_MOVED)

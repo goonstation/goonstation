@@ -827,7 +827,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
-		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, .proc/master_pre_attackby)
+		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(master_pre_attackby))
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode

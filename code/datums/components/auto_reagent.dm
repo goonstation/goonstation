@@ -27,7 +27,7 @@ TYPEINFO(/datum/component/auto_reagent)
 			return COMPONENT_INCOMPATIBLE
 
 		if(src.overflowing)
-			RegisterSignal(parent, COMSIG_ATOM_EXAMINE, .proc/examined)
+			RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 		global.processing_items.Add(src)
 
 	UnregisterFromParent()

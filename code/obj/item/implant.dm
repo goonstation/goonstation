@@ -213,7 +213,7 @@ THROWING DARTS
 		//try not to conflict with other emote triggers
 		src.activation_emote = pick(src.compatible_emotes - M.trigger_emotes) || pick(src.compatible_emotes)
 		LAZYLISTADD(M.trigger_emotes, src.activation_emote)
-		src.RegisterSignal(M, COMSIG_MOB_EMOTE, .proc/trigger)
+		src.RegisterSignal(M, COMSIG_MOB_EMOTE, PROC_REF(trigger))
 		M.mind.store_memory("[src] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.", 0, 0)
 		boutput(M, "The implanted [src.name] can be activated by using the [src.activation_emote] emote, <B>say *[src.activation_emote]</B> to attempt to activate.")
 

@@ -16,8 +16,8 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/mechcompsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", .proc/mechcompreceive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)

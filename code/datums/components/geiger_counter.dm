@@ -2,7 +2,7 @@
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	signals = list(COMSIG_MOB_GEIGER_TICK)
 	var/list/cooldowns = list()
-	proctype = .proc/geigerclick
+	proctype = PROC_REF(geigerclick)
 
 /datum/component/wearertargeting/geiger/proc/geigerclick(var/mob/owner, var/stage)
 	if(owner && !ON_COOLDOWN(src, "playsound", 1 SECOND))
@@ -12,7 +12,7 @@
 /datum/component/holdertargeting/geiger
 	dupe_mode = COMPONENT_DUPE_HIGHLANDER
 	signals = list(COMSIG_MOB_GEIGER_TICK)
-	proctype = .proc/geigerclick
+	proctype = PROC_REF(geigerclick)
 	var/list/cooldowns = list()
 
 	on_dropped(datum/source, mob/user)

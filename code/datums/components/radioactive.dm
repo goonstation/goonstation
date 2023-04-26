@@ -35,8 +35,8 @@ TYPEINFO(/datum/component/radioactive)
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
 
-		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, .proc/get_radioactivity)
-		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, .proc/examined)
+		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, PROC_REF(get_radioactivity))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 		RegisterSignals(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
@@ -44,11 +44,11 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_ITEM_PICKUP,
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
-		), .proc/touched)
-		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL), .proc/eaten)
+		), PROC_REF(touched))
+		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL), PROC_REF(eaten))
 
 		if(isitem(parent))
-			RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/ticked)
+			RegisterSignal(parent, COMSIG_ITEM_PROCESS, PROC_REF(ticked))
 			if(!(parent in global.processing_items))
 				global.processing_items.Add(parent)
 				src._added_to_items_processing = TRUE

@@ -80,7 +80,7 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name

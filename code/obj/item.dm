@@ -1548,7 +1548,7 @@
 /obj/item/proc/dropped(mob/user)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
-			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
+			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))
 		else if (firesource == FIRESOURCE_OPEN_FLAME)
 			log_firesource(src, null, user)
 

@@ -307,9 +307,9 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 		if (!..())
 			return
 		if (src.side == "left")
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_L)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_L))
 		else
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_R)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_R))
 
 	on_remove()
 		if (!..())
@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 
 	cast(atom/target)
 		playsound(get_turf(holder.owner), pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
-		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, .proc/eldritch_move)
+		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, PROC_REF(eldritch_move))
 		SPAWN(10 SECONDS)
 			UnregisterSignal(holder.owner, COMSIG_MOVABLE_MOVED)
 

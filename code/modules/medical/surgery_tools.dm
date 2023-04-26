@@ -407,7 +407,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 		if(!src.hasStatus("defib_charged"))
 			user.visible_message("<span class='alert'>[user] rubs the paddles of [src] together.</span>", "<span class='notice'>You rub the paddles of [src] together.</span>", "<span class='alert'>You hear an electrical whine.</span>")
 			playsound(user.loc, 'sound/items/defib_charge.ogg', 90, 0)
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
 		if(prob(1))
@@ -648,7 +648,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
-		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 	emag_act()
 		..()
@@ -682,7 +682,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_move, TRUE)
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move), TRUE)
 		UpdateIcon()
 
 	attackby(obj/item/W, mob/living/user)
@@ -1505,7 +1505,7 @@ keeping this here because I want to make something else with it eventually
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
-			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), PROC_REF(detach))
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)

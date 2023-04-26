@@ -146,7 +146,7 @@
 			while(!istype(temp.loc, /turf))
 				temp = temp.loc
 			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
-			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 			outer_eye_atom = temp
 		else
 			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
@@ -517,7 +517,7 @@
 	while(!istype(temp.loc, /turf))
 		temp = temp.loc
 	if(temp != source)
-		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
 		outer_eye_atom = temp
 

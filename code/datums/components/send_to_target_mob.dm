@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/send_to_target_mob)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	if(isitem(tracked_item))
-		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, .proc/send)
+		RegisterSignal(tracked_item, COMSIG_SEND_TO_MOB, PROC_REF(send))
 
 /datum/component/send_to_target_mob/proc/send(datum/source, var/mob/living/M, teleport_effect = FALSE, )
 	var/obj/item/I = src.parent

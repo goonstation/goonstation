@@ -10,7 +10,7 @@ TYPEINFO(/datum/component/disposing_confetti)
 	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, .proc/the_confetti)
+	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(the_confetti))
 
 /datum/component/disposing_confetti/proc/the_confetti()
 	var/atom/movable/AM = parent

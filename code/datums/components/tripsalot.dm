@@ -5,7 +5,7 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	signals = list(COMSIG_MOVABLE_MOVED)
 	mobtype = /mob/living/carbon/human
-	proctype = .proc/tripalot
+	proctype = PROC_REF(tripalot)
 	// valid_slots is provided by the AddComponent argument
 
 

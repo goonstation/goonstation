@@ -69,7 +69,7 @@
 		armer = null
 
 	proc/set_armer(mob/user)
-		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_armer)
+		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_armer))
 		armer = user
 
 	disposing()

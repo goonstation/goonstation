@@ -50,7 +50,7 @@
 					actionbar_duration /= 2
 
 			user.show_text("You start putting the rods on the frame...", "blue")
-			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, .proc/MakeCatwalk, list(C), C.icon, C.icon_state, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, PROC_REF(MakeCatwalk), list(C), C.icon, C.icon_state, null, null)
 			return
 
 		if(issnippingtool(C))

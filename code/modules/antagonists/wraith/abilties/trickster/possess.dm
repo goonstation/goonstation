@@ -55,7 +55,7 @@
 				WG = O.insert_slasher_observer(H)
 			wraith_mind = W.mind
 			W.mind.transfer_to(H)
-			RegisterSignal(H, COMSIG_MOB_DEATH, .proc/return_wraith)
+			RegisterSignal(H, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
 			sleep(45 SECONDS)
 			if (!H?.loc)

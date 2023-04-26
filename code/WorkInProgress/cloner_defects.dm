@@ -108,7 +108,7 @@
 
 	/// Performs the above function after the mob moves. Used for cloning (only apply)
 	proc/apply_to_on_move(mob/living/carbon/human/target)
-		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/apply_to)
+		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, PROC_REF(apply_to))
 
 	/// Returns TRUE if this holder contains the given defect type, FALSE otherwise
 	proc/has_defect(defect_type)

@@ -48,7 +48,7 @@
 	icon_state = "folded"
 
 	attack_self(mob/user)
-		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, .proc/setup_tripod, list(user), src.icon, src.icon_state, null, null)
+		SETUP_GENERIC_ACTIONBAR(user, src, 0.5 SECONDS, PROC_REF(setup_tripod), list(user), src.icon, src.icon_state, null, null)
 
 	proc/setup_tripod(mob/user)
 		if(!(src in user.equipped_list()))

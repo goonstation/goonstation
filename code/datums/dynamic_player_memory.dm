@@ -9,7 +9,7 @@
 		. = ..()
 		src.owner = owner
 		src.memory_text = memory_text
-		RegisterSignal(src.owner, COMSIG_MIND_UPDATE_MEMORY, .proc/update_memory)
+		RegisterSignal(src.owner, COMSIG_MIND_UPDATE_MEMORY, PROC_REF(update_memory))
 		src.update_memory()
 
 	proc/update_memory()

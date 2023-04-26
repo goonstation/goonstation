@@ -3,11 +3,11 @@
 	signals = list(COMSIG_LIVING_LIFE_TICK) //signal that this component is listening for. COMSIG_LIVING_LIFE_TICK is sent once per Life loop, as defined in Life.dm
 	mobtype = /mob/living/carbon/human //Component will only register for the signal if the mob blocking is of this type, in this case, human
 	bonus = 1 //bonus is a flag that determines whether or not the item tooltip will include "⛨ Block+: RESIST with this item for more info" when not blocking
-	proctype = .proc/warmup //the proc to be called when this component receives the signal it is listening for, in this case, COMSIG_LIVING_LIFE_TICK
+	proctype = PROC_REF(warmup) //the proc to be called when this component receives the signal it is listening for, in this case, COMSIG_LIVING_LIFE_TICK
 
 /datum/component/itemblock/warmsup/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, PROC_REF(append_to_tooltip))
 
 //arguments are sent from the the SendSignal() in Life.dm:140
 //SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, (life_time_passed / tick_spacing))

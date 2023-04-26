@@ -72,8 +72,8 @@
 		for(var/turf/simulated/floor/F in src.locs)
 			F.explosion_immune = TRUE
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", .proc/_set_statorload_mechchomp)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", .proc/_set_flowrate_mechchomp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Stator Load", PROC_REF(_set_statorload_mechchomp))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Flow Rate", PROC_REF(_set_flowrate_mechchomp))
 		src.history = list()
 
 	disposing()

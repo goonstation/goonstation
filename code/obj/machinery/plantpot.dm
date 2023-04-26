@@ -268,7 +268,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", .proc/mechcompScanPlant)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
 
 	proc/post_alert(var/list/alert_data)
 		if(status & (NOPOWER|BROKEN)) return

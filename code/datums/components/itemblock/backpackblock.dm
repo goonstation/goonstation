@@ -1,11 +1,11 @@
 /datum/component/itemblock/backpackblock
 	signals = list(COMSIG_MOB_ATTACKED_PRE)
 	mobtype = /mob/living
-	proctype = .proc/loseitem
+	proctype = PROC_REF(loseitem)
 
 /datum/component/itemblock/backpackblock/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, PROC_REF(append_to_tooltip))
 
 /datum/component/itemblock/backpackblock/proc/loseitem(var/mob/living/M, var/obj/item/weap)
 	var/obj/item/storage/S = parent
