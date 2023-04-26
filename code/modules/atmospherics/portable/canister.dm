@@ -74,32 +74,51 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	casecolor = "redws"
+
+/obj/machinery/portable_atmospherics/canister/sleeping_agent/empty
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	casecolor = "red"
+
+/obj/machinery/portable_atmospherics/canister/nitrogen/empty
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
+
+/obj/machinery/portable_atmospherics/canister/oxygen/empty
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	casecolor = "orange"
+
+/obj/machinery/portable_atmospherics/canister/toxins/empty
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	casecolor = "black"
+
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty
+
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
 	filled = 2
+
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
 	filled = 5
+
+/obj/machinery/portable_atmospherics/canister/air/empty
+
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
@@ -714,7 +733,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
-
+/obj/machinery/portable_atmospherics/canister/toxins/empty/New()
+	..()
+	src.air_contents.toxins = 0
+	src.UpdateIcon()
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
 
 	..()
@@ -723,6 +745,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
+/obj/machinery/portable_atmospherics/canister/oxygen/empty/New()
+	..()
+	src.air_contents.oxygen = 0
+	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
 
@@ -733,6 +759,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
+/obj/machinery/portable_atmospherics/canister/sleeping_agent/empty/New()
+	..()
+	src.air_contents.trace_gas.moles = 0
+	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
 
@@ -743,7 +773,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
-
+/obj/machinery/portable_atmospherics/canister/nitrogen/empty/New()
+	..()
+	src.air_contents.nitrogen = 0
+	src.UpdateIcon()
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
 
 	..()
@@ -751,8 +784,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
-
-
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty/New()
+	..()
+	src.air_contents.carbon_dioxide = 0
+	src.UpdateIcon()
 /obj/machinery/portable_atmospherics/canister/air/New()
 
 	..()
@@ -761,3 +796,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	src.UpdateIcon()
 	return 1
+/obj/machinery/portable_atmospherics/canister/air/empty/New()
+	..()
+	src.air_contents.oxygen = 0
+	src.air_contents.nitrogen = 0
+	src.UpdateIcon()
