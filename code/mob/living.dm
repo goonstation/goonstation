@@ -1262,6 +1262,9 @@
 	src.new_static_image()
 
 /mob/living/proc/update_mob_silhouette()
+	if (!src.silhouette)
+		return
+
 	src.silhouette.icon = src
 	src.silhouette.overlays = src.overlays
 	src.silhouette.vis_contents = src.vis_contents
