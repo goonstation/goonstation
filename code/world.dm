@@ -146,7 +146,7 @@ var/global/mob/twitch_mob = 0
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = call(lib, "init")()
+	var/init = LIBCALL(lib, "init")()
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif
 
