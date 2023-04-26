@@ -141,6 +141,7 @@ my@=me
 map@=treasure map
 magboots@=anchorshoes
 medbay@=the ship's ward
+mercury@=quicksilver
 med@=the ship's ward
 mile@=nautical mile
 mine@=spelunk
