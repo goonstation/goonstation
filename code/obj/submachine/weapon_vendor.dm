@@ -118,7 +118,7 @@
 		materiel_stock += new/datum/materiel/loadout/justabaton
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
-		materiel_stock += new/datum/materiel/utility/crowdgrenades
+		materiel_stock += new/datum/materiel/utility/flashbangs
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
@@ -314,10 +314,10 @@
 	path = /obj/item/storage/lunchbox/robustdonuts
 	description = "One Robust Donut and one Robusted Donut, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
-/datum/materiel/utility/crowdgrenades
-	name = "Crowd Dispersal Grenades"
-	path = /obj/item/storage/box/crowdgrenades
-	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well!"
+/datum/materiel/utility/flashbangs
+	name = "Flashbang Grenades"
+	path = /obj/item/storage/box/flashbang_kit/vendor
+	description = "Four flash bangs, capable of inhibiting riots."
 
 /datum/materiel/utility/detscanner
 	name = "Forensics Scanner"

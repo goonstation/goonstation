@@ -123,6 +123,9 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/flashbang = 7)
 
+/obj/item/storage/box/flashbang_kit/vendor //Smaller amount for the sec vendor
+	spawn_contents = list(/obj/item/chem_grenade/flashbang = 4)
+
 /obj/item/storage/box/emp_kit
 	name = "\improper EMP grenade box"
 	desc = "A box with 5 EMP grenades."
