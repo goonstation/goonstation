@@ -1598,3 +1598,7 @@
 
 /obj/item/proc/can_pickup(mob/user)
 	return !src.anchored
+
+/// attempt unique functionality when item is held in hand and and using the equip hotkey
+/obj/item/proc/try_specific_equip(mob/user)
+	return FALSE
