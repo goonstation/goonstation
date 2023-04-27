@@ -1,4 +1,9 @@
 
+(t)wed apr 26 23
+(u)Amylizzle
+(p)13860
+(e)|
+(+)Blood & paint footprints will no longer track onto space tiles.
 (t)tue apr 25 23
 (u)aloe
 (+)After some shady dealings with the heads of staff on the NSS Manta, CARL (the listening post vendor) now sells high explosive torpedos on Oshan.
