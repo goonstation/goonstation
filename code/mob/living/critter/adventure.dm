@@ -9,9 +9,9 @@
 	can_grab = FALSE
 	can_disarm = FALSE
 	health_brute = 10
-	health_brute_vuln = 0.7
+	health_brute_vuln = 0.8
 	health_burn = 10
-	health_burn_vuln = 0.3
+	health_burn_vuln = 0.4
 	use_stamina = FALSE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -40,6 +40,8 @@
 		..()
 		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
 		src.real_name = src.name
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
 	process_language(var/message)
 		var/datum/language/L = languages.language_cache[say_language]
@@ -52,6 +54,9 @@
 		..(gibbed, 0)
 		ghostize()
 		qdel(src)
+
+	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+		return
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -127,13 +132,17 @@
 	health_brute_vuln = 0.7
 	health_burn = 20
 	health_burn_vuln = 0.2
-	var/activated = TRUE
+	var/activated = FALSE
 
 	active
-		src.wakeup()
+		New()
+			..()
+			SPAWN(2 SECONDS)
+				src.wakeup()
 
 	New()
 		..()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		src.ai.disable()
 
 	attackby(obj/item/W, mob/user)
