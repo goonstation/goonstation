@@ -492,6 +492,7 @@
 		if (src.temp)
 			dat += text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 		else
+			var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			dat += {"
 				<style type="text/css">
 				.l { text-align: left; }
@@ -511,25 +512,31 @@
 				<br><a href='?src=\ref[src];[src.authenticated ? "logout=1'>Log Out" : "login=1'>Log In"]</a><hr>
 				"}
 
-			if (src.authenticated)
+			dat += {"
+				<table>
+					<thead>
+						<tr><th colspan="2">Budget Status</th></tr>
+					</thead>
+					<tbody>
+						<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
+					</tbody>
+				</table>
+				"}
 
-				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+			if (src.authenticated)
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
 				var/surplus = round(wagesystem.payroll_stipend - payroll)
 
 				dat += {"
-			<table>
-				<thead>
-					<tr><th colspan="2">Budget Status</th></tr>
-				</thead>
-				<tbody>
-					<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
-					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
+				<table>
+					<thead>
+					<tr><th colspan="2" class='second'>Payroll Details</th></tr></thead>
+					<tbody>
 					<tr><th>Payroll Stipend</th><td class='r'>[num2text(round(wagesystem.payroll_stipend),50)][CREDIT_SIGN]</td></tr>
 					<tr><th>Payroll Cost</th><td class='r'>[num2text(round(payroll),50)][CREDIT_SIGN]</td></tr>
 					[surplus >= 0 ? {"
