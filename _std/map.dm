@@ -10,24 +10,19 @@
 var/list/z_level_parallax_settings = list(
 	"[Z_LEVEL_NULL]" = list(),
 	"[Z_LEVEL_ADVENTURE]" = list(),
-	"[Z_LEVEL_SECRET]" = list(),
-#ifdef UNDERWATER_MAP
-	"[Z_LEVEL_DEBRIS]" = list(),
-	"[Z_LEVEL_MINING]" = list(),
-#else
 	"[Z_LEVEL_DEBRIS]" = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/asteroids_far,
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
+	"[Z_LEVEL_SECRET]" = list(),
 	"[Z_LEVEL_MINING]" = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
 		/atom/movable/screen/parallax_layer/asteroids_far,
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
-#endif
 	)
 
 ///Map generation defines
