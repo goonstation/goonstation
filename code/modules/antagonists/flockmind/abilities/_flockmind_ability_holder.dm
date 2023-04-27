@@ -46,31 +46,12 @@
 /datum/targetable/flockmindAbility
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "template"
-	cooldown = 40
+	cooldown = 4 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
+	check_range = FALSE
 	preferred_holder_type = /datum/abilityHolder/flockmind
 	theme = "flock"
-
-/datum/targetable/flockmindAbility/New()
-	var/atom/movable/screen/ability/topBar/flockmind/B = new /atom/movable/screen/ability/topBar/flockmind(null)
-	B.icon = src.icon
-	B.icon_state = src.icon_state
-	B.owner = src
-	B.name = src.name
-	B.desc = src.desc
-	src.object = B
-
-/datum/targetable/flockmindAbility/cast(atom/target)
-	if (!holder || !holder.owner)
-		return TRUE
-	return FALSE
-
-/datum/targetable/flockmindAbility/doCooldown()
-	. = ..()
-	holder.updateButtons()
-	SPAWN(cooldown + 5)
-		holder?.updateButtons()
 
 /datum/targetable/flockmindAbility/proc/tutorial_check(id, atom/context, silent = FALSE)
 	var/mob/living/intangible/flock/flockmind/flock_owner = src.holder.owner

@@ -5,8 +5,7 @@
 	cooldown = 0.1 SECONDS
 
 /datum/targetable/flockmindAbility/deconstruct/cast(atom/target)
-	if(..())
-		return TRUE
+	. = ..()
 	if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 		if (isflockdeconimmune(target)) // ghost structure on click opens tgui window
 			return TRUE

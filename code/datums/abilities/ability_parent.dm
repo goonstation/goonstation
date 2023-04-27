@@ -1051,6 +1051,10 @@
 	/// 0 is a valid argument so we check for null specifically
 	proc/doCooldown(customCooldown)
 		SHOULD_CALL_PARENT(TRUE)
+		// TODO see if this is actually needed?
+		src.holder.updateButtons()
+		SPAWN(src.cooldown + 0.5 SECONDS)
+			src.holder?.updateButtons()
 		return OVERRIDE_COOLDOWN(src, "cast", isnull(customCooldown) ? src.cooldown : customCooldown)
 
 	/// Helper to set an ability's cooldown to 0 (ie make it usable again)

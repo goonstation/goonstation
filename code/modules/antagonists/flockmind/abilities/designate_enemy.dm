@@ -5,18 +5,12 @@
 	cooldown = 0
 
 /datum/targetable/flockmindAbility/designateEnemy/cast(atom/target)
-	if(..())
-		return TRUE
-
-	var/M = target
+	var/mob/M = target
 	var/mob/living/intangible/flock/F = holder.owner
-
-	if (!(isliving(M) || iscritter(M) || isvehicle(M)) || isflockmob(M) || isintangible(M))
-		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
-		return TRUE
 
 	var/datum/flock/flock = F.flock
 
+	// TODO delete this if Leah says it's cool
 	if (!flock)
 		return TRUE
 
@@ -33,6 +27,12 @@
 
 	flock.updateEnemy(M)
 
+/datum/targetable/flockmindAbility/designateEnemy/castcheck(atom/target)
+	. = ..()
+	if (!(isliving(target) || iscritter(target) || isvehicle(target)) || isflockmob(target) || isintangible(target))
+		boutput(src.holder.owner, "<span class='alert'>That isn't a valid target.</span>")
+		return FALSE
+
 /datum/targetable/flockmindAbility/designateIgnore
 	name = "Designate Ignore"
 	desc = "Designate someone to be ignored by your Flock."
@@ -40,15 +40,9 @@
 	cooldown = 0.1 SECONDS
 
 /datum/targetable/flockmindAbility/designateIgnore/cast(atom/target)
-	if(..())
-		return TRUE
-
 	var/mob/living/intangible/flock/F = holder.owner
 
-	if (!isflockvalidenemy(target))
-		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
-		return TRUE
-
+	// TODO del if leah says it's cool
 	if (!F.flock)
 		return TRUE
 
@@ -61,3 +55,9 @@
 		F.flock.removeEnemy(target)
 
 	F.flock.addIgnore(target)
+
+/datum/targetable/flockmindAbility/designateIgnore/castcheck(atom/target)
+	. = ..()
+	if (!isflockvalidenemy(target))
+		boutput(src.holder.owner, "<span class='alert'>That isn't a valid target.</span>")
+		return TRUE
