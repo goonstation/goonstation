@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata)
 /obj/item/clothing/under/gimmick/yukata
 	name = "yukata"
-	desc = "Light cotton robes secured with a large obi tied into a neat bow around the waist. Perfect for the Japanese summer heat, which you're very far from."
+	desc = "Light cotton robes secured with a large obi tied into a neat bow around the waist. Perfect for the Japanese summer heat, which you're very far away from."
 	icon_state = "yukata_plain1"
 	item_state = "yukata_plain1"
 
