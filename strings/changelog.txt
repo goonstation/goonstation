@@ -1,4 +1,9 @@
 
+(t)thu apr 27 23
+(u)Kubius
+(p)13866
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Spatial interdictors can now initialize at 70% or higher charge, instead of requiring completely full charge.
 (t)wed apr 26 23
 (u)Amylizzle
 (p)13860
