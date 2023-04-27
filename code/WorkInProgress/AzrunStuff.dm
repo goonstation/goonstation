@@ -914,7 +914,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 		. = ..()
 		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{max_charge = 300; recharge_rate = 10}
 		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=300, swappable=FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		UpdateIcon()
 
 	update_icon()

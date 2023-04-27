@@ -193,7 +193,7 @@
 			else if (istype(W, /obj/item/grab)) //If its a person, we're trying to stuff them into the washing machine
 				var/obj/item/grab/G = W
 				user.visible_message("<span class='alert'>[user] starts to put [G.affecting] into the washing machine!</span>")
-				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/submachine/laundry_machine/proc/force_into_machine, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
+				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, TYPE_PROC_REF(/obj/submachine/laundry_machine, force_into_machine), list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null) //Sounds about right since it's a lengthy stun afterwards
 	else
 		return ..()
 

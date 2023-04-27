@@ -682,7 +682,7 @@ function lineEnter (ev)
 
 	else if (isscrewingtool(W))
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/computer3, unscrew_monitor),\
 		list(W, user), W.icon, W.icon_state, null, null)
 
 	else

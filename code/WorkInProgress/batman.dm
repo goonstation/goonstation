@@ -40,14 +40,14 @@
 			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, slot_in_belt)
 			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, slot_in_belt)
 
-			src.verbs += /mob/proc/batsmoke
-			src.verbs += /mob/proc/batarang
-			src.verbs += /mob/proc/batkick
-			src.verbs += /mob/proc/batrevive
-			src.verbs += /mob/proc/batattack
-			src.verbs += /mob/proc/batspinkick
-			src.verbs += /mob/proc/batspin
-			src.verbs += /mob/proc/batdropkick
+			src.verbs += TYPE_PROC_REF(/mob, batsmoke)
+			src.verbs += TYPE_PROC_REF(/mob, batarang)
+			src.verbs += TYPE_PROC_REF(/mob, batkick)
+			src.verbs += TYPE_PROC_REF(/mob, batrevive)
+			src.verbs += TYPE_PROC_REF(/mob, batattack)
+			src.verbs += TYPE_PROC_REF(/mob, batspinkick)
+			src.verbs += TYPE_PROC_REF(/mob, batspin)
+			src.verbs += TYPE_PROC_REF(/mob, batdropkick)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -57,24 +57,24 @@
 
 /*
 /obj/item/clothing/suit/armor/batman/equipped(var/mob/user)
-	user.verbs += /client/proc/batsmoke
-	user.verbs += /client/proc/batarang
-	user.verbs += /mob/proc/batkick
-	user.verbs += /mob/proc/batrevive
-	user.verbs += /mob/proc/batattack
-	user.verbs += /mob/proc/batspinkick
-	user.verbs += /mob/proc/batspin
-	user.verbs += /mob/proc/batdropkick
+	user.verbs += TYPE_PROC_REF(/client, batsmoke)
+	user.verbs += TYPE_PROC_REF(/client, batarang)
+	user.verbs += TYPE_PROC_REF(/mob, batkick)
+	user.verbs += TYPE_PROC_REF(/mob, batrevive)
+	user.verbs += TYPE_PROC_REF(/mob, batattack)
+	user.verbs += TYPE_PROC_REF(/mob, batspinkick)
+	user.verbs += TYPE_PROC_REF(/mob, batspin)
+	user.verbs += TYPE_PROC_REF(/mob, batdropkick)
 
 /obj/item/clothing/suit/armor/batman/unequipped(var/mob/user)
-	user.verbs -= /client/proc/batsmoke
-	user.verbs -= /client/proc/batarang
-	user.verbs -= /mob/proc/batkick
-	user.verbs -= /mob/proc/batrevive
-	user.verbs -= /mob/proc/batattack
-	user.verbs -= /mob/proc/batspinkick
-	user.verbs -= /mob/proc/batspin
-	user.verbs -= /mob/proc/batdropkick
+	user.verbs -= TYPE_PROC_REF(/client, batsmoke)
+	user.verbs -= TYPE_PROC_REF(/client, batarang)
+	user.verbs -= TYPE_PROC_REF(/mob, batkick)
+	user.verbs -= TYPE_PROC_REF(/mob, batrevive)
+	user.verbs -= TYPE_PROC_REF(/mob, batattack)
+	user.verbs -= TYPE_PROC_REF(/mob, batspinkick)
+	user.verbs -= TYPE_PROC_REF(/mob, batspin)
+	user.verbs -= TYPE_PROC_REF(/mob, batdropkick)
 */
 
 /proc/batman_pow(atom/target_location)

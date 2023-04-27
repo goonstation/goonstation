@@ -255,7 +255,7 @@
 	if (!isobserver(M) || isAIeye(M))
 		M.set_loc(src)
 		M.network_device = src
-		//M.verbs += /mob/proc/jack_in
+		//M.verbs += TYPE_PROC_REF(/mob, jack_in)
 		src.occupant = M
 		src.con_user = M
 		src.active = 1
@@ -337,7 +337,7 @@
 /obj/machinery/sim/vr_bed/proc/go_out()
 	for(var/obj/O in src)
 		O.set_loc(get_turf(src.loc))
-//	src.verbs -= /mob/proc/jack_in
+//	src.verbs -= TYPE_PROC_REF(/mob, jack_in)
 	src.occupant?.set_loc(get_turf(src.loc))
 	src.occupant?.changeStatus("weakened", 2 SECONDS)
 	src.occupant?.network_device = null

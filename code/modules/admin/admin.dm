@@ -4551,7 +4551,7 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
 				if(special != "hardmode")
 					M.mind.special_role = ROLE_TRAITOR
-					M.verbs += /client/proc/gearspawn_traitor
+					M.verbs += TYPE_PROC_REF(/client, gearspawn_traitor)
 					M.show_antag_popup("traitorradio")
 				else
 					M.mind.special_role = ROLE_HARDMODE_TRAITOR

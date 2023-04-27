@@ -1510,27 +1510,27 @@
 /*
 /mob/proc/make_shipcrewmember(weapon_class as num)
 	//boutput(world, "Is called for [src.name]")
-	src.verbs += /client/proc/access_main_computer
+	src.verbs += TYPE_PROC_REF(/client, access_main_computer)
 	if(weapon_class)
-		src.verbs += /client/proc/fire_main_weapon
-	src.verbs += /client/proc/use_external_speaker
-	src.verbs += /client/proc/access_sensors
-	src.verbs += /client/proc/create_wormhole
-	src.verbs += /client/proc/use_secondary_system
-	src.verbs += /client/proc/open_hangar
-	src.verbs += /client/proc/return_to_station
+		src.verbs += TYPE_PROC_REF(/client, fire_main_weapon)
+	src.verbs += TYPE_PROC_REF(/client, use_external_speaker)
+	src.verbs += TYPE_PROC_REF(/client, access_sensors)
+	src.verbs += TYPE_PROC_REF(/client, create_wormhole)
+	src.verbs += TYPE_PROC_REF(/client, use_secondary_system)
+	src.verbs += TYPE_PROC_REF(/client, open_hangar)
+	src.verbs += TYPE_PROC_REF(/client, return_to_station)
 	return
 
 /mob/proc/remove_shipcrewmember_powers(weapon_class as num)
-	src.verbs -= /client/proc/access_main_computer
+	src.verbs -= TYPE_PROC_REF(/client, access_main_computer)
 	if(weapon_class)
-		src.verbs -= /client/proc/fire_main_weapon
-	src.verbs -= /client/proc/use_external_speaker
-	src.verbs -= /client/proc/access_sensors
-	src.verbs -= /client/proc/create_wormhole
-	src.verbs -= /client/proc/use_secondary_system
-	src.verbs -= /client/proc/open_hangar
-	src.verbs -= /client/proc/return_to_station
+		src.verbs -= TYPE_PROC_REF(/client, fire_main_weapon)
+	src.verbs -= TYPE_PROC_REF(/client, use_external_speaker)
+	src.verbs -= TYPE_PROC_REF(/client, access_sensors)
+	src.verbs -= TYPE_PROC_REF(/client, create_wormhole)
+	src.verbs -= TYPE_PROC_REF(/client, use_secondary_system)
+	src.verbs -= TYPE_PROC_REF(/client, open_hangar)
+	src.verbs -= TYPE_PROC_REF(/client, return_to_station)
 	return
 */
 

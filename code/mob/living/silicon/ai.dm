@@ -456,27 +456,27 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				src.show_text("To use something, simply click it.")
 				src.show_text("Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
 				src.show_laws()
-				src.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-				src.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-				src.verbs += /mob/living/silicon/ai/proc/reset_apcs
-				src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-				src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-				src.verbs += /mob/living/silicon/ai/proc/ai_alerts
-				src.verbs += /mob/living/silicon/ai/proc/ai_camera_list
-				src.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-				src.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-				src.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_call_shuttle)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, show_laws_verb)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, reset_apcs)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, de_electrify_verb)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, unbolt_all_airlocks)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_camera_track)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_alerts)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_camera_list)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_statuschange)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_laws_all)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_laws_standard)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_set_fake_laws)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_fake_laws)
 				src.verbs += /mob/living/silicon/ai/verb/deploy_to
-				src.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-				src.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_view_crew_manifest)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, toggle_alerts_verb)
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 				src.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-				src.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-				src.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-				src.verbs += /mob/living/silicon/ai/proc/view_messageLog
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_colorchange)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_station_announcement)
+				src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, view_messageLog)
 				src.verbs += /mob/living/silicon/ai/verb/rename_self
 				src.job = "AI"
 				if (src.mind)
@@ -1846,9 +1846,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 		message_admins("[key_name(message_mob)] globally reset [count] APCs.")
 		boutput(message_mob, "Reset [count] APCs.")
-		src.verbs -= /mob/living/silicon/ai/proc/reset_apcs
+		src.verbs -= TYPE_PROC_REF(/mob/living/silicon/ai, reset_apcs)
 		sleep(10 SECONDS)
-		src.verbs += /mob/living/silicon/ai/proc/reset_apcs
+		src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, reset_apcs)
 
 // drsingh new AI de-electrify thing
 
@@ -1870,9 +1870,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 		message_admins("[key_name(message_mob)] globally de-shocked [count] airlocks.")
 		boutput(message_mob, "Removed electrification from [count] airlocks.")
-		src.verbs -= /mob/living/silicon/ai/proc/de_electrify_verb
+		src.verbs -= TYPE_PROC_REF(/mob/living/silicon/ai, de_electrify_verb)
 		sleep(10 SECONDS)
-		src.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
+		src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, de_electrify_verb)
 
 /mob/living/silicon/ai/proc/unbolt_all_airlocks()
 	set category = "AI Commands"
@@ -1893,9 +1893,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 		message_admins("[key_name(message_mob)] globally unbolted [count] airlocks.")
 		boutput(message_mob, "Unbolted [count] airlocks.")
-		src.verbs -= /mob/living/silicon/ai/proc/unbolt_all_airlocks
+		src.verbs -= TYPE_PROC_REF(/mob/living/silicon/ai, unbolt_all_airlocks)
 		sleep(10 SECONDS)
-		src.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
+		src.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, unbolt_all_airlocks)
 
 /mob/living/silicon/ai/proc/toggle_alerts_verb()
 	set category = "AI Commands"

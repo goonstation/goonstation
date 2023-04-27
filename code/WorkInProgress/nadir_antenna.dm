@@ -324,7 +324,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 				var/less_cursed_check = src.repair_status == ARRAY_INTEG_WRENCH_ON
 				boutput(user, "You start [less_cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/communications_dish/transception/proc/wrench_cabinet,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, TYPE_PROC_REF(/obj/machinery/communications_dish/transception, wrench_cabinet),\
 				list(user), I.icon, I.icon_state, null, null)
 				tell_you_what_to_do_next = FALSE
 
@@ -332,7 +332,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 			if (src.repair_status == ARRAY_INTEG_PRY_RODS)
 				boutput(user, "You start prying out the damaged frame rods.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/machinery/communications_dish/transception/proc/pry_cabinet,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, TYPE_PROC_REF(/obj/machinery/communications_dish/transception, pry_cabinet),\
 				list(user), I.icon, I.icon_state, null, null)
 				tell_you_what_to_do_next = FALSE
 

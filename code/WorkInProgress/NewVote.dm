@@ -180,7 +180,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 
 	New(var/A)
 		for(var/client/C in clients)
-			C.verbs += /client/proc/viewnewvote
+			C.verbs += TYPE_PROC_REF(/client, viewnewvote)
 			may_vote += C.ckey
 		vote_started = world.time
 		data = A
@@ -254,7 +254,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 	proc/end_vote()
 		vote_manager.active_vote = null
 		for(var/client/C in clients)
-			C.verbs -= /client/proc/viewnewvote
+			C.verbs -= TYPE_PROC_REF(/client, viewnewvote)
 		qdel(src)
 
 
@@ -306,7 +306,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 
 	New(var/A)
 		for(var/client/C in clients)
-			C.verbs += /client/proc/viewnewvote
+			C.verbs += TYPE_PROC_REF(/client, viewnewvote)
 			may_vote += C.ckey
 		vote_started = world.time
 		data = A
@@ -345,7 +345,7 @@ var/global/obj/newVoteLink/newVoteLinkStat = new /obj/newVoteLink
 
 	New(var/A)
 		for(var/client/C in clients)
-			C.verbs += /client/proc/viewnewvote
+			C.verbs += TYPE_PROC_REF(/client, viewnewvote)
 			may_vote += C.ckey
 		vote_started = world.time
 		data = A

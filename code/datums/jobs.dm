@@ -67,8 +67,8 @@
 		if (!M)
 			return
 		if (receives_miranda)
-			M.verbs += /mob/proc/recite_miranda
-			M.verbs += /mob/proc/add_miranda
+			M.verbs += TYPE_PROC_REF(/mob, recite_miranda)
+			M.verbs += TYPE_PROC_REF(/mob, add_miranda)
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
 

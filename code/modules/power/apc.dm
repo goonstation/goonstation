@@ -429,7 +429,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					else
 						boutput(user, "<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>")
 						return
-					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/power/apc/proc/fix_wiring,\
+					SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, TYPE_PROC_REF(/obj/machinery/power/apc, fix_wiring),\
 					list(theCoil, user), W.icon, W.icon_state, null, null)
 					return
 				if (2)
@@ -446,7 +446,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					boutput(user, "<span class='alert'>You must repair the autotransformer's windings prior to tuning it.</span>")
 				if (2)
 					boutput(user, "You begin to carefully tune the autotransformer.  This might take a little while.")
-					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/power/apc/proc/fix_autotransformer,\
+					SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, TYPE_PROC_REF(/obj/machinery/power/apc, fix_autotransformer),\
 					list(user), W.icon, W.icon_state, null, null)
 				else
 					boutput(user, "The autotransformer is already tuned.")

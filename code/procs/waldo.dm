@@ -26,9 +26,9 @@
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked)) return
 	usr.set_loc(picked)
-	usr.verbs -= /client/proc/waldo_decoys
+	usr.verbs -= TYPE_PROC_REF(/client, waldo_decoys)
 	SPAWN(30 SECONDS)
-		usr.verbs += /client/proc/waldo_decoys
+		usr.verbs += TYPE_PROC_REF(/client, waldo_decoys)
 
 /client/proc/mass_teleport()
 	set category = "Spells"
@@ -50,9 +50,9 @@
 	if (usr.wizard_spellpower(null)) SPcool = 600
 
 	var/A
-	usr.verbs -= /client/proc/mass_teleport
+	usr.verbs -= TYPE_PROC_REF(/client, mass_teleport)
 	SPAWN(SPcool)
-		usr.verbs += /client/proc/mass_teleport
+		usr.verbs += TYPE_PROC_REF(/client, mass_teleport)
 
 	var/list/theareas = new/list()
 	for(var/area/AR in world)

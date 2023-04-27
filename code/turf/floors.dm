@@ -1862,7 +1862,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(!instantly)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, TYPE_PROC_REF(/turf/simulated/floor, finish_attaching),\
 			list(W, user), W.icon, W.icon_state, null, null)
 		return
 
@@ -1950,7 +1950,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if (C.amount >= 2)
 				boutput(user, "<span class='notice'>Reinforcing the floor...</span>")
 
-				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/reinforce, C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+				SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, TYPE_PROC_REF(/turf/simulated/floor, reinforce), C, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 			else
 				boutput(user, "<span class='alert'>You need more rods.</span>")
 		else

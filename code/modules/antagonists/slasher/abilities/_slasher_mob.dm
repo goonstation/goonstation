@@ -350,7 +350,7 @@
 		///Actionbar handler for stealing a dead body's soul.
 		soulStealSetup(mob/living/carbon/human/M)
 			boutput(src, "<span class='alert'>You begin stealing [M]'s soul.</span>")
-			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, /mob/living/carbon/human/slasher/proc/soulSteal, M, src.icon, src.icon_state,\
+			SETUP_GENERIC_ACTIONBAR(src, null, 3 SECONDS, TYPE_PROC_REF(/mob/living/carbon/human/slasher, soulSteal), M, src.icon, src.icon_state,\
 	 		"Something barely visible seems to come out of [M]'s mouth, which then is absorbed into [src]'s body!", null)
 
 		///Steal a dead body's soul, provided they have a full one, and get more machete damage

@@ -685,7 +685,7 @@ TYPEINFO(/obj/machinery/field_generator)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/field_generator/proc/weld_action, \
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/field_generator, weld_action), \
 						list(user), "[user] finishes using their [W.name] on the field generator.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the field generator to the floor.")
@@ -1117,7 +1117,7 @@ TYPEINFO(/obj/machinery/emitter)
 			if(!W:try_weld(user, 1, noisy = 2))
 				return
 			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/emitter/proc/weld_action, \
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/emitter, weld_action), \
 						list(user), "[user] finishes using their [W.name] on the emitter.", positions[1], positions[2]),user)
 		if(state == WRENCHED)
 			boutput(user, "You start to weld the emitter to the floor.")

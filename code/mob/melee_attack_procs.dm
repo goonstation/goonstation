@@ -79,7 +79,7 @@
 
 		if (P)
 			if (P.barbed == FALSE)
-				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(target, P), P.icon, P.icon_state, \
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, TYPE_PROC_REF(/mob/living, pull_out_implant), list(target, P), P.icon, P.icon_state, \
 					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of themselves!</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else
@@ -112,7 +112,7 @@
 
 		if (P)
 			if (P.barbed == FALSE)
-				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, /mob/living/proc/pull_out_implant, list(src, P), P.icon, P.icon_state, \
+				SETUP_GENERIC_ACTIONBAR(src, target, 1 SECOND, TYPE_PROC_REF(/mob/living, pull_out_implant), list(src, P), P.icon, P.icon_state, \
 					src.visible_message("<span class='alert'><B>[src] pulls a [P.pull_out_name] out of [target]!</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 			else

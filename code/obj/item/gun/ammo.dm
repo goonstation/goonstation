@@ -1256,7 +1256,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	New()
 		..()
 		AddComponent(src.component_type, max_charge, charge, recharge_rate, recharge_delay, rechargable)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		desc = "A power cell that holds a max of [src.max_charge]PU. Can be inserted into any energy gun, even tasers!"
 		UpdateIcon()
 

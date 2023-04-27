@@ -1568,7 +1568,7 @@ About the new airlock wires panel:
 
 		var/positions = src.get_welding_positions(user)
 
-		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/door/airlock/proc/weld_action, \
+		actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/door/airlock, weld_action), \
 			list(user), null, positions[1], positions[2]),user)
 
 		if (src.health < src.health_max)

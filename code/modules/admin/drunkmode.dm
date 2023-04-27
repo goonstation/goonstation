@@ -3,77 +3,77 @@ var/list/dangerousVerbs = list(\
 
 //No accidentally restarting the server
 /verb/restart_the_fucking_server_i_mean_it,\
-/datum/admins/proc/restart,\
+TYPE_PROC_REF(/datum/admins, restart),\
 
 //Music/sounds
-/client/proc/open_dj_panel,\
+TYPE_PROC_REF(/client, open_dj_panel),\
 
 //No banning for you
-/client/proc/warn,\
-/client/proc/openBanPanel,\
-/client/proc/cmd_admin_addban,\
-/client/proc/banooc,\
-/client/proc/sharkban,\
+TYPE_PROC_REF(/client, warn),\
+TYPE_PROC_REF(/client, openBanPanel),\
+TYPE_PROC_REF(/client, cmd_admin_addban),\
+TYPE_PROC_REF(/client, banooc),\
+TYPE_PROC_REF(/client, sharkban),\
 
 //This is a little involved for a drunk person huh
-/client/proc/main_loop_context,\
-/client/proc/main_loop_tick_detail,\
-/client/proc/cmd_explosion,\
+TYPE_PROC_REF(/client, main_loop_context),\
+TYPE_PROC_REF(/client, main_loop_tick_detail),\
+TYPE_PROC_REF(/client, cmd_explosion),\
 
 //Shitguy stuff
-/client/proc/debug_variables,\
-/client/proc/cmd_debug_mutantrace,\
-/client/proc/cmd_debug_del_all,\
-/client/proc/general_report,\
-/client/proc/map_debug_panel,\
-/client/proc/air_report,\
-/client/proc/air_status,\
-/client/proc/fix_next_move,\
-/client/proc/debugreward,\
+TYPE_PROC_REF(/client, debug_variables),\
+TYPE_PROC_REF(/client, cmd_debug_mutantrace),\
+TYPE_PROC_REF(/client, cmd_debug_del_all),\
+TYPE_PROC_REF(/client, general_report),\
+TYPE_PROC_REF(/client, map_debug_panel),\
+TYPE_PROC_REF(/client, air_report),\
+TYPE_PROC_REF(/client, air_status),\
+TYPE_PROC_REF(/client, fix_next_move),\
+TYPE_PROC_REF(/client, debugreward),\
 
 //Coder stuff this is mostly all dangerous shit
-/client/proc/cmd_modify_market_variables,\
-/client/proc/BK_finance_debug,\
-/client/proc/BK_alter_funds,\
-/client/proc/debug_pools,\
-/client/proc/debug_variables,\
-/client/proc/debug_global_variable,\
-/client/proc/call_proc,\
-/client/proc/call_proc_all,\
-/client/proc/ticklag,\
-/client/proc/cmd_debug_vox,\
-/client/proc/mapWorld,\
-/client/proc/haine_blood_debug,\
-/client/proc/debug_messages,\
-/client/proc/debug_reaction_list,\
-/client/proc/debug_reagents_cache,\
-/client/proc/set_admin_level,\
-/client/proc/show_camera_paths, \
-/*/client/proc/remove_camera_paths_verb, \*/
-/client/proc/check_gang_scores,\
-/client/proc/critter_creator_debug,\
-/client/proc/debug_deletions,\
-/client/proc/cmd_modify_controller_variables,\
-/client/proc/cmd_modify_ticker_variables,\
-/client/proc/find_thing,\
-/client/proc/find_one_of,\
-/client/proc/find_all_of,\
-/client/proc/fix_powernets,\
-/client/proc/cmd_job_controls,\
+TYPE_PROC_REF(/client, cmd_modify_market_variables),\
+TYPE_PROC_REF(/client, BK_finance_debug),\
+TYPE_PROC_REF(/client, BK_alter_funds),\
+TYPE_PROC_REF(/client, debug_pools),\
+TYPE_PROC_REF(/client, debug_variables),\
+TYPE_PROC_REF(/client, debug_global_variable),\
+TYPE_PROC_REF(/client, call_proc),\
+TYPE_PROC_REF(/client, call_proc_all),\
+TYPE_PROC_REF(/client, ticklag),\
+TYPE_PROC_REF(/client, cmd_debug_vox),\
+TYPE_PROC_REF(/client, mapWorld),\
+TYPE_PROC_REF(/client, haine_blood_debug),\
+TYPE_PROC_REF(/client, debug_messages),\
+TYPE_PROC_REF(/client, debug_reaction_list),\
+TYPE_PROC_REF(/client, debug_reagents_cache),\
+TYPE_PROC_REF(/client, set_admin_level),\
+TYPE_PROC_REF(/client, show_camera_paths), \
+/*TYPE_PROC_REF(/client, remove_camera_paths_verb), \*/
+TYPE_PROC_REF(/client, check_gang_scores),\
+TYPE_PROC_REF(/client, critter_creator_debug),\
+TYPE_PROC_REF(/client, debug_deletions),\
+TYPE_PROC_REF(/client, cmd_modify_controller_variables),\
+TYPE_PROC_REF(/client, cmd_modify_ticker_variables),\
+TYPE_PROC_REF(/client, find_thing),\
+TYPE_PROC_REF(/client, find_one_of),\
+TYPE_PROC_REF(/client, find_all_of),\
+TYPE_PROC_REF(/client, fix_powernets),\
+TYPE_PROC_REF(/client, cmd_job_controls),\
 
 //Toggles (these are ones that could be very confusing to accidentally toggle for a drunk person)
-/client/proc/toggle_toggles,\
-/client/proc/toggle_popup_verbs,\
-/client/proc/toggle_server_toggles_tab,\
-/datum/admins/proc/toggleenter,\
-/datum/admins/proc/toggle_blood_system,\
-/datum/admins/proc/toggle_bone_system,\
-/client/proc/togglebuildmode,\
-/client/proc/toggle_atom_verbs,\
-/client/proc/toggle_camera_network_reciprocity, \
-/client/proc/toggle_atom_verbs,\
-/client/proc/toggle_extra_verbs,\
-/datum/admins/proc/togglethetoggles,\
+TYPE_PROC_REF(/client, toggle_toggles),\
+TYPE_PROC_REF(/client, toggle_popup_verbs),\
+TYPE_PROC_REF(/client, toggle_server_toggles_tab),\
+TYPE_PROC_REF(/datum/admins, toggleenter),\
+TYPE_PROC_REF(/datum/admins, toggle_blood_system),\
+TYPE_PROC_REF(/datum/admins, toggle_bone_system),\
+TYPE_PROC_REF(/client, togglebuildmode),\
+TYPE_PROC_REF(/client, toggle_atom_verbs),\
+TYPE_PROC_REF(/client, toggle_camera_network_reciprocity), \
+TYPE_PROC_REF(/client, toggle_atom_verbs),\
+TYPE_PROC_REF(/client, toggle_extra_verbs),\
+TYPE_PROC_REF(/datum/admins, togglethetoggles),\
 
 /client/proc/forceDrunkMode\
 )
@@ -90,8 +90,8 @@ var/list/dangerousVerbs = list(\
 		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
 
 		if (src)
-			src.verbs -= /client/proc/enableDrunkMode
-			src.verbs += /client/proc/disableDrunkMode
+			src.verbs -= TYPE_PROC_REF(/client, enableDrunkMode)
+			src.verbs += TYPE_PROC_REF(/client, disableDrunkMode)
 			src.toggleDrunkMode(src, not_drunk_but_high)
 	return
 
@@ -117,8 +117,8 @@ var/list/dangerousVerbs = list(\
 	var/puzzle = input(src, message, "Puzzle time!") as text
 	if (puzzle)
 		if (puzzle == answer)
-			src.verbs -= /client/proc/disableDrunkMode
-			src.verbs += /client/proc/enableDrunkMode
+			src.verbs -= TYPE_PROC_REF(/client, disableDrunkMode)
+			src.verbs += TYPE_PROC_REF(/client, enableDrunkMode)
 			src.toggleDrunkMode(src)
 		else
 			message_admins("[key_name(src)] tried to disable drunk-mode on himself but failed the puzzle ([num1] + [num2]). Everyone laugh at them.")
@@ -172,8 +172,8 @@ var/list/dangerousVerbs = list(\
 		C.holder.drunk = 0
 
 		if (forced)
-			C.verbs -= /client/proc/disableDrunkMode
-			C.verbs += /client/proc/enableDrunkMode
+			C.verbs -= TYPE_PROC_REF(/client, disableDrunkMode)
+			C.verbs += TYPE_PROC_REF(/client, enableDrunkMode)
 
 		var/logMessage = (forced ? "was forced out of drunk-mode by [key_name(src)]" : "has disabled drunk-mode for themselves")
 		logTheThing(LOG_ADMIN, C, logMessage)
@@ -189,8 +189,8 @@ var/list/dangerousVerbs = list(\
 		C.holder.drunk = 1
 
 		if (forced)
-			C.verbs -= /client/proc/enableDrunkMode
-			C.verbs += /client/proc/disableDrunkMode
+			C.verbs -= TYPE_PROC_REF(/client, enableDrunkMode)
+			C.verbs += TYPE_PROC_REF(/client, disableDrunkMode)
 
 		var/logMessage = (forced ? "was forced into drunk-mode by [key_name(src)]" : "has enabled drunk-mode for themselves")
 		logTheThing(LOG_ADMIN, C, logMessage)

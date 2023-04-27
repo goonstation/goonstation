@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, TYPE_PROC_REF(/obj/storage/secure/closet, toggle_bolts), list(user), I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
 			..()

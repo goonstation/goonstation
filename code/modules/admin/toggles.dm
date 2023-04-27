@@ -5,9 +5,9 @@
 //ADD YOUR SHIT HERE IF YOU MAKE A NEW VERB THAT GOES ON RIGHT-CLICK OR YOU ARE LITERALLY HITLER (Aka marquesas jr)
 //fixed that for you -marq
 var/list/popup_verbs_to_toggle = list(\
-/client/proc/sendmobs,
-/client/proc/sendhmobs,
-/client/proc/Jump,\
+TYPE_PROC_REF(/client, sendmobs),
+TYPE_PROC_REF(/client, sendhmobs),
+TYPE_PROC_REF(/client, Jump),\
 )
 
 /client/proc/toggle_popup_verbs()
@@ -44,48 +44,48 @@ var/list/popup_verbs_to_toggle = list(\
 
 // if it's in Toggles (Server) it should be in here, ya dig?
 var/list/server_toggles_tab_verbs = list(
-/client/proc/toggle_attack_messages,
-/client/proc/toggle_ghost_respawns,
-/client/proc/toggle_adminwho_alerts,
-/client/proc/toggle_toggles,
-/client/proc/toggle_jobban_announcements,
-/client/proc/toggle_banlogin_announcements,
-/client/proc/toggle_literal_disarm,
-/client/proc/toggle_spooky_light_plane,\
-/client/proc/toggle_cloning_with_records,
-/client/proc/toggle_random_job_selection,
-/datum/admins/proc/toggleooc,
-/datum/admins/proc/togglelooc,
-/datum/admins/proc/toggleoocdead,
-/datum/admins/proc/toggletraitorscaling,
-/datum/admins/proc/pcap,
-/datum/admins/proc/toggleenter,
-/datum/admins/proc/toggleAI,
-/datum/admins/proc/toggle_soundpref_override,
-/datum/admins/proc/toggle_respawns,
-/datum/admins/proc/adsound,
-/datum/admins/proc/adspawn,
-/datum/admins/proc/adrev,
-/datum/admins/proc/toggledeadchat,
-/datum/admins/proc/togglefarting,
-/datum/admins/proc/toggle_blood_system,
-/datum/admins/proc/toggle_bone_system,
-/datum/admins/proc/togglesuicide,
-/datum/admins/proc/togglethetoggles,
-/datum/admins/proc/toggleautoending,
-/datum/admins/proc/toggleaprilfools,
-/datum/admins/proc/togglespeechpopups,
-/datum/admins/proc/togglemonkeyspeakhuman,
-/datum/admins/proc/toggletraitorsseeeachother,
-/datum/admins/proc/togglelatetraitors,
-/datum/admins/proc/togglesoundwaiting,
-/datum/admins/proc/adjump,
-/datum/admins/proc/togglesimsmode,
-/datum/admins/proc/toggle_pull_slowing,
-/datum/admins/proc/togglepowerdebug,
-/client/proc/admin_toggle_nightmode,
-/client/proc/toggle_camera_network_reciprocity,
-/datum/admins/proc/toggle_radio_audio,
+TYPE_PROC_REF(/client, toggle_attack_messages),
+TYPE_PROC_REF(/client, toggle_ghost_respawns),
+TYPE_PROC_REF(/client, toggle_adminwho_alerts),
+TYPE_PROC_REF(/client, toggle_toggles),
+TYPE_PROC_REF(/client, toggle_jobban_announcements),
+TYPE_PROC_REF(/client, toggle_banlogin_announcements),
+TYPE_PROC_REF(/client, toggle_literal_disarm),
+TYPE_PROC_REF(/client, toggle_spooky_light_plane),\
+TYPE_PROC_REF(/client, toggle_cloning_with_records),
+TYPE_PROC_REF(/client, toggle_random_job_selection),
+TYPE_PROC_REF(/datum/admins, toggleooc),
+TYPE_PROC_REF(/datum/admins, togglelooc),
+TYPE_PROC_REF(/datum/admins, toggleoocdead),
+TYPE_PROC_REF(/datum/admins, toggletraitorscaling),
+TYPE_PROC_REF(/datum/admins, pcap),
+TYPE_PROC_REF(/datum/admins, toggleenter),
+TYPE_PROC_REF(/datum/admins, toggleAI),
+TYPE_PROC_REF(/datum/admins, toggle_soundpref_override),
+TYPE_PROC_REF(/datum/admins, toggle_respawns),
+TYPE_PROC_REF(/datum/admins, adsound),
+TYPE_PROC_REF(/datum/admins, adspawn),
+TYPE_PROC_REF(/datum/admins, adrev),
+TYPE_PROC_REF(/datum/admins, toggledeadchat),
+TYPE_PROC_REF(/datum/admins, togglefarting),
+TYPE_PROC_REF(/datum/admins, toggle_blood_system),
+TYPE_PROC_REF(/datum/admins, toggle_bone_system),
+TYPE_PROC_REF(/datum/admins, togglesuicide),
+TYPE_PROC_REF(/datum/admins, togglethetoggles),
+TYPE_PROC_REF(/datum/admins, toggleautoending),
+TYPE_PROC_REF(/datum/admins, toggleaprilfools),
+TYPE_PROC_REF(/datum/admins, togglespeechpopups),
+TYPE_PROC_REF(/datum/admins, togglemonkeyspeakhuman),
+TYPE_PROC_REF(/datum/admins, toggletraitorsseeeachother),
+TYPE_PROC_REF(/datum/admins, togglelatetraitors),
+TYPE_PROC_REF(/datum/admins, togglesoundwaiting),
+TYPE_PROC_REF(/datum/admins, adjump),
+TYPE_PROC_REF(/datum/admins, togglesimsmode),
+TYPE_PROC_REF(/datum/admins, toggle_pull_slowing),
+TYPE_PROC_REF(/datum/admins, togglepowerdebug),
+TYPE_PROC_REF(/client, admin_toggle_nightmode),
+TYPE_PROC_REF(/client, toggle_camera_network_reciprocity),
+TYPE_PROC_REF(/datum/admins, toggle_radio_audio),
 )
 
 /client/proc/toggle_server_toggles_tab()
@@ -125,32 +125,32 @@ var/list/server_toggles_tab_verbs = list(
 	set name = "Toggle Extra Verbs"
 	ADMIN_ONLY
 	if (!src.holder.extratoggle)
-		src.verbs -= /client/proc/addreagents
+		src.verbs -= TYPE_PROC_REF(/client, addreagents)
 
 		//src.verbs -= /proc/possess
-		src.verbs -= /client/proc/addreagents
-		src.verbs -= /client/proc/cmd_admin_rejuvenate
+		src.verbs -= TYPE_PROC_REF(/client, addreagents)
+		src.verbs -= TYPE_PROC_REF(/client, cmd_admin_rejuvenate)
 
-		src.verbs -= /client/proc/main_loop_context
-		src.verbs -= /client/proc/main_loop_tick_detail
-		src.verbs -= /client/proc/ticklag
+		src.verbs -= TYPE_PROC_REF(/client, main_loop_context)
+		src.verbs -= TYPE_PROC_REF(/client, main_loop_tick_detail)
+		src.verbs -= TYPE_PROC_REF(/client, ticklag)
 
 		src.holder.extratoggle = 1
 		boutput(src, "Extra Toggled Off")
 	else
-		src.verbs += /client/proc/addreagents
+		src.verbs += TYPE_PROC_REF(/client, addreagents)
 		src.holder.extratoggle = 0
 		boutput(src, "Extra Toggled On")
-		src.verbs += /client/proc/addreagents
+		src.verbs += TYPE_PROC_REF(/client, addreagents)
 
 
 		//src.verbs += /proc/possess
-		src.verbs += /client/proc/addreagents
-		src.verbs += /client/proc/cmd_admin_rejuvenate
+		src.verbs += TYPE_PROC_REF(/client, addreagents)
+		src.verbs += TYPE_PROC_REF(/client, cmd_admin_rejuvenate)
 
-		src.verbs += /client/proc/main_loop_context
-		src.verbs += /client/proc/main_loop_tick_detail
-		src.verbs += /client/proc/ticklag
+		src.verbs += TYPE_PROC_REF(/client, main_loop_context)
+		src.verbs += TYPE_PROC_REF(/client, main_loop_tick_detail)
+		src.verbs += TYPE_PROC_REF(/client, ticklag)
 
 var/global/IP_alerts = 1
 

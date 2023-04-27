@@ -169,7 +169,7 @@ TYPEINFO(/obj/item/circuitboard)
 	qdel(src)
 
 /obj/computerframe/attackby(obj/item/P, mob/user)
-	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
+	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/computerframe, state_actions),\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
 		if (0)

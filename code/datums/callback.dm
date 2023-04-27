@@ -36,7 +36,7 @@
 						Example:
 								CALLBACK(GLOBAL_PROC, .some_proc_here)
 
-				Other wise you will have to do the full typepath of the proc (/type/of/thing/proc/procname)
+				Other wise you will have to do the full typepath of the proc (TYPE_PROC_REF(/type/of/thing, procname))
 
 */
 

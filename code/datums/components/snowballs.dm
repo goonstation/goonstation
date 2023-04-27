@@ -18,7 +18,7 @@ TYPEINFO(/datum/component/snowballs)
 
 /datum/component/snowballs/proc/start_snowball(turf/T, mob/user)
 	if(!ON_COOLDOWN(source_turf, "snowball", 6 SECONDS))
-		actions.start(new /datum/action/bar/icon/callback(user, T, rand(3 SECONDS, 5 SECONDS), /datum/component/snowballs/proc/form_snowball,
+		actions.start(new /datum/action/bar/icon/callback(user, T, rand(3 SECONDS, 5 SECONDS), TYPE_PROC_REF(/datum/component/snowballs, form_snowball),
 		list(user), 'icons/misc/xmas.dmi', "snowball", null, null, src), user)
 		return TRUE
 

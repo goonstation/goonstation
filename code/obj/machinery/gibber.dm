@@ -78,7 +78,7 @@ TYPEINFO(/obj/machinery/gibber)
 		return
 	user.visible_message("<span class='alert'>[user] starts to put [G.affecting] onto the gibber!</span>")
 	src.add_fingerprint(user)
-	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/machinery/gibber/proc/gibber_action, list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null)
+	SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, TYPE_PROC_REF(/obj/machinery/gibber, gibber_action), list(G, user), 'icons/mob/screen1.dmi', "grabbed", null, null)
 
 /obj/machinery/gibber/proc/gibber_action(obj/item/grab/G as obj, mob/user as mob)
 	if(G?.affecting && (BOUNDS_DIST(user, src) == 0))

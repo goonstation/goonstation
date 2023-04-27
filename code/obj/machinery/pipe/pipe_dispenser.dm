@@ -70,7 +70,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 			var/obj/disposalconstruct/dummy_pipe = new
 			dummy_pipe.ptype = p_type
 			dummy_pipe.update()
-			SETUP_GENERIC_ACTIONBAR(src, null, duration, /obj/machinery/disposal_pipedispenser/proc/build_disposal_pipe, list(p_type, amount),\
+			SETUP_GENERIC_ACTIONBAR(src, null, duration, TYPE_PROC_REF(/obj/machinery/disposal_pipedispenser, build_disposal_pipe), list(p_type, amount),\
 			 dummy_pipe.icon, dummy_pipe.icon_state, "<span class='notice'>The [src] finishes making pipes!</span>", INTERRUPT_NONE)
 			qdel(dummy_pipe) //Above creates a construct and changes its icon for usage in the actionbar icon.
 			. = TRUE

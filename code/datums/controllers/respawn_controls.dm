@@ -105,7 +105,7 @@ var/datum/respawn_controls/respawn_controller
 
 
 	disposing()
-		the_client?.verbs -= /client/proc/respawn_via_controller
+		the_client?.verbs -= TYPE_PROC_REF(/client, respawn_via_controller)
 		master = null
 		..()
 
@@ -172,7 +172,7 @@ var/datum/respawn_controls/respawn_controller
 			if(master.rp_alert)
 				boutput(the_client.mob, "<span class='alert'>Remember that you <B>must spawn as a <u>new character</u></B> and <B>have no memory of your past life!</B></span>")
 
-			the_client.verbs |= /client/proc/respawn_via_controller
+			the_client.verbs |= TYPE_PROC_REF(/client, respawn_via_controller)
 			client_processed = 1
 
 	proc/doRespawn()

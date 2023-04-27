@@ -151,7 +151,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	if(length(mat1?.triggersOnEntered))
-		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
+		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, TYPE_PROC_REF(/datum/material, triggerOnEntered))
 
 	for(var/X in getMaterialPrefixList(mat1))
 		strPrefix += " [X]"

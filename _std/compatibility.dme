@@ -45,3 +45,8 @@
 replace with:
 PROC_REF($1)
 */
+
+//attempt at a general /datum/thing/proc/foo regex that doesn't capture proc definitions
+// (?!=[,=(]\s*)((\/\w+)+)\/proc\/(\w+)(?=[),]|$)
+// replace with
+// TYPE_PROC_REF($1, $3)

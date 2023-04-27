@@ -21,7 +21,7 @@
 		usr.show_text("<h3>The password to your uplink is '[U.lock_code]'.</h3>", "blue")
 		usr.mind.store_memory("<B>Uplink password:</B> [U.lock_code].")
 
-	usr.verbs -= /client/proc/gearspawn_traitor
+	usr.verbs -= TYPE_PROC_REF(/client, gearspawn_traitor)
 
 	return
 

@@ -383,7 +383,7 @@ TYPEINFO(/obj)
 					actionbar_duration /= 2
 
 			user.show_text("You start putting the rods together and making a catwalk...", "blue")
-			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, TYPE_PROC_REF(/obj/lattice, replace_with_catwalk), list(C), C.icon, C.icon_state, null, null)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C

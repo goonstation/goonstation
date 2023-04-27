@@ -123,7 +123,7 @@
 				"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>",\
 				"<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
 			logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, "IV", null, null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, TYPE_PROC_REF(/obj/item/reagent_containers/iv_drip, insert_needle), list(H, user), src.icon, "IV", null, null)
 			return
 
 	attackby(obj/A, mob/user)

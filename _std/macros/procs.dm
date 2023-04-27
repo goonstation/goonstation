@@ -20,7 +20,7 @@
 /// returns early if x is an overlay or effect
 #define return_if_overlay_or_effect(x) if (istype(x, /obj/overlay) || istype(x, /obj/effects)) return
 
-/proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from /datum/callback/proc/InvokeAsync, which is PD, unlike this proc on tg
+/proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from TYPE_PROC_REF(/datum/callback, InvokeAsync), which is PD, unlike this proc on tg
 	set waitfor = 0
 	if (isnull(object))
 		CRASH("Cannot call null. [delegate]")

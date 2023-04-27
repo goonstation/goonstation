@@ -416,7 +416,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [state == 1 ? "fasten the window to" : "unfasten the window from"] the frame...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, TYPE_PROC_REF(/obj/window, assembly_handler), list(user,W), W.icon, W.icon_state,null,null)
 				else
 					assembly_handler(user, W)
 			else
@@ -428,7 +428,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.anchored ? "unfasten the frame from" : "fasten the frame to"] the floor...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, TYPE_PROC_REF(/obj/window, assembly_handler), list(user,W), W.icon, W.icon_state,null,null)
 				else
 					assembly_handler(user, W)
 
@@ -444,7 +444,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 						if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 							total_decon_time = round(total_decon_time / 2)
 					user.show_text("You begin to [src.state ? "pry the window out of" : "pry the window into"] the frame...", "red")
-					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, /obj/window/proc/assembly_handler, list(user,W), W.icon, W.icon_state,null,null)
+					SETUP_GENERIC_ACTIONBAR(user, src, total_decon_time, TYPE_PROC_REF(/obj/window, assembly_handler), list(user,W), W.icon, W.icon_state,null,null)
 				else
 					assembly_handler(user, W)
 

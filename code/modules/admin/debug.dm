@@ -400,8 +400,8 @@ var/global/debug_messages = 0
 			return
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
-		src.verbs += /client/proc/cmd_debug_del_all_cancel
-		src.verbs += /client/proc/cmd_debug_del_all_check
+		src.verbs += TYPE_PROC_REF(/client, cmd_debug_del_all_cancel)
+		src.verbs += TYPE_PROC_REF(/client, cmd_debug_del_all_check)
 		boutput(usr, "Deleting [hsbitem]...")
 		var/numdeleted = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
@@ -420,8 +420,8 @@ var/global/debug_messages = 0
 		logTheThing(LOG_ADMIN, src, "has deleted [numdeleted] instances of [hsbitem].")
 		logTheThing(LOG_DIARY, src, "has deleted [numdeleted] instances of [hsbitem].", "admin")
 		message_admins("[key_name(src)] has deleted [numdeleted] instances of [hsbitem].")
-		src.verbs -= /client/proc/cmd_debug_del_all_cancel
-		src.verbs -= /client/proc/cmd_debug_del_all_check
+		src.verbs -= TYPE_PROC_REF(/client, cmd_debug_del_all_cancel)
+		src.verbs -= TYPE_PROC_REF(/client, cmd_debug_del_all_check)
 		src.delete_state = DELETE_STOP
 
 /client/proc/cmd_debug_del_half(var/typename as text)
@@ -440,8 +440,8 @@ var/global/debug_messages = 0
 			return
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
-		src.verbs += /client/proc/cmd_debug_del_all_cancel
-		src.verbs += /client/proc/cmd_debug_del_all_check
+		src.verbs += TYPE_PROC_REF(/client, cmd_debug_del_all_cancel)
+		src.verbs += TYPE_PROC_REF(/client, cmd_debug_del_all_check)
 		boutput(usr, "Deleting [hsbitem]...")
 		var/numdeleted = 0
 		var/numtotal = 0
@@ -463,8 +463,8 @@ var/global/debug_messages = 0
 		logTheThing(LOG_ADMIN, src, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
 		logTheThing(LOG_DIARY, src, "has deleted [numdeleted]/[numtotal] instances of [hsbitem].", "admin")
 		message_admins("[key_name(src)] has deleted [numdeleted]/[numtotal] instances of [hsbitem].")
-		src.verbs -= /client/proc/cmd_debug_del_all_cancel
-		src.verbs -= /client/proc/cmd_debug_del_all_check
+		src.verbs -= TYPE_PROC_REF(/client, cmd_debug_del_all_cancel)
+		src.verbs -= TYPE_PROC_REF(/client, cmd_debug_del_all_check)
 		src.delete_state = DELETE_STOP
 
 // cancels your del_all in process, if one is running

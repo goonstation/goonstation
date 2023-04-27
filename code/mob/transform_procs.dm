@@ -121,34 +121,34 @@
 	O.show_laws()
 	boutput(O, "<b>These laws may be changed by other players.</b>")
 
-	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
-	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
-	O.verbs += /mob/living/silicon/ai/proc/reset_apcs
-	O.verbs += /mob/living/silicon/ai/proc/de_electrify_verb
-	O.verbs += /mob/living/silicon/ai/proc/unbolt_all_airlocks
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_track
-	O.verbs += /mob/living/silicon/ai/proc/ai_alerts
-	O.verbs += /mob/living/silicon/ai/proc/ai_camera_list
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_call_shuttle)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, show_laws_verb)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, reset_apcs)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, de_electrify_verb)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, unbolt_all_airlocks)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_camera_track)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_alerts)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_camera_list)
 	// See file code/game/verbs/ai_lockdown.dm for next two
-	//O.verbs += /mob/living/silicon/ai/proc/lockdown
-	//O.verbs += /mob/living/silicon/ai/proc/disablelockdown
-	O.verbs += /mob/living/silicon/ai/proc/ai_statuschange
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_all
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_laws_standard
-	O.verbs += /mob/living/silicon/ai/proc/ai_set_fake_laws
-	O.verbs += /mob/living/silicon/ai/proc/ai_state_fake_laws
-	//O.verbs += /mob/living/silicon/ai/proc/ai_toggle_arrival_alerts
-	//O.verbs += /mob/living/silicon/ai/proc/ai_custom_arrival_alert
-//	O.verbs += /mob/living/silicon/ai/proc/hologramize
+	//O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, lockdown)
+	//O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, disablelockdown)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_statuschange)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_laws_all)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_laws_standard)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_set_fake_laws)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_state_fake_laws)
+	//O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_toggle_arrival_alerts)
+	//O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_custom_arrival_alert)
+//	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, hologramize)
 	O.verbs += /mob/living/silicon/ai/verb/deploy_to
-//	O.verbs += /mob/living/silicon/ai/proc/ai_cancel_call
-	O.verbs += /mob/living/silicon/ai/proc/ai_view_crew_manifest
-	O.verbs += /mob/living/silicon/ai/proc/toggle_alerts_verb
+//	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_cancel_call)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_view_crew_manifest)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, toggle_alerts_verb)
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_radio
 	O.verbs += /mob/living/silicon/ai/verb/access_internal_pda
-	O.verbs += /mob/living/silicon/ai/proc/ai_colorchange
-	O.verbs += /mob/living/silicon/ai/proc/ai_station_announcement
-	O.verbs += /mob/living/silicon/ai/proc/view_messageLog
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_colorchange)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_station_announcement)
+	O.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, view_messageLog)
 	O.verbs += /mob/living/silicon/ai/verb/rename_self
 	O.job = "AI"
 

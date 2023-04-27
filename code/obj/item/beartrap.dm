@@ -34,7 +34,7 @@
 				"<span class='alert'><B>You accidentally trigger the beartrap on your hand! Yowch!</B></span>")
 				return
 			M.visible_message("[M] starts disarming [src]...")
-			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, /obj/item/beartrap/proc/disarm,\
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 3 SECONDS, TYPE_PROC_REF(/obj/item/beartrap, disarm),\
 			list(M), src.icon, src.icon_state, "[M] finishes disarming [src]")
 			actions.start(action_bar, M)
 		else
@@ -43,7 +43,7 @@
 	attack_self(mob/M)
 		if (!src.armed)
 			M.show_text("You start to arm the beartrap...", "blue")
-			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, /obj/item/beartrap/proc/arm,\
+			var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(M, src, 2 SECONDS, TYPE_PROC_REF(/obj/item/beartrap, arm),\
 			list(M), src.icon, src.icon_state, "[M] finishes arming [src]")
 			actions.start(action_bar, M)
 		return

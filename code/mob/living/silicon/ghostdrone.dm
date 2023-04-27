@@ -145,7 +145,7 @@
 
 			//This stuff is hacky but I don't feel like messing with observer New code so fuck it
 			if (!src.oldmob) //Prevents re-entering a ghostdrone corpse
-				ghost.verbs -= /mob/dead/observer/proc/reenter_corpse
+				ghost.verbs -= TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
 

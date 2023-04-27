@@ -349,7 +349,7 @@
 	else if (player.mentor)
 		boutput(src, "<span class='ooc mentorooc'>You are a mentor!</span>")
 		if (!src.holder)
-			src.verbs += /client/proc/toggle_mentorhelps
+			src.verbs += TYPE_PROC_REF(/client, toggle_mentorhelps)
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && (src.ckey in bypassCapCkeys))
 		boutput(src, "<span class='ooc adminooc'>Welcome! The server has reached the player cap of [player_cap], but you are allowed to bypass the player cap!</span>")
 	else if (player_capa && (total_clients_for_cap() >= player_cap) && client_has_cap_grace(src))
@@ -468,7 +468,7 @@
 
 		ircbot.event("login", src.key)
 #if defined(RP_MODE) && !defined(IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME)
-		src.verbs += /client/proc/cmd_rp_rules
+		src.verbs += TYPE_PROC_REF(/client, cmd_rp_rules)
 		if (istype(src.mob, /mob/new_player))
 			src.cmd_rp_rules()
 #endif

@@ -677,7 +677,7 @@
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
 		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		UpdateIcon()
 
 	examine()

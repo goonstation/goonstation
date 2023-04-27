@@ -638,7 +638,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
 			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
-			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
+			SETUP_GENERIC_ACTIONBAR(user, src, duration, TYPE_PROC_REF(/obj/control_point_computer, capture), list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
 			boutput(user, "You can't think of anything else to do on this console...")
@@ -805,7 +805,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack_self(mob/user as mob)
-		SETUP_GENERIC_ACTIONBAR(user, src, build_duration, /obj/item/deployer/barricade/proc/deploy, list(user, get_turf(user)),\
+		SETUP_GENERIC_ACTIONBAR(user, src, build_duration, TYPE_PROC_REF(/obj/item/deployer/barricade, deploy), list(user, get_turf(user)),\
 		 src.icon, src.icon_state, "[user] deploys \the [src]", null)
 
 	//mostly stolen from furniture_parts/proc/construct

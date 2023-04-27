@@ -5,12 +5,12 @@
 	R = new(0xBEEF)
 
 	for(var/i in 1 to 5)
-		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(0,100),1000)
-		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(1,99),1000)
-		distribution_check(/datum/xor_rand_generator/proc/xor_randf, list(1, 99),1000)
-		distribution_check(/datum/xor_rand_generator/proc/xor_randf, list(0, 100),1000)
-		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(),1000)
-		distribution_check(/datum/xor_rand_generator/proc/xor_rand, list(),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_rand), list(0,100),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_rand), list(1,99),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_randf), list(1, 99),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_randf), list(0, 100),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_rand), list(),1000)
+		distribution_check(TYPE_PROC_REF(/datum/xor_rand_generator, xor_rand), list(),1000)
 
 /datum/unit_test/xor_rand/proc/distribution_check(delegate, args, iterations)
 	var/result

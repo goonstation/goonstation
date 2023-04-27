@@ -225,7 +225,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 #ifdef HALLOWEEN
 	user.emote("scream")
 #endif
-	SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/machinery/door/proc/try_force_open, list(user, TRUE), src.icon, src.icon_state, \
+	SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, TYPE_PROC_REF(/obj/machinery/door, try_force_open), list(user, TRUE), src.icon, src.icon_state, \
 	"<span class='alert'>[user] pries open [src]!</span>", \
 	INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 

@@ -73,7 +73,7 @@
 		src.bound_width = possessed_thing.bound_width
 
 		//Relay these signals
-		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src.possessed_thing, COMSIG_ATOM_POST_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 
 		src.owner = controller
 		if (src.owner)

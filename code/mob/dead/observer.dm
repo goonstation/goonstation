@@ -237,7 +237,7 @@
 	src.see_invisible = INVIS_SPOOKY
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
-	src.verbs += /mob/dead/observer/proc/toggle_tgui_auto_open
+	src.verbs += TYPE_PROC_REF(/mob/dead/observer, toggle_tgui_auto_open)
 	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
@@ -246,7 +246,7 @@
 			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
-		src.verbs += /mob/dead/observer/proc/reenter_corpse
+		src.verbs += TYPE_PROC_REF(/mob/dead/observer, reenter_corpse)
 	else
 		stack_trace("Observer New() called with non-mob thing [identify_object(corpse)] (\ref [corpse]) as a corpse.")
 

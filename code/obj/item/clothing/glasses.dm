@@ -412,14 +412,14 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_GLASSES && !H.network_device && !inafterlife(H))
 			user.network_device = src
-			//user.verbs += /mob/proc/jack_in
+			//user.verbs += TYPE_PROC_REF(/mob, jack_in)
 			Station_VNet.Enter_Vspace(H, src,src.network)
 		return
 
 	unequipped(var/mob/user)
 		..()
 		if(ishuman(user) && user:network_device == src)
-			//user.verbs -= /mob/proc/jack_in
+			//user.verbs -= TYPE_PROC_REF(/mob, jack_in)
 			user:network_device = null
 		return
 

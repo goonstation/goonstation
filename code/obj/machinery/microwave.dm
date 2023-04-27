@@ -102,20 +102,20 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	if(src.microwave_state > 0)
 		if (isscrewingtool(O) && src.microwave_state == MW_STATE_BROKEN_2)
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/screwdriver.dmi', "screwdriver", "", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/microwave, repair), list(user), 'icons/obj/items/tools/screwdriver.dmi', "screwdriver", "", null)
 		else if (src.microwave_state == MW_STATE_BROKEN_1 && iswrenchingtool(O))
 			src.visible_message("<span class='notice'>[user] starts to fix part of the microwave.</span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/repair, list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/microwave, repair), list(user), 'icons/obj/items/tools/wrench.dmi', "wrench", "", null)
 		else
 			boutput(user, "It's broken! It could be fixed with some common tools.")
 			return
 	else if(src.dirty) // The microwave is all dirty so can't be used!
 		if(istype(O, /obj/item/spraybottle))
 			src.visible_message("<span class='notice'>[user] starts to clean the microwave.</span>")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/clean, list(user), 'icons/obj/janitor.dmi', "cleaner", "", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/microwave, clean), list(user), 'icons/obj/janitor.dmi', "cleaner", "", null)
 
 		else if(istype(O, /obj/item/sponge))
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/microwave/proc/clean, list(user), 'icons/obj/janitor.dmi', "sponge", "", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/microwave, clean), list(user), 'icons/obj/janitor.dmi', "sponge", "", null)
 
 		else //Otherwise bad luck!!
 			boutput(user, "It's dirty! It could be cleaned with a sponge or spray bottle")

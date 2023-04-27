@@ -26,7 +26,7 @@
 		..()
 		var/cell = new/obj/item/ammo/power_cell
 		AddComponent(/datum/component/cell_holder, new_cell=cell, chargable=TRUE, max_cell=100, swappable=FALSE)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		UpdateIcon()
 
 	proc/get_welding_positions()
@@ -119,7 +119,7 @@
 #endif
 			user.update_inhands()
 			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding/salvage(user, A, ., /obj/item/salvager/proc/weld_action, \
+			actions.start(new /datum/action/bar/private/welding/salvage(user, A, ., TYPE_PROC_REF(/obj/item/salvager, weld_action), \
 				list(A, user), null, positions[1], positions[2], src),user)
 
 	proc/weld_action(atom/A, mob/user as mob)

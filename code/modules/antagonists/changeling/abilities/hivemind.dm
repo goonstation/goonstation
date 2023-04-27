@@ -348,7 +348,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		logTheThing(LOG_COMBAT, holder.owner, "granted control of their body to [constructTarget(HO,"combat")] as a changeling!")
 		//Transfer the owner's mind into a hivemind observer and grant it the recovery verb
 		var/mob/dead/target_observer/hivemind_observer/master = H.insert_into_hivemind(H.owner)
-		master.verbs += /mob/dead/target_observer/hivemind_observer/proc/regain_control
+		master.verbs += TYPE_PROC_REF(/mob/dead/target_observer/hivemind_observer, regain_control)
 		H.master = master //Make it the controller of the mob
 		boutput(master, "<span class='notice'>We relinquish control of our form to [HO]!</span>")
 

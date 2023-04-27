@@ -67,7 +67,7 @@
 			return
 
 		user.visible_message("[user] starts to take apart \the [src].", "You start to take apart \the [src].")
-		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/bookshelf/proc/deconstruct, list(), W.icon, W.icon_state,\
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/bookshelf, deconstruct), list(), W.icon, W.icon_state,\
 		"[user] takes \the [src] apart.", null)
 		return
 

@@ -574,7 +574,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		// Swap the barrel objs
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 		user.visible_message("[user] begins swapping the barrel on [his_or_her(user)] [src].", "You begin swapping the barrel on \the [src].")
-		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/gun/kinetic/survival_rifle/proc/swap_barrel, list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
+		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, TYPE_PROC_REF(/obj/item/gun/kinetic/survival_rifle, swap_barrel), list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
 		return
 
 	proc/swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)

@@ -2001,7 +2001,7 @@
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.last_moved = TIME
 			CH.active = 1
-			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), TYPE_PROC_REF(/datum/bioEffect/power/chameleon, decloak))
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -23,7 +23,7 @@ TYPEINFO(/obj/item/gun/energy)
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargeable, custom_cell_max_capacity, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		..()
 		UpdateIcon()
 

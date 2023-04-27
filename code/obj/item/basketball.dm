@@ -227,10 +227,10 @@
 	throwforce = 10
 
 	proc/plutonize(var/usrverbs)
-		usrverbs += /mob/proc/chaos_dunk
+		usrverbs += TYPE_PROC_REF(/mob, chaos_dunk)
 
 	proc/unplutonize(var/usrverbs)
-		usrverbs -= /mob/proc/chaos_dunk
+		usrverbs -= TYPE_PROC_REF(/mob, chaos_dunk)
 
 /obj/item/plutonium_core/attack_hand(mob/user)
 	..()

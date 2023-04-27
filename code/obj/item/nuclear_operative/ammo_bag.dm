@@ -43,7 +43,7 @@
 	attack_self(mob/user)
 		if(!deployed)
 			user.visible_message("[user] begins unfolding a [src].", "You begin unfolding \the [src].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/deploy_ammobag, user, src.icon, src.icon_state,"[user] finishes deploying a [src].", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, TYPE_PROC_REF(/obj/item/ammo/ammobox/nukeop, deploy_ammobag), user, src.icon, src.icon_state,"[user] finishes deploying a [src].", null)
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 		if(!(over_object == usr))
@@ -53,7 +53,7 @@
 
 		if(deployed)
 			usr.visible_message("[usr] begins folding up [src].", "You begin folding up \the [src].")
-			SETUP_GENERIC_ACTIONBAR(usr, src, 5 SECONDS, /obj/item/ammo/ammobox/nukeop/proc/fold_ammobag, usr, src.icon, src.icon_state,"[usr] finishes folding up [src].", null)
+			SETUP_GENERIC_ACTIONBAR(usr, src, 5 SECONDS, TYPE_PROC_REF(/obj/item/ammo/ammobox/nukeop, fold_ammobag), usr, src.icon, src.icon_state,"[usr] finishes folding up [src].", null)
 
 
 	proc/deploy_ammobag(var/mob/user)

@@ -298,7 +298,7 @@ obj/machinery/atmospherics/pipe
 				boutput(user, "You start to repair the [src.name].")
 
 				var/positions = src.get_welding_positions()
-				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/machinery/atmospherics/pipe/simple/proc/repair_pipe, \
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/atmospherics/pipe/simple, repair_pipe), \
 						list(user), "<span class='notice'>[user] repairs the [src.name].</span>", positions[1], positions[2]),user)
 
 
@@ -307,7 +307,7 @@ obj/machinery/atmospherics/pipe
 				if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
 					duration = round(duration / 2)
 				var/obj/item/rods/S = W
-				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, /obj/machinery/atmospherics/pipe/simple/proc/reconstruct_pipe,\
+				var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, duration, TYPE_PROC_REF(/obj/machinery/atmospherics/pipe/simple, reconstruct_pipe),\
 				list(user, S), W.icon, W.icon_state, "[user] finishes working with \the [src].")
 				actions.start(action_bar, user)
 

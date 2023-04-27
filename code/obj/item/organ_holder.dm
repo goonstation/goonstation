@@ -151,7 +151,7 @@
 			var/obj/item/organ/O = organ_list[thing]
 			//Organ needs to be inside someone for it to function.
 			if(istype(O) && O.donor)
-				//in obj/item/organ/proc/on_life, It should return 1 on success and 0 on fail. And it will fail if the organ is damaged beyond repair or is broken. So...
+				//in objTYPE_PROC_REF(/item/organ, on_life), It should return 1 on success and 0 on fail. And it will fail if the organ is damaged beyond repair or is broken. So...
 				if (!O.on_life(mult))
 					O.on_broken(mult)
 			else	//The organ for this slot is missing. For our purposes here at least. Do bad effects, depending.

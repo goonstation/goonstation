@@ -28,7 +28,7 @@
 	proc/makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have defected and become a traitor!</B></font></h2>", "red")
 		M.mind.special_role = ROLE_TRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
+		M.verbs += TYPE_PROC_REF(/client, gearspawn_traitor)
 		M.show_antag_popup("traitorradio")
 
 /obj/traitorifier/wizard

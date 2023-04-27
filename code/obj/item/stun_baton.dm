@@ -57,7 +57,7 @@ TYPEINFO(/obj/item/baton)
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargable, INFINITY, can_swap_cell)
-		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
+		RegisterSignal(src, COMSIG_UPDATE_ICON, TYPE_PROC_REF(/atom, UpdateIcon))
 		processing_items |= src
 		src.UpdateIcon()
 		src.setItemSpecial(src.item_special_path)

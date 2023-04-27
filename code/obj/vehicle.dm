@@ -2052,13 +2052,13 @@ TYPEINFO(/obj/vehicle/adminbus)
 
 /mob/proc/add_adminbus_powers()
 	if(src.client.holder && src.client.holder.rank && src.client.holder.level >= LEVEL_PA)
-		src.client.verbs += /client/proc/toggle_gib_onhit
-		src.client.verbs += /client/proc/toggle_badminbus
+		src.client.verbs += TYPE_PROC_REF(/client, toggle_gib_onhit)
+		src.client.verbs += TYPE_PROC_REF(/client, toggle_badminbus)
 	return
 
 /mob/proc/remove_adminbus_powers()
-	src.client.verbs -= /client/proc/toggle_gib_onhit
-	src.client.verbs -= /client/proc/toggle_badminbus
+	src.client.verbs -= TYPE_PROC_REF(/client, toggle_gib_onhit)
+	src.client.verbs -= TYPE_PROC_REF(/client, toggle_badminbus)
 	return
 
 //////////////////////////////////////////////////////////////// Battle Bus //////////////////////////

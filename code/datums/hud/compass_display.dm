@@ -2,7 +2,7 @@
 //Example for if you were adding this from inside an abilityHolder
 //compass = new/atom/movable/screen/compass_display(src,owner=owner,target=get_turf(owner))
 //hud.add_object(compass)
-//Then call compass.process() from datum/abilityHolder/proc/onLife
+//Then call compass.process() from datumTYPE_PROC_REF(/abilityHolder, onLife)
 
 atom/movable/screen/compass_display
 	name = "compass"

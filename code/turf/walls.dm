@@ -110,7 +110,7 @@
 	if(!instantly && W && !W.disposed)
 		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
+		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, TYPE_PROC_REF(/turf/simulated/wall, finish_attaching),\
 			list(W, user, dir), W.icon, W.icon_state, null, null)
 		return
 
@@ -285,7 +285,7 @@
 			return
 
 		boutput(user, "<span class='notice'>Now disassembling the outer wall plating.</span>")
-		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /turf/simulated/wall/proc/weld_action,\
+		SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, TYPE_PROC_REF(/turf/simulated/wall, weld_action),\
 			list(W, user), W.icon, W.icon_state, "[user] finishes disassembling the outer wall plating.", null)
 
 //Spooky halloween key

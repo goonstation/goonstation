@@ -302,7 +302,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			if(!I:try_weld(user, 1, burn_eyes = TRUE))
 				return
 			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/storage, weld_action), \
 				list(I, user), null, positions[1], positions[2]),user)
 			return
 
@@ -902,7 +902,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 TYPEINFO(/obj/storage/secure)
 TYPEINFO_NEW(/obj/storage/secure)
 	. = ..()
-	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
+	admin_procs += list(TYPE_PROC_REF(/obj/storage, lock), TYPE_PROC_REF(/obj/storage, unlock))
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"

@@ -15,7 +15,7 @@
  *
  * 	attack_self(var/mob/M)
  * 		M.visible_message("[M] starts fiddling with \the [src].")
- * 		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, /obj/item/foo/proc/cool_proc, list(M, src), src.icon, src.icon_state,\
+ * 		SETUP_GENERIC_ACTIONBAR(M, src, 5 SECONDS, TYPE_PROC_REF(/obj/item/foo, cool_proc), list(M, src), src.icon, src.icon_state,\
  * 		"[M] finishes fiddling with \the [src]", null)
  *
  * 	proc/cool_proc(var/mob/arg_1, var/obj/item/arg_2)

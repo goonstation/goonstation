@@ -33,7 +33,7 @@ proc/generate_procs_by_type()
 Returns procs of a datum categorized by parent type on which they are defined.
 e.g. list_procs(new /obj/item/gnome) returns
 list(
-	/obj/item/gnome = list("hohoho" = /obj/item/gnome/proc/hohoho),
+	/obj/item/gnome = list("hohoho" = TYPE_PROC_REF(/obj/item/gnome, hohoho)),
 	/obj/item = list(...),
 	/obj = list(...),
 	...

@@ -33,7 +33,7 @@ TYPEINFO(/obj/item/magtractor)
 		processing_items |= src
 		if (user)
 			src.holder = user
-			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
+			src.verbs |= TYPE_PROC_REF(/obj/item/magtractor, toggleHighPower)
 
 	process()
 		//power usage here maybe??
@@ -46,14 +46,14 @@ TYPEINFO(/obj/item/magtractor)
 	pickup(mob/user)
 		..()
 		src.holder = user
-		src.verbs |= /obj/item/magtractor/proc/toggleHighPower
+		src.verbs |= TYPE_PROC_REF(/obj/item/magtractor, toggleHighPower)
 		src.set_mob(user)
 		src.show_buttons()
 
 	dropped(mob/user)
 		..()
 		src.holder = null
-		src.verbs -= /obj/item/magtractor/proc/toggleHighPower
+		src.verbs -= TYPE_PROC_REF(/obj/item/magtractor, toggleHighPower)
 
 	attackby(obj/item/W, mob/user)
 		if (!W) return 0
@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/magtractor)
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"
-		src.verbs |= /obj/item/magtractor/proc/releaseItem
+		src.verbs |= TYPE_PROC_REF(/obj/item/magtractor, releaseItem)
 		src.working = 0
 
 		return 1
@@ -229,7 +229,7 @@ TYPEINFO(/obj/item/magtractor)
 		if (src.working) return 0
 
 		src.holdAction = null
-		src.verbs -= /obj/item/magtractor/proc/releaseItem
+		src.verbs -= TYPE_PROC_REF(/obj/item/magtractor, releaseItem)
 
 		if (isitem(src.holding) && usr)
 			src.holding.dropped(usr)

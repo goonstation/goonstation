@@ -153,7 +153,7 @@ datum/special_respawn
 				O.cant_self_remove = 1
 			mob.nodamage = 1
 			mob.bioHolder.AddEffect("xray", 2)
-			mob.verbs += /client/proc/noclip
+			mob.verbs += TYPE_PROC_REF(/client, noclip)
 			mob.bioHolder.AddEffect("accent_smiling")
 		else
 			mob = new /mob/living/carbon/human/normal(spawn_landmark)

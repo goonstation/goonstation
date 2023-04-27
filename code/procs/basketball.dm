@@ -15,9 +15,9 @@
 	if(!M.bball_spellpower())
 		return
 
-	M.verbs -= /mob/proc/bball_nova
+	M.verbs -= TYPE_PROC_REF(/mob, bball_nova)
 	SPAWN(30 SECONDS)
-		M.verbs += /mob/proc/bball_nova
+		M.verbs += TYPE_PROC_REF(/mob, bball_nova)
 
 	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
 
@@ -48,9 +48,9 @@
 	if(!isturf(M.loc) || !M.bball_spellpower())
 		return
 
-	M.verbs -= /mob/proc/showboat_slam
+	M.verbs -= TYPE_PROC_REF(/mob, showboat_slam)
 	SPAWN(30 SECONDS)
-		M.verbs += /mob/proc/showboat_slam
+		M.verbs += TYPE_PROC_REF(/mob, showboat_slam)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -110,9 +110,9 @@
 	if(!isturf(M.loc) || !M.bball_spellpower())
 		return
 
-	M.verbs -= /mob/proc/holy_jam
+	M.verbs -= TYPE_PROC_REF(/mob, holy_jam)
 	SPAWN(15 SECONDS)
-		M.verbs += /mob/proc/holy_jam
+		M.verbs += TYPE_PROC_REF(/mob, holy_jam)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -176,9 +176,9 @@
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked)) return
 	M.set_loc(picked)
-	M.verbs -= /mob/proc/blitz_slam
+	M.verbs -= TYPE_PROC_REF(/mob, blitz_slam)
 	SPAWN(4 SECONDS)
-		M.verbs += /mob/proc/blitz_slam
+		M.verbs += TYPE_PROC_REF(/mob, blitz_slam)
 
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
 	set category = "Spells"
@@ -193,9 +193,9 @@
 
 	var/SPtime = 3000
 	if (M.bball_spellpower()) SPtime = 900
-	M.verbs -= /mob/proc/clown_jam
+	M.verbs -= TYPE_PROC_REF(/mob, clown_jam)
 	SPAWN(SPtime)
-	M.verbs += /mob/proc/clown_jam
+	M.verbs += TYPE_PROC_REF(/mob, clown_jam)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -322,7 +322,7 @@
 		boutput(M, "<span class='alert'>You can't dunk without a b-ball, yo!</span>")
 		return
 
-	M.verbs -= /mob/proc/chaos_dunk
+	M.verbs -= TYPE_PROC_REF(/mob, chaos_dunk)
 	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
 	logTheThing(LOG_COMBAT, M, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
@@ -416,9 +416,9 @@
 
 	M.transforming = 0
 
-	M.verbs -= /mob/proc/spin
+	M.verbs -= TYPE_PROC_REF(/mob, spin)
 	SPAWN(4 SECONDS)
-		M.verbs += /mob/proc/spin
+		M.verbs += TYPE_PROC_REF(/mob, spin)
 
 /obj/item/bball_uplink
 	name = "station bounced radio"
@@ -491,29 +491,29 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				src.temp = "This jam will cause an eruption of explosive basketballs from your location."
-				usr.verbs += /mob/proc/bball_nova
+				usr.verbs += TYPE_PROC_REF(/mob, bball_nova)
 		if (href_list["spell_showboat"])
 			if (src.uses >= 1)
 				src.uses -= 1
-				usr.verbs += /mob/proc/showboat_slam
+				usr.verbs += TYPE_PROC_REF(/mob, showboat_slam)
 				src.temp = "Leap up high above your target and slam them for massive damage."
 		if (href_list["spell_holy"])
 			if (src.uses >= 1)
 				src.uses -= 1
-				usr.verbs += /mob/proc/holy_jam
+				usr.verbs += TYPE_PROC_REF(/mob, holy_jam)
 				src.temp = "A powerful and sacred jam that blinds surrounding enemies."
 		if (href_list["spell_blink"])
 			if (src.uses >= 1)
 				src.uses -= 1
-				usr.verbs += /mob/proc/blitz_slam
+				usr.verbs += TYPE_PROC_REF(/mob, blitz_slam)
 				src.temp = "This slam will allow you to teleport randomly at a short distance."
 		if (href_list["spell_revengeclown"])
 			if (src.uses >= 1)
 				src.uses -= 1
-				usr.verbs += /mob/proc/clown_jam
+				usr.verbs += TYPE_PROC_REF(/mob, clown_jam)
 				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an idiotic, horrible, and useless clown."
 		if (href_list["spell_spin"])
-			usr.verbs += /mob/proc/spin
+			usr.verbs += TYPE_PROC_REF(/mob, spin)
 			src.temp = "This spell lets you do a 360 spin, knocking down any fools tailing you."
 /*
 		if (href_list["spell_summongolem"])

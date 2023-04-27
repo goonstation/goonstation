@@ -186,11 +186,11 @@ client/proc/open_dj_panel()
 /datum/dj_panel/proc/toggledj(client/C, client/actor)
 	C.non_admin_dj = !C.non_admin_dj
 	if (C.non_admin_dj)
-		C.verbs += /client/proc/open_dj_panel
-		C.verbs += /client/proc/cmd_dectalk
+		C.verbs += TYPE_PROC_REF(/client, open_dj_panel)
+		C.verbs += TYPE_PROC_REF(/client, cmd_dectalk)
 	else
-		C.verbs -= /client/proc/cmd_dectalk
-		C.verbs -= /client/proc/open_dj_panel
+		C.verbs -= TYPE_PROC_REF(/client, cmd_dectalk)
+		C.verbs -= TYPE_PROC_REF(/client, open_dj_panel)
 
 	logTheThing(LOG_ADMIN, actor, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"admin")] to DJ and use dectalk.")
 	logTheThing(LOG_DIARY, actor, "has [C.non_admin_dj ? "given" : "removed"] the ability for [constructTarget(C,"diary")] to DJ and use dectalk.", "admin")

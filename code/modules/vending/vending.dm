@@ -1951,20 +1951,20 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if (iswrenchingtool(target))
 			if (!wrenched)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/vendingframe, setFrameState),\
 				list("WRENCHED", user), target.icon, target.icon_state, null, null)
 			else if (!boardinstalled && wrenched)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/vendingframe, setFrameState),\
 				list("UNWRENCHED", user), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/machineboard/vending))
 			if (wrenched && !boardinstalled)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/vendingframe, setFrameState),\
 				list("BOARDINSTALLED", user, target), target.icon, target.icon_state, null, null)
 		else if (istype(target, /obj/item/cable_coil) && boardinstalled && !wiresinstalled)
 			var/obj/item/cable_coil/targetcoil = target
 			if (targetcoil.amount >= 5)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/vendingframe, setFrameState),\
 				list("WIRESINSTALLED", user, target), target.icon, target.icon_state, null, null)
 			else if (!wiresinstalled && boardinstalled)
 				boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the vending machine.</span>")
@@ -1988,7 +1988,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else if (isweldingtool(target) && !wrenched)
 			var/obj/item/weldingtool/T = target
 			if (T.try_weld(user,0,-1,1,1))
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/vendingframe/proc/setFrameState,\
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, TYPE_PROC_REF(/obj/machinery/vendingframe, setFrameState),\
 				list("DECONSTRUCTED", user, target), target.icon, target.icon_state, null, null)
 		else . = ..()
 

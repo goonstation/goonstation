@@ -1734,11 +1734,11 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	contraband = 8
 
 	equipped(var/mob/user)
-		user.verbs += /mob/proc/kali_ma
+		user.verbs += TYPE_PROC_REF(/mob, kali_ma)
 
 	unequipped(var/mob/user)
-		user.verbs -= /mob/proc/kali_ma
-		user.verbs -= /mob/proc/kali_ma_placeholder
+		user.verbs -= TYPE_PROC_REF(/mob, kali_ma)
+		user.verbs -= TYPE_PROC_REF(/mob, kali_ma_placeholder)
 
 /mob/proc/kali_ma_placeholder(var/mob/living/M in grabbing())
 	set category = "Sacrifice"
@@ -1771,8 +1771,8 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						boutput(src, "You must be grabbing someone for this to work!")
 						return
 					if(isliving(G.affecting))
-						src.verbs += /mob/proc/kali_ma_placeholder
-						src.verbs -= /mob/proc/kali_ma
+						src.verbs += TYPE_PROC_REF(/mob, kali_ma_placeholder)
+						src.verbs -= TYPE_PROC_REF(/mob, kali_ma)
 						src.say("Bali Mangthi Kali Ma.")
 						sleep(1 SECOND)
 						var/mob/living/H = G.affecting
@@ -1839,9 +1839,9 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 
 						var/cooldown = max(100,(300-src.jitteriness))
 						SPAWN(cooldown)
-							src.verbs -= /mob/proc/kali_ma_placeholder
+							src.verbs -= TYPE_PROC_REF(/mob, kali_ma_placeholder)
 							if (istype(src:w_uniform, /obj/item/clothing/under/mola_ram))
-								src.verbs += /mob/proc/kali_ma
+								src.verbs += TYPE_PROC_REF(/mob, kali_ma)
 								boutput(src, "<span class='alert'>Kali Ma desires more!</span>")
 
 						return

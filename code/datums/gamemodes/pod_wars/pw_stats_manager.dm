@@ -228,7 +228,7 @@ Player Stats
 		for (var/client/C in clients)
 			C.Browse(html_string, "window=scores;size=700x500;title=Scores" )
 			boutput(C, "<strong style='color: #393;'>Use the command Display-Stats to view the stats screen if you missed it.</strong>")
-			C.mob.verbs += /client/proc/display_stats
+			C.mob.verbs += TYPE_PROC_REF(/client, display_stats)
 
 /client/proc/display_stats()
 	set name = "Display Stats"

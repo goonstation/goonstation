@@ -2134,8 +2134,8 @@ var/global/night_mode_enabled = 0
 			boutput(world, "<B>The AI may now use VOX!</B>")
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
-				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_announcement
-				AI.verbs += /mob/living/silicon/ai/proc/ai_vox_help
+				AI.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_vox_announcement)
+				AI.verbs += TYPE_PROC_REF(/mob/living/silicon/ai, ai_vox_help)
 				AI.show_text("<B>You may now make intercom announcements!</B><BR>You'll find two new verbs under AI commands: \"AI Intercom Announcement\" and \"AI Intercom Help\"")
 
 
@@ -2146,8 +2146,8 @@ var/global/night_mode_enabled = 0
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
-				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_announcement
-				AI.verbs -= /mob/living/silicon/ai/proc/ai_vox_help
+				AI.verbs -= TYPE_PROC_REF(/mob/living/silicon/ai, ai_vox_announcement)
+				AI.verbs -= TYPE_PROC_REF(/mob/living/silicon/ai, ai_vox_help)
 				AI.show_text("<B>You may no longer make intercom announcements!</B>")
 
 		if("Cancel")
@@ -2647,7 +2647,7 @@ var/global/night_mode_enabled = 0
 	if(alert("Disable admin powers? Lasts until you log in or you cancel the effect.", "Disable admin powers?", "Yes", "No") == "Yes")
 		message_admins("[key_name(src)] has shut off their admin powers.")
 		src.clear_admin()
-		src.verbs += /client/proc/cmd_admin_reinitialize
+		src.verbs += TYPE_PROC_REF(/client, cmd_admin_reinitialize)
 		alert("Your admin abilities have been removed. Use 'Return Admin Powers' to get them back.")
 
 /client/proc/cmd_admin_reinitialize()
@@ -2661,7 +2661,7 @@ var/global/night_mode_enabled = 0
 	else
 		message_admins("[key_name(src)] tried to re-enable admin powers but was rejected.")
 
-	src.verbs -= /client/proc/cmd_admin_reinitialize
+	src.verbs -= TYPE_PROC_REF(/client, cmd_admin_reinitialize)
 
 /client/proc/toggle_text_mode(client/C in clients)
 	set name = "Toggle Text Mode"
