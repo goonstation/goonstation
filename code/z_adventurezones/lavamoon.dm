@@ -530,117 +530,6 @@ var/sound/iomoon_alarm_sound = null
 		. = ..()
 		anchored = alive
 
-/obj/critter/ancient_repairbot
-	name = "strange robot"
-	desc = "It looks like some sort of floating repair bot or something?"
-	icon_state = "ancient_repairbot"
-	density = 0
-	aggressive = 0
-	health = 10
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 0.1
-	brutevuln = 0.6
-	angertext = "beeps at"
-	death_text = "%src% blows apart!"
-	butcherable = 0
-	attack_range = 3
-	flying = 1
-	generic = 0
-
-	grumpy
-		aggressive = 1
-		atkcarbon = 1
-		atksilicon = 1
-
-	New()
-		..()
-		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
-
-	ChaseAttack(mob/M)
-		if(prob(33))
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-		return
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		SPAWN(0)
-			elecflash(src,power = 2)
-			qdel(src)
-
-	process()
-		if(prob(7))
-			src.visible_message("<b>[src] beeps.</b>")
-			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
-		..()
-		return
-
-
-	seek_target()
-		..()
-		if (src.task == "chasing" && src.target)
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		SPAWN(3.5 SECONDS)
-			src.attacking = 0
-
-		var/atom/last = src
-		var/atom/target_r = M
-
-		var/list/dummies = new/list()
-
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
-
-		if(isturf(M))
-			target_r = new/obj/elec_trg_dummy(M)
-
-		var/turf/currTurf = get_turf(target_r)
-		currTurf.hotspot_expose(2000, 400)
-
-		for(var/count=0, count<4, count++)
-
-			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			for(var/obj/O in affected)
-				SPAWN(0.6 SECONDS) qdel(O)
-
-			if(isliving(target_r)) //Probably unsafe.
-				playsound(target_r:loc, 'sound/effects/electric_shock.ogg', 50, 1)
-				target_r:shock(src, 15000, "chest", 1, 1)
-				break
-
-			var/list/next = new/list()
-			for(var/atom/movable/AM in orange(3, target_r))
-				if(istype(AM, /obj/line_obj/elec) || istype(AM, /obj/elec_trg_dummy) || istype(AM, /obj/overlay/tile_effect) || AM.invisibility)
-					continue
-				next.Add(AM)
-
-			if(istype(target_r, /obj/elec_trg_dummy))
-				dummies.Add(target_r)
-
-			last = target_r
-			target_r = pick(next)
-			target = target_r
-
-		for(var/d in dummies)
-			qdel(d)
-
-/obj/critter/ancient_repairbot/security
-	name = "stranger robot"
-	desc = "It looks rather mean."
-	icon_state = "ancient_guardbot"
-	aggressive = 1
-	health = 15
-	atkcarbon = 1
-	atksilicon = 1
-
-
 //Decor
 
 /obj/shrub/dead
@@ -949,9 +838,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					set_dir(2)
 					return
 				if (prob(80))
-					new /obj/critter/ancient_repairbot/grumpy (src.loc)
+					new /mob/living/critter/robotic/repairbot (src.loc)
 				else
-					new /obj/critter/ancient_repairbot/security (src.loc)
+					new /mob/living/critter/robotic/repairbot/security (src.loc)
 				max_bots--
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
