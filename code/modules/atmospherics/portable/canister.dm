@@ -735,8 +735,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/toxins/empty/New()
 	..()
-	src.air_contents.toxins = 0
+	src.air_contents.vacuum()
 	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
 
 	..()
@@ -747,7 +748,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/oxygen/empty/New()
 	..()
-	src.air_contents.oxygen = 0
+	src.air_contents.vacuum()
 	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
@@ -761,7 +762,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/empty/New()
 	..()
-	src.air_contents.clear_trace_gases()
+	src.air_contents.vacuum()
 	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
@@ -775,7 +776,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/nitrogen/empty/New()
 	..()
-	src.air_contents.nitrogen = 0
+	src.air_contents.vacuum()
 	src.UpdateIcon()
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
 
@@ -786,7 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty/New()
 	..()
-	src.air_contents.carbon_dioxide = 0
+	src.air_contents.vacuum()
 	src.UpdateIcon()
 /obj/machinery/portable_atmospherics/canister/air/New()
 
@@ -798,6 +799,5 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	return 1
 /obj/machinery/portable_atmospherics/canister/air/empty/New()
 	..()
-	src.air_contents.oxygen = 0
-	src.air_contents.nitrogen = 0
+	src.air_contents.vacuum()
 	src.UpdateIcon()
