@@ -248,11 +248,11 @@
 		if (!AST)
 			return 1
 		if(prob(25))
-			var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+			var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
 			N.set_loc(AST)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)
 			return 1
-		var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+		var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
 		N.set_loc(AST)

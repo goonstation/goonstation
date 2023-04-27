@@ -14,9 +14,9 @@
 	health_burn_vuln = 0.3
 	use_stamina = FALSE
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 0
-	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_agressive
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs
@@ -27,6 +27,9 @@
 	speechverb_stammer = "beeps"
 	speechverb_exclaim = "beeps"
 	speechverb_ask = "beeps"
+
+	nice
+		ai_type = /datum/aiHolder/wanderer
 
 	understands_language(var/langname)
 		if (langname == say_language || langname == "silicon" || langname == "binary" || langname == "english")
