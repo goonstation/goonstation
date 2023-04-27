@@ -246,9 +246,15 @@
 	security
 		name = "faded officer"
 		desc = "Their armor still seems surprisingly functional."
-		health_brute = 100
+		health_brute = 50
 		health_brute_vuln = 1
-		health_burn = 100
+		health_burn = 50
 		health_burn_vuln = 1
 		jumpsuit = "security"
 		overarmor = "heavy"
+
+		get_melee_protection(zone, damage_type)
+			return 4
+
+		get_ranged_protection()
+			return 1.5
