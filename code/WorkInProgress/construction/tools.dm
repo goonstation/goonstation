@@ -593,6 +593,7 @@ TYPEINFO(/obj/item/room_planner)
 				selectedmod = wallmods[selectedtype]
 
 		if (isnull(selectedtype))
+			selecting = 0
 			return
 
 		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
