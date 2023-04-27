@@ -118,7 +118,7 @@
 	desc = "A Security Robot, something seems a bit off."
 	icon_state = "ancient_guardbot"
 	health_brute = 15
-	health_brute_vuln = 0.7
+	health_brute_vuln = 0.8
 	health_burn = 15
 	health_burn_vuln = 0.2
 
@@ -129,9 +129,9 @@
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "drone_service_bot_off"
 	health_brute = 20
-	health_brute_vuln = 0.7
+	health_brute_vuln = 0.8
 	health_burn = 20
-	health_burn_vuln = 0.2
+	health_burn_vuln = 0.6
 	var/activated = FALSE
 
 	active
