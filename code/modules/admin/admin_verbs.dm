@@ -59,7 +59,7 @@ var/list/admin_verbs = list(
 		TYPE_PROC_REF(/client, cmd_admin_plain_message),
 		TYPE_PROC_REF(/client, cmd_admin_check_vehicle),
 		TYPE_PROC_REF(/client, change_admin_prefs),
-		/TYPE_PROC_REF(/client, cmd_boot),
+		//TYPE_PROC_REF(/client, cmd_boot),
 
 		TYPE_PROC_REF(/client, enableDrunkMode),
 		TYPE_PROC_REF(/client, forceDrunkMode),
@@ -268,7 +268,7 @@ var/list/admin_verbs = list(
 		TYPE_PROC_REF(/client, toggle_vpn_blacklist),
 
 		// moved up from admin
-		/TYPE_PROC_REF(/client, cmd_admin_delete),
+		//TYPE_PROC_REF(/client, cmd_admin_delete),
 		TYPE_PROC_REF(/client, noclip),
 		TYPE_PROC_REF(/client, idclip),
 		//TYPE_PROC_REF(/client, addpathogens),
