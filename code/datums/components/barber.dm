@@ -483,6 +483,11 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	if (isnull(src.preview))
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
+
+		if (src.barbee.hud.layout_style == "tg")
+			var/mob/living/carbon/human/preview_mob = src.preview.preview_thing // So the game understands we are manipulating a human
+			preview_mob.hud.layout_style = "tg"
+
 		src.preview.add_background("#242424", 2)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
@@ -605,8 +610,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	to_paste.wear_id = to_copy.wear_id
 	to_paste.r_store = to_copy.r_store
 	to_paste.l_store = to_copy.l_store
-
-	to_paste.update_clothing()
 
 /datum/component/barber/proc/nullify_clothes(var/mob/living/carbon/human/to_nullify)
 	to_nullify.wear_suit = null
