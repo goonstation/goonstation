@@ -100,7 +100,7 @@
 	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
 	<br>
 	<br>
-	Suitable conditions are: Adequate internal cell charge, presence of an area power controller, and active magnetic anchoring.
+	Suitable conditions are: Adequate internal cell charge (70% of capacity or greater), presence of an area power controller, and active magnetic anchoring.
 	<br>
 	<br>
 	For charging or operation, activate magnetic anchoring by touching the control pad located on the front side of the rectangular regulator unit.
