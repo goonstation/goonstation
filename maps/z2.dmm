@@ -23214,7 +23214,7 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/obj/critter/ancient_repairbot/security,
+/mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "brV" = (
@@ -23565,7 +23565,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bsQ" = (
-/obj/critter/ancient_repairbot/security,
+/mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bsR" = (
@@ -24645,7 +24645,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "bwo" = (
-/obj/critter/ancient_repairbot,
+/mob/living/critter/robotic/repairbot,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bwq" = (
@@ -27285,7 +27285,7 @@
 	icon = 'icons/obj/machines/heavy_fiber.dmi';
 	name = "power conduit"
 	},
-/obj/critter/ancient_repairbot/security,
+/mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bFB" = (
@@ -69447,7 +69447,7 @@
 /mob/living/critter/bear{
 	desc = "Wow, you haven't seen this guy since 2014!";
 	name = "DOngEun MesTur";
-
+	
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)

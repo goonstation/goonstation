@@ -20,7 +20,7 @@
 	var/datum/light/portal_light
 	var/list/obj/critter/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
-								/obj/critter/ancient_repairbot/security,
+								/mob/living/critter/robotic/repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
 								/obj/critter/shade,
 								/obj/critter/bat/buff,

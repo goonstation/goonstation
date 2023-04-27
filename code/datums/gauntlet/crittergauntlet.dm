@@ -1197,7 +1197,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Security Zapbot"
 		point_cost = 2
 		count = 2
-		types = list(/obj/critter/ancient_repairbot/grumpy)
+		types = list(/mob/living/critter/robotic/repairbot)
 
 	fermid
 		name = "Fermid"

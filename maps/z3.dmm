@@ -12794,7 +12794,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/critter/ancient_repairbot/helldrone_guard,
+/mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "aZy" = (
@@ -14255,7 +14255,7 @@
 /turf/simulated/floor/caution/east,
 /area/h7/lab)
 "beB" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
+/mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/black,
 /area/helldrone)
 "beJ" = (
@@ -18370,7 +18370,7 @@
 	},
 /area/diner/dining)
 "gbF" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
+/mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "ggh" = (
@@ -18538,7 +18538,7 @@
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
 "gwR" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
+/mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/black,
 /area/helldrone/core)
 "gwV" = (
@@ -22167,7 +22167,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/critter/ancient_repairbot/helldrone_guard,
+/mob/living/critter/robotic/repairbot/helldrone,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "qAR" = (
