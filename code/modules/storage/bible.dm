@@ -7,6 +7,17 @@ var/global/list/bible_contents = list()
 /datum/storage/bible
 	// stored item list and bible_contents can be read interchangeably
 
+/datum/storage/bible/New()
+	..()
+
+	for (var/obj/item/I as anything in bible_contents)
+		src.stored_items += I
+		src.hud.add_item(I)
+
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/W = src.linked_item
+		W.tooltip_rebuild = TRUE
+
 /datum/storage/bible/add_contents(obj/item/I, mob/user = null, visible = TRUE)
 	if (user?.equipped() == I)
 		user.u_equip(I)
