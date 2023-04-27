@@ -466,9 +466,9 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
-	if (src.find_type_in_hand(/obj/item/megaphone))
+	if(src.find_type_in_hand(/obj/item/megaphone))
 		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
-		if	(megaphone.makes_you_quieter)
+		if(megaphone.makes_you_quieter)
 			loudness -= 1
 		else
 			loudness += 1

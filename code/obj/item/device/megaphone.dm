@@ -14,6 +14,8 @@
 	object_flags = NO_GHOSTCRITTER
 	var/makes_you_quieter = FALSE
 	var/maptext_size = 14 //how big in px it makes your text. lower numbers can make your text smaller
+	var/maptext_color = "#b0e8b3"
+	var/maptext_outline_color = "#043606"
 
 	emag_act(var/mob/user)
 		if(!makes_you_quieter)
