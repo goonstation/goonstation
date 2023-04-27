@@ -1042,6 +1042,58 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/summer)
 	name = "Red Collar Dress"
 	path = /obj/item/clothing/under/collardressr
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/summer/yukata_plain)
+/datum/clothingbooth_item/summer/yukata_plain
+	name = "plain yukata"
+	path = /obj/item/clothing/under/gimmick/yukata/plain
+	cost = PAY_TRADESMAN/2
+
+	gray
+		name = "Gray Plain Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/plain/gray
+
+	black
+		name = "Black Plain Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/plain/black
+
+	cream
+		name = "Cream Plain Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/plain/cream
+
+	navy
+		name = "Navy Plain Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/plain/navy
+
+	teal
+		name = "Teal Plain Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/plain/teal
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/summer/yukata_floral)
+/datum/clothingbooth_item/summer/yukata_floral
+	name = "floral yukata"
+	path = /obj/item/clothing/under/gimmick/yukata/floral
+	cost = PAY_TRADESMAN/2
+
+	blue
+		name = "Blue Floral Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/floral/blue
+
+	orange
+		name = "Orange Floral Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/floral/orange
+
+	yellow
+		name = "Yellow Floral Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/floral/yellow
+
+	red
+		name = "Red Floral Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/floral/red
+
+	black
+		name = "Black Floral Yukata"
+		path = /obj/item/clothing/under/gimmick/yukata/floral/black
+
 //Masquerade
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/masquerade)

@@ -5,64 +5,66 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata)
 	icon_state = "yukata_plain1"
 	item_state = "yukata_plain1"
 
-	plain
-		name = "plain yukata"
+ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata/plain)
+/obj/item/clothing/under/gimmick/yukata/plain
+	name = "plain yukata"
 
-		gray
-			icon_state = "yukata_plain1"
-			item_state = "yukata_plain1"
+	gray
+		icon_state = "yukata_plain1"
+		item_state = "yukata_plain1"
 
-		black
-			icon_state = "yukata_plain2"
-			item_state = "yukata_plain2"
+	black
+		icon_state = "yukata_plain2"
+		item_state = "yukata_plain2"
 
-		cream
-			icon_state = "yukata_plain3"
-			item_state = "yukata_plain3"
+	cream
+		icon_state = "yukata_plain3"
+		item_state = "yukata_plain3"
 
-		navy
-			icon_state = "yukata_plain4"
-			item_state = "yukata_plain4"
+	navy
+		icon_state = "yukata_plain4"
+		item_state = "yukata_plain4"
 
-		slate_gray
-			icon_state = "yukata_plain5"
-			item_state = "yukata_plain5"
+	teal
+		icon_state = "yukata_plain5"
+		item_state = "yukata_plain5"
 
-		random
-			New()
-				var/yukata_index = rand(1,5)
-				icon_state = "yukata_plain[yukata_index]"
-				item_state = "yukata_plain[yukata_index]"
-				..()
+	random
+		New()
+			var/yukata_index = rand(1,5)
+			icon_state = "yukata_plain[yukata_index]"
+			item_state = "yukata_plain[yukata_index]"
+			..()
 
-	floral
-		name = "floral yukata"
+ABSTRACT_TYPE(/obj/item/clothing/under/gimmick/yukata/floral)
+/obj/item/clothing/under/gimmick/yukata/floral
+	name = "floral yukata"
+	icon_state = "yukata_floral1"
+	item_state = "yukata_floral1"
+
+	blue
 		icon_state = "yukata_floral1"
 		item_state = "yukata_floral1"
 
-		blue
-			icon_state = "yukata_floral1"
-			item_state = "yukata_floral1"
+	orange
+		icon_state = "yukata_floral2"
+		item_state = "yukata_floral2"
 
-		orange
-			icon_state = "yukata_floral2"
-			item_state = "yukata_floral2"
+	yellow
+		icon_state = "yukata_floral3"
+		item_state = "yukata_floral3"
 
-		yellow
-			icon_state = "yukata_floral3"
-			item_state = "yukata_floral3"
+	red
+		icon_state = "yukata_floral4"
+		item_state = "yukata_floral4"
 
-		red
-			icon_state = "yukata_floral4"
-			item_state = "yukata_floral4"
+	black
+		icon_state = "yukata_floral5"
+		item_state = "yukata_floral5"
 
-		black
-			icon_state = "yukata_floral5"
-			item_state = "yukata_floral5"
-
-		random
-			New()
-				var/yukata_index = rand(1,5)
-				icon_state = "yukata_floral[yukata_index]"
-				item_state = "yukata_floral[yukata_index]"
-				..()
+	random
+		New()
+			var/yukata_index = rand(1,5)
+			icon_state = "yukata_floral[yukata_index]"
+			item_state = "yukata_floral[yukata_index]"
+			..()
