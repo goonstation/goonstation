@@ -130,7 +130,7 @@
 					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
-					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+					if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 						src.start_interdicting()
 				else
 					boutput(user, "<span class='alert'>An interdictor is already active within range.</span>")
@@ -169,7 +169,7 @@
 						src.connected = 1
 						boutput(user, "You activate the interdictor's magnetic lock.")
 						playsound(src.loc, src.sound_togglebolts, 50, 0)
-						if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+						if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 							src.start_interdicting()
 					else
 						boutput(user, "<span class='alert'>Cannot activate interdictor - another field is already active within operating bounds.</span>")
@@ -274,7 +274,7 @@
 				if(!src.canInterdict)
 					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 				use_power(added / CELLRATE)
-		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+		if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 			doupdateicon = 0
 			src.start_interdicting()
 		if(src.canInterdict)
