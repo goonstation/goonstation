@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		return hear
 
 	speech_bubble()
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
 		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 

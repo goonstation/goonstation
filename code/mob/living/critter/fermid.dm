@@ -45,7 +45,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	is_npc = TRUE
-	ai_type = /datum/aiHolder/fermid
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
@@ -99,17 +99,20 @@
 				return 3
 		return ..()
 
-	critter_attack(var/mob/target)
+	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/fermid)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/fermid_bite)
 		if (!sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
+			return TRUE
 		else if (!bite.disabled && bite.cooldowncheck())
 			bite.handleCast(target)
-		else
-			if(prob(30))
-				src.swap_hand()
-			src.hand_attack(target)
+			return TRUE
+
+	critter_basic_attack(mob/target)
+		if(prob(30))
+			src.swap_hand()
+		return ..()
 
 	death()
 		src.can_lie = FALSE

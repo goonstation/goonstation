@@ -151,8 +151,8 @@ proc/maximal_subtype(var/list/L)
 	#define START_TRACKING
 	#define STOP_TRACKING
 #elif defined(OPENDREAM) // Yay, actual sanity!
-	#define START_TRACKING if(!by_type[opendream_procpath]) { by_type[opendream_procpath] = list() }; by_type[opendream_procpath][src] = 1
-	#define STOP_TRACKING by_type[opendream_procpath].Remove(src)
+	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
+	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
 	/// we use an assoc list here because removing from one is a lot faster
 	#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1

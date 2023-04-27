@@ -83,12 +83,14 @@
 
 
 /obj/item/gun/russianrevolver/fake357
-	name = "revolver"
+	name = "\improper Predator revolver"
+	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
+	force = MELEE_DMG_REVOLVER
 	shotsMax = 1 //griff
 	var/fakeshots = 0
 	New()
 		fakeshots = rand(2, 7)
-		desc = "There are [fakeshots] bullets left! Each shot will currently use 1 bullets!"
+		set_current_projectile(new/datum/projectile/bullet/revolver_357)
 		..()
 		inventory_counter.update_number(fakeshots)
 

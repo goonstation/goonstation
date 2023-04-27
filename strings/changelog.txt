@@ -1,4 +1,125 @@
 
+(t)wed apr 26 23
+(u)Amylizzle
+(p)13860
+(e)|
+(+)Blood & paint footprints will no longer track onto space tiles.
+(t)tue apr 25 23
+(u)aloe
+(+)After some shady dealings with the heads of staff on the NSS Manta, CARL (the listening post vendor) now sells high explosive torpedos on Oshan.
+(u)LeahTheTech
+(+)The rockbox now displays a count of how many of each ore have been purchased.
+(+)Manufacturers now have category tabs.
+(u)Ikea
+(p)13752
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Sylvester can now be walked through
+(u)Ikea
+(p)13818
+(e)💅📄|C-QoL, A-UI
+(*)The colors for the command, medical, and intercom channels for radio headsets have been changed to make them stand out more from each other.
+(u)monkeymilesmoo
+(p)13842
+(e)|
+(+)Monkeys are no longer bodybuilders
+(t)sun apr 23 23
+(u)LeahTheTech
+(p)13782
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)All security officers including NTSCs (not assistants) now receive mind protection health implants. Said implants now self-destruct upon death.
+(+)Traitor slip and signs have been buffed slightly, they now have a 100% chance to activate, have a reduced cooldown and can be anchored with a screwdriver.
+(+)Attempting to disarm someone who is grabbing you will now resist the grab instead.
+(+)Fibre wire no longer shows an attack icon and twitch unless you are actually able to grab someone.
+(t)sat apr 22 23
+(u)pali
+(+)Missing organs now displayed in red in health scan.
+(u)Piesuu
+(p)13762
+(e)🗺💅|A-Mapping, C-QoL
+(+)The NCS Atlas has been equipped with AI intercoms
+(u)Flaborized
+(p)13786
+(e)🎨|C-Sprites
+(+)Chief engineers can now find an extra jumpsuit in their clothing box and a new green stripe on their hat.
+(u)Lofijuno
+(p)13783
+(e)🎨|C-Sprites
+(+)SWAT Gas Mask medal reward is now more NT coloured.
+(t)fri apr 21 23
+(u)rdcb
+(p)13739
+(e)🎨|C-Sprites
+(+)Added a respirator gas mask skin, redeemable via the Old Enemy medal.
+(u)aloe
+(+)During Gang rounds on RP, less gangs will spawn (down from 1 per 9 roundstart players to 1 per 15)
+(u)Flaborized
+(p)13764
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Full tile windows now have damaged sprites.
+(u)LeahTheTech
+(+)Ghostcritters now die instantly to mousetraps and cannot interact with them.
+(u)Caio029
+(p)12426
+(e)💅📄|C-QoL, A-UI
+(+)Updates the Barbering Menu into a new, fancy TGUI version with previews!
+(u)Piesuu
+(p)13771
+(e)🪲🤖|C-Bug, A-Silicons
+(+)Cyborgs can no longer recall the emergency shuttle
+(u)DeeDotVeeA
+(p)13751
+(e)🗺|A-Mapping
+(+)Atmos barriers have been added to several external airlocks on cogmap1.
+(u)Chatauscours
+(p)13759
+(e)💅💡|C-QoL, A-Station-Systems
+(+)Underage drinking now relies on sec records rather than true age
+(t)thu apr 20 23
+(u)LeahTheTech
+(+)Meteor showers can now leave behind solid lumps of rock containing ore.
+(t)wed apr 19 23
+(u)Azrun
+(p)13590
+(e)🆕🎨⚖🧱📦💡|C-Feature, C-Sprites, C-Balance, A-Materials, A-Game-Objects, A-Station-Systems
+(*)TEG Semiconductor gone?!? Now you can replace it with some sheets or with the help of the Nano-fabricator if you really need to.
+(u)Wisemonster, Ikea
+(p)13742
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Security implants will no longer send crit alerts to security pdas. Normal health implants/pdas unaffected.
+(t)tue apr 18 23
+(u)LeahTheTech
+(*)The syndicate cargo transporter now rewards money for anything teleported using it.
+(+)Objects sold via the syndicate cargo transporter will be dele- teleported to the syndicate, and humans sold will reward money based on their assigned job.
+(*)Pods and cars now damage things (windows, tables, vending machines) they crash into, and also take slightly more damage from said crashes.
+(u)Sord
+(+)Engineering manufacturers now have some more items available for production
+(+)Engineers now spawn with their own jumpsuits instead of mechanics jumpsuits
+(u)Caio029
+(p)13643
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Catwalks are now constructable. Click on a lattice with a steel rod and you'll start building a catwalk on it. Check minor updates for more details.
+(+)While normal roles have to wait an actionbar to build the catwalk, players with engineering training don't have to wait for such actionbar.
+(+)To destroy the catwalks and the support beams, click on it with wirecutters or scissors.
+(t)mon apr 17 23
+(u)LeahTheTech
+(+)Mimics now hide their faces after sitting still for a few seconds.
+(t)sun apr 16 23
+(u)ZWRh3
+(p)13689
+(e)⚖💅💊|C-Balance, C-QoL, A-Medical
+(*)Cyborgs with the ProDoc upgrade and people with upgraded ProDoc Healthgoggles or Healthview cybereyes can now see if a brain has gone cold.
+(u)LeahTheTech
+(+)Money can now be laundered.
+(+)Clown cars now start with 5 banana peels.
+(u)Kubius
+(p)13586
+(e)🪲🆕⚖📦🌠|C-Bug, C-Feature, C-Balance, A-Game-Objects, A-Events
+(+)Tuned down spatial interdictors' power usage significantly in most scenarios, and added the ability for authorized users to calibrate their power intake.
+(t)sat apr 15 23
+(u)Amylizzle
+(p)13696
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added a couple of mimic themed random rooms.
 (t)fri apr 14 23
 (u)Wisemonster
 (p)13623
