@@ -5,6 +5,9 @@
 	/// The ability holder of this grinch, containing their respective abilities.
 	var/datum/abilityHolder/grinch/ability_holder
 
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
+
 	give_equipment()
 		var/datum/abilityHolder/grinch/A = src.owner.current.get_ability_holder(/datum/abilityHolder/grinch)
 		if (!A)

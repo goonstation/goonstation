@@ -4,7 +4,7 @@
 	icon_state = "grey_target_prism"
 	var/raised = 0
 	var/enabled = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	invisibility = INVIS_CLOAK
@@ -28,7 +28,7 @@
 	name = "pop-up turret cover"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER+0.5
 	density = 0
 
@@ -345,7 +345,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_le
 	name = "Turret deactivation control"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "ai3"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	var/enabled = 1

@@ -149,7 +149,7 @@
 	icon_state = "flag_neutral"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"

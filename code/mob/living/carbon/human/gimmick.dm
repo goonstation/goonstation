@@ -35,7 +35,7 @@
 
 /mob/living/carbon/human/cluwne/floor
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 
@@ -72,7 +72,7 @@
 // Come to collect a poor unfortunate soul
 /mob/living/carbon/human/satan
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 	New()
@@ -86,7 +86,7 @@
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 	plane = PLANE_DEFAULT
 
@@ -186,14 +186,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	New()
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
-
-/datum/aiHolder/wanderer
-	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
-
 
 // how you gonna have father ted and father jack and not father dougal? smh
 
@@ -926,9 +918,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	switch(type)
 		if("spacer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")]"
 		if("juicer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 
 	return constructed_name
 

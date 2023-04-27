@@ -138,6 +138,23 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	frame_path = /obj/machinery/ai_status_display
 
+/******************** Laser beam things *******************/
+
+/datum/manufacture/mechanics/laser_mirror
+	name = "Laser Mirror"
+	item_paths = list("MET-1", "CRY-1", "REF-1")
+	item_amounts = list(10, 10, 30)
+	frame_path = /obj/laser_sink/mirror
+	time = 45 SECONDS
+	create = 1
+
+/datum/manufacture/mechanics/laser_splitter //I'm going to regret this
+	name = "Beam Splitter"
+	item_paths = list("MET-1", "CRY-2", "REF-1")
+	item_amounts = list(20, 20, 30)
+	frame_path = /obj/laser_sink/splitter
+	time = 90 SECONDS
+	create = 1
 /datum/manufacture/mechanics/gunbot
 	name = "Security Robot"
 	item_paths = list("POW-1","MET-2","CON-1")
@@ -190,6 +207,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/wrench)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/crowbar/yellow
+	name = "Crowbar"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/crowbar/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/screwdriver/yellow
+	name = "Screwdriver"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/screwdriver/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/wirecutters/yellow
+	name = "Wirecutters"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/wirecutters/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/wrench/yellow
+	name = "Wrench"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/wrench/yellow)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -334,6 +387,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(1,1)
 	item_outputs = list(/obj/item/weldingtool)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/welder/yellow
+	name = "Welding Tool"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/weldingtool/yellow)
 	time = 8 SECONDS
 	create = 1
 	category = "Tool"
@@ -716,6 +778,25 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/engivac
+	name = "Materiel Vacuum"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(10,5,5)
+	item_outputs = list(/obj/item/engivac)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/lampmanufacturer
+	name = "Lamp Manufacturer"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(5,10,20)
+	item_outputs = list(/obj/item/lamp_manufacturer/organic)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 
 ////////////////////////////////
 

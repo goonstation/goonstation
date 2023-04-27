@@ -253,7 +253,7 @@
 					return 0
 				// Devera-class interdictor: prevent passive hygiene decrease within the field
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(2,src,TRUE,ITDR_DEVERA))
+					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA))
 						return 0
 				return 1
 
@@ -752,7 +752,7 @@ var/global/datum/simsControl/simsController = new()
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "plum-desat"
 	mouse_opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 32
 	var/mob/living/owner
 

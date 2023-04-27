@@ -142,7 +142,7 @@
 	icon_state = "anom"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/has_processing_loop = 0
 
 	New(var/turf/loc)
@@ -171,7 +171,7 @@
 	name = "do not press this button"
 	desc = "This button stand is covered in warnings that say not to press it. Huh. Guess you shouldn't press it."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state = "button_comp_button_unpressed"
 	var/steps_until_pressable = 18

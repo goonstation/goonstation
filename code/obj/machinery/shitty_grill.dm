@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	flags = NOSPLASH
 	var/obj/item/grillitem = null
