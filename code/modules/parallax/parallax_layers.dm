@@ -65,8 +65,8 @@
 
 	mundus
 		parallax_icon_state = "mundus"
-		initial_x_coordinate = 146
-		initial_y_coordinate = 0
+		initial_x_coordinate = 300
+		initial_y_coordinate = -100
 
 	iustitia
 		parallax_icon_state = "iustitia"
