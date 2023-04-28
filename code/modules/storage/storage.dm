@@ -132,7 +132,7 @@
 					return
 			// if item has a storage, dump contents into this storage
 			if (W.storage && !src.is_full())
-				for (var/obj/item/I as anything in W.storage.get_contents())
+				for (var/obj/item/I as anything in (W.storage.get_contents() - src.linked_item))
 					if (src.check_can_hold(I) == STORAGE_CAN_HOLD)
 						if (I.anchored)
 							continue
