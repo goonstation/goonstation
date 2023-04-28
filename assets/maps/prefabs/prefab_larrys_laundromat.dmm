@@ -294,33 +294,32 @@
 /area/space)
 "Kn" = (
 /obj/table/auto,
-/obj/item/spacecash/random{
-	pixel_y = -2;
-	pixel_x = 5
-	},
-/obj/item/spacecash/random{
-	pixel_y = 4;
-	pixel_x = -3
-	},
-/obj/item/spacecash/random{
-	pixel_y = 11;
-	pixel_x = -5
-	},
-/obj/item/spacecash/random{
-	pixel_y = 5;
-	pixel_x = 6
-	},
-/obj/item/spacecash/random{
-	pixel_y = 12;
-	pixel_x = 4
-	},
-/obj/item/spacecash/random{
-	pixel_y = 8;
-	pixel_x = -4
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -10
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 2
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 7;
+	pixel_x = 3
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 12;
+	pixel_x = 4
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 9;
+	pixel_x = -4
 	},
 /turf/simulated/floor/twotone/black,
 /area/space)
