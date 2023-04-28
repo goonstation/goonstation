@@ -24,6 +24,7 @@ var/global/list/bible_contents = list()
 	for_by_tcl(bible, /obj/item/bible)
 		bible.storage.stored_items += I
 		bible.storage.hud.add_item(I, user)
+		bible.tooltip_rebuild = TRUE
 	bible_contents += I
 	I.set_loc(src.linked_item)
 	I.stored = src
@@ -36,6 +37,7 @@ var/global/list/bible_contents = list()
 	for_by_tcl(bible, /obj/item/bible)
 		bible.storage.stored_items -= I
 		bible.storage.hud.remove_item(I, user)
+		bible.tooltip_rebuild = TRUE
 	bible_contents -= I
 	I.stored = null
 
