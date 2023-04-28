@@ -1,5 +1,9 @@
 
 (t)thu apr 27 23
+(u)DeeDotVeeA
+(p)13785
+(e)🗺|A-Mapping
+(+)Atmos barriers can now be found on most external airlocks on cogmap2
 (u)Kubius
 (p)13866
 (e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
