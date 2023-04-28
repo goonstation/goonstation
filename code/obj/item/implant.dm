@@ -731,6 +731,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
+		var/mob/living/carbon/human/H = target
 		if (!istype(target))
 			return FALSE
 		if (!implant_hacker)
@@ -738,8 +739,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				implant_hacker = user
 			else
 				return FALSE
+		if (isabomination(H)) //Abominations really shouldn't be mindhackable, for the aboms sake
+			if (ismob(user)) user.show_text("The implant cannot locate a mind within the mass to hack!", "red")
+			return FALSE
 		// all the stuff in here was added by Convair880, I just adjusted it to work with this can_implant() proc thing - haine
-		var/mob/living/carbon/human/H = target
 		if (!H.mind || !H.client)
 			if (ismob(user)) user.show_text("[H] is braindead!", "red")
 			return FALSE
