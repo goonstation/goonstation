@@ -356,10 +356,15 @@ THROWING DARTS
 		..()
 		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+
+	on_death()
+		. = ..()
+		src.on_remove(src.owner)
+		qdel(src)
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
@@ -625,8 +630,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
-	big_message = "emits a loud clunk"
-	small_message = "makes a small clicking noise"
+	big_message = " emits a loud clunk"
+	small_message = " makes a small clicking noise"
 
 	implanted(mob/target, mob/user)
 		..()

@@ -17,7 +17,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 25
 	health_burn_vuln = 0.25
-	ai_type = /datum/aiHolder/snake
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0

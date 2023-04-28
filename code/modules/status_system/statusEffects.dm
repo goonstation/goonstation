@@ -1766,6 +1766,8 @@
 
 	proc/track_paint(mob/living/M, oldLoc, direct)
 		var/turf/T = get_turf(M)
+		if(istype_exact(T, /turf/space)) //can't smear paint on space
+			return
 		var/obj/decal/cleanable/paint/P
 		if (T.messy > 0)
 			P = locate(/obj/decal/cleanable/paint) in T

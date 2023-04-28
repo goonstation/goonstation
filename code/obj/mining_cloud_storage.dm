@@ -4,6 +4,7 @@
 	var/for_sale = FALSE
 	var/type_path = /obj/item/raw_material
 	var/list/stats = list()
+	var/amount_sold = 0
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -273,6 +274,8 @@
 		var/datum/ore_cloud_data/OCD = ores[material_name]
 		if(OCD)
 			amount_ejected = min(ejectamt, OCD.amount)
+			if (transmit)
+				OCD.amount_sold += amount_ejected
 			for(var/i in 1 to amount_ejected)
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
@@ -337,7 +340,8 @@
 				"amount" = OCD.amount,
 				"price" = OCD.price,
 				"forSale" = OCD.for_sale,
-				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : ""
+				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : "",
+				"amountSold" = OCD.amount_sold
 			))
 
 		. = list(
