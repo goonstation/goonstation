@@ -31584,7 +31584,7 @@
 	})
 "bIE" = (
 /obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor,
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
