@@ -19115,12 +19115,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"boy" = (
-/obj/critter/fermid,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "boz" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -20777,19 +20771,6 @@
 "bvN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/storage)
-"bvO" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/machinery/manufacturer/engineering,
-/turf/simulated/floor/yellow/corner,
-/area/station/engine/engineering)
 "bvP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -27825,10 +27806,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
-"epI" = (
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "epJ" = (
 /obj/cable,
 /obj/cable{
@@ -29725,6 +29702,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"fLX" = (
+/obj/item/raw_material/gold,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "fMJ" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -30121,11 +30103,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"ggw" = (
-/obj/item/raw_material/gold,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "ggJ" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
@@ -31213,6 +31190,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"hdb" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "heK" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -31634,12 +31617,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
-"hxM" = (
-/obj/critter/fermid,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/pharosium,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "hxT" = (
 /obj/item/device/prox_sensor{
 	pixel_x = -8;
@@ -38298,6 +38275,11 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"ncG" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "ndp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
@@ -42801,11 +42783,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"qMf" = (
-/obj/critter/fermid,
-/obj/item/raw_material/syreline,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "qMr" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -46408,6 +46385,12 @@
 	intact = 0
 	},
 /area/station/quartermaster/magnet)
+"txz" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "txI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47270,6 +47253,19 @@
 /obj/stool/bench/green,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"uiY" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "W APC";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/yellow/corner,
+/area/station/engine/engineering)
 "ujN" = (
 /obj/stool/chair{
 	dir = 8
@@ -48349,6 +48345,10 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"vgP" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "vgX" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/mail,
@@ -81194,7 +81194,7 @@ bvN
 bsL
 bvN
 bzi
-bvO
+uiY
 bwZ
 bxL
 bys
@@ -133240,7 +133240,7 @@ aaa
 sPP
 sPP
 eaH
-boy
+txz
 wfj
 wfj
 wfj
@@ -133849,7 +133849,7 @@ sPP
 wfj
 wfj
 wfj
-epI
+vgP
 sPP
 sPP
 sPP
@@ -134456,11 +134456,11 @@ pgY
 pgY
 wfj
 pli
-hxM
+hdb
 sPP
 sPP
 sPP
-ggw
+fLX
 wfj
 sPP
 sPP
@@ -135367,7 +135367,7 @@ sVO
 tMS
 wfj
 wfj
-qMf
+ncG
 sPP
 sPP
 sPP
@@ -135659,12 +135659,12 @@ aaa
 sPP
 sPP
 sPP
-epI
+vgP
 wfj
 daS
 wfj
 wfj
-epI
+vgP
 wfj
 tMS
 sPP

@@ -77,6 +77,11 @@
 		. = ..()
 
 	attack_hand(mob/user)
+		if (ismobcritter(user))
+			var/mob/living/critter/critter = user
+			if (critter.ghost_spawned)
+				critter.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+				return
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -89,6 +94,12 @@
 				return
 		..()
 		return
+
+	pull(mob/living/critter/user)
+		if (istype(user) && user.ghost_spawned)
+			user.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+			return TRUE
+		return ..()
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
@@ -366,7 +377,10 @@
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
-			C.TakeDamage("All", 1)
+			if (C.ghost_spawned)
+				C.TakeDamage("All", 5)
+			else
+				C.TakeDamage("All", 1)
 
 		if (target)
 			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)

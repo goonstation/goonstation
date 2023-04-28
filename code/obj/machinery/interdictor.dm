@@ -14,8 +14,12 @@
 	///Internal capacitor; the cell installed internally during construction, which acts as a capacitor for energy used in interdictor operation.
 	var/obj/item/cell/intcap = null
 
-	///Maximum target rate at which the internal capacitor can be charged, per tick.
-	var/chargerate = 700
+	///Current target rate at which the internal capacitor may be charged, in cell units restored per tick.
+	var/chargerate = 100
+	///Maximum allowable internal capacitor charge rate for user configuration.
+	var/chargerate_max = 500
+	///Minimum allowable internal capacitor charge rate for user configuration.
+	var/chargerate_min = 50
 
 	///Tracks whether interdictor is tied into area power and ready to attempt operation.
 	var/connected = 0
@@ -126,7 +130,7 @@
 					src.connected = 1
 					boutput(user, "You activate the interdictor's magnetic lock.")
 					playsound(src.loc, src.sound_togglebolts, 50, 0)
-					if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+					if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 						src.start_interdicting()
 				else
 					boutput(user, "<span class='alert'>An interdictor is already active within range.</span>")
@@ -135,8 +139,11 @@
 
 	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
-			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
-			return
+			if(emagged || src.allowed(user))
+				var/chargescale = input(user,"Minimum [src.chargerate_min] | Maximum [src.chargerate_max] | Current [src.chargerate]","Target Recharge per Cycle","1") as num
+				chargescale = clamp(chargescale,src.chargerate_min,src.chargerate_max)
+				src.chargerate = chargescale
+				return
 		else if(istype(W, /obj/item/card/id))
 			if(!emagged && !src.check_access(W))
 				boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
@@ -162,12 +169,16 @@
 						src.connected = 1
 						boutput(user, "You activate the interdictor's magnetic lock.")
 						playsound(src.loc, src.sound_togglebolts, 50, 0)
-						if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+						if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 							src.start_interdicting()
 					else
-						boutput(user, "<span class='alert'>Cannot activate interdictor - </span>")
+						boutput(user, "<span class='alert'>Cannot activate interdictor - another field is already active within operating bounds.</span>")
 		else
 			..()
+
+	examine()
+		. = ..()
+		. += "\n <span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>"
 
 	Exited(Obj, newloc)
 		. = ..()
@@ -263,7 +274,7 @@
 				if(!src.canInterdict)
 					playsound(src.loc, src.sound_interdict_run, 5, 0, 0, 0.8)
 				use_power(added / CELLRATE)
-		if(intcap.charge == intcap.maxcharge && !src.canInterdict)
+		if(intcap.charge >= (intcap.maxcharge * 0.7) && !src.canInterdict)
 			doupdateicon = 0
 			src.start_interdicting()
 		if(src.canInterdict)
@@ -321,7 +332,7 @@
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
 /obj/machinery/interdictor/proc/radstorm_interdict(var/target = null)
-	var/use_cost = 900 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+	var/use_cost = 400 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
 	if (status & BROKEN || !src.canInterdict)
 		return 0
 	if (!target || !IN_RANGE(src,target,src.interdict_range))

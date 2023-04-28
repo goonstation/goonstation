@@ -607,8 +607,8 @@ toxic - poisons
 	shot_sound = 'sound/weapons/lasersound.ogg'
 	dissipation_delay = 4
 	dissipation_rate = 2
-	cost = 10
-	damage = 18
+	cost = 15
+	damage = 15
 	fullauto_valid = 1
 	shot_volume = 75
 

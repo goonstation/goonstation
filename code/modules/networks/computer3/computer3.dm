@@ -13,7 +13,6 @@
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
-	var/datum/computer/file/terminal_shell/os_shell
 	var/list/processing_programs = list()
 	var/obj/item/disk/data/floppy/diskette = null
 	var/list/peripherals = list()

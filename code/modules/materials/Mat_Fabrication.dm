@@ -20,6 +20,7 @@
 	/datum/matfab_recipe/lightbulb,
 	/datum/matfab_recipe/tripodbulb,
 	/datum/matfab_recipe/sheet,
+	/datum/matfab_recipe/thermocouple,
 	/datum/matfab_recipe/cell_small,
 	/datum/matfab_recipe/cell_large,
 	/datum/matfab_recipe/infusion,

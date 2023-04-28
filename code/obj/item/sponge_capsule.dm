@@ -33,7 +33,7 @@
 					/mob/living/critter/spider/ice,
 					/obj/critter/townguard/passive,
 					/mob/living/critter/lion,
-					/obj/critter/fermid)
+					/mob/living/critter/fermid)
 
 /obj/item/toy/sponge_capsule/New()
 	..()

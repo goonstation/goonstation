@@ -1204,6 +1204,32 @@ datum/projectile/bullet/autocannon
 			if(P)
 				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
+/datum/projectile/bullet/stunbaton //direct less-lethal 40mm option
+	name = "stun baton round"
+	icon_state = "stunbaton"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	damage = 0
+	stun = 50
+	dissipation_rate = 0
+	dissipation_delay = 4
+	max_range = 12
+	implanted = null
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	ie_type = null
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
+
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
+
+
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0

@@ -143,10 +143,10 @@
 				src.oldtarget_name = C.name
 				if (do_stun)
 					C.changeStatus("stunned", 2 SECONDS)
-				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 7 SECONDS, max_gib_distance), src)
-				ON_COOLDOWN(src, "gib_attack", 7 SECONDS)
+				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 10 SECONDS, max_gib_distance), src)
+				ON_COOLDOWN(src, "gib_attack", 10 SECONDS)
 				src.attack = 0
-				sleeping = 7
+				sleeping = 10
 				return
 			else continue
 

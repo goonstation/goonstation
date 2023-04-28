@@ -127,7 +127,7 @@
 
 			turfd = 1
 
-		if (user?.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
+		if (user && user.client?.tg_layout) //MBC TG OVERRIDE IM SORTY
 			x = 11 - round(master.slots / 2)
 			y = 3
 			sx = master.slots + 1

@@ -635,7 +635,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		playerProduct.contents -= vended
 	else // make a new one
 		vended = new product.product_path(src.get_output_location())
-	vended.name = product.product_name
 	vended.set_loc(src.get_output_location())
 	vended.layer = src.layer + 0.1 //So things stop spawning under the fukin thing
 	if(isitem(vended))
@@ -1461,7 +1460,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10) //does this even work??
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10) //does this even work??
 
 	blue
 		icon_state = "grife"
@@ -1483,7 +1482,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product("/obj/item/reagent_containers/food/drinks/cola/random", 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -3074,8 +3073,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)

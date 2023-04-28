@@ -313,6 +313,10 @@
 
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
+	for(var/obj/item/grab/grab in target.equipped_list()) //if we're disarming the person grabbing us then resist instead
+		if (grab.affecting == src)
+			grab.do_resist()
+			return
 
 	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype

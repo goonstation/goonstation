@@ -31,10 +31,10 @@
 
 				if(4)
 					//spatial interdictor: suppress intense particle discharge
-					//consumes 150 units of charge per flash interdicted
+					//consumes 80 units of charge (40,000 joules) per flash interdicted
 					var/interdicted = FALSE
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(150,src))
+						if (IX.expend_interdict(80,src))
 							interdicted = TRUE
 							break
 					if(!interdicted)
@@ -68,10 +68,10 @@
 	proc/spawn_horror()
 		var/horror_path = null
 		//spatial interdictor: when something would exit a vortex, it doesn't
-		//consumes 500 units of charge per inbound thing interdicted
+		//consumes 400 units of charge (200,000 joules) per inbound thing interdicted
 		var/interdicted = FALSE
 		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(500,src))
+			if (IX.expend_interdict(400,src))
 				interdicted = TRUE
 				break
 		if(!interdicted)
@@ -110,7 +110,7 @@
 				/obj/critter/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
-				/obj/critter/fermid,
+				/mob/living/critter/fermid,
 				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")

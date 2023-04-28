@@ -12,6 +12,7 @@
 	var/cut_resist = 0
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
+	var/amount_of_rods_when_destroyed = 2
 	var/auto = TRUE
 	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
@@ -83,6 +84,7 @@
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
+		amount_of_rods_when_destroyed = 1
 		var/catwalk_type = "C" // Short for "Catwalk"
 		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
@@ -124,7 +126,6 @@
 					src.icon_state += "-1"
 				if(76 to INFINITY)
 					src.icon_state += "-0"
-
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
@@ -231,7 +232,7 @@
 			return
 
 		if (src.ruined)
-			drop_rods(1)
+			drop_rods(src.amount_of_rods_when_destroyed)
 			qdel(src)
 			return
 
@@ -239,7 +240,6 @@
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			drop_rods(1)
 			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1

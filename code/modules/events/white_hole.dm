@@ -270,7 +270,7 @@
 		"asteroid" = list(
 			"ore" = 200,
 			/obj/critter/rockworm = 3,
-			/obj/critter/fermid = 10,
+			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
 			/mob/living/carbon/human/normal/miner = 0.1,
@@ -837,6 +837,7 @@
 
 		if(triggered_by_event)
 			//spatial interdictor: can't stop the white hole, but it can mitigate it
+			//consumes 500 units of charge (250,000 joules) to reduce white hole duration
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))

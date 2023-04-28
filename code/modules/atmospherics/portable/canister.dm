@@ -706,6 +706,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return
 	return
 
+/obj/machinery/portable_atmospherics/canister/damage_blunt(amount)
+	src.health -= amount
+	src.healthcheck()
+
 /obj/machinery/portable_atmospherics/canister/toxins/New()
 
 	..()

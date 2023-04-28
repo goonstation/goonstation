@@ -1292,6 +1292,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1343,6 +1346,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1442,6 +1449,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1449,6 +1458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -2018,6 +2032,10 @@ TYPEINFO(/obj/item/cargotele)
 /obj/item/cargotele/traitor
 	cost = 15
 	var/static/list/possible_targets = list()
+	///The account to credit for sales
+	var/datum/db_record/account = null
+	///The total amount earned from selling/stealing
+	var/total_earned = 0
 
 	New()
 		..()
@@ -2043,22 +2061,56 @@ TYPEINFO(/obj/item/cargotele)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
 		if (!length(src.possible_targets))
-			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
-		src.target = pick(src.possible_targets)
+			src.target = locate(rand(1,world.maxx), rand(1,world.maxy), 1)
+		else
+			src.target = pick(src.possible_targets)
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-
+		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
 		// Logs for good measure (Convair880).
-		for (var/mob/M in cargo.contents)
-			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-
-		cargo.set_loc(src.target)
+		for (var/atom/A in cargo.contents)
+			if (ismob(A))
+				var/mob/M = A
+				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				var/datum/job/job = find_job_in_controller_by_string(M.job)
+				value += job?.wages * 5
+			else
+				cargo.contents -= A
+				qdel(A)
+		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
+			cargo.set_loc(src.target)
+		else
+			qdel(cargo)
+		src.total_earned += value
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-		if (ret & CELL_INSUFFICIENT_CHARGE)
-			boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+		boutput(user, "[bicon(src)] *beep*")
+		if (src.account)
+			account?["current_money"] += value
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, [value] credits have been deposited into your bank account. You have [src.account["current_money"]] credits total.")
 		else
-			boutput(user, "<span class='notice'>Transfer successful.</span>")
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, no account registered.")
+		if (ret & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class='alert'>[src] is now out of charge.</span>")
+
+	attackby(obj/item/item, mob/user)
+		var/owner_name = null
+		if (istype(item, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = item
+			owner_name = pda.registered
+		else if (istype(item, /obj/item/card/id))
+			var/obj/item/card/id/card = item
+			owner_name = card.registered
+		if (owner_name)
+			boutput(user, "<span class='notice'>You set [src]'s payout account.</span>")
+			src.account = data_core.bank.find_record("name", owner_name)
+			return
+		..()
+
+	get_desc()
+		. = ..()
+		if (src.total_earned)
+			. += "<br>There is a little counter on the side, it says: Total amount earned: [src.total_earned] credits.<br>"
 
 /obj/item/oreprospector
 	name = "geological scanner"

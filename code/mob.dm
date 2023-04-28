@@ -583,9 +583,9 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 300 units of charge to interdict a repulsion, permitting safe discharge of the fields
+					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(100,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -630,10 +630,10 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 600 units of charge to interdict an attraction, permitting safe discharge of the fields
+					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(300,src))
+						if (IX.expend_interdict(150,src))
 							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 							var/atom/source = get_turf(tmob)
 							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
@@ -916,7 +916,9 @@
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
-
+#ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
+	return TRUE
+#else
 	if (IsGuestKey(src.key))
 		return null
 	else if (!config)
@@ -926,6 +928,7 @@
 
 	var/result = world.GetMedal(medal, src.key, config.medal_hub, config.medal_password)
 	return result
+#endif
 
 /mob/verb/list_medals()
 	set name = "Medals"
@@ -1125,6 +1128,11 @@
 
 	if(!can_reach(src, A) || src.restrained())
 		return
+
+	if(istype(A, /obj/stool))
+		var/obj/stool/C = A
+		if(C?.buckled_guy == src)
+			return
 
 	src.pulling = A
 
@@ -2320,27 +2328,25 @@
 
 		sortList(OL, /proc/cmp_text_asc)
 
-		selection:
-		var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
+		while(TRUE)
+			var/IP = input(output_target, "Select item to view fingerprints, cancel to close window.", "[src]'s inventory") as null|anything in OL
 
-		if (!IP || !output_target || !ismob(output_target))
-			return
+			if (!IP || !output_target || !ismob(output_target))
+				return
 
-		if (!src || !ismob(src))
-			output_target.show_text("Target mob doesn't exist anymore.", "red")
-			return
+			if (!src || !ismob(src))
+				output_target.show_text("Target mob doesn't exist anymore.", "red")
+				return
 
-		if (IP == REFRESH)
-			src.print_contents(output_target)
-			return
+			if (IP == REFRESH)
+				src.print_contents(output_target)
+				return
 
-		if (isnull(OL[IP]) || !isobj(OL[IP]))
-			output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
-			goto selection
+			if (isnull(OL[IP]) || !isobj(OL[IP]))
+				output_target.show_text("Selected object reference is invalid (item deleted?). Try freshing the list.", "red")
 
-		if (output_target.client)
-			output_target.client.view_fingerprints(OL[IP])
-			goto selection
+			if (output_target.client)
+				output_target.client.view_fingerprints(OL[IP])
 
 	return
 #undef REFRESH
@@ -2981,7 +2987,7 @@
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
-
+	qdel(src)
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 
 	var/atom/movable/overlay/animation = new(reappear_turf)
