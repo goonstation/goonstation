@@ -17,6 +17,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	var/casecolor = "empty"
 	var/filled = 0.5
+	/// Spawns it in as empty
+	var/isempty = FALSE
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
@@ -75,35 +77,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "redws"
 	casecolor = "redws"
 
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/empty
-
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	casecolor = "red"
-
-/obj/machinery/portable_atmospherics/canister/nitrogen/empty
 
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
 
-/obj/machinery/portable_atmospherics/canister/oxygen/empty
-
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	casecolor = "orange"
 
-/obj/machinery/portable_atmospherics/canister/toxins/empty
-
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	casecolor = "black"
-
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty
 
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
@@ -116,8 +108,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "greyred"
 	casecolor = "greyred"
 	filled = 5
-
-/obj/machinery/portable_atmospherics/canister/air/empty
 
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
@@ -730,78 +720,53 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	src.healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/toxins/New()
-
 	..()
-
-	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/toxins/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
-
 	..()
-
-	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/oxygen/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
-
 	..()
-
-	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
+		trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/sleeping_agent/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
-
 	..()
-
-	src.air_contents.temperature = 80
-	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.temperature = 80
+		src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/nitrogen/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
-
 	..()
-	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/carbon_dioxide/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
+
 /obj/machinery/portable_atmospherics/canister/air/New()
-
 	..()
-	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	else src.air_contents.vacuum()
 	src.UpdateIcon()
 	return 1
-/obj/machinery/portable_atmospherics/canister/air/empty/New()
-	..()
-	src.air_contents.vacuum()
-	src.UpdateIcon()
+
