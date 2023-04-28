@@ -1,5 +1,9 @@
 
 (t)thu apr 27 23
+(u)FlameArrow57
+(p)13848
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Swords will now auto-sheathe if using the equip hotkey while they're held in hand.
 (u)DeeDotVeeA
 (p)13785
 (e)🗺|A-Mapping
