@@ -2711,6 +2711,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/plasma_can,
 		/datum/manufacture/red_o2_grenade)
 
+	hidden = list(/datum/manufacture/n2o_can)
+
+
 // a blank manufacturer for mechanics
 
 /obj/machinery/manufacturer/mechanic
