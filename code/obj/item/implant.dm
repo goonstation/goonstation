@@ -331,14 +331,10 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		if (!src)
-			return
 		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
-			return
-		if (!src)
 			return
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
