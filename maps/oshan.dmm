@@ -16887,7 +16887,7 @@
 /area/space)
 "aRU" = (
 /obj/machinery/disposal/transport,
-/obj/disposalpipe/trunk/west,
+/obj/disposalpipe/trunk,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "aRV" = (
@@ -29313,13 +29313,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"bCX" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "bCY" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
@@ -30135,10 +30128,6 @@
 	},
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor/caution/north,
-/area/station/quartermaster/office)
-"bFe" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
 /area/station/quartermaster/office)
 "bFf" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -36249,11 +36238,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"bVy" = (
-/obj/disposaloutlet,
-/obj/disposalpipe/trunk/north,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "bVz" = (
 /obj/item/wrapping_paper,
 /obj/decal/cleanable/dirt,
@@ -39585,12 +39569,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "cfG" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/southwest)
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "cfH" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39799,6 +39780,7 @@
 "cgs" = (
 /obj/table/round,
 /obj/item/cigarbox,
+/obj/item/matchbook,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cgt" = (
@@ -43086,14 +43068,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"iuW" = (
-/obj/disposalpipe/trunk,
-/obj/disposaloutlet{
-	dir = 8;
-	pixel_x = 8
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
 "ivJ" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -43609,13 +43583,6 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"kvq" = (
-/obj/disposalpipe/segment{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -44228,7 +44195,6 @@
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "nks" = (
-/obj/disposalpipe/segment,
 /obj/machinery/light/incandescent/harsh,
 /obj/submachine/cargopad{
 	name = "Cargo Bay Pad"
@@ -44798,7 +44764,6 @@
 /turf/unsimulated/wall/trench/side,
 /area/supply/sell_point)
 "pAR" = (
-/obj/disposalpipe/segment,
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/office)
 "pCE" = (
@@ -45180,7 +45145,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "rqE" = (
-/obj/disposalpipe/segment,
 /obj/decal/stripe_caution,
 /obj/storage/crate/biohazard,
 /turf/simulated/floor,
@@ -45407,7 +45371,6 @@
 "sPr" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone,
-/obj/disposalpipe/segment,
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -46295,7 +46258,6 @@
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "xiS" = (
-/obj/disposalpipe/segment,
 /obj/decal/stripe_caution,
 /obj/storage/secure/crate/bee/loaded,
 /turf/simulated/floor,
@@ -76029,18 +75991,18 @@ buE
 buE
 buE
 cid
-cfG
-bIC
+buE
+bJw
 sPr
-bFe
-lio
+bKj
+cfG
 xiS
 rqE
-lio
+cfG
 pAR
 nks
-bIC
-bVy
+bJw
+btZ
 btZ
 buE
 cic
@@ -76332,7 +76294,7 @@ btZ
 bua
 btZ
 aRU
-bCX
+bIC
 hyD
 bOa
 lio
@@ -76631,10 +76593,10 @@ btX
 buE
 bbi
 btZ
-iuW
-bIC
-bIC
-kvq
+btZ
+bJw
+bJw
+bJw
 ozF
 ncE
 ncE
