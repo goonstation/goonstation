@@ -5019,9 +5019,6 @@
 /obj/random_item_spawner/desk_stuff/one_or_zero,
 /turf/simulated/floor/carpet,
 /area/station/hallway/secondary/exit)
-"bqx" = (
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/checkpoint/west)
 "bqK" = (
 /obj/stool/chair/moveable,
 /obj/landmark{
@@ -10192,7 +10189,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/security/checkpoint/west)
+/area/station/security/brig/south_side)
 "cSv" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -43787,7 +43784,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black/grime,
-/area/station/security/checkpoint/west)
+/area/station/security/brig/south_side)
 "njI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52990,7 +52987,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/checkpoint/west)
+/area/station/security/brig/south_side)
 "pUj" = (
 /turf/simulated/floor/escape/corner{
 	dir = 4
@@ -108758,13 +108755,13 @@ xQr
 czo
 swe
 pUa
-bqx
-bqx
+cQi
+cQi
 njD
 njD
 njD
 cSt
-bqx
+cQi
 glT
 ovT
 ppi
