@@ -46,7 +46,7 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
-	critter_attack(var/mob/target)
+	critter_basic_attack(var/mob/target)
 		if (target.lying || is_incapacitated(target))
 			src.set_a_intent(INTENT_HELP)
 		else
@@ -151,7 +151,7 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
-	critter_attack(var/mob/target)
+	critter_basic_attack(var/mob/target)
 		src.chase_lines(target)
 		..()
 
@@ -201,7 +201,7 @@
 	// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
 */
 
-/mob/living/critter/shade/crew_member
+/mob/living/critter/shade/crew
 	name = "faded scientist"
 	desc = "Something is terribly wrong with them."
 	icon = 'icons/mob/human.dmi'
@@ -209,22 +209,23 @@
 	icon_state_dead = "body_m" //doesn't have a dead icon
 	alpha = 192
 	color = "#676767"
-	health_brute = 50
+	health_brute = 30
 	health_brute_vuln = 1
-	health_burn = 50
+	health_burn = 30
 	health_burn_vuln = 1
-	var/jumpsuit = "scientist-alt"
-	var/oversuit = null
-	var/overarmor = null
+	var/image/jumpsuit = null
+	var/image/oversuit = null
+	var/jumppath = "scientist-alt"
+	var/overpath = null
 
 	New()
 		..()
-		if(jumpsuit)
-			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
-		if(oversuit)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
-		if(overarmor)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[oversuit]")
+		if(jumppath)
+			ENSURE_IMAGE(src.jumpsuit, 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi', src.jumppath)
+			src.UpdateOverlays(src.jumpsuit, "jumpsuit")
+		if(overpath)
+			ENSURE_IMAGE(src.oversuit,'icons/mob/clothing/overcoats/worn_suit_armor.dmi', src.overpath)
+			src.UpdateOverlays(src.oversuit, "oversuitsuit")
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
@@ -240,8 +241,8 @@
 
 	researcher
 		name = "faded researcher"
-		jumpsuit = "robotics-alt"
-		oversuit = "ROlabcoat"
+		jumppath = "robotics-alt"
+		overpath = "ROlabcoat"
 
 	security
 		name = "faded officer"
@@ -250,8 +251,8 @@
 		health_brute_vuln = 1
 		health_burn = 50
 		health_burn_vuln = 1
-		jumpsuit = "security"
-		overarmor = "heavy"
+		jumppath = "security"
+		overpath = "heavy"
 
 		get_melee_protection(zone, damage_type)
 			return 4
