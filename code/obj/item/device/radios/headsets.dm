@@ -113,6 +113,9 @@
 		"g" = RADIOCL_SECURITY,
 		)
 	icon_override = "nt"
+	icon_tooltip = "NanoTrasen Special Operative"
+
+/obj/item/device/radio/headset/command/nt/consultant
 	icon_tooltip = "NanoTrasen Security Consultant"
 
 /obj/item/device/radio/headset/command/captain
