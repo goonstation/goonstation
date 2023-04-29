@@ -60758,6 +60758,18 @@
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"sfa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/station/security/main)
 "sfc" = (
 /obj/decorative_pot{
 	anchored = 1
@@ -72882,7 +72894,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "vOE" = (
-/obj/access_spawn/security,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -72891,6 +72902,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access = null
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "vOK" = (
@@ -104822,7 +104834,7 @@ fwD
 esH
 gtI
 pmY
-gtI
+sfa
 tBp
 aQL
 mRJ
