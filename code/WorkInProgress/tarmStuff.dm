@@ -500,7 +500,7 @@
 		if (dist <= 1)
 			. = "The shells smell like [prob(1) ? "deadchat. What?" : "the ocean."]"
 
-/datum/pipeshotrecipe/chem/pepper
+/datum/pipeshotrecipe/chem/salt
 	thingsneeded = 4
 	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
 	craftname = "salt"
