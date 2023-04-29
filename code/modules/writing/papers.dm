@@ -1102,3 +1102,28 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 	Congrats! Your mineral magnet is now assembled and ready for use!
 	"}
+
+/obj/item/paper/employee_notice
+	name = "Employee reminder"
+	icon_state = "paper"
+	info = {"
+	The backroom is currently locked for renovations and is unsafe.<br>
+	DO NOT TRY AND ENTER! or ask questions, thats not what im paying you for.<br>
+	-Larry
+	"}
+
+/obj/item/paper/laundry_purchase
+	name = "Purchase confirmation"
+	icon_state = "paper"
+	info ={"
+
+	"}
+
+/obj/item/paper/final_notice
+	name = "PAY UP LARRY"
+	icon_state = "paper"
+	info ={"
+	You have been late on your payments one too many times... <br>
+	Flake out this time and you will regret it. <br>
+	You know where to find us larry, bring the money, 100,000 credits.
+	"}

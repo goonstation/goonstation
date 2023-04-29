@@ -428,8 +428,8 @@ obj/decal/fakeobjects/teleport_pad
 
 	drying
 		desc = "Will those clothes ever be dry?"
-		icon_state = "laundry-d1"
 		New()
+			icon_state = "laundry-d1"
 			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
 			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
 			src.UpdateOverlays(src.light, "light")
@@ -437,8 +437,8 @@ obj/decal/fakeobjects/teleport_pad
 
 	washing
 		desc = "Around and around..."
-		icon_state = "laundry-w1"
 		New()
+			icon_state = "laundry-w1"
 			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
 			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
 			src.UpdateOverlays(src.light, "light")
@@ -446,8 +446,8 @@ obj/decal/fakeobjects/teleport_pad
 
 	open
 		desc = "Who left these clothes?"
-		icon_state = "laundry-p"
 		New()
+			icon_state = "laundry-p"
 			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
 			..()
 
