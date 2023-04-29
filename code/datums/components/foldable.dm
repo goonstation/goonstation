@@ -30,12 +30,12 @@ TYPEINFO(/datum/component/foldable)
 		src.original_desc = object.desc
 		object.name = "foldable [object.name]"
 		object.desc += " Whoa, this one can be folded into a briefcase!"
-	object.verbs += TYPE_PROC_REF(/obj, foldUpIntoBriefcase)
+	object.verbs += /obj/proc/foldUpIntoBriefcase
 
 /datum/component/foldable/UnregisterFromParent()
 	. = ..()
 	var/atom/movable/object = src.parent
-	object.verbs -= TYPE_PROC_REF(/obj, foldUpIntoBriefcase)
+	object.verbs -= /obj/proc/foldUpIntoBriefcase
 	if(src.change_name)
 		object.name = src.original_name
 		object.desc = src.original_desc

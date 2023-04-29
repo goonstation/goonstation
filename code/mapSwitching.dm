@@ -121,7 +121,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.voteIndex++
 
 		for (var/client/C in clients)
-			C.verbs += TYPE_PROC_REF(/client, mapVote)
+			C.verbs += /client/proc/mapVote
 			if(C?.preferences && length(C.preferences.preferred_map) && !istype(C.mob,/mob/new_player) && (C.preferences.preferred_map in playerPickable))
 				src.passiveVotes[C.ckey] = C.preferences.preferred_map
 
@@ -155,7 +155,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.playersVoting = 0
 
 		for (var/client/C in clients)
-			C.verbs -= TYPE_PROC_REF(/client, mapVote)
+			C.verbs -= /client/proc/mapVote
 
 		//count votes
 		var/list/reportData = list()
@@ -232,7 +232,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.playersVoting = 0
 
 		for (var/client/C in clients)
-			C.verbs -= TYPE_PROC_REF(/client, mapVote)
+			C.verbs -= /client/proc/mapVote
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C,var/pickable)

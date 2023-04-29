@@ -63,26 +63,26 @@
 
 	proc/update_controller_verbs()
 		if(rad)
-			src.verbs |= TYPE_PROC_REF(/obj/item/device/brainjar, control_radio)
+			src.verbs |= /obj/item/device/brainjar/proc/control_radio
 		else
-			src.verbs -= TYPE_PROC_REF(/obj/item/device/brainjar, control_radio)
+			src.verbs -= /obj/item/device/brainjar/proc/control_radio
 
 		if(signal)
-			src.verbs |= TYPE_PROC_REF(/obj/item/device/brainjar, control_signaller)
+			src.verbs |= /obj/item/device/brainjar/proc/control_signaller
 		else
-			src.verbs -= TYPE_PROC_REF(/obj/item/device/brainjar, control_signaller)
+			src.verbs -= /obj/item/device/brainjar/proc/control_signaller
 
 		if(detonator_part)
-			src.verbs |= TYPE_PROC_REF(/obj/item/device/brainjar, control_canister_detonator)
-			src.verbs |= TYPE_PROC_REF(/obj/item/device/brainjar, expedite_canbomb_detonation)
+			src.verbs |= /obj/item/device/brainjar/proc/control_canister_detonator
+			src.verbs |= /obj/item/device/brainjar/proc/expedite_canbomb_detonation
 		else
-			src.verbs -= TYPE_PROC_REF(/obj/item/device/brainjar, control_canister_detonator)
-			src.verbs -= TYPE_PROC_REF(/obj/item/device/brainjar, expedite_canbomb_detonation)
+			src.verbs -= /obj/item/device/brainjar/proc/control_canister_detonator
+			src.verbs -= /obj/item/device/brainjar/proc/expedite_canbomb_detonation
 
 		if(istype(src.master, /obj/item/device/transfer_valve))
-			src.verbs |= TYPE_PROC_REF(/obj/item/device/brainjar, detonate_tank_transfer_valve)
+			src.verbs |= /obj/item/device/brainjar/proc/detonate_tank_transfer_valve
 		else
-			src.verbs -= TYPE_PROC_REF(/obj/item/device/brainjar, detonate_tank_transfer_valve)
+			src.verbs -= /obj/item/device/brainjar/proc/detonate_tank_transfer_valve
 
 	update_icon()
 		icon_state = "tb-[colour]"
