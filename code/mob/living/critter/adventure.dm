@@ -217,6 +217,7 @@
 	var/image/oversuit = null
 	var/jumppath = "scientist-alt"
 	var/overpath = null
+	var/armourpath = null
 
 	New()
 		..()
@@ -224,8 +225,11 @@
 			ENSURE_IMAGE(src.jumpsuit, 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi', src.jumppath)
 			src.UpdateOverlays(src.jumpsuit, "jumpsuit")
 		if(overpath)
-			ENSURE_IMAGE(src.oversuit,'icons/mob/clothing/overcoats/worn_suit_armor.dmi', src.overpath)
-			src.UpdateOverlays(src.oversuit, "oversuitsuit")
+			ENSURE_IMAGE(src.oversuit,'icons/mob/clothing/overcoats/worn_suit.dmi', src.overpath)
+			src.UpdateOverlays(src.oversuit, "oversuit")
+		if(armourpath)
+			ENSURE_IMAGE(src.oversuit,'icons/mob/clothing/overcoats/worn_suit_armor.dmi', src.armourpath)
+			src.UpdateOverlays(src.oversuit, "oversuit")
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
@@ -252,7 +256,7 @@
 		health_burn = 50
 		health_burn_vuln = 1
 		jumppath = "security"
-		overpath = "heavy"
+		armourpath = "heavy"
 
 		get_melee_protection(zone, damage_type)
 			return 4
