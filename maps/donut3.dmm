@@ -72170,16 +72170,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
-"vEl" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/wall/auto/reinforced/supernorn/blackred,
-/area/station/security/brig/south_side)
 "vEx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -108164,7 +108154,7 @@ afi
 afi
 afi
 pSv
-vEl
+cQi
 kiY
 cdH
 lRb
@@ -108466,7 +108456,7 @@ ikH
 ikH
 ikH
 bTo
-vEl
+cQi
 eBx
 tmV
 lsr
