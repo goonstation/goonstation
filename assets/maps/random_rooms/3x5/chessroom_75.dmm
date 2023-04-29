@@ -21,7 +21,9 @@
 /obj/stool/chair/wooden/regal{
 	dir = 8
 	},
-/obj/machinery/bot/floorbot,
+/obj/machinery/bot/floorbot{
+	name = "Old Benoni"
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/east,
 /area/space)
 "u" = (
@@ -35,7 +37,9 @@
 /obj/stool/chair/wooden/regal{
 	dir = 8
 	},
-/obj/machinery/bot/firebot,
+/obj/machinery/bot/firebot{
+	name = "Ruy Lopez, Exchange Variation Doubly Deferred"
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/east,
 /area/space)
 "A" = (
@@ -59,14 +63,18 @@
 /obj/stool/chair/wooden/regal{
 	dir = 4
 	},
-/obj/machinery/bot/mining,
+/obj/machinery/bot/mining{
+	name = "Bogo"
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/space)
 "Z" = (
 /obj/stool/chair/wooden/regal{
 	dir = 4
 	},
-/obj/machinery/bot/secbot,
+/obj/machinery/bot/secbot{
+	name = "Bird"
+	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
 /area/space)
 
