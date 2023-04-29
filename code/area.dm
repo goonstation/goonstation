@@ -4021,8 +4021,9 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = TRUE
 				F.UpdateIcon()
-		for (var/obj/machinery/camera/C in src)
-			cameras += C
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == src)
+				cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)

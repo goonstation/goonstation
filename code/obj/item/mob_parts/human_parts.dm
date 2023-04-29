@@ -72,7 +72,7 @@
 			if(!src.holder_ahol && ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
 				src.holder_ahol = H?.bioHolder?.mobAppearance
-			if (src.holder_ahol.special_style)
+			if ((src.holder_ahol.special_style) && (istype_exact(src, src.holder_ahol.mutant_race.r_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.l_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.r_limb_leg_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.l_limb_leg_type_mutantrace)))
 				icon = src.holder_ahol.body_icon
 				partIcon = src.holder_ahol.body_icon
 			if(!src.bones)
