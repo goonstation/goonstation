@@ -6,11 +6,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"//1"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	_health = 150
 	_max_health = 150
-	var/armed = 0
+	var/armed = FALSE
 	var/det_time = 0
 	var/timer_default = 10 MINUTES
 	var/timer_modifier_disk = 3 MINUTES // +3 (crew member) or -3 (nuke ops) min.
@@ -168,7 +168,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		if (src.armed)
 			return
 		src.armed = TRUE
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
 			src.change_status_display()
 		if (!src.image_light)
@@ -197,7 +197,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 				if (src.disk && istype(src.disk))
 					boutput(user, "<span class='alert'>There's already something in the [src.name]'s disk drive.</span>")
 					return
-				if (src.armed == 0)
+				if (!src.armed)
 					boutput(user, "<span class='alert'>The [src.name] isn't armed yet.</span>")
 					return
 
@@ -331,7 +331,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		src._health = max(0,src._health - amount)
 		if (src._health < 1)
 			src.visible_message("<b>[src]</b> breaks and falls apart into useless pieces!")
-			robogibs(src.loc,null)
+			robogibs(src.loc)
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			var/datum/game_mode/nuclear/gamemode = null
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
@@ -444,7 +444,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		..()
 		if (owner && the_bomb)
 			var/timer_modifier = round((the_bomb.det_time - TIME) / 2)
-			the_bomb.anchored = 0
+			the_bomb.anchored = UNANCHORED
 
 			for (var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
@@ -480,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	_health = 10
 
 	proc/checkhealth()

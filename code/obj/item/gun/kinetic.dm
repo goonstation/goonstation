@@ -161,46 +161,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.sanitycheck(0, 1) == 0)
 				user.show_text("You can't unload this gun.", "red")
 				return
-			if (src.ammo.amount_left <= 0)
-				// The gun may have been fired; eject casings if so.
-				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.UpdateIcon()
-			user.put_in_hand_or_drop(ammoHand)
-			ammoHand.after_unload(user)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.ammo.amount_left = 0
-			src.ammo.refillable = FALSE
-			src.UpdateIcon()
-			src.add_fingerprint(user)
-			ammoHand.add_fingerprint(user)
-
-			user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
-			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
-			return
+			src.eject_magazine(user)
 
 		return ..()
 
@@ -244,6 +205,48 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
+
+	proc/eject_magazine(mob/user)
+		if (src.ammo.amount_left <= 0)
+			// The gun may have been fired; eject casings if so.
+			if ((src.casings_to_eject > 0) && src.current_projectile.casing)
+				if (src.sanitycheck(1, 0) == 0)
+					logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+					src.casings_to_eject = 0
+					return
+				else
+					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+					src.ejectcasings()
+					return
+			else
+				user.show_text("[src] is empty!", "red")
+				return
+
+		// Make a copy here to avoid item teleportation issues.
+		var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
+		ammoHand.amount_left = src.ammo.amount_left
+		ammoHand.name = src.ammo.name
+		ammoHand.icon = src.ammo.icon
+		ammoHand.icon_state = src.ammo.icon_state
+		ammoHand.ammo_type = src.ammo.ammo_type
+		ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
+		ammoHand.UpdateIcon()
+		user.put_in_hand_or_drop(ammoHand)
+		ammoHand.after_unload(user)
+
+		// The gun may have been fired; eject casings if so.
+		src.ejectcasings()
+		src.casings_to_eject = 0
+
+		src.ammo.amount_left = 0
+		src.ammo.refillable = FALSE
+		src.UpdateIcon()
+		src.add_fingerprint(user)
+		ammoHand.add_fingerprint(user)
+
+		user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
+		//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
+		return
 
 	proc/ejectcasings()
 		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
@@ -311,6 +314,48 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else if (!ignore_hammer_state && src.has_uncocked_state)
 			state +="-uc"
 		return state
+
+
+ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
+/obj/item/survival_rifle_barrel
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	var/caliber_name = ""
+	var/rifle_icon_state = ""
+	var/ammo_cats = list()
+	var/max_ammo_capacity = 1
+	var/default_magazine = null
+	var/default_projectile = null
+
+	New()
+		name = "[src.caliber_name] rifle barrel"
+		desc = "An interchangable barrel for the Efnysien survival rifle. This one is designed to fire [src.caliber_name]."
+		..()
+
+	barrel_22
+		caliber_name = ".22 LR"
+		rifle_icon_state = "survival_rifle_22"
+		ammo_cats = list(AMMO_PISTOL_22)
+		max_ammo_capacity = 10
+		default_magazine = /obj/item/ammo/bullets/bullet_22
+		default_projectile = /datum/projectile/bullet/bullet_22
+
+
+	barrel_9mm
+		caliber_name = "9x19mm Parabellum"
+		rifle_icon_state = "survival_rifle_9mm"
+		ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+		max_ammo_capacity = 15
+		default_magazine = /obj/item/ammo/bullets/bullet_9mm
+		default_projectile = /datum/projectile/bullet/bullet_9mm
+
+	barrel_556
+		caliber_name = "5.56x45mm NATO"
+		rifle_icon_state = "survival_rifle_556"
+		ammo_cats = list(AMMO_AUTO_556)
+		max_ammo_capacity = 20
+		default_magazine = /obj/item/ammo/bullets/assault_rifle
+		default_projectile = /datum/projectile/bullet/assault_rifle
 
 /obj/item/casing
 	name = "bullet casing"
@@ -482,6 +527,77 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		..()
 		return
+
+/obj/item/gun/kinetic/survival_rifle
+	name = "\improper Efnysien survival rifle"
+	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "survival_rifle_22"
+	item_state = "survival_rifle"
+	wear_state = "survival_rifle"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_RIFLE
+	c_flags = ONBACK
+	contraband = 8
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	auto_eject = TRUE
+	fire_animation = TRUE
+	var/obj/item/survival_rifle_barrel/barrel = new /obj/item/survival_rifle_barrel/barrel_22
+
+	New()
+		src.set_barrel_stats(src.barrel)
+		ammo = new default_magazine
+		..()
+
+	attackby(obj/item/b, mob/user)
+		if (istype(b, /obj/item/survival_rifle_barrel))
+			var/obj/item/survival_rifle_barrel/new_barrel = b
+			src.try_swap_barrel(user, new_barrel, TRUE)
+			return
+		..()
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (istype(target, /obj/item/survival_rifle_barrel))
+			var/obj/item/survival_rifle_barrel/new_barrel = target
+			src.try_swap_barrel(user, new_barrel, FALSE)
+			return
+		..()
+
+	proc/try_swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)
+		if (istype(new_barrel, src.barrel.type))
+			user.show_text("There's no point swapping the barrel. They're the same caliber!", "red")
+			return
+		// Eject the mag first so we don't dissapear ammo
+		src.eject_magazine(user)
+
+		// Swap the barrel objs
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("[user] begins swapping the barrel on [his_or_her(user)] [src].", "You begin swapping the barrel on \the [src].")
+		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/gun/kinetic/survival_rifle/proc/swap_barrel, list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
+		return
+
+	proc/swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)
+		if (holding_barrel)
+			// Drop the barrel if you're holding it, so we can set_loc on it
+			user.drop_item()
+		new_barrel.set_loc(src)
+		user.put_in_hand_or_drop(src.barrel)
+		src.barrel = new_barrel
+
+		// Set the gun's stats to the new barrel
+		src.set_barrel_stats(barrel)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+	proc/set_barrel_stats(var/obj/item/survival_rifle_barrel/barrel)
+		src.icon_state = barrel.rifle_icon_state
+		src.ammo_cats = barrel.ammo_cats
+		src.max_ammo_capacity = barrel.max_ammo_capacity
+		src.default_magazine = barrel.default_magazine
+		set_current_projectile(new barrel.default_projectile)
+		src.projectiles = list(current_projectile)
+		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
+		src.tooltip_rebuild = 1
 
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
@@ -1583,7 +1699,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			return
 
 /obj/item/gun/kinetic/mrl
-	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles."
+	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -1870,18 +1986,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 // scout
 /obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
-	name = "tactical shotgun"
-	desc = "Multi-purpose high-grade military shotgun, painted a menacing black colour."
+	name = "\improper Pryderi tactical shotgun"
+	desc = "A compact multi-purpose shotgun from Mabinogi Firearms Company, standard-issue for Hafgan's mine guards and convoy security throughout the Martian War."
 	icon_state = "tactical_shotgun"
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 8
+	max_ammo_capacity = 5
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
+	fire_animation = TRUE
+	has_empty_state = TRUE
 
 	New()
 		ammo = new default_magazine

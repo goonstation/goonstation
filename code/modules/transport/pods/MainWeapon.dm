@@ -30,6 +30,8 @@
 					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
+			if(uses_ammunition)
+				dat += {"<b>Remaining ammo:</b> [remaining_ammunition]<BR>"}
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
 		user.Browse(dat, "window=ship_main_weapon")

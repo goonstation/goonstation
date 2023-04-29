@@ -3,28 +3,6 @@
 
 // Added kyle2143's werewolf patch (Gannets).
 
-/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
-
-// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
-/mob/proc/make_werewolf()
-	if (ishuman(src))
-		var/datum/abilityHolder/werewolf/A = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (A && istype(A))
-			return
-		var/datum/abilityHolder/werewolf/W = src.add_ability_holder(/datum/abilityHolder/werewolf)
-		W.addAbility(/datum/targetable/werewolf/werewolf_feast)
-		W.addAbility(/datum/targetable/werewolf/werewolf_pounce)
-		W.addAbility(/datum/targetable/werewolf/werewolf_thrash)
-		W.addAbility(/datum/targetable/werewolf/werewolf_throw)
-		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
-		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
-		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction) //not using for now, but could be fun later ish.
-		src.resistances += /datum/ailment/disease/lycanthropy
-
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			src.show_antag_popup("werewolf")
-
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
 // Avoids C&P code for that werewolf disease.

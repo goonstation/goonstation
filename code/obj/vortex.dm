@@ -6,7 +6,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "anom"
 	desc = "I wonder what this is."
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()
@@ -31,10 +31,10 @@
 
 				if(4)
 					//spatial interdictor: suppress intense particle discharge
-					//consumes 150 units of charge per flash interdicted
+					//consumes 80 units of charge (40,000 joules) per flash interdicted
 					var/interdicted = FALSE
 					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(150,src))
+						if (IX.expend_interdict(80,src))
 							interdicted = TRUE
 							break
 					if(!interdicted)
@@ -68,10 +68,10 @@
 	proc/spawn_horror()
 		var/horror_path = null
 		//spatial interdictor: when something would exit a vortex, it doesn't
-		//consumes 500 units of charge per inbound thing interdicted
+		//consumes 400 units of charge (200,000 joules) per inbound thing interdicted
 		var/interdicted = FALSE
 		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(500,src))
+			if (IX.expend_interdict(400,src))
 				interdicted = TRUE
 				break
 		if(!interdicted)
@@ -95,13 +95,13 @@
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /obj/critter/aberration)
+					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
 				if (was_eaten && prob(15))
 					horror_path = /obj/critter/blobman/meaty_martha
 			else
 				horror_path = pick(/obj/critter/killertomato,
 				/obj/critter/spore,
-				/obj/critter/spacerattlesnake,
+				/mob/living/critter/small_animal/rattlesnake,
 				/obj/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
@@ -109,9 +109,9 @@
 				/obj/machinery/bot/cleanbot/emagged,
 				/obj/critter/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
-				/obj/critter/mimic,
-				/obj/critter/fermid,
-				/obj/critter/bear)
+				/mob/living/critter/mimic,
+				/mob/living/critter/fermid,
+				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else

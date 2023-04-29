@@ -13,7 +13,7 @@
 	var/using = 0
 	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
-	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
+	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
 		..()
@@ -22,35 +22,38 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.dispose()
 			ability.owner = null
+			qdel(ability)
 		src.ability = null
 		..()
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			check_ability_owner()
-			var/mob/living/carbon/human/H = owner
-			H.hud.update_ability_hotbar()
-		return
+		check_ability_owner()
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.hud)
-				H.hud.update_ability_hotbar()
-		return
+		if (src.ability)
+			src.ability.holder.removeAbilityInstance(src.ability)
 
 	proc/check_ability_owner()
 		if (ispath(ability_path))
-			var/datum/targetable/geneticsAbility/AB = new ability_path(src)
+			var/datum/targetable/geneticsAbility/AB = src.owner?.abilityHolder?.addAbility(src.ability_path)
+			if (!AB)
+				return
 			ability = AB
+			AB.cooldown = src.cooldown
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
 			AB.owner = src.owner
+			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
+
+	//varedit support for cooldowns
+	onVarChanged(variable, oldval, newval)
+		if (variable == "cooldown" && istype(src.ability))
+			src.ability.cooldown = newval
+			src.ability.holder?.updateButtons()
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -1237,28 +1240,32 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if(linked_power.using)
-			return 1
+			return TRUE
 
 		var/obj/the_object = target
 
-		if(!target)
-			var/base_path = /obj/item/
-			if (linked_power.power > 1)
-				base_path = /obj/
+		var/base_path = /obj/item/
+		if (linked_power.power > 1)
+			base_path = /obj/
 
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+
+		if(target)
+			if (!(target in items))
+				return TRUE
+		else
 			if (!items.len)
-				boutput(usr, "/red You can't find anything nearby to touch.")
-				return 1
+				boutput(usr, "<span class='alert'>You can't find anything nearby to touch.</span>")
+				return TRUE
 
 			linked_power.using = 1
 			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 			if (!the_object)
 				last_cast = 0
 				linked_power.using = 0
-				return 1
+				return TRUE
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1278,7 +1285,6 @@
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
 				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
 		linked_power.using = 0
-		return
 
 	cast_misfire()
 		if (..())
@@ -1412,8 +1418,8 @@
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
-	var/active = 0
-	var/processing = 0
+	var/active = FALSE
+	var/processing = FALSE
 	var/atom/last_loc = null
 	acceptable_in_mutini = 0
 
@@ -1434,8 +1440,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				active = 0
-			processing = 0
+				active = FALSE
+				processing = FALSE
 		return
 
 /datum/targetable/geneticsAbility/dimension_shift
@@ -1481,7 +1487,7 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = FALSE
+				P.processing = FALSE
 			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
@@ -1500,8 +1506,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = 0
-			P.processing = 0
+				P.active = FALSE
+				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1552,7 +1558,7 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	icon = null
 	icon_state = null
@@ -2104,10 +2110,9 @@
 			return 1
 
 		var/obj/the_object = target
-
+		var/base_path = /obj
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if(!the_object)
-			var/base_path = /obj
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
 				return 1
@@ -2116,6 +2121,8 @@
 			if (!the_object)
 				last_cast = 0
 				return 1
+		if (!(the_object in items))
+			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2185,7 +2192,6 @@
 			hit.changeStatus("weakened", 5 SECONDS)
 			hit.force_laydown_standup()
 			break
-		return 0
 
 	cast(atom/target)
 		if (..())

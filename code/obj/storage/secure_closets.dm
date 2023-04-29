@@ -21,7 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
-			anchored = 1
+			anchored = ANCHORED
 		src.attack_particle = new /obj/particle/attack
 		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
@@ -36,7 +36,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
 			..()
@@ -59,12 +59,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 			else
 				var/damage
 				var/damage_text
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
-				if (I.force <= 10)
+				if (I.force < 10)
 					damage = round(I.force * 0.6)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
@@ -119,10 +119,11 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		SPAWN(0.2 SECONDS)
 			src.attack_particle.alpha = 0
 
-	proc/toggle_bolts(var/mob/M)
-		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+	proc/toggle_bolts(var/mob/user)
+		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
+		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
 
 	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
 		if (!isnum(amount) || amount <= 0)
@@ -149,7 +150,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 				else
 					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			else if (M)
-				logTheThing(LOG_COMBAT, M, "broke open [src] with [I] at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, M, "broke open [log_object(src)] with [log_object(I)] at [log_loc(src)]")
 			else
 				logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
@@ -328,8 +329,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/engineer,
-		/obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
 
 	)
@@ -411,7 +412,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Automatic Locker"
 	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
-	anchored = 1
+	anchored = ANCHORED
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE

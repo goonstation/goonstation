@@ -20,28 +20,28 @@
 	name = "Nuclear Fuel Rod"
 	desc = "A fuel rod for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/fuel_rod
 
 /datum/matfab_recipe/simple/nuclear/control_rod
 	name = "Control Rod"
 	desc = "A control rod for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/control_rod
 
 /datum/matfab_recipe/simple/nuclear/heat_exchanger
 	name = "Heat Exchanger"
 	desc = "A heat exchanger component for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/heat_exchanger
 
 /datum/matfab_recipe/simple/nuclear/gas_channel
 	name = "Coolant Channel"
 	desc = "A coolant channel component for a nuclear reactor"
 	category = "Nuclear"
-	materials = list("!any"=3)
+	materials = list("!any"=2)
 	result = /obj/item/reactor_component/gas_channel
 
 /datum/matfab_recipe/spacesuit
@@ -595,6 +595,22 @@
 				newObj.setMaterial(source.material)
 			newObj.change_stack_amount((amount*10) - newObj.amount)
 			newObj.set_loc(getOutputLocation(owner))
+
+/datum/matfab_recipe/thermocouple
+	name = "Themocouple"
+	desc = "For use in a Thermo Electric Generator."
+	category = "Tools"
+
+	New()
+		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		..()
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		var/obj/item/source = getObjectByPartName("Sheet")
+		var/obj/item/teg_semiconductor/newObj = new()
+		if(source?.material)
+			newObj.setMaterial(source.material)
+		newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/cell_small
 	name = "Small energy cell"

@@ -7220,7 +7220,8 @@
 "aJx" = (
 /turf/simulated/shuttle/wall{
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	icon = 'icons/obj/doors/shuttle.dmi'
 	},
 /area/abandonedmedicalship)
 "aJy" = (
@@ -10342,7 +10343,7 @@
 /obj/item/raw_material/claretine,
 /obj/item/raw_material/claretine,
 /obj/item/raw_material/uqill,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSF" = (
@@ -10478,7 +10479,7 @@
 "aSX" = (
 /obj/item/raw_material/bohrum,
 /obj/item/raw_material/bohrum,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aSY" = (
@@ -10545,7 +10546,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTi" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTj" = (
@@ -10865,7 +10866,7 @@
 "aTY" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/mining_tool/powerhammer,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aTZ" = (
@@ -11008,7 +11009,7 @@
 /area/fermid_hive)
 "aUu" = (
 /obj/item/raw_material/uqill,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUv" = (
@@ -11065,7 +11066,7 @@
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/syreline,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUD" = (
@@ -11080,7 +11081,7 @@
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
 /obj/item/raw_material/cobryl,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/fermid_hive)
 "aUF" = (
@@ -17942,6 +17943,7 @@
 /obj/storage/crate,
 /obj/item/clothing/mask/medical,
 /obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/mask/gas/swat,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "eFq" = (

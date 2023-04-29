@@ -7,7 +7,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	desc = "fix me please"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
@@ -323,7 +323,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		S.deployer = src
 		src.deployed_shields += S
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
@@ -336,7 +336,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			qdel(S)
 
 		if(!connected)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 		src.active = 0
 
 		//currently only the e-shield interacts with atmos
@@ -530,7 +530,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			src.set_density(FALSE)
 
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if(istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 

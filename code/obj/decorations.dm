@@ -2,7 +2,7 @@
 /obj/poolwater
 	name = "water"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "poolwater"
 	layer = EFFECTS_LAYER_UNDER_3
@@ -47,7 +47,7 @@
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
 	icon_state = "tree" // changed from 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_3
 
 	pixel_x = -20
@@ -157,14 +157,14 @@
 	desc = "Some flowing water."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "river"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/stone
 	name = "stone"
 	desc = "Rock and stone, son. Rock and stone."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "stone"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 
 	_max_health = 25
@@ -214,7 +214,7 @@
 	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "shrub"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
 	flags = FLUID_SUBMERGE
@@ -401,7 +401,7 @@
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
@@ -419,7 +419,7 @@
 			var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
 			C.overlays += image('icons/misc/32x64.dmi',"halo")
 			C.set_loc(pick(afterlife_turfs))
-			C.anchored = 0
+			C.anchored = UNANCHORED
 			C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
@@ -476,7 +476,7 @@
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "bottleship"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_1
 	var/destroyed = 0
@@ -491,7 +491,7 @@
 		var/obj/captain_bottleship/C = new /obj/captain_bottleship
 		C.overlays += image('icons/misc/32x64.dmi',"halo")
 		C.set_loc(pick(get_area_turfs(/area/afterlife/bar)))
-		C.anchored = 0
+		C.anchored = UNANCHORED
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
@@ -530,7 +530,7 @@
 	desc = "Considering the fact that plants communicate through their roots, you wonder if this one ever feels lonely."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ppot0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER
 
@@ -558,29 +558,43 @@
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grassplug"
-	anchored = 1
+	anchored = ANCHORED
+
+/proc/switched_obj_toggle(var/category,var/id,var/new_state = FALSE)
+	if(!category || !id)
+		logTheThing(LOG_DEBUG, null, "Switched object toggle called without full var set. Variables passed: [category] | [id]")
+		return
+	for(var/atom/A in switched_objs[category][id])
+		A:toggle(new_state)
 
 /obj/window_blinds
 	name = "blinds"
 	desc = "Thin strips of plastic that can be angled to prevent light from passing through. There's probably a switch that controls them nearby."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "blindsH-o"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = FLY_LAYER+1.01 // just above windows
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null
-	var/obj/blind_switch/mySwitch = null
 
 	New()
 		. = ..()
-		START_TRACKING
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
 
 	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
 		. = ..()
-		STOP_TRACKING
 
 	ex_act(var/severity)
 		switch(severity)
@@ -589,24 +603,19 @@
 			else
 				if(prob(50))
 					qdel(src)
+
 	attack_hand(mob/user)
-		src.toggle()
 		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
 		src.toggle_group()
 
-	proc/toggle(var/force_state as null|num)
-		if (!isnull(force_state))
-			src.open = force_state
-		else
-			src.open = !(src.open)
+	proc/toggle(var/new_state)
+		src.open = new_state
 		src.UpdateIcon()
 
 	proc/toggle_group()
-		if (istype(src.mySwitch))
-			src.mySwitch.toggle()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.open))
 
 	update_icon()
 		if (src.open)
@@ -659,18 +668,29 @@
 	desc = "A switch for opening the blinds."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/on = 0
 	var/id = null
-	var/list/myBlinds = list()
 
 	New()
-		..()
+		. = ..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
 		if (!src.name || (src.name in list("N blind switch", "E blind switch", "S blind switch", "W blind switch")))//== "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			src.name = "blind switch"
-		SPAWN(0.5 SECONDS)
-			src.locate_blinds()
+		if (!src.id)
+			var/area/blind_area = get_area(src)
+			src.id = blind_area.name
+		ADD_SWITCHED_OBJ(SWOB_BLINDS)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_BLINDS)
+		. = ..()
+
 	ex_act(var/severity)
 		switch(severity)
 			if(1,2)
@@ -678,29 +698,23 @@
 			else
 				if(prob(50))
 					qdel(src)
-	proc/locate_blinds()
-		for_by_tcl(blind, /obj/window_blinds)
-			if (blind.id == src.id)
-				if (!(blind in src.myBlinds))
-					src.myBlinds += blind
-					blind.mySwitch = src
 
-	proc/toggle()
-		src.on = !(src.on)
+	proc/toggle(var/new_state)
+		src.on = new_state
 		src.icon_state = "light[!(src.on)]"
-		if (!islist(myBlinds) || !length(myBlinds))
-			return
-		for (var/obj/window_blinds/blind in myBlinds)
-			blind.toggle(src.on)
+		src.UpdateIcon()
+
+	proc/toggle_group()
+		switched_obj_toggle(SWOB_BLINDS,src.id,!(src.on))
 
 	attack_hand(mob/user)
-		src.toggle()
+		src.toggle_group()
 
 	attack_ai(mob/user as mob)
-		src.toggle()
+		src.toggle_group()
 
 	attackby(obj/item/W, mob/user)
-		src.toggle()
+		src.toggle_group()
 
 /obj/blind_switch/north
 	name = "N blind switch"
@@ -718,17 +732,8 @@
 	name = "W blind switch"
 	pixel_x = -24
 
+// left in for existing map compatibility; subsequent update could unify blind and sign switches codewise, and eliminate this subtype
 /obj/blind_switch/area
-	locate_blinds()
-		var/area/A = get_area(src)
-		for_by_tcl(blind, /obj/window_blinds)
-			var/area/blind_area = get_area(blind)
-			if(blind_area != A)
-				continue
-			LAGCHECK(LAG_LOW)
-			if (!(blind in src.myBlinds))
-				src.myBlinds += blind
-				blind.mySwitch = src
 
 /obj/blind_switch/area/north
 	name = "N blind switch"
@@ -746,11 +751,156 @@
 	name = "W blind switch"
 	pixel_x = -24
 
+/obj/sign_switch
+	name = "sign switch"
+	desc = "Connected to one or more illuminated signs, turning them on or off."
+	icon = 'icons/obj/power.dmi'
+	icon_state = "light0"
+	anchored = ANCHORED
+	density = 0
+	var/on = FALSE
+	var/id = null
+
+	New()
+		..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.name || (src.name in list("N sign switch", "E sign switch", "S sign switch", "W sign switch")))
+			src.name = "sign switch"
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.icon_state = "light[src.on]"
+		src.UpdateIcon()
+
+	proc/toggle_group()
+		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+
+	attack_hand(mob/user)
+		src.toggle_group()
+
+	attack_ai(mob/user as mob)
+		src.toggle_group()
+
+	attackby(obj/item/W, mob/user)
+		src.toggle_group()
+
+/obj/sign_switch/north
+	name = "N sign switch"
+	pixel_y = 24
+
+/obj/sign_switch/east
+	name = "E sign switch"
+	pixel_x = 24
+
+/obj/sign_switch/south
+	name = "S sign switch"
+	pixel_y = -24
+
+/obj/sign_switch/west
+	name = "W sign switch"
+	pixel_x = -24
+
+/obj/machinery/illuminated_sign
+	name = "illuminated sign"
+	desc = "It's a sign on the wall that does the glowy thing."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "occupancy-1"
+	anchored = ANCHORED
+	density = 0
+	opacity = 0
+	layer = FLY_LAYER+1.01 // just above windows
+	var/base_state = "occupancy"
+	var/on = FALSE
+	var/id = null
+
+	New()
+		..()
+		if (current_state > GAME_STATE_PREGAME)
+			SPAWN(0.5 SECONDS)
+				src.initialize()
+
+	initialize()
+		if (!src.id)
+			var/area/sign_area = get_area(src)
+			src.id = sign_area.name
+		ADD_SWITCHED_OBJ(SWOB_SIGNAGE)
+
+	disposing()
+		REMOVE_SWITCHED_OBJ(SWOB_SIGNAGE)
+		. = ..()
+
+	ex_act(var/severity)
+		switch(severity)
+			if(1,2)
+				qdel(src)
+			else
+				if(prob(50))
+					qdel(src)
+
+	proc/toggle(var/new_state)
+		src.on = new_state
+		src.UpdateIcon()
+
+	power_change()
+		..()
+		UpdateIcon()
+
+/obj/machinery/illuminated_sign/update_icon()
+	if(!on || status & NOPOWER)
+		icon_state = "[src.base_state]-0"
+		src.UpdateOverlays(null, "light")
+	else
+		icon_state = "[src.base_state]-1"
+		var/mutable_appearance/light_ov = mutable_appearance(src.icon, "[src.base_state]-glow")
+		light_ov.plane = PLANE_LIGHTING
+		light_ov.alpha = 150
+		src.UpdateOverlays(light_ov, "light")
+
+/obj/machinery/illuminated_sign/occupancy
+	name = "occupancy sign"
+	desc = "A convenient illuminated sign to let you know that you're not supposed to butt in."
+	icon_state = "occupancy-0"
+	base_state = "occupancy"
+
+/obj/machinery/illuminated_sign/onair
+	name = "ON AIR sign"
+	desc = "Glows in proximity to pompous radio hosts."
+	icon_state = "onair-0"
+	base_state = "onair"
+
+/obj/machinery/illuminated_sign/open_neon
+	name = "open sign"
+	desc = "A fancy neon-style sign, traditionally used to welcome others to an active place of business."
+	icon_state = "opensign-0"
+	base_state = "opensign"
+
 /obj/disco_ball
 	name = "disco ball"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "disco0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = 6
 	var/on = 0
@@ -783,13 +933,13 @@
 	desc = "A nameplate signifying who this office belongs to."
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "office_plaque"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/chainlink_fence
 	name = "chain-link fence"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "chainlink"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	centcom_edition
 		name = "electrified super high-security mk. X-22 edition chain-link fence"
@@ -808,7 +958,7 @@
 	desc = "A nearby icy moon orbiting the gas giant. Deep reserves of liquid water have been detected below the fractured and desolate surface."
 	mouse_opacity = 0
 	opacity = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	plane = PLANE_SPACE
 
@@ -950,7 +1100,7 @@ obj/decoration/decorativeplant
 	desc = "Is it flora or is it fauna? Hm."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "plant1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	plant2
@@ -971,7 +1121,7 @@ obj/decoration/junctionbox
 	desc = "It seems to be locked pretty tight with no reasonable way to open it."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "junctionbox"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	junctionbox2
 		icon_state = "junctionbox2"
@@ -984,7 +1134,7 @@ obj/decoration/clock
 	icon_state = "clock"
 	desc = " "
 	icon = 'icons/obj/decoration.dmi'
-	anchored = 1
+	anchored = ANCHORED
 
 	get_desc()
 		. += "[pick("The time is", "It's", "It's currently", "It reads", "It says")] [o_clock_time()]."
@@ -1000,7 +1150,7 @@ obj/decoration/vent
 	desc = "Better not to stick your hand in there, those blades look sharp.."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "vent1"
-	anchored = 1
+	anchored = ANCHORED
 
 	vent2
 		icon_state = "vent2"
@@ -1012,7 +1162,7 @@ obj/decoration/ceilingfan
 	desc = "It's actually just kinda hovering above the floor, not actually in the ceiling. Don't tell anyone."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "detectivefan"
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_BASE
 
 /obj/decoration/candles
@@ -1021,7 +1171,7 @@ obj/decoration/ceilingfan
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "candles-unlit"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 	var/icon_off = "candles-unlit"
 	var/icon_on = "candles"
@@ -1108,14 +1258,14 @@ obj/decoration/ceilingfan
 	icon = 'icons/obj/large/64x32.dmi'
 	density = 0
 	opacity = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decoration/bookcase
 	name = "bookcase"
 	desc = "It's a bookcase. Full of books."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "bookcase"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	layer = DECAL_LAYER
 
@@ -1124,7 +1274,7 @@ obj/decoration/ceilingfan
 	desc = "Why would you even need this when there's no..?"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "toiletholder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /obj/decoration/tabletopfull
@@ -1132,7 +1282,7 @@ obj/decoration/ceilingfan
 	desc = "It's a shelf full of things that you'll need to play your favourite tabletop campaigns. Mainly a lot of dice that can only roll 1's."
 	icon_state = "tabletopfull"
 	icon = 'icons/obj/large/64x32.dmi'
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	layer = DECAL_LAYER
 
@@ -1141,14 +1291,14 @@ obj/decoration/gibberBroken
 	desc = "This thing is completely broken and rusted. There's also a shredded armored jacket and some crunched up bloody bones inside. Huh."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gibberBroken"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_CROWBAR
 
 /obj/decoration/syndiepc
 	name = "syndicate computer"
 	desc = "It looks rather sinister with all the red text. I wonder what does it all mean?"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndiepc1"
@@ -1221,7 +1371,7 @@ obj/decoration/gibberBroken
 /obj/decoration/bustedmantapc
 	name = "broken computer"
 	desc = "Yeaaah, it has certainly seen some better days."
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "bustedmantapc"
@@ -1236,7 +1386,7 @@ obj/decoration/gibberBroken
 
 /obj/decoration/collapsedwall
 	name = "collapsed wall"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
 	icon = 'icons/obj/decoration.dmi'
@@ -1244,7 +1394,7 @@ obj/decoration/gibberBroken
 
 /obj/decoration/ntcratesmall
 	name = "metal crate"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	desc = "A tightly locked metal crate."
 	icon = 'icons/obj/decoration.dmi'
@@ -1252,7 +1402,7 @@ obj/decoration/gibberBroken
 
 /obj/decoration/ntcrate
 	name = "metal crate"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	desc = "Assortment of two metal crates, both of them sealed shut."
 	icon = 'icons/obj/large/32x64.dmi'
@@ -1267,37 +1417,37 @@ obj/decoration/gibberBroken
 
 /obj/decoration/weirdmark
 	name = "weird mark"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "weirdmark"
 
 /obj/decoration/frontwalldamage
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "frontwalldamage"
 	mouse_opacity = 0
 
 /obj/decoration/damagedchair
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "damagedchair"
 
 /obj/decoration/syndcorpse5
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	name = "syndicate corpse"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "Whoever this was, you're pretty sure they've had better days. Makes you wonder where the other half is..."
 	icon_state = "syndcorpse5"
 
 /obj/decoration/syndcorpse10
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	name = "syndicate corpse"
 	icon = 'icons/obj/decoration.dmi'
 	desc = "... Oh, there it is."
 	icon_state = "syndcorpse10"
 
 /obj/decoration/bullethole
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "bhole"
 	mouse_opacity = 0
@@ -1306,7 +1456,7 @@ obj/decoration/gibberBroken
 		return list()
 
 /obj/decoration/plasmabullethole
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "plasma-bhole"
 	mouse_opacity = 0
@@ -1380,7 +1530,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "lamp_regal_unlit"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	var/parts_type = /obj/item/furniture_parts/decor/regallamp
 	var/icon_off = "lamp_regal_unlit"
@@ -1499,7 +1649,7 @@ obj/decoration/floralarrangement
 	desc = "These look... Very plastic. Huh."
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "floral_arrange"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 obj/decoration/pottedfern
@@ -1507,7 +1657,7 @@ obj/decoration/pottedfern
 	desc = "These look... Very plastic. Huh."
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "plant_fern"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/burning_barrel
@@ -1516,7 +1666,7 @@ obj/decoration/pottedfern
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "barrel1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/light
@@ -1547,7 +1697,7 @@ obj/decoration/pottedfern
 	name = "Box of Fireworks"
 	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "fireworksbox"
@@ -1557,7 +1707,7 @@ obj/decoration/pottedfern
 		if(fireworking) return
 		fireworking = 1
 		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
-		anchored = 1
+		anchored = ANCHORED
 
 		SPAWN(0)
 			for(var/i=0, i<rand(15,25), i++)
@@ -1576,7 +1726,7 @@ ADMIN_INTERACT_PROCS(/obj/lever, proc/toggle)
 	name = "lever"
 	desc = "A big satisfying wall lever, ready to be pulled."
 	density = 0
-	anchored = TRUE
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "wall-lever-up"
 	var/on = FALSE

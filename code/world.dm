@@ -52,6 +52,7 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
+			next_round_mode = master_mode
 			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
@@ -113,8 +114,6 @@ var/global/mob/twitch_mob = 0
 		turfjs = jointext(typesof(/turf), ";")
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
-
-var/f_color_selector_handler/F_Color_Selector
 
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
@@ -280,6 +279,9 @@ var/f_color_selector_handler/F_Color_Selector
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
+
+		Z_LOG_DEBUG("Preload", "Generating minimaps...")
+		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -511,6 +513,7 @@ var/f_color_selector_handler/F_Color_Selector
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -960,9 +963,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
 								twitch_mob.set_a_intent(lowertext(msg))
-								if (ishuman(twitch_mob))
-									var/mob/living/carbon/human/H = twitch_mob
-									H.hud.update_intent()
 							return 1
 
 						if("attack")
@@ -989,7 +989,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
 									twitch_mob.set_a_intent(INTENT_HARM)
-									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
 								var/list/p = list()
@@ -1544,6 +1543,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
@@ -1565,7 +1566,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("rev")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[vcs_revision] by [vcs_author]"
+				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
+				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
 			if ("version")

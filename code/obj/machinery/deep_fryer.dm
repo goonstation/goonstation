@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 	desc = "An industrial deep fryer.  A big hit at state fairs!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "fryer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH
 	status = REQ_PHYSICAL_ACCESS
@@ -83,6 +83,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 		return
 
+	logTheThing(LOG_STATION, user, "puts the [log_object(W)] into the [log_object(src)] at [log_loc(src)].")
 	src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 	user.u_equip(W)
 	W.dropped(user)

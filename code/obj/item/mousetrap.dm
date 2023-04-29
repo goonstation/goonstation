@@ -8,7 +8,7 @@
 	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
-	var/armed = 0
+	var/armed = FALSE
 	var/obj/item/chem_grenade/grenade = null
 	var/obj/item/old_grenade/grenade_old = null
 	var/obj/item/pipebomb/bomb/pipebomb = null
@@ -25,7 +25,7 @@
 
 	armed
 		icon_state = "mousetraparmed"
-		armed = 1
+		armed = TRUE
 
 		cleaner
 			name = "cleantrap"
@@ -77,6 +77,11 @@
 		. = ..()
 
 	attack_hand(mob/user)
+		if (ismobcritter(user))
+			var/mob/living/critter/critter = user
+			if (critter.ghost_spawned)
+				critter.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+				return
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -90,10 +95,16 @@
 		..()
 		return
 
+	pull(mob/living/critter/user)
+		if (istype(user) && user.ghost_spawned)
+			user.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+			return TRUE
+		return ..()
+
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
-			if (CG.stage == 2 && !CG.state)
+			if (CG.stage == 2 && !CG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
 					return
@@ -111,7 +122,7 @@
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
-			if (OG.not_in_mousetraps == 0 && !OG.state)
+			if (OG.not_in_mousetraps == 0 && !OG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
 					return
@@ -300,7 +311,7 @@
 			var/mob/living/critter/wraith/plaguerat/P = AM
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
-			src.armed = 0
+			src.armed = FALSE
 			clear_armer()
 			src.visible_message("<span class='alert'><b>[P] is caught in the trap and squeals in pain!</b></span>")
 			P.setStatus("stunned", 3 SECONDS)
@@ -310,7 +321,7 @@
 			var/mob/living/critter/wraith/plaguerat/P = AM
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
-			src.armed = 0
+			src.armed = FALSE
 			clear_armer()
 			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
 			P.gib()
@@ -325,7 +336,7 @@
 			var/mob/living/critter/small_animal/mouse/M = AM
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"
-			src.armed = 0
+			src.armed = FALSE
 			clear_armer()
 			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
 			M.death()
@@ -366,12 +377,15 @@
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
-			C.TakeDamage("All", 1)
+			if (C.ghost_spawned)
+				C.TakeDamage("All", 5)
+			else
+				C.TakeDamage("All", 1)
 
 		if (target)
 			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		src.icon_state = "mousetrap"
-		src.armed = 0
+		src.armed = FALSE
 
 		if (src.grenade)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
@@ -381,7 +395,7 @@
 
 		else if (src.grenade_old)
 			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
-			src.grenade_old.prime()
+			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
@@ -432,7 +446,7 @@
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
-	var/armed = 0
+	var/armed = FALSE
 	var/obj/item/mousetrap/mousetrap = null
 	var/obj/item/pipebomb/frame/frame = null
 	var/payload = ""
@@ -514,9 +528,9 @@
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
-		src.armed = 1
+		src.armed = TRUE
 		if (!(src.mousetrap?.armed))
-			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
+			src.mousetrap.armed = TRUE // Must be armed or it won't work in mousetrap.triggered().
 			src.mousetrap.set_armer(user)
 		src.set_density(1)
 		user.u_equip(src)

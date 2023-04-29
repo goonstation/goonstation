@@ -3,9 +3,9 @@
 	desc = "Controls the simulation room and V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "mastercomp"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	power_usage = 3000
+	power_usage = 100
 	var/active = 1
 	var/id = 1
 	var/vspace_id = 1
@@ -127,7 +127,7 @@
 	desc = "Lets a user access V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simchair"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	machine_registry_idx = MACHINES_SIM
 	var/active = 0
@@ -149,7 +149,7 @@
 	else
 		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
 
-	M.anchored = 1
+	M.anchored = ANCHORED
 	M.buckled = src
 	M.set_loc(src.loc)
 	M.network_device = src
@@ -167,7 +167,7 @@
 		else
 			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
 
-		M.anchored = 0
+		M.anchored = UNANCHORED
 		M.buckled = null
 		M.network_device = null
 		src.active = 0
@@ -183,7 +183,7 @@
 	desc = "An advanced pod that lets the user enter V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "vrbed"//_0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_MULTITOOL
 	machine_registry_idx = MACHINES_SIM
@@ -404,7 +404,7 @@
 	desc = "Controls part of V-space"
 	icon = 'icons/misc/simroom.dmi'
 	icon_state = "simcomp"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/id = "none"
 	var/network = "none"

@@ -34,12 +34,6 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/purchased_traitor_items = list()
-	var/list/traitor_crate_items = list()
-	var/list/blob_absorb_victims = list()
-	var/list/spy_stolen_items = list()
-
-	var/datum/gang/gang = null //Associate a leader with their gang.
 
 	var/list/intrinsic_verbs = list()
 
@@ -88,10 +82,20 @@ datum/mind
 				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to qdel'd mob [new_character] (\ref[new_character]) God damnit. Un-qdeling the mob and praying (this will probably fuck up).")
 				new_character.disposed = 0
 			else
-				message_admins("Tried to transfer mind [src] (\ref[src]) to qdel'd mob [new_character] (\ref[new_character]) FIX THIS SHIT")
+				message_admins("Tried to transfer mind [src] to qdel'd mob [new_character] (\ref[new_character]).")
 
-			Z_LOG_ERROR("Mind/TransferTo", "Trying to transfer to a mob that's in the delete queue! Jesus fucking christ.")
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
+			return
 			//CRASH("Trying to transfer to a mob that's in the delete queue!")
+
+		if (new_character.client)
+			if (current)
+				boutput(current, "You were about to be transferred into another body, but that body was occupied!")
+				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to mob with an existing client [new_character] (\ref[new_character])")
+			else
+				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
+			return
 
 		if (current)
 			if(current.client)
@@ -220,44 +224,66 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
-		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
+		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
 				if (A.mutually_exclusive)
 					return FALSE
 		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist
-		if (!isnull(src.get_antagonist(role_id)))
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
 			return FALSE
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
+				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
+				if (!new_datum || QDELETED(new_datum))
+					return FALSE
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return !isnull(src.get_antagonist(role_id))
+				return TRUE
+		return FALSE
+
+	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
+	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
+		if (!master)
+			return FALSE
+		// To avoid wacky shenanigans
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
+			src.remove_antagonist(role_id)
+		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
+			var/datum/antagonist/subordinate/A = V
+			if (initial(A.id) == role_id)
+				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
+				if (!new_datum || QDELETED(new_datum))
+					return FALSE
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
+				return TRUE
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
 	proc/remove_antagonist(role_id)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
-				A.remove_self(TRUE, FALSE)
+				A.remove_self(TRUE)
 				src.antagonists.Remove(A)
 				if (!length(src.antagonists) && src.special_role == A.id)
 					src.special_role = null
 					ticker.mode.traitors.Remove(src)
+					ticker.mode.Agimmicks.Remove(src)
 				qdel(A)
+				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
-			A.remove_self(TRUE, FALSE)
+			A.remove_self(TRUE)
 			src.antagonists.Remove(A)
 			qdel(A)
 		src.special_role = null
 		ticker.mode.traitors.Remove(src)
+		ticker.mode.Agimmicks.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()

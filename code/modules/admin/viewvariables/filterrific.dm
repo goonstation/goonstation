@@ -83,6 +83,11 @@
 			if(new_color)
 				target.transition_filter(params["name"], 4, list("color" = new_color))
 				. = TRUE
+		if("convert_color_value_matrix")
+			var/new_color = normalize_color_to_matrix(target.filter_data[params["name"]]["color"])
+			if(new_color)
+				target.transition_filter(params["name"], 4, list("color" = new_color))
+				. = TRUE
 		if("modify_icon_value")
 			var/icon/new_icon = input("Pick icon:", "Icon") as null|icon
 			if(new_icon)
@@ -174,9 +179,18 @@ var/static/master_filter_info = list(
 			"flags" = FILTER_OVERLAY,
 			"color" = "",
 			"transform" = null,
-			"blend_mode" = BLEND_DEFAULT
-		)
+			"blend_mode" = BLEND_DEFAULT,
+		),
+		"blend_mode" = list(
+				"BLEND_DEFAULT" = BLEND_DEFAULT,
+				"BLEND_OVERLAY" = BLEND_OVERLAY,
+				"BLEND_ADD" = BLEND_ADD,
+				"BLEND_SUBTRACT" = BLEND_SUBTRACT,
+				"BLEND_MULTIPLY" = BLEND_MULTIPLY,
+				"BLEND_INSET_OVERLAY" = BLEND_INSET_OVERLAY,
+			)
 	),
+
 	"motion_blur" = list(
 		"defaults" = list(
 			"x" = 0,

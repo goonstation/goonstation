@@ -8,7 +8,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
@@ -395,6 +395,7 @@
 		for (var/datum/blob_upgrade/U in src.available_upgrades)
 			src.available_upgrades -= U
 			qdel(U)
+		src.update_buttons()
 
 	proc/remove_ability(var/ability_type)
 		if (!ispath(ability_type))
@@ -768,40 +769,3 @@
 /mob/living/intangible/blob_overmind/checkContextActions(atom/target)
 	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
 	return list()
-
-/mob/proc/make_blob()
-	if (!src.client && !src.mind)
-		return null
-	var/mob/living/intangible/blob_overmind/W = new/mob/living/intangible/blob_overmind(src)
-
-	var/turf/T = get_turf(src)
-	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (ASLoc)
-			W.set_loc(ASLoc)
-		else
-			W.z = 1
-	else
-		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-
-	if (src.mind)
-		src.mind.transfer_to(W)
-	else
-		var/key = src.client.key
-		if (src.client)
-			src.client.mob = W
-		W.mind = new /datum/mind()
-		W.mind.ckey = ckey
-		W.mind.key = key
-		W.mind.current = W
-		ticker.minds += W.mind
-
-	var/this = src
-	src = null
-	qdel(this)
-
-	boutput(W, "<b>You are a blob! Grow in size and devour the station.</b>")
-	boutput(W, "Your hivemind will cease to exist if your body is entirely destroyed.")
-	boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-
-	return W

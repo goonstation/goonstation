@@ -58,18 +58,7 @@
 	..()
 	emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 	for (var/datum/mind/blob in traitors)
-		if (istype(blob))
-			bestow_objective(blob,/datum/objective/specialist/blob)
-
-			SPAWN(0)
-				var/newname = input(blob.current, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
-
-				if (newname)
-					phrase_log.log_phrase("name-blob", newname, no_duplicates=TRUE)
-					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-					newname = strip_html(newname) + " the Blob"
-					blob.current.real_name = newname
-					blob.current.name = newname
+		blob.add_antagonist(ROLE_BLOB)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

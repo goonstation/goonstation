@@ -7,7 +7,7 @@
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/WarpGrim.ogg'
 	voice_fem = 'sound/voice/wizard/WarpFem.ogg'

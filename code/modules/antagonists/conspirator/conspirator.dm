@@ -3,13 +3,14 @@
 	display_name = "conspirator"
 
 	var/static/list/datum/mind/conspirators
-	var/static/conspirator_objective
+	var/static/datum/objective/conspiracy/conspirator_objective
 	var/static/meeting_point
 	var/obj/item/device/radio/headset/headset
 
 	New(datum/mind/new_owner)
 		if (!src.conspirator_objective)
-			src.conspirator_objective = pick(typesof(/datum/objective/conspiracy))
+			var/objective_type = pick(typesof(/datum/objective/conspiracy))
+			src.conspirator_objective = new objective_type
 
 		if (!src.meeting_point)
 			src.meeting_point = "Your initial meet-up point is <b>[pick("the chapel", "the bar", "disposals", "the arcade", "the escape wing", "crew quarters", "the pool", "the aviary")].</b>"
@@ -23,6 +24,9 @@
 			SEND_SIGNAL(conspirator, COMSIG_MIND_UPDATE_MEMORY)
 
 		. = ..()
+
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
 
 	give_equipment()
 		if (!ishuman(src.owner.current))
@@ -55,7 +59,7 @@
 		..(override)
 
 	assign_objectives()
-		ticker.mode.bestow_objective(src.owner, src.conspirator_objective, src)
+		new /datum/objective/conspiracy(src.conspirator_objective.explanation_text, src.owner, src)
 
 		SPAWN(1 SECOND)
 			src.owner.store_memory(src.meeting_point)

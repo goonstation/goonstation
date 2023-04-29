@@ -1,0 +1,64 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/trench/side,
+/area/space)
+"z" = (
+/turf/space/fluid/acid,
+/area/space)
+"B" = (
+/obj/landmark/artifact/random_room,
+/turf/space/fluid/acid/clear,
+/area/space)
+"V" = (
+/turf/unsimulated/wall/trench,
+/area/space)
+
+(1,1,1) = {"
+z
+V
+a
+z
+z
+"}
+(2,1,1) = {"
+V
+V
+V
+V
+a
+"}
+(3,1,1) = {"
+V
+a
+z
+z
+z
+"}
+(4,1,1) = {"
+z
+z
+z
+V
+a
+"}
+(5,1,1) = {"
+V
+a
+B
+z
+z
+"}
+(6,1,1) = {"
+V
+V
+V
+V
+a
+"}
+(7,1,1) = {"
+V
+V
+a
+z
+z
+"}

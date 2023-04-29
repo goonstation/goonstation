@@ -12,6 +12,7 @@
 	var/id = null
 	weld_image_offset_X = -6
 	weld_image_offset_Y = 2
+	mat_appearances_to_ignore = list("wood")
 
 /obj/storage/closet/wardrobe
 	name = "wardrobe"

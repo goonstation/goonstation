@@ -9,7 +9,7 @@
 	pointCost = 200 //copy pasted below. sorry.
 	when_stunned = 0
 	not_when_handcuffed = 1
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 	unlock_message = "You have gained Enthrall. It allows you to enthrall dead humans."
 
 	cast(mob/target)
@@ -48,7 +48,6 @@
 	not_when_in_an_object = FALSE
 	when_stunned = 1
 	not_when_handcuffed = 0
-	restricted_area_check = 0
 	unlock_message = "You have gained 'Speak to Thralls'. It allows you to telepathically speak to all of your undead thralls."
 
 	cast(mob/target)
@@ -129,6 +128,7 @@
 			H.make_thrall(target)
 		else
 			target.full_heal()
+			target.mind?.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = enthrall.holder)
 
 		if (target in H.thralls)
 			//and add blood!

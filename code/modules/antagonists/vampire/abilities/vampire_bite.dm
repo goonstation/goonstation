@@ -72,7 +72,7 @@
 
 	return TRUE
 
-/datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampire/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampire/H = src
@@ -82,9 +82,9 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT && thrall || isdead(HH) && !thrall)
+	if (isdead(HH))
 		if (prob(20))
-			boutput(M, "<span class='alert'>The blood of the [thrall ? "rotten" : "dead"] provides little sustenance...</span>")
+			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		H.change_vampire_blood(bitesize, 1)
@@ -133,33 +133,32 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-			//vampires heal, thralls don't
-			if (!thrall)
-				if(istype(M))
-					M.HealDamage("All", 3, 3)
-					M.take_toxin_damage(-1)
-					M.take_oxygen_deprivation(-1)
 
-				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
-					if (HH.blood_volume < 300 && prob(15))
-						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
-						HH.changeStatus("paralysis", 10 SECONDS)
-					else
-						if (prob(65))
-							HH.changeStatus("weakened", 1 SECOND)
-							HH.stuttering = min(HH.stuttering + 3, 10)
+			//vampires heal, thralls don't
+			M.HealDamage("All", 3, 3)
+			M.take_toxin_damage(-1)
+			M.take_oxygen_deprivation(-1)
+			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
+				if (HH.blood_volume < 300 && prob(15))
+					if (!HH.getStatusDuration("paralysis"))
+						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
+					HH.changeStatus("paralysis", 10 SECONDS)
+				else
+					if (prob(65))
+						HH.changeStatus("weakened", 1 SECOND)
+						HH.stuttering = min(HH.stuttering + 3, 10)
 
 			if (istype(H)) H.blood_tracking_output()
 
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
+	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+		boutput(HH, "<span class='alert'>You feel your soul slipping away...</span>")
 		HH.death(FALSE)
 
 	if (istype(H))
 		H.check_for_unlocks()
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,'sound/items/drink.ogg', rand(5,20), 1, pitch = 1.4)
+	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4) //tested to be audible for about 5 tiles, assuming quiet environment
 	HH.was_harmed(M, special = "vamp")
 	bleed(HH, 1, 3, get_turf(src.owner))
 
@@ -236,7 +235,7 @@
 
 	return 1
 
-/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1, var/thrall = 0)
+/datum/abilityHolder/vampiric_thrall/proc/do_bite(var/mob/living/carbon/human/HH, var/mult = 1)
 	.= 1
 	var/mob/living/carbon/human/M = src.owner
 	var/datum/abilityHolder/vampiric_thrall/H = src
@@ -246,9 +245,9 @@
 		boutput(M, "<span class='alert'>This human is completely void of blood... Wow!</span>")
 		return 0
 
-	if (isdead(HH))
+	if (HH.decomp_stage > DECOMP_STAGE_NO_ROT)
 		if (prob(20))
-			boutput(M, "<span class='alert'>The blood of the dead provides little sustenance...</span>")
+			boutput(M, "<span class='alert'>The blood of the rotten provides little sustenance...</span>")
 
 		var/bitesize = 5 * mult
 		M.change_vampire_blood(bitesize, 1)
@@ -293,27 +292,22 @@
 				HH.blood_volume = 0
 			else
 				HH.blood_volume -= 20 * mult
-			//vampires heal, thralls don't
-			if (!thrall)
-				M.HealDamage("All", 3, 3)
-				M.take_toxin_damage(-1)
-				M.take_oxygen_deprivation(-1)
+			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
+				if (HH.blood_volume < 300 && prob(15))
+					if (!HH.getStatusDuration("paralysis"))
+						boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
+					HH.changeStatus("paralysis", 10 SECONDS)
+				else
+					if (prob(65))
+						HH.changeStatus("weakened", 1 SECOND)
+						HH.stuttering = min(HH.stuttering + 3, 10)
 
-				if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
-					if (HH.blood_volume < 300 && prob(15))
-						if (!HH.getStatusDuration("paralysis"))
-							boutput(HH, "<span class='alert'>Your vision fades to blackness.</span>")
-						HH.changeStatus("paralysis", 10 SECONDS)
-					else
-						if (prob(65))
-							HH.changeStatus("weakened", 1 SECOND)
-							HH.stuttering = min(HH.stuttering + 3, 10)
-
-	if (!can_take_blood_from(HH) && (mult >= 1) && (isunconscious(HH) || HH.health <= 90))
+	if (!can_take_blood_from(HH) && (mult >= 1) && isunconscious(HH))
+		boutput(HH, "<span class='alert'>You feel your soul slipping away...</span>")
 		HH.death(FALSE)
 
 	eat_twitch(src.owner)
-	playsound(src.owner.loc,'sound/items/drink.ogg', rand(5,20), 1, pitch = 1.4)
+	playsound(src.owner.loc, 'sound/items/drink.ogg', 5, 1, -15, pitch = 1.4) //tested to be audible for about 5 tiles, assuming quiet environment
 	HH.was_harmed(M, special = "vamp")
 
 
@@ -321,16 +315,16 @@
 	name = "Bite Victim"
 	desc = "Bite the victim's neck to drain them of blood."
 	icon_state = "bite"
-	targeted = 1
-	target_nodamage_check = 1
+	targeted = TRUE
+	target_nodamage_check = TRUE
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
-	when_stunned = 0
-	not_when_handcuffed = 1
-	dont_lock_holder = 1
-	restricted_area_check = 2
-	var/thrall = 0
+	when_stunned = FALSE
+	not_when_handcuffed = TRUE
+	lock_holder = FALSE
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
+	var/thrall = FALSE
 
 	cast(mob/target)
 		if (!holder)
@@ -365,8 +359,7 @@
 		return 0
 
 /datum/targetable/vampire/vampire_bite/thrall
-	thrall = 1
-
+	thrall = TRUE
 
 /datum/action/bar/private/icon/vamp_blood_suc
 	duration = 30
@@ -432,7 +425,7 @@
 			src.end()
 			return
 
-		if (!H.do_bite(HH,mult = 1.5, thrall = B.thrall))
+		if (!H.do_bite(HH,mult = 1.5))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()

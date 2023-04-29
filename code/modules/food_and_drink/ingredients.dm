@@ -286,6 +286,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "salt"
 	food_color = "#a7927d"
 	custom_food = 1
+	initial_volume = 100
+	initial_reagents = list("salt"=10)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pepper
 	name = "pepper"
@@ -293,6 +295,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "pepper"
 	food_color = "#a7927d"
 	custom_food = 1
+	initial_volume = 100
+	initial_reagents = list("pepper"=10)
 
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"

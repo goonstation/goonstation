@@ -11,7 +11,7 @@ Pipelines + Other Objects -> Pipe network
 */
 //
 obj/machinery/atmospherics
-	anchored = 1
+	anchored = ANCHORED
 
 	var/initialize_directions = 0
 

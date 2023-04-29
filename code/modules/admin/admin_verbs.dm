@@ -43,6 +43,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/toggleAI,
 		/datum/admins/proc/delay_start,
 		/datum/admins/proc/delay_end,
+		/datum/admins/proc/togglepowerdebug,
 
 		/client/proc/cmd_admin_subtle_message,
 		/client/proc/cmd_admin_alert,
@@ -195,7 +196,8 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
-		/client/proc/vpn_whitelist_remove
+		/client/proc/vpn_whitelist_remove,
+		/client/proc/set_conspiracy_objective
 		),
 
 	4 = list(
@@ -244,6 +246,8 @@ var/list/admin_verbs = list(
 		/proc/releasemob,
 		/client/proc/critter_creator_debug,
 		/client/proc/cmd_cat_county,
+		/client/proc/fake_pda_message_to_all,
+		/client/proc/force_say_in_range,
 		/client/proc/find_thing,
 		/client/proc/find_one_of,
 		/client/proc/cmd_admin_advview,
@@ -364,6 +368,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
+		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_radio_maptext,
 
@@ -535,7 +540,7 @@ var/list/special_pa_observing_verbs = list(
 */
 /client/proc/update_admins(var/rank)
 	if(src.player.tempmin && src.player.perm_admin)
-		logTheThing("debug", src, null, "is somehow both tempminned and permadminned. This is a bug.")
+		logTheThing(LOG_DEBUG, src, "is somehow both tempminned and permadminned. This is a bug.")
 		stack_trace("[src] is somehow both tempminned and permadminned. This is a bug.")
 
 	// The idea is that player.tempmin and player.perm_admin are set when the given player
@@ -1273,6 +1278,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
+				S.UpdateOverlays(null, "starlight", 1)
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
@@ -1284,6 +1290,11 @@ var/list/fun_images = list()
 	if (confirm6 == "Yes")
 		winset(src, "menu.set_shadow", "is-checked=false")
 		src.apply_depth_filter()
+
+	var/confirm7 = tgui_alert(src.mob, "Reset client color matrix to identity matrix?", "Reset Color Matrix?", list("Yes", "No"))
+	if (confirm7 == "Yes")
+		src.set_saturation(1)
+		src.set_color(COLOR_MATRIX_IDENTITY, FALSE)
 
 	// Get fucked ghost HUD
 	for (var/atom/movable/screen/ability/hudItem in src.screen)
@@ -2459,3 +2470,18 @@ var/list/fun_images = list()
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
+
+/client/proc/set_conspiracy_objective()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Set Conspiracy Objective"
+	set desc = "Set a custom objective for all conspirators. Works fine in non-conspiracy modes."
+	ADMIN_ONLY
+	//comedic type abuse time
+	var/datum/antagonist/conspirator/type = /datum/antagonist/conspirator
+	var/objective_text = input(usr, "Input a custom objective for the conspiracy to follow (leave blank for random)", "Custom objective")
+	if (length(objective_text))
+		type.conspirator_objective = new /datum/objective/conspiracy(objective_text)
+		boutput(usr, "Conspiracy objective set to: [type.conspirator_objective.explanation_text]")
+	else
+		boutput(usr, "Custom objective cleared, conspiracy will select a random objective.")
+		type.conspirator_objective = null

@@ -162,7 +162,7 @@
 
 /obj/overlay/tile_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 	alpha = 255
@@ -175,7 +175,7 @@
 
 /obj/overlay/tile_gas_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 
@@ -529,6 +529,7 @@ proc/generate_space_color()
 	return
 
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
+	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
@@ -1075,9 +1076,12 @@ proc/generate_space_color()
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.change_stack_amount(-1))
+	if (istype(R))
+		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		R.change_stack_amount(-1)
 		ReplaceWithLattice()
 		if (R.material)
 			src.setMaterial(C.material)

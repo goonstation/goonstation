@@ -651,7 +651,7 @@
 	throw_speed = 2
 	throw_range = 10
 	c_flags = COVERSEYES | COVERSMOUTH
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
@@ -777,6 +777,7 @@
 		src.eyeholes = TRUE
 		block_vision = FALSE
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "It's a bedsheet with eye holes cut in it."
 
 	proc/make_cape()
@@ -788,6 +789,7 @@
 		src.cape = TRUE
 		block_vision = FALSE
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "It's a bedsheet that's been tied into a cape."
 
 	proc/cut_cape()
@@ -799,7 +801,16 @@
 		src.cape = FALSE
 		block_vision = !src.eyeholes
 		src.UpdateIcon()
+		src.update_examine()
 		desc = "A linen sheet used to cover yourself while you sleep. Preferably on a bed."
+
+	proc/update_examine()
+		if(src.cape)
+			src.hides_from_examine = 0
+		else if(src.eyeholes)
+			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_EARS)
+		else
+			src.hides_from_examine = initial(src.hides_from_examine)
 
 /obj/item/clothing/suit/bedsheet/red
 	icon_state = "bedsheet-red"
@@ -1356,6 +1367,46 @@
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
 
+// Light space suits
+/obj/item/clothing/suit/space/light // Lighter suits that don't impede movement, but have way less armor
+	name = "light space suit"
+	desc = "A lightweight suit that protects against low pressure environments. This one doesn't seem to have any extra padding"
+	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	item_state = "es_suit"
+	c_flags = SPACEWEAR
+	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
+	duration_remove = 6 SECONDS
+	duration_put = 6 SECONDS
+	protective_temperature = 1000
+
+	New()
+		..()
+		if(!istype(get_area(src), /area/station))
+			var/nt_wear_state = "[src.wear_state || src.icon_state]-nt"
+			if(nt_wear_state in icon_states(src.wear_image_icon))
+				src.wear_state = nt_wear_state
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 50)
+		setProperty("heatprot", 10)
+		setProperty("viralprot", 50)
+		setProperty("chemprot", 30)
+		setProperty("meleeprot", 1)
+		setProperty("rangedprot", 0)
+		setProperty("space_movespeed", 0)
+		setProperty("radprot", 10)
+
+	engineer
+		name = "engineering light space suit"
+		desc = "A lightweight engineering spacesuit designed to.... well, it doesn't really protect you from as much. But it lets you run away from fires quicker."
+		icon_state = "spacelight-e"
+		item_state = "es_suit"
+
 // Sealab suits
 
 /obj/item/clothing/suit/space/diving
@@ -1418,9 +1469,9 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		setProperty("coldprot", 75)
 		setProperty("heatprot", 25)
 		setProperty("exploprot", 30)
-		setProperty("meleeprot", 2)
-		setProperty("rangedprot", 0.5)
-		setProperty("space_movespeed", 0)
+		setProperty("meleeprot", 5)
+		setProperty("rangedprot", 1)
+		setProperty("space_movespeed", 0.6)
 
 	New()
 		. = ..()
@@ -1430,10 +1481,20 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING
 		. = ..()
 
+	nt_specialist
+		name = "NT industrial space armor"
+		item_state = "indus-nt"
+		icon_state = "indus-nt"
+
+		setupProperties()
+			..()
+			setProperty("space_movespeed", 0)
+
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
 	is_syndicate = TRUE
+	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
 
@@ -1441,6 +1502,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		..()
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
+		setProperty("space_movespeed", 0)
 
 	New()
 		..()
@@ -1464,12 +1526,17 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
+		setProperty("space_movespeed", 0)
+		setProperty("exploprot", 30)
+		setProperty("disorient_resist", 25)
+		setProperty("radprot", 50)
 
 //NT pod wars suits
 /obj/item/clothing/suit/space/nanotrasen
@@ -1825,6 +1892,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 //crate loot
 

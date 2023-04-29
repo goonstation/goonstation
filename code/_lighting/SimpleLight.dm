@@ -2,7 +2,7 @@
 
 /obj/overlay/simple_light
 	event_handler_flags = IMMUNE_SINGULARITY
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 0
 	layer = LIGHTING_LAYER_BASE
 	plane = PLANE_LIGHTING

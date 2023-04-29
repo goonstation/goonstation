@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 #ifdef SECRETS_ENABLED
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
-	/obj/critter/aberration = 1,\
+	/mob/living/critter/aberration = 1,\
 	/mob/living/critter/small_animal/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
 	/obj/item/record/spacebux = 4,\

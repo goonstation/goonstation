@@ -12,12 +12,13 @@
 	var/cut_resist = 0
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
+	var/amount_of_rods_when_destroyed = 2
 	var/auto = TRUE
 	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	layer = GRILLE_LAYER
@@ -74,19 +75,18 @@
 			icon_state = "grille-corroded"
 		melted
 			icon_state = "grille-melted"
-
 	catwalk
 		name = "catwalk surface"
-		icon = 'icons/obj/grille.dmi'
+		icon = 'icons/obj/catwalk.dmi'
 		icon_state = "catwalk"
 		density = 0
 		desc = "This doesn't look very safe at all!"
 		layer = CATWALK_LAYER
 		shock_when_entered = 0
 		plane = PLANE_FLOOR
-		auto = FALSE
-		connects_to_turf = null
-		connects_to_turf = null
+		amount_of_rods_when_destroyed = 1
+		var/catwalk_type = "C" // Short for "Catwalk"
+		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
 
 		New()
@@ -98,21 +98,34 @@
 			if (ruined)
 				return
 
-			if (istext(special_icon_state))
-				icon_state = initial(src.icon_state) + "-" + special_icon_state
+			if (src.auto)
+				var/connectdir = 0
+				for (var/dir in cardinal)
+					var/turf/T = get_step(src, dir)
+					for (var/i in 1 to length(connects_to_obj))
+						var/atom/movable/AM = locate(connects_to_obj[i]) in T
+						if (AM?.anchored)
+							connectdir |= dir
+							break
+
+				src.icon_state = "[src.catwalk_type][connectdir]"
+
+			if (istext(special_icon_state) && special_icon_state != "cut")
+				src.icon_state += "-" + special_icon_state
 				return
 
 			var/diff = get_fraction_of_percentage_and_whole(health,health_max)
 			switch(diff)
-				if(-INFINITY to 25)
-					icon_state = initial(src.icon_state) + "-3"
+				if(-INFINITY to 0)
+					src.icon_state += "-4"
+				if(1 to 25)
+					src.icon_state += "-3"
 				if(26 to 50)
-					icon_state = initial(src.icon_state) + "-2"
+					src.icon_state += "-2"
 				if(51 to 75)
-					icon_state = initial(src.icon_state) + "-1"
+					src.icon_state += "-1"
 				if(76 to INFINITY)
-					icon_state = initial(src.icon_state) + "-0"
-
+					src.icon_state += "-0"
 		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
 			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
 			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
@@ -121,6 +134,7 @@
 			name = "maintenance catwalk"
 			icon_state = "catwalk_jen"
 			desc = "This looks marginally more safe than the ones outside, at least..."
+			catwalk_type = "M" // Short for "Maintenance"
 			layer = PIPE_LAYER + 0.01
 
 			attack_hand(obj/M, mob/user)
@@ -218,7 +232,7 @@
 			return
 
 		if (src.ruined)
-			drop_rods(1)
+			drop_rods(src.amount_of_rods_when_destroyed)
 			qdel(src)
 			return
 
@@ -226,12 +240,12 @@
 
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
-			drop_rods(1)
 			UpdateIcon("cut")
 			src.set_density(0)
 			src.ruined = 1
 		else
 			UpdateIcon()
+
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)

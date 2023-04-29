@@ -38,7 +38,7 @@ export const Cashreg = (_, context) => {
               onClick={owner ? ((is_authorised || is_owner) && (() => act('reset'))) : () => act('swipe_owner')}
               tooltip={(owner && (is_authorised || is_owner)) && `Click to remove ownership`}
               width="100%">
-              {owner ? `Owner ${owner}` : `Swipe ID to own`}
+              {owner ? `Owner: ${owner}` : `Swipe ID to own`}
             </Button>
           </Stack.Item>
           <Stack.Item grow>
@@ -123,7 +123,7 @@ const CenterPart = (_, context) => {
             </tbody>
           </table>
         ) : (
-          <Stack.Item align="center">{`Enter amount`}</Stack.Item>
+          <Stack.Item align="center">{is_owner? `Enter amount` : `Owner must enter amount`}</Stack.Item>
         )
       ) : (
         <Stack.Item align="center">{`Please register owner`}</Stack.Item>

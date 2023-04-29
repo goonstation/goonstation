@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -937,7 +937,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1109,9 +1109,10 @@
 	/obj/critter/bat,
 	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
-	/obj/critter/dog/george/blair,
-	/obj/critter/dog/george/orwell,
-	/obj/critter/dog/george/shiba,
+	/mob/living/critter/small_animal/dog,
+	/mob/living/critter/small_animal/dog/george,
+	/mob/living/critter/small_animal/dog/blair,
+	/mob/living/critter/small_animal/dog/shiba,
 	/obj/critter/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
@@ -1880,28 +1881,28 @@
 		new /obj/item/breaching_charge{
 			pixel_x = 10;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = 4;
 			pixel_y = -2
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = -2;
 			pixel_y = -5
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -3;
 			pixel_y = 7
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -1;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/gun/kinetic/riot40mm/breach{
 			pixel_x = -5;
 			pixel_y = 8
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
-			}(src.loc)
+		}(src.loc)

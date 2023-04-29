@@ -100,7 +100,13 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		else
 			L.set_loc(WSLoc)
 
+		var/mob/current_mob
+		if (M.current)
+			current_mob = M.current
 		M.transfer_to(L)
+		if (current_mob)
+			qdel(current_mob)
+
 		M.assigned_role = "Santa Claus"
 		boutput(L, "<span class='notice'><b>You have been respawned as Santa Claus!</b></span>")
 		boutput(L, "Go to the station and reward the crew for their high faith in Spacemas. Use your Spacemas magic!")
@@ -118,7 +124,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		L.set_loc(ASLoc)
+
+		var/mob/current_mob
+		if (M.current)
+			current_mob = M.current
 		M.transfer_to(L)
+		if (current_mob)
+			qdel(current_mob)
+
 		boutput(L, "<span class='notice'><b>You have been respawned as Krampus 3.0! <font color=red>CUTTING EDGE!</font></b></span>")
 		boutput(L, "The station has been very naughty. <b>FUCK. UP. EVERYTHING.</b> This may be a little harder than usual.")
 		boutput(L, "Be on the lookout for grinches. Do not harm them!")
@@ -179,7 +192,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -398,7 +411,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in view(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -443,7 +456,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "O Spacemas tree, O Spacemas tree, Much p- Huh, there's a bunch of crayons and canvases under it, try clicking it?"
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "xmastree_2022"
-	anchored = 1
+	anchored = ANCHORED
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_x = -64
 	plane = PLANE_ABOVE_LIGHTING
@@ -665,7 +678,7 @@ proc/compare_ornament_score(list/a, list/b)
 		ornament.layer = src.layer + 0.1
 		ornament.plane = src.plane
 		ornament.on_tree = src
-		ornament.anchored = 2
+		ornament.anchored = ANCHORED_ALWAYS
 		ornament.set_loc(null)
 		src.placed_ornaments[slot_number] = ornament
 
@@ -707,7 +720,7 @@ proc/compare_ornament_score(list/a, list/b)
 						empty_index = i
 						break
 				src.place_ornament(ornament, empty_index || rand(1, length(src.placed_ornaments)))
-				logTheThing("station", user, null, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
+				logTheThing(LOG_STATION, user, "placed an ornament with name '[ornament.name]' on the Spacemas tree.")
 				boutput(user, "<span class='notice'>You hang \the [ornament.name] on the tree.</span>")
 				LAZYLISTADD(src.ckeys_placed_this_round, user.ckey)
 		else
@@ -803,7 +816,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "garland"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/tinsel
 	plane = PLANE_DEFAULT
@@ -811,7 +824,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "tinsel-silver"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/wreath
 	plane = PLANE_DEFAULT
@@ -819,14 +832,14 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "wreath"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 /obj/decal/mistletoe
 	plane = PLANE_DEFAULT
 	name = "mistletoe"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "mistletoe"
 	layer = 9
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/xmas_lights
 	plane = PLANE_DEFAULT
@@ -834,7 +847,7 @@ proc/compare_ornament_score(list/a, list/b)
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "lights1"
 	layer = 5
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/light/light
 
 	New()
@@ -1249,7 +1262,7 @@ proc/compare_ornament_score(list/a, list/b)
 	desc = "The most festive kind of sock!"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "stocking_red"
-	anchored = 1
+	anchored = ANCHORED
 	var/list/giftees = list()
 	var/list/gift_paths = null//list()
 	var/list/questionable_gift_paths = null//list()
@@ -1391,7 +1404,7 @@ proc/get_spacemas_ornaments(only_if_loaded=FALSE)
 				if(tgui_alert(usr, "Are you sure you want to remove \the [src] not only from the tree but also from the ornament database?", "Remove ornament", list("Yes", "No")) != "Yes")
 					return
 				get_spacemas_ornaments().Remove(src.name)
-				logTheThing("admin", usr, null, "Removed ornament '[src.name]' from the tree and the ornament database.")
+				logTheThing(LOG_ADMIN, usr, "Removed ornament '[src.name]' from the tree and the ornament database.")
 				qdel(src)
 				boutput(usr, "<span class='alert'>You removed \the [src] from the tree and the ornament database.</span>")
 			return

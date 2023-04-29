@@ -95,7 +95,7 @@
 	desc = "An extremely expansionistic species of vine."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "vine-light1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	event_handler_flags = USE_FLUID_ENTER
 	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.

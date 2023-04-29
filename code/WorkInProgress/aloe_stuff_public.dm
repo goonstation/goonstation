@@ -155,5 +155,6 @@
 		. = ..()
 
 
-
+// *whistles*
+/obj/stool/chair/couch/blue/cal
 

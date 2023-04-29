@@ -44,7 +44,7 @@
 		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
 			return
-		if (W.cant_self_remove)
+		if (W.cant_self_remove || W.cant_drop)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return
 		if (istype(W, /obj/item/clothing/under/trash_bag))

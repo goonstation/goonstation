@@ -103,7 +103,7 @@
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
 	A.name = "a batarang"
-	A.anchored = 0
+	A.anchored = UNANCHORED
 	A.set_density(0)
 	var/i
 	for(i=0, i<100, i++)
@@ -152,7 +152,7 @@
 
 /obj/decal/batman_pow
 	name = "POW!"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	mouse_opacity = 0

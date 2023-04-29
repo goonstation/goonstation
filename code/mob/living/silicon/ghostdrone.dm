@@ -131,6 +131,10 @@
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
 
+	clamp_values()
+		..()
+		src.lying = 0
+
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
@@ -1295,10 +1299,6 @@
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
-
-	if (M.client)
-		G.lastKnownIP = M.client.address
-		M.client.mob = G
 
 	if (M?.real_name)
 		G.oldname = M.real_name

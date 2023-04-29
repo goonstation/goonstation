@@ -291,6 +291,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "foam dart"
 	sname = "foam dart"
 	spread_angle_variance = 22.5
+	damage = 0
 	speed_max = 32
 	speed_min = 20
 	cost = 6

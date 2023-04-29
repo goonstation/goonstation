@@ -5,7 +5,7 @@ TYPEINFO(/obj/machinery/teleport)
 	name = "teleport"
 	icon = 'icons/obj/teleporter.dmi'
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	New()

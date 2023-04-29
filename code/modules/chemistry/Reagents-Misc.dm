@@ -238,7 +238,7 @@ datum
 				if (prob(90))
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
-				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
+				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!</span>")
 				if (prob(5))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.setStatusMin("stunned", 2 SECONDS * mult)
@@ -1601,7 +1601,7 @@ datum
 						if (ishuman(M))
 							logTheThing(LOG_COMBAT, M, "was transformed into a dog by reagent [name] at [log_loc(M)].")
 						M.gib()
-						new /obj/critter/dog/george (Mturf)
+						new /mob/living/critter/small_animal/dog/george (Mturf)
 					return
 
 				..()
@@ -3063,7 +3063,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				flush(M, 2 * mult, flushed_reagents)
+				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
 
@@ -3962,6 +3962,10 @@ datum
 			on_add()
 				if (holder && ismob(holder.my_atom))
 					holder.my_atom.setStatus("miasma", duration = INFINITE_STATUS)
+				if(holder.get_reagent_amount("lavender_essence") > 0)
+					var/lavender_amount = src.holder.get_reagent_amount("lavender_essence")
+					src.holder.remove_reagent("lavender_essence", (src.holder.get_reagent_amount("miasma")/2))
+					src.holder.remove_reagent("miasma", lavender_amount*2)
 
 			on_remove()
 				if (ismob(holder.my_atom))
@@ -4186,6 +4190,23 @@ datum
 			description = "A low quality blend of chemical agents, water, an aggregate and cement."
 			concrete_strength = 1
 
+		mirabilis
+			name = "mirabilis"
+			id = "mirabilis"
+			fluid_r = 71
+			fluid_g = 159
+			fluid_b = 188
+
+			on_add()
+				src.RegisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED, .proc/analyzed)
+
+			on_remove()
+				src.UnregisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED)
+
+			proc/analyzed(source, mob/user)
+				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
+					src.holder.trans_to(user, max(1, src.volume))
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."
@@ -4193,7 +4214,7 @@ datum
 	icon_state = "badman"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/deathtarget = null
 	var/deathspeed = 3
 

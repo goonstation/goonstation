@@ -337,7 +337,7 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
+		<I>/[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari

@@ -5,7 +5,7 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 var/global/cloning_with_records = TRUE
-
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -318,6 +318,16 @@ var/global/cloning_with_records = TRUE
 			break
 	return selected_record
 
+/obj/machinery/computer/cloning/proc/scan_someone()
+	src.scan_mob(src.scanner?.occupant)
+
+/obj/machinery/computer/cloning/proc/clone_someone()
+	for (var/datum/db_record/record in src.records)
+		var/mob/ghost = find_ghost_by_key(record["ckey"])
+		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+			src.clone_record(record)
+			return
+
 /obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))
 		show_message("Invalid or corrupt record.", "danger")
@@ -440,7 +450,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	density = 1
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -787,7 +797,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 

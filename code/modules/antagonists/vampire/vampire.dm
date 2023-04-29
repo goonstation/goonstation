@@ -6,12 +6,9 @@
 	var/datum/abilityHolder/vampire/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current)
+		return ishuman(mind.current) || ismobcritter(mind.current)
 
 	give_equipment()
-		if (!ishuman(src.owner.current))
-			return FALSE
-
 		var/datum/abilityHolder/vampire/A = src.owner.current.get_ability_holder(/datum/abilityHolder/vampire)
 		if (!A)
 			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/vampire)

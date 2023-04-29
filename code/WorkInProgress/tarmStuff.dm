@@ -556,7 +556,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
@@ -733,7 +733,7 @@ TYPEINFO(/obj/item/device/geiger)
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
 	desc = "Don't ask."
-	anchored = 0
+	anchored = UNANCHORED
 	pixel_y = 6
 	var/homeloc
 

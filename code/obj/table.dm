@@ -11,7 +11,7 @@ TYPEINFO_NEW(/obj/table)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -301,7 +301,7 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer)
+		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
 			src.mouse_drop(user, src.loc, user.loc)
 
 		if (ishuman(user))
@@ -370,7 +370,7 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer)
+		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
 			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
 		..()
 
@@ -458,9 +458,12 @@ TYPEINFO_NEW(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
+	mat_appearances_to_ignore = list("wood")
 
 	auto
 		auto = 1
+	constructed //no "wood wood table"
+		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -679,7 +682,7 @@ TYPEINFO_NEW(/obj/table/reinforced)
 		auto = 1
 
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
+		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -1010,6 +1013,8 @@ TYPEINFO_NEW(/obj/table/glass)
 			return ..()
 
 	harm_slam(mob/user, mob/victim)
+		if(src.glass_broken != GLASS_INTACT)
+			return ..()
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
@@ -1215,10 +1220,10 @@ TYPEINFO_NEW(/obj/table/glass)
 				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_STRENGTHEN)
 				verbing = "strengthening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
 				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)

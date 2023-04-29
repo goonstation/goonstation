@@ -233,7 +233,7 @@
 				src.desc = "A unique card allowing the user to teleport back to the location it was drawn, but only once!"
 				keep = 1
 			if("Syndicate Operative")
-				user.reagents.add_reagent("sarin", 50)
+				user.reagents.add_reagent("saxitoxin", 50)
 				qdel(src)
 			if("Robusted")
 				user.TakeDamage("head",user.max_health)

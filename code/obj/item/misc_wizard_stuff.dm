@@ -328,7 +328,7 @@
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "wizard_mirror"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 

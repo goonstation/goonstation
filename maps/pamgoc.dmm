@@ -2345,7 +2345,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred4"

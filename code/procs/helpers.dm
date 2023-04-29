@@ -91,7 +91,7 @@ var/global/obj/fuckyou/flashDummy
 		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
-		flashDummy.anchored = 1
+		flashDummy.anchored = ANCHORED
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
@@ -688,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -1180,7 +1180,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		return "0 "
 
 	var/suffix = ""
-	var/power = round( log(10, value) / 3)
+	var/power = round( log(10, abs(value)) / 3)
 	switch (power)
 		if (-8)
 			suffix = "y"
@@ -1366,13 +1366,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			for(var/datum/mind/M in someEnemies)
 				if (M.current)
 					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-					for(var/datum/mind/G in M.gang.members) //This may be fucked. Dunno how these are stored.
-						enemies += G
 
 		//Lists we grab regardless of game type
 		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
@@ -1704,8 +1697,8 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!istype(A) || !istype(B))
 		return
 	if (A.anchored || B.anchored)
-		A.anchored = 1
-		B.anchored = 1
+		A.anchored = ANCHORED
+		B.anchored = ANCHORED
 
 	if (!islist(A.attached_objs))
 		A.attached_objs = list()
@@ -1850,8 +1843,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
-			sleep(30 SECONDS)
+		sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -2680,3 +2672,20 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)
 	return "[log_object(thing)] \ref[thing]" // actual datum
+
+///Returns `amount` evenly distributed random integers that sum to `sum`
+/proc/random_split(sum, amount)
+	if (amount >= sum || sum <= 0)
+		CRASH("Invalid arguments to random split")
+	var/list/points = list(sum)
+	for (var/i in 1 to (amount - 1))
+		var/next_number = rand(1, sum)
+		while (next_number in points)
+			next_number = rand(1, sum)
+		points += next_number
+	sortList(points)
+	. = list()
+	var/prev = 0
+	for (var/point in points)
+		. += point - prev
+		prev = point

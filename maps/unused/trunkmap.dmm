@@ -192,7 +192,7 @@
 /area/station/medical/cdc)
 "aaH" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Security Shuttle Access";
 	req_access_txt = "39"
 	},
@@ -440,7 +440,7 @@
 /area/russian)
 "abm" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Security Shuttle Access";
 	req_access_txt = "39"
 	},
@@ -4420,7 +4420,7 @@
 /area/station/medical/cdc)
 "ans" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Security Shuttle Access";
 	req_access_txt = "39"
 	},
@@ -9180,7 +9180,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9710,7 +9710,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-	
+
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -28345,7 +28345,7 @@
 /area/station/hallway/primary/south)
 "eSJ" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Security Shuttle Access";
 	req_access_txt = "39"
 	},
@@ -30084,7 +30084,7 @@
 /area/station/crew_quarters/observatory)
 "kfn" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Security Shuttle Access";
 	req_access_txt = "39"
 	},
@@ -30993,7 +30993,7 @@
 /area/station/crew_quarters/quarters)
 "meZ" = (
 /obj/machinery/door/airlock/engineering{
-	ai_no_access = 1;
+	aiControlDisabled = 1;
 	name = "Prison Engineering";
 	req_access_txt = "1"
 	},

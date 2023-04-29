@@ -160,23 +160,23 @@ export const NuclearReactor = (props, context) => {
             <Flex.Item>
               <Box>Control Rod Insertion:</Box>
               <RoundGauge
-                minValue={-100}
-                maxValue={0}
+                minValue={0}
+                maxValue={100}
                 size={5}
-                value={-actualControlRodLevel}
-                format={value => round(-value, 1)+"%"}
-                alertAfter={-5}
+                value={actualControlRodLevel}
+                format={value => round(value, 1)+"%"}
+                alertBefore={20}
                 ranges={{
-                  "good": [-100, -30],
-                  "average": [-30, -10],
-                  "bad": [-10, 0],
+                  "bad": [0, 20],
+                  "average": [20, 80],
+                  "good": [80, 100],
                 }} />
             </Flex.Item>
             <Flex.Item>
               <Button color="transparent" icon="angle-double-left" onClick={() => act('adjustCR', { crvalue: 0 })} />
               <Button color="transparent" icon="angle-left" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
               {configuredControlRodLevel} %
-              <Button color="transparent" icon="angle-right" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
+              <Button color="transparent" icon="angle-right" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel+5 })} />
               <Button color="transparent" icon="angle-double-right" onClick={() => act('adjustCR', { crvalue: 100 })} />
               <Knob
                 animated

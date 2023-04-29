@@ -408,6 +408,21 @@
 	icon_override = "ghost_buster"
 	icon_tooltip = "Ghost Buster"
 
+/obj/item/device/radio/headset/command/nt/commander
+	name = "\improper NT Commander's headset"
+	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY
+		)
+	icon_override = "ntboss"
+	icon_tooltip = "Nanotrasen Commander"
+
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
@@ -609,4 +624,18 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
 				C = ticker.mode
 			src.secure_frequencies = list("z" = C.agent_radiofreq)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	gang
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New(turf/newLoc, var/frequency)
+			..()
+			if (!frequency)
+				return
+
+			src.secure_frequencies = list("z" = frequency)
 			src.secure_classes = list("z" = RADIOCL_SYNDICATE)

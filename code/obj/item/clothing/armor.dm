@@ -126,7 +126,7 @@
 		if (istype(W, /obj/item/chem_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/chem_grenade/CG = W
-				if (CG.stage == 2 && !CG.state)
+				if (CG.stage == 2 && !CG.armed)
 					user.u_equip(CG)
 					CG.set_loc(src)
 					src.grenade = CG
@@ -140,7 +140,7 @@
 		else if (istype(W, /obj/item/old_grenade/))
 			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/obj/item/old_grenade/OG = W
-				if (OG.not_in_mousetraps == 0 && !OG.state) // Same principle, okay.
+				if (OG.not_in_mousetraps == 0 && !OG.armed) // Same principle, okay.
 					user.u_equip(OG)
 					OG.set_loc(src)
 					src.grenade_old = OG
@@ -251,7 +251,7 @@
 			src.icon_state = "bombvest0"
 
 		else if (src.grenade_old)
-			src.grenade_old.prime()
+			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
