@@ -784,6 +784,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 		src.former_implantee = M
 		M.delStatus("mindhack")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
 		return
 
 	proc/add_orders(var/orders)

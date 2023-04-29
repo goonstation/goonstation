@@ -2,10 +2,13 @@
 	id = ROLE_MINDHACK
 	display_name = "mindhack"
 	remove_on_death = TRUE
-	remove_on_clone = TRUE
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
+
+	disposing()
+		src.owner.current.delStatus("mindhack")
+		. = ..()
 
 	announce()
 		. = ..()

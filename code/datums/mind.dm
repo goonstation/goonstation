@@ -261,7 +261,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
-	proc/remove_antagonist(role_id, source)
+	proc/remove_antagonist(role_id, source = null)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				A.remove_self(TRUE, source)

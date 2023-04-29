@@ -628,8 +628,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			for (var/obj/item/implant/I in patient.implant)
 
 				// This is kinda important (Convair880).
-				if (istype(I, /obj/item/implant/mindhack) && surgeon != patient)
-					patient.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
+				if (istype(I, /obj/item/implant/mindhack) && surgeon == patient)
+					continue
 
 				if (!istype(I, /obj/item/implant/artifact))
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
