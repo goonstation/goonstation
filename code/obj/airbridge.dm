@@ -10,14 +10,14 @@
 //Also, make sure the bridges can extend in a straight line. Or you're gonna have a really bad time
 
 /* -------------------- Controller -------------------- */
-
+ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressurize)
 /obj/airbridge_controller
 	name = "Airbridge Controller"
 	desc = "This is an invisible thing. Yet you can see it. You notice reality unraveling around you."
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	var/tunnel_width = 1
@@ -496,7 +496,7 @@
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))

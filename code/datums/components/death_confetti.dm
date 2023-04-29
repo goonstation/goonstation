@@ -5,6 +5,7 @@ TYPEINFO(/datum/component/death_confetti)
 	initialization_args = list()
 
 /datum/component/death_confetti/Initialize()
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, .proc/the_confetti)

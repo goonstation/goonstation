@@ -50,6 +50,6 @@
 
 /datum/component/complexsignal/outermost_movable/UnregisterFromParent()
 	for(var/atom/movable/AM as anything in loc_chain)
-		AM.UnregisterSignal(src, COMSIG_MOVABLE_SET_LOC)
+		src.UnregisterSignal(AM, COMSIG_MOVABLE_SET_LOC)
 	src.loc_chain.len = 0
 	. = ..()

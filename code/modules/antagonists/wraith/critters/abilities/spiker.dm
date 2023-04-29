@@ -38,13 +38,11 @@
 	name = "Lash"
 	desc = "Go into a bloody frenzy on a weakened target and rip them to shreds."
 	cooldown = 50 SECONDS
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "lash"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (istype(holder.owner, /mob/living/critter/wraith/spiker))

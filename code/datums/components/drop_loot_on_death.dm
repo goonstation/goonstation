@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/drop_loot_on_death)
 	var/list/items_to_drop
 
 /datum/component/drop_loot_on_death/Initialize(loot)
+	. = ..()
 	if (islist(loot) && length(loot))
 		src.items_to_drop = loot
 	else if (ispath(loot))

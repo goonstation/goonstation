@@ -45,7 +45,7 @@
 
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
-		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages received."]")
 		tooltip_rebuild = 1
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)

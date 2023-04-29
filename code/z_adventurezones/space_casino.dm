@@ -63,7 +63,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/brullbar, // have fun!
+		/mob/living/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)
@@ -99,7 +99,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		if (!prize_type)
 			prize_type = /obj/item/raw_material/rock
 		var/obj/item/prize = new prize_type
-		prize.loc = src.loc
+		prize.set_loc(src.loc)
 		prize.layer += 0.1
 		src.visible_message("<span class='subtle'><b>[src]</b> says, '[exclamation][src.scan.registered] has won \an [prize.name]!'</span>")
 		playsound(get_turf(src), "[win_sound]", 55, 1)
@@ -130,7 +130,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	name = "modified GeneTek Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/chefbot
@@ -138,7 +138,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	desc = "It seems to still be sparking..."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot0"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/brokengamblebot
 	name = "inactive gambling robot"

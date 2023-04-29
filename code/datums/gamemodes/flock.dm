@@ -1,9 +1,10 @@
 /datum/game_mode/flock
-	name = "flock"
+	name = "Flock (Beta)"
 	config_tag = "flock"
+	regular = FALSE
 
-	shuttle_available = 2
-	shuttle_available_threshold = 12000 // 20 min, default value, probably change this
+	shuttle_available = SHUTTLE_AVAILABLE_DELAY
+	shuttle_available_threshold = 20 MINUTES // default value, probably change this
 
 	//NOTE: if you need to track something, put it here
 	var/list/datum/mind/flockminds = list()
@@ -27,12 +28,16 @@
 	flockminds |= chosen_flockminds
 	for (var/datum/mind/flockmind in flockminds)
 		flockmind.assigned_role = "MODE"
-		flockmind.special_role = ROLE_FLOCKMIND
 		src.traitors += flockmind
-		bestow_objective(flockmind, /datum/objective/specialist/flock)
 		possible_flockminds.Remove(flockmind)
 
 	return TRUE
+
+/datum/game_mode/flock/post_setup()
+	for (var/datum/mind/flockmind in flockminds)
+		flockmind.add_antagonist(ROLE_FLOCKMIND)
+
+	. = ..()
 
 /datum/game_mode/flock/victory_msg()
 	if (flock_signal_unleashed)

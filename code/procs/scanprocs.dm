@@ -1,6 +1,7 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
+	admin = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -212,7 +213,7 @@
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0, 0, 0, 1)
+			reagent_data = scan_reagents(M, 0, 0, 0, 1, admin = admin)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
@@ -268,7 +269,7 @@
 				return null
 
 	else
-		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
+		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
@@ -462,7 +463,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
+/proc/scan_reagents(atom/A as turf|obj|mob, show_temp = TRUE, var/single_line = FALSE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -488,6 +489,8 @@
 				if(cloaker.volume >= 5)
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
+			if (!admin)
+				SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
 
 			var/reagents_length = length(reagents.reagent_list)
 			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"

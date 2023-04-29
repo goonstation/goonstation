@@ -89,16 +89,3 @@
 		return call(src.delegate)(arglist(callingArguments))
 
 	return call(src.object, src.delegate)(arglist(callingArguments))
-
-/proc/ImmediateInvokeAsync(thingtocall, proctocall, ...)
-	set waitfor = FALSE
-
-	if (!thingtocall)
-		return
-
-	var/list/calling_arguments = length(args) > 2 ? args.Copy(3) : null
-
-	if (thingtocall == GLOBAL_PROC)
-		call(proctocall)(arglist(calling_arguments))
-	else
-		call(thingtocall, proctocall)(arglist(calling_arguments))

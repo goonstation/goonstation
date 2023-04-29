@@ -1,5 +1,5 @@
 /datum/game_mode/mixed/mixed_rp
-	name = "mixed (mild)"
+	name = "Mixed (Mild)"
 	config_tag = "mixed_rp"
 	latejoin_antag_compatible = 1
 	 //went with a trivial solution of adding more identical items to the list

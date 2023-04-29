@@ -8,7 +8,6 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 	initialization_args = list()
 
 /datum/component/clown_disbelief_item/Initialize()
-	SHOULD_CALL_PARENT(1)
 	..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE

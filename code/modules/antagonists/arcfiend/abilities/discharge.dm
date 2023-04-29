@@ -38,6 +38,9 @@
 			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
+			if (airlock.hardened)
+				boutput(src.holder.owner, "<span class='alert'>[target] is hardened against your electrical attacks, your [name] skill has no effect!</span>")
+				return TRUE
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
 			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)

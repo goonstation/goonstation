@@ -28,7 +28,7 @@
 	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
 		src.name = name
 		src.plane = plane
-		src.appearance_flags = PLANE_MASTER | appearance_flags
+		src.appearance_flags = PLANE_MASTER | PIXEL_SCALE | appearance_flags
 		src.blend_mode = blend_mode
 		src.color = color
 		src.mouse_opacity = mouse_opacity
@@ -54,7 +54,7 @@
 		if(pl)
 			src.name = pl.name
 			src.render_source = pl.render_target
-			src.appearance_flags = pl.appearance_flags | PASS_MOUSE
+			src.appearance_flags = pl.appearance_flags | PASS_MOUSE | PIXEL_SCALE
 			src.blend_mode = pl.blend_mode
 			src.mouse_opacity = pl.mouse_opacity
 		..()

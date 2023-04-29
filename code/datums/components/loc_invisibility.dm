@@ -6,6 +6,7 @@ TYPEINFO(/datum/component/loc_invisibility)
 	initialization_args = list()
 
 /datum/component/loc_invisibility/Initialize()
+	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)

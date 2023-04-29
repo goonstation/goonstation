@@ -142,7 +142,7 @@
 	targeted = 0
 	target_anything = 0
 	copiable = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 	var/datum/bioHolder/dna_sting_target = null
 	var/datum/targetable/changeling/sting = null

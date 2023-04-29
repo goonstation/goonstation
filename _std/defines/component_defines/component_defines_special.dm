@@ -99,7 +99,7 @@
 
 // ---- Dock Signals and Events ----
 // Docks are categorized by the shuttle that uses them. Docks are not interchangable.
-// Registered listeners recieve a signal for each shuttle state change.
+// Registered listeners receive a signal for each shuttle state change.
 // When handling the signal, the provided argument will match a dock event define.
 
 	// ---- Dock Events ----
@@ -132,3 +132,7 @@
 #define COMSIG_LIGHT_ENABLE "enable_light"
 /// Send to a thing to disable component lights on it
 #define COMSIG_LIGHT_DISABLE "disable_light"
+
+// ---- Door signals, for bucket pranks ----
+/// When the door was bumped open, send the movable that opened it
+#define COMSIG_DOOR_OPENED "door_opened"

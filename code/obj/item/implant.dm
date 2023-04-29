@@ -42,6 +42,8 @@ THROWING DARTS
 			if (!src.net_id)
 				src.net_id = generate_net_id(src)
 			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, pda_alert_frequency)
+		if (ismob(src.loc))
+			src.implanted(src.loc)
 
 	disposing()
 		if (owner)
@@ -57,14 +59,21 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
+		SHOULD_CALL_PARENT(TRUE)
 		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
-		implanted = 1
+		src.set_loc(M)
+		implanted = TRUE
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.implant.Add(src)
+		else if (ismobcritter(M))
+			var/mob/living/critter/C = M
+			C.implants.Add(src)
 		if (implant_overlay)
 			M.update_clothing()
 		activate()
-		return
 
 	// called when an implant is removed from M
 	proc/on_remove(var/mob/M)
@@ -320,19 +329,18 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
+		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
 			return
-		var/coords = src.get_coords()
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
 		for(var/obj/item/implant/cloner/cl_implant in src.owner)
 			if(cl_implant.owner != src.owner)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
 		if (he_or_she(src.owner) == "they")
 			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
 		else
@@ -343,14 +351,20 @@ THROWING DARTS
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 
-	New()
+	death_alert()
 		mailgroups.Add(MGD_SECURITY)
 		..()
+		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+
+	on_death()
+		. = ..()
+		src.on_remove(src.owner)
+		qdel(src)
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
@@ -441,6 +455,30 @@ THROWING DARTS
 		src.send_message(message, MGA_TRACKING, "TRACKER-MAILBOT")
 		..()
 
+/obj/item/implant/pod_wars
+	name = "pilot tracking implant"
+
+	deactivate()
+		. = ..()
+		var/datum/component/C = src.owner.GetComponent(/datum/component/minimap_marker)
+		C?.RemoveComponent(/datum/component/minimap_marker)
+
+	on_death()
+		src.deactivate()
+
+/obj/item/implant/pod_wars/nanotrasen
+
+	activate()
+		. = ..()
+		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_NANOTRASEN, "blue_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+
+/obj/item/implant/pod_wars/syndicate
+
+	activate()
+		. = ..()
+		src.owner.AddComponent(/datum/component/minimap_marker, MAP_POD_WARS_SYNDICATE, "red_dot", 'icons/obj/minimap/minimap_markers.dmi', "Pilot Tracker", FALSE)
+
+
 /** Deprecated **/
 /obj/item/implant/syn
 	name = "syndicate implant"
@@ -489,47 +527,49 @@ THROWING DARTS
 			return
 		var/mob/living/carbon/human/H = src.owner
 
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if (H.mind in ticker.mode:head_revolutionaries)
-				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
-				H.changeStatus("weakened", 1 SECOND)
-				H.force_laydown_standup()
-				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
-				//src.on_remove(H)
-				//H.implant.Remove(src)
-				//src.set_loc(get_turf(H))
-			else if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1, 1, 0)
-				H.changeStatus("weakened", 1 SECOND)
-				H.force_laydown_standup()
-				H.emote("scream")
-				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
+		if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
+			H.changeStatus("weakened", 1 SECOND)
+			H.force_laydown_standup()
+			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
+
+		else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			H.TakeDamage("chest", 1, 1, 0)
+			H.changeStatus("weakened", 1 SECOND)
+			H.setStatus("derevving")
+			H.force_laydown_standup()
+			H.emote("scream")
+			playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
 
 	do_process(var/mult = 1)
-		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if (!ishuman(src.owner))
-				return
-			var/mob/living/carbon/human/H = src.owner
-			if (H.mind in ticker.mode:revolutionaries)
-				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
-				if (H.health < 0)
-					H.changeStatus("paralysis", 5 SECONDS)
-					H.changeStatus("newcause", 5 SECONDS)
-					H.force_laydown_standup()
-					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
+		if (!ishuman(src.owner))
+			return
+		var/mob/living/carbon/human/H = src.owner
+		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
+			if (H.health < 0)
+				H.changeStatus("paralysis", 5 SECONDS)
+				H.changeStatus("newcause", 5 SECONDS)
+				H.delStatus("derevving")
+				H.force_laydown_standup()
+				H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
-					//heal a small amount for the trouble of bein critted via this thing
-					H.HealDamage("All", max(30 - H.health,0), 0)
-					H.HealDamage("All", 0, max(30 - H.health,0))
+				//heal a small amount for the trouble of bein critted via this thing
+				H.HealDamage("All", max(30 - H.health,0), 0)
+				H.HealDamage("All", 0, max(30 - H.health,0))
 
-					ticker.mode:remove_revolutionary(H.mind)
-				else
-					if (prob(30))
-						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
-						playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
-						H.emote("twitch_v")
+				H.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
+			else
+				if (prob(30))
+					H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the Heads of Staff!</B>", "blue")
+					playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
+					H.emote("twitch_v")
 
 		..()
+
+	on_remove(var/mob/M)
+		M.delStatus("derevving")
+		. = ..()
 
 
 // dumb joke
@@ -590,8 +630,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
-	big_message = "emits a loud clunk"
-	small_message = "makes a small clicking noise"
+	big_message = " emits a loud clunk"
+	small_message = " makes a small clicking noise"
 
 	implanted(mob/target, mob/user)
 		..()
@@ -607,7 +647,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/turf/T = get_turf(src)
 
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1 //Create a big bomb explosion overlay.
+		Ov.anchored = ANCHORED //Create a big bomb explosion overlay.
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -692,29 +732,29 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
 		if (!istype(target))
-			return 0
+			return FALSE
 		if (!implant_hacker)
 			if (ismob(user))
 				implant_hacker = user
 			else
-				return 0
+				return FALSE
 		// all the stuff in here was added by Convair880, I just adjusted it to work with this can_implant() proc thing - haine
 		var/mob/living/carbon/human/H = target
 		if (!H.mind || !H.client)
 			if (ismob(user)) user.show_text("[H] is braindead!", "red")
-			return 0
+			return FALSE
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
-			return 0
+			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
 			boutput(user, "<span class='alert'>[H] is protected from mindhacking by \an [AM.name]!</span>")
-			return 0
+			return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
-			return 0
+			return FALSE
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)
 			if (!istype(MS))
@@ -726,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			var/obj/item/implant/mindhack/Inew = new MS.type(H)
 			H.implant += Inew
 			qdel(MS)
-		return 1
+		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
 		..()
@@ -741,7 +781,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(M, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			tgui_alert(M, "You feel utterly strengthened in your resolve! You are the most important person in the universe!", "YOU ARE REALY GREAT!!")
 			return
-
+		logTheThing(LOG_COMBAT, M, "is mindhacked ([src.expire ? "regular" : "deluxe"]) by [constructTarget(I,"combat")] at [log_loc(I)].")
 		M.setStatus("mindhack", expire ? (25 + rand(-5,5)) MINUTES : null, I, custom_orders)
 		src.uses -= 1
 
@@ -946,7 +986,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	flintlock
 		name= "flintlock round"
-		desc = "Rather unperfect round ball. Looks very old."
+		desc = "A rather imperfect round ball. It looks very old indeed."
 		icon_state = "flintlockbullet"
 
 	bullet_50
@@ -959,11 +999,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		desc = "A weird flechette-like projectile."
 		icon_state = "blowdart"
 
-/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I)
-	SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, C)
-	implanted = 1
-	owner = C
-
+/obj/item/implant/projectile/implanted(mob/living/carbon/C, mob/I, bleed_time)
 	if (!istype(C) || !isnull(I)) //Don't make non-organics bleed and don't act like a launched bullet if some doofus is just injecting it somehow.
 		return
 
@@ -971,11 +1007,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(C) && leaves_wound)
 			var/datum/reagent/contained_blood = reagents_cache[C.blood_id]
 			implant_overlay.color = rgb(contained_blood.fluid_r, contained_blood.fluid_g, contained_blood.fluid_b, contained_blood.transparency)
-		C.update_clothing()
 
-	if (!src.bleed_time)
+	..()
+
+	if (!bleed_time)
 		return
-
+	src.bleed_time = bleed_time
 	src.blood_DNA = src.owner.bioHolder.Uid
 
 	for (var/obj/item/implant/projectile/P in C)
@@ -1063,6 +1100,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			New()
 				..()
 				access.access = get_access("Medical Doctor") + get_access("Janitor") + get_access("Botanist") + get_access("Chef") + get_access("Scientist")
+
+		captain
+			New()
+				..()
+				access.access = get_access("Captain")
 
 /* ============================================================ */
 /* --------------------- Artifact Implants -------------------- */
@@ -1357,7 +1399,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				src.implant_activate(50)
 				sleep(2 SECONDS)
 				if (H && src && (src in H.implant))
-					gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+					gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 					H.set_mutantrace(pick(possible_mutantraces))
 		..()
 
@@ -1365,7 +1407,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
 			if (H.mutantrace != original_mutantrace)
-				gibs(get_turf(H), null, null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
+				gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
 			H.set_mutantrace(original_mutantrace)
 		..()
 
@@ -1456,14 +1498,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				"<span class='alert'>You have been implanted by [user].</span>",\
 				"<span class='alert'>You implanted the implant into [M].</span>")
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			H.implant.Add(src.imp)
-		else if (ismobcritter(M))
-			var/mob/living/critter/C = M
-			C.implants.Add(src.imp)
-
-		src.imp.set_loc(M)
 		src.imp.implanted(M, user)
 
 		src.imp = null
@@ -2143,17 +2177,13 @@ TYPEINFO(/obj/item/gun/implanter)
 		if (ishuman(hit))
 			var/mob/living/carbon/human/H = hit
 			if (my_implant.can_implant(H, implant_master))
-				my_implant.set_loc(H)
 				my_implant.implanted(H, implant_master)
-				H.implant.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(H))
 		else if (ismobcritter(hit))
 			var/mob/living/critter/C = hit
 			if (C.can_implant && my_implant.can_implant(C, implant_master))
-				my_implant.set_loc(C)
 				my_implant.implanted(C, implant_master)
-				C.implants.Add(my_implant)
 			else
 				my_implant.set_loc(get_turf(C))
 		else
@@ -2187,7 +2217,6 @@ TYPEINFO(/obj/item/gun/implanter)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			random_brute_damage(M, 1)
-			src.set_loc(M)
 			src.implanted(M)
 
 	attack_hand(mob/user)
@@ -2218,5 +2247,4 @@ TYPEINFO(/obj/item/gun/implanter)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)
-			src.set_loc(M)
 			src.implanted(M)

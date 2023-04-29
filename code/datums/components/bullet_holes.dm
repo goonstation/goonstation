@@ -22,6 +22,7 @@ TYPEINFO(/datum/component/bullet_holes)
 	var/decal_num = 0
 
 /datum/component/bullet_holes/Initialize(max_holes, req_damage)
+	. = ..()
 	if (!isatom(src.parent))
 		return COMPONENT_INCOMPATIBLE
 	src.max_holes = max_holes

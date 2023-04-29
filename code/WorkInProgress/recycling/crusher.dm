@@ -9,8 +9,9 @@ TYPEINFO(/obj/machinery/crusher)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1
+	anchored = ANCHORED
 	is_syndicate = 1
+	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
@@ -179,7 +180,7 @@ TYPEINFO(/obj/machinery/crusher)
 		user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", "crusherpoke")] the [src]!</span>")
 		if(prob(osha_prob)) //RIP you.
 			user.canmove = 0
-			user.anchored = 1
+			user.anchored = ANCHORED
 			sleep(0.5 SECONDS) //Give it a little time
 			if(user) //Gotta make sure they haven't moved since last time
 				poking_jerks -= user
@@ -195,7 +196,7 @@ TYPEINFO(/obj/machinery/crusher)
 			var/anc = user.anchored
 			//To prevent them moving away.
 			user.canmove = 0
-			user.anchored = 1
+			user.anchored = ANCHORED
 			interact_particle(user,src)
 			sleep(0.5 SECONDS)
 			if(user) //Still here?
@@ -225,7 +226,6 @@ TYPEINFO(/obj/machinery/crusher)
 /obj/machinery/crusher/process()
 	..()
 	if(status & (NOPOWER|BROKEN))	return
-	use_power(500)
 
 /obj/machinery/crusher/New()
 	..()

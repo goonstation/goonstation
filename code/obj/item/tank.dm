@@ -283,6 +283,14 @@ Contains:
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
 
@@ -417,9 +425,9 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
-	item_state = "microjetpack0"
+	item_state = "microjetpack"
 	base_icon_state = "microjetpack"
-	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
 	force = 6
 
 	New()

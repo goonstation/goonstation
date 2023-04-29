@@ -107,8 +107,8 @@ datum
 					var/mob/living/L = M
 					var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 					if(istype(L) && burn)
-						L.changeStatus("burning", 2 * src.volume SECONDS)
-						burn.counter += 10 * src.volume
+						L.changeStatus("burning", 2 * raw_volume SECONDS)
+						burn.counter += 10 * raw_volume
 						L.TakeDamage("All", 0, (1 - L.get_heat_protection()/100) * clamp(3 * raw_volume * (burn.getStage()-1.25), 0, 35), 0, DAMAGE_BURN)
 						if(!M.stat && !ON_COOLDOWN(M, "napalm_scream", 1 SECOND))
 							M.emote("scream")
@@ -140,8 +140,8 @@ datum
 						var/datum/statusEffect/simpledot/burning/burn = L.hasStatus("burning")
 						L.changeStatus("slowed", 4 SECONDS, optional = 4)
 						if(istype(L) && burn) //double up on the extra burny, not blockable by biosuits/etc either
-							L.changeStatus("burning", src.volume SECONDS)
-							burn.counter += 5 * src.volume
+							L.changeStatus("burning", raw_volume SECONDS)
+							burn.counter += 5 * raw_volume
 
 		combustible/kerosene
 			name = "kerosene"

@@ -9,7 +9,7 @@
 /// ceil, with second argument being the multiple to use for rounding
 #define ceil2(x,y) (-round(-x / y) * y)
 
-#define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
+#define nround(x) ((((x) % 1) >= 0.5) ? round(x) : ceil(x))
 
 /// Returns the sign of the given number (1 or -1)
 #define sign(x) (((x) > 0) - ((x) < 0))
@@ -94,4 +94,5 @@ proc/text2num_safe(x)
 	. -= round(.)
 
 // hyperbolic trig functions
+#define sech(x) (2/((eulers**x)+(eulers**-x)+0.000001))
 #define tanh(x) (((eulers**(2*x))-1)/((eulers**(2*x))+1))

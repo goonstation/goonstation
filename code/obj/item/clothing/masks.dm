@@ -7,6 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
+	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
@@ -129,6 +130,15 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+/obj/item/clothing/mask/gas/respirator
+	name = "gas respirator"
+	desc = "A close-fitting gas mask with a custom particle filter."
+	icon_state = "respirator-gas"
+	item_state = "respirator-gas"
+	color_r = 0.85 // glass visor gives more visibility
+	color_g = 0.85
+	color_b = 0.95
+
 TYPEINFO(/obj/item/clothing/mask/moustache)
 	mats = 2
 
@@ -139,6 +149,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	item_state = "moustache"
 	see_face = 0
 	w_class = W_CLASS_TINY
+	c_flags = null
 	is_syndicate = 1
 
 	setupProperties()
@@ -220,6 +231,15 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+
+/obj/item/clothing/mask/gas/swat/NT
+	name = "SWAT mask"
+	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
+	icon_state = "swatNT"
+	item_state = "swatNT"
+	color_r = 0.8
+	color_g = 0.8
+	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	mats = 6
@@ -627,6 +647,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
 	see_face = 0
+	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
@@ -634,6 +655,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana

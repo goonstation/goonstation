@@ -1,16 +1,14 @@
 import { Window } from '../layouts';
 import { useBackend } from "../backend";
-
+import { ReagentBar } from './common/ReagentInfo';
 import { clamp, round } from 'common/math';
 
 import {
   Stack,
-  Box,
   Button,
   Section,
   Slider,
   Tabs,
-  ProgressBar,
 } from '../components';
 
 const TO_SELF = 0;
@@ -49,38 +47,12 @@ const DropperAmountSection = (props) => {
     minTransferAmt,
     maxTransferAmt,
     onTransferAmtChange,
-    curReagentVol,
-    reagentColor,
+    reagents,
   } = props;
 
   return (
     <Section>
-      <Stack align="center" pb={1}>
-        <Stack.Item>
-          <Box
-            textAlign="right"
-            width="3em"
-          >
-            {`${curReagentVol}u`}
-          </Box>
-        </Stack.Item>
-        <Stack.Item grow>
-          <ProgressBar
-            value={curReagentVol}
-            minValue={0}
-            maxValue={maxTransferAmt}
-            color={reagentColor}
-          />
-        </Stack.Item>
-        <Stack.Item>
-          <Box
-            textAlign="left"
-            width="3em"
-          >
-            {`${maxTransferAmt}u`}
-          </Box>
-        </Stack.Item>
-      </Stack>
+      <ReagentBar container={reagents} />
       <Stack align="center">
         <Stack.Item>
           <Button
@@ -121,8 +93,7 @@ export const MechanicalDropper = (_props, context) => {
     minTransferAmt,
     maxTransferAmt,
     transferMode,
-    curReagentVol,
-    reagentColor,
+    reagents,
   } = data;
 
   const onTransferModeChange = (mode) => {
@@ -150,8 +121,7 @@ export const MechanicalDropper = (_props, context) => {
               minTransferAmt={minTransferAmt}
               maxTransferAmt={maxTransferAmt}
               onTransferAmtChange={onTransferAmtChange}
-              curReagentVol={curReagentVol}
-              reagentColor={reagentColor}
+              reagents={reagents}
             />
           </Stack.Item>
         </Stack>

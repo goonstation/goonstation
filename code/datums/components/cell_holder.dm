@@ -14,9 +14,9 @@ TYPEINFO(/datum/component/cell_holder)
 	)
 
 /datum/component/cell_holder/Initialize(atom/movable/new_cell, chargable = TRUE, max_cell = INFINITY, swappable = TRUE)
+	. = ..()
 	if(!isitem(parent) || SEND_SIGNAL(parent, COMSIG_CELL_IS_CELL))
 		return COMPONENT_INCOMPATIBLE
-	. = ..()
 	if(SEND_SIGNAL(new_cell, COMSIG_CELL_IS_CELL))
 		src.cell = new_cell
 		new_cell.set_loc(parent)

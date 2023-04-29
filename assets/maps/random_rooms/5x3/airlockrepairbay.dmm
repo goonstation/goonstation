@@ -12,7 +12,6 @@
 "c" = (
 /obj/machinery/door/airlock/pyro/external{
 	aiControlDisabled = 1;
-	ai_no_access = 1;
 	name = "Repair Bay"
 	},
 /obj/cable{

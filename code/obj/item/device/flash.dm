@@ -288,38 +288,33 @@ TYPEINFO(/obj/item/device/flash)
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
 	.= 0
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-		var/datum/game_mode/revolution/R = ticker.mode
-		if (ishuman(M))
-			//playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1 , 0, 0.6) //moved to rev flash only
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/safety = 0
+		if (H.eyes_protected_from_light())
+			safety = 1
 
-			var/mob/living/carbon/human/H = M
-			var/safety = 0
-			if (H.eyes_protected_from_light())
-				safety = 1
-
-			if (safety == 0 && user.mind && (user.mind in R.head_revolutionaries) && !isghostcritter(user))
-				var/nostun = 0
-				var/list/U = R.get_unconvertables()
-				if (!H.client || !H.mind)
-					user.show_text("[H] is braindead and cannot be converted.", "red")
-				else if (locate(/obj/item/implant/counterrev) in H.implant)
-					user.show_text("There seems to be something preventing [H] from revolting.", "red")
-					.= 0.5
-					nostun = 1
-				else if (H.mind in U)
-					user.show_text("[H] seems unwilling to revolt.", "red")
-					nostun = 1
-				else if (H.mind in R.head_revolutionaries)
-					user.show_text("[H] is already a member of the revolution.", "red")
+		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
+			var/nostun = 0
+			if (!H.client || !H.mind)
+				user.show_text("[H] is braindead and cannot be converted.", "red")
+			else if (locate(/obj/item/implant/counterrev) in H.implant)
+				user.show_text("There seems to be something preventing [H] from revolting.", "red")
+				.= 0.5
+				nostun = 1
+			else if (!H.can_be_converted_to_the_revolution())
+				user.show_text("[H] seems unwilling to revolt.", "red")
+				nostun = 1
+			else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				user.show_text("[H] is already a member of the revolution.", "red")
+			else
+				.= 1
+				if (!(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
+					H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
 				else
-					.= 1
-					if (!(H.mind in R.revolutionaries))
-						R.add_revolutionary(H.mind)
-					else
-						user.show_text("[H] is already a member of the revolution.", "red")
-				if (!nostun)
-					M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
+					user.show_text("[H] is already a member of the revolution.", "red")
+			if (!nostun)
+				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
 
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
@@ -420,6 +415,8 @@ TYPEINFO(/obj/item/device/flash/turbo)
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/device/flash/turbo = 5)
 
+TYPEINFO(/obj/item/device/flash/revolution)
+	mats = 0
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
@@ -441,13 +438,10 @@ TYPEINFO(/obj/item/device/flash/turbo)
 
 
 	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
-		if (!convert)
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				if (M.mind && (M.mind in R.head_revolutionaries))
-					user.show_text("[src] refuses to flash!", "red") //lol
-					return
-		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
+		if (!convert && M.mind && M.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+			user.show_text("[src] refuses to flash!", "red")
+			return
+		else
 			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
 			var/convert_result = convert(M,user)
 			if (convert_result == 0.5)

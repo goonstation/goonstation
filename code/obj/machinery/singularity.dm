@@ -34,7 +34,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	desc = "An Odd Device which produces a Black Hole when set up."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "TheSingGen"
-	anchored = 0 // so it can be moved around out of crates
+	anchored = UNANCHORED // so it can be moved around out of crates
 	density = 1
 	var/bhole = 0 // it is time. we can trust people to use the singularity For Good - cirr
 
@@ -71,15 +71,15 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	src.add_fingerprint(user)
 	if (iswrenchingtool(W))
 		if (!anchored)
-			anchored = 1
+			anchored = ANCHORED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the [src.name] to the floor.")
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else if (anchored)
-			anchored = 0
+			anchored = UNANCHORED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You unsecure the [src.name].")
-			src.anchored = 0
+			src.anchored = UNANCHORED
 
 		logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 		return
@@ -94,7 +94,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = "Sing2"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
@@ -240,11 +240,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if (selfmove)
 		var/dir = pick(cardinal)
 
-		var/checkloc = get_step(src.get_center(), dir)
-		for (var/dist = 0, dist < max(2,radius+1), dist ++)
+		for (var/dist = max(0,radius-1), dist <= radius+1, dist++)
+			var/turf/checkloc = get_ranged_target_turf(src.get_center(), dir, dist)
 			if (locate(/obj/machinery/containment_field) in checkloc)
 				return
-			checkloc = get_step(checkloc, dir)
 
 		step(src, dir)
 
@@ -305,24 +304,38 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	else if (isobj(A))
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
-
+		if (istype(A.material))
+			gain += A.material.getProperty("density") * 2
+			gain += A.material.getProperty("radioactive") * 2
+		if (A.reagents)
+			gain += min(A.reagents.total_volume/4, 50)
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
 			qdel(A)
-			gain = 2
+			gain += 2
+		else if (istype(A, /obj/machinery/nuclearbomb))
+			gain += 5000 //ten clowns
+			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
+			SPAWN(1 SECOND)
+				src.maxradius += 5
+				for (var/i in 1 to 5)
+					src.grow()
+					sleep(0.5 SECONDS)
+			qdel(A)
 		else
 			var/obj/O = A
+			gain += 2
+			gain += length(O.contents) * 2
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)
 				qdel(O)
-			gain = 2
 
 	else if (isturf(A))
 		var/turf/T = A
 		if (T.turf_flags & IS_TYPE_SIMULATED)
 			if (istype(T, /turf/simulated/floor))
 				T.ReplaceWithSpace()
-				gain = 2
+				gain += 2
 			else
 				T.ReplaceWithFloor()
 
@@ -330,7 +343,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/get_center()
 	return src.loc
-
 
 /obj/machinery/the_singularity/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I, /obj/item/clothing/mask/cigarette))
@@ -461,7 +473,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	desc = "Projects an energy field when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Field_Gen"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	req_access = list(access_engineering_engine)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -486,9 +498,9 @@ TYPEINFO(/obj/machinery/field_generator)
 		if (src.active != act)
 			src.active = act
 			if (src.active)
-				event_handler_flags |= IMMUNE_SINGULARITY
+				event_handler_flags |= IMMUNE_SINGULARITY_INACTIVE
 			else
-				event_handler_flags &= ~IMMUNE_SINGULARITY
+				event_handler_flags &= ~IMMUNE_SINGULARITY_INACTIVE
 
 /obj/machinery/field_generator/attack_hand(mob/user)
 	if(state == WELDED)
@@ -541,14 +553,13 @@ TYPEINFO(/obj/machinery/field_generator)
 	active = FALSE
 	. = ..()
 
-/obj/machinery/field_generator/process()
-
+/obj/machinery/field_generator/process(var/mult)
 	if(src.Varedit_start == 1)
 		if(src.active == 0)
 			src.set_active(1)
 			src.state = WELDED
 			src.power = 250
-			src.anchored = 1
+			src.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		Varedit_start = 0
 
@@ -563,7 +574,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		src.set_active(2)
 	src.power = clamp(src.power, 0, src.max_power)
 	if(src.active >= 1)
-		src.power -= 1
+		src.power -= 1 * mult
 		if(Varpower == 0)
 			if(src.power <= 0)
 				src.visible_message("<span class='alert'>The [src.name] shuts down due to lack of power!</span>")
@@ -658,7 +669,7 @@ TYPEINFO(/obj/machinery/field_generator)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			desc = "Projects an energy field when active. It has been bolted to the floor."
-			src.anchored = 1
+			src.anchored = ANCHORED
 			return
 
 		else if(state == WRENCHED)
@@ -666,7 +677,7 @@ TYPEINFO(/obj/machinery/field_generator)
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			desc = "Projects an energy field when active."
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			return
 
 	if(isweldingtool(W))
@@ -820,7 +831,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 	pass_unstable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
 	var/active = 1
@@ -957,7 +968,7 @@ TYPEINFO(/obj/machinery/emitter)
 	desc = "Shoots a high power laser when active"
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Emitter"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	req_access = list(access_engineering_engine)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -1066,6 +1077,7 @@ TYPEINFO(/obj/machinery/emitter)
 			src.dir &= 12 // Cardinalize
 		src.visible_message("<span class='alert'><b>[src]</b> fires a bolt of energy!</span>")
 		shoot_projectile_DIR(src, current_projectile, dir)
+		use_power(current_projectile.power)
 
 		if(prob(35))
 			elecflash(src)
@@ -1088,7 +1100,7 @@ TYPEINFO(/obj/machinery/emitter)
 			state = WRENCHED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
-			src.anchored = 1
+			src.anchored = ANCHORED
 			desc = "Shoots a high power laser when active, it has been bolted to the floor."
 			return
 
@@ -1096,7 +1108,7 @@ TYPEINFO(/obj/machinery/emitter)
 			state = UNWRENCHED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			desc = "Shoots a high power laser when active."
 			return
 
@@ -1239,7 +1251,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	desc = "A device which uses Hawking Radiation and plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "ca"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
 	var/magic = 0
@@ -1312,11 +1324,11 @@ TYPEINFO(/obj/machinery/power/collector_array)
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
-				src.anchored = 1
+				src.anchored = ANCHORED
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
@@ -1360,7 +1372,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	desc = "A device which uses Hawking Radiation and Plasma to produce power."
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "cu"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
 	var/magic = 0
@@ -1384,6 +1396,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 /obj/machinery/power/collector_control/New()
 	..()
 	START_TRACKING
+	AddComponent(/datum/component/mechanics_holder)
 	SPAWN(1 SECOND)
 		updatecons()
 
@@ -1507,6 +1520,7 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			power_a = power_p*power_s*50
 			src.lastpower = power_a
 			add_avail(power_a)
+			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[power_a]&powerfmt=[engineering_notation(power_a)]W")
 			..()
 	else
 		var/power_a = 0
@@ -1543,11 +1557,11 @@ TYPEINFO(/obj/machinery/power/collector_control)
 			if (!src.anchored)
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
-				src.anchored = 1
+				src.anchored = ANCHORED
 			else
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
 		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
@@ -1570,7 +1584,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 	desc = "A WMD that creates a singularity."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "portgen0"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/state = UNWRENCHED
 	var/timing = 0
@@ -1589,14 +1603,14 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 			state = WRENCHED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
-			src.anchored = 1
+			src.anchored = ANCHORED
 			return
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			return
 
 	if(isweldingtool(W))
@@ -1726,7 +1740,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 
 /obj/machinery/the_singularitybomb/attack_hand(mob/user)
 	..()
-	if(src.state != 3)
+	if(src.state != WELDED)
 		boutput(user, "The bomb needs to be firmly secured to the floor first.")
 		return
 	if (user.stat || user.restrained() || user.lying)

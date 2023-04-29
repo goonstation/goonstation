@@ -299,7 +299,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //also sneakily contains diner and siphon shaft cover
 		prefabSizeX = 47
-		prefabSizeY = 41
+		prefabSizeY = 47
 
 	miracliumsurvey
 		underwater = 1

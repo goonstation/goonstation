@@ -1,6 +1,7 @@
 
 var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/human_item/reset,\
+	new /datum/bank_purchaseable/candy_heart,\
 	new /datum/bank_purchaseable/human_item/crayon,\
 	new /datum/bank_purchaseable/human_item/paint_rainbow,\
 	new /datum/bank_purchaseable/human_item/crayon_box,\
@@ -36,7 +37,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 
 	new /datum/bank_purchaseable/limbless,\
 	new /datum/bank_purchaseable/space_diner,\
-	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
 	new /datum/bank_purchaseable/lunchbox,\
 
@@ -453,36 +453,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				M.set_loc(start)
 			return 1
 
-	mail_order
-		name = "Mail Order"
-		cost = 5000
-		icon = 'icons/obj/large_storage.dmi'
-		icon_state = "woodencrate1"
-
-		Create(var/mob/living/M)
-			var/obj/storage/S
-			if (istype(M.loc, /obj/storage)) // also for stowaways; we really should have a system for integrating this stuff
-				S = M.loc
-			else
-				S = new /obj/storage/crate/wooden()
-				M.set_loc(S)
-			SPAWN(1)
-				if(transception_array) //hand off delivery to array's management systems
-					transception_array.direct_queue += S
-				else
-					for(var/i in 1 to 3)
-						shippingmarket.receive_crate(S)
-						sleep(randfloat(10 SECONDS, 20 SECONDS))
-						if(istype(get_area(S), /area/station))
-							return
-						boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
-					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
-					if(length(last_chance_turfs))
-						S.set_loc(pick(last_chance_turfs))
-					else
-						S.set_loc(get_random_station_turf())
-			return 1
-
 	frog
 		name = "Adopt a Frog"
 		cost = 6000
@@ -681,6 +651,33 @@ var/global/list/persistent_bank_purchaseables =	list(\
 					return 1
 			return 0
 
+	candy_heart
+		name = "Send Candy Heart"
+		cost = 2500
+		icon = 'icons/obj/foodNdrink/food_candy.dmi'
+		icon_state = "heart-1"
+
+		Create(var/mob/M)
+			SPAWN(rand(3 SECONDS, 15 SECONDS)) // stagger in case multiple purchases
+				var/datum/db_record/R = pick(data_core.general.records)
+				var/obj/storage/S = new /obj/storage/crate/packing
+				S.name = "special delivery ([R["name"]])"
+				var/obj/item/I = new /obj/item/reagent_containers/food/snacks/candy/candyheart(S)
+				I.name = "candy heart (to: [R["name"]] from: [M])"
+				if(transception_array) //hand off delivery to array's management systems
+					transception_array.direct_queue += S
+				else
+					for(var/i in 1 to 3)
+						shippingmarket.receive_crate(S)
+						sleep(randfloat(10 SECONDS, 20 SECONDS))
+						if(istype(get_area(S), /area/station))
+							return
+					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+					if(length(last_chance_turfs))
+						S.set_loc(pick(last_chance_turfs))
+					else
+						S.set_loc(get_random_station_turf())
+			return TRUE
 
 	/////////////////////////////////////
 	//CLOTHING (FITS HUMAN AND CYBORGS)//

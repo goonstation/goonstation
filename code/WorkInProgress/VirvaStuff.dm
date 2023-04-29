@@ -80,7 +80,8 @@ obj/item/ammo/bullets/flechette_mag
 	damage = 110
 	dissipation_delay = 2
 	dissipation_rate = 5
-	damage_type = D_KINETIC
+	damage_type = D_PIERCING // a bit of a misnomer, more like it crushes through armour
+	armor_ignored = 0.50
 	hit_type = DAMAGE_STAB
 	impact_image_state = "bhole"
 	hit_ground_chance = 25
@@ -272,7 +273,7 @@ obj/item/ammo/bullets/flechette_mag
 	icon = 'icons/obj/foodNdrink/bottle.dmi'
 	icon_state = "taskumatti"
 	item_state = "taskumatti"
-	initial_reagents = list("enriched_msg"=10,"energydrink"=10,"royal_jelly"=10,"hard_punch"=10)
+	initial_reagents = list("enriched_msg"=10,"methamphetamine"=10,"royal_jelly"=10,"hard_punch"=10)
 
 /obj/item/decoration/virvase
 	name = "pretty purple hibiscus"

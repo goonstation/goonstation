@@ -128,7 +128,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	proc/do_retaliate(mob/living/user)
 		if(!(issawflybuddy(user) || (user in src.friends) || (user.health < 40)))//are you an eligible target: nonantag or healthy enough?
 			if(prob(50) && !ON_COOLDOWN(src, "sawfly_retaliate_cd", 5 SECONDS) && !isdead(src))//now that you're eligible, are WE eligible?
-				if((ai.target != user))
+				if(ai && (ai.target != user))
 					src.lastattacker = user
 					src.retaliate = TRUE
 					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
@@ -143,7 +143,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 
 		if(!gibbed)
 			animate(src) //no more float animation
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			desc = "A folding antipersonnel drone, made by Ranodyne LLC. It's totally wrecked."
 			if (prob(20))
 				new /obj/item/device/prox_sensor(src.loc)
@@ -247,5 +247,5 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.is_npc = TRUE
-		src.ai = new /datum/aiHolder/sawfly(src)
+		src.ai = new/datum/aiHolder/wanderer_aggressive(src)
 

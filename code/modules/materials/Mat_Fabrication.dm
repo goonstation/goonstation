@@ -20,6 +20,7 @@
 	/datum/matfab_recipe/lightbulb,
 	/datum/matfab_recipe/tripodbulb,
 	/datum/matfab_recipe/sheet,
+	/datum/matfab_recipe/thermocouple,
 	/datum/matfab_recipe/cell_small,
 	/datum/matfab_recipe/cell_large,
 	/datum/matfab_recipe/infusion,
@@ -43,6 +44,14 @@
 	/datum/matfab_recipe/mining_mod_conc,
 	/datum/matfab_recipe/spacesuit)
 
+/obj/machinery/nanofab/nuclear
+	name = "Nano-fabricator (Nuclear)"
+	color = "#094721"
+	blueprints = list(/datum/matfab_recipe/simple/nuclear/gas_channel,
+	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
+	/datum/matfab_recipe/simple/nuclear/control_rod,
+	/datum/matfab_recipe/simple/nuclear/fuel_rod)
+
 /obj/machinery/nanofab/prototype
 	name = "Nano-fabricator (Protoype)"
 	color = "#496ba3"
@@ -64,7 +73,7 @@
 	desc = "A more complicated sibling to the manufacturers, this machine can make things that inherit material properties."// this isnt super good but it's better than what it was
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "fab2-on"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = FLOOR_EQUIP_LAYER1
 	flags = NOSPLASH

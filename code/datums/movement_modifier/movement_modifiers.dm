@@ -45,7 +45,7 @@
 	additive_slowdown = 3
 
 /datum/movement_modifier/disoriented
-	additive_slowdown = 8
+	additive_slowdown = 7
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
@@ -58,6 +58,9 @@
 
 /datum/movement_modifier/reagent/juggernaut
 	health_deficiency_adjustment = -65
+
+/datum/movement_modifier/pain_immune
+	health_deficiency_adjustment = -10000
 
 /datum/movement_modifier/reagent/morphine
 	health_deficiency_adjustment = -60
@@ -237,3 +240,10 @@
 
 /datum/movement_modifier/shiver
 	additive_slowdown = 2
+
+// methed up bears
+
+/datum/movement_modifier/spacebear
+	health_deficiency_adjustment = -30
+	additive_slowdown = -0.4
+

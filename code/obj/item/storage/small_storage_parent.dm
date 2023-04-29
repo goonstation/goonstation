@@ -294,7 +294,7 @@
 	attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
+		if (src.loc == user && (!does_not_open_in_pocket || (src in user.equipped_list(FALSE)) || IS_LIVING_OBJECT_USING_SELF(user)))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
@@ -357,12 +357,12 @@
 
 /obj/item/storage/box/starter // the one you get in your backpack
 	icon_state = "emergbox"
-	spawn_contents = list(/obj/item/clothing/mask/breath)
-	make_my_stuff()
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	make_my_stuff(onlyMaskAndOxygen)
 		..()
-		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES) //aaaaaa
+		if (prob(15) || ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen) //aaaaaa
 			new /obj/item/tank/emergency_oxygen(src)
-		if (ticker?.round_elapsed_ticks > 20 MINUTES)
+		if (ticker?.round_elapsed_ticks > 20 MINUTES && !onlyMaskAndOxygen)
 			new /obj/item/crowbar/red(src)
 #ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
 		new /obj/item/clothing/suit/space/emerg(src)
@@ -373,8 +373,11 @@
 			new /obj/item/clothing/head/emerg(src)
 #endif
 
-/obj/item/storage/box/starter/withO2
+
+/obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
+	make_my_stuff()
+		..(TRUE)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"

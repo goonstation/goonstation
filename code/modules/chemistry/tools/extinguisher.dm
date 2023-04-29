@@ -116,9 +116,7 @@
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.owner = M
-				M.implant += implanted
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 			qdel(src)

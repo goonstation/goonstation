@@ -134,7 +134,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged2
@@ -142,7 +141,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged3
@@ -150,7 +148,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
@@ -870,16 +867,32 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/airless/plating/scorched
-	icon_state = "panelscorched"
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/airless/plating/damaged1
-	icon_state = "platingdmg1"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged2
-	icon_state = "platingdmg2"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged3
-	icon_state = "platingdmg3"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 //////////////
 
@@ -1022,7 +1035,8 @@
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+			if(istype(src))
+				edge_overlays()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))

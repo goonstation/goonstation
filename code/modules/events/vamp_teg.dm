@@ -222,7 +222,7 @@ datum/teg_transformation/vampire
 		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, .proc/attackby)
 
 		var/image/mask = image('icons/obj/clothing/item_masks.dmi', "death")
-		mask.appearance_flags = RESET_COLOR | RESET_ALPHA
+		mask.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 		mask.color = "#b10000"
 		mask.alpha = 240
 		teg.UpdateOverlays(mask, "mask")

@@ -133,10 +133,12 @@ TYPEINFO(/obj/item/device/accessgun)
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
+		var/str_contents = kText.list2text(ID_card.access, ", ")
 		if (!mode)
 			O.set_access_list(list(ID_card.access))
 		else
 			O.set_access_list(ID_card.access)
+		logTheThing(LOG_STATION, user, "reprograms door access on [constructName(O)] [log_loc(O)] to [str_contents] [mode ? "(AND mode)" : "(OR mode)"]")
 		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
 
 

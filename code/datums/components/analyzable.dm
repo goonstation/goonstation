@@ -13,6 +13,7 @@ TYPEINFO(/datum/component/analyzable)
 	)
 
 /datum/component/analyzable/Initialize(type_override)
+	. = ..()
 	if (!isobj(parent))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/O = parent

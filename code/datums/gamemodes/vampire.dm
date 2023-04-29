@@ -1,5 +1,5 @@
 /datum/game_mode/mixed/vampire //todo : 'horror' mode
-	name = "vampire"
+	name = "Vampire"
 	config_tag = "vampire"
 	latejoin_antag_compatible = 1
 	antag_token_support = TRUE

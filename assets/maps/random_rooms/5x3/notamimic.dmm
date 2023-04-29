@@ -1,0 +1,204 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/carafe/research{
+	pixel_y = 4;
+	mimic_chance = 5
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/table/auto,
+/obj/item/beach_ball{
+	pixel_y = 9;
+	mimic_chance = 10
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC"
+	},
+/turf/simulated/floor/purple/side,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/table/auto,
+/obj/item/cigpacket{
+	pixel_x = -3;
+	mimic_chance = 5
+	},
+/obj/item/clothing/mask/cigarette{
+	pixel_y = 10;
+	pixel_x = 2;
+	mimic_chance = 5
+	},
+/obj/item/clothing/mask/cigarette{
+	pixel_y = 9;
+	mimic_chance = 5
+	},
+/turf/simulated/floor/purple/side{
+	dir = 6
+	},
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/bottle,
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/stool/chair/office{
+	dir = 1
+	},
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 9;
+	pixel_x = -6;
+	mimic_chance = 100
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 7;
+	pixel_y = 8;
+	mimic_chance = 15
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC";
+	pixel_y = -2
+	},
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/paper_cup{
+	pixel_x = 4;
+	mimic_chance = 50
+	},
+/obj/item/clothing/glasses/regular{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/paper_cup{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC";
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC";
+	pixel_y = 8;
+	pixel_x = 5
+	},
+/turf/simulated/floor/purple/side,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/item/clothing/suit/labcoat/science{
+	pixel_y = -4
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 7
+	},
+/obj/item/paper{
+	info = "oh god, the notes, they do nothing!";
+	pixel_y = -10;
+	pixel_x = -14
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"Q" = (
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/table/auto,
+/obj/item/clipboard{
+	pixel_y = 3;
+	pixel_x = 9
+	},
+/obj/item/item_box/postit{
+	pixel_x = -7
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"U" = (
+/turf/simulated/floor/purple/side,
+/area/dmm_suite/clear_area)
+"W" = (
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"Y" = (
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/table/auto,
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = 13;
+	mimic_chance = 10
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = -4;
+	pixel_y = 4;
+	mimic_chance = 5
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC";
+	pixel_y = 3
+	},
+/obj/item/sticker/postit{
+	words = "NOT A MIMIC";
+	pixel_y = -4;
+	pixel_x = 16
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+Z
+Q
+s
+"}
+(2,1,1) = {"
+a
+Y
+M
+"}
+(3,1,1) = {"
+W
+Y
+U
+"}
+(4,1,1) = {"
+S
+N
+e
+"}
+(5,1,1) = {"
+C
+x
+g
+"}

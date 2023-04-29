@@ -91,7 +91,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 /obj/stomachacid
 	name = "acid"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "acid_depth"
 	layer = EFFECTS_LAYER_UNDER_1
@@ -119,7 +119,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "The masons inscribed the all-seeing eye of providence on the dollar bill as part of a great conspiracy.  Ha ha, nah, I'm lying. The symbol was added years before the masons started using it by an artist who probably just thought it looked cool.  Anyway, this sure is a gross blobby thing, ain't it?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "light"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 10
 	var/alive = 1
@@ -154,7 +154,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "A hydraulic door capable of withstanding multiple atmospheres of pressure. Oh, except this one. This one is all broken and covered in blood."
 	wanderer = 0
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
 	butcherable = 0
@@ -236,7 +236,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					if (M)
 						CritterAttack(M)
 						src.task = "attacking"
-						src.anchored = 1
+						src.anchored = ANCHORED
 						src.target_lastloc = M.loc
 				else
 					if ((GET_DIST(src, src.target)) >= src.attack_range)
@@ -268,7 +268,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	density = 1
 	defensive = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	aggressive = 0
 	health = 4000
 	icon = 'icons/effects/64x64.dmi'
@@ -314,7 +314,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					if (M)
 						CritterAttack(M)
 						src.task = "attacking"
-						src.anchored = 1
+						src.anchored = ANCHORED
 						src.target_lastloc = M.loc
 				else
 					if ((GET_DIST(src, src.target)) >= src.attack_range)
@@ -1276,7 +1276,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "\"WHO PUT BELLA IN THE WYCH ELM?\"<br>There is a small keyhole on the front."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/opened = 0
 
@@ -1321,7 +1321,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It's a big ol' ball of nerves.  Normally, these aren't the size of patio furniture, but.  um.  <i>future.</i>"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "ganglion0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/timer = 0 //Seconds to toggle back off after activation.  Zero to just act as a toggle.
 	var/active = 0
@@ -1437,7 +1437,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "fangdoor1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 
 	open()
@@ -1619,6 +1619,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It looks pretty well ruined."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "meat_reactor"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0

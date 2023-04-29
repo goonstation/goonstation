@@ -85,7 +85,7 @@
 						src.blinktimerstage = 5
 			switch(src.blinktimerstage)
 				if (0)
-					// this statement is intentionally left blank
+					; // this statement is intentionally left blank
 				if (1)
 					if (showmessages) boutput(owner, "<span class='alert'>Your eyes feel slightly uncomfortable!</span>")
 					src.blinktimernotifredundant = 1

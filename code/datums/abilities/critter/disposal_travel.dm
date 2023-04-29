@@ -47,6 +47,9 @@
 			if (!P)
 				boutput(holder.owner, "<span class='alert'>There aren't any pipes here!</span>")
 				return TRUE
+			else if(!P.dpdir)
+				boutput(holder.owner, "<span class='alert'>That pipe is a mangled mess of pain!  Best to stay here for now.</span>")
+				return TRUE
 
 			activate()
 
@@ -153,7 +156,7 @@
 	icon = null
 	name = "???"
 	desc = "Something is in disposals again..."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/can_move = 1

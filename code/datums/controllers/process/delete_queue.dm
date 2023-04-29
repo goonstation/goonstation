@@ -56,9 +56,10 @@ var/global/harddel_count = 0
 
 		//var/t_gccount = gccount
 		//var/t_delcount = delcount
-		for (var/r in global.delete_queue_2[global.delqueue_pos])
+		for (var/numr in global.delete_queue_2[global.delqueue_pos])
 			scheck()
 
+			var/r = NUM_TO_ADDR(numr)
 			var/datum/D = locate(r)
 			if (!istype(D) || !D.qdeled)
 				// If we can't locate it, it got garbage collected.
@@ -185,13 +186,14 @@ var/global/harddel_count = 0
 
 		#ifdef UPSCALED_MAP //this causes a ton of lag. no clue why.
 		return
-		#endif
+		#else
 
 		L.lying = FALSE
 		L.dir = SOUTH
 		L.invisibility = INVIS_NONE
 		L.update_lying()
 		put_mob_in_centcom_cloner(L, indirect=TRUE)
+		#endif
 
 	tickDetail()
 		#ifdef DELETE_QUEUE_DEBUG

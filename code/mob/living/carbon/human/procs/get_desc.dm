@@ -120,10 +120,8 @@
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
 
-	if (src.arrestIcon?.icon_state && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-
-		if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+	if (src.arrestIcon?.icon_state)
+		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
 			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 			if(sec_record)
 				var/sechud_flag = sec_record["sec_flag"]
@@ -346,7 +344,23 @@
 				. += "<br><span class='alert'>[src.name] has a blank expression on [his_or_her(src)] face.</span>"
 
 			if (!src.client && !src.ai_active)
-				. += "<br>[src.name] seems to be staring blankly into space."
+				var/using_vr_goggles = FALSE
+				var/mob = find_player(src.last_ckey)?.client?.mob
+
+				if (istype(mob, /mob/living/carbon/human/virtual))
+					var/mob/living/carbon/human/virtual/vr_person = mob
+					if (!vr_person.isghost) // rare but can happen if you leave your body while alive, and then decide to go into vr as a ghost
+						using_vr_goggles = TRUE
+				else if (istype(mob, /mob/living/critter/robotic/scuttlebot))
+					var/mob/living/critter/robotic/scuttlebot/scuttlebot = mob
+					if (scuttlebot.controller == src) // in case you mindswap into a scuttlebot
+						using_vr_goggles = TRUE
+
+				if (using_vr_goggles)
+					if (!(src.wear_suit?.hides_from_examine & C_GLASSES) && !(src.head?.hides_from_examine & C_GLASSES))
+						. += "<br><span style='color:#8600C8'>[src.name]'s mind is elsewhere.</span>"
+				else
+					. += "<br>[src.name] seems to be staring blankly into space."
 
 	switch (src.decomp_stage)
 		if (DECOMP_STAGE_BLOATED)
@@ -382,7 +396,7 @@
 	. += "<br><span class='notice'>*---------*</span>"
 
 	if (GET_DIST(usr, src) < 4)
-		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH) || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))
+		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br><span class='alert'>You analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)

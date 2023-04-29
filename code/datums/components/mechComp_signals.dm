@@ -307,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a [log_object(trigger)] [log_loc(trigger)] to a [log_object(receiver)] [log_loc(receiver)].")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
@@ -367,6 +367,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					//must be a custom config specific to the device, so let the device handle it
 					var/path = src.configs[selected_config]
 					call(parent, path)(W, user)
+					return TRUE
 
 //If it's a multi-tool, let the user configure the device.
 /datum/component/mechanics_holder/proc/compatible()
@@ -383,6 +384,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	var/atom/connectee
 
 /datum/component/mechanics_connector/Initialize(var/datum/component/mechanics_holder/C)
+	. = ..()
 	if(!ispulsingtool(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.connectee = C

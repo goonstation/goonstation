@@ -174,7 +174,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
@@ -216,12 +216,12 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'

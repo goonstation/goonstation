@@ -161,6 +161,8 @@
 
 	//What should happen on every tick when an organ is missing. Should be called above in /datum/organHolder/proc/handle_organs().
 	proc/handle_missing(var/organ_name as text, var/mult = 1)
+		if (ischangeling(src.donor))
+			return
 		switch (organ_name)
 			if ("liver")
 				donor.take_toxin_damage(2*mult, 1)
@@ -175,7 +177,7 @@
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
 			if ("tail")
-				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+				if(src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
 					return
 				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
 					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
@@ -1169,6 +1171,8 @@
 	proc/handle_lungs_stamina(var/mult = 1)
 		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
+		if (ischangeling(src.donor)) //we cheat
+			working_lungs = 2
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)

@@ -15,8 +15,8 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
-	power_usage = 100
+	anchored = ANCHORED
+	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
@@ -247,7 +247,7 @@
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return
-	use_power(power_usage)
+	..()
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -281,9 +281,11 @@
 	if(!operable)
 		operating = OP_OFF
 	if(!operating || (status & NOPOWER))
+		power_usage = 0
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
 	else
+		power_usage = 100
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 
@@ -368,6 +370,8 @@
 	if(!operating)
 		return
 	if(!loc)
+		return
+	if(AM.loc != src.loc) //fixes race condition where AM gets yoinked during the turf-to-turf loop that calls Crossed on everything (& ends up with an active walk inside another object)
 		return
 	move_thing(AM)
 
@@ -549,7 +553,7 @@
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLY_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
@@ -664,6 +668,7 @@
 
 
 
+ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
@@ -679,7 +684,7 @@
 	var/id = ""
 	/// the list of converyors that are controlled by this switch
 	var/list/conveyors
-	anchored = 1
+	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
 
@@ -775,7 +780,7 @@
 	name = "carousel power unit"
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"

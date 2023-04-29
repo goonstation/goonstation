@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
+
 /obj/window
 	name = "window"
 	icon = 'icons/obj/window.dmi'
@@ -28,9 +31,11 @@
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
+	var/image/damage_image = null
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.1
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -112,6 +117,13 @@
 
 		return
 
+	set_dir(new_dir)
+		. = ..()
+		if(new_dir in cardinal)
+			src.material_amt = 0.1
+		else
+			src.material_amt = 0.2
+
 	onMaterialChanged()
 		..()
 
@@ -131,6 +143,9 @@
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
+
+			if(src.material.special_naming)
+				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
 
@@ -162,6 +177,7 @@
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
+		UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount))
@@ -175,6 +191,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_piercing(var/amount)
 		if (!isnum(amount))
@@ -188,6 +205,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -199,6 +217,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
 		if (!isnum(amount) || amount <= 0)
@@ -217,6 +236,7 @@
 				qdel(src)
 			else
 				smash()
+		UpdateIcon()
 
 	ex_act(severity)
 		// Current windows have 30 HP
@@ -351,7 +371,7 @@
 				damage_blunt(O.throwforce)
 
 		if (src && src.health <= 2 && !reinforcement)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.stops_space_move = 0
 			step(src, get_dir(AM, src))
 		..()
@@ -737,6 +757,7 @@
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
+	var/connectdir
 	var/static/list/connects_to = typecacheof(list(
 		/obj/machinery/door,
 		/obj/window,
@@ -799,9 +820,10 @@
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			src.UpdateOverlays(null, "connect")
+			update_damage_overlay()
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
+		connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
 		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
@@ -813,6 +835,7 @@
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
+		src.update_damage_overlay()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
@@ -821,6 +844,26 @@
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+	proc/update_damage_overlay()
+		var/health_percentage = health/health_max
+		if (!src.damage_image)
+			src.damage_image = image('icons/obj/window_damage.dmi')
+			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+				src.damage_image.alpha = 85
+			else
+				src.damage_image.alpha = 180
+
+		if(health_percentage < 0.15) //only look very broken when it's about to break
+			src.damage_image.icon_state = "heavy-[connectdir]"
+		else if(health_percentage < 0.6)
+			src.damage_image.icon_state = "medium-[connectdir]"
+		else if(health_percentage < 0.9)
+			src.damage_image.icon_state = "light-[connectdir]"
+		else
+			src.damage_image.icon_state = null
+		src.UpdateOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3
@@ -875,7 +918,7 @@
 	name = "extremely indestructible window"
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
 	var/initialPos
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	New()
 		..()
 		initialPos = loc
@@ -935,7 +978,7 @@
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE

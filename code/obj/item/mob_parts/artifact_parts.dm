@@ -461,14 +461,14 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 /obj/line_obj/martian_tentacle
 	name = "Martian tentacle"
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 
 /obj/martian_tentacle_end_dummy
 	name = ""
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 	invisibility = INVIS_ALWAYS_ISH

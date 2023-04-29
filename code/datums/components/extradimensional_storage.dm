@@ -9,6 +9,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	)
 
 /datum/component/extradimensional_storage/Initialize(width=9, height=9, region_init_proc=null)
+	. = ..()
 	if(!istype(parent, /obj/storage))
 		return COMPONENT_INCOMPATIBLE
 	region = global.region_allocator.allocate(width, height)

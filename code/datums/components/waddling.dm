@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/waddling)
 	)
 
 /datum/component/waddling/Initialize(height=4, angle=16)
+	. = ..()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.height = height

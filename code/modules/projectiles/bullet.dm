@@ -307,7 +307,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/smg_shot.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	implanted = /obj/item/implant/projectile/bullet_22
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
 
@@ -352,8 +352,8 @@ toxic - poisons
 
 /datum/projectile/bullet/nine_mm_soviet
 	name = "bullet"
-	shot_sound = 'sound/weapons/smg_shot.ogg'
-	damage = 15
+	shot_sound = 'sound/weapons/9x19NATO.ogg'
+	damage = 25
 	impact_image_state = "bhole-small"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -528,31 +528,61 @@ toxic - poisons
 
 //0.58
 /datum/projectile/bullet/flintlock
-	name = "bullet"
-	damage = 100
-	damage_type = D_PIERCING
+	name = "lead ball"
+	icon_state = "bullet"
+	damage = 40
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/flintlock
 	shot_sound = 'sound/weapons/flintlock.ogg'
 	dissipation_delay = 10
+	hit_ground_chance = 50
 	casing = null
 	impact_image_state = "bhole-small"
 
-	on_hit(atom/hit, dirflag)
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
-			if(power > 40)
-#ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-#endif
-			if(power > 80)
+			if(proj.power > 30)
+				M.changeStatus("slowed", 3 SECONDS)
+				M.changeStatus("weakened", 2 SECONDS)
+			if(proj.power > 60)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 3, 2, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
 		..()
+
+	rifle
+		damage = 70
+		impact_image_state = "bhole-large"
+
+	mortar
+		name = "mortar grenade"
+		icon_state = "mortar"
+		damage = 10 // The explosion should deal most of the damage.
+		impact_image_state = "bhole-large"
+		damage_type = D_KINETIC
+		hit_type = DAMAGE_BLUNT
+
+		on_hit(atom/hit, dirflag, obj/projectile/proj)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+
+				M.do_disorient(75, weakened = 50, stunned = 50, disorient = 30, remove_stamina_below_zero = 0)
+
+				if(!M.stat)
+					M.emote("scream")
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+				SPAWN(0.5 SECONDS) // Wait until the target is at rest before exploding.
+					explosion_new(proj, get_turf(hit), 4, 1.75)
+			else
+				explosion_new(proj, get_turf(hit), 4, 1.75)
+			..()
+
+		on_max_range_die(obj/projectile/O)
+			explosion_new(O, get_turf(O), 4, 1.75)
 
 //0.72
 /datum/projectile/bullet/a12
@@ -655,7 +685,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 6
+	damage = 8
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
@@ -664,7 +694,7 @@ toxic - poisons
 	dissipation_delay = 2
 	dissipation_rate = 2
 	implanted = null
-	damage = 4
+	damage = 6
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
@@ -673,7 +703,7 @@ toxic - poisons
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
-	damage = 8
+	damage = 10
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
@@ -776,7 +806,7 @@ toxic - poisons
 	name = "rock salt"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	icon_state = "trace"
-	damage = 3
+	damage = 4
 	dissipation_rate = 1
 	dissipation_delay = 2
 	implanted = null
@@ -805,7 +835,7 @@ toxic - poisons
 	speed_max = 36
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
-	pellets_to_fire = 4
+	pellets_to_fire = 7
 
 /datum/projectile/bullet/flare
 	name = "flare"
@@ -1174,6 +1204,32 @@ datum/projectile/bullet/autocannon
 			if(P)
 				P.travelled = max(proj.travelled, (max_range-2) * 32)
 
+/datum/projectile/bullet/stunbaton //direct less-lethal 40mm option
+	name = "stun baton round"
+	icon_state = "stunbaton"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	damage = 0
+	stun = 50
+	dissipation_rate = 0
+	dissipation_delay = 4
+	max_range = 12
+	implanted = null
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	ie_type = null
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
+
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
+
+
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"
 	window_pass = 0
@@ -1255,7 +1311,7 @@ datum/projectile/bullet/autocannon
 				O.set_loc(T)
 				src.has_det = 1
 				SPAWN(1 DECI SECOND)
-					O.prime()
+					O.detonate()
 				return
 			else //what the hell happened
 				return
@@ -1329,9 +1385,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
@@ -1427,9 +1481,7 @@ datum/projectile/bullet/autocannon
 				if (M.get_ranged_protection()>=1.5)
 					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 				else
-					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-					implanted.owner = M
-					M.implant += implanted
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 

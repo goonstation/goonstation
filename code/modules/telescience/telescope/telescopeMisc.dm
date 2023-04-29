@@ -1,15 +1,13 @@
 var/datum/telescope_manager/tele_man
 var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
-var/list/magnet_locations = list()
-
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2

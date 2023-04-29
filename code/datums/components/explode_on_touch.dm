@@ -16,6 +16,7 @@ TYPEINFO(/datum/component/explode_on_touch)
 	)
 
 /datum/component/explode_on_touch/Initialize(explosion_size=5, gib=FALSE, delete_self=TRUE, remove_limbs=0, turf_safe_explosion=FALSE)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.explosion_size = explosion_size

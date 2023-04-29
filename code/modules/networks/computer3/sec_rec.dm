@@ -339,7 +339,7 @@
 						return
 
 					if (FIELDNUM_SECFLAG)
-						src.print_text("Please enter new value (10 characters max), or \"None.\"")
+						src.print_text("Please enter new value ([SECHUD_FLAG_MAX_CHARS] characters max), or \"None\".")
 						src.menu = MENU_FIELD_INPUT
 						return
 
@@ -461,7 +461,7 @@
 							return
 
 						if (ckey(inputText))
-							src.active_secure["sec_flag"] = copytext(inputText, 1, 11) // 10 characters at most
+							src.active_secure["sec_flag"] = copytext(inputText, 1, SECHUD_FLAG_MAX_CHARS + 1)
 						else
 							return
 
@@ -571,7 +571,7 @@
 
 				var/list/datum/db_record/results = list()
 				for(var/datum/db_record/R as anything in data_core.general.records)
-					var/haystack = jointext(list(ckey(R["name"]), ckey(R["id"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
+					var/haystack = jointext(list(ckey(R["name"]), ckey(R["dna"]), ckey(R["id"]), ckey(R["fingerprint"]), ckey(R["rank"])), " ")
 					if(findtext(haystack, searchText))
 						results += R
 

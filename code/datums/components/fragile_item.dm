@@ -26,6 +26,7 @@ TYPEINFO(/datum/component/fragile_item)
 		ARG_INFO("sound_to_play_on_breaking", DATA_INPUT_TEXT, "Sound effect that plays when the item breaks", 'sound/impact_sounds/Crystal_Shatter_1.ogg')
 	)
 /datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = 'sound/impact_sounds/Crystal_Shatter_1.ogg')
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.safe_hits = safe_hits

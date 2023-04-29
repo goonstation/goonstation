@@ -31,7 +31,7 @@
 	var/datum/objective/new_objective = null
 	for (var/i in 0 to rand(1, 3))
 		new_objective = pick(eligible_objectives)
-		objectives += new new_objective(null, owner)
+		objectives += new new_objective(null, owner, src)
 	var/datum/objective/escape/E = pick(escape_objectives)
-	objectives += new /datum/objective/regular/gimmick(null, owner)
-	objectives += new E(null, owner)
+	objectives += new /datum/objective/regular/gimmick(null, owner, src)
+	objectives += new E(null, owner, src)

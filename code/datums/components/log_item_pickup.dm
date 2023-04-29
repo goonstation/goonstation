@@ -10,6 +10,7 @@ TYPEINFO(/datum/component/log_item_pickup)
 	)
 
 /datum/component/log_item_pickup/Initialize(authorized_job=null, message_admins_too=FALSE)
+	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.authorized_job = authorized_job

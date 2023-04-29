@@ -62,7 +62,7 @@
 	icon_state = "timer0"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/time_delay = 10
 	var/curr_time
 	var/aborted = 1

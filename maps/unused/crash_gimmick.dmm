@@ -1298,7 +1298,7 @@
 	},
 /area/russian/radiation)
 "aKr" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor/carpet/grime{
 	desc = " It is made of temp."
 	},
@@ -6482,7 +6482,7 @@
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bja" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /turf/simulated/floor/grass,
@@ -33847,7 +33847,7 @@
 	},
 /area/russian/radiation)
 "daI" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's an omen.";
 	dir = 8;
 	interesting = "Toil and toil. Try as you might, you cannot escape what has already been, what will be.";
@@ -38500,7 +38500,7 @@
 /area/space)
 "dDa" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/space,
 /area/space)
 "dDb" = (
@@ -38638,7 +38638,7 @@
 "dDJ" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/snacks/donut,
 /turf/space,
 /area/space)

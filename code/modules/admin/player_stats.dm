@@ -69,8 +69,8 @@
 	html += "<table>"
 	html += "<tr><td><b>Current status</b></td><td>[C ? "<span style='color: green;'>Online" : "<span style='color: red;'>Offline"]</span></td></tr>"
 	html += "<tr><td><b>Rounds connected to</b></td><td>[response["seen"]]</td></tr>"
-	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
 	html += "<tr><td><b>Rounds participated in</b></td><td>[response["participated"]]</td></tr>"
+	html += "<tr><td><b>Rounds connected to, RP</b></td><td>[response["seen_rp"]]</td></tr>"
 	html += "<tr><td><b>Rounds participated in, RP</b></td><td>[response["participated_rp"]]</td></tr>"
 	html += "<tr><td><b>Last seen</b></td><td>[response["last_seen"]]</td></tr>"
 	html += "<tr><td><b>Last seen BYOND version</b></td><td>[response["byondMajor"]].[response["byondMinor"]]</td></tr>"
@@ -90,7 +90,7 @@
 	html += "</table>"
 
 	var/client/ownerC = src.owner
-	ownerC.Browse(html, "window=playerStats[ckey];title=Player+Stats;size=400x330", 1)
+	ownerC.Browse(html, "window=playerStats[ckey];title=Player+Stats;size=500x380", 1)
 
 
 /datum/admins/proc/showPlayerIPs(ckey)
