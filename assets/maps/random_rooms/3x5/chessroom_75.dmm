@@ -6,17 +6,17 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/blue/standard,
-/area/space)
+/area/dmm_suite/clear_area)
 "d" = (
 /obj/candle_light,
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
-/area/space)
+/area/dmm_suite/clear_area)
 "j" = (
 /turf/simulated/floor/carpet/blue/standard/edge/north,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /turf/simulated/floor/carpet/blue/standard/edge/east,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/stool/chair/wooden/regal{
 	dir = 8
@@ -25,14 +25,14 @@
 	name = "Old Benoni"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/east,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/candle_light,
 /turf/simulated/floor/carpet/blue/standard/edge/se,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /turf/simulated/floor/carpet/blue/standard/edge/south,
-/area/space)
+/area/dmm_suite/clear_area)
 "z" = (
 /obj/stool/chair/wooden/regal{
 	dir = 8
@@ -41,24 +41,24 @@
 	name = "Ruy Lopez, Exchange Variation Doubly Deferred"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/east,
-/area/space)
+/area/dmm_suite/clear_area)
 "A" = (
 /obj/candle_light,
 /turf/simulated/floor/carpet/blue/standard/edge/nw,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/candle_light,
 /turf/simulated/floor/carpet/blue/standard/edge/ne,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/decoration/regallamp{
 	layer = 2
 	},
 /turf/simulated/floor/carpet/blue/standard,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/space)
+/area/dmm_suite/clear_area)
 "Y" = (
 /obj/stool/chair/wooden/regal{
 	dir = 4
@@ -67,7 +67,7 @@
 	name = "Bogo"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/space)
+/area/dmm_suite/clear_area)
 "Z" = (
 /obj/stool/chair/wooden/regal{
 	dir = 4
@@ -76,7 +76,7 @@
 	name = "Bird"
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/west,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 A
