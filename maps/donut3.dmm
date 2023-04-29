@@ -1581,6 +1581,7 @@
 	},
 /obj/cable,
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},
@@ -36341,6 +36342,7 @@
 	pixel_x = -4;
 	pixel_y = 26
 	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
