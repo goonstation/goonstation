@@ -1032,9 +1032,6 @@
 "aej" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable,
@@ -48396,7 +48393,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "oAH" = (
-/obj/cable,
 /obj/securearea{
 	desc = "";
 	icon_state = "shock";
@@ -64961,14 +64957,13 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/disposalpipe/segment/brig,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
