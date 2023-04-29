@@ -55,6 +55,10 @@
 /obj/table/wood/auto/desk,
 /turf/simulated/floor/carpet/grime,
 /area/prefab/larrys_laundry)
+"hv" = (
+/obj/decal/fakeobjects/Laundry,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
 "hF" = (
 /obj/window/cubicle{
 	dir = 4;
@@ -109,11 +113,11 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/larrys_laundry)
 "mW" = (
-/obj/submachine/laundry_machine,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/decal/fakeobjects/Laundry/drying,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "od" = (
@@ -158,6 +162,10 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"rC" = (
+/obj/decal/fakeobjects/Laundry/washing,
+/turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "rI" = (
 /turf/simulated/floor/wood/three,
@@ -347,11 +355,11 @@
 /turf/simulated/floor/plating,
 /area/prefab/larrys_laundry)
 "NE" = (
-/obj/submachine/laundry_machine,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/decal/fakeobjects/Laundry/open,
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "Op" = (
@@ -386,11 +394,11 @@
 /turf/simulated/floor/wood/three,
 /area/prefab/larrys_laundry)
 "Tp" = (
-/obj/submachine/laundry_machine,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -10
 	},
+/obj/decal/fakeobjects/Laundry/open,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "Uq" = (
@@ -569,7 +577,7 @@ Uq
 Kp
 yi
 NE
-yi
+rC
 rI
 rI
 QD
@@ -721,7 +729,7 @@ Kp
 Kp
 VN
 Kp
-HY
+hv
 Tp
 HY
 Kn

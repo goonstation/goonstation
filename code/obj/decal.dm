@@ -410,6 +410,47 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 1
 
+// Laundry machines
+
+/obj/decal/fakeobjects/Laundry
+	name = "laundry machine"
+	desc = "The door has been pried off..."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "laundry"
+	anchored = ANCHORED
+	density = 1
+	var/image/cycle = null
+	var/image/light = null
+
+	New()
+		..()
+		src.UpdateOverlays(src.cycle, "door")
+
+	drying
+		desc = "Will those clothes ever be dry?"
+		icon_state = "laundry-d1"
+		New()
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	washing
+		desc = "Around and around..."
+		icon_state = "laundry-w1"
+		New()
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	open
+		desc = "Who left these clothes?"
+		icon_state = "laundry-p"
+		New()
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
+			..()
+
 //sealab prefab fakeobjs
 
 /obj/decal/fakeobjects/pcb
