@@ -2670,7 +2670,7 @@
 	price = 250
 	baseprice = 250
 	upperfluc = 500
-	lowerfluc = -500
+	lowerfluc = -50
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"
