@@ -1,3 +1,4 @@
+var/global/parallax_enabled = TRUE
 /datum/parallax_controller
 	/// The client that this parallax controller belongs to.
 	var/client/owner
