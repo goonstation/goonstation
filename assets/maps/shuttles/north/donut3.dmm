@@ -291,6 +291,12 @@
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
+"ik" = (
+/obj/disposalpipe/segment/regular/bent,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
 "is" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 5
@@ -738,13 +744,14 @@
 	},
 /area/centcom/outside)
 "EK" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/small/east,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -766,6 +773,14 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
+"FI" = (
+/obj/disposalpipe/segment/regular/bent{
+	dir = 1
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/table/auto,
@@ -979,6 +994,15 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating/airless,
+/area/shuttle/escape/centcom)
+"PU" = (
+/obj/disposalpipe/trunk,
+/obj/disposaloutlet/east{
+	pixel_x = 14
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
 /area/shuttle/escape/centcom)
 "QE" = (
 /obj/indestructible/shuttle_corner{
@@ -1460,8 +1484,8 @@ mb
 mb
 mg
 mg
-lb
-pH
+PU
+FI
 lb
 lb
 ZD
@@ -1488,8 +1512,8 @@ Xp
 Xp
 uW
 mc
-uW
-sS
+Xp
+ik
 EK
 Hy
 nh

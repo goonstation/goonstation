@@ -136,8 +136,12 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/stool/chair/comfy/shuttle/red{
+/obj/machinery/disposal/small/north{
+	name = "ejection chute";
 	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 1
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -678,6 +682,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"uy" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
 "uI" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 10;
@@ -848,6 +858,15 @@
 "Gq" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
+"Hb" = (
+/obj/disposaloutlet/east{
+	pixel_x = 15
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
 "Hm" = (
 /obj/machinery/shuttle/engine/propulsion{
 	icon_state = "alt_propulsion"
@@ -1251,6 +1270,12 @@
 	icon_state = "12"
 	},
 /area/shuttle/escape/centcom)
+"WF" = (
+/obj/disposalpipe/segment/bent,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
 "Xe" = (
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -1459,8 +1484,8 @@ Li
 Li
 Vg
 Li
-tt
-rR
+Hb
+uy
 tt
 tt
 Rf
@@ -1487,8 +1512,8 @@ lQ
 lQ
 sU
 Ko
-lQ
-Tr
+sU
+WF
 du
 MF
 bQ

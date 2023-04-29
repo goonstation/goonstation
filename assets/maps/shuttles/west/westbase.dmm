@@ -993,12 +993,30 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"MB" = (
+/obj/machinery/disposal/small/east{
+	name = "ejection chute"
+	},
+/obj/disposalpipe/trunk/regular/west,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "MI" = (
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/arrival{
 	dir = 4
 	},
 /area/centcom)
+"Ng" = (
+/obj/disposaloutlet/west{
+	pixel_x = -14
+	},
+/obj/disposalpipe/trunk/regular/east,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
 "Nm" = (
 /obj/decal/tile_edge/line/black{
 	dir = 9;
@@ -1732,7 +1750,7 @@ jK
 jK
 fY
 jK
-jK
+fY
 aY
 cq
 cC
@@ -1760,7 +1778,7 @@ ez
 JX
 pj
 JX
-JX
+Ng
 IG
 SG
 ei
@@ -1788,7 +1806,7 @@ aY
 GJ
 mK
 mK
-jT
+MB
 aY
 pl
 Ab

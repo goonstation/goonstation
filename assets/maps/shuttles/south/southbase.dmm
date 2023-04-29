@@ -344,6 +344,12 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"pM" = (
+/obj/disposalpipe/segment/regular/bent/south,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "11"
+	},
+/area/shuttle/escape/centcom)
 "qq" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light{
@@ -500,6 +506,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
+"yu" = (
+/obj/disposalpipe/trunk/regular/north,
+/obj/disposaloutlet/west{
+	pixel_x = -14
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
 	},
 /area/shuttle/escape/centcom)
 "yK" = (
@@ -752,6 +767,16 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
+"Hv" = (
+/obj/machinery/disposal/small/north{
+	name = "ejection chute";
+	dir = 8
+	},
+/obj/disposalpipe/trunk/regular/south,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "HA" = (
 /obj/machinery/computer/shuttle,
 /turf/unsimulated/floor/shuttle{
@@ -887,6 +912,12 @@
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
+"Lo" = (
+/obj/disposalpipe/segment/regular/bent/north,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
 	},
 /area/shuttle/escape/centcom)
 "Lu" = (
@@ -1756,9 +1787,9 @@ YT
 NG
 mh
 kF
-ml
-Oc
-Nt
+Hv
+Lo
+GM
 qq
 GM
 Nt
@@ -1785,8 +1816,8 @@ PQ
 NG
 ve
 ve
-NG
-ve
+pM
+yu
 mr
 sk
 mr
