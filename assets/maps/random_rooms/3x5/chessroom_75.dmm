@@ -1,0 +1,93 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/regal,
+/obj/item/boardgame/chess,
+/obj/item/gameclock{
+	pixel_y = 16
+	},
+/turf/simulated/floor/carpet/blue/standard,
+/area/space)
+"d" = (
+/obj/candle_light,
+/turf/simulated/floor/carpet/blue/standard/edge/sw,
+/area/space)
+"j" = (
+/turf/simulated/floor/carpet/blue/standard/edge/north,
+/area/space)
+"m" = (
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/space)
+"s" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8
+	},
+/obj/machinery/bot/floorbot,
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/space)
+"u" = (
+/obj/candle_light,
+/turf/simulated/floor/carpet/blue/standard/edge/se,
+/area/space)
+"v" = (
+/turf/simulated/floor/carpet/blue/standard/edge/south,
+/area/space)
+"z" = (
+/obj/stool/chair/wooden/regal{
+	dir = 8
+	},
+/obj/machinery/bot/firebot,
+/turf/simulated/floor/carpet/blue/standard/edge/east,
+/area/space)
+"A" = (
+/obj/candle_light,
+/turf/simulated/floor/carpet/blue/standard/edge/nw,
+/area/space)
+"B" = (
+/obj/candle_light,
+/turf/simulated/floor/carpet/blue/standard/edge/ne,
+/area/space)
+"D" = (
+/obj/decoration/regallamp{
+	layer = 2
+	},
+/turf/simulated/floor/carpet/blue/standard,
+/area/space)
+"G" = (
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/space)
+"Y" = (
+/obj/stool/chair/wooden/regal{
+	dir = 4
+	},
+/obj/machinery/bot/mining,
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/space)
+"Z" = (
+/obj/stool/chair/wooden/regal{
+	dir = 4
+	},
+/obj/machinery/bot/secbot,
+/turf/simulated/floor/carpet/blue/standard/edge/west,
+/area/space)
+
+(1,1,1) = {"
+A
+Y
+G
+Z
+d
+"}
+(2,1,1) = {"
+j
+a
+D
+a
+v
+"}
+(3,1,1) = {"
+B
+s
+m
+z
+u
+"}
