@@ -806,7 +806,7 @@ toxic - poisons
 	name = "rock salt"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	icon_state = "trace"
-	damage = 3
+	damage = 4
 	dissipation_rate = 1
 	dissipation_delay = 2
 	implanted = null
@@ -835,7 +835,7 @@ toxic - poisons
 	speed_max = 36
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
-	pellets_to_fire = 4
+	pellets_to_fire = 7
 
 /datum/projectile/bullet/flare
 	name = "flare"
