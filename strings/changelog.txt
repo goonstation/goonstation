@@ -1,4 +1,10 @@
 
+(t)sat apr 29 23
+(u)The_Kakapo
+(p)13630
+(e)🎨|C-Sprites
+(*)Adds Foam Dart Grenades
+(+)Foam Dart Grenades can be purchased from Geoff Honkinton
 (t)fri apr 28 23
 (u)Virvatuli
 (e)⚖|C-Balance
