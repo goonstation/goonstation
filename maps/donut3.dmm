@@ -16786,11 +16786,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/science/lobby)
-"eRt" = (
-/obj/disposalpipe/segment,
-/obj/lattice,
-/turf/space,
-/area/space)
 "eRv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -22316,24 +22311,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
-"gze" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 4
-	},
-/turf/simulated/floor/redwhite{
-	dir = 4
-	},
-/area/station/security/main)
 "gzp" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/railing/orange,
@@ -44058,18 +44035,6 @@
 /area/station/maintenance/outer/ne)
 "nnq" = (
 /obj/machinery/shield_generator{
-	name = "aquarium shield generator";
-	desc = "Protects the chief's aquarium from outside threats. Must have pulled some strings for this."
-	},
-/obj/cable/brown{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/machinery/shield_generator{
 	desc = "Protects the chief's aquarium from outside threats. Must have pulled some strings for this.";
 	name = "aquarium shield generator"
 	},
@@ -50743,7 +50708,7 @@
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
-/area/space)
+/area/station/security/main)
 "pmj" = (
 /obj/table/glass/reinforced/auto,
 /obj/random_item_spawner/snacks/one_or_zero,
@@ -73451,16 +73416,15 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
 "vXd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/decal/tile_edge/line/black{
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/cable,
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	icon_state = "0-4"
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -78030,13 +77994,6 @@
 	},
 /obj/machinery/light/incandescent/warm{
 	dir = 1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
 	},
 /turf/simulated/floor/white,
 /area/station/security/main)
@@ -104873,7 +104830,7 @@ fwD
 esH
 gtI
 pmY
-gze
+gtI
 tBp
 aQL
 mRJ
@@ -108493,9 +108450,9 @@ baf
 xWt
 lQd
 uwe
-eRt
-eRt
-eRt
+uwe
+uwe
+uwe
 swe
 cQE
 wLS
