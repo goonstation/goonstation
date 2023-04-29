@@ -1,5 +1,9 @@
 
 (t)fri apr 28 23
+(u)KolIsDumb, DeadMan164
+(p)13843
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a new medal reward for 'Slow Burn'
 (u)DimWhat
 (p)13794
 (e)🎨🎩|C-Sprites, A-Clothing
