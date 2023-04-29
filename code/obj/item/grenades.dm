@@ -545,7 +545,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	var/custom_projectile_type = /datum/projectile/bullet/foamdart/biodegradable
 	var/pellets_to_fire = 18
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (!T)
 			qdel(src)
