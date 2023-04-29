@@ -344,12 +344,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"pM" = (
-/obj/disposalpipe/segment/regular/bent/south,
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "11"
-	},
-/area/shuttle/escape/centcom)
 "qq" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/light{
@@ -509,13 +503,13 @@
 	},
 /area/shuttle/escape/centcom)
 "yu" = (
-/obj/disposalpipe/trunk/regular/north,
+/obj/disposalpipe/trunk{
+	dir = 1
+	},
 /obj/disposaloutlet/west{
-	pixel_x = -14
+	pixel_x = 8
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "yK" = (
 /obj/table/auto,
@@ -771,7 +765,8 @@
 /obj/disposalpipe/trunk/regular/south,
 /obj/machinery/disposal/brig/small/east{
 	name = "ejection chute";
-	dir = 8
+	dir = 8;
+	desc = "A pneumatic delivery chute for ejecting staff assistants."
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -915,7 +910,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Lo" = (
-/obj/disposalpipe/segment/regular/bent/north,
+/obj/disposalpipe/segment/regular/vertical,
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
@@ -1789,7 +1784,7 @@ mh
 kF
 Hv
 Lo
-GM
+yu
 qq
 GM
 Nt
@@ -1816,8 +1811,8 @@ PQ
 NG
 ve
 ve
-pM
-yu
+NG
+ve
 mr
 sk
 mr

@@ -396,7 +396,8 @@
 /obj/disposalpipe/trunk/regular/east,
 /obj/machinery/disposal/brig/small/east{
 	name = "ejection chute";
-	dir = 8
+	dir = 8;
+	desc = "A pneumatic delivery chute for ejecting staff assistants."
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -556,11 +557,9 @@
 "uJ" = (
 /obj/disposalpipe/trunk/regular/west,
 /obj/disposaloutlet/east{
-	pixel_x = 14
+	pixel_x = -8
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "uY" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -1512,7 +1511,7 @@ af
 Ya
 CC
 dW
-uJ
+EF
 EF
 DC
 EF
@@ -1540,7 +1539,7 @@ Rh
 pm
 IV
 fa
-Il
+uJ
 bD
 Il
 bD

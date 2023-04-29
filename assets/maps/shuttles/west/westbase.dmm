@@ -381,6 +381,14 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
+"ov" = (
+/obj/disposaloutlet{
+	dir = 8;
+	pixel_x = 8
+	},
+/obj/disposalpipe/trunk/regular/east,
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/escape/centcom)
 "oM" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4;
@@ -995,7 +1003,8 @@
 /area/centcom/outside)
 "MB" = (
 /obj/machinery/disposal/brig/small/east{
-	name = "ejection chute"
+	name = "ejection chute";
+	desc = "A pneumatic delivery chute for ejecting staff assistants."
 	},
 /obj/disposalpipe/trunk/regular/west,
 /turf/unsimulated/floor/shuttle{
@@ -1009,10 +1018,7 @@
 	},
 /area/centcom)
 "Ng" = (
-/obj/disposaloutlet/west{
-	pixel_x = -14
-	},
-/obj/disposalpipe/trunk/regular/east,
+/obj/disposalpipe/segment/regular/horizontal,
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "3"
 	},
@@ -1750,7 +1756,7 @@ jK
 jK
 fY
 jK
-fY
+ov
 aY
 cq
 cC

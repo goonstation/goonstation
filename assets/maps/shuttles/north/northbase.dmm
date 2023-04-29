@@ -140,7 +140,8 @@
 	dir = 1
 	},
 /obj/machinery/disposal/brig/small/east{
-	name = "ejection chute"
+	name = "ejection chute";
+	desc = "A pneumatic delivery chute for ejecting staff assistants."
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -681,12 +682,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"uy" = (
-/obj/disposalpipe/segment/bent/north,
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
-/area/shuttle/escape/centcom)
 "uI" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 10;
@@ -859,12 +854,10 @@
 /area/centcom)
 "Hb" = (
 /obj/disposaloutlet/east{
-	pixel_x = 15
+	pixel_x = -8
 	},
-/obj/disposalpipe/trunk/regular/south,
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/obj/disposalpipe/trunk,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Hm" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -1270,7 +1263,7 @@
 	},
 /area/shuttle/escape/centcom)
 "WF" = (
-/obj/disposalpipe/segment/bent,
+/obj/disposalpipe/segment,
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
@@ -1483,8 +1476,8 @@ Li
 Li
 Vg
 Li
-Hb
-uy
+tt
+rR
 tt
 tt
 Rf
@@ -1511,7 +1504,7 @@ lQ
 lQ
 sU
 Ko
-sU
+Hb
 WF
 du
 MF

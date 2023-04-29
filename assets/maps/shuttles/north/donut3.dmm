@@ -292,7 +292,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ik" = (
-/obj/disposalpipe/segment/regular/bent,
+/obj/disposalpipe/segment/regular,
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
 	},
@@ -752,7 +752,8 @@
 	dir = 1
 	},
 /obj/machinery/disposal/brig/small/east{
-	name = "ejection chute"
+	name = "ejection chute";
+	desc = "A pneumatic delivery chute for ejecting staff assistants."
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -777,12 +778,11 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "FI" = (
-/obj/disposalpipe/segment/regular/bent{
-	dir = 1
+/obj/disposalpipe/trunk,
+/obj/disposaloutlet/east{
+	pixel_x = -7
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "7"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Gc" = (
 /obj/table/auto,
@@ -996,15 +996,6 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating/airless,
-/area/shuttle/escape/centcom)
-"PU" = (
-/obj/disposalpipe/trunk,
-/obj/disposaloutlet/east{
-	pixel_x = 14
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
 /area/shuttle/escape/centcom)
 "QE" = (
 /obj/indestructible/shuttle_corner{
@@ -1486,8 +1477,8 @@ mb
 mb
 mg
 mg
-PU
-FI
+lb
+pH
 lb
 lb
 ZD
@@ -1514,7 +1505,7 @@ Xp
 Xp
 uW
 mc
-Xp
+FI
 ik
 EK
 Hy
