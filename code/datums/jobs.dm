@@ -2523,7 +2523,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_medical")
 
-// Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
+// Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Consultant"
@@ -2544,7 +2544,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/spacecash/fivehundred)
