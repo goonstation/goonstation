@@ -1316,8 +1316,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.smash()
 
 
-	Crossed(atom/movable/mover) //Makes barfights cooler
-		if(istype(mover, /obj/projectile))
+	Crossed(obj/projectile/mover) //Makes barfights cooler
+		if(istype(mover) && !istype(mover.proj_data, /datum/projectile/bullet/foamdart))
 			if(prob(30))
 				src.smash()
 		. = ..()
