@@ -685,7 +685,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 6
+	damage = 8
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
@@ -694,7 +694,7 @@ toxic - poisons
 	dissipation_delay = 2
 	dissipation_rate = 2
 	implanted = null
-	damage = 4
+	damage = 6
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
@@ -703,7 +703,7 @@ toxic - poisons
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
-	damage = 8
+	damage = 10
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
