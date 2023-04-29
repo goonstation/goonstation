@@ -67,6 +67,8 @@ export const findCacheRoot = async () => {
 
 const onCacheRootFound = cacheRoot => {
   logger.log(`found cache at '${cacheRoot}'`);
+  // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 514.
+  fs.closeSync(fs.openSync(cacheRoot + '/dummy', 'w'));
 };
 
 export const reloadByondCache = async bundleDir => {
@@ -91,7 +93,7 @@ export const reloadByondCache = async bundleDir => {
     // Clear garbage
     const garbage = await resolveGlob(cacheDir, './*.+(bundle|chunk|hot-update).*');
     try {
-      // Plant a dummy browser window file, we'll be using this to avoid world topic
+      // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515.
       fs.closeSync(fs.openSync(cacheDir + '/dummy', 'w'));
       for (let file of garbage) {
         fs.unlinkSync(file);
