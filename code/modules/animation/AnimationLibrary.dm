@@ -1109,7 +1109,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
+	var/image/underlay
+	if (isturf(A))
+		underlay = image('icons/turf/floors.dmi', icon_state = "solid_black")
+		underlay.appearance_flags |= RESET_TRANSFORM
+		underlay.plane = PLANE_UNDERFLOOR
+		A.underlays += underlay
+
+	animate(A, transform = list(1, 0, px, 0, 1, py), time = T, easing = ease, flags=ANIMATION_PARALLEL)
+
+	if (underlay)
+		SPAWN(T)
+			A.underlays -= underlay
+			qdel(underlay)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))

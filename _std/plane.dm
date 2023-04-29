@@ -1,6 +1,6 @@
-#define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
-#define PLANE_SPACE -115
-#define PLANE_PARALLAX -114
+#define PLANE_SPACE -120
+#define PLANE_PARALLAX -119
+#define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
 #define PLANE_NOSHADOW_BELOW -101
