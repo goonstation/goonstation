@@ -16886,7 +16886,7 @@
 /turf/space/fluid,
 /area/space)
 "aRU" = (
-/obj/machinery/disposal,
+/obj/machinery/disposal/transport,
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
@@ -31915,14 +31915,11 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bJz" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/firedoor_spawn,
-/obj/access_spawn/cargo,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/stool/chair{
+	dir = 8
 	},
 /turf/simulated/floor/plating/random,
-/area/station/quartermaster/office)
+/area/station/maintenance/southwest)
 "bJA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
@@ -32145,11 +32142,8 @@
 	name = "Supply Lobby"
 	})
 "bKo" = (
-/obj/disposalpipe/trunk/west,
-/obj/disposaloutlet{
-	dir = 4;
-	pixel_x = -8
-	},
+/obj/machinery/disposal/transport,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bKp" = (
@@ -32642,11 +32636,10 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
 "bLI" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
+/obj/item/reagent_containers/pill/catdrugs,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "bLL" = (
 /obj/stool/chair{
 	dir = 4
@@ -34289,9 +34282,9 @@
 	},
 /area/station/storage/warehouse)
 "bQm" = (
-/obj/disposalpipe/segment/bent/south,
-/turf/simulated/wall/auto/supernorn,
-/area/station/quartermaster/office)
+/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "bQn" = (
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/simulated/floor/black,
@@ -35441,9 +35434,9 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "bTk" = (
-/obj/disposalpipe/segment/bent/north,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/office)
+/obj/item/reagent_containers/pill/bathsalts,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "bTl" = (
 /obj/vehicle/forklift,
 /obj/machinery/power/apc/autoname_west,
@@ -36257,8 +36250,9 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "bVy" = (
-/obj/disposalpipe/segment/bent/north,
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/disposaloutlet,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "bVz" = (
 /obj/item/wrapping_paper,
@@ -39803,8 +39797,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/refinery)
 "cgs" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/north,
+/obj/table/round,
+/obj/item/cigarbox,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cgt" = (
@@ -42883,7 +42877,9 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gST" = (
-/obj/landmark/random_room/size3x3,
+/obj/machinery/computer/stockexchange{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "gUq" = (
@@ -44413,6 +44409,10 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"nQD" = (
+/obj/item/spacecash,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southwest)
 "nSl" = (
 /obj/table/round/auto,
 /obj/item/hand_labeler,
@@ -75121,8 +75121,8 @@ brI
 brH
 aqn
 buE
-btZ
-btZ
+gST
+bLI
 gST
 bJw
 chZ
@@ -75423,9 +75423,9 @@ buE
 buE
 aqn
 buE
-btZ
-btZ
-btZ
+bJz
+nQD
+bTk
 cir
 bKj
 bKj
@@ -75725,9 +75725,9 @@ buF
 buE
 aqn
 buE
-btZ
-btZ
-btZ
+cgs
+bQi
+bQm
 bJw
 nqQ
 bKj
@@ -75737,10 +75737,10 @@ bKj
 bKj
 bCY
 lis
-bSj
-aqn
-aqn
-aqn
+bJw
+buE
+buE
+buE
 aqn
 aqn
 aqn
@@ -76041,7 +76041,7 @@ pAR
 nks
 bIC
 bVy
-buE
+btZ
 buE
 cic
 cic
@@ -76341,9 +76341,9 @@ nVK
 lio
 vdr
 cij
-bTk
+bIC
 bKo
-bua
+btZ
 btZ
 btZ
 btZ
@@ -76643,9 +76643,9 @@ bKj
 bKj
 uvT
 bEi
-bLI
+bJw
 btZ
-btZ
+bua
 bSl
 bSl
 bSl
@@ -76945,8 +76945,8 @@ bGS
 bGS
 bVu
 aSy
-bLI
-buE
+bJw
+btZ
 btZ
 bSl
 bSm
@@ -77247,7 +77247,7 @@ bFW
 svi
 bHQ
 bQj
-bJz
+cir
 btZ
 btZ
 bSl
@@ -77549,8 +77549,8 @@ bNZ
 bNZ
 bHR
 bJA
-bQm
-cgs
+bJA
+btZ
 bQi
 bPi
 bSo
