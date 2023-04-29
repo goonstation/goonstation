@@ -1521,7 +1521,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	orig.color = T.color
 	orig.appearance_flags |= RESET_TRANSFORM
 	T.ReplaceWith(new_turf_type)
-	T.underlays += orig
 	T.layer--
 	switch(dir)
 		if(WEST)
