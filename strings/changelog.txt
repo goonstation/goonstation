@@ -1,5 +1,8 @@
 
 (t)fri apr 28 23
+(u)Virvatuli
+(e)⚖|C-Balance
+(+)Pipeshot ammunition now has significantly improved damage potential.
 (u)DimWhat
 (p)13833
 (e)🎨⚖🎩👽|C-Sprites, C-Balance, A-Clothing, A-Mutantraces
