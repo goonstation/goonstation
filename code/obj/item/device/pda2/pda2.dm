@@ -659,7 +659,7 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
-	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
