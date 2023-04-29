@@ -994,7 +994,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "MB" = (
-/obj/machinery/disposal/small/east{
+/obj/machinery/disposal/brig/small/east{
 	name = "ejection chute"
 	},
 /obj/disposalpipe/trunk/regular/west,

@@ -768,11 +768,11 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "Hv" = (
-/obj/machinery/disposal/small/north{
+/obj/disposalpipe/trunk/regular/south,
+/obj/machinery/disposal/brig/small/east{
 	name = "ejection chute";
 	dir = 8
 	},
-/obj/disposalpipe/trunk/regular/south,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},

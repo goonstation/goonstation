@@ -136,12 +136,11 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/disposal/small/north{
-	name = "ejection chute";
-	dir = 4
-	},
 /obj/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/disposal/brig/small/east{
+	name = "ejection chute"
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"

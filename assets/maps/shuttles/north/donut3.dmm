@@ -751,7 +751,9 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/obj/machinery/disposal/small/east,
+/obj/machinery/disposal/brig/small/east{
+	name = "ejection chute"
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
