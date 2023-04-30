@@ -101,7 +101,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.set_density(0)
 					O.layer = FLY_LAYER
 					O.set_dir(pick(cardinal))

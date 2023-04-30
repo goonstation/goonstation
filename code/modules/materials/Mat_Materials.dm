@@ -591,7 +591,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
 	beta

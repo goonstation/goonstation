@@ -47,7 +47,7 @@
 		return 0
 
 	get_desc()
-		if (usr?.traitHolder?.hasTrait("training_medical"))
+		if (usr && (usr.traitHolder?.hasTrait("training_medical") || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH)))
 			if (src.owner?.key)
 				if (!find_ghost_by_key(src.owner?.key))
 					. += "<br><span class='notice'>This brain is slimy.</span>"

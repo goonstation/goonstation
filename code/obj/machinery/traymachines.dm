@@ -33,7 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "morgue1"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	power_usage = 50
 
 	//tray related variables
@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	density = TRUE
 	layer = FLOOR_EQUIP_LAYER1
 	var/obj/machinery/traymachine/my_machine = null
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 	//simple subtypes
@@ -372,7 +372,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	desc = "Burn baby burn!"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "crema_switch"
-	anchored = TRUE
+	anchored = ANCHORED
 	req_access = list(access_crematorium)
 	plane = PLANE_NOSHADOW_ABOVE
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER

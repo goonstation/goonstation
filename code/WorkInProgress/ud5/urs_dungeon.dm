@@ -86,7 +86,7 @@
 	icon_state = "Pipe_Timed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/trap_delay = 100
 	var/next_trap = 0
 	var/power = 100
@@ -126,7 +126,7 @@
 	icon_state = "portal"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/my_portal = null
 	var/start_on = 0
@@ -302,7 +302,7 @@
 /obj/adventurepuzzle/triggerable/adventure_announcement
 	name = "announcer"
 	desc = "A strange device that emits a very loud sound, truly the future."
-	anchored = 1
+	anchored = ANCHORED
 	var/speaker_type
 	var/message = null
 	var/text_color = "#FF0000"
@@ -344,7 +344,7 @@
 	desc = "Some kind of coloured tile."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 
 
@@ -538,7 +538,7 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/ursium = 0
 	var/s_time = 1
 	var/content = null

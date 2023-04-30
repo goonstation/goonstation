@@ -924,7 +924,7 @@
 /obj/machinery/networked/artifact_console
 	name = "artifact research console"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "PNET_ARTCONSOL"
 	timeout = 10
 	icon = 'icons/obj/networked.dmi'

@@ -15,7 +15,7 @@
 		M.transforming = 1
 
 		var/atom/movable/overlay/gibs/O = new/atom/movable/overlay/gibs(get_turf(M))
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -281,7 +281,7 @@
 	var/turf/T = get_turf(src.mob)
 	if(T)
 		var/obj/overlay/O = new/obj/overlay(T)
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.name = "Explosion"
 		O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		O.pixel_x = -92
@@ -367,7 +367,7 @@
 	icon_state = "idle"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/tysontarget2 = null
 	var/tysonmins2 = null
 	var/mob/caller = null
@@ -449,7 +449,7 @@
 	icon_state = "idle"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/tysontarget2 = null
 	var/tysonspeed = 1
 	var/mob/caller = null

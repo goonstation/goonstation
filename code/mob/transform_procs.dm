@@ -102,7 +102,7 @@
 	O.canmove = 0
 	O.name = src.name
 	O.real_name = src.real_name
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = src.client.address
 
@@ -219,18 +219,26 @@
 	cyborg.name = "Cyborg"
 	cyborg.real_name = "Cyborg"
 	cyborg.UpdateName()
-	if (src.client)
-		cyborg.lastKnownIP = src.client.address
-		src.client.mob = cyborg
-	else
-		//if they're logged out or whatever
-		cyborg.key = src.key
 	if (src.ghost)
 		if (src.ghost.mind)
 			src.ghost.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	else
 		if(src.mind)
 			src.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
 		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")

@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/recharger)
 	mats = 16
 
 /obj/machinery/recharger
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"

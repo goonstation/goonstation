@@ -2,13 +2,13 @@
 	name = "Prismatic Spray"
 	desc = "Launches a spray of colorful projectiles in outwards in a cone aimed roughly at the target."
 	icon_state = "prismspray" //credit to Kubius for the new icons
-	targeted = 1
-	target_anything = 1
-	cooldown = 250 //10 seconds shorter than the cooldown for fireball in modern code
-	requires_robes = 1
+	targeted = TRUE
+	target_anything = TRUE
+	cooldown = 25 SECONDS //10 seconds shorter than the cooldown for fireball in modern code
+	requires_robes = TRUE
 	requires_being_on_turf = TRUE
-	offensive = 1
-	sticky = 1
+	offensive = TRUE
+	sticky = TRUE
 	/*
 	voice_grim = 'sound/voice/wizard/weneed.ogg'
 	voice_fem = 'sound/voice/wizard/someoneto.ogg'
@@ -19,7 +19,11 @@
 	//the number of projectiles we want to fire in a single cast
 	var/num_projectiles = 12
 	//what projectiles do we *NOT* want to add to the pool of random projectiles?
-	var/static/list/blacklist = list(/datum/projectile/slam,/datum/projectile/artifact,/datum/projectile/artifact/prismatic_projectile,/datum/projectile/pickpocket/plant,/datum/projectile/implanter)
+	var/static/list/blacklist = list(/datum/projectile/slam,
+									 /datum/projectile/artifact,
+									 /datum/projectile/artifact/prismatic_projectile,
+									 /datum/projectile/pickpocket/plant,
+									 /datum/projectile/implanter)
 	//If random == 0, use the special prismatic projectile datum. Else, pick from the pool of all projectiles minus the blacklisted ones
 	var/random = 0
 	//the list of projectile types to pick from if random is set to 1

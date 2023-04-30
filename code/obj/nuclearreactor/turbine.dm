@@ -9,7 +9,7 @@
 	desc = "A large turbine used for generating power using hot gas."
 	icon = 'icons/obj/large/96x160.dmi'
 	icon_state = "turbine_main"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_width = 96
 	bound_height = 160
@@ -46,17 +46,19 @@
 	var/overspeed = FALSE
 	/// Flag for gas temperature being > 3000K
 	var/overtemp = FALSE
+	/// Flag for gas temperature being < T20C
+	var/undertemp = FALSE
 	/// INTERNAL: used to determine whether an icon update is required
-	var/_last_rpm_icon_update = 0
+	VAR_PRIVATE/_last_rpm_icon_update = 0
 	/// INTERNAL: ref to the turf the turbine light is stored on, because you can't center simple lights
-	var/turf/_light_turf
+	VAR_PRIVATE/turf/_light_turf
 	/// Turbine RPM/powergen/stator load history
 	var/list/history
 	var/const/history_max = 50
 	/// Current gas for processing
 	var/datum/gas_mixture/air_contents
 	/// bodge factor for power generation
-	var/power_multiplier = 3
+	var/power_multiplier = 1
 
 	New()
 		. = ..()
@@ -159,6 +161,7 @@
 		air_contents =  air1.remove(transfer_moles)
 		src.lastgen = 0
 		src.overtemp = (air_contents?.temperature > 2500)
+		src.undertemp = (air_contents?.temperature < T20C)
 		if(air_contents?.temperature > 3000)
 			//overheat
 			src.assume_air(air_contents)
@@ -271,6 +274,7 @@
 			"history" = src.history,
 			"overspeed" = src.overspeed,
 			"overtemp" = src.overtemp,
+			"undertemp" = src.undertemp,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -280,8 +284,8 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.stator_load = min(max(x,1),10e30)
-				logTheThing("station", src, null, "[src] stator load configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
 				src.flow_rate = min(max(x,1),10e5)
-				logTheThing("station", src, null, "[src] flow rate configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src] flow rate configured to [x] by [ui.user]")

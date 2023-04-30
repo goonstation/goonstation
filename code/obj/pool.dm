@@ -1,7 +1,7 @@
 /obj/pool
 	name = "pool"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
 	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
@@ -14,7 +14,7 @@
 
 /obj/pool/ladder
 	name = "pool ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	dir = 8
 	icon = 'icons/obj/fluid.dmi'
@@ -23,7 +23,7 @@
 /obj/pool/perspective
 	name = "pool"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/fluid.dmi'
 	plane = PLANE_FLOOR
 	icon_state = "pool"
@@ -31,7 +31,7 @@
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_2
 	pixel_x = -16
 	icon = 'icons/obj/stationobjs.dmi'

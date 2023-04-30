@@ -491,6 +491,21 @@
 					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 				H.death()
 
+/obj/item/ammo/bullets/pipeshot/chems/saltshot
+	sname = "salt load"
+	desc = "This appears to be a bunch of salt shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/salt
+
+	get_desc(dist, mob/user)
+		if (dist <= 1)
+			. = "The shells smell like [prob(1) ? "deadchat. What?" : "the ocean."]"
+
+/datum/pipeshotrecipe/chem/salt
+	thingsneeded = 4
+	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
+	craftname = "salt"
+	reagents_req = list("salt"=5)
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -556,7 +571,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
@@ -733,7 +748,7 @@ TYPEINFO(/obj/item/device/geiger)
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
 	desc = "Don't ask."
-	anchored = 0
+	anchored = UNANCHORED
 	pixel_y = 6
 	var/homeloc
 

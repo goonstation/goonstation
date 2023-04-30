@@ -1378,8 +1378,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("food_bad_breath"))
-		for (var/mob/living/L in view(2,src))
-			if (L == src) continue //You were able to vomit from your own breath. Maybe a good idea?
+		for (var/mob/living/L in oview(2,src))
 			if (prob(20))
 				boutput(L, "<span class='alert'>Good lord, [src]'s breath smells bad!</span>")
 				L.vomit()
@@ -3404,3 +3403,12 @@
 		src.l_hand?.hear_talk(M, text, real_name, lang_id)
 	. = ..()
 
+///Returns the number of clown items someone is wearing
+/mob/living/carbon/human/proc/clown_tally()
+	. = 0
+	if(istype(src.w_uniform, /obj/item/clothing/under/misc/clown))
+		. += 1
+	if(istype(src.shoes, /obj/item/clothing/shoes/clown_shoes))
+		. += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
+		. += 1

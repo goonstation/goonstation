@@ -235,7 +235,7 @@
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc_verb = list("plays", "performs", "composes", "arranges")
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
@@ -306,7 +306,7 @@
 /obj/item/instrument/large/jukebox
 	name = "old jukebox"
 	desc = "I wonder who fixed this thing?"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
 	item_state = "jukebox"

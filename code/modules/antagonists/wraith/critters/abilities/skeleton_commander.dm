@@ -14,10 +14,10 @@
 	/obj/critter/gunbot/drone/buzzdrone,
 	/obj/critter/mechmonstrositycrawler,
 	/obj/critter/bat/buff,
-	/obj/critter/lion,
+	/mob/living/critter/lion,
 	/mob/living/critter/skeleton/wraith,
 	/obj/critter/gunbot/heavy,
-	/obj/critter/bear,
+	/mob/living/critter/bear,
 	/mob/living/critter/brullbar,
 	/obj/critter/gunbot/drone)
 

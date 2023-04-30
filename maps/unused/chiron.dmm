@@ -1718,7 +1718,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -1857,7 +1857,7 @@
 "ado" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
@@ -11126,7 +11126,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -32223,7 +32223,7 @@
 "bly" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -32231,7 +32231,7 @@
 /obj/stool/bench/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/exit)
@@ -32239,7 +32239,7 @@
 /obj/stool/bench/yellow/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -32253,7 +32253,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -32269,7 +32269,7 @@
 "blE" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9;
-	
+
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -32375,7 +32375,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -33954,7 +33954,7 @@
 "bpK" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-	
+
 	},
 /turf/simulated/wall/auto/gannets,
 /area/station/hallway/secondary/exit)

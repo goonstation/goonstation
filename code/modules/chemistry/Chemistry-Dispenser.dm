@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"

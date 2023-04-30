@@ -11870,7 +11870,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -16546,8 +16545,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bfz" = (
-/obj/storage/secure/closet/engineering/welding,
 /obj/machinery/light,
+/obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "bfA" = (
@@ -18144,6 +18143,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/storage/secure/closet/engineering/welding,
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/engine)
 "blv" = (
@@ -20020,8 +20020,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/rancher,
 /obj/firedoor_spawn,
+/obj/access_spawn/hydro,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
@@ -38594,9 +38594,7 @@
 /area/station/science/lobby)
 "flZ" = (
 /obj/random_item_spawner/junk/one,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "fme" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -40852,9 +40850,7 @@
 	icon_state = "2-5"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "hdb" = (
 /obj/stool/chair/red{
@@ -45218,9 +45214,7 @@
 	icon_state = "8-10"
 	},
 /obj/item/storage/box/cablesbox,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "lkW" = (
 /obj/machinery/conveyor/EW{
@@ -45694,9 +45688,7 @@
 /area/station/maintenance/south)
 "lDg" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "lDS" = (
 /obj/table/auto,
@@ -52120,9 +52112,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "rsS" = (
 /obj/machinery/disposal/brig{

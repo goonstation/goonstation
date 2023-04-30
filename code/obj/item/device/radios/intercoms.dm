@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 #else
 	icon_state = "intercom-map"
 #endif
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM

@@ -1140,7 +1140,7 @@
 		adventure_view = 0
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
 			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 

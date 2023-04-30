@@ -329,19 +329,18 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("HEALTH ALERT: [src.owner][src.get_coords()] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
+		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
 			return
-		var/coords = src.get_coords()
 		var/myarea = get_area(src)
 		var/list/cloner_areas = list()
 		for(var/obj/item/implant/cloner/cl_implant in src.owner)
 			if(cl_implant.owner != src.owner)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner][coords] in [myarea], " //youre lucky im not onelining this
+		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
 		if (he_or_she(src.owner) == "they")
 			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
 		else
@@ -352,14 +351,20 @@ THROWING DARTS
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 
-	New()
+	death_alert()
 		mailgroups.Add(MGD_SECURITY)
 		..()
+		mailgroups.Remove(MGD_SECURITY)
 
-/obj/item/implant/health/security/anti_mindhack //HoS implant
+/obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
 	icon_state = "implant-b"
 	impcolor = "b"
+
+	on_death()
+		. = ..()
+		src.on_remove(src.owner)
+		qdel(src)
 
 /obj/item/implant/emote_triggered/freedom
 	name = "freedom implant"
@@ -625,8 +630,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
-	big_message = "emits a loud clunk"
-	small_message = "makes a small clicking noise"
+	big_message = " emits a loud clunk"
+	small_message = " makes a small clicking noise"
 
 	implanted(mob/target, mob/user)
 		..()
@@ -642,7 +647,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/turf/T = get_turf(src)
 
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1 //Create a big bomb explosion overlay.
+		Ov.anchored = ANCHORED //Create a big bomb explosion overlay.
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -727,29 +732,29 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
 		if (!istype(target))
-			return 0
+			return FALSE
 		if (!implant_hacker)
 			if (ismob(user))
 				implant_hacker = user
 			else
-				return 0
+				return FALSE
 		// all the stuff in here was added by Convair880, I just adjusted it to work with this can_implant() proc thing - haine
 		var/mob/living/carbon/human/H = target
 		if (!H.mind || !H.client)
 			if (ismob(user)) user.show_text("[H] is braindead!", "red")
-			return 0
+			return FALSE
 		if (src.uses <= 0)
 			if (ismob(user)) user.show_text("[src] has been used up!", "red")
-			return 0
+			return FALSE
 		for(var/obj/item/implant/health/security/anti_mindhack/AM in H.implant)
 			boutput(user, "<span class='alert'>[H] is protected from mindhacking by \an [AM.name]!</span>")
-			return 0
+			return FALSE
 		// It might happen, okay. I don't want to have to adapt the override code to take every possible scenario (no matter how unlikely) into considertion.
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
-			return 0
+			return FALSE
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)
 			if (!istype(MS))
@@ -761,7 +766,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			var/obj/item/implant/mindhack/Inew = new MS.type(H)
 			H.implant += Inew
 			qdel(MS)
-		return 1
+		return TRUE
 
 	implanted(var/mob/M, var/mob/I)
 		..()
@@ -1892,7 +1897,7 @@ TYPEINFO(/obj/item/implantpad)
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Tracking Beacon<BR>
 <b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Life:</b> 10 minutes after death of host<BR>
 <b>Important Notes:</b> None<BR>
 <HR>
@@ -1939,7 +1944,7 @@ No Implant Specifics"}
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> T.U.R.D.S. Weapon Auth Implant<BR>
 <b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Life:</b> 10 minutes after death of host<BR>
 <b>Important Notes:</b> Allows access to weapons equip with M.W.L. (Martian Weapon Lock) devices<BR>
 <HR>
@@ -1959,35 +1964,35 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Counter-Revolutionary Implant<BR>
 <b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/revenge/microbomb))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Microbomb Implant<br>
 <b>Zone:</b> Base of Skull<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes: <font color='red'>Illegal</font></b><BR><HR>"}
 			else if (istype(src.case.imp, /obj/item/implant/robotalk))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Machine Language Translator<br>
 <b>Zone:</b> Cerebral Cortex<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Enables the host to transmit, receive and understand digital transmissions used by most mechanoids.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/bloodmonitor))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Blood Monitor<br>
 <b>Zone:</b> Jugular Vein<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Warns the host of any detected infections or foreign substances in the bloodstream.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/mindhack))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Mind Hack<br>
 <b>Zone:</b> Brain Stem<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
 				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
@@ -1995,7 +2000,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Remote Signaler<br>
 <b>Zone:</b> Left hand near wrist<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <HR>
 <b>Implant Details:</b> <BR>
 <b>Function:</b> Transmits a radio signal on a configurable frequency.

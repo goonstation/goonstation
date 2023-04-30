@@ -115,8 +115,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-var/f_color_selector_handler/F_Color_Selector
-
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
 	for(var/A in childrentypesof(/datum/material_property)) //Caching material props
@@ -1545,6 +1543,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)

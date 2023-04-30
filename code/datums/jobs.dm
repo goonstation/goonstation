@@ -303,7 +303,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/chiefengineer)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
 	slot_eyes = list(/obj/item/clothing/glasses/meson)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
@@ -447,7 +447,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	allow_spy_theft = 0
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
-	receives_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
@@ -479,6 +479,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
+		receives_implant = /obj/item/implant/health/security
 		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
 		slot_suit = list()
@@ -769,7 +770,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
+	slot_jump = list(/obj/item/clothing/under/rank/engineer)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
@@ -2522,7 +2523,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_medical")
 
-// Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
+// Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Consultant"
@@ -2535,7 +2536,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
-	receives_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2543,7 +2544,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/spacecash/fivehundred)

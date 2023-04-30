@@ -11,7 +11,7 @@ TYPEINFO_NEW(/obj/table)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -1220,10 +1220,10 @@ TYPEINFO_NEW(/obj/table/glass)
 				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_STRENGTHEN)
 				verbing = "strengthening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
 				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)
