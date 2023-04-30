@@ -168,7 +168,7 @@
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
 			owner.client.mob = src.wraith
-		APPLY_ATOM_PROPERTY(src.wraith, PROP_MOB_INVISIBILITY, src.wraith, INVIS_GHOST)
+		APPLY_ATOM_PROPERTY(src.wraith, PROP_MOB_INVISIBILITY, src.wraith, INVIS_SPOOKY)
 		src.wraith.set_loc(get_turf(owner))
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3

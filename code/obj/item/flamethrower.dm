@@ -326,6 +326,13 @@ A Flamethrower in various states of assembly
 			B.linkedflamer = null
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
+
+	try_specific_equip(mob/user)
+		. = FALSE
+		if (istype(user.back, /obj/item/tank/jetpack/backtank))
+			user.back.attackby(src, user)
+			return TRUE
+
 /obj/item/gun/flamethrower/backtank/napalm
 	New()
 		..()

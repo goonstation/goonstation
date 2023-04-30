@@ -106,6 +106,9 @@
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		AH = src.abilityHolder
 		src.abilityHolder.points = 50
+#ifdef BONUS_POINTS
+		src.abilityHolder.points = 99999
+#endif
 		if (!istype(src, /mob/living/intangible/wraith/wraith_trickster) && !istype(src, /mob/living/intangible/wraith/wraith_decay) && !istype(src, /mob/living/intangible/wraith/wraith_harbinger) && !istype(src, /mob/living/intangible/wraith/poltergeist))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
