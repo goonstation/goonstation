@@ -1116,7 +1116,21 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "Purchase confirmation"
 	icon_state = "paper"
 	info ={"
+	Dear Mr. Lard, <br>
 
+	Congratulations on being the proud owner of our new cutting edge portable laundry technology!<br>
+	perfect for those long space trips.<br><br>
+
+	<p>Purchase details:</p>
+	<ul>
+	<li>Port-A-Laundry - 50,000</li>
+	<li>Tax - 2,500</li>
+	<li>6 month warranty guarantee</li>
+	</ul>
+
+	<p>Consumer notice:</p>
+	Do not under ANY circimstances put people or money into the machine.<br>
+	your warranty will be void, you have been warned.
 	"}
 
 /obj/item/paper/final_notice
