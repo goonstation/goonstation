@@ -57,7 +57,7 @@
 	announce()
 		. = ..()
 		boutput(src.owner.current, "<span class='alert'>You are now a member of [src.gang.gang_name]!</span>")
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.</span>")
+		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
 		boutput(src.owner.current, "<span class='alert'>Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!</span>")
 		boutput(src.owner.current, "<span class='alert'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
 		boutput(src.owner.current, "<span class='alert'>You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")
