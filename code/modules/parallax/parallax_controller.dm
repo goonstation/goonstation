@@ -154,9 +154,10 @@ var/global/parallax_enabled = TRUE
 		src.update_parallax_z()
 
 /mob/proc/unregister_parallax_signals()
-	UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
-	UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
-	UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	if (src.client?.parallax_controller)
+		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+		UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
+		UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
 
 /mob/proc/update_parallax(datum/component/component, turf/old_turf, turf/new_turf)
 	src.client?.parallax_controller?.update_parallax_layers(old_turf, new_turf)
