@@ -15652,9 +15652,7 @@
 /obj/storage/crate,
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/device/microphone,
-/obj/item/device/key/generic{
-	name = "studio door key"
-	},
+/obj/item/device/key/generic/radio,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (

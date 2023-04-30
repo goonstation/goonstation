@@ -852,9 +852,9 @@
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"
