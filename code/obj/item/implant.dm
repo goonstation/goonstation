@@ -1897,7 +1897,7 @@ TYPEINFO(/obj/item/implantpad)
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Tracking Beacon<BR>
 <b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Life:</b> 10 minutes after death of host<BR>
 <b>Important Notes:</b> None<BR>
 <HR>
@@ -1944,7 +1944,7 @@ No Implant Specifics"}
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> T.U.R.D.S. Weapon Auth Implant<BR>
 <b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Life:</b> 10 minutes after death of host<BR>
 <b>Important Notes:</b> Allows access to weapons equip with M.W.L. (Martian Weapon Lock) devices<BR>
 <HR>
@@ -1964,35 +1964,35 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Implant Specifications:</b><BR>
 <b>Name:</b> Counter-Revolutionary Implant<BR>
 <b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<BR>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
 <b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/revenge/microbomb))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Microbomb Implant<br>
 <b>Zone:</b> Base of Skull<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes: <font color='red'>Illegal</font></b><BR><HR>"}
 			else if (istype(src.case.imp, /obj/item/implant/robotalk))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Machine Language Translator<br>
 <b>Zone:</b> Cerebral Cortex<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Enables the host to transmit, receive and understand digital transmissions used by most mechanoids.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/bloodmonitor))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Blood Monitor<br>
 <b>Zone:</b> Jugular Vein<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Warns the host of any detected infections or foreign substances in the bloodstream.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/mindhack))
 				dat += {"
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Mind Hack<br>
 <b>Zone:</b> Brain Stem<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
 			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
 				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
@@ -2000,7 +2000,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 <b>Implant Specifications:</b><br>
 <b>Name:</b> Remote Signaler<br>
 <b>Zone:</b> Left hand near wrist<br>
-<b>Power Source:</b> Nervous System Ion Withdrawl Gradient<br>
+<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
 <HR>
 <b>Implant Details:</b> <BR>
 <b>Function:</b> Transmits a radio signal on a configurable frequency.
