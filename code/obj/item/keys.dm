@@ -141,7 +141,7 @@ ABSTRACT_TYPE(/obj/item/device/key)
 
 /obj/item/device/key/lead
 	name = "lead key"
-	desc = "A shockingly heavy key for such a small size. Probably not safe to knaw on either."
+	desc = "A shockingly heavy key for such a small size."
 	icon_state = "key_lead"
 
 /obj/item/device/key/onyx
@@ -150,13 +150,13 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	icon_state = "key_onyx"
 
 /obj/item/device/key/silver
-	desc = "A little key with a green jewel socketed in the bow. How fancy."
+	desc = "A little key with a green jewel socketed into the bow. How fancy."
 	name = "silver key"
 	icon_state = "key_silver"
 
 /obj/item/device/key/hotiron
 	name = "hot iron key"
-	desc = "An intricate key made of iron. It sure looks warm."
+	desc = "An intricate key made of iron. It occasionally flashes with a brilliant heat."
 	icon_state = "key_hot"
 
 /obj/item/device/key/generic/coldsteel
@@ -166,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/device/key)
 
 /obj/item/device/key/hospital
 	name = "niobium key"
-	desc = "A flashy key made of some multicolored metal."
+	desc = "A dazzling key made of some multicolored metal."
 	icon_state = "key_niobium"
 
 //Something for the solarium nerds to obsess over for a month
