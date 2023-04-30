@@ -154,7 +154,7 @@ var/global/parallax_enabled = TRUE
 		src.update_parallax_z()
 
 /mob/proc/unregister_parallax_signals()
-	if (src.client?.parallax_controller)
+	if (src.GetComponent(/datum/component/complexsignal/outermost_movable))
 		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
 		UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
 		UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)

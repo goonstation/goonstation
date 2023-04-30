@@ -1277,9 +1277,9 @@ var/global/curr_day = null
 
 	else if (src.parallax_controller)
 		src.screen -= src.parallax_controller.parallax_layers
-		src.mob?.unregister_parallax_signals()
 		qdel(src.parallax_controller)
 		src.parallax_controller = null
+		src.mob?.unregister_parallax_signals()
 #endif
 
 /client/verb/apply_view_tint()
