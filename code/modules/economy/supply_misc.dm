@@ -57,6 +57,63 @@ ABSTRACT_TYPE(/area/supply)
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/unsimulated/wall/auto/reinforced/supernorn,
+
+		/turf/simulated/shuttle/wall,
+		/turf/unsimulated/wall,
+		/turf/simulated/wall/auto/shuttle,
+		/obj/indestructible/shuttle_corner,
+
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/supernorn/orange,
+		/turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen,
+		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/supernorn/wood,
+		/turf/unsimulated/wall/auto/supernorn/wood,
+
+		/turf/unsimulated/wall/auto/lead/blue,
+		/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+		/turf/simulated/wall/auto/reinforced/old,
+		/turf/unsimulated/wall/auto/adventure/old,
+		/turf/unsimulated/wall/auto/adventure/mars/interior,
+		/turf/unsimulated/wall/auto/adventure/shuttle,
+		/turf/simulated/wall/auto/marsoutpost,
+		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
+		/obj/plasticflaps
+	))
+/obj/plasticflaps/New()
+	..()
+	src.UpdateIcon()
+	src.update_neighbors()
+
+/obj/plasticflaps/update_icon()
+	..()
+	var/connectdir = get_connected_directions_bitflag(connects_to)
+	if (connectdir & NORTH || connectdir & SOUTH)
+		src.dir = 4
+		return
+	if (connectdir & EAST || connectdir & WEST)
+		src.dir = 1
+
+/obj/plasticflaps/disposing()
+	..()
+	src.update_neighbors()
+
+/obj/plasticflaps/proc/update_neighbors()
+	for (var/turf/simulated/wall/auto/T in orange(1,src))
+		T.UpdateIcon()
+	for (var/obj/window/auto/O in orange(1,src))
+		O.UpdateIcon()
+	for (var/obj/grille/G in orange(1,src))
+		G.UpdateIcon()
 
 /obj/plasticflaps/Cross(atom/A)
 	if (isliving(A)) // You Shall Not Pass!
