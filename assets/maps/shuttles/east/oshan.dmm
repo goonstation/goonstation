@@ -189,6 +189,12 @@
 	icon_state = "2"
 	},
 /area/shuttle/escape/centcom)
+"hJ" = (
+/obj/disposalpipe/segment/bent,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
 "hL" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 8;
@@ -856,6 +862,18 @@
 	icon_state = "5"
 	},
 /area/shuttle/escape/centcom)
+"Is" = (
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/disposaloutlet{
+	dir = 4;
+	pixel_x = -8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
 "IW" = (
 /obj/rack,
 /obj/random_item_spawner/tools/maybe_few,
@@ -922,6 +940,14 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"MU" = (
+/obj/disposalpipe/segment/bent{
+	dir = 1
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
 "No" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -996,6 +1022,20 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"QP" = (
+/obj/machinery/disposal/brig/small/east{
+	name = "ejection chute";
+	desc = "A pneumatic delivery chute for ejecting staff assistants.";
+	dir = 8
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "Rl" = (
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -1414,7 +1454,7 @@ jn
 an
 uh
 yp
-uh
+QP
 an
 wm
 aS
@@ -1442,8 +1482,8 @@ Pg
 iT
 iT
 Dd
-iT
-iT
+hJ
+MU
 cn
 fc
 qW
@@ -1471,7 +1511,7 @@ Gh
 Gh
 Sp
 Gh
-Gh
+Is
 hg
 Bp
 qW
