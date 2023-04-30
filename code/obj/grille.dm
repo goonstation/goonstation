@@ -127,9 +127,6 @@
 					src.icon_state += "-1"
 				if(76 to INFINITY)
 					src.icon_state += "-0"
-		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
-			//Or I'll murder you since you are making things ugly on purpose.
-			//icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
 
 		jen // ^^ no i made my own because i am epic
 			name = "maintenance catwalk"
@@ -149,18 +146,6 @@
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
-
-			side
-				//icon_state = "catwalk_jen_side"
-
-			inner
-				//icon_state = "catwalk_jen_inner"
-
-			fourcorners
-				//icon_state = "catwalk_jen_4corner"
-
-			twosides
-				//iconstate = "catwalk_jen_2sides"
 
 		dubious
 			name = "rusty catwalk"
