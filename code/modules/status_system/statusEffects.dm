@@ -683,7 +683,7 @@
 
 	simpledot/stimulant_withdrawl
 		id = "stimulant_withdrawl"
-		name = "Stimulant withdrawl"
+		name = "Stimulant withdrawal"
 		icon_state = "janktank-w"
 		desc = "You feel AWFUL!"
 		tickSpacing = 3 SECONDS
@@ -1346,8 +1346,8 @@
 
 	gang_drug_withdrawl
 		id = "janktank_withdrawl"
-		name = "janktank withdrawl"
-		desc = "You're going through withrawl of Janktank"
+		name = "Janktank withdrawal"
+		desc = "You're going through withdrawal of Janktank"
 		icon_state = "janktank-w"
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
