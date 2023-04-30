@@ -16391,10 +16391,6 @@
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
-"beZ" = (
-/obj/grille/catwalk/cross,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "bfa" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
@@ -44060,7 +44056,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "klY" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -52791,7 +52787,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -92413,7 +92409,7 @@ cgQ
 chK
 bsH
 cpx
-beZ
+bsH
 acO
 aaa
 ach
