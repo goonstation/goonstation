@@ -36280,7 +36280,7 @@
 /obj/machinery/door_control{
 	id = "secfront2";
 	name = "Lobby Interior Door Control";
-	pixel_x = -4;
+	pixel_x = -2;
 	pixel_y = 26
 	},
 /turf/simulated/floor/redwhite{
