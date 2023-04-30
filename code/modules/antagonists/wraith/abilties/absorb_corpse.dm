@@ -5,7 +5,7 @@
 	targeted = TRUE
 	target_anything = TRUE
 	pointCost = 20
-	cooldown = 45 SECONDS //Starts at 45 seconds and scales upward exponentially
+	cooldown = 45 SECONDS //Starts at 45 seconds and scales by 15 seconds per corpse
 
 	cast(atom/target)
 		. = ..()
@@ -49,7 +49,7 @@
 		logTheThing(LOG_COMBAT, holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
-		if ((istype(holder.owner, /mob/living/intangible/wraith/wraith_decay)))
+		if (istype(holder.owner, /mob/living/intangible/wraith/wraith_decay))
 			if ((H.get_toxin_damage() >= 60) || (H.decomp_stage == DECOMP_STAGE_HIGHLY_DECAYED))
 				boutput(holder.owner, "<span class='alert'>[H] is extremely rotten and bloated. It satisfies us greatly</span>")
 				holder.points += 150

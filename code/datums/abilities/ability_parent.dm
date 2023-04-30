@@ -23,7 +23,7 @@
 	var/pointName = ""
 	var/notEnoughPointsMessage = "<span class='alert'>You do not have enough points to use that ability.</span>"
 	var/points = 0 //starting points
-	var/regenRate = 1 //starting regen
+	var/regenRate = 0 //starting regen
 	var/bonus = 0
 	var/lastBonus = 0
 	var/tabName = "Spells"

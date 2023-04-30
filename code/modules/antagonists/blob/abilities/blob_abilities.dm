@@ -7,6 +7,24 @@
 // TODO: merge this with the new ability system
 // TODO: merge this with the new ability system
 // TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
+// TODO: merge this with the new ability system
 /datum/blob_ability
 	var/name = null
 	var/desc = null

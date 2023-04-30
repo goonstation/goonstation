@@ -5,7 +5,6 @@
 	cooldown = 50
 	targeted = FALSE
 	target_anything = FALSE
-	can_use_in_container = 1
 	var/last_used_name = null
 
 	onAttach(var/datum/abilityHolder/H)
@@ -76,7 +75,6 @@
 	targeted = FALSE
 	target_anything = FALSE
 	human_only = 1
-	can_use_in_container = 1
 	lock_holder = FALSE
 
 	cast(atom/target)
