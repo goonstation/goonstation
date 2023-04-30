@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 
 	larrys_laundry
 		maxNum = 1
-		probability = 100
+		probability = 20
 		prefabPath = "assets/maps/prefabs/prefab_larrys_laundromat.dmm"
 		prefabSizeX = 17
 		prefabSizeY = 20
