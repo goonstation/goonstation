@@ -84,6 +84,7 @@
 
 		src.tessellate()
 		src.offset_layer()
+		src.scroll_layer()
 
 	/// Realigns the parallax layer so that the centremost tessellated tile occupies the position of the tessellated tile closest to the player.
 	proc/update_tessellation_alignment()
@@ -159,14 +160,12 @@
 
 			src.transform = matrix(1, 0, src.initial_pixel_x_offset + pixel_x_offset, 0, 1, src.initial_pixel_y_offset + pixel_y_offset)
 
-		src.scroll_layer()
+		src.update_tessellation_alignment()
 
 	/// Animates the parallax layer so that it appears to be infinitely moving in one direction, using the `scroll_speed`, `parallax_value`, and `scroll_angle` variables.
 	proc/scroll_layer()
 		if (!src.tessellate || (!src.scroll_speed && !src.scroll_angle))
 			return
-
-		src.end_layer_scrolling()
 
 		var/x = src.scroll_speed * src.parallax_value * sin(src.scroll_angle)
 		if (x)
@@ -183,7 +182,3 @@
 			src.animation_pixel_y_offset = src.icon_height * y_direction / -2
 			animate(src, 0, -1, transform = matrix(1, 0, 0, 0, 1, src.animation_pixel_y_offset), flags = ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 			animate(time = animation_time_y, transform = matrix(1, 0, 0, 0, 1, src.icon_height * y_direction), flags = ANIMATION_RELATIVE)
-
-	/// Ends any infinite scrolling animation on the parallax layer.
-	proc/end_layer_scrolling()
-		animate(src, 0, transform = matrix(), flags = ANIMATION_RELATIVE | ANIMATION_END_NOW)
