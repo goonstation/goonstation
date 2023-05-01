@@ -1533,21 +1533,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 //Meat limbs: probably not a desirable prize
 /obj/item/parts/human_parts/arm/meat_mutant
-
-	getMobIcon(var/lying)
-		if (lying)
-			if (src.lyingImage)
-				return src.lyingImage
-
-			src.lyingImage = image('icons/mob/human.dmi', "[slot]_mutated_l")
-			return lyingImage
-
-		else
-			if (src.standImage)
-				return src.standImage
-
-			src.standImage = image('icons/mob/human.dmi', "[slot]_mutated")
-			return standImage
+	partIconModifier = "mutated"
 
 	left
 		name = "weird left arm"

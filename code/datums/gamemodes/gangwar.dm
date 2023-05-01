@@ -329,6 +329,9 @@ proc/broadcast_to_all_gangs(var/message)
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
 	var/spendable_points = 0
+#ifdef BONUS_POINTS
+	spendable_points = 99999
+#endif
 	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 

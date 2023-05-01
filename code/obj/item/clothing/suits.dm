@@ -369,8 +369,9 @@
 /obj/item/clothing/suit/det_suit
 	name = "coat"
 	desc = "Someone who wears this means business."
-	icon_state = "detective"
+	icon_state = "detective_o"
 	item_state = "det_suit"
+	coat_style = "detective"
 	body_parts_covered = TORSO|LEGS|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -379,12 +380,17 @@
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
+	coat_style = "ntarmor"
 
 	setupProperties()
 		..()
@@ -396,7 +402,8 @@
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "hoscoat"
+	icon_state = "hoscoat_o"
+	coat_style = "hoscoat"
 
 	setupProperties()
 		..()
