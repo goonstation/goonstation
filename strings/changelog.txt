@@ -1,5 +1,9 @@
 
 (t)mon may 01 23
+(u)Keiiro
+(p)13923
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The Research Director now brings their unique labcoat to work!
 (u)Flaborized
 (p)13853
 (e)🆕🎨|C-Feature, C-Sprites
