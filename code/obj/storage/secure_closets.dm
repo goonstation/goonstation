@@ -269,6 +269,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
+	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd)
 
 	make_my_stuff()
