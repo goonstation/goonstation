@@ -104,7 +104,7 @@
 		if (length(.) && prob(15))
 			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
 
-	critter_attack(var/mob/target)
+	critter_basic_attack(var/mob/target)
 		if(prob(30))
 			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
 		var/list/params = list()
