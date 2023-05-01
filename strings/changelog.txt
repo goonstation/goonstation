@@ -1,4 +1,30 @@
 
+(t)sat apr 29 23
+(u)Flyingcow01
+(p)13339
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now insert a penlight into your PDA.
+(u)The_Kakapo
+(p)13630
+(e)🎨|C-Sprites
+(*)Adds Foam Dart Grenades
+(+)Foam Dart Grenades can be purchased from Geoff Honkinton
+(t)fri apr 28 23
+(u)Virvatuli
+(e)⚖|C-Balance
+(+)Pipeshot ammunition now has significantly improved damage potential.
+(u)DimWhat
+(p)13833
+(e)🎨⚖🎩👽|C-Sprites, C-Balance, A-Clothing, A-Mutantraces
+(+)Added several unique clothing sprites for lizard tails.
+(u)KolIsDumb, DeadMan164
+(p)13843
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a new medal reward for 'Slow Burn'
+(u)DimWhat
+(p)13794
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added buttoned versions of the Detective, HoS, and Beepsky coat.
 (t)thu apr 27 23
 (u)FlameArrow57
 (p)13848
