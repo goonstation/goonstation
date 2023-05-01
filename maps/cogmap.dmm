@@ -12625,6 +12625,10 @@
 /area/station/chapel/sanctuary)
 "aKb" = (
 /obj/grille/steel,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
 /turf/space,
 /area/station/com_dish/comdish)
 "aKc" = (
@@ -25214,7 +25218,10 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bqQ" = (
-/obj/lattice,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
 /obj/grille/steel,
 /turf/space,
 /area/space)
@@ -29431,6 +29438,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"bDx" = (
+/obj/grille/steel,
+/obj/lattice,
+/turf/space,
+/area/station/com_dish/comdish)
 "bDB" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -48927,6 +48939,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"dRz" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "dRM" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -49965,6 +49985,14 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
+"eVP" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "eWa" = (
 /obj/item/storage/wall/medical_wear,
 /turf/simulated/floor/bluewhite{
@@ -54770,6 +54798,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
+"kUl" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "kUs" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -54842,6 +54878,14 @@
 	dir = 8
 	},
 /area/station/security/main)
+"kZf" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "kZm" = (
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -55063,6 +55107,14 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/engine)
+"lqx" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "lrO" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -55076,7 +55128,10 @@
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
 	},
-/obj/lattice,
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
 /turf/space,
 /area/space)
 "ltz" = (
@@ -58840,6 +58895,14 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"pWO" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "pWZ" = (
 /obj/window/reinforced{
 	dir = 1
@@ -88100,10 +88163,10 @@ fEo
 evT
 adC
 adC
-aKb
-aKb
-aKb
-aKb
+kZf
+eVP
+bDx
+eVP
 aKb
 adC
 adC
@@ -88402,11 +88465,11 @@ fEo
 evT
 adC
 adC
-aKb
+lqx
 aLh
 aLh
 aLh
-aKb
+pWO
 adC
 adC
 adC
@@ -88704,11 +88767,11 @@ fEo
 evT
 adC
 aak
-aKb
+bDx
 aLh
 aMu
 aLh
-aKb
+bDx
 acm
 adC
 adC
@@ -89006,11 +89069,11 @@ fEo
 evT
 adC
 adC
-aKb
-aLi
+kUl
+aLh
 aMv
-aNE
-aKb
+aLh
+dRz
 adC
 adC
 adC
@@ -110484,7 +110547,7 @@ adC
 adC
 adC
 bqQ
-aag
+aap
 buk
 bum
 bwL
@@ -110786,7 +110849,7 @@ adC
 adC
 adC
 bqQ
-aag
+aap
 buk
 buZ
 bva
@@ -111088,7 +111151,7 @@ adC
 adC
 adC
 bqQ
-aag
+aap
 buk
 buZ
 bvS
@@ -111390,7 +111453,7 @@ adC
 adC
 adC
 bqQ
-aag
+aap
 buk
 buY
 bwJ
@@ -115956,7 +116019,7 @@ bZl
 yiM
 aap
 lsh
-aap
+aaq
 uLB
 cgc
 cCW
