@@ -50694,6 +50694,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"fHV" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "fIb" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -54524,6 +54532,11 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"kxu" = (
+/obj/grille/steel,
+/obj/lattice,
+/turf/space,
+/area/station/com_dish/comdish)
 "kzw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -58389,6 +58402,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"psJ" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "pui" = (
 /obj/machinery/light_switch{
 	name = "S light switch";
@@ -59586,6 +59607,14 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"qJg" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "qJw" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -59844,6 +59873,14 @@
 	dir = 4
 	},
 /area/station/medical/staff)
+"qTp" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "qTU" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -60430,6 +60467,14 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rLd" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "rLp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62637,6 +62682,14 @@
 "ucm" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/psychiatrist)
+"ucZ" = (
+/obj/grille/steel,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/station/com_dish/comdish)
 "udw" = (
 /obj/machinery/cargo_router/Router15,
 /turf/simulated/floor/plating,
@@ -88100,11 +88153,11 @@ fEo
 evT
 adC
 adC
-aKb
-aKb
-aKb
-aKb
-aKb
+ucZ
+qTp
+kxu
+qTp
+psJ
 adC
 adC
 adC
@@ -88402,11 +88455,11 @@ fEo
 evT
 adC
 adC
-aKb
+fHV
 aLh
 aLh
 aLh
-aKb
+qJg
 adC
 adC
 adC
@@ -88704,11 +88757,11 @@ fEo
 evT
 adC
 aak
-aKb
+rLd
 aLh
 aMu
 aLh
-aKb
+rLd
 acm
 adC
 adC
