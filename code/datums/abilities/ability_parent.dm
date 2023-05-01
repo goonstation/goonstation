@@ -41,6 +41,9 @@
 
 	var/points_last = 0
 
+#ifdef BONUS_POINTS
+	points = 99999
+#endif
 
 	New(var/mob/M)
 		..()

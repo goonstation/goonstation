@@ -24,7 +24,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/lion
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/bite/big)
 

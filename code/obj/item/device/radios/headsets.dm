@@ -115,6 +115,9 @@
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen Special Operative"
 
+/obj/item/device/radio/headset/command/nt/consultant
+	icon_tooltip = "NanoTrasen Security Consultant"
+
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
 	desc = "So the captain can know exactly what's going on around the station while doing nothing about any of it."

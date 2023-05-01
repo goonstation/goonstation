@@ -118,15 +118,22 @@
 		leadercount++
 
 	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
+#ifndef RP_MODE
 		force_shuttle()
+		return 1
+#else
+		return 0
+#endif
 
 	else return 0
 
 /datum/game_mode/gang/process()
 	..()
+#ifndef RP_MODE
 	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
 		shuttle_called = TRUE
 		force_shuttle()
+#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -322,6 +329,9 @@ proc/broadcast_to_all_gangs(var/message)
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
 	var/spendable_points = 0
+#ifdef BONUS_POINTS
+	spendable_points = 99999
+#endif
 	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 
