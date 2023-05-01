@@ -64,13 +64,13 @@
 
 /datum/component/complexsignal/outermost_movable/_register(datum/listener, sig_type, proctype, override = FALSE, ...)
 	. = ..()
-	var/atom/A = parent
+	var/atom/A = src.get_outermost_movable()
 	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2] && !(A.event_handler_flags & MOVE_NOCLIP))
-		src.RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/on_loc_change)
+		src.RegisterSignal(A, COMSIG_MOVABLE_MOVED, .proc/on_loc_change)
 		track_movable_moved = TRUE
 
 /datum/component/complexsignal/outermost_movable/_unregister(datum/listener, sig_type)
 	. = ..()
 	if (sig_type == XSIG_MOVABLE_TURF_CHANGED[2])
-		src.UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+		src.UnregisterSignal(src.get_outermost_movable(), COMSIG_MOVABLE_MOVED)
 		track_movable_moved = FALSE
