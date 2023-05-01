@@ -2,14 +2,9 @@
 	name = "Enter Regenerative Stasis"
 	desc = "Enter a stasis, appearing to be completely dead for 45 seconds, while healing all injuries."
 	icon_state = "stasis"
-	human_only = 1
-	cooldown = 450
-	targeted = FALSE
-	target_anything = FALSE
-	can_use_in_container = 1
-
-	incapacitationCheck()
-		return 0
+	human_only = TRUE
+	cooldown = 45 SECONDS
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
 		if (..())
@@ -170,7 +165,6 @@
 	pointCost = 10
 	targeted = FALSE
 	target_anything = FALSE
-	can_use_in_container = 1
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 

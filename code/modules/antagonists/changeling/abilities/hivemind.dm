@@ -5,18 +5,13 @@
 
 ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 /datum/targetable/changeling/critter
-	cooldown = 600
-	targeted = FALSE
-	target_anything = FALSE
-	human_only = 0
-	can_use_in_container = 1
+	cooldown = 60 SECONDS
+	human_only = FALSE
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	///The observer mob we chose to transfer mind from, this should just be returned from New, but datum/targetable/New relies on truthy fail states
 	var/mob/dead/target_observer/hivemind_observer/use_mob = null
 	///The associated ROLE_ define
 	var/antag_role = null
-
-	incapacitationCheck()
-		return 0
 
 	cast(atom/target)
 		if (..())
@@ -225,11 +220,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	targeted = FALSE
 	target_anything = FALSE
 	human_only = 0
-	can_use_in_container = 1
 	interrupt_action_bars = 0
 	lock_holder = FALSE
-	incapacitationCheck()
-		return 0
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
 		if (..())
@@ -253,12 +246,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	target_anything = FALSE
 	human_only = 0
 	pointCost = 0
-	can_use_in_container = 1
 	lock_holder = FALSE
 	interrupt_action_bars = 0
-
-	incapacitationCheck()
-		return 0
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
 		if (..())
@@ -305,12 +295,9 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	target_anything = FALSE
 	human_only = 0
 	pointCost = 0
-	can_use_in_container = 1
 	lock_holder = FALSE
 	interrupt_action_bars = 0
-
-	incapacitationCheck()
-		return 0
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
 		if (..())

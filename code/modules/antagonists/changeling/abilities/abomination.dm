@@ -61,7 +61,7 @@
 	src.update_clothing()
 	src.abilityHolder.updateButtons()
 	C?.transferOwnership(src)
-	logTheThing(LOG_COMBAT, H, "voluntarily leaves horror form as a changeling, [log_loc(H)].")
+	logTheThing(LOG_COMBAT, src, "voluntarily leaves horror form as a changeling at [log_loc(src)].")
 
 /datum/targetable/changeling/scream
 	name = "Horrific Scream"

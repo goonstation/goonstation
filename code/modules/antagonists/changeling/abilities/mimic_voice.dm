@@ -6,7 +6,6 @@
 	targeted = FALSE
 	target_anything = FALSE
 	human_only = 1
-	can_use_in_container = 1
 	interrupt_action_bars = 0
 	var/last_mimiced_name = ""
 	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override, check headsets.dm

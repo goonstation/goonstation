@@ -142,49 +142,22 @@
 	var/human_only = 0
 	preferred_holder_type = /datum/abilityHolder/changeling
 
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/changeling()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-
-	proc/incapacitationCheck()
-		var/mob/living/M = holder.owner
-		var/datum/abilityHolder/changeling/H = holder
-		if (istype(H) && H.in_fakedeath)
-			return 1
-		return M.stat || M.getStatusDuration("paralysis")
+	incapacitation_check()
+		. = ..()
+		var/datum/abilityHolder/changeling/AH = src.holder
+		if (AH.in_fakedeath) // if you're fakedeathed, we count you as actionable
+			return FALSE
 
 	castcheck()
-		if (incapacitationCheck())
-			boutput(holder.owner, "<span class='alert'>We cannot use our abilities while incapacitated.</span>")
-			return 0
-		if (!human_only && !abomination_only)
-			return 1
+		. = ..()
 		var/mob/living/carbon/human/H = holder.owner
 		if (istype(H))
 			if (human_only && (isabomination(H) || ismonkey(H)))
-				return 0
+				return FALSE
 			else if (abomination_only && !isabomination(H))
-				return 0
+				return FALSE
 			else
-				return 1//what could possibly go wrong
-		return 0
+				return TRUE
 
 	Stat()
 		if (!human_only && !abomination_only)
@@ -197,12 +170,10 @@
 				..()
 
 	display_available()
-		.= 1
-		if (human_only || abomination_only)
-			.= 0
-			var/mob/living/carbon/human/H = holder.owner
-			if (istype(H))
-				if (human_only && !isabomination(H) && !ismonkey(H))
-					.= 1
-				else if (abomination_only && isabomination(H))
-					.= 1
+		. = FALSE
+		var/mob/living/carbon/human/H = holder.owner
+		if (istype(H))
+			if (human_only && !isabomination(H) && !ismonkey(H))
+				. = ..()
+			else if (abomination_only && isabomination(H))
+				. = ..()
