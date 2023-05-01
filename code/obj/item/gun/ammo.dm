@@ -1517,6 +1517,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	recharge_rate = 5
 	component_type = /datum/component/power_cell/flockdrone
 
+/obj/item/ammo/power_cell/self_charging/visicar
+	name = "Visicar cell"
+	desc = "You should not be seeing this!"
+	max_charge = 50
+	recharge_rate = 1
+	component_type = /datum/component/power_cell/flockdrone
+
+
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND
 	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED

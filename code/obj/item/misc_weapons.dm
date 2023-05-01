@@ -1990,6 +1990,8 @@ obj/item/whetstone
 		src.shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
+		AddComponent(/datum/component/cell_holder, /obj/item/ammo/power_cell)
+
 	attack_self(mob/user)
 		if(!attached)
 			boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
@@ -2003,6 +2005,12 @@ obj/item/whetstone
 				src.mode = DEFENSIVE_MODE
 		setup_props(user)
 		..()
+
+	emp_act()
+		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
+		src.visible_message("[src] sparks briefly as it overloads!")
+		playsound(src, "sparks", 75, 1, -1)
+		setup_props(user)
 
 	attack(var/mob/target, var/mob/user, def_zone)
 		if(attached && src.mode == OFFENSIVE_MODE)
