@@ -1,5 +1,9 @@
 
 (t)mon may 01 23
+(u)Cheffie
+(p)13905
+(e)🗺|A-Mapping
+(+)Added a new prefab to Z5. Clean some clothes at Larry's today.
 (u)Mr. Moriarty
 (p)13898
 (e)🗺💅|A-Mapping, C-QoL
