@@ -1,5 +1,9 @@
 
 (t)mon may 01 23
+(u)Flaborized
+(p)13853
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The captain's locker has been stocked with a megaphone to help them get their finer points across.
 (u)Cheffie
 (p)13905
 (e)🗺|A-Mapping
