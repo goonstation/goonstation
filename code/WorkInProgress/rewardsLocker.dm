@@ -903,6 +903,14 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
+				if(H.find_type_in_hand(/obj/item/megaphone))
+					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+					M.icon_state = "megaphone_blue"
+					M.item_state = "megaphone_blue"
+					M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
+					M.maptext_color = "#c1ddf8"
+					M.maptext_outline_color = "#02294d"
+					succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
@@ -1039,6 +1047,15 @@
 						M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
 						H.set_clothing_icon_dirty()
 						succ = TRUE
+
+				if(H.find_type_in_hand(/obj/item/megaphone))
+					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+					M.icon_state = "megaphone_red"
+					M.item_state = "megaphone_red"
+					M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
+					M.maptext_color = "#fcd4d4"
+					M.maptext_outline_color = "#520000"
+					succ = TRUE
 
 
 			if (!succ)

@@ -616,6 +616,11 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		. = ..()
 		STOP_TRACKING
 
+/obj/item/storage/secure/ssafe/larrys
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/spacecash/buttcoin, /obj/item/spacecash/buttcoin)
+
 #undef KEYPAD_ERR
 #undef KEYPAD_SET
 #undef KEYPAD_OK

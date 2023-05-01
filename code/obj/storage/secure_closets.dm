@@ -206,7 +206,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain,
+	/obj/item/megaphone)
 
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
