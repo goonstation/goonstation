@@ -9850,7 +9850,8 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	dir = 10
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -36174,6 +36175,15 @@
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
+"duj" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "dup" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/primary/east)
@@ -46037,6 +46047,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
+"lRn" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 8
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "lRp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -50644,6 +50663,15 @@
 	dir = 4
 	},
 /area/station/security/brig/solitary)
+"pYx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 6
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "pZc" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -56947,6 +56975,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"vEV" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 9
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -127395,8 +127432,8 @@ anX
 aAG
 aCK
 aEB
-aGE
-aGE
+vEV
+lRn
 aGE
 aLN
 aCK
@@ -127999,9 +128036,9 @@ anX
 aAG
 aDq
 aEJ
-aGE
-aGE
-aGE
+duj
+lRn
+pYx
 aOs
 aQX
 aAG
