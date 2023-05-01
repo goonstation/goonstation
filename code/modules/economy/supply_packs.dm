@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/sheet/wood)
 	amount = 10
 	cost = 500
-	containertype = /obj/storage/crate
+	containertype = /obj/storage/crate/wooden
 	containername = "Wooden Sheets Crate - 10 pack"
 
 /datum/supply_packs/wood50
@@ -181,8 +181,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/sheet/wood)
 	amount = 50
 	cost = 2500
-	containertype = /obj/storage/crate
-	containername = "Wooden Sheets Crate - 10 pack"
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 50 pack"
 
 /datum/supply_packs/dryfoods
 	name = "Catering: Dry Goods Crate"
