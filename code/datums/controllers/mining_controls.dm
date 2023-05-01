@@ -183,6 +183,15 @@ var/list/asteroid_blocked_turfs = list()
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED
 
+	ex_act()
+		return
+
+	blob_act()
+		return
+
+	meteorhit()
+		return
+
 /// *** MISC *** ///
 
 /proc/getOreQualityName(var/quality)
