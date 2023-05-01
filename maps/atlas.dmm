@@ -81,7 +81,7 @@
 	},
 /obj/item/paper/fortune,
 /obj/marker/supplymarker,
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "aaE" = (
@@ -3162,7 +3162,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "ajY" = (
@@ -9315,7 +9315,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "aDq" = (
@@ -11042,7 +11042,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aIw" = (
@@ -11909,7 +11909,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/ghostdrone_factory)
 "aLu" = (
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "aLv" = (
@@ -12353,7 +12353,7 @@
 /area/ghostdrone_factory)
 "aMI" = (
 /obj/decal/cleanable/dirt,
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "aMJ" = (
@@ -19202,7 +19202,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "rzl" = (
@@ -19561,7 +19561,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/mob/living/critter/spider/baby,
+/mob/living/critter/spider/baby/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "uEL" = (
