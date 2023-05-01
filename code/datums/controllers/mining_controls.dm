@@ -80,10 +80,6 @@ var/list/asteroid_blocked_turfs = list()
 			magnet_area = get_area(T)
 			break
 
-		for(var/turf/T in landmarks[LANDMARK_MAGNET_SHIELD])
-			var/obj/forcefield/mining/S = new /obj/forcefield/mining(T)
-			magnet_shields += S
-
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
 		SPAWN(0)
 			var/the_mining_z = zlev ? zlev : src.mining_z
