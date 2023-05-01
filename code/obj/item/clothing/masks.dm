@@ -222,6 +222,12 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	syndicate
 		name = "syndicate field protective mask"
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
+		icon_state = "gas_mask_syndicate"
+		item_state = "gas_mask_syndicate"
+		color_r = 0.8 //this one's also green
+		color_g = 1
+		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
