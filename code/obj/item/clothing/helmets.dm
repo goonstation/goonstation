@@ -79,11 +79,11 @@
 		return
 
 /obj/item/clothing/head/helmet/space/engineer/april_fools
-	icon_state = "espace-alt0"
+	icon_state = "espace0-alt"
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
-		src.icon_state = "espace-alt[on]"
+		src.icon_state = "espace[on]-alt"
 		if (on)
 			light_dir.update(1)
 		else
