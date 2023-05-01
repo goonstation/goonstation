@@ -4,19 +4,27 @@ What are the archived variables for?
 	This prevents race conditions that arise based on the order of tile processing.
 */
 
+/// Define a custom trace gas my making a subtype of this.
 /datum/gas
 	var/moles = 0
 #ifdef ATMOS_ARCHIVING
 	var/ARCHIVED(moles) = 0
 #endif
+	/// Amount of heat needed in joules to heat up 1 mole up 1 Kelvin.
 	var/specific_heat = 0
 
 /datum/gas/sleeping_agent
 	specific_heat = 40
+
 /datum/gas/oxygen_agent_b
 	specific_heat = 300
 
-
+/**
+ * The key of atmospherics.
+ * This datum here is how we represent gas mixtures.
+ * Temperature is in Kelvin and volume is in Litres.
+ * Todo cringe: write more about gas mixtures
+ */
 /datum/gas_mixture
 	#define _DEFINE_GAS(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_DEFINE_GAS)
@@ -27,18 +35,24 @@ What are the archived variables for?
 	APPLY_TO_ARCHIVED_GASES(_DEFINE_ARCH_GAS)
 	#undef _DEFINE_ARCH_GAS
 #endif
-
-	var/temperature = 0
+	/// Temperature of gases in Kelvin
+	var/temperature = 0 KELVIN
 #ifdef ATMOS_ARCHIVING
 	var/tmp/ARCHIVED(temperature)
 #endif
 
+	/// Volume of container in litres
 	var/volume = CELL_VOLUME
+
+	/// Used in air groups, this represents how many tiles are in the air group so we can account for reduced pressure with bigger groups.
 	var/group_multiplier = 1
+	/// Bitfield representing gas graphics on our tile.
 	var/graphic
 	var/tmp/graphic_archived // intentionally NOT using ARCHIVED() because graphic archiving is actually important and shouldn't be turned off
+	/// Non-base gases that are more modular. Tends to be slower than base gases however.
 	var/list/datum/gas/trace_gases
 	var/list/trace_gas_refs // mapping of type->gas to leverage hashing previous use of locate and avoid O(n^2) when comparing multiple gas_mixtures
+	/// Rough representation of
 	var/tmp/fuel_burnt = 0
 
 
@@ -56,6 +70,8 @@ What are the archived variables for?
 
 // Mutator procs
 // For specific events
+
+/// Removes all gases except if in an underwater map, in which case the gas is set to be hot low pressure air.
 /datum/gas_mixture/proc/zero()
 	clear_trace_gases()
 	ZERO_BASE_GASES(src)
@@ -64,6 +80,7 @@ What are the archived variables for?
 		nitrogen = MOLES_N2STANDARD * 0.5
 		temperature = OCEAN_TEMP
 
+/// Completely removes any gas.
 /datum/gas_mixture/proc/vacuum() //yknow, for when you want "zero" to actually mean "zero".
 	clear_trace_gases()
 	ZERO_BASE_GASES(src)
@@ -101,7 +118,7 @@ What are the archived variables for?
 
 /// Build bitfield of overlays to use for a gas mixture and determine if graphic should be updated
 /datum/gas_mixture/proc/check_tile_graphic()
-	//returns 1 if graphic changed
+	//returns TRUE if graphic changed
 	graphic = 0
 
 	UPDATE_GAS_MIXTURE_GRAPHIC(graphic, GAS_IMG_PLASMA, toxins)
@@ -114,8 +131,9 @@ What are the archived variables for?
 	. = graphic != graphic_archived
 	graphic_archived = graphic
 
+/// Process all reactions, return bitfield if notable reaction occurs.
 /datum/gas_mixture/proc/react(atom/dump_location)
-	. = 0 //set to non-zero if a notable reaction occured (used by pipe_network and hotspots)
+	. = 0 //(used by pipe_network and hotspots)
 	var/reaction_rate
 
 	if(length(src.trace_gases))
@@ -152,9 +170,11 @@ What are the archived variables for?
 
 	fuel_burnt = 0
 	if(temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		if(fire() > 0)
+		if(fire())
 			. |= COMBUSTION_ACTIVE
 
+/// Process fire combustion, pretty much just plasma combustion.
+/// Returns: Amount of plasma burnt.
 /datum/gas_mixture/proc/fire()
 	var/energy_released = 0
 	var/old_heat_capacity = HEAT_CAPACITY(src)
@@ -184,15 +204,14 @@ What are the archived variables for?
 
 				src.fuel_burnt += (plasma_burn_rate) * ( 1 + oxygen_burn_rate)
 
-	if(energy_released > 0)
+	if(energy_released)
 		var/new_heat_capacity = HEAT_CAPACITY(src)
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			src.temperature = (src.temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
 	return src.fuel_burnt
 
-//Update archived versions of variables
-//Returns: 1 in all cases
+/// Update archived versions of variables.
 #ifdef ATMOS_ARCHIVING
 /datum/gas_mixture/proc/archive()
 	#define _ARCHIVE_GAS(GAS, ...) ARCHIVED(GAS) = GAS;
@@ -203,35 +222,34 @@ What are the archived variables for?
 			trace_gas.ARCHIVED(moles) = trace_gas.moles
 	ARCHIVED(temperature) = temperature
 	graphic_archived = graphic
-	return 1
 #endif
 
-//Similar to merge(...) but first checks to see if the amount of air assumed is small enough
-//	that group processing is still accurate for source (aborts if not)
-//Returns: 1 on successful merge, 0 if the check failed
+/// Similar to [/datum/gas_mixture/proc/merge] but first checks to see if the amount of air assumed is small enough
+///	that group processing is still accurate for source (aborts if not).
+/// Returns: TRUE on successful merge, FALSE if the check failed.
 /datum/gas_mixture/proc/check_then_merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((giver.GAS > MINIMUM_AIR_TO_SUSPEND) && (giver.GAS >= GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
-	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
-		return 0
+	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) FALSE) // the FALSE is there so the last || in the macro isnt left hanging
+		return FALSE
 	#undef _ABOVE_SUSPEND_THRESHOLD
 	if(abs(giver.temperature - temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-		return 0
+		return FALSE
 
 	if(length(giver.trace_gases))
 		for(var/datum/gas/trace_gas as anything in giver.trace_gases)
 			var/datum/gas/corresponding = src.get_trace_gas_by_type(trace_gas.type)
 			if((trace_gas.moles > MINIMUM_AIR_TO_SUSPEND) && (!corresponding || (trace_gas.moles >= corresponding.moles*MINIMUM_AIR_RATIO_TO_SUSPEND)))
-				return 0
+				return FALSE
 
 	return merge(giver)
 
-//Merges all air from giver into self. Deletes giver.
-//Returns: 1 on success (no failure cases yet)
+/// Merges all air from giver into self. Deletes giver.
+/// Returns: TRUE on success (no failure cases yet)
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
 	if(!giver)
-		return 0
+		return FALSE
 
 	if(abs(temperature-giver.temperature)>MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/self_heat_capacity = HEAT_CAPACITY(src)*group_multiplier
@@ -240,7 +258,7 @@ What are the archived variables for?
 		if(combined_heat_capacity != 0)
 			temperature = (giver.temperature*giver_heat_capacity + temperature*self_heat_capacity)/combined_heat_capacity
 
-	if((group_multiplier>1)||(giver.group_multiplier>1))
+	if((group_multiplier > 1) || (giver.group_multiplier > 1))
 		#define _MERGE_GAS_GM(GAS, ...) GAS += giver.GAS*giver.group_multiplier/group_multiplier;
 		APPLY_TO_GASES(_MERGE_GAS_GM)
 		#undef _MERGE_GAS_GM
@@ -255,15 +273,15 @@ What are the archived variables for?
 			corresponding.moles += trace_gas.moles*giver.group_multiplier/group_multiplier
 
 	giver.dispose() // skip the qdel overhead
-	return 1
+	return TRUE
 
-//Proportionally removes amount of gas from the gas_mixture
-//Returns: gas_mixture with the gases removed
+/// Proportionally removes amount of gas from the gas_mixture.
+/// Returns: gas_mixture with the gases removed.
 /datum/gas_mixture/proc/remove(amount)
 	var/sum = TOTAL_MOLES(src)
 	amount = min(amount,sum) //Can not take more air than tile has!
 	if(amount <= 0)
-		return null
+		return
 
 	var/datum/gas_mixture/removed = new /datum/gas_mixture
 
@@ -284,11 +302,11 @@ What are the archived variables for?
 
 	return removed
 
-//Proportionally removes amount of gas from the gas_mixture
-//Returns: gas_mixture with the gases removed
+/// Proportionally removes amount of gas from the gas_mixture.
+/// Returns: gas_mixture with the gases removed.
 /datum/gas_mixture/proc/remove_ratio(ratio)
 	if(ratio <= 0)
-		return null
+		return
 
 	ratio = min(ratio, 1)
 
@@ -310,22 +328,22 @@ What are the archived variables for?
 
 	return removed
 
-//Similar to remove(...) but first checks to see if the amount of air removed is small enough
-//	that group processing is still accurate for source (aborts if not)
-//Returns: gas_mixture with the gases removed or null
+/// Similar to [/datum/gas_mixture/proc/remove] but first checks to see if the amount of air removed is small enough
+/// that group processing is still accurate for source (aborts if not).
+/// Returns: gas_mixture with the gases removed or null
 /datum/gas_mixture/proc/check_then_remove(amount)
 	//Since it is all proportional, the check may be done on the gas as a whole
 	var/sum = TOTAL_MOLES(src)
 	amount = min(amount,sum) //Can not take more air than tile has!
 
 	if((amount > MINIMUM_AIR_RATIO_TO_SUSPEND) && (amount > sum*MINIMUM_AIR_RATIO_TO_SUSPEND))
-		return 0
+		return
 
 	return remove(amount)
 
-//Copies variables from sample
+/// Copies variables from sample
 /datum/gas_mixture/proc/copy_from(datum/gas_mixture/sample)
-	if (sample == null)
+	if (!sample)
 		return
 
 	#define _COPY_GAS(GAS, ...) GAS = sample.GAS;
@@ -340,9 +358,9 @@ What are the archived variables for?
 
 	temperature = sample.temperature
 
-	return 1
+	return TRUE
 
-//Subtracts right_side from air_mixture. Used to help turfs mingle
+/// Subtracts right_side from air_mixture. Used to help turfs mingle
 /datum/gas_mixture/proc/subtract(datum/gas_mixture/right_side)
 	#define _SUBTRACT_GAS(GAS, ...) GAS -= right_side.GAS;
 	APPLY_TO_GASES(_SUBTRACT_GAS)
@@ -353,9 +371,10 @@ What are the archived variables for?
 			var/datum/gas/corresponding = src.get_or_add_trace_gas_by_type(trace_gas.type)
 			corresponding.moles -= trace_gas.moles
 
-	return 1
+	return TRUE
 
-//Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if both checks pass
+/// Checks if us and the sharer have a low enough delta and our combination's delta is small enough that group processing can be preserved.
+/// Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if both checks pass.
 /datum/gas_mixture/proc/check_gas_mixture(datum/gas_mixture/sharer)
 	if (!sharer)
 		return 0
@@ -366,7 +385,7 @@ What are the archived variables for?
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
 	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
-	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
+	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) FALSE) // the FALSE is there so the last || in the macro isnt left hanging
 		return 0
 	#undef _ABOVE_SUSPEND_THRESHOLD
 
@@ -374,31 +393,31 @@ What are the archived variables for?
 		return 0
 
 	if(length(sharer.trace_gases))
-		if(!length(trace_gases))
-			return 0
+		if(!length(src.trace_gases))
+			return FALSE
 		for(var/datum/gas/trace_gas as anything in sharer.trace_gases)
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding = src.get_trace_gas_by_type(trace_gas.type)
 				if(corresponding)
 					if(trace_gas.ARCHIVED(moles) >= corresponding.ARCHIVED(moles)*MINIMUM_AIR_RATIO_TO_SUSPEND*4)
-						return 0
+						return FALSE
 				else
-					return 0
+					return FALSE
 
-	if(length(trace_gases))
+	if(length(src.trace_gases))
 		if(!length(sharer.trace_gases))
-			return 0
+			return FALSE
 		for(var/datum/gas/trace_gas as anything in trace_gases)
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				if(!sharer.get_trace_gas_by_type(trace_gas.type))
-					return 0
+					return FALSE
 
 	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= sharer.GAS*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
-	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
+	if(APPLY_TO_ARCHIVED_GASES(_ABOVE_SUSPEND_THRESHOLD) FALSE) // the FALSE is there so the last || in the macro isnt left hanging
 		return -1
 	#undef _ABOVE_SUSPEND_THRESHOLD
 
-	if(length(trace_gases))
+	if(length(src.trace_gases))
 		for(var/datum/gas/trace_gas as anything in trace_gases)
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
 				var/datum/gas/corresponding = sharer.get_trace_gas_by_type(trace_gas.type)
@@ -410,7 +429,8 @@ What are the archived variables for?
 
 	return 1
 
-//Returns: 0 if self-check failed or 1 if check passes
+/// Checks if the turf is valid for air group processing.
+/// Returns: FALSE if self-check failed or TRUE if check passes
 /datum/gas_mixture/proc/check_turf(turf/model)
 	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) - model.GAS)/5;
 	APPLY_TO_GASES(_DELTA_GAS)
@@ -419,21 +439,21 @@ What are the archived variables for?
 	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 
 	#define _ABOVE_SUSPEND_THRESHOLD(GAS, ...) ((abs(delta_##GAS) > MINIMUM_AIR_TO_SUSPEND) && (abs(delta_##GAS) >= ARCHIVED(GAS)*MINIMUM_AIR_RATIO_TO_SUSPEND)) ||
-	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) 0)
-		return 0
+	if(APPLY_TO_GASES(_ABOVE_SUSPEND_THRESHOLD) FALSE) // the FALSE is there so the last || in the macro isnt left hanging
+		return FALSE
 	#undef _ABOVE_SUSPEND_THRESHOLD
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND)
-		return 0
+		return FALSE
 
-	if(length(trace_gases))
-		for(var/datum/gas/trace_gas as anything in trace_gases)
+	if(length(src.trace_gases))
+		for(var/datum/gas/trace_gas as anything in src.trace_gases)
 			if(trace_gas.ARCHIVED(moles) > MINIMUM_AIR_TO_SUSPEND*4)
-				return 0
+				return FALSE
 
-	return 1
+	return TRUE
 
-//Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length
-//Return: amount of gas exchanged (+ if sharer received)
+/// Performs air sharing calculations between two gas_mixtures assuming only 1 boundary length.
+/// Return: amount of gas exchanged (+ if sharer received)
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
@@ -470,10 +490,10 @@ What are the archived variables for?
 
 	var/list/trace_types_considered
 
-	if(length(trace_gases))
+	if(length(src.trace_gases))
 		trace_types_considered = list()
 
-		for(var/datum/gas/trace_gas as anything in trace_gases)
+		for(var/datum/gas/trace_gas as anything in src.trace_gases)
 
 			var/datum/gas/corresponding = sharer.get_or_add_trace_gas_by_type(trace_gas.type)
 			var/delta = 0
@@ -497,7 +517,6 @@ What are the archived variables for?
 
 			trace_types_considered += trace_gas.type
 
-
 	if(length(sharer.trace_gases))
 		for(var/datum/gas/trace_gas as anything in sharer.trace_gases)
 			if(trace_types_considered && (trace_gas.type in trace_types_considered)) continue
@@ -508,12 +527,12 @@ What are the archived variables for?
 				// This is using a simplified implementation of get_or_add_trace_gas_by_type()
 				// assumptions can be made to minimize decision points thereby minimize operations to perform
 				if(!trace_gases)
-					trace_gases = list()
-					trace_gas_refs = list()
+					src.trace_gases = list()
+					src.trace_gas_refs = list()
 
 				corresponding = new trace_gas.type()
-				trace_gases += corresponding
-				trace_gas_refs[corresponding.type] = corresponding
+				src.trace_gases += corresponding
+				src.trace_gas_refs[corresponding.type] = corresponding
 
 				delta = trace_gas.ARCHIVED(moles)/5
 
@@ -547,10 +566,10 @@ What are the archived variables for?
 		return (delta_pressure*R_IDEAL_GAS_EQUATION/volume)
 
 	else
-		return 0
+		return FALSE
 
-//Similar to share(...), except the model is not modified
-//Return: amount of gas exchanged
+/// Similar to [/datum/gas_mixture/proc/share], except the model is not modified.
+/// Return: amount of gas exchanged.
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier = 1)
 	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/group_multiplier);
 	APPLY_TO_GASES(_DELTA_GAS)
@@ -600,10 +619,7 @@ What are the archived variables for?
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
 		var/new_self_heat_capacity = old_self_heat_capacity - heat_capacity_transferred
 		if(new_self_heat_capacity > MINIMUM_HEAT_CAPACITY)
-			if(border_multiplier)
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*ARCHIVED(temperature))/new_self_heat_capacity
-			else
-				temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*ARCHIVED(temperature))/new_self_heat_capacity
+			temperature = (old_self_heat_capacity*temperature - heat_capacity_transferred*border_multiplier*ARCHIVED(temperature))/new_self_heat_capacity
 
 		temperature_mimic(model, model.thermal_conductivity, border_multiplier)
 
@@ -613,6 +629,8 @@ What are the archived variables for?
 	else
 		return 0
 
+/// Checks if our combined temperatures have a low enough delta that group processing is preserved.
+/// Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if both checks pass.
 /datum/gas_mixture/proc/check_both_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
@@ -645,6 +663,8 @@ What are the archived variables for?
 	return 1
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
+/// Similar to [/datum/gas_mixture/proc/check_both_then_temperature_share] except that we solely check ourselves.
+/// Returns: FALSE if the self-check failed and TRUE if self-check passed.
 /datum/gas_mixture/proc/check_me_then_temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 
@@ -661,18 +681,20 @@ What are the archived variables for?
 		self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
 		sharer_temperature_delta = heat/(sharer_heat_capacity*sharer.group_multiplier)
 	else
-		return 1
+		return TRUE
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
 		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
-		return 0
+		return FALSE
 
 	temperature += self_temperature_delta
 	sharer.temperature += sharer_temperature_delta
 
-	return 1
+	return TRUE
 	//Logic integrated from: temperature_share(sharer, conduction_coefficient) for efficiency
 
+/// Checks if the difference is small enough so we can continue group processing.
+/// Return: TRUE if valid for group processing, FALSE if delta is too large for group processing.
 /datum/gas_mixture/proc/check_me_then_temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.temperature)
 
@@ -689,18 +711,19 @@ What are the archived variables for?
 			self_temperature_delta = -heat/(self_heat_capacity*group_multiplier)
 			sharer_temperature_delta = heat/sharer.heat_capacity
 	else
-		return 1
+		return TRUE
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
 		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
-		return 0
+		return FALSE
 
 	temperature += self_temperature_delta
 	sharer.temperature += sharer_temperature_delta
 
-	return 1
+	return TRUE
 	//Logic integrated from: temperature_turf_share(sharer, conduction_coefficient) for efficiency
 
+/// Similar to [/datum/gas_mixture/proc/check_me_then_temperature_share] except the model is not modified.
 /datum/gas_mixture/proc/check_me_then_temperature_mimic(turf/model, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
 	var/self_temperature_delta = 0
@@ -716,13 +739,14 @@ What are the archived variables for?
 
 	if((abs(self_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) \
 		&& (abs(self_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*ARCHIVED(temperature)))
-		return 0
+		return FALSE
 
 	temperature += self_temperature_delta
 
-	return 1
+	return TRUE
 	//Logic integrated from: temperature_mimic(model, conduction_coefficient) for efficiency
 
+/// Conducts heat between gases, with conduction_coefficient as heat transfer efficiency factor.
 /datum/gas_mixture/proc/temperature_share(datum/gas_mixture/sharer, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -736,10 +760,11 @@ What are the archived variables for?
 			temperature -= heat/(self_heat_capacity*group_multiplier)
 			sharer.temperature += heat/(sharer_heat_capacity*sharer.group_multiplier)
 
+/// Similar to [/datum/gas_mixture/proc/temperature_share] except the model is not modified.
 /datum/gas_mixture/proc/temperature_mimic(turf/model, conduction_coefficient, border_multiplier)
 	var/delta_temperature = (temperature - model.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
-		var/self_heat_capacity = HEAT_CAPACITY(src)//ARCHIVED()()
+		var/self_heat_capacity = HEAT_CAPACITY(src)
 
 		if((model.heat_capacity > MINIMUM_HEAT_CAPACITY) && (self_heat_capacity > MINIMUM_HEAT_CAPACITY))
 			var/heat = conduction_coefficient*delta_temperature* \
@@ -750,6 +775,7 @@ What are the archived variables for?
 			else
 				temperature -= heat/(self_heat_capacity*group_multiplier)
 
+/// Shares heat between turfs, with conduction_coefficient as heat transfer efficiency factor.
 /datum/gas_mixture/proc/temperature_turf_share(turf/simulated/sharer, conduction_coefficient)
 	var/delta_temperature = (ARCHIVED(temperature) - sharer.temperature)
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER)
@@ -763,20 +789,21 @@ What are the archived variables for?
 			sharer.temperature += heat/sharer.heat_capacity
 
 /// Compares sample to src to see if within acceptable ranges that group processing may be enabled
+/// Returns: TRUE if within range, FALSE if outside range.
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample)
 	if (!sample)
-		return 0
+		return FALSE
 	#define _COMPARE_GAS(GAS, ...) \
 		if((abs(GAS-sample.GAS) > MINIMUM_AIR_TO_SUSPEND) && \
 			((GAS < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.GAS) || (GAS > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*sample.GAS))) \
-			{ return 0; }
+			{ return FALSE; }
 	APPLY_TO_GASES(_COMPARE_GAS)
 	#undef _COMPARE_GAS
 
 	if((TOTAL_MOLES(src)) > MINIMUM_AIR_TO_SUSPEND)
 		if((abs(temperature-sample.temperature) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && \
 			((temperature < (1-MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature) || (temperature > (1+MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND)*sample.temperature)))
-			return 0
+			return FALSE
 
 	if(length(sample.trace_gases))
 		for(var/datum/gas/trace_gas as anything in sample.trace_gases)
@@ -785,9 +812,9 @@ What are the archived variables for?
 				if(corresponding)
 					if((abs(trace_gas.moles - corresponding.moles) > MINIMUM_AIR_TO_SUSPEND) && \
 						((corresponding.moles < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*trace_gas.moles) || (corresponding.moles > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*trace_gas.moles)))
-						return 0
+						return FALSE
 				else
-					return 0
+					return FALSE
 
 	if(length(trace_gases))
 		for(var/datum/gas/trace_gas as anything in trace_gases)
@@ -796,29 +823,14 @@ What are the archived variables for?
 				if(corresponding)
 					if((abs(trace_gas.moles - corresponding.moles) > MINIMUM_AIR_TO_SUSPEND) && \
 						((trace_gas.moles < (1-MINIMUM_AIR_RATIO_TO_SUSPEND)*corresponding.moles) || (trace_gas.moles > (1+MINIMUM_AIR_RATIO_TO_SUSPEND)*corresponding.moles)))
-						return 0
+						return FALSE
 				else
-					return 0
-	return 1
+					return FALSE
+	return TRUE
 
+/// Checks for, ya know, if the mixture is potentially dangerous.
 /datum/gas_mixture/proc/check_if_dangerous()
 	if(TOTAL_MOLES(src) && (temperature > T100C || temperature < T0C || trace_gases || toxins || farts || carbon_dioxide || (nitrogen && !oxygen)))
 		return TRUE
 	else
 		return FALSE
-
-// Dead prototypes (or never implemented?)
-// /datum/gas_mixture/proc/check_me_then_share(datum/gas_mixture/sharer)
-	//Similar to share(...) but first checks to see if amount of air moved is small enough
-	//	that group processing is still accurate for source (aborts if not)
-	//Returns: 1 on successful share, 0 if the check failed
-
-// /datum/gas_mixture/proc/check_me_then_mimic(turf/model)
-	//Similar to mimic(...) but first checks to see if amount of air moved is small enough
-	//	that group processing is still accurate (aborts if not)
-	//Returns: 1 on successful mimic, 0 if the check failed
-
-// /datum/gas_mixture/proc/check_both_then_share(datum/gas_mixture/sharer)
-	//Similar to check_me_then_share(...) but also checks to see if amount of air moved is small enough
-	//	that group processing is still accurate for the sharer (aborts if not)
-	//Returns: 0 if the self-check failed then -1 if sharer-check failed then 1 if successful share

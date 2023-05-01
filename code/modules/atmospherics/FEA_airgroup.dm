@@ -1,18 +1,22 @@
 
+/**
+ * Air groups are collections of tiles that let us save processing time by treating a bunch of similar tiles as a single tile.
+ * This is quite useful because atmospherics processing is quite the time hog and processing one tile is much faster.
+ * Whenever our tiles become too different, we can break up and create new smaller groups.
+ */
 /datum/air_group
-
 	/// Processing all tiles as one large tile if TRUE
 	var/tmp/group_processing = TRUE
 
 	/// The gas mixture we use for the air group's atmos
 	var/tmp/datum/gas_mixture/air = null
 
-	/// cycle that oxygen value represents
+	/// Current cycle of the atmospherics master.
 	var/tmp/current_cycle = 0
 
-	//cycle that ARCHIVED(oxygen) value represents
-	//The use of archived cycle saves processing power by permitting the archiving step of FET
-	//	to be rolled into the updating step
+	/// Cycle that our archived vars were made.
+	/// The use of archived cycle saves processing power by permitting the archiving step of FET
+	/// to be rolled into the updating step.
 	var/tmp/archived_cycle = 0
 
 	/// Tiles that connect this group to other groups/individual tiles
@@ -21,8 +25,8 @@
 	/// All tiles in this group
 	var/list/turf/simulated/members
 
-	/// Space tiles that border this group
-	var/list/turf/space_borders // ZeWaka/Atmos: SHOULD JUST BE SPACE TILES??? HOW SIM GETTING IN
+	/// Tiles that border space
+	var/list/turf/simulated/space_borders
 
 	/// Length of space border
 	var/length_space_border = 0
@@ -49,27 +53,28 @@
 	air = new /datum/gas_mixture
 
 // Group procs
+
+// Distribute air from the group out to members
 /datum/air_group/proc/suspend_group_processing()
-	// Distribute air from the group out to members
 	ASSERT(group_processing == TRUE)
 	update_tiles_from_group()
 	group_processing = FALSE
 
+// Collect air from the members to the group.
 /datum/air_group/proc/resume_group_processing()
 	ASSERT(group_processing == FALSE)
 	update_group_from_tiles()
 	group_processing = TRUE
 
-//Copy group air information to individual tile air
-//Used right before turning on group processing
+/// Copy group air information to individual tile air. Used right before turning on group processing.
 /datum/air_group/proc/update_group_from_tiles()
 	// Single sample? Seems like not very many...
 	// Local var, direct access to gas_mixture, no need to pool
 	var/sample_member
 
-	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
+	if(!members || !length(members)) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
-		return 0
+		return FALSE
 
 	sample_member = pick(members)
 	if (sample_member:air)
@@ -78,10 +83,9 @@
 		air.copy_from(sample_air)
 		air.group_multiplier = length(members)
 
-	return 1
+	return TRUE
 
-//Copy group air information to individual tile air
-//Used right before turning off group processing
+/// Copy group air information to individual tile air. Used right before turning off group processing.
 /datum/air_group/proc/update_tiles_from_group()
 	for(var/turf/simulated/member as anything in members)
 		if (member.air) member.air.copy_from(air)
@@ -93,34 +97,32 @@
 	archived_cycle = air_master.current_cycle
 #endif
 
-//If individually processing tiles, checks all member tiles to see if they are close enough
-//	that the group may resume group processing
-//Warning: Do not call, called by air_master.process()
+/// If individually processing tiles, checks all member tiles to see if they are close enough that the group may resume group processing.
+/// Returns: False if group should not continue processing, TRUE if it should.
+/// Warning: Do not call, called by air_master.process()
 /datum/air_group/proc/check_regroup()
-	//Purpose: Checks to see if group processing should be turned back on
-	//Returns: group_processing
-	if(group_processing) return 1
+	if(group_processing) return TRUE
 
-	if(!members || !members.len ) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
+	if(!members || !length(members)) //I guess all the areas were BADSPACE!!! OH NO! (Spyguy fix for pick() from empty list)
 		qdel(src)
-		return 0
+		return FALSE
 
 	var/turf/simulated/sample = pick(members)
 	for(var/turf/simulated/member as anything in members)
 		if(member.active_hotspot)
-			return 0
+			return FALSE
 		if(member.air && member.air.compare(sample.air))
 			continue
 		else
-			return 0
+			return FALSE
 
 	resume_group_processing()
-	return 1
+	return TRUE
 
-
+/// Process the various air groups.
 /datum/air_group/proc/process_group(var/datum/controller/process/parent_controller)
 	var/abort_group = FALSE
-	current_cycle = air_master.current_cycle
+	src.current_cycle = air_master.current_cycle
 
 	if (spaced)
 		if (!length_space_border)
@@ -195,7 +197,7 @@
 					//archive other groups information if it has not been archived yet this cycle
 					AG.archive()
 #endif
-				if(AG.current_cycle < current_cycle)
+				if(AG.current_cycle < src.current_cycle)
 					//This if statement makes sure two groups only process their individual connections once!
 					//Without it, each connection would be processed a second time as the second group is evaluated
 
@@ -248,10 +250,10 @@
 				//if(istype(enemy_tile, /turf/simulated)) //trying the other one
 				if(enemy_tile.turf_flags & IS_TYPE_SIMULATED) //blahhh danger
 #ifdef ATMOS_ARCHIVING
-					if(enemy_tile:archived_cycle < archived_cycle) //archive tile information if not already done
+					if(enemy_tile:archived_cycle < src.archived_cycle) //archive tile information if not already done
 						enemy_tile:archive()
 #endif
-					if(enemy_tile:current_cycle < current_cycle)
+					if(enemy_tile:current_cycle < src.current_cycle)
 						if(air.check_gas_mixture(enemy_tile:air))
 							connection_difference = air.share(enemy_tile:air)
 						else
@@ -300,7 +302,7 @@
 						abort_group = TRUE
 
 				if(connection_difference)
-					for(var/turf/simulated/self_border in space_borders) // ZeWaka/Atmos: BOTH SPACE AND SIM?
+					for(var/turf/simulated/self_border in space_borders)
 						self_border.consider_pressure_difference_space(connection_difference)
 
 		if(abort_group)
@@ -318,7 +320,7 @@
 	// suspended in the above block.
 	if(!group_processing) //Revert to individual processing
 		// space fastpath if we didn't revert (avoid regrouping tiles prior to processing individual cells)
-		if (!abort_group && members.len && length_space_border)
+		if (!abort_group && length(members) && length_space_border)
 			if (space_fastpath(parent_controller))
 				// If the fastpath resulted in the group being zeroed, return early.
 				return
@@ -350,14 +352,13 @@
 		air.react()
 
 
-// If group processing is off, and the air group is bordered by a space tile,
-// execute a fast evacuation of the air in the group.
-// If the average pressure in the group is < 5kpa, the group will be zeroed
-// returns: 1 if the group is zeroed, 0 if not
+/// If group processing is off, and the air group is bordered by a space tile, execute a fast evacuation of the air in the group.
+/// If the average pressure in the group is < 5kpa, the group will be zeroed.
+/// Returns: TRUE if the group is zeroed, FALSE if not.
 /datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
 	var/minDist
 	var/turf/space/sample
-	. = 0
+	. = FALSE
 	sample = air_master.space_sample
 
 	if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
@@ -385,7 +386,7 @@
 
 		// Don't space hotspots, it breaks them
 		if(member.active_hotspot)
-			return 0
+			return FALSE
 
 		if (member.air && !isnull(minDist))
 			var/datum/gas_mixture/member_air = member.air
@@ -396,19 +397,21 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-	if(!length(members))  //bail to resolve div 0
-		return
+	if(!members || !length(members))  //bail to resolve div 0
+		qdel(src) // die theres no one with you
+		return FALSE
 
 	//mbc : bringing this silly fix back in for now
 	if (map_currently_underwater)
-		if (totalPressure / members.len < 65)
+		if (totalPressure / length(members) < 65)
 			space_group()
-			return 1
+			return TRUE
 	else
-		if (totalPressure / members.len < 5)
+		if (totalPressure / length(members) < 5)
 			space_group()
-			return 1
+			return TRUE
 
+/// Zeroes and spaces the air of the group and resumes group processing.
 /datum/air_group/proc/space_group()
 	for(var/turf/simulated/member as anything in members)
 		member.air?.zero()
@@ -417,6 +420,7 @@
 		if(!group_processing)
 			resume_group_processing()
 
+/// Unspaces the group and stops group processing.
 /datum/air_group/proc/unspace_group()
 	if(group_processing)
 		suspend_group_processing()
