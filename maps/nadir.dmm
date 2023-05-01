@@ -34818,10 +34818,6 @@
 /obj/item/kitchen/utensil/fork{
 	pixel_x = 7
 	},
-/obj/item/decoration/virvase{
-	pixel_x = -4;
-	pixel_y = 19
-	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"

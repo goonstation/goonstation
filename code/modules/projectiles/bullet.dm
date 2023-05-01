@@ -371,7 +371,7 @@ toxic - poisons
 	hit_ground_chance = 50
 	projectile_speed = 60
 	impact_image_state = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_flechette
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 
 /datum/projectile/bullet/veritate/burst
@@ -685,7 +685,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 6
+	damage = 8
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
@@ -694,7 +694,7 @@ toxic - poisons
 	dissipation_delay = 2
 	dissipation_rate = 2
 	implanted = null
-	damage = 4
+	damage = 6
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
@@ -703,7 +703,7 @@ toxic - poisons
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
-	damage = 8
+	damage = 10
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
@@ -806,7 +806,7 @@ toxic - poisons
 	name = "rock salt"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	icon_state = "trace"
-	damage = 3
+	damage = 4
 	dissipation_rate = 1
 	dissipation_delay = 2
 	implanted = null
@@ -835,7 +835,7 @@ toxic - poisons
 	speed_max = 36
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
-	pellets_to_fire = 4
+	pellets_to_fire = 7
 
 /datum/projectile/bullet/flare
 	name = "flare"

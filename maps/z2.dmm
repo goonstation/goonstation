@@ -23201,22 +23201,6 @@
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
-"brU" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "brV" = (
 /turf/unsimulated/iomoon/ancient_wall{
 	dir = 8
@@ -23564,10 +23548,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
-"bsQ" = (
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bsR" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -24644,10 +24624,6 @@
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bwo" = (
-/mob/living/critter/robotic/repairbot,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bwq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -27273,20 +27249,6 @@
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
-/area/iomoon/robot_ruins)
-"bFA" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	name = "power conduit"
-	},
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bFB" = (
 /obj/decal/cleanable/cobweb,
@@ -68972,6 +68934,22 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
+"hwt" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "hxO" = (
 /obj/noticeboard{
 	pixel_y = 28
@@ -69329,22 +69307,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
-"iho" = (
-/obj/machinery/computer3/generic/personal/personel_alt{
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = -15
-	},
-/obj/adventurepuzzle/triggerable/light{
-	id = "virva_light";
-	on_brig = 1.2;
-	on_cgreen = 0.4;
-	on_cred = 0
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -69439,18 +69401,6 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
-"ioJ" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/mob/living/critter/bear{
-	desc = "Wow, you haven't seen this guy since 2014!";
-	name = "DOngEun MesTur";
-	
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -70455,22 +70405,6 @@
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
-"kcz" = (
-/obj/adventurepuzzle/element_link{
-	act_type = "on";
-	triggerable_id = "virva_light";
-	triggerer_id = "virva_trigger"
-	},
-/obj/table/clothred/auto{
-	desc = "The tablecloth definitely isn't there to hide anything.";
-	name = "cool table"
-	},
-/obj/item/decoration/virvase{
-	anchored = 1;
-	pixel_y = 11
-	},
-/turf/unsimulated/floor/minitiles/black,
-/area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -70519,6 +70453,19 @@
 "kfN" = (
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
+"kgf" = (
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
+	},
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "khd" = (
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -71666,6 +71613,20 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
+"mtX" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -75637,6 +75598,16 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"sGS" = (
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "sHI" = (
 /obj/machinery/door/unpowered/wood{
 	autoclose = 0;
@@ -75789,6 +75760,17 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sRI" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "sUn" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	dir = 6
@@ -75964,6 +75946,10 @@
 "tqB" = (
 /turf/unsimulated/floor/marble,
 /area/centcom/gallery)
+"trg" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "trs" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton{
@@ -77378,20 +77364,6 @@
 "vBq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"vBO" = (
-/obj/loudspeaker{
-	desc = "This could probably cause an earthquake.";
-	name = "studio speaker";
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti{
-	pixel_x = 9;
-	pixel_y = 7
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -78567,6 +78539,14 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"xFD" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "xGt" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -3
@@ -78718,6 +78698,10 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
+"xQJ" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -125988,7 +125972,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+xQJ
 bqb
 bpo
 bpo
@@ -126583,7 +126567,7 @@ aaa
 bpo
 bpo
 bxH
-bwo
+xQJ
 bqb
 bqb
 bqb
@@ -128083,7 +128067,7 @@ bqb
 brk
 bqb
 bpo
-bsQ
+trg
 bpo
 brT
 bpo
@@ -129309,7 +129293,7 @@ bBi
 bBY
 bqb
 bBY
-bsQ
+trg
 bBY
 bqb
 bBY
@@ -130506,7 +130490,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+xQJ
 bqb
 bqb
 bqb
@@ -133231,7 +133215,7 @@ bqb
 bqb
 bpo
 bpo
-bwo
+xQJ
 bvb
 bpo
 bpo
@@ -133844,7 +133828,7 @@ bEn
 bEI
 bqH
 bpo
-bFA
+mtX
 bpo
 bFN
 bFN
@@ -135631,7 +135615,7 @@ aaa
 aaa
 bpo
 bpo
-brU
+hwt
 bqb
 bqb
 bpo
@@ -150981,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-ioJ
+sRI
 wel
 gtU
 eiT
@@ -153069,10 +153053,10 @@ tfB
 eip
 fBu
 tij
-vBO
+sGS
 tlW
 xya
-kcz
+xFD
 wel
 iFW
 vij
@@ -153371,7 +153355,7 @@ tfB
 jvd
 fBu
 tij
-iho
+kgf
 nRm
 nBd
 nBd

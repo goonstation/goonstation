@@ -1735,6 +1735,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\infrared_stuff.dm"
 #include "code\obj\item\device\lightbreaker.dm"
 #include "code\obj\item\device\lights.dm"
+#include "code\obj\item\device\megaphone.dm"
 #include "code\obj\item\device\mic_amp_etc.dm"
 #include "code\obj\item\device\monkey_barrel.dm"
 #include "code\obj\item\device\multitool.dm"
