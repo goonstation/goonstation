@@ -443,12 +443,6 @@
 	},
 /turf/simulated/floor/black,
 /area/pirate_ship)
-"lb" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
-/turf/space,
-/area/pirate_ship)
 "lf" = (
 /obj/item/shipcomponent/mainweapon/phaser{
 	pixel_x = 4;
@@ -739,9 +733,7 @@
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "qM" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /area/pirate_ship)
 "rg" = (
@@ -2740,7 +2732,7 @@ nZ
 AP
 rt
 TC
-lb
+qM
 qg
 "}
 (13,1,1) = {"
