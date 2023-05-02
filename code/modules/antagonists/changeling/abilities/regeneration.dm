@@ -7,13 +7,8 @@
 	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		var/datum/abilityHolder/changeling/H = holder
-		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
-			return 1
+		. = ..()
+		var/datum/abilityHolder/changeling/H = src.holder
 
 		var/mob/living/carbon/human/C = holder.owner
 		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
@@ -39,6 +34,7 @@
 			SPAWN(cooldown)
 				changeling_super_heal_step(C, 100, 100) //get those limbs back i didn't lay here for 45 seconds to be hopping around on one leg dang it
 				if (C && !isdead(C))
+					// hell is real...
 					C.HealDamage("All", 1000, 1000)
 					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
@@ -54,10 +50,10 @@
 					C.delStatus("radiation")
 					C.take_radiation_dose(-INFINITY)
 					C.delStatus("disorient")
-					C.health = 100
+					C.health = C.max_health
 					C.reagents.clear_reagents()
-					C.lying = 0
-					C.canmove = 1
+					C.lying = FALSE
+					C.canmove = TRUE
 					boutput(C, "<span class='notice'>We have regenerated.</span>")
 					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
 					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
@@ -65,7 +61,6 @@
 						if (istype(I, /obj/item/implant/projectile))
 							boutput(C, "<span class='alert'>\an [I] falls out of your abdomen.</span>")
 							I.on_remove(C)
-							C.implant.Remove(I)
 							I.set_loc(C.loc)
 							continue
 					if(C.bioHolder?.effects && length(C.bioHolder.effects))
@@ -75,10 +70,10 @@
 								C.bioHolder.RemoveEffect(gene.id)
 
 				C.set_clothing_icon_dirty()
-				H.in_fakedeath = 0
+				H.in_fakedeath = FALSE
 				REMOVE_ATOM_PROPERTY(C, PROP_MOB_CANTMOVE, src.type)
-		return 0
 
+// this is a global proc. fascinating
 /proc/changeling_super_heal_step(var/mob/living/carbon/human/healed, var/limb_regen_prob = 25, var/eye_regen_prob = 25, var/mult = 1, var/changer = 1)
 	var/mob/living/carbon/human/C = healed
 	var/list/implants = list()
@@ -103,6 +98,8 @@
 					C.implant.Remove(I)
 					I.set_loc(C.loc)
 					continue
+
+		// ...and we live there.
 
 		if (!C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
 			if(!C.limbs.l_arm && prob(limb_regen_prob))
@@ -160,33 +157,22 @@
 	name = "Speed Regeneration"
 	desc = "Regenerate your health quickly and rather loudly."
 	icon_state = "speedregen"
-	human_only = 1
-	cooldown = 900
+	human_only = TRUE
+	cooldown = 90 SECONDS
 	pointCost = 10
-	targeted = FALSE
-	target_anything = FALSE
-	lock_holder = FALSE
-	ignore_holder_lock = 1
+	ignore_holder_lock = TRUE
 
 	cast(atom/target)
-		if (..())
-			return 1
-		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
-			return 1
+		. = ..()
+		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?", list("Yes","No")) != "Yes")
+			return TRUE
 
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round(on_cooldown)] seconds.</span>")
-			return 1
-
-		var/mob/living/carbon/human/C = holder.owner
-		if (!istype(C))
-			boutput(holder.owner, "<span class='alert'>We have no idea what we are, but it's damn sure not compatible.</span>")
-			return 1
+		var/mob/living/carbon/human/H
 		boutput(holder.owner, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
 
-		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
-			if(isdead(C))
-				break
-			sleep(3 SECONDS)
-			changeling_super_heal_step(C)
+		SPAWN(0)
+			while(H.health < H.max_health || !H.limbs.l_arm || !H.limbs.r_arm || !H.limbs.l_leg || !H.limbs.r_leg)
+				if(isdead(H))
+					break
+				sleep(3 SECONDS)
+				changeling_super_heal_step(H)

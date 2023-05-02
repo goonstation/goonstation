@@ -14,8 +14,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	var/antag_role = null
 
 	cast(atom/target)
-		if (..())
-			return TRUE
+		. = ..()
 
 		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
@@ -187,7 +186,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Buttcrab"
 	desc = "You butt fall off and hivemind person become butt"
 	icon_state = "buttcrab"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	pointCost = 1
 	antag_role = ROLE_BUTTCRAB
 
@@ -216,66 +215,44 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Speak Hivemind"
 	desc = "Speak to your own collected minds telepathically."
 	icon_state = "hivesay"
-	cooldown = 0
-	targeted = FALSE
-	target_anything = FALSE
-	human_only = 0
-	interrupt_action_bars = 0
+	interrupt_action_bars = FALSE
 	lock_holder = FALSE
+	ignore_holder_lock = TRUE
 	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
-		if (..())
-			return 1
-
+		..()
 		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
 		if (!message)
-			return
+			return TRUE
 		logTheThing(LOG_SAY, holder.owner, "<b>(HIVESAY):</b> [message]")
-		//logTheThing(LOG_DIARY, holder.owner, "(HIVEMIND): [message]", "hivesay")
-		.= holder.owner.say_hive(message, holder)
-
-		return 0
+		. = holder.owner.say_hive(message, holder)
 
 /datum/targetable/changeling/boot
 	name = "Silence Hivemind Member"
 	desc = "Remove a member of your hivemind at no penalty."
 	icon_state = "silence"
-	cooldown = 0
-	targeted = FALSE
-	target_anything = FALSE
-	human_only = 0
-	pointCost = 0
 	lock_holder = FALSE
-	interrupt_action_bars = 0
+	ignore_holder_lock = TRUE
+	interrupt_action_bars = FALSE
 	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
-		if (..())
-			return 1
-		var/datum/abilityHolder/changeling/H = holder
-		//Sanity check
-		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
-			return 1
-
-		//Verify that you are not in control of your master's body.
-		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!.</span>")
-			return 1
+		. = ..()
+		var/datum/abilityHolder/changeling/H = src.holder
 
 		var/list/eligible = list()
 		for (var/mob/dead/target_observer/hivemind_observer/O in H.hivemind)
 			eligible[O.real_name] = O
 
-		if (eligible.len < 1)
+		if (length(eligible) == 0)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
-			return 1
+			return TRUE
 
 		var/use_mob_name = tgui_input_list(holder.owner, "Select the mind to silence:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if (!use_mob_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
-			return 1
+			return TRUE
 
 		//RIP
 		var/mob/dead/target_observer/hivemind_observer/use_mob = eligible[use_mob_name]
@@ -283,52 +260,44 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		boutput(use_mob, "<span class='alert'>You have been cut off from the hivemind by [holder.owner.real_name]!</span>")
 		use_mob.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		boutput(holder.owner, "<span class='alert'>You have silenced [use_mob_name]'s consciousness from your hivemind.</span>")
-		return 0
+
+	castcheck()
+		. = ..()
+		//Verify that you are not in control of your master's body.
+		var/datum/abilityHolder/changeling/H = src.holder
+		if(H.master && H.owner != H.master)
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot boot other members of the hivemind!</span>")
+			return FALSE
 
 
 /datum/targetable/changeling/give_control
 	name = "Grant Control to Hivemind Member"
 	desc = "Allow one of the members of the hive mind to control our form."
 	icon_state = "hivesay"
-	cooldown = 0
-	targeted = FALSE
-	target_anything = FALSE
-	human_only = 0
-	pointCost = 0
 	lock_holder = FALSE
-	interrupt_action_bars = 0
+	ignore_holder_lock = TRUE
+	interrupt_action_bars = FALSE
 	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(atom/target)
-		if (..())
-			return 1
-		var/datum/abilityHolder/changeling/H = holder
-		//Sanity check
-		if (!istype(H))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
-			return 1
-
-		//Verify that you are not in control of your master's body.
-		if(H.master && H.owner != H.master)
-			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
-			return 1
+		. = ..()
+		var/datum/abilityHolder/changeling/H = src.holder
 
 		var/list/eligible = list()
 		for (var/mob/dead/target_observer/hivemind_observer/O in H.hivemind)
 			if(O.client)
 				eligible += O
 
-		if (eligible.len < 1)
+		if (length(eligible) == 0)
 			boutput(holder.owner, "<span class='alert'>There are no minds eligible for this ability.</span>")
-			return 1
+			return TRUE
 
 		var/mob/dead/target_observer/hivemind_observer/HO = tgui_input_list(holder.owner, "Select the mind to grant control:", "Select Mind", sortList(eligible, /proc/cmp_text_asc))
 		if(!HO)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return TRUE
 		if (!(HO in eligible))
-			boutput(holder.owner, "<span class='alert'>Something fucked up, ahelp about this. Mind transfer aborted.</span>")
-			stack_trace("[holder.owner] tried to grant control of a changeling body to [HO], but that name wasn't in the list of eligible mobs. List of mobs: [json_encode(eligible)]")
+			boutput(holder.owner, "<span class='alert'>That hivemind member is no longer able to be given control.</span>") // probably got cloned our or something
 			return TRUE
 
 		//Do the actual control-granting here.
@@ -346,4 +315,12 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		H.transferOwnership(H.owner)
 		H.temp_controller = HO
 
-		boutput(H.owner, "<h1><font color=red>You have reawakened to serve your host [H.master]! You must follow their commands and protect our form!</font></h1>")
+		boutput(H.owner, "<h1><span class='alert'>You have reawakened to serve your host [H.master]! You must follow their commands and protect our form!</span></h1>")
+
+	castcheck()
+		. = ..()
+		var/datum/abilityHolder/changeling/H = src.holder
+		//Verify that you are not in control of your master's body.
+		if(H.master && H.owner != H.master)
+			boutput(holder.owner, "<span class='alert'>A member of the hivemind cannot relinquish control of the shared form!.</span>")
+			return FALSE

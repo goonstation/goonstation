@@ -606,27 +606,38 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_death()
 		SHOULD_CALL_PARENT(TRUE)
 		..()
-		if (isliving(src.owner) && !src.active)
-			var/mob/living/source = owner
-			if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
-				source.visible_message("[source] emits a somber buzzing noise.")
-				return
-			. = 0
+		// The way this works sorta sucks. We have N implants, but we only want a single effect, scaled by the value of N.
+		// So we just run this on_death code for every implant, but the first implant to run it marks all the others as 'active',
+		// and if an implant is already 'active' then it does nothing on death.
+		if (!src.active)
+			var/power = 0
 			for (var/obj/item/implant/implant in src.loc)
 				if (istype(implant, src.type)) //only interact with implants that are the same type as us
 					var/obj/item/implant/revenge/revenge_implant = implant
 					if (!revenge_implant.active)
 						revenge_implant.active = TRUE
-						. += revenge_implant.power //tally the total power we're dealing with here
+						power += revenge_implant.power //tally the total power we're dealing with here
 
-			if (. >= 6)
-				source.visible_message("<span class='alert'><b>[source][big_message]!</b></span>")
-			else
-				source.visible_message("[source][small_message].")
+			// If you're suiciding and unlucky, all the power just goes out the window and we don't trigger
+			var/mob/living/source = owner
+			if(source.suiciding && prob(60)) //Probably won't trigger on suicide though
+				source.visible_message("[source] emits a somber buzzing noise.")
+				return
+			src.do_effect(power)
+
 			var/area/A = get_area(source)
 			if (!A.dont_log_combat)
 				logTheThing(LOG_BOMBING, source, "triggered \a [src] on death at [log_loc(source)].")
 				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
+
+	/// This is where you put the actual effect the implant has on death (some kind of an explosion probably)
+	/// You probably want to call this parent after exploding or whatever
+	proc/do_effect(power)
+		SHOULD_CALL_PARENT(TRUE)
+		if (. >= 6)
+			src.owner.visible_message("<span class='alert'><b>[src.owner][big_message]!</b></span>")
+		else
+			src.owner.visible_message("[src.owner][small_message].")
 
 /obj/item/implant/revenge/microbomb
 	name = "microbomb implant"
@@ -642,8 +653,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			boutput(user, "The implanted [src] will detonate upon [target]'s unintentional death.")
 
 
-	on_death()
-		. = ..()
+	do_effect(power)
 		var/turf/T = get_turf(src)
 
 		var/obj/overlay/Ov = new/obj/overlay(T)
@@ -660,11 +670,12 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			T.hotspot_expose(800,125)
-			explosion_new(src, T, 7 * ., 1) //The . is the tally of explosionPower in this poor slob.
+			explosion_new(src, T, 7 * power, 1) //The . is the tally of explosionPower in this poor slob.
 			if (ishuman(src.owner))
 				var/mob/living/carbon/human/H = src.owner
 				H.dump_contents_chance = 80 //hee hee
 			src.owner?.gib() //yer DEAD
+		. = ..()
 
 /obj/item/implant/revenge/microbomb/hunter
 	power = 4
@@ -676,16 +687,15 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	power = 3
 
 	// this is kinda horribly inefficient but it runs pretty rarely so eh
-	on_death()
-		. = ..()
-		elecflash(src, ., . * 2, TRUE)
-		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
+	do_effect(power)
+		elecflash(src, power, power * 2, TRUE)
+		for (var/mob/living/M in orange(power / 6 + 1, src.owner))
 			if (!isintangible(M))
 				var/dist = GET_DIST(src.owner, M) + 1
 				// arcflash uses some fucked up thresholds so trust me on this one
-				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(max(1,.)) + 3))
-		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
-			if (prob(. * 7))
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(max(1, power)) + 3))
+		for (var/obj/machinery/machine in orange(round(power / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
+			if (prob(power * 7))
 				var/mob/living/target
 				for (var/mob/living/L in orange(machine, 2))
 					if (!isintangible(L))
@@ -696,6 +706,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 		SPAWN(1)
 			src.owner?.elecgib()
+		. = ..()
 
 
 /obj/item/implant/robotalk
