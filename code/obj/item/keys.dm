@@ -23,7 +23,8 @@ ABSTRACT_TYPE(/obj/item/device/key)
 
 /obj/item/device/key/generic/larrys
 	name = "backroom key"
-	desc = "do you really want to go back there?"
+	desc = "Do you really want to go back there?"
+	icon_state = "key_larry"
 
 /obj/item/device/key/cheget
 	name = "old fancy key"
@@ -44,6 +45,7 @@ ABSTRACT_TYPE(/obj/item/device/key)
 /obj/item/device/key/haunted
 	name = "iron key"
 	desc = "An old key of iron."
+	icon_state = "key_iron"
 	var/last_use = 0
 
 /obj/item/device/key/generic/chompskey
