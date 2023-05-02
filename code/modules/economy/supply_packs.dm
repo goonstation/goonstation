@@ -1184,7 +1184,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Kendo Crate"
 
-/datum/supply_packs/yukata
+/datum/supply_packs/obon
 	name = "Obon Festival Crate"
 	desc = {"Contains traditional Space Japanese robes and fireworks for the observance of Obon; a syncretic summer festival fusing indigenous Japanese spiritual beliefs
 			with the Buddhist tradition of reverence for the dead."}
