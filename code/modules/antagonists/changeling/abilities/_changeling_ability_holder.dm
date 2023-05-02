@@ -170,10 +170,12 @@
 				..()
 
 	display_available()
-		. = FALSE
-		var/mob/living/carbon/human/H = holder.owner
-		if (istype(H))
-			if (human_only && !isabomination(H) && !ismonkey(H))
-				. = ..()
-			else if (abomination_only && isabomination(H))
-				. = ..()
+		. = TRUE
+		if (human_only || abomination_only)
+			. = FALSE
+			var/mob/living/carbon/human/H = holder.owner
+			if (istype(H))
+				if (human_only && !isabomination(H) && !ismonkey(H))
+					. = ..()
+				else if (abomination_only && isabomination(H))
+					. = ..()
