@@ -49007,6 +49007,12 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
+/obj/forcefield/energyshield/perma{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 2;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor,
 /area/station/engine/monitoring)
 "vjA" = (
