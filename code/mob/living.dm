@@ -1063,7 +1063,8 @@
 				for(var/mob/M in olocs[olocs.len])
 					listening |= M
 				for(var/obj/item/organ/head/H in say_location.loc)
-					listening |= H.linked_human
+					if (H.linked_human)
+						listening |= H.linked_human
 
 				listening |= olocs[olocs.len]
 			else
