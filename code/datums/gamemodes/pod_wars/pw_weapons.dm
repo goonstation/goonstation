@@ -221,7 +221,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 		if (T)
 			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'

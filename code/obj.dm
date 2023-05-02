@@ -1,5 +1,7 @@
 TYPEINFO(/obj)
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = 0
 
 /obj
 	var/real_name = null
@@ -39,6 +41,7 @@ TYPEINFO(/obj)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
+		if(usr==0) usr = null
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/old_loc = get_turf(src)
 			. = ..()
@@ -280,7 +283,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -308,7 +311,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
@@ -337,7 +340,7 @@ TYPEINFO(/obj)
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -361,7 +364,26 @@ TYPEINFO(/obj)
 				return
 			else
 
+	proc/replace_with_catwalk(var/obj/item/rods/rods)
+		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
+		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
+		T.MakeCatwalk(rods)
+		qdel(src)
+
 	attackby(obj/item/C, mob/user)
+		if (istype(C, /obj/item/rods))
+			var/actionbar_duration = 2 SECOND
+
+			if (ishuman(user))
+				if (user.traitHolder.hasTrait("training_engineer"))
+					src.replace_with_catwalk(C)
+					return // Engineers can bypass the actionbar and instantly put down catwalks.
+
+				if (user.traitHolder.hasTrait("carpenter"))
+					actionbar_duration /= 2
+
+			user.show_text("You start putting the rods together and making a catwalk...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
@@ -375,12 +397,6 @@ TYPEINFO(/obj)
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
-		if (istype(C, /obj/item/rods))
-			var/obj/item/rods/R = C
-			if (R.change_stack_amount(-2))
-				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
-				new /obj/lattice/barricade(src.loc)
-				qdel(src)
 		return
 
 /obj/lattice/barricade
@@ -450,7 +466,7 @@ TYPEINFO(/obj)
 
 /obj/overlay
 	name = "overlay"
-	anchored = TRUE
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
@@ -485,7 +501,7 @@ TYPEINFO(/obj)
 
 /obj/projection
 	name = "Projection"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -559,3 +575,8 @@ TYPEINFO(/obj)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 		else if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
+
+/obj/proc/become_mimic()
+	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
+	replacer.disguise_as(src)
+	qdel(src)

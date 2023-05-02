@@ -60,7 +60,7 @@
 						sleep(0.1 SECONDS)
 					temp.pixel_x = 0
 					temp.pixel_y = 0
-					new/obj/critter/magiczombie(temp)
+					new/mob/living/critter/skeleton(temp)
 					closets -= temp
 				else
 					break

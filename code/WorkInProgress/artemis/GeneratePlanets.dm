@@ -264,7 +264,7 @@ obj/decal/teleport_mark
 	icon = 'icons/misc/artemis/temps.dmi'
 	icon_state = "decal_tele"
 	name = "teleport mark"
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	alpha = 180
 

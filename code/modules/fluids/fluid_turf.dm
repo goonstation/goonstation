@@ -20,7 +20,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
 	color = OCEAN_COLOR
-	pathable = 0
+	pathable = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	fullbright = 0
@@ -338,6 +338,12 @@
 			return
 		if (locate(/obj/lattice) in src)
 			return
+		if (AM.anchored == 2)
+			return
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client?.flying)
+				return
 		return_if_overlay_or_effect(AM)
 
 		try_build_turf_list()

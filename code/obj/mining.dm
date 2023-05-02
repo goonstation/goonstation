@@ -7,7 +7,7 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
@@ -364,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -461,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
@@ -926,6 +926,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_ore = null
 		hardness = 10
 
+	jean
+		name = "jasteroid"
+		desc = "A free-floating jineral jeposit from space."
+		default_ore = null
+		hardness = 1
+		default_material = "jean"
+		default_ore = /obj/item/material_piece/cloth/jean
+		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		stone_color = "#88c2ff"
+
 
 // cogwerks - adding some new wall types for cometmap and whatever else
 
@@ -1282,6 +1292,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1333,6 +1346,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1432,6 +1449,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1439,6 +1458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1449,6 +1473,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+
+/turf/simulated/floor/plating/airless/asteroid/jean
+	name = "jasteroid"
+	desc = "A free-floating jineral jeposit from space."
+	stone_color = "#88c2ff"
 
 
 // Tool Defines
@@ -1764,7 +1794,7 @@ TYPEINFO(/obj/item/mining_tool/drill)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.armed)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+				if (!src.check_placeable_target(target))
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
@@ -2002,6 +2032,10 @@ TYPEINFO(/obj/item/cargotele)
 /obj/item/cargotele/traitor
 	cost = 15
 	var/static/list/possible_targets = list()
+	///The account to credit for sales
+	var/datum/db_record/account = null
+	///The total amount earned from selling/stealing
+	var/total_earned = 0
 
 	New()
 		..()
@@ -2027,22 +2061,56 @@ TYPEINFO(/obj/item/cargotele)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
 		if (!length(src.possible_targets))
-			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
-		src.target = pick(src.possible_targets)
+			src.target = locate(rand(1,world.maxx), rand(1,world.maxy), 1)
+		else
+			src.target = pick(src.possible_targets)
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-
+		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
 		// Logs for good measure (Convair880).
-		for (var/mob/M in cargo.contents)
-			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-
-		cargo.set_loc(src.target)
+		for (var/atom/A in cargo.contents)
+			if (ismob(A))
+				var/mob/M = A
+				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				var/datum/job/job = find_job_in_controller_by_string(M.job)
+				value += job?.wages * 5
+			else
+				cargo.contents -= A
+				qdel(A)
+		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
+			cargo.set_loc(src.target)
+		else
+			qdel(cargo)
+		src.total_earned += value
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-		if (ret & CELL_INSUFFICIENT_CHARGE)
-			boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+		boutput(user, "[bicon(src)] *beep*")
+		if (src.account)
+			account?["current_money"] += value
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, [value] credits have been deposited into your bank account. You have [src.account["current_money"]] credits total.")
 		else
-			boutput(user, "<span class='notice'>Transfer successful.</span>")
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, no account registered.")
+		if (ret & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class='alert'>[src] is now out of charge.</span>")
+
+	attackby(obj/item/item, mob/user)
+		var/owner_name = null
+		if (istype(item, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = item
+			owner_name = pda.registered
+		else if (istype(item, /obj/item/card/id))
+			var/obj/item/card/id/card = item
+			owner_name = card.registered
+		if (owner_name)
+			boutput(user, "<span class='notice'>You set [src]'s payout account.</span>")
+			src.account = data_core.bank.find_record("name", owner_name)
+			return
+		..()
+
+	get_desc()
+		. = ..()
+		if (src.total_earned)
+			. += "<br>There is a little counter on the side, it says: Total amount earned: [src.total_earned] credits.<br>"
 
 /obj/item/oreprospector
 	name = "geological scanner"
@@ -2129,7 +2197,7 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "gravgen-off"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/obj/item/cell/cell = null
 	var/target = null
@@ -2159,12 +2227,12 @@ TYPEINFO(/obj/item/cargotele)
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = 0
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
@@ -2185,14 +2253,14 @@ TYPEINFO(/obj/item/cargotele)
 			if (!src.cell)
 				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			PCEL.charge -= 5
@@ -2291,7 +2359,7 @@ TYPEINFO(/obj/submachine/cargopad)
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE

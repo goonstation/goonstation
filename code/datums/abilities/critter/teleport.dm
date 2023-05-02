@@ -7,7 +7,7 @@
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())

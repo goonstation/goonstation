@@ -59,6 +59,7 @@ var/global
 	round_start_time = 0
 	round_time_check = 0			// set to world.timeofday when round starts, then used to calculate round time
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
+	list/deferred_powernet_objs = list()
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
 	regex/full_url_regex = null
@@ -487,11 +488,6 @@ var/global
 	centralConn = 1 //Are we able to connect to the central server?
 	centralConnTries = 0 //How many times have we tried and failed to connect?
 
-	/* nuclear reactor & parameter set, if it exists */
-	obj/machinery/power/nuke/fchamber/nuke_core = null
-	obj/machinery/power/nuke/nuke_turbine/nturbine = null
-	datum/nuke_knobset/nuke_knobs = null
-
 	//Resource Management
 	list/localResources = list()
 	list/cachedResources = list()
@@ -518,7 +514,7 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	list/icon/z_level_maps = list()
+	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()
 
 	/// When toggled on creating new /turf/space will be faster but they will be slightly broken

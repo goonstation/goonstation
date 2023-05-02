@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -85,7 +85,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
@@ -180,7 +180,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
-	anchored = 1
+	anchored = ANCHORED
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	fitting = "bulb"
@@ -486,7 +486,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"

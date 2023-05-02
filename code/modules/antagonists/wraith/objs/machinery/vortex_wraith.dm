@@ -3,7 +3,7 @@
 	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	_health = 25
 	var/list/obj/critter/critter_list = list()
@@ -24,9 +24,9 @@
 								/obj/critter/mechmonstrositycrawler,
 								/obj/critter/shade,
 								/obj/critter/bat/buff,
-								/obj/critter/lion,
-								/obj/critter/wraithskeleton,
-								/obj/critter/bear,
+								/mob/living/critter/bear,
+								/mob/living/critter/lion,
+								/mob/living/critter/skeleton/wraith,
 								/mob/living/critter/brullbar,
 								/obj/critter/gunbot/heavy)
 
@@ -146,9 +146,9 @@
 
 	proc/getMobValue(var/obj/O)
 		switch (O)
-			if (/obj/critter/bear)
+			if (/mob/living/critter/bear)
 				return 10
-			if (/obj/critter/wraithskeleton)
+			if (/mob/living/critter/skeleton/wraith)
 				return 4
 			if (/obj/critter/shade)
 				return 4
@@ -156,7 +156,7 @@
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3
-			if (/obj/critter/lion)
+			if (/mob/living/critter/lion)
 				return 5
 			if (/mob/living/critter/brullbar)
 				return 15

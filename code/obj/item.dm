@@ -118,7 +118,8 @@
 	var/override_attack_hand = 1 //when used as an arm, attack with item rather than using attack_hand
 	var/limb_hit_bonus = 0 // attack bonus for when you have this item as a limb and hit someone with it
 	var/can_hold_items = 0 //when used as an arm, can it hold things?
-
+	/// Chance for this item to be replaced by a mimic disguised as it - note, setting this high here is a *really* bad idea
+	var/mimic_chance = 0
 	var/rand_pos = 0
 	var/obj/item/holding = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
@@ -307,6 +308,9 @@
 	if (isnull(initial(src.health))) // if not overridden
 		src.health = get_initial_item_health(src.type)
 	..()
+	if(prob(src.mimic_chance))
+		SPAWN(10 SECONDS)
+			src.become_mimic()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -1594,3 +1598,7 @@
 
 /obj/item/proc/can_pickup(mob/user)
 	return !src.anchored
+
+/// attempt unique functionality when item is held in hand and and using the equip hotkey
+/obj/item/proc/try_specific_equip(mob/user)
+	return FALSE

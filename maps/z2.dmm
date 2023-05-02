@@ -17132,10 +17132,6 @@
 /obj/decal/mushrooms/type4,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"bcp" = (
-/obj/critter/bear,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "bcq" = (
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/power_cond.dmi';
@@ -27315,11 +27311,6 @@
 	name = "mossy dirt"
 	},
 /area/catacombs)
-"bFF" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
-/area/catacombs)
 "bFN" = (
 /turf/unsimulated/wall/auto/adventure/iomoon/interior,
 /area/iomoon/robot_ruins/boss_chamber)
@@ -27470,11 +27461,6 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
 /turf/unsimulated/dirt,
-/area/catacombs)
-"bGf" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGg" = (
 /obj/storage/closet/coffin,
@@ -27647,23 +27633,11 @@
 /obj/item/paper/alchemy/southwest,
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bGK" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/salt,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bGL" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/earth,
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bGM" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/proj,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bGO" = (
 /turf/unsimulated/floor/grime{
@@ -28425,12 +28399,6 @@
 	},
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bIV" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bIW" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/incin,
@@ -28440,12 +28408,6 @@
 	name = "crumbly skeleton"
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bIX" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/fire,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bIY" = (
 /turf/unsimulated/wall/void,
@@ -61426,22 +61388,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"dEE" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/obj/critter/bear{
-	aggressive = 0;
-	desc = "Wow, you haven't seen this guy since 2014!";
-	generic = 0;
-	material = null;
-	name = "DOngEun MesTur";
-	quality = 420;
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "dEF" = (
 /obj/adventurepuzzle/element_link{
 	act_type = "on";
@@ -67295,6 +67241,11 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"etS" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "etZ" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -68185,6 +68136,11 @@
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/maintenance)
+"fXG" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "fZr" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
@@ -69294,6 +69250,12 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"hVH" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "hWH" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -69370,9 +69332,6 @@
 "iho" = (
 /obj/machinery/computer3/generic/personal/personel_alt{
 	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = -15
 	},
 /obj/adventurepuzzle/triggerable/light{
 	id = "virva_light";
@@ -69477,6 +69436,17 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"ioJ" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -70487,14 +70457,6 @@
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
 	},
-/obj/table/clothred/auto{
-	desc = "The tablecloth definitely isn't there to hide anything.";
-	name = "cool table"
-	},
-/obj/item/decoration/virvase{
-	anchored = 1;
-	pixel_y = 11
-	},
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "kcN" = (
@@ -70743,6 +70705,16 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"kBZ" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The inscription has eroded away.";
+	special = /mob/living/critter/skeleton
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "kCf" = (
 /obj/stool/chair/couch/purple{
 	dir = 4
@@ -72850,16 +72822,6 @@
 	dir = 9
 	},
 /area/centcom/gallery)
-"oad" = (
-/obj/map/light/graveyard,
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "oaN" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -73147,6 +73109,12 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/entry)
+"oFx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/fire,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "oGk" = (
 /obj/decal/cleanable/sakura{
 	real_name = "sakura petals"
@@ -76289,6 +76257,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tTP" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/salt,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "tUJ" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -77398,10 +77372,6 @@
 	name = "studio speaker";
 	pixel_x = -3;
 	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti{
-	pixel_x = 9;
-	pixel_y = 7
 	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
@@ -78833,6 +78803,12 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
+"xXx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/proj,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "xXy" = (
 /obj/crevice{
 	pixel_y = -28
@@ -78948,6 +78924,10 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yhB" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "yhG" = (
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_2";
@@ -122683,7 +122663,7 @@ bGG
 bHe
 bFS
 bFR
-oad
+kBZ
 bGG
 bGG
 bGG
@@ -123522,7 +123502,7 @@ aIG
 aIG
 rIS
 aIG
-bcp
+yhB
 aIG
 aIr
 aIG
@@ -125020,7 +125000,7 @@ bah
 aIr
 aIG
 aIG
-bcp
+yhB
 bcM
 aIr
 aIG
@@ -125327,7 +125307,7 @@ bcN
 aIr
 aIG
 aIr
-bcp
+yhB
 aIr
 aIr
 aIr
@@ -137174,13 +137154,13 @@ bFD
 bFD
 bCb
 bCb
-bGK
+tTP
 bCb
 bHw
 bCb
 bIj
 bCb
-bIV
+hVH
 bCb
 bJU
 bFE
@@ -137474,7 +137454,7 @@ bzH
 bFs
 bFD
 bFD
-bGf
+fXG
 bCb
 bCb
 bCb
@@ -138680,17 +138660,17 @@ bzH
 bzH
 bCb
 bCb
-bFF
+etS
 bCb
 bGg
 bCb
-bGM
+xXx
 bCb
 bHx
 bCb
 bIl
 bCb
-bIX
+oFx
 bCb
 bJU
 bJR
@@ -150985,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-dEE
+ioJ
 wel
 gtU
 eiT

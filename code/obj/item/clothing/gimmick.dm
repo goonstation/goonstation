@@ -158,22 +158,35 @@
 	desc = "A very distinctive outfit."
 	icon_state = "waldo"
 	item_state = "waldo"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/gimmick/odlaw
 	name = "yellow-striped shirt and jeans"
 	desc = "A rather sinister outfit."
 	icon_state = "odlaw"
 	item_state = "odlaw"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/gimmick/fake_waldo
 	name = "striped shirt and jeans"
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
+	material_piece = /obj/item/material_piece/cloth/jean
+
 	New()
 		..()
 		icon_state = "waldont[rand(1,6)]"
 		item_state = "waldont[rand(1,6)]"
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/head/waldohat
 	name = "Bobble Hat and Glasses"
@@ -786,6 +799,12 @@
 	item_state = "dawson"
 	cant_self_remove = 1
 	cant_other_remove = 1
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if(slot == SLOT_W_UNIFORM && ishuman(user))
@@ -1150,7 +1169,7 @@
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
 						return
-					if (user == H) // is this some form of masturbation?? giving yourself a wedding ring???? or are you too lazy to just equip it like a normal person????????
+					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
 						"You slip [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
 					else
@@ -1467,6 +1486,11 @@
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
 	item_state = "white"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"

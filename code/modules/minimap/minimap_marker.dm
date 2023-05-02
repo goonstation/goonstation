@@ -12,12 +12,16 @@
 	var/visible = TRUE
 	///The alpha value that the minimap marker should use when visible.
 	var/alpha_value = 255
+	///The desired scale of the minimap marker, as a multiple of the original size (32x32px).
+	var/marker_scale = 1
 	///Whether the target is on the minimap datum's rendered z-level, determining whether it is displayed.
 	var/on_minimap_z_level = FALSE
 	///Whether the minimap marker can be deleted by players using minimap controllers.
 	var/can_be_deleted_by_player = FALSE
+	///Whether this minimap marker appears on the controller ui, permitting it's visibility to be toggled, or for it to be deleted.
+	var/list_on_ui = TRUE
 
-	New(var/atom/target, var/name, var/can_be_deleted_by_player)
+	New(var/atom/target, var/name, var/can_be_deleted_by_player = FALSE, var/list_on_ui = TRUE, var/marker_scale)
 		. = ..()
 		src.marker = new /atom/movable
 		src.target = target
@@ -35,8 +39,9 @@
 			src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 			src.handle_move(target)
 
-		if (can_be_deleted_by_player)
-			src.can_be_deleted_by_player = can_be_deleted_by_player
+		src.can_be_deleted_by_player = can_be_deleted_by_player
+		src.list_on_ui = list_on_ui
+		src.scale_marker(marker_scale)
 
 	disposing()
 		src.UnregisterSignal(target, COMSIG_MOVABLE_SET_LOC)
@@ -51,3 +56,8 @@
 		if (!T)
 			return
 		map.set_marker_position(src, T.x, T.y, T.z)
+
+	proc/scale_marker(var/scale)
+		var/scale_factor = (scale / src.marker_scale)
+		src.marker.Scale(scale_factor, scale_factor)
+		src.marker_scale = scale

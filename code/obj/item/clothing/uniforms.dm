@@ -359,6 +359,12 @@
 		icon_state = "chief-dress"
 		item_state = "chief-dress"
 
+	scarf
+		name = "chief engineer's outfit"
+		desc = "A brand new fancy outfit, with a scarf! Still somehow covered with faded oil stains."
+		icon_state = "chief-engineer-scarf"
+		item_state = "chief-engineer-scarf"
+
 /obj/item/clothing/under/rank/research_director
 	name = "research director's uniform"
 	desc = "This suit is ludicrously cheap. They must be embezzling the research budget again."
@@ -1649,54 +1655,99 @@
     desc = "Look at those knee tears! You're too cool for school!"
     icon_state = "casual_jeans_wb"
     item_state = "casual_jeans_wb"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansskr
     name = "Red Skull Shirt and Jeans"
     desc = "You're not evil, just misunderstood."
     icon_state = "casual_jeans_skullr"
     item_state = "casual_jeans_skullr"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansskb
     name = "Black Skull Shirt and Jeans"
     desc = "You're not evil, just misunderstood."
     icon_state = "casual_jeans_skullb"
     item_state = "casual_jeans_skullb"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansyel
     name = "Yellow Shirt and Jeans"
     desc = "For when you want to be both a ray of sunshine, and also grunge."
     icon_state = "casual_jeans_yshirt"
     item_state = "casual_jeans_yshirt"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansacid
     name = "Skull Shirt and Acid Wash Jeans"
     desc = "It's 1993 and you're dressed to start your new grunge garage band."
     icon_state = "casual_jeans_skullbshort"
     item_state = "casual_jeans_skullbshort"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansgrey
     name = "Grey Shirt and Jeans"
     desc = "Blend into the crowd while still looking cool."
     icon_state = "casual_jeans_grey"
     item_state = "casual_jeans_grey"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeanspurp
     name = "Purple Shirt and White Jeans"
     desc = "A E S T H E T I C."
     icon_state = "casual_jeans_purp"
     item_state = "casual_jeans_purp"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansblue
     name = "Blue Shirt and Jeans"
     desc = "You patched up the tears in this pair of jeans because your knees got cold."
     icon_state = "casual_jeans_blue"
     item_state = "casual_jeans_blue"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeanskhaki
     name = "Khaki Shirt and Jeans"
     desc = "Perfect for adventuring."
     icon_state = "casual_jeans_khaki"
     item_state = "casual_jeans_khaki"
+    material_piece = /obj/item/material_piece/cloth/jean
+
+    New()
+        . = ..()
+        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/racingsuitbee
     name = "Bee Racing Jumpsuit"

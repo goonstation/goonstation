@@ -6,7 +6,7 @@
 	desc = "Part of an elaborate small-ship teleportation network recently deployed by Nanotrasen.  Probably won't cause you to die."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacon"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
@@ -99,7 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
-	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE, "portal")
+	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()
@@ -111,7 +111,7 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
@@ -226,7 +226,7 @@
 
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
-	src.anchored = 1
+	src.anchored = ANCHORED
 	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
 		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)

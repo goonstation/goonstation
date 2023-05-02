@@ -119,11 +119,11 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		return "has [bicon(src)] \an [src.name] attached as a"
 
 	getMobIcon()
-		if (src.standImage)
-			return src.standImage
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
-		return standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
+		return bodyImage
 
 	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
 		if(!ishuman(M))
@@ -157,8 +157,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
 			return ..()
 		var/mob/living/carbon/human/H = holder
 		src.handlistPart = (!H.w_uniform && !H.wear_suit) ? initial(src.handlistPart) : "[initial(src.handlistPart)]-clothing"
-		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
-		return src.standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.handlistPart)
+		return src.bodyImage
 
 ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
 /obj/item/parts/artifact_parts/leg
@@ -461,14 +461,14 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 /obj/line_obj/martian_tentacle
 	name = "Martian tentacle"
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 
 /obj/martian_tentacle_end_dummy
 	name = ""
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 	invisibility = INVIS_ALWAYS_ISH

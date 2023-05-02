@@ -214,7 +214,7 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_state = "semi_pinoff"
 	icon_type = "semi"
 	hudarrow_color = "#adad00"
-	target_criteria = /obj/item/teg_semiconductor
+	target_criteria = /obj/item/teg_semiconductor/prototype
 
 /obj/item/pinpointer/trench
 	name = "pinpointer (sea elevator)"

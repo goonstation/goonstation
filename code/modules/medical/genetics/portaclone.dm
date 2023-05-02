@@ -10,7 +10,7 @@
 	var/obj/machinery/computer/cloning/computer = null //Built-in computer for i/o.
 
 	//Portable object vars
-	anchored = 0
+	anchored = UNANCHORED
 	var/locked = 0
 
 	New()

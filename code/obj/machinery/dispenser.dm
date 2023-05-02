@@ -18,7 +18,7 @@ TYPEINFO(/obj/machinery/dispenser)
 	status = REQ_PHYSICAL_ACCESS
 	var/o2tanks = 10
 	var/pltanks = 10
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 	//These keep track of tanks that people have inserted back into the machine (for shenanigans!)

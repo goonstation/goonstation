@@ -471,7 +471,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			. = TRUE
 		if("anchor")
 			if(!src.anchored)
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				. = TRUE
@@ -582,7 +582,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						if (anchored)
 							src.visible_message("<B><font color=#B7410E>A faint click is heard from inside the canister, but the effect is not immediately apparent.</font></B>")
 						else
-							anchored = 1
+							anchored = ANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 					if("leak")
 						src.det.failsafe_engage()
@@ -658,10 +658,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if (anchored)
-							anchored = 0
+							anchored = UNANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the inside the canister, unsecuring itself.</font></B>")
 						else
-							anchored = 1
+							anchored = ANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 					if ("leak")
 						src.det.failsafe_engage()
@@ -705,6 +705,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		healthcheck()
 		return
 	return
+
+/obj/machinery/portable_atmospherics/canister/damage_blunt(amount)
+	src.health -= amount
+	src.healthcheck()
 
 /obj/machinery/portable_atmospherics/canister/toxins/New()
 

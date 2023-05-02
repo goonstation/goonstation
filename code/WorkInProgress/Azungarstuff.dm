@@ -477,7 +477,7 @@
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bedrolls"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/shrooms
@@ -485,14 +485,14 @@
 	desc = "What the hell are these..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "shrooms"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/smallrocks
 	name = "small rocks"
 	desc = "Some small rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "smallrocks"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)
@@ -515,7 +515,7 @@
 	desc = "Those are some big rocks, they are probably from the ceiling..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bigrocks"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)
@@ -539,7 +539,7 @@
 	desc = "Seriously big rocks."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "bigrock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/azarakrocks
@@ -547,7 +547,7 @@
 	desc = "Some lil' rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "rock1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	rock2
@@ -581,7 +581,7 @@
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cultiststatue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -590,7 +590,7 @@
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cross"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/bookcase
@@ -598,7 +598,7 @@
 	desc = "It's a bookcase. Full of books."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bookcase"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = DECAL_LAYER
 
@@ -607,7 +607,7 @@
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "creepytv"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/circle
@@ -615,7 +615,7 @@
 	desc = "TEMP"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "circle"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	layer = FLOOR_EQUIP_LAYER1
@@ -626,7 +626,7 @@
 	name = "candles"
 	desc = "TEMP"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = FLOOR_EQUIP_LAYER1
 
@@ -647,7 +647,7 @@
 	name = "candle"
 	desc = "TEMP"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/point/light
@@ -667,7 +667,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-on"
 	flags = FPRINT | TABLEPASS
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/juggleplaque/manta
 	name = "dedication plaque"
@@ -681,7 +681,7 @@
 	icon_state = "holoplanet"
 	alpha = 180
 	pixel_y = 16
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
@@ -716,7 +716,7 @@
 	name = ""
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holoparticles"
-	anchored = 1
+	anchored = ANCHORED
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
@@ -752,7 +752,7 @@
 	desc = "These huge containers are used to transport goods from one place to another."
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "manta"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	bound_height = 32
 	bound_width = 96
@@ -773,7 +773,7 @@
 		desc = "These huge containers are used to transport goods from one place to another."
 		icon = 'icons/obj/large/96x64.dmi'
 		icon_state = "manta"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 96
 		bound_width = 64
@@ -787,7 +787,7 @@
 	desc = "A table with a built-in roulette wheel and a little ball. The numbers are evenly distributed between black and red, except for the zero which is green. Unlike most of tables you'd find in America, this one only has a single zero, lowering the house edge to about 2.7% on almost every bet. Truly generous."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/running = 0
 	var/run_time = 40
@@ -855,7 +855,7 @@
 		desc = "TEMP"
 		icon = 'icons/obj/large/96x160.dmi'
 		icon_state = "turbine_main"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 160
 		bound_width = 96
@@ -865,7 +865,7 @@
 		desc = "TEMP"
 		icon = 'icons/obj/large/32x96.dmi'
 		icon_state = "nuclearcomputer"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 96
 		bound_width = 32
@@ -880,7 +880,7 @@
 
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -939,7 +939,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/recharging =0
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
@@ -993,7 +993,7 @@
 	angertext = "screeches at"
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -1045,7 +1045,7 @@ TYPEINFO(/obj/item/rpcargotele)
 
 /obj/decoration/scenario/crate
 	name = "NT vital supplies crate"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	desc = "A tightly locked metal crate."
 	icon = 'icons/obj/decoration.dmi'

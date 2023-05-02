@@ -1171,7 +1171,10 @@
 			if(A.material)
 				A.material.triggerTemp(A, temp)
 
-	get_static_image()
+	new_static_image()
+		return
+
+	update_static_image()
 		return
 
 	update_item_abilities()
@@ -1299,10 +1302,6 @@
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
-
-	if (M.client)
-		G.lastKnownIP = M.client.address
-		M.client.mob = G
 
 	if (M?.real_name)
 		G.oldname = M.real_name

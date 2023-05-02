@@ -369,8 +369,9 @@
 /obj/item/clothing/suit/det_suit
 	name = "coat"
 	desc = "Someone who wears this means business."
-	icon_state = "detective"
+	icon_state = "detective_o"
 	item_state = "det_suit"
+	coat_style = "detective"
 	body_parts_covered = TORSO|LEGS|ARMS
 	bloodoverlayimage = SUITBLOOD_COAT
 
@@ -379,12 +380,17 @@
 		setProperty("meleeprot", 2)
 		setProperty("rangedprot", 0.5)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
+	coat_style = "ntarmor"
 
 	setupProperties()
 		..()
@@ -396,7 +402,8 @@
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "hoscoat"
+	icon_state = "hoscoat_o"
+	coat_style = "hoscoat"
 
 	setupProperties()
 		..()
@@ -578,6 +585,19 @@
 		icon_state = "MDlonglabcoat-alt"
 		item_state = "MDlonglabcoat-alt"
 		coat_style = "MDlonglabcoat-alt"
+
+/obj/item/clothing/suit/labcoat/research_director
+	name = "research director's labcoat"
+	desc = ""
+	icon_state = "RDlabcoat"
+	item_state = "RDlabcoat"
+	coat_style = "RDlabcoat"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "Your most prized lab coat; it took all your life savings to get it designed and tailored just for you."
+		else
+			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
@@ -1494,6 +1514,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 	name = "\improper Syndicate command armor"
 	desc = "An armored space suit, not for your average expendable chumps. No sir."
 	is_syndicate = TRUE
+	contraband = 3
 	icon_state = "indusred"
 	item_state = "indusred"
 
@@ -1525,11 +1546,12 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A heavily modified industrial mining suit, it's been retrofitted for greater protection in firefights."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	contraband = 3
 	item_function_flags = IMMUNE_TO_ACID
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 9)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("space_movespeed", 0)
 		setProperty("exploprot", 30)
@@ -1890,6 +1912,11 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "jean_jacket"
 	item_state = "jean_jacket"
 	body_parts_covered = TORSO|ARMS
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 //crate loot
 

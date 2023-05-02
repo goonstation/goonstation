@@ -7,18 +7,27 @@
 	antag_token_support = TRUE
 	var/list/gangs = list()
 
-	var/const/setup_min_teams = 3
-	var/const/setup_max_teams = 5
+	var/const/setup_min_teams = 2
+	var/const/setup_max_teams = 6
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/list/potential_hot_zones = null
 	var/area/hot_zone = null
+#ifdef RP_MODE
+	var/hot_zone_timer = 10 MINUTES
+#else
 	var/hot_zone_timer = 5 MINUTES
+#endif
 	var/hot_zone_score = 1000
 
+#ifdef RP_MODE
+	var/const/kidnapping_timer = 15 MINUTES 	//Time to find and kidnap the victim.
+	var/const/delay_between_kidnappings = 12 MINUTES
+#else
 	var/const/kidnapping_timer = 8 MINUTES 	//Time to find and kidnap the victim.
 	var/const/delay_between_kidnappings = 5 MINUTES
+#endif
 	var/kidnapping_score = 20000
 	var/kidnap_success = 0			//true if the gang successfully kidnaps.
 
@@ -38,7 +47,13 @@
 		if (!istype(player)) continue
 		if(player.ready) num_players++
 
-	var/num_teams = clamp(round((num_players) / 9), setup_min_teams, setup_max_teams) //1 gang per 9 players
+#ifdef RP_MODE
+#define PLAYERS_PER_GANG_GENERATED 15
+#else
+#define PLAYERS_PER_GANG_GENERATED 9
+#endif
+	var/num_teams = clamp(round((num_players) / PLAYERS_PER_GANG_GENERATED), setup_min_teams, setup_max_teams) //1 gang per 9 players, 15 on RP
+#undef PLAYERS_PER_GANG_GENERATED
 
 	var/list/leaders_possible = get_possible_enemies(ROLE_GANG_LEADER, num_teams)
 	if (num_teams > length(leaders_possible))
@@ -103,15 +118,22 @@
 		leadercount++
 
 	if(leadercount <= 1 && ticker.round_elapsed_ticks > 12000 && !emergency_shuttle.online)
+#ifndef RP_MODE
 		force_shuttle()
+		return 1
+#else
+		return 0
+#endif
 
 	else return 0
 
 /datum/game_mode/gang/process()
 	..()
+#ifndef RP_MODE
 	if (ticker.round_elapsed_ticks >= 55 MINUTES && !shuttle_called)
 		shuttle_called = TRUE
 		force_shuttle()
+#endif //RP_MODE
 	slow_process ++
 	if (slow_process < 60)
 		return
@@ -185,7 +207,7 @@
 
 	broadcast_to_all_gangs("The [hot_zone.name] is a high priority area. Ensure that your gang has control of it five minutes from now!")
 
-	SPAWN(hot_zone_timer-600)
+	SPAWN(hot_zone_timer - 1 MINUTE)
 		if(hot_zone != null) broadcast_to_all_gangs("You have a minute left to control the [hot_zone.name]!")
 		sleep(1 MINUTE)
 		if(hot_zone != null && hot_zone.gang_owners != null)
@@ -307,6 +329,9 @@ proc/broadcast_to_all_gangs(var/message)
 	var/obj/ganglocker/locker = null
 	/// The usable number of points that this gang has to spend with.
 	var/spendable_points = 0
+#ifdef BONUS_POINTS
+	spendable_points = 99999
+#endif
 	/// An associative list of the items that this gang has purchased and the quantity in which they have been purchased.
 	var/list/items_purchased = list()
 
@@ -701,7 +726,7 @@ proc/broadcast_to_all_gangs(var/message)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/datum/gang/gang = null
 	var/max_health = 200
 	var/health = 200
@@ -1204,7 +1229,7 @@ proc/broadcast_to_all_gangs(var/message)
 			user.visible_message("<b>[user]</b> attaches [src] to [A].","You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()
 
@@ -1214,7 +1239,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		var/turf/T = src.loc
 		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>", "<span class='alert'>You rip down [src] from [T]!</span>")
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		user.put_in_hand_or_drop(src)
 
 	attack_self(mob/living/carbon/human/user as mob)
