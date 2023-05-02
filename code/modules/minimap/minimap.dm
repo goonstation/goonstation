@@ -244,3 +244,9 @@
 			return FALSE
 
 		. = ..()
+
+#ifndef LIVE_SERVER
+/client/verb/save_station_map()
+	var/datum/minimap/z_level/map = new(MAP_ALL)
+	src << ftp(map.map.icon, "map.png")
+#endif
