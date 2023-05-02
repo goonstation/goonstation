@@ -3430,7 +3430,7 @@ datum
 			name = "Filgrastim"
 			id = "filgrastim"
 			result = "filgrastim"
-			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
+			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
 		ecoli // needed for filgrastim vOv
