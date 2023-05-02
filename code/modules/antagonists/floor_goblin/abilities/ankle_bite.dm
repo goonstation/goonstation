@@ -10,8 +10,8 @@
 	tryCast()
 		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
 
 	cast(atom/target)

@@ -29,6 +29,7 @@
 		else
 			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
+		H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
 		// Allow for Salvagers to have a secure channel
 		//headset.secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 		//headset.secure_classes = list(RADIOCL_OTHER)

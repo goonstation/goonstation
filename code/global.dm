@@ -488,11 +488,6 @@ var/global
 	centralConn = 1 //Are we able to connect to the central server?
 	centralConnTries = 0 //How many times have we tried and failed to connect?
 
-	/* nuclear reactor & parameter set, if it exists */
-	obj/machinery/power/nuke/fchamber/nuke_core = null
-	obj/machinery/power/nuke/nuke_turbine/nturbine = null
-	datum/nuke_knobset/nuke_knobs = null
-
 	//Resource Management
 	list/localResources = list()
 	list/cachedResources = list()
@@ -519,7 +514,7 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	list/icon/z_level_maps = list()
+	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()
 
 	/// When toggled on creating new /turf/space will be faster but they will be slightly broken

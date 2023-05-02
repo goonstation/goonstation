@@ -33,7 +33,7 @@
 /obj/decal/skateboardpopup
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	layer = MOB_LAYER + 2
 	icon = 'icons/effects/96x32.dmi'

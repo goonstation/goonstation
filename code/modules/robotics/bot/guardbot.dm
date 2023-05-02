@@ -97,7 +97,7 @@
 	icon_state = "robuddy0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_heads)
 	on = 1
 	var/idle = 0 //Sleeping on the job??
@@ -1437,7 +1437,7 @@
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
 			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
-			Ov.anchored = 1
+			Ov.anchored = ANCHORED
 			Ov.name = "Explosion"
 			Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			Ov.pixel_x = -92
@@ -4345,7 +4345,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	desc = "A recharging and command station for PR-6S Guardbuddies."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
-	anchored = 1
+	anchored = ANCHORED
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
 	var/frequency = FREQ_BUDDY
@@ -4951,7 +4951,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92

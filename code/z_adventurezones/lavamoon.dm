@@ -495,7 +495,7 @@ var/sound/iomoon_alarm_sound = null
 	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
 	icon_state = "lavacrab"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	health = 30
 	aggressive = 1
 	defensive = 1
@@ -861,7 +861,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #define STATE_RECHARGING 2
 
 /obj/iomoon_boss
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	ex_act(severity)
@@ -1202,7 +1202,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						base.icon_state = "powercore_base_off"
 
 					var/obj/overlay/O = new/obj/overlay( src.loc )
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.name = "Explosion"
 					O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 					O.pixel_x = -92
@@ -1270,7 +1270,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	base
 		name = "huge contraption"
 		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it."
-		anchored = 1
+		anchored = ANCHORED
 		density = 0
 		icon = 'icons/effects/160x160.dmi'
 		icon_state = "powercore_base"
@@ -1303,7 +1303,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "tallsmes0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()
@@ -1318,7 +1318,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/id = null
 	var/broken = FALSE
@@ -1389,7 +1389,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancientwall2"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/opened = 0
@@ -1556,7 +1556,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "A slightly elevated floor panel.  It matches the \"creepy ancient shit\" aesthetic pretty well."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_floorpanel0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/pads_required = 1 //Number of total active pads required to open a door, not including this one.  If 0, all pads must be INACTIVE instead.
 	var/pads_active = 0
@@ -1587,6 +1587,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		 return
 
 	Uncrossed(var/atom/crosser as mob|obj)
+		..()
 		if (crosser == activator)
 			activator = null
 			if (active)
@@ -1726,7 +1727,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is clearly some sort of lock in need of a key.  Obviously."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "lock-blue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/locktype = 0 //0: blue, 1: red
 	var/active = 0
@@ -1790,7 +1791,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "Some manner of strange panel, built of a strange and foreboding metal."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_button0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/timer = 0 //Seconds to toggle back off after activation.  Zero to just act as a toggle.
 	var/active = 0

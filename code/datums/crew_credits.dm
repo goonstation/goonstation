@@ -53,8 +53,11 @@ var/global/crew_creds = null
 		for (var/datum/antagonist/antag_role in M.antagonists)
 			if (antag_role.pseudo || antag_role.vr || antag_role.silent)
 				continue
-
 			antag_display_names += capitalize(antag_role.display_name)
+
+		//fall back to just displaying the special role string if no antag datums
+		if (!length(antag_display_names))
+			antag_display_names = list(M.special_role)
 
 		if (generate_antagonist_data)
 			. += list(list(

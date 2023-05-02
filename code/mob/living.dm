@@ -276,9 +276,12 @@
 /mob/living/Logout()
 	. = ..()
 	src.UpdateOverlays(null, "speech_bubble")
+	src.is_npc = initial(src.is_npc)
+
 
 /mob/living/Login()
 	..()
+	src.is_npc = FALSE
 	// If...
 	// living
 	// and not (in the afterlife, and not in hell)
@@ -1101,10 +1104,17 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/popup_style = src.speechpopupstyle
+
+		if (src.find_type_in_hand(/obj/item/megaphone))
+			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			maptext_color = megaphone.maptext_color
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
@@ -1452,6 +1462,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -1803,13 +1814,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.spellshield)
 		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 		return 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-				return 0
-			S.active = 0
-			S.icon_state = "shield0"
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()

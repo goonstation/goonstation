@@ -22,6 +22,7 @@
 	boutput(world, "<B>The current game mode is - Salvagers!</B>")
 
 /datum/game_mode/salvager/pre_setup()
+	. = ..()
 	var/list/possible_salvagers = list()
 
 	var/num_players = 0
@@ -62,6 +63,7 @@
 	return TRUE
 
 /datum/game_mode/salvager/post_setup()
+	..()
 	for (var/datum/mind/salvager in salvager_minds)
 		equip_antag(salvager)
 

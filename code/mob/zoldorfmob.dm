@@ -9,7 +9,7 @@
 	density = 0
 	canmove = 0
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	stat = 0
 	var/autofree = 0

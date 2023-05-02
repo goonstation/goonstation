@@ -30,7 +30,7 @@
 	var/open = TRUE
 	var/welded = FALSE
 	var/can_be_welded = FALSE
-	var/can_be_anchored = FALSE
+	var/can_be_anchored = UNANCHORED
 	custom_suicide = TRUE
 	open_to_sound = TRUE
 
@@ -212,7 +212,7 @@
 		[src.anchored ? "It is [src.open || src.welded ? "also" : ""] anchored to the ground." : ""]"
 	housing_large // chonker
 		can_be_welded = TRUE
-		can_be_anchored = TRUE
+		can_be_anchored = ANCHORED
 		slots=CABINET_CAPACITY // wew, dont use this in-hand or equipped!
 		name="Component Cabinet" // i tried to replace "23" below with "[CABINET_CAPACITY]", but byond
 									 // thinks it's not a constant and refuses to work with it.
@@ -221,7 +221,7 @@
 		w_class = W_CLASS_BULKY //all the weight
 		num_f_icons=3
 		density=1
-		anchored = FALSE
+		anchored = UNANCHORED
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
 		light_color = list(0, 179, 255, 255)
@@ -439,7 +439,7 @@
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
 					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
-					anchored = 0
+					anchored = UNANCHORED
 					clear_owner()
 					loosen()
 				if(2) //Level 2 = loose
@@ -463,7 +463,7 @@
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
 					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
-					anchored = 1
+					anchored = ANCHORED
 					set_owner(user)
 					secure()
 
@@ -833,7 +833,7 @@
 	desc = "A beam of light that will trigger a device when passed."
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 	var/obj/item/mechanics/triplaser/holder
@@ -2948,8 +2948,7 @@
 		return
 
 	fire(var/datum/mechanicsMessage/input)
-		if(charging || level == 2) return
-		if(ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
+		if(charging) return
 		return ..()
 
 	update_icon()

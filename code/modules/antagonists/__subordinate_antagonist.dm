@@ -1,6 +1,7 @@
 ABSTRACT_TYPE(/datum/antagonist/subordinate)
 /datum/antagonist/subordinate
 	mutually_exclusive = FALSE
+	display_at_round_end = FALSE
 	/// The mind of this antagonist's master, leader, and so forth.
 	var/datum/mind/master
 

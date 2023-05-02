@@ -42,7 +42,7 @@
 
 	var/bite_transfer_amt = 1
 
-	ai_type = /datum/aiHolder/spider
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //no patience for spiders
@@ -150,16 +150,15 @@
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
 
-	critter_attack(target)
-		if(ismob(target))
-			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
-			var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
-			if (!flail.disabled && flail.cooldowncheck() && prob(20))
-				flail.handleCast(target)
-			else if(!bite.disabled && bite.cooldowncheck())
-				bite.handleCast(target)
-			else
-				..()
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+		var/datum/targetable/critter/spider_flail/flail = src.abilityHolder.getAbility(/datum/targetable/critter/spider_flail)
+		if (!flail.disabled && flail.cooldowncheck() && prob(20))
+			flail.handleCast(target)
+			return TRUE
+		else if(!bite.disabled && bite.cooldowncheck())
+			bite.handleCast(target)
+			return TRUE
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)
@@ -354,17 +353,15 @@
 			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
 
-	critter_attack(target)
-		if(ismob(target))
-			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
-			var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick)
-			if (!kick.disabled && kick.cooldowncheck() && prob(20))
-				kick.handleCast(target)
-			else if(!bite.disabled && bite.cooldowncheck())
-				bite.handleCast(target)
-			else
-				src.set_a_intent(INTENT_HARM)
-				src.hand_attack(target)
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+		var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick)
+		if (!kick.disabled && kick.cooldowncheck() && prob(20))
+			kick.handleCast(target)
+			return TRUE
+		else if(!bite.disabled && bite.cooldowncheck())
+			bite.handleCast(target)
+			return TRUE
 	cluwne
 		name = "cluwnespider"
 		desc = "Uhhh. That's not normal. Like, even for clownspiders."
@@ -379,17 +376,15 @@
 		item_shoes = /obj/item/clothing/shoes/cursedclown_shoes
 		item_mask = /obj/item/clothing/mask/cursedclown_hat
 
-		critter_attack(target)
-			if(ismob(target))
-				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
-				var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick/cluwne)
-				if (!kick.disabled && kick.cooldowncheck() && prob(20))
-					kick.handleCast(target)
-				else if(!bite.disabled && bite.cooldowncheck())
-					bite.handleCast(target)
-				else
-					src.set_a_intent(INTENT_HARM)
-					src.hand_attack(target)
+		critter_ability_attack(mob/target)
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+			var/datum/targetable/critter/clownspider_kick/kick = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_kick/cluwne)
+			if (!kick.disabled && kick.cooldowncheck() && prob(20))
+				kick.handleCast(target)
+				return TRUE
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+				return TRUE
 
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
@@ -441,17 +436,15 @@
 		// egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/cluwne
 		max_defensive_babies = 150
 
-		critter_attack(target)
-			if(ismob(target))
-				var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
-				var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
-				if (!trample.disabled && trample.cooldowncheck() && prob(20))
-					trample.handleCast(target)
-				else if(!bite.disabled && bite.cooldowncheck())
-					bite.handleCast(target)
-				else
-					src.set_a_intent(INTENT_HARM)
-					src.hand_attack(target)
+		critter_ability_attack(mob/target)
+			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite/cluwne)
+			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample/cluwne)
+			if (!trample.disabled && trample.cooldowncheck() && prob(20))
+				trample.handleCast(target)
+				return TRUE
+			else if(!bite.disabled && bite.cooldowncheck())
+				bite.handleCast(target)
+				return TRUE
 
 		critter_scavenge(target)
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
@@ -519,18 +512,16 @@
 			CS.ai.interrupt()
 			defenders++
 
-	critter_attack(target)
-		if(ismob(target))
-			var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
-			var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
+		var/datum/targetable/critter/clownspider_trample/trample = src.abilityHolder.getAbility(/datum/targetable/critter/clownspider_trample)
 
-			if (!trample.disabled && trample.cooldowncheck() && prob(20))
-				trample.handleCast(target)
-			else if(!bite.disabled && bite.cooldowncheck())
-				bite.handleCast(target)
-			else
-				src.set_a_intent(INTENT_HARM)
-				src.hand_attack(target)
+		if (!trample.disabled && trample.cooldowncheck() && prob(20))
+			trample.handleCast(target)
+			return TRUE
+		else if(!bite.disabled && bite.cooldowncheck())
+			bite.handleCast(target)
+			return TRUE
 
 	critter_scavenge(target)
 		var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain)

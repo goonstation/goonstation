@@ -335,8 +335,11 @@
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
+		else if (user.client)
+			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				return ..()
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
 
@@ -1168,7 +1171,6 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
 			user.update_inhands()
 
@@ -1181,7 +1183,6 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
 			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 			user.update_inhands()
 
