@@ -17,6 +17,7 @@
 	atk_text = "headbutts"
 	chase_text = "charges into"
 	crit_text = "rams really hard into"
+	density = 0
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
 	var/rigged = FALSE
