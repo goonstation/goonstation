@@ -1104,10 +1104,17 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/popup_style = src.speechpopupstyle
+
+		if (src.find_type_in_hand(/obj/item/megaphone))
+			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			maptext_color = megaphone.maptext_color
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)

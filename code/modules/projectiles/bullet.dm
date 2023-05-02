@@ -371,7 +371,7 @@ toxic - poisons
 	hit_ground_chance = 50
 	projectile_speed = 60
 	impact_image_state = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_flechette
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 
 /datum/projectile/bullet/veritate/burst
