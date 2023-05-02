@@ -1235,6 +1235,25 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/howitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/staples
+	sname = "staples"
+	name = "staples"
+	desc = "A tiny case of staples. You really shouldn't be seeing this."
+	icon_state = "power_cell"
+	icon_empty = "power_cell"
+	amount_left = 2
+	max_amount = 2
+	ammo_type = new/datum/projectile/bullet/staple
+	ammo_cat = AMMO_STAPLE
+	w_class = W_CLASS_TINY
+
+	after_unload(mob/user)
+		. = ..()
+		for(var/i in 1 to src.amount_left)
+			new/obj/item/implant/projectile/staple(get_turf(src))
+		qdel(src)
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell

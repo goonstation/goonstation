@@ -69333,9 +69333,6 @@
 /obj/machinery/computer3/generic/personal/personel_alt{
 	pixel_y = 7
 	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = -15
-	},
 /obj/adventurepuzzle/triggerable/light{
 	id = "virva_light";
 	on_brig = 1.2;
@@ -69446,8 +69443,7 @@
 	},
 /mob/living/critter/bear{
 	desc = "Wow, you haven't seen this guy since 2014!";
-	name = "DOngEun MesTur";
-
+	name = "DOngEun MesTur"
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
@@ -70460,14 +70456,6 @@
 	act_type = "on";
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
-	},
-/obj/table/clothred/auto{
-	desc = "The tablecloth definitely isn't there to hide anything.";
-	name = "cool table"
-	},
-/obj/item/decoration/virvase{
-	anchored = 1;
-	pixel_y = 11
 	},
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
@@ -77384,10 +77372,6 @@
 	name = "studio speaker";
 	pixel_x = -3;
 	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti{
-	pixel_x = 9;
-	pixel_y = 7
 	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
