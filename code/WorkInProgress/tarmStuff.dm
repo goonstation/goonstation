@@ -493,7 +493,7 @@
 
 /obj/item/ammo/bullets/pipeshot/chems/saltshot
 	sname = "salt load"
-	desc = "This appears to be some a bunch of salt shoved into a few cut open pipe frames."
+	desc = "This appears to be a bunch of salt shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/salt
 
 	get_desc(dist, mob/user)

@@ -16,11 +16,6 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	name = "key"
 	desc = "It unlocks or locks doors."
 
-/obj/item/device/key/generic/radio
-	name = "studio door key"
-	desc = "It unlocks or locks doors. This one specifically is made for a studio door."
-	icon_state = "key_radio"
-
 /obj/item/device/key/cheget
 	name = "old fancy key"
 	desc = "It unlocks or locks slightly newer doors."

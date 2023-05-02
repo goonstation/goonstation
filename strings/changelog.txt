@@ -1,5 +1,35 @@
 
+(t)mon may 01 23
+(u)Keiiro
+(p)13923
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The Research Director now brings their unique labcoat to work!
+(u)Flaborized
+(p)13853
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The captain's locker has been stocked with a megaphone to help them get their finer points across.
+(u)Cheffie
+(p)13905
+(e)🗺|A-Mapping
+(+)Added a new prefab to Z5. Clean some clothes at Larry's today.
+(u)Mr. Moriarty
+(p)13898
+(e)🗺💅|A-Mapping, C-QoL
+(*)Donut3's Security Foyer has been relocated to be adjacent to the entrance.
+(t)sat apr 29 23
+(u)Flyingcow01
+(p)13339
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now insert a penlight into your PDA.
+(u)The_Kakapo
+(p)13630
+(e)🎨|C-Sprites
+(*)Adds Foam Dart Grenades
+(+)Foam Dart Grenades can be purchased from Geoff Honkinton
 (t)fri apr 28 23
+(u)Virvatuli
+(e)⚖|C-Balance
+(+)Pipeshot ammunition now has significantly improved damage potential.
 (u)DimWhat
 (p)13833
 (e)🎨⚖🎩👽|C-Sprites, C-Balance, A-Clothing, A-Mutantraces
