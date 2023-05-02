@@ -1124,9 +1124,15 @@
 
 		if(chat_text)
 			chat_text.measure(src.client)
-			for(var/image/chat_maptext/I in src.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
+			var/obj/chat_maptext_holder/holder = src.chat_text
+			if (is_decapitated_skeleton) // for skeleton heads
+				var/mob/living/carbon/human/H = src
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				holder = S.head_tracker?.chat_text
+			if (holder)
+				for(var/image/chat_maptext/I in holder.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))

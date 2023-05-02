@@ -35,11 +35,6 @@
 		if(istype(src.loc, /obj/chat_maptext_holder))
 			var/obj/chat_maptext_holder/holder = src.loc
 			holder.lines -= src
-		if(istype(src.loc, /obj/item/organ/head))
-			var/obj/item/organ/head/head =  src.loc
-			var/obj/chat_maptext_holder/holder = head.linked_human?.chat_text
-			if(holder)
-				holder.lines -= src
 		for(var/client/C in src.visible_to)
 			C.images -= src
 		src.loc = null
@@ -83,17 +78,12 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 
 	var/obj/chat_maptext_holder/holder = target.chat_text
 
-	if (istype(target,/obj/item/organ/head)) // skeleton speech scrolling bandaid fix
-		var/obj/item/organ/head/head = target
-		holder = head.linked_human?.chat_text
-		text.loc = head
-		text.layer = head.layer+1 // dont layer under the hud k thanks bye
-
-	else if(istype(target, /atom/movable) && holder)
+	if(istype(target, /atom/movable) && holder)
 		var/atom/movable/L = target
 		holder = L.chat_text
 		text.loc = holder
-
+		if (target.layer > HUD_LAYER)
+			text.layer = target.layer+1
 	else
 		text.loc = target
 
