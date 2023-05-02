@@ -154,7 +154,7 @@ var/global/total_gas_mixtures = 0
 				if (possible == test)
 					test.dist_to_space = 1
 					break
-				dist = GET_DIST(b, test)
+				dist = GET_DIST(possible, test)
 				if (!test.dist_to_space || (dist < test.dist_to_space))
 					test.dist_to_space = dist
 
