@@ -279,7 +279,7 @@ TYPEINFO(/obj/item/baton)
 					if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
-					if (M.do_dodge(user, src))
+					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
 						return
 					src.do_stun(user, M, "stun", 2)
 

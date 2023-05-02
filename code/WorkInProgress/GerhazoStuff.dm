@@ -941,3 +941,288 @@
 
 
 ////////////////////////////////////////////////// Clothing properties stuff ///////////////////////////////////////////////
+
+#ifdef SECRETS_ENABLED
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+
+// Mob, design and assets inspired and/or sourced from Pizza Tower, developed by Tour De Pizza, also known as Pizza Tower Guy, used with their permission.
+#define NOT_MOVING 0
+#define MOVING_RIGHT 1
+#define MOVING_UP 2
+#define MOVING_LEFT 3
+#define MOVING_DOWN 4
+
+/mob/living/critter/peppino
+	name = "extremely anxious looking chef"
+	real_name = "extremely anxious looking chef"
+	desc = "He looks like he's having a REALLY bad day."
+	icon = '+secret/icons/mob/peppino.dmi'
+	icon_state = "walk"
+	icon_state_dead = "dead"
+	density = 1
+	hand_count = 2
+	can_throw = 1
+	can_grab = 1
+	can_disarm = 1
+	blood_id = "pizza"
+	burning_suffix = "humanoid"
+	base_walk_delay = 1.6
+	base_move_delay = 1.6
+	var/base_movement_delay = 1.6
+	var/minimum_movement_delay = 0.58
+	var/momentum_step_increase = 0.15
+	var/machrun_animation_min_momentum = 1
+	var/last_location_x
+	var/last_location_y
+	var/last_bumped_object_timestamp = 0
+	var/combo_counter
+	var/last_combo_time = 0
+	var/combo_grace_time = 5 SECONDS
+	var/steps = 0
+
+	var/lastdirection = NOT_MOVING
+	var/momentum
+
+	New()
+		. = ..()
+		buildIcon()
+		last_location_x = src.loc.x
+		last_location_y = src.loc.y
+		add_stam_mod_max("AAAAAA", 999999)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/pain_immune, src.type)
+		src.maptext_height = 32
+		src.maptext_width = 96
+		src.maptext_x = 36
+		src.maptext_y = 64
+
+		src.m_intent = "walk"
+		hud.update_mintent()
+
+		// dirty code for a loop since taking up an actual processing loop for a gimmick seems excessive
+		while(src)
+			if (!isdead(src) && world.time > src.next_move + 0.5 SECONDS) // stopped moving
+				src.momentum = 0
+				src.icon_state = "walk"
+				src.lastdirection = NOT_MOVING
+
+			if(world.time > last_combo_time + combo_grace_time)
+				combo_counter = 0
+				update_combo_counter()
+			sleep(0.5 SECONDS)
+
+	proc/buildIcon()
+		var/icon/icon_to_be_scaled = icon(src.icon)
+		icon_to_be_scaled.Scale(80, 80)
+		src.icon = icon(icon_to_be_scaled)
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	Login()
+		. = ..()
+		boutput(src, {"<h1><span class='alert'>PIZZA, PASTA.</span></h1>
+			<span class='notice'>Walk/run intent toggles MACH RUN.</span>
+			<br><span class='notice'>*scream, *fart and *dance have special effects.</span>"})
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+
+		// bad code to counteract other things resetting the sprite offset
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	bump(atom/A)
+		. = ..()
+		var/atom/movable/AM = A
+		if ((isturf(A) || isobj(A)) && momentum >= machrun_animation_min_momentum)
+			if(world.time > last_bumped_object_timestamp + 0.2 SECONDS)
+				flick("mach_hit_wall", src)
+				last_bumped_object_timestamp = world.time
+				animate_storage_thump(A)
+		if (ismob(AM) && momentum >= machrun_animation_min_momentum)
+			last_combo_time = world.time
+			combo_counter++;
+			update_combo_counter()
+			src.visible_message("<span class='alert'><B>[src]</B> slams into [A]!</span>")
+			playsound(AM.loc, 'sound/impact_sounds/Generic_Hit_heavy_1.ogg', 100, 1)
+			var/throw_dir = turn(get_dir(src, A),rand(-1,1)*45)
+			AM.throw_at(get_edge_cheap(src.loc, throw_dir),  20, 3)
+			var/obj/decal/batman_pow/pow = new /obj/decal/batman_pow/wham(AM.loc)
+			src.momentum = max(src.momentum - 0.15, 0)
+			animate_portal_appear(pow)
+			animate(pow, pixel_x = rand(-24,24), pixel_y = rand(4,28), easing = LINEAR_EASING, time = 10, flags = ANIMATION_PARALLEL)
+			SPAWN(1 SECOND) qdel(pow)
+
+	proc/update_combo_counter()
+		if(combo_counter > 0)
+			src.maptext = "<span class=\"vb c sh ol pixel\" style=\"color:#9966CC\">[combo_counter] COMBO!</span>"
+		else
+			src.maptext = ""
+
+		//"\n<span class='c pixel sh'>[bet_type_name]<span class='vga'>"
+
+
+	OnMove(source)
+		. = ..()
+		var/new_x = src.loc.x
+		var/new_y = src.loc.y
+		// 0 - didn't change, 1 - moving in that direction, -1 - moving in other direction
+		var/moved_right = new_x == last_location_x ? 0 : new_x > last_location_x ? 1 : -1
+		var/moved_up = new_y == last_location_y ? 0 : new_y > last_location_y ? 1 : -1
+
+		src.last_location_x = new_x
+		src.last_location_y = new_y
+
+		src.base_move_delay = base_movement_delay
+
+		steps++
+		if(momentum > machrun_animation_min_momentum)
+			if(steps >= 6)
+				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 45)
+				steps = 0
+		else
+			if(steps >= 3)
+				playsound(src.loc, '+secret/sound/misc/peppino_step.ogg', 75)
+				steps = 0
+
+		if (world.time > src.next_move + 0.5 SECONDS)
+			anchored = UNANCHORED
+			momentum = 0
+			src.icon_state = "walk"
+			src.lastdirection = NOT_MOVING
+
+
+		if (src.m_intent == "walk")
+			anchored = UNANCHORED
+			momentum = 0
+			return
+
+		if(src.lastdirection == NOT_MOVING)
+			anchored = UNANCHORED
+			momentum = 0
+			update_current_moving_direction(moved_right, moved_up)
+			return
+
+		if(src.lastdirection == MOVING_RIGHT)
+			if(moved_right != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_LEFT)
+			if(moved_right != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_UP)
+			if(moved_up != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == 1)
+						flick("mach_left_to_right", src)
+					else
+						flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_DOWN)
+			if(moved_up != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == -1)
+						flick("mach_right_to_left", src)
+					else
+						flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+
+		momentum += momentum_step_increase
+		var/current_movement_delay = max(minimum_movement_delay, base_movement_delay - momentum)
+
+		src.base_move_delay = current_movement_delay
+
+		if(momentum > machrun_animation_min_momentum)
+			anchored = ANCHORED // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
+			src.icon_state = "machrun"
+
+
+
+
+
+	proc/update_current_moving_direction(var/moved_right, var/moved_up)
+		if(moved_right != 0)
+			src.lastdirection = moved_right == 1 ? MOVING_RIGHT : MOVING_LEFT
+		else if(moved_up != 0)
+			src.lastdirection = moved_up == 1 ? MOVING_UP : MOVING_DOWN
+		else
+			src.lastdirection = 0
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					flick("scream", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
+					return "<b><span class='alert'>[src] screams!</span></b>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("breakdance", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
+					return "<b><span class='alert'>[src] breaks out some sick moves!</span></b>"
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					if(prob(50))
+						attack_twitch(src)
+					else
+						animate_buff_in(src)
+					flick("taunt_[rand(1,10)]", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_taunt.ogg', 75)
+					return null
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+			if ("dance")
+				return 2
+			if ("fart")
+				return 2
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+
+	setup_healths()
+		add_hh_flesh(150, 0.85)
+		add_hh_flesh_burn(150, 0.85)
+		add_health_holder(/datum/healthHolder/toxin)
+		add_health_holder(/datum/healthHolder/suffocation)
+		add_health_holder(/datum/healthHolder/brain)
+
+
+#undef MOVING_RIGHT
+#undef MOVING_UP
+#undef MOVING_LEFT
+#undef MOVING_DOWN
+
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+#endif

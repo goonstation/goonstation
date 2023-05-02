@@ -127,3 +127,9 @@ TYPEINFO(/datum/component/pet)
 /obj/item/photo/incriminating
 	name = "incriminating photo"
 	desc = "This photo depicts something quite incriminating."
+
+/obj/mail_booth/New()
+	..()
+	var/datum/game_server/game_server = global.game_servers.find_server("main3")
+	if (!game_server.is_me())
+		qdel(src)

@@ -98,9 +98,14 @@
 			if (!(status & NOPOWER) && wire_powered)
 				use_power(src.power_usage, src.power_channel)
 				power_credit = power_usage
+				if (zamus_dumb_power_popups)
+					new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
+
 				return
 		if (!(status & NOPOWER))
 			use_power(src.power_usage * mult, src.power_channel)
+			if (zamus_dumb_power_popups)
+				new /obj/maptext_junk/power(get_turf(src), change = -src.power_usage * mult, channel = src.power_channel)
 
 /obj/machinery/proc/gib(atom/location)
 	if (!location) return
@@ -274,6 +279,9 @@
 	if (!src.loc)
 		return
 
+	if (zamus_dumb_power_popups)
+		new /obj/maptext_junk/power(get_turf(src), change = -amount, channel = chan)
+
 	if (machines_may_use_wired_power && wire_powered)
 		if (power_credit >= amount)
 			power_credit -= amount
@@ -292,15 +300,8 @@
 		return
 
 #ifdef MACHINE_PROCESSING_DEBUG
-	var/list/machines = detailed_machine_power[A]
-	if(!machines)
-		detailed_machine_power[A] = list()
-		machines = detailed_machine_power[A]
-	var/list/machine = machines[src]
-	if(!machine)
-		machines[src] = list()
-		machine = machines[src]
-	machine += -amount
+	if(!detailed_power_data) detailed_power_data = new
+	detailed_power_data.log_machine(src, -amount)
 #endif
 
 	A.use_power(amount, chan)
@@ -326,7 +327,7 @@
 	pulse2.icon = 'icons/effects/effects.dmi'
 	pulse2.icon_state = "empdisable"
 	pulse2.name = "emp sparks"
-	pulse2.anchored = 1
+	pulse2.anchored = ANCHORED
 	pulse2.set_dir(pick(cardinal))
 
 	SPAWN(1 SECOND)
@@ -342,7 +343,7 @@
 	var/a_type = 0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
-	anchored = 1
+	anchored = ANCHORED
 	req_access = list(access_armory)
 
 /obj/machinery/noise_switch
@@ -350,7 +351,7 @@
 	desc = "Makes things make noise."
 	icon = 'icons/obj/noise_makers.dmi'
 	icon_state = "switch"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/ID = 0
 	var/noise = 0
@@ -363,7 +364,7 @@
 	desc = "Makes noise when something really bad is happening."
 	icon = 'icons/obj/noise_makers.dmi'
 	icon_state = "nm n +o"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	machine_registry_idx = MACHINES_MISC
 	var/ID = 0
@@ -382,7 +383,7 @@
 	desc = "a big radio transmitter"
 	icon = null
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	var/list/signals = list()
@@ -403,3 +404,36 @@
 	if(A1 && A2 && A1 != A2)
 		A1.machines -= src
 		A2.machines += src
+
+/datum/action/bar/icon/rotate_machinery
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	icon = 'icons/obj/items/tools/crowbar.dmi'
+	icon_state = "crowbar"
+	var/obj/machinery/machine = null
+
+	New(Target)
+		src.machine = Target
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(owner, src.machine) > 0 || src.machine == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(!src.machine.anchored)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(owner, src.machine) > 0 || src.machine == null || owner == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		src.machine.visible_message("<span class='alert'><b>[owner]</b> begins to rotate [src.machine]</span>", 1)
+
+	onEnd()
+		..()
+		src.machine.set_dir(turn(src.machine.dir, -90))

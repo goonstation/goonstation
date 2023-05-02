@@ -295,8 +295,9 @@
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
-		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
+		var/reagent_id = islist(reagent_to_add) ? pick(reagent_to_add) : reagent_to_add
+		if (L.reagents && L.reagents.get_reagent_amount(reagent_id) < reagent_threshold)
+			L.reagents.add_reagent(reagent_id,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"

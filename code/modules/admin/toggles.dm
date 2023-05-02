@@ -75,6 +75,7 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/toggleautoending,
 /datum/admins/proc/toggleaprilfools,
 /datum/admins/proc/togglespeechpopups,
+/datum/admins/proc/toggle_global_parallax,
 /datum/admins/proc/togglemonkeyspeakhuman,
 /datum/admins/proc/toggletraitorsseeeachother,
 /datum/admins/proc/togglelatetraitors,
@@ -82,6 +83,7 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/adjump,
 /datum/admins/proc/togglesimsmode,
 /datum/admins/proc/toggle_pull_slowing,
+/datum/admins/proc/togglepowerdebug,
 /client/proc/admin_toggle_nightmode,
 /client/proc/toggle_camera_network_reciprocity,
 /datum/admins/proc/toggle_radio_audio,
@@ -398,9 +400,9 @@ client/proc/toggle_ghost_respawns()
 	if(isobserver(mob))
 		setalive(mob)
 
-	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
-	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]", "admin")
-	message_admins("[key_name(usr)] has toggled their ghost interaction to [(usr.nodamage ? "On" : "Off")]")
+	logTheThing(LOG_ADMIN, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
+	logTheThing(LOG_DIARY, usr, "has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]", "admin")
+	message_admins("[key_name(usr)] has toggled their ghost interaction to [(src.holder.ghost_interaction ? "On" : "Off")]")
 
 /client/proc/iddqd()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -842,6 +844,20 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled speech popups [speechpopups ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled speech popups [speechpopups ? "on" : "off"]")
 
+/datum/admins/proc/toggle_global_parallax()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set name = "Toggle Global Parallax"
+	set desc = "Toggles parallax on or off globally. Toggling on respects client preferences in regard to parallax."
+
+	parallax_enabled = !parallax_enabled
+
+	for (var/client/client in clients)
+		client.toggle_parallax()
+
+	logTheThing(LOG_ADMIN, src, "toggled parallax [parallax_enabled ? "on" : "off"] globally.")
+	logTheThing(LOG_DIARY, src, "toggled parallax [parallax_enabled ? "on" : "off"] globally.", "admin")
+	message_admins("[key_name(src)] toggled parallax [parallax_enabled ? "on" : "off"] globally.")
+
 /datum/admins/proc/togglemonkeyspeakhuman()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set desc = "Toggle monkeys being able to speak human."
@@ -987,6 +1003,19 @@ client/proc/toggle_ghost_respawns()
 			C.set_widescreen(1)
 		message_admins( "[key_name(src)] toggled widescreen on." )
 */
+
+
+
+/datum/admins/proc/togglepowerdebug()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
+	set desc="Toggle power debugging popups"
+	set name="Toggle Power Debug"
+	NOT_IF_TOGGLES_ARE_OFF
+	zamus_dumb_power_popups = !( zamus_dumb_power_popups )
+	logTheThing(LOG_ADMIN, usr, "toggled power debug popups.")
+	logTheThing(LOG_DIARY, usr, "toggled power debug popups.", "admin")
+	message_admins("[key_name(usr)] toggled power debug popups.")
+
 
 /client/proc/toggle_next_click()
 	set name = "Toggle next_click"

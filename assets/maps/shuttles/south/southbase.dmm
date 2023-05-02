@@ -604,9 +604,6 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "CB" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-R"
@@ -766,9 +763,6 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "Io" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-L"

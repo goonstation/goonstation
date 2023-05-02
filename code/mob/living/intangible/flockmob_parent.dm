@@ -11,7 +11,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -77,8 +77,7 @@
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
-	var/turf/T = get_turf(src)
-	if (T.z != Z_LEVEL_STATION)
+	if (!src.flock.z_level_check(src))
 		src.emote("scream")
 		if (length(src.flock.units[/mob/living/critter/flock/drone]))
 			boutput(src, "<span class='alert'>You feel your consciousness weakening as you are ripped further from your drones, you retreat back to them to save yourself!</span>")
@@ -159,6 +158,7 @@
 /mob/living/intangible/flock/proc/select_drone(mob/living/critter/flock/drone/drone)
 	var/datum/abilityHolder/flockmind/holder = src.abilityHolder
 	holder.drone_controller.drone = drone
+	drone.selected_by = src
 	drone.AddComponent(/datum/component/flock_ping/selected)
 	src.targeting_ability = holder.drone_controller
 	src.update_cursor()
@@ -184,7 +184,6 @@
 			if (flockdrone.selected_by || flockdrone.controller)
 				boutput(src, "<span class='alert'>This drone is receiving a command!</span>")
 				return
-			flockdrone.selected_by = src
 			src.select_drone(flockdrone)
 			return
 	//moved from flock_structure_ghost for interfering with ability targeting

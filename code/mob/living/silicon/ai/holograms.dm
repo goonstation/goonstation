@@ -178,7 +178,7 @@
 	desc = "A hologram projected by an AI. Usually lasts about 30 seconds."
 	icon = 'icons/misc/holograms.dmi'
 	icon_state = "caution"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	alpha = 0		//animates to 180 in New
 	// plane = PLANE_HUD
@@ -281,3 +281,20 @@
 
 #undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
 #undef MAX_TILES_PER_HOLOGRAM_VERTICAL
+
+///Turns the atom into a transparent, blueish, flickering hologram
+///if you want to ignore lighting you also have to render above EVERYTHING ELSE so use with caution
+/atom/movable/proc/hologram_effect(over_lighting = FALSE)
+	src.color = list(
+		1.5, 0, 1, 0,
+		0, 1.5, 1, 0,
+		0, 0, 1.5, 0,
+		0, 0, 0, 0.65,
+		0, 0, 0, 0
+	)
+	if (over_lighting)
+		src.plane = PLANE_ABOVE_LIGHTING
+	var/obj/effect/distort/hologram/E = new
+	E.icon_state = "d_fast"
+	src.vis_contents += E
+	src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)

@@ -211,7 +211,7 @@
 		icon_state = "stam+"
 		maxDuration = 9 SECONDS
 		unique = 1
-		change = 8
+		change = 12
 
 		getTooltip()
 			. = "A feeling of invigoration permeates you."
@@ -372,7 +372,7 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\the [owner][message]</span>")
+			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -683,7 +683,7 @@
 
 	simpledot/stimulant_withdrawl
 		id = "stimulant_withdrawl"
-		name = "Stimulant withdrawl"
+		name = "Stimulant withdrawal"
 		icon_state = "janktank-w"
 		desc = "You feel AWFUL!"
 		tickSpacing = 3 SECONDS
@@ -1255,7 +1255,7 @@
 			if (ismob(owner))
 				var/mob/M = owner
 				if (M.mind)
-					gang = M.mind.gang
+					gang = M.get_gang()
 
 		onRemove()
 			. = ..()
@@ -1346,8 +1346,8 @@
 
 	gang_drug_withdrawl
 		id = "janktank_withdrawl"
-		name = "janktank withdrawl"
-		desc = "You're going through withrawl of Janktank"
+		name = "Janktank withdrawal"
+		desc = "You're going through withdrawal of Janktank"
 		icon_state = "janktank-w"
 		duration = 9 MINUTES
 		maxDuration = 18 MINUTES
@@ -1766,6 +1766,8 @@
 
 	proc/track_paint(mob/living/M, oldLoc, direct)
 		var/turf/T = get_turf(M)
+		if(istype_exact(T, /turf/space)) //can't smear paint on space
+			return
 		var/obj/decal/cleanable/paint/P
 		if (T.messy > 0)
 			P = locate(/obj/decal/cleanable/paint) in T
@@ -2397,3 +2399,8 @@
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "recent_trauma")
 		H.remove_stam_mod_max("recent_trauma")
 
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
+	icon_state = "mindhack"

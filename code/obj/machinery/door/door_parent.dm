@@ -20,7 +20,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/panel_open = FALSE
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
-	anchored = TRUE
+	anchored = ANCHORED
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
@@ -146,7 +146,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	return !density
 
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	var/turf/simulated/source = loc
+	var/turf/source = src.loc
 	if (istype(source))
 		return source.update_nearby_tiles(need_rebuild)
 
@@ -707,8 +707,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	panel_open = 0
 	operating = 0
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = TRUE
+	anchored = ANCHORED
 	autoclose = TRUE
+	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from

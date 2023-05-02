@@ -576,6 +576,45 @@ TYPEINFO(/obj/item/sword)
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 
+// Revolutionary sign.
+/obj/item/revolutionary_sign
+	name = "revolutionary sign"
+	desc = "A sign bearing revolutionary propaganda. Good for picketing."
+
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "revsign"
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
+	item_state = "revsign"
+
+	w_class = W_CLASS_BULKY
+	throwforce = 8
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 7
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 10
+	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (isrevolutionary(owner))
+				for (var/mob/M in viewers(5, owner))
+					if (isrevolutionary(M))
+						M.changeStatus("revspirit", 20 SECONDS)
+
 /obj/item/storage/box/shuriken_pouch
 	name = "Shuriken Pouch"
 	desc = "Contains four throwing stars!"
@@ -1119,6 +1158,17 @@ TYPEINFO(/obj/item/bat)
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
+/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+	. = FALSE
+	if (!istype(user))
+		return
+	if (!istype(user.belt, /obj/item/swords_sheaths))
+		return
+	var/obj/item/swords_sheaths/sheath = user.belt
+	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
+		sheath.Attackby(src, user)
+		return TRUE
+
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
 	mats = list("MET-3"=20, "FAB-1"=5)
@@ -1183,6 +1233,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()

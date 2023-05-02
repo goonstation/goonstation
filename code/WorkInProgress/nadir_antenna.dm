@@ -633,10 +633,11 @@ TYPEINFO(/obj/machinery/transception_pad)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "neopad"
 	name = "\proper transception pad"
-	anchored = 1
+	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
+	processing_tier = PROCESSING_32TH //processes infrequently to check for stuck mobs
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
@@ -870,6 +871,24 @@ TYPEINFO(/obj/machinery/transception_pad)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
+
+	//if anyone gets stuck inside, eject them. (violently. you got stuck in a prototype teleporter)
+	process()
+		..()
+		if(src.is_transceiving)
+			return
+		var/mob/M = locate() in src.contents
+		if(M)
+			src.is_transceiving = TRUE
+			src.visible_message("<span class='alert'><B>[src]</B> emits a buffer error alert!</span>")
+			playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
+			flick("neopad_activate",src)
+			SPAWN(0.4 SECONDS)
+				M.set_loc(src.loc)
+				showswirl(src.loc)
+				use_power(200)
+				telefrag(M)
+				src.is_transceiving = FALSE
 
 /obj/machinery/computer/transception
 	name = "\improper Transception Interlink"

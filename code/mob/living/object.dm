@@ -19,7 +19,7 @@
 	gender = NEUTER
 
 	blinded = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	a_intent = "disarm"
 	can_bleed = FALSE
 	var/name_prefix = "living "
@@ -35,9 +35,6 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
-
-		if (controller)
-			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
 
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
@@ -471,6 +468,5 @@
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff
-		spooker.hud.update_intent()
 
 	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

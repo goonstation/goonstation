@@ -180,8 +180,14 @@
 	RETURN_TYPE(/datum/mind)
 	var/list/datum/mind/possible_leaders = list()
 	for(var/datum/mind/mind in syndicates)
-		if(mind.current.client.preferences.be_syndicate_commander)
+		if(mind.current.client.preferences.be_syndicate_commander && mind.current.has_medal("Manhattan Project"))
 			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
+	else
+		for(var/datum/mind/mind in syndicates)
+			if(mind.current.client.preferences.be_syndicate_commander)
+				possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
 	return pick(syndicates)
@@ -458,7 +464,7 @@ var/syndicate_name = null
 	name = "Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 

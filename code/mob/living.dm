@@ -38,9 +38,8 @@
 	var/has_typing_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
+	var/image/silhouette
 	var/image/static_image = null
-	var/static_type_override = null
-	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
@@ -67,9 +66,6 @@
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
-
-	var/caneat = 1
-	var/candrink = 1
 
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
@@ -128,6 +124,7 @@
 	var/const/singing_prefix = "%"
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
@@ -141,7 +138,6 @@
 		//eventual hud merger pls
 
 	SPAWN(0)
-		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
@@ -169,6 +165,10 @@
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
+
+	if (src.silhouette)
+		get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_image(src.silhouette)
+		src.silhouette = null
 
 	if (src.static_image)
 		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
@@ -279,9 +279,12 @@
 /mob/living/Logout()
 	. = ..()
 	src.UpdateOverlays(null, "speech_bubble")
+	src.is_npc = initial(src.is_npc)
+
 
 /mob/living/Login()
 	..()
+	src.is_npc = FALSE
 	// If...
 	// living
 	// and not (in the afterlife, and not in hell)
@@ -886,11 +889,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message)
+			phrase_log.log_phrase("sing", message, user = src)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message)
+			phrase_log.log_phrase("radio", message, user = src)
 		else
-			phrase_log.log_phrase("say", message)
+			phrase_log.log_phrase("say", message, user = src)
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -1104,10 +1107,17 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/popup_style = src.speechpopupstyle
+
+		if (src.find_type_in_hand(/obj/item/megaphone))
+			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			maptext_color = megaphone.maptext_color
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
@@ -1234,42 +1244,66 @@
 
 	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
-/mob/living/proc/get_static_image()
-	if (src.disposed)
+/mob/living/update_body()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_clothing()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_inhands()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/proc/create_mob_silhouette()
+	src.silhouette = new(src, src)
+	src.silhouette.plane = PLANE_MOB_OVERLAY
+	src.update_mob_silhouette()
+
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
+
+	src.new_static_image()
+
+/mob/living/proc/update_mob_silhouette()
+	if (!src.silhouette)
 		return
-	if (!islist(default_mob_static_icons))
+
+	src.silhouette.icon = src
+	src.silhouette.overlays = src.overlays
+	src.silhouette.vis_contents = src.vis_contents
+
+	src.update_static_image()
+
+/mob/living/proc/new_static_image()
+	src.static_image = new(null, src)
+
+	src.static_image.appearance_flags = KEEP_TOGETHER
+	src.static_image.plane = PLANE_LIGHTING
+	src.static_image.override = TRUE
+	src.static_image.color = list(
+		-0.5, 0, 0, -0.3,
+		0, -0.5, 0, -0.3,
+		0, 0, -0.5, -0.3,
+		0, 0, 0, 1,
+		0, 0, 0, 0,)
+
+	get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
+
+/mob/living/proc/update_static_image()
+	if (!src.silhouette || !src.static_image)
 		return
-	if (src.static_image)
-		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
-	var/checkpath = src.static_type_override ? src.static_type_override : src.type
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace))
-			checkpath = H.mutantrace.type
-	if (ispath(checkpath))
-		var/generate_static = 1
-		if (checkpath in default_mob_static_icons)
-			if (istype(default_mob_static_icons[checkpath], /image))
-				src.static_image = image(default_mob_static_icons[checkpath])
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-				generate_static = 0
-		if (generate_static)
-			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if (H.mutantrace)
-					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
-			else
-				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
-			if (src.static_image)
-				default_mob_static_icons[checkpath] = image(src.static_image)
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-		return src.static_image
+
+	src.static_image.icon = src.silhouette.icon
+	src.static_image.overlays = src.silhouette.overlays
+	src.static_image.vis_contents = src.silhouette.vis_contents
+
+	var/image/static_overlay = image('icons/effects/atom_textures_64.dmi', "static")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+	src.static_image.overlays += static_overlay
 
 /proc/check_static_defaults()
 	if (!islist(default_mob_static_icons))
@@ -1279,8 +1313,6 @@
 		var/image/i = default_mob_static_icons[Type]
 		if (i)
 			DEBUG_MESSAGE(bicon(i) + "\ref[i][Type]")
-
-var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.dmi', "body_m")
 
 
 /mob/living/verb/give_item()
@@ -1455,6 +1487,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
+		actions.interrupt(src, INTERRUPT_ACT) // interrupt actions
 
 /mob/living/proc/animate_lying(lying)
 	animate_rest(src, !lying)
@@ -1678,7 +1711,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							var/mob/M = A
 							//if they're lying, pull em slower, unless you have anext_move gang and they are in your gang.
 							if(M.lying)
-								if (src.mind?.gang && (src.mind.gang == M.mind?.gang))
+								var/datum/gang/gang = src.get_gang()
+								if (gang && (gang == M.get_gang()))
 									. *= 1		//do nothing
 								else
 									. *= lerp(1, max(A.p_class, 1), mob_pull_multiplier)
@@ -1794,17 +1828,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	SHOULD_CALL_PARENT(TRUE)
 	.= 0
 
-//left this here to standardize into living later
-/mob/living/critter/was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
-	if (src.ai)
-		src.ai.was_harmed(weapon,M)
-		if(src.is_hibernating)
-			if (src.registered_area)
-				src.registered_area.wake_critters(M)
-			else
-				src.wake_from_hibernation()
-	..()
-
 /mob/living/bullet_act(var/obj/projectile/P)
 	log_shot(P,src)
 	if (ismob(P.shooter))
@@ -1816,13 +1839,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.spellshield)
 		src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
 		return 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			if (P.proj_data.damage_type == D_KINETIC)
-				src.visible_message("<span class='alert'>[src]'s shield deflects the shot!</span>")
-				return 0
-			S.active = 0
-			S.icon_state = "shield0"
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
@@ -1854,7 +1870,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if (!IN_RANGE(src,V, 6))
 			continue
 		if(prob(8) && src)
-			if(src != V)
+			if(src != V && !V.reagents?.has_reagent("CBD"))
 				V.emote("scream")
 				V.changeStatus("stunned", 2 SECONDS)
 
@@ -1891,7 +1907,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 		if (P.proj_data.damage_type & (D_KINETIC | D_PIERCING | D_SLASHING))
 			if (P.proj_data.hit_type & (DAMAGE_CUT | DAMAGE_STAB | DAMAGE_CRUSH))
-				take_bleeding_damage(src, null, round(damage / 3 * rangedprot_mod), P.proj_data.hit_type)
+				take_bleeding_damage(src, null, round(damage / (2 * rangedprot_mod)), P.proj_data.hit_type)
 			src.changeStatus("staggered", clamp(P.power/8, 5, 1) SECONDS)
 
 		switch(P.proj_data.damage_type)
@@ -2117,7 +2133,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
 
 /mob/living/take_radiation_dose(Sv,internal=FALSE)
-	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+	// but we should still allow ourselves to heal
+	if(Sv > 0 && !src.lifeprocesses[/datum/lifeprocess/radiation])
 		return
 	var/actual_dose = ..()
 	if(actual_dose > 0.2 && !internal)
@@ -2129,3 +2147,6 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 /mob/living/get_hud()
 	return src.vision
+
+///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
+/mob/living/proc/restore_life_processes()

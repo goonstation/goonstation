@@ -185,7 +185,13 @@
 		return 0
 
 	proc/apply_to(mob/M as mob, mob/user as mob)
-		repair_bleeding_damage(M, 25, 1)
+		if(isliving(M))
+			var/mob/living/L = M
+			if (L.bleeding <= 3)
+				repair_bleeding_damage(M, 25, 1)
+
+		else 
+			repair_bleeding_damage(M, 25, 1)
 		active = 1
 
 		if (reagents?.total_volume)

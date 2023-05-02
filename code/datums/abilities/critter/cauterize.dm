@@ -5,11 +5,9 @@
 	name = "Cauterize"
 	desc = "Cauterize a mob, stopping all bleeding immediately but inflicting mild fire damage."
 	icon_state = "fire_e_cauterize"
-	cooldown = 150
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 15 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -32,6 +30,4 @@
 			return 1
 		MT.TakeDamage("All", 0, 8, 0, DAMAGE_BURN)
 		holder.owner.visible_message("<span class='notice'><b>[holder.owner] cauterizes [MT]!</b></span>", "<span class='notice'>You cauterize [MT]!</span>")
-		//if (MT.bleeding)
-		//	boutput(MT, "<span class='notice'>Your bleeding stops!</span>")
 		return 0

@@ -17,7 +17,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "airbr"
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	var/tunnel_width = 1
@@ -496,7 +496,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))

@@ -39,7 +39,7 @@
 	name = "\improper Research Director's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/research_director,
 	/obj/item/clothing/under/rank/research_director/dress,
-	/obj/item/clothing/suit/labcoat,
+	/obj/item/clothing/suit/labcoat/research_director,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/research_director/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
@@ -59,6 +59,7 @@
 	/obj/item/clothing/under/rank/chief_engineer/dress,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/chief_engineer/fancy,
+	/obj/item/clothing/under/rank/chief_engineer/scarf,
 	/obj/item/clothing/suit/wintercoat/command)
 
 // Civilian Equipment

@@ -120,8 +120,7 @@ TYPEINFO(/obj/item/gun/energy)
 	item_state = "rifle"
 	force = 1
 	desc = "The XIANG|GIESEL model '天妃', a hefty laser-induced ionic disruptor with a self-charging radio-isotopic power core. Feared by rogue cyborgs across the Frontier."
-	charge_up = 15
-	can_dual_wield = 0
+	can_dual_wield = FALSE
 	two_handed = 1
 	slowdown = 5
 	slowdown_time = 5
@@ -132,6 +131,7 @@ TYPEINFO(/obj/item/gun/energy)
 	New()
 		set_current_projectile(new/datum/projectile/heavyion)
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/windup, 1.5 SECONDS)
 		..()
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -151,7 +151,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
-		projectiles = list(current_projectile,new/datum/projectile/energy_bolt/burst)
+		projectiles = list(current_projectile)
 		..()
 
 	update_icon()
@@ -159,19 +159,8 @@ TYPEINFO(/obj/item/gun/energy)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			if (current_projectile.type == /datum/projectile/energy_bolt/burst)
-				src.icon_state = "taserburst[ratio]"
-			else if(current_projectile.type == /datum/projectile/energy_bolt)
-				src.icon_state = "taser[ratio]"
+			src.icon_state = "taser[ratio]"
 		..()
-
-	attack_self()
-		..()
-		UpdateIcon()
-		if(istype(src.current_projectile, /datum/projectile/energy_bolt/burst))
-			src.spread_angle = 6
-		else
-			src.spread_angle = initial(src.spread_angle)
 
 	borg
 		cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
@@ -315,7 +304,9 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	name = "RP-5 macro phaser"
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
-	item_state = "phaser"
+	item_state = "phaser_xl"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
@@ -335,7 +326,8 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			var/ratio = min(1, ret["charge"] / ret["max_charge"])
 			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "phaser-xl[ratio]"
+			src.icon_state = "[initial(src.icon_state)][ratio]"
+			src.wear_state = "[initial(src.icon_state)]"
 			return
 
 ///////////////////////////////////////Rad Crossbow

@@ -3,7 +3,7 @@
 	desc = "A mobile scanner and computer in one unit for genetics work."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = null //will revisit later
 	var/mob/occupant = null
 	var/datum/movable_preview/character/multiclient/occupant_preview = null

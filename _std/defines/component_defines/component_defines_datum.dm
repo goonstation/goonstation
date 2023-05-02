@@ -28,3 +28,7 @@
 // ---- TGUI signals ----
 	/// A TGUI window was opened by a user (receives tgui datum)
 	#define COMSIG_TGUI_WINDOW_OPEN "tgui_window_open"
+
+// ---- reagents signals ----
+	/// When reagent scanned
+	#define COMSIG_REAGENTS_ANALYZED "reagents_analyzed"

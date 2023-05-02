@@ -6,12 +6,9 @@
 	var/datum/abilityHolder/arcfiend/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current)
+		return isliving(mind.current)
 
 	give_equipment()
-		if (!ishuman(src.owner.current))
-			return FALSE
-		var/mob/living/carbon/human/H = src.owner.current
 		var/datum/abilityHolder/arcfiend/A = src.owner.current.get_ability_holder(/datum/abilityHolder/arcfiend)
 		if (!A)
 			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/arcfiend)
@@ -26,8 +23,8 @@
 		src.ability_holder.addAbility(/datum/targetable/arcfiend/jamming_field)
 		src.ability_holder.addAbility(/datum/targetable/arcfiend/jolt)
 
-		H.bioHolder.AddEffect("resist_electric", power = 2, magical = TRUE)
-		H.ClearSpecificOverlays("resist_electric")
+		src.owner.current.bioHolder.AddEffect("resist_electric", power = 2, magical = TRUE)
+		src.owner.current.ClearSpecificOverlays("resist_electric")
 
 	remove_equipment()
 		// now this is pod racing

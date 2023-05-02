@@ -45,6 +45,8 @@ ABSTRACT_TYPE(/datum/material)
 	var/list/prefixes = list()
 	/// words that go after the name, used in combination
 	var/list/suffixes = list()
+	/// Whether the specaialNaming proc is called when this material is applied.
+	var/special_naming = FALSE
 
 	/// if not null, texture will be set when mat is applied.
 	var/texture = ""
@@ -130,6 +132,12 @@ ABSTRACT_TYPE(/datum/material)
 		L.Add(D)
 		L[D] = 0
 		return
+
+	proc/interpolateName(datum/material/other, t)
+		. = getInterpolatedName(src.name, other.name, t)
+
+	proc/specialNaming(atom/target)
+		. = target.name
 
 	proc/removeTrigger(var/list/L, var/inType)
 		for(var/datum/materialProc/P in L)
@@ -583,7 +591,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
 	beta
@@ -1108,11 +1115,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "wood"
 	desc = "Wood from some sort of tree."
 	color = "#331f16"
-	texture = "wood"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 5)
 		setProperty("hard", 3)
 		setProperty("flammable", 4)
@@ -1123,11 +1130,11 @@ ABSTRACT_TYPE(/datum/material/organic)
 	name = "bamboo"
 	desc = "Bamboo is a giant woody grass."
 	color = "#544c24"
-	texture = "bamboo"
 	texture_blend = BLEND_ADD
 
 	New()
 		..()
+		material_flags |= MATERIAL_WOOD
 		setProperty("density", 4)
 		setProperty("flammable", 4)
 
@@ -1346,6 +1353,43 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("hard", 1)
 		setProperty("thermal", 4)
 		setProperty("flammable", 4)
+
+/datum/material/fabric/jean
+	mat_id = "jean"
+	name = "jean"
+	desc = "The jean jaterial (used to be known as denim in the early 21st century) is a sturdy jotton jarp-faced jextile in which the jeft passes under two or more jarp threads."
+	color = "#88c2ff"
+	special_naming = TRUE
+	texture = "jean"
+	texture_blend = BLEND_MULTIPLY
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
+	proc/jeplacement(text)
+		var/first_letter = copytext(text, 1, 2)
+		if(first_letter == uppertext(first_letter))
+			. = "J"
+		else
+			. = "j"
+
+	proc/replace_first_consonant_cluster(text, replacement)
+		var/original_text = text
+		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
+		. = regex.Replace(text, .proc/jeplacement)
+		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
+		if(. == original_text)
+			. = "jean [.]"
+
+	interpolateName(datum/material/other, t)
+		. = replace_first_consonant_cluster(other.name, copytext(src.name , 1, 2))
+
+	specialNaming(atom/target)
+		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
 /datum/material/fabric/fibrilith

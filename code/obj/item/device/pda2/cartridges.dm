@@ -327,7 +327,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 
 	janitor
 		name = "\improper CustodiPRO cartridge"
-		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequenies of nearby mops."
+		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequencies of nearby mops."
 		icon_state = "cart-j"
 
 		New()

@@ -21,7 +21,7 @@ TYPEINFO(/obj/item/remote/porter)
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
@@ -303,7 +303,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 	icon_state = "port_a_brig_0"
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.8
 	req_access = list(access_security)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -538,7 +538,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	var/image/image_lid = null
 	desc = "An emergency transportation device for critically injured patients."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
@@ -683,7 +683,7 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 	icon_closed = "portasci"
 	icon_opened = "portasci-open"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 6
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
@@ -702,8 +702,8 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 
 		src.homeloc = src.loc
 
-		possible_new_friend = typesof(/obj/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
+		possible_new_friend = typesof(/mob/living/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
+						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /mob/living/critter/skeleton/wraith, /mob/living/critter/skeleton, /mob/living/critter/brullbar)\
 						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
@@ -849,7 +849,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	layer = FLOOR_EQUIP_LAYER1
 	req_access_txt = "5"
 	acceptcard = 0
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	can_fall = 0
 	ai_control_enabled = 1

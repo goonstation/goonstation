@@ -50,6 +50,8 @@
 			last_laugh = world.time
 
 	process()
+		if (src.anchored)
+			return
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
@@ -134,7 +136,7 @@ TYPEINFO(/obj/item/disk)
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
 	item_function_flags = IMMUNE_TO_ACID
@@ -218,7 +220,7 @@ TYPEINFO(/obj/item/disk)
 	attack(mob/M, mob/user, def_zone)
 		if (ismob(M))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [user == M ? 0 : rand(1,10)]")
+			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
@@ -439,7 +441,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 /obj/item/wrestlingbell
 	name = "Wrestling bell"
 	desc = "A bell used to signal the start of a wrestling match"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
@@ -456,7 +458,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 /obj/item/trophy
 	name = "trophy"
 	desc = "You're winner! You did it! You did the thing! Good job!"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
@@ -627,3 +629,17 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		current_loc.assume_air(leak_gas)
 		qdel(src)
 
+/obj/tombstone/nuclear_warning
+	name = "inscribed stone"
+	desc = {"A stone block, inscribed with a message. It says:<br>
+	This place is a message... and part of a system of messages... pay attention to it!<br>
+    Sending this message was important to us. We considered ourselves to be a powerful culture.<br>
+    This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.<br>
+    What is here was dangerous and repulsive to us. This message is a warning about danger.<br>
+    The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.<br>
+    The danger is still present, in your time, as it was in ours.<br>
+    The danger is to the body, and it can kill.<br>
+    The form of the danger is an emanation of energy.<br>
+    The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
+	<br>
+	...spooky!"}

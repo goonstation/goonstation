@@ -8402,7 +8402,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aqi" = (
-/obj/critter/dog/george,
+/mob/living/critter/small_animal/dog/george,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aqj" = (
@@ -8972,7 +8972,6 @@
 /area/space)
 "aru" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
 	},
@@ -24782,7 +24781,6 @@
 /area/space)
 "aUH" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
 	},

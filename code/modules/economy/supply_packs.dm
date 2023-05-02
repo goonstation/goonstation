@@ -1362,6 +1362,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
 
+/datum/supply_packs/lawrack
+	name = "AI Law Rack ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
+	cost = 30000
+	containertype = /obj/storage/secure/crate
+	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */

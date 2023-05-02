@@ -373,9 +373,11 @@ proc/ui_describe_reagents(atom/A)
 
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
-				src.reagents.trans_to(I, 5)
-				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				if (src.reagents.trans_to(I, 5))
+					logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+					user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				else
+					boutput(user, "<span class='notice'>[I] is already fully coated, more won't do any good.</span>")
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
@@ -546,11 +548,13 @@ proc/ui_describe_reagents(atom/A)
 		if(!IN_RANGE(AM, targetDoor, 1)) //not in range or AM is null
 			src.set_loc(get_turf(targetDoor))
 			src.reagents.reaction(get_turf(targetDoor))
+			src.reagents.clear_reagents()
 			src.visible_message("<span class='alert'>[src] falls from \the [targetDoor][splash? ", splashing its contents on the floor" : ""].</span>")
 		else //we're in range, splash the AM, splash the floor
 			logTheThing(LOG_COMBAT, AM, "Victim of bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
 			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
 			src.reagents.reaction(get_turf(targetDoor)) //half on the floor
+			src.reagents.clear_reagents()
 			if(ishuman(AM))
 				//the bucket lands on your head for maximum comedy
 				var/mob/living/carbon/human/H = AM

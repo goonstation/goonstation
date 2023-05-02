@@ -60,7 +60,7 @@
 	icon_state = "secbot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	luminosity = 2
 	req_access = list(access_security)
 	var/weapon_access = access_carrypermit
@@ -604,7 +604,7 @@
 			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.target_lastloc = M.loc
 				src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 			return
@@ -811,7 +811,7 @@
 
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
@@ -825,7 +825,7 @@
 					var/obj/item/card/id/perp_id = H.equipped()
 					if (!istype(perp_id))
 						perp_id = H.wear_id
-					if(!perp_id || (perp_id && !(perp_id.access & src.lockdown_permit)))
+					if(!perp_id || (perp_id && !length(perp_id.access & src.lockdown_permit)))
 						src.threatlevel += 4
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
@@ -1005,7 +1005,7 @@
 
 	KillPathAndGiveUp(var/give_up = KPAGU_CLEAR_PATH)
 		. = ..()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		if(give_up == KPAGU_RETURN_TO_GUARD || give_up == KPAGU_CLEAR_ALL)
 			src.oldtarget_name = src.target?.name

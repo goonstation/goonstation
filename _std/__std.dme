@@ -14,6 +14,7 @@
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "types.dm"					// stuff like childrentypesof()
 #include "datum.dm"					// hasvar()
+#include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
 #include "defines\admin.dm"
@@ -49,6 +50,7 @@
 #include "defines\ephemeral.dm"
 #include "defines\floors.dm"
 #include "defines\fluid.dm"
+#include "defines\food.dm"
 #include "defines\infernal.dm"
 #include "defines\input.dm"
 #include "defines\item.dm"
@@ -76,6 +78,7 @@
 #include "defines\RCD.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
+#include "defines\security.dm"
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sims.dm"
@@ -85,6 +88,7 @@
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
+#include "defines\switch.dm"
 #include "defines\temperatures.dm"
 #include "defines\time.dm"
 #include "defines\tooltips.dm"
@@ -128,6 +132,7 @@
 #include "macros\reagents.dm"
 #include "macros\spawn.dm"
 #include "macros\strings.dm"
+#include "macros\switched_obj.dm"
 #include "macros\time.dm"
 #include "macros\transfers.dm"
 #include "macros\turf.dm"

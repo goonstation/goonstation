@@ -371,42 +371,61 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
+
+	proc/find_molitz(datum/material/material)
+		if (istype(material, /datum/material/crystal/molitz))
+			return material
+		var/datum/material/interpolated/alloy = material
+		if (istype(alloy))
+			return locate(/datum/material/crystal/molitz) in alloy.parent_materials
+
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
-		if(!istype(owner.material, /datum/material/crystal/molitz))
-			return
-		var/datum/material/crystal/molitz/molitz = owner.material
-		var/turf/target = get_turf(owner)
+		if(temp < 500) return //less than reaction temp
+
+		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
+		if (!istype(molitz))
+			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
+
 		if(molitz.iterations <= 0) return
+
+		var/datum/gas_mixture/air
+		if(hasvar(owner, "air_contents"))
+			air = owner:air_contents
+		if(!istype(air) && hasvar(owner.loc, "air_contents"))
+			air = owner.loc:air_contents
+		if(!istype(air))
+			var/turf/target = get_turf(owner)
+			air = target?.return_air()
+
+		if(!istype(air)) return //all air finding has failed, so stop
+
 		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
-		var/datum/gas_mixture/air = target.return_air()
-		if(!air) return
-
+		//okay, now we've passed all the conditions for gas generation - do that
 		var/datum/gas_mixture/payload = new /datum/gas_mixture
-		payload.temperature = T20C
-		payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 
-		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
+		if(agent_b && air.toxins > MINIMUM_REACT_QUANTITY)
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-			payload.temperature = T0C
+			trace_gas.moles += 0.18 * owner.material_amt //set payload's trace_gas datum
+			payload.oxygen = 15 * owner.material_amt
+			payload.temperature = T0C //reduced temp is supposeed to represent endothermic reaction
+			air.merge(payload) //add it to the target air
 
+			//sparkles
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
 			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
-			trace_gas.moles += 0.18 * owner.material_amt
-			molitz.iterations -= 1
-			payload.oxygen = 15 * owner.material_amt
-
-			target.assume_air(payload)
-		else
+		else //no plasma present, or this is just normal molitz - you get just plain oxygen
+			payload.oxygen = 80 * owner.material_amt
+			payload.temperature = temp
+			air.merge(payload) //add it to the target air
+			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
 			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
-			payload.oxygen = 80 * owner.material_amt
-			molitz.iterations -= 1
 
-			target.assume_air(payload)
 
+		molitz.iterations -= 1
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -436,11 +455,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			molitz.iterations = 2
 			molitz.unexploded = 0
 
-
-/datum/materialProc/molitz_on_hit
-	max_generations = 1
-	execute(var/atom/owner, var/obj/attackobj)
-		owner.material.triggerTemp(owner, 1500)
 
 /datum/materialProc/miracle_add
 	execute(var/location)

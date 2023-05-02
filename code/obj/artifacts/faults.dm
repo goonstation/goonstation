@@ -69,7 +69,9 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
 		playsound(T, 'sound/effects/mag_warp.ogg', 100, 1)
-		user.set_loc(pick(random_floor_turfs))
+		var/turf/destination = pick(random_floor_turfs)
+		logTheThing(LOG_COMBAT, user, "was teleported by artifact fault from [log_loc(user)] to [log_loc(destination)]")
+		user.set_loc(destination)
 
 /datum/artifact_fault/grow
 	// embiggens the artifact

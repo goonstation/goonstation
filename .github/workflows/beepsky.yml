@@ -11,7 +11,7 @@ on:
 jobs:
   lint:
     name: Run Linters
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
@@ -49,17 +49,22 @@ jobs:
 
   compile:
     name: Compile
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Dependencies
+      - name: Install i386 Architecture
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386
+          version: beepsky
 
       - name: Cache BYOND
         uses: actions/cache@v3
@@ -96,7 +101,7 @@ jobs:
 
   compile_full:
     name: "Compile and Lint with Secret Submodule"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     if: |
       ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
     steps:
@@ -105,12 +110,17 @@ jobs:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
-      - name: Install Dependencies
+      - name: Install i386 Architecture
         run: |
           sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
           sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
+
+      - name: Fetch cached i386 packages
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: libstdc++6:i386
+          version: beepsky
 
       - name: Cache BYOND
         uses: actions/cache@v3

@@ -5,7 +5,7 @@
 	targeted = 0
 	cooldown = 300
 	requires_robes = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/DopplegangerGrim.ogg'
 	voice_fem = 'sound/voice/wizard/DopplegangerFem.ogg'
 	voice_other = 'sound/voice/wizard/DopplegangerLoud.ogg'
@@ -64,7 +64,7 @@
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/dummy/spell_doppel/relaymove(var/mob/user, direction)
 	if (!src.can_move) return

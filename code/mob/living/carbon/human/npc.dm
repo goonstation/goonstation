@@ -5,6 +5,12 @@
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
+
+//Put any items that NPCs physically cannot pickup here
+#define IS_NPC_ILLEGAL_ITEM(x) ( \
+		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
+	)
+
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -31,7 +37,8 @@
 		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN(2 SECONDS)
-			ai_init()
+			if (src.is_npc)
+				ai_init()
 
 /mob/living/carbon/human/npc/mutantrace
 	var/spawn_mutantrace
@@ -721,7 +728,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(G)) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -1008,3 +1015,4 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
+#undef IS_NPC_ILLEGAL_ITEM

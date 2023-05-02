@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	icon_state = "fab-general"
 	var/icon_base = "general" //! This is used to make icon state changes cleaner by setting it to "fab-[icon_base]"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	power_usage = 200
 	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
@@ -63,6 +63,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
+	var/list/stored_materials_by_id = list()
 
 	// Production options
 	var/search = null
@@ -317,9 +318,33 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#products {
 				position: absolute;
 				left: 0;
-				top: 0;
+				top:50px;
 				width: 73%;
 				padding: 0.25em;
+			}
+			.tabs {
+				position:fixed;
+				background-color: inherit;
+				z-index:1;
+				top: 0;
+				left: 0;
+			}
+			.tabs a {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				padding: 14px 16px;
+                margin-left: 10px;
+                margin-top: 6px;
+                margin-bottom: 6px;
+				border-radius: 5px;
+			}
+			.tabs a:hover {
+				background-color: #ddd;
+			}
+			.tabs a.active {
+				background-color: #ccc;
 			}
 
 			.queue, .product {
@@ -456,7 +481,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.Browse(dat, "window=manufact;size=750x500")
 			onclose(user, "manufact")
 			return
-
+		dat += "<div class='tabs'>"
+		for (var/category in list("All") + src.categories)
+			var/actual_category = category == "All" ? null : category
+			dat += "<a [actual_category == src.category ? "class='active" : ""]' href='?src=\ref[src];category=[category]'>[category]</a>"
+		dat += "</div>"
 		dat += "<div id='products'>"
 
 		// Get the list of stuff we can print ...
@@ -524,8 +553,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		//Search
 		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
-		//Filter
-		dat += " <A href='?src=\ref[src];category=1'>(Filter: \"[istext(src.category) ? html_encode(src.category) : "----"]\")</A><HR>"
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
@@ -678,8 +705,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.search = null
 
 			if (href_list["category"])
-				var/selection = input("Select which category to filter by.","Manufacturing Unit") as null|anything in list("REMOVE FILTER") + src.categories
-				src.category = ((selection == "REMOVE FILTER") ? null : selection)
+				var/category = href_list["category"]
+				if (category == "All")
+					src.category = null
+				else if (category in src.categories)
+					src.category = category
 
 			if (href_list["continue"])
 				if (length(src.queue) < 1)
@@ -847,7 +877,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							var/list/accounts = \
 								data_core.bank.find_records("job", "Chief Engineer") + \
 								data_core.bank.find_records("job", "Chief Engineer") + \
-								data_core.bank.find_records("job", "Engineer")
+								data_core.bank.find_records("job", "Miner")
 
 
 							var/datum/signal/minerSignal = get_free_signal()
@@ -1590,6 +1620,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
 		if (pattern == "RUB")
 			return mat.material_flags & MATERIAL_RUBBER
+		if (pattern == "WOOD")
+			return mat.material_flags & MATERIAL_WOOD
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num_safe(copytext(pattern, 5))
@@ -1661,7 +1693,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for (var/mat_id in mats_available)
 				if (mats_available[mat_id] < amount)
 					continue
-				var/datum/material/mat = getMaterial(mat_id)
+				var/datum/material/mat = src.get_our_material(mat_id)
 				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
 					mats_used[pattern] = mat_id
 					mats_available[mat_id] -= amount
@@ -1941,10 +1973,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 	<tbody>
 		"}
 		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = getMaterial(mat_id)
+			var/datum/material/mat = src.get_our_material(mat_id)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[mat_id]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
 			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
 		</tr>
 			"}
@@ -2115,10 +2147,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 			for(var/obj/item/material_piece/M in src.contents)
 				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
 					M.change_stack_amount(P.amount)
-					src.update_resource_amount(M.material.mat_id, P.amount * 10)
+					src.update_resource_amount(M.material.mat_id, P.amount * 10, M.material)
 					qdel(P)
 					return
-			src.update_resource_amount(P.material.mat_id, P.amount * 10)
+			src.update_resource_amount(P.material.mat_id, P.amount * 10, P.material)
 
 		O.set_loc(src)
 
@@ -2131,7 +2163,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src] is destroyed!</b></span>")
 				playsound(src.loc, src.sound_destroyed, 50, 2)
-				robogibs(src.loc, null)
+				robogibs(src.loc)
 				qdel(src)
 				return
 			if (src.health <= 70 && !src.malfunction && prob(33))
@@ -2149,8 +2181,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/update_resource_amount(mat_id, amt)
+	proc/update_resource_amount(mat_id, amt, datum/material/mat_added=null)
 		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
+		if (src.resource_amounts[mat_id] == 0)
+			stored_materials_by_id -= mat_id
+		else if (mat_added && !(mat_id in stored_materials_by_id))
+			stored_materials_by_id[mat_id] = copyMaterial(mat_added)
+
+	proc/get_our_material(mat_id)
+		if (mat_id in src.stored_materials_by_id)
+			return copyMaterial(src.stored_materials_by_id[mat_id])
+		return getMaterial(mat_id)
 
 	proc/claim_free_resources()
 		if (src.deconstruct_flags & DECON_BUILT)
@@ -2227,10 +2268,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/welder,
-		/datum/manufacture/soldering,
 		/datum/manufacture/flashlight,
 		/datum/manufacture/weldingmask,
-		/datum/manufacture/multitool,
 		/datum/manufacture/metal,
 		/datum/manufacture/metalR,
 		/datum/manufacture/rods2,
@@ -2288,6 +2327,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/bullet_smoke,
 		/datum/manufacture/stapler,
 		/datum/manufacture/bagpipe,
+		/datum/manufacture/fiddle,
 		/datum/manufacture/whistle)
 
 #define MALFUNCTION_WIRE_CUT 15 & ~(1<<WIRE_MALF)
@@ -2505,15 +2545,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
 		/datum/manufacture/mechdropper,
-		/datum/manufacture/biosuit,
-		/datum/manufacture/labcoat,
-		/datum/manufacture/jumpsuit_white,
 		/datum/manufacture/patient_gown,
 		/datum/manufacture/blindfold,
 		/datum/manufacture/muzzle,
-		/datum/manufacture/gasmask,
-		/datum/manufacture/latex_gloves,
-		/datum/manufacture/shoes_white,
+		/datum/manufacture/audiotape,
+		/datum/manufacture/audiolog,
 		/datum/manufacture/rods2,
 		/datum/manufacture/metal,
 		/datum/manufacture/glass)
@@ -2548,6 +2584,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+		/datum/manufacture/lightengspacesuit,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
@@ -2856,7 +2893,51 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/fireaxe,
 		/datum/manufacture/shovel)
 
+/obj/machinery/manufacturer/engineering
+	name = "Engineering Specialist Manufacturer"
+	desc = "This one produces specialist engineering devices."
+	icon_state = "fab-engineering"
+	icon_base = "engineering"
+	free_resource_amt = 2
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/copper,
+		/obj/item/material_piece/glass)
+	available = list(
+		/datum/manufacture/screwdriver/yellow,
+		/datum/manufacture/wirecutters/yellow,
+		/datum/manufacture/wrench/yellow,
+		/datum/manufacture/crowbar/yellow,
+		/datum/manufacture/extinguisher,
+		/datum/manufacture/welder/yellow,
+		/datum/manufacture/soldering,
+		/datum/manufacture/multitool,
+		/datum/manufacture/t_scanner,
+		/datum/manufacture/engivac,
+		/datum/manufacture/lampmanufacturer,
+		/datum/manufacture/breathmask,
+		/datum/manufacture/engspacesuit,
+		/datum/manufacture/lightengspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+		/datum/manufacture/flippers,
+#endif
+		/datum/manufacture/mechanics/laser_mirror,
+		/datum/manufacture/mechanics/laser_splitter,
+		/datum/manufacture/interdictor_kit,
+		/datum/manufacture/interdictor_board_standard,
+		/datum/manufacture/interdictor_board_nimbus,
+		/datum/manufacture/interdictor_board_zephyr,
+		/datum/manufacture/interdictor_board_devera,
+		/datum/manufacture/interdictor_rod_lambda,
+		/datum/manufacture/interdictor_rod_sigma,
+		/datum/manufacture/interdictor_rod_epsilon,
+		/datum/manufacture/interdictor_rod_phi
+	)
 
+	New()
+		. = ..()
+		if (isturf(src.loc)) //not inside a frame or something
+			new /obj/item/paper/book/from_file/interdictor_guide(src.loc)
 
 /// Manufacturer blueprints can be read by any manufacturer unit to add the referenced object to the unit's production options.
 /obj/item/paper/manufacturer_blueprint

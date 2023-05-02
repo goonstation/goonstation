@@ -33,7 +33,7 @@
 /obj/decal/skateboardpopup
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	layer = MOB_LAYER + 2
 	icon = 'icons/effects/96x32.dmi'
@@ -221,7 +221,7 @@
 	in_bump = 0
 	return
 
-/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	if (!src.rider)
 		return
 

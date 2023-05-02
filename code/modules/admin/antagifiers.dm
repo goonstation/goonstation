@@ -3,7 +3,7 @@
 	//var/allowAntagStacking = 0 // If set to 1, permits people to use multiple traitorifier types TODO: Figure out how to make this work intelligently
 	name = "An Offer You Couldn't Refuse"
 	desc = "In this economy you'd be stupid to turn this down."
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda-s"
 	var/attachedObjective = "For the free market!"
@@ -19,8 +19,8 @@
 			return
 		*/
 		if (M?.mind && !M.mind.special_role)
-			makeAntag(M)
 			new /datum/objective(attachedObjective, M.mind)
+			makeAntag(M)
 			uses--
 			if (uses == 0)
 				qdel(src)
@@ -73,9 +73,8 @@
 	icon_state = "machobelt"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_WRESTLER
 		M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
-		M.make_wrestler(1)
+		M.mind.add_antagonist(ROLE_WRESTLER)
 
 /obj/traitorifier/hunter
 	name = "Ferocious Alien Skull"
@@ -98,7 +97,7 @@
 
 	makeAntag(mob/M as mob)
 		M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-		M.mind.add_antagonist(ROLE_WEREWOLF)
+		M.mind?.add_antagonist(ROLE_WEREWOLF)
 
 /obj/traitorifier/omnitraitor
 	name = "Ugly Amalgamation"
@@ -108,16 +107,7 @@
 	icon_state = "1old"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_OMNITRAITOR
-		M.verbs += /client/proc/gearspawn_traitor
-		M.verbs += /client/proc/gearspawn_wizard
-		M.make_changeling()
-		M.make_vampire()
-		M.make_werewolf()
-		M.make_wrestler(1)
-		M.make_grinch()
-		M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
-		M.show_antag_popup("traitoromni")
+		M.mind.add_antagonist(ROLE_OMNITRAITOR)
 
 /obj/traitorifier/wraith
 	name = "Spooky Pool"
@@ -127,18 +117,18 @@
 	attachedObjective = "Make them suffer."
 
 	makeAntag(mob/M as mob)
-		M.make_wraith()
+		M.mind?.add_antagonist(ROLE_WRAITH)
 
 /obj/traitorifier/blob
 	name = "Viscous Puddle"
 	desc = "This does not look refreshing."
 	icon = 'icons/mob/blob.dmi'
-	icon_state = "nucleus"
+	icon_state = "0"
 	color = "#44FF44"
 	attachedObjective = "GET FAT"
 
 	makeAntag(mob/M as mob)
-		M.make_blob()
+		M.mind?.add_antagonist(ROLE_BLOB)
 
 
 
@@ -185,7 +175,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
-			M.mind.add_antagonist(ROLE_WEREWOLF, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			M.mind.add_antagonist(ROLE_WEREWOLF, do_vr = TRUE)
 
 	wrestler
 		name = "WRESTL~1.EXE"
@@ -195,7 +185,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>Time to step into the squared circle, son.</span>")
-			M.make_wrestler(1)
+			M.mind.add_antagonist(ROLE_WRESTLER, do_vr = TRUE)
 
 	wizard
 		name = "WIZARD.EXE"
@@ -205,9 +195,7 @@
 
 		makeAntag(mob/living/carbon/human/M as mob)
 			boutput(M, "<span class='combat'>You're a wizard, <s>Harry</s> [M]! Don't forget to pick your spells.</span>")
-			M.mind?.add_antagonist(ROLE_WIZARD, do_equip = FALSE, do_relocate = FALSE, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
-			var/datum/antagonist/wizard/antag_role = M.mind?.get_antagonist(ROLE_WIZARD)
-			antag_role.give_equipment(TRUE)
+			M.mind?.add_antagonist(ROLE_WIZARD, do_vr = TRUE)
 
 	nuclear
 		name = "NUKE_TKN.EXE"
@@ -228,5 +216,4 @@
 
 		makeAntag(mob/living/carbon/human/M)
 			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
-			// No need to specify other arguments here; pseudo does most of this on its own
-			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE, respect_mutual_exclusives = FALSE)
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_vr = TRUE)

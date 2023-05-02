@@ -481,6 +481,7 @@
 		if (target.mind)
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
+		target.mind = null
 		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
@@ -505,7 +506,7 @@
 		if(!target)
 			system.reply("Valid mob not found.", "user")
 			return FALSE
-		target.revive()
+		target.full_heal()
 		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
@@ -628,6 +629,31 @@
 		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/check_vpn_whitelist
+	name = "checkvpnwhitelist"
+	help_message = "Checks if a given ckey is VPN whitelisted"
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, ckey)
+		var/list/response
+		try
+			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey), forceResponse = 1)
+		catch(var/exception/e)
+			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
+			return
+		if (!islist(response))
+			system.reply("Failed to query vpn whitelist, did not receive response from API.")
+		if (response["error"])
+			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
+		else if ((response["success"]))
+			if (response["whitelisted"])
+				system.reply("ckey [ckey] is VPN whitelisted. Whitelisted by [response["akey"] ? response["akey"] : "unknown admin"]")
+			else
+				system.reply("ckey [ckey] is not VPN whitelisted.")
+		else
+			system.reply("Failed to query vpn whitelist, received invalid response from API.")
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"

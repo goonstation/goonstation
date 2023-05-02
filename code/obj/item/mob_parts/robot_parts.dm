@@ -10,20 +10,22 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
-	accepts_normal_human_overlays = 0
-	skintoned = 0
+	accepts_normal_human_overlays = FALSE
+	skintoned = FALSE
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
 
-	decomp_affected = 0
+	decomp_affected = FALSE
 	var/robot_movement_modifier
 
 	var/max_health = 100
 	var/dmg_blunt = 0
 	var/dmg_burns = 0
-	var/weight = 0     // for calculating speed modifiers
-	var/powerdrain = 0 // does this part consume any extra power
+	/// for calculating speed modifiers
+	var/weight = 0
+	/// does this part consume any extra power
+	var/powerdrain = 0
 
 	force = 6
 	stamina_damage = 40
@@ -53,12 +55,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(60 to INFINITY)
 				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
+	getMobIcon()
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
-		return standImage
+		src.bodyImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
+		return bodyImage
 
 	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
@@ -171,9 +173,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
-
-		// Screen head specific
-	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
+	// Screen head specific
+	/// lod (light-on-dark) or dol (dark-on-light)
+	var/mode = "lod"
 	var/face = "happy"
 
 	examine()
@@ -394,7 +396,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	icon_state_base = "body"
 	icon_state = "body-generic"
 	slot = "chest"
-	//These vars track the wiring/cell that the chest needs before you can stuff it on a frame
+	// These vars track the wiring/cell that the chest needs before you can stuff it on a frame
 	var/wires = 0
 	var/obj/item/cell/cell = null
 
@@ -498,7 +500,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	max_health = 60
 	can_hold_items = 1
-	accepts_normal_human_overlays = 1
+	accepts_normal_human_overlays = TRUE
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
@@ -886,7 +888,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "robot frame"
 	icon_state = "robo_suit"
 	max_health = 5000
-	var/syndicate = 0 ///This will make the borg a syndie one
+	/// This will make the borg a syndie one
+	var/syndicate = FALSE
 	var/emagged = 0
 	var/obj/item/parts/robot_parts/head/head = null
 	var/obj/item/parts/robot_parts/chest/chest = null
@@ -895,6 +898,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/obj/item/parts/robot_parts/l_leg = null
 	var/obj/item/parts/robot_parts/r_leg = null
 	var/obj/item/organ/brain/brain = null
+	appearance_flags = KEEP_TOGETHER
 
 	New()
 		..()
@@ -1067,25 +1071,47 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 	update_icon()
-		src.overlays = null
-		if(src.chest) src.overlays += image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, OBJ_LAYER, 2)
-		if(src.head) src.overlays += image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, OBJ_LAYER, 2)
+		if(src.chest)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, FLOAT_LAYER, 2),"chest")
+		else
+			src.UpdateOverlays(null,"chest")
+
+		if(src.head)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
+		else
+			src.UpdateOverlays(null,"head")
 
 		if(src.l_leg)
-			if(src.l_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.l_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+		else
+			src.UpdateOverlays(null,"l_leg")
 
 		if(src.r_leg)
-			if(src.r_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.r_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+		else
+			src.UpdateOverlays(null,"r_leg")
 
 		if(src.l_arm)
-			if(src.l_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.l_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+		else
+			src.UpdateOverlays(null,"l_arm")
 
 		if(src.r_arm)
-			if(src.r_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.r_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+		else
+			src.UpdateOverlays(null,"r_arm")
 
 	proc/check_completion()
 		if (src.chest && src.head)
@@ -1180,7 +1206,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		// final check to guarantee the icon shows up for everyone
 		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((borg.mind in ticker.mode:revolutionaries) || (borg.mind in ticker.mode:head_revolutionaries))
+			if ((borg.mind?.get_antagonist(ROLE_REVOLUTIONARY)) || (borg.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
 				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		borg.update_appearance()
 
@@ -1188,7 +1214,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		return
 
 /obj/item/parts/robot_parts/robot_frame/syndicate
-	syndicate = 1
+	syndicate = TRUE
 
 // UPGRADES
 // Cyborg

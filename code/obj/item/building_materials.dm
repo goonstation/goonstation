@@ -291,6 +291,9 @@ MATERIAL
 		if (src?.material?.mat_id == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+		if (src?.material?.material_flags & MATERIAL_WOOD)
+			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
 		.["itemList"] = availableRecipes
 
@@ -488,6 +491,28 @@ MATERIAL
 				var/datum/material/M = getMaterial("steel")
 				src.set_reinforcement(M)
 
+/obj/item/sheet/wood
+
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "sheet-metal"
+	amount = 10
+
+	New()
+		..()
+		var/datum/material/M = getMaterial("wood")
+		src.setMaterial(M)
+
+/obj/item/sheet/bamboo
+
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "sheet-metal"
+	amount = 10
+
+	New()
+		..()
+		var/datum/material/M = getMaterial("bamboo")
+		src.setMaterial(M)
+
 // RODS
 /obj/item/rods
 	name = "rods"
@@ -681,7 +706,7 @@ MATERIAL
 	desc = "A human head impaled on a spike, dim-eyed, grinning faintly, blood blackening between the teeth."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "head_spike"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/list/heads = list()
 	var/head_offset = 0 //so the ones at the botton don't teleport upwards when a head is removed
@@ -1047,6 +1072,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/reinforced_metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name
@@ -1241,6 +1267,84 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 
 		glass
 			icon_state = "sheet-g_5"
+
+	wood
+		fl_tiles
+			recipe_id = "fl_tiles_wood"
+			craftedType = /obj/item/tile
+			name = "Floor Tile"
+			yield = 4
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/metal.dmi'
+			icon_state = "tile_5"
+		stool
+			recipe_id = "wood_stool"
+			craftedType = /obj/stool/wooden/constructed
+			name = "Stool"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "wstool"
+		chair
+			recipe_id = "wood_chair"
+			craftedType = /obj/stool/chair/wooden/constructed
+			name = "Chair"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "chair_wooden"
+		table
+			recipe_id = "wood_table"
+			craftedType = /obj/item/furniture_parts/table/wood
+			name = "Table Parts"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/table_wood.dmi'
+			icon_state = "table_parts"
+		dresser
+			recipe_id = "wood_dresser"
+			craftedType = /obj/storage/closet/dresser
+			name = "dresser"
+			sheet_cost = 2
+			icon = 'icons/obj/large_storage.dmi'
+			icon_state = "dresser"
+		coffin
+			recipe_id = "coffin"
+			craftedType = /obj/storage/closet/coffin
+			name = "coffin"
+			sheet_cost = 2
+			icon = 'icons/obj/large_storage.dmi'
+			icon_state = "coffin"
+		construct
+			recipe_id = "wood_construct"
+			craftedType = /obj/structure/girder
+			name = "Wall Girders"
+			sheet_cost = 2
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "girder$$wood"
+		barricade
+			recipe_id = "barricade"
+			craftedType = /obj/structure/woodwall
+			name = "Barricade"
+			sheet_cost = 5
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "woodwall"
+		wood_door
+			recipe_id = "wood_door"
+			craftedType = /obj/machinery/door/unpowered/wood
+			name = "Door"
+			sheet_cost = 3
+			icon = 'icons/obj/doors/door_wood.dmi'
+			icon_state = "door1"
+		bookshelf
+			recipe_id = "bookshelf"
+			craftedType = /obj/bookshelf
+			name = "Bookshelf"
+			sheet_cost = 5
+			icon = 'icons/obj/furniture/bookshelf.dmi'
+			icon_state = "bookshelf_small"
+		wood_double_door
+			recipe_id = "wood_double_door"
+			craftedType = /obj/machinery/door/unpowered/wood/pyro
+			name = "Double Door"
+			sheet_cost = 6
+			icon = 'icons/obj/doors/SL_doors.dmi'
+			icon_state = "wood1"
 
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)

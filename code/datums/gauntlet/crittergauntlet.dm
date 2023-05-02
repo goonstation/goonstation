@@ -52,7 +52,7 @@
 /obj/stagebutton
 	name = "Gauntlet Staging Button"
 	desc = "By pressing this button, you begin the staging process. No more new attendees will be accepted."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/effects/VR.dmi'
@@ -540,7 +540,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 	invisibility = INVIS_ALWAYS
 	name = "Observable"
 	desc = "observable"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/buildmode.dmi'
@@ -998,7 +998,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 /obj/zapdummy
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 /datum/gauntletWave
@@ -1041,7 +1041,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/mimic)
+		types = list(/mob/living/critter/mimic)
 
 	meaty
 		name = "Meat Thing"
@@ -1083,7 +1083,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Bear"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/bear)
+		types = list(/mob/living/critter/bear)
 
 	tomato
 		name = "Killer Tomato"
@@ -1125,7 +1125,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Skeleton"
 		point_cost = 3
 		count = 5
-		types = list(/obj/critter/magiczombie)
+		types = list(/mob/living/critter/skeleton)
 
 	zombie
 		name = "Zombie"
@@ -1185,13 +1185,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Brullbar"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/brullbar)
+		types = list(/mob/living/critter/brullbar)
 
 	brullbarking
 		name = "Brullbar King"
 		point_cost = 6
 		count = 0.05
-		types = list(/obj/critter/brullbar/king)
+		types = list(/mob/living/critter/brullbar/king)
 
 	badbot
 		name = "Security Zapbot"
@@ -1203,13 +1203,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Fermid"
 		point_cost = 3
 		count = 3
-		types = list(/obj/critter/fermid)
+		types = list(/mob/living/critter/fermid)
 
 	lion
 		name = "Lion"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/lion)
+		types = list(/mob/living/critter/lion)
 
 	maneater
 		name = "Man Eater"

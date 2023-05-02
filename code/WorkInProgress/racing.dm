@@ -16,7 +16,7 @@
 	name = "Booster"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "boosterstrip"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -39,7 +39,7 @@
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
 	icon = 'icons/Testing/atmos_testing.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS
@@ -69,7 +69,7 @@
 	name = "butt"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "buttshell"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/source_car = null
@@ -101,7 +101,7 @@
 	name = "superbutt"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "superbuttshell"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/source_car = null
@@ -145,7 +145,7 @@
 	name = "banana peel"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "banana-peel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/delete = 1
@@ -179,7 +179,7 @@
 	name = "POWERUP!"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "powerup"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -195,7 +195,7 @@
 	desc = "Click to use"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER
 	screen_loc = "NORTH,WEST"
 	var/obj/racing_clowncar/owner
@@ -217,7 +217,7 @@
 /obj/powerup/bananapeel
 	name = "Bananapeel"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "banana"
 	screen_loc = "NORTH,WEST"
 
@@ -239,7 +239,7 @@
 /obj/powerup/butt
 	name = "Butt"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "butt"
 	screen_loc = "NORTH,WEST"
 
@@ -269,7 +269,7 @@
 /obj/powerup/superbutt
 	name = "Superbutt"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "superbutt"
 	screen_loc = "NORTH,WEST"
 
@@ -299,7 +299,7 @@
 /obj/powerup/mushroom
 	name = "Mushroom"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "mushroom"
 	screen_loc = "NORTH,WEST"
 
@@ -322,7 +322,7 @@
 /obj/powerup/superboost
 	name = "Super Boost"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "superboost"
 	screen_loc = "NORTH,WEST"
 
@@ -348,7 +348,7 @@
 	desc = ""
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "clowncar"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 

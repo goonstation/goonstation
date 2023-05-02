@@ -195,6 +195,15 @@
 				attack_hand()
 				attack()
 
+				science //For the science module
+					name = "box shaped artifact form dispensor"
+					desc = "A box full of forms for classifying alien artifacts"
+					icon_state = "item_box"
+					icon_closed = "item_box"
+					icon_open = "item_box-open"
+					set_contained_items()
+						contained_items = list(/obj/item/sticker/postit/artifact_paper)
+
 			stickers_limited
 				desc = "This box contains a small assortment of stickers. Remember to share!"
 				item_amount = 10

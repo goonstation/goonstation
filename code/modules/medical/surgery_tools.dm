@@ -206,8 +206,8 @@ CONTAINS:
 		var/hisher = his_or_her(user)
 		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
-		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
+		playsound(user.loc, 'sound/effects/espoon_suicide.ogg', 50, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -626,13 +626,8 @@ TYPEINFO(/obj/item/robodefibrillator)
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
 
-	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
-		if (parent)
-			parent.put_back_defib(M)
-		else
-			qdel(src)
-
 	disposing()
+		parent?.defib = null
 		parent = null
 		..()
 
@@ -644,14 +639,16 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon = 'icons/obj/compact_machines.dmi'
 	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
+	status = REQ_PHYSICAL_ACCESS
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, .proc/handle_move)
 
 	emag_act()
 		..()
@@ -663,21 +660,18 @@ TYPEINFO(/obj/machinery/defib_mount)
 			defib = null
 		..()
 
+	process()
+		handle_move(src.defib.loc)
+		..()
+
 	update_icon()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
 			icon_state = "defib0"
 
-	process()
-		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(get_turf(src.defib), get_turf(src)) > 0)
-				if (isliving(src.defib.loc))
-					put_back_defib(src.defib.loc)
-		..()
-
 	attack_hand(mob/living/user)
-		if (isAI(user) || isintangible(user) || isobserver(user)) return
+		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
 		user.lastattacked = src
 		..()
 		if(!defib || QDELETED(defib))
@@ -688,35 +682,28 @@ TYPEINFO(/obj/machinery/defib_mount)
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/handle_move, TRUE)
 		UpdateIcon()
-
-		//set move callback (when user moves, defib go back)
-		if (islist(user.move_laying))
-			user.move_laying += src
-		else
-			if (user.move_laying)
-				user.move_laying = list(user.move_laying, src.defib)
-			else
-				user.move_laying = list(src.defib)
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
-			src.defib.move_callback(user,get_turf(user),get_turf(src))
+			put_back_defib(user)
 
-	proc/put_back_defib(var/mob/living/M)
+	proc/handle_move(mob/living/user)
+		if (src.defib && src.defib.loc != src)
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				put_back_defib(user)
+
+	proc/put_back_defib(mob/living/M)
 		if (src.defib)
-			M.drop_item(defib)
+			if (isliving(src.defib.loc))
+				M.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
 			src.defib.set_loc(src)
 			src.defib.parent = null
-		if (islist(M.move_laying))
-			M.move_laying -= src.defib
-		else
-			M.move_laying = null
 
-		playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
-		UpdateIcon()
+			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
+			UpdateIcon()
 
 
 /* ================================================ */
@@ -847,7 +834,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	update_icon()
 		switch (src.uses)
-			if (0 to -INFINITY)
+			if (-INFINITY to 0)
 				src.icon_state = "bandage-item-0"
 			if (1 to 2)
 				src.icon_state = "bandage-item-1"
@@ -1417,7 +1404,7 @@ TYPEINFO(/obj/item/device/light/flashlight/penlight)
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tray"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/max_to_move = 10
 	p_class = 1.5
 

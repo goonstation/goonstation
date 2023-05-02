@@ -9,18 +9,28 @@ ABSTRACT_TYPE(/obj/item/parts)
 	c_flags = ONBELT
 	override_attack_hand = 0
 	var/skin_tone = "#FFFFFF"
-	var/slot = null // which part of the person or robot suit does it go on???????
-	var/streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
-	var/streak_descriptor = "bloody" //bloody, oily, etc
-	var/datum/limb/limb_data = null // used by arms for attack_hand overrides
-	var/limb_type = /datum/limb // the type of limb_data
-	var/obj/item/remove_object = null //set to create an item when severed rather than removing the arm itself
-	var/side = "left" //used for streak direction
-	var/remove_stage = 0 //2 will fall off, 3 is removed
-	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
-	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+	/// which part of the person or robot suit does it go on???????
+	var/slot = null
+	/// what streaks everywhere when it's cut off?
+	var/streak_decal = /obj/decal/cleanable/blood
+	/// bloody, oily, etc
+	var/streak_descriptor = "bloody"
+	/// used by arms for attack_hand overrides
+	var/datum/limb/limb_data = null
+	/// the type of limb_data
+	var/limb_type = /datum/limb
+	/// set to create an item when severed rather than removing the arm itself
+	var/obj/item/remove_object = null
+	/// used for streak direction
+	var/side = "left"
+	/// 2 will fall off, 3 is removed. This should use defines honestly but eh.
+	var/remove_stage = 0
+	///if the only icon is above the clothes layer ie. in the handlistPart list
+	var/no_icon = FALSE
+	/// is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+	var/skintoned = TRUE
 
-	/// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
+	// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
 	/// The icon of this overlay
 	var/severed_overlay_1_icon
 	/// The state of this overlay
@@ -46,28 +56,39 @@ ABSTRACT_TYPE(/obj/item/parts)
 	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
 	var/handfoot_overlay_1_color
 
-	var/easy_attach = 0 //Attachable without surgery?
+	///Attachable without surgery?
+	var/easy_attach = FALSE
 
-	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
+	/// set to TRUE if this limb has decomposition icons
+	var/decomp_affected = TRUE
 	var/current_decomp_stage_l = -1
 	var/current_decomp_stage_s = -1
 
 	var/mob/living/holder = null
 
-	var/image/standImage	// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
-	var/image/lyingImage	// Appears to be unused, since we just rotate the sprite through animagic
-	var/partIcon = 'icons/mob/human.dmi'	// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
+	/// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
+	var/image/bodyImage
+	/// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
+	var/partIcon = 'icons/mob/human.dmi'
+	/// The part of the icon state that differs per part, ie "brullbar" for brullbar arms
+	var/partIconModifier = null
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
-	var/handlistPart	// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
-	var/partlistPart	// Ditto, but for foot sprites, presumably
-	var/datum/bone/bones = null // for medical crap
+	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
+	var/handlistPart
+	/// Used by getPartIconState to determine the attached-to-mob-sprite non-hand sprite
+	var/partlistPart
+	/// for medical crap
+	var/datum/bone/bones = null
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
 	var/siemens_coefficient = 1
-	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
-	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
-	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// for legs, we leave footprints in this style (located in blood.dmi)
+	var/step_image_state = null
+	/// for avoiding istype in update icon
+	var/accepts_normal_human_overlays = TRUE
+	/// When attached, applies this movement modifier
+	var/datum/movement_modifier/movement_modifier
 	/// If TRUE, it'll resist mutantraces trying to change them
 	var/limb_is_unnatural = FALSE
 	/// Limb is not attached to its original owner
@@ -75,7 +96,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 	/// What kind of limb is this? So we dont have to do dozens of typechecks. is bitflags, check defines/item.dm
 	var/kind_of_limb
 	/// Can we roll this limb as a random limb?
-	var/random_limb_blacklisted = 0
+	var/random_limb_blacklisted = FALSE
 
 	New(atom/new_holder)
 		..()
@@ -301,35 +322,25 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if(no_icon) return 0
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
 		var/used_icon = getAttachmentIcon(decomp_stage)
-
-		if (lying)
-			if (src.lyingImage && ((src.decomp_affected && src.current_decomp_stage_l == decomp_stage) || !src.decomp_affected))
-				return src.lyingImage
-			//boutput(world, "Attaching lying limb [src.slot][decomp]_l on decomp stage [decomp_stage].")
-			current_decomp_stage_l = decomp_stage
-			src.lyingImage = image(used_icon, "[src.slot][decomp]_l")
-			return lyingImage
-
-		else
-			if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-				return src.standImage
-			//boutput(world, "Attaching standing limb [src.slot][decomp]_s on decomp stage [decomp_stage].")
-			current_decomp_stage_s = decomp_stage
-			src.standImage = image(used_icon, "[src.slot][decomp]")
-			return standImage
+		if (src.bodyImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.bodyImage
+		current_decomp_stage_s = decomp_stage
+		var/icon_state = "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
+		src.bodyImage = image(used_icon, icon_state)
+		return bodyImage
 
 	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	proc/getHandIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -337,7 +348,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	proc/getPartIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"

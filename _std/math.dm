@@ -9,7 +9,7 @@
 /// ceil, with second argument being the multiple to use for rounding
 #define ceil2(x,y) (-round(-x / y) * y)
 
-#define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
+#define nround(x) ((((x) % 1) >= 0.5) ? round(x) : ceil(x))
 
 /// Returns the sign of the given number (1 or -1)
 #define sign(x) (((x) > 0) - ((x) < 0))
