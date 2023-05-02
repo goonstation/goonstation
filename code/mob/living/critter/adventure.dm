@@ -46,6 +46,16 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && prob(5))
+			if (src.ai.current_task == "wandering")
+				src.say(pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?"))
+			else if (prob(50))
+				src.say(pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God."))
+
 	critter_basic_attack(var/mob/target)
 		if (target.lying || is_incapacitated(target))
 			src.set_a_intent(INTENT_HELP)
@@ -60,7 +70,6 @@
 				src.say( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
 			else
 				src.say( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
-
 
 	seek_target(var/range = 5)
 		. = list()
@@ -98,14 +107,6 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
-
-/*
-	Extralines I haven't used but can be later, here to preserve them.
-	orginally used for obj critter thinking messages
-
-	src.say(pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?"))
-	src.say(pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God."))
-*/
 
 ////////////// Shades ////////////////
 /mob/living/critter/shade
@@ -151,6 +152,19 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && prob(5))
+			if (src.ai.current_task == "wandering")
+				src.speak(pick("namlugallu ha-lam ina lugal-šaà-lá-sù...","ù da-rí-sè šeš...","á-e-me-en ìri-zé-er igi-bad!","inim...kí ina ki-dul, ina e-ùr, ina ki-bad-rá, hé-àm-me-àm...", "ìri-kúr...díb, ìri...ar, e-zé...", "galam, gamar ganzer, gíbil píri! ul, ul! súkud..."))
+				// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
+			else if (prob(50))
+				src.speak(pick("ina urudu e-re-sì-ki-in kala libir arza ina SÚKUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lúní-áa...","bar...gub ina bàd-šul-hi...","šidim ak ina libir išgal, diir ak ina agrun, ul-šár-ra, zà-mí!", "ùru pàd gíg, ina gidim niin!"))
+				// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants..., step outside the outer wall
+				// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
+
 	critter_basic_attack(var/mob/target)
 		src.chase_lines(target)
 		..()
@@ -188,18 +202,6 @@
 	proc/speak(var/message)
 		src.say(message)
 		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
-
-/*
-	Extralines I haven't used but can be later, here to preserve them.
-	orginally used for obj critter thinking messages
-
-	src.speak(pick("namlugallu ha-lam ina lugal-šaà-lá-sù...","ù da-rí-sè šeš...","á-e-me-en ìri-zé-er igi-bad!","inim...kí ina ki-dul, ina e-ùr, ina ki-bad-rá, hé-àm-me-àm...", "ìri-kúr...díb, ìri...ar, e-zé...", "galam, gamar ganzer, gíbil píri! ul, ul! súkud..."))
-	// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
-
-	src.speak(pick("ina urudu e-re-sì-ki-in kala libir arza ina SÚKUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden lúní-áa...","bar...gub ina bàd-šul-hi...","šidim ak ina libir išgal, diir ak ina agrun, ul-šár-ra, zà-mí!", "ùru pàd gíg, ina gidim niin!"))
-	// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants...// step outside the outer wall
-	// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
-*/
 
 /mob/living/critter/shade/crew
 	name = "faded scientist"
