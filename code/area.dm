@@ -1344,6 +1344,7 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/vault
 	name = "Secure Vault"
+
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1441,6 +1442,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/adrift_cargorouter
 	name = "Adrift Cargo Router"
 	icon_state = "yellow"
+
+/area/prefab/larrys_laundry
+	name = "Larry's Laundry"
+	icon_state = "green"
 
 // Sealab trench areas //
 
@@ -4021,8 +4026,9 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = TRUE
 				F.UpdateIcon()
-		for (var/obj/machinery/camera/C in src)
-			cameras += C
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == src)
+				cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)

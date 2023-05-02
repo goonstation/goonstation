@@ -121,7 +121,7 @@
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
 			if (!src.target && istype(T, /turf/simulated/floor) && !AR.teleport_blocked && istype(AR, /area/station) && \
-					!istype(AR, /area/station/solar) && !T.density && T.z == 1)
+					!istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore) && !T.density && T.z == 1)
 				var/ok = TRUE
 				for(var/atom/A in T)
 					if(A.density)

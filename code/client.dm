@@ -443,18 +443,19 @@
 #ifdef LIVE_SERVER
 		// check client version validity
 		if (src.byond_version < 514 || src.byond_build < 1584)
+			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
 				src << link("http://www.byond.com/download/")
-			else // warn out of date clients
-				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
-			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-/*
+	#if (BUILD_TIME_UNIX < 1682899200) //cut off may 1st, 2023
+			else
+				tgui_alert(src, "Version enforcement will be enabled May 1st, 2023. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+	#else
 			// kick out of date clients
-			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
+			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			del(src)
 			tgui_process.close_user_uis(src.mob)
 			return
-*/
+	#endif
 		if (src.byond_version >= 515)
 			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
 				src << link("http://www.byond.com/download/")

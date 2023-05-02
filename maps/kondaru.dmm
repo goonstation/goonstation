@@ -9850,7 +9850,8 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor{
 	id = "ai_core";
-	name = "AI Core Shield"
+	name = "AI Core Shield";
+	dir = 10
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -36174,6 +36175,15 @@
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
+"duj" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "dup" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/primary/east)
@@ -38594,9 +38604,7 @@
 /area/station/science/lobby)
 "flZ" = (
 /obj/random_item_spawner/junk/one,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "fme" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -40852,9 +40860,7 @@
 	icon_state = "2-5"
 	},
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "hdb" = (
 /obj/stool/chair/red{
@@ -45218,9 +45224,7 @@
 	icon_state = "8-10"
 	},
 /obj/item/storage/box/cablesbox,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "lkW" = (
 /obj/machinery/conveyor/EW{
@@ -45694,9 +45698,7 @@
 /area/station/maintenance/south)
 "lDg" = (
 /obj/landmark/artifact,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "lDS" = (
 /obj/table/auto,
@@ -46045,6 +46047,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
+"lRn" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 8
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "lRp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -50652,6 +50663,15 @@
 	dir = 4
 	},
 /area/station/security/brig/solitary)
+"pYx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 6
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "pZc" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -52120,9 +52140,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "rsS" = (
 /obj/machinery/disposal/brig{
@@ -56957,6 +56975,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
+"vEV" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 9
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -127405,8 +127432,8 @@ anX
 aAG
 aCK
 aEB
-aGE
-aGE
+vEV
+lRn
 aGE
 aLN
 aCK
@@ -128009,9 +128036,9 @@ anX
 aAG
 aDq
 aEJ
-aGE
-aGE
-aGE
+duj
+lRn
+pYx
 aOs
 aQX
 aAG

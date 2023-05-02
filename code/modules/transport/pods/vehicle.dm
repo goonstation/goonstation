@@ -442,6 +442,23 @@
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		if (isitem(AM))
+			var/obj/item/I = AM
+			switch(I.hit_type)
+				if (DAMAGE_BLUNT, DAMAGE_CRUSH)
+					src.health -= AM.throwforce / 1.5
+				if (DAMAGE_CUT, DAMAGE_STAB)
+					src.health -= AM.throwforce / 2
+				if (DAMAGE_BURN)
+					src.health -= AM.throwforce / 3
+		else
+			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
+		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		checkhealth()
+		..()
+
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
 			return

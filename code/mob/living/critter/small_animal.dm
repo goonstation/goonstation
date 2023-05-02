@@ -1757,7 +1757,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	can_lie = 0
-	ai_type = /datum/aiHolder/scorpion
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
@@ -1884,7 +1884,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	can_lie = FALSE
-	ai_type = /datum/aiHolder/rattlesnake
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -4021,7 +4021,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream","chitter")
 				return 2
+		return ..()
+
+	emote(act, voluntary)
 		if (act == "flip")
+			if (!emote_check(voluntary, 2 SECONDS))
+				return
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				var/mob/living/M = G.affecting
 				if (M == src)
@@ -4037,7 +4042,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, pitch = 1.3)
 					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
-		return ..()
+		else
+			return ..()
 
 	death(var/gibbed)
 		playsound(src, 'sound/misc/talk/blub.ogg', 80, 1, pitch = 0.6)
