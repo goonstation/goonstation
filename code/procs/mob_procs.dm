@@ -1094,8 +1094,18 @@
 	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
 
 	var/rendered_outside = null
-	if (olocs.len)
-		var/atom/movable/OL = olocs[olocs.len]
+	if (length(olocs))
+		var/atom/movable/OL = olocs[length(olocs)]
+
+		var/obj/head_on_spike/H = locate() in olocs
+		if (H)
+			OL = H
+			thickness = -1 // override because we're the head on the spike
+		else if (ismob(OL) && length(olocs) > 1)
+			var/atom/I = olocs[length(olocs)-1]
+			if (istype(I,/obj))
+				OL = I
+
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
@@ -1111,7 +1121,7 @@
 		processed += M
 		var/thisR = rendered
 
-		if (olocs.len && !(M.loc in olocs))
+		if (olocs.len && !(M.loc in olocs) && (M != src))
 			if (rendered_outside)
 				thisR = rendered_outside
 			else
