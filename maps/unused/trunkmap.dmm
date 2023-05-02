@@ -9180,7 +9180,7 @@
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9710,7 +9710,7 @@
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)

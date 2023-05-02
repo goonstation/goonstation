@@ -1,5 +1,14 @@
 
+(t)tue may 02 23
+(u)Mr. Moriarty
+(p)13667
+(e)🆕🎨🧫📄|C-Feature, C-Sprites, C-Experimental, A-UI
+(*)Replaced the static space background with parallaxing background layers, with layer contents varying between station maps and z-levels. Should you wish to toggle it off, you may do so through the `Game -> Effects -> Parallax` toggle.
 (t)mon may 01 23
+(u)Keiiro
+(p)13923
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The Research Director now brings their unique labcoat to work!
 (u)Flaborized
 (p)13853
 (e)🆕🎨|C-Feature, C-Sprites
