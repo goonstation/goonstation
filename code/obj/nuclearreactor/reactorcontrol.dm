@@ -48,13 +48,13 @@
 		if (status & (NOPOWER|BROKEN))
 			return
 
-		if(turbine_handle.overspeed & src.icon_state != "engine1")
+		if(turbine_handle.overspeed && src.icon_state != "engine1")
 			src.icon_state = "engine1"
 			src.UpdateIcon()
-		else if(turbine_handle.stalling & src.icon_state != "engine2")
+		else if(turbine_handle.stalling && src.icon_state != "engine2")
 			src.icon_state = "engine2"
 			src.UpdateIcon()
-		else if(!turbine_handle.overspeed & !turbine_handle.stalling & src.icon_state != "engine")
+		else if(!turbine_handle.overspeed && !turbine_handle.stalling && src.icon_state != "engine")
 			src.icon_state = "engine"
 			src.UpdateIcon()
 
