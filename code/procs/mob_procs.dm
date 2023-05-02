@@ -1095,25 +1095,26 @@
 
 	var/rendered_outside = null
 	if (length(olocs))
-		var/atom/movable/OL = olocs[length(olocs)]
+		/// outermost atom before it hits turf
+		var/atom/movable/AM = olocs[length(olocs)]
 
-		var/obj/head_on_spike/H = locate() in olocs
-		if (H)
-			OL = H
+		var/obj/head_on_spike/O = locate() in olocs
+		if (O)
+			AM = O
 			thickness = -1 // override because we're the head on the spike
-		else if (ismob(OL) && length(olocs) > 1)
-			var/atom/I = olocs[length(olocs)-1]
-			if (istype(I,/obj))
-				OL = I
+		else if (ismob(AM) && length(olocs) > 1)
+			var/atom/A = olocs[length(olocs)-1]
+			if (istype(A,/obj))
+				AM = A
 
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (on [bicon(AM)] [AM]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(AM)] [AM]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(AM)] [AM]) <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in heard)
 		if (M in processed)
@@ -1121,7 +1122,7 @@
 		processed += M
 		var/thisR = rendered
 
-		if (olocs.len && !(M.loc in olocs) && (M != src))
+		if (olocs.len && !(M.loc in olocs))
 			if (rendered_outside)
 				thisR = rendered_outside
 			else

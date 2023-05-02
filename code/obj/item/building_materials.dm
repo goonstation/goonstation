@@ -730,7 +730,7 @@ MATERIAL
 			heads -= head
 			if (head in src.vis_contents)
 				vis_contents -= head
-				head.anchored = FALSE
+				head.vis_flags &= ~VIS_INHERIT_ID
 
 			if(!length(heads))
 				head_offset = 0
@@ -817,7 +817,7 @@ MATERIAL
 				pixely += 8
 				H.set_dir(SOUTH)
 				src.vis_contents += H
-				H.anchored = ANCHORED
+				H.vis_flags |= VIS_INHERIT_ID
 
 			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_flies"),"flies")
 		else

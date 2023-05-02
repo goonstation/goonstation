@@ -480,7 +480,6 @@
 			return ..()
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (src.anchored) return // prevent bugs with heads on spikes vis_contents
 		/* Overrides parent function to handle special case for attaching heads. */
 		if (src.linked_human)
 			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
