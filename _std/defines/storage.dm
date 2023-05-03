@@ -10,3 +10,7 @@
 #define STORAGE_RESTRICTED_TYPE -2
 /// storage can't hold the item, due to it being too full
 #define STORAGE_IS_FULL -3
+
+// no_hud storage defines
+#define STORAGE_NO_HUD_STACK 0
+#define STORAGE_NO_HUD_RANDOM 1
