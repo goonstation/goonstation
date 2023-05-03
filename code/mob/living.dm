@@ -1065,9 +1065,16 @@
 			if (ismob(olocs[olocs.len])) // if we're in someone's bag, only the nerd holding it can hear us
 				for(var/mob/M in olocs[olocs.len])
 					listening |= M
-				for(var/obj/item/organ/head/H in say_location.loc)
-					if (H.linked_human)
-						listening |= H.linked_human
+				for (var/obj/item/W in olocs[olocs.len]) // let the skeleton skulls in the bag / pockets hear the nerd
+					if (istype(W,/obj/item/organ/head))
+						if (H.linked_human)
+							listening |= H.linked_human
+					else
+						for(var/obj/item/organ/head/H in W)
+							if (H.linked_human)
+								listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
 
 				listening |= olocs[olocs.len]
 			else
