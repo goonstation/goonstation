@@ -71526,7 +71526,7 @@
 	},
 /area/hospital)
 "miu" = (
-/mob/living/critter/crunched,
+/mob/living/critter/shade/crunched,
 /turf/unsimulated/floor,
 /area/crunch)
 "mje" = (
@@ -77084,7 +77084,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "vjF" = (
-/mob/living/critter/crunched,
+/mob/living/critter/shade/crunched,
 /turf/unsimulated/floor/white,
 /area/crunch)
 "vjH" = (
@@ -77414,7 +77414,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "vGO" = (
-/mob/living/critter/crunched,
+/mob/living/critter/shade/crunched,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "vIb" = (

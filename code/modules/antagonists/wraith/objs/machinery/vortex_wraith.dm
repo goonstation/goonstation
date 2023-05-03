@@ -18,7 +18,7 @@
 	var/mob/living/intangible/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light
-	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
+	var/list/obj/critter/default_mobs = list(/mob/living/critter/shade/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
 								/mob/living/critter/robotic/repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
@@ -152,7 +152,7 @@
 				return 4
 			if (/mob/living/critter/shade)
 				return 4
-			if (/mob/living/critter/crunched)
+			if (/mob/living/critter/shade/crunched)
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3

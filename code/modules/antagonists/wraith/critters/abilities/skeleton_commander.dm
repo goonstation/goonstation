@@ -8,7 +8,7 @@
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
 	var/list/critter_list = list(/mob/living/critter/shade,
-	/mob/living/critter/crunched,
+	/mob/living/critter/shade/crunched,
 	/obj/critter/ancient_thing,
 	/mob/living/critter/robotic/repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,
