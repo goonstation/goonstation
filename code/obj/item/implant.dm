@@ -177,14 +177,10 @@ THROWING DARTS
 					user.show_text("[Imp] already has an implant loaded.")
 					return
 				else
-					var/obj/item/storage/store
-					if(istype(src.loc, /obj/item/storage))
-						store = src.loc
 					src.set_loc(Imp)
 					Imp.imp = src
 					Imp.update()
 					user.u_equip(src)
-					store?.hud.remove_item(src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))

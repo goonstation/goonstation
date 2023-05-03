@@ -351,7 +351,7 @@
 						V.throw_at(target, 8, 3, throw_type = THROW_GUNIMPACT)
 				var/go2hell
 				src.transform = oldtransform
-				for (var/obj/item/storage/bible/B in src.loc)
+				for (var/obj/item/bible/B in src.loc)
 					go2hell = 1
 					var/turf/oldloc = get_turf(src)
 					src.visible_message("<span class='alert'>[src] blasts its ass all over the bible.<br><b>A mysterious force <u>is not pleased</u>!</b></span>")
@@ -398,7 +398,7 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				break
-			else if(istype(A,/obj/item/storage/bible))
+			else if(istype(A,/obj/item/bible))
 				src.visible_message("<span class='alert'>[src] farts on the bible.<br><b>A mysterious force smites [src]!</b></span>")
 				fart_on_other = 1
 				src.fart_memory += A

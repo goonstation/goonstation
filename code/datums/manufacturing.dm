@@ -2822,7 +2822,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Handkerchief"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	item_outputs = list(/obj/item/cloth/handkerchief/colored/white)
 	time = 4 SECONDS
 	create = 1
 	category = "Resource"

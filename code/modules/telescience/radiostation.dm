@@ -783,13 +783,13 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
-/obj/item/storage/box/record/radio/host/New()
+/obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
-	for (var/i = 1, i < 8, i++)
+	while (!src.storage.is_full() && length(possibilities))
 		var/obj/item/record/R = pick(possibilities)
-		new R(src)
+		src.storage.add_contents(new R(src))
 		possibilities -= R
 
 // Tape deck
