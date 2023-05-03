@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, /mob/living/critter/small_animal/mouse)) continue
-			if (C.faction == src.faction) continue //Checks if they are in the same faction
+			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 	critter_basic_attack(var/mob/target)

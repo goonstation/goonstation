@@ -78,7 +78,7 @@
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, src.type)) continue
-			if (C.faction == src.faction) continue //Checks if they are in the same faction
+			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 		if (length(.) && prob(5))
@@ -196,7 +196,7 @@
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, /mob/living/critter/shade)) continue
-			if (C.faction == src.faction) continue //Checks if they are in the same faction
+			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 		if (length(.) && prob(5))
