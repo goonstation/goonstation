@@ -14863,6 +14863,15 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
+"aWb" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "aWd" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Furnace Room"
@@ -20644,15 +20653,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bld" = (
-/obj/critter/shade,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "ble" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21890,19 +21890,6 @@
 /obj/item/crowbar,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
-"bob" = (
-/obj/landmark{
-	name = "theonyxkeywashere"
-	},
-/obj/critter/shade/scientist/lost,
-/obj/item/device/key/onyx,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "boc" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -32046,10 +32033,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
-"bVi" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor,
-/area/crunch)
 "bVj" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -33423,10 +33406,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/crunch)
-"bZP" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/white,
-/area/crunch)
 "bZQ" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -34313,10 +34292,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"ccM" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -67175,6 +67150,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"emb" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
@@ -69329,19 +69308,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
-"iho" = (
-/obj/machinery/computer3/generic/personal/personel_alt{
-	pixel_y = 7
-	},
-/obj/adventurepuzzle/triggerable/light{
-	id = "virva_light";
-	on_brig = 1.2;
-	on_cgreen = 0.4;
-	on_cred = 0
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -69436,17 +69402,6 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
-"ioJ" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/mob/living/critter/bear{
-	desc = "Wow, you haven't seen this guy since 2014!";
-	name = "DOngEun MesTur"
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -69514,6 +69469,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
+"isW" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/white,
+/area/crunch)
 "isZ" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/grime,
@@ -70451,14 +70410,6 @@
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
-"kcz" = (
-/obj/adventurepuzzle/element_link{
-	act_type = "on";
-	triggerable_id = "virva_light";
-	triggerer_id = "virva_trigger"
-	},
-/turf/unsimulated/floor/minitiles/black,
-/area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -71130,6 +71081,10 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"luq" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor,
+/area/crunch)
 "luT" = (
 /obj/shrub{
 	dir = 8
@@ -71448,6 +71403,14 @@
 	icon_state = "beach-0"
 	},
 /area/titlescreen)
+"lVA" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "lWe" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/garden)
@@ -73034,6 +72997,19 @@
 	icon_state = "track_1"
 	},
 /area/centcom/lounge)
+"ouj" = (
+/obj/landmark{
+	name = "theonyxkeywashere"
+	},
+/mob/living/critter/shade/crew/lost,
+/obj/item/device/key/onyx,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
@@ -74297,6 +74273,17 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qwZ" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 9
@@ -76545,6 +76532,16 @@
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/floor/lava,
 /area/iomoon/robot_ruins)
+"uwv" = (
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -77366,16 +77363,6 @@
 "vBq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"vBO" = (
-/obj/loudspeaker{
-	desc = "This could probably cause an earthquake.";
-	name = "studio speaker";
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -78920,6 +78907,19 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"yfh" = (
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
+	},
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "yfT" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
@@ -86764,7 +86764,7 @@ bKw
 bKw
 bKw
 bUY
-bVi
+luq
 bVt
 bKw
 bKw
@@ -87390,7 +87390,7 @@ bUP
 bUP
 cbH
 aDC
-ccM
+emb
 bUP
 bUP
 bUP
@@ -89196,7 +89196,7 @@ bYB
 bYS
 bZi
 aDC
-bZP
+isW
 cao
 caK
 cbf
@@ -109627,7 +109627,7 @@ biX
 biX
 biX
 biX
-bld
+aWb
 biX
 bjJ
 biY
@@ -111437,12 +111437,12 @@ biX
 bjK
 biC
 biX
-bld
+aWb
 biX
 bjK
 biC
 biX
-bld
+aWb
 biX
 biX
 bjJ
@@ -114163,10 +114163,10 @@ pHY
 aaa
 biD
 biY
-bld
+aWb
 biX
 biX
-bld
+aWb
 bjJ
 bkr
 aaa
@@ -114466,7 +114466,7 @@ aaa
 aaa
 biD
 biY
-bob
+ouj
 biX
 bjJ
 bkr
@@ -150965,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-ioJ
+qwZ
 wel
 gtU
 eiT
@@ -153053,10 +153053,10 @@ tfB
 eip
 fBu
 tij
-vBO
+uwv
 tlW
 xya
-kcz
+lVA
 wel
 iFW
 vij
@@ -153355,7 +153355,7 @@ tfB
 jvd
 fBu
 tij
-iho
+yfh
 nRm
 nBd
 nBd

@@ -43,7 +43,7 @@
 					return 1
 				switch(mob_choice)
 					if("Crunched")
-						mob_choice = /obj/critter/crunched
+						mob_choice = /mob/living/critter/crunched
 					if("Ancient things")
 						mob_choice = /obj/critter/ancient_thing
 					if("Ancient repairbots")
@@ -51,7 +51,7 @@
 					if("Monstrosity crawlers")
 						mob_choice = /obj/critter/mechmonstrositycrawler
 					if("Shades")
-						mob_choice = /obj/critter/shade
+						mob_choice = /mob/living/critter/shade
 					if("Bats")
 						mob_choice = /obj/critter/bat/buff
 					if("Lions")
