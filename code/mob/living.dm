@@ -1067,6 +1067,7 @@
 					listening |= M
 				for (var/obj/item/W in olocs[olocs.len]) // let the skeleton skulls in the bag / pockets hear the nerd
 					if (istype(W,/obj/item/organ/head))
+						var/obj/item/organ/head/H = W
 						if (H.linked_human)
 							listening |= H.linked_human
 					else
