@@ -4589,12 +4589,8 @@
 /area/station/storage/emergencyinternals)
 "bYc" = (
 /obj/table/reinforced/auto,
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "bYs" = (
@@ -9926,8 +9922,11 @@
 /area/station/security/brig/genpop)
 "evN" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
+/obj/item/shaker/mustard{
+	pixel_x = -6
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -24176,6 +24175,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"kuP" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/decoration/ashtray,
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "kuV" = (
 /obj/rack,
 /obj/machinery/light/incandescent/netural,
@@ -28532,13 +28536,6 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
-"mlq" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
-/area/station/crew_quarters/cafeteria)
 "mma" = (
 /obj/submachine/tape_deck,
 /turf/simulated/floor/darkblue/checker/other,
@@ -34551,6 +34548,12 @@
 "paN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/staff)
+"paQ" = (
+/obj/table/reinforced/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "paY" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -40770,10 +40773,6 @@
 /area/station/maintenance/east)
 "scm" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray{
-	pixel_x = -4;
-	pixel_y = 8
-	},
 /obj/item/clothing/head/cakehat,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
@@ -89344,8 +89343,8 @@ maE
 hkx
 iHN
 kVe
-mlq
 cSI
+kuP
 jGI
 scm
 hdI
@@ -90552,7 +90551,7 @@ abu
 diQ
 uel
 cfT
-evN
+paQ
 nea
 jwF
 chV
