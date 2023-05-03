@@ -1175,7 +1175,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
 			src.head_tracker.linked_human = null
 		head_tracker = head
-		head_tracker.linked_human = src.mob
+		if (src.head_tracker)
+			head_tracker.linked_human = src.mob
 
 /obj/item/joint_wax
 	name = "joint wax"

@@ -317,7 +317,6 @@
 		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
 		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
 		src.donor_appearance = src.donor.bioHolder.mobAppearance
-
 	on_removal()
 		src.transplanted = 1
 		if (src.linked_human)
@@ -487,7 +486,8 @@
 
 	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
 		/* Overrides parent function to handle special case for attaching heads. */
-		if (src.linked_human)
+
+		if (src.linked_human && isskeleton(M))// return the typing indicator to the human only if we're put on a skeleton
 			src.UnregisterSignal(src.linked_human, COMSIG_CREATE_TYPING)
 			src.UnregisterSignal(src.linked_human, COMSIG_REMOVE_TYPING)
 			src.UnregisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE)
