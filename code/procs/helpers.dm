@@ -1240,7 +1240,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 					. += linked_mob
 			if (istype(A, /obj/head_on_spike))
 				for(var/obj/item/organ/head/head in A)
-					if (head.head_type == HEAD_SKELETON && found_head.linked_human != null)
+					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
 					var/mob/linked_mob = head.linked_human
 					. += linked_mob
 			for(var/mob/M in A.contents)
