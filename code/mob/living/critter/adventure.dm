@@ -1,36 +1,83 @@
-/* -For adventure zoneish mobs-
-   -Most of these orginally made by cogwerks-
-	whats here:
-	- Transposed scientist
-	- Shades
-*/
-/mob/living/critter/crunched
-	name = "transposed scientist"
-	real_name = "transposed scientist"
-	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
-	icon_state = "crunched"
-	icon_state_dead = "crunched"
-	hand_count = 2
-	can_help = TRUE
-	can_throw = TRUE
-	can_grab = TRUE
-	can_disarm = TRUE
-	health_brute = 25
-	health_brute_vuln = 1
-	health_burn = 25
-	health_burn_vuln = 1
-	speech_void = 1
+////////////// Repair bots ////////////////
+/mob/living/critter/robotic/repairbot
+	name = "strange robot"
+	real_name = "strange robot"
+	desc = "It looks like some sort of floating repair bot or something?"
+	icon_state = "ancient_repairbot"
+	hand_count = 1
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	health_brute = 10
+	health_brute_vuln = 0.8
+	health_burn = 10
+	health_burn_vuln = 0.4
+	use_stamina = FALSE
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 3
-	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
->>>>>>> master
+	death_text = "%src% blows apart!"
+	custom_gib_handler = /proc/robogibs
+	say_language = "binary"
+	voice_name = "synthesized voice"
+	speechverb_say = "beeps"
+	speechverb_gasp = "chirps"
+	speechverb_stammer = "beeps"
+	speechverb_exclaim = "beeps"
+	speechverb_ask = "beeps"
+
+	nice
+		ai_type = /datum/aiHolder/wanderer
+
+	understands_language(var/langname)
+		if (langname == say_language || langname == "silicon" || langname == "binary" || langname == "english")
+			return TRUE
+		return FALSE
+
+	New()
+		..()
+		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
+		src.real_name = src.name
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
+
+	process_language(var/message)
+		var/datum/language/L = languages.language_cache[say_language]
+		if (!L)
+			L = languages.language_cache["english"]
+		return L.get_messages(message, (1 - health / max_health) * 16)
+
+	death(var/gibbed)
+		elecflash(src, power = 3)
+		..(gibbed, 0)
+		ghostize()
+		qdel(src)
+
+	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
+		return
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> screams!"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+		return ..()
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears/intercom(src)
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-<<<<<<< HEAD
 		HH.limb = new /datum/limb/arcflash
 		HH.name = "Electric Intruder Countermeasure"
 		HH.icon = 'icons/mob/critter_ui.dmi'
@@ -43,57 +90,19 @@
 	setup_healths()
 		add_hh_robot(src.health_brute, src.health_brute_vuln)
 		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
-=======
-		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/transposed
-		HH.icon_state = "handl"				// the icon state of the hand UI background
-		HH.limb_name = "left transposed arm"
-
-		HH = hands[2]
-		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new /datum/limb/transposed
-		HH.name = "right hand"
-		HH.suffix = "-R"
-		HH.icon_state = "handr"				// the icon state of the hand UI background
-		HH.limb_name = "right transposed arm"
-
-	setup_healths()
-		add_hh_flesh(src.health_brute, src.health_brute_vuln)
-		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
->>>>>>> master
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
 
 		if (src.ai?.enabled && prob(5))
-			if (src.ai.current_task == "wandering")
-				src.say(pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?"))
-			else if (prob(50))
-				src.say(pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God."))
-
-	critter_basic_attack(var/mob/target)
-		if (target.lying || is_incapacitated(target))
-			src.set_a_intent(INTENT_HELP)
-		else
-			src.set_a_intent(INTENT_HARM)
-		src.chase_lines(target)
-		src.hand_attack(target)
-
-	proc/chase_lines(var/mob/target)
-		if(!ON_COOLDOWN(src, "chase_talk", 10 SECONDS))
-			if (target.lying || is_incapacitated(target))
-				src.say( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
-			else
-				src.say( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
->>>>>>> master
+			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
 
 	seek_target(var/range = 5)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
-<<<<<<< HEAD
 			if (istype(C, /mob/living/critter/robotic/repairbot)) continue
 			if (isrobot(C)) continue // Arcflash doesn't hurt borgs
 			if (is_incapacitated(C)) continue // Intruder subdued do not chain stun them
@@ -153,7 +162,84 @@
 		src.icon_state = "drone_service_bot"
 		src.desc = "A machine. Of some sort. It looks mad"
 		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
-=======
+/* -For adventure zoneish mobs-
+   -Most of these orginally made by cogwerks-
+	whats here:
+	- Transposed scientist
+	- Shades
+*/
+/mob/living/critter/crunched
+	name = "transposed scientist"
+	real_name = "transposed scientist"
+	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
+	icon_state = "crunched"
+	icon_state_dead = "crunched"
+	hand_count = 2
+	can_help = TRUE
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 1
+	speech_void = 1
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 3
+	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
+	ai_type = /datum/aiHolder/wanderer_aggressive
+	is_npc = TRUE
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb/transposed
+		HH.icon_state = "handl"				// the icon state of the hand UI background
+		HH.limb_name = "left transposed arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb/transposed
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"				// the icon state of the hand UI background
+		HH.limb_name = "right transposed arm"
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && prob(5))
+			if (src.ai.current_task == "wandering")
+				src.say(pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?"))
+			else if (prob(50))
+				src.say(pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God."))
+
+	critter_basic_attack(var/mob/target)
+		if (target.lying || is_incapacitated(target))
+			src.set_a_intent(INTENT_HELP)
+		else
+			src.set_a_intent(INTENT_HARM)
+		src.chase_lines(target)
+		src.hand_attack(target)
+
+	proc/chase_lines(var/mob/target)
+		if(!ON_COOLDOWN(src, "chase_talk", 10 SECONDS))
+			if (target.lying || is_incapacitated(target))
+				src.say( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
+			else
+				src.say( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
+
+	seek_target(var/range = 5)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
 			if (istype(C, src.type)) continue
 			. += C
 
@@ -343,80 +429,3 @@
 
 		get_ranged_protection()
 			return 1.5
-
-////////////// Repair bots ////////////////
-/mob/living/critter/robotic/repairbot
-	name = "strange robot"
-	real_name = "strange robot"
-	desc = "It looks like some sort of floating repair bot or something?"
-	icon_state = "ancient_repairbot"
-	hand_count = 1
-	can_throw = FALSE
-	can_grab = FALSE
-	can_disarm = FALSE
-	health_brute = 10
-	health_brute_vuln = 0.8
-	health_burn = 10
-	health_burn_vuln = 0.4
-	use_stamina = FALSE
-	ai_retaliates = TRUE
-	ai_retaliate_patience = 2
-	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/wanderer_aggressive
-	is_npc = TRUE
-	death_text = "%src% blows apart!"
-	custom_gib_handler = /proc/robogibs
-	say_language = "binary"
-	voice_name = "synthesized voice"
-	speechverb_say = "beeps"
-	speechverb_gasp = "chirps"
-	speechverb_stammer = "beeps"
-	speechverb_exclaim = "beeps"
-	speechverb_ask = "beeps"
-
-	nice
-		ai_type = /datum/aiHolder/wanderer
-
-	understands_language(var/langname)
-		if (langname == say_language || langname == "silicon" || langname == "binary" || langname == "english")
-			return TRUE
-		return FALSE
-
-	New()
-		..()
-		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
-		src.real_name = src.name
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
-
-	process_language(var/message)
-		var/datum/language/L = languages.language_cache[say_language]
-		if (!L)
-			L = languages.language_cache["english"]
-		return L.get_messages(message, (1 - health / max_health) * 16)
-
-	death(var/gibbed)
-		elecflash(src, power = 3)
-		..(gibbed, 0)
-		ghostize()
-		qdel(src)
-
-	do_disorient(stamina_damage, weakened, stunned, paralysis, disorient = 60, remove_stamina_below_zero = 0, target_type = DISORIENT_BODY, stack_stuns = 1)
-		return
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b>[src]</b> screams!"
-		return null
-
-	specific_emote_type(var/act)
-		switch (act)
-			if ("scream")
-				return 2
-		return ..()
-
-	setup_equipment_slots()
-		equipment += new /datum/equipmentHolder/ears/intercom(src)
