@@ -28,12 +28,12 @@ TYPEINFO(/obj/item/storage/toilet)
 	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W, mob/user, obj/item/storage/T)
-	if (src.contents.len >= 7)
+/obj/item/storage/toilet/attackby(obj/item/W, mob/user)
+	if (src.storage.is_full())
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
-	if (istype(W, /obj/item/storage))
+	if (W.storage)
 		return
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
@@ -112,25 +112,23 @@ TYPEINFO(/obj/item/storage/toilet)
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
+	if((src.clogged < 1) || (!src.storage.is_full()) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
 		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
 
 
 #ifdef UNDERWATER_MAP
-		var/turf/source = get_turf(src)
-		if (source)
-			var/turf/target = locate(source.x,source.y,5)
-			for (var/thing in contents)
-				var/atom/movable/A = thing
-				A.set_loc(target)
+		var/turf/T = get_turf(src)
+		if (T)
+			var/turf/target = locate(T.x, T.y, 5)
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, target)
 #endif
 		src.clogged = 0
-		for (var/item in src.contents)
+		for (var/item in src.storage.get_contents())
 			flush(item)
-			src.hud?.remove_item(item)
 
-	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
+	else if((src.clogged >= 1) || (src.storage.is_full()) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
 
 /obj/item/storage/toilet/proc/flush(atom)
@@ -144,7 +142,7 @@ TYPEINFO(/obj/item/storage/toilet)
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
-	if (src.clogged >= 1 || src.contents.len >= 7)
+	if (src.clogged >= 1 || src.storage.is_full())
 		head.set_loc(src.loc)
 		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
@@ -182,7 +180,7 @@ TYPEINFO(/obj/item/storage/toilet)
 		if (prob(1))
 			var/something = pick(trinket_safelist)
 			if (ispath(something))
-				new something(src)
+				src.storage.add_contents(new something(src))
 
 /obj/item/storage/toilet/random/gold // important!!
 	New()

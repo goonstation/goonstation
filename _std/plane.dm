@@ -1,5 +1,6 @@
-#define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
-#define PLANE_SPACE -115
+#define PLANE_SPACE -120
+#define PLANE_PARALLAX -119
+#define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
 #define PLANE_NOSHADOW_BELOW -101
@@ -10,6 +11,7 @@
 #define PLANE_SELFILLUM -80
 #define PLANE_ABOVE_LIGHTING -50
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
+#define PLANE_MOB_OVERLAY 5
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
 #define PLANE_OVERLAY_EFFECTS 25
@@ -81,6 +83,7 @@ client
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "parallax_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_WALL, name = "wall_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
@@ -90,6 +93,7 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_MOB_OVERLAY, mouse_opacity = 0, name = "mob_overlay"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))

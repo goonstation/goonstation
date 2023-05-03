@@ -23391,7 +23391,7 @@
 /obj/item/storage/wall/random,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/red,
-/obj/item/storage/bible/mini,
+/obj/item/bible/mini,
 /turf/simulated/floor/carpet,
 /area/derelict_ai_sat)
 "tIa" = (

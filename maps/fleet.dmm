@@ -13771,7 +13771,7 @@
 /area/station/chapel/sanctuary)
 "Bj" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -14074,7 +14074,7 @@
 /area/station/chapel/sanctuary)
 "BV" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "BW" = (

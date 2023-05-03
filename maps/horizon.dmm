@@ -12972,7 +12972,7 @@
 	icon_state = "2-4"
 	},
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/machinery/light{
 	dir = 1;
@@ -15551,7 +15551,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "Altar"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/chapel/sanctuary)
 "aOH" = (
@@ -34137,7 +34137,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bHk" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bHl" = (
@@ -45907,7 +45907,7 @@
 	},
 /area/station/engine/coldloop)
 "cjo" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /obj/item/clothing/head/merchant_hat,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
@@ -61006,9 +61006,7 @@
 	name = "Engineering Control Room"
 	})
 "svO" = (
-/obj/grille/catwalk/jen/side{
-	dir = 5
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/drainage,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -61417,9 +61415,7 @@
 	name = "Artifact Lounge"
 	})
 "tnv" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/vending/janitor,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
@@ -61495,12 +61491,6 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/security/main)
-"tzi" = (
-/obj/grille/catwalk/jen/side{
-	dir = 6
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "tzx" = (
 /obj/decal/poster/wallsign/stencil/left/a,
 /obj/decal/poster/wallsign/stencil/right/m,
@@ -61532,9 +61522,7 @@
 	dir = 8;
 	name = "trash sorting chair"
 	},
-/obj/grille/catwalk/jen/side{
-	dir = 9
-	},
+/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "tGB" = (
@@ -62170,9 +62158,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "vdE" = (
-/obj/grille/catwalk/jen/side{
-	dir = 10
-	},
+/obj/grille/catwalk/jen,
 /obj/item/reagent_containers/food/snacks/hotdog{
 	initial_reagents = list("yuck"=10,"nicotine"=10);
 	name = "free hotdog"
@@ -62694,9 +62680,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/se,
 /area/station/hallway/primary/east)
 "vSK" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -62735,14 +62719,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/disposal)
 "vXo" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "vXV" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -124450,7 +124432,7 @@ kTx
 lQv
 bpd
 svO
-tzi
+bHk
 clW
 chM
 cih

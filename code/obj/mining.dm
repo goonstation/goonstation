@@ -2001,10 +2001,9 @@ TYPEINFO(/obj/item/cargotele)
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo

@@ -72,7 +72,7 @@
 			if(!src.holder_ahol && ishuman(original_holder))
 				var/mob/living/carbon/human/H = original_holder
 				src.holder_ahol = H?.bioHolder?.mobAppearance
-			if ((src.holder_ahol.special_style) && (istype_exact(src, src.holder_ahol.mutant_race.r_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.l_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.r_limb_leg_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race.l_limb_leg_type_mutantrace)))
+			if ((src.holder_ahol.special_style) && (istype_exact(src, src.holder_ahol.mutant_race?.r_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_arm_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.r_limb_leg_type_mutantrace) || istype_exact(src, src.holder_ahol.mutant_race?.l_limb_leg_type_mutantrace)))
 				icon = src.holder_ahol.body_icon
 				partIcon = src.holder_ahol.body_icon
 			if(!src.bones)
@@ -114,20 +114,11 @@
 	proc/set_skin_tone()
 		if (!skintoned)
 			return
-		var/this_skin_tone = src.skin_tone
-		if (src.lyingImage)
-			src.lyingImage.color = this_skin_tone
-		if (src.standImage)
-			src.standImage.color = this_skin_tone
+		src.bodyImage?.color = src.skin_tone
 
-	getMobIcon(var/lying)
+	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		. = ..()
-		if (skintoned)
-			var/newrgb = src.skin_tone
-			if (src.lyingImage)
-				src.lyingImage.color = newrgb
-			if (src.standImage)
-				src.standImage.color = newrgb
+		src.set_skin_tone()
 
 	surgery(var/obj/item/tool)
 		if(remove_stage > 0 && (istype(tool,/obj/item/staple_gun) || istype(tool,/obj/item/suture)) )
@@ -748,6 +739,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "l_hand_brullbar"
+	partIconModifier = "brullbar"
 	show_on_examine = TRUE
 	/// Brullbar are pretty unnatural, and most people'd miss em if they suddenly turned into a lizard arm
 	limb_is_unnatural = TRUE
@@ -757,13 +749,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
-		return standImage
 
 /obj/item/parts/human_parts/arm/left/brullbar/king
 	name = "left king brullbar arm"
@@ -781,6 +766,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/brullbar
 	handlistPart = "r_hand_brullbar"
+	partIconModifier = "brullbar"
 	show_on_examine = TRUE
 	/// If you went through the trouble to get yourself a wendy arm, you should keep it no matter how inhuman you become
 	limb_is_unnatural = TRUE
@@ -790,13 +776,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
-		return standImage
 
 /obj/item/parts/human_parts/arm/right/brullbar/king
 	name = "right king brullbar arm"
@@ -856,6 +835,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "l_hand_bear"
+	partIconModifier = "bear"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
@@ -865,13 +845,6 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		set_skin_tone()
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_bear")
-		return standImage
 
 /obj/item/parts/human_parts/arm/right/bear
 	name = "right bear arm"
@@ -885,6 +858,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/bear
 	handlistPart = "r_hand_bear"
+	partIconModifier = "bear"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_BEAR)
@@ -893,14 +867,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		set_skin_tone()
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_bear")
-		return standImage
 
 /obj/item/parts/human_parts/arm/left/synth
 	name = "synthetic left arm"
@@ -911,7 +877,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	handlistPart = "l_hand_plant"
-	var/name_thing = "plant"
+	partIconModifier = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	/// Plants are pretty unnatural
@@ -923,13 +889,6 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
-
 /obj/item/parts/human_parts/arm/right/synth
 	name = "synthetic right arm"
 	desc = "A right arm. Looks like a rope composed of vines. And tofu??"
@@ -939,7 +898,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	handlistPart = "r_hand_plant"
-	var/name_thing = "plant"
+	partIconModifier = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -949,13 +908,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 /obj/item/parts/human_parts/leg/left/synth
 	name = "synthetic left leg"
@@ -966,7 +918,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	partlistPart = "l_foot_plant"
-	var/name_thing = "plant"
+	partIconModifier = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -976,13 +928,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 /obj/item/parts/human_parts/leg/right/synth
 	name = "synthetic right leg"
@@ -993,7 +938,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	partlistPart = "r_foot_plant"
-	var/name_thing = "plant"
+	partIconModifier = "plant"
 	show_on_examine = TRUE
 	easy_attach = TRUE
 	limb_is_unnatural = TRUE
@@ -1004,37 +949,30 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
-
 
 /obj/item/parts/human_parts/arm/left/synth/bloom
 	desc = "A left arm. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "arm_left_plant_bloom"
 	handlistPart = "l_hand_plant"
-	name_thing = "plant_bloom"
+	partIconModifier = "plant_bloom"
 
 /obj/item/parts/human_parts/arm/right/synth/bloom
 	desc = "A right arm. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "arm_right_plant_bloom"
 	handlistPart = "r_hand_plant"
-	name_thing = "plant_bloom"
+	partIconModifier = "plant_bloom"
 
 /obj/item/parts/human_parts/leg/left/synth/bloom
 	desc = "A left leg. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "leg_left_plant_bloom"
 	partlistPart = "l_foot_plant"
-	name_thing = "plant_bloom"
+	partIconModifier = "plant_bloom"
 
 /obj/item/parts/human_parts/leg/right/synth/bloom
 	desc = "A right leg. Looks like a rope composed of vines. There's some little flowers on it."
 	icon_state = "leg_right_plant_bloom"
 	partlistPart = "r_foot_plant"
-	name_thing = "plant_bloom"
+	partIconModifier = "plant_bloom"
 
 // Added shambler, werewolf and hunter arms, including the sprites (Convair880).
 /obj/item/parts/human_parts/arm/left/abomination
@@ -1048,6 +986,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "l_hand_abomination"
+	partIconModifier = "abomination"
 	show_on_examine = TRUE
 	/// About as unnatural as it gets
 	limb_is_unnatural = TRUE
@@ -1076,13 +1015,6 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_abomination")
-		return standImage
-
 /obj/item/parts/human_parts/arm/right/abomination
 	name = "right chitinous tendril"
 	desc = "Some sort of alien tendril with very sharp edges. Seems to be moving on its own..."
@@ -1094,6 +1026,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/abomination
 	handlistPart = "r_hand_abomination"
+	partIconModifier = "abomination"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ABOM)
@@ -1120,13 +1053,6 @@
 		newlimb.original_holder = src.original_holder
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_abomination")
-		return standImage
 
 /obj/item/parts/human_parts/arm/left/zombie
 	name = "left rotten arm"
@@ -1185,6 +1111,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "l_hand_brullbar"
+	partIconModifier = "brullbar"
 	siemens_coefficient = 0
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
@@ -1194,13 +1121,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
-		return standImage
 
 /obj/item/parts/human_parts/arm/right/claw
 	name = "right claw arm"
@@ -1213,6 +1133,7 @@
 	override_attack_hand = 1
 	limb_type = /datum/limb/claw
 	handlistPart = "r_hand_brullbar"
+	partIconModifier = "brullbar"
 	siemens_coefficient = 0
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
@@ -1223,13 +1144,6 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_brullbar")
-		return standImage
-
 /obj/item/parts/human_parts/arm/right/stone
 	name = "synthetic right arm"
 	desc = "A right arm. Looks like it's made out of stone. How is that even possible?"
@@ -1239,7 +1153,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	handlistPart = "r_hand_stone"
-	var/name_thing = "stone"
+	partIconModifier = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -1248,13 +1162,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 /obj/item/parts/human_parts/arm/left/stone
 	name = "synthetic left arm"
@@ -1265,7 +1172,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	handlistPart = "l_hand_stone"
-	var/name_thing = "stone"
+	partIconModifier = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -1274,13 +1181,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 /obj/item/parts/human_parts/leg/left/stone
 	name = "synthetic left leg"
@@ -1291,7 +1191,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	partlistPart = "l_foot_stone"
-	var/name_thing = "stone"
+	partIconModifier = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -1300,13 +1200,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 /obj/item/parts/human_parts/leg/right/stone
 	name = "synthetic right leg"
@@ -1317,7 +1210,7 @@
 	decomp_affected = FALSE
 	skintoned = FALSE
 	partlistPart = "r_foot_stone"
-	var/name_thing = "stone"
+	partIconModifier = "stone"
 	show_on_examine = TRUE
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_STONE)
@@ -1326,13 +1219,6 @@
 		if (holder != null)
 			set_loc(holder)
 		..()
-
-	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-			return src.standImage
-		current_decomp_stage_s = decomp_stage
-		src.standImage = image('icons/mob/human.dmi', "[src.slot]_[name_thing]")
-		return standImage
 
 
 ////// MUTANT PARENT PARTS //////
