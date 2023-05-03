@@ -25,7 +25,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_minds_with_subcount = list()
 		subscribed_clients_with_subcount = list()
 
-	/// Checks whether an image is elligible to be attached to a client's mob.
+	/// Checks whether an image is elligible to be attached to be displayed to a client.
 	proc/image_condition(image/image, mob/mob)
 		if (image.loc == mob)
 			var/datum/mind_mob_overlay/overlay = src.minds_with_associated_mob_image[mob.mind]
