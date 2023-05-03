@@ -11866,7 +11866,7 @@
 "aFQ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -15771,7 +15771,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -23819,7 +23819,7 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/white/checker{
 	dir = 6
@@ -28953,7 +28953,7 @@
 "buw" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/cargo{
@@ -31152,7 +31152,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/carpet/red/fancy/innercorner/nw,
 /area/station/hallway/secondary/east)
@@ -32031,9 +32031,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/hangar/arrivals)
 "bCh" = (
-/obj/machinery/disposal{
-	icon_state = "mailchute";
-	icon_style = "mail";
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/machinery/camera{
@@ -33105,7 +33103,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 10;
-
+	
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -36113,7 +36111,7 @@
 "bMd" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	d1 = 2;
@@ -36678,7 +36676,7 @@
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -37840,7 +37838,7 @@
 "bQO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-
+	
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black,
@@ -38498,7 +38496,7 @@
 "bSk" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	d1 = 2;
@@ -38893,7 +38891,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
@@ -44090,7 +44088,7 @@
 "cfo" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow,
@@ -44509,7 +44507,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -44618,7 +44616,7 @@
 "cgz" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	d1 = 4;
@@ -44952,7 +44950,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -45367,7 +45365,7 @@
 "chZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/coldloop)
@@ -45844,7 +45842,7 @@
 "cje" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/engine/substation/east)
@@ -56880,7 +56878,7 @@
 "jIi" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-
+	
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -58368,7 +58366,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/equipment)
@@ -58754,9 +58752,7 @@
 	},
 /area/ghostdrone_factory)
 "nAW" = (
-/obj/machinery/disposal{
-	icon_state = "mailchute";
-	icon_style = "mail";
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/machinery/light{
@@ -59940,7 +59936,7 @@
 "qgY" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
@@ -61152,7 +61148,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/machinery/light{
 	dir = 4;
