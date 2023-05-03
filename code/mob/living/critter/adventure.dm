@@ -91,6 +91,13 @@
 		add_hh_robot(src.health_brute, src.health_brute_vuln)
 		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled && prob(5))
+			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
+
 	seek_target(var/range = 5)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
@@ -100,9 +107,6 @@
 			if (isrobot(C)) continue // Arcflash doesn't hurt borgs
 			if (is_incapacitated(C)) continue // Intruder subdued do not chain stun them
 			. += C
-
-		if (length(.) && prob(15))
-			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
 
 	critter_basic_attack(var/mob/target)
 		if(prob(30))
