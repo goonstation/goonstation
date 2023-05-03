@@ -1091,8 +1091,7 @@ datum
 			fluid_r = 180
 			fluid_g = 255
 			fluid_b = 140
-			depletion_rate = 0.1
-			penetrates_skin = TRUE
+			depletion_rate = 0.4
 			overdose = 25
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
