@@ -2931,10 +2931,12 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-// no text description though, because it's all different everywhere
-/mob/proc/vomit(var/nutrition=0, var/specialType=null)
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
+	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
+		return
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	src.visible_message(flavorMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
