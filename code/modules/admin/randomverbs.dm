@@ -2983,14 +2983,14 @@ var/global/force_radio_maptext = FALSE
 
 	var/obj/item/device/key/iridium/fancy_keys = new()
 
-	backpack_full_of_ammo.add_contents(button_1)
-	backpack_full_of_ammo.add_contents(button_2)
-	backpack_full_of_ammo.add_contents(button_3)
-	backpack_full_of_ammo.add_contents(button_4)
-	backpack_full_of_ammo.add_contents(button_5)
-	backpack_full_of_ammo.add_contents(button_6)
-	backpack_full_of_ammo.add_contents(button_7)
-	backpack_full_of_ammo.add_contents(fancy_keys)
+	backpack_full_of_ammo.storage.add_contents(button_1)
+	backpack_full_of_ammo.storage.add_contents(button_2)
+	backpack_full_of_ammo.storage.add_contents(button_3)
+	backpack_full_of_ammo.storage.add_contents(button_4)
+	backpack_full_of_ammo.storage.add_contents(button_5)
+	backpack_full_of_ammo.storage.add_contents(button_6)
+	backpack_full_of_ammo.storage.add_contents(button_7)
+	backpack_full_of_ammo.storage.add_contents(fancy_keys)
 
 	if (ishuman(src.mob))
 		// If you are using this you are going to Fuck Things Up

@@ -2808,7 +2808,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/chapel/sanctuary)
 "aiQ" = (
@@ -2859,7 +2859,7 @@
 /area/station/chapel/sanctuary)
 "ajb" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajc" = (
@@ -9846,15 +9846,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"aGE" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield";
-	dir = 10
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "aGF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -16392,10 +16383,6 @@
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
-"beZ" = (
-/obj/grille/catwalk/cross,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "bfa" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/pharmacy)
@@ -36175,15 +36162,6 @@
 	},
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/hallway/primary/west)
-"duj" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield";
-	dir = 5
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "dup" = (
 /turf/simulated/floor/escape/corner,
 /area/station/hallway/primary/east)
@@ -39019,6 +38997,15 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"fEw" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 10
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "fET" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -43007,6 +42994,15 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"jkG" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 8
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "jld" = (
 /obj/machinery/light{
 	dir = 1;
@@ -43683,6 +43679,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/sw)
+"jQm" = (
+/obj/grille/catwalk,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/transport,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "jQJ" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -44069,19 +44078,6 @@
 /obj/decal/tile_edge/floorguide/arrow_n,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
-"klY" = (
-/obj/grille/catwalk/cross,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/transport,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/airless/plating,
-/area/station/maintenance/west)
 "kmM" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
@@ -44751,6 +44747,15 @@
 	dir = 1
 	},
 /area/station/security/interrogation)
+"kOZ" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 6
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "kQv" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -46047,15 +46052,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
-"lRn" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield";
-	dir = 8
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "lRp" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -49950,6 +49946,16 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/ce)
+"pvb" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/grille/catwalk,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "pvj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50663,15 +50669,6 @@
 	dir = 4
 	},
 /area/station/security/brig/solitary)
-"pYx" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield";
-	dir = 6
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "pZc" = (
 /turf/simulated/floor/grey/side{
 	dir = 1
@@ -52815,16 +52812,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/captain)
-"rYn" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/grille/catwalk/cross,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "rYU" = (
 /turf/simulated/floor,
 /area/station/hangar/sec)
@@ -55634,6 +55621,15 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"uun" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 5
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "uux" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
@@ -56975,15 +56971,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"vEV" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor{
-	id = "ai_core";
-	name = "AI Core Shield";
-	dir = 9
-	},
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai)
 "vFg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59869,6 +59856,15 @@
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor,
 /area/station/mining/magnet)
+"xVX" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor{
+	id = "ai_core";
+	name = "AI Core Shield";
+	dir = 9
+	},
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai)
 "xXb" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -92145,7 +92141,7 @@ xnq
 bpV
 bpV
 bpV
-klY
+jQm
 cob
 bsF
 hOS
@@ -92450,7 +92446,7 @@ cgQ
 chK
 bsH
 cpx
-beZ
+bsH
 acO
 aaa
 ach
@@ -92751,7 +92747,7 @@ boO
 buf
 aMt
 aMt
-rYn
+pvb
 aRt
 bvo
 bvo
@@ -127432,9 +127428,9 @@ anX
 aAG
 aCK
 aEB
-vEV
-lRn
-aGE
+xVX
+jkG
+fEw
 aLN
 aCK
 aAG
@@ -128036,9 +128032,9 @@ anX
 aAG
 aDq
 aEJ
-duj
-lRn
-pYx
+uun
+jkG
+kOZ
 aOs
 aQX
 aAG

@@ -145,7 +145,7 @@ proc/maximal_subtype(var/list/L)
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
-// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
 #ifdef SPACEMAN_DMM // just don't ask
 	#define START_TRACKING

@@ -8373,7 +8373,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -8872,9 +8872,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aGd" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -9366,7 +9364,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/podium_wood,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/floor,
@@ -9995,9 +9993,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/west)
 "aJU" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -22484,9 +22480,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "bBZ" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -23779,9 +23773,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "bGH" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -24060,7 +24052,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24068,9 +24060,7 @@
 	},
 /area/station/solar/east)
 "bHF" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -24167,11 +24157,7 @@
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/cross{
-	dir = 5;
-	icon_state = "catwalk_cross";
-	tag = "icon-catwalk_cross (NORTHEAST)"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -24304,7 +24290,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24401,7 +24387,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24424,7 +24410,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24432,9 +24418,7 @@
 	},
 /area/station/solar/south)
 "bIx" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -24468,9 +24452,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -24516,9 +24498,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -24604,7 +24584,7 @@
 	},
 /area/mining/magnet)
 "bIM" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24646,9 +24626,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -24694,9 +24672,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -27597,9 +27573,7 @@
 	},
 /area/station/crew_quarters/pool)
 "ejB" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -33066,7 +33040,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 17;
 	pixel_y = 4
 	},
@@ -36139,7 +36113,7 @@
 	icon_state = "bulb1"
 	},
 /obj/table/auto,
-/obj/item/cloth/handkerchief/white,
+/obj/item/cloth/handkerchief/colored/white,
 /obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/wood/six,
@@ -36509,9 +36483,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "lGG" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	tag = "icon-catwalk (WEST)"
@@ -40052,7 +40024,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -46136,9 +46108,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "tlV" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	tag = "icon-catwalk (WEST)"
@@ -47286,7 +47256,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "uky" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},

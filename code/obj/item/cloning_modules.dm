@@ -42,34 +42,38 @@ Modules to do things with cloning modules
 
 	make_my_stuff()
 		..()
-		new /obj/item/cloneModule/mindhack_module(src)
-		new /obj/item/electronics/soldering(src)
+		src.storage.add_contents(new /obj/item/cloneModule/mindhack_module(src))
+		src.storage.add_contents(new /obj/item/electronics/soldering(src))
 
 
 		// Creates premade mechanics scanned items. That way you can make a cloning lab faster.
 
-		var/obj/item/electronics/frame/F1 = new/obj/item/electronics/frame(src)
+		var/obj/item/electronics/frame/F1 = new /obj/item/electronics/frame(src)
+		src.storage.add_contents(F1)
 		F1.name = "Boxed Cloning Computer"
 		F1.store_type = /obj/machinery/computer/cloning
 		F1.viewstat = 2
 		F1.secured = 2
 		F1.icon_state = "dbox"
 
-		var/obj/item/electronics/frame/F2 = new/obj/item/electronics/frame(src)
+		var/obj/item/electronics/frame/F2 = new /obj/item/electronics/frame(src)
+		src.storage.add_contents(F2)
 		F2.name = "Disassembled Cloning Pod"
 		F2.store_type = /obj/machinery/clonepod
 		F2.viewstat = 2
 		F2.secured = 2
 		F2.icon_state = "dbox"
 
-		var/obj/item/electronics/frame/F3 = new/obj/item/electronics/frame(src)
+		var/obj/item/electronics/frame/F3 = new /obj/item/electronics/frame(src)
+		src.storage.add_contents(F3)
 		F3.name = "Compacted Giant Blender"
 		F3.store_type = /obj/machinery/clonegrinder
 		F3.viewstat = 2
 		F3.secured = 2
 		F3.icon_state = "dbox"
 
-		var/obj/item/electronics/frame/F4 = new/obj/item/electronics/frame(src)
+		var/obj/item/electronics/frame/F4 = new /obj/item/electronics/frame(src)
+		src.storage.add_contents(F4)
 		F4.name = "Expandable DNA Scanner"
 		F4.store_type = /obj/machinery/clone_scanner
 		F4.viewstat = 2

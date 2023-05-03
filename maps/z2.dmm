@@ -20644,15 +20644,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bld" = (
-/obj/critter/shade,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "ble" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21890,19 +21881,6 @@
 /obj/item/crowbar,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
-"bob" = (
-/obj/landmark{
-	name = "theonyxkeywashere"
-	},
-/obj/critter/shade/scientist/lost,
-/obj/item/device/key/onyx,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "boc" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -32008,10 +31986,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
-"bVi" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor,
-/area/crunch)
 "bVj" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -33385,10 +33359,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/crunch)
-"bZP" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/white,
-/area/crunch)
 "bZQ" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -34275,10 +34245,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"ccM" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -67994,6 +67960,10 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"fNh" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "fNL" = (
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -68934,22 +68904,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/sovexe)
-"hwt" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "hxO" = (
 /obj/noticeboard{
 	pixel_y = 28
@@ -69307,6 +69261,19 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
+"iho" = (
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
+	},
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -69401,6 +69368,17 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"ioJ" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -70405,6 +70383,14 @@
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"kcz" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -70453,19 +70439,6 @@
 "kfN" = (
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
-"kgf" = (
-/obj/machinery/computer3/generic/personal/personel_alt{
-	pixel_y = 7
-	},
-/obj/adventurepuzzle/triggerable/light{
-	id = "virva_light";
-	on_brig = 1.2;
-	on_cgreen = 0.4;
-	on_cred = 0
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "khd" = (
 /obj/item/storage/secure/ssafe/icemoon,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -70826,6 +70799,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"kVQ" = (
+/obj/landmark{
+	name = "theonyxkeywashere"
+	},
+/mob/living/critter/shade/crew/lost,
+/obj/item/device/key/onyx,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "kWN" = (
 /obj/table/auto/desk,
 /obj/item/pen/fancy{
@@ -71539,6 +71525,10 @@
 	name = "plating"
 	},
 /area/hospital)
+"miu" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor,
+/area/crunch)
 "mje" = (
 /obj/storage/closet/office,
 /obj/item/pen/fancy,
@@ -71613,20 +71603,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
-"mtX" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	name = "power conduit"
-	},
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "muz" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -75449,6 +75425,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skj" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "skF" = (
 /obj/storage/closet/dresser,
 /obj/machinery/light/small/floor/warm/very,
@@ -75598,16 +75588,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
-"sGS" = (
-/obj/loudspeaker{
-	desc = "This could probably cause an earthquake.";
-	name = "studio speaker";
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "sHI" = (
 /obj/machinery/door/unpowered/wood{
 	autoclose = 0;
@@ -75760,17 +75740,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"sRI" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/mob/living/critter/bear{
-	desc = "Wow, you haven't seen this guy since 2014!";
-	name = "DOngEun MesTur"
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "sUn" = (
 /turf/unsimulated/wall/setpieces/fakewindow{
 	dir = 6
@@ -75946,10 +75915,6 @@
 "tqB" = (
 /turf/unsimulated/floor/marble,
 /area/centcom/gallery)
-"trg" = (
-/mob/living/critter/robotic/repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "trs" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton{
@@ -77118,6 +77083,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
+"vjF" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/white,
+/area/crunch)
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
@@ -77364,6 +77333,16 @@
 "vBq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"vBO" = (
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -77434,6 +77413,10 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"vGO" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "vIb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -78096,6 +78079,22 @@
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"wRU" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "wTN" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -78476,6 +78475,15 @@
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
+"xzj" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78539,14 +78547,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"xFD" = (
-/obj/adventurepuzzle/element_link{
-	act_type = "on";
-	triggerable_id = "virva_light";
-	triggerer_id = "virva_trigger"
-	},
-/turf/unsimulated/floor/minitiles/black,
-/area/centcom/offices/virvatuli)
 "xGt" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -3
@@ -78698,10 +78698,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
-"xQJ" = (
-/mob/living/critter/robotic/repairbot,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -78958,6 +78954,10 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"ylS" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "ymj" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg5"
@@ -86764,7 +86764,7 @@ bKw
 bKw
 bKw
 bUY
-bVi
+miu
 bVt
 bKw
 bKw
@@ -87390,7 +87390,7 @@ bUP
 bUP
 cbH
 aDC
-ccM
+vGO
 bUP
 bUP
 bUP
@@ -89196,7 +89196,7 @@ bYB
 bYS
 bZi
 aDC
-bZP
+vjF
 cao
 caK
 cbf
@@ -109627,7 +109627,7 @@ biX
 biX
 biX
 biX
-bld
+xzj
 biX
 bjJ
 biY
@@ -111437,12 +111437,12 @@ biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 biX
 bjJ
@@ -114163,10 +114163,10 @@ pHY
 aaa
 biD
 biY
-bld
+xzj
 biX
 biX
-bld
+xzj
 bjJ
 bkr
 aaa
@@ -114466,7 +114466,7 @@ aaa
 aaa
 biD
 biY
-bob
+kVQ
 biX
 bjJ
 bkr
@@ -125972,7 +125972,7 @@ bpo
 bpo
 bqb
 bqb
-xQJ
+ylS
 bqb
 bpo
 bpo
@@ -126567,7 +126567,7 @@ aaa
 bpo
 bpo
 bxH
-xQJ
+ylS
 bqb
 bqb
 bqb
@@ -128067,7 +128067,7 @@ bqb
 brk
 bqb
 bpo
-trg
+fNh
 bpo
 brT
 bpo
@@ -129293,7 +129293,7 @@ bBi
 bBY
 bqb
 bBY
-trg
+fNh
 bBY
 bqb
 bBY
@@ -130490,7 +130490,7 @@ bpo
 bpo
 bqb
 bqb
-xQJ
+ylS
 bqb
 bqb
 bqb
@@ -133215,7 +133215,7 @@ bqb
 bqb
 bpo
 bpo
-xQJ
+ylS
 bvb
 bpo
 bpo
@@ -133828,7 +133828,7 @@ bEn
 bEI
 bqH
 bpo
-mtX
+skj
 bpo
 bFN
 bFN
@@ -135615,7 +135615,7 @@ aaa
 aaa
 bpo
 bpo
-hwt
+wRU
 bqb
 bqb
 bpo
@@ -150965,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-sRI
+ioJ
 wel
 gtU
 eiT
@@ -153053,10 +153053,10 @@ tfB
 eip
 fBu
 tij
-sGS
+vBO
 tlW
 xya
-xFD
+kcz
 wel
 iFW
 vij
@@ -153355,7 +153355,7 @@ tfB
 jvd
 fBu
 tij
-kgf
+iho
 nRm
 nBd
 nBd

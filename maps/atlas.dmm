@@ -3059,7 +3059,7 @@
 /area/station/security/main)
 "ajJ" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/device/microphone,
 /turf/simulated/floor/carpet{
 	dir = 8;

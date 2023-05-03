@@ -13046,7 +13046,7 @@
 /area/station/chapel/sanctuary)
 "aQF" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet,
 /area/station/chapel/sanctuary)
 "aQG" = (
@@ -13090,7 +13090,7 @@
 	dir = 1
 	},
 /obj/storage/secure/closet/civilian/chaplain,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/ghostboard,
 /turf/simulated/grimycarpet,
 /area/station/chapel/office)

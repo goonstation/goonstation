@@ -48,13 +48,13 @@
 		if (status & (NOPOWER|BROKEN))
 			return
 
-		if(turbine_handle.overspeed & src.icon_state != "engine1")
+		if(turbine_handle.overspeed && src.icon_state != "engine1")
 			src.icon_state = "engine1"
 			src.UpdateIcon()
-		else if(turbine_handle.stalling & src.icon_state != "engine2")
+		else if(turbine_handle.stalling && src.icon_state != "engine2")
 			src.icon_state = "engine2"
 			src.UpdateIcon()
-		else if(src.icon_state != "engine")
+		else if(!turbine_handle.overspeed && !turbine_handle.stalling && src.icon_state != "engine")
 			src.icon_state = "engine"
 			src.UpdateIcon()
 
@@ -105,7 +105,7 @@
 
 /obj/machinery/power/nuclear/reactor_control
 	name = "Reactor Control Computer"
-	desc = "A computer for configuring and monitoring the a nuclear reactor."
+	desc = "A computer for configuring and monitoring a nuclear reactor."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
 	density = TRUE
