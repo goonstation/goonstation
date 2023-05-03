@@ -40771,6 +40771,15 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
+"mzK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/storage/tech)
 "mzR" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/wingrille_spawn/auto,
@@ -67459,6 +67468,10 @@
 	pixel_x = 6;
 	pixel_y = -6
 	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
 /turf/simulated/floor/plating/jen,
 /area/station/storage/tech)
 "uKB" = (
@@ -137249,7 +137262,7 @@ fTY
 cJe
 fwu
 xKv
-xKv
+mzK
 xKv
 mDM
 pKe
