@@ -38168,7 +38168,6 @@
 /area/station/crew_quarters/clown)
 "lJq" = (
 /obj/machinery/light/incandescent/warm,
-/obj/storage/closet/welding_supply,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "lJt" = (
@@ -47634,7 +47633,7 @@
 	},
 /obj/access_spawn/engineering,
 /turf/simulated/floor/plating/jen,
-/area/station/engine/ptl)
+/area/station/maintenance/outer/se)
 "oIS" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "8"
@@ -55387,7 +55386,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/engineering/breakroom)
+/area/station/maintenance/outer/se)
 "qYC" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -78484,6 +78483,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/storage/closet/welding_supply,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
 "xUj" = (
