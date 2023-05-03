@@ -1,4 +1,3 @@
-
 /* -For adventure zoneish mobs-
    -Most of these orginally made by cogwerks-
 	whats here:
@@ -36,7 +35,6 @@
 	icon_state_dead = "shade" //doesn't have a dead icon, just fades away
 	death_text = null //has special spooky voice lines
 	hand_count = 2
-	can_lie = FALSE
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -117,6 +115,7 @@
 
 	death()
 		src.speak(pick(src.deathlines))
+		can_lie = FALSE
 		..()
 		SPAWN(1.5 SECONDS)
 			qdel(src)
