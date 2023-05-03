@@ -2820,10 +2820,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
 	health_brute = 10
+	health_brute_vuln = 1
 	health_burn = 10
+	health_burn_vuln = 1
 	reagent_capacity = 100
 	flags = TABLEPASS
-	fits_under_table = 1
+	fits_under_table = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/wanderer_aggressive
+	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 
 	setup_hands()
@@ -2835,11 +2842,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
 
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
 	death(var/gibbed)
+		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("toxin", 50, null)
 			src.reagents.add_reagent("histamine", 50, null)
 		return ..()
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting)
+		if (!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+			return TRUE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2861,6 +2879,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","buzz")
 				return 2
 		return ..()
+
+/mob/living/critter/small_animal/wasp/strong // Admins / polymorph
+	desc = "A wasp in space. it looks angry."
+	health_brute = 20
+	health_brute_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 0.8
+	is_npc = FALSE
 
 /* ================================================= */
 /* -------------------- Raccoon -------------------- */
