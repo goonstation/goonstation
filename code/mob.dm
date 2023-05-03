@@ -23,7 +23,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
 
