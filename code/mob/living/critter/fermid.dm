@@ -45,7 +45,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	is_npc = TRUE
-	ai_type = /datum/aiHolder/fermid
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP

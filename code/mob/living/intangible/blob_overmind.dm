@@ -41,6 +41,16 @@
 	var/image/nucleus_overlay
 	var/total_placed = 0
 	var/next_pity_point = 100
+#ifdef BONUS_POINTS
+	bio_points = 999
+	bio_points_max = 999
+	bio_points_max_bonus = 999
+	base_gen_rate = 999
+	gen_rate_bonus = 999
+	gen_rate_used = 999
+	evo_points = 999
+#endif
+
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null

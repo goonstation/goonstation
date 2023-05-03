@@ -55,12 +55,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(60 to INFINITY)
 				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
+	getMobIcon()
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
-		return standImage
+		src.bodyImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
+		return bodyImage
 
 	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))

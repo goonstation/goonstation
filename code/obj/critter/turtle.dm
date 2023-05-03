@@ -3,7 +3,6 @@
 	desc = "A turtle. They are noble creatures of the land and sea."
 	icon_state = "turtle"
 	var/base_icon_state = "turtle"		//I added this in a poor attempt to add costumes for sylvester and decided not to go with it, but it could be useful for handling other turtle types later on so I'll leave it.
-	density = 1
 	health = 100
 	aggressive = 0
 	defensive = 1
@@ -18,6 +17,7 @@
 	atk_text = "headbutts"
 	chase_text = "charges into"
 	crit_text = "rams really hard into"
+	density = 0
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
 	var/rigged = FALSE

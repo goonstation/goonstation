@@ -24,7 +24,7 @@ var/list/asteroid_blocked_turfs = list()
 	var/list/small_encounters = list()
 	var/list/mining_encounters_selectable = list()
 
-	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk,/obj/grille/catwalk/cross, /obj/overlay)
+	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk, /obj/overlay)
 
 	New()
 		..()
@@ -79,10 +79,6 @@ var/list/asteroid_blocked_turfs = list()
 			magnetic_center = T
 			magnet_area = get_area(T)
 			break
-
-		for(var/turf/T in landmarks[LANDMARK_MAGNET_SHIELD])
-			var/obj/forcefield/mining/S = new /obj/forcefield/mining(T)
-			magnet_shields += S
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
 		SPAWN(0)
@@ -182,6 +178,15 @@ var/list/asteroid_blocked_turfs = list()
 	density = 0
 	invisibility = INVIS_ALWAYS
 	anchored = ANCHORED
+
+	ex_act()
+		return
+
+	blob_act()
+		return
+
+	meteorhit()
+		return
 
 /// *** MISC *** ///
 

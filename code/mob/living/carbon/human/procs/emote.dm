@@ -141,8 +141,8 @@
 											src.add_karma(10)
 									fart_on_other = 1
 									break
-								else if (istype(A,/obj/item/storage/bible))
-									var/obj/item/storage/bible/B = A
+								else if (istype(A,/obj/item/bible))
+									var/obj/item/bible/B = A
 									B.farty_heresy(src)
 									fart_on_other = 1
 									break
@@ -235,7 +235,7 @@
 									var/found_bible = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/storage/bible))
+											if (istype(A,/obj/item/bible))
 												found_bible = 1
 									if (found_bible)
 										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
@@ -2299,7 +2299,7 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text("<span class='alert'>Your head hurts!</span>")
-					if(locate(/obj/item/storage/bible) in src.loc)
+					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
 							dab_id?.arm_count++

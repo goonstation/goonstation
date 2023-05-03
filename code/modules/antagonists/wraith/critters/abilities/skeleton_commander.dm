@@ -7,8 +7,8 @@
 	//List of critters we can buff, same as the one the wraith portal has.
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "harbinger_frame"
-	var/list/critter_list = list(/obj/critter/shade,
-	/obj/critter/crunched,
+	var/list/critter_list = list(/mob/living/critter/shade,
+	/mob/living/critter/crunched,
 	/obj/critter/ancient_thing,
 	/obj/critter/ancient_repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,

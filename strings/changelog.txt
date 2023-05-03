@@ -1,4 +1,117 @@
-
+(t)wed may 03 23
+(u)LeahTheTech
+(+)Botany produce chutes now have a unique green sprite.
+(u)Skeletonman0
+(p)13932
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Severed skeleton heads can now speak inside backpacks and while on spikes
+(t)tue may 02 23
+(u)Mr. Moriarty
+(p)13667
+(e)🆕🎨🧫📄|C-Feature, C-Sprites, C-Experimental, A-UI
+(*)Replaced the static space background with parallaxing background layers, with layer contents varying between station maps and z-levels. Should you wish to toggle it off, you may do so through the `Game -> Effects -> Parallax` toggle.
+(t)mon may 01 23
+(u)Keiiro
+(p)13923
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The Research Director now brings their unique labcoat to work!
+(u)Flaborized
+(p)13853
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The captain's locker has been stocked with a megaphone to help them get their finer points across.
+(u)Cheffie
+(p)13905
+(e)🗺|A-Mapping
+(+)Added a new prefab to Z5. Clean some clothes at Larry's today.
+(u)Mr. Moriarty
+(p)13898
+(e)🗺💅|A-Mapping, C-QoL
+(*)Donut3's Security Foyer has been relocated to be adjacent to the entrance.
+(t)sat apr 29 23
+(u)Flyingcow01
+(p)13339
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now insert a penlight into your PDA.
+(u)The_Kakapo
+(p)13630
+(e)🎨|C-Sprites
+(*)Adds Foam Dart Grenades
+(+)Foam Dart Grenades can be purchased from Geoff Honkinton
+(t)fri apr 28 23
+(u)Virvatuli
+(e)⚖|C-Balance
+(+)Pipeshot ammunition now has significantly improved damage potential.
+(u)DimWhat
+(p)13833
+(e)🎨⚖🎩👽|C-Sprites, C-Balance, A-Clothing, A-Mutantraces
+(+)Added several unique clothing sprites for lizard tails.
+(u)KolIsDumb, DeadMan164
+(p)13843
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Adds a new medal reward for 'Slow Burn'
+(u)DimWhat
+(p)13794
+(e)🎨🎩|C-Sprites, A-Clothing
+(+)Added buttoned versions of the Detective, HoS, and Beepsky coat.
+(t)thu apr 27 23
+(u)FlameArrow57
+(p)13848
+(e)💅🔨📦|C-QoL, A-Player-Actions, A-Game-Objects
+(+)Swords will now auto-sheathe if using the equip hotkey while they're held in hand.
+(u)DeeDotVeeA
+(p)13785
+(e)🗺|A-Mapping
+(+)Atmos barriers can now be found on most external airlocks on cogmap2
+(u)Kubius
+(p)13866
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Spatial interdictors can now initialize at 70% or higher charge, instead of requiring completely full charge.
+(t)wed apr 26 23
+(u)Amylizzle
+(p)13860
+(e)|
+(+)Blood & paint footprints will no longer track onto space tiles.
+(t)tue apr 25 23
+(u)aloe
+(+)After some shady dealings with the heads of staff on the NSS Manta, CARL (the listening post vendor) now sells high explosive torpedos on Oshan.
+(u)LeahTheTech
+(+)The rockbox now displays a count of how many of each ore have been purchased.
+(+)Manufacturers now have category tabs.
+(u)Ikea
+(p)13752
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Sylvester can now be walked through
+(u)Ikea
+(p)13818
+(e)💅📄|C-QoL, A-UI
+(*)The colors for the command, medical, and intercom channels for radio headsets have been changed to make them stand out more from each other.
+(u)monkeymilesmoo
+(p)13842
+(e)|
+(+)Monkeys are no longer bodybuilders
+(t)sun apr 23 23
+(u)LeahTheTech
+(p)13782
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)All security officers including NTSCs (not assistants) now receive mind protection health implants. Said implants now self-destruct upon death.
+(+)Traitor slip and signs have been buffed slightly, they now have a 100% chance to activate, have a reduced cooldown and can be anchored with a screwdriver.
+(+)Attempting to disarm someone who is grabbing you will now resist the grab instead.
+(+)Fibre wire no longer shows an attack icon and twitch unless you are actually able to grab someone.
+(t)sat apr 22 23
+(u)pali
+(+)Missing organs now displayed in red in health scan.
+(u)Piesuu
+(p)13762
+(e)🗺💅|A-Mapping, C-QoL
+(+)The NCS Atlas has been equipped with AI intercoms
+(u)Flaborized
+(p)13786
+(e)🎨|C-Sprites
+(+)Chief engineers can now find an extra jumpsuit in their clothing box and a new green stripe on their hat.
+(u)Lofijuno
+(p)13783
+(e)🎨|C-Sprites
+(+)SWAT Gas Mask medal reward is now more NT coloured.
 (t)fri apr 21 23
 (u)rdcb
 (p)13739

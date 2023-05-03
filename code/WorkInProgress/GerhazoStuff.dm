@@ -232,12 +232,10 @@
 				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
-		if (istype(sword.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = sword.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(sword)
-			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+		if (sword.stored)
+			var/atom/previous_storage = sword.stored.linked_item
+			sword.stored.transfer_stored_item(sword, get_turf(sword))
+			sword.visible_message("<span class='alert'>[sword] somehow escapes the [previous_storage] that it was inside of!</span>")
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)

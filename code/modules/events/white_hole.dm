@@ -176,7 +176,7 @@
 			/datum/reagent/flockdrone_fluid = 3,
 		),
 		"chapel" = list(
-			/obj/item/storage/bible = 2,
+			/obj/item/bible = 2,
 			/obj/item/device/light/candle = 10,
 			/obj/item/device/light/candle/small = 15,
 			/obj/item/device/light/candle/spooky = 2,

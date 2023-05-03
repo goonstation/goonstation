@@ -268,7 +268,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindhack_status(M)
+			M.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 		. = ..()
 
 	on_grump(mult)
@@ -351,7 +351,7 @@ datum/teg_transformation/vampire
 	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
-		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
+		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
 
 		switch (force)

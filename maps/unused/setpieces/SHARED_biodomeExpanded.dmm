@@ -547,7 +547,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-
+	
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -6932,7 +6932,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-4"

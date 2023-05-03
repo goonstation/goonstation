@@ -50,7 +50,7 @@
 				H.equip_if_possible(src.headset, H.slot_r_store)
 			else if (!H.l_store)
 				H.equip_if_possible(src.headset, H.slot_l_store)
-			else if (istype(H.back, /obj/item/storage/) && length(H.back.contents) < 7)
+			else if (H.back?.storage && !H.back.storage.is_full())
 				H.equip_if_possible(src.headset, H.slot_in_backpack)
 			else
 				H.put_in_hand_or_drop(src.headset)
@@ -81,7 +81,7 @@
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.</span>")
+		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
 		boutput(src.owner.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(src.owner.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
 		boutput(src.owner.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")

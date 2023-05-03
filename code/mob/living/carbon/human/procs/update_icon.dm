@@ -804,6 +804,7 @@
 	UpdateOverlays(src.fire_standing, "fire", 0, 1)
 
 /mob/living/carbon/human/update_inhands()
+	..()
 
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
@@ -1011,7 +1012,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
 
-						var/image/limb_pic = limb.getMobIcon(0, src.decomp_stage)	// The limb, not the hand/foot
+						var/image/limb_pic = limb.getMobIcon(src.decomp_stage)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
 							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
@@ -1020,9 +1021,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							limb_pic.pixel_y = armleg_offset
 							src.body_standing.overlays += limb_pic
 
-						var/hand_icon_s = limb.getHandIconState(0, src.decomp_stage)
+						var/hand_icon_s = limb.getHandIconState(src.decomp_stage)
 
-						var/part_icon_s = limb.getPartIconState(0, src.decomp_stage)
+						var/part_icon_s = limb.getPartIconState(src.decomp_stage)
 
 						var/handlimb_icon = limb.getAttachmentIcon(src.decomp_stage)
 
