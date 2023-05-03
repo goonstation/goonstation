@@ -69,7 +69,6 @@
 
 		for (var/datum/mind/M in players)
 			equip_player(M.current, TRUE)
-			M.current.antagonist_overlay_refresh(1,0)
 
 	proc/select_commander()
 

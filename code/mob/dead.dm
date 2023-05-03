@@ -28,9 +28,15 @@
 	if(client?.holder?.ghost_interaction)
 		setalive(src)
 
+	if (isadminghost(src))
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_mob(src)
+
 /mob/dead/Logout()
 	. = ..()
 	setdead(src)
+
+	if (isadminghost(src))
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_mob(src)
 
 /mob/dead/click(atom/target, params, location, control)
 	if(src.client?.holder?.ghost_interaction)

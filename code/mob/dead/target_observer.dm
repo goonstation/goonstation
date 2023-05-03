@@ -45,8 +45,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (src.client && src.client.holder)
-			src.antagonist_overlay_refresh(0, 0)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (IS_TWITCH_CONTROLLED(src))

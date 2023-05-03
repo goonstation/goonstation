@@ -1,6 +1,7 @@
 /datum/antagonist/spy_thief
 	id = ROLE_SPY_THIEF
 	display_name = "spy thief"
+	antagonist_icon = "spy_thief"
 
 	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
 	var/list/obj/stolen_items = list()

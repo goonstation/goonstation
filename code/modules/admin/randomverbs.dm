@@ -1134,10 +1134,12 @@
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
 		mob.see_invisible = INVIS_ADVENTURE
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
 			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
@@ -1773,8 +1775,6 @@
 		ticker.minds.Add(newMind)
 	M.mind = newMind
 	M.mind.brain?.owner = M.mind
-
-	M.antagonist_overlay_refresh(1, 1)
 
 	if (new_mind_only)
 		return

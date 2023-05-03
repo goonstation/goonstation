@@ -341,12 +341,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-		// -- Mode/mind specific stuff goes here
-
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-
-		// -- End mode specific stuff
 
 		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")

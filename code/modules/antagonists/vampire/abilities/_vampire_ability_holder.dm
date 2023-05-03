@@ -338,8 +338,6 @@
 					return
 
 			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
-			if (istype(src.owner, /mob))
-				src.owner.antagonist_overlay_refresh(TRUE, FALSE)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")

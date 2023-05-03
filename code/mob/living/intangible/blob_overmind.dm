@@ -130,9 +130,6 @@
 			death()
 			return
 
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
 		//time to un-apply the nucleus-destroyed debuff
 		if (src.debuff_timestamp && world.timeofday >= src.debuff_timestamp)
 			src.debuff_timestamp = 0

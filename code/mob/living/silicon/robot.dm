@@ -246,7 +246,6 @@
 			update_bodypart() //TODO probably remove this later. keeping in for safety
 			if (src.syndicate)
 				src.show_antag_popup("syndieborg")
-				src.antagonist_overlay_refresh(1, 1)
 
 		if (prob(50))
 			src.sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'

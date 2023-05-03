@@ -4,6 +4,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/id = null
 	/// Human-readable name for displaying this antagonist for admin menus, round-end summary, etc.
 	var/display_name = null
+	/// The icon state that should be used for the antagonist overlay for this antagonist type. Icons may be found in `icons/mob/antag_overlays.dmi`.
+	var/image/antagonist_icon = "generic"
+
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
 	/// If FALSE, this antagonist will not be displayed at the end of the round.
@@ -78,6 +81,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (take_gear)
 			src.remove_equipment()
 
+		src.remove_from_image_groups()
 		src.remove_objectives()
 
 		if (!src.silent && !src.pseudo)
@@ -118,6 +122,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
+		src.add_to_image_groups()
+
 		if (!src.silent)
 			src.announce()
 			src.do_popup()
@@ -129,6 +135,16 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_relocate)
 			src.relocate()
+
+	proc/add_to_image_groups()
+		if (!src.antagonist_icon)
+			return
+
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_mind_mob_overlay(src.owner, image)
+
+	proc/remove_from_image_groups()
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_mind_mob_overlay(src.owner)
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()

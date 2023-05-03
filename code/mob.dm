@@ -501,7 +501,6 @@
 			O.client_login(src)
 
 	src.need_update_item_abilities = 1
-	src.antagonist_overlay_refresh(1, 0)
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
