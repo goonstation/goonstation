@@ -236,6 +236,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
+	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
 	seek_target(range)
@@ -243,7 +244,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		for (var/mob/living/C in hearers(range, src))
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
-			if (istype(C, /mob/living/critter/small_animal/mouse) || istype(C, /mob/living/critter/wraith/plaguerat)) continue
+			if (istype(C, /mob/living/critter/small_animal/mouse)) continue
+			if (C.faction == src.faction) continue //Checks if they are in the same faction
 			. += C
 
 	critter_basic_attack(var/mob/target)

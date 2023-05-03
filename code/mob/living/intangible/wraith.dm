@@ -19,6 +19,7 @@
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
+	faction = MOB_AI_FACTION_WRAITH
 
 	var/atom/movable/overlay/animation = null
 

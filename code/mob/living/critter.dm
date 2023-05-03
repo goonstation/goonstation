@@ -1305,6 +1305,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, src.type)) continue
+			if (C.faction == src.faction) continue //Checks if they are in the same faction
 			. += C
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.

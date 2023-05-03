@@ -43,6 +43,7 @@
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
+	var/faction = null // For assigning mobs various factions
 
 	var/canspeak = 1
 
@@ -181,6 +182,8 @@
 /mob/living/death(gibbed)
 	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
+	if (src.faction)
+		src.faction = null
 	if (src.ai) src.ai.disable()
 	if (src.key) statlog_death(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))

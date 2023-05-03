@@ -3,6 +3,7 @@
 	real_name = "brullbar"
 	desc = "Oh god."
 	density = 1
+	faction = MOB_AI_FACTION_WRAITH
 	icon_state = "brullbar"
 	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs
@@ -117,6 +118,7 @@
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
+			if (C.faction == src.faction) continue //Checks if they are in the same faction
 			if (ishuman(C))
 				var/mob/living/carbon/human/H = C
 				if(!is_king && iswerewolf(H))

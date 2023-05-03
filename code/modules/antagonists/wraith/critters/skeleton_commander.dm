@@ -7,6 +7,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
