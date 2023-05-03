@@ -223,7 +223,7 @@ var/datum/signal_holder/global_signal_holder
 		comp.register(arglist(register_args))
 		return // exit early since we're done
 
-	if(!override && target_procs[signal_type] && ((target_procs[signal_type]) != proctype))
+	if(!override && target_procs[signal_type])
 		stack_trace("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [identify_object(target)] Proc: [proctype]")
 
 	target_procs[signal_type] = proctype
