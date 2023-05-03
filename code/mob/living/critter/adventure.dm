@@ -148,7 +148,6 @@
 	health_burn_vuln = 1
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
-	ai_type = /datum/aiHolder/wanderer_aggressive
 
 	wanderlines = list("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?")
 
