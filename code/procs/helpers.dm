@@ -1240,8 +1240,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 					. += linked_mob
 			if (istype(A, /obj/head_on_spike))
 				for(var/obj/item/organ/head/head in A)
-					if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
-					var/mob/linked_mob = found_head.linked_human
+					if (head.head_type == HEAD_SKELETON && found_head.linked_human != null)
+					var/mob/linked_mob = head.linked_human
 					. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
