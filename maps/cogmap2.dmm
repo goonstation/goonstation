@@ -4381,7 +4381,7 @@
 /area/station/chapel/office)
 "alF" = (
 /obj/rack,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/pen/fancy,
 /obj/item/device/microphone,
 /obj/item/dice/magic8ball,
@@ -6193,7 +6193,7 @@
 /area/station/chapel/sanctuary)
 "aqp" = (
 /obj/stool,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -73473,16 +73473,12 @@
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "kLC" = (
-/obj/item/bang_gun/ak47{
-	layer = 2
-	},
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
-/obj/item/storage/wall{
+/obj/item/storage/wall/ak_fake{
 	dir = 4;
-	grab_stuff_on_spawn = 1;
 	pixel_x = -31
 	},
 /turf/simulated/floor/plating,

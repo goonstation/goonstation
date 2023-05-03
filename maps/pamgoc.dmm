@@ -62255,7 +62255,7 @@
 	pixel_x = 5;
 	pixel_y = 9
 	},
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 8;
 	pixel_y = 8
 	},
@@ -62654,7 +62654,7 @@
 /area/station/crew_quarters/hor)
 "cnT" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 4;
 	pixel_y = 3
 	},

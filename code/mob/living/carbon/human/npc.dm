@@ -575,17 +575,17 @@
 		throw_equipped |= prob(80)
 
 	// pull things out of other things!
-	if(istype(src.equipped(), /obj/item/storage))
-		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+	var/obj/item/I = src.equipped()
+	if(I.storage)
+		if(!length(I.storage.get_contents()) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else if(length(storage.contents))
-			var/obj/item/taken = pick(storage.contents)
-			src.u_equip(storage)
-			storage.set_loc(src.loc)
-			storage.dropped(src)
-			storage.layer = initial(storage.layer)
-			taken.set_loc(storage.loc)
+		else if(length(I.storage.get_contents()))
+			var/obj/item/taken = pick(I.storage.get_contents())
+			src.u_equip(I)
+			I.set_loc(src.loc)
+			I.dropped(src)
+			I.layer = initial(I.layer)
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
@@ -748,7 +748,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1
@@ -803,10 +803,8 @@
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(src.back && istype(src.back,/obj/item/storage/backpack))
-			var/obj/item/storage/backpack/B = src.back
-			if(B.contents.len < 7)
-				B.Attackby(GN,src)
+		else if(src.back?.storage && !src.back.storage.is_full())
+			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup
 

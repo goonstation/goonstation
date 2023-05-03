@@ -814,7 +814,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
-			I.set_loc(src)
+			if (I.stored)
+				I.stored.transfer_stored_item(I, src, user = src)
+			else
+				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr

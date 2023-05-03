@@ -685,38 +685,38 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"
 	item_state = "bandana_white"
-	handkerchief = /obj/item/cloth/handkerchief/white
+	handkerchief = /obj/item/cloth/handkerchief/colored/white
 
 /obj/item/clothing/mask/bandana/yellow
 	name = "yellow bandana"
 	item_state = "bandana_yellow"
 	icon_state = "bandana_yellow"
-	handkerchief = /obj/item/cloth/handkerchief/yellow
+	handkerchief = /obj/item/cloth/handkerchief/colored/yellow
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
 	item_state = "bandana_red"
 	icon_state = "bandana_red"
-	handkerchief = /obj/item/cloth/handkerchief/red
+	handkerchief = /obj/item/cloth/handkerchief/colored/red
 
 /obj/item/clothing/mask/bandana/purple
 	name = "purple bandana"
 	item_state = "bandana_purple"
 	icon_state = "bandana_purple"
-	handkerchief = /obj/item/cloth/handkerchief/purple
+	handkerchief = /obj/item/cloth/handkerchief/colored/purple
 
 /obj/item/clothing/mask/bandana/pink
 	name = "pink bandana"
 	item_state = "bandana_pink"
 	icon_state = "bandana_pink"
 	desc = "The fashionable bandit's choice."
-	handkerchief = /obj/item/cloth/handkerchief/pink
+	handkerchief = /obj/item/cloth/handkerchief/colored/pink
 
 /obj/item/clothing/mask/bandana/orange
 	name = "orange bandana"
 	item_state = "bandana_orange"
 	icon_state = "bandana_orange"
-	handkerchief = /obj/item/cloth/handkerchief/orange
+	handkerchief = /obj/item/cloth/handkerchief/colored/orange
 
 /obj/item/clothing/mask/bandana/nt
 	name = "nt bandana"
@@ -729,13 +729,13 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "green bandana"
 	item_state = "bandana_green"
 	icon_state = "bandana_green"
-	handkerchief = /obj/item/cloth/handkerchief/green
+	handkerchief = /obj/item/cloth/handkerchief/colored/green
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	item_state = "bandana_blue"
 	icon_state = "bandana_blue"
-	handkerchief = /obj/item/cloth/handkerchief/blue
+	handkerchief = /obj/item/cloth/handkerchief/colored/blue
 
 /obj/item/clothing/mask/bandana/random
 	var/list/possible_bandana = list(/obj/item/clothing/mask/bandana/white,
