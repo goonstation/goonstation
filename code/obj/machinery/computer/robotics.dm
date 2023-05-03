@@ -4,11 +4,12 @@
 	icon_state = "robotics"
 	req_access = list(access_robotics)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+	deconstruct_flags = DECON_NOBORG
 	desc = "A computer that allows an authorized user to have an overview of the cyborgs on the station."
 	power_usage = 500
 	circuit_type = /obj/item/circuitboard/robotics
 	id = 0
-	var/perma = 0
+	var/perma = 1
 
 	light_r =0.85
 	light_g = 0.86
