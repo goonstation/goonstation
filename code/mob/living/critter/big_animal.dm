@@ -3,7 +3,6 @@
 	real_name = "lion"
 	desc = "Oh christ"
 	density = 1
-	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/gibs
 	icon_state = "lion"
 	icon_state_dead = "lion-dead"

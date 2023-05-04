@@ -6,7 +6,6 @@
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
 	hand_count = 2
-	faction = MOB_AI_FACTION_WRAITH
 	can_throw = FALSE
 	can_grab = TRUE
 	can_disarm = TRUE
