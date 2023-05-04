@@ -2880,13 +2880,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				return 2
 		return ..()
 
-/mob/living/critter/small_animal/wasp/strong // Admins / polymorph
-	desc = "A wasp in space. it looks angry."
-	health_brute = 20
+/mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
+	desc = "A wasp in space. it looks angry"
+	health_brute = 15
 	health_brute_vuln = 1
-	health_burn = 20
+	health_burn = 15
+	health_burn_vuln = 0.8
+
+/mob/living/critter/small_animal/wasp/strong // Polymorph and admin spawn
+	desc = "A wasp in space. it looks buff... somehow."
+	health_brute = 30
+	health_brute_vuln = 1
+	health_burn = 30
 	health_burn_vuln = 0.8
 	is_npc = FALSE
+
+	setup_hands() // Stronger grip
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "weird grabby foot thing"
+		HH.limb_name = "foot"
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
+	name = "space wasp egg"
+	desc = "That doesn't seem right..."
+	critter_type = /mob/living/critter/small_animal/wasp
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+	name = "space wasp egg?"
+	desc = "There is ALOT OF BUZZING coming from this thing..."
+	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
 /* -------------------- Raccoon -------------------- */
