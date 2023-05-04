@@ -290,7 +290,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
 	uses_charge_overlay = TRUE
-	charge_icon_state = "phaser_xl"
+	charge_icon_state = "phaser-xl"
 
 	New()
 		set_current_projectile(new/datum/projectile/laser/light/huge) // light/huge - whatev!!!! this should probably be refactored
@@ -337,7 +337,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image = image(src.icon)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
-				src.charge_image.icon_state = "[src.charge_icon_state]full"
+				src.charge_image.icon_state = "[src.icon_state]full"
 				UpdateIcon()
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
@@ -402,7 +402,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 	rechargeable = FALSE
 	spread_angle = 10
 	uses_charge_overlay = TRUE
-	charge_icon_state = "egun-jr"
+	charge_icon_state = "egunjr"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/diffuse)
