@@ -12221,7 +12221,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEG" = (
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/disposalpipe/trunk/produce{
@@ -14024,8 +14024,9 @@
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
 "aJf" = (
-/obj/machinery/disposal{
-	name = "Produce Chute - Lobby"
+/obj/machinery/disposal/botany{
+	name = "Produce Chute - Lobby";
+	desc = "A pneumatic delivery chute for sending produce to the lobby."
 	},
 /obj/machinery/light{
 	dir = 4;

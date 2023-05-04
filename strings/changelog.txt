@@ -1,4 +1,10 @@
-
+(t)wed may 03 23
+(u)LeahTheTech
+(+)Botany produce chutes now have a unique green sprite.
+(u)Skeletonman0
+(p)13932
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Severed skeleton heads can now speak inside backpacks and while on spikes
 (t)tue may 02 23
 (u)Mr. Moriarty
 (p)13667

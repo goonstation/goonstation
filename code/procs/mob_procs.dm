@@ -1094,16 +1094,29 @@
 	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
 
 	var/rendered_outside = null
-	if (olocs.len)
-		var/atom/movable/OL = olocs[olocs.len]
+	if (length(olocs))
+		/// outermost movable atom in the chain our mob is in, used to determine how text will look
+		var/atom/movable/outermost = olocs[length(olocs)]
+
+		/// determines if we're located on a spike for special handling
+		var/obj/head_on_spike/spike = locate() in olocs
+		if (spike)
+			outermost = spike
+			thickness = -1 // dont muffle at all for heads on spikes
+		else
+			/// determine if we're atleast in an item held by a mob, such as a backpack
+			for (var/obj/item/I in olocs)
+				if (ismob(I.loc))
+					outermost = I // set it so it appears as what we're in when talking
+
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in heard)
 		if (M in processed)

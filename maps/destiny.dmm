@@ -31491,7 +31491,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /turf/simulated/floor/grass/random,

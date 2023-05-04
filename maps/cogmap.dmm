@@ -52119,7 +52119,7 @@
 /area/station/routing/airbridge)
 "hMn" = (
 /obj/machinery/camera/ranch,
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -53337,7 +53337,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "juE" = (
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/disposalpipe/trunk/produce,

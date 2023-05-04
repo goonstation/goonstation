@@ -1057,11 +1057,21 @@
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
 	else
-		olocs = obj_loc_chain(src)
+		olocs = obj_loc_chain(say_location)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
-			listening = all_hearers(message_range, olocs[olocs.len])
+
+			if (ismob(olocs[olocs.len])) // if we're in someone's bag, only the nerd holding it can hear us
+				for(var/mob/M in olocs[olocs.len])
+					listening |= M
+				for(var/obj/item/organ/head/H in say_location.loc)
+					if (H.linked_human)
+						listening |= H.linked_human
+
+				listening |= olocs[olocs.len]
+			else
+				listening = all_hearers(message_range, olocs[olocs.len])
 
 
 	listening |= src
@@ -1124,9 +1134,15 @@
 
 		if(chat_text)
 			chat_text.measure(src.client)
-			for(var/image/chat_maptext/I in src.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
+			var/obj/chat_maptext_holder/holder = src.chat_text
+			if (is_decapitated_skeleton) // for skeleton heads
+				var/mob/living/carbon/human/H = src
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				holder = S.head_tracker?.chat_text
+			if (holder)
+				for(var/image/chat_maptext/I in holder.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))
@@ -1160,7 +1176,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
+				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
