@@ -145,7 +145,7 @@ var/list/rollList = list()
 			return 0
 		if (!src.can_have_pals || !Pal.can_have_pals)
 			return 0
-		if (istype(Pal.loc, /obj/item/storage))
+		if (Pal.stored)
 			return 0
 
 		src.dicePals += Pal
@@ -153,7 +153,7 @@ var/list/rollList = list()
 		if (Pal.dicePals.len)
 
 			for (var/obj/item/dice/D in Pal.dicePals)
-				if (istype(D.loc, /obj/item/storage))
+				if (D.stored)
 					Pal.dicePals -= D
 					continue
 				if (ismob(D.loc))
@@ -790,7 +790,7 @@ var/list/rollList = list()
 
 	proc/colorpick()
 		src.setcolor = pick("#D65555","#D88A41","#D8D856","#5FBF91","#6AC2D8","#9F6AD8", "null","#D882B3")
-		for(var/obj/item/dice/i in src)
+		for(var/obj/item/dice/i in src.storage.get_contents())
 			i.color = src.setcolor
 
 	make_my_stuff()

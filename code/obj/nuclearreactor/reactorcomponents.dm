@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "fuel_rod"
 	w_class = W_CLASS_BULKY
+	material_amt = 1 //cannot efficiently recycle these
 
 	/// Icon that appears in the UI
 	var/icon_state_inserted = "base"
@@ -39,7 +40,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	/// How much gas this component can hold, and will be processed per tick
 	var/gas_volume = 0
 	/// Thermal mass. Basically how much energy it takes to heat this up 1Kelvin
-	var/thermal_mass = 420*25//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
 	New(material_name="steel")
@@ -119,8 +120,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			var/k = calculateHeatTransferCoefficient(RC.material,src.material)
 			//surface area in thermal contact (m^2)
 			var/A = min(src.thermal_cross_section,RC.thermal_cross_section)
-			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
-			RC.temperature = RC.temperature - (k * A * 1/RC.thermal_mass)*-deltaT
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT //8 because machines are ticked when % 8 == 0
+			RC.temperature = RC.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/RC.thermal_mass)*-deltaT
 
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
@@ -132,8 +133,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			var/deltaT = src.temperature - holder.temperature
 			var/k = calculateHeatTransferCoefficient(holder.material,src.material)
 			var/A = src.thermal_cross_section
-			src.temperature = src.temperature - (k * A * 1/src.thermal_mass)*deltaT
-			holder.temperature = holder.temperature - (k * A * 1/holder.thermal_mass)*-deltaT
+			src.temperature = src.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/src.thermal_mass)*deltaT
+			holder.temperature = holder.temperature - (k * A * (MACHINE_PROC_INTERVAL*8)/holder.thermal_mass)*-deltaT
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
@@ -232,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	icon_state_cap = "fuel_cap"
 	neutron_cross_section = 1.0
 	thermal_cross_section = 10
-	thermal_mass = 420*100//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	thermal_mass = 420*1000//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	extra_info()
 		. = ..()
@@ -286,7 +287,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/gas_thermal_cross_section = 15
 	var/datum/gas_mixture/air_contents
 	gas_volume = 100
-	thermal_mass = 420*5//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
+	thermal_mass = 420*50//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 	melt()
 		..()
@@ -307,13 +308,18 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			// temperature differential
 			var/deltaT = src.temperature - src.air_contents.temperature
 			// temp differential for radiative heating
-			var/deltaTr = (src.temperature ** 4) - (src.air_contents.temperature ** 4)
+			//this is equivelant to (src.temperature ** 4) - (src.current_gas.temperature ** 4), but factored so its less likely to hit overflow
+			var/deltaTr = (src.temperature + src.air_contents.temperature)*(src.temperature - src.air_contents.temperature)*((src.temperature**2) + (src.air_contents.temperature**2))
+
 			//thermal conductivity
 			var/k = calculateHeatTransferCoefficient(null,src.material)
 			//surface area in thermal contact (m^2)
-			var/A = src.gas_thermal_cross_section
+			var/A = src.gas_thermal_cross_section * (MACHINE_PROC_INTERVAL*8) //multipied by process time to approximate flow rate
 
 			var/thermal_e = THERMAL_ENERGY(air_contents)
+			//commented out for later debugging purposes
+			//var/coe_check = thermal_e + src.temperature*src.thermal_mass
+
 			//okay, we're slightly abusing some things here. Notably we're using the thermal conductivity as a stand-in
 			//for the convective heat transfer coefficient(h). It's wrong, since h generally depends on flow rate, but we
 			//can assume a constant flow rate and then a dependence on the thermal conductivity of the material it's flowing over
@@ -323,10 +329,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			//by clamping between hottest and coldest. It's not pretty, but it works.
 			var/hottest = max(src.air_contents.temperature, src.temperature)
 			var/coldest = min(src.air_contents.temperature, src.temperature)
-			src.air_contents.temperature = clamp(src.air_contents.temperature + ((k * A * deltaT) + (5.67037442e-8 * A * deltaTr))/HEAT_CAPACITY(src.air_contents), coldest, hottest)
+			//max limit on the energy transfered is bounded between the coldest and hottest temperature of the thermal mass, to ensure that the
+			//gas can't suck out more heat from the component than exists
+			var/max_delta_e = clamp(((k * A * deltaT) + (5.67037442e-8 * A * deltaTr)), src.temperature*src.thermal_mass - hottest*src.thermal_mass, src.temperature*src.thermal_mass - coldest*src.thermal_mass)
+			src.air_contents.temperature = clamp(src.air_contents.temperature + max_delta_e/HEAT_CAPACITY(src.air_contents), coldest, hottest)
 			//after we've transferred heat to the gas, we remove that energy from the gas channel to preserve CoE
-			src.temperature = src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass
+			src.temperature = clamp(src.temperature - (THERMAL_ENERGY(air_contents) - thermal_e)/src.thermal_mass, coldest, hottest)
 
+			//commented out for later debugging purposes
+			//var/coe2 = (THERMAL_ENERGY(air_contents) + src.temperature*src.thermal_mass)
+			//if(abs(coe2 - coe_check) > 64)
+			//	CRASH("COE VIOLATION COMPONENT")
 			if(src.air_contents.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
@@ -340,6 +353,16 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		if(inGas)
 			src.air_contents = inGas.remove((src.gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			src.air_contents?.volume = gas_volume
+			if(src.air_contents && TOTAL_MOLES(src.air_contents) < 1)
+				if(istype(., /datum/gas_mixture))
+					var/datum/gas_mixture/result = .
+					result.merge(src.air_contents)
+					src.air_contents = null
+					return result
+				else
+					. = src.air_contents
+					src.air_contents = null
+					return .
 
 #define SANE_COMPONENT_MATERIALS \
 		100;"gold",\

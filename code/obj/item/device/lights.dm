@@ -303,7 +303,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	icon = 'icons/obj/items/alchemy.dmi'
 	icon_state = "candle-off"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	icon_off = "candle-off"
 	icon_on = "candle"
@@ -388,7 +388,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 /obj/item/device/light/candle/spooky
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()
@@ -489,7 +489,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	icon_state = "wizard1"
 	icon_on = "wizard1"
 	icon_off = "wizard0"
-	anchored = 1
+	anchored = ANCHORED
 	col_r = 1
 	col_g = 0.9
 	col_b = 0.9

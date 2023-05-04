@@ -29,180 +29,6 @@
 	bullet_act(flag, A as obj)
 		CritterDeath()
 
-/obj/critter/mimic
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic_blue1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	death_text = "%src% flops closed, dead!"
-	chase_text = "hurls itself at"
-	atk_brute_amt = 3
-	crit_brute_amt = 6
-	var/toolbox_style = "blue"
-	var/list/toolbox_list = list("blue", "red", "yellow", "green")
-	var/switcharoo = 10 // set to 0 for mimics that always are mimics and never toolboxes
-
-	New()
-		..()
-		src.toolbox_style = pick(src.toolbox_list)
-		src.UpdateIcon()
-		if (prob(src.switcharoo))
-			switch (src.toolbox_style)
-				if ("blue")
-					new /obj/item/storage/toolbox/mechanical(src.loc)
-				if ("red")
-					new /obj/item/storage/toolbox/emergency(src.loc)
-				if ("yellow")
-					new /obj/item/storage/toolbox/electrical(src.loc)
-				if ("green")
-					if (prob(1))
-						new /obj/item/storage/toolbox/memetic(src.loc)
-					else
-						new /obj/item/storage/toolbox/artistic(src.loc)
-			qdel(src)
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch (task)
-				if ("thinking")
-					src.UpdateIcon()
-				if ("chasing")
-					src.UpdateIcon()
-				if ("attacking")
-					src.UpdateIcon()
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(33)) M.changeStatus("weakened", 4 SECONDS)
-
-	CritterAttack(mob/M)
-		..()
-
-	update_icon()
-		if (!src.toolbox_style)
-			src.toolbox_style = pick(src.toolbox_list)
-			src.dead_state = "mimic_[src.toolbox_style]1-dead"
-		switch (src.task)
-
-			if ("thinking")
-				src.icon_state = "mimic_[src.toolbox_style]1"
-
-				if (src.toolbox_style == "blue")
-					src.name = "mechanical toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds standard construction tools."
-
-				if (src.toolbox_style == "red")
-					src.name = "emergency toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds supplies required for emergencies."
-
-				if (src.toolbox_style == "yellow")
-					src.name = "electrical toolbox"
-					src.desc = "A metal container designed to hold various tools. This variety holds electrical supplies."
-
-				if (src.toolbox_style == "green")
-					src.name = "artistic toolbox"
-					src.desc = "It almost hurts to look at that, it's all out of focus."
-
-			if ("chasing")
-				src.icon_state = "mimic_[src.toolbox_style]2"
-				src.name = "mimic"
-				src.desc = "Oh shit, that's no toolbox at all!"
-
-			if ("attacking")
-				src.icon_state = "mimic_[src.toolbox_style]2"
-				src.name = "mimic"
-				src.desc = "Oh shit, that's no toolbox at all!"
-/*
-/obj/critter/mimic_old
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	death_text = "%src% crumbles to pieces!"
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch(task)
-				if("thinking")
-					src.icon_state = "mimic1"
-					src.name = "mechanical toolbox"
-				if("chasing")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-				if("attacking")
-					src.icon_state = "mimic2"
-					src.name = "mimic"
-
-	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> hurls itself at [M]!</span>")
-		if (prob(33)) M.weakened += rand(3,6)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		random_brute_damage(src.target, rand(2,4))
-		SPAWN(2.5 SECONDS)
-			src.attacking = 0
-*/
-
-/obj/critter/mimic2
-	name = "mechanical toolbox"
-	desc = null
-	icon_state = "mimic1"
-	health = 20
-	aggressive = 1
-	defensive = 1
-	wanderer = 0
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.5
-	seekrange = 1
-	angertext = "suddenly comes to life and lunges at"
-	var/objname = "mechanical toolbox" //name when in disguise
-	generic = 0
-	death_text = "%src% crumbles to pieces!"
-	chase_text = "hurls itself at"
-	atk_brute_amt = 3
-	crit_brute_amt = 6
-
-	ai_think()
-		..()
-		if (src.alive)
-			switch(task)
-				if("thinking")
-					src.overlays = null
-					src.name = objname
-				if("chasing")
-					src.overlays += image("icon" = 'icons/misc/critter.dmi', "icon_state" = "mimicface", "layer" = FLOAT_LAYER)
-					src.name = "mimic"
-				if("attacking")
-					src.overlays += image("icon" = 'icons/misc/critter.dmi', "icon_state" = "mimicface", "layer" = FLOAT_LAYER)
-					src.name = "mimic"
-
-	ChaseAttack(mob/M)
-		..()
-		if (prob(33)) M.changeStatus("weakened", 4 SECONDS)
-
-	CritterAttack(mob/M)
-		..()
 
 /obj/critter/spirit
 	name = "spirit"
@@ -240,7 +66,7 @@
 					src.invisibility = INVIS_NONE
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -322,7 +148,7 @@
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -408,7 +234,7 @@
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		var/mob/living/Cc
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
@@ -493,7 +319,7 @@
 		sword_damage_max = 0
 		sword_damage_min = 0
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -626,7 +452,7 @@
 		..()
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -774,7 +600,7 @@
 			qdel(src)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		if (src.target)
 			src.task = "chasing"
 			return
@@ -832,104 +658,6 @@
 		src.invisibility = INVIS_NONE
 		SPAWN(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
-		return
-
-/obj/critter/crunched
-	name = "transposed scientist"
-	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
-	icon_state = "crunched"
-	health = 10
-	brutevuln = 0.5
-	firevuln = 0
-	aggressive = 1
-	generic = 0
-
-	attack_hand(var/mob/user)
-		if (user.a_intent == "help")
-			return
-
-		..()
-
-	ChaseAttack(mob/M)
-		return
-
-	CritterAttack(mob/M)
-		if (!ismob(M))
-			return
-
-		src.attacking = 1
-
-		if (M.lying)
-			src.speak( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
-			src.visible_message("<span class='notice'>[src] shakes [M] trying to wake them up!</span>")
-			boutput(M, "<span class='combat'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		else
-			src.speak( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
-			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
-			boutput(M, "<span class='combat'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		if (isliving(M))
-			var/mob/living/H = M
-			H.was_harmed(src)
-		SPAWN(6 SECONDS)
-			src.attacking = 0
-
-	ai_think()
-		if(task == "thinking" || task == "wandering")
-			if (prob(5))
-				src.speak( pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God.") )
-		else
-			if (prob(5))
-				src.speak( pick("Please...help...it hurts...please", "I'm...sick...help","It went wrong.  It all went wrong.","I didn't mean for this to happen!", "I see everything twice!") )
-
-		return ..()
-
-	CritterDeath()
-		..()
-		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		SPAWN(1.5 SECONDS)
-			qdel(src)
-
-	seek_target()
-		src.anchored = 0
-		if (src.target)
-			src.task = "chasing"
-			return
-
-		for (var/mob/living/carbon/C in view(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (C.stat || C.health < 0) continue
-
-			src.target = C
-			src.oldtarget_name = C.name
-			src.task = "chasing"
-			src.speak( pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?") )
-			break
-
-	proc/speak(var/message)
-		if (!message)
-			return
-
-		var/fontSize = 1
-		var/fontIncreasing = 1
-		var/fontSizeMax = 3
-		var/fontSizeMin = -3
-		var/messageLen = length(message)
-		var/processedMessage = ""
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-
-		src.visible_message("<b>[src.name]</b> says, \"[processedMessage]\"")
 		return
 
 /obj/critter/livingtail

@@ -129,7 +129,7 @@
 		if (M.holding)
 			incoming = M.holding
 
-	if (istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
+	if (incoming.storage || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
 			if(length(incoming.contents))
@@ -147,14 +147,14 @@
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
-			if (!length(incoming.contents)) // We check here too in case it changed between asking and them responding
+			if (!length(incoming.contents)) // in case it changed between asking and them responding
 				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
 				return
 			if (istype(incoming, /obj/item/ore_scoop))
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
 			var/transfers = 0
-			for(var/obj/item/I in incoming)
+			for(var/obj/item/I in (incoming.storage?.get_contents() || incoming))
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 				transfers++
 			incoming.UpdateIcon()

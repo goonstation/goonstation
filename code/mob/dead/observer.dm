@@ -9,7 +9,7 @@
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
-	anchored = 1	//  don't get pushed around
+	anchored = ANCHORED	//  don't get pushed around
 	var/observe_round = FALSE
 	var/health_shown = FALSE
 	var/arrest_shown = FALSE

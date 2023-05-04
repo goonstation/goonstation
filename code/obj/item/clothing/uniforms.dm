@@ -359,6 +359,12 @@
 		icon_state = "chief-dress"
 		item_state = "chief-dress"
 
+	scarf
+		name = "chief engineer's outfit"
+		desc = "A brand new fancy outfit, with a scarf! Still somehow covered with faded oil stains."
+		icon_state = "chief-engineer-scarf"
+		item_state = "chief-engineer-scarf"
+
 /obj/item/clothing/under/rank/research_director
 	name = "research director's uniform"
 	desc = "This suit is ludicrously cheap. They must be embezzling the research budget again."

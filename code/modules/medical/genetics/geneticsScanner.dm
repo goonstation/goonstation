@@ -13,7 +13,7 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 	var/mob/occupant = null
 	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 
 	var/net_id = null

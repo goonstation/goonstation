@@ -21,7 +21,7 @@ TYPEINFO(/obj/machinery/status_display)
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
@@ -367,7 +367,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"
 	name = "\improper AI display"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	power_usage = 200

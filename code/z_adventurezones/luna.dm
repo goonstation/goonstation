@@ -910,7 +910,7 @@ Contents:
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "airlock_closed"
 	icon_base = "airlock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	autoclose = FALSE
@@ -958,7 +958,7 @@ Contents:
 /obj/decal/lunar_bootprint
 	name = "Neil Armstrong's genuine lunar bootprint"
 	desc = "The famous photographed bootprint is actually from Buzz Aldrin, but this is the genuine actual real replica of the FIRST step on the moon.  A corner of another world that is forever mankind."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = TURF_LAYER
 	icon = 'icons/misc/lunar.dmi'
@@ -987,7 +987,7 @@ Contents:
 	desc = "A really large mockup of the Earth's moon."
 	icon = 'icons/misc/lunar64.dmi'
 	icon_state = "moon"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = MOB_LAYER + 1
 
@@ -1004,7 +1004,7 @@ Contents:
 /obj/decal/fakeobjects/lunar_lander
 	name = "Lunar module descent stage"
 	desc = "The descent stage of the Apollo 11 lunar module, which landed the first astronauts on the moon."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/misc/lunar64.dmi'
 	icon_state = "LEM"
@@ -1017,7 +1017,7 @@ Contents:
 	desc = "A piece of regolith. Or something. It is a heavy rock from the moon.  These used to be worth more."
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "moonrock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/critter/mannequin
@@ -1132,7 +1132,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	name = "maintenance access panel"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "museum_control"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	var/id_tag = null
@@ -1624,7 +1624,8 @@ datum/computer/file/embedded_program/maintpanel
 			if (cmptext(copytext(setupEntry, 1, 5), "fake"))
 				. = text2path("/datum/maintpanel_device_entry/dummy[copytext(setupEntry, 5)]")
 				if (.)
-					src.device_entries += new . (src, entryName)
+					var/typ = .
+					src.device_entries += new typ (src, entryName)
 				else
 					src.device_entries += new /datum/maintpanel_device_entry/dummy (src, entryName)
 				continue
@@ -2076,7 +2077,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	desc = "This is a model of the \"dwarf\" plasma bomb held by the Space IRA in the 2004 Lunar Port Hostage Crisis.  At least, you hope it's a model."
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "dwarf_bomb"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 
 	var/well_fuck_its_armed = 0
@@ -2137,7 +2138,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "junction_box"
 	pixel_y = 24
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	attackby(obj/item/C, mob/user)

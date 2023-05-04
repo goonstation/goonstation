@@ -41,6 +41,9 @@
 
 	var/points_last = 0
 
+#ifdef BONUS_POINTS
+	points = 99999
+#endif
 
 	New(var/mob/M)
 		..()
@@ -887,10 +890,9 @@
 	proc
 		handleCast(atom/target, params)
 			var/datum/abilityHolder/localholder = src.holder
-#ifdef NO_COOLDOWNS
-			var/result = TRUE
-#else
 			var/result = tryCast(target, params)
+#ifdef NO_COOLDOWNS
+			result = TRUE
 #endif
 			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
 			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)

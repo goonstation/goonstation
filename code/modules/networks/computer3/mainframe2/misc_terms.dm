@@ -12,7 +12,7 @@
 // Generic testing appartus
 
 /obj/machinery/networked
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/networked.dmi'
 	var/net_id = null
@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 /obj/machinery/networked/storage
 	name = "Databank"
 	desc = "A networked data storage device."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "tapedrive0"
 	device_tag = "PNET_DATA_BANK"
@@ -663,7 +663,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 /obj/machinery/networked/storage/bomb_tester
 	name = "Explosive Simulator"
 	desc = "A networked device designed to simulate and analyze explosions.  Takes two tanks."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "bomb_scanner0"
 	base_icon_state = "bomb_scanner"
@@ -891,7 +891,7 @@ TYPEINFO(/obj/machinery/networked/storage)
 
 			vrbomb = new
 			vrbomb.set_loc(B)
-			vrbomb.anchored = 1
+			vrbomb.anchored = ANCHORED
 			vrbomb.tester = src
 
 			var/obj/item/device/timer/T = new
@@ -1030,7 +1030,7 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 
 /obj/machinery/networked/nuclear_charge
 	name = "Nuclear Charge"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon_state = "net_nuke0"
 	desc = "A nuclear charge used as a self-destruct device. Uh oh!"
@@ -1357,7 +1357,7 @@ TYPEINFO(/obj/machinery/networked/radio)
 /obj/machinery/networked/radio
 	name = "Network Radio"
 	desc = "A networked radio interface."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "net_radio"
 	device_tag = "PNET_PR6_RADIO"
@@ -1679,7 +1679,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 /obj/machinery/networked/printer
 	name = "Printer"
 	desc = "A networked printer.  It's designed to print."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_DESTRUCT
 	icon_state = "printer0"
@@ -2154,7 +2154,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 /obj/machinery/networked/storage/scanner
 	name = "Scanner"
 	desc = "A networked drum scanner.  It's designed to...scan documents."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon_state = "scanner0"
 	deconstruct_flags = DECON_DESTRUCT
@@ -2741,7 +2741,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2797,7 +2797,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -3217,7 +3217,7 @@ TYPEINFO(/obj/machinery/networked/printer)
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1
+	anchored = ANCHORED
 	flags = TABLEPASS
 	var/datum/light/light
 
