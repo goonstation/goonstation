@@ -1231,9 +1231,9 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-		 	if(isskeleton(A))
+			if(isskeleton(A))
 				var/mob/living/carbon/human/H = A
-				if (H.organholder.head?.head_type == HEAD_SKELETON) // do they have their head
+				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
 					. += A
 			else
 				. += A
