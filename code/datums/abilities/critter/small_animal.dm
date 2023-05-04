@@ -252,8 +252,10 @@
 		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
+		APPLY_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "pincergrab")
 		SPAWN(3 SECONDS)
 			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
+			REMOVE_ATOM_PROPERTY(MT, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 
 /datum/targetable/critter/hootat
