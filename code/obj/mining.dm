@@ -2531,16 +2531,24 @@ TYPEINFO(/obj/item/ore_scoop)
 		if (istype(target, /obj/item/satchel/mining))
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/new_satchel = target
-				var/atom/old_location = new_satchel.loc //we need to store the old location to move the ejected satchel there
-				user.drop_item(new_satchel)
+				var/atom/old_location = null //this stores the old location so we know where the clicked item came from
+				var/was_stored = FALSE //For stuff with storage datums, we can move the item to that storage
+				if (new_satchel.stored)
+					old_location = new_satchel.stored.linked_item
+					was_stored = TRUE
+				else
+					old_location = new_satchel.loc
+				if (ismob(old_location) && !was_stored)
+					var/mob/old_user = old_location
+					old_user.drop_item(new_satchel) // not only user since you could click on a satchel carried by someone else... ugh
 				var/obj/item/satchel/mining/old_satchel = src.satchel
 				if (old_satchel)
 					old_satchel.set_loc(get_turf(user))
 				new_satchel.set_loc(src)
 				src.satchel = new_satchel
 				if (old_satchel && old_location)
-					if (istype(old_location, /obj/item/storage)) //if the old satchel was in a storage item, the new item should fit as well
-						old_satchel.set_loc(old_location)
+					if (was_stored) //if the old satchel was in a storage item, the new item should fit as well
+						old_location.storage.add_contents(old_satchel, user, FALSE)
 					else
 						user.put_in_hand_or_drop(old_satchel)
 				src.icon_state = "scoop-bag"
