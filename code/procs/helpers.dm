@@ -1231,18 +1231,23 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-			. += A
+		 	if(isskeleton(A))
+				var/mob/living/carbon/human/H = A
+				if (H.organholder.head?.head_type == HEAD_SKELETON) // do they have their head
+					. += A
+			else
+				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
 				var/obj/item/organ/head/found_head = A
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
-			if (istype(A, /obj/head_on_spike))
+			else if (isobj(A)) // is it holding a head
 				for(var/obj/item/organ/head/head in A)
 					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
-					var/mob/linked_mob = head.linked_human
-					. += linked_mob
+						var/mob/linked_mob = head.linked_human
+						. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
