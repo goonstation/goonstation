@@ -1,5 +1,9 @@
 
 (t)thu may 04 23
+(u)Flaborized
+(p)13826
+(e)|
+(+)Added a new accent mutation, Frontal Gyrus Alteration Type-AR. Arrr!!🏴‍☠️
 (u)DimWhat, LeahTheTech
 (p)13975
 (e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL
