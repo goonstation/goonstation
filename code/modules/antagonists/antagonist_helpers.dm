@@ -66,7 +66,7 @@ proc/get_all_gangs()
 	return TRUE
 
 /datum/mind/proc/is_head_of_staff()
-	if(src.assigned_role in list(
+	return src.assigned_role in list(
 			"Captain",
 			"Head of Security",
 			"Head of Personnel",
@@ -74,7 +74,4 @@ proc/get_all_gangs()
 			"Research Director",
 			"Medical Director",
 			"Communications Officer",
-			))
-		return TRUE
-
-	return FALSE
+			)
