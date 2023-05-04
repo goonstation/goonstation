@@ -17,13 +17,12 @@
 
 	New()
 		..()
-		src.create_storage(/datum/storage/no_hud, max_wclass = W_CLASS_NORMAL, prevent_holding = list(/obj/item/clothing/under/trash_bag), slots = 20,
-			params = list("use_inventory_counter" = TRUE, "use_max_weight" = TRUE, "max_weight" = 20, "variable_weight" = TRUE))
+		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/clothing/under/trash_bag), max_wclass = W_CLASS_NORMAL, slots = 20,
+			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
 
 	equipped(mob/user)
 		..()
-		var/items_to_remove = round(length(src.storage.get_contents()) * 0.33)
-		for (var/i = 1 to items_to_remove)
+		for (var/i = 1 to round(length(src.storage.get_contents()) / 3))
 			src.remove_random_item(user)
 
 	attackby(obj/item/W, mob/user)
@@ -55,6 +54,15 @@
 
 		if (ismob(user))
 			user.update_inhands()
+
+	get_desc(dist)
+		..()
+		if (dist > 2)
+			return
+		if (src.storage.is_full())
+			. += "It's totally full."
+		else
+			. += "There's still some room to hold something."
 
 	proc/remove_random_item(mob/user)
 		if (!length(src.storage.get_contents()))

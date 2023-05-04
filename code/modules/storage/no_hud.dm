@@ -20,7 +20,7 @@
 	/// current weight held in the storage
 	var/cur_weight = 0
 
-/datum/storage/no_hud/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
+/datum/storage/no_hud/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass,
 		slots, sneaky, opens_if_worn, list/params)
 	..()
 	src.use_inventory_counter = params["use_inventory_counter"] || initial(src.use_inventory_counter)
@@ -29,13 +29,13 @@
 	src.max_weight = !isnull(params["max_weight"]) ? params["max_weight"] : initial(src.max_weight)
 	src.item_pick_type = params["item_pick_type"] || initial(src.item_pick_type)
 
-	if (use_inventory_counter && istype(src.linked_item, /obj/item))
+	if (src.use_inventory_counter && istype(src.linked_item, /obj/item))
 		var/obj/item/I = src.linked_item
 		I.inventory_counter_enabled = TRUE
 		I.create_inventory_counter()
 
 /datum/storage/no_hud/disposing()
-	if (use_inventory_counter && istype(src.linked_item, /obj/item))
+	if (src.use_inventory_counter && istype(src.linked_item, /obj/item))
 		var/obj/item/I = src.linked_item
 		I.remove_inventory_counter()
 	..()
@@ -49,6 +49,8 @@
 	if (isnull(user.equipped()))
 		var/obj/item/I
 		switch(src.item_pick_type)
+			if (STORAGE_NO_HUD_QUEUE)
+				I = src.get_contents()[1]
 			if (STORAGE_NO_HUD_STACK)
 				I = src.get_contents()[length(src.get_contents())]
 			if (STORAGE_NO_HUD_RANDOM)
@@ -63,11 +65,14 @@
 	if (. != STORAGE_CAN_HOLD)
 		return
 
-	if (isnull(src.max_weight))
-		return
+	if (!isnull(src.max_weight))
+		if (src.cur_weight + W.w_class > src.max_weight)
+			return STORAGE_WONT_FIT
 
-	if (src.cur_weight + W.w_class > src.max_weight)
-		return STORAGE_WONT_FIT
+	if (src.variable_weight && istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		if (I.stored && I.stored.max_wclass < W.w_class)
+			return STORAGE_WONT_FIT
 
 /datum/storage/no_hud/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
@@ -78,7 +83,7 @@
 		src.cur_weight += I.w_class
 	if (src.use_inventory_counter && istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
-		if (!show_count)
+		if (!src.show_count)
 			if (length(src.get_contents()) / src.slots > src.cur_weight / src.max_weight)
 				W.inventory_counter.update_percent(length(src.get_contents()), src.slots)
 			else
@@ -99,7 +104,7 @@
 		src.cur_weight -= I.w_class
 	if (src.use_inventory_counter && istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
-		if (!show_count)
+		if (!src.show_count)
 			if (length(src.get_contents()) / src.slots > src.cur_weight / src.max_weight)
 				W.inventory_counter.update_percent(length(src.get_contents()), src.slots)
 			else
@@ -123,7 +128,7 @@
 
 	var/capacity = null
 
-	switch(round(src.cur_weight / src.max_weight, 0.01) * 100)
+	switch(round(src.cur_weight / src.max_weight * 100))
 		if (0)
 			capacity = ""
 		if (1 to 24)
