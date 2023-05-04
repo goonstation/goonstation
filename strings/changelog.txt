@@ -1,6 +1,10 @@
 
 (t)thu may 04 23
 (u)Kubius
+(p)13949
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Kondaru's security wing teleporter beacon has been moved to the brig.
+(u)Kubius
 (p)13950
 (e)🗺|A-Mapping
 (+)Reduced the complement of televisions in Nadir's cafeteria for ease of rearrangement.
