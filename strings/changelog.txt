@@ -1,5 +1,9 @@
 
 (t)thu may 04 23
+(u)DimWhat, LeahTheTech
+(p)13975
+(e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL
+(+)Monkeys now have unique sprites for robotic and synthlimbs.
 (u)Wisemonster
 (p)13680
 (e)⚖📦|C-Balance, A-Game-Objects
