@@ -11,7 +11,6 @@
 	icon_state = "crunched"
 	icon_state_dead = "crunched"
 	hand_count = 2
-	faction = MOB_AI_FACTION_WRAITH
 	can_help = TRUE
 	can_throw = TRUE
 	can_grab = TRUE
@@ -78,7 +77,7 @@
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, src.type)) continue
-			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
+			if (C.faction & src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 		if (length(.) && prob(5))
@@ -119,7 +118,6 @@
 	icon_state_dead = "shade" //doesn't have a dead icon, just fades away
 	death_text = null //has special spooky voice lines
 	hand_count = 2
-	faction = MOB_AI_FACTION_WRAITH
 	can_lie = FALSE
 	can_throw = TRUE
 	can_grab = TRUE
@@ -196,7 +194,7 @@
 			if (isintangible(C)) continue
 			if (isdead(C)) continue
 			if (istype(C, /mob/living/critter/shade)) continue
-			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
+			if (C.faction & src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 		if (length(.) && prob(5))

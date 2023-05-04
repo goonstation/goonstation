@@ -166,7 +166,7 @@
 			if (islivingobject(C)) continue //don't attack wraith objects
 			if (istype(C, /mob/living/critter/wraith)) continue // don't attack wraith summons
 			if (istype(C, /mob/living/critter/skeleton)) continue
-			if (src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
+			if (C.faction & src.faction != null && (C.faction == src.faction)) continue //Checks if they are in the same faction
 			. += C
 
 	death()
