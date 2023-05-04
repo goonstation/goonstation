@@ -327,16 +327,19 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if (force)
 			qdel(src.bodyImage)
 			src.bodyImage = null
-		var/decomp = ""
-		if (src.decomp_affected && decomp_stage)
-			decomp = "_decomp[decomp_stage]"
 		var/used_icon = mutantrace_override || getAttachmentIcon(decomp_stage)
 		if (src.bodyImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.bodyImage
 		current_decomp_stage_s = decomp_stage
-		var/icon_state = "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
+		var/icon_state = src.getMobIconState(decomp_stage)
 		src.bodyImage = image(used_icon, icon_state)
 		return bodyImage
+
+	proc/getMobIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
+		var/decomp = ""
+		if (src.decomp_affected && decomp_stage)
+			decomp = "_decomp[decomp_stage]"
+		return "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
 
 	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)

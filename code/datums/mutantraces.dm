@@ -77,6 +77,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
+	///The icon states of the above icon, cached because byond is bad
+	var/icon_states = null
 	var/icon_state = "blank_c"
 	/// The icon used to render their eyes
 	var/eye_icon = 'icons/mob/human_hair.dmi'
@@ -262,6 +264,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
 			src.load_clothing_icons()
+			src.icon_states = icon_states(src.icon)
 			if (movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 			if (!needs_oxy)
