@@ -166,8 +166,6 @@
 		if (costume_name)
 			src.UpdateOverlays(costume_shell, "costume")
 
-		density = 0
-
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
 		return 1
 
@@ -182,8 +180,6 @@
 		icon_state = base_icon_state
 		if (costume_name)
 			src.UpdateOverlays(costume_alive, "costume")
-
-		density = 1
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
 		return 1
