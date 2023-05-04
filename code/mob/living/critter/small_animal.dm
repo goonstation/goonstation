@@ -2827,7 +2827,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	ai_retaliates = TRUE
-	ai_retaliate_patience = 0
+	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
@@ -2852,6 +2852,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if (src.ai?.enabled && prob(5))
 			src.emote("scream")
+
+	seek_target(var/range = 5)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			if (C.job == "Botanist") continue
+			. += C
 
 	death(var/gibbed)
 		src.can_lie = FALSE
