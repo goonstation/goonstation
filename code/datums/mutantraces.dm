@@ -132,6 +132,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/r_robolimb_leg_type_mutantrace = null
 	var/l_robolimb_leg_type_mutantrace = null
 
+	///If true, normal limbs use custom icons for this mutantrace
+	var/override_limb_icons = FALSE
+
 	/// Replace both arms regardless of mob status (new and dispose).
 	var/ignore_missing_limbs = 0
 
@@ -1535,6 +1538,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
+	override_limb_icons = TRUE
 
 	load_clothing_icons()
 		src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
@@ -1555,6 +1559,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if(ishuman(M))
 			M.add_stam_mod_max("monkey", -50)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+			SPAWN(0) //aaaaaaaaaaaaa
+				M.update_body(TRUE)
 
 	disposing()
 		if (ishuman(src.mob))
