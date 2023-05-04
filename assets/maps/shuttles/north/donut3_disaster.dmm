@@ -770,7 +770,7 @@
 	},
 /area/centcom/outside)
 "Be" = (
-/mob/living/critter/shade/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Cf" = (

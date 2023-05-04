@@ -70803,7 +70803,7 @@
 /obj/landmark{
 	name = "theonyxkeywashere"
 	},
-/mob/living/critter/shade/crew/lost,
+/mob/living/critter/crew/lost,
 /obj/item/device/key/onyx,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
@@ -71526,7 +71526,7 @@
 	},
 /area/hospital)
 "miu" = (
-/mob/living/critter/shade/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor,
 /area/crunch)
 "mje" = (
@@ -77084,7 +77084,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "vjF" = (
-/mob/living/critter/shade/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/white,
 /area/crunch)
 "vjH" = (
@@ -77414,7 +77414,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "vGO" = (
-/mob/living/critter/shade/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "vIb" = (
