@@ -1,3 +1,7 @@
+(t)thu may 04 23
+(u)Flappybat
+(+)Only one beartrap can be armed per tile.
+(+)Prevented beartraps being armed when inside an object, such as a pod or locker.
 (t)wed may 03 23
 (u)LeahTheTech
 (+)Botany produce chutes now have a unique green sprite.
