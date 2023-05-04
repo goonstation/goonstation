@@ -25,7 +25,7 @@
 					LAGCHECK(LAG_LOW)
 			if (3)
 				while (spawnamount > 0)
-					type =/mob/living/critter/small_animal/wasp
+					type = /mob/living/critter/small_animal/wasp
 					new type(pestlandmark)
 					spawnamount -= 2
 					LAGCHECK(LAG_LOW)
