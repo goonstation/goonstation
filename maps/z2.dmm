@@ -70803,7 +70803,7 @@
 /obj/landmark{
 	name = "theonyxkeywashere"
 	},
-/mob/living/critter/crew/lost,
+/mob/living/critter/shade/crew/lost,
 /obj/item/device/key/onyx,
 /turf/unsimulated/floor/void{
 	desc = "You can barely see ...";
