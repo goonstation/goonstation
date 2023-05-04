@@ -1799,6 +1799,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/labcoat/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	icon_state = "inspectorc"
+	item_state = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"
