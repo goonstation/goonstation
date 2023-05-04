@@ -54,7 +54,7 @@
 		"Mimic" = /mob/living/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
 		"Skeleton" = /mob/living/critter/skeleton,
-		"Space Wasp" = /obj/critter/wasp,
+		"Space Wasp" = /mob/living/critter/small_animal/wasp,
 		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,
 		"Town Guard" = /obj/critter/townguard,
