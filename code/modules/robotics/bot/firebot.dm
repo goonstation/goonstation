@@ -17,7 +17,7 @@
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_engineering_atmos)
 	on = 1
 	health = 20
@@ -383,7 +383,7 @@
 		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
-	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
+	for(var/obj/item/I in emptybox.storage.get_contents()) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)

@@ -17,7 +17,7 @@ TYPEINFO(/area/station/shield_zone)
 	desc = "Some kinda thing what generates a big ol' shield around everything."
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "shieldgen0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_height = 96
 	power_usage = 250

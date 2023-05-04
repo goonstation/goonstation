@@ -52,7 +52,7 @@
 	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
@@ -72,7 +72,7 @@
 	desc = "A classic 20th century jukebox. Ayyy!"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/last_switch = 0
 	var/list/to_transfer = list() //List of mobs waiting to be shuffled back.
@@ -322,7 +322,7 @@
 	desc = "The television, that insidious beast, that Medusa which freezes a billion people to stone every night, staring fixedly, that Siren which called and sang and promised so much and gave, after all, so little."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "security_det"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attack_hand(mob/user)
@@ -351,7 +351,7 @@
 			M.set_loc(stoneman)
 			stoneman.name = "statue of [M.name]"
 			stoneman.desc = "A really dumb looking statue. Very well carved, though."
-			stoneman.anchored = 0
+			stoneman.anchored = UNANCHORED
 			stoneman.set_density(1)
 			stoneman.layer = MOB_LAYER
 
@@ -499,7 +499,7 @@
 	desc = "A decorative ghost, hanging from the ceiling. It's <b><u><i>pretty scary!!!!</i></u></b>"
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "g_drone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	pixel_y = 7
 	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
@@ -540,7 +540,7 @@
 	desc = "An empty cast-iron cauldron."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "cauldron"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	candy

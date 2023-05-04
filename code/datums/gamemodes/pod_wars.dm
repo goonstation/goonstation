@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 	capacity = 1
 	health = 100
 	maxhealth = 100
-	anchored = 0
+	anchored = UNANCHORED
 	var/weapon_type = /obj/item/shipcomponent/mainweapon/phaser/short
 	speed = 1.7
 
@@ -935,7 +935,7 @@ proc/setup_pw_crate_lists()
 
 /proc/make_fake_explosion(var/atom/I)
 	var/obj/overlay/O = new/obj/overlay(get_turf(I))
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.name = "Explosion"
 	O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 	O.pixel_x = -92
@@ -949,7 +949,7 @@ proc/setup_pw_crate_lists()
 	name = "Generic Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 
@@ -957,7 +957,7 @@ proc/setup_pw_crate_lists()
 	name = "Nanotrasen Mission Log"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 

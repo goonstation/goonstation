@@ -15,7 +15,7 @@
 	icon_state = "duckbot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
 	bot_move_delay = DUCKBOT_MOVE_SPEED

@@ -44,6 +44,9 @@ TYPEINFO(/atom)
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
 	var/tmp/pass_unstable = TRUE
 
+	/// Storage for items
+	var/datum/storage/storage = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -173,6 +176,8 @@ TYPEINFO(/atom)
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
+
+		src.remove_storage()
 		..()
 
 	proc/Turn(var/rot)
@@ -261,7 +266,7 @@ TYPEINFO(/atom)
 	return 0
 
 /atom/proc/emp_act()
-	return
+	src.storage?.storage_emp_act()
 
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
@@ -314,6 +319,13 @@ TYPEINFO(/atom)
 	..()
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
+
+/atom/Uncrossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im also cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -393,7 +405,7 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
@@ -414,7 +426,7 @@ TYPEINFO(/atom)
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
 	var/tmp/last_move = null
-	var/anchored = 0
+	var/anchored = UNANCHORED
 	var/move_speed = 10
 	var/tmp/l_move_time = 1
 	var/throwing = 0
@@ -736,9 +748,9 @@ TYPEINFO(/atom)
 
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_attack_hand(user)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
-	return
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
@@ -756,6 +768,8 @@ TYPEINFO(/atom)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
+	if (src.storage?.storage_item_attack_by(W, user))
+		return
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
@@ -888,7 +902,7 @@ TYPEINFO(/atom)
 
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
-	return
+	src.storage?.storage_item_mouse_drop(usr, over_object, src_location, over_location)
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
@@ -1029,6 +1043,15 @@ TYPEINFO(/atom)
 
 	return src
 
+/atom/movable/proc/move_trigger(mob/M, kindof)
+	var/atom/movable/AM = src.loc
+	while (AM && !isarea(AM) && AM != M)
+		AM = AM.loc
+	if (!AM || isarea(AM))
+		return FALSE
+	src.storage?.storage_item_move_triggered(M, kindof)
+	return TRUE
+
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
 	var/old_density = src.density
@@ -1036,6 +1059,7 @@ TYPEINFO(/atom)
 	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
+		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

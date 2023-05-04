@@ -24,7 +24,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/lion
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/bite/big)
 
@@ -53,14 +53,16 @@
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = FALSE
 
-	critter_attack(var/mob/target)
+	critter_ability_attack(var/mob/target)
 		var/datum/targetable/critter/bite = src.abilityHolder.getAbility(/datum/targetable/critter/bite/big)
 		if (!bite.disabled && bite.cooldowncheck() && prob(40))
 			bite.handleCast(target)
-		else
-			if(prob(20))
-				src.swap_hand()
-			src.hand_attack(target)
+			return TRUE
+
+	critter_basic_attack(mob/target)
+		if(prob(20))
+			src.swap_hand()
+		return ..()
 
 	critter_scavenge(var/mob/target)
 		src.visible_message("<span class='alert'<b>[src] bites a chunk out of [target]!</b></span>")

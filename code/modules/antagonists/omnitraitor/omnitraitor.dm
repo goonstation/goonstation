@@ -2,6 +2,9 @@
 	id = ROLE_OMNITRAITOR
 	display_name = "omnitraitor"
 
+	is_compatible_with(datum/mind/mind)
+		return isliving(mind.current)
+
 	give_equipment()
 		src.owner.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 		src.owner.add_antagonist(ROLE_CHANGELING, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)

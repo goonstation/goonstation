@@ -14863,6 +14863,15 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
+"aWb" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "aWd" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Furnace Room"
@@ -17130,10 +17139,6 @@
 /area/crater)
 "bco" = (
 /obj/decal/mushrooms/type4,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
-"bcp" = (
-/obj/critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcq" = (
@@ -20648,15 +20653,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bld" = (
-/obj/critter/shade,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "ble" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21894,19 +21890,6 @@
 /obj/item/crowbar,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
-"bob" = (
-/obj/landmark{
-	name = "theonyxkeywashere"
-	},
-/obj/critter/shade/scientist/lost,
-/obj/item/device/key/onyx,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "boc" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -27315,11 +27298,6 @@
 	name = "mossy dirt"
 	},
 /area/catacombs)
-"bFF" = (
-/obj/storage/closet/coffin,
-/mob/living/critter/skeleton,
-/turf/unsimulated/dirt,
-/area/catacombs)
 "bFN" = (
 /turf/unsimulated/wall/auto/adventure/iomoon/interior,
 /area/iomoon/robot_ruins/boss_chamber)
@@ -27470,11 +27448,6 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
 /turf/unsimulated/dirt,
-/area/catacombs)
-"bGf" = (
-/obj/storage/closet/coffin,
-/mob/living/critter/skeleton,
-/turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGg" = (
 /obj/storage/closet/coffin,
@@ -27647,23 +27620,11 @@
 /obj/item/paper/alchemy/southwest,
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bGK" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/salt,
-/mob/living/critter/skeleton,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bGL" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/earth,
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bGM" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/proj,
-/mob/living/critter/skeleton,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bGO" = (
 /turf/unsimulated/floor/grime{
@@ -28425,12 +28386,6 @@
 	},
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bIV" = (
-/obj/storage/closet/coffin,
-/mob/living/critter/skeleton,
-/obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bIW" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/incin,
@@ -28440,12 +28395,6 @@
 	name = "crumbly skeleton"
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bIX" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/fire,
-/mob/living/critter/skeleton,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bIY" = (
 /turf/unsimulated/wall/void,
@@ -32084,10 +32033,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
-"bVi" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor,
-/area/crunch)
 "bVj" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -33461,10 +33406,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/crunch)
-"bZP" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/white,
-/area/crunch)
 "bZQ" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -34351,10 +34292,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"ccM" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -61426,22 +61363,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"dEE" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/obj/critter/bear{
-	aggressive = 0;
-	desc = "Wow, you haven't seen this guy since 2014!";
-	generic = 0;
-	material = null;
-	name = "DOngEun MesTur";
-	quality = 420;
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "dEF" = (
 /obj/adventurepuzzle/element_link{
 	act_type = "on";
@@ -67229,6 +67150,10 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"emb" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
@@ -67295,6 +67220,11 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"etS" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "etZ" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -68185,6 +68115,11 @@
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/maintenance)
+"fXG" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "fZr" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
@@ -69294,6 +69229,12 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"hVH" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "hWH" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -69367,22 +69308,6 @@
 	icon_state = "diagonalWall"
 	},
 /area/crunch)
-"iho" = (
-/obj/machinery/computer3/generic/personal/personel_alt{
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = -15
-	},
-/obj/adventurepuzzle/triggerable/light{
-	id = "virva_light";
-	on_brig = 1.2;
-	on_cgreen = 0.4;
-	on_cred = 0
-	},
-/obj/table/wood/auto/desk,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "iia" = (
 /obj/machinery/door/unpowered/wood/stall{
 	dir = 8;
@@ -69544,6 +69469,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
+"isW" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/white,
+/area/crunch)
 "isZ" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/grime,
@@ -70481,22 +70410,6 @@
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
-"kcz" = (
-/obj/adventurepuzzle/element_link{
-	act_type = "on";
-	triggerable_id = "virva_light";
-	triggerer_id = "virva_trigger"
-	},
-/obj/table/clothred/auto{
-	desc = "The tablecloth definitely isn't there to hide anything.";
-	name = "cool table"
-	},
-/obj/item/decoration/virvase{
-	anchored = 1;
-	pixel_y = 11
-	},
-/turf/unsimulated/floor/minitiles/black,
-/area/centcom/offices/virvatuli)
 "kcN" = (
 /obj/stool/chair/couch/green{
 	dir = 9;
@@ -70743,6 +70656,16 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"kBZ" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The inscription has eroded away.";
+	special = /mob/living/critter/skeleton
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "kCf" = (
 /obj/stool/chair/couch/purple{
 	dir = 4
@@ -71158,6 +71081,10 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"luq" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor,
+/area/crunch)
 "luT" = (
 /obj/shrub{
 	dir = 8
@@ -71476,6 +71403,14 @@
 	icon_state = "beach-0"
 	},
 /area/titlescreen)
+"lVA" = (
+/obj/adventurepuzzle/element_link{
+	act_type = "on";
+	triggerable_id = "virva_light";
+	triggerer_id = "virva_trigger"
+	},
+/turf/unsimulated/floor/minitiles/black,
+/area/centcom/offices/virvatuli)
 "lWe" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/garden)
@@ -72850,16 +72785,6 @@
 	dir = 9
 	},
 /area/centcom/gallery)
-"oad" = (
-/obj/map/light/graveyard,
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	special = /mob/living/critter/skeleton
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "oaN" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -73072,6 +72997,19 @@
 	icon_state = "track_1"
 	},
 /area/centcom/lounge)
+"ouj" = (
+/obj/landmark{
+	name = "theonyxkeywashere"
+	},
+/mob/living/critter/shade/crew/lost,
+/obj/item/device/key/onyx,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "oum" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/rd)
@@ -73147,6 +73085,12 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/entry)
+"oFx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/fire,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "oGk" = (
 /obj/decal/cleanable/sakura{
 	real_name = "sakura petals"
@@ -74329,6 +74273,17 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qwZ" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 9
@@ -76289,6 +76244,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tTP" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/salt,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "tUJ" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -76571,6 +76532,16 @@
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/floor/lava,
 /area/iomoon/robot_ruins)
+"uwv" = (
+/obj/loudspeaker{
+	desc = "This could probably cause an earthquake.";
+	name = "studio speaker";
+	pixel_x = -3;
+	pixel_y = 10
+	},
+/obj/table/wood/auto,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "uwC" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/light/lamp/green{
@@ -77392,20 +77363,6 @@
 "vBq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
-"vBO" = (
-/obj/loudspeaker{
-	desc = "This could probably cause an earthquake.";
-	name = "studio speaker";
-	pixel_x = -3;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti{
-	pixel_x = 9;
-	pixel_y = 7
-	},
-/obj/table/wood/auto,
-/turf/unsimulated/floor/carpet/purple/standard,
-/area/centcom/offices/virvatuli)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -78833,6 +78790,12 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
+"xXx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/proj,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "xXy" = (
 /obj/crevice{
 	pixel_y = -28
@@ -78944,10 +78907,27 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"yfh" = (
+/obj/machinery/computer3/generic/personal/personel_alt{
+	pixel_y = 7
+	},
+/obj/adventurepuzzle/triggerable/light{
+	id = "virva_light";
+	on_brig = 1.2;
+	on_cgreen = 0.4;
+	on_cred = 0
+	},
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/carpet/purple/standard,
+/area/centcom/offices/virvatuli)
 "yfT" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yhB" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "yhG" = (
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_2";
@@ -86784,7 +86764,7 @@ bKw
 bKw
 bKw
 bUY
-bVi
+luq
 bVt
 bKw
 bKw
@@ -87410,7 +87390,7 @@ bUP
 bUP
 cbH
 aDC
-ccM
+emb
 bUP
 bUP
 bUP
@@ -89216,7 +89196,7 @@ bYB
 bYS
 bZi
 aDC
-bZP
+isW
 cao
 caK
 cbf
@@ -109647,7 +109627,7 @@ biX
 biX
 biX
 biX
-bld
+aWb
 biX
 bjJ
 biY
@@ -111457,12 +111437,12 @@ biX
 bjK
 biC
 biX
-bld
+aWb
 biX
 bjK
 biC
 biX
-bld
+aWb
 biX
 biX
 bjJ
@@ -114183,10 +114163,10 @@ pHY
 aaa
 biD
 biY
-bld
+aWb
 biX
 biX
-bld
+aWb
 bjJ
 bkr
 aaa
@@ -114486,7 +114466,7 @@ aaa
 aaa
 biD
 biY
-bob
+ouj
 biX
 bjJ
 bkr
@@ -122683,7 +122663,7 @@ bGG
 bHe
 bFS
 bFR
-oad
+kBZ
 bGG
 bGG
 bGG
@@ -123522,7 +123502,7 @@ aIG
 aIG
 rIS
 aIG
-bcp
+yhB
 aIG
 aIr
 aIG
@@ -125020,7 +125000,7 @@ bah
 aIr
 aIG
 aIG
-bcp
+yhB
 bcM
 aIr
 aIG
@@ -125327,7 +125307,7 @@ bcN
 aIr
 aIG
 aIr
-bcp
+yhB
 aIr
 aIr
 aIr
@@ -137174,13 +137154,13 @@ bFD
 bFD
 bCb
 bCb
-bGK
+tTP
 bCb
 bHw
 bCb
 bIj
 bCb
-bIV
+hVH
 bCb
 bJU
 bFE
@@ -137474,7 +137454,7 @@ bzH
 bFs
 bFD
 bFD
-bGf
+fXG
 bCb
 bCb
 bCb
@@ -138680,17 +138660,17 @@ bzH
 bzH
 bCb
 bCb
-bFF
+etS
 bCb
 bGg
 bCb
-bGM
+xXx
 bCb
 bHx
 bCb
 bIl
 bCb
-bIX
+oFx
 bCb
 bJU
 bJR
@@ -150985,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-dEE
+qwZ
 wel
 gtU
 eiT
@@ -153073,10 +153053,10 @@ tfB
 eip
 fBu
 tij
-vBO
+uwv
 tlW
 xya
-kcz
+lVA
 wel
 iFW
 vij
@@ -153375,7 +153355,7 @@ tfB
 jvd
 fBu
 tij
-iho
+yfh
 nRm
 nBd
 nBd

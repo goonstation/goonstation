@@ -751,13 +751,8 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
-			if(node1)
-				icon_state = "intact"
-
-				dir = get_dir(src, node1)
-
-			else
-				icon_state = "exposed"
+			var/turf/T = get_turf(src)
+			src.hide(T.intact)
 
 		initialize()
 			var/connect_direction = dir
@@ -781,12 +776,12 @@ obj/machinery/atmospherics/pipe
 
 			return null
 
-		hide(var/i) //to make the little pipe section invisible, the icon changes.
-			if(node1)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-				dir = get_dir(src, node1)
+		hide(var/intact) //to make the little pipe section invisible, the icon changes.
+			if (intact && istype(loc, /turf/simulated) && level == 1)
+				src.icon_state = "hvent"
 			else
-				icon_state = "exposed"
+				src.icon_state = src.node1 ? "intact" : ""
+
 
 	vertical_pipe
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'

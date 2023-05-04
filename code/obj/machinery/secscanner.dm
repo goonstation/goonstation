@@ -8,7 +8,7 @@ TYPEINFO(/obj/machinery/secscanner)
 	icon_state = "scanner_on"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
@@ -272,8 +272,8 @@ TYPEINFO(/obj/machinery/secscanner)
 			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 				if (!has_contraband_permit)
 					threatcount += perp.back.get_contraband() * 0.5
-			if (istype(perp.back, /obj/item/storage/))
-				for( var/obj/item/item in perp.back.contents )
+			if (perp.back?.storage)
+				for(var/obj/item/item in perp.back.storage.get_contents())
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
 							threatcount += item.get_contraband() * 0.5

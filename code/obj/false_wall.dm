@@ -315,7 +315,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	desc = ""
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "r_wall"

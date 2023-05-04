@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -834,7 +834,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 				return
 			if (istype(FP, /obj/stool))
 				var/obj/stool/S = FP
-				S.anchored = 0
+				S.anchored = UNANCHORED
 			else if (istype(FP, /obj/item/chair/folded))
 				var/obj/item/chair/folded/F = FP
 				F.c_color = "chair[pick("","-b","-y","-r","-g")]"

@@ -121,7 +121,7 @@ CONTENTS:
 	name = "complicated contraption"
 	desc = "A big machine with lots of buttons and dials on it. Looks kinda dangerous."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/machines/mindswap.dmi'
 	icon_state = "mindswap"

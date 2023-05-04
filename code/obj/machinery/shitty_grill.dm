@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	flags = NOSPLASH
 	var/obj/item/grillitem = null
@@ -129,7 +129,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
+		if (W.w_class > src.max_wclass || W.storage)
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 

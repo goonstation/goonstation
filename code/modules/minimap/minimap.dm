@@ -244,3 +244,10 @@
 			return FALSE
 
 		. = ..()
+
+#ifndef LIVE_SERVER
+/client/verb/save_station_map()
+	var/datum/minimap/map = new(MAP_ALL)
+	minimap_renderer.render_minimaps(Z_LEVEL_STATION)
+	src << ftp(map.map.icon, "[map_settings.display_name].png")
+#endif

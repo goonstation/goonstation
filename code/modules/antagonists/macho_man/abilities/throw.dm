@@ -55,7 +55,7 @@
 							sleep(1.5 SECONDS)
 							playsound(holder.owner.loc, "explosion", 50)
 							var/obj/overlay/O = new/obj/overlay(get_turf(H))
-							O.anchored = 1
+							O.anchored = ANCHORED
 							O.name = "Explosion"
 							O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 							O.pixel_x = -92

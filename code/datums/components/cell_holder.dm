@@ -85,8 +85,17 @@ TYPEINFO(/datum/component/cell_holder)
 /datum/component/cell_holder/proc/do_swap(source, atom/movable/P, mob/user)
 	var/atom/movable/old_cell = src.cell
 	var/atom/old_loc = get_turf(parent)
+	var/atom/new_cell_stored = null
 	if(P)
-		old_loc = P.loc
+		if (istype(P, /obj/item))
+			var/obj/item/I = P
+			if (I.stored)
+				new_cell_stored = I.stored.linked_item
+				I.stored.transfer_stored_item(I, get_turf(I), user = user)
+			else
+				old_loc = P.loc
+		else
+			old_loc = P.loc
 		if(user)
 			user.u_equip(P)
 			P.add_fingerprint(user)
@@ -96,7 +105,10 @@ TYPEINFO(/datum/component/cell_holder)
 		SEND_SIGNAL(P, COMSIG_UPDATE_ICON)
 
 	if(old_cell)
-		old_cell.set_loc(old_loc)
+		if (new_cell_stored)
+			new_cell_stored.storage.add_contents(old_cell, user, FALSE)
+		else
+			old_cell.set_loc(old_loc)
 		SEND_SIGNAL(old_cell, COMSIG_UPDATE_ICON)
 		UnregisterSignal(old_cell, COMSIG_UPDATE_ICON)
 		if(!P)

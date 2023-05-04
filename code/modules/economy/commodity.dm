@@ -869,8 +869,8 @@
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
-	price = 1000
-	baseprice = 1000
+	price = 1500
+	baseprice = 1500
 	upperfluc = 500
 	lowerfluc = -500
 
@@ -2662,6 +2662,15 @@
 	baseprice = 2000
 	upperfluc = 500
 	lowerfluc = -500
+
+/datum/commodity/foam_dart_grenade
+	comname = "Foam Dart Grenade"
+	comtype = /obj/item/old_grenade/foam_dart
+	desc = "Goes great with foam dart guns!"
+	price = 250
+	baseprice = 250
+	upperfluc = 500
+	lowerfluc = -50
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"
