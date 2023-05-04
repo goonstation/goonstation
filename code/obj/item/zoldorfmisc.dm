@@ -308,12 +308,9 @@
 						user.put_in_hand_or_drop(new /obj/item/implant/robust)
 					if("pack")
 						var/obj/item/storage/fanny/pack = new /obj/item/storage/fanny
-						new /obj/item/crowbar(pack)
-						new /obj/item/screwdriver(pack)
-						new /obj/item/wirecutters(pack)
-						new /obj/item/wrench(pack)
-						new /obj/item/weldingtool(pack)
-						new /obj/item/device/multitool(pack)
+						for (var/item in list(/obj/item/crowbar, /obj/item/screwdriver, /obj/item/wirecutters, /obj/item/wrench, /obj/item/weldingtool, \
+								/obj/item/device/multitool))
+							pack.storage.add_contents(new item(pack))
 						user.put_in_hand_or_drop(pack)
 					if("oxy")
 						user.put_in_hand_or_drop(new /obj/item/tank/emergency_oxygen)

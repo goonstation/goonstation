@@ -1109,7 +1109,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
+	var/image/underlay
+	if (isturf(A))
+		underlay = image('icons/turf/floors.dmi', icon_state = "solid_black")
+		underlay.appearance_flags |= RESET_TRANSFORM
+		underlay.plane = PLANE_UNDERFLOOR
+		A.underlays += underlay
+
+	animate(A, transform = list(1, 0, px, 0, 1, py), time = T, easing = ease, flags=ANIMATION_PARALLEL)
+
+	if (underlay)
+		SPAWN(T)
+			A.underlays -= underlay
+			qdel(underlay)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
@@ -1357,7 +1369,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	var/oldlayer = A.layer
 	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
+	A.anchored = ANCHORED
 	if (!reverse)
 		A.alpha = 0
 		A.pixel_y = 176
@@ -1413,7 +1425,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
@@ -1453,7 +1465,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
@@ -1521,7 +1533,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	orig.color = T.color
 	orig.appearance_flags |= RESET_TRANSFORM
 	T.ReplaceWith(new_turf_type)
-	T.underlays += orig
 	T.layer--
 	switch(dir)
 		if(WEST)

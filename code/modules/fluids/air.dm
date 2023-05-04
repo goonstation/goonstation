@@ -123,12 +123,6 @@ var/list/ban_from_airborne_fluid = list()
 			return
 		A.EnteredAirborneFluid(src, A.last_turf)
 
-	Uncrossed(atom/movable/AM, atom/newloc)
-		return
-		//if (AM.event_handler_flags & USE_FLUID_ENTER)
-		//	AM.ExitedFluid(src,newloc)
-
-
 	add_tracked_blood(atom/movable/AM as mob|obj)
 		.=0
 

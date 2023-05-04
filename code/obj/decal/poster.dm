@@ -4,7 +4,7 @@
 	name = "poster"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "poster"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 	deconstruct_flags = DECON_WIRECUTTERS

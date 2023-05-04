@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 	desc = "An industrial arc electroplater.  It uses strong currents to coat a target object with a provided material."
 	icon = 'icons/obj/crafting.dmi'
 	icon_state = "plater0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = NOSPLASH
 	power_usage = 10 KILO WATTS

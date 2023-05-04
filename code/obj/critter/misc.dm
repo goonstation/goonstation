@@ -66,7 +66,7 @@
 					src.invisibility = INVIS_NONE
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -148,7 +148,7 @@
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -234,7 +234,7 @@
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		var/mob/living/Cc
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
@@ -319,7 +319,7 @@
 		sword_damage_max = 0
 		sword_damage_min = 0
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -452,7 +452,7 @@
 		..()
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue
@@ -600,7 +600,7 @@
 			qdel(src)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		if (src.target)
 			src.task = "chasing"
 			return
@@ -658,104 +658,6 @@
 		src.invisibility = INVIS_NONE
 		SPAWN(1.2 SECONDS)
 			src.icon_state = "ancientrobot"
-		return
-
-/obj/critter/crunched
-	name = "transposed scientist"
-	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
-	icon_state = "crunched"
-	health = 10
-	brutevuln = 0.5
-	firevuln = 0
-	aggressive = 1
-	generic = 0
-
-	attack_hand(var/mob/user)
-		if (user.a_intent == "help")
-			return
-
-		..()
-
-	ChaseAttack(mob/M)
-		return
-
-	CritterAttack(mob/M)
-		if (!ismob(M))
-			return
-
-		src.attacking = 1
-
-		if (M.lying)
-			src.speak( pick("No! Get up! Please, get up!", "Not again! Not again! I need you!", "Please! Please get up! Please!", "I don't want to be alone again!") )
-			src.visible_message("<span class='notice'>[src] shakes [M] trying to wake them up!</span>")
-			boutput(M, "<span class='combat'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		else
-			src.speak( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
-			src.visible_message("<span class='combat'><B>[src]</B> grabs at [M]'s arm!</span>")
-			boutput(M, "<span class='combat'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		if (isliving(M))
-			var/mob/living/H = M
-			H.was_harmed(src)
-		SPAWN(6 SECONDS)
-			src.attacking = 0
-
-	ai_think()
-		if(task == "thinking" || task == "wandering")
-			if (prob(5))
-				src.speak( pick("Cut the power! It's about to go critical, cut the power!","I warned them. I warned them the system wasn't ready.","Shut it down!","It hurts, oh God, oh God.") )
-		else
-			if (prob(5))
-				src.speak( pick("Please...help...it hurts...please", "I'm...sick...help","It went wrong.  It all went wrong.","I didn't mean for this to happen!", "I see everything twice!") )
-
-		return ..()
-
-	CritterDeath()
-		..()
-		speak( pick("There...is...nothing...","It's dark.  Oh god, oh god, it's dark.","Thank you.","Oh wow. Oh wow. Oh wow.") )
-		SPAWN(1.5 SECONDS)
-			qdel(src)
-
-	seek_target()
-		src.anchored = 0
-		if (src.target)
-			src.task = "chasing"
-			return
-
-		for (var/mob/living/carbon/C in view(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (C.stat || C.health < 0) continue
-
-			src.target = C
-			src.oldtarget_name = C.name
-			src.task = "chasing"
-			src.speak( pick("Hey..you! Help! Help me please!","I need..a doctor...","Someone...new? Help me...please.","Are you real?") )
-			break
-
-	proc/speak(var/message)
-		if (!message)
-			return
-
-		var/fontSize = 1
-		var/fontIncreasing = 1
-		var/fontSizeMax = 3
-		var/fontSizeMin = -3
-		var/messageLen = length(message)
-		var/processedMessage = ""
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-
-		src.visible_message("<b>[src.name]</b> says, \"[processedMessage]\"")
 		return
 
 /obj/critter/livingtail

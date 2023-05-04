@@ -156,7 +156,7 @@
 	icon = null
 	name = "???"
 	desc = "Something is in disposals again..."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/can_move = 1

@@ -322,7 +322,7 @@
 						visible_message("[P] knocks into [src]. There must already be a ball in there!")
 					else
 						if(!QDELETED(ball))
-							ball.set_loc(src)
+							src.storage.add_contents(ball)
 						P.alpha = 0
 						P.die()
 						visible_message("[P] makes it into [src]. Nice shot!")
@@ -336,7 +336,7 @@
 
 		bullet_act(var/obj/projectile/P)
 			..()
-			var/obj/item/golf_ball/ball = locate() in src
+			var/obj/item/golf_ball/ball = locate() in src.storage.get_contents()
 			if(ball)
 				var/list/nearby_turfs = list()
 				for (var/turf/T in view(2, src))
@@ -346,7 +346,7 @@
 					animate_spin(src,looping=3)
 					sleep(0.2 SECOND)
 
-					ball.set_loc(get_turf(src))
+					src.storage.transfer_stored_item(ball, get_turf(src))
 					ball.layer = src.layer
 
 					ball.ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
@@ -367,7 +367,7 @@
 			if(istype(ball) && P.mob_shooter)
 				if( ((P.max_range * 32) - P.travelled) < 48 || prob(10))
 					if(!QDELETED(ball))
-						ball.set_loc(src)
+						src.storage.add_contents(ball)
 					P.alpha = 0
 					P.die()
 					visible_message("[P] makes it into [src]. Nice shot?")

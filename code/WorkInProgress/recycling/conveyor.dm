@@ -15,7 +15,7 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
@@ -553,7 +553,7 @@
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLY_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
@@ -684,7 +684,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	var/id = ""
 	/// the list of converyors that are controlled by this switch
 	var/list/conveyors
-	anchored = 1
+	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
 
@@ -780,7 +780,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	name = "carousel power unit"
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"

@@ -945,7 +945,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
+				if(holder.has_reagent("methamphetamine") || holder.has_reagent("synd_methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth", 98)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth", 98)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth", 1000)
@@ -968,7 +968,7 @@ datum
 				var/mob/living/M = overdoser
 				if(!istype(M))
 					return
-				if(holder.has_reagent("methamphetamine"))
+				if(holder.has_reagent("methamphetamine") || holder.has_reagent("synd_methamphetamine"))
 					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)

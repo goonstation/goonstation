@@ -6,7 +6,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"//1"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	event_handler_flags = IMMUNE_MANTA_PUSH
 	_health = 150
 	_max_health = 150
@@ -168,7 +168,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		if (src.armed)
 			return
 		src.armed = TRUE
-		src.anchored = TRUE
+		src.anchored = ANCHORED
 		if (src.z == Z_LEVEL_STATION && src.boom_size == "nuke")
 			src.change_status_display()
 		if (!src.image_light)
@@ -444,7 +444,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 		..()
 		if (owner && the_bomb)
 			var/timer_modifier = round((the_bomb.det_time - TIME) / 2)
-			the_bomb.anchored = 0
+			the_bomb.anchored = UNANCHORED
 
 			for (var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[owner]</b> unscrews [the_bomb]'s floor bolts.</span>", 1)
@@ -480,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "nuclearbomb"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	_health = 10
 
 	proc/checkhealth()

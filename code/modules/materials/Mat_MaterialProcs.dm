@@ -371,11 +371,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
+
+	proc/find_molitz(datum/material/material)
+		if (istype(material, /datum/material/crystal/molitz))
+			return material
+		var/datum/material/interpolated/alloy = material
+		if (istype(alloy))
+			return locate(/datum/material/crystal/molitz) in alloy.parent_materials
+
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
 		if(temp < 500) return //less than reaction temp
 
-		var/datum/material/crystal/molitz/molitz = owner.material
-		if(!istype(molitz)) CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
+		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
+		if (!istype(molitz))
+			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
 
 		if(molitz.iterations <= 0) return
 

@@ -7,7 +7,7 @@ TYPEINFO(/obj/machinery/cashreg)
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "scanner"
 	req_access = list(access_heads) // Allows heads of staff to deregister owners from a cashreg.
-	anchored = TRUE
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 	flags = FPRINT | TGUI_INTERACTIVE
 

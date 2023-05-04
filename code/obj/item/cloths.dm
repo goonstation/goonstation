@@ -190,32 +190,35 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	user.put_in_hand_or_drop(the_bandana)
 	boutput(user, "<span class='notice'>You tie \the [src] together to make \a [the_bandana].</span>")
 
-/obj/item/cloth/handkerchief/white
+ABSTRACT_TYPE(/obj/item/cloth/handkerchief/colored)
+/obj/item/cloth/handkerchief/colored
+
+/obj/item/cloth/handkerchief/colored/white
 	name = "white handkerchief"
 	icon_state = "hanky_white"
 	bandana = /obj/item/clothing/mask/bandana/white
 
-/obj/item/cloth/handkerchief/yellow
+/obj/item/cloth/handkerchief/colored/yellow
 	name = "yellow handkerchief"
 	icon_state = "hanky_yellow"
 	bandana = /obj/item/clothing/mask/bandana/yellow
 
-/obj/item/cloth/handkerchief/red
+/obj/item/cloth/handkerchief/colored/red
 	name = "red handkerchief"
 	icon_state = "hanky_red"
 	bandana = /obj/item/clothing/mask/bandana/red
 
-/obj/item/cloth/handkerchief/purple
+/obj/item/cloth/handkerchief/colored/purple
 	name = "purple handkerchief"
 	icon_state = "hanky_purple"
 	bandana = /obj/item/clothing/mask/bandana/purple
 
-/obj/item/cloth/handkerchief/pink
+/obj/item/cloth/handkerchief/colored/pink
 	name = "pink handkerchief"
 	icon_state = "hanky_pink"
 	bandana = /obj/item/clothing/mask/bandana/pink
 
-/obj/item/cloth/handkerchief/orange
+/obj/item/cloth/handkerchief/colored/orange
 	name = "orange handkerchief"
 	icon_state = "hanky_orange"
 	bandana = /obj/item/clothing/mask/bandana/orange
@@ -226,28 +229,20 @@ ABSTRACT_TYPE(/obj/item/cloth/handkerchief)
 	icon_state = "hanky_nt"
 	bandana = /obj/item/clothing/mask/bandana/nt
 
-/obj/item/cloth/handkerchief/green
+/obj/item/cloth/handkerchief/colored/green
 	name = "green handkerchief"
 	icon_state = "hanky_green"
 	bandana = /obj/item/clothing/mask/bandana/green
 
-/obj/item/cloth/handkerchief/blue
+/obj/item/cloth/handkerchief/colored/blue
 	name = "blue handkerchief"
 	icon_state = "hanky_blue"
 	bandana = /obj/item/clothing/mask/bandana/blue
 
 /obj/item/cloth/handkerchief/random
-	var/list/possible_handkerchief = list(/obj/item/cloth/handkerchief/white,
-										/obj/item/cloth/handkerchief/yellow,
-										/obj/item/cloth/handkerchief/red,
-										/obj/item/cloth/handkerchief/purple,
-										/obj/item/cloth/handkerchief/pink,
-										/obj/item/cloth/handkerchief/orange,
-										/obj/item/cloth/handkerchief/green,
-										/obj/item/cloth/handkerchief/blue)
 
 /obj/item/cloth/handkerchief/random/New()
 	..()
-	var/obj/item/cloth/handkerchief/handkerchief_to_spawn = pick(possible_handkerchief)
+	var/obj/item/cloth/handkerchief/handkerchief_to_spawn = pick(concrete_typesof(/obj/item/cloth/handkerchief/colored))
 	new handkerchief_to_spawn(src.loc)
 	qdel(src)

@@ -55,6 +55,8 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
+	appearance_flags = KEEP_TOGETHER
+
 	New()
 		..()
 		SPAWN(0)
@@ -73,6 +75,9 @@
 					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
+			if (!src.chat_text)
+				src.chat_text = new
+			src.vis_contents += src.chat_text
 
 	disposing()
 		if (src.linked_human)
@@ -97,6 +102,7 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
+		chat_text = null
 
 		..()
 
