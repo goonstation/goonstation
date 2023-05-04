@@ -137,6 +137,8 @@
 
 	var/job = null
 
+	var/faction = 0 // For assigning mobs various factions
+
 	var/nodamage = 0
 
 	var/spellshield = 0
