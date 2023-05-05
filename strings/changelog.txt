@@ -1,4 +1,9 @@
 
+(t)fri may 05 23
+(u)Flaborized
+(p)13925
+(e)🎨|C-Sprites
+(+)Added a unique sprite for the "syndicate field protective mask". (That's the mask nukeops spawn with.)
 (t)thu may 04 23
 (u)Kubius
 (p)13949
