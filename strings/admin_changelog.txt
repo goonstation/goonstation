@@ -1,3 +1,13 @@
+(t)thu apr 20 23
+(u)LeahTheTech
+(+)Added new buildmode mode: meteor.
+(t)wed apr 19 23
+(u)LeahTheTech
+(+)Added flavour text, medical, security and syndicate notes to player options panel.
+(t)sat apr 15 23
+(u)LeahTheTech
+(+)New admin bioeffect: "robed", lets humans and critters cast wizard spells without needing a staff. Useful for making an army of magic crabs.
+(+)New admin interact proc for critters "Modify critter health" that lets you set new values for critter health holders without going insane.
 (t)sat apr 8 23
 (u)Mr. Moriarty
 (*)The way antagonist roles are displayed in Player Options has changed. Each current role and the controls to add/remove roles is now centralized under Antagonist Options.

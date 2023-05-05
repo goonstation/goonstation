@@ -47,7 +47,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
+			heldfly.ai = new /datum/aiHolder/wanderer_aggressive(heldfly)
 
 		qdel(src)
 /obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version

@@ -48,34 +48,22 @@
 			uplink_source = H.r_hand
 			loc_string = "in your right hand"
 		else
-			if (istype(H.l_hand, /obj/item/storage))
-				var/obj/item/storage/S = H.l_hand
-				var/list/L = S.get_contents()
-				for (var/obj/item/device/pda2/foo in L)
-					uplink_source = foo
-					loc_string = "in the [S.name] in your left hand"
-					break
-			if (istype(H.r_hand, /obj/item/storage))
-				var/obj/item/storage/S = H.r_hand
-				var/list/L = S.get_contents()
-				for (var/obj/item/device/pda2/foo in L)
-					uplink_source = foo
-					loc_string = "in the [S.name] in your right hand"
-					break
-			if (istype(H.back, /obj/item/storage))
-				var/obj/item/storage/S = H.back
-				var/list/L = S.get_contents()
-				for (var/obj/item/device/pda2/foo in L)
-					uplink_source = foo
-					loc_string = "in the [S.name] on your back"
-					break
-			if (istype(H.belt, /obj/item/storage))
-				var/obj/item/storage/S = H.belt
-				var/list/L = S.get_contents()
-				for (var/obj/item/device/pda2/foo in L)
-					uplink_source = foo
-					loc_string = "in the [S.name] on your belt"
-					break
+			for (var/obj/item/device/pda2/foo in H.l_hand?.storage?.get_contents())
+				uplink_source = foo
+				loc_string = "in the [H.l_hand.name] in your left hand"
+				break
+			for (var/obj/item/device/pda2/foo in H.r_hand?.storage?.get_contents())
+				uplink_source = foo
+				loc_string = "in the [H.r_hand.name] in your right hand"
+				break
+			for (var/obj/item/device/pda2/foo in H.back?.storage?.get_contents())
+				uplink_source = foo
+				loc_string = "in the [H.back.name] on your back"
+				break
+			for (var/obj/item/device/pda2/foo in H.belt?.storage?.get_contents())
+				uplink_source = foo
+				loc_string = "in the [H.belt.name] on your belt"
+				break
 
 		// If the owner has no PDA, create one.
 		if (!uplink_source)
@@ -100,7 +88,7 @@
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_r_store)
 		else if (!H.l_store)
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_l_store)
-		else if (istype(H.back, /obj/item/storage/) && H.back.contents.len < 7)
+		else if (H.back?.storage && !H.back.storage.is_full())
 			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_in_backpack)
 		else
 			var/obj/camera = new /obj/item/camera/spy(get_turf(H))

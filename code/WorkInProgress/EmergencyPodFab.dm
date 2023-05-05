@@ -73,9 +73,8 @@
 	var/override_dir = null
 	var/turf/outputLoc = null
 	var/sound_happy = 'sound/machines/chime.ogg'
-	var/sound_volume = 50
-	var/static/list/fabsounds = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
-	'sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
+	var/sound_volume = 20
+	var/static/list/fabsounds = list('sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/machines/mixer.ogg','sound/machines/pc_process.ogg','sound/machines/rock_drill.ogg','sound/machines/scan.ogg') //holy fuck these were awful sounds, these ones are slightly less awful but i hate the way this works
 
 	attack_hand(var/mob/user)
 		if (active)

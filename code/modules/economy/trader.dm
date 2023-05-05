@@ -815,6 +815,7 @@
 				src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
+				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
 				src.goods_sell += new /datum/commodity/drugs/crank(src)
 				//src.goods_sell += new /datum/commodity/drugs/bathsalts(src)
@@ -879,7 +880,7 @@
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
-#ifdef MAP_OVERRIDE_MANTA
+#ifdef UNDERWATER_MAP
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
 
@@ -1152,6 +1153,8 @@
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
+
 
 
 		/////////////////////////////////////////////////////////

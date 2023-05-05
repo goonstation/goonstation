@@ -666,7 +666,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/power)
 "abC" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid{
 	name = "asteroid"
 	},
@@ -870,7 +870,7 @@
 	},
 /area/station/solar/east)
 "abT" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "abU" = (
@@ -12516,7 +12516,7 @@
 "aBE" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/beacon,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "aBF" = (
@@ -38537,7 +38537,7 @@
 /area/station/turret_protected/ai_upload)
 "bHE" = (
 /obj/item/raw_material/gold,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bHF" = (
@@ -41158,22 +41158,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quarters_south)
-"bMO" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 9
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	layer = 2
-	},
-/area/space)
 "bMP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -41408,10 +41392,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
@@ -48185,10 +48166,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -49194,10 +49172,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
@@ -49208,10 +49183,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
@@ -71473,7 +71445,7 @@ aaa
 aaa
 aaa
 apV
-bMO
+cbC
 bMR
 bNl
 aab

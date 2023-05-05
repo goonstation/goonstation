@@ -292,14 +292,13 @@
 	slots = 8
 
 	attack_hand(mob/user)
-		if(istype(src.loc, /obj/item/storage/backpack))
+		if (src.stored)
+			src.stored.hide_hud(user)
+			// in case its somehow attacked without opening where its stored
 			if (user.s_active)
 				user.detach_hud(user.s_active)
 				user.s_active = null
-			user.s_active = src.hud
-			hud.update(user)
-			user.attach_hud(src.hud)
-			return
+			src.storage.show_hud(user)
 		else
 			. = ..()
 
@@ -310,7 +309,7 @@
 	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
-	in_list_or_max = 1
+	check_wclass = 1
 	color = "#ff9933"
 	satchel_compatible = FALSE
 

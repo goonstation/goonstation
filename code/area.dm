@@ -559,12 +559,12 @@ TYPEINFO(/area)
 			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
 				return
 			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was ghosted by the area that kills you if you enter it at [log_loc(jerk)]")
-			jerk.death(TRUE)
 			// ghostize the mob first to punt them out of their body
 			// before removing the old body, so that we can boot the ghost out
 			var/mob/dead/dead_jerk = jerk.ghostize()
-			dead_jerk.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+			dead_jerk?.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 			jerk.remove()
+
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
 			qdel(O)
 		. = ..()
@@ -1344,6 +1344,7 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/vault
 	name = "Secure Vault"
+
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1441,6 +1442,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/adrift_cargorouter
 	name = "Adrift Cargo Router"
 	icon_state = "yellow"
+
+/area/prefab/larrys_laundry
+	name = "Larry's Laundry"
+	icon_state = "green"
 
 // Sealab trench areas //
 
@@ -4021,8 +4026,9 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = TRUE
 				F.UpdateIcon()
-		for (var/obj/machinery/camera/C in src)
-			cameras += C
+		for_by_tcl(C, /obj/machinery/camera)
+			if(get_area(C) == src)
+				cameras += C
 			LAGCHECK(LAG_HIGH)
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
