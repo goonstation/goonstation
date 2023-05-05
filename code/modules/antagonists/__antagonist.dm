@@ -141,10 +141,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
-		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_mind_mob_overlay(src.owner, image)
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.add_mind(src.owner)
 
 	proc/remove_from_image_groups()
-		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_mind_mob_overlay(src.owner)
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.remove_mind_mob_overlay(src.owner)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.remove_mind(src.owner)
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()
