@@ -349,7 +349,7 @@ var/global/totally_random_jobs = FALSE
 		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
 	else if (length(JOB.slot_belt))
 		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
-	if (JOB.slot_belt && length(JOB.items_in_belt) && istype(H.belt, /obj/item/storage))
+	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, H.slot_in_belt)
@@ -592,7 +592,7 @@ var/global/totally_random_jobs = FALSE
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
-		if (istype(src.back, /obj/item/storage))
+		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
@@ -637,21 +637,21 @@ var/global/totally_random_jobs = FALSE
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -695,9 +695,9 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
 			equipped = 1
-		else if (istype(src.belt, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
 			equipped = 1
 		if (!equipped)
 			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))

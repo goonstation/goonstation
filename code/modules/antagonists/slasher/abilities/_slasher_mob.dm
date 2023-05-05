@@ -176,10 +176,7 @@
 
 			if(ismob(src.loc))
 				src.u_equip(I)
-			if(istype(I.loc, /obj/item/storage))
-				var/obj/item/storage/S = I.loc
-				var/datum/hud/storage/H = S.hud
-				H.remove_object(I)
+			I.stored?.transfer_stored_item(I, get_turf(I))
 			if(istype(I.loc, /mob/living))
 				var/mob/living/L = I.loc
 				L.drop_item(I)

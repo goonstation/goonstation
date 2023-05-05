@@ -287,8 +287,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	for (var/obj/item/I in src.contents)
 		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts)) continue //FUCK
 		hudlist += I
-		if (istype(I,/obj/item/storage))
-			hudlist += I.contents
+		if (I.storage)
+			hudlist += I.storage.get_contents()
 	hudlist += src.item_abilities
 
 	var/list/close_match = list()

@@ -586,6 +586,19 @@
 		item_state = "MDlonglabcoat-alt"
 		coat_style = "MDlonglabcoat-alt"
 
+/obj/item/clothing/suit/labcoat/research_director
+	name = "research director's labcoat"
+	desc = ""
+	icon_state = "RDlabcoat"
+	item_state = "RDlabcoat"
+	coat_style = "RDlabcoat"
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "Your most prized lab coat; it took all your life savings to get it designed and tailored just for you."
+		else
+			. = "A bunch of purple glitter and cheap plastic glued together in a sad attempt to make a stylish lab coat."
+
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
@@ -1786,6 +1799,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/labcoat/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	icon_state = "inspectorc"
+	item_state = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"

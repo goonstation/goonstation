@@ -1,4 +1,57 @@
 
+(t)thu may 04 23
+(u)Kubius
+(p)13949
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Kondaru's security wing teleporter beacon has been moved to the brig.
+(u)Kubius
+(p)13950
+(e)🗺|A-Mapping
+(+)Reduced the complement of televisions in Nadir's cafeteria for ease of rearrangement.
+(u)Flaborized
+(p)13826
+(e)|
+(+)Added a new accent mutation, Frontal Gyrus Alteration Type-AR. Arrr!!🏴‍☠️
+(u)DimWhat, LeahTheTech
+(p)13975
+(e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL
+(+)Monkeys now have unique sprites for robotic and synthlimbs.
+(u)Wisemonster
+(p)13680
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Health Implants now have a 15-25 second delay before sending crit/death alerts
+(u)Flappybat
+(+)Only one beartrap can be armed per tile.
+(+)Prevented beartraps being armed when inside an object, such as a pod or locker.
+(t)wed may 03 23
+(u)LeahTheTech
+(+)Botany produce chutes now have a unique green sprite.
+(u)Skeletonman0
+(p)13932
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(*)Severed skeleton heads can now speak inside backpacks and while on spikes
+(t)tue may 02 23
+(u)Mr. Moriarty
+(p)13667
+(e)🆕🎨🧫📄|C-Feature, C-Sprites, C-Experimental, A-UI
+(*)Replaced the static space background with parallaxing background layers, with layer contents varying between station maps and z-levels. Should you wish to toggle it off, you may do so through the `Game -> Effects -> Parallax` toggle.
+(t)mon may 01 23
+(u)Keiiro
+(p)13923
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)The Research Director now brings their unique labcoat to work!
+(u)Flaborized
+(p)13853
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The captain's locker has been stocked with a megaphone to help them get their finer points across.
+(u)Cheffie
+(p)13905
+(e)🗺|A-Mapping
+(+)Added a new prefab to Z5. Clean some clothes at Larry's today.
+(u)Mr. Moriarty
+(p)13898
+(e)🗺💅|A-Mapping, C-QoL
+(*)Donut3's Security Foyer has been relocated to be adjacent to the entrance.
 (t)sat apr 29 23
 (u)Flyingcow01
 (p)13339

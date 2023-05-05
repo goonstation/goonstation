@@ -3,7 +3,7 @@
 //TODO:
 // - Message Datum pooling and recycling.
 
-#define IN_CABINET (istype(src.loc,/obj/item/storage/mechanics))
+#define IN_CABINET (istype(src.stored?.linked_item,/obj/item/storage/mechanics))
 #define CONTAINER_LIGHT_TIME 2 // process()es to light up for when one component is triggered. this adds up to MAX_CONTAINER_LIGHT_TIME
 #define MAX_CONTAINER_LIGHT_TIME 10 // max process()es to light up for
 #define CABINET_CAPACITY 23
@@ -12,7 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -94,7 +94,7 @@
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
 				return
-			src.does_not_open_in_pocket=src.open
+			src.opens_if_worn=!src.open
 			src.open=!src.open
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
 			if(!src.open)
@@ -163,7 +163,7 @@
 		close_storage_menus() // still ugly but probably quite better performing
 			for(var/mob/chump in src.users)
 				for(var/datum/hud/storage/hud in chump.huds)
-					if(hud.master==src) hud.close.clicked()
+					if(hud.master==src.storage) hud.close.clicked()
 			src.users = list() // gee golly i hope garbage collection does its job
 			return 1
 		notify_cabinet_state()
@@ -305,7 +305,7 @@
 
 	attack_hand(mob/user)
 		..()
-		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
+		if (!istype(src.stored?.linked_item,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
 			return
 		if(level == 1)
@@ -380,7 +380,7 @@
 				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
-			var/obj/item/storage/mechanics/the_container = src.loc
+			var/obj/item/storage/mechanics/the_container = src.stored?.linked_item
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
 				the_container.light_up()
 			return
@@ -436,8 +436,8 @@
 		else if(iswrenchingtool(W))
 			switch(level)
 				if(1) //Level 1 = wrenched into place
-					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = UNANCHORED
 					clear_owner()
@@ -460,8 +460,8 @@
 					if(anchored)
 						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
 						return
-					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = ANCHORED
 					set_owner(user)
@@ -503,7 +503,7 @@
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
 		var/mob/user = usr
-		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
+		if (src_exists_inside_user_or_user_storage && !src.storage)
 			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
 		else
 			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
@@ -3894,15 +3894,15 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
 
 	secure()
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			src.loc.AddComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			src.stored.linked_item.AddComponent(/datum/component/legs/four)
 		else
 			src.loc.AddComponent(/datum/component/legs/six)
 
 	loosen()
 		var/datum/component/C
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			C = src.loc.GetComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			C = src.stored.linked_item.GetComponent(/datum/component/legs/four)
 		else
 			C = src.loc.GetComponent(/datum/component/legs/six)
 		if (C)
@@ -3921,7 +3921,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (direction == null)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3942,7 +3942,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (!direction)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3952,7 +3952,7 @@
 	/// set our glide size in case it was changed
 	/// check if we are in a container or space and stop in that case
 	proc/movement_stuff()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			stop_moving()
 			return
@@ -3973,7 +3973,7 @@
 		return TRUE
 
 	proc/stop_moving()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!istype(S))
 			return
 		walk(S, 0)

@@ -15,6 +15,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	throw_range = 7
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
+	prevent_holding = list(/obj/item/storage/box)
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -39,8 +40,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
-		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tile) && !length(src.storage.get_contents()) && !isrobot(user)) // we are making a floorbot!
 			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
 
 			user.put_in_hand_or_drop(B)
@@ -61,14 +62,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
 
-		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, S) == 0)
-					break
-			return
-		else
-			return ..()
+		return ..()
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -123,6 +117,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	/obj/item/crowbar)
 
 	make_my_stuff()
+		..()
 		var/picked = pick(/obj/item/cable_coil,\
 		/obj/item/cable_coil/yellow,\
 		/obj/item/cable_coil/orange,\
@@ -133,10 +128,10 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		/obj/item/cable_coil/hotpink,\
 		/obj/item/cable_coil/brown,\
 		/obj/item/cable_coil/white)
-		spawn_contents.Add(picked)
+		src.storage.add_contents(new picked(src))
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
-			spawn_contents.Add(picked,picked)
-		. = ..()
+			for (var/i = 1 to 2)
+				src.storage.add_contents(new picked(src))
 
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
@@ -196,9 +191,9 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
-		if (src.contents.len >= 7)
+		if (src.storage.is_full())
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
+		if (((W.storage && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
@@ -228,15 +223,15 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		src.hunger_message_level = 0
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
-		var/obj/item/storage/box/per_person = new
-		per_person.set_loc(src)
-		var/obj/item/storage/box/Gcontents = new
-		Gcontents.set_loc(per_person)
+		var/obj/item/storage/box/per_person = new /obj/item/storage/box(src)
+		src.storage.add_contents(per_person)
+		var/obj/item/storage/box/Gcontents = new /obj/item/storage/box(src)
+		per_person.storage.add_contents(Gcontents)
 		per_person.name = "Box-'[M.real_name]'"
 		for(var/obj/item/looted in M)
-			if(Gcontents.contents.len >= 7)
-				Gcontents = new
-				Gcontents.set_loc(per_person)
+			if(Gcontents.storage.is_full())
+				Gcontents = new /obj/item/storage/box(src)
+				per_person.storage.add_contents(Gcontents)
 			if(istype(looted, /obj/item/implant)) continue
 			M.u_equip(looted)
 			if (looted == src)
@@ -245,7 +240,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 				continue
 
 			if (looted)
-				looted.set_loc(Gcontents)
+				Gcontents.storage.add_contents(looted)
 				looted.layer = initial(looted.layer)
 				looted.dropped(M)
 

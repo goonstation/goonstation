@@ -228,6 +228,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_plain_message_all,
 		/client/proc/cmd_admin_fake_medal,
 		/datum/admins/proc/togglespeechpopups,
+		/datum/admins/proc/toggle_global_parallax,
 		/datum/admins/proc/togglemonkeyspeakhuman,
 		/datum/admins/proc/toggletraitorsseeeachother,
 		/datum/admins/proc/toggleautoending,
