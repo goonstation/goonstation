@@ -168,7 +168,7 @@
 	return 1
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost")
+	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
