@@ -5424,6 +5424,7 @@
 /area/station/engine/core)
 "arW" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/snacks/chips,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "arX" = (
@@ -17551,13 +17552,9 @@
 	},
 /area/station/engine/hotloop)
 "gML" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/phone,
 /obj/table/auto,
-/turf/simulated/floor/yellow,
+/turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "gTj" = (
 /obj/cable{
@@ -17574,15 +17571,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"gZJ" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/engineering)
 "hay" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
@@ -59138,7 +59126,7 @@ xLn
 udk
 asb
 aQB
-gZJ
+asb
 udk
 tvu
 avE
