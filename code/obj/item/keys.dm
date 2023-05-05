@@ -16,6 +16,10 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	name = "key"
 	desc = "It unlocks or locks doors."
 
+/obj/item/device/key/generic/larrys
+	name = "backroom key"
+	desc = "do you really want to go back there?"
+
 /obj/item/device/key/cheget
 	name = "old fancy key"
 	desc = "It unlocks or locks slightly newer doors."

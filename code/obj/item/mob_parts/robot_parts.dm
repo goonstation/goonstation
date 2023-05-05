@@ -55,12 +55,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(60 to INFINITY)
 				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
+	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
+		if (force)
+			qdel(src.bodyImage)
+			src.bodyImage = null
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
-		return standImage
+		src.bodyImage = image(mutantrace_override || src.partIcon, icon_state = "[src.icon_state_base]-[appearanceString]")
+		return bodyImage
 
 	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))

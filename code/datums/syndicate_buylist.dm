@@ -538,7 +538,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/minibible
 	name = "Miniature Bible"
-	item = /obj/item/storage/bible/mini
+	item = /obj/item/bible/mini
 	cost = 1
 	desc = "We understand it can be difficult to carry out some of our missions. Here is some spiritual counsel in a small package."
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Chaplain", "Clown")
@@ -558,7 +558,7 @@ This is basically useless for anyone but miners.
 	run_on_spawn(var/obj/item/storage/briefcase/satan/Q,var/mob/living/owner, in_surplus_crate)
 		if (istype(Q) && owner)
 			owner.make_merchant() //give them the power to summon more contracts
-			Q.merchant = owner
+			Q.set_merchant(owner)
 			owner.mind.diabolical = 1 //can't sell souls to ourselves now can we?
 
 /datum/syndicate_buylist/traitor/mailsuit
@@ -691,7 +691,7 @@ This is basically useless for anyone but miners.
 	name = "Stimulants"
 	item = /obj/item/storage/box/stimulants
 	cost = 6
-	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawl symptoms play out naturally.</font>"
+	desc = "When top agents need energy, they turn to our new line of X-Cite 500 stimulants. This 3-pack of all-natural* and worry-free** blend accelerates perception, endurance, and reaction time to superhuman levels! Shrug off even the cruelest of blows without a scratch! <br><br><font size=-1>*Contains less than 0.5 grams unnatural material per 0.49 gram serving.<br>**May cause dizziness, blurred vision, heart failure, renal compaction, adenoid calcification, or death. Users are recommended to take only a single dose at a time, and let withdrawal symptoms play out naturally.</font>"
 	job = list("Medical Doctor","Medical Director","Scientist","Geneticist","Pathologist","Research Director")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

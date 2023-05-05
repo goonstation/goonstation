@@ -659,7 +659,7 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
-	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
@@ -1103,12 +1103,11 @@
 			return
 
 		if(src in bible_contents)
-			for_by_tcl(B, /obj/item/storage/bible)
+			for_by_tcl(B, /obj/item/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)
 					explosion(src, T, -1, -1, 2, 3)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 

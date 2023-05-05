@@ -1292,6 +1292,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1343,6 +1346,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1442,6 +1449,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1449,6 +1458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1987,10 +2001,9 @@ TYPEINFO(/obj/item/cargotele)
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo

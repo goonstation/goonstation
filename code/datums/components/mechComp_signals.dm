@@ -239,10 +239,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 	//Need to use comsig_target instead of parent, to access .loc
 	if(A.loc != comsig_target.loc) //If these aren't sharing a container
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(A.loc, /obj/item/storage/mechanics))
-			cabinet = A.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
@@ -274,10 +278,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return
 	if(trigger.loc != comsig_target.loc)
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(trigger.loc, /obj/item/storage/mechanics))
-			cabinet = trigger.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(trigger, /obj/item))
+			var/obj/item/I = trigger
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")

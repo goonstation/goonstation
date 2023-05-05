@@ -495,17 +495,17 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE)
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE, AMMO_STAPLE)
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
-	default_magazine = /obj/item/ammo/bullets/bullet_22
+	default_magazine = /obj/item/ammo/bullets/staples
 
 	New()
 
 		ammo = new default_magazine
-		ammo.amount_left = 0 // start empty
-		set_current_projectile(new/datum/projectile/bullet/bullet_22)
+		ammo.amount_left = 1 // start empty
+		set_current_projectile(new/datum/projectile/bullet/staple)
 		..()
 
 

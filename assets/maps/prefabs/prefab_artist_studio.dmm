@@ -73,12 +73,6 @@
 	},
 /turf/simulated/floor/longtile/red,
 /area/prefab/art_workshop)
-"go" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
-/turf/space,
-/area/noGenerate)
 "gB" = (
 /turf/simulated/floor/darkblue,
 /area/prefab/art_workshop)
@@ -333,9 +327,7 @@
 /turf/simulated/floor/longtile/red,
 /area/prefab/art_workshop)
 "DH" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /area/noGenerate)
 "Eq" = (
@@ -577,7 +569,7 @@ VB
 VB
 sQ
 NZ
-go
+DH
 DH
 UB
 sQ

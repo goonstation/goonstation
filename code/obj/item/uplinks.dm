@@ -29,6 +29,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/reading_synd_int = FALSE
 	var/reading_specific_synd_int = null
 	var/has_synd_int = TRUE
+#ifdef BONUS_POINTS
+	uses = 9999
+#endif
 
 	var/use_default_GUI = 0 // Use the parent's HTML interface (less repeated code).
 	var/temp = null
@@ -1149,6 +1152,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	var/datum/syndicate_buylist/reading_about = null
 	/// Bitflags for what items this uplink can buy (see `_std/defines/uplink.dm` for flags)
 	var/purchase_flags = UPLINK_NUKE_COMMANDER
+#ifdef BONUS_POINTS
+	points = 9999
+#endif
 
 	New()
 		..()
@@ -1159,6 +1165,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 				continue
 			num_players++
 		points = max(2, round(num_players / PLAYERS_PER_UPLINK_POINT))
+#ifdef BONUS_POINTS
+		points = 9999
+#endif
 		SPAWN(1 SECOND)
 			if (src && istype(src) && (!length(src.commander_buylist)))
 				src.setup()
@@ -1275,6 +1284,9 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 	throw_range = 20
 	m_amt = 100
 	var/vr = 0
+#ifdef BONUS_POINTS
+	uses = 9999
+#endif
 
 	New(var/in_vr = 0)
 		..()

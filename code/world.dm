@@ -1075,8 +1075,8 @@ var/global/mob/twitch_mob = 0
 								for (var/obj/item/I in H.contents)
 									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
-									if (istype(I,/obj/item/storage))
-										hudlist += I.contents
+									if (I.storage)
+										hudlist += I.storage.get_contents()
 
 							var/list/close_match = list()
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)

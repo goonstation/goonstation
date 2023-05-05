@@ -1344,6 +1344,7 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/vault
 	name = "Secure Vault"
+
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1441,6 +1442,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/adrift_cargorouter
 	name = "Adrift Cargo Router"
 	icon_state = "yellow"
+
+/area/prefab/larrys_laundry
+	name = "Larry's Laundry"
+	icon_state = "green"
 
 // Sealab trench areas //
 

@@ -1319,6 +1319,8 @@
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE
+		for (var/obj/item/W as anything in I.storage?.get_contents())
+			I.storage.transfer_stored_item(W, get_turf(flock_owner), user = flock_owner)
 		for(var/obj/O in I.contents)
 			if(istype(O, /obj/item))
 				O.set_loc(flock_owner.loc)

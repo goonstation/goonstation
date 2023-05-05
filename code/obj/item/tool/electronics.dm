@@ -289,6 +289,7 @@
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
+	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		deconstructed_thing = null
