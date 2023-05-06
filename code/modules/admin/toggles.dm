@@ -882,7 +882,7 @@ client/proc/toggle_ghost_respawns()
 	var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
 	for (var/antagonist_type in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/A = antagonist_type
-		for (var/datum/antagonist/antagonist_datum in get_all_antagonists(initial(A.id), TRUE))
+		for (var/datum/antagonist/antagonist_datum in get_all_antagonists(initial(A.id)))
 			if (antagonists_see_each_other)
 				antagonist_image_group.add_mind(antagonist_datum.owner)
 			else
