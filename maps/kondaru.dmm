@@ -41392,10 +41392,7 @@
 /area/station/ai_monitored/armory)
 "hFc" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/toolbox{
-	desc = "Looks suspiciously similar to a toolbox.";
-	name = "lunchbox"
-	},
+/obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "hFG" = (
