@@ -13482,7 +13482,7 @@
 /obj/item/clothing/gloves/yellow{
 	pixel_y = 7
 	},
-/obj/item/hand_labeler,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -23107,6 +23107,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/hand_labeler{
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
