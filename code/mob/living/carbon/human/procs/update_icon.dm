@@ -1030,7 +1030,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
 						var/mutantrace_override = null
-						if (src.mutantrace?.override_limb_icons && (limb.getMobIconState() in src.mutantrace.icon_states))
+						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in src.mutantrace.icon_states))
 							mutantrace_override = src.mutantrace.icon
 						var/image/limb_pic = limb.getMobIcon(src.decomp_stage, mutantrace_override, force)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
