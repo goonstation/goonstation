@@ -902,7 +902,14 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		if (!src.decomp_stage)
 			file = AHOLD.body_icon
 		else
-			file = 'icons/mob/human_decomp.dmi'
+			if (ismonkey(src))
+				file = 'icons/mob/monkey_decomp.dmi'
+				human_decomp_image.icon = file
+				human_untoned_decomp_image.icon = file
+			else
+				file = 'icons/mob/human_decomp.dmi'
+				human_decomp_image.icon = file
+				human_untoned_decomp_image.icon = file
 
 
 		src.body_standing = SafeGetOverlayImage("body", file, "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
@@ -995,6 +1002,17 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					UpdateOverlays(null, "tail_oversuit")
 
 			else
+				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
+					// we dont care about the head image for rotting
+					human_head_image = image(file,src,"head_decomp[src.decomp_stage]", MOB_LIMB_LAYER)
+					human_head_image?.pixel_y = head_offset
+					src.body_standing.overlays += human_head_image
+
+				if (ismonkey(src))
+					// monkey needs diaper
+					human_image.icon_state = "groin_[gender_t]"
+					src.body_standing.overlays += human_image
+
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
 
@@ -1026,7 +1044,6 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 						var/part_icon_s = limb.getPartIconState(src.decomp_stage)
 
 						var/handlimb_icon = limb.getAttachmentIcon(src.decomp_stage)
-
 						if (limb.decomp_affected && src.decomp_stage)
 							if (hand_icon_s) //isicon
 								if (istext(hand_icon_s))
