@@ -63,7 +63,7 @@
 		"Weird Thing" = /obj/critter/ancient_thing,
 		"Brullbar" = /mob/living/critter/brullbar,
 		"Brullbar (king)" = /mob/living/critter/brullbar/king,
-		"Zapping Robot" = /obj/critter/ancient_repairbot/security,
+		"Zapping Robot" = /mob/living/critter/robotic/repairbot/security,
 		"Zombie" = /obj/critter/zombie,
 		"Zombie (science)"  = /obj/critter/zombie/scientist,
 		"Zombie (security)"  = /obj/critter/zombie/security,

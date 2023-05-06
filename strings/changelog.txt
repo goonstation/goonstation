@@ -2,7 +2,9 @@
 (t)sat may 06 23
 (u)tarmunora
 (e)🆕|C-Feature
-(+)Ghost critter may now only nibble at food.
+(+)Ghost critters may now only nibble at food.
+(u)Flappybat
+(+)Pest respawn roboroach has been nerfed to small critter limbs instead of medium.
 (t)fri may 05 23
 (u)Flaborized
 (p)13925
