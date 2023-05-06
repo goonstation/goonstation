@@ -5860,6 +5860,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/chem_dispenser/soda,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/cafeteria)
 "cEr" = (
@@ -9158,6 +9159,10 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/exit)
+"ecB" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southwest)
 "ecQ" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood/two,
@@ -20421,6 +20426,13 @@
 	dir = 4
 	},
 /obj/machinery/light_switch/west,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -25263,16 +25275,8 @@
 /obj/item_dispenser/icedispenser{
 	pixel_y = 11
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/firealarm{
-	pixel_x = 4;
-	pixel_y = 24
+/obj/drink_rack/cup{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
@@ -26059,13 +26063,6 @@
 /turf/simulated/floor/engine/glow,
 /area/station/ai_monitored/armory)
 "llT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/table/auto,
 /obj/item/shaker/salt,
 /obj/item/shaker/pepper{
@@ -33492,6 +33489,10 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
+"oCi" = (
+/obj/machinery/vending/capsule,
+/turf/simulated/floor/redblack,
+/area/station/hallway/primary/northeast)
 "oCJ" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -34008,6 +34009,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black/side{
 	dir = 9
 	},
@@ -36093,9 +36095,9 @@
 "pPd" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/obj/machinery/light/emergency{
+/obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -10
+	pixel_x = -24
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/cafeteria)
@@ -37766,7 +37768,7 @@
 /area/station/crew_quarters/lounge)
 "qCW" = (
 /obj/disposalpipe/segment/food,
-/obj/machinery/vending/capsule,
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -38040,13 +38042,6 @@
 /obj/item/reagent_containers/food/drinks/eggnog{
 	pixel_x = 5;
 	pixel_y = 10
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -39303,6 +39298,13 @@
 /area/station/crew_quarters/cafeteria)
 "rsN" = (
 /obj/machinery/vending/jobclothing/catering,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "rsP" = (
@@ -40550,6 +40552,15 @@
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergencyinternals)
 "rXf" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/pen/pencil,
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
 "rXj" = (
@@ -40885,6 +40896,13 @@
 /area/station/medical/medbay/lobby)
 "sec" = (
 /obj/submachine/chef_oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "seK" = (
@@ -41512,10 +41530,11 @@
 	name = "prep counter"
 	},
 /obj/machinery/espresso_machine{
-	pixel_y = 7
+	pixel_y = 5
 	},
-/obj/drink_rack/cup{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
@@ -49619,13 +49638,6 @@
 	pixel_x = -14;
 	pixel_y = 4
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "wdR" = (
@@ -52674,6 +52686,12 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"xCS" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/redblack,
+/area/station/hallway/primary/northeast)
 "xCT" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -95090,7 +95108,7 @@ xVH
 aYv
 jmJ
 jmJ
-eGA
+ecB
 eGA
 eGA
 jcK
@@ -111975,7 +111993,7 @@ kvK
 jdT
 lsj
 lsj
-rXf
+xCS
 gTj
 acK
 eAl
@@ -112277,7 +112295,7 @@ vpY
 jdT
 lsj
 lsj
-rXf
+oCi
 fmc
 hOi
 xCI
