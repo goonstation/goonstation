@@ -44779,6 +44779,7 @@
 /area/station/science/testchamber)
 "kRM" = (
 /obj/table/wood/round/auto,
+/obj/item/storage/lunchbox/food1,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "kSA" = (
@@ -127775,8 +127776,8 @@ aZa
 bre
 bsw
 kvh
-hFc
 kRM
+hFc
 rsY
 uAQ
 uAQ
