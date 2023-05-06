@@ -581,8 +581,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -609,8 +609,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
@@ -655,8 +655,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -683,8 +683,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
