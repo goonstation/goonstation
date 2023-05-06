@@ -48769,7 +48769,8 @@
 /area/station/security/checkpoint/research)
 "vAA" = (
 /obj/machinery/conveyor/SE{
-	id = "zeta_mail_in"
+	id = "zeta_mail_in";
+	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)

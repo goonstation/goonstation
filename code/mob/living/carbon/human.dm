@@ -733,12 +733,6 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(src, "mindhack", "death")
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindhack_status(src, "vthrall", "death")
-		else if (src.mind.master)
-			remove_mindhack_status(src, "otherhack", "death")
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"

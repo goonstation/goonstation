@@ -39983,6 +39983,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "gvi" = (
@@ -44298,7 +44299,6 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "kwz" = (
-/obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},

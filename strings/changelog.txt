@@ -1,5 +1,36 @@
 
+(t)fri may 05 23
+(u)Flaborized
+(p)13925
+(e)🎨|C-Sprites
+(+)Added a unique sprite for the "syndicate field protective mask". (That's the mask nukeops spawn with.)
+(t)thu may 04 23
+(u)Kubius
+(p)13949
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Kondaru's security wing teleporter beacon has been moved to the brig.
+(u)Kubius
+(p)13950
+(e)🗺|A-Mapping
+(+)Reduced the complement of televisions in Nadir's cafeteria for ease of rearrangement.
+(u)Flaborized
+(p)13826
+(e)|
+(+)Added a new accent mutation, Frontal Gyrus Alteration Type-AR. Arrr!!🏴‍☠️
+(u)DimWhat, LeahTheTech
+(p)13975
+(e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL
+(+)Monkeys now have unique sprites for robotic and synthlimbs.
+(u)Wisemonster
+(p)13680
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Health Implants now have a 15-25 second delay before sending crit/death alerts
+(u)Flappybat
+(+)Only one beartrap can be armed per tile.
+(+)Prevented beartraps being armed when inside an object, such as a pod or locker.
 (t)wed may 03 23
+(u)LeahTheTech
+(+)Botany produce chutes now have a unique green sprite.
 (u)Skeletonman0
 (p)13932
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
