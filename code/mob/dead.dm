@@ -29,14 +29,14 @@
 		setalive(src)
 
 	if (isadminghost(src))
-		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_mob(src)
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src.client)
 
 /mob/dead/Logout()
 	. = ..()
 	setdead(src)
 
-	if (isadminghost(src))
-		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_mob(src)
+	if (src.last_client?.holder && (rank_to_level(src.last_client.holder.rank) >= LEVEL_MOD) && (istype(src, /mob/dead/observer) || istype(src, /mob/dead/target_observer)))
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src.last_client)
 
 /mob/dead/click(atom/target, params, location, control)
 	if(src.client?.holder?.ghost_interaction)
