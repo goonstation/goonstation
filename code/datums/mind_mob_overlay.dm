@@ -19,8 +19,8 @@
 			src.image.loc = src.owner.current
 			src.image_group.add_image(src.image)
 
-		RegisterSignal(src.owner, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_self)
-		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, .proc/update_loc)
+		RegisterSignal(src.owner, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_self))
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(update_loc))
 
 	/// Update the .loc of the image so that it appears attached to the owner's mob.
 	proc/update_loc()
