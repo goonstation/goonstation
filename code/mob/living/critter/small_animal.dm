@@ -2819,9 +2819,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
-	health_brute = 10
+	health_brute = 5
 	health_brute_vuln = 1
-	health_burn = 10
+	health_burn = 5
 	health_burn_vuln = 1
 	reagent_capacity = 100
 	flags = TABLEPASS
@@ -2832,6 +2832,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/wanderer_aggressive
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
+	ai_attacks_per_ability = 0
 
 	setup_hands()
 		..()
@@ -2898,16 +2899,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
 	desc = "A wasp in space. it looks angry"
-	health_brute = 15
+	health_brute = 10
 	health_brute_vuln = 1
-	health_burn = 15
+	health_burn = 10
 	health_burn_vuln = 0.8
 
 /mob/living/critter/small_animal/wasp/strong // Polymorph and admin spawn
 	desc = "A wasp in space. it looks buff... somehow."
-	health_brute = 30
+	health_brute = 25
 	health_brute_vuln = 1
-	health_burn = 30
+	health_burn = 25
 	health_burn_vuln = 0.8
 	is_npc = FALSE
 
