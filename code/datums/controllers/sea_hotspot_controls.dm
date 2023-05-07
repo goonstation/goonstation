@@ -993,7 +993,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (isliving(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
-				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))

@@ -31,7 +31,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			mob_to_associated_images_lookup[img.loc] += img
 		else // first time a mob's image is added, on top of adding it to the lookup list a signal is registered on the mob to track invisibility changes.
 			mob_to_associated_images_lookup[img.loc] = list(img)
-			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, .proc/on_mob_invisibility_changed)
+			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, PROC_REF(on_mob_invisibility_changed))
 
 		for (var/client/iterated_client as() in subscribed_clients_with_subcount)
 			if (IMG_CONDITION(img, iterated_client.mob))
@@ -54,9 +54,9 @@ var/global/list/datum/client_image_group/client_image_groups
 			if(added_mob.client)
 				add_client(added_mob.client)
 
-			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, .proc/on_login)
-			RegisterSignal(added_mob, COMSIG_MOB_LOGOUT, .proc/on_logout)
-			RegisterSignal(added_mob, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mob_forced)
+			RegisterSignal(added_mob, COMSIG_MOB_LOGIN, PROC_REF(on_login))
+			RegisterSignal(added_mob, COMSIG_MOB_LOGOUT, PROC_REF(on_logout))
+			RegisterSignal(added_mob, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_mob_forced))
 
 	/// Removes a mob from the mob list, removes the images from its client and unregisters signals on it. Force overrides subcount and removes it no matter what.
 	proc/remove_mob(mob/removed_mob, force = FALSE) // same just reverse, and unregisters signals
@@ -76,9 +76,9 @@ var/global/list/datum/client_image_group/client_image_groups
 		if (subscribed_minds_with_subcount[added_mind] == 1)
 			if(added_mind.current)
 				add_mob(added_mind.current)
-				RegisterSignal(added_mind, COMSIG_PARENT_PRE_DISPOSING, .proc/remove_mind)
-				RegisterSignal(added_mind, COMSIG_MIND_ATTACH_TO_MOB, .proc/on_mind_attach)
-				RegisterSignal(added_mind, COMSIG_MIND_DETACH_FROM_MOB, .proc/on_mind_detach)
+				RegisterSignal(added_mind, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove_mind))
+				RegisterSignal(added_mind, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(on_mind_attach))
+				RegisterSignal(added_mind, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(on_mind_detach))
 
 	proc/remove_mind(datum/mind/removed_mind)
 		subscribed_minds_with_subcount[removed_mind] -= 1
@@ -97,7 +97,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			for (var/image/img as() in images)
 				if (IMG_CONDITION(img, added_client.mob))
 					added_client.images.Add(img)
-			RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, .proc/on_client_del)
+			RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_client_del))
 
 	proc/on_client_del(client/client)
 		remove_client(client, force=TRUE)
