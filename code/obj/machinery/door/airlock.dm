@@ -2014,6 +2014,8 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	if (src.aiControlDisabled == 1) return
 
+	if (src.hardened == 1) return
+
 	if (user.client.check_key(KEY_OPEN) && user.client.check_key(KEY_BOLT))
 		. = 1
 		// need to do it in the right order or nothing will happen

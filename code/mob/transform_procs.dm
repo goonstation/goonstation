@@ -219,18 +219,26 @@
 	cyborg.name = "Cyborg"
 	cyborg.real_name = "Cyborg"
 	cyborg.UpdateName()
-	if (src.client)
-		cyborg.lastKnownIP = src.client.address
-		src.client.mob = cyborg
-	else
-		//if they're logged out or whatever
-		cyborg.key = src.key
 	if (src.ghost)
 		if (src.ghost.mind)
 			src.ghost.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	else
 		if(src.mind)
 			src.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
 		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
@@ -646,7 +654,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
-	to_del = locate(/obj/item/storage/bible) in newbody
+	to_del = locate(/obj/item/bible) in newbody
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)

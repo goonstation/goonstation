@@ -59,8 +59,8 @@ TYPEINFO(/datum/component/pet)
 		return COMPONENT_INCOMPATIBLE
 	src.critter = parent
 	src.critter_parent = critter_parent
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/try_grab)
-	RegisterSignal(critter_parent, COMSIG_MOB_DEATH, .proc/on_parent_die)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(try_grab))
+	RegisterSignal(critter_parent, COMSIG_MOB_DEATH, PROC_REF(on_parent_die))
 
 /datum/component/pet/proc/try_grab(obj/critter/C, mob/user)
 	if(!(user == critter_parent && user.a_intent == INTENT_GRAB && C.alive))

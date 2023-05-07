@@ -49,7 +49,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/skeleton
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
@@ -120,12 +120,11 @@
 			if (iswizard(C) && src.wizardSpawn) continue
 			. += C
 
-	critter_attack(mob/target)
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
-		else
-			return ..()
+			return TRUE
 
 	death(var/gibbed)
 		if (prob(src.revivalChance))

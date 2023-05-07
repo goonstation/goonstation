@@ -895,15 +895,6 @@
 	/obj/item/mine/stun/armed,
 	/obj/item/mine/blast/armed)
 
-// Surplus crate picker.
-/obj/random_item_spawner/landmine/surplus
-	name = "random land mine spawner (surplus crate)"
-	amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation,
-	/obj/item/mine/incendiary,
-	/obj/item/mine/stun,
-	/obj/item/mine/blast)
-
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
@@ -1881,28 +1872,28 @@
 		new /obj/item/breaching_charge{
 			pixel_x = 10;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = 4;
 			pixel_y = -2
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = -2;
 			pixel_y = -5
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -3;
 			pixel_y = 7
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -1;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/gun/kinetic/riot40mm/breach{
 			pixel_x = -5;
 			pixel_y = 8
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
-			}(src.loc)
+		}(src.loc)

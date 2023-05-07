@@ -443,18 +443,19 @@
 #ifdef LIVE_SERVER
 		// check client version validity
 		if (src.byond_version < 514 || src.byond_build < 1584)
+			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
 				src << link("http://www.byond.com/download/")
-			else // warn out of date clients
-				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
-			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-/*
+	#if (BUILD_TIME_UNIX < 1682899200) //cut off may 1st, 2023
+			else
+				tgui_alert(src, "Version enforcement will be enabled May 1st, 2023. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+	#else
 			// kick out of date clients
-			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
+			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			del(src)
 			tgui_process.close_user_uis(src.mob)
 			return
-*/
+	#endif
 		if (src.byond_version >= 515)
 			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
 				src << link("http://www.byond.com/download/")
@@ -551,7 +552,7 @@
 		// when an admin logs in check all clients again per Mordent's request
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
-
+	winset(src, "rpanewindow.left", "infowindow")
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -566,7 +567,7 @@
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
 
-	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkHiRes)))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
@@ -575,7 +576,7 @@
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkScreenAspect)))
 	else
 
 		set_splitter_orientation(0, splitter_value)
@@ -1264,6 +1265,23 @@ var/global/curr_day = null
 	set name ="apply-depth-shadow"
 
 	apply_depth_filter() //see _plane.dm
+
+/client/verb/toggle_parallax()
+	set hidden = 1
+	set name = "toggle-parallax"
+
+#ifndef UNDERWATER_MAP
+	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
+		src.screen -= src.parallax_controller?.parallax_layers
+		src.parallax_controller = new(null, src)
+		src.mob?.register_parallax_signals()
+
+	else if (src.parallax_controller)
+		src.screen -= src.parallax_controller.parallax_layers
+		qdel(src.parallax_controller)
+		src.parallax_controller = null
+		src.mob?.unregister_parallax_signals()
+#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1

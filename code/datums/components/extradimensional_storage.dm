@@ -17,8 +17,8 @@ TYPEINFO(/datum/component/extradimensional_storage)
 		call(region_init_proc)(region, parent)
 	else
 		src.default_init_region()
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/on_entered)
-	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, .proc/on_disposing)
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(parent, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_disposing))
 
 /datum/component/extradimensional_storage/proc/default_init_region()
 	var/obj/storage/parent = src.parent

@@ -104,6 +104,10 @@
 	points = 0 // Replaces the old vamp_blood_remaining var.
 	var/vamp_blood_tracking = 1
 	var/mob/vamp_isbiting = null
+#ifdef BONUS_POINTS
+	vamp_blood = 99999
+	points = 99999
+#endif
 
 	// Note: please use mob.get_vampire_blood() & mob.change_vampire_blood() instead of changing the numbers directly.
 

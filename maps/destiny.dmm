@@ -16421,7 +16421,7 @@
 /area/station/security/hos)
 "bFF" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -19645,9 +19645,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "ddf" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -20843,9 +20841,7 @@
 /area/station/hallway/primary/central)
 "dGA" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -25662,9 +25658,7 @@
 /area/station/ai_monitored/armory)
 "fJM" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -27235,9 +27229,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/office)
 "gvq" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
 	},
@@ -31499,7 +31491,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /turf/simulated/floor/grass/random,
@@ -37071,9 +37063,7 @@
 /obj/machinery/mining_magnet{
 	pixel_x = 16
 	},
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -45049,9 +45039,7 @@
 /area/station/engine/gas)
 "pSO" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -46251,9 +46239,7 @@
 /area/station/medical/medbay)
 "qBJ" = (
 /obj/landmark/magnet_shield,
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/securearea{
 	desc = "A warning sign. I guess this area is dangerous.";
 	icon_state = "magwarning2";
@@ -49890,9 +49876,7 @@
 	},
 /area/station/hallway/secondary/construction)
 "sxU" = (
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51194,7 +51178,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/artistic,
 /obj/item/card_box/tarot,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -53713,9 +53697,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "uBe" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -57962,9 +57944,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "wAL" = (
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "4-8"
 	},

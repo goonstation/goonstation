@@ -102,6 +102,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	///If the mob has an ai, and is currently retaliating against being attacked, how long should we do that for? (deciseconds)
 	///Special values: RETALIATE_ONCE = Attack once, RETALIATE_UNTIL_INCAP = Attack until the target is incapacitated, RETALIATE_UNTIL_DEAD = Attck until the target is dead
 	var/ai_retaliate_persistence = RETALIATE_ONCE
+	///Counts the number of attacks this critter has performed without using an ability
+	var/ai_attack_count = 0
+	///The number of basic attacks this critter will perform in between using abilities
+	var/ai_attacks_per_ability = 2
 
 	blood_id = "blood"
 
@@ -810,7 +814,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
-			I.set_loc(src)
+			if (I.stored)
+				I.stored.transfer_stored_item(I, src, user = src)
+			else
+				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -1315,9 +1322,23 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_attack(var/mob/target)
+		if (src.ai_attack_count >= src.ai_attacks_per_ability)
+			if (src.critter_ability_attack(target))
+				src.ai_attack_count = 0 //ability used successfully, reset the count
+				return
+		//default to a basic attack
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
+
+	/// How the critter should attack normally
+	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	///How the critter should use abilities, return TRUE to indicate ability usage success
+	proc/critter_ability_attack(var/mob/target)
+		return FALSE
 
 	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_scavenge(var/mob/target)
@@ -1467,7 +1488,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 /mob/living/critter/Logout()
 	..()
-	if (src.ai && !src.ai.enabled && src.is_npc)
+	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.key)
 		ai.enable()
 
 /mob/living/critter/Login()
