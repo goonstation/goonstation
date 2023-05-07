@@ -15,7 +15,7 @@ TYPEINFO(/obj/item/gun/energy)
 	var/custom_cell_max_capacity = null // Is there a limit as to what power cell (in PU) we can use?
 	var/wait_cycle = 0 // Using a self-charging cell should auto-update the gun's sprite.
 	var/can_swap_cell = 1
-	var/uses_charge_overlay = FALSE // Does this gun use charge overlays on the sprite?
+	var/uses_charge_overlay = FALSE //! Does this gun use charge overlays on the sprite?
 	var/charge_icon_state
 	var/image/charge_image = null
 	muzzle_flash = null
