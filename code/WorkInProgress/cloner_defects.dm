@@ -322,7 +322,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 		// Ugly fix because I can't 'hook' into the brain damage proc- don't want to instantly kill people with weak organs
 		var/damage = src.data["amount"]
 		if (src.owner.traitHolder.hasTrait("weakorgans"))
-			damage /= 2 // ends up the same for frail people and non-frail
+			damage /= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
 		src.owner.take_brain_damage(damage)
 
 
