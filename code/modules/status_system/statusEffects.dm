@@ -1237,10 +1237,12 @@
 		var/const/max_health = 30
 		var/const/max_stam = 60
 		var/const/regen_stam = 5
-		var/const/max_dist = 50 //maximum distance from locker for healing
 		var/mob/living/carbon/human/H
 		var/datum/gang/gang
 		var/on_turf = 0
+
+		var/tickCount = 0
+		var/tickSpacing = 1 SECOND //Time between ticks.
 
 		onAdd(optional=null)
 			. = ..()
@@ -1269,12 +1271,17 @@
 			var/mob/living/carbon/human/H
 			if(ishuman(owner))
 				H = owner
-				if (GET_DIST(owner,gang.locker) < 7) //give a small heal to folks camping round their locker
-					H.HealDamage("All", 1, 1, 1)
+				tickCount += timePassed
+				var/times = (tickCount / tickSpacing)
+				if(times >= 1)
+					tickCount -= (round(times) * tickSpacing)
+					for(var/i in 1 to times)
+						H.HealDamage("All", 0.2, 0.2, 0)
+						if (GET_DIST(owner,gang.locker) < 4) //give a boost to folks camping round their locker
+							H.HealDamage("All", 0.5, 0.5, 0.5)
 
-				H.HealDamage("All", 1, 1, 0)
-				if (H.bleeding && prob(20))
-					repair_bleeding_damage(H, 5, 1)
+						if (H.bleeding && prob(20))
+							repair_bleeding_damage(H, 5, 1)
 
 
 				var/list/statusList = H.getStatusList()
@@ -1288,7 +1295,10 @@
 			return
 
 		getTooltip()
-			. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
+			if (GET_DIST(owner,gang.locker) < 4)
+				. = "You're healing quickly, proudly wearing your uniform next to your locker."
+			else
+				. = "Your endurance and recovery are improved because of the pride you feel while wearing your uniform in your territory."
 
 	ganger_debuff
 		id = "ganger_debuff"

@@ -237,7 +237,12 @@
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
-			var/move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			var/move_amount
+			if (K.max_move_amount <= 0)
+				move_amount = min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left)
+			else
+				move_amount = min(K.max_move_amount,min(A.amount_left, K.max_ammo_capacity - K.ammo.amount_left))
+
 			A.amount_left -= move_amount
 			K.ammo.amount_left += move_amount
 			K.ammo.ammo_type = A.ammo_type
@@ -259,6 +264,12 @@
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
 						qdel(A) // No duplicating empty magazines, please (Convair880).
 				return 5 // Full reload or ammo left over.
+
+			if ((A.amount_left >= 0) && (move_amount == K.max_move_amount))
+				A.UpdateIcon()
+				K.ammo.UpdateIcon()
+				K.UpdateIcon()
+				return 7 // Partial reload, capped by max_move_amount
 
 	update_icon()
 
@@ -540,8 +551,8 @@
 		icon_state = "uzi"
 		icon_empty = "uzi-empty"
 		name = "9mm MOR magazine"
-		amount_left = 15.0
-		max_amount = 15.0
+		amount_left = 30.0
+		max_amount = 30.0
 	lopoint
 		icon_state = "pistol_magazine"
 		name = "9mm Lo-Point magazine"
@@ -749,6 +760,21 @@
 	weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
 
+
+	bird //for gangs
+		ammo_type = new/datum/projectile/bullet/a12/bird
+		ammo_cat = AMMO_SHOTGUN_LOW
+		sound_load = 'sound/weapons/gunload_click.ogg'
+		sname = "12ga Birdshot"
+		name = "12ga birdshot ammo box"
+		desc = "A box of birdshot shells, still more than capable of murder."
+		ammo_type = new/datum/projectile/bullet/a12/bird
+
+		seven //for striker
+			amount_left = 7
+			max_amount = 7
+
+
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
 	name = "buckshot ammo box"
@@ -796,7 +822,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/bullets/pipeshot/scrap/five
 	amount_left = 5
 	max_amount = 5
-
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
 	sname = "Nails"

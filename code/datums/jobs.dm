@@ -2949,6 +2949,27 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	name = "Football Player"
 	limit = -1
 
+
+/datum/job/special/gang_respawn
+	name = "Gang Respawn"
+	limit = 0
+	wages = 200
+	slot_card = /obj/item/card/id/civilian
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Staff Assistant")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+
+
+
 /*---------------------------------------------------------------*/
 
 /datum/job/created

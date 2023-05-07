@@ -40,9 +40,13 @@
 			src.ability_holder = A
 
 		src.ability_holder.addAbility(/datum/targetable/gang/set_gang_base)
+		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
+
 
 		var/mob/living/carbon/human/H = src.owner.current
-
+		H.AddComponent(/datum/component/death_gang_respawn)
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(H.mind)
 		// If possible, get the gang leader's headset.
 		if (istype(H.ears, /obj/item/device/radio/headset))
 			src.headset = H.ears

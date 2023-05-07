@@ -875,6 +875,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		New()
 			..()
 			implant_overlay = image(icon = 'icons/mob/human.dmi', icon_state = "buckshot_wound-[rand(0, 1)]", layer = MOB_EFFECT_LAYER)
+		bird
+			name = "birdshot"
+			desc = "A large collection of birdshot rounds, a less-lethal load for shotguns."
+
 	staple
 		name = "staple"
 		icon_state = "staple"
@@ -987,6 +991,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					return
 				SPAWN(4.5 SECONDS)
 					playsound(M.loc, 'sound/items/hypo.ogg', 50, 0)
+
 				SPAWN(5 SECONDS)
 					if (!ishuman(M))
 						return
@@ -1002,7 +1007,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					H.take_oxygen_deprivation(-INFINITY)
 					H.take_brain_damage(-H.get_brain_damage())
 					var/damage = H.max_health - H.health
-					var/desired = H.max_health * (1-JANKTANK2_DESIRED_HEALTH_PCT)
+					var/desired = H.max_health * (JANKTANK2_DESIRED_HEALTH_PCT)
 					var/multi = 0
 					if (damage > 0)
 						multi = max(0,1-(desired/damage)) //what to multiply all damage by to get to desired HP,
@@ -1013,9 +1018,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					H.visible_message("<span class='alert'>[H] shudders to life!</span>")
 					playsound(H.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 0)
 					playsound(H.loc, 'sound/misc/meat_plop.ogg', 30, 0)
-					H.reagents.reaction(H.loc,TOUCH, H.reagents.total_volume)
+					H.reagents.reaction(get_turf(H.loc),TOUCH, H.reagents.total_volume)
 					H.vomit()
-					H.reagents.clear_reagents()
 
 					//un-kill organs
 					for (var/organ_slot in H.organHolder.organ_list)
@@ -1027,20 +1031,22 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 					H.remove_ailments()
 
 					setalive(H)
-					H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
-					H.reagents.add_reagent("synaptizine", 5)
-					H.reagents.add_reagent("ephedrine", 5)
-					H.reagents.add_reagent("salbutamol", 10) //don't die immediately in space
-					H.reagents.add_reagent("space_drugs", 5) //heh
-					H.make_jittery(200)
-					H.delStatus("resting")
-					H.hud.update_resting()
-					H.delStatus("stunned")
-					H.delStatus("weakened")
-					H.force_laydown_standup()
-					#ifdef USE_STAMINA_DISORIENT
-					H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
-					#endif
+					SPAWN(0) //some part of the vomit proc makes these duplicate
+						H.reagents.clear_reagents()
+						H.reagents.add_reagent("atropine", 2.5) //don't slip straight back into crit
+						H.reagents.add_reagent("synaptizine", 5)
+						H.reagents.add_reagent("ephedrine", 5)
+						H.reagents.add_reagent("salbutamol", 10) //don't die immediately in a vacuum
+						H.reagents.add_reagent("space_drugs", 5) //heh
+						H.make_jittery(200)
+						H.delStatus("resting")
+						H.hud.update_resting()
+						H.delStatus("stunned")
+						H.delStatus("weakened")
+						H.force_laydown_standup()
+						#ifdef USE_STAMINA_DISORIENT
+						H.do_disorient(H.get_stamina()+75, disorient = 100, remove_stamina_below_zero = 1, target_type = DISORIENT_NONE)
+						#endif
 
 
 

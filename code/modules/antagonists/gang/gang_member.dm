@@ -6,6 +6,8 @@
 	var/datum/gang/gang
 	/// The headset of this gang member, tracked so that additional channels may be later removed.
 	var/obj/item/device/radio/headset/headset
+		/// The ability holder of this gang member, containing their abilities (namely, toggling the gang overlay)
+	var/datum/abilityHolder/gang/ability_holder
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
 		src.master = master
@@ -30,8 +32,19 @@
 		if (!ishuman(src.owner.current))
 			return FALSE
 
+
+		var/datum/abilityHolder/gang/A = src.owner.current.get_ability_holder(/datum/abilityHolder/gang)
+		if (!A)
+			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/gang)
+		else
+			src.ability_holder = A
+		src.ability_holder.addAbility(/datum/targetable/gang/toggle_overlay)
+
+
 		var/mob/living/carbon/human/H = src.owner.current
 
+		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+		imgroup.add_mind(H.mind)
 		// If possible, get the gang member's headset.
 		if (istype(H.ears, /obj/item/device/radio/headset))
 			src.headset = H.ears

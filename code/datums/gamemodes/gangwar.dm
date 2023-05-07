@@ -419,6 +419,7 @@ proc/broadcast_to_all_gangs(var/message)
 	var/static/list/uniform_list
 	/// Mask or hat items that are being used by other gangs as part of their gang uniform.
 	var/static/list/headwear_list
+	var/static/list/colors_left =  list("#88CCEE","#117733","#332288","#DDCC77","#CC6677","#AA4499") //(hopefully) colorblind friendly palette
 
 	/// The radio source for the gang's announcer, who will announce various messages of importance over the gang's frequency.
 	var/datum/generic_radio_source/announcer_source
@@ -480,15 +481,17 @@ proc/broadcast_to_all_gangs(var/message)
 	var/newmember_price_gain = GANG_NEW_MEMBER_COST_GAIN
 
 
-	proc/unclaim_tiles(var/location)
+	proc/unclaim_tiles(var/location,  claimRange, minimumRange)
+		var/squared_claim = claimRange*claimRange
+		var/squared_minimum = minimumRange*minimumRange
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
 		var/turf/sourceturf = get_turf(location)
-		for (var/turf/turftile in range(GANG_TAG_INFLUENCE,sourceturf))
+		for (var/turf/turftile in range(claimRange,sourceturf))
 			var/tileDistance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
-			if(tileDistance > GANG_TAG_INFLUENCE_SQUARED) continue
+			if(tileDistance > squared_claim) continue
 			if (turftile.gang_control[src])
 				turftile.gang_control[src][3] -= 1
-				if (tileDistance <= GANG_TAG_MINIMUM_RANGE_SQUARED)
+				if (tileDistance <= squared_minimum)
 					turftile.gang_control[src][2] -= 1
 
 				if (turftile.gang_control[src][2] == 0)
@@ -499,11 +502,14 @@ proc/broadcast_to_all_gangs(var/message)
 					qdel(turftile.gang_control[src][1])
 					turftile.gang_control[src] = null
 
-
-	proc/claim_tiles(var/location)
+	//Claim all tiles within claimRange, making all within minimumRange unclaimable.
+	proc/claim_tiles(var/location, claimRange, minimumRange)
+		var/squared_claim = claimRange*claimRange
+		var/squared_minimum = minimumRange*minimumRange
 		var/datum/client_image_group/imgroup = get_image_group(CLIENT_IMAGE_GROUP_GANGS)
+
 		var/turf/sourceturf = get_turf(location)
-		if (!sourceturf.gang_control[src])
+		if (!sourceturf.gang_control[src]) //mark this tile with heavy coloring
 			var/image/img = image('icons/effects/white.dmi', sourceturf)
 			img.alpha = 230
 			img.color = src.color
@@ -514,21 +520,22 @@ proc/broadcast_to_all_gangs(var/message)
 			sourceturf.gang_control[src][2] += 1
 			sourceturf.gang_control[src][3] += 1
 
-		for (var/turf/turftile in orange(GANG_TAG_INFLUENCE,sourceturf))
+		for (var/turf/turftile in orange(claimRange,sourceturf))
 			var/distance = GET_SQUARED_EUCLIDEAN_DIST(turftile, sourceturf)
-			if(distance > GANG_TAG_INFLUENCE_SQUARED) continue
+			if(distance > squared_claim) continue
 			if (!turftile.gang_control[src])
 				var/image/img = image('icons/effects/white.dmi', turftile)
-				if(distance > GANG_TAG_MINIMUM_RANGE_SQUARED)
-					turftile.gang_control[src] = list(img,0,1)
+				//if this tile is too close to our
+				if(distance > squared_minimum)
+					turftile.gang_control[src] = list(img,0,1) //mark this tile as claimable
 					img.alpha = 80
 				else
-					turftile.gang_control[src] = list(img,1,1)
+					turftile.gang_control[src] = list(img,1,1)	//mark this tile as unclaimable
 					img.alpha = 170
 				img.color = src.color
 				imgroup.add_image(img)
 			else
-				if(distance <= GANG_TAG_MINIMUM_RANGE_SQUARED)
+				if(distance <= squared_minimum)
 					turftile.gang_control[src][1].alpha = 170
 					turftile.gang_control[src][2] += 1
 				turftile.gang_control[src][3] += 1
@@ -544,7 +551,8 @@ proc/broadcast_to_all_gangs(var/message)
 			src.used_frequencies = list()
 		if (!src.uniform_list || !src.headwear_list)
 			src.make_item_lists()
-
+		color = pick(colors_left)
+		colors_left -= color
 		src.gang_tag = rand(0, 22)
 		while(src.gang_tag in src.used_tags)
 			src.gang_tag = rand(0, 22)
@@ -682,7 +690,7 @@ proc/broadcast_to_all_gangs(var/message)
 		tag.name = "[src.gang_name] tag"
 		tag.owners = src
 		tag.delete_same_tags()
-		src.claim_tiles(T)
+		src.claim_tiles(T, GANG_TAG_INFLUENCE, GANG_TAG_MINIMUM_RANGE)
 		var/area/area = T.loc
 		T.tagged = TRUE
 		area.gang_owners = src
@@ -809,8 +817,8 @@ proc/broadcast_to_all_gangs(var/message)
 			if (tag.owners == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to an existing tag!</span>")
 				return
-		for (var/obj/ganglocker/locker in orange(GANG_TAG_MINIMUM_RANGE,target))
-			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_MINIMUM_RANGE)) continue
+		for (var/obj/ganglocker/locker in orange(GANG_TAG_MINIMUM_RANGE_LOCKER,target))
+			if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_MINIMUM_RANGE_LOCKER)) continue
 			if (locker.gang == user.get_gang())
 				boutput(user, "<span class='alert'>This is too close to your locker!</span>")
 				return
@@ -821,8 +829,8 @@ proc/broadcast_to_all_gangs(var/message)
 			if (tag.owners != user.get_gang())
 				//if we're tagging over someone's tag, double our search radius
 				//(this will find any tags whose influence intersects with the target tag's influence)
-				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE*2,target))
-					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE*2)) continue
+				for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE,target))
+					if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER+GANG_TAG_INFLUENCE)) continue
 					if (locker.gang == user.get_gang())
 						validLocation = TRUE
 				for (var/obj/decal/gangtag/otherTag in orange(GANG_TAG_INFLUENCE*2,target))
@@ -841,12 +849,12 @@ proc/broadcast_to_all_gangs(var/message)
 				else if (tag.owners)
 					boutput(user, "<span class='alert'>You can't spray in another gang's territory! Spray over their tag, instead!</span>")
 					return
-			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE,target))
-				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE)) continue
+			for (var/obj/ganglocker/locker in orange(GANG_TAG_INFLUENCE_LOCKER,target))
+				if(!IN_EUCLIDEAN_RANGE(locker, target, GANG_TAG_INFLUENCE_LOCKER)) continue
 				if (locker.gang == user.get_gang())
 					validLocation = TRUE
 				else
-					boutput(user, "<span class='alert'>There's better places to tag than here! </span>")
+					boutput(user, "<span class='alert'>There's better places to tag than near someone else's locker! </span>")
 					return
 
 		if(!validLocation)
@@ -972,7 +980,7 @@ proc/broadcast_to_all_gangs(var/message)
 		S.in_use = FALSE
 		target_area.being_captured = FALSE
 		for (var/obj/decal/gangtag/otherTag in range(1,target_turf))
-			otherTag.owners.unclaim_tiles(target_turf)
+			otherTag.owners.unclaim_tiles(target_turf,GANG_TAG_INFLUENCE, GANG_TAG_MINIMUM_RANGE)
 			otherTag.owners = null
 
 		src.gang.make_tag(target_turf)
@@ -991,6 +999,10 @@ proc/broadcast_to_all_gangs(var/message)
 	var/image/default_screen_overlay = null
 	var/HTML = null
 	var/list/buyable_items = list()
+	var/ghost_confirmation_delay  = 30 SECONDS
+
+	var/hunting_for_ghosts = FALSE //are we hunting for gang members atm?
+	var/given_flyers = FALSE
 
 	var/static/janktank_price = 300
 
@@ -1045,8 +1057,9 @@ proc/broadcast_to_all_gangs(var/message)
 				<font size="3">The gang has [gang.spray_paint_remaining] spray paints remaining.</font>
 			</div>
 			<div style="height: 150px;width: 290px;padding-left: 5px;; float: left;border-style: solid;">
-				<center><font size="6"><a href='byond://?src=\ref[src];get_gear=1'>get gear</a></font></center><br>
-				<font size="3">You have [gang.street_cred] street cred!</font>
+				<font size="3">You have [gang.street_cred] street cred!</font><br>
+				<font size="3"><a href='byond://?src=\ref[src];respawn_new=1'>Recruit a new member:</a></font> [src.gang.current_newmember_price] cred<br>
+				<font size="3"><a href='byond://?src=\ref[src];respawn_syringe=1'>Buy a revival stim:</a></font> [src.gang.current_revival_price] cred<br>
 			</div>
 		</div>
 		<HR>
@@ -1095,6 +1108,10 @@ proc/broadcast_to_all_gangs(var/message)
 
 		if (href_list["get_gear"])
 			handle_gang_gear(usr)
+		if (href_list["respawn_new"])
+			handle_respawn_new(usr)
+		if (href_list["respawn_syringe"])
+			handle_respawn_syringe(usr)
 		if (href_list["get_spray"])
 			handle_get_spraypaint(usr)
 		if (href_list["buy_item"])
@@ -1118,6 +1135,60 @@ proc/broadcast_to_all_gangs(var/message)
 		for (var/datum/gang/gang in get_all_gangs())
 			var/datum/gang_item/misc/janktank/JT = locate(/datum/gang_item/misc/janktank) in gang.locker.buyable_items
 			JT.price = janktank_price
+
+	proc/handle_respawn_new(var/mob/living/carbon/human/user)
+		if (!src.gang.leader == user.mind)
+			boutput(user, "You're not this gang's leader!")
+			return
+		if (hunting_for_ghosts)
+			boutput(user, "A new member is being recruited, wait a minute!")
+			return
+		if (gang.street_cred < gang.current_newmember_price)
+			boutput(user, "You don't have enough cred for a new gang member!")
+			return
+		hunting_for_ghosts = TRUE
+		gang.street_cred -= gang.current_newmember_price
+		var/list/text_messages = list()
+		text_messages.Add("Would you like to respawn as a gang member? Your name will be added to the list of eligible candidates.")
+		text_messages.Add("You are eligible to be respawned as a gang member. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
+		text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
+
+		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
+		message_admins("Sending gang member respawn offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
+		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
+
+
+		if (!islist(candidates) || candidates.len <= 0)
+			message_admins("Couldn't set up gang member respawn for [src.gang.gang_name]; no ghosts responded. Source: [user]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up gang member respawn ; no ghosts responded. Source: [user]")
+			boutput(user, "We couldn't find any new recruits. Your street cred is refunded.")
+			gang.street_cred += gang.current_newmember_price
+			hunting_for_ghosts = FALSE
+			return
+
+		var/datum/mind/lucky_dude = candidates[1]
+
+		if (lucky_dude.current)
+			var/mob/living/carbon/human/normal/P = new/mob/living/carbon/human/normal(src.loc)
+			P.initializeBioholder(lucky_dude.current?.client?.preferences?.gender) //try to preserve gender if we can
+			SPAWN(0)
+				P.JobEquipSpawned("Gang Respawn")
+				lucky_dude.transfer_to(P)
+				lucky_dude.add_subordinate_antagonist(ROLE_GANG_MEMBER, master = src.gang.leader)
+				message_admins("[lucky_dude.key] respawned as a gang member for [src.gang.gang_name].")
+				log_respawn_event(lucky_dude, "gang member respawn", src.gang.gang_name)
+				boutput(P, "<span class='notice'><b>You have been respawned as a gang member!</b></span>")
+				boutput(P, "<span class='alert'><b>You're allied with [src.gang.gang_name]! Work with your leader, [user.name], to become the baddest gang ever!</b></span>")
+				get_gang_gear(P)
+			gang.current_newmember_price += gang.newmember_price_gain
+			hunting_for_ghosts = FALSE
+
+
+	proc/handle_respawn_syringe(var/mob/living/carbon/human/user)
+		var/datum/gang/G = user.get_gang()
+		if (G != null && G.leader == user.mind)
+			var/obj/item/i = new/obj/item/tool/janktanktwo(src.loc)
+
 
 	proc/handle_gang_gear(var/mob/living/carbon/human/user)
 		var/image/overlay = null
@@ -1207,7 +1278,8 @@ proc/broadcast_to_all_gangs(var/message)
 		if(!has_spray_paint)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
-		if(user.mind.special_role == ROLE_GANG_LEADER)
+		if(user.mind.special_role == ROLE_GANG_LEADER && !src.given_flyers)
+			src.given_flyers = TRUE
 			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
 			case.name = "[src.gang.gang_name] recruitment material"
 			case.desc = "A briefcase full of flyers advertising the [src.gang.gang_name] gang."
@@ -1586,12 +1658,12 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/item/storage/box/gang_flyers
 	name = "gang recruitment flyer case"
-	desc = "A briefcase full of flyers advertising a gang."
+	desc = "A briefcase full of flyers advertising a gang, and some other neat stuff."
 	icon_state = "briefcase_black"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "sec-case"
 
-	spawn_contents = list(/obj/item/gang_flyer = 7)
+	spawn_contents = list(/obj/item/gang_flyer = 4, /obj/item/spray_paint = 2, /obj/item/tool/quickhack = 1)
 	var/datum/gang/gang = null
 
 	make_my_stuff()

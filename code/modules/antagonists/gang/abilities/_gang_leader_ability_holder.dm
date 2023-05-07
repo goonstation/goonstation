@@ -211,10 +211,10 @@
 		locker.name = "[antag_role.gang.gang_name] Locker"
 		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		locker.gang = antag_role.gang
+		locker.gang.claim_tiles(usr.loc, GANG_TAG_INFLUENCE_LOCKER, GANG_TAG_MINIMUM_RANGE_LOCKER)
 		antag_role.gang.locker = locker
 		locker.UpdateIcon()
 
 		M.abilityHolder.removeAbility(/datum/targetable/gang/set_gang_base)
-		M.remove_ability_holder(/datum/abilityHolder/gang)
 
 		return

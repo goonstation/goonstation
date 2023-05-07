@@ -33,6 +33,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
 	var/sound_load_override = null
 
+	/// How many bullets get moved into this gun per action?
+	var/max_move_amount = -1
+	/// What's the fastest speed we can reload this? 2 deciseconds is the default spam limiter.
+	var/reload_cooldown = 2 DECI SECONDS
 	/// Does this gun add gunshot residue when fired? Kinetic guns should (Convair880).
 	add_residue = TRUE
 
@@ -109,7 +113,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	attackby(obj/item/ammo/bullets/b, mob/user)
 		if(istype(b, /obj/item/ammo/bullets))
-			if(ON_COOLDOWN(src, "reload_spam", 2 DECI SECONDS))
+			if(ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
 				return
 			switch (src.ammo.loadammo(b,src))
 				if(0)
@@ -145,6 +149,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
+				if(7)
+					if(!ON_COOLDOWN(src, "reload_single_spam", 3 SECONDS))
+						user.visible_message("<span class='alert'>[user] loads some ammo into [src].</span>", "<span class='alert'>You load [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
+					src.tooltip_rebuild = 1
+					src.logme_temp(user, src, b)
+					return
+
 		else
 			..()
 
@@ -860,25 +871,25 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			UpdateIcon()
 
 /obj/item/gun/kinetic/uzi
-	desc = ""
-	name = "\improper MOR-15"
+	desc = "A stamped metal PDW."
+	name = "\improper MOR-30"
 	icon_state = "uzi"
-	item_state = "glock"
+	item_state = "uzi"
 	shoot_delay = 2
 	has_empty_state = 1
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
-	max_ammo_capacity = 15
+	max_ammo_capacity = 30
 	auto_eject = 1
 	fire_animation = TRUE
 	default_magazine = /obj/item/ammo/bullets/nine_mm_NATO/mag_mor
 
 	get_desc(var/dist, var/mob/user)
 		if (user.get_gang() != null)
-			. = "A stamped metal PDW for when you need MOR' DAKKA. Uses 9mm NATO rounds."
+			. += "For when you need MOR' DAKKA. Uses 9mm NATO rounds."
 		else
-			. = "A stamped metal PDW. Its' firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
+			. += "Its' firemodes are labelled 'DAKKA' and 'MOR'... Uses 9mm NATO rounds."
 
 	New()
 		ammo = new default_magazine
@@ -1517,6 +1528,64 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		ammo = new default_magazine
 		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
 		..()
+
+/obj/item/gun/kinetic/striker
+	name = "\improper Striker-7"
+	desc = "A terrifying looking drum shotgun, renowned for being incredibly fiddly to reload."
+	icon = 'icons/obj/large/48x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "striker12"
+	item_state = "striker"
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	force = MELEE_DMG_RIFLE
+	contraband = 7
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	max_ammo_capacity = 7
+	max_move_amount = 1
+	reload_cooldown = 8 DECI SECONDS
+	auto_eject = TRUE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = FALSE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/a12/bird/seven
+	var/is_loading = FALSE //are we reloading?
+
+	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+		if (src.is_loading)
+			return
+		..()
+
+
+	attackby(obj/item/b, mob/user)
+		if (istype(b, /obj/item/ammo/bullets) && !src.is_loading)
+			if (!ON_COOLDOWN(src, "reload_spam", src.reload_cooldown))
+				boutput(user, "<span class='alert'>It's too [pick("fiddly","frustrating","awkward")] to load \the [src] like this! You'll need to lower it first.</span>")
+			return
+		..()
+
+	canshoot(mob/user)
+		return(..() && !src.is_loading)
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/bullet/a12/bird)
+		..()
+
+	attack_self(mob/user as mob)
+		if (is_loading)
+			if (setTwoHanded(1))
+				is_loading = FALSE
+				src.transform = src.transform.Turn(-45)
+				boutput(user, "<span class='alert'>You raise the striker, ready to shoot!</span>")
+			else
+				boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+		else
+			boutput(user, "<span class='alert'>You lower the [src] for reloading.</span>")
+			setTwoHanded(0)
+			is_loading = TRUE
+			src.transform = src.transform.Turn(45)
 
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."

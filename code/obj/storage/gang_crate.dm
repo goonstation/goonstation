@@ -619,11 +619,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	medium //2x1
 		size = list(2,1)
 		// HIGH VALUE:
-		clock
+		lopoint
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/gun/kinetic/clock_188/boomerang,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/gun/kinetic/lopoint,scale_x=0.75,scale_y=0.75)
 		saa
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
@@ -700,11 +699,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/ammo/bullets/flare,off_x=4,scale_x=0.8,scale_y=0.8)
 				spawn_item(C,I,/obj/item/gun/kinetic/flaregun,off_x=-8,scale_x=0.75,scale_x=0.75)
-		clock
+		striker
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/ammo/bullets/nine_mm_NATO,off_x=6,scale_x=0.8,scale_y=0.8)
-				spawn_item(C,I,/obj/item/gun/kinetic/clock_188,off_x=-4,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/gun/kinetic/striker,off_x=-8,scale_x=0.75,scale_x=0.75)
 		gl
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
@@ -760,7 +758,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
 				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=0)
-
+		m16
+			tier = GANG_CRATE_GUN_WEAK
+			create_loot(var/C,var/I)
+				spawn_item(C,I,/obj/item/gun/kinetic/m16,off_x=-8,off_y=0,scale_x=0.7,scale_y=0.7)
 		//MID
 		utility_belt
 			tier = GANG_CRATE_GEAR
@@ -832,6 +833,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		size = list(2,2)
 
 		// HIGH VALUE:
+		uzi
+			tier = GANG_CRATE_GUN_WEAK
+			create_loot(var/C,var/I)
+				spawn_item(C,I,/obj/item/gun/kinetic/uzi,scale_x=0.75,scale_y=0.75)
 		frags
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)

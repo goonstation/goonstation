@@ -1,4 +1,4 @@
-#define GANG_STARTING_SPRAYPAINT 5 // number of spray bottles gangs start with
+#define GANG_STARTING_SPRAYPAINT 3 // number of spray bottles gangs start with, excluding the 2 in the recruitment briefcase
 #define GANG_SPRAYPAINT_REGEN 300 //time in seconds between gangs gaining another spray bottle
 
 
@@ -29,6 +29,8 @@
 //GANG_TAG_INFLUENCE   		= radius of influence around gang tags tiles
 //GANG_TAG_MINIMUM_RANGE 	= minimum range between two gang tags
 
+#define GANG_TAG_INFLUENCE_LOCKER 4
+#define GANG_TAG_MINIMUM_RANGE_LOCKER 1
 
 
 //larger maps

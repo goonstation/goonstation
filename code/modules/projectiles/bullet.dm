@@ -626,6 +626,21 @@ toxic - poisons
 	weak
 		damage = 50 //can have a little throwing, as a treat
 
+	bird //birdshot, for gangs. just much worse overall
+		implanted = /obj/item/implant/projectile/bullet_12ga/bird
+		hit_ground_chance = 66
+		damage = 38
+		dissipation_rate = 6
+		on_hit(atom/hit, dirflag, obj/projectile/proj)
+			if (istype(hit, /mob/living/critter/small_animal/bird))
+				var/mob/living/critter/small_animal/bird/M = hit
+				M.TakeDamage("chest", (proj.power*3)/M.get_ranged_protection(), 0) //it's in the name
+				var/turf/target = get_edge_target_turf(M, dirflag)
+				M.throw_at(target, 4, 1, throw_type = THROW_GUNIMPACT)
+				M.update_canmove()
+			..()
+
+
 /datum/projectile/bullet/flak_chunk
 	name = "flak chunk"
 	sname = "flak chunk"
