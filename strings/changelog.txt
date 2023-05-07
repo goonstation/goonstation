@@ -1,5 +1,7 @@
 
 (t)sun may 07 23
+(u)Sord
+(+)You will only see what cards are in a hand if you're holding them (or on the same tile as them)
 (u)Kubius
 (p)13994
 (e)🆕🗺|C-Feature, A-Mapping
