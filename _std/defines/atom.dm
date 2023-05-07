@@ -22,7 +22,6 @@
 		. = ..(); \
 		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
 	}
-
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted

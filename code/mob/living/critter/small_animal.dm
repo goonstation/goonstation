@@ -624,7 +624,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	New(loc)
 		. = ..()
-		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	OnMove()
 		if(client?.player?.shamecubed)

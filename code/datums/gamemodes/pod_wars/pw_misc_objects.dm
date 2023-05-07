@@ -175,7 +175,7 @@
 					else if (team_num == TEAM_SYNDICATE)
 						team = mode.team_SY
 				last_check = world.time
-				INVOKE_ASYNC(src, /obj/machinery/clonepod/pod_wars.proc/growclone_a_ghost)
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/clonepod/pod_wars, growclone_a_ghost))
 		return..()
 
 	New()
