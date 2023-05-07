@@ -53,6 +53,8 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
+	last_input_loop_time = 0
+
 	list/muted_keys = list()
 
 	server_start_time = 0

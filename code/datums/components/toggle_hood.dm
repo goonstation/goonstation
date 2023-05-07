@@ -17,8 +17,8 @@
 	suit.ability_buttons += toggle
 	toggle.the_item = suit
 	toggle.name = toggle.name + " ([suit.name])"
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/flip_hood)
-	RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, .proc/hood_icon)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(flip_hood))
+	RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, PROC_REF(hood_icon))
 
 /datum/component/toggle_hood/proc/flip_hood(atom/movable/thing, mob/user)
 	src.hooded = !src.hooded

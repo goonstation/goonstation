@@ -624,7 +624,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	New(loc)
 		. = ..()
-		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -2044,6 +2044,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	weak
 		health_brute = 5
 		health_burn = 5
+
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.limb = new /datum/limb/small_critter
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon_state = "handn"
+			HH.name = "weird grabby foot thing"
+			HH.limb_name = "foot"
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
