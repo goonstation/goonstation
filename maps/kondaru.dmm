@@ -41392,10 +41392,6 @@
 /area/station/ai_monitored/armory)
 "hFc" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/toolbox{
-	desc = "Looks suspiciously similar to a toolbox.";
-	name = "lunchbox"
-	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "hFG" = (
@@ -44783,6 +44779,7 @@
 /area/station/science/testchamber)
 "kRM" = (
 /obj/table/wood/round/auto,
+/obj/item/storage/lunchbox/food1,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "kSA" = (
@@ -127779,8 +127776,8 @@ aZa
 bre
 bsw
 kvh
-hFc
 kRM
+hFc
 rsY
 uAQ
 uAQ
