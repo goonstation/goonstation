@@ -1723,6 +1723,16 @@
 	name = "solar paneling"
 	},
 /area/space)
+"afK" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/mob/living/critter/robotic/repairbot/helldrone,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "afN" = (
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -9545,6 +9555,10 @@
 	},
 /turf/space,
 /area/space)
+"aQi" = (
+/mob/living/critter/robotic/repairbot/helldrone,
+/turf/simulated/floor/black,
+/area/helldrone)
 "aQj" = (
 /obj/machinery/power/data_terminal,
 /obj/overlay{
@@ -12787,16 +12801,6 @@
 	dir = 10
 	},
 /area/h7/lab)
-"aZx" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/critter/ancient_repairbot/helldrone_guard,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "aZy" = (
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
@@ -14254,10 +14258,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/h7/lab)
-"beB" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
-/turf/simulated/floor/black,
-/area/helldrone)
 "beJ" = (
 /obj/structure/girder/displaced,
 /obj/lattice{
@@ -18185,6 +18185,10 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
+"fwG" = (
+/mob/living/critter/robotic/repairbot/helldrone,
+/turf/simulated/floor/black,
+/area/helldrone/core)
 "fAl" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -5
@@ -18304,6 +18308,19 @@
 	},
 /turf/space,
 /area/space)
+"fWi" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/helldrone,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "fWG" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
@@ -18369,10 +18386,6 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
-"gbF" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "ggh" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -18537,10 +18550,6 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"gwR" = (
-/obj/critter/ancient_repairbot/helldrone_guard,
-/turf/simulated/floor/black,
-/area/helldrone/core)
 "gwV" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -21519,6 +21528,13 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
+"oWn" = (
+/obj/item/storage/wall/random,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/item/bible/mini,
+/turf/simulated/floor/carpet,
+/area/derelict_ai_sat)
 "oWB" = (
 /mob/living/critter/spider,
 /obj/item/storage/box/record/notaquario,
@@ -22157,19 +22173,6 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
-"qyC" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/critter/ancient_repairbot/helldrone_guard,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "qAR" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -23387,13 +23390,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/shuttlebay,
 /area/helldrone)
-"tHX" = (
-/obj/item/storage/wall/random,
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/item/storage/bible/mini,
-/turf/simulated/floor/carpet,
-/area/derelict_ai_sat)
 "tIa" = (
 /turf/simulated/floor/plating,
 /area/diner/hangar)
@@ -24130,6 +24126,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"vSm" = (
+/mob/living/critter/robotic/repairbot/helldrone,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "vSu" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 4
@@ -34527,7 +34527,7 @@ bgu
 bgu
 bgu
 bgu
-beB
+aQi
 bgu
 tNm
 tNm
@@ -35745,7 +35745,7 @@ wFJ
 wFJ
 wFJ
 wFJ
-beB
+aQi
 bgu
 bfY
 bfY
@@ -36350,7 +36350,7 @@ bgu
 wFJ
 wFJ
 bgu
-gbF
+vSm
 bfY
 sWa
 nfg
@@ -37545,7 +37545,7 @@ aYm
 sWa
 beZ
 beZ
-qyC
+fWi
 bgu
 wFJ
 bed
@@ -37865,7 +37865,7 @@ bfY
 bfY
 bfv
 bfY
-gbF
+vSm
 bgu
 aaa
 aaa
@@ -38157,7 +38157,7 @@ bdb
 bcL
 bcL
 bcL
-gwR
+fwG
 bdb
 bed
 bfY
@@ -39058,7 +39058,7 @@ wOn
 wOn
 bgu
 wFJ
-beB
+aQi
 bed
 bed
 bed
@@ -40259,7 +40259,7 @@ aaa
 aaa
 aaa
 bgu
-aZx
+afK
 bdM
 sWa
 nfg
@@ -70112,7 +70112,7 @@ tYP
 amR
 mSk
 anx
-tHX
+oWn
 amR
 gBu
 fdb

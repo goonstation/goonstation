@@ -2808,7 +2808,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/chapel/sanctuary)
 "aiQ" = (
@@ -2859,7 +2859,7 @@
 /area/station/chapel/sanctuary)
 "ajb" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajc" = (
@@ -39983,6 +39983,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/item/device/radio/beacon,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "gvi" = (
@@ -41391,10 +41392,6 @@
 /area/station/ai_monitored/armory)
 "hFc" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/toolbox{
-	desc = "Looks suspiciously similar to a toolbox.";
-	name = "lunchbox"
-	},
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "hFG" = (
@@ -44298,7 +44295,6 @@
 /turf/simulated/floor,
 /area/station/mining/magnet)
 "kwz" = (
-/obj/item/device/radio/beacon,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -44783,6 +44779,7 @@
 /area/station/science/testchamber)
 "kRM" = (
 /obj/table/wood/round/auto,
+/obj/item/storage/lunchbox/food1,
 /turf/simulated/floor/grass,
 /area/station/garden/aviary)
 "kSA" = (
@@ -127779,8 +127776,8 @@ aZa
 bre
 bsw
 kvh
-hFc
 kRM
+hFc
 rsY
 uAQ
 uAQ

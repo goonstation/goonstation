@@ -338,8 +338,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 
 		contents_index += sell_crate.contents
 
-		for(var/obj/item/storage/S in sell_crate.contents)
-			contents_index += S.get_all_contents()
+		for(var/atom/A in sell_crate.contents)
+			if (A.storage)
+				contents_index += A.storage.get_all_contents()
 
 		. = REQ_RETURN_NOSALE //by default return no success
 

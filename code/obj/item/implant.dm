@@ -177,14 +177,10 @@ THROWING DARTS
 					user.show_text("[Imp] already has an implant loaded.")
 					return
 				else
-					var/obj/item/storage/store
-					if(istype(src.loc, /obj/item/storage))
-						store = src.loc
 					src.set_loc(Imp)
 					Imp.imp = src
 					Imp.update()
 					user.u_equip(src)
-					store?.hud.remove_item(src)
 					user.show_text("You insert [src] into [Imp].")
 				return
 			else if (istype(I, /obj/item/implantcase))
@@ -316,14 +312,16 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
-		health_alert()
+		SPAWN(rand(15, 25) SECONDS)
+			health_alert()
 		..()
 
 	on_death()
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report death")
-		death_alert()
+		SPAWN(rand(15, 25) SECONDS)
+			death_alert()
 		..()
 
 	proc/health_alert()
@@ -767,13 +765,8 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return FALSE
 		// Same here, basically. Multiple active implants is just asking for trouble.
+		H.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
 		for (var/obj/item/implant/mindhack/MS in H.implant)
-			if (!istype(MS))
-				continue
-			if (H.mind && (H.mind.special_role == ROLE_MINDHACK))
-				remove_mindhack_status(H, "mindhack", "override")
-			else if (H.mind && H.mind.master)
-				remove_mindhack_status(H, "otherhack", "override")
 			var/obj/item/implant/mindhack/Inew = new MS.type(H)
 			H.implant += Inew
 			qdel(MS)
@@ -800,6 +793,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 		src.former_implantee = M
 		M.delStatus("mindhack")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_SURGERY)
 		return
 
 	proc/add_orders(var/orders)

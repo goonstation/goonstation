@@ -121,6 +121,25 @@ var/global/meteor_shower_active = 0
 				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/disaster_alert.ogg', 60)
 
+	#ifndef UNDERWATER_MAP
+			var/scroll_angle
+			switch(src.wave_direction)
+				if (NORTH)
+					scroll_angle = 180
+				if (EAST)
+					scroll_angle = 270
+				if (SOUTH)
+					scroll_angle = 0
+				if (WEST)
+					scroll_angle = 90
+
+			if (scroll_angle)
+				var/list/params = list("scroll_angle" = scroll_angle)
+
+				for (var/client/client in clients)
+					client.parallax_controller?.add_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower, layer_params = params)
+	#endif
+
 			var/start_x
 			var/start_y
 			var/targ_x
@@ -179,6 +198,11 @@ var/global/meteor_shower_active = 0
 			meteor_shower_active = 0
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
 				S.UpdateIcon()
+
+	#ifndef UNDERWATER_MAP
+			for (var/client/client in clients)
+				client.parallax_controller?.remove_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower)
+	#endif
 
 	admin_call(var/source)
 		if (..())

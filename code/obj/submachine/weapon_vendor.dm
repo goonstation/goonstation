@@ -134,15 +134,14 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
-				var/list/tracklist = list()
-				for(var/atom/C in A.contents)
-					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
-						tracklist += C
+			var/list/tracklist = list()
+			for(var/atom/C in A.storage.get_contents())
+				if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
+					tracklist += C
 
-				if (length(tracklist))
-					var/obj/item/pinpointer/secweapons/P = new(src.loc)
-					P.track(tracklist)
+			if (length(tracklist))
+				var/obj/item/pinpointer/secweapons/P = new(src.loc)
+				P.track(tracklist)
 
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
