@@ -2851,8 +2851,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (..(parent))
 			return 1
 
-		if (src.ai?.enabled && prob(5))
-			src.emote("scream")
+		if (src.ai?.enabled)
+			if (prob(5))
+				src.emote("scream")
+			else if (prob(1))
+				src.emote("dance")
 
 	seek_target(var/range = 5)
 		. = list()
