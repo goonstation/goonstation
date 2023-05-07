@@ -330,16 +330,16 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "One of those briefcases spies leave at park benches."
 	spawn_contents = list(/obj/item/paper/safehouse/cloner_note)
 
-	New()
+	make_my_stuff()
 		..()
 		var/obj/item/spacecash/random/tourist/S1 = new /obj/item/spacecash/random/tourist
-		S1.setup(src)
+		S1.setup(src, try_add_to_storage = TRUE)
 		var/obj/item/spacecash/random/tourist/S2 = new /obj/item/spacecash/random/tourist
-		S2.setup(src)
+		S2.setup(src, try_add_to_storage = TRUE)
 		var/obj/item/spacecash/random/tourist/S3 = new /obj/item/spacecash/random/tourist
-		S3.setup(src)
+		S3.setup(src, try_add_to_storage = TRUE)
 		var/obj/item/spacecash/random/tourist/S4 = new /obj/item/spacecash/random/tourist
-		S4.setup(src)
+		S4.setup(src, try_add_to_storage = TRUE)
 
 /obj/decal/poster/wallsign/dead_exec_portrait
 	name = "executive portrait"

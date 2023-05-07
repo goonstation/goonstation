@@ -17,6 +17,7 @@
 	atk_text = "headbutts"
 	chase_text = "charges into"
 	crit_text = "rams really hard into"
+	density = FALSE
 	var/shell_count = 0		//Count down to 0. Measured in process cycles. If they are in their shell when this is 0, exit.
 	var/wandering_count = 0		//Make them move less frequently when wandering... They're slow.
 	var/rigged = FALSE
@@ -165,7 +166,7 @@
 		if (costume_name)
 			src.UpdateOverlays(costume_shell, "costume")
 
-		density = 0
+		density = TRUE
 
 		src.visible_message("<span class='alert'><b>[src]</b> retreats into [his_or_her()] shell!")
 		return 1
@@ -182,7 +183,7 @@
 		if (costume_name)
 			src.UpdateOverlays(costume_alive, "costume")
 
-		density = 1
+		density = FALSE
 
 		src.visible_message("<span class='notice'><b>[src]</b> comes out of [his_or_her()] shell!")
 		return 1

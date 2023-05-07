@@ -441,10 +441,15 @@
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
 	item_state = "ntarmor"
+	coat_style = "ntarmor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"

@@ -146,8 +146,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -2081,7 +2081,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
 			return
 		var/obj/item/targetContainer = target
-		if (!istype(targetContainer, /obj/item/storage) && !istype(targetContainer, /obj/item/satchel))
+		if (!targetContainer.storage && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
@@ -2101,12 +2101,9 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if(!quiet)
 			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 
-		var/obj/item/storage/targetStorage = null
-		if(istype(targetContainer, /obj/item/storage))
-			targetStorage = targetContainer
-		for (var/obj/item/R in targetContainer)
-			targetStorage?.hud.remove_object(R)
-			productListUpdater(R, user)
+		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
+			targetContainer.storage.transfer_stored_item(I, src, user = user)
+			productListUpdater(I, user)
 
 
 	proc/productListUpdater(obj/item/target, mob/user)
@@ -2169,7 +2166,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				return
 
 			var/num_loaded = 0
-			for (var/obj/item/I in dropped.contents)
+			for (var/obj/item/I in (dropped.storage?.get_contents() || dropped.contents))
 				addProduct(I, user, quiet=TRUE)
 				if(I.loc == src)
 					num_loaded++

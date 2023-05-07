@@ -73,12 +73,6 @@
 	dir = 10
 	},
 /area/pod_wars/spacejunk/fstation/command)
-"as" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3dir"
-	},
-/area/pod_wars/spacejunk/dorgun)
 "at" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/white,
@@ -1080,7 +1074,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "es" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/storage)
 "et" = (
@@ -1366,6 +1360,16 @@
 	dir = 8
 	},
 /area/pod_wars/spacejunk/miningoutpost)
+"fj" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10;
+	nostick = 1
+	},
+/turf/unsimulated/floor/blue/side{
+	dir = 9
+	},
+/area/pod_wars/team1/bridge)
 "fl" = (
 /obj/cable{
 	d2 = 8;
@@ -1481,12 +1485,6 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/fstation/landingpads)
-"fD" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3"
-	},
-/area/pod_wars/spacejunk/dorgun)
 "fE" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -1839,7 +1837,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "gP" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/porthall)
 "gQ" = (
@@ -3385,9 +3383,7 @@
 /turf/space,
 /area/space)
 "mT" = (
-/turf/simulated/shuttle/wall{
-	dir = 4
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle,
 /area/pod_wars/spacejunk/brightwell)
 "mU" = (
 /obj/cable{
@@ -3573,7 +3569,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "nC" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "nE" = (
@@ -3795,10 +3791,11 @@
 	},
 /area/pod_wars/team2/central_hallway)
 "os" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 4;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "ou" = (
 /obj/cable{
@@ -4070,7 +4067,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pp" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "pr" = (
@@ -4332,7 +4329,7 @@
 /area/pod_wars/spacejunk/restaurant/solars)
 "qa" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "qb" = (
@@ -4700,10 +4697,11 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "rs" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 1;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/pod_wars/spacejunk/dorgun)
 "rt" = (
 /turf/unsimulated/floor{
@@ -5247,9 +5245,10 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "tH" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans"
 	},
+/turf/space,
 /area/pod_wars/spacejunk/brightwell)
 "tI" = (
 /obj/cable{
@@ -5580,12 +5579,6 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/pod_wars/spacejunk/brightwell)
-"uP" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall_space"
-	},
 /area/pod_wars/spacejunk/brightwell)
 "uQ" = (
 /obj/cable{
@@ -6543,7 +6536,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "yb" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "yf" = (
@@ -6592,7 +6585,7 @@
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "yn" = (
@@ -7497,7 +7490,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "BL" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "BM" = (
@@ -7514,8 +7507,12 @@
 	},
 /area/pod_wars/team2/hangar)
 "BO" = (
-/obj/machinery/light/incandescent/netural,
 /obj/landmark/start/latejoin,
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10;
+	nostick = 1
+	},
 /turf/unsimulated/floor/blue/side{
 	dir = 5
 	},
@@ -7666,10 +7663,7 @@
 	},
 /area/pod_wars/spacejunk/snackstand)
 "Ct" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "wall3dir"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pod_wars/spacejunk/greatwreck)
 "Cu" = (
 /obj/cable{
@@ -8087,9 +8081,16 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "Ef" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/starboardhall)
+"Eg" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 1
+	},
+/turf/space,
+/area/pod_wars/spacejunk/brightwell)
 "Eh" = (
 /obj/computerframe{
 	desc = "It is highly unlikely that this still works.";
@@ -8432,12 +8433,6 @@
 	dir = 8
 	},
 /area/pod_wars/spacejunk/restaurant)
-"Fs" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3_space"
-	},
-/area/pod_wars/spacejunk/greatwreck)
 "Ft" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/pod_wars/team1/starboardhall)
@@ -9122,11 +9117,6 @@
 /obj/machinery/recharger,
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/miningoutpost/crewquarters)
-"Ib" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
-	},
-/area/pod_wars/spacejunk/greatwreck)
 "Ic" = (
 /obj/stool/chair{
 	dir = 4
@@ -9644,7 +9634,7 @@
 /area/space)
 "JZ" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "Ka" = (
@@ -9673,7 +9663,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Kg" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bridge)
 "Ki" = (
@@ -9957,10 +9947,11 @@
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team2/bar)
 "Ll" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 8
 	},
+/turf/space,
 /area/pod_wars/spacejunk/brightwell)
 "Lm" = (
 /obj/machinery/light/incandescent/netural,
@@ -10036,15 +10027,19 @@
 /turf/simulated/wall/auto/asteroid/pod_wars,
 /area/pod_wars/asteroid/major/maj_16)
 "LF" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3dir"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/pod_wars/spacejunk/dorgun)
 "LH" = (
 /obj/machinery/r_door_control/podbay/t2d4/new_walls/east,
 /turf/unsimulated/floor/shuttlebay,
 /area/pod_wars/team2/hangar)
+"LI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pod_wars/spacejunk/dorgun)
 "LK" = (
 /obj/landmark/start{
 	name = "Syndicate Pod Pilot"
@@ -10201,7 +10196,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Mr" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "Ms" = (
@@ -11046,12 +11041,6 @@
 	icon_state = "floor"
 	},
 /area/pod_wars/team1/mining)
-"PI" = (
-/turf/simulated/shuttle/wall{
-	name = "window";
-	opacity = 0
-	},
-/area/pod_wars/spacejunk/brightwell)
 "PJ" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/airless/plating,
@@ -11414,10 +11403,11 @@
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "Re" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall_trans";
+	dir = 5
 	},
+/turf/space,
 /area/pod_wars/spacejunk/brightwell)
 "Rf" = (
 /turf/simulated/floor/blueblack,
@@ -11732,11 +11722,6 @@
 	},
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
-"St" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/pod_wars/spacejunk/greatwreck)
 "Su" = (
 /obj/cable{
 	d1 = 2;
@@ -11749,12 +11734,6 @@
 	dir = 5
 	},
 /area/pod_wars/team2/central_hallway)
-"Sv" = (
-/obj/machinery/light/incandescent/netural,
-/turf/unsimulated/floor/blue/side{
-	dir = 9
-	},
-/area/pod_wars/team1/bridge)
 "Sx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -12806,7 +12785,7 @@
 	},
 /area/pod_wars/team2/mining)
 "Wr" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "Ws" = (
@@ -12837,6 +12816,13 @@
 	dir = 1
 	},
 /area/pod_wars/spacejunk/uvb67/central)
+"WB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/pod_wars/spacejunk/dorgun)
 "WC" = (
 /obj/machinery/light/incandescent/netural,
 /obj/submachine/foodprocessor,
@@ -12848,6 +12834,16 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/uvb67/central)
+"WH" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10;
+	nostick = 1
+	},
+/turf/unsimulated/floor/blue/side{
+	dir = 5
+	},
+/area/pod_wars/team1/bridge)
 "WJ" = (
 /obj/stool/chair,
 /obj/drink_rack/mug{
@@ -13000,7 +12996,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Xn" = (
-/obj/wingrille_spawn/crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/power)
 "Xp" = (
@@ -47106,7 +47102,7 @@ Yz
 ae
 ae
 ae
-St
+Ct
 ae
 ae
 Pw
@@ -47428,7 +47424,7 @@ JW
 Mr
 Mr
 Mr
-pv
+fj
 jq
 jq
 jq
@@ -47601,7 +47597,7 @@ JW
 JW
 JW
 JW
-St
+Ct
 ae
 ae
 ae
@@ -47929,7 +47925,7 @@ Mr
 Mr
 Mr
 pv
-qg
+jq
 mi
 HT
 HT
@@ -48115,9 +48111,9 @@ Pw
 Pw
 Pw
 Pw
-St
-St
-St
+Ct
+Ct
+Ct
 ae
 JW
 JW
@@ -48428,7 +48424,7 @@ JW
 JW
 Mr
 Mr
-Sv
+fj
 jq
 mi
 oD
@@ -50439,7 +50435,7 @@ Mr
 Mr
 Mr
 vg
-tz
+lK
 nF
 HT
 HT
@@ -50623,16 +50619,16 @@ ae
 ae
 ae
 ae
-St
-St
-St
-St
+Ct
+Ct
+Ct
+Ct
 ae
 ae
 ae
 Yz
 aM
-Ib
+Ct
 ae
 JW
 JW
@@ -50942,7 +50938,7 @@ JW
 Mr
 Mr
 Mr
-vg
+WH
 lK
 lK
 lK
@@ -51120,7 +51116,7 @@ JW
 JW
 JW
 JW
-St
+Ct
 ae
 ae
 Pw
@@ -53645,7 +53641,7 @@ ng
 ae
 iL
 Ct
-Fs
+Ct
 JW
 JW
 JW
@@ -88700,12 +88696,12 @@ JW
 JW
 JW
 Ll
-PI
+mT
 tH
 uN
 uN
 Ll
-PI
+mT
 tH
 JW
 JW
@@ -89203,10 +89199,10 @@ JW
 JW
 mT
 at
-PI
-PI
-PI
-PI
+mT
+mT
+mT
+mT
 at
 mT
 JW
@@ -91711,7 +91707,7 @@ JW
 JW
 JW
 JW
-uP
+Eg
 mT
 aD
 aD
@@ -93218,12 +93214,12 @@ JW
 JW
 JW
 JW
-uP
+mT
 aD
 aD
 aD
 aD
-Re
+mT
 JW
 JW
 JW
@@ -93720,12 +93716,12 @@ JW
 JW
 JW
 JW
-JW
-uP
+Eg
+mT
 wb
 wb
+mT
 Re
-JW
 JW
 JW
 JW
@@ -196827,9 +196823,9 @@ JW
 JW
 LF
 rS
-fD
+LF
 JW
-fD
+LF
 rS
 LF
 JW
@@ -197327,13 +197323,13 @@ JW
 JW
 JW
 JW
-rs
-fD
-fD
-fD
-fD
-fD
-os
+LF
+LF
+LF
+LF
+LF
+LF
+LF
 JW
 JW
 JW
@@ -197829,13 +197825,13 @@ JW
 JW
 JW
 JW
-JW
-as
+LI
+LF
 xG
 LU
 vN
-as
-JW
+LF
+WB
 JW
 JW
 JW
@@ -198332,11 +198328,11 @@ JW
 JW
 JW
 JW
-as
+LF
 XJ
 Rk
 RU
-as
+LF
 JW
 JW
 JW
@@ -199336,11 +199332,11 @@ JW
 JW
 JW
 JW
-as
+LF
 RV
 XJ
 RV
-as
+LF
 JW
 JW
 JW
@@ -199838,11 +199834,11 @@ JW
 JW
 JW
 JW
-as
+LF
 XJ
 XJ
 XJ
-as
+LF
 JW
 JW
 JW
@@ -200340,11 +200336,11 @@ JW
 JW
 JW
 JW
-as
+LF
 XJ
 sZ
 XJ
-as
+LF
 JW
 JW
 JW
@@ -200843,9 +200839,9 @@ JW
 JW
 JW
 rs
-fD
+LF
 up
-fD
+LF
 os
 JW
 JW

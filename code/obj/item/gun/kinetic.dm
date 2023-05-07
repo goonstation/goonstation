@@ -1625,7 +1625,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -2225,7 +2225,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
 					return
 				else
-					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 					return
 		else
 			..()

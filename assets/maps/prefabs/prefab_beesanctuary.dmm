@@ -329,12 +329,6 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"mX" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "nk" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
@@ -669,7 +663,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "yr" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -978,7 +972,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "EE" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -1433,13 +1427,6 @@
 	dir = 5
 	},
 /area/prefab/bee_sanctuary)
-"PX" = (
-/obj/grille/catwalk/cross{
-	dir = 5;
-	tag = "icon-catwalk_cross (NORTHEAST)"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "Qd" = (
 /obj/cable{
 	d1 = 2;
@@ -1543,12 +1530,6 @@
 	},
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
-"Rq" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "Rw" = (
 /obj/stone{
 	dir = 4
@@ -1560,13 +1541,6 @@
 	},
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
-"RF" = (
-/obj/grille/catwalk/cross{
-	dir = 9;
-	tag = "icon-catwalk_cross (NORTHWEST)"
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "RR" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor,
@@ -1977,10 +1951,10 @@ Yk
 Yk
 pH
 UG
-RF
 fQ
 fQ
-mX
+fQ
+fQ
 "}
 (7,1,1) = {"
 Os
@@ -2185,10 +2159,10 @@ LG
 Au
 Zz
 UG
-PX
 fQ
 fQ
-Rq
+fQ
+fQ
 "}
 (15,1,1) = {"
 ZM

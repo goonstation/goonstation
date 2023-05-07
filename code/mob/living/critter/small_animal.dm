@@ -624,7 +624,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	New(loc)
 		. = ..()
-		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -2044,6 +2044,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	weak
 		health_brute = 5
 		health_burn = 5
+
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.limb = new /datum/limb/small_critter
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon_state = "handn"
+			HH.name = "weird grabby foot thing"
+			HH.limb_name = "foot"
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -3625,7 +3634,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					var/obj/item/storage/bible/B = locate(/obj/item/storage/bible) in get_turf(src)
+					var/obj/item/bible/B = locate(/obj/item/bible) in get_turf(src)
 					if(B)
 						SPAWN(0.1 SECONDS) // so that this message happens second
 							playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)

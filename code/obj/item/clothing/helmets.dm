@@ -44,7 +44,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
@@ -598,6 +598,19 @@
 		icon_state = "hardhat_chief_engineer0"
 		item_state = "hardhat_chief_engineer0"
 		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
+
+		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+			on = !on
+			src.icon_state = "hardhat_chief_engineer[on]"
+			if (on)
+				light_dir.update(1)
+			else
+				light_dir.update(0)
+			user.update_clothing()
+			if (activated_inhand)
+				var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
+				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+			return
 
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"

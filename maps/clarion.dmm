@@ -6,9 +6,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -159,9 +157,7 @@
 	},
 /area/space)
 "aaI" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -235,18 +231,14 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaT" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
 /area/space)
 "aaU" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -7626,7 +7618,7 @@
 "auY" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -9879,9 +9871,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aCs" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -10731,9 +10721,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "aEW" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -10834,9 +10822,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "aFx" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -11195,9 +11181,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aGr" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -14710,9 +14694,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aSn" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -26194,9 +26176,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bMV" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -26227,9 +26207,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "bMY" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -26243,9 +26221,7 @@
 	},
 /area/station/solar/west)
 "bMZ" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -26281,9 +26257,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bNe" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -26322,9 +26296,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bNC" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -26354,9 +26326,7 @@
 	},
 /area/mining/magnet)
 "bNF" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -30279,9 +30249,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -36304,9 +36272,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "lJz" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -37407,9 +37373,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -37676,9 +37640,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "ndn" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -39640,9 +39602,7 @@
 	},
 /area/mining/magnet)
 "plf" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -40038,9 +39998,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "pEZ" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -43525,9 +43483,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/md)
 "tiD" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -43602,9 +43558,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -47527,9 +47481,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;

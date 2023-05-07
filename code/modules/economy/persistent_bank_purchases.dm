@@ -82,9 +82,9 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
-			if (istype(H.back, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_backpack))
+			if (H.back?.storage && H.equip_if_possible(I, H.slot_in_backpack))
 				equipped = 1
-			else if (istype(H.belt, /obj/item/storage) && H.equip_if_possible(I, H.slot_in_belt))
+			else if (H.belt?.storage && H.equip_if_possible(I, H.slot_in_belt))
 				equipped = 1
 			if (!equipped)
 				if (!H.l_store && H.equip_if_possible(I, H.slot_l_store))
@@ -208,9 +208,14 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		handkerchief
 			name = "Handkerchief"
 			cost = 1000
-			path = /obj/item/cloth/handkerchief/random
+			path = null
 			icon = 'icons/obj/items/cloths.dmi'
 			icon_state = "hanky_pink"
+
+			Create(mob/living/M)
+				// equivalent to /obj/item/cloth/handkerchief/random, but that deletes itself in new(), so this is used
+				path = pick(concrete_typesof(/obj/item/cloth/handkerchief/colored))
+				..()
 
 		bee_egg
 			name = "Bee Egg"
@@ -477,10 +482,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		icon_dir = SOUTH
 
 		Create(var/mob/living/M)
-			if(istype(M.back, /obj/item/storage))
-				var/obj/item/storage/backpack = M.back
-				new /obj/item/tank/emergency_oxygen(backpack) // oh boy they'll need this if they are unlucky
-				backpack.hud.update(M)
+			M.back?.storage?.add_contents(new /obj/item/tank/emergency_oxygen(M.back)) // oh boy they'll need this if they are unlucky
 			var/mob/living/carbon/human/H = M
 			if(istype(H))
 				H.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
@@ -647,7 +649,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/storage/lunchbox/L = pick(childrentypesof(/obj/item/storage/lunchbox))
-				if ((!H.l_hand && H.equip_if_possible(new L(H), H.slot_l_hand)) || (!H.r_hand && H.equip_if_possible(new L(H), H.slot_r_hand)) || (istype(H.back, /obj/item/storage) && H.equip_if_possible(new L(H), H.slot_in_backpack)))
+				if ((!H.l_hand && H.equip_if_possible(new L(H), H.slot_l_hand)) || (!H.r_hand && H.equip_if_possible(new L(H), H.slot_r_hand)) || (H.back?.storage && H.equip_if_possible(new L(H), H.slot_in_backpack)))
 					return 1
 			return 0
 

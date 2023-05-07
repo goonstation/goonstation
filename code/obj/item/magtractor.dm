@@ -188,14 +188,12 @@ TYPEINFO(/obj/item/magtractor)
 		src.working = 1
 		user.set_pulling(null)
 
-		var/atom/oldloc = W.loc
+		if (W.stored) //For removing items from containers with the tractor
+			W.stored.transfer_stored_item(W, src, user = user)
+			W.layer = 3 //why is this necessary aaaaa!.
+
 		W.set_loc(src)
 		W.pickup(user)
-
-		if (istype(oldloc, /obj/item/storage)) //For removing items from containers with the tractor
-			var/obj/item/storage/S = oldloc
-			S.hud.remove_item(W) // ugh
-			W.layer = 3 //why is this necessary aaaaa!.
 
 		src.holding = W
 		src.processHeld = 1
