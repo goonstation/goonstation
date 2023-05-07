@@ -323,7 +323,7 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 		var/damage = src.data["amount"]
 		if (src.owner.traitHolder.hasTrait("weakorgans"))
 			damage /= 2 // ends up the same for frail people and non-frail
-		src.owner.take_brain_damage(data["amount"])
+		src.owner.take_brain_damage(damage)
 
 
 /datum/cloner_defect/brain_damage/minor
