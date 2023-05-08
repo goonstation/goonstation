@@ -1,5 +1,9 @@
 
 (t)mon may 08 23
+(u)Flappybat
+(p)13986
+(e)🗺⛔|A-Mapping, C-Removal
+(+)Removed shields from Atlas
 (u)DimWhat
 (p)13935
 (e)⚖🎩|C-Balance, A-Clothing
