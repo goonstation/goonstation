@@ -321,9 +321,15 @@
 	on_removal()
 		src.transplanted = 1
 		if (src.linked_human)
-			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
-			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, .proc/remove_typing_indicator)
-			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, .proc/speech_bubble)
+		 	// if we're typing, attempt to seamlessly transfer it
+			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
+				src.linked_human.remove_typing_indicator()
+				src.linked_human.has_typing_indicator = TRUE // proc above removes it
+				src.create_typing_indicator()
+
+			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
 		. = ..()
 
 	///Taking items off a head
