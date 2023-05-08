@@ -129,7 +129,11 @@
 			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 
 		if (number_of_antagonists)
-			number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
+			if (number_of_antagonists == 1)
+				var/datum/antagonist/antagonist_role = M.mind.antagonists[1]
+				number_of_antagonist_roles = " <b><span class='antag'>Antagonist: [capitalize(antagonist_role.display_name)]</span></b>"
+			else
+				number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
 
 	//General info
 	//  Logs link:
