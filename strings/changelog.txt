@@ -1,5 +1,9 @@
 
 (t)mon may 08 23
+(u)DimWhat
+(p)13935
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Made the MDir and RD labcoats slightly more chemical resistant
 (u)RubberRats
 (p)13993
 (e)🪲🔎💅📦|C-Bug, C-Code-Quality, C-QoL, A-Game-Objects
