@@ -812,8 +812,8 @@
 
 	proc/update_flags()
 		if(src.cape)
-			src.hides_from_examine = 0
-			src.obstructs = 0
+			src.hides_from_examine = null
+			src.obstructs = null
 		else if(src.eyeholes)
 			src.hides_from_examine = (C_UNIFORM|C_GLOVES|C_SHOES|C_EARS)
 			src.obstructs = initial(src.obstructs)
@@ -1843,7 +1843,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "security_badge"
 	var/badge_owner_name = null
 	var/badge_owner_job = null
-	obstructs = 0
+	obstructs = null
 
 	setupProperties()
 		..()
@@ -1868,7 +1868,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "hosmedal"
 	icon_state = "hosmedal"
-	obstructs = 0
+	obstructs = null
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Head of Security")
@@ -1974,7 +1974,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "billow_cape"
 	item_state = "billow_cape"
 	body_parts_covered = TORSO|ARMS
-	obstructs = 0
+	obstructs = null
 
 /obj/item/clothing/suit/space/replica
 	name = "replica space suit"
@@ -1993,7 +1993,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "torncape_red"
 	item_state = "torncape_red"
 	body_parts_covered = TORSO|ARMS
-	obstructs = 0
+	obstructs = null
 
 	red
 		name = "Red Torn Cloak"
@@ -2044,7 +2044,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarfcape_white"
 	item_state = "scarfcape_white"
-	obstructs = 0
+	obstructs = null
 
 	red
 		name = "Red Adventurous Scarf"

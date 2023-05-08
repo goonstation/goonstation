@@ -555,7 +555,7 @@
 	icon_state = "hardhat0"
 	uses_multiple_icon_states = 1
 	item_state = "hardhat0"
-	obstructs = 0
+	obstructs = null
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 	var/on = 0
 	var/datum/component/loctargeting/simple_light/light_dir
@@ -664,7 +664,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
-	obstructs = 0
+	obstructs = null
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"

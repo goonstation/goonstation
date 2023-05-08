@@ -1119,7 +1119,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "scarf"
-	obstructs = 0
+	obstructs = null
 
 	setupProperties()
 		..()
@@ -1131,7 +1131,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "suspenders"
-	obstructs = 0
+	obstructs = null
 
 /obj/item/clothing/under/misc/flame
 	name = "flame shirt"
@@ -1439,7 +1439,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "painful"
-	obstructs = 0
+	obstructs = null
 
 /obj/item/clothing/suit/rando
 	name = "red skull mask and cloak"
@@ -1894,7 +1894,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_purple"
-	obstructs = 0
+	obstructs = null
 
 /obj/item/clothing/suit/witchcape_mint
 	name = "Mint Witch Cape"
@@ -1902,7 +1902,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
-	obstructs = 0
+	obstructs = null
 
 // marching band stuff
 /obj/item/clothing/under/gimmick/marchingband

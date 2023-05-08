@@ -489,8 +489,8 @@
 	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
-	hides_from_examine = 0
-	obstructs = 0
+	hides_from_examine = null
+	obstructs = null
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)
