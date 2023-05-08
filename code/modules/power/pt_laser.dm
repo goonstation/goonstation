@@ -292,7 +292,7 @@
 	return abs(src.output) <= src.charge
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	src.laser?.traverse(.proc/update_laser_segment)
+	src.laser?.traverse(PROC_REF(update_laser_segment))
 
 /obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
 	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
@@ -424,7 +424,7 @@
 		return
 
 	if(prob(min(power/1e5,50)))
-		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
+		INVOKE_ASYNC(L, TYPE_PROC_REF(/mob/living, emote), "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
@@ -681,8 +681,8 @@ TYPEINFO(/obj/laser_sink/splitter)
 	src.length = length
 	src.dir = dir
 	src.current_turf = get_turf(src)
-	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
-	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/current_turf_density_change)
+	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, PROC_REF(current_turf_replaced))
+	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(current_turf_density_change))
 
 ///Attempt to propagate the laser by extending, interacting with sinks etc.
 ///Separated from New to allow setting up properties on a laser object without passing them as New args
@@ -732,9 +732,9 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/proc/become_endpoint()
 	src.is_endpoint = TRUE
 	var/turf/next_turf = get_next_turf()
-	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, .proc/next_turf_replaced)
-	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_updated)
-	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/next_turf_updated)
+	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, PROC_REF(next_turf_replaced))
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, PROC_REF(next_turf_updated))
+	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(next_turf_updated))
 
 ///Called when we extend a new laser object and are therefore no longer an endpoint
 /obj/linked_laser/proc/release_endpoint()

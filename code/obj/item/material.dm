@@ -309,11 +309,11 @@
 
 		switch(severity)
 			if(1)
-				explosion(src, src.loc, 1, 2, 3, 4, 1)
+				explosion(src, src.loc, 1, 2, 3, 4)
 			if(2)
-				explosion(src, src.loc, 0, 1, 2, 3, 1)
+				explosion(src, src.loc, 0, 1, 2, 3)
 			if(3)
-				explosion(src, src.loc, 0, 0, 1, 2, 1)
+				explosion(src, src.loc, 0, 0, 1, 2)
 			else
 				return
 		// if not on mining z level
@@ -329,7 +329,7 @@
 
 	temperature_expose(null, temp, volume)
 
-		explosion(src, src.loc, 1, 2, 3, 4, 1)
+		explosion(src, src.loc, 1, 2, 3, 4)
 
 		// if not on mining z level
 		if (src.z != MINING_Z)

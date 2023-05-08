@@ -5257,7 +5257,6 @@ var/global/noir = 0
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
-	M.Login()
 
 	usr.remove()
 

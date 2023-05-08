@@ -6476,13 +6476,18 @@
 /area/station/medical/head)
 "aqa" = (
 /obj/item/item_box/gold_star{
-	item_amount = 20
+	item_amount = 20;
+	pixel_x = -8
 	},
-/obj/random_item_spawner/med_kit,
 /obj/table/wood/round/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/item/clipboard,
+/obj/item/paper_bin,
+/obj/item/stamp/md,
+/obj/item/pen/fancy,
+/obj/item/kitchen/food_box/lollipop,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -7022,13 +7027,9 @@
 	},
 /area/station/medical/head)
 "arr" = (
-/obj/item/clipboard,
-/obj/item/paper_bin,
-/obj/item/pen,
-/obj/item/stamp/md,
-/obj/item/pen/fancy,
-/obj/item/kitchen/food_box/lollipop,
-/obj/table/wood/round/auto,
+/obj/machinery/computer/card/department/medical{
+	dir = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue1"
@@ -7161,6 +7162,9 @@
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/card/department/research{
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/science/research_director)
@@ -15768,6 +15772,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/computer/card/department/engineering,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/ce)
 "aOA" = (
@@ -37128,9 +37133,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bXA" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /obj/machinery/turretid{
 	pixel_x = -24;
 	turretArea = /area/station/ai_monitored/armory
@@ -37142,7 +37144,6 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bXC" = (
-/obj/machinery/light/incandescent/warm/very,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -37319,12 +37320,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
-"bYi" = (
-/obj/cable{
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/south)
 "bYj" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -42129,6 +42124,12 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost)
+"dTS" = (
+/obj/machinery/computer/card/department/security{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "dVf" = (
 /obj/access_spawn/pathology,
 /turf/simulated/floor,
@@ -43797,6 +43798,13 @@
 /obj/access_spawn/tox,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
+"loJ" = (
+/obj/machinery/light/incandescent/greenish,
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/south)
 "lpD" = (
 /obj/machinery/navbeacon/mule/hydroponics_north,
 /turf/simulated/floor/grass,
@@ -43993,6 +44001,10 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"mzF" = (
+/obj/machinery/light/incandescent/warm/very,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "mAL" = (
 /obj/table/auto,
 /obj/item/decoration/ashtray{
@@ -45930,6 +45942,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
+"vVf" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/turf/simulated/floor/black,
+/area/station/security/hos)
 "vYa" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -91931,7 +91949,7 @@ bVc
 clX
 bVc
 bVc
-bTR
+bVc
 bTR
 bNP
 bLr
@@ -92232,10 +92250,10 @@ adh
 bWa
 bWK
 bXA
+vVf
 bVc
-bOR
-bMC
-bNQ
+bLr
+bNP
 bLr
 bVo
 aqn
@@ -92534,11 +92552,11 @@ bVe
 bWb
 bWL
 bXB
+bXB
 bVc
 bLr
 bNP
 bLr
-bVo
 bVo
 aqn
 aqn
@@ -92836,12 +92854,12 @@ fDD
 bWc
 bWM
 bXC
+mzF
 bVc
 bLr
 bNP
 bVo
 bVo
-aqn
 aqn
 aqn
 aqn
@@ -93138,6 +93156,7 @@ xBm
 bWd
 bWN
 bXD
+dTS
 bVc
 bLr
 pRU
@@ -93146,7 +93165,6 @@ bYl
 bYl
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -93441,6 +93459,7 @@ bVg
 bWO
 bVc
 bVc
+bVc
 bLr
 bNP
 bYl
@@ -93449,7 +93468,6 @@ qcB
 yfC
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -93743,6 +93761,7 @@ anh
 ceS
 ceT
 bJR
+lbK
 bLr
 bNP
 bYl
@@ -93752,7 +93771,6 @@ vIJ
 ygP
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -94046,6 +94064,7 @@ bWI
 bFX
 bJS
 iPV
+iPV
 yhP
 juK
 dvD
@@ -94054,7 +94073,6 @@ vIJ
 xVc
 nhW
 qBd
-aqn
 aqn
 aqn
 aqn
@@ -94348,6 +94366,7 @@ bWQ
 jLI
 bXW
 mYN
+mYN
 bYB
 cSE
 uHb
@@ -94361,7 +94380,6 @@ chs
 chg
 arS
 kwr
-aqn
 aqn
 aqn
 aqn
@@ -94650,6 +94668,7 @@ wIh
 aqi
 bYx
 jfH
+jfH
 dFX
 dWG
 oox
@@ -94658,7 +94677,6 @@ vIJ
 xVc
 eUL
 qBd
-aqn
 aqn
 aqn
 aqn
@@ -94952,6 +94970,7 @@ bWS
 bXG
 bJR
 bLr
+bLr
 bNP
 bYl
 wzL
@@ -94960,7 +94979,6 @@ vIJ
 xmS
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -95254,6 +95272,7 @@ bWT
 aql
 bJR
 bLr
+bLr
 bNP
 bYl
 pIo
@@ -95261,7 +95280,6 @@ uTy
 vIJ
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -95556,13 +95574,13 @@ bWU
 bRS
 bJR
 bLr
-pRU
+bLr
+loJ
 bYl
 bYl
 bYl
 bYl
 bYl
-aqn
 aqn
 aqn
 aqn
@@ -95858,7 +95876,7 @@ bUd
 bRS
 bLr
 bLr
-bYi
+bWk
 bVo
 aqn
 aqn

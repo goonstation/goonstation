@@ -18,6 +18,8 @@
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
+	var/departmentcomp = FALSE
+	var/department = 0 //0 = standard, 1 = engineering, 2 = medical, 3 = research, 4 = security
 	req_access = list(access_change_ids)
 	desc = "A computer that allows an authorized user to change the identification of other ID cards."
 
@@ -198,11 +200,43 @@
 			body += "PIN: <a href='?src=\ref[src];pin=1'>****</a>"
 
 			//Jobs organised into sections
-			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
-			var/list/maintainencejobs = list("Engineer", "Miner", "Quartermaster")
-			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
-			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
-			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
+			var/list/civilianjobs = null
+			var/list/maintainencejobs = null
+			var/list/researchjobs = null
+			var/list/securityjobs = null
+			var/list/commandjobs = null
+			if (src.departmentcomp == TRUE)
+				switch(src.department)
+					if (1) // eng
+						civilianjobs = list("Staff Assistant")
+						maintainencejobs = list("Engineer", "Miner", "Quartermaster")
+						researchjobs = null
+						securityjobs = null
+						commandjobs = null
+					if (2) // med
+						civilianjobs = list("Staff Assistant")
+						maintainencejobs = null
+						researchjobs = list("Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
+						securityjobs = null
+						commandjobs = null
+					if (3) // research
+						civilianjobs = list("Staff Assistant")
+						maintainencejobs = null
+						researchjobs = list("Scientist")
+						securityjobs = null
+						commandjobs = null
+					if (4) // sec
+						civilianjobs = list("Staff Assistant", "Clown")
+						maintainencejobs = null
+						researchjobs = null
+						securityjobs = list("Security Officer", "Security Assistant", "Detective")
+						commandjobs = null
+			else
+				civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
+				maintainencejobs = list("Engineer", "Miner", "Quartermaster")
+				researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
+				securityjobs = list("Security Officer", "Security Assistant", "Detective")
+				commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
 
 			body += "<br><br><u>Jobs</u>"
 			body += "<br>Civilian:"
@@ -537,3 +571,66 @@
 		src.eject = I
 		return I:access
 	return I
+
+/obj/machinery/computer/card/department
+	name = "department identification computer"
+	departmentcomp = TRUE
+
+/obj/machinery/computer/card/department/engineering
+	color = "#ffffcc" // look there's a lot of icons to edit just to add a single stripe of color to these computers
+	department = 1
+	req_access = list(access_engineering_chief)
+
+	civilian_access_list = list( access_maint_tunnels, access_tech_storage)
+	engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
+	supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
+	research_access_list = null
+	security_access_list = null
+	command_access_list = list(access_eva) //allow heads to give out eva access in emergencies
+
+/obj/machinery/computer/card/department/medical
+	color = "#99ccff"
+	department = 2
+	req_access = list(access_medical_director)
+
+	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage)
+	engineering_access_list = null
+	supply_access_list = null
+	research_access_list = list(access_medical, access_medlab, access_medical_lockers, access_robotics, access_pathology)
+	security_access_list = null
+	command_access_list = list(access_eva)
+
+
+/obj/machinery/computer/card/department/research
+	color = "#cc99ff"
+	department = 3
+	req_access = list(access_research_director)
+
+	civilian_access_list = list(access_maint_tunnels, access_tech_storage)
+	engineering_access_list = null
+	supply_access_list = null
+	research_access_list = list(access_tox, access_tox_storage, access_research, access_chemistry, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+	security_access_list = null
+	command_access_list = list(access_eva)
+
+
+/obj/machinery/computer/card/department/security
+	color = "#ff9999"
+	department = 4
+	req_access = list(access_maxsec)
+
+	#ifdef RP_MODE // fuckin RP mode giving secoffs more access *grumble grumble*
+	civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
+	engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
+	supply_access_list = list(access_hangar, access_cargo, access_mining, access_mining_shuttle, access_mining_outpost)
+	research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
+	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	command_access_list = list(access_emergency_storage, access_eva) // why do secoffs get emergency_storage on rp when basically no one else does?
+	#else
+	civilian_access_list = list(access_morgue, access_maint_tunnels, access_tech_storage, access_bar, access_crematorium, access_kitchen, access_hydro)
+	engineering_access_list = list(access_engineering, access_engineering_control)
+	supply_access_list = list(access_cargo)
+	research_access_list = list(access_medical, access_research, access_chemistry, access_researchfoyer)
+	security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
+	command_access_list = list(access_eva)
+	#endif

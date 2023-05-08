@@ -16,7 +16,7 @@
 	New()
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitby_proj)
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitby_proj))
 
 	ex_act(severity)
 		summon_drones()

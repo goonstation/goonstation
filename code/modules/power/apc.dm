@@ -1379,7 +1379,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/meteorhit(var/obj/O as obj)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else set_broken()
@@ -1388,7 +1388,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/ex_act(severity)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel(src)
 	else
@@ -1409,7 +1409,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 /obj/machinery/power/apc/temperature_expose(null, temp, volume)
 	if (istype(cell,/obj/item/cell/erebite))
 		src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-		explosion(src, src.loc, 1, 2, 4, 6, 1)
+		explosion(src, src.loc, 1, 2, 4, 6)
 		SPAWN(1 DECI SECOND)
 			qdel (src)
 
