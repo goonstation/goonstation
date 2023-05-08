@@ -17,8 +17,7 @@
 	icon_state = "lights3";
 	name = "broken seamas lights";
 	pixel_y = 28
-	},
-/obj/shrub{
+	}/obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
 	dir = 1
@@ -293,7 +292,7 @@
 /turf/simulated/floor/green/checker,
 /area/prefab/mobius)
 "ba" = (
-r/mob/living/critter/golem,
+/mob/living/critter/golem,
 /turf/simulated/floor/blue/checker,
 /area/prefab/mobius/mfortuna)
 "bb" = (
