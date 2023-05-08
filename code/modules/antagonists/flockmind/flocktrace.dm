@@ -1,4 +1,4 @@
-/datum/antagonist/subordinate/flocktrace
+/datum/antagonist/subordinate/intangible/flocktrace
 	id = ROLE_FLOCKTRACE
 	display_name = "flocktrace"
 
@@ -34,20 +34,7 @@
 		src.flock.traces -= src.owner.current
 		src.flock.trace_minds -= src.owner.current.name
 
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
-
-	relocate()
-		var/turf/T = get_turf(src.master.current)
-		if (!(T && isturf(T)) || (T.z != Z_LEVEL_STATION))
-			var/spawn_loc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, Z_LEVEL_STATION))
-			if (spawn_loc)
-				src.owner.current.set_loc(spawn_loc)
-			else
-				src.owner.current.z = Z_LEVEL_STATION
-		else
-			src.owner.current.set_loc(T)
+		. = ..()
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/flock, src)

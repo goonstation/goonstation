@@ -58,14 +58,9 @@
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = candidates[1]
-		if (lucky_dude.current)
-			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
+		if (lucky_dude.add_subordinate_antagonist(ROLE_POLTERGEIST, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
-			lucky_dude.transfer_to(P)
-			antagify(lucky_dude.current, null, 1)
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
-			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
-			boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
-			boutput(P, "Don't venture too far from your portal or your master!")
+			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
+			P.marker = marker

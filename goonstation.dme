@@ -849,6 +849,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\wizard\abilities\summon_staff.dm"
 #include "code\modules\antagonists\wizard\abilities\teleport.dm"
 #include "code\modules\antagonists\wizard\abilities\warp.dm"
+#include "code\modules\antagonists\wraith\poltergeist.dm"
 #include "code\modules\antagonists\wraith\wraith.dm"
 #include "code\modules\antagonists\wraith\abilties\_wraith_ability_holder.dm"
 #include "code\modules\antagonists\wraith\abilties\absorb_corpse.dm"
