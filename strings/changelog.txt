@@ -1,5 +1,7 @@
 
 (t)mon may 08 23
+(u)Sord
+(*)Added new departmental ID computers. They allow promotion to that department or demotion to Staff Assistant by that department's head. *Not on atlas
 (u)Flappybat
 (p)13986
 (e)🗺⛔|A-Mapping, C-Removal
