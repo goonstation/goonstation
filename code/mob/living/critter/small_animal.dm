@@ -2828,12 +2828,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
-	health_brute = 10
-	health_burn = 10
+	health_brute = 5
+	health_brute_vuln = 1
+	health_burn = 5
+	health_burn_vuln = 1
 	reagent_capacity = 100
 	flags = TABLEPASS
-	fits_under_table = 1
+	fits_under_table = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/wanderer_aggressive
+	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
+	ai_attacks_per_ability = 0
 
 	setup_hands()
 		..()
@@ -2844,11 +2852,41 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
 
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled)
+			if (prob(5))
+				src.emote("scream")
+			else if (prob(1))
+				src.emote("dance")
+
+	seek_target(var/range = 5)
+		. = list()
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			if (C.job == "Botanist") continue
+			. += C
+
 	death(var/gibbed)
+		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("toxin", 50, null)
 			src.reagents.add_reagent("histamine", 50, null)
 		return ..()
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting)
+		if (!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+			return TRUE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2870,6 +2908,40 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","buzz")
 				return 2
 		return ..()
+
+/mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
+	desc = "A wasp in space. it looks angry"
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 0.8
+
+/mob/living/critter/small_animal/wasp/strong // Polymorph and admin spawn
+	desc = "A wasp in space. it looks buff... somehow."
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.8
+	is_npc = FALSE
+
+	setup_hands() // Stronger grip
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "weird grabby foot thing"
+		HH.limb_name = "foot"
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
+	name = "space wasp egg"
+	desc = "That doesn't seem right..."
+	critter_type = /mob/living/critter/small_animal/wasp
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+	name = "space wasp egg?"
+	desc = "There is ALOT OF BUZZING coming from this thing..."
+	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
 /* -------------------- Raccoon -------------------- */
