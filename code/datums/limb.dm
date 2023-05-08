@@ -1557,3 +1557,28 @@
 
 
 /datum/limb/jean
+
+/datum/limb/golem
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (!user || !target)
+			return 0
+
+		if (!target.melee_attack_test(user))
+			return
+		if (no_logs != 1)
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a golem arm at [log_loc(user)].")
+
+		if(target.reagents)
+			if(user.reagents && user.reagents.total_volume)
+				user.reagents.reaction(target, TOUCH)
+				user.reagents.trans_to(target, 5)
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(4, 6), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		msgs.base_attack_message = "<b><span class='alert'>[user] punches [target] with [src.holder]!</span></b>"
+		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+
