@@ -1,4 +1,9 @@
 
+(t)mon may 08 23
+(u)RubberRats
+(p)13993
+(e)🪲🔎💅📦|C-Bug, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Bloody footprints are moppable again.
 (t)sun may 07 23
 (u)Sord
 (+)You can now buy fake money in the card vending machine.
