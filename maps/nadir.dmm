@@ -761,15 +761,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "apr" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/mug/HoS{
-	pixel_x = -6;
-	pixel_y = 12
+/obj/machinery/computer/card/department/security{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -3179,20 +3172,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
-	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stamp/md{
-	pixel_x = 14
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 3;
-	pixel_y = 6
-	},
+/obj/machinery/computer/card/department/medical,
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "bsR" = (
@@ -22810,11 +22790,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "jTO" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/card/department/research,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -35196,6 +35172,14 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/east,
+/obj/item/remote/porter/port_a_nanomed{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 3;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -42144,6 +42128,15 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -6;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "sGq" = (
@@ -44380,6 +44373,9 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/item/stamp/md{
+	pixel_x = 14
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
@@ -49053,6 +49049,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"vNv" = (
+/obj/machinery/computer/card/department/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "vOi" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -109621,7 +109623,7 @@ kRi
 kAS
 vQR
 fZQ
-jyA
+vNv
 boA
 kdG
 ntb
@@ -110527,7 +110529,7 @@ vTc
 fcf
 eGv
 aKN
-mxV
+jyA
 hFV
 kdG
 sZX

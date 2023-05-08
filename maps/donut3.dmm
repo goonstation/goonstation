@@ -16117,8 +16117,8 @@
 	dir = 9;
 	name = "autoname - SS13";
 	pixel_x = 10;
-	tag = "";
-	pixel_y = 17
+	pixel_y = 17;
+	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -22473,9 +22473,9 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
+	pixel_x = 6;
 	pixel_y = 20;
-	tag = "";
-	pixel_x = 6
+	tag = ""
 	},
 /turf/simulated/floor/carpet{
 	dir = 9;
@@ -40052,6 +40052,9 @@
 	},
 /area/station/chapel/sanctuary)
 "mrr" = (
+/obj/machinery/computer/card/department/security{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/red/fancy/edge{
 	dir = 10
 	},
@@ -43784,6 +43787,7 @@
 /turf/simulated/floor/white/checker,
 /area/station/hallway/primary/south)
 "nzY" = (
+/obj/storage/crate/rcd/CE,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
@@ -43922,6 +43926,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/computer/card/department/research{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge{
 	dir = 5
@@ -55591,9 +55598,11 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "rfE" = (
-/obj/storage/crate/rcd/CE,
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/machinery/computer/card/department/engineering{
+	dir = 8
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
@@ -60123,6 +60132,9 @@
 /turf/simulated/floor/stairs/wood2/wide,
 /area/station/crew_quarters/cafeteria)
 "szV" = (
+/obj/machinery/computer/card/department/medical{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -63189,9 +63201,9 @@
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
+	pixel_x = 6;
 	pixel_y = 20;
-	tag = "";
-	pixel_x = 6
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
