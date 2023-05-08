@@ -2335,6 +2335,15 @@
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
 
+/datum/statusEffect/quickcharged
+	id = "quick_charged"
+	name = "Quick charged"
+	maxDuration = 7 MINUTES
+
+	getTooltip()
+		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until its safe for your battery to quick charge again."
+
+
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
 	name = "Critical Condition"
