@@ -1161,7 +1161,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	proc/set_head(var/obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
+		if (isskeleton(head?.linked_human) && head?.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
 			if (H.eye == head)

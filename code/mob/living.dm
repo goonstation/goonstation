@@ -1143,7 +1143,8 @@
 			if (is_decapitated_skeleton) // for skeleton heads
 				var/mob/living/carbon/human/H = src
 				var/datum/mutantrace/skeleton/S = H.mutantrace
-				holder = S.head_tracker?.chat_text
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
 			if (holder)
 				for(var/image/chat_maptext/I in holder.lines)
 					if(I != chat_text)

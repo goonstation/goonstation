@@ -831,10 +831,8 @@
 
 					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						if (newHead.head_type == HEAD_SKELETON) // dont set eye position if we're not linking to it
+						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
 							S.set_head(newHead)
-							H.set_eye(null)
-						else if (!S.head_tracker) // set head position if there's no head
 							H.set_eye(null)
 					else
 						H.set_eye(null)
@@ -888,9 +886,9 @@
 				src.head.brain = newBrain
 
 				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
-				if (src.head.head_type == HEAD_SKELETON && !isskeleton(src.donor))
+				if (src.head.head_type == HEAD_SKELETON)
 					var/mob/living/carbon/human/H = src.head.linked_human
-					if (H)
+					if (H && (!isskeleton(src.donor) && H != src.donor))
 						var/datum/mutantrace/skeleton/S = H?.mutantrace
 						S.head_tracker = null
 						H.set_eye(null)
