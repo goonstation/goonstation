@@ -63,4 +63,5 @@
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
+			P.set_loc(T)
 			P.marker = marker
