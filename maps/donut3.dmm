@@ -13234,7 +13234,7 @@
 	})
 "dWu" = (
 /obj/table/auto,
-/obj/item/storage/toolbox{
+/obj/item/storage/toolbox/mechanical/empty{
 	pixel_x = 1;
 	pixel_y = 7
 	},

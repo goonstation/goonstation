@@ -890,7 +890,7 @@
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-			explosion(cell, src.loc, 1, 2, 4, 6, 1)
+			explosion(cell, src.loc, 1, 2, 4, 6)
 			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
@@ -1034,7 +1034,7 @@
 					if (RP.ropart_take_damage(0, 35) == 1) src.compborg_lose_limb(RP)
 				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-					explosion(cell, src.loc, 1, 2, 4, 6, 1)
+					explosion(cell, src.loc, 1, 2, 4, 6)
 					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
@@ -1057,7 +1057,7 @@
 		if (!Fshield)
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-				explosion(cell, src.loc, 1, 2, 4, 6, 1)
+				explosion(cell, src.loc, 1, 2, 4, 6)
 				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null

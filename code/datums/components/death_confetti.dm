@@ -8,9 +8,9 @@ TYPEINFO(/datum/component/death_confetti)
 	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, .proc/the_confetti)
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/the_confetti)
-	RegisterSignal(parent, COMSIG_MOB_FAKE_DEATH, .proc/the_confetti)
+	RegisterSignal(parent, COMSIG_OBJ_CRITTER_DEATH, PROC_REF(the_confetti))
+	RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(the_confetti))
+	RegisterSignal(parent, COMSIG_MOB_FAKE_DEATH, PROC_REF(the_confetti))
 
 /datum/component/death_confetti/proc/the_confetti()
 	var/atom/movable/AM = parent
