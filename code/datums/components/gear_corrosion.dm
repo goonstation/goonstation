@@ -15,8 +15,8 @@ TYPEINFO(/datum/component/gear_corrosion)
 	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/show_pip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/hide_pip)
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(show_pip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(hide_pip))
 
 /datum/component/gear_corrosion/RegisterWithParent()
 	. = ..()

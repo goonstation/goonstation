@@ -431,7 +431,7 @@
 			..()
 
 	special_desc(dist, mob/user) //handles the special chat output for examining hands and decks!
-		if(is_hand && in_interact_range(src,user))
+		if(is_hand && dist == 0)
 			hand_examine(user,"self")
 		else
 			..()

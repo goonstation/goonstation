@@ -22,7 +22,6 @@
 		. = ..(); \
 		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
 	}
-
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted
@@ -81,3 +80,10 @@
 
 /// Uncross should call this after setting `.` to make sure Bump gets called if needed
 #define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)
+
+/// For an unanchored movable atom
+#define UNANCHORED 0
+/// For an atom that can't be moved by player actions
+#define ANCHORED 1
+/// For an atom that's always immovable, even by stuff like black holes and gravity artifacts.
+#define ANCHORED_ALWAYS 2

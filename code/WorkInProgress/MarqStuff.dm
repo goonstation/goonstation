@@ -119,7 +119,7 @@
 	icon_state = "hld0"
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	examine()
 		. = ..()
@@ -206,7 +206,7 @@
 /obj/steel_beams
 	name = "steel beams"
 	desc = "A bunch of unfortunately placed, tightly packed steel beams. You cannot get a meaningful glimpse of what's on the other side."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	icon = 'icons/obj/stationobjs.dmi'
@@ -227,7 +227,7 @@
 /obj/faint_shimmer
 	name = "faint shimmer"
 	desc = "Huh."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_CLOAK
 	blend_mode = 4

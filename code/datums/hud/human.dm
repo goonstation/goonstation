@@ -267,7 +267,7 @@
 			toxin.desc = "This indicator warns that you are poisoned. You will take toxic damage until the situation is remedied."
 
 			rad = create_screen("rad","Radiation Warning", src.icon_hud, "rad0", "EAST-7, NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-			rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+			rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 			ability_toggle = create_screen("ability", "Toggle Ability Hotbar", src.icon_hud, "[layouts[layout_style]["ability_icon"]]1", layouts[layout_style]["abiltoggle"], HUD_LAYER)
 			stats = create_screen("stats", "Character stats", src.icon_hud, "stats", layouts[layout_style]["stats"], HUD_LAYER,
@@ -307,6 +307,9 @@
 			if ("invtoggle")
 				var/obj/item/I = master.equipped()
 				if (I)
+					if (I.try_specific_equip(user))
+						return
+
 					// this doesnt unequip the original item because that'd cause all the items to drop if you swapped your jumpsuit, I expect this to cause problems though
 					// ^-- You don't say.
 					// you can write multiline macros with \, please god don't write 400 character macros on one line
@@ -340,13 +343,13 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.Attackby(I, user, params)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 
@@ -387,6 +390,9 @@
 			if ("equip")
 				var/obj/item/I = master.equipped()
 				if (I)
+					if (I.try_specific_equip(user))
+						return
+
 					#define autoequip_slot(slot, var_name) if (master.can_equip(I, master.slot) && !(master.var_name && master.var_name.cant_self_remove)) { master.u_equip(I); var/obj/item/C = master.var_name; if (C) { /*master.u_equip(C);*/ C.unequipped(master); master.var_name = null; if(!master.put_in_hand(C)){master.drop_from_slot(C, get_turf(C))} } master.force_equip(I, master.slot); return }
 					autoequip_slot(slot_shoes, shoes)
 					autoequip_slot(slot_gloves, gloves)
@@ -399,13 +405,13 @@
 					autoequip_slot(slot_head, head)
 					autoequip_slot(slot_back, back)
 
-					if (!istype(master.belt,/obj/item/storage) || istype(I,/obj/item/storage)) // belt BEFORE trying storages, and only swap if its not a storage swap
+					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
 						if (master.equipped() != I)
 							return
 
 					for (var/datum/hud/storage/S in user.huds) //ez storage stowing
-						S.master.Attackby(I, user, params)
+						S.master.add_contents_safe(I, user)
 						if (master.equipped() != I)
 							return
 
@@ -993,9 +999,6 @@
 			health_oxy.icon_state = "moxy[stage]"
 			health_oxy.tooltipTheme = "healthDam healthDam[stage]"
 
-			// may as well let you see you're being irradiated if you can already see individual things like oxy/tox/burn/brute
-			//update_rad_indicator(master.radiation ? 1 : 0)
-
 			return
 
 		else
@@ -1003,7 +1006,6 @@
 			health_burn.icon_state = "blank"
 			health_tox.icon_state = "blank"
 			health_oxy.icon_state = "blank"
-			update_rad_indicator(0)
 
 			if (isdead(master) || master.fakedead)
 				health.icon_state = "health7" // dead
@@ -1134,9 +1136,10 @@
 			return
 		fire.icon_state = "fire[status]"
 
-	proc/update_rad_indicator(var/status)
+	proc/update_rad_indicator()
 		if (!rad) // not rad :'(
 			return
+		var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 		rad.icon_state = "rad[status]"
 
 	proc/change_hud_style(var/icon/new_file)

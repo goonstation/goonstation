@@ -320,6 +320,11 @@
 	req_access = list(access_syndicate_shuttle)
 	color = SECURITY
 
+/obj/access_spawn/pirate_ship
+	name = "pirate ship access spawn"
+	req_access = list(access_pirate)
+	color = SECURITY
+
 /obj/access_spawn/research_foyer
 	name = "research foyer access spawn"
 	req_access = list(access_researchfoyer)

@@ -3,7 +3,7 @@
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
 	icon_state = "bmarker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = TURF_LAYER
 
@@ -12,7 +12,7 @@
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"
 	icon_state = "bmarkerred"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = TURF_LAYER
 
@@ -23,7 +23,7 @@
 	desc = "This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	var/invalidCount = 0
 
@@ -131,12 +131,12 @@
 		for(var/obj/O in markers)
 			qdel(O)
 		locked = 0
-		anchored = 0
+		anchored = UNANCHORED
 		return
 
 	proc/activate()
 		locked = 1
-		anchored = 1
+		anchored = ANCHORED
 		invalidCount = 0
 		for(var/datum/tileinfo/T in currentBp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
@@ -188,7 +188,7 @@
 				V.icon = 'icons/obj/objects.dmi'
 				V.icon_state = "buildeffect"
 				V.name = "energy"
-				V.anchored = 1
+				V.anchored = ANCHORED
 				V.set_density(0)
 				V.layer = EFFECTS_LAYER_BASE
 

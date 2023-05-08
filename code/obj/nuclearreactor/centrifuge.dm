@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "centrifuge0"
 	desc = "A large machine that can be used to separate radioactive isotopes from spent fuel."
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	var/doing_stuff = FALSE
 	var/active_icon_state = "centrifuge1"

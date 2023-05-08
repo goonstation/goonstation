@@ -3734,9 +3734,9 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				CRITTER_REACTION_CHECK(reaction_count)
 				if (holder?.my_atom)
-					new /obj/critter/fermid(get_turf(holder.my_atom))
+					new /mob/living/critter/fermid(get_turf(holder.my_atom))
 				else
-					new /obj/critter/fermid(pick(holder.covered_cache))
+					new /mob/living/critter/fermid(pick(holder.covered_cache))
 				return
 
 		life
@@ -3763,7 +3763,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
