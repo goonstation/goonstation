@@ -1,5 +1,65 @@
 
+(t)mon may 08 23
+(u)Sord
+(*)Added new departmental ID computers. They allow promotion to that department or demotion to Staff Assistant by that department's head. *Not on atlas
+(u)Flappybat
+(p)13986
+(e)🗺⛔|A-Mapping, C-Removal
+(+)Removed shields from Atlas
+(u)DimWhat
+(p)13935
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Made the MDir and RD labcoats slightly more chemical resistant
+(u)RubberRats
+(p)13993
+(e)🪲🔎💅📦|C-Bug, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Bloody footprints are moppable again.
+(t)sun may 07 23
+(u)Sord
+(+)You can now buy fake money in the card vending machine.
+(+)You will only see what cards are in a hand if you're holding them (or on the same tile as them)
+(u)Kubius
+(p)13994
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Minor Nadir fixbatch, including new vending machines and a mechanical toolbox for Security.
+(t)sat may 06 23
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Ghost critters may now only nibble at food.
+(u)Flappybat
+(+)Pest respawn roboroach has been nerfed to small critter limbs instead of medium.
+(t)fri may 05 23
+(u)Flaborized
+(p)13925
+(e)🎨|C-Sprites
+(+)Added a unique sprite for the "syndicate field protective mask". (That's the mask nukeops spawn with.)
+(t)thu may 04 23
+(u)Kubius
+(p)13949
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Kondaru's security wing teleporter beacon has been moved to the brig.
+(u)Kubius
+(p)13950
+(e)🗺|A-Mapping
+(+)Reduced the complement of televisions in Nadir's cafeteria for ease of rearrangement.
+(u)Flaborized
+(p)13826
+(e)|
+(+)Added a new accent mutation, Frontal Gyrus Alteration Type-AR. Arrr!!🏴‍☠️
+(u)DimWhat, LeahTheTech
+(p)13975
+(e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL
+(+)Monkeys now have unique sprites for robotic and synthlimbs.
+(u)Wisemonster
+(p)13680
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Health Implants now have a 15-25 second delay before sending crit/death alerts
+(u)Flappybat
+(+)Only one beartrap can be armed per tile.
+(+)Prevented beartraps being armed when inside an object, such as a pod or locker.
 (t)wed may 03 23
+(u)LeahTheTech
+(+)Botany produce chutes now have a unique green sprite.
 (u)Skeletonman0
 (p)13932
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects

@@ -2,7 +2,8 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
+	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD_INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -1056,6 +1057,20 @@
 			say_location = S.head_tracker
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
+		if (ismob(say_location))
+			for(var/mob/M in say_location)
+				listening |= M
+			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
+				if (istype(W,/obj/item/organ/head))
+					var/obj/item/organ/head/H = W
+					if (H.linked_human)
+						listening |= H.linked_human
+				else
+					for(var/obj/item/organ/head/H in W)
+						if (H.linked_human)
+							listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
 	else
 		if (ismob(say_location.loc) && is_decapitated_skeleton) // if we're the head of a talking mob we arent linked to
 			var/mob/living/L = say_location.loc
@@ -1067,14 +1082,24 @@
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
 
-			if (ismob(olocs[olocs.len])) // if we're in someone's bag, only the nerd holding it can hear us
-				for(var/mob/M in olocs[olocs.len])
+			// nerd we're inside
+			var/mob/living/inside = locate() in olocs
+			if (inside)
+				for(var/mob/M in inside)
 					listening |= M
-				for(var/obj/item/organ/head/H in say_location.loc)
-					if (H.linked_human)
-						listening |= H.linked_human
+				for (var/obj/item/W in inside) // let the skeleton skulls in the bag / pockets hear the nerd
+					if (istype(W,/obj/item/organ/head))
+						var/obj/item/organ/head/H = W
+						if (H.linked_human)
+							listening |= H.linked_human
+					else
+						for(var/obj/item/organ/head/H in W)
+							if (H.linked_human)
+								listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
 
-				listening |= olocs[olocs.len]
+				listening |= inside
 			else
 				listening = all_hearers(message_range, olocs[olocs.len])
 

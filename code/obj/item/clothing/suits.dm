@@ -581,6 +581,10 @@
 	item_state = "MDlonglabcoat"
 	coat_style = "MDlonglabcoat"
 
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
+
 	april_fools
 		icon_state = "MDlonglabcoat-alt"
 		item_state = "MDlonglabcoat-alt"
@@ -592,6 +596,10 @@
 	icon_state = "RDlabcoat"
 	item_state = "RDlabcoat"
 	coat_style = "RDlabcoat"
+
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Research Director")
@@ -1799,6 +1807,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 /obj/item/clothing/suit/labcoat/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	icon_state = "inspectorc"
+	item_state = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"
