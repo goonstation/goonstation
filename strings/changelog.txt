@@ -1,4 +1,9 @@
 
+(t)tue may 09 23
+(u)Ikea
+(p)13749
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Jones can now be mechscanned with a syndicate analyzer
 (t)mon may 08 23
 (u)Sord
 (*)Added new departmental ID computers. They allow promotion to that department or demotion to Staff Assistant by that department's head. *Not on atlas
