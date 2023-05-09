@@ -67630,7 +67630,7 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
-	id = Chemistry
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -78959,7 +78959,7 @@
 	},
 /obj/window_blinds/cog2/middle{
 	dir = 4;
-	id = Chemistry
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
