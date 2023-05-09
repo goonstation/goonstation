@@ -11,7 +11,7 @@
 	metabolizes = FALSE // Don't die to the horrible shit the wizard added
 	death_text = "%src% bursts into a puff of smoke!"
 	health_brute = 20
-	health_brute_vuln = 0.75
+	health_brute_vuln = 0.8
 	health_burn = 20
 	health_burn_vuln = 0.5
 	ai_retaliates = TRUE
