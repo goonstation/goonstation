@@ -5981,6 +5981,13 @@
 	dir = 9
 	},
 /area/station/hangar/arrivals)
+"bJl" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "bJA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -28357,6 +28364,11 @@
 /obj/stool/chair/comfy,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
+"iGM" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "iGZ" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
@@ -35533,6 +35545,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
+"kRb" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	id = "chemistry"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "kRc" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light/emergency{
@@ -41701,7 +41720,12 @@
 /obj/machinery/light/incandescent/cool/very{
 	dir = 1
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -42818,6 +42842,13 @@
 "nea" = (
 /turf/simulated/floor/carpet/blue/standard,
 /area/station/medical/medbay/cloner)
+"neb" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "ned" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass,
@@ -49115,6 +49146,12 @@
 	pixel_y = 7
 	},
 /obj/item/reagent_containers/dropper,
+/obj/blind_switch/south{
+	pixel_x = 4
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pgv" = (
@@ -56301,6 +56338,7 @@
 /area/station/hallway/primary/west)
 "rki" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "rkj" = (
@@ -67592,7 +67630,7 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4;
-	id = "chemistry"
+	id = Chemistry
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -69274,6 +69312,9 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "vkW" = (
@@ -76111,6 +76152,13 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"xjv" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/robotics)
 "xjy" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
@@ -78911,7 +78959,7 @@
 	},
 /obj/window_blinds/cog2/middle{
 	dir = 4;
-	id = "chemistry"
+	id = Chemistry
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -127237,11 +127285,11 @@ bpe
 bpe
 pgO
 vkJ
-rki
+neb
 ijz
-rki
-rki
-rki
+bJl
+xjv
+neb
 pgO
 kfw
 rht
@@ -127846,7 +127894,7 @@ nAt
 uvs
 wMO
 qXC
-rki
+iGM
 fVi
 jyN
 aTA
@@ -128148,7 +128196,7 @@ wXy
 uvs
 rCl
 ohz
-rki
+iGM
 nAG
 tvK
 oEH
@@ -128450,7 +128498,7 @@ uvs
 uvs
 buf
 kLL
-rki
+kRb
 nAG
 ubw
 qnY
