@@ -6,6 +6,7 @@
 	desc = "Place this over a door to spawn a firedoor underneath. Sets direction, too!"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "f_spawn"
+	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
 
 /obj/firedoor_spawn/New()
 	..()
