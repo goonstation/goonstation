@@ -10700,7 +10700,7 @@
 	pixel_x = -4
 	},
 /obj/blind_switch/north{
-	id = genetics;
+	id = "genetics";
 	pixel_x = 4
 	},
 /turf/simulated/floor/greenblack{
@@ -11504,7 +11504,7 @@
 "dtv" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
-	id = mining
+	id = "mining"
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
@@ -14066,7 +14066,7 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research{
@@ -17858,7 +17858,7 @@
 	},
 /obj/window_blinds/cog2/middle{
 	dir = 8;
-	id = mining
+	id = "mining"
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
@@ -26015,7 +26015,7 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 10;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -27768,7 +27768,7 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/research{
@@ -39290,7 +39290,7 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 6;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -40388,7 +40388,7 @@
 "mqW" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -41088,7 +41088,7 @@
 	},
 /obj/random_item_spawner/snacks/one,
 /obj/blind_switch/south{
-	id = mining;
+	id = "mining";
 	pixel_x = 4
 	},
 /turf/simulated/floor/black,
@@ -46405,7 +46405,7 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 9;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -56365,7 +56365,7 @@
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
-	id = mining
+	id = "mining"
 	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
@@ -59803,7 +59803,7 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 5;
-	id = genetics
+	id = "genetics"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -66223,7 +66223,7 @@
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
 /obj/window_blinds/cog2/middle{
-	id = mining
+	id = "mining"
 	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
