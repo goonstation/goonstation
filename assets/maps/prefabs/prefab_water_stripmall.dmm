@@ -17,7 +17,8 @@
 	icon_state = "lights3";
 	name = "broken seamas lights";
 	pixel_y = 28
-	}/obj/shrub{
+	},
+/obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
 	dir = 1
