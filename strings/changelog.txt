@@ -1,5 +1,7 @@
 
 (t)tue may 09 23
+(u)LeahTheTech
+(+)Security mind protection health implants now only self destruct *after* sending the death alert.
 (u)Ikea
 (p)13749
 (e)🆕📦|C-Feature, A-Game-Objects
