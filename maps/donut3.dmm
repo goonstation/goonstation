@@ -2290,6 +2290,11 @@
 /obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"aEr" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/medical/medbooth)
 "aEC" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -3691,6 +3696,11 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/stairs/wide,
 /area/station/hangar/arrivals)
+"aZe" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/medical/breakroom)
 "aZs" = (
 /turf/simulated/shuttle/wall/corner{
 	dir = 1
@@ -4764,14 +4774,14 @@
 /area/station/crew_quarters/arcade/dungeon)
 "brw" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/access_spawn/medical,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/medical/medbooth)
 "brC" = (
@@ -6789,9 +6799,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bXE" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
 /obj/access_spawn/medlab,
@@ -6799,6 +6806,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -8344,6 +8354,9 @@
 	pixel_y = 7
 	},
 /obj/access_spawn/medical,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "cus" = (
@@ -10683,7 +10696,13 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/light_switch/north,
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/north{
+	id = genetics;
+	pixel_x = 4
+	},
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -10698,9 +10717,8 @@
 	dir = 4
 	},
 /obj/access_spawn/cargo,
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 8;
-	req_access = null
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
@@ -11483,6 +11501,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"dtv" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	id = mining
+	},
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "dtM" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -12037,6 +12062,16 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge,
 /area/station/chapel/sanctuary)
+"dEq" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "dEr" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mail{
@@ -12493,9 +12528,8 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/cargo,
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 8;
-	req_access = null
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
@@ -14030,6 +14064,10 @@
 /area/station/medical/medbay/pharmacy)
 "eiB" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8;
+	id = genetics
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -16215,7 +16253,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/science/bot_storage)
+/area/station/science/teleporter)
 "eTU" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -16799,6 +16837,13 @@
 /obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
+"fcn" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "fcp" = (
 /obj/item/clothing/suit/bedsheet,
 /obj/stool/bed,
@@ -17105,6 +17150,11 @@
 "fiB" = (
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/brig/north_side)
+"fiF" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/medical/medbooth)
 "fiH" = (
 /obj/machinery/light/small/sticky{
 	dir = 4
@@ -17806,6 +17856,10 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
+/obj/window_blinds/cog2/middle{
+	dir = 8;
+	id = mining
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "fue" = (
@@ -17831,6 +17885,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/medical/medbay)
+"fut" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "fuv" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -21561,6 +21622,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "gAo" = (
@@ -22535,8 +22599,13 @@
 /turf/space,
 /area/listeningpost)
 "gQV" = (
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
 /obj/reagent_dispensers/watertank/fountain,
+/obj/blind_switch/area/south{
+	pixel_x = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/medical/breakroom)
 "gQW" = (
@@ -23235,6 +23304,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
+"hcd" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "hcg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -25387,7 +25463,7 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "hLE" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25935,6 +26011,14 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"hVX" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 10;
+	id = genetics
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "hVZ" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -26072,7 +26156,12 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hZl" = (
@@ -26645,6 +26734,13 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/AIsat)
+"ihh" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/breakroom)
 "ihq" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/glass{
@@ -27670,6 +27766,10 @@
 	dir = 4
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8;
+	id = genetics
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -30566,6 +30666,12 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/science)
 "juz" = (
@@ -31014,6 +31120,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
+"jAv" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "jAH" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -31808,11 +31921,13 @@
 /turf/simulated/floor/wood/six,
 /area/station/library)
 "jLx" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/ranch)
 "jLD" = (
@@ -34643,6 +34758,13 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"kEz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "kEK" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -34891,6 +35013,9 @@
 	dir = 4
 	},
 /obj/access_spawn/cargo,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "kKi" = (
@@ -36065,6 +36190,9 @@
 /area/station/chapel/sanctuary)
 "lcg" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "lcq" = (
@@ -38760,7 +38888,12 @@
 "lTz" = (
 /obj/machinery/optable,
 /obj/item/reagent_containers/iv_drip/blood,
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/south{
+	pixel_x = 4
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "lTE" = (
@@ -39153,6 +39286,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"lYK" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 6;
+	id = genetics
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "lYL" = (
 /obj/table/auto,
 /obj/random_item_spawner/dressup/two,
@@ -40149,11 +40290,13 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "mpE" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn/hydro,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
 /turf/simulated/floor/wood,
 /area/station/hydroponics/bay)
 "mpG" = (
@@ -40242,6 +40385,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/AIsat)
+"mqW" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	id = genetics
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "mqY" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40929,12 +41079,18 @@
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/south,
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
 /obj/table/auto,
 /obj/item/plate{
 	pixel_y = 7
 	},
 /obj/random_item_spawner/snacks/one,
+/obj/blind_switch/south{
+	id = mining;
+	pixel_x = 4
+	},
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "mDN" = (
@@ -44926,7 +45082,7 @@
 /obj/disposalpipe/segment,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "nSh" = (
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
@@ -45201,7 +45357,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/machinery/door/airlock/pyro/engineering,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "nWd" = (
@@ -45217,7 +45373,7 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "nWh" = (
 /obj/item/storage/firstaid/toxin{
 	pixel_x = 10;
@@ -46245,6 +46401,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"onb" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 9;
+	id = genetics
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "onh" = (
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -46908,7 +47072,7 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "oxG" = (
 /obj/grille/catwalk/jen,
 /obj/disposalpipe/segment,
@@ -50084,6 +50248,11 @@
 	dir = 5
 	},
 /area/station/chapel/sanctuary)
+"pyf" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/medical/medbooth)
 "pyn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50838,6 +51007,9 @@
 "pIM" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -56192,6 +56364,9 @@
 "rlA" = (
 /obj/disposalpipe/segment,
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	id = mining
+	},
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "rlB" = (
@@ -56747,7 +56922,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/science/bot_storage)
+/area/station/science/teleporter)
 "ruY" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
@@ -57022,6 +57197,9 @@
 /obj/machinery/cashreg{
 	pixel_x = -4;
 	pixel_y = -2
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -58826,12 +59004,6 @@
 /obj/item/storage/toolbox/mechanical{
 	pixel_y = -2
 	},
-/obj/machinery/light_switch/south{
-	pixel_x = -4
-	},
-/obj/blind_switch/area/south{
-	pixel_x = 4
-	},
 /turf/simulated/floor,
 /area/station/hangar/science)
 "sao" = (
@@ -59627,6 +59799,14 @@
 "smZ" = (
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
+"sna" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 5;
+	id = genetics
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/dome)
 "snc" = (
 /obj/table/reinforced/auto,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -60456,6 +60636,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/gas)
+"sAm" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/breakroom)
 "sAG" = (
 /turf/simulated/floor,
 /area/spacehabitat/pool)
@@ -62195,6 +62382,13 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"tfa" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/qm)
 "tfk" = (
 /obj/decal/boxingrope,
 /obj/machinery/camera{
@@ -62825,6 +63019,7 @@
 "tor" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/medical/medbooth)
 "toz" = (
@@ -62893,6 +63088,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/visitation)
+"tpf" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/breakroom)
 "tph" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -64303,9 +64505,6 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "tMg" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/decal/mule/dropoff,
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
@@ -64313,6 +64512,9 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -64361,9 +64563,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 8;
-	req_access = null
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -64456,6 +64657,11 @@
 	dir = 1
 	},
 /area/station/science/lobby)
+"tOw" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "tOD" = (
 /obj/disposalpipe/segment{
 	dir = 8
@@ -66016,6 +66222,9 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/mining,
 /obj/firedoor_spawn,
+/obj/window_blinds/cog2/middle{
+	id = mining
+	},
 /turf/simulated/floor/black/grime,
 /area/station/mining/staff_room)
 "uqE" = (
@@ -67210,20 +67419,22 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "uHZ" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 8;
-	name = "Engineering"
-	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering/breakroom)
 "uIi" = (
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left{
+	id = null
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/breakroom)
 "uIk" = (
@@ -70089,7 +70300,7 @@
 /obj/access_spawn/telesci,
 /obj/machinery/door/airlock/pyro/sci_alt,
 /turf/simulated/floor/black,
-/area/station/science/lobby)
+/area/station/science/teleporter)
 "vBl" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -71931,13 +72142,15 @@
 /area/station/bridge)
 "wcQ" = (
 /obj/decal/mule/dropoff,
-/obj/machinery/door/airlock/pyro/glass,
 /obj/access_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
+/obj/machinery/door/airlock/pyro/maintenance{
+	req_access = null
+	},
 /turf/simulated/floor,
 /area/station/crewquarters/fuq3)
 "wdh" = (
@@ -72090,6 +72303,9 @@
 /area/station/hangar/qm)
 "wfJ" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbooth)
 "wfL" = (
@@ -72483,9 +72699,6 @@
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/artifact)
-"wno" = (
-/turf/simulated/wall/auto/jen/purple,
-/area/station/science/bot_storage)
 "wns" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/external{
@@ -74198,6 +74411,9 @@
 	pixel_y = 5
 	},
 /obj/access_spawn/medical,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbooth)
 "wMI" = (
@@ -77859,6 +78075,9 @@
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/window_blinds/cog2/left{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/breakroom)
@@ -119428,7 +119647,7 @@ vSL
 nOU
 jrH
 pWe
-uIi
+aZe
 wHi
 nUt
 tAU
@@ -119724,12 +119943,12 @@ cmi
 bnj
 sbI
 nAi
-uIi
-uIi
-uIi
+ihh
+sAm
+tpf
 tMg
 xLt
-uIi
+tpf
 mKz
 qnp
 nIN
@@ -125492,7 +125711,7 @@ hNd
 qbv
 hNd
 sTE
-xJS
+rtr
 jvG
 uoI
 nmG
@@ -127304,7 +127523,7 @@ rtr
 tDQ
 teN
 rtr
-xJS
+rtr
 onh
 ciW
 xqT
@@ -127606,7 +127825,7 @@ qkQ
 kPH
 ukP
 sge
-xJS
+rtr
 onh
 ciW
 aGD
@@ -128814,7 +129033,7 @@ wPh
 qNW
 hoG
 miG
-xJS
+rtr
 pjd
 mzb
 sqm
@@ -129111,12 +129330,12 @@ eOq
 oCr
 tYp
 tuB
-vzs
-wno
+sTE
+rtr
 ruU
 eTQ
-wno
-wno
+rtr
+rtr
 wbX
 kIj
 wbX
@@ -130605,7 +130824,7 @@ fes
 gul
 wNz
 imF
-xDi
+mqW
 biC
 pMQ
 pMQ
@@ -130613,7 +130832,7 @@ gNA
 pMQ
 abr
 pMQ
-xDi
+mqW
 jBg
 sca
 tSw
@@ -130907,15 +131126,15 @@ fes
 ueF
 aWR
 noC
-xDi
-xDi
+hVX
+onb
 rGd
 pMQ
 hOb
 pMQ
 wKh
-xDi
-xDi
+lYK
+sna
 fPb
 jBg
 aAb
@@ -131210,13 +131429,13 @@ jIk
 aWR
 krj
 uuy
-xDi
-xDi
+jAv
+onb
 ruY
 mAl
 nNu
-xDi
-xDi
+lYK
+sna
 oDl
 jBg
 sps
@@ -131474,12 +131693,12 @@ uJg
 mDD
 mhe
 aaZ
-fMu
-bpN
+kEz
+tfa
 dLt
 dfS
-fMu
-bpN
+kEz
+tfa
 mhe
 mhe
 vnK
@@ -131517,7 +131736,7 @@ xDi
 sFY
 sFY
 sFY
-xDi
+sna
 vfS
 dCa
 qSh
@@ -131774,7 +131993,7 @@ gPi
 fLf
 fLf
 jme
-mCZ
+dtv
 fBJ
 rqF
 jwT
@@ -131784,7 +132003,7 @@ aDk
 duh
 lMS
 jnk
-qxQ
+fut
 qxQ
 fhc
 qxQ
@@ -132953,7 +133172,7 @@ puU
 nqL
 hRi
 fIF
-wfJ
+aEr
 qvc
 qIT
 cFr
@@ -133290,9 +133509,9 @@ plQ
 plQ
 plQ
 xUo
-lcg
+hcd
 tMX
-gAd
+dEq
 duN
 qxQ
 qxQ
@@ -133557,7 +133776,7 @@ svU
 srJ
 sLh
 uDq
-wfJ
+pyf
 oyi
 gcu
 lNp
@@ -133595,7 +133814,7 @@ tHb
 mHm
 mPq
 aSD
-lcg
+tOw
 oqp
 wPT
 fuT
@@ -133859,7 +134078,7 @@ svU
 tbg
 sLh
 uDq
-wfJ
+fiF
 lEs
 cjy
 ivc
@@ -134199,7 +134418,7 @@ bmd
 uWL
 lTK
 ivX
-lcg
+tOw
 ugb
 lJJ
 edW
@@ -134502,7 +134721,7 @@ pIM
 tMX
 gAd
 duN
-lcg
+fcn
 rzn
 kJX
 gAd
