@@ -18367,10 +18367,6 @@
 	},
 /area/station/security/main)
 "blI" = (
-/obj/stool/bench/red/auto,
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-s"
@@ -18530,10 +18526,6 @@
 /obj/machinery/camera{
 	c_tag = "Security Lobby";
 	dir = 4
-	},
-/obj/stool/bench/red/auto,
-/obj/landmark/start{
-	name = "Security Assistant"
 	},
 /obj/securearea{
 	pixel_x = -32
@@ -19060,6 +19052,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/stool/bench/red/auto,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -38318,6 +38311,10 @@
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 30
 	},
+/obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -39286,6 +39283,10 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
