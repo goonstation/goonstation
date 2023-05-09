@@ -6389,6 +6389,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/right{
+	id = "chemistry"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "bQa" = (
@@ -7370,6 +7373,9 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -8464,6 +8470,9 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment,
+/obj/window_blinds/cog2/right{
+	id = "chemistry"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "cwp" = (
@@ -10312,6 +10321,9 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -20242,6 +20254,10 @@
 	dir = 8
 	},
 /obj/table/reinforced/chemistry/auto,
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	id = "chemistry"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "gfv" = (
@@ -22090,7 +22106,11 @@
 "gHR" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/middle{
-	dir = 4
+	dir = 4;
+	id = "chemistry"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
@@ -25349,6 +25369,10 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 6;
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -49975,6 +49999,16 @@
 /obj/storage/crate/bartending,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
+"pts" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left{
+	id = "chemistry"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "ptw" = (
 /obj/disposalpipe/segment/transport,
 /obj/surgery_tray/kitchen_island,
@@ -55276,6 +55310,9 @@
 	icon_state = "0-8"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/window_blinds/cog2/middle{
+	id = "chemistry"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "qWE" = (
@@ -67553,6 +67590,10 @@
 /area/station/solar/west)
 "uJx" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "chemistry"
+	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "uJI" = (
@@ -78867,6 +78908,10 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/cashreg{
 	name = "Chemistry credit transfer device"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4;
+	id = "chemistry"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -120572,7 +120617,7 @@ qrR
 qgJ
 sUp
 amn
-hJh
+pts
 wTH
 tud
 nUD
