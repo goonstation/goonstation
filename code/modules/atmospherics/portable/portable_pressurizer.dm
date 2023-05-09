@@ -222,12 +222,10 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			S.UpdateIcon()
 			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 			return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/obj/item/storage/S = I
-			for(var/obj/item/O in S)
-				O.set_loc(src)
-				S.hud.remove_object(O)
-			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+		if (length(I.storage?.get_contents()))
+			for(var/obj/item/O in I.storage.get_contents())
+				I.storage.transfer_stored_item(O, src, user = user)
+				user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			return
 
 		var/obj/item/grab/G = I

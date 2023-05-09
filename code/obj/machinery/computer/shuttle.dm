@@ -329,7 +329,12 @@ var/bombini_saved
 	var/location = 1 // 0 for bottom, 1 for top
 
 /obj/machinery/computer/shuttle/emag_act(var/mob/user, var/obj/item/card/emag/E)
-	if(emergency_shuttle.location != SHUTTLE_LOC_STATION) return
+	if(emergency_shuttle.location != SHUTTLE_LOC_STATION)
+		return
+	for (var/datum/flock/flock in flocks)
+		if (flock.relay_in_progress)
+			boutput(user, "<span class='alert'>[src] emits a pained burst of static, but nothing happens!</span>")
+			return
 
 	if (user)
 		var/choice = tgui_alert(user, "Would you like to launch the shuttle?", "Shuttle control", list("Launch", "Cancel"))
@@ -371,6 +376,10 @@ var/bombini_saved
 		if(!choice || emergency_shuttle.location != SHUTTLE_LOC_STATION || BOUNDS_DIST(user, src) > 0) return
 		switch(choice)
 			if("Authorize")
+				for (var/datum/flock/flock in flocks)
+					if (flock.relay_in_progress)
+						boutput(user, "Unable to contact central command, authorization rejected.")
+						return
 				if(emergency_shuttle.timeleft() < 60)
 					boutput(user, "The shuttle is already leaving in less than 60 seconds!")
 					return
@@ -539,7 +548,7 @@ var/bombini_saved
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	get_desc()
 		return "It says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\"."

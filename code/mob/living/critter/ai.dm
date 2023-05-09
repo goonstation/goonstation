@@ -266,7 +266,12 @@ var/list/ai_move_scheduled = list()
 			for(var/atom/A as anything in targets)
 				var/score = src.score_target(A)
 				if(score > best_score)
-					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, !move_through_space)
+					var/simulated_only = !move_through_space
+#ifdef UNDERWATER_MAP
+					//fucking unsimulated ocean tiles fuck
+					simulated_only = FALSE
+#endif
+					var/tmp_best_path = get_path_to(holder.owner, A, max_dist*2, can_be_adjacent_to_target, null, simulated_only)
 					if(length(tmp_best_path))
 						best_score = score
 						best_path = tmp_best_path
@@ -441,7 +446,8 @@ var/list/ai_move_scheduled = list()
 			else
 				current_subtask = subtasks[subtask_index]
 				current_subtask.reset()
-				// ready to run this immediately next tick
+				//double tick, fuck you
+				current_subtask.tick()
 				return
 		else if(current_subtask.failed())
 			// the sequence is ruined

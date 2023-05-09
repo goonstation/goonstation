@@ -237,7 +237,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
-		show_message("Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected.")
+		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
 		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
 		show_message("Error: Extreme genetic degredation present.", "danger")
@@ -249,7 +249,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
 	if (subject.mob_flags & IS_BONEY)
-		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
+		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
 		show_message("Error: Unable to scan alive patient.")
@@ -450,7 +450,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	density = 1
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -797,7 +797,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 

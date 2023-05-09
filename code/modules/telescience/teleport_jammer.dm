@@ -8,7 +8,7 @@ TYPEINFO(/obj/machinery/telejam)
 	icon_state = "shieldgen"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -161,14 +161,14 @@ TYPEINFO(/obj/machinery/telejam)
 		if (PCEL.charge < 0)
 			return
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
 
 	proc/turn_off()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.active = 0
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		playsound(src.loc, src.sound_off, 50, 1)

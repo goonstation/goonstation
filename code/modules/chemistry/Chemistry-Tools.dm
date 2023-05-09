@@ -373,9 +373,11 @@ proc/ui_describe_reagents(atom/A)
 
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
-				src.reagents.trans_to(I, 5)
-				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				if (src.reagents.trans_to(I, 5))
+					logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+					user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				else
+					boutput(user, "<span class='notice'>[I] is already fully coated, more won't do any good.</span>")
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
@@ -519,7 +521,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return ..()
 		boutput(user, "You start propping \the [src] above \the [target]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/setup_bucket_prank, list(target, user), src.icon, src.icon_state, \
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(setup_bucket_prank), list(target, user), src.icon, src.icon_state, \
 					src.visible_message("<span class='alert'><B>[user] props a [src] above \the [target]</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
@@ -528,7 +530,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return
 		logTheThing(LOG_COMBAT, user, "Set up a bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
-		RegisterSignal(targetDoor, COMSIG_DOOR_OPENED, .proc/bucket_prank)
+		RegisterSignal(targetDoor, COMSIG_DOOR_OPENED, PROC_REF(bucket_prank))
 		user.u_equip(src)
 		src.set_loc(targetDoor)
 		user.visible_message("<span class='alert'>Props \the [src] above \the [targetDoor]!</span>","<span class='alert'>You prop \the [src] above \the [targetDoor]. The next person to come through will get splashed!</span>")

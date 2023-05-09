@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			return
 
 		playsound(get_turf(master), 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
-		master.anchored = 1
+		master.anchored = ANCHORED
 		if(istype(master, /mob/living/critter/robotic/bot))
 			var/mob/living/critter/robotic/bot/bot = master
 			master.icon_state = "[bot.icon_state_base]-c"

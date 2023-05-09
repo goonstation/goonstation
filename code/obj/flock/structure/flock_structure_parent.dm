@@ -5,7 +5,7 @@ TYPEINFO(/obj/flock_structure)
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"

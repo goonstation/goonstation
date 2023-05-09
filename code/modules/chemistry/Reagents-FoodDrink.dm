@@ -87,7 +87,7 @@ datum
 					M = holder.my_atom
 				if (M.get_toxin_damage() <= 25)
 					M.take_toxin_damage(-1 * mult)
-				flush(M,5 * mult, flushed_reagents)
+				flush(holder,5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -195,16 +195,17 @@ datum
 				if(!istype(holder) || !istype(holder.my_atom) || !ishuman(holder.my_atom))
 					return
 				var/mob/living/carbon/human/H = holder.my_atom
-				if(H.bioHolder.age < 21) // Yes. Its 21. This is Space America. That is canon now.
-					if(seen_by_camera(H))
-						// determine the name of the perp (goes by ID if wearing one)
-						var/perpname = H.name
-						if(H:wear_id && H:wear_id:registered)
-							perpname = H:wear_id:registered
-						var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
-						if(sec_record && sec_record["criminal"] != "*Arrest*")
-							sec_record["criminal"] = "*Arrest*"
-							sec_record["mi_crim"] = "Underage drinking."
+				if(seen_by_camera(H))
+					// determine the name of the perp (goes by ID if wearing one)
+					var/perpname = H.name
+					if(H:wear_id && H:wear_id:registered)
+						perpname = H:wear_id:registered
+					var/datum/db_record/gen_record = data_core.general.find_record("name", perpname)
+					var/datum/db_record/sec_record = data_core.security.find_record("name", perpname)
+					// Yes. Its 21. This is Space America. That is canon now.
+					if(gen_record && sec_record && text2num(gen_record["age"]) < 21 && sec_record["criminal"] != "*Arrest*")
+						sec_record["criminal"] = "*Arrest*"
+						sec_record["mi_crim"] = "Underage drinking."
 
 		fooddrink/alcoholic/hard_punch
 			name = "hard punch"
@@ -683,6 +684,7 @@ datum
 						H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/hair/long/dreads
 						H.bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/fullbeard
 						H.real_name = "Captain [H.real_name]"
+						M.bioHolder.AddEffect("accent_pirate")
 
 						if(!istype(H.glasses, /obj/item/clothing/glasses/eyepatch))
 							var/obj/item/old_glasses = H.glasses
@@ -1232,7 +1234,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				flush(M, 8 * mult)
+				flush(holder, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -2065,7 +2067,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				if(!volume_passed)
+				if(!volume_passed || M.nodamage)
 					return
 
 				//var/mob/living/carbon/human/H = M
@@ -2465,7 +2467,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
+				flush(holder, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -3087,16 +3089,6 @@ datum
 					return
 				if(method == INGEST)
 					boutput(M, "<span class='notice'>That tasted amazing!</span>")
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				if(!M) M = holder.my_atom
-				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
-					if (prob(10))
-						M.take_toxin_damage(rand(2,4) * mult)
-					if (prob(7))
-						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
-						M.setStatusMin("stunned", 4 SECONDS * mult)
-				..()
 
 		fooddrink/egg
 			name = "egg"
@@ -4434,7 +4426,7 @@ datum
 					M = holder.my_atom
 				if (M.reagents.has_reagent("flockdrone_fluid"))
 					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
-				flush(M, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
+				flush(holder, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
 
 		fooddrink/matcha
 			name = "matcha"
@@ -4464,7 +4456,7 @@ datum
 			var/list/flushed_reagents = list("cholesterol")
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				flush(M, 3 * mult, flushed_reagents)
+				flush(holder, 3 * mult, flushed_reagents)
 				..()
 
 		fooddrink/iced/coconutmilkespresso
@@ -4575,6 +4567,11 @@ datum
 					boutput(M, "<font color=#be9ffe>You feel [.].</font>")
 
 				..()
+			on_add()
+				if(holder.get_reagent_amount("miasma") > 0)
+					var/miasma_amount = src.holder.get_reagent_amount("miasma")
+					src.holder.remove_reagent("miasma", (src.holder.get_reagent_amount("lavender_essence")) * 2)
+					src.holder.remove_reagent("lavender_essence", miasma_amount/2)
 
 		fooddrink/lavenderlatte
 			name = "lavender latte"

@@ -11,7 +11,7 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/camera_status = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	var/invuln = null
 	var/last_paper = 0
 	///Cameras only the AI can see through
@@ -28,6 +28,9 @@
 	//Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Robust light
+	var/datum/light/point/light
+
 	ranch
 		name = "autoname"
 		network = "ranch"
@@ -39,7 +42,7 @@
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
 	network = "Zeta" // why not.
 	icon_state = "television"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	reinforced = TRUE
 	var/securedstate = 2
@@ -59,9 +62,9 @@
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
@@ -98,7 +101,7 @@
 /obj/machinery/camera/television/mobile
 	name = "mobile television camera"
 	desc = "A bulky mobile camera for wireless broadcasting of live feeds."
-	anchored = 0
+	anchored = UNANCHORED
 	icon_state = "mobilevision"
 	securedstate = null //No bugginess thank you
 
@@ -114,6 +117,12 @@
 		src.ai_only = TRUE
 
 	AddComponent(/datum/component/camera_coverage_emitter)
+
+	src.light = new /datum/light/point
+	src.light.set_brightness(0.3)
+	src.light.set_color(209/255, 27/255, 6/255)
+	src.light.attach(src)
+	src.light.enable()
 
 	START_TRACKING
 	SPAWN(1 SECOND)
@@ -258,6 +267,7 @@
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
+	src.light.disable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
@@ -267,7 +277,7 @@
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
-	// updateCoverage()
+	src.light.enable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)

@@ -781,10 +781,6 @@
 			var/list/M = S.spies
 			if (src.mind in (L + M))
 				see_special = 1
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			if(src.mind.gang != null)
-				gang_to_see = src.mind.gang
-		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
 		else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			// var/datum/game_mode/pod_wars/PW = ticker.mode
 			PWT_to_see = get_pod_wars_team_num(src)
@@ -794,6 +790,7 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
+		gang_to_see = src.get_gang()
 		if (istraitor(src) && traitorsseeeachother)
 			see_traitors = TRUE
 		else if (isnukeop(src) || isnukeopgunbot(src))
@@ -826,7 +823,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && !gang_to_see && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -879,6 +876,14 @@
 				if (ROLE_NUKEOP)
 					if (see_everything || see_nukeops)
 						var/I = image(antag_syndicate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_LEADER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang_leader, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_MEMBER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_CHANGELING)
 					if (see_everything)
@@ -985,22 +990,6 @@
 				var/I = image(antag_spyleader, loc = leader_mind.current)
 				can_see.Add(I)
 
-	else if (istype(ticker.mode, /datum/game_mode/gang))
-		var/datum/game_mode/gang/mode = ticker.mode
-
-		for (var/datum/gang/G in mode.gangs)
-			if (G != gang_to_see && !see_everything) continue
-
-			if(G.leader && G.leader.current)
-				if (!see_everything && isobserver(G.leader.current)) continue
-				var/I = image(antag_gang_leader, loc = G.leader.current)
-				can_see.Add(I)
-
-			for(var/datum/mind/M in G.members)
-				if(M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/II = image(antag_gang, loc = M.current)
-					can_see.Add(II)
 	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (PWT_to_see || see_everything)
@@ -1105,16 +1094,29 @@
 	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
 
 	var/rendered_outside = null
-	if (olocs.len)
-		var/atom/movable/OL = olocs[olocs.len]
+	if (length(olocs))
+		/// outermost movable atom in the chain our mob is in, used to determine how text will look
+		var/atom/movable/outermost = olocs[length(olocs)]
+
+		/// determines if we're located on a spike for special handling
+		var/obj/head_on_spike/spike = locate() in olocs
+		if (spike)
+			outermost = spike
+			thickness = -1 // dont muffle at all for heads on spikes
+		else
+			/// determine if we're atleast in an item held by a mob, such as a backpack
+			for (var/obj/item/I in olocs)
+				if (ismob(I.loc))
+					outermost = I // set it so it appears as what we're in when talking
+
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in heard)
 		if (M in processed)

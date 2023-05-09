@@ -11757,7 +11757,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMM" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -11969,7 +11969,7 @@
 /turf/unsimulated/floor/airless,
 /area/space)
 "aNu" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -12146,7 +12146,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12170,7 +12170,7 @@
 	},
 /area/crater/biodome/north)
 "aOd" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12196,7 +12196,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12575,7 +12575,7 @@
 	icon_state = "4-8"
 	},
 /obj/spacevine,
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "aPd" = (
@@ -14226,17 +14226,6 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
-"aUv" = (
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Upper Level Access";
-	req_access_txt = "33"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor,
-/area/crater/biodome/crew)
 "aUw" = (
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor,
@@ -15001,15 +14990,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/specialroom/medbay,
 /area/marsoutpost)
-"aWz" = (
-/obj/machinery/door/airlock/pyro/external{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	secondsElectrified = -1
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/upper_arctic/hall)
 "aWA" = (
 /obj/ladder{
 	id = "icemoon"
@@ -17150,10 +17130,6 @@
 /area/crater)
 "bco" = (
 /obj/decal/mushrooms/type4,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
-"bcp" = (
-/obj/critter/bear,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bcq" = (
@@ -20668,15 +20644,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bld" = (
-/obj/critter/shade,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "ble" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21914,19 +21881,6 @@
 /obj/item/crowbar,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
-"bob" = (
-/obj/landmark{
-	name = "theonyxkeywashere"
-	},
-/obj/critter/shade/scientist/lost,
-/obj/item/device/key/onyx,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "boc" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -23225,22 +23179,6 @@
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
-"brU" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "brV" = (
 /turf/unsimulated/iomoon/ancient_wall{
 	dir = 8
@@ -23588,10 +23526,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
-"bsQ" = (
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bsR" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -24668,10 +24602,6 @@
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bwo" = (
-/obj/critter/ancient_repairbot,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bwq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -27298,20 +27228,6 @@
 	icon_state = "ancientfloor2"
 	},
 /area/iomoon/robot_ruins)
-"bFA" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	name = "power conduit"
-	},
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bFB" = (
 /obj/decal/cleanable/cobweb,
 /obj/storage/closet/coffin,
@@ -27334,11 +27250,6 @@
 	dir = 8;
 	name = "mossy dirt"
 	},
-/area/catacombs)
-"bFF" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bFN" = (
 /turf/unsimulated/wall/auto/adventure/iomoon/interior,
@@ -27490,11 +27401,6 @@
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
 /turf/unsimulated/dirt,
-/area/catacombs)
-"bGf" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
 /area/catacombs)
 "bGg" = (
 /obj/storage/closet/coffin,
@@ -27667,23 +27573,11 @@
 /obj/item/paper/alchemy/southwest,
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bGK" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/salt,
-/obj/critter/magiczombie,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bGL" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/earth,
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bGM" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/proj,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bGO" = (
 /turf/unsimulated/floor/grime{
@@ -28445,12 +28339,6 @@
 	},
 /turf/unsimulated/dirt,
 /area/catacombs)
-"bIV" = (
-/obj/storage/closet/coffin,
-/obj/critter/magiczombie,
-/obj/decal/cleanable/cobweb2,
-/turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
 "bIW" = (
 /obj/storage/closet/coffin,
 /obj/item/alchemy/symbol/incin,
@@ -28460,12 +28348,6 @@
 	name = "crumbly skeleton"
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
-/area/catacombs)
-"bIX" = (
-/obj/storage/closet/coffin,
-/obj/item/alchemy/symbol/fire,
-/obj/critter/magiczombie,
-/turf/unsimulated/dirt,
 /area/catacombs)
 "bIY" = (
 /turf/unsimulated/wall/void,
@@ -31364,17 +31246,6 @@
 	dir = 8
 	},
 /area/crypt/sigma/mainhall)
-"bSt" = (
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Lower Level Access";
-	req_access_txt = "33"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor,
-/area/crypt/sigma/mainhall)
 "bSu" = (
 /turf/unsimulated/floor/stairs{
 	dir = 8
@@ -32115,10 +31986,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
-"bVi" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor,
-/area/crunch)
 "bVj" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -33492,10 +33359,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/crunch)
-"bZP" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/white,
-/area/crunch)
 "bZQ" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -34382,10 +34245,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"ccM" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -35307,22 +35166,6 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
-"cfH" = (
-/obj/decal/fakeobjects/firelock_broken{
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/airlock/pyro/medical{
-	aiControlDisabled = 1;
-	dir = 4;
-	locked = 1;
-	name = "Hazardous Materials Storage";
-	req_access_txt = "";
-	secondsElectrified = -1
-	},
-/obj/trigger/critter,
-/turf/unsimulated/floor,
-/area/crunch)
 "cfL" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4;
@@ -51333,11 +51176,6 @@
 /obj/item/reagent_containers/food/snacks/granola_bar,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
-"cVc" = (
-/obj/decal/cleanable/blood,
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "cVd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -61478,22 +61316,6 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/offices/urs)
-"dEE" = (
-/obj/decal/fakeobjects/teleport_pad{
-	desc = "A pad used for virtual reality experimentation.";
-	name = "virtualizer pad"
-	},
-/obj/critter/bear{
-	aggressive = 0;
-	desc = "Wow, you haven't seen this guy since 2014!";
-	generic = 0;
-	material = null;
-	name = "DOngEun MesTur";
-	quality = 420;
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood,
-/area/centcom/offices/urs)
 "dEF" = (
 /obj/adventurepuzzle/element_link{
 	act_type = "on";
@@ -66509,10 +66331,21 @@
 /obj/table/wood/round/auto,
 /obj/decal/cleanable/dirt,
 /obj/item/paper_bin,
+/obj/map/light/brighterwhite,
+/obj/item/paper_bin{
+	pixel_x = 4;
+	pixel_y = 4
+	},
 /obj/item/pen{
 	desc = "It's a normal black ink pen. Looks like it has been chewed on."
 	},
-/obj/map/light/brighterwhite,
+/obj/item/pen{
+	desc = "It's a normal black ink pen. Looks like it has been chewed on.";
+	pixel_x = 3
+	},
+/obj/item/pen/fancy{
+	pixel_x = 5
+	},
 /turf/unsimulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -67240,8 +67073,8 @@
 /obj/effects/precipitation/snow/grey/tile,
 /obj/tree{
 	icon_state = "snowtree";
-	pixel_y = -1;
-	pixel_x = -18
+	pixel_x = -18;
+	pixel_y = -1
 	},
 /turf/unsimulated/floor/snowcalm,
 /area/centcom/offices{
@@ -67336,6 +67169,11 @@
 	},
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"etS" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "etZ" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -68122,6 +67960,10 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"fNh" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "fNL" = (
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -68226,6 +68068,11 @@
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/maintenance)
+"fXG" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "fZr" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
@@ -68494,6 +68341,11 @@
 	},
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"gwj" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "gwr" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/unsimulated/wall/auto/adventure/old/reinforced,
@@ -68841,6 +68693,11 @@
 	dir = 10
 	},
 /area/centcom/gallery)
+"hgF" = (
+/mob/living/critter/brullbar,
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "hgL" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It is not working.";
@@ -69112,11 +68969,6 @@
 	dir = 5
 	},
 /area/centcom/offices/cogwerks)
-"hDJ" = (
-/obj/critter/brullbar,
-/obj/decal/cleanable/blood,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hEq" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -69154,10 +69006,6 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
-"hIb" = (
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "hIz" = (
 /obj/reagent_dispensers/watertank/fountain/piss,
 /obj/machinery/light{
@@ -69334,6 +69182,12 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"hVH" = (
+/obj/storage/closet/coffin,
+/mob/living/critter/skeleton,
+/obj/decal/cleanable/cobweb2,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "hWH" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -69410,9 +69264,6 @@
 "iho" = (
 /obj/machinery/computer3/generic/personal/personel_alt{
 	pixel_y = 7
-	},
-/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_x = -15
 	},
 /obj/adventurepuzzle/triggerable/light{
 	id = "virva_light";
@@ -69517,6 +69368,17 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"ioJ" = (
+/obj/decal/fakeobjects/teleport_pad{
+	desc = "A pad used for virtual reality experimentation.";
+	name = "virtualizer pad"
+	},
+/mob/living/critter/bear{
+	desc = "Wow, you haven't seen this guy since 2014!";
+	name = "DOngEun MesTur"
+	},
+/turf/unsimulated/floor/wood,
+/area/centcom/offices/urs)
 "ioS" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 8
@@ -69531,6 +69393,12 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
+"irg" = (
+/obj/critter/meatslinky/alfredo{
+	health = 999999
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/wire)
 "irq" = (
 /obj/decoration/decorativeplant/plant6,
 /obj/railing/velvet,
@@ -69929,12 +69797,6 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
-"iVf" = (
-/obj/critter/brullbar{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "iVt" = (
 /obj/machinery/light{
 	dir = 1;
@@ -70043,6 +69905,10 @@
 /obj/item/instrument/harmonica,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"jfN" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "jgd" = (
 /obj/decal/fakeobjects/shuttlethruster,
 /turf/space,
@@ -70143,6 +70009,11 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
+"jqo" = (
+/obj/decal/icefloor,
+/mob/living/critter/brullbar/king,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "jqz" = (
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
@@ -70518,14 +70389,6 @@
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
 	},
-/obj/table/clothred/auto{
-	desc = "The tablecloth definitely isn't there to hide anything.";
-	name = "cool table"
-	},
-/obj/item/decoration/virvase{
-	anchored = 1;
-	pixel_y = 11
-	},
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "kcN" = (
@@ -70774,6 +70637,16 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"kBZ" = (
+/obj/map/light/graveyard,
+/obj/tombstone/memorial{
+	desc = "The inscription has eroded away.";
+	special = /mob/living/critter/skeleton
+	},
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "kCf" = (
 /obj/stool/chair/couch/purple{
 	dir = 4
@@ -70926,6 +70799,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"kVQ" = (
+/obj/landmark{
+	name = "theonyxkeywashere"
+	},
+/mob/living/critter/shade/crew/lost,
+/obj/item/device/key/onyx,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "kWN" = (
 /obj/table/auto/desk,
 /obj/item/pen/fancy{
@@ -71539,6 +71425,17 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"lYA" = (
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Lower Level Access";
+	req_access_txt = "33"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/crypt/sigma/mainhall)
 "lZf" = (
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -71628,8 +71525,13 @@
 	name = "plating"
 	},
 /area/hospital)
+"miu" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor,
+/area/crunch)
 "mje" = (
 /obj/storage/closet/office,
+/obj/item/pen/fancy,
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "mjk" = (
@@ -72121,6 +72023,14 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"ndE" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "ndM" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 1;
@@ -72861,16 +72771,6 @@
 	dir = 9
 	},
 /area/centcom/gallery)
-"oad" = (
-/obj/map/light/graveyard,
-/obj/tombstone/memorial{
-	desc = "The inscription has eroded away.";
-	special = /obj/critter/magiczombie
-	},
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "oaN" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -73158,6 +73058,12 @@
 	icon_state = "floor"
 	},
 /area/meat_derelict/entry)
+"oFx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/fire,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "oGk" = (
 /obj/decal/cleanable/sakura{
 	real_name = "sakura petals"
@@ -73438,6 +73344,15 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"pcE" = (
+/obj/machinery/door/airlock/pyro/external{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	secondsElectrified = -1
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/upper_arctic/hall)
 "pdL" = (
 /obj/storage/crate,
 /obj/item/peripheral/drive/tape_reader,
@@ -73859,6 +73774,10 @@
 	temperature = 313.15
 	},
 /area/iomoon)
+"pIi" = (
+/obj/mail_booth,
+/turf/unsimulated/floor/wood,
+/area/afterlife/bar/sanctuary)
 "pJw" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -74006,14 +73925,6 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
-"pRr" = (
-/obj/critter/brullbar,
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "pRK" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -74311,6 +74222,22 @@
 /obj/machinery/microwave,
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"qvf" = (
+/obj/decal/fakeobjects/firelock_broken{
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Hazardous Materials Storage";
+	req_access_txt = "";
+	secondsElectrified = -1
+	},
+/obj/trigger/critter,
+/turf/unsimulated/floor,
+/area/crunch)
 "qwW" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/snacks/burger/plague/fishstick{
@@ -74336,6 +74263,11 @@
 /obj/decal/lightshaft,
 /turf/unsimulated/floor/carpet/darkcarpet,
 /area/centcom/gallery)
+"qBW" = (
+/obj/decal/cleanable/blood,
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "qBZ" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor{
@@ -74853,11 +74785,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/iomoon/base)
-"rrB" = (
-/obj/decal/icefloor,
-/obj/critter/brullbar/king,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "rst" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying the name of the art gallery.";
@@ -75498,6 +75425,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skj" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "skF" = (
 /obj/storage/closet/dresser,
 /obj/machinery/light/small/floor/warm/very,
@@ -75762,6 +75703,10 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPM" = (
+/mob/living/critter/brullbar,
+/turf/unsimulated/floor/arctic/snow,
+/area/upper_arctic/exterior/surface)
 "sPY" = (
 /obj/stool/chair{
 	desc = "There are screws stuck at odd angles to keep this thing from falling apart. You feel like you'll have back spasms if you keep looking at it.";
@@ -76275,6 +76220,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tTP" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/salt,
+/mob/living/critter/skeleton,
+/turf/unsimulated/floor/setpieces/rootfloor,
+/area/catacombs)
 "tUJ" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -76903,6 +76854,17 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"uUy" = (
+/obj/machinery/door/airlock/pyro/medical{
+	aiControlDisabled = 1;
+	dir = 4;
+	locked = 1;
+	name = "Upper Level Access";
+	req_access_txt = "33"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
+/area/crater/biodome/crew)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/cow)
@@ -76969,6 +76931,14 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"vdi" = (
+/mob/living/critter/brullbar,
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "vdq" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -77113,6 +77083,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
+"vjF" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/white,
+/area/crunch)
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
@@ -77366,10 +77340,6 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
-/obj/item/reagent_containers/food/drinks/flask/taskumatti{
-	pixel_x = 9;
-	pixel_y = 7
-	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
@@ -77443,6 +77413,10 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"vGO" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "vIb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77520,16 +77494,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
-"vOz" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/critter/brullbar{
-	wanderer = 0
-	},
-/turf/unsimulated/floor/arctic/snow,
-/area/upper_arctic/exterior/surface)
 "vOL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -78115,6 +78079,22 @@
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"wRU" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "wTN" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -78195,11 +78175,6 @@
 /obj/reagent_dispensers/still,
 /turf/unsimulated/floor/plating,
 /area/diner/cow)
-"xch" = (
-/obj/decal/icefloor,
-/obj/critter/brullbar,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "xcj" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -78500,6 +78475,15 @@
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
+"xzj" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78815,6 +78799,12 @@
 	},
 /turf/unsimulated/floor/orange,
 /area/iomoon/base)
+"xXx" = (
+/obj/storage/closet/coffin,
+/obj/item/alchemy/symbol/proj,
+/mob/living/critter/skeleton,
+/turf/unsimulated/dirt,
+/area/catacombs)
 "xXy" = (
 /obj/crevice{
 	pixel_y = -28
@@ -78930,6 +78920,10 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"yhB" = (
+/mob/living/critter/bear,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "yhG" = (
 /obj/decal/exhibit/highend{
 	exhibit_id = "ex_centcom_highend_2";
@@ -78960,6 +78954,10 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"ylS" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "ymj" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg5"
@@ -81962,7 +81960,7 @@ bLn
 bLn
 ceO
 ceO
-cfH
+qvf
 ceO
 ceO
 bKw
@@ -82416,7 +82414,7 @@ aSG
 aSG
 aVL
 aRJ
-vOz
+ndE
 faP
 faP
 faP
@@ -83321,7 +83319,7 @@ aTC
 aUk
 bMs
 uJX
-aWz
+pcE
 faP
 aYe
 aYZ
@@ -86766,7 +86764,7 @@ bKw
 bKw
 bKw
 bUY
-bVi
+miu
 bVt
 bKw
 bKw
@@ -87392,7 +87390,7 @@ bUP
 bUP
 cbH
 aDC
-ccM
+vGO
 bUP
 bUP
 bUP
@@ -89198,7 +89196,7 @@ bYB
 bYS
 bZi
 aDC
-bZP
+vjF
 cao
 caK
 cbf
@@ -90598,7 +90596,7 @@ aLr
 aLS
 aLN
 bgC
-iVf
+sPM
 aLN
 aLN
 aLN
@@ -97526,7 +97524,7 @@ aIp
 aIp
 bdB
 bdQ
-rrB
+jqo
 aJE
 aJE
 aJE
@@ -98555,7 +98553,7 @@ crf
 cpq
 aaa
 daM
-daZ
+pIi
 daZ
 daM
 daM
@@ -98739,7 +98737,7 @@ aIp
 aIp
 aIp
 aIp
-hIb
+jfN
 aIp
 aIp
 aIp
@@ -101447,7 +101445,7 @@ aIC
 bbs
 aIp
 aIp
-xch
+gwj
 aIp
 aIp
 aIp
@@ -101755,7 +101753,7 @@ aIp
 aIp
 aIp
 aIp
-pRr
+vdi
 aIp
 aIC
 aIC
@@ -102653,7 +102651,7 @@ aNq
 aPE
 aIC
 aIp
-hIb
+jfN
 aIC
 aIC
 aIC
@@ -103278,7 +103276,7 @@ aIp
 aIp
 aIC
 aJi
-hDJ
+hgF
 aIp
 bgr
 bgr
@@ -104173,12 +104171,12 @@ aIp
 aIp
 aIp
 aIC
-hIb
+jfN
 aIp
 aYu
 bwn
 aIp
-cVc
+qBW
 aIp
 aIp
 aIp
@@ -105685,7 +105683,7 @@ bwk
 aIC
 aIp
 aIC
-hIb
+jfN
 aIp
 aIC
 aIC
@@ -109629,7 +109627,7 @@ biX
 biX
 biX
 biX
-bld
+xzj
 biX
 bjJ
 biY
@@ -110495,8 +110493,8 @@ aIr
 aIr
 aIr
 rtc
-aUv
-aUv
+uUy
+uUy
 rtc
 aIr
 aIr
@@ -111439,12 +111437,12 @@ biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 biX
 bjJ
@@ -114165,10 +114163,10 @@ pHY
 aaa
 biD
 biY
-bld
+xzj
 biX
 biX
-bld
+xzj
 bjJ
 bkr
 aaa
@@ -114468,7 +114466,7 @@ aaa
 aaa
 biD
 biY
-bob
+kVQ
 biX
 bjJ
 bkr
@@ -121487,14 +121485,14 @@ aDY
 aDY
 afW
 afW
-bSt
+lYA
 afW
 afW
 afW
 afW
 afW
 afW
-bSt
+lYA
 afW
 afW
 wMp
@@ -122665,7 +122663,7 @@ bGG
 bHe
 bFS
 bFR
-oad
+kBZ
 bGG
 bGG
 bGG
@@ -123504,7 +123502,7 @@ aIG
 aIG
 rIS
 aIG
-bcp
+yhB
 aIG
 aIr
 aIG
@@ -125002,7 +125000,7 @@ bah
 aIr
 aIG
 aIG
-bcp
+yhB
 bcM
 aIr
 aIG
@@ -125309,7 +125307,7 @@ bcN
 aIr
 aIG
 aIr
-bcp
+yhB
 aIr
 aIr
 aIr
@@ -125974,7 +125972,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+ylS
 bqb
 bpo
 bpo
@@ -126569,7 +126567,7 @@ aaa
 bpo
 bpo
 bxH
-bwo
+ylS
 bqb
 bqb
 bqb
@@ -128069,7 +128067,7 @@ bqb
 brk
 bqb
 bpo
-bsQ
+fNh
 bpo
 brT
 bpo
@@ -129295,7 +129293,7 @@ bBi
 bBY
 bqb
 bBY
-bsQ
+fNh
 bBY
 bqb
 bBY
@@ -130492,7 +130490,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+ylS
 bqb
 bqb
 bqb
@@ -133217,7 +133215,7 @@ bqb
 bqb
 bpo
 bpo
-bwo
+ylS
 bvb
 bpo
 bpo
@@ -133830,7 +133828,7 @@ bEn
 bEI
 bqH
 bpo
-bFA
+skj
 bpo
 bFN
 bFN
@@ -135617,7 +135615,7 @@ aaa
 aaa
 bpo
 bpo
-brU
+wRU
 bqb
 bqb
 bpo
@@ -137156,13 +137154,13 @@ bFD
 bFD
 bCb
 bCb
-bGK
+tTP
 bCb
 bHw
 bCb
 bIj
 bCb
-bIV
+hVH
 bCb
 bJU
 bFE
@@ -137456,7 +137454,7 @@ bzH
 bFs
 bFD
 bFD
-bGf
+fXG
 bCb
 bCb
 bCb
@@ -138662,17 +138660,17 @@ bzH
 bzH
 bCb
 bCb
-bFF
+etS
 bCb
 bGg
 bCb
-bGM
+xXx
 bCb
 bHx
 bCb
 bIl
 bCb
-bIX
+oFx
 bCb
 bJU
 bJR
@@ -150967,7 +150965,7 @@ poK
 wel
 dEo
 dEx
-dEE
+ioJ
 wel
 gtU
 eiT
@@ -153367,7 +153365,7 @@ vij
 wel
 dxP
 dxP
-dxP
+irg
 wel
 dxC
 dyn

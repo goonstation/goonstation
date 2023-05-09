@@ -36,8 +36,8 @@
 
 	announce()
 		. = ..()
-		boutput(owner.current, "<span class='alert'><b>Your hivemind will cease to exist if your body is entirely destroyed.</b></span>")
-		boutput(owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
+		boutput(src.owner.current, "<span class='alert'><b>Your hivemind will cease to exist if your body is entirely destroyed.</b></span>")
+		boutput(src.owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

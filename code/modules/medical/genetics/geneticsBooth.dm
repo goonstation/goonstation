@@ -42,7 +42,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	icon_state = "genebooth"
 	pass_unstable = TRUE
 	pixel_x = -3
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_FLUID_ENTER
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE

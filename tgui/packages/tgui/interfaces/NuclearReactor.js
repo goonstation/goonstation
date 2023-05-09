@@ -176,7 +176,7 @@ export const NuclearReactor = (props, context) => {
               <Button color="transparent" icon="angle-double-left" onClick={() => act('adjustCR', { crvalue: 0 })} />
               <Button color="transparent" icon="angle-left" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
               {configuredControlRodLevel} %
-              <Button color="transparent" icon="angle-right" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel-5 })} />
+              <Button color="transparent" icon="angle-right" onClick={() => act('adjustCR', { crvalue: configuredControlRodLevel+5 })} />
               <Button color="transparent" icon="angle-double-right" onClick={() => act('adjustCR', { crvalue: 100 })} />
               <Knob
                 animated

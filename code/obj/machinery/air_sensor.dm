@@ -4,7 +4,7 @@ obj/machinery/air_sensor
 	name = "Gas Sensor"
 	desc = "A device that detects the composition of the air nearby."
 
-	anchored = 1
+	anchored = ANCHORED
 
 	var/id_tag
 	var/frequency = FREQ_AIR_ALARM_CONTROL

@@ -29,6 +29,9 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				return 0
 
+			if (istype(ticker.mode, /datum/game_mode/salvager))
+				weight = initial(weight)+100
+
 			if (istype(ticker.mode, /datum/game_mode/flock))
 				wont_occur_past_this_time = 25 MINUTES
 

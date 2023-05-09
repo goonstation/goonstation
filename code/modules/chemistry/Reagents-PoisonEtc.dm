@@ -67,6 +67,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					var/stack_mult = 1
@@ -160,6 +162,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					. = 0
 					if (volume >= 50 && prob(75))
@@ -1378,8 +1382,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(0.5*mult)
-				take_bleeding_damage(M, null, 2 * mult, DAMAGE_CUT)
+				M.take_toxin_damage(mult)
+				bleed(M, 6 * mult, 6 * mult)
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
@@ -1389,7 +1393,7 @@ datum
 					M.reagents.add_reagent("histamine", rand(8,10) * mult)
 
 				if (probmult(10))
-					M.setStatus("staggered", max(M.getStatusDuration("staggered"), 5 SECONDS))
+					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
@@ -1397,7 +1401,6 @@ datum
 				if (probmult(10))
 					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
-					M.take_toxin_damage(8)
 					if (!isdead(M))
 						M.emote(pick("shake", "tremble", "shudder"))
 
@@ -1526,6 +1529,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((3 * volume) + 2)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1563,6 +1568,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if ( (method==TOUCH && prob((5 * volume) + 1)) || method==INGEST)
 					if(ishuman(M))
 						M.bioHolder.RandomEffect("bad")
@@ -1704,6 +1711,8 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
+				if (M.nodamage)
+					return .
 				if (method == TOUCH)
 					M.reagents.add_reagent("histamine", min(10,volume * 2))
 					M.make_jittery(10)
@@ -2174,3 +2183,40 @@ datum
 						H.TakeDamage(zone="All", brute=damage)
 						bleed(H, damage * 2 * mult, 3)
 
+		harmful/mimic_toxin
+			name = "mimicotoxin"
+			id = "mimicotoxin"
+			description = "A mild psychoactive neurotoxin that attacks the optic nerve, causing hallucinations, temporary blindness in low doses, and finally permenant blindness"
+			taste = "intensely bitter"
+			reagent_state = SOLID
+			fluid_r = 188
+			fluid_g = 111
+			fluid_b = 207
+			transparency = 255
+			depletion_rate = 0.2
+			target_organs = list("left_eye", "right_eye")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				var/poison_amount = holder.get_reagent_amount(src.id)
+				if(poison_amount > 5)
+					for(var/obj/item/I in oview(M,5))
+						if(probmult(2))
+							var/image/mimicface = image(icon('icons/misc/critter.dmi',"mimicface"))
+							mimicface.loc = I
+							mimicface.blend_mode = BLEND_INSET_OVERLAY
+							var/client/client = M.client //hold a reference to the client directly
+							client?.images.Add(mimicface)
+							if(prob(25))
+								M.show_message("[I] suddenly opens eyes that weren't there and sprouts teeth!", 1)
+							SPAWN (10 SECONDS)
+								client?.images.Remove(mimicface)
+								qdel(mimicface)
+				if(poison_amount > 15)
+					M.setStatusMin("blinded", 10 SECONDS * mult)
+				if(poison_amount > 30)
+					if (ishuman(M))
+						var/mob/living/carbon/human/H = M
+						H.take_eye_damage(1)
+					else
+						M.take_toxin_damage(1 * mult)

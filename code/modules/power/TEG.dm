@@ -46,6 +46,8 @@
 #define TEG_SEMI_STATE_DISCONNECTED 3
 /// TEG Semiconductor Missing
 #define TEG_SEMI_STATE_MISSING 4
+/// TEG Semiconductor Missing
+#define TEG_SEMI_STATE_BOOTLEG_SEMI 5
 
 /obj/machinery/atmospherics/binary/circulatorTemp
 	name = "hot gas circulator"
@@ -73,7 +75,7 @@
 	var/variant_b_active = FALSE
 	var/warning_active = FALSE
 
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 
 	var/datum/pump_ui/ui
@@ -128,7 +130,7 @@
 		if(open && repairstate)
 			switch(repairstate)
 				if(1)
-					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+					if (isweldingtool(W) && W:try_weld(user,0,-1))
 						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(2)
@@ -142,7 +144,7 @@
 							actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 				if(4)
-					if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+					if (isweldingtool(W) && W:try_weld(user,0,-1))
 						actions.start(new /datum/action/bar/icon/teg_circulator_repair(src, W, 5 SECONDS), user)
 						return
 
@@ -474,7 +476,6 @@
 		..()
 		// Weld > Crowbar > Rods > Weld
 		if (circ.repairstate == 1)
-			playsound(circ, 'sound/items/Welder.ogg', 50, 1)
 			owner.visible_message("<span class='notice'>[owner] begins to cut up the damaged piping of the lubrication system.</span>")
 		if (circ.repairstate == 2)
 			owner.visible_message("<span class='notice'>[owner] begins prying out the damaged lubrication system.</span>")
@@ -483,7 +484,6 @@
 			playsound(circ, 'sound/impact_sounds/Generic_Stab_1.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins replacing the sections of lubrication piping.</span>")
 		if (circ.repairstate == 4)
-			playsound(circ, 'sound/items/Welder.ogg', 60, 1)
 			owner.visible_message("<span class='notice'>[owner] begins to weld the lubrication piping.</span>")
 
 	onEnd()
@@ -556,14 +556,14 @@ datum/pump_ui/circulator_ui
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/teg_connector
 	name = "\improper TEG connector"
 	desc = "Connects a Thermo-Electric Generator to its turbines."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "teg_connector"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/machinery/teg_connector/random_appearance
@@ -575,7 +575,7 @@ datum/pump_ui/circulator_ui
 	name = "generator"
 	desc = "A high efficiency thermoelectric generator."
 	icon_state = "teg"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	//var/lightsbusted = 0
 
@@ -676,6 +676,7 @@ datum/pump_ui/circulator_ui
 
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
 
 		//List init
 		history = list()
@@ -715,8 +716,10 @@ datum/pump_ui/circulator_ui
 			src.generate_variants()
 
 			if(!src.semiconductor)
-				semiconductor = new(src)
-
+				if( (src.z == Z_LEVEL_STATION) && (current_state < GAME_STATE_PLAYING) )
+					semiconductor = new /obj/item/teg_semiconductor/prototype(src)
+				else
+					semiconductor = new
 			UpdateIcon()
 
 	disposing()
@@ -880,6 +883,7 @@ datum/pump_ui/circulator_ui
 		if(cold_air) src.circ2.circulate_gas(cold_air)
 
 		desc = "Current Output: [engineering_notation(lastgen)]W [warning_light_desc]"
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W")
 		var/genlev = clamp(round(26*lastgen / 4000000), 0, 26) // raised 2MW toplevel to 3MW, dudes were hitting 2mw way too easily
 		var/warnings = src.circ1?.warning_active | src.circ2?.warning_active
 
@@ -909,6 +913,11 @@ datum/pump_ui/circulator_ui
 
 	proc/get_efficiency_scale(delta_temperature, heat_capacity, cold_capacity)
 		var/efficiency_scale = efficiency_controller
+
+		if(semiconductor)
+			//Bound contribution of the semiconductor to +/- 25
+			var/semi_contribution = clamp(src.semiconductor.efficiency_offset, -25, 25)
+			efficiency_scale += semi_contribution
 
 		if(src.generator_flags & (TEG_HIGH_TEMP | TEG_LOW_TEMP))
 			var/heat = delta_temperature * (heat_capacity* cold_capacity /(heat_capacity + cold_capacity))
@@ -951,8 +960,15 @@ datum/pump_ui/circulator_ui
 						actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
 						return
 			if(TEG_SEMI_STATE_MISSING)
-				if(istype(W,/obj/item/teg_semiconductor))
+				if(istype(W,/obj/item/teg_semiconductor) || (istype(W,/obj/item/sheet) && (W.amount >= 10)))
 					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 5 SECONDS), user)
+					return
+			if(TEG_SEMI_STATE_BOOTLEG_SEMI)
+				if(istool(W, TOOL_WELDING) && W:try_weld(user, 2))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_replace(src, W, 15 SECONDS), user)
+					return
+				if(istool(W, TOOL_PRYING))
+					actions.start(new /datum/action/bar/icon/teg_semiconductor_removal(src, W, 8 SECONDS), user)
 					return
 		..()
 
@@ -1243,6 +1259,9 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			if (TEG_SEMI_STATE_DISCONNECTED)
 				owner.visible_message("<span class='notice'>[owner] begins prying out the semiconductor from \the [generator].</span>")
 				playsound(generator, 'sound/items/Crowbar.ogg', 60, 1)
+			if (TEG_SEMI_STATE_BOOTLEG_SEMI)
+				owner.visible_message("<span class='notice'>[owner] begins prying out the sheets from \the [generator].</span>")
+				playsound(generator, 'sound/items/Crowbar.ogg', 60, 1)
 
 	onEnd()
 		..()
@@ -1269,6 +1288,20 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				generator.semiconductor_repair = "The semiconductor is missing..."
 
 				generator.semiconductor.set_loc(get_turf(generator))
+				generator.semiconductor = null
+			if (TEG_SEMI_STATE_BOOTLEG_SEMI)
+				generator.semiconductor_state = TEG_SEMI_STATE_MISSING
+				boutput(owner, "<span class='notice'>You finish prying the metal out of \the [generator].</span>")
+				playsound(generator, 'sound/items/Deconstruct.ogg', 80, 1)
+				generator.semiconductor_repair = "The semiconductor is missing..."
+
+				var/obj/item/sheet/S = new /obj/item/sheet(get_turf(generator))
+				S.amount = 2
+				if (generator.semiconductor.material)
+					S.setMaterial(generator.semiconductor.material)
+				else
+					S.setMaterial(getMaterial("steel"))
+				qdel(generator.semiconductor)
 				generator.semiconductor = null
 
 /datum/action/bar/icon/teg_semiconductor_replace
@@ -1312,6 +1345,8 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 			if (TEG_SEMI_STATE_MISSING)
 				owner.visible_message("<span class='notice'>[owner] begins to insert [the_tool] into \the [generator].</span>")
 				playsound(generator, 'sound/items/Deconstruct.ogg', 60, 1)
+			if(TEG_SEMI_STATE_BOOTLEG_SEMI)
+				owner.visible_message("<span class='notice'>[owner] begins to cut away excess metal and fuse the sheets to fit into \the [generator].</span>")
 			if (TEG_SEMI_STATE_DISCONNECTED)
 				owner.visible_message("<span class='notice'>[owner] begins to wire up the semiconductor and \the [generator].</span>")
 				playsound(generator, 'sound/items/Deconstruct.ogg', 60, 1)
@@ -1328,15 +1363,39 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 		switch(generator.semiconductor_state)
 			if (TEG_SEMI_STATE_MISSING)
 				if (the_tool != null)
-					src.generator.semiconductor = the_tool
-					if(ismob(owner))
-						var/mob/M = owner
-						M.drop_item(the_tool)
-					generator.semiconductor.set_loc(generator)
+					if(istype(the_tool, /obj/item/teg_semiconductor))
+						src.generator.semiconductor = the_tool
+						if(ismob(owner))
+							var/mob/M = owner
+							M.drop_item(the_tool)
+						generator.semiconductor.set_loc(generator)
 
+						generator.semiconductor_state = TEG_SEMI_STATE_DISCONNECTED
+						playsound(generator, 'sound/items/Deconstruct.ogg', 80, 1)
+						owner.visible_message("<span class='notice'>[owner] places [the_tool] inside [generator].</span>", "<span class='notice'>You successfully place semiconductor inside \the [generator].</span>")
+						generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
+					else if(istype(the_tool, /obj/item/sheet))
+						src.generator.semiconductor = new /obj/item/teg_semiconductor(generator)
+						if (the_tool.material)
+							src.generator.semiconductor.setMaterial(the_tool.material)
+						else
+							src.generator.semiconductor.setMaterial(getMaterial("steel"))
+						the_tool.change_stack_amount(-10)
+
+						generator.semiconductor_state = TEG_SEMI_STATE_BOOTLEG_SEMI
+						playsound(generator, 'sound/items/Deconstruct.ogg', 80, 1)
+						owner.visible_message("<span class='notice'>[owner] places [the_tool] inside [generator].</span>", "<span class='notice'>You successfully placed the sheets inside \the [generator].</span>")
+						generator.semiconductor_repair = "The semiconductor has stuffed with some sheets they need to but and fused with a welder to probably make it work."
+
+			if(TEG_SEMI_STATE_BOOTLEG_SEMI)
+				if (the_tool != null)
 					generator.semiconductor_state = TEG_SEMI_STATE_DISCONNECTED
-					playsound(generator, 'sound/items/Deconstruct.ogg', 80, 1)
-					owner.visible_message("<span class='notice'>[owner] places [the_tool] inside [generator].</span>", "<span class='notice'>You successfully place semiconductor inside \the [generator].</span>")
+					playsound(generator, 'sound/items/Deconstruct.ogg', 40, 1)
+
+					src.generator.semiconductor.efficiency_offset -= 5;
+					src.generator.semiconductor.desc += " Looks like someone just welded some metal together but is better than nothing!"
+
+					owner.visible_message("<span class='notice'>[owner] carefully uses [the_tool] inside [generator].</span>", "<span class='notice'>You successfully fuse the sheets inside \the [generator] and cut away the excess.</span>")
 					generator.semiconductor_repair = "The semiconductor has been disconnected and can be pried out or reconnected with additional cable."
 
 			if (TEG_SEMI_STATE_DISCONNECTED)
@@ -1370,10 +1429,40 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 
 /** Thermoelectric Generator Semiconductor - A beautiful array of thermopiles */
 /obj/item/teg_semiconductor
-	name = "Prototype Semiconductor"
-	desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+	name = "thermocouple"
+	desc = "A large rectangular plate composed of two similar metals. Better examples of this have to be out there."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "semi"
+	var/can_transform = FALSE
+	var/efficiency_offset = -15
+
+	onMaterialChanged()
+		if(can_transform)
+			..()
+		else
+			var/electrical_conductivity = 50
+			if(src.material.hasProperty("electrical"))
+				electrical_conductivity = src.material.getProperty("electrical") * 10
+
+			var/thermal_conductivity = 50
+			if(src.material.hasProperty("thermal"))
+				thermal_conductivity =  src.material.getProperty("thermal") * 10
+
+			/*    2σ / κ = zT    - Offset 				Result 	*/
+			/*  2*75 / 25 = 6    - 2 = 4  		 	 Great! 	*/
+			/*	2*50 / 50 = 2    - 2 = 0  			 No Change*/
+			/*  2*25 / 75 = 0.66 -2  = -1.34 		 TERRIBAD */
+			/* Use above offset * 10 to put it in the -25 to 40 ballpark */
+			var/efficiency_shift = (2 * electrical_conductivity / thermal_conductivity) - 2 //center on zero
+			efficiency_offset = clamp(efficiency_shift*10, -25, 20) //scale shift by 10 which gets it in the ballpark!
+			..()
+
+	prototype
+		name = "Prototype Semiconductor"
+		desc = "A large rectangular plate stamped with 'Prototype Thermo-Electric Generator Semiconductor.  If found please return to NanoTrasen.'"
+		icon_state = "semi-nt"
+		can_transform = TRUE
+		efficiency_offset = 0
 
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
@@ -1418,7 +1507,7 @@ TYPEINFO(/obj/machinery/power/furnace/thermo)
 	name = "Zaojun-1 Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace. This version lacks the thermocouple and is designed to heat larger thermo-electric gas circulator systems."
 	icon_state = "furnace"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 

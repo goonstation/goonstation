@@ -115,6 +115,9 @@
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen Special Operative"
 
+/obj/item/device/radio/headset/command/nt/consultant
+	icon_tooltip = "NanoTrasen Security Consultant"
+
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
 	desc = "So the captain can know exactly what's going on around the station while doing nothing about any of it."
@@ -624,4 +627,18 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
 				C = ticker.mode
 			src.secure_frequencies = list("z" = C.agent_radiofreq)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	gang
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New(turf/newLoc, var/frequency)
+			..()
+			if (!frequency)
+				return
+
+			src.secure_frequencies = list("z" = frequency)
 			src.secure_classes = list("z" = RADIOCL_SYNDICATE)

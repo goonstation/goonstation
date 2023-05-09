@@ -186,7 +186,7 @@
 	icon = 'icons/mob/mobile_ai.dmi'
 	icon_state = "intact"
 	layer = AI_RAIL_LAYER
-	anchored = 1
+	anchored = ANCHORED
 	var/bitdir = 0 //Valid direction bitflags
 
 	New()
@@ -223,7 +223,7 @@
 	icon_state = "drone"
 	pixel_y = 15
 	layer = MOB_LAYER
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		..()

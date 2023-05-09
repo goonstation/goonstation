@@ -1,4 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -28,7 +29,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/area/registered_area = null
 	///time when mob last awoke from hibernation
 	var/last_hibernation_wake_tick = 0
-	var/is_hibernating = TRUE
+	var/is_hibernating = FALSE
 
 	var/can_burn = 1
 	var/can_throw = 0
@@ -70,6 +71,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
 	var/max_skins = 0
 
+	// for critters with removable arms(brullbar, bear)
+	var/left_arm = null
+	var/right_arm = null
+
 	var/fits_under_table = 0
 	var/table_hide = 0
 
@@ -97,6 +102,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	///If the mob has an ai, and is currently retaliating against being attacked, how long should we do that for? (deciseconds)
 	///Special values: RETALIATE_ONCE = Attack once, RETALIATE_UNTIL_INCAP = Attack until the target is incapacitated, RETALIATE_UNTIL_DEAD = Attck until the target is dead
 	var/ai_retaliate_persistence = RETALIATE_ONCE
+	///Counts the number of attacks this critter has performed without using an ability
+	var/ai_attack_count = 0
+	///The number of basic attacks this critter will perform in between using abilities
+	var/ai_attacks_per_ability = 2
 
 	blood_id = "blood"
 
@@ -111,10 +120,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
-		SPAWN(0)
-			if(!src.disposed)
-				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -133,6 +138,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		hud = new custom_hud_type(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 
 		if (src.stamina_bar)
 			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -242,6 +248,28 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (HH.count_in_total)
 				max_health += HH.maximum_value
 				health += HH.maximum_value
+
+	///admin varediting proc
+	proc/modify_health()
+		set name = "Modify critter health"
+		var/chosen = input(usr, "Pick health type") in (src.healthlist + "All")
+		if (!chosen)
+			return
+		var/value = input(usr, "Input new value") as num
+		if (!value)
+			return
+		var/to_update = list()
+		if (chosen == "All")
+			to_update = src.healthlist
+		else
+			to_update = list("chosen" = src.healthlist[chosen])
+		for (var/holder_id in to_update)
+			var/datum/healthHolder/holder = to_update[holder_id]
+			holder.maximum_value = value
+			holder.value = value
+			holder.last_value = value
+
+		src.count_healths()
 
 	// begin convenience procs
 	proc/add_hh_flesh(var/max, var/mult)
@@ -369,6 +397,32 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		src.ghostize()
 		qdel (src)
+
+	proc/remove_arm(var/left_or_right) // for removing the arms of brullbars and bears
+		switch(left_or_right)
+			if("left")
+				if(!src.left_arm)
+					return
+				var/datum/handHolder/HH = hands[1]
+				if(!HH.limb)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.left_arm(src.loc)
+				src.update_dead_icon()
+				return
+			if("right")
+				if(!src.right_arm)
+					return
+				var/datum/handHolder/HH = hands[2]
+				if(!HH.limb)
+					return //in case two action bars are running at the same time, don't duplicate arms
+				qdel(HH)
+				new src.right_arm(src.loc)
+				src.update_dead_icon()
+				return
+
+	proc/update_dead_icon() // for brullbar and bear missing arm sprites
+		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
@@ -760,7 +814,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
-			I.set_loc(src)
+			if (I.stored)
+				I.stored.transfer_stored_item(I, src, user = src)
+			else
+				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -1061,28 +1118,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 					message = "<b>[src]</b> [param]"
 					m_type = 1
 				if ("flip")
-					if (src.emote_check(voluntary, 50) && !src.shrunk)
-						if (istype(src.loc,/obj/))
+					if (src.emote_check(voluntary, 50))
+						if (isobj(src.loc))
 							var/obj/container = src.loc
-							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 3 SECONDS)
-							src.changeStatus("weakened", 4 SECONDS)
-							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-							var/wiggle = 6
-							while(wiggle > 0)
-								wiggle--
-								container.pixel_x = rand(-3,3)
-								container.pixel_y = rand(-3,3)
-								sleep(0.1 SECONDS)
-							container.pixel_x = 0
-							container.pixel_y = 0
-							if (prob(33))
-								if (istype(container, /obj/storage))
-									var/obj/storage/C = container
-									if (C.can_flip_bust == 1)
-										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
-										C.bust_out()
+							container.mob_flip_inside(src)
 						else
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
@@ -1186,6 +1225,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		..()
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
+		src.can_lie = initial(src.can_lie)
 		src.can_implant = initial(src.can_implant)
 		blood_volume = initial(blood_volume)
 
@@ -1282,9 +1322,23 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_attack(var/mob/target)
+		if (src.ai_attack_count >= src.ai_attacks_per_ability)
+			if (src.critter_ability_attack(target))
+				src.ai_attack_count = 0 //ability used successfully, reset the count
+				return
+		//default to a basic attack
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
+
+	/// How the critter should attack normally
+	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	///How the critter should use abilities, return TRUE to indicate ability usage success
+	proc/critter_ability_attack(var/mob/target)
+		return FALSE
 
 	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_scavenge(var/mob/target)
@@ -1296,7 +1350,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	proc/can_critter_attack()
 		var/datum/handHolder/HH = get_active_hand()
 		if(HH?.limb)
-			return !HH.limb.is_on_cooldown() //if we have limb cooldowns, use that, otherwise use can_act()
+			return !HH.limb.is_on_cooldown() && can_act(src,TRUE) //if we have limb cooldowns, use that, otherwise use can_act()
 		return can_act(src,TRUE)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
@@ -1318,21 +1372,20 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 	. = ..()
 
+/mob/living/critter/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
 			src.set_a_intent(INTENT_HELP)
-			hud.update_intent()
 		if ("disarm")
 			src.set_a_intent(INTENT_DISARM)
-			hud.update_intent()
 		if ("grab")
 			src.set_a_intent(INTENT_GRAB)
-			hud.update_intent()
 		if ("harm")
 			src.set_a_intent(INTENT_HARM )
-			hud.update_intent()
 		if ("drop")
 			src.drop_item(null, TRUE)
 		if ("swaphand")
@@ -1399,9 +1452,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 
@@ -1438,7 +1488,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 /mob/living/critter/Logout()
 	..()
-	if (src.ai && !src.ai.enabled && src.is_npc)
+	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.key)
 		ai.enable()
 
 /mob/living/critter/Login()
@@ -1471,6 +1522,12 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	emp_act()
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+
+	can_eat()
+		return FALSE
+
+	can_drink()
+		return FALSE
 
 	vomit()
 		return

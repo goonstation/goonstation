@@ -66,6 +66,9 @@ TYPEINFO(/obj/item/aiModule)
 			return
 
 		var/answer = tgui_input_text(user, text, title, default)
+		if(!(src in user.equipped_list()))
+			boutput(user, "<span class='notice'>You must be holding [src] to modify it.<span>")
+			return
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
 	proc/update_law_text(user)

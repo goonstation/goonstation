@@ -1,7 +1,7 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 mob/new_player
-	anchored = 1
+	anchored = ANCHORED
 
 	var/ready = 0
 	var/spawning = 0
@@ -19,7 +19,7 @@ mob/new_player
 	stat = 2
 	canmove = 0
 
-	anchored = 1	//  don't get pushed around
+	anchored = ANCHORED	//  don't get pushed around
 
 	var/datum/spend_spacebux/bank_menu
 
@@ -205,6 +205,9 @@ mob/new_player
 						latejoin.color = json_decode("\[-0.152143,1.02282,-0.546681,1.28769,-0.143153,0.610996,-0.135547,0.120332,0.935685\]") //spriters beware
 						latejoin.owner = src.mind
 						src.mind.transfer_to(S)
+						if (S.emagged)
+							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
+							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
 							S.choose_name()
 							qdel(src)
@@ -651,6 +654,7 @@ a.latejoin-card:hover {
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
+		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
 
 		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
@@ -724,52 +728,18 @@ a.latejoin-card:hover {
 		var/datum/mind/traitor = traitormob.mind
 		ticker.mode.traitors += traitor
 
-		var/objective_set_path = null
-		// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
-		// It should be removed when all antagonists are on the new system.
-		var/do_objectives = TRUE
 		switch (type)
 			if (ROLE_TRAITOR)
 				if (traitor.assigned_role)
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
 				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
-				do_objectives = FALSE
 
-			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER)
+			if (ROLE_ARCFIEND, ROLE_SALVAGER, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_WRESTLER, ROLE_HUNTER, ROLE_GRINCH, ROLE_WRAITH, ROLE_FLOCKMIND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_GRINCH)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
-
-			if (ROLE_WRAITH)
-				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)
-				do_objectives = FALSE
 
 			else // Fallback if role is unrecognized.
 				traitor.special_role = ROLE_TRAITOR
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-		if (do_objectives)
-			if (!isnull(objective_set_path))
-				if (ispath(objective_set_path, /datum/objective_set))
-					new objective_set_path(traitor)
-				else if (ispath(objective_set_path, /datum/objective))
-					ticker.mode.bestow_objective(traitor, objective_set_path)
-
-			var/obj_count = 1
-			for(var/datum/objective/objective in traitor.objectives)
-				#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew)) continue
-				#endif
-				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-				obj_count++
 
 	proc/close_spawn_windows()
 		if(client)

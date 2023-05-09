@@ -30,7 +30,7 @@
 				gamemode.head_revolutionaries += src.owner
 			gamemode.update_rev_icons_added(src.owner)
 
-	Del()
+	disposing()
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 			var/datum/game_mode/revolution/gamemode = ticker.mode
 			if (src.owner in gamemode.head_revolutionaries)

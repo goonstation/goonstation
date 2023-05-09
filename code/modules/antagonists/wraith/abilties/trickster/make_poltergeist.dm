@@ -13,7 +13,12 @@
 	cast(atom/target, params)
 		if (..())
 			return 1
-
+#ifdef RP_MODE
+		var/mob/living/intangible/wraith/wraith = holder.owner
+		if (istype(wraith) && length(wraith.poltergeists) >= 3)
+			boutput(wraith, "<span class='alert'>This world is already loud with the voices of your children. No more ghosts will come for now.</span>")
+			return 1
+#endif
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm!")

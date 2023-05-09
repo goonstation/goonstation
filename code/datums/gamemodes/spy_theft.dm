@@ -467,7 +467,6 @@
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
-	big_station_bounties[/obj/machinery/lawrack] = 3
 	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
@@ -514,7 +513,7 @@
 	big_station_bounties[/obj/reagent_dispensers/still] = 2
 
 	big_station_bounties[/obj/machinery/communications_dish] = 2
-	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/item/teg_semiconductor/prototype] = 2
 	big_station_bounties[/obj/machinery/power/smes] = 2
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3

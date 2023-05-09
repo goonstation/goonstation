@@ -6,7 +6,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	desc = "A water-filled unit intended for cookery purposes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
@@ -51,6 +51,10 @@ TYPEINFO(/obj/submachine/chef_sink)
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"
+			if (istype(W, /obj/item/reagent_containers/mender))
+				var/obj/item/reagent_containers/mender/automender = W
+				if(automender.borg)
+					return
 			if (W.reagents)
 				W.reagents.clear_reagents()		// avoid null error
 
@@ -148,7 +152,7 @@ TYPEINFO(/obj/submachine/ice_cream_dispenser)
 	desc = "A machine designed to dispense space ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
@@ -312,7 +316,7 @@ TYPEINFO(/obj/submachine/chef_oven)
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
@@ -499,8 +503,16 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
+			src.recipes += new /datum/cookingrecipe/synthbuttburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberbuttburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
+			src.recipes += new /datum/cookingrecipe/synthheartburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberheartburger(src)
+			src.recipes += new /datum/cookingrecipe/flockheartburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
+			src.recipes += new /datum/cookingrecipe/synthbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/flockbrainburger(src)
 			src.recipes += new /datum/cookingrecipe/flockburger(src)
 			src.recipes += new /datum/cookingrecipe/brainburger(src)
 			src.recipes += new /datum/cookingrecipe/fishburger(src)
@@ -921,7 +933,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 	desc = "Refines various food substances into different forms."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
@@ -984,7 +996,8 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/ingredient/oatmeal/(src.loc)
 					qdel( P )
 				if (/obj/item/plant/oat/salt)
-					new/obj/item/reagent_containers/food/snacks/ingredient/salt/(src.loc)
+					var/obj/item/reagent_containers/food/snacks/ingredient/salt/F = new(src.loc)
+					F.reagents.add_reagent("salt", P.reagents.get_reagent_amount("salt")) // item/plant has no plantgenes :(
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)
 					new/obj/item/reagent_containers/food/snacks/ingredient/rice(src.loc)
@@ -1055,7 +1068,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
-					new/obj/item/reagent_containers/food/snacks/ingredient/pepper(src.loc)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/ingredient/pepper/F = new(src.loc)
+					F.reagents.add_reagent("pepper", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
@@ -1189,7 +1204,7 @@ TYPEINFO(/obj/submachine/mixer)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "blender"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()

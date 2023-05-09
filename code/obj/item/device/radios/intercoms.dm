@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 #else
 	icon_state = "intercom-map"
 #endif
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WIRECUTTERS | DECON_MULTITOOL
 	chat_class = RADIOCL_INTERCOM
@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/New()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, PROC_REF(update_pixel_offset_dir))
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color

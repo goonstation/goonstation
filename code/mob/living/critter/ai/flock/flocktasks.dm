@@ -405,7 +405,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
@@ -484,7 +483,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
@@ -606,8 +604,8 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
-	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
+	for(var/obj/item/storage/I in view(max_dist, holder.owner)) // flock can only see /obj/item/storage
+		if(length(I.storage.get_contents()) && I.loc != holder.owner)
 			. += I
 
 
@@ -627,7 +625,7 @@ stare
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(container_target) // fix runtime Cannot read null.contents
-		return !length(container_target.contents) || (F.absorber.item == container_target)
+		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
 		return FALSE
@@ -651,7 +649,7 @@ stare
 				return
 			else
 				// we've opened a HUD, do a fake HUD click
-				container_target.hud.relay_click("boxes", F, dummy_params)
+				container_target.storage.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					F.drop_item()
 					return
@@ -948,7 +946,6 @@ stare
 	if (drone)
 		drone.set_hand(2) // nanite spray
 		drone.set_a_intent(INTENT_DISARM)
-		drone.hud?.update_intent()
 		drone.hud?.update_hands()
 	has_started = FALSE
 
@@ -972,7 +969,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
@@ -1035,7 +1031,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_DISARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/succeedable/barricade
@@ -1097,7 +1092,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/get_targets()

@@ -12,7 +12,7 @@
 	var/testmerges = list()
 #ifdef TESTMERGE_PRS
 	for (var/testmerge in TESTMERGE_PRS)
-		testmerges += "#" + testmerge // so they're clickable on GH
+		testmerges += "#[testmerge]" // so they're clickable on GH
 #endif
 	var/desc = {"
 ### Labels

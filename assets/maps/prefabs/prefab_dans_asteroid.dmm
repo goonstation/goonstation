@@ -844,7 +844,7 @@
 	dir = 4;
 	icon_state = "gib4"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Jd" = (
@@ -1101,7 +1101,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /obj/item/reagent_containers/food/snacks/burrito{
 	pixel_x = -5;
 	pixel_y = 4
@@ -1275,7 +1275,7 @@
 /area/prefab/discount_dans_asteroid)
 "Wo" = (
 /obj/decal/cleanable/blood/gibs/body,
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Wr" = (

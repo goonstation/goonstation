@@ -59,6 +59,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 			silent = TRUE
 		src.setup_antagonist(do_equip, do_objectives, do_relocate, silent, source, late_setup)
 
+		if (QDELETED(src))
+			return FALSE
+		src.owner.antagonists.Add(src)
+
 	Del()
 		if (owner && !src.pseudo)
 			owner.former_antagonist_roles.Add(owner.special_role)
@@ -70,14 +74,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 		..()
 
 	/// Calls removal procs to soft-remove this antagonist from its owner. Actual movement or deletion of the datum still needs to happen elsewhere.
-	proc/remove_self(take_gear = TRUE)
+	proc/remove_self(take_gear = TRUE, source)
 		if (take_gear)
 			src.remove_equipment()
 
 		src.remove_objectives()
 
 		if (!src.silent && !src.pseudo)
-			src.announce_removal()
+			src.announce_removal(source)
 			src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
@@ -165,7 +169,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		boutput(owner.current, "<h3><span class='alert'>You are \a [src.display_name]!</span></h3>")
 
 	/// Display something when this antagonist is removed.
-	proc/announce_removal()
+	proc/announce_removal(source)
 		boutput(owner.current, "<h3><span class='alert'>You are no longer \a [src.display_name]!</span></h3>")
 
 	/// Show a popup window for this antagonist. Defaults to using the same ID as the antagonist itself.
@@ -213,7 +217,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"
-			if (log_data)
+			if (log_data && length(src.objectives))
 				owner.current.unlock_medal("MISSION COMPLETE", TRUE)
 				if (!isnull(success_medal))
 					owner.current.unlock_medal(success_medal, TRUE)
@@ -222,7 +226,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src.id)
+			src.owner.remove_antagonist(src.id, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()

@@ -21,7 +21,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/mosquito,
 /mob/living/critter/spider/baby,
 /mob/living/critter/spider/ice/baby,
-/mob/living/critter/small_animal/wasp,
+/mob/living/critter/small_animal/wasp/strong,
 /mob/living/critter/small_animal/raccoon,
 /mob/living/critter/small_animal/seal,
 /mob/living/critter/small_animal/walrus,
@@ -29,7 +29,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/slug/snail,
 /mob/living/critter/small_animal/bee,
 /mob/living/critter/maneater_polymorph,
-/mob/living/critter/fermid_polymorph,
+/mob/living/critter/fermid/polymorph,
 /mob/living/critter/small_animal/crab_polymorph)
 
 /datum/targetable/spell/animal

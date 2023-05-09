@@ -17,6 +17,8 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Are we the memory of a dead flockmind?
+	var/dead = FALSE
 	/// number of zero compute flocktraces the flock has
 	var/free_traces = 0
 	var/queued_trace_deaths = 0
@@ -59,7 +61,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/New()
 	..()
 	src.center_marker = new(locate(0,0,1))
-	src.center_marker.anchored = TRUE
+	src.center_marker.anchored = ANCHORED
 	src.center_marker.mouse_opacity = 0
 	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
 	src.center_marker.icon_state = "structure-relay"
@@ -657,6 +659,7 @@ var/flock_signal_unleashed = FALSE
 	if (!real)
 		src.load_structures()
 		return
+	src.dead = TRUE
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
 	if (src.flockmind)
@@ -790,7 +793,7 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/z_level_check(var/atom/A)
 	var/turf/T = get_turf(A)
-	if (src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
+	if (src.dead || src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 
@@ -846,6 +849,8 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer3 = /obj/flock_structure/compute,
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
+	/obj/submachine/chem_extractor = /obj/flock_structure/compute,
+	/obj/submachine/seed_manipulator = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
 	/obj/machinery/vending = /obj/flock_structure/fabricator,
 	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
