@@ -1575,7 +1575,8 @@
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(4, 6), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
-		msgs.base_attack_message = "<b><span class='alert'>[user] punches [target] with [src.holder]!</span></b>"
+		var/action = pick("pummel", "pound", "mangle")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
 		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
