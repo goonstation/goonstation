@@ -55,7 +55,7 @@ TYPEINFO(/obj/item/cloaking_device)
 		if (number_of_devices.len > 0)
 			return FALSE
 
-		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, .proc/deactivate)
+		RegisterSignal(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE, PROC_REF(deactivate))
 		APPLY_ATOM_PROPERTY(user, PROP_MOB_INVISIBILITY, "cloak", INVIS_CLOAK)
 		cloak_overlay.loc = user
 		user.client?.images += cloak_overlay

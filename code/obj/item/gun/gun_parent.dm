@@ -379,7 +379,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	spread = max(spread, spread_angle)
 
 	for (var/i = 0; i < current_projectile.shot_number; i++)
-		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
+		var/obj/projectile/P = initialize_projectile_pixel_spread(user, current_projectile, target, 0, 0, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 		if (!P)
 			return FALSE
 		if (user == target)
@@ -457,7 +457,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		spread += 5 * how_drunk
 	spread = max(spread, spread_angle)
 
-	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, .proc/alter_projectile))
+	var/obj/projectile/P = shoot_projectile_ST_pixel_spread(user, current_projectile, target, POX, POY, spread, alter_proj = new/datum/callback(src, PROC_REF(alter_projectile)))
 	if (P)
 		P.forensic_ID = src.forensic_ID
 

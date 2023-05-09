@@ -830,7 +830,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	setup(var/datum/mind/ownermind, var/obj/item/device/master)
 		..()
-		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, .proc/master_pre_attackby)
+		RegisterSignal(master, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(master_pre_attackby))
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/spy_theft))
 				src.game = ticker.mode
@@ -1346,7 +1346,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 	SWFspell_Purchased(var/mob/living/carbon/human/user,var/obj/item/SWF_uplink/book)
 		..()
-		user.spell_soulguard = 1
+		user.spell_soulguard = SOULGUARD_SPELL
 
 /datum/SWFuplinkspell/staffofcthulhu
 	name = "Staff of Cthulhu"

@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/wasp
+	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower

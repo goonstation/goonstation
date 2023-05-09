@@ -581,6 +581,10 @@
 	item_state = "MDlonglabcoat"
 	coat_style = "MDlonglabcoat"
 
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
+
 	april_fools
 		icon_state = "MDlonglabcoat-alt"
 		item_state = "MDlonglabcoat-alt"
@@ -592,6 +596,10 @@
 	icon_state = "RDlabcoat"
 	item_state = "RDlabcoat"
 	coat_style = "RDlabcoat"
+
+	setupProperties()
+		. = ..()
+		setProperty("chemprot", 30)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Research Director")
