@@ -5,18 +5,8 @@
 
 /datum/aiTask/prioritizer/critter/bloodling/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive/bloodling, list(src.holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack/bloodling, list(src.holder, src))
-
-/datum/aiTask/timed/wander/critter/aggressive/bloodling
-
-/datum/aiTask/timed/wander/critter/aggressive/bloodling/on_tick()
-	if (prob(10))
-		var/mob/living/critter/bloodling/bloodling = src.holder.owner
-		if (!(locate(bloodling.cleanable_type) in src.holder.owner.loc))
-			playsound(src.holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE, -1)
-			new bloodling.cleanable_type(get_turf(src.holder.owner))
-	..()
 
 /datum/aiTask/sequence/goalbased/critter/attack/bloodling
 

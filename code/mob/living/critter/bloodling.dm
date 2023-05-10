@@ -55,6 +55,14 @@
 	movement_delay(atom/move_target = 0, running = 0)
 		. = BASE_SPEED
 
+	Life(datum/controller/process/mobs/parent)
+		..()
+		if (prob(80))
+			return
+		if (!(locate(src.cleanable_type) in src.loc))
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE, -1)
+			new src.cleanable_type(get_turf(src))
+
 	seek_target(range = 5)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
