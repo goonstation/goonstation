@@ -72654,7 +72654,7 @@
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
-/mob/living/critter/small_animal/bee/virvatulbee,
+/obj/critter/domestic_bee/virvatulbee,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "nRU" = (
