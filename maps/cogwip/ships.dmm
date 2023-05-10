@@ -1812,7 +1812,7 @@
 /area/space)
 "fd" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "wizard"
 	},
@@ -1895,7 +1895,7 @@
 "fo" = (
 /obj/window/south,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/landmark/start{
 	name = "wizard"
 	},
@@ -2669,7 +2669,7 @@
 /area/space)
 "hu" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/paper/ACNote,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
@@ -2699,7 +2699,7 @@
 /area/space)
 "hx" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred2"
@@ -2731,7 +2731,7 @@
 /area/space)
 "hD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/clothing/under/gimmick/snazza,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
@@ -2746,7 +2746,7 @@
 /area/space)
 "hF" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -4007,7 +4007,7 @@
 /area/space)
 "kR" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /turf/simulated/floor{
 	icon_state = "carpetSE"
 	},
@@ -6128,7 +6128,7 @@
 /obj/item/clothing/under/gimmick/dawson{
 	name = "hipster clothes"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -6353,7 +6353,7 @@
 	icon_state = "body6";
 	name = "decomposed corpse"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -6388,7 +6388,7 @@
 	layer = 4;
 	name = "Iji"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -9223,7 +9223,7 @@
 /area/space)
 "xA" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -9250,7 +9250,7 @@
 /area/space)
 "xC" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -9651,7 +9651,7 @@
 /area/space)
 "yv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -9670,7 +9670,7 @@
 /area/space)
 "yx" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -10872,7 +10872,7 @@
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -10880,7 +10880,7 @@
 /area/space)
 "BA" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},

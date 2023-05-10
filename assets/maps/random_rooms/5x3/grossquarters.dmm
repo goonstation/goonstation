@@ -49,7 +49,7 @@
 /area/dmm_suite/clear_area)
 "B" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/machinery/light/small/sticky{
 	dir = 1
 	},

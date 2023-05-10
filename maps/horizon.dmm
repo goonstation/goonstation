@@ -340,7 +340,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/wreckage)
 "aaT" = (
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -490,7 +490,7 @@
 /area/station/crew_quarters/quarters_east)
 "abq" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -499,7 +499,7 @@
 /area/station/crew_quarters/quarters_east)
 "abr" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -707,7 +707,7 @@
 "abN" = (
 /obj/decal/cleanable/ash,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -2610,7 +2610,7 @@
 /area/station/crew_quarters/quarters_east)
 "agA" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -2619,7 +2619,7 @@
 /area/station/crew_quarters/quarters_east)
 "agB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -2843,7 +2843,7 @@
 "ahf" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -2851,7 +2851,7 @@
 /area/station/crew_quarters/quarters_east)
 "ahg" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -6534,7 +6534,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -7021,7 +7021,7 @@
 	pixel_y = 21
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -7041,7 +7041,7 @@
 /area/station/crew_quarters/quartersB)
 "ats" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -7258,7 +7258,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -7313,7 +7313,7 @@
 /area/station/medical/cdc)
 "aue" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -7356,7 +7356,7 @@
 /area/station/com_dish/auxdish)
 "aul" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -7376,7 +7376,7 @@
 /area/station/crew_quarters/quartersB)
 "auo" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -7393,7 +7393,7 @@
 /area/station/crew_quarters/quartersB)
 "aur" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -7532,7 +7532,7 @@
 	pixel_y = 21
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/clothing/suit/straight_jacket,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/specialroom/freezer/blue,
@@ -8253,7 +8253,7 @@
 /area/station/crew_quarters/quartersB)
 "awE" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -8740,7 +8740,7 @@
 /area/station/maintenance/east)
 "axD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -9109,11 +9109,11 @@
 /area/station/medical/cdc)
 "ayF" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -9128,11 +9128,11 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -14556,7 +14556,7 @@
 /area/station/chapel/office)
 "aMl" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -16301,7 +16301,7 @@
 	pixel_y = 20
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -17912,7 +17912,7 @@
 /area/station/bridge/captain)
 "aTY" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -18219,7 +18219,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aUD" = (
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -18907,7 +18907,7 @@
 /area/station/janitor/office)
 "aWp" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -19424,7 +19424,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay/cloner)
 "aXr" = (
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -20408,7 +20408,7 @@
 /area/station/janitor/office)
 "aZH" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
 "aZI" = (
@@ -20931,7 +20931,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -21680,7 +21680,7 @@
 /area/station/crew_quarters/clown)
 "bcn" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -21701,7 +21701,7 @@
 /area/station/crew_quarters/clown)
 "bco" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -21838,7 +21838,7 @@
 /area/station/security/checkpoint/arrivals)
 "bcE" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -23588,7 +23588,7 @@
 /area/station/crew_quarters/md)
 "bgT" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -24735,7 +24735,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -32958,7 +32958,7 @@
 /area/station/crew_quarters/quarters_south)
 "bEf" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -33389,7 +33389,7 @@
 	pixel_y = 21
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "bFm" = (
@@ -34209,7 +34209,7 @@
 /area/station/maintenance/southeast)
 "bHH" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -35103,7 +35103,7 @@
 /area/station/crew_quarters/pool)
 "bJF" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -37072,7 +37072,7 @@
 /area/station/security/detectives_office)
 "bOU" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -38709,7 +38709,7 @@
 /area/station/crew_quarters/quarters_south)
 "bSR" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -38735,7 +38735,7 @@
 /area/station/crew_quarters/quarters_south)
 "bST" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -42623,7 +42623,7 @@
 /area/station/crew_quarters/baroffice)
 "cbP" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -49724,7 +49724,7 @@
 /area/ghostdrone_factory)
 "ctQ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -49864,7 +49864,7 @@
 /area/space)
 "cus" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -49884,7 +49884,7 @@
 /area/listeningpost)
 "cuv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "normal red bedsheet"
@@ -49900,7 +49900,7 @@
 /area/listeningpost/syndicate_teleporter)
 "cuz" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -49920,7 +49920,7 @@
 /area/listeningpost)
 "cuB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -52795,7 +52795,7 @@
 /area/station/science/testchamber)
 "cCv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -55454,7 +55454,7 @@
 /area/station/medical/medbay)
 "hai" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -55890,7 +55890,7 @@
 	icon_state = "clowncorpse";
 	name = "what used to be Twenty Second Elephant"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "hard to believe...";
 	icon_state = "bedsheet-captain";
@@ -58888,7 +58888,7 @@
 /area/station/engine/engineering)
 "nRv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
 "nTp" = (
@@ -61967,7 +61967,7 @@
 	pixel_y = -7
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},

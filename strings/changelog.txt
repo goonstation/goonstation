@@ -2,6 +2,7 @@
 (t) wed may 10 23
 (u)aloe
 (+)The Head of Security's cape is now worn on the back. Its stats have been slightly lowered to account for this.
+(+)Bedsheets and bedsheet capes too
 (t)tue may 09 23
 (u)LeahTheTech
 (+)Security mind protection health implants now only self destruct *after* sending the death alert.

@@ -14890,7 +14890,7 @@
 /area/crew_quarters/hor)
 "Hz" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
 "HA" = (

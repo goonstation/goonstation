@@ -33,7 +33,7 @@
 
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
-	var/obj/item/clothing/suit/bedsheet/bedsheet = null
+	var/obj/item/clothing/back/bedsheet/bedsheet = null
 
 	New()
 		..()
@@ -524,7 +524,7 @@
 				user.visible_message("<b>[user]</b> gently places a hat on [src]!", "You gently place a hat on [src]!")
 			return
 
-		else if (istype(W, /obj/item/clothing/suit/bedsheet))
+		else if (istype(W, /obj/item/clothing/back/bedsheet))
 			if (src.bedsheet)
 				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
 				return
