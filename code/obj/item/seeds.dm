@@ -24,7 +24,7 @@
 		// harvesting a plant or what-have-you.
 		// Scatter the seed's sprite around a bit so you can make big ol' piles of them.
 		if (src.auxillary_datum && !src.planttype)
-			src.planttype = new src.auxillary_datum(src)
+			src.planttype = HY_get_species_from_path(src.auxillary_datum)
 		if (do_color)
 			docolor()
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
@@ -92,7 +92,7 @@
 		// The proc for when the manipulator is infusing seeds with a reagent. This is sort of a
 		// framing proc simply to check if the seed is in good enough condition to withstand the
 		// infusion or not - the actual gameplay effects are handled in a different proc:
-		// proc/HYPinfusionP, /datums/plants.dm, line 115
+		// proc/HYPinfusionP, /datums/plants.dm, line 111
 		// Note that this continues down the chain and checks the proc for individual plant
 		// datums after it's finished executing the base plant datum infusion proc.
 
@@ -107,10 +107,10 @@
 			// Whoops, you did it too often and now the seed broke. Good job doofus!!
 
 		var/datum/plant/P = src.planttype
-		if (P.HYPinfusionP(src,reagent) == 99)
-			// The proc call both executes the infusion on the species AND performs a check -
-			// The check is for a return value of 99, basically an error code for "Whoops you
-			// destroyed the seed you dumbass".
+		//this proc handles all statistics changes of the plant that depends on the chemical used, like phlogs 80-100 damage.
+		P.HYPinfusionP(src,reagent)
+		if (src.seeddamage > 99)
+			// "Whoops you destroyed the seed you dumbass".
 			M.seeds -= src
 			qdel(src)
 			return 1 // We'll want to tell the manipulator that so it can inform the user, too.

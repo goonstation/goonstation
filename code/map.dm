@@ -11,36 +11,36 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 60),
+	"Clarion" =				list("id" = "CLARION",		"settings" = "destiny/clarion", "playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 #ifdef RP_MODE
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 14),
+	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
 #else
-	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 #endif
-	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
-	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
-	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = FALSE,		"MaxPlayersAllowed" = 80),
-	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
-	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = FALSE),
-	"Crash" = 			list("id" = "CRASH", 		"settings" = "horizon/crash", 		"playerPickable" = FALSE),
-	"Mushroom" =		list("id" = "MUSHROOM", 	"settings" = "mushroom",		"playerPickable" = FALSE),
-	"Trunkmap" = 		list("id" = "TRUNKMAP", 	"settings" = "trunkmap",		"playerPickable" = FALSE),
-	"Oshan Laboratory"= list("id" = "OSHAN", 	"settings" = "oshan", 			"playerPickable" = TRUE),
-	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = FALSE),
-	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
-	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
-	"Nadir" = 		list("id" = "NADIR", 		"settings" = "nadir", 		"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
-	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = FALSE),
-	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
-	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = TRUE,				"MaxPlayersAllowed" = 30),
-	"Manta" = 			list("id" = "MANTA", 		"settings" = "manta", 				"playerPickable" = FALSE,				"MaxPlayersAllowed" = 80),
-	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = FALSE),
-	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = FALSE),
-	"Event" = 			list("id" = "EVENT", 		"settings" = "destiny/clarion", 		"playerPickable" = FALSE),
-	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = FALSE),
-	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = FALSE)
+	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
+	"Cogmap 1 (Old)" =		list("id" = "COGMAP_OLD",	"settings" = "cogmap_old"),
+	"Cogmap 2" =			list("id" = "COGMAP2",		"settings" = "cogmap2",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
+	"Donut 2" =				list("id" = "DONUT2",		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
+	"Donut 3" =				list("id" = "DONUT3",		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
+	"Horizon" =				list("id" = "HORIZON",		"settings" = "horizon",			"playerPickable" = FALSE),
+	"Crash" = 				list("id" = "CRASH",		"settings" = "horizon/crash",	"playerPickable" = FALSE),
+	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
+	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
+	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE),
+	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
+	"Kondaru" =				list("id" = "KONDARU",		"settings" = "kondaru",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
+	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
+	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
+	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
+	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
+	"Atlas" =				list("id" = "ATLAS",		"settings" = "atlas",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 30),
+	"Manta" =				list("id" = "MANTA",		"settings" = "manta",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
+	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
+	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
+	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
+	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
+	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE)
 )
 
 /obj/landmark/map
@@ -77,6 +77,12 @@ var/global/list/mapNames = list(
 	var/goonhub_map = "https://goonhub.com/maps/cogmap"
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
+
+	var/list/atom/movable/screen/parallax_layer/parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	var/walls = /turf/simulated/wall/auto
 	var/rwalls = /turf/simulated/wall/auto/reinforced
@@ -179,7 +185,7 @@ var/global/list/mapNames = list(
 
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
-		var/dmm_suite/dmm_suite = new
+		var/dmm_suite/dmm_suite = new(debug_id="shuttle [transit_path]")
 		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
 		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
 		var/turf/transit_start
@@ -189,7 +195,7 @@ var/global/list/mapNames = list(
 				break
 		if (!transit_start)
 			CRASH("Unable to load escape transit landmark")
-		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
+		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z, flags=DMM_LOAD_SPACE)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
@@ -202,6 +208,13 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	escape_dir = WEST
 
@@ -240,6 +253,13 @@ var/global/list/mapNames = list(
 	airlock_style = "pyro"
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	escape_dir = NORTH
 	default_shuttle = "donut3"
@@ -297,6 +317,14 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/cogmap,
+		/atom/movable/screen/parallax_layer/planet/mundus,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
 	rwindows = /obj/window/auto/reinforced
@@ -343,6 +371,14 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/cogmap2,
+		/atom/movable/screen/parallax_layer/planet/iustitia,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -393,6 +429,11 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/destiny"
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/south,
+		/atom/movable/screen/parallax_layer/space_2/south,
+		)
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -455,7 +496,6 @@ var/global/list/mapNames = list(
 		"the central research sector hub" = list(/area/station/science/lobby),
 		"the quartermaster's office" = list(/area/station/quartermaster/office),
 		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/lobby),
 		"the bar" = list(/area/station/crew_quarters/bar),
 		//"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
@@ -518,7 +558,6 @@ var/global/list/mapNames = list(
 		/datum/job/research/roboticist = 3,
 		/datum/job/research/scientist = 6,
 		/datum/job/research/medical_doctor = 7,
-		/datum/job/engineering/mechanic = 4,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,
@@ -542,6 +581,8 @@ var/global/list/mapNames = list(
 
 	style = "ship"
 	arrivals_type = MAP_SPAWN_CRYO
+
+	parallax_layers = list()
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -620,6 +661,11 @@ var/global/list/mapNames = list(
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/west,
+		/atom/movable/screen/parallax_layer/space_2/west,
+		)
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -657,6 +703,13 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/kondaru"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/kondaru,
+		/atom/movable/screen/parallax_layer/asteroids_far/kondaru,
+		)
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -864,6 +917,8 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
+	parallax_layers = list()
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -914,6 +969,8 @@ var/global/list/mapNames = list(
 	display_name = "Nadir Extraction Site"
 	goonhub_map = "https://goonhub.com/maps/nadir"
 
+	parallax_layers = list()
+
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	auto_walls = TRUE
@@ -941,19 +998,19 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
+	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/cargooffice,\
+		/area/station/quartermaster/cargobay,\
+		/area/station/quartermaster/storage),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"security's central staff room" = list(/area/station/security/main),
 		"the engineering staff room" = list(/area/station/engine/engineering),
 		"the medical bay's central room" = list(/area/station/medical/medbay),
 		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
 		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
-		"the chapel" = list(/area/station/chapel/sanctuary))
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the radio lab" = list(/area/station/crew_quarters/radio/lab),
+		"the derelict southeast 'Warrens'" = list(/area/station/hallway/secondary/construction))
 
 	job_limits_from_landmarks = TRUE
-	job_limits_override = list(
-		/datum/job/engineering/miner = 0 //eventually, assay technicians?
-	)
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
@@ -1002,6 +1059,12 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
 
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far,
+		/atom/movable/screen/parallax_layer/asteroids_near,
+		)
 
 	arrivals_type = MAP_SPAWN_CRYO
 

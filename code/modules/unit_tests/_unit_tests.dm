@@ -38,8 +38,10 @@
 
 #include "rand.dm"
 #include "deletions.dm"
+#include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"
+#include "passability_cache.dm"
 #include "unit_test.dm"
 
 #undef TEST_ASSERT

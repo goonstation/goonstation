@@ -105,7 +105,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.food_color
+				overlay_color = F.get_food_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
@@ -654,8 +654,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-		eater.emote("scream")
-		return
 
 #endif
 

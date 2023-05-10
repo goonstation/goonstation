@@ -305,7 +305,7 @@ const AvailableCellsDisplay = (props) => {
                     <LabeledList.Item label={cell.name}
                       buttons={
                         <>
-                          <DockingAllowedButton onClick={() => act("cell-install", { cellRef: cell.ref })} icon="plus" tooltip="Add to occpuant" />
+                          <DockingAllowedButton onClick={() => act("cell-install", { cellRef: cell.ref })} icon="plus" tooltip="Add to occupant" />
                           <DockingAllowedButton onClick={() => act("cell-eject", { cellRef: cell.ref })} icon="eject" tooltip="Eject from station" />
                         </>
                       }
@@ -333,7 +333,7 @@ const AvailableModulesDisplay = (props) => {
           modules.map(modu => {
             return (
               <div key={modu.ref}>{modu.name}
-                <DockingAllowedButton onClick={() => act("module-install", { moduleRef: modu.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("module-install", { moduleRef: modu.ref })} icon="plus-circle" color="transparent" tooltip="Add to occupant" />
                 <DockingAllowedButton onClick={() => act("module-eject", { moduleRef: modu.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </div>
             );
@@ -355,7 +355,7 @@ const AvailableUpgradesDisplay = (props) => {
           upgrades.map(upgrade => {
             return (
               <div key={upgrade.ref}>{upgrade.name}
-                <DockingAllowedButton onClick={() => act("upgrade-install", { upgradeRef: upgrade.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("upgrade-install", { upgradeRef: upgrade.ref })} icon="plus-circle" color="transparent" tooltip="Add to occupant" />
                 <DockingAllowedButton onClick={() => act("upgrade-eject", { upgradeRef: upgrade.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </div>
             );
@@ -376,7 +376,7 @@ const AvailableClothingDisplay = (props) => {
           clothes.map(cloth => {
             return (
               <Box key={cloth.ref}>{cloth.name}
-                <DockingAllowedButton onClick={() => act("clothing-install", { clothingRef: cloth.ref })} icon="plus-circle" color="transparent" tooltip="Add to occpuant" />
+                <DockingAllowedButton onClick={() => act("clothing-install", { clothingRef: cloth.ref })} icon="plus-circle" color="transparent" tooltip="Add to occupant" />
                 <DockingAllowedButton onClick={() => act("clothing-eject", { clothingRef: cloth.ref })} icon="eject" color="transparent" tooltip="Eject from station" />
               </Box>
             );
@@ -399,7 +399,7 @@ const OccupantCellDisplay = (props) => {
         <DockingAllowedButton
           onClick={() => act("cell-remove")}
           icon="minus"
-          tooltip="Remove the occpuant's power cell"
+          tooltip="Remove the occupant's power cell"
           disabled={cellData ? false : true} />
       }>
       { cellData && <CellChargeBar cellData={cellData} />}

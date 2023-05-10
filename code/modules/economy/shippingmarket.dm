@@ -276,6 +276,8 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		var/obj/item/card/id/scan = sell_art_datum.scan
+		var/datum/db_record/account = sell_art_datum.account
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
@@ -312,14 +314,21 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		wagesystem.shipping_budget += price
+		if (scan && account)
+			wagesystem.shipping_budget += price / 2
+			account["current_money"] += price / 2
+		else
+			wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
-			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
+			if (pap.lastAnalysis == 3)
+				message += "Analysis was correct."
+			else
+				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
@@ -441,7 +450,7 @@
 
 
 		#ifdef SECRETS_ENABLED
-		send_to_brazil(sell_crate)
+		send_to_canada_post(sell_crate)
 		#endif
 
 		if(return_handling)
@@ -476,8 +485,10 @@
 
 		var/datum/signal/pdaSignal = get_free_signal()
 		if(scan && account)
-			wagesystem.shipping_budget += duckets / 2
-			account["current_money"] += duckets / 2
+			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
+			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
+			wagesystem.shipping_budget += share_NT
+			account["current_money"] += share_seller
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
@@ -577,20 +588,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"
@@ -615,7 +626,7 @@
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
-	var/amount = input(usr, "How much?", "Funds", 0) as null|num
+	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
 	if (!isnum_safe(amount)) return
 
 	switch(trans)

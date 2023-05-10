@@ -397,7 +397,7 @@ obj/machinery/embedded_controller
 
 	name = "Embedded Controller"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	var/on = 1
 

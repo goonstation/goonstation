@@ -60,7 +60,7 @@
 	icon_state = "secbot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	luminosity = 2
 	req_access = list(access_security)
 	var/weapon_access = access_carrypermit
@@ -604,7 +604,7 @@
 			SPAWN(0.2 SECONDS)
 				src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			if (src.target.getStatusDuration("weakened"))
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.target_lastloc = M.loc
 				src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 			return
@@ -811,7 +811,7 @@
 
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue
@@ -825,7 +825,7 @@
 					var/obj/item/card/id/perp_id = H.equipped()
 					if (!istype(perp_id))
 						perp_id = H.wear_id
-					if(!perp_id || (perp_id && !(perp_id.access & src.lockdown_permit)))
+					if(!perp_id || (perp_id && !length(perp_id.access & src.lockdown_permit)))
 						src.threatlevel += 4
 			if (src.threatlevel >= 4)
 				src.EngageTarget(C)
@@ -922,6 +922,9 @@
 			var/has_carry_permit = 0
 			var/has_contraband_permit = 0
 
+			if (!has_contraband_permit)
+				threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 			if(perp_id) //Checking for permits
 				if(weapon_access in perp_id.access)
 					has_carry_permit = 1
@@ -931,44 +934,44 @@
 			if (istype(perp.l_hand))
 				if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 					if(!has_carry_permit)
-						threatcount += perp.l_hand.contraband
+						threatcount += perp.l_hand.get_contraband()
 				else // not carrying a gun, but potential contraband?
 					if(!has_contraband_permit)
-						threatcount += perp.l_hand.contraband
+						threatcount += perp.l_hand.get_contraband()
 
 			if (istype(perp.r_hand))
 				if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 					if(!has_carry_permit)
-						threatcount += perp.r_hand.contraband
+						threatcount += perp.r_hand.get_contraband()
 				else // not carrying a gun, but potential contraband?
 					if(!has_contraband_permit)
-						threatcount += perp.r_hand.contraband
+						threatcount += perp.r_hand.get_contraband()
 
 			if (istype(perp.belt))
 				if (istype(perp.belt, /obj/item/gun/))
 					if (!has_carry_permit)
-						threatcount += perp.belt.contraband * 0.5
+						threatcount += perp.belt.get_contraband() * 0.5
 				else
 					if (!has_contraband_permit)
-						threatcount += perp.belt.contraband * 0.5
+						threatcount += perp.belt.get_contraband() * 0.5
 
 			if (istype(perp.wear_suit))
 				if (!has_contraband_permit)
-					threatcount += perp.wear_suit.contraband
+					threatcount += perp.wear_suit.get_contraband()
 
 			if (istype(perp.back))
 				if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 					if (!has_carry_permit)
-						threatcount += perp.back.contraband * 0.5
+						threatcount += perp.back.get_contraband() * 0.5
 				else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 					if (!has_contraband_permit)
-						threatcount += perp.back.contraband * 0.5
+						threatcount += perp.back.get_contraband() * 0.5
 
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5
 
-		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perp.name)))
 				threatcount += 5
 
@@ -1002,7 +1005,7 @@
 
 	KillPathAndGiveUp(var/give_up = KPAGU_CLEAR_PATH)
 		. = ..()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 		if(give_up == KPAGU_RETURN_TO_GUARD || give_up == KPAGU_CLEAR_ALL)
 			src.oldtarget_name = src.target?.name
@@ -1278,7 +1281,6 @@
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
-			master.visible_message("<span class='alert'><B>...vigorously!</B></span>")
 			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
 
 	onInterrupt()

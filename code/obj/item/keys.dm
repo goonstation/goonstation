@@ -16,6 +16,10 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	name = "key"
 	desc = "It unlocks or locks doors."
 
+/obj/item/device/key/generic/larrys
+	name = "backroom key"
+	desc = "do you really want to go back there?"
+
 /obj/item/device/key/cheget
 	name = "old fancy key"
 	desc = "It unlocks or locks slightly newer doors."
@@ -167,9 +171,3 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	name = "tubular key"
 	desc = "One of those cylinder keys that you see on vending machines and stuff."
 	icon_state = "key_round"
-
-
-/obj/item/device/key/hairball //Hairball key construction is in jonescity.dm
-	desc = "Gross, it's all slimy. It's still dripping."
-	name = "hairball key"
-	icon_state = "key_cat"

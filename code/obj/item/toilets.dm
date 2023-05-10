@@ -3,16 +3,18 @@ CONTAINS:
 TOILET
 */
 
+TYPEINFO(/obj/item/storage/toilet)
+	mats = 5
+
 /obj/item/storage/toilet
 	name = "toilet"
 	w_class = W_CLASS_BULKY
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
-	mats = 5
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	var/status = 0
 	var/clogged = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "toilet"
 	rand_pos = 0
@@ -26,12 +28,12 @@ TOILET
 	STOP_TRACKING
 	..()
 
-/obj/item/storage/toilet/attackby(obj/item/W, mob/user, obj/item/storage/T)
-	if (src.contents.len >= 7)
+/obj/item/storage/toilet/attackby(obj/item/W, mob/user)
+	if (src.storage.is_full())
 		boutput(user, "The toilet is clogged!")
 		user.unlock_medal("Try jiggling the handle",1) //new method to get this medal since the old one (fat person in disposal pipe) is gone
 		return
-	if (istype(W, /obj/item/storage))
+	if (W.storage)
 		return
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/G = W
@@ -92,7 +94,7 @@ TOILET
 		user.visible_message("<span class='notice'>[user] sits on [src].</span>", "<span class='notice'>You sit on [src].</span>")
 	else
 		user.visible_message("<span class='notice'>[M] is seated on [src] by [user]!</span>")
-	M.anchored = 1
+	M.anchored = ANCHORED
 	M.buckled = src
 	M.set_loc(src.loc)
 	src.add_fingerprint(user)
@@ -110,25 +112,23 @@ TOILET
 			reset_anchored(M)
 			M.buckled = null
 			src.add_fingerprint(user)
-	if((src.clogged < 1) || (src.contents.len < 7) || (user.loc != src.loc))
+	if((src.clogged < 1) || (!src.storage.is_full()) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
 		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
 
 
 #ifdef UNDERWATER_MAP
-		var/turf/source = get_turf(src)
-		if (source)
-			var/turf/target = locate(source.x,source.y,5)
-			for (var/thing in contents)
-				var/atom/movable/A = thing
-				A.set_loc(target)
+		var/turf/T = get_turf(src)
+		if (T)
+			var/turf/target = locate(T.x, T.y, 5)
+			for (var/obj/item/I as anything in src.storage.get_contents())
+				src.storage.transfer_stored_item(I, target)
 #endif
 		src.clogged = 0
-		for (var/item in src.contents)
+		for (var/item in src.storage.get_contents())
 			flush(item)
-			src.hud?.remove_item(item)
 
-	else if((src.clogged >= 1) || (src.contents.len >= 7) || (user.buckled != src.loc))
+	else if((src.clogged >= 1) || (src.storage.is_full()) || (user.buckled != src.loc))
 		src.visible_message("<span class='notice'>The toilet is clogged!</span>")
 
 /obj/item/storage/toilet/proc/flush(atom)
@@ -142,7 +142,7 @@ TOILET
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
-	if (src.clogged >= 1 || src.contents.len >= 7)
+	if (src.clogged >= 1 || src.storage.is_full())
 		head.set_loc(src.loc)
 		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
@@ -180,7 +180,7 @@ TOILET
 		if (prob(1))
 			var/something = pick(trinket_safelist)
 			if (ispath(something))
-				new something(src)
+				src.storage.add_contents(new something(src))
 
 /obj/item/storage/toilet/random/gold // important!!
 	New()
@@ -195,9 +195,9 @@ TOILET
 
 /obj/item/storage/toilet/goldentoilet
 	name = "golden toilet"
-	icon_state = "goldentoilet"
+	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
 
 	New()
 		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/sparkles(src))
+		src.setMaterial(getMaterial("gold"))

@@ -35,6 +35,11 @@
 #define LANDMARK_SYNDICATE_ASSAULT_POD_TELE "Syndicate-Assault-Pod-Tele"
 #define LANDMARK_SYNDICATE_ASSAULT_POD_COMP "Syndicate-Assault-Pod-Comp"
 
+// Pirates. Yarr!
+#define LANDMARK_PIRATE "Pirate-Spawn"
+#define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
+#define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
+
 // Salvagers
 
 #define LANDMARK_SALVAGER "Salvager-Spawn"
@@ -59,6 +64,7 @@
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
 #define LANDMARK_TUTORIAL_START "tutorial_start_marker"
+#define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
 // loading screen maptext landmarks

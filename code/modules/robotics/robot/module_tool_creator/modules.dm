@@ -27,6 +27,7 @@
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
@@ -35,9 +36,11 @@
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/chemistry
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
 		/obj/item/hand_labeler,
+		/obj/item/pen,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -50,6 +53,7 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/extinguisher/large/cyborg,
+		/obj/item/device/gps, // Let's them assist with telesci
 	)
 
 // botanist. chef. janitor.
@@ -129,6 +133,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif

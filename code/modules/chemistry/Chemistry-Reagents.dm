@@ -132,10 +132,9 @@ datum
 		proc/reaction_blob(var/obj/blob/B, var/volume)
 			SHOULD_CALL_PARENT(TRUE)
 			if (!blob_damage)
-				return 1
-			src.holder.remove_reagent(src.id, volume)
+				return TRUE
 			B.take_damage(blob_damage, volume, "poison")
-			return 0
+			return TRUE
 
 		//Proc to check a mob's chemical protection in advance of reaction.
 		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
@@ -267,6 +266,8 @@ datum
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
 					amount *= (0.65)
+				if(HAS_ATOM_PROPERTY(H, PROP_MOB_OVERDOSE_WEAKNESS))
+					amount *= 2
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)
@@ -321,10 +322,10 @@ datum
 				return AD
 			return
 
-		proc/flush(var/mob/M, var/amount, var/list/flush_specific_reagents)
-			for (var/reagent_id in M.reagents.reagent_list)
+		proc/flush(var/datum/reagents/holder, var/amount, var/list/flush_specific_reagents)
+			for (var/reagent_id in holder.reagent_list)
 				if ((reagent_id != src.id) && ((reagent_id in flush_specific_reagents) || !flush_specific_reagents))//checks if there's a specific reagent list to flush or if it should flush all reagents.
-					holder.remove_reagent(reagent_id, (amount * M.reagents.reagent_list[reagent_id].flushing_multiplier))
+					holder.remove_reagent(reagent_id, (amount * holder.reagent_list[reagent_id].flushing_multiplier))
 			return
 
 		// reagent state helper procs

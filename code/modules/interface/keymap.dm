@@ -50,6 +50,8 @@
 		var/req_modifier = 0 //The modifier(s) associated with this key
 		var/bound_key //The final key that should be bound
 		var/list/keys = splittext(keybind, "+")
+		if(keybind == "+")
+			keys = list("+")
 
 		if(keys.len > 1)
 			//We have multiple keys (modifiers + normal ones)

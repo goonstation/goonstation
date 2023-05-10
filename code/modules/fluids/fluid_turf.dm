@@ -20,7 +20,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
 	color = OCEAN_COLOR
-	pathable = 0
+	pathable = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	fullbright = 0
@@ -63,6 +63,8 @@
 	New()
 		..()
 
+		if(global.dont_init_space)
+			return
 		if (randomIcon)
 			switch(rand(1,3))
 				if(1)
@@ -332,10 +334,16 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
-		if (istype(AM,/mob/dead) || istype(AM,/mob/wraith) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
+		if (istype(AM,/mob/dead) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed))
 			return
 		if (locate(/obj/lattice) in src)
 			return
+		if (AM.anchored == 2)
+			return
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client?.flying)
+				return
 		return_if_overlay_or_effect(AM)
 
 		try_build_turf_list()
@@ -422,6 +430,12 @@
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
+
+/turf/space/fluid/trench/nospawn
+	spawningFlags = null
+
+	generate_worldgen()
+		return
 
 /turf/space/fluid/nospawn
 	spawningFlags = null
@@ -520,7 +534,7 @@
 		return
 
 	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
 		if (isturf(T))

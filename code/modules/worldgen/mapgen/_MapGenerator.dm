@@ -10,6 +10,9 @@ proc/initialize_biomes()
 ///This type is responsible for any map generation behavior that is done in areas, override this to allow for area-specific map generation. This generation is ran by areas on world/proc/init().
 /datum/map_generator
 	var/list/seeds
+	var/floor_turf_type
+	var/wall_turf_type
+	var/clear_turf_type
 
 ///This proc will be ran by areas on world/proc/init(), and provides the areas turfs as argument to allow for generation.
 /datum/map_generator/proc/generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
@@ -43,6 +46,14 @@ area/map_gen
 /area/map_gen/jungle
 	name = "planet generation area"
 	map_generator = /datum/map_generator/jungle_generator
+
+/area/map_gen/desert
+	name = "planet generation area"
+	map_generator = /datum/map_generator/desert_generator
+
+/area/map_gen/snow
+	name = "planet generation area"
+	map_generator = /datum/map_generator/snow_generator
 
 /turf/map_gen
 	name = "ungenerated turf"

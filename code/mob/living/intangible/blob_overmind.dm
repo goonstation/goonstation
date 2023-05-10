@@ -8,11 +8,11 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
 
-	var/datum/tutorial_base/blob/tutorial
+	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
 	var/bio_points = 0
 	var/bio_points_max = 1
@@ -41,6 +41,16 @@
 	var/image/nucleus_overlay
 	var/total_placed = 0
 	var/next_pity_point = 100
+#ifdef BONUS_POINTS
+	bio_points = 999
+	bio_points_max = 999
+	bio_points_max_bonus = 999
+	base_gen_rate = 999
+	gen_rate_bonus = 999
+	gen_rate_used = 999
+	evo_points = 999
+#endif
+
 
 	var/datum/blob_ability/shift_power = null
 	var/datum/blob_ability/ctrl_power = null
@@ -64,6 +74,8 @@
 	var/extra_try_timestamp = 0
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
+
+	var/admin_override = FALSE //for sudo blobs
 
 	proc/start_tutorial()
 		if (tutorial)
@@ -96,7 +108,7 @@
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
-		src.nucleus_overlay.appearance_flags = RESET_COLOR
+		src.nucleus_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		SPAWN(0)
 			while (src)
@@ -393,6 +405,7 @@
 		for (var/datum/blob_upgrade/U in src.available_upgrades)
 			src.available_upgrades -= U
 			qdel(U)
+		src.update_buttons()
 
 	proc/remove_ability(var/ability_type)
 		if (!ispath(ability_type))
@@ -766,40 +779,3 @@
 /mob/living/intangible/blob_overmind/checkContextActions(atom/target)
 	// a bit oh a hack, no multicontext for blobs now because it keeps overriding attacking pods :/
 	return list()
-
-/mob/proc/make_blob()
-	if (!src.client && !src.mind)
-		return null
-	var/mob/living/intangible/blob_overmind/W = new/mob/living/intangible/blob_overmind(src)
-
-	var/turf/T = get_turf(src)
-	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (ASLoc)
-			W.set_loc(ASLoc)
-		else
-			W.z = 1
-	else
-		W.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-
-	if (src.mind)
-		src.mind.transfer_to(W)
-	else
-		var/key = src.client.key
-		if (src.client)
-			src.client.mob = W
-		W.mind = new /datum/mind()
-		W.mind.ckey = ckey
-		W.mind.key = key
-		W.mind.current = W
-		ticker.minds += W.mind
-
-	var/this = src
-	src = null
-	qdel(this)
-
-	boutput(W, "<b>You are a blob! Grow in size and devour the station.</b>")
-	boutput(W, "Your hivemind will cease to exist if your body is entirely destroyed.")
-	boutput(W, "Use the question mark button in the lower right corner to get help on your abilities.")
-
-	return W

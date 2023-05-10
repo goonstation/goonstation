@@ -5,13 +5,19 @@
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
+
+//Put any items that NPCs physically cannot pickup here
+#define IS_NPC_ILLEGAL_ITEM(x) ( \
+		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
+	)
+
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
 			istype(x, /obj/item/device/radio/headset) || \
 			istype(x, /obj/item/card/id) || \
-			x.flags & ONBELT || \
-			x.flags & ONBACK \
+			x.c_flags & ONBELT || \
+			x.c_flags & ONBACK \
 		) && !IS_NPC_HATED_ITEM(x) \
 	)
 
@@ -31,7 +37,18 @@
 		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN(2 SECONDS)
-			ai_init()
+			if (src.is_npc)
+				ai_init()
+
+/mob/living/carbon/human/npc/mutantrace
+	var/spawn_mutantrace
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			if(spawn_mutantrace)
+				src.set_mutantrace(text2path(spawn_mutantrace))
+				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
@@ -159,7 +176,7 @@
 	ai_attacked = 0
 
 	if(abilityHolder)
-		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+		if(src.use_ai_toggle && !abilityHolder.getAbility(/datum/targetable/ai_toggle))
 			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
@@ -199,6 +216,13 @@
 		ai_lastaction = world.time
 		walk_towards(src, null)
 		return
+
+	// Strange to have this so high up, but we're considered 'restrained' if we have a missing limb on our active hand
+	// thus the AI thinks it's cuffed or whatever and never does anything other than moving if it loses the active arm
+	if(!src.limbs.l_arm)
+		src.swap_hand(0)
+	else if(!src.limbs.r_arm)
+		src.swap_hand(1)
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
@@ -244,7 +268,7 @@
 	//Priority-based target finding
 	var/mob/T
 	var/lastRating = -INFINITY
-	for (var/mob/living/carbon/M in view(7,src))
+	for (var/mob/living/carbon/M in viewers(7,src))
 		//Any reason we do not want to take this target into account AT ALL?
 		if((M == src && !ai_suicidal) || isdead(M) || (M.is_npc && !ai_attacknpc)) continue //Let's not fight ourselves (unless we're real crazy) or a dead person... or NPCs, unless we're allowed to.
 
@@ -260,7 +284,7 @@
 
 		//Why do we NOT want to go after this jerk
 		if(isunconscious(M)) rating-=8 //This one's unconscious
-		for(var/mob/living/carbon/human/H in oview(7,src))
+		for(var/mob/living/carbon/human/H in viewers(7,src))
 			if(H.ai_target == M) rating -= 4 //I'd rather fight my own fight
 		if(M.is_npc) rating -= 5 //I don't want to go after my fellow NPCs unless there is no other option
 		if(M == src) rating -= 14 //I don't want to go after myself
@@ -393,7 +417,7 @@
 							suit:set_loc(carbon_target:loc)
 							suit:dropped(carbon_target)
 							suit:layer = initial(suit:layer)
-				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot()) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
+				if(prob(75) && distance > 1 && (world.timeofday - ai_attacked) > 100 && ai_validpath() && ((istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src)) || src.bioHolder.HasOneOfTheseEffects("eyebeams", "cryokinesis", "jumpy")) && !A?.sanctuary)
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					var/datum/bioEffect/power/eyebeams/eyebeams = src.bioHolder.GetEffect("eyebeams")
@@ -415,7 +439,7 @@
 								if(2)
 									src.say(pick("BANG!", "POW!", "Eat lead, [carbon_target.name]!", "Suck it down, [carbon_target.name]!"))
 
-				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot() && !A?.sanctuary))
+				if((prob(33) || ai_throw) && (distance > 1 || A?.sanctuary) && ai_validpath() && src.equipped() && !(istype(src.equipped(),/obj/item/gun) && src.equipped():canshoot(src) && !A?.sanctuary))
 					//I can attack someone! =D
 					ai_target_old.Cut()
 					src.throw_item(ai_target, list("npc_throw"))
@@ -551,21 +575,21 @@
 		throw_equipped |= prob(80)
 
 	// pull things out of other things!
-	if(istype(src.equipped(), /obj/item/storage))
-		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+	var/obj/item/I = src.equipped()
+	if(I.storage)
+		if(!length(I.storage.get_contents()) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else if(length(storage.contents))
-			var/obj/item/taken = pick(storage.contents)
-			src.u_equip(storage)
-			storage.set_loc(src.loc)
-			storage.dropped(src)
-			storage.layer = initial(storage.layer)
-			taken.set_loc(storage.loc)
+		else if(length(I.storage.get_contents()))
+			var/obj/item/taken = pick(I.storage.get_contents())
+			src.u_equip(I)
+			I.set_loc(src.loc)
+			I.dropped(src)
+			I.layer = initial(I.layer)
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.c_flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -595,7 +619,7 @@
 					poured = TRUE
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
-			// do nothing
+			; // do nothing
 		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else
@@ -704,7 +728,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(G)) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -724,7 +748,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1
@@ -732,7 +756,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband
+		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -753,10 +777,10 @@
 			src.set_clothing_icon_dirty()
 
 /mob/living/carbon/human/proc/ai_pickupweapon()
-	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun) && src.r_hand:canshoot(src))
 		return
 
-	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot())
+	if(istype(src.r_hand,/obj/item/gun/kinetic) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
@@ -772,23 +796,21 @@
 	if(src.r_hand?.cant_drop)
 		return
 
-	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot())
+	if(istype(src.r_hand, /obj/item/gun) && !src.r_hand:canshoot(src))
 		var/obj/item/gun/GN = src.r_hand
 		src.drop_item()
 		if(src.w_uniform && !src.belt)
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(src.back && istype(src.back,/obj/item/storage/backpack))
-			var/obj/item/storage/backpack/B = src.back
-			if(B.contents.len < 7)
-				B.Attackby(GN,src)
+		else if(src.back?.storage && !src.back.storage.is_full())
+			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup
 
 	for(var/obj/item/G in src.contents)
 		if(G.throwing) continue
-		if((istype(G,/obj/item/gun) && G:canshoot()) && src.r_hand != G)
+		if((istype(G,/obj/item/gun) && G:canshoot(src)) && src.r_hand != G)
 			pickup = G
 			src.u_equip(G)
 			break
@@ -797,7 +819,7 @@
 		for (var/obj/item/G in view(1,src))
 			if(G.throwing) continue
 			if(!istype(G.loc, /turf) || G.anchored) continue
-			if((istype(G,/obj/item/gun) && G:canshoot()))
+			if((istype(G,/obj/item/gun) && G:canshoot(src)))
 				pickup = G
 				break
 			else if(!src.r_hand && !pickup && G.force > 3)
@@ -991,3 +1013,4 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
+#undef IS_NPC_ILLEGAL_ITEM

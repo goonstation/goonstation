@@ -81,14 +81,17 @@
 
 	return B
 
-var/global/obj/flashDummy
+var/global/obj/fuckyou/flashDummy
+
+// This runtimes due to abstract instantiation every time an arcflash occurs and I don't feel like fixing it so here's a magic concrete child
+/obj/fuckyou
 
 /proc/getFlashDummy()
 	if (!flashDummy)
-		flashDummy = new /obj(null)
+		flashDummy = new /obj/fuckyou(null)
 		flashDummy.set_density(0)
 		flashDummy.set_opacity(0)
-		flashDummy.anchored = 1
+		flashDummy.anchored = ANCHORED
 		flashDummy.mouse_opacity = 0
 	return flashDummy
 
@@ -369,6 +372,10 @@ proc/get_angle(atom/a, atom/b)
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Cleans up data passed in from network packets for display so it doesn't mess with formatting
+/proc/tidy_net_data(var/t)
+	. = isnum(t) ? t : strip_html(t)
+
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
@@ -477,10 +484,10 @@ proc/get_angle(atom/a, atom/b)
 	. = dir2text(angle2dir(degree))
 
 /proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = sanitize(input(Message, Title, Default) as text, length)
+	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(input(user, Message, Title, Default) as null|text, length)
+	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -660,7 +667,7 @@ proc/get_angle(atom/a, atom/b)
 		if(C.client)
 			. += C
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/wraith/M in mobs)
+	for(var/mob/living/intangible/wraith/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/intangible/blob_overmind/M in mobs)
@@ -681,7 +688,7 @@ proc/get_angle(atom/a, atom/b)
 	for(var/mob/zoldorf/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/living/seanceghost/M in mobs)
+	for(var/mob/living/intangible/seanceghost/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 
@@ -1141,10 +1148,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // Marquesas: added an extra parameter to fix issue with changeling.
 // Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
 // cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name)
+/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
 	if (src.open_to_sound)
 		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name)
+			O.hear_talk(M,text,real_name, lang_id)
 
 /**
   * Returns true if given value is a hex value
@@ -1173,7 +1180,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		return "0 "
 
 	var/suffix = ""
-	var/power = round( log(10, value) / 3)
+	var/power = round( log(10, abs(value)) / 3)
 	switch (power)
 		if (-8)
 			suffix = "y"
@@ -1224,13 +1231,23 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-			. += A
+			if(isskeleton(A))
+				var/mob/living/carbon/human/H = A
+				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
+					. += A
+			else
+				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
 				var/obj/item/organ/head/found_head = A
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
+			else if (isobj(A)) // is it holding a head
+				for(var/obj/item/organ/head/head in A)
+					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
+						var/mob/linked_mob = head.linked_human
+						. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
@@ -1247,8 +1264,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/mob/M as anything in by_cat[TR_CAT_OMNIPRESENT_MOBS])
 			if(get_step(M, 0)?.z == get_step(centre, 0)?.z)
 				. |= M
-
-
+	var/turf/T = get_turf(centre)
+	if(T?.vistarget)
+		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
+		. |= all_hearers(range, T.vistarget)
 
 /proc/all_viewers(var/range,var/centre)
 	. = list()
@@ -1357,13 +1376,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 			for(var/datum/mind/M in someEnemies)
 				if (M.current)
 					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-					for(var/datum/mind/G in M.gang.members) //This may be fucked. Dunno how these are stored.
-						enemies += G
 
 		//Lists we grab regardless of game type
 		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
@@ -1695,8 +1707,8 @@ var/list/english_num = list("0" = "zero", "1" = "one", "2" = "two", "3" = "three
 	if (!istype(A) || !istype(B))
 		return
 	if (A.anchored || B.anchored)
-		A.anchored = 1
-		B.anchored = 1
+		A.anchored = ANCHORED
+		B.anchored = ANCHORED
 
 	if (!islist(A.attached_objs))
 		A.attached_objs = list()
@@ -1841,8 +1853,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
-			sleep(30 SECONDS)
+		sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -1852,6 +1863,7 @@ proc/countJob(rank)
 					continue
 
 			if (candidates.len)
+				candidates = prioritize_dead_players(candidates)
 				if (return_minds == 1)
 					return candidates
 				else
@@ -1874,21 +1886,43 @@ proc/countJob(rank)
 		if (dead_player_list_helper(O, allow_dead_antags, require_client) != 1)
 			continue
 		if (!(O in candidates))
-			candidates.Add(O)
-
+			candidates.Add(O.mind)
+	candidates = prioritize_dead_players(candidates)
 	if (return_minds == 1)
-		var/list/datum/mind/minds = list()
-		for (var/mob/M2 in candidates)
-			if (M2.mind && !(M2.mind in minds))
-				minds.Add(M2.mind)
+		return candidates
+	else
+		var/list/mob/mobs = list()
+		for (var/datum/mind/M3 in candidates)
+			if (M3.current && ismob(M3.current))
+				if (!(M3.current in mobs))
+					mobs.Add(M3.current)
+		return mobs
 
-		return minds
+///Returns a randomized list of minds with players who joined as observer at the back
+/proc/prioritize_dead_players(list/datum/mind/minds)
+	var/list/observers = list()
+	for (var/datum/mind/mind in minds)
+		if (istype(mind.current, /mob/dead/observer))
+			var/mob/dead/observer/ghost = mind.current
+			if (ghost.observe_round)
+				minds -= mind
+				observers += mind
+	shuffle_list(minds)
+	shuffle_list(observers)
+	return minds + observers
 
-	return candidates
+///Logs a player respawning as something from a respawn event, noting if they joined the round as an observer or not
+///Note: should be called BEFORE they are transferred to the new body
+/proc/log_respawn_event(datum/mind/mind, respawning_as, source)
+	var/is_round_observer = FALSE
+	if (istype(mind.current, /mob/dead/observer))
+		var/mob/dead/observer/ghost = mind.current
+		is_round_observer = ghost.observe_round
+	logTheThing(LOG_ADMIN, mind.current, " was chosen to respawn as a random event [respawning_as][is_round_observer ? " after joining as an observer" : ""]. Source: [source ? "[source]" : "random"]")
 
 // So there aren't multiple instances of C&P code (Convair880).
 /proc/dead_player_list_helper(var/mob/G, var/allow_dead_antags = 0, var/require_client = FALSE)
-	if (!G?.mind || G.mind.dnr)
+	if (!G?.mind || G.mind.get_player()?.dnr)
 		return 0
 	// if (!isobserver(G) && !(isliving(G) && isdead(G))) // if (NOT /mob/dead) AND NOT (/mob/living AND dead)
 	// 	return 0
@@ -1916,7 +1950,7 @@ proc/countJob(rank)
 			if (TO.ghost && istype(TO.ghost, /mob/dead/observer))
 				the_ghost = TO.ghost
 
-		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost) || the_ghost.observe_round)
+		if (!the_ghost || !isobserver(the_ghost) || !isdead(the_ghost))
 			return 0
 
 	if (!allow_dead_antags && (!isnull(G.mind.special_role) || length(G.mind.former_antagonist_roles))) // Dead antagonists have had their chance.
@@ -1951,87 +1985,6 @@ proc/countJob(rank)
 	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
 
 	return is_immune
-
-// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
-/proc/remove_mindhack_status(var/mob/M, var/hack_type ="", var/removal_type ="")
-	if (!M || !M.mind || !hack_type || !removal_type)
-		return
-
-	// Find our master's mob reference (if any).
-	var/mob/mymaster = ckey_to_mob(M.mind.master)
-
-	switch (hack_type)
-		if ("mindhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		if ("vthrall")
-			switch (removal_type)
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
-					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
-				ticker.mode.former_antagonists += M.mind
-
-		// This is only used for spy minions and mindhacked antagonists at the moment.
-		if ("otherhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindhack status.")
-
-			// Fix for mindhacked traitors etc losing their antagonist status.
-			if (M.mind && (M.mind.special_role == "spyminion"))
-				remove_antag(M, null, 1, 0)
-			else
-				M.mind.master = null
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		else
-			logTheThing(LOG_DEBUG, M, "<b>Convair880</b>: [M] isn't mindhacked or vampire thrall, can't remove mindhack status.")
-			return
-
-	if (removal_type == "death")
-		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer mindhacked! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		M.show_antag_popup("mindhackdeath")
-	else if (removal_type == "override")
-		boutput(M, "<h2><span class='alert'>Your mindhack implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		M.show_antag_popup("mindhackoverride")
-	else
-		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		M.show_antag_popup("mindhackexpired")
-
-	return
 
 /**
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
@@ -2080,6 +2033,24 @@ proc/countJob(rank)
 				return C.mob
 
 /**
+  * Given a ckey finds a mob with that ckey even if they are not in the game.
+  */
+/proc/ckey_to_mob_maybe_disconnected(target as text, exact=1)
+	if(isnull(target))
+		return
+	target = ckey(target)
+	for(var/mob/M in mobs)
+		if(M.ckey == target)
+			return M
+	if(!exact)
+		for(var/mob/M in mobs) // prefix match second
+			if(copytext(M.ckey, 1, length(target) + 1) == target)
+				return M
+		for(var/mob/M in mobs) // substring match third
+			if (findtext(M.ckey, target))
+				return M
+
+/**
   * Finds whoever's dead.
 	*/
 /proc/whodead()
@@ -2099,12 +2070,12 @@ proc/countJob(rank)
 		. += pick(hex_chars)
 
 //A global cooldown on this so it doesnt destroy the external server
-var/global/nextDectalkDelay = 5 //seconds
+var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
 	if (!msg || !config.spacebee_api_key) return 0
-	if (world.timeofday > (lastDectalkUse + (nextDectalkDelay * 10)))
-		lastDectalkUse = world.timeofday
+	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
+		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
 		// Fetch via HTTP from goonhub
@@ -2155,13 +2126,9 @@ proc/copy_datum_vars(var/atom/from, var/atom/target)
 var/list/uppercase_letters = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
 var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
 
-var/global/list/allowed_restricted_z_areas
-
 // Helper for blob, wraiths and whoever else might need them (Convair880).
 /proc/restricted_z_allowed(var/mob/M, var/T)
 	. = FALSE
-	if(!allowed_restricted_z_areas)
-		allowed_restricted_z_areas = concrete_typesof(/area/shuttle/escape) + concrete_typesof(/area/shuttle_transit_space) + concrete_typesof(/area/football/field)
 
 	if (M && isblob(M))
 		var/mob/living/intangible/blob_overmind/B = M
@@ -2174,7 +2141,7 @@ var/global/list/allowed_restricted_z_areas
 	else if (T && isturf(T))
 		A = get_area(T)
 
-	if (A && istype(A) && (A.type in allowed_restricted_z_areas))
+	if (A && istype(A) && A.allowed_restricted_z)
 		return TRUE
 
 /**
@@ -2258,11 +2225,11 @@ var/global/list/allowed_restricted_z_areas
   * Given user, will proompt user to select skin color from list (or custom) and returns skin tone after blending
   */
 /proc/get_standard_skintone(var/mob/user)
-	var/new_tone = input(user, "Please select skin color.", "Character Generation")  as null|anything in standard_skintones + list("Custom...")
+	var/new_tone = tgui_input_list(user, "Please select skin color.", "Character Generation", standard_skintones + "Custom...")
 	if (new_tone == "Custom...")
-		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
-		if (!isnull(tone))
-			tone = 35 - clamp(tone, 1, 220) // range is 34 to -194
+		var/tone = tgui_input_number(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker", 1, 220, 1)
+		if (tone)
+			tone = 35 - clamp(round(text2num(tone)), 1, 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else
@@ -2310,7 +2277,11 @@ var/global/list/allowed_restricted_z_areas
 
 	return role
 
-var/regex/regexTextMacro = regex("\xFF.", "g")
+// DM simultaneously makes cursed shit like this work...
+// yet won't work with just the unicode raws - infinite pain
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
@@ -2367,29 +2338,31 @@ proc/gradientText(var/color1, var/color2, message)
   . = result.Join()
 
 /**
-  * Returns given text replaced by nonsense chars, on a 40% or given % basis
+  * Returns given text replaced by nonsense chars, excepting HTML tags, on a 40% or given % basis
   */
 proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
+	var/split_html_text = splittext(message,  regex("<\[^>\]*>"), 1, length(message), TRUE) //I'd love to just use include_delimiters=TRUE, but byond
 	var/list/corruptedChars = list("@","#","!",",",".","-","=","/","\\","'","\"","`","*","(",")","[","]","_","&")
-	. = ""
-	for(var/i=1 to length(message))
-		if(prob(per_letter_corruption_chance))
-			// corrupt that letter
-			. += pick(corruptedChars)
-		else
-			. += copytext(message, i, i+1)
+	. = list()
+	for(var/text_bit in split_html_text)
+		if(findtext(text_bit, regex("<\[^>\]*>")))
+			. += text_bit
+			continue
+		var/corrupted_bit = ""
+		for(var/i=1 to length(text_bit))
+			if(prob(per_letter_corruption_chance))
+				corrupted_bit += pick(corruptedChars)
+			else
+				corrupted_bit += copytext(text_bit, i, i+1)
+		. += corrupted_bit
+	return jointext(.,"")
+
 
 /**
   * Returns given text replaced entirely by nonsense chars
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
-
-/**
-  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
-  */
-proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
-	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp
@@ -2569,7 +2542,7 @@ proc/is_incapacitated(mob/M)
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat))
+		M.stat)) && !M.client?.holder?.ghost_interaction
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()
@@ -2616,3 +2589,32 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
 	else
 		return new_screen_loc //regex failed to match, just use what we got
+
+/// For logs- returns the thing's name and type. Handles nulls and non-datums fine, might do something weird for savefiles, clients, etc
+/proc/log_object(datum/thing)
+	if (isnull(thing))
+		return "***NULL***"
+	if (!istype(thing))
+		return thing
+	return "\"[thing]\" ([thing.type])"
+
+/// For runtime logs- returns the above plus ref
+/proc/identify_object(datum/thing)
+	return "[log_object(thing)] \ref[thing]" // actual datum
+
+///Returns `amount` evenly distributed random integers that sum to `sum`
+/proc/random_split(sum, amount)
+	if (amount >= sum || sum <= 0)
+		CRASH("Invalid arguments to random split")
+	var/list/points = list(sum)
+	for (var/i in 1 to (amount - 1))
+		var/next_number = rand(1, sum)
+		while (next_number in points)
+			next_number = rand(1, sum)
+		points += next_number
+	sortList(points)
+	. = list()
+	var/prev = 0
+	for (var/point in points)
+		. += point - prev
+		prev = point

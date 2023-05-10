@@ -13,7 +13,8 @@ WET FLOOR SIGN
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -87,7 +88,7 @@ WET FLOOR SIGN
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
 	alpha = 175
-	anchored = 1
+	anchored = ANCHORED
 
 	New(var/_loc, var/atom/target)
 		..()
@@ -180,7 +181,7 @@ WET FLOOR SIGN
 	var/lastUse = null
 
 	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (istype(A, /obj/item/storage))
+		if (A.storage)
 			return
 		if (!isturf(user.loc))
 			return
@@ -205,7 +206,7 @@ WET FLOOR SIGN
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/item/storage))
+	if (A.storage)
 		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
@@ -248,7 +249,7 @@ WET FLOOR SIGN
 			sleep(0.3 SECONDS)
 		qdel(D)
 	var/turf/logTurf = get_turf(D)
-	logTheThing(LOG_COMBAT, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
+	logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(logTurf,"combat")] [log_reagents] at [log_loc(user)].")
 
 	return
 
@@ -329,7 +330,7 @@ WET FLOOR SIGN
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && src.reagents.reagent_list.len > 1)))
-		logTheThing(LOG_COMBAT, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
 	if (U && isturf(U))
 		src.reagents.reaction(U,1,5)
@@ -381,6 +382,8 @@ WET FLOOR SIGN
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
 	name = "antique mop"
+	icon_state = "mop_old"
+	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
 	afterattack(atom/A, mob/user as mob)
@@ -726,10 +729,15 @@ WET FLOOR SIGN
 			src.payload = W
 			W.set_loc(src)
 			return
+		else if (isscrewingtool(W))
+			user.show_message("You [src.anchored ? "un" : ""]screw [src] [src.anchored ? "from" : "to"] the floor.")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = !src.anchored
+			return
 		. = ..()
 
 	HasProximity(atom/movable/AM)
-		if(iscarbon(AM) && isturf(src.loc) && prob(20) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
@@ -757,7 +765,7 @@ WET FLOOR SIGN
 	throw_spin = 0
 	var/currentSelection = "wet"
 	var/ownerKey = null
-	anchored = 0
+	anchored = UNANCHORED
 
 	attack_hand(mob/user)
 		if(user.key != ownerKey && ownerKey != null)
@@ -819,7 +827,7 @@ WET FLOOR SIGN
 	icon_state = "holo-wet"
 	alpha = 230
 	pixel_y = 16
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
@@ -855,7 +863,7 @@ WET FLOOR SIGN
 	name = ""
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holoparticles"
-	anchored = 1
+	anchored = ANCHORED
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
@@ -863,12 +871,14 @@ WET FLOOR SIGN
 
 // handheld vacuum
 
+TYPEINFO(/obj/item/handheld_vacuum)
+	mats = list("bamboo"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
-	mats = list("bamboo"=3, "MET-1"=10)
 	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -1075,9 +1085,11 @@ WET FLOOR SIGN
 		else
 			. = ..()
 
+TYPEINFO(/obj/item/handheld_vacuum/overcharged)
+	mats = list("neutronium"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
-	mats = list("neutronium"=3, "MET-1"=10)
 	color = list(0,0,1, 0,1,0, 1,0,0)
 	New()
 		..()
@@ -1169,7 +1181,7 @@ WET FLOOR SIGN
 			playsound(master, 'sound/effects/suck.ogg', 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = FALSE
 	plane = PLANE_NOSHADOW_BELOW
 	icon = 'icons/effects/effects.dmi'

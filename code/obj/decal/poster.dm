@@ -4,7 +4,7 @@
 	name = "poster"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "poster"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 	deconstruct_flags = DECON_WIRECUTTERS
@@ -848,6 +848,12 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		keep_it_or_melt
+			name = "KEEP IT or MELT"
+			desc = "A poster depicting an emergency suit with large text that reads \"KEEP IT or MELT\". A tiny row of text at the bottom reads \"All personnel receive suits rated for three minutes of exposure.\""
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "keep_it_or_melt"
+
 		eiffelposter //for Jan's office
 			desc = "A poster of the Eiffel Tower in Paris, France."
 			name = "Eiffel Poster"
@@ -1095,7 +1101,7 @@
 
 	New()
 		. = ..()
-		banner_holder.appearance_flags = RESET_COLOR
+		banner_holder.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.underlays.Add(banner_holder)
 
 	attackby(obj/item/W, mob/user)
@@ -1104,7 +1110,7 @@
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
 				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
-				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
 				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")

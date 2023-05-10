@@ -239,7 +239,7 @@
 				if("organs_4")
 					parts += organs_4
 		available_parts &= parts
-		if(!H.organs)
+		if(!H.organHolder)
 			available_parts -= organs_1
 			available_parts -= organs_2
 			available_parts -= organs_3

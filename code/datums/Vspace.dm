@@ -100,7 +100,7 @@ datum/v_space
 			character = V
 			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
 		else
-			character = create_Vcharacter(user, network_device, network)
+			character = create_Vcharacter(user, network_device, network, B)
 			character.set_loc(B)
 			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
 		users.Add(character)
@@ -118,6 +118,11 @@ datum/v_space
 
 		if (user.client)
 			user.client.reset_view()
+
+		if (user.mind)
+			for (var/datum/antagonist/antag_role in user.mind.antagonists)
+				if (antag_role.vr)
+					antag_role.on_death()
 
 		for(var/mob/O in oviewers())
 			boutput(O, "<span class='alert'><b>[user] logs out!</b></span>")
@@ -171,7 +176,7 @@ datum/v_space
 		return 0
 
 
-	proc/create_Vcharacter(var/mob/user, var/network_device, var/network)
+	proc/create_Vcharacter(var/mob/user, var/network_device, var/network, turf/B)
 		var/mob/living/carbon/human/virtual/virtual_character
 
 		if (inactive_bodies.len)
@@ -182,7 +187,7 @@ datum/v_space
 				inactive_bodies -= virtual_character
 			virtual_character.full_heal()
 		else
-			virtual_character = new(src)
+			virtual_character = new(B)
 
 		virtual_character.network_device = network_device
 		virtual_character.body = user

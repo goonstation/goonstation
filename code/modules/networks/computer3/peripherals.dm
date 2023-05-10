@@ -16,6 +16,9 @@
 
 
 
+TYPEINFO(/obj/item/peripheral)
+	mats = 8
+
 /obj/item/peripheral
 	name = "Peripheral card"
 	desc = "A computer circuit board."
@@ -28,7 +31,6 @@
 	var/id = null
 	var/func_tag = "GENERIC" //What kind of peripheral is this, huh??
 	var/setup_has_badge = 0 //IF this is set, present return_badge() in the host's browse window
-	mats = 8
 
 	New(location)
 		..()
@@ -902,7 +904,7 @@
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
 				prize.desc = "Blink.  Blink.  Blink."
-				prize.anchored = FALSE
+				prize.anchored = UNANCHORED
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
 				prize.name = "Burno Lighter"

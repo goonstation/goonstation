@@ -359,3 +359,31 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	nectarlevel = 10
 	assoc_reagents = list("juice_peach")
 	commuts = list(/datum/plant_gene_strain/quality)
+
+/datum/plant/fruit/cucumber
+	name = "Cucumber"
+	seedcolor = "#005622"
+	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	starthealth = 25
+	growtime = 50
+	harvtime = 100
+	cropsize = 8
+	harvests = 1
+	isgrass = 1
+	endurance = 6
+	genome = 19
+	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
+
+/datum/plant/fruit/mustard
+	name = "Mustard" //oh god
+	seedcolor = "#FFCC00"
+	crop = /obj/item/reagent_containers/food/snacks/plant/mustard
+	starthealth = 20
+	growtime = 60
+	harvtime = 200
+	cropsize = 3
+	harvests = 3
+	endurance = 6
+	genome = 12
+	assoc_reagents = list("mustard")
+	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/metabolism_slow)

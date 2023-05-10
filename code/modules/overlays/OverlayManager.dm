@@ -115,7 +115,7 @@
 			fill_left.transform = flip
 			//fill_left.pixel_x = -480
 			fill_left.screen_loc = "LEFT-12,CENTER-7"
-			fill_left.appearance_flags = TILE_BOUND
+			fill_left.appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 			var/atom/movable/screen/screenoverlay/fill_right = new()
 			fill_right.icon = D.d_icon
@@ -130,7 +130,7 @@
 			fill_right.transform = flip
 			//fill_right.pixel_x = 480
 			fill_right.screen_loc = "RIGHT+12,CENTER-7"
-			fill_right.appearance_flags = TILE_BOUND
+			fill_right.appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 			added_for_fill += fill_left
 			added_for_fill += fill_right
@@ -484,3 +484,17 @@
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/insanity_light
+	New()
+		var/datum/overlayDefinition/insanity = new()
+		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
+		insanity.d_icon_state = "insanity"
+		insanity.d_blend_mode = 2
+		insanity.do_wide_fill = 0
+		insanity.d_alpha = 120
+		insanity.d_screen_loc = "CENTER-10,CENTER-7"
+		definitions.Add(insanity)
+
+		return ..()
+

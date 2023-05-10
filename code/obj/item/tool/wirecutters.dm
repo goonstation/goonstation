@@ -5,7 +5,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wirecutters.dmi'
 	icon_state = "wirecutters"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_SNIPPING
 	health = 5
 	w_class = W_CLASS_SMALL

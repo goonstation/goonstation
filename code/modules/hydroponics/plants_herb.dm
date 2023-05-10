@@ -209,6 +209,61 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 1
 	assoc_reagents = list("wolfsbane")
 
+/datum/plant/herb/stinging_nettle
+	name = "Stinging Nettle"
+	override_icon_state = "Nettle"
+	seedcolor = "#2ecc43"
+	crop = /obj/item/plant/herb/nettle
+	cropsize = 3
+	starthealth = 20
+	growtime = 40
+	harvtime = 100
+	cropsize = 4
+	harvests = 3
+	special_proc = 1
+	harvested_proc = 1
+	force_seed_on_harvest = 1
+	vending = 2
+	genome = 7
+
+	HYPspecial_proc(var/obj/machinery/plantpot/POT)
+		. = ..()
+		if (.) return
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		var/sting_prob = clamp((33 + DNA?.get_effective_value("endurance") / 2), 33, 100)
+		var/chem_protection = 1
+
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(sting_prob)) //how frequently it injects people is based on endurance
+			for (var/mob/living/M in range(1,POT))
+				if (ishuman(M))
+					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
+				for (var/plantReagent in assoc_reagents) //amount of delivered chems is based on potency
+					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(assoc_reagents) ** 0.5))))))
+				boutput(M, "<span class='notice'>You feel something brush against you.</span>")
+
+	HYPharvested_proc(var/obj/machinery/plantpot/POT,var/mob/user) //better not try to harvest these without gloves
+		. = ..()
+		if (.) return
+		var/datum/plantgenes/DNA = POT.plantgenes
+		var/mob/living/carbon/human/H = user
+
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				return
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				return
+		if(istype(H))
+			if(H.gloves)
+				return
+		boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
+		H.reagents?.add_reagent("histamine", 5)
+		for (var/plantReagent in assoc_reagents)
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(assoc_reagents) ** 0.5))))))
+		H.changeStatus("weakened", 4 SECONDS)
+
 /datum/plant/herb/tobacco
 	name = "Tobacco"
 	seedcolor = "#82D213"
@@ -257,3 +312,18 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 4
 	assoc_reagents = list("grassgro")
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
+
+/datum/plant/herb/lavender
+	name = "Lavender"
+	seedcolor = "#be9ffe"
+	crop = /obj/item/clothing/head/flower/lavender
+	starthealth = 20
+	growtime = 80
+	harvtime = 120
+	cropsize = 3
+	harvests = 3
+	nectarlevel = 10
+	force_seed_on_harvest = TRUE
+	genome = 3
+	assoc_reagents = list("lavender_essence")
+	commuts = list(/datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/quality)

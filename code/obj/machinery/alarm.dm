@@ -6,7 +6,9 @@
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1
+	power_usage = 5
+	power_channel = ENVIRON
+	anchored = ANCHORED
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
@@ -51,7 +53,7 @@
 		icon_state = "alarmp"
 		return
 
-	use_power(5, ENVIRON)
+	..()
 
 	if (!( istype(location, /turf) ))
 		return 0

@@ -297,6 +297,7 @@
 			..()
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -374,7 +375,8 @@
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
@@ -434,7 +436,7 @@
 	desc = "A self-heating TV dinner. You should probably use a fork."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	bites_left = 2
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
@@ -559,6 +561,7 @@
 		return
 
 	heal(var/mob/M)
+		..()
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -587,6 +590,7 @@
 
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")

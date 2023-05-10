@@ -182,10 +182,6 @@
 		icon_state = "martianSP"
 		icon_state_dead = "martianSP-dead"
 
-		New()
-			..()
-			abilityHolder.addAbility(/datum/targetable/critter/seed)
-
 	overseer
 		name = "martian overseer"
 		real_name = "martian overseer"

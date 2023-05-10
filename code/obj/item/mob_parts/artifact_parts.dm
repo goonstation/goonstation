@@ -3,7 +3,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	skintoned = FALSE
 	decomp_affected = FALSE
 	accepts_normal_human_overlays = FALSE
@@ -98,8 +99,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [src.name] to [holder.name] with [tool].</span>", "<span class='alert'>You attach [src.name] to [holder.name] with [tool].</span>")
-				logTheThing("diary", tool.the_mob, holder, "attaches [src.name] to [constructTarget(holder,"combat")].", "combat")
-				logTheThing("combat", tool.the_mob, holder, "attaches [src.name] to [constructTarget(holder,"combat")].")
+				logTheThing(LOG_COMBAT, tool.the_mob, "attaches [src.name] to [constructTarget(holder,"combat")].")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the [src.limb_material] of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
@@ -110,8 +110,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 						src.remove(FALSE)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] [src.cut_messages[1]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You [src.cut_messages[2]] the remaining [src.limb_material] holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("diary", tool.the_mob, holder, "removes [src.name] to [constructTarget(holder,"combat")].", "combat")
-				logTheThing("combat", tool.the_mob, holder, "removes [src.name] to [constructTarget(holder,"combat")].")
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [src.name] to [constructTarget(holder,"combat")].")
 				src.remove(FALSE)
 
 		return TRUE
@@ -120,11 +119,11 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		return "has [bicon(src)] \an [src.name] attached as a"
 
 	getMobIcon()
-		if (src.standImage)
-			return src.standImage
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
-		return standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
+		return bodyImage
 
 	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
 		if(!ishuman(M))
@@ -158,8 +157,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
 			return ..()
 		var/mob/living/carbon/human/H = holder
 		src.handlistPart = (!H.w_uniform && !H.wear_suit) ? initial(src.handlistPart) : "[initial(src.handlistPart)]-clothing"
-		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
-		return src.standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.handlistPart)
+		return src.bodyImage
 
 ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
 /obj/item/parts/artifact_parts/leg
@@ -308,9 +307,9 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 		if (!..())
 			return
 		if (src.side == "left")
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_L)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_L))
 		else
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_R)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_R))
 
 	on_remove()
 		if (!..())
@@ -369,7 +368,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 
 	cast(atom/target)
 		playsound(get_turf(holder.owner), pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
-		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, .proc/eldritch_move)
+		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, PROC_REF(eldritch_move))
 		SPAWN(10 SECONDS)
 			UnregisterSignal(holder.owner, COMSIG_MOVABLE_MOVED)
 
@@ -462,14 +461,14 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 /obj/line_obj/martian_tentacle
 	name = "Martian tentacle"
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 
 /obj/martian_tentacle_end_dummy
 	name = ""
 	desc = ""
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	opacity = FALSE
 	invisibility = INVIS_ALWAYS_ISH

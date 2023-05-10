@@ -77,7 +77,7 @@
 	..()
 
 /atom/movable/proc/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 	SHOULD_CALL_PARENT(TRUE)
 	//use a modified version of Bresenham's algorithm to get from the atom's current position to that of the target
 	if(!throwing_controller) return
@@ -94,6 +94,11 @@
 		if (ismob(src))
 			var/mob/M = src
 			M.force_laydown_standup()
+
+	if (istype(src.loc, /obj/vehicle))
+		var/obj/vehicle/V = src.loc
+		if (V.can_eject_items)
+			src.set_loc(get_turf(V))
 
 	src.last_throw_x = src.x
 	src.last_throw_y = src.y

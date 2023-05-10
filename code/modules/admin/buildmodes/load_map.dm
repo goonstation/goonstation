@@ -27,7 +27,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if(!dmm_suite)
-			dmm_suite = new
+			dmm_suite = new(debug_id="buildmode")
 		var/turf/A = get_turf(object)
 		if (!A) return
 		blink(A)
@@ -38,6 +38,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		if(!target)
 			loading = 0
 			return
+		dmm_suite.debug_id = "buildmode [target]"
 		var/text = file2text(target)
 		if(!text)
 			loading = 0

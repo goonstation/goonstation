@@ -121,3 +121,6 @@
 
 		return 0
 
+	dropped(mob/user)
+		. = ..()
+		user.closeContextActions()

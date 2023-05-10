@@ -258,7 +258,7 @@ TYPEINFO_NEW(/obj/table/flock)
 	icon_state = "flock1"
 	base_state = "flock"
 	brightness = 1.2
-	power_usage = FALSE
+	power_usage = 0
 	on = TRUE
 	removable_bulb = FALSE
 	mat_appearances_to_ignore = list("gnesis")
@@ -311,7 +311,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/lattice/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -378,7 +378,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/grille/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)

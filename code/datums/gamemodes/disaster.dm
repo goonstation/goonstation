@@ -1,7 +1,8 @@
 /datum/game_mode/disaster
-	name = "disaster"
+	name = "Disaster (Beta)"
 	config_tag = "disaster"
 
+	regular=FALSE
 	var/disaster_type = 0
 	var/disaster_name = "bad thing" //This should be set by the disaster start!!
 	//Time before the disaster starts.
@@ -11,13 +12,13 @@
 	var/const/shuttle_waittime = 4000
 
 /datum/game_mode/disaster/pre_setup()
-	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 0)
+	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 1)
 	if (length(candidates))
 		var/datum/mind/twraith = pick(candidates) // Just one for now
 		twraith.special_role = ROLE_WRAITH
 		Agimmicks += twraith
 
-	return 1
+	return TRUE
 
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
@@ -32,8 +33,14 @@
 
 /datum/game_mode/disaster/post_setup()
 	for(var/datum/mind/wraith in Agimmicks)
-		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
-		generate_wraith_objectives(wraith)
+		wraith.add_antagonist(ROLE_WRAITH) // this creates the wraith mob and such
+		var/mob/living/intangible/wraith/W = wraith.current
+		if (istype(W))
+			W.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+			generate_wraith_objectives(wraith)
+			var/datum/targetable/wraithAbility/specialize/SP = W.abilityHolder.getAbility(/datum/targetable/wraithAbility/specialize)
+			SP.pointCost = 0
+			SP?.evolve(2)
 
 	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED //Disable the shuttle temporarily.
 

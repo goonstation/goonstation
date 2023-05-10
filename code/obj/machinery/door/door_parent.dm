@@ -1,5 +1,6 @@
 #define KNOCK_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
@@ -12,13 +13,14 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
+	pass_unstable = TRUE
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = TRUE
 	var/panel_open = FALSE
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
-	anchored = TRUE
+	anchored = ANCHORED
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
@@ -40,6 +42,9 @@
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
+	var/atom/movable/bumper = null
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
@@ -104,10 +109,7 @@
 				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
-					var/obj/item/affecting = H.organs["head"]
-					if (affecting)
-						affecting.take_damage(9, 0)
-						H.UpdateDamageIcon()
+					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 					H.changeStatus("weakened", 1 SECOND)
 				else
 					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")
@@ -144,7 +146,7 @@
 	return !density
 
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	var/turf/simulated/source = loc
+	var/turf/source = src.loc
 	if (istype(source))
 		return source.update_nearby_tiles(need_rebuild)
 
@@ -165,7 +167,7 @@
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -340,32 +342,22 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
 	else if (src.density && !ON_COOLDOWN(src, "deny_sound", 1 SECOND)) // stop the sound from spamming, if there is one
 		play_animation("deny")
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 
-	if (src.density && !src.operating && I)
+	if (src.density && !src.operating && I?.force > 5)
+		var/resolvedForce = I.force
+		if (I.tool_flags & TOOL_CHOPPING)
+			resolvedForce *= 4
 		user.lastattacked = src
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-		src.take_damage(I.force, user)
-/*
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-*/
-
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(resolvedForce, user)
-
-
-	return ..(I,user)
+		src.take_damage(resolvedForce, user)
+		return ..(I,user) // only call parent if force > 5; no material hit or attack message otherwise
 
 /obj/machinery/door/proc/bumpopen(atom/movable/AM)
 	if (src.operating)
@@ -373,12 +365,11 @@
 	if(world.time-last_used <= 10)
 		return 0
 	src.add_fingerprint(AM)
-	if (!src.requiresID())
-		AM = null
 
-	if (src.allowed(AM))
+	if (!src.requiresID() || src.allowed(AM))
 		if (src.density)
 			last_used = world.time
+			src.bumper = AM
 			if (src.open() == 1)
 				return 1
 			else
@@ -524,6 +515,8 @@
 		src.update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
+		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
+		src.bumper = null
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
@@ -662,6 +655,7 @@
 	src.add_fingerprint(user)
 	if (src.allowed(user))
 		if (src.density)
+			src.bumper = user
 			open()
 		else
 			close()
@@ -713,8 +707,9 @@
 	panel_open = 0
 	operating = 0
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = TRUE
+	anchored = ANCHORED
 	autoclose = TRUE
+	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from

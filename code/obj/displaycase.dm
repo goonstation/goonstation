@@ -4,7 +4,8 @@
 	icon_state = "glassbox0"
 	desc = "A display case for antique possessions."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.3
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
@@ -96,11 +97,11 @@
 /obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
-			src.anchored = 1
+			src.anchored = ANCHORED
 			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
 		else
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
 			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
 		return
@@ -171,7 +172,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 	force = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/stability = 10
 
 	var/repair_stage = 0

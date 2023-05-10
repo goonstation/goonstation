@@ -41,6 +41,7 @@
 			H.delStatus("stunned")
 			H.delStatus("weakened")
 			H.delStatus("disorient")
+			H.delStatus("pinned")
 			H.force_laydown_standup()
 
 			H.abilityHolder.updateButtons()

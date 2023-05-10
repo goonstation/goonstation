@@ -14,52 +14,22 @@ obj/machinery/atmospherics/valve
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
 
-	vertical
-		dir = NORTH
-	horizontal
-		dir = EAST
-
 	purge
 		name = "purge valve"
 
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
-
 	notify_admins
 		high_risk = 1
-
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
 
 	digital		// can be controlled by AI
 		name = "digital valve"
 		desc = "A digitally controlled valve."
 		icon = 'icons/obj/atmospherics/digital_valve.dmi'
 
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
-
 		purge
 			name = "purge valve"
 
-			vertical
-				dir = NORTH
-			horizontal
-				dir = EAST
-
 		notify_admins
 			high_risk = 1
-
-			vertical
-				dir = NORTH
-			horizontal
-				dir = EAST
 
 		attack_ai(mob/user as mob)
 			return src.Attackhand(user)
@@ -198,6 +168,7 @@ obj/machinery/atmospherics/valve
 		return
 
 	attack_hand(mob/user)
+		interact_particle(user,src)
 		UpdateIcon(1)
 		sleep(1 SECOND)
 		logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
@@ -206,6 +177,7 @@ obj/machinery/atmospherics/valve
 		else
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
+		add_fingerprint(user)
 
 	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))
@@ -335,15 +307,6 @@ obj/machinery/atmospherics/manifold_valve
 
 	var/frequency = "1439"
 	var/id = null
-
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
 
 	update_icon(animation)
 		if(animation)

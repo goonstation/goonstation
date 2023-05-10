@@ -1,16 +1,15 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/global/list/bible_contents = list()
 
-/obj/item/storage/bible
+/obj/item/bible
 	name = "bible"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -18,6 +17,7 @@ var/global/list/bible_contents = list()
 
 	New()
 		..()
+		src.create_storage(/datum/storage/bible, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
@@ -30,7 +30,7 @@ var/global/list/bible_contents = list()
 		STOP_TRACKING
 
 	proc/bless(mob/M as mob, var/mob/user)
-		if (isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
+		if (isvampire(M) || isvampiricthrall(M) || iswraith(M) || M.bioHolder.HasEffect("revenant"))
 			M.visible_message("<span class='alert'><B>[M] burns!</span>", 1)
 			var/zone = "chest"
 			if (user.zone_sel)
@@ -48,11 +48,12 @@ var/global/list/bible_contents = list()
 				//Wraith curses
 				if(prob(75) && ishuman(H))
 					var/mob/living/carbon/human/target = H
-					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse"))
+					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse") || target.bioHolder?.HasEffect("death_curse"))
 						target.bioHolder.RemoveEffect("blood_curse")
 						target.bioHolder.RemoveEffect("blind_curse")
 						target.bioHolder.RemoveEffect("weak_curse")
 						target.bioHolder.RemoveEffect("rot_curse")
+						target.bioHolder.RemoveEffect("death_curse")
 						target.visible_message("[target] screams as some black smoke exits their body.")
 						target.emote("scream")
 						var/turf/T = get_turf(target)
@@ -65,8 +66,8 @@ var/global/list/bible_contents = list()
 			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
-		if (istype(W, /obj/item/storage/bible))
+	attackby(var/obj/item/W, var/mob/user)
+		if (istype(W, /obj/item/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -86,50 +87,42 @@ var/global/list/bible_contents = list()
 			JOB_XP(user, "Clown", 1)
 			return
 
-	//	if(..() == BLOCKED)
-	//		return
-
 		if (iswraith(M) || (M.bioHolder && M.bioHolder.HasEffect("revenant")))
 			M.visible_message("<span class='alert'><B>[user] smites [M] with the [src]!</B></span>")
 			bless(M, user)
 			boutput(M, "<span_class='alert'><B>IT BURNS!</B></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-			else
-				playsound(src.loc, "punch", 25, 1, -1)
 			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
-			var/mob/H = M
 			// ******* Check
-			if ((ishuman(H) && prob(60) && !(M.traitHolder?.hasTrait("atheist"))))
+			var/is_undead = isvampire(M) || iswraith(M) || M.bioHolder.HasEffect("revenant")
+			var/is_atheist = M.traitHolder?.hasTrait("atheist")
+			if (ishuman(M) && prob(60) && !(is_atheist && !is_undead))
 				bless(M, user)
 				M.visible_message("<span class='alert'><B>[user] heals [M] with the power of Christ!</B></span>")
-				boutput(M, "<span class='alert'>May the power of Christ compel you to be healed!</span>")
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				else
-					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing(LOG_COMBAT, user, "biblically healed [constructTarget(M,"combat")]")
+				var/deity = is_atheist ? "a god you don't believe in" : "Christ"
+				boutput(M, "<span class='alert'>May the power of [deity] compel you to be healed!</span>")
+				var/healed = is_undead ? "damaged undead" : "healed"
+				logTheThing(LOG_COMBAT, user, "biblically [healed] [constructTarget(M,"combat")]")
+
 			else
-				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
-					if (M.traitHolder?.hasTrait("atheist"))
-						M.take_brain_damage(5)
-					else
-						M.take_brain_damage(10)
-					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
+				var/damage = 10 - clamp(M.get_melee_protection("head", DAMAGE_BLUNT) - 1, 0, 10)
+				if (is_atheist)
+					damage /= 2
+
+				M.take_brain_damage(damage)
+				boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
 				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				else
-					playsound(src.loc, "punch", 25, 1, -1)
+
 		else if (isdead(M))
 			M.visible_message("<span class='alert'><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-			else
-				playsound(src.loc, "punch", 25, 1, -1)
+
+		if (narrator_mode)
+			playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
+		else
+			playsound(src.loc, "punch", 25, 1, -1)
+
 		return
 
 	attack_hand(var/mob/user)
@@ -140,27 +133,6 @@ var/global/list/bible_contents = list()
 			user.changeStatus("weakened", 15 SECONDS)
 			return
 		return ..()
-
-	get_contents()
-		return bible_contents
-
-	get_all_contents()
-		var/list/L = list()
-		L += bible_contents
-		for (var/obj/item/storage/S in bible_contents)
-			L += S.get_all_contents()
-		return L
-
-	contains(var/atom/A)
-		if(!A)
-			return 0
-		return (A in bible_contents)
-
-	add_contents(obj/item/I)
-		bible_contents += I
-		I.set_loc(null)
-		for_by_tcl(bible, /obj/item/storage/bible)
-			bible.hud.update() // fuck bibles
 
 	custom_suicide = 1
 	suicide_distance = 0
@@ -208,7 +180,7 @@ var/global/list/bible_contents = list()
 		M.emote("scream")
 		M.gib()
 
-/obj/item/storage/bible/evil
+/obj/item/bible/evil
 	name = "frayed bible"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
@@ -218,7 +190,7 @@ var/global/list/bible_contents = list()
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
-/obj/item/storage/bible/mini
+/obj/item/bible/mini
 	//Grif
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
@@ -238,7 +210,7 @@ var/global/list/bible_contents = list()
 		smite(user)
 		return TRUE
 
-/obj/item/storage/bible/hungry
+/obj/item/bible/hungry
 	name = "hungry bible"
 	desc = "Huh."
 
@@ -288,16 +260,16 @@ var/global/list/bible_contents = list()
 				sleep(0.3 SECONDS)
 		return 1
 
-/obj/item/storage/bible/loaded
-	spawn_contents = list(/obj/item/gun/kinetic/faith)
+/obj/item/bible/loaded
 
 	New()
 		..()
+		new /obj/item/gun/kinetic/faith(src)
 		desc += " This is the chaplain's personal copy."
 
 	get_desc()
 		. = ..()
-		if(src.contents.len > 0)
+		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
 			. += " It feels a bit heavier than it should."
 
 	attack_hand(mob/user)

@@ -37,12 +37,13 @@ to translate concepts between old and new tgui, read this
 
 You will need these programs to start developing in tgui:
 
-- [Node v12.18.3+](https://nodejs.org/en/download/)
+- [Node v**16**.13+](https://nodejs.org/en/download/)
+  - This page will show the latest version, you will need to go to 'Previous Releases'
+  - **LTS** release is recommended instead of latest, as well as the x64 arch.
+  - **DO NOT install Chocolatey if Node installer asks you to!**
 - [Yarn v2.2.1+](https://yarnpkg.com/getting-started/install) (optional)
 - [Git Bash](https://git-scm.com/downloads)
   or [MSys2](https://www.msys2.org/) (optional)
-
-**DO NOT install Chocolatey if Node installer asks you to!**
 
 ## Usage
 
@@ -227,7 +228,9 @@ See: [Component Reference](docs/component-reference.md).
 
 ## FontAwesome Icon
 
-For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v5/search?m=free&s=regular%2Csolid)
+For a list of all the icons you can use, see the [FontAwesome website](https://fontawesome.com/v6/search?o=r&m=free&s=solid%2Cregular)
+
+For additional font styles you can use, see the [FontAwesome Docs](https://fontawesome.com/v6/docs/web/style/style-cheatsheet#contentHeader)
 
 ## License
 

@@ -43,7 +43,7 @@ proc/get_moving_lights_stats()
 			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
 			0, 0, 0, 1) ; \
 	} else { if(src.RL_AddOverlay) { qdel(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
-	} while(false)
+	} while(FALSE)
 
 
 // requires atten to be defined outside
@@ -58,12 +58,12 @@ proc/get_moving_lights_stats()
 	src.RL_AddLumG = clamp((src.RL_LumG - 1) * 0.5, 0, 0.3) ; \
 	src.RL_AddLumB = clamp((src.RL_LumB - 1) * 0.5, 0, 0.3) ; \
 	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
-	} while(false)
+	} while(FALSE)
 
 #define RL_APPLY_LIGHT(src, lx, ly, brightness, height2, r, g, b) do { \
 	var/atten ; \
 	 RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) ; \
-	} while(false)
+	} while(FALSE)
 
 #define RL_APPLY_LIGHT_LINE(src, lx, ly, dir, radius, brightness, height2, r, g, b) do { \
 	if (src.loc?:force_fullbright) { break } \
@@ -95,7 +95,7 @@ proc/get_moving_lights_stats()
 	src.RL_AddLumG = clamp((src.RL_LumG - 1) * 0.5, 0, 0.3) ; \
 	src.RL_AddLumB = clamp((src.RL_LumB - 1) * 0.5, 0, 0.3) ; \
 	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
-	} while(false)
+	} while(FALSE)
 
 #define APPLY_AND_UPDATE if (RL_Started) { for (var/turf in src.apply()) { var/turf/T = turf; RL_UPDATE_LIGHT(T) } }
 
@@ -631,7 +631,7 @@ proc
 	blend_mode = BLEND_ADD
 	plane = PLANE_LIGHTING
 	layer = LIGHTING_LAYER_BASE
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/overlay/tile_effect/lighting/mul
 	plane = PLANE_LIGHTING
@@ -671,28 +671,6 @@ turf
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif
-	disposing()
-		..()
-		RL_Cleanup()
-
-		var/old_lights = src.RL_Lights
-		var/old_opacity = src.opacity
-		SPAWN(0) // ugghhh fuuck
-			if (old_lights)
-				if (!RL_Lights)
-					RL_Lights = old_lights
-				else
-					RL_Lights |= old_lights
-			var/new_opacity = src.opacity
-			src.set_opacity(old_opacity)
-			RL_SetOpacity(new_opacity)
-
-			for (var/turf/T in view(RL_MaxRadius, src))
-				for (var/datum/light/light in T.RL_Lights)
-					if (light.enabled)
-						light.apply_to(src)
-			if (RL_Started)
-				RL_UPDATE_LIGHT(src)
 
 	proc
 		RL_ApplyLight(lx, ly, brightness, height2, r, g, b) // use the RL_APPLY_LIGHT macro instead if at all possible!!!!
@@ -789,6 +767,12 @@ turf
 					qdel(src.RL_AddOverlay)
 					src.RL_AddOverlay = null
 
+
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = 0
+
 atom
 	var
 		RL_Attached = null
@@ -797,6 +781,22 @@ atom
 		next_light_dir_update = 0
 
 	movable
+
+		// Enables mobs and objs to be mechscannable, also why is this file even in lighting???
+
+		var/is_syndicate = 0
+		/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+		var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+		/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+		var/mechanics_type_override = null
+
+
+		New()
+			. = ..()
+			var/typeinfo/obj/typeinfo = src.get_typeinfo()
+			if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+				src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
+
 		Move(atom/target)
 			var/old_loc = src.loc
 			. = ..()

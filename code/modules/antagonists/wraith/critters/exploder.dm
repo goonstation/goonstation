@@ -74,12 +74,12 @@
 
 		if (!gibbed)
 			gibs(src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			src.drop_item()
 			qdel(src)
 		else
 			gibs(src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 
 /mob/living/critter/exploder/New(var/atom/L)
 	..()

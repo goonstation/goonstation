@@ -18,7 +18,8 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+	power_usage = 250
 	var/locked = 1
 	var/open = 0
 	var/mainsupply = 1
@@ -134,9 +135,7 @@
 		src.remove_dialog(usr)
 
 /obj/machinery/power/switchgear/process()
-	if(!(status & (NOPOWER|BROKEN)) )
-		use_power(250)
-
+	..()
 	src.updateDialog()
 
 /obj/machinery/power/switchgear/power_change()

@@ -7,19 +7,18 @@
 ////////////////
 
 ////////////////
-proc/make_cleanable(var/type,var/loc,var/list/viral_list)
+proc/make_cleanable(var/type,var/loc)
 	RETURN_TYPE(/obj/decal/cleanable)
-	return new type(loc, viral_list)
+	return new type(loc)
 
 /obj/decal/cleanable
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/can_sample = 0
 	var/sampled = 0
 	var/sample_amt = 10
 	var/sample_reagent = "water"
 	var/sample_verb = "scoop"
-	var/list/diseases = list()
 	var/slippery = 0 // set it to the probability that you want people to slip in the stuff, ie urine's slippery is 80 so you have an 80% chance to slip on it
 	var/slipped_in_blood = 0 // self explanitory hopefully
 	var/can_dry = 0
@@ -37,17 +36,15 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 	plane = PLANE_NOSHADOW_BELOW
 
-	New(var/loc,var/list/viral_list)
+	New(var/loc)
 		..()
-		setup(loc,viral_list)
+		if(loc)
+			setup(loc)
 
-	setup(var/L,var/list/viral_list)
+	setup(var/L)
 		..()
 		src.real_name = src.name
 
-		if (length(viral_list))
-			for (var/datum/ailment_data/AD in viral_list)
-				src.diseases += AD
 		if (src.can_dry)
 			src.Dry()
 
@@ -376,7 +373,6 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 	disposing()
 		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if (!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
-			diseases = list()
 			B = new /obj/decal/bloodtrace(src.loc)
 			B.blood_DNA = src.blood_DNA // okay so we shouldn't check to see if B has DNA/type because it's brand new and it does not, duh
 			B.blood_type = src.blood_type
@@ -419,7 +415,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	reagents_max = 100
 
 	disposing()
-		diseases = list()
 		var/obj/decal/bloodtrace/B = locate() in src.loc
 		if(!B) // hacky solution because I don't want there to be a million blood traces on a tile, ideally one trace should contain more samples
 			B = new /obj/decal/bloodtrace(src.loc)
@@ -469,6 +464,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	proc/add_volume(var/add_color, var/reagent_id = "blood", var/amount = 1, var/vis_amount = 1, var/list/bdata = null, var/i_state = null, var/direction = null, var/do_fluid_react = 1, blood_reagent_data=null)
 	// add_color passes the blood's color to the overlays
 	// vis_amount should only be 1-5 if you want anything to happen
+		if(src.disposed)
+			return
 		if (istype(bdata))
 			src.blood_DNA = bdata["bDNA"]
 			src.blood_type = bdata["btype"]
@@ -569,7 +566,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/blood/gibs
 	name = "gibs"
 	desc = "Grisly..."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "gibbl5"
@@ -761,7 +758,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
-		if (src.reagents.total_volume)
+		if (src.reagents?.total_volume)
 			. += "<br><span class = 'notice'>It's written in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	UpdateName()
@@ -770,7 +767,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/writing/maptext_dummy
 	icon_state = ""
 
-	setup(var/L,var/list/viral_list)
+	setup(var/L)
 		. = ..()
 		icon_state = initial(icon_state)
 		maptext_width = 16
@@ -807,9 +804,9 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 			var/obj/item/stamp/S = W
 			switch (S.current_mode)
-				if ("Approved")
+				if ("Granted")
 					src.icon_state = "postit-approved"
-				if ("Rejected")
+				if ("Denied")
 					src.icon_state = "postit-rejected"
 				if ("Void")
 					src.icon_state = "postit-void"
@@ -1028,7 +1025,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "green vomit"
 	desc = "That's just wrong."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/vomit.dmi'
 	icon_state = "green1"
 	var/dried = 0
@@ -1204,6 +1201,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER+1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb1"
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/cleanable/molten_item
 	name = "gooey grey mass"
@@ -1211,6 +1209,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = OBJ_LAYER
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "molten"
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/cleanable/cobweb2
 	name = "cobweb"
@@ -1227,7 +1226,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "cobweb_floor-c"
 
 
-	Cross(atom/A)
+	Crossed(atom/A)
 		if (ismob(A))
 			A.changeStatus("slowed", 0.2 SECONDS)
 			SPAWN(-1)
@@ -1280,7 +1279,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/martian_viscera
 	name = "chunky martian goop"
 	desc = "Gross alien flesh. Do not ingest. Do not apply to face."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	sample_reagent = "martian_flesh"
 	sample_verb = "scoop"
@@ -1296,7 +1295,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 /obj/decal/cleanable/flockdrone_debris
 	name = "weird stringy crystal fibres"
 	desc = "Aw hell it's probably going to ruin your lungs if you breathe those. It's probably space alien asbestos or something. They're all sticky too, eww."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	sample_reagent = "flockdrone_fluid"
 	sample_verb = "scoop"
@@ -1310,23 +1309,28 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "viscous teal fluid"
 	desc = "Is it like weird alien blood? Weird alien oil? Aw man that looks like it'd never wash out."
 	random_icon_states = list("fluid1", "fluid2", "fluid3")
-	anchored = 1
+	anchored = ANCHORED
 	slippery = 50
 	stain = "teal-stained"
 
 /obj/decal/cleanable/machine_debris
 	name = "twisted shrapnel"
 	desc = "A chunk of broken and melted scrap metal."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
+/obj/decal/cleanable/machine_debris/radioactive
+	New()
+		.=..()
+		src.AddComponent(/datum/component/radioactive,100,TRUE,FALSE)
+
 /obj/decal/cleanable/robot_debris
 	name = "robot debris"
 	desc = "Useless heap of junk."
-	anchored = 0
+	anchored = UNANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "gib1"
@@ -1335,7 +1339,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
+			if (H.job == "Roboticist" || H.job == "Engineer")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)
@@ -1689,7 +1693,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	name = "gang tag"
 	desc = "A spraypainted gang tag."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER
 	icon = 'icons/obj/decals/graffiti.dmi'
 	icon_state = "gangtag0"
@@ -1712,22 +1716,24 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		src.layer = 4
 
 	disposing(var/uncapture = 1)
-		var/area/tagarea = get_area(src)
-		if(tagarea.gang_owners == src.owners && uncapture)
-			tagarea.gang_owners = null
-			var/turf/T = get_turf(src)
-			T.tagged = 0
+		if (istype(owners))
+			src.owners.tags -= src
+			var/area/tagarea = get_area(src)
+			if(tagarea.gang_owners == src.owners && uncapture)
+				tagarea.gang_owners = null
+				var/turf/T = get_turf(src)
+				T.tagged = 0
 		..()
 
 /// Input a cardinal direction, it'll throw it somewhere within +-45 degrees of that direction. More or less.
-/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak)
+/obj/decal/cleanable/proc/streak_cleanable(var/list/directions, var/randcolor = 0, var/full_streak, var/dist_lower=1, var/dist_upper=6)
 	if(src.disposed)
 		return
 	if(isnull(get_turf(src)))
-		CRASH("Attempting to streak cleanable [src] which is in null.")
+		CRASH("Attempting to streak cleanable [identify_object(src)] which is in null.")
 
 	var/destination
-	var/dist = rand(1,6)
+	var/dist = rand(dist_lower,dist_upper)
 	if(prob(10))
 		dist = 30 // Occasionally throw the chunk somewhere *interesting*
 	if(length(directions))
@@ -1766,8 +1772,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 					if("BLOOD")
 						var/obj/decal/cleanable/blood/b = make_cleanable( /obj/decal/cleanable/blood/splatter/extra,get_turf(src))
 						if (!b) continue //ZeWaka: fix for null.diseases
-						if (src?.diseases)
-							b.diseases += src.diseases
 						if (src.blood_DNA && src.blood_type) // For forensics (Convair880).
 							b.blood_DNA = src.blood_DNA
 							b.blood_type = src.blood_type
@@ -1800,3 +1804,11 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "sec_tape_1"
 	random_icon_states = list("sec_tape_1", "sec_tape_2")
+
+/obj/decal/cleanable/desk_clutter //RIP desk clutter object you're a decal now
+	name = "desk clutter"
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "deskclutter"
+	desc = "What a mess..."
+	plane = PLANE_DEFAULT //needs to go on desks
+	layer = OBJ_LAYER

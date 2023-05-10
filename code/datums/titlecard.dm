@@ -91,7 +91,7 @@
 
 ///old title card turf
 /obj/titlecard
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	icon = null //set in New()
 	icon_state = "title_main"
 	layer = 60
@@ -99,7 +99,7 @@
 	desc = "The title card for it, at least."
 	plane = PLANE_OVERLAY_EFFECTS
 	pixel_x = -96
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	ex_act(severity)
 		return

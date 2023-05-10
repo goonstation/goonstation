@@ -1,25 +1,25 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/simulated/floor,
-/area/blob/tutorial_zone)
+/area/tutorial/blob)
 "g" = (
 /turf/cordon,
 /area/cordon)
 "m" = (
 /obj/landmark/tutorial_start,
 /turf/simulated/floor,
-/area/blob/tutorial_zone)
+/area/tutorial/blob)
 "D" = (
 /obj/adventurepuzzle/triggerable/light/gauntlet,
 /turf/simulated/floor,
-/area/blob/tutorial_zone)
+/area/tutorial/blob)
 "V" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"
 	},
-/area/blob/tutorial_zone)
+/area/tutorial/blob)
 
 (1,1,1) = {"
 g

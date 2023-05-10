@@ -4,12 +4,14 @@
 #define SET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_SET_SIGNAL_GAS, ID)
 #define RESET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_RESET_SIGNAL_GAS, ID)
 
-obj/machinery/atmospherics/mixer
+/obj/machinery/atmospherics/mixer
+	name = "Gas mixer"
 	icon = 'icons/obj/atmospherics/mixer.dmi'
 	icon_state = "intact_off"
 	density = 0
-//
-	name = "Gas mixer"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
+
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST
@@ -159,7 +161,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["in1tg"] = round(100*tgmoles/in1_total_moles)
 				signal.data["in1kpa"] = round(MIXTURE_PRESSURE(air_in1), 0.1)
-				signal.data["in1temp"] = round(air_in1.temperature - T0C)
+				signal.data["in1temp"] = round(TO_CELSIUS(air_in1.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(in1)
 				signal.data["in1tg"] = 0
@@ -174,7 +176,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["in2tg"] = round(100*tgmoles/in2_total_moles)
 				signal.data["in2kpa"] = round(MIXTURE_PRESSURE(air_in2), 0.1)
-				signal.data["in2temp"] = round(air_in2.temperature - T0C)
+				signal.data["in2temp"] = round(TO_CELSIUS(air_in2.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(in2)
 				signal.data["in2tg"] = 0
@@ -193,7 +195,7 @@ obj/machinery/atmospherics/mixer
 						tgmoles += trace_gas.moles
 				signal.data["outtg"] = round(100*tgmoles/out_total_moles)
 				signal.data["outkpa"] = round(MIXTURE_PRESSURE(air_out), 0.1)
-				signal.data["outtemp"] = round(air_out.temperature - T0C)
+				signal.data["outtemp"] = round(TO_CELSIUS(air_out.temperature))
 			else
 				RESET_SIGNAL_MIXTURE(out)
 				signal.data["outtg"] = 0

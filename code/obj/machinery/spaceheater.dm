@@ -1,5 +1,8 @@
+TYPEINFO(/obj/machinery/space_heater)
+	mats = 8
+
 /obj/machinery/space_heater
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "sheater0"
@@ -13,7 +16,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = FPRINT
 
@@ -179,8 +181,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -256,8 +258,11 @@
 		if(Obj == src.cell)
 			src.cell = null
 
+TYPEINFO(/obj/machinery/sauna_stove)
+	mats = 8
+
 /obj/machinery/sauna_stove
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "sauna0"
@@ -270,7 +275,6 @@
 	var/set_temperature = 50		// in celcius, add T0C for kelvin
 	var/heating_power = 40000
 	var/cooling_power = -30000
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = FPRINT
 
@@ -390,8 +394,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")

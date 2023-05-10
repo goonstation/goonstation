@@ -44,7 +44,7 @@
 		if(W.w_class > W_CLASS_NORMAL)
 			boutput(user, "<span class='alert'>\The [W] is too big to fit inside [src]!</span>")
 			return
-		if (W.cant_self_remove)
+		if (W.cant_self_remove || W.cant_drop)
 			boutput(user, "<span class='alert'>You can't get [W] to come off of you!</span>")
 			return
 		if (istype(W, /obj/item/clothing/under/trash_bag))
@@ -54,11 +54,9 @@
 			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
 			return
 		else
-			if (istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/S = src.loc
-				if (S.max_wclass < W.w_class) // too big to fit in the thing we're in already!
-					boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [S]!</span>")
-					return
+			if (src.stored && src.stored.check_can_hold(W) == STORAGE_WONT_FIT) // too big to fit in the thing we're in already!
+				boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [src.stored.linked_item]!</span>")
+				return
 			user.u_equip(W)
 			W.set_loc(src)
 			playsound(src.loc, "rustle", 50, 1, -5)

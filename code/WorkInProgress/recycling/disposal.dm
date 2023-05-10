@@ -175,10 +175,11 @@
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
-	density = 0
+	anchored = ANCHORED
+	density = FALSE
+	pass_unstable = FALSE
 	text = ""
-
+	var/spawner_type = /obj/disposalpipespawner
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
 	dir = 0				//! dir will contain dominant direction for junction pipes
@@ -285,7 +286,7 @@
 		missing_image.plane = PLANE_FLOOR
 		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
 		missing_image.alpha = 180
-		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 
 		var/turf/simulated/T = get_turf(src)
 		if (!T.disposal_image)
@@ -304,10 +305,8 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.set_loc(src)
-			return
+		if(!checkTurfPassable(T, source = get_turf(src)))	// dense ouput turf, so default to just ejecting them here
+			T = get_turf(src)
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
@@ -315,7 +314,7 @@
 			F.setIntact(FALSE)
 			F.levelupdate()
 			new /obj/item/tile/steel(H)	// add to holder so it will be thrown with other stuff
-			F.icon_state = "[F.burnt ? "panelscorched" : "plating"]"
+			F.icon_state = "plating"
 
 		if(direction)		// direction is specified
 			if(istype(T, /turf/space)) // if ended in space, then range is unlimited
@@ -434,6 +433,9 @@
 		if (isrestrictedz(z))
 			return
 		var/turf/T = src.loc
+		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
+			T.Attackby(I, user)
+			return
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 
@@ -503,7 +505,24 @@
 			dir = SOUTH
 		west
 			dir = WEST
+	// /regular should be used instead of /segment from now on
+	// don't know if segment/horizontal and such are used, is the issue
+	regular
+		horizontal
+			dir = EAST
+		vertical
+			dir = NORTH
+		bent
+			icon_state = "pipe-c"
 
+			north
+				dir = NORTH
+			east
+				dir = EAST
+			south
+				dir = SOUTH
+			west
+				dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -854,11 +873,13 @@
 
 		qdel(src)
 
+TYPEINFO(/obj/disposalpipe/loafer)
+	mats = 100
+
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
 	icon_state = "pipe-loaf0"
-	mats = 100
 	is_syndicate = 1
 	var/is_doing_stuff = FALSE
 
@@ -898,6 +919,7 @@
 				for (var/atom/movable/O2 in H)
 					if(ismob(O2))
 						var/mob/M = O2
+						logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
 						M.ghostize()
 					qdel(O2)
 
@@ -918,8 +940,9 @@
 
 				else if (isliving(newIngredient))
 					playsound(src.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Liquid_Slosh_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
-					var/mob/living/poorSoul = newIngredient
-					if (issilicon(poorSoul))
+					var/mob/living/M = newIngredient
+					logTheThing(LOG_COMBAT, M, "was loafed by the [log_object(src)] at [log_loc(src)]")
+					if (issilicon(M))
 						newLoaf.reagents.add_reagent("oil",10)
 						newLoaf.reagents.add_reagent("silicon",10)
 						newLoaf.reagents.add_reagent("iron",10)
@@ -931,11 +954,11 @@
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 5) + 50 // good god this is a weird value
 					else
 						newLoaf.loaf_factor += (newLoaf.loaf_factor / 10) + 50
-					if(!isdead(poorSoul))
-						poorSoul:emote("scream")
-					poorSoul.death()
-					if (poorSoul.mind || poorSoul.client)
-						poorSoul.ghostize()
+					if(!isdead(M))
+						M:emote("scream")
+					M.death()
+					if (M.mind || M.client)
+						M.ghostize()
 				else if (isitem(newIngredient))
 					var/obj/item/I = newIngredient
 					newLoaf.loaf_factor += I.w_class * 5
@@ -1022,11 +1045,10 @@
 		src.reagents.add_reagent("silicate",10)
 		src.reagents.add_reagent("space_fungus",3)
 		src.reagents.add_reagent("synthflesh",10)
-		START_TRACKING
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES) // only relevant if strangelet
 
 	proc/update()
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
@@ -1121,6 +1143,7 @@
 				src.throwforce = 88
 				src.throw_range = 0
 				src.reagents.add_reagent("george_melonium",50)
+				START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 				if (!src.processing)
 					src.processing = TRUE
@@ -1162,9 +1185,9 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleactivation))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", PROC_REF(deactivate))
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
@@ -1275,7 +1298,7 @@
 	name = "smart disposal outlet"
 	desc = "A disposal outlet with a little sonar sensor on the front, so it only dumps contents if it is unblocked."
 	icon_state = "unblockoutlet"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/turf/stuff_chucking_target
 
@@ -1519,6 +1542,7 @@
 	icon_state = "pipe-t"
 	var/obj/linked 	// the linked obj/machinery/disposal or obj/disposaloutlet
 
+	// these four types need to be removed, but i dont know if they're used in maps
 	north
 		dir = NORTH
 	east
@@ -1528,6 +1552,15 @@
 	west
 		dir = WEST
 
+	regular
+		north
+			dir = NORTH
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
 	mail
 		name = "mail pipe"
 		desc = "An underfloor mail pipe."
@@ -1576,6 +1609,11 @@
 		name = "mineral pipe"
 		desc = "An underfloor mineral pipe."
 		color = PIPEC_MINERAL
+
+	cargo
+		name = "cargo pipe"
+		desc = "An underfloor cargo pipe"
+		color = PIPEC_CARGO
 
 	New()
 		..()
@@ -1697,16 +1735,18 @@
 
 // the disposal outlet machine
 
+TYPEINFO(/obj/disposaloutlet)
+	mats = 12
+
 /obj/disposaloutlet
 	name = "disposal outlet"
 	desc = "An outlet for the pneumatic disposal system."
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "outlet"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
-	mats = 12
 	var/range = 10
 
 	var/message = null
@@ -1884,3 +1924,153 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+ABSTRACT_TYPE(/obj/disposalpipespawner)
+/obj/disposalpipespawner
+	icon = 'icons/obj/disposal.dmi'
+	name = "disposal pipe spawner"
+	icon_state = "pipe-spawner"
+	text = ""
+	var/pipe_type = /obj/disposalpipe/segment/regular
+	var/trunk_type = /obj/disposalpipe/trunk/regular
+	var/dpdir = 0		//! bitmask of pipe directions
+	regular
+		pipe_type = /obj/disposalpipe/segment/regular
+		trunk_type = /obj/disposalpipe/trunk/regular
+	mail
+		name = "mail pipe spawner"
+		color = PIPEC_MAIL
+		pipe_type = /obj/disposalpipe/segment/mail
+		trunk_type = /obj/disposalpipe/trunk/mail
+	brig
+		name = "brig pipe spawner"
+		color = PIPEC_BRIG
+		pipe_type = /obj/disposalpipe/segment/brig
+		trunk_type = /obj/disposalpipe/trunk/brig
+
+	ejection
+		name = "ejection pipe spawner"
+		color = PIPEC_EJECTION
+		pipe_type = /obj/disposalpipe/segment/ejection
+		trunk_type = /obj/disposalpipe/trunk/ejection
+
+	morgue
+		name = "morgue pipe spawner"
+		color = PIPEC_MORGUE
+		pipe_type = /obj/disposalpipe/segment/morgue
+		trunk_type = /obj/disposalpipe/trunk/morgue
+
+	food
+		name = "food pipe spawner"
+		color = PIPEC_FOOD
+		pipe_type = /obj/disposalpipe/segment/food
+		trunk_type = /obj/disposalpipe/trunk/food
+
+	produce
+		name = "produce pipe spawner"
+		color = PIPEC_PRODUCE
+		pipe_type = /obj/disposalpipe/segment/produce
+		trunk_type = /obj/disposalpipe/trunk/produce
+
+	transport
+		name = "transport pipe spawner"
+		color = PIPEC_TRANSPORT
+		pipe_type = /obj/disposalpipe/segment/transport
+		trunk_type = /obj/disposalpipe/trunk/transport
+
+	mineral
+		name = "mineral pipe spawner"
+		color = PIPEC_MINERAL
+		pipe_type = /obj/disposalpipe/segment/mineral
+		trunk_type = /obj/disposalpipe/trunk/mineral
+
+	cargo
+		name = "cargo pipe spawner"
+		color = PIPEC_CARGO
+		pipe_type = /obj/disposalpipe/segment/cargo
+		trunk_type = /obj/disposalpipe/trunk/cargo
+
+ABSTRACT_TYPE(/obj/disposalpipespawner)
+
+/obj/disposalpipespawner/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/disposalpipespawner/initialize()
+	var/list/selftile = list()
+	for (var/obj/disposalpipespawner/dupe in range(0, src))
+		if (istype(dupe, src))
+			selftile += dupe
+	if (length(selftile) > 1)
+		CRASH("Multiple pipespawners on coordinate [src.x] x [src.y] y!")
+	selftile.Cut()
+	var/list/directions = list()
+	for(var/dir_to_pipe in cardinal)
+		for(var/obj/disposalpipespawner/maybe_pipe in get_step(src, dir_to_pipe))
+		// checks for other pipe spawners of its own type
+			if(istype(maybe_pipe, src) || istype(src, maybe_pipe))
+				dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
+		// this checks all the different subtypes of pipe
+			// the ones which spit out at 90 degrees
+			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
+			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
+				if (turn(maybe_pipe.dir, 90) == dir_to_pipe || turn(maybe_pipe.dir, -90) == dir_to_pipe)
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+			// the three ways (they do not check which 3 ways, it connects in all 4 directions)
+			if (istype(maybe_pipe, /obj/disposalpipe/junction)\
+			|| istype(maybe_pipe, /obj/disposalpipe/mechanics_switch)\
+			|| istype(maybe_pipe, /obj/disposalpipe/switch_junction))
+				dpdir |= dir_to_pipe
+				directions += dir_to_pipe
+
+			// regular pipes and trunks
+			if(istype(maybe_pipe, src.pipe_type)\
+			|| istype(maybe_pipe, src.trunk_type))
+			// these only connect to their own kind btw
+				if (maybe_pipe.dpdir & get_dir(maybe_pipe, src))
+				// makes sure they're pointing at you
+					dpdir |= dir_to_pipe
+					directions += dir_to_pipe
+
+	if (dpdir == 0)
+		CRASH("Lone Pipespawner doesn't connect to anything!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	else if (length(directions) == 1)
+		// lays a trunk pipe
+		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
+		current.dir = directions[1]
+		current.dpdir = dpdir
+		update_icon(current)
+	else if (length(directions) == 2)
+	// lays a normal pipe segment
+		if (dpdir == NORTHWEST || dpdir == NORTHEAST || dpdir == SOUTHWEST || dpdir == SOUTHEAST)
+		// curved pipe
+			var/obj/disposalpipe/segment/bent/current = new src.pipe_type(src.loc)
+			current.dpdir = dpdir
+			// this is to make it face the right way, for the icon
+			if (dpdir == NORTHEAST)
+				current.dir = NORTH
+			else if (dpdir == NORTHWEST)
+				current.dir = WEST
+			else if (dpdir == SOUTHEAST)
+				current.dir = EAST
+			else if (dpdir == SOUTHWEST)
+				current.dir = SOUTH
+			current.icon_state = "pipe-c"
+			update_icon(current)
+		else
+		// straight pipe
+			var/obj/disposalpipe/segment/current = new src.pipe_type(src.loc)
+			current.dir = directions[1]
+			current.dpdir = dpdir
+			current.icon_state = "pipe-s"
+			update_icon(current)
+	else
+	// DO NOT MAKE JUNCTIONS, FOOLS
+		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")
+	qdel(src)

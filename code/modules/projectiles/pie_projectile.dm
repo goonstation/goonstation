@@ -2,10 +2,9 @@
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "pie"
-	power = 1
+	stun = 1
 	dissipation_rate = 1
 	dissipation_delay = 7
-	ks_ratio = 0
 	shot_number = 1
 	shot_sound = 'sound/effects/throw.ogg'
 	damage_type = D_SPECIAL

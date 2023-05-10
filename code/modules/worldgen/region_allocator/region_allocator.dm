@@ -136,7 +136,7 @@ var/global/datum/region_allocator/region_allocator = new
 	proc/clean_up(turf/main_turf=/turf/space, turf/edge_turf=/turf/cordon, area/main_area=/area/space)
 		if(ispath(main_area))
 			main_area = new main_area(null)
-		for(var/turf/T in REGION_TILES(src))
+		for(var/turf/T in REGION_TURFS(src))
 			var/target_type = turf_on_border(T) ? edge_turf : main_turf
 			T = T.ReplaceWith(target_type, FALSE, FALSE, FALSE, force=TRUE)
 			if(!isnull(main_area))
@@ -220,7 +220,9 @@ var/global/datum/region_allocator/region_allocator = new
 
 	proc/add_z_level()
 		RETURN_TYPE(/datum/region_node)
+		global.dont_init_space = TRUE
 		world.setMaxZ(world.maxz + 1)
+		global.dont_init_space = FALSE
 		var/size = min(world.maxx, world.maxy)
 		. = new/datum/region_node(1, 1, world.maxz, size, parent=null)
 

@@ -152,8 +152,7 @@
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
 		if (isflockmob(user))
-			var/mob/living/critter/flock/flock_creature = user
-			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
+			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
@@ -180,7 +179,7 @@
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
 			return
-		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert) as null|text
+		var/newalert = tgui_input_text(user, "Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert)
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))

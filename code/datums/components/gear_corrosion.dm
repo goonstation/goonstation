@@ -12,10 +12,11 @@ TYPEINFO(/datum/component/gear_corrosion)
 	initialization_args = list()
 
 /datum/component/gear_corrosion/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_PICKUP, .proc/show_pip)
-	RegisterSignal(parent, COMSIG_ITEM_DROPPED, .proc/hide_pip)
+	RegisterSignal(parent, COMSIG_ITEM_PICKUP, PROC_REF(show_pip))
+	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(hide_pip))
 
 /datum/component/gear_corrosion/RegisterWithParent()
 	. = ..()
@@ -111,7 +112,7 @@ TYPEINFO(/datum/component/gear_corrosion)
 	invisibility = INVIS_ALWAYS
 	plane = PLANE_HUD
 	layer = HUD_LAYER_3
-	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 
 	New()
 		..()

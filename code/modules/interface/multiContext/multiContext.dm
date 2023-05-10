@@ -67,7 +67,7 @@
 			R.hud.remove_screen(C)
 
 		else if(iswraith(src))
-			var/mob/wraith/W = src
+			var/mob/living/intangible/wraith/W = src
 			W.hud.remove_screen(C)
 
 		else if(istype(src, /mob/dead/observer))
@@ -166,7 +166,7 @@
 
 		if(background == null)
 			background = image('icons/ui/context16x16.dmi', src, "[action.getBackground(target, user)]0")
-			background.appearance_flags = RESET_COLOR
+			background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 
 		if (A.background_color)
 			src.background.color = A.background_color
@@ -219,7 +219,7 @@
 			mcrit.hud.remove_screen(src)
 
 		else if(iswraith(user))
-			var/mob/wraith/wraith = user
+			var/mob/living/intangible/wraith/wraith = user
 			wraith.hud.remove_screen(src)
 
 		else if (isrobot(user))

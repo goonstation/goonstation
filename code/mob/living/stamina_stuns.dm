@@ -180,10 +180,6 @@
 
 //new disorient thing
 
-#define DISORIENT_BODY 1
-#define DISORIENT_EYE 2
-#define DISORIENT_EAR 4
-
 /mob/proc/get_disorient_protection()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX), 90, 100)) + 0
 

@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -94,8 +94,20 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
-	A.fx_image = image(src.icon, src.icon_state + "fx")
+	A.fx_image = new
+	A.fx_image.icon = src.icon
+	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
+	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
+	A.fx_image.plane = PLANE_ABOVE_LIGHTING
+
+	A.fx_fallback = new
+	A.fx_fallback.icon = src.icon
+	A.fx_fallback.icon_state = src.icon_state + "fx"
+	A.fx_fallback.color = A.fx_image.color
+	A.fx_fallback.alpha = A.fx_image.alpha
+	A.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
+	A.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
 
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
@@ -127,7 +139,7 @@
 
 /obj/proc/ArtifactActivated()
 	if (!src)
-		return
+		return 1
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
@@ -146,7 +158,8 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.UpdateOverlays(A.fx_image, "activated")
+		src.vis_contents += A.fx_image
+		src.vis_contents += A.fx_fallback
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -164,7 +177,8 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.UpdateOverlays(null, "activated")
+		src.vis_contents -= A.fx_image
+		src.vis_contents -= A.fx_fallback
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()
@@ -372,6 +386,7 @@
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
+			logTheThing(LOG_COMBAT, src, "experienced an artifact fault [F.type_name] affecting [constructTarget(user,"combat")] at [log_loc(src)]")
 			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP

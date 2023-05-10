@@ -216,7 +216,7 @@
 		owner.eyecam.stopObserving()
 		tracking = null
 		delay = success_delay
-		owner.hud.update_tracking()
+		owner.hud?.update_tracking()
 
 	proc/cease_track_temporary()
 		owner.eyecam.stopObserving()

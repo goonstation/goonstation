@@ -321,6 +321,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Experimental Local Generator Crate"
 
+/datum/supply_packs/combustion_generator
+	name = "Portable Combustion Generator"
+	desc = "x1 Portable Generator, comes with a complementary fueltank."
+	category = "Engineering Department"
+	contains = list(/obj/machinery/power/combustion_generator,
+					/obj/item/reagent_containers/food/drinks/fueltank/empty)
+	cost = 8000
+	containertype = /obj/storage/crate/wooden
+	containername = "Portable Combustion Generator"
+
 /datum/supply_packs/medicalfirstaid
 	name = "Medical: First Aid Crate"
 	desc = "x10 Assorted First Aid Kits"
@@ -597,7 +607,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Novelty Clothing Crate"
 	desc = "Assorted Novelty Clothing"
 	contains = list(/obj/random_item_spawner/dressup)
-	cost = 15000
+	cost = 7500
 	containertype = /obj/storage/crate/packing
 	containername = "Novelty Clothing Crate"
 
@@ -641,6 +651,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 750
 	containertype = /obj/storage/crate
 	containername = "Party Supplies"
+
+/datum/supply_packs/wedding
+	name = "Wedding Supplies"
+	desc = "Your very own DIY wedding! Chaplain not included."
+	contains = list(/obj/item/clothing/under/gimmick/wedding_dress = 2,
+					/obj/item/clothing/head/veil = 2,
+					/obj/item/clothing/under/misc/fancy_vest = 2,
+					/obj/item/clothing/suit/tuxedo_jacket = 2,
+					/obj/item/clothing/gloves/ring = 2,
+					/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne = 1)
+	cost = 10000
+	containertype = /obj/storage/crate
+	containername = "Wedding Supplies"
 
 /datum/supply_packs/glowsticks
 	name = "Emergency Glowsticks Crate - 4 pack"
@@ -883,7 +906,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/body_bag = 10,
 					/obj/item/reagent_containers/glass/bottle/formaldehyde,
 					/obj/item/reagent_containers/syringe,
-					/obj/item/storage/bible)
+					/obj/item/bible)
 	cost = 10000
 	containertype = /obj/storage/closet/coffin
 	containername = "Morgue Supplies"
@@ -963,8 +986,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	access = access_engineering
 
 /datum/supply_packs/radiation_emergency
-	name = "Radioactive Emergency Supplies"
-	desc = "Equipment for dealing with a radioactive emergency. No, the crate itself is not radioactive."
+	name = "Radiation Emergency Supplies"
+	desc = "Equipment for dealing with a radiation emergency. No, the crate itself is not irradiated."
 	category = "Basic Materials"
 	contains = list(/obj/item/clothing/suit/rad = 4,
 					/obj/item/clothing/head/rad_hood = 4,
@@ -1208,13 +1231,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for catering"
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering and hydroponics"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
 					/obj/item/vending/restock_cartridge/kitchen)
 	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"
@@ -1338,6 +1361,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 7000
 	containertype = /obj/storage/secure/crate
 	containername = "Construction Equipment"
+
+/datum/supply_packs/lawrack
+	name = "AI Law Rack ManuDrive Crate"
+	desc = "A single-use ManuDrive for creating a replacement Law Rack for your Automated Intelligence unit. Note: Bring your own law modules."
+	category = "Engineering Department"
+	contains = list(/obj/item/disk/data/floppy/manudrive/law_rack/singleuse)
+	cost = 30000
+	containertype = /obj/storage/secure/crate
+	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
+	access = access_heads
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */
@@ -1464,8 +1497,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-//Nadir is not intended to have station pods/submarines
-#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1474,7 +1505,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
-#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"
@@ -1583,7 +1613,6 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 					/obj/submachine/chef_sink,
 					/obj/machinery/deep_fryer,
 					/obj/submachine/foodprocessor,
-					/obj/machinery/vending/monkey,
 					/obj/machinery/vending/kitchen,
 					/obj/kitchenspike,
 					/obj/machinery/gibber)

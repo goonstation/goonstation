@@ -44,7 +44,7 @@ change the direction of created objects.<br>
 			marker = image('icons/misc/buildmode.dmi', "marker")
 			marker.plane = PLANE_OVERLAY_EFFECTS
 			marker.layer = NOLIGHT_EFFECTS_LAYER_BASE
-			marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+			marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 		A = get_turf(object)
 		marker.loc = A
 		usr.client?.images += marker

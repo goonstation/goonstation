@@ -6,7 +6,7 @@
 	desc = "Part of an elaborate small-ship teleportation network recently deployed by Nanotrasen.  Probably won't cause you to die."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacon"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
@@ -83,7 +83,7 @@
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -99,6 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
+	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()
@@ -110,7 +111,7 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
@@ -162,6 +163,8 @@
 				else
 					H:bioHolder:RandomEffect("good")
 			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
+	else if (istype(M, /atom/movable))
+		logTheThing(LOG_COMBAT, M, "([M.type]) entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
@@ -210,7 +213,7 @@
 			src.deploybeacon()
 
 		else if (ispulsingtool(W) && !src.deploying)
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -225,7 +228,7 @@
 
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
-	src.anchored = 1
+	src.anchored = ANCHORED
 	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
 		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)

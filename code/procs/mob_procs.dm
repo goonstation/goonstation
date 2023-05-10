@@ -266,7 +266,11 @@
 			mod_weak = -INFINITY
 			mod_stun = -INFINITY
 			hulk = 1
-		if ((H.glasses && istype(H.glasses, /obj/item/clothing/glasses/thermal)) || H.eye_istype(/obj/item/organ/eye/cyber/thermal))
+		var/helmet_thermal = FALSE
+		if (istype(H.head, /obj/item/clothing/head/helmet/space/industrial))
+			var/obj/item/clothing/head/helmet/space/industrial/helmet = H.head
+			helmet_thermal = helmet.visor_enabled && helmet.visor_enabled
+		if (helmet_thermal || istype(H.glasses, /obj/item/clothing/glasses/thermal) || H.eye_istype(/obj/item/organ/eye/cyber/thermal))
 			H.show_text("<b>Your thermals intensify the bright flash of light, hurting your eyes quite a bit.</b>", "red")
 			mod_animation = 20
 			if (hulk == 0)
@@ -481,6 +485,9 @@
 /proc/hes_or_shes(var/mob/subject)
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
+
+/proc/is_or_are(var/mob/subject)
+	return (subject.get_pronouns().pluralize ? "are" : "is")
 
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
@@ -747,6 +754,7 @@
 	var/list/can_see = list()
 	var/see_traitors = 0
 	var/see_nukeops = 0
+	var/see_pirates = 0
 	var/see_wizards = 0
 	var/see_revs = 0
 	var/see_heads = 0
@@ -763,13 +771,9 @@
 	if (isadminghost(src) || src.client?.adventure_view || current_state >= GAME_STATE_FINISHED)
 		see_everything = 1
 	else
-		if (istype(ticker.mode, /datum/game_mode/revolution))
-			var/datum/game_mode/revolution/R = ticker.mode
-			var/list/datum/mind/HR = R.head_revolutionaries
-			var/list/datum/mind/RR = R.revolutionaries
-			if (src.mind in (HR + RR))
-				see_revs = 1
-			if (src.mind in HR)
+		if (isrevolutionary(src))
+			see_revs = 1
+			if (src.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
 				see_heads = 1
 		else if (istype(ticker.mode, /datum/game_mode/spy))
 			var/datum/game_mode/spy/S = ticker.mode
@@ -777,10 +781,6 @@
 			var/list/M = S.spies
 			if (src.mind in (L + M))
 				see_special = 1
-		else if (istype(ticker.mode, /datum/game_mode/gang))
-			if(src.mind.gang != null)
-				gang_to_see = src.mind.gang
-		//mostly took this from gang. I'm sure it can be better though, sorry. -Kyle
 		else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			// var/datum/game_mode/pod_wars/PW = ticker.mode
 			PWT_to_see = get_pod_wars_team_num(src)
@@ -790,10 +790,13 @@
 				see_traitors = 1
 				see_nukeops = 1
 				see_revs = 1
+		gang_to_see = src.get_gang()
 		if (istraitor(src) && traitorsseeeachother)
 			see_traitors = TRUE
 		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
+		else if (ispirate(src))
+			see_pirates = 1
 		else if (iswizard(src))
 			see_wizards = 1
 		else if (isvampire(src))
@@ -820,7 +823,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_salvager && !see_special && !see_everything && !gang_to_see && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -857,6 +860,30 @@
 				if (ROLE_TRAITOR, ROLE_HARDMODE_TRAITOR, ROLE_SLEEPER_AGENT)
 					if (see_everything || see_traitors)
 						var/I = image(antag_traitor, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_HEAD_REVOLUTIONARY)
+					if (see_everything || see_revs)
+						var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+						can_see.Add(I)
+				if (ROLE_REVOLUTIONARY)
+					if (see_everything || see_revs)
+						var/I = image(antag_rev, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+						can_see.Add(I)
+				if (ROLE_NUKEOP_COMMANDER)
+					if (see_everything || see_nukeops)
+						var/I = image(antag_syndicate_comm, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_NUKEOP)
+					if (see_everything || see_nukeops)
+						var/I = image(antag_syndicate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_LEADER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang_leader, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_GANG_MEMBER)
+					if (see_everything || gang_to_see == M.current.get_gang())
+						var/I = image(antag_gang, loc = M.current)
 						can_see.Add(I)
 				if (ROLE_CHANGELING)
 					if (see_everything)
@@ -920,45 +947,29 @@
 					if (see_everything || see_salvager)
 						var/I = image(antag_salvager, loc = M.current)
 						can_see.Add(I)
+				if (ROLE_PIRATE)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_PIRATE_FIRST_MATE)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate_first_mate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_PIRATE_CAPTAIN)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate_captain, loc = M.current)
+						can_see.Add(I)
 				else
 					if (see_everything)
 						var/I = image(antag_generic, loc = M.current) // Default to this.
 						can_see.Add(I)
 
-	// Antagonists who generally only appear in certain game modes.
-	if (istype(ticker.mode, /datum/game_mode/revolution))
-		var/datum/game_mode/revolution/R = ticker.mode
-		var/list/datum/mind/HR = R.head_revolutionaries
-		var/list/datum/mind/RR = R.revolutionaries
-		var/list/datum/mind/heads = R.get_all_heads()
-
-		if (see_revs || see_everything)
-			for (var/datum/mind/M in HR)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_revhead, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1)) //secHuds are on EFFECTS_LAYER_UNDER_4
-					can_see.Add(I)
-			for (var/datum/mind/M in RR)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_rev, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
-					can_see.Add(I)
-
-		if (see_heads || see_everything)
-			for (var/datum/mind/M in heads)
-				if (M.current)
-					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
-					can_see.Add(I)
-
-	else if (istype(ticker.mode, /datum/game_mode/nuclear))
-		var/datum/game_mode/nuclear/N = ticker.mode
-		var/list/datum/mind/syndicates = N.syndicates
-		if (see_nukeops || see_everything)
-			for (var/datum/mind/M in syndicates)
-				if (M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/I = image(antag_syndicate, loc = M.current)
-					can_see.Add(I)
+	var/datum/antagonist/head_revolutionary/antag_role = src.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+	if (antag_role)
+		for (var/datum/mind/head_mind in antag_role.heads_of_staff)
+			if (head_mind.current)
+				var/I = image(antag_head, loc = head_mind.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+				can_see.Add(I)
 
 	else if (istype(ticker.mode, /datum/game_mode/spy))
 		var/datum/game_mode/spy/S = ticker.mode
@@ -979,22 +990,6 @@
 				var/I = image(antag_spyleader, loc = leader_mind.current)
 				can_see.Add(I)
 
-	else if (istype(ticker.mode, /datum/game_mode/gang))
-		var/datum/game_mode/gang/mode = ticker.mode
-
-		for (var/datum/gang/G in mode.gangs)
-			if (G != gang_to_see && !see_everything) continue
-
-			if(G.leader && G.leader.current)
-				if (!see_everything && isobserver(G.leader.current)) continue
-				var/I = image(antag_gang_leader, loc = G.leader.current)
-				can_see.Add(I)
-
-			for(var/datum/mind/M in G.members)
-				if(M.current)
-					if (!see_everything && isobserver(M.current)) continue
-					var/II = image(antag_gang, loc = M.current)
-					can_see.Add(II)
 	else if (istype(ticker.mode, /datum/game_mode/pod_wars))
 		var/datum/game_mode/pod_wars/mode = ticker.mode
 		if (PWT_to_see || see_everything)
@@ -1099,16 +1094,29 @@
 	var/rendered = "<span class='game say'>[my_name] <span class='message'>[message_a]</span></span>"
 
 	var/rendered_outside = null
-	if (olocs.len)
-		var/atom/movable/OL = olocs[olocs.len]
+	if (length(olocs))
+		/// outermost movable atom in the chain our mob is in, used to determine how text will look
+		var/atom/movable/outermost = olocs[length(olocs)]
+
+		/// determines if we're located on a spike for special handling
+		var/obj/head_on_spike/spike = locate() in olocs
+		if (spike)
+			outermost = spike
+			thickness = -1 // dont muffle at all for heads on spikes
+		else
+			/// determine if we're atleast in an item held by a mob, such as a backpack
+			for (var/obj/item/I in olocs)
+				if (ismob(I.loc))
+					outermost = I // set it so it appears as what we're in when talking
+
 		if (thickness < 0)
 			rendered_outside = rendered
 		else if (thickness == 0)
-			rendered_outside = "<span class='game say'>[my_name] (on [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (on [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 10)
-			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>[my_name] (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 		else if (thickness < 20)
-			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(OL)] [OL]) <span class='message'>[message_a]</span></span>"
+			rendered_outside = "<span class='game say'>muffled <span class='name' data-ctx='\ref[src.mind]'>[src.voice_name]</span> (inside [bicon(outermost)] [outermost]) <span class='message'>[message_a]</span></span>"
 
 	for (var/mob/M in heard)
 		if (M in processed)

@@ -415,7 +415,7 @@
 
 	buildBackgroundIcon(atom/target, mob/user)
 		var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-		background.appearance_flags = RESET_COLOR
+		background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		. = background
 
 	getIcon()
@@ -442,17 +442,36 @@
 		else
 			. = ..()
 
+#define OMNI_TOOL_WAIT_TIME 0.5 SECONDS
 
 /datum/contextAction/deconstruction
 	icon = 'icons/ui/context16x16.dmi'
 	name = "Deconstruct with Tool"
 	desc = "You shouldn't be reading this, bug."
 	icon_state = "wrench"
+	var/omni_mode
+	var/omni_path
+	var/success_text
+	var/success_sound
+
+	proc/success_feedback(atom/target, mob/user)
+		user.show_text(replacetext(success_text, "%target%", target), "blue")
+		if (success_sound)
+			playsound(target, success_sound, 50, 1)
+
+	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
+		if (!(omni_mode in omni.modes))
+			return FALSE
+		omni.change_mode(omni_mode, user, omni_path)
+		user.show_text("You flip [omni] to [name] mode.", "blue")
+		sleep(OMNI_TOOL_WAIT_TIME)
+		return TRUE
 
 	execute(atom/target, mob/user)
 		if (isobj(target))
 			var/obj/O = target
 			if (O.decon_contexts)
+				success_feedback(target, user)
 				O.decon_contexts -= src
 				if (O.decon_contexts.len <= 0)
 					user.show_text("Looks like [target] is ready to be deconstructed with the device.", "blue")
@@ -473,72 +492,106 @@
 		name = "Wrench"
 		desc = "Wrenching required to deconstruct."
 		icon_state = "wrench"
+		omni_mode = OMNI_MODE_WRENCHING
+		omni_path = /obj/item/wrench
+		success_text = "You wrench %target%'s bolts."
+		success_sound = 'sound/items/Ratchet.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (iswrenchingtool(I))
-					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
 		name = "Cut"
 		desc = "Cutting required to deconstruct."
 		icon_state = "cut"
+		omni_mode = OMNI_MODE_SNIPPING
+		omni_path = /obj/item/wirecutters
+		success_text = "You cut some vestigial wires from %target%."
+		success_sound = 'sound/items/Wirecutter.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user,I))
+						return ..()
 				if (iscuttingtool(I) || issnippingtool(I))
-					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
 		desc = "Welding required to deconstruct."
 		icon_state = "weld"
+		omni_mode = OMNI_MODE_WELDING
+		omni_path = /obj/item/weldingtool
+		success_text = "You weld %target% carefully."
+		success_sound = null // sound handled in try_weld
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
 				if (isweldingtool(I))
 					if (I:try_weld(user, 2))
-						user.show_text("You weld [target] carefully.", "blue")
 						return ..()
+				if(istype(I, /obj/item/tool/omnitool))
+					var/obj/item/tool/omnitool/omni = I
+					if(omnitool_swap(target, user,I))
+						if (omni:try_weld(user, 2))
+							return ..()
 
 	pry
 		name = "Pry"
 		desc = "Prying required to deconstruct. Try a crowbar."
 		icon_state = "bar"
+		omni_mode = OMNI_MODE_PRYING
+		omni_path = /obj/item/crowbar
+		success_text = "You pry on %target% without remorse."
+		success_sound = 'sound/items/Crowbar.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (ispryingtool(I))
-					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
-
 	screw
 		name = "Screw"
 		desc = "Screwing required to deconstruct."
 		icon_state = "screw"
+		omni_mode = OMNI_MODE_SCREWING
+		omni_path = /obj/item/screwdriver
+		success_text = "You unscrew some of the screws on %target%."
+		success_sound = 'sound/items/Screwdriver.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (isscrewingtool(I))
-					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
 		name = "Pulse"
 		desc = "Pulsing required to deconstruct. Try a multitool."
 		icon_state = "pulse"
+		omni_mode = OMNI_MODE_PULSING
+		omni_path = /obj/item/device/multitool
+		success_text = "You pulse %target%. In a general sense."
+		success_sound = 'sound/items/penclick.ogg'
 
 		execute(atom/target, mob/user)
 			for (var/obj/item/I in user.equipped_list())
+				if(istype(I, /obj/item/tool/omnitool))
+					if(omnitool_swap(target, user, I))
+						return ..()
 				if (ispulsingtool(I))
-					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
+
+#undef OMNI_TOOL_WAIT_TIME
 
 /datum/contextAction/vehicle
 	icon = 'icons/ui/context16x16.dmi'
@@ -848,28 +901,16 @@
 			M.set_icon_state("[M.prefix]-[M.setting]")
 		M.tooltip_rebuild = 1
 
-	white
-		name = "Set White"
-		desc = "Sets the manufacturer to produce white lamps."
-		icon_state = "white"
+	green
+		name = "Set Green"
+		desc = "Sets the manufacturer to produce green lamps."
+		icon_state = "green"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "white"
-			M.dispensing_tube = /obj/item/light/tube
-			M.dispensing_bulb = /obj/item/light/bulb
-			..()
-
-	red
-		name = "Set Red"
-		desc = "Sets the manufacturer to produce red lamps."
-		icon_state = "red"
-
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "red"
-			M.dispensing_tube = /obj/item/light/tube/red
-			M.dispensing_bulb = /obj/item/light/bulb/red
+			M.setting = "green"
+			M.dispensing_tube = /obj/item/light/tube/green
+			M.dispensing_bulb = /obj/item/light/bulb/green
 			..()
 
 	yellow
@@ -884,52 +925,57 @@
 			M.dispensing_bulb = /obj/item/light/bulb/yellow
 			..()
 
-	green
-		name = "Set Green"
-		desc = "Sets the manufacturer to produce green lamps."
-		icon_state = "green"
+	red
+		name = "Set Red"
+		desc = "Sets the manufacturer to produce red lamps."
+		icon_state = "red"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "green"
-			M.dispensing_tube = /obj/item/light/tube/green
-			M.dispensing_bulb = /obj/item/light/bulb/green
+			M.setting = "red"
+			M.dispensing_tube = /obj/item/light/tube/red
+			M.dispensing_bulb = /obj/item/light/bulb/red
 			..()
 
-	cyan
-		name = "Set Cyan"
-		desc = "Sets the manufacturer to produce cyan lamps."
-		icon_state = "cyan"
+	white
+		name = "Set White"
+		desc = "Sets the manufacturer to produce white lamps."
+		icon_state = "white"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "cyan"
-			M.dispensing_tube = /obj/item/light/tube/cyan
-			M.dispensing_bulb = /obj/item/light/bulb/cyan
+			M.setting = "white"
+			M.dispensing_tube = /obj/item/light/tube
+			M.dispensing_bulb = /obj/item/light/bulb
 			..()
 
-	blue
-		name = "Set Blue"
-		desc = "Sets the manufacturer to produce blue lamps."
-		icon_state = "blue"
-
+	removal
+		name = "Toggle Fitting Removal"
+		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
+		icon_state = "close"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "blue"
-			M.dispensing_tube = /obj/item/light/tube/blue
-			M.dispensing_bulb = /obj/item/light/bulb/blue
+			M.removing_toggled = !M.removing_toggled
+			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
 			..()
 
-	purple
-		name = "Set Purple"
-		desc = "Sets the manufacturer to produce purple lamps."
-		icon_state = "purple"
+	bulbs
+		name = "Fitting Production: Bulbs"
+		desc = "Sets the manufacturer to produce bulb wall fittings."
+		icon_state = "bulb"
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.dispensing_fitting = /obj/machinery/light/small
+			..()
+
+	tubes
+		name = "Fitting Production: Tubes"
+		desc = "Sets the manufacturer to produce tube wall fittings."
+		icon_state = "tube"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.setting = "purple"
-			M.dispensing_tube = /obj/item/light/tube/purple
-			M.dispensing_bulb = /obj/item/light/bulb/purple
+			M.dispensing_fitting = /obj/machinery/light
 			..()
 
 	blacklight
@@ -944,33 +990,39 @@
 			M.dispensing_bulb = /obj/item/light/bulb/blacklight
 			..()
 
-	tubes
-		name = "Fitting Production: Tubes"
-		desc = "Sets the manufacturer to produce tube wall fittings."
-		icon_state = "tube"
+	purple
+		name = "Set Purple"
+		desc = "Sets the manufacturer to produce purple lamps."
+		icon_state = "purple"
 
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light
+			M.setting = "purple"
+			M.dispensing_tube = /obj/item/light/tube/purple
+			M.dispensing_bulb = /obj/item/light/bulb/purple
 			..()
 
-	bulbs
-		name = "Fitting Production: Bulbs"
-		desc = "Sets the manufacturer to produce bulb wall fittings."
-		icon_state = "bulb"
-		execute(var/atom/target, var/mob/user)
-			var/obj/item/lamp_manufacturer/M = target
-			M.dispensing_fitting = /obj/machinery/light/small
-			..()
+	blue
+		name = "Set Blue"
+		desc = "Sets the manufacturer to produce blue lamps."
+		icon_state = "blue"
 
-	removal
-		name = "Toggle Fitting Removal"
-		desc = "Toggles the manufacturer between removing fittings and replacing lamps."
-		icon_state = "remove"
 		execute(var/atom/target, var/mob/user)
 			var/obj/item/lamp_manufacturer/M = target
-			M.removing_toggled = !M.removing_toggled
-			boutput(user, "<span class='notice'>Now set to [M.removing_toggled == TRUE ? "remove fittings" : "replace lamps"].</span>")
+			M.setting = "blue"
+			M.dispensing_tube = /obj/item/light/tube/blue
+			M.dispensing_bulb = /obj/item/light/bulb/blue
+			..()
+	cyan
+		name = "Set Cyan"
+		desc = "Sets the manufacturer to produce cyan lamps."
+		icon_state = "cyan"
+
+		execute(var/atom/target, var/mob/user)
+			var/obj/item/lamp_manufacturer/M = target
+			M.setting = "cyan"
+			M.dispensing_tube = /obj/item/light/tube/cyan
+			M.dispensing_bulb = /obj/item/light/bulb/cyan
 			..()
 
 /datum/contextAction/card
@@ -1124,7 +1176,7 @@
 
 			buildBackgroundIcon-(atom/target, mob/user)
 				var/image/background = image('icons/ui/context32x32.dmi', src, "[getBackground(target, user)]0")
-				background.appearance_flags = RESET_COLOR
+				background.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				.= background
 
 
@@ -1176,89 +1228,6 @@
 			return 0
 */
 
-/datum/contextAction/flockdrone
-	icon = 'icons/ui/context16x16.dmi'
-	icon_background = "flockbg"
-	name = "Control flockdrone"
-	desc = "You shouldn't be reading this, bug."
-	icon_state = "wrench"
-	close_clicked = TRUE
-	/// The flockdrone aiTask subtype we should switch to upon cast
-	var/task_type = null
-
-	//funny copy paste ability targeting code, someone should really generalize this UPSTREAM
-	execute(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		//typecasting soup time
-		if (!istype(target) || !istype(user))
-			return
-		var/datum/abilityHolder/flockmind/holder = user.abilityHolder
-		if (!istype(holder))
-			return
-		var/datum/targetable/flockmindAbility/droneControl/ability = holder.drone_controller
-		if (ability.targeted && user.targeting_ability == ability)
-			user.targeting_ability = null
-			user.update_cursor()
-			return
-		if (ability.targeted)
-			if (world.time < ability.last_cast)
-				return
-			ability.drone = target
-			ability.task_type = task_type
-			ability.holder.owner.targeting_ability = ability
-			ability.holder.owner.update_cursor()
-		user.closeContextActions()
-
-	checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-		return istype(target) && istype(user) && !user.targeting_ability
-
-	move
-		name = "Move"
-		desc = "Go somwhere."
-		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/flock/rally
-
-	convert
-		name = "Convert"
-		desc = "Convert this thing"
-		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_CONVERT_COST
-
-	capture
-		name = "Capture"
-		desc = "Capture this enemy"
-		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
-
-		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..()
-
-	barricade
-		name = "Barricade"
-		desc = "Build a barricade"
-		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
-
-		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources >= FLOCK_BARRICADE_COST
-
-	shoot
-		name = "Shoot"
-		desc = "Shoot this enemy"
-		icon_state = "flock_shoot"
-		task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
-
-	control
-		name = "Control"
-		desc = "Assume direct control of this endpoint"
-		icon_state = "flock_control"
-
-		execute(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			if(user.flock && target.flock == user.flock)
-				target.take_control(user)
-
 /datum/contextAction/rcd
 	icon = 'icons/ui/context16x16.dmi'
 	close_clicked = TRUE
@@ -1274,34 +1243,30 @@
 	checkRequirements(var/obj/item/rcd/rcd, var/mob/user)
 		return rcd in user
 
-	floorswalls
-		name = "Floors/walls"
-		icon_state = "wall"
-		mode = RCD_MODE_FLOORSWALLS
-	airlock
-		name = "Airlocks"
-		icon_state = "door"
-		mode = RCD_MODE_AIRLOCK
-
 	deconstruct
 		name = "Deconstruct"
 		icon_state = "close"
 		mode = RCD_MODE_DECONSTRUCT
-
-	windows
-		name = "Windows"
-		icon_state = "window"
-		mode = RCD_MODE_WINDOWS
-
-	lightbulbs
-		name = "Lightbulbs"
-		icon_state = "bulb"
-		mode = RCD_MODE_LIGHTBULBS
-
+	airlock
+		name = "Airlocks"
+		icon_state = "door"
+		mode = RCD_MODE_AIRLOCK
+	floorswalls
+		name = "Floors/walls"
+		icon_state = "wall"
+		mode = RCD_MODE_FLOORSWALLS
 	lighttubes
 		name = "Light tubes"
 		icon_state = "tube"
 		mode = RCD_MODE_LIGHTTUBES
+	lightbulbs
+		name = "Lightbulbs"
+		icon_state = "bulb"
+		mode = RCD_MODE_LIGHTBULBS
+	windows
+		name = "Windows"
+		icon_state = "window"
+		mode = RCD_MODE_WINDOWS
 
 /datum/contextAction/reagent
 	icon_background = "whitebg"

@@ -9,18 +9,20 @@
 //Machine that tracks the sun and reports it's direction to the solar controllers
 //As long as this is working, solar panels on same powernet will track automatically
 
+TYPEINFO(/obj/machinery/power/tracker)
+	mats = list("CRY-1"=15, "CON-1"=20)
+
 /obj/machinery/power/tracker
 	name = "Houyi stellar tracker"
 	desc = "The XIANG|GIESEL model '后羿' star tracker, used to set the alignment of accompanying photo-electric generator panels."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "tracker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
-	mats = list("CRY-1"=15, "CON-1"=20)
 
 	north
 		id = "north"
@@ -81,16 +83,18 @@
 
 /////////////////////////////////////////////// Solar panel /////////////////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/power/solar)
+	mats = list("MET-2"=15, "CON-1"=15)
+
 /obj/machinery/power/solar
 	name = "Kuafu photoelectric panel"
 	desc = "The XIANG|GIESEL model '夸父' photo electrical generator. commonly known as a solar panel."
 	icon = 'icons/obj/power.dmi'
 	icon_state = "solar_panel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	directwired = 1
-	processing_tier = PROCESSING_32TH // Uncomment this and line 175 for an experimental optimization
-	power_usage = 10
+	processing_tier = PROCESSING_EIGHTH
 	var/health = 10
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/obscured = 0
@@ -99,7 +103,6 @@
 	var/ndir = SOUTH
 	var/turn_angle = 0
 	var/obj/machinery/computer/solar_control/control
-	mats = list("MET-2"=15, "CON-1"=15)
 
 
 	north
@@ -189,7 +192,7 @@
 #define SOLARGENRATE (454.54 * MACHINE_PROCS_PER_SEC)
 
 /obj/machinery/power/solar/process()
-
+	..()
 	if(status & BROKEN)
 		return
 
@@ -205,7 +208,7 @@
 		var/max_move = rand(8, 12)
 		adir = (360 + adir + clamp((180 - (540 - ndir + adir) % 360), -max_move, max_move)) % 360
 		if(adir != old_adir)
-			use_power(power_usage)
+			use_power(10) // uses power to rotate
 			UpdateIcon()
 
 		update_solar_exposure()
@@ -292,6 +295,7 @@
 
 /obj/machinery/computer/solar_control/New()
 	..()
+	AddComponent(/datum/component/mechanics_holder)
 	SPAWN(1.5 SECONDS)
 		var/turf/T = get_turf(src)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
@@ -315,6 +319,7 @@
 
 	lastgen = gen
 	gen = 0
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[lastgen]&powerfmt=[engineering_notation(lastgen)]W&angle=[cdir]")
 
 	if(status & (NOPOWER | BROKEN))
 		return
@@ -410,18 +415,20 @@
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if (!powernet) return
 	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
-		if(Solar.control) continue
+		if(Solar.control != src && Solar.control) continue
 		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
 			continue // some solars are weird
 		Solar.control = src
-		src.cdir = Solar.adir
-	for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
-		if(Tracker.control) continue
-		if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
-			continue // some solars are weird
-		Tracker.control = src
-		src.tracker = Tracker
-		break
+		Solar.ndir = src.cdir
+
+	if (!src.tracker)
+		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
+			if(Tracker.control != src && Tracker.control) continue
+			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+				continue // some solars are weird
+			Tracker.control = src
+			src.tracker = Tracker
+			break
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
@@ -446,9 +453,11 @@
 
 // solar panels which ignore occlusion
 
+TYPEINFO(/obj/machinery/power/solar/owl_cheat)
+	mats = 0
+
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"
-	mats = 0
 
 	update_solar_exposure()
 		if(isnull(sun))	return

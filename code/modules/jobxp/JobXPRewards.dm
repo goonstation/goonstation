@@ -244,6 +244,19 @@ mob/verb/checkrewards()
 	required_levels = list("Botanist"=10)
 	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/rainbow
 
+/datum/jobXpReward/botanist/jumpsuit
+	name = "Senior Botanist Jumpsuit"
+	desc = "An old jumpsuit with an earthy smell to it."
+	required_levels = list("Botanist"=15)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+
 /datum/jobXpReward/botanist/wateringcan/old
 	name = "Antique Watering Can"
 	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
@@ -605,6 +618,27 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand(U)
 		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
 		return
+
+/datum/jobXpReward/chefhattall
+    name = "Tall Chef Hat"
+    desc = "Your iconic toque blanche but tall!"
+    required_levels = list("Chef"=2)
+    claimable = 1
+    var/path_to_spawn = /obj/item/clothing/head/chefhattall/
+
+    activate(var/client/C)
+        var/obj/item/clothing/head/chefhat/chefhat = locate(/obj/item/clothing/head/chefhat) in C.mob.contents
+
+        if (istype(chefhat))
+            C.mob.remove_item(chefhat)
+            qdel(chefhat)
+        else
+            boutput(C.mob, "You need to be holding a chef's hat in order to claim this reward")
+            return
+        var/obj/item/I = new path_to_spawn()
+        I.set_loc(get_turf(C.mob))
+        C.mob.put_in_hand_or_drop(I)
+        boutput(C.mob, "Your chef's hat suddenly elongates before your very eyes!")
 
 /////////////Mime////////////////
 

@@ -429,7 +429,7 @@
 							default = src.master.uplink.lock_code
 							prompt += " Your uplink code has been pre-entered for your convenience."
 
-						var/t = input(usr, prompt, src.name, default) as text
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -551,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as null|text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 
@@ -746,7 +746,7 @@
 				null, \
 				FALSE \
 			)
-			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 		on_unset_host(obj/item/device/pda2/pda)
 			qdel(get_radio_connection_by_id(pda, "pda"))

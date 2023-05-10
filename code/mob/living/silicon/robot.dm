@@ -1,6 +1,7 @@
 #define ROBOT_BATTERY_DISTRESS_INACTIVE 0
 #define ROBOT_BATTERY_DISTRESS_ACTIVE 1
 #define ROBOT_BATTERY_DISTRESS_THRESHOLD 100
+#define ROBOT_BATTERY_WIRELESS_CHARGERATE 50
 
 /datum/robot_cosmetic
 	var/head_mod = null
@@ -15,9 +16,10 @@
 	name = "Cyborg"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/robots.dmi'
+	voice_type = "cyborg"
 	icon_state = "robot"
 	health = 300
-	emaggable = 1
+	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
@@ -224,7 +226,7 @@
 				B.icon_state = "borg_brain"
 				if (!B.owner) //Oh no, they have no mind!
 					logTheThing(LOG_DEBUG, null, "<b>Mind</b> Cyborg spawn forced to create new mind for key \[[src.key ? src.key : "INVALID KEY"]]")
-					stack_trace("Cyborg [src] (\ref[src]) was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
+					stack_trace("[identify_object(src)] was created without a mind, somehow. Mind force-created for key \[[src.key ? src.key : "INVALID KEY"]]. That's bad.")
 					var/datum/mind/newmind = new
 					newmind.ckey = ckey
 					newmind.key = src.key
@@ -236,7 +238,7 @@
 					src.part_head.brain = B
 				else
 					// how the hell would this happen. oh well
-					stack_trace("Cyborg [src] (\ref[src]) was created without a head, somehow. That's bad.")
+					stack_trace("[identify_object(src)] was created without a head, somehow. That's bad.")
 					var/obj/item/parts/robot_parts/head/standard/H = new /obj/item/parts/robot_parts/head/standard(src)
 					src.part_head = H
 					B.set_loc(H)
@@ -254,12 +256,20 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		var/is_emagged = src.emagged
+		var/is_syndicate = src.syndicate
+
 		src.stat = 2
+		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
-		src.borg_death_alert()
+
+		if (src.mind)
+			for (var/datum/antagonist/antag_role in src.mind.antagonists)
+				antag_role.on_death()
+
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
 			src.clothes[slot].set_loc(src.loc)
@@ -268,12 +278,15 @@
 			var/turf/T = get_turf(src)
 			for(var/obj/item/parts/robot_parts/R in src.contents)
 				R.set_loc(T)
-			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+				if (istype(R, /obj/item/parts/robot_parts/chest))
+					var/obj/item/parts/robot_parts/chest/chest = R
+					chest.wires = 1
+					if (src.cell)
+						chest.cell = src.cell
 
-			if (src.emagged)
-				frame.emagged = TRUE
-			if (src.syndicate)
-				frame.syndicate = TRUE
+			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
+			frame.emagged = is_emagged
+			frame.syndicate = is_syndicate
 
 			src.ghostize()
 			qdel(src)
@@ -296,6 +309,7 @@
 		return ..(gibbed)
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -542,27 +556,31 @@
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
 					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
-						if (narrator_mode)
-							playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if (isobj(src.loc))
+							var/obj/container = src.loc
+							container.mob_flip_inside(src)
 						else
-							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-						message = "<B>[src]</B> beep-bops!"
-						if (prob(50))
-							animate_spin(src, "R", 1, 0)
-						else
-							animate_spin(src, "L", 1, 0)
+							if (narrator_mode)
+								playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							else
+								playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							message = "<B>[src]</B> beep-bops!"
+							if (prob(50))
+								animate_spin(src, "R", 1, 0)
+							else
+								animate_spin(src, "L", 1, 0)
 
-						for (var/mob/living/M in view(1, null))
-							if (M == src)
-								continue
-							message = "<B>[src]</B> beep-bops at [M]."
-							break
+							for (var/mob/living/M in viewers(1, null))
+								if (M == src)
+									continue
+								message = "<B>[src]</B> beep-bops at [M]."
+								break
 
-						if (istype(src.buckled, /obj/machinery/conveyor))
-							message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
-							src.buckled = null
-							if(isunconscious(src))
-								setalive(src) //reset stat to ensure emote comes out
+							if (istype(src.buckled, /obj/machinery/conveyor))
+								message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
+								src.buckled = null
+								if(isunconscious(src))
+									setalive(src) //reset stat to ensure emote comes out
 
 			if("flex", "flexmuscles")
 				if(!part_arm_r || !part_arm_l)
@@ -742,7 +760,7 @@
 			if(force_instead)
 				newname = default_name
 			else
-				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
+				newname = tgui_input_text(src, "You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
 				if(newname && newname != default_name)
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
@@ -872,7 +890,7 @@
 
 		if (istype(cell,/obj/item/cell/erebite) && fire_protect != 1)
 			src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-			explosion(cell, src.loc, 1, 2, 4, 6, 1)
+			explosion(cell, src.loc, 1, 2, 4, 6)
 			SPAWN(1 DECI SECOND)
 				qdel (src.cell)
 				src.cell = null
@@ -908,8 +926,8 @@
 		if (damage < 1)
 			return
 
-		if(P.proj_data.ks_ratio <= 0.1)
-			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+		if(P.proj_data.stun && P.proj_data.damage <= 5)
+			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
@@ -925,7 +943,7 @@
 				damage -= damage_reduced_by
 				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 
-		if (damage < 1)
+		if (P.proj_data.damage < 1)
 			return
 
 		if (src.material)
@@ -962,6 +980,9 @@
 		if(isshell(src) || src.part_head.ai_interface)
 			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
+		if (!src.emaggable)
+			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
+			return FALSE
 
 		if (!src.emagged)	// trying to unlock with an emag card
 			if (src.opened && user) boutput(user, "You must close the cover to swipe an ID card.")
@@ -970,17 +991,8 @@
 				if (user)
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
-				src.emagged = 1
-				logTheThing(LOG_STATION, src, "[src.name] is emagged by [user] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.law_rack_connection = null //emagging removes the connection for laws, essentially nulling the laws and allowing the emagger to connect this borg to a different rack
-				if (src.mind && !src.mind.special_role) // Preserve existing antag role (if any).
-					src.mind.special_role = ROLE_EMAGGED_ROBOT
-					if (!(src.mind in ticker.mode.Agimmicks))
-						ticker.mode.Agimmicks += src.mind
-				boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>")
-				tgui_alert(src, "You have been emagged and now have absolute free will.", "You have been emagged!")
-				if(src.syndicate)
-					src.antagonist_overlay_refresh(1, 1)
+				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
+				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 				update_appearance()
 				return 1
 			return 0
@@ -1022,7 +1034,7 @@
 					if (RP.ropart_take_damage(0, 35) == 1) src.compborg_lose_limb(RP)
 				if (istype(cell, /obj/item/cell/erebite))
 					src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-					explosion(cell, src.loc, 1, 2, 4, 6, 1)
+					explosion(cell, src.loc, 1, 2, 4, 6)
 					SPAWN(1 DECI SECOND)
 						qdel(src.cell)
 						src.cell = null
@@ -1045,7 +1057,7 @@
 		if (!Fshield)
 			if (istype(cell,/obj/item/cell/erebite))
 				src.visible_message("<span class='alert'><b>[src]'s</b> erebite cell violently detonates!</span>")
-				explosion(cell, src.loc, 1, 2, 4, 6, 1)
+				explosion(cell, src.loc, 1, 2, 4, 6)
 				SPAWN(1 DECI SECOND)
 					qdel (src.cell)
 					src.cell = null
@@ -1132,13 +1144,7 @@
 				if(src.law_rack_connection)
 					var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 					if (raw == "Yes")
-						src.law_rack_connection = linker.linked_rack
-						logTheThing(LOG_STATION, src, "[src.name] is connected to the rack [constructName(src.law_rack_connection)] with a linker by [constructName(user)]")
-						var/area/A = get_area(src.law_rack_connection)
-						boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-						src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-						src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-						src.show_laws()
+						src.set_law_rack(linker.linked_rack, user)
 			else
 				boutput(user,"Linker lost connection to the stored law rack!")
 			return
@@ -1262,7 +1268,7 @@
 				var/obj/item/organ/brain/B = W
 				user.drop_item()
 				user.visible_message("<span class='notice'>[user] inserts [W] into [src]'s head.</span>")
-				if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "Cyborg")))
+				if (B.owner && (B.owner.get_player().dnr || jobban_isbanned(B.owner.current, "Cyborg")))
 					src.visible_message("<span class='alert'>The safeties on [src] engage, zapping [B]! [B] must not be compatible with silicon bodies.</span>")
 					B.combust()
 					return
@@ -1334,11 +1340,27 @@
 				boutput(user, "<span class='alert'>You can't think of anything to use the wrench on.</span>")
 				return
 
-			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
+			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Deconstruction", actions)
 			if (!action) return
 			if (action == "Do nothing") return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
+				return
+
+			if(action == "Remove Right Arm" && !src.part_arm_r)
+				boutput(user, "<span class='alert'>There's no right arm to remove!</span>")
+				return
+			if(action == "Remove Left Arm" && !src.part_arm_l)
+				boutput(user, "<span class='alert'>There's no left arm to remove!</span>")
+				return
+			if(action == "Remove Right Leg" && !src.part_leg_r)
+				boutput(user, "<span class='alert'>There's no right leg to remove!</span>")
+				return
+			if(action == "Remove Left Leg" && !src.part_leg_l)
+				boutput(user, "<span class='alert'>There's no left leg to remove!</span>")
+				return
+			if(action == "Remove Head" && !src.part_head)
+				boutput(user, "<span class='alert'>There's no head to remove!</span>")
 				return
 
 			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
@@ -1494,8 +1516,8 @@
 
 		if (available_actions.len)
 			available_actions.Insert(1, "Cancel")
-			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
-			if (!action)
+			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Maintenance", available_actions)
+			if (!action || action == "Cancel")
 				return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
@@ -1562,12 +1584,13 @@
 						return
 
 					for (var/obj/item/roboupgrade/UPGR in src.contents) UPGR.upgrade_deactivate(src)
-					user.put_in_hand_or_drop(src.cell)
-					user.show_text("You remove [src.cell] from [src].", "red")
+					var/obj/item/cell/_cell = src.cell
+					user.put_in_hand_or_drop(_cell)
+					user.show_text("You remove [_cell] from [src].", "red")
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
-					cell.add_fingerprint(user)
-					cell.UpdateIcon()
+					_cell.add_fingerprint(user)
+					_cell.UpdateIcon()
 					src.part_chest.cell = null
 					src.cell = null
 
@@ -1733,6 +1756,9 @@
 		else
 			hud.set_active_tool(null)
 
+	equipped_list(var/check_for_magtractor=1)
+		. = src.module_states
+
 	click(atom/target, params)
 		if (istype(target, /obj/item/roboupgrade) && (target in src.upgrades)) // ugh
 			src.activate_upgrade(target)
@@ -1765,10 +1791,8 @@
 		switch (name)
 			if ("help")
 				src.set_a_intent(INTENT_HELP)
-				hud.update_intent()
 			if ("harm")
 				src.set_a_intent(INTENT_HARM)
-				hud.update_intent()
 			if ("unequip")
 				src.uneq_active()
 			if ("swaphand")
@@ -2134,6 +2158,7 @@
 	verb/cmd_state_standard_laws()
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
+		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 		src.say("1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
 		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
@@ -2158,6 +2183,7 @@
 				return
 			laws = src.law_rack_connection.format_for_irc()
 
+		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
@@ -2240,7 +2266,7 @@
 		if(src.module) return
 		if(!src.freemodule) return
 		boutput(src, "<span class='notice'>You may choose a starter module.</span>")
-		var/list/starter_modules = list("Brobocop", "Chemistry", "Civilian", "Engineering", "Medical", "Mining")
+		var/list/starter_modules = list("Brobocop", "Science", "Civilian", "Engineering", "Medical", "Mining")
 		if (ticker?.mode)
 			if (istype(ticker.mode, /datum/game_mode/construction))
 				starter_modules += "Construction Worker"
@@ -2253,37 +2279,50 @@
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Brobocop module. It comes with a free Security HUD Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/brobocop(src))
-				src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
-			if("Chemistry")
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/sechudgoggles(src)
+			if("Science")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Chemistry module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
-				src.set_module(new /obj/item/robot_module/chemistry(src))
-				src.upgrades += new /obj/item/roboupgrade/spectro(src)
+				boutput(src, "<span class='notice'>You chose the Science module. It comes with a free Spectroscopic Scanner Upgrade.</span>")
+				src.set_module(new /obj/item/robot_module/science(src))
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/spectro(src)
 			if("Civilian")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Civilian module. It comes with a free Efficiency Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/civilian(src))
-				src.upgrades += new /obj/item/roboupgrade/efficiency(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/efficiency(src)
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Engineering module. It comes with a free Meson Vision Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/engineering(src))
-				src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
 			if("Medical")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Medical module. It comes with a free ProDoc Healthgoggles Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/medical(src))
-				src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/healthgoggles(src)
 			if("Mining")
 				src.freemodule = 0
-				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/mining(src))
-				src.upgrades += new /obj/item/roboupgrade/jetpack(src)
+			#ifdef UNDERWATER_MAP
+				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Meson Vision Upgrade.</span>")
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/opticmeson(src)
+			#else
+				boutput(src, "<span class='notice'>You chose the Mining module. It comes with a free Propulsion Upgrade.</span>")
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/jetpack(src)
+			#endif
 			if ("Construction Worker")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Construction Worker module. It comes with a free Construction Visualizer Upgrade.</span>")
 				src.set_module(new /obj/item/robot_module/construction_worker(src))
-				src.upgrades += new /obj/item/roboupgrade/visualizer(src)
+				if(length(src.upgrades) < src.max_upgrades)
+					src.upgrades += new /obj/item/roboupgrade/visualizer(src)
 
 		var/datum/robot_cosmetic/C = null
 		var/datum/robot_cosmetic/M = null
@@ -2363,7 +2402,7 @@
 
 			if (src.max_upgrades > initial(src.max_upgrades))
 				var/delta = src.max_upgrades - initial(src.max_upgrades)
-				power_use_tally += 3 ^ delta
+				power_use_tally += 3 ** delta
 
 			if (power_use_tally < 0) power_use_tally = 0
 
@@ -2437,9 +2476,21 @@
 					if (R.activated)
 						if (efficient) power_use_tally += R.drainrate / 2
 						else power_use_tally += R.drainrate
+				if (src.max_upgrades > initial(src.max_upgrades))
+					var/delta = src.max_upgrades - initial(src.max_upgrades)
+					power_use_tally += 3 ** delta
+
 				if (src.oil && power_use_tally > 0) power_use_tally /= 1.5
 
 				src.cell.use(power_use_tally)
+
+				// Nimbus-class interdictor: wirelessly charge cyborgs
+				if(src.cell.charge < (src.cell.maxcharge - ROBOT_BATTERY_WIRELESS_CHARGERATE))
+					for_by_tcl(IX, /obj/machinery/interdictor)
+						if (IX.expend_interdict(round(ROBOT_BATTERY_WIRELESS_CHARGERATE*1.7),src,TRUE,ITDR_NIMBUS))
+							//multiplier to charge rate is an efficiency penalty due to over-the-air charging
+							src.cell.give(ROBOT_BATTERY_WIRELESS_CHARGERATE)
+							break
 
 				if (fix)
 					HealDamage("All", 6, 6)
@@ -2929,7 +2980,18 @@
 		return max(part_chest.ropart_get_damage_percentage(2), part_head.ropart_get_damage_percentage(2)) // return the most significant damage to the vital bits
 
 	get_valid_target_zones()
-		return list("head", "chest", "l_leg", "r_leg", "l_arm", "r_arm")
+		var/list/ret = list("chest")
+		if(src.part_arm_l)
+			ret += "l_arm"
+		if(src.part_arm_r)
+			ret += "r_arm"
+		if(src.part_leg_l)
+			ret += "l_leg"
+		if(src.part_leg_r)
+			ret += "r_leg"
+		if(src.part_head)
+			ret += "head"
+		return ret
 
 	disposing()
 		if (src.shell)
@@ -3018,6 +3080,9 @@
 		src.next_batteryDistressBoop = world.time + 50 // wait 5 seconds between sad boops
 		playsound(src.loc, src.sound_sad_robot, 100, 1) // Play a sad boop to garner sympathy
 
+/mob/living/silicon/robot/set_a_intent(intent)
+	. = ..()
+	src.hud?.update_intent()
 
 /mob/living/silicon/robot/proc/clearBatteryDistress()
 	src.batteryDistress = ROBOT_BATTERY_DISTRESS_INACTIVE

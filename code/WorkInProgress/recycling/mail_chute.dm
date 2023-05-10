@@ -197,7 +197,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
@@ -483,7 +483,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north

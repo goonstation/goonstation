@@ -7,7 +7,7 @@
 	name = "fluid pipe"
 	desc = "A pipe. For fluids."
 	icon = 'icons/obj/disposal.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/pipe_shape = ""
 	var/capacity = DEFAULT_FLUID_CAPACITY

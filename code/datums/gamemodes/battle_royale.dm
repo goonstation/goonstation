@@ -18,6 +18,7 @@ var/global/area/current_battle_spawn = null
 /datum/game_mode/battle_royale
 	name = "Battle Royale"
 	config_tag = "battle_royale"
+	regular = FALSE
 	var/list/drop_locations = list()
 	var/list/datum/mind/living_battlers = list()
 	var/last_shuttle_move = 0
@@ -184,7 +185,7 @@ var/global/area/current_battle_spawn = null
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale", "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.", 1, TRUE, TRUE)
 
 	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 
