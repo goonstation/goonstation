@@ -14309,12 +14309,10 @@
 /area/station/crew_quarters/md)
 "aQB" = (
 /obj/machinery/computer/card/department/medical,
-/obj/machinery/computer/card/department/medical,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/reagent_containers/food/drinks/tea,
 /obj/machinery/door_control{
 	id = "pharmacylock";
 	name = "Pharmacy Shutters";
@@ -47440,6 +47438,7 @@
 	icon_state = "1-8"
 	},
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/tea,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
