@@ -263,7 +263,7 @@
 /area/prefab/drug_den/party)
 "qg" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /obj/item/reagent_containers/syringe/krokodil{
 	pixel_x = -3;
 	pixel_y = -12

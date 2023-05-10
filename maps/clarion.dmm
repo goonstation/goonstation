@@ -909,7 +909,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -1062,7 +1062,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1117,7 +1117,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1199,7 +1199,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1254,7 +1254,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1370,7 +1370,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -1644,7 +1644,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1699,7 +1699,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1785,7 +1785,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -2080,7 +2080,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "green2"
@@ -2158,7 +2158,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2213,7 +2213,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2331,7 +2331,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -2592,7 +2592,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2647,7 +2647,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2728,7 +2728,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "red2"
@@ -3028,7 +3028,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -3194,7 +3194,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3249,7 +3249,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3374,7 +3374,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3429,7 +3429,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3574,7 +3574,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "purple2"
@@ -3800,7 +3800,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3855,7 +3855,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3952,7 +3952,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4007,7 +4007,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4467,7 +4467,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4522,7 +4522,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4623,7 +4623,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4678,7 +4678,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -8685,7 +8685,7 @@
 "ayt" = (
 /obj/stool/bed,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -8880,7 +8880,7 @@
 /area/station/janitor/office)
 "azh" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -10393,7 +10393,7 @@
 /area/station/crew_quarters/kitchen)
 "aDV" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -17238,7 +17238,7 @@
 	tag = ""
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -17327,7 +17327,7 @@
 	dir = 8
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -17817,7 +17817,7 @@
 /area/station/medical/cdc)
 "bcp" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -17825,7 +17825,7 @@
 /area/station/medical/cdc)
 "bcq" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -18988,7 +18988,7 @@
 /area/station/science/lab)
 "bhb" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -18996,7 +18996,7 @@
 /area/station/medical/cdc)
 "bhc" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -25642,7 +25642,7 @@
 /area/listeningpost)
 "bLb" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -25749,7 +25749,7 @@
 /area/listeningpost)
 "bLs" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -26524,7 +26524,7 @@
 /area/station/medical/medbay)
 "bXO" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white/checker{
 	dir = 1
@@ -27924,7 +27924,7 @@
 /area/station/medical/medbay)
 "dwt" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -33938,7 +33938,7 @@
 /area/station/quartermaster/office)
 "jFB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -34023,7 +34023,7 @@
 /area/station/hallway/secondary/exit)
 "jLe" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -34610,7 +34610,7 @@
 /area/station/teleporter)
 "klq" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -38254,7 +38254,7 @@
 /area/station/ai_monitored/storage/eva)
 "nTj" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -38857,7 +38857,7 @@
 	pixel_y = -4
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},

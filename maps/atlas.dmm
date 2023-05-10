@@ -1017,7 +1017,7 @@
 "adt" = (
 /obj/plasticflaps,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -7414,7 +7414,7 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -7963,7 +7963,7 @@
 /area/station/medical/medbay/surgery)
 "azj" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/red,
 /area/station/medical/medbay)
 "azk" = (
@@ -8121,7 +8121,7 @@
 	pixel_x = -7;
 	pixel_y = -4
 	},
-/obj/item/clothing/suit/bedsheet/captain,
+/obj/item/clothing/back/bedsheet/captain,
 /obj/item/reagent_containers/food/snacks/plant/strawberry{
 	pixel_x = 7;
 	pixel_y = -4
@@ -10480,7 +10480,7 @@
 /area/station/janitor/office)
 "aGE" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
 	},
@@ -12698,7 +12698,7 @@
 /area/listeningpost)
 "aNX" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -12710,7 +12710,7 @@
 /area/listeningpost)
 "aNZ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red";
 	name = "syndicate bedsheet"
@@ -13100,7 +13100,7 @@
 /area/station/mining/refinery)
 "aPj" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -15189,7 +15189,7 @@
 /area/station/security/brig/genpop)
 "aVm" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/hop,
+/obj/item/clothing/back/bedsheet/hop,
 /obj/landmark/start{
 	name = "Head of Personnel"
 	},
@@ -16326,7 +16326,7 @@
 /area/station/maintenance/southwest)
 "aYy" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;

@@ -597,7 +597,7 @@
 /area/prefab/sea_monkey_hideout)
 "bY" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/coin{
 	pixel_y = 4
 	},

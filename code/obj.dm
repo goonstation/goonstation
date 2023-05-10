@@ -265,7 +265,7 @@
 	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
+		if (istype(W, /obj/item/clothing/back/bedsheet))
 			qdel(W)
 			src.amount++
 		return
@@ -274,7 +274,7 @@
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
+			new /obj/item/clothing/back/bedsheet(src.loc)
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else

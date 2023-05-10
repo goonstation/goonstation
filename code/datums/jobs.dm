@@ -2014,7 +2014,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	limit = 1
 	change_name_on_spawn = 1
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
-	slot_suit = list(/obj/item/clothing/suit/bedsheet)
+	slot_suit = list(/obj/item/clothing/back/bedsheet)
 	slot_ears = list(/obj/item/device/radio/headset)
 
 	special_setup(var/mob/living/carbon/human/M)

@@ -404,7 +404,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
@@ -569,7 +569,7 @@
 /area/station/crew_quarters/captain)
 "acg" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -1318,7 +1318,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
@@ -1794,7 +1794,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /obj/machinery/light_switch/east{
 	dir = 4
 	},
@@ -1912,7 +1912,7 @@
 /area/station/bridge/captain)
 "ahc" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -2958,7 +2958,7 @@
 /area/station/solar/east)
 "alN" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -3132,7 +3132,7 @@
 /area/station/maintenance/central)
 "amA" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -3382,7 +3382,7 @@
 /area/station/hallway/primary/central)
 "anr" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -3667,7 +3667,7 @@
 /area/station/chapel/sanctuary)
 "aoZ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -4307,7 +4307,7 @@
 	icon_state = "line2"
 	},
 /obj/stool/bed/moveable/hospital,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -15900,7 +15900,7 @@
 /area/listeningpost)
 "bAM" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "bAN" = (
@@ -19365,7 +19365,7 @@
 /area/station/engine/core)
 "cXp" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -20081,7 +20081,7 @@
 /area/station/quartermaster/office)
 "dnC" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -23194,7 +23194,7 @@
 /area/station/medical/medbay/cloner)
 "eFD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -26627,7 +26627,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -27603,7 +27603,7 @@
 "gED" = (
 /obj/disposalpipe/segment,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -33252,7 +33252,7 @@
 	pixel_y = 21
 	},
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
@@ -37096,7 +37096,7 @@
 /area/station/security/beepsky)
 "lMK" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
@@ -39627,7 +39627,7 @@
 /area/station/medical/medbay/cloner)
 "nbB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -40489,7 +40489,7 @@
 /area/station/crew_quarters/lounge/starboard)
 "nvT" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -40722,7 +40722,7 @@
 	pixel_y = 32
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/captain,
+/obj/item/clothing/back/bedsheet/captain,
 /obj/item/paper/book/from_file/the_trial,
 /obj/landmark/start{
 	name = "Clown"
@@ -42579,7 +42579,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -45631,7 +45631,7 @@
 	nostick = 1;
 	pixel_x = 11
 	},
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /obj/stool/bed,
 /obj/decal/poster/wallsign/poster_clown{
 	pixel_x = 10;
@@ -48658,7 +48658,7 @@
 /area/station/crew_quarters/bar)
 "rOK" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -49380,7 +49380,7 @@
 /area/station/maintenance/disposal)
 "siz" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/poster/wallsign/poster_eyetest{
 	pixel_y = 32
 	},
@@ -49853,7 +49853,7 @@
 /area/station/turret_protected/ai)
 "sxz" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -50017,7 +50017,7 @@
 /area/station/security/hos)
 "sEl" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -50561,7 +50561,7 @@
 /area/station/engine/core)
 "sUb" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -50706,7 +50706,7 @@
 /area/station/hydroponics/bay)
 "sXk" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
@@ -54833,7 +54833,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -55060,7 +55060,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/item/storage/secure/ssafe{
 	pixel_y = 28
 	},
@@ -56126,7 +56126,7 @@
 /area/station/science/chemistry)
 "vED" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/green,
+/obj/item/clothing/back/bedsheet/green,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -59815,7 +59815,7 @@
 /area/station/medical/robotics)
 "xxD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},

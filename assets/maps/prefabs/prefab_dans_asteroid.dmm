@@ -1131,7 +1131,7 @@
 /area/prefab/discount_dans_asteroid)
 "QS" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /obj/decal/fakeobjects/skeleton{
 	pixel_x = 2;
 	pixel_y = 1

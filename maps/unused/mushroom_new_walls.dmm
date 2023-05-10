@@ -5312,7 +5312,7 @@
 /area/station/janitor/office)
 "avp" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/item/device/radio/intercom,
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -7774,7 +7774,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24
@@ -8752,7 +8752,7 @@
 /area/ghostdrone_factory)
 "aJu" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/landmark/start{
 	name = "Engineer"
 	},
@@ -11209,7 +11209,7 @@
 /area/station/crew_quarters/courtroom)
 "aSQ" = (
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -13349,7 +13349,7 @@
 /area/station/maintenance/east)
 "aZI" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -16830,7 +16830,7 @@
 /area/listeningpost)
 "bmi" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "bmj" = (
@@ -18427,7 +18427,7 @@
 /area/station/crew_quarters/pool)
 "brm" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -18484,7 +18484,7 @@
 "brv" = (
 /obj/stool/bed,
 /obj/machinery/light_switch/north,
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/engine/engineering/ce)
 "brw" = (
@@ -21791,7 +21791,7 @@
 /area/station/turret_protected/AIbaseoutside)
 "ePe" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/engine/engineering/private)
 "eQy" = (
@@ -29253,7 +29253,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -29859,7 +29859,7 @@
 /area/station/crew_quarters/arcade)
 "oRk" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -33883,7 +33883,7 @@
 "tkc" = (
 /obj/stool/bed,
 /obj/machinery/light,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -34050,7 +34050,7 @@
 /area/station/hydroponics/bay)
 "tpe" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -35062,7 +35062,7 @@
 "urq" = (
 /obj/stool/bed,
 /obj/item/item_box/gold_star,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -35497,7 +35497,7 @@
 /area/station/security/main)
 "uQl" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
@@ -37907,7 +37907,7 @@
 /area/station/turret_protected/armory_outside)
 "xIn" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /obj/item/device/radio/intercom/loudspeaker/speaker/west{
 	pixel_x = 22
 	},
