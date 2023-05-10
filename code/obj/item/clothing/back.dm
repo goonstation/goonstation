@@ -2,6 +2,8 @@
 /obj/item/clothing/back
 	wear_layer = MOB_BACK_LAYER
 	c_flags = ONBACK
+	/// Should we hide hair while wearing this?
+	var/over_hair = FALSE
 
 /obj/item/clothing/back/hoscape
 	name = "Head of Security's cape"

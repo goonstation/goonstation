@@ -450,7 +450,7 @@
 		src.hat = null
 		return 1
 
-	proc/putonSheet(obj/item/clothing/suit/bedsheet/W as obj, mob/user as mob)
+	proc/putonSheet(obj/item/clothing/back/bedsheet/W as obj, mob/user as mob)
 		W.set_loc(src)
 		src.bedsheet = W
 		src.setFace(faceType, faceColor) // removes face overlay and lumin (also sets icon)
