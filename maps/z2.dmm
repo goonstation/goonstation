@@ -77339,6 +77339,10 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 13;
+	pixel_y = 4
+	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
