@@ -33,7 +33,7 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if (slot == SLOT_BACK)
-			src.wear_layer = initial(src.wear_layer) + 0.01 // just above suit slot items of similar types
+			src.wear_layer = MOB_OVERLAY_BASE + 0.01 // we are on back, we are above essentially everything (except bedsheets, I guess)
 
 	unequipped(mob/user)
 		. = ..()
@@ -805,7 +805,7 @@
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
 			over_hair = TRUE
-			wear_layer = MOB_OVERLAY_BASE
+			wear_layer = MOB_OVERLAY_BASE + 0.02 // we want to be above everything, even above things that want to be above everything
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
