@@ -245,10 +245,9 @@ ABSTRACT_TYPE(/datum/ion_category)
 				door.secondsElectrified = -1
 				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
-				door.locked = 1
-				door.UpdateIcon()
-				playsound(door, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
-				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				if (!door.locked)
+					door.set_locked()
+					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()

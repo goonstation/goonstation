@@ -1097,11 +1097,9 @@ About the new airlock wires panel:
 				src.shock(usr, 50)
 		if (AIRLOCK_WIRE_DOOR_BOLTS)
 			//Cutting this wire also drops the door bolts, and mending it does not raise them. (This is what happens now, except there are a lot more wires going to door bolts at present)
-			if (src.locked!=1)
-				src.locked = 1
-				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+			if (!src.locked)
+				src.set_locked()
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
-			src.UpdateIcon()
 
 		if (AIRLOCK_WIRE_BACKUP_POWER1, AIRLOCK_WIRE_BACKUP_POWER2)
 			//Cutting either one disables the backup door power (allowing it to be crowbarred open, but disabling bolts-raising), but may electocute the user.
