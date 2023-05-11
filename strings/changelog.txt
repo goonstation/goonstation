@@ -1,5 +1,5 @@
 
-(t) wed may 10 23
+(t)wed may 10 23
 (u)aloe
 (+)The Head of Security's cape is now worn on the back. Its stats have been slightly lowered to account for this.
 (+)Bedsheets and bedsheet capes too
