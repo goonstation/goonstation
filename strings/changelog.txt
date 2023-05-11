@@ -1,4 +1,9 @@
 
+(t)thu may 11 23
+(u)Flaborized
+(p)14003
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Tools now come in additional colors, based on where they're sourced from.
 (t)wed may 10 23
 (u)aloe
 (+)The Head of Security's cape is now worn on the back. Its stats have been slightly lowered to account for this.

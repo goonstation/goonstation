@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Crowbar"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/crowbar)
+	item_outputs = list(/obj/item/crowbar/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Screwdriver"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/screwdriver)
+	item_outputs = list(/obj/item/screwdriver/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Wirecutters"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/wirecutters)
+	item_outputs = list(/obj/item/wirecutters/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Wrench"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/wrench)
+	item_outputs = list(/obj/item/wrench/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -386,7 +386,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Welding Tool"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(1,1)
-	item_outputs = list(/obj/item/weldingtool)
+	item_outputs = list(/obj/item/weldingtool/green)
 	time = 8 SECONDS
 	create = 1
 	category = "Tool"
