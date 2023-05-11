@@ -173,6 +173,7 @@
 	health_brute_vuln = 1
 	health_burn = 40
 	health_brute_vuln = 0.1
+	ai_type = /datum/aiHolder/rockworm
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -184,6 +185,10 @@
 		. = list()
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
 			. += ore
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
 	setup_hands()
 		..()

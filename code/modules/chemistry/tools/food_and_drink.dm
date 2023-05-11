@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	Eat(var/mob/M as mob, var/mob/user, var/bypass_utensils = FALSE, var/edibility_bypass = FALSE)
 		// in this case m is the consumer and user is the one holding it
-		if (!src.edible && !edibility_bypass)
+		if (!src.edible || !edibility_bypass)
 			return 0
 		if(!M?.bioHolder.HasEffect("mattereater") && ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
 			return 0
