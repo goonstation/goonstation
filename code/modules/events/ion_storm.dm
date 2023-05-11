@@ -230,15 +230,15 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/doors
 	amount = 40
 
-	valid_instance(var/obj/machinery/door/door)
+	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
 
 	build_targets()
-		for_by_tcl(door, /obj/machinery/door)
+		for_by_tcl(door, /obj/machinery/door/airlock)
 			if (valid_instance(door))
 				targets += door
 
-	action(var/obj/machinery/door/door)
+	action(var/obj/machinery/door/airlock/door)
 		var/door_diceroll = rand(1,3)
 		switch(door_diceroll)
 			if(1)
@@ -247,6 +247,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 			if(2)
 				door.locked = 1
 				door.UpdateIcon()
+				playsound(door, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
 				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
