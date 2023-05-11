@@ -8,7 +8,7 @@
 	density = 1
 	see_face = 0
 	over_hair = 1
-	wear_layer = MOB_FULL_COVERAGE_LAYER
+	wear_layer = MOB_OVERLAY_BASE // this thing is so fucking large that it gets to layer above things that layer above everything
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK
