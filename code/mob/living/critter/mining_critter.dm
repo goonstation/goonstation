@@ -153,3 +153,64 @@
 ///////////////////////////////////////////////
 // FERMID EGG
 ///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// ROCK WORM
+///////////////////////////////////////////////
+
+/mob/living/critter/rockworm
+	name = "rock worm"
+	real_name = "rock worm"
+	desc = "Tough lithovoric worms."
+	icon_state = "rockworm"
+	icon_state_dead = "rockworm-dead"
+	hand_count = 1
+	can_lie = FALSE
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	health_brute = 40
+	health_brute_vuln = 1
+	health_burn = 40
+	health_brute_vuln = 0.1
+	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_ONCE
+	var/eaten = 0
+	var/const/rocks_per_gem = 10
+
+	seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
+			. += ore
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = FALSE
+
+	death()
+		src.can_lie = FALSE
+		..()
+
+	proc/aftereat()
+		src.eaten++
+		if (src.eaten >= src.rocks_per_gem)
+			var/pickgem = rand(1,3)
+			var/obj/item/created = null
+			switch(pickgem)
+				if(1) created = new /obj/item/raw_material/gemstone
+				if(2) created = new /obj/item/raw_material/uqill
+				if(3) created = new /obj/item/raw_material/fibrilith
+			created.set_loc(src.loc)
+			src.visible_message("<b><span class='alert'>[src] vomits up a piece of [created]!</span></b>")
+			src.eaten -= src.rocks_per_gem
+
+/mob/living/critter/rockworm/gary
+	name = "Gary the rockworm"
