@@ -805,7 +805,7 @@
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
 			over_hair = TRUE
-			wear_layer = MOB_FULL_COVERAGE_LAYER
+			wear_layer = MOB_OVER_TOP_LAYER
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
