@@ -4,7 +4,8 @@ proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
 		spacePushList += A
 		A.temp_flags |= SPACE_PUSHING
-		reset_anchored(A)
+		if(ismob(A))
+			reset_anchored(A)
 
 proc/EndSpacePush(var/atom/movable/A)
 	if(ismob(A))
@@ -12,7 +13,8 @@ proc/EndSpacePush(var/atom/movable/A)
 		M.inertia_dir = 0
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
-	reset_anchored(A)
+	if(ismob(A))
+		reset_anchored(A)
 
 /// Controls forced movements
 /datum/controller/process/fMove
