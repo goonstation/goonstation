@@ -85,9 +85,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 
 /obj/machinery/recharge_station/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/clothing))
-		// this sucks
-		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) \
-			&& !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit) && !istype(W, /obj/item/clothing/back))
+		if (!istype(W, /obj/item/clothing/mask) && !istype(W, /obj/item/clothing/head) && !istype(W, /obj/item/clothing/under) && !istype(W, /obj/item/clothing/suit))
 			boutput(user, "<span class='alert'>This type of is not compatible.</span>")
 			return
 		if (user.contents.Find(W))
@@ -909,7 +907,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if(clothingRef)
 				var/obj/item/clothing/cloth = locate(clothingRef) in src.clothes
 				if (istype(cloth, /obj/item/clothing))
-					// this also sucks!!
 					if (istype(cloth, /obj/item/clothing/under))
 						if (R.clothes["under"] != null)
 							var/obj/old = R.clothes["under"]
@@ -940,14 +937,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 							src.clothes.Add(old)
 							old.set_loc(src)
 						R.clothes["head"] = cloth
-						src.clothes.Remove(cloth)
-						cloth.set_loc(R)
-					else if (istype(cloth, /obj/item/clothing/back))
-						if (R.clothes["back"] != null)
-							var/obj/old = R.clothes["head"]
-							src.clothes.Add(old)
-							old.set_loc(src)
-						R.clothes["back"] = cloth
 						src.clothes.Remove(cloth)
 						cloth.set_loc(R)
 			R.update_appearance()

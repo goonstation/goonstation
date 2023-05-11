@@ -694,8 +694,7 @@
 	UpdateOverlays(null, "hair_special_two", 1, 1)
 	UpdateOverlays(null, "hair_special_three", 1, 1)
 
-	var/obj/item/clothing/back/typed_back = src.back
-	var/seal_hair = ((istype(typed_back) && typed_back.over_hair) || src.wear_suit?.over_hair || src.head?.seal_hair || (src.wear_suit?.body_parts_covered & HEAD))
+	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance

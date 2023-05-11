@@ -80,7 +80,7 @@
 /area/dmm_suite/clear_area)
 "C" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/carpet/grime,
 /area/dmm_suite/clear_area)
 "D" = (

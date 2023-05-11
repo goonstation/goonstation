@@ -55,8 +55,8 @@
 /obj/stool/bed{
 	pixel_y = 16
 	},
-/obj/item/clothing/back/bedsheet,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/suit/bedsheet{
 	pixel_y = 16
 	},
 /obj/decal/cleanable/dirt,
@@ -73,8 +73,8 @@
 /obj/stool/bed{
 	pixel_y = 16
 	},
-/obj/item/clothing/back/bedsheet,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/suit/bedsheet{
 	pixel_y = 16
 	},
 /turf/simulated/floor/carpet/grime,

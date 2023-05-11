@@ -14,7 +14,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "drip3"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /turf/simulated/floor/carpet/grime,
 /area/dmm_suite/clear_area)
 "j" = (

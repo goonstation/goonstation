@@ -854,7 +854,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "tU" = (
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
 /obj/landmark{
@@ -1214,7 +1214,7 @@
 	},
 /area/pirate_ship)
 "yJ" = (
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
 /obj/landmark{
@@ -1416,7 +1416,7 @@
 	},
 /area/pirate_ship)
 "DQ" = (
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/landmark{
 	name = "Pirate-Spawn"
@@ -1706,7 +1706,7 @@
 /turf/space,
 /area/pirate_ship)
 "Kf" = (
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
@@ -1796,7 +1796,7 @@
 	},
 /area/pirate_ship)
 "MH" = (
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/landmark{
 	name = "Pirate-Spawn"

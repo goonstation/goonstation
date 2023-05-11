@@ -16,7 +16,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "E" = (
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /obj/decal/fakeobjects/skeleton/unanchored{
 	pixel_y = -4
 	},
