@@ -33,7 +33,7 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if (slot == SLOT_BACK)
-			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer (bedsheets and boxes)
+			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer
 
 	unequipped(mob/user)
 		. = ..()
