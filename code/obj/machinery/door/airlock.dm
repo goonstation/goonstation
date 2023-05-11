@@ -984,7 +984,6 @@ About the new airlock wires panel:
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
 					boutput(usr, "You hear a clunk from inside the door.")
 					src.set_unlocked()
-			src.UpdateIcon()
 			SPAWN(1 DECI SECOND)
 				src.shock(usr, 25)
 
