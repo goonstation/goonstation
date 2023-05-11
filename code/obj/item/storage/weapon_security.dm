@@ -267,6 +267,8 @@
 	New()
 		..()
 		src.cloaked = 0
+		src.create_storage(/datum/storage, prevent_holding = list(/obj/item/storage/box), max_wclass = src.max_wclass, slots = src.slots, sneaky = src.sneaky,
+			opens_if_worn = TRUE)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
