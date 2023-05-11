@@ -1565,6 +1565,7 @@
 
 		if (!target.melee_attack_test(user))
 			return
+
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a golem arm at [log_loc(user)].")
 
@@ -1581,5 +1582,3 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
-
-
