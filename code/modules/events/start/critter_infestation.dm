@@ -8,7 +8,7 @@
 	required_elapsed_round_time = 0
 
 	var/list/invasion_critter_types = list(\
-	list(/obj/critter/wasp),\
+	list(/mob/living/critter/small_animal/wasp),\
 	list(/mob/living/critter/small_animal/scorpion),\
 	list(/mob/living/critter/skeleton/wraith),\
 	list(/mob/living/critter/spider,/mob/living/critter/spider/baby),\

@@ -353,7 +353,7 @@
 /area/station/security/main)
 "aP" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -4425,7 +4425,7 @@
 "jC" = (
 /obj/table/wood/auto,
 /obj/item/ghostboard,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 2
 	},
 /turf/simulated/floor/carpet{

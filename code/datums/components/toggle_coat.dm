@@ -16,8 +16,8 @@
 	suit.ability_buttons += toggle
 	toggle.the_item = suit
 	toggle.name = toggle.name + " ([suit.name])"
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/button_coat)
-	RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, .proc/update_coat_icon)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(button_coat))
+	RegisterSignal(parent, COMSIG_ATOM_POST_UPDATE_ICON, PROC_REF(update_coat_icon))
 
 /datum/component/toggle_coat/proc/button_coat(atom/movable/thing, mob/user)
 	src.buttoned = !src.buttoned

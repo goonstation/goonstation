@@ -63,6 +63,8 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+	flags = OPENCONTAINER | FPRINT
+
 
 	New()
 		..()
@@ -868,7 +870,6 @@ proc/generate_space_color()
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
-	flags = OPENCONTAINER | FPRINT
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD

@@ -8,7 +8,7 @@
 /obj/decal/cleanable/generic{
 	name = "Shredded Fabric"
 	},
-/obj/item/clothing/suit/bedsheet/yellow{
+/obj/item/clothing/back/bedsheet/yellow{
 	desc = "A linen sheet used to cover yourself while you sleep. Seems to have a few holes scorched into it...";
 	eyeholes = 1
 	},

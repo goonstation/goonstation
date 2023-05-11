@@ -627,7 +627,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	has_crush = FALSE
 	health = 500
 	health_max = 500
-	layer = EFFECTS_LAYER_UNDER_1
+	layer = EFFECTS_LAYER_UNDER_4 // under lights and blinds, above pretty much everything else
 	object_flags = BOTS_DIRBLOCK | CAN_REPROGRAM_ACCESS | HAS_DIRECTIONAL_BLOCKING
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID | ON_BORDER
 	event_handler_flags = USE_FLUID_ENTER
@@ -637,7 +637,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	. = ..()
 
 /obj/machinery/door/airlock/pyro/glass/windoor/close()
-	layer = EFFECTS_LAYER_UNDER_1
+	layer = EFFECTS_LAYER_UNDER_4
 	. = ..()
 
 /obj/machinery/door/airlock/pyro/glass/windoor/bumpopen(atom/movable/AM)

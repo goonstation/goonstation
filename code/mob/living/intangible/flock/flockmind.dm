@@ -212,7 +212,7 @@
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
 	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
 
-	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.mind, respect_mutual_exclusives = FALSE))
+	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.mind))
 		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
 
 // old code for flocktrace respawns

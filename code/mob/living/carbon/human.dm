@@ -655,7 +655,7 @@
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
@@ -722,7 +722,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
+		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -733,12 +733,6 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(src, "mindhack", "death")
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindhack_status(src, "vthrall", "death")
-		else if (src.mind.master)
-			remove_mindhack_status(src, "otherhack", "death")
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -809,7 +803,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
+		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -872,14 +866,17 @@
 		animation.master = src
 		animation.icon_state = "ungibbed"
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
-		src.spell_soulguard = 0 // clear this as well
+		if (src.spell_soulguard)
+			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
+			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
-		src.spell_soulguard = 0
+		src.spell_soulguard = SOULGUARD_INACTIVE
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
@@ -1927,7 +1924,7 @@
 		if (slot_r_store)
 			return src.r_store
 
-/mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
+/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -2020,19 +2017,32 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
+				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
+				if (I.storage && !I.storage.opens_if_worn)
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_in_backpack)
-			if (src.back && istype(src.back, /obj/item/storage))
-				I.set_loc(src.back)
-				equipped = 1
+			if (src.back?.storage)
+				if (role_equipped)
+					src.back.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.back.storage.add_contents_safe(I, src)
+					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				I.set_loc(src.belt)
+			if (src.belt?.storage)
+				if (role_equipped)
+					src.belt.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.belt.storage.add_contents_safe(I, src)
+					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
 	if (equipped)
@@ -2183,15 +2193,11 @@
 				else
 					return TRUE
 		if (slot_in_backpack) // this slot is stupid
-			if (src.back && istype(src.back, /obj/item/storage))
-				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 		if (slot_in_belt) // this slot is also stupid
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
@@ -2202,9 +2208,9 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, role_equipped = TRUE)
 	if (can_equip(I, slot))
-		return force_equip(I, slot)
+		return force_equip(I, slot, role_equipped)
 	else
 		return 0
 

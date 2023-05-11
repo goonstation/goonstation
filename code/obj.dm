@@ -1,8 +1,3 @@
-TYPEINFO(/obj)
-	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
-	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
-	var/list/mats = 0
-
 /obj
 	var/real_name = null
 	var/real_desc = null
@@ -12,13 +7,8 @@ TYPEINFO(/obj)
 	var/quality = 1
 	var/adaptable = 0
 
-	var/is_syndicate = 0
 	var/deconstruct_flags = DECON_NONE
 
-	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
-	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	var/mechanics_type_override = null
 	var/artifact = null
 	var/move_triggered = 0
 	var/object_flags = 0
@@ -35,9 +25,6 @@ TYPEINFO(/obj)
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		var/typeinfo/obj/typeinfo = src.get_typeinfo()
-		if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
-			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
@@ -84,14 +71,6 @@ TYPEINFO(/obj)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
-
-	proc/move_trigger(var/mob/M, var/kindof)
-		var/atom/movable/x = loc
-		while (x && !isarea(x) && x != M)
-			x = x.loc
-		if (!x || isarea(x))
-			return 0
-		return 1
 
 	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
 		return
@@ -286,7 +265,7 @@ TYPEINFO(/obj)
 	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
+		if (istype(W, /obj/item/clothing/back/bedsheet))
 			qdel(W)
 			src.amount++
 		return
@@ -295,7 +274,7 @@ TYPEINFO(/obj)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/clothing/suit/bedsheet(src.loc)
+			new /obj/item/clothing/back/bedsheet(src.loc)
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else

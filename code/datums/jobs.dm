@@ -77,8 +77,8 @@
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
 				if (src.receives_disk && ishuman(M))
-					if (istype(H.back, /obj/item/storage))
-						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
+					if (H.back?.storage)
+						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
 						if (D)
 							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
 							if (R)
@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar/blue) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -928,7 +928,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_lhan = list(/obj/item/storage/bible/loaded)
+	slot_lhan = list(/obj/item/bible/loaded)
 
 	New()
 		..()
@@ -1434,10 +1434,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1471,8 +1469,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/instrument/whistle(B)
+			B.storage.add_contents(new /obj/item/instrument/whistle(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
+			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
 
 		return
@@ -1543,7 +1542,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1569,10 +1568,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1604,10 +1601,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/device/camera_viewer{network = "Zeta"}(B)
-			new /obj/item/clothing/head/helmet/camera(B)
-			new /obj/item/device/audio_log(B)
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
+			B.storage.add_contents(new /obj/item/device/audio_log(B))
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1659,6 +1656,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Sous-Chef")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
 
 /datum/job/special/random/waiter
 	name = "Waiter"
@@ -2011,7 +2014,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	limit = 1
 	change_name_on_spawn = 1
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
-	slot_suit = list(/obj/item/clothing/suit/bedsheet)
+	slot_suit = list(/obj/item/clothing/back/bedsheet)
 	slot_ears = list(/obj/item/device/radio/headset)
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2482,7 +2485,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_engineer")
 		SPAWN(1)
-			var/obj/item/rcd/rcd = locate() in M.belt
+			var/obj/item/rcd/rcd = locate() in M.belt.storage.stored_items
 			rcd.matter = 100
 			rcd.max_matter = 100
 			rcd.tooltip_rebuild = TRUE

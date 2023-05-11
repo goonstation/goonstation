@@ -3,7 +3,7 @@
 //TODO:
 // - Message Datum pooling and recycling.
 
-#define IN_CABINET (istype(src.loc,/obj/item/storage/mechanics))
+#define IN_CABINET (istype(src.stored?.linked_item,/obj/item/storage/mechanics))
 #define CONTAINER_LIGHT_TIME 2 // process()es to light up for when one component is triggered. this adds up to MAX_CONTAINER_LIGHT_TIME
 #define MAX_CONTAINER_LIGHT_TIME 10 // max process()es to light up for
 #define CABINET_CAPACITY 23
@@ -12,7 +12,7 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -94,7 +94,7 @@
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
 				return
-			src.does_not_open_in_pocket=src.open
+			src.opens_if_worn=!src.open
 			src.open=!src.open
 			playsound(src.loc,'sound/items/screwdriver.ogg',50)
 			if(!src.open)
@@ -163,7 +163,7 @@
 		close_storage_menus() // still ugly but probably quite better performing
 			for(var/mob/chump in src.users)
 				for(var/datum/hud/storage/hud in chump.huds)
-					if(hud.master==src) hud.close.clicked()
+					if(hud.master==src.storage) hud.close.clicked()
 			src.users = list() // gee golly i hope garbage collection does its job
 			return 1
 		notify_cabinet_state()
@@ -305,7 +305,7 @@
 
 	attack_hand(mob/user)
 		..()
-		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
+		if (!istype(src.stored?.linked_item,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
 			return
 		if(level == 1)
@@ -380,7 +380,7 @@
 				particle_list.Cut()
 			return
 		light_up_housing( ) // are we in a housing? if so, tell it to light up
-			var/obj/item/storage/mechanics/the_container = src.loc
+			var/obj/item/storage/mechanics/the_container = src.stored?.linked_item
 			if(istype(the_container,/obj/item/storage/mechanics)) // wew lad i hope this compiles
 				the_container.light_up()
 			return
@@ -391,7 +391,7 @@
 			owner = null
 
 		set_owner(mob/user)
-			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_owner)
+			RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_owner))
 			owner = user
 
 
@@ -436,8 +436,8 @@
 		else if(iswrenchingtool(W))
 			switch(level)
 				if(1) //Level 1 = wrenched into place
-					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					boutput(user, "You detach the [src] from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = UNANCHORED
 					clear_owner()
@@ -460,8 +460,8 @@
 					if(anchored)
 						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
 						return
-					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					boutput(user, "You attach the [src] to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.stored?.linked_item,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = ANCHORED
 					set_owner(user)
@@ -503,7 +503,7 @@
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
 		var/mob/user = usr
-		if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage))
+		if (src_exists_inside_user_or_user_storage && !src.storage)
 			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
 		else
 			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
@@ -537,12 +537,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", .proc/emoney)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", PROC_REF(emoney))
 		// SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price",.proc/setPrice)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code",.proc/setCode)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String",.proc/setThank)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money",.proc/checkEjectMoney)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price",PROC_REF(setPrice))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code",PROC_REF(setCode))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String",PROC_REF(setThank))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money",PROC_REF(checkEjectMoney))
 
 	proc/emoney(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -656,7 +656,7 @@
 
 	New()
 		. = ..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"flush", .proc/flushp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"flush", PROC_REF(flushp))
 
 	disposing()
 		if(air_contents)
@@ -739,8 +739,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"print", .proc/print)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name",.proc/setPaperName)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"print", PROC_REF(print))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name",PROC_REF(setPaperName))
 
 	proc/print(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
@@ -790,8 +790,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Paper Consumption",.proc/toggleConsume)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",.proc/toggleThermal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Paper Consumption",PROC_REF(toggleConsume))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",PROC_REF(toggleThermal))
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if(level == 2 && GET_DIST(src, target) == 1)
@@ -868,9 +868,9 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",.proc/setRange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",PROC_REF(setRange))
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
@@ -935,7 +935,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Type",.proc/toggleSig)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Type",PROC_REF(toggleSig))
 
 	proc/toggleSig(obj/item/W as obj, mob/user as mob)
 		send_name = !send_name
@@ -973,7 +973,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activateproc)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activateproc))
 
 	proc/drivecurrent()
 		if(level == 2) return
@@ -1034,8 +1034,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", .proc/eleczap)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power",.proc/setPower)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", PROC_REF(eleczap))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power",PROC_REF(setPower))
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
@@ -1076,10 +1076,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delay", .proc/delayproc)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delay", PROC_REF(delayproc))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",.proc/setDelay)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",.proc/toggleDefault)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",PROC_REF(setDelay))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
 
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
@@ -1133,10 +1133,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", PROC_REF(fire1))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", PROC_REF(fire2))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Frame",.proc/setTime)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Frame",PROC_REF(setTime))
 
 	proc/setTime(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
@@ -1195,18 +1195,18 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 9", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 10", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 9", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 10", PROC_REF(fire))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -1240,8 +1240,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", .proc/split)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", PROC_REF(split))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",PROC_REF(setTrigger))
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -1287,13 +1287,13 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", .proc/checkstr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", .proc/setPatternSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", .proc/setReplacementSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", .proc/setFlagsSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern",.proc/setPattern)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement",.proc/setReplacement)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags",.proc/setFlags)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", PROC_REF(checkstr))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", PROC_REF(setPatternSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", PROC_REF(setReplacementSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", PROC_REF(setFlagsSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern",PROC_REF(setPattern))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement",PROC_REF(setReplacement))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags",PROC_REF(setFlags))
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Pattern:","Pattern setting", expressionpatt) as text
@@ -1382,12 +1382,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", .proc/checkstr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", .proc/setregex)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", PROC_REF(checkstr))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", PROC_REF(setregex))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Pattern",.proc/setRegex)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Flags",.proc/setFlags)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing",.proc/toggleReplaceing)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Pattern",PROC_REF(setRegex))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Flags",PROC_REF(setFlags))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing",PROC_REF(toggleReplaceing))
 
 	proc/setRegex(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
@@ -1460,12 +1460,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", .proc/checkstr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", .proc/settrigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", PROC_REF(checkstr))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", PROC_REF(settrigger))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger-String",.proc/setTrigger)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Invert Trigger",.proc/invertTrigger)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Replace Signal",.proc/toggleReplace)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger-String",PROC_REF(setTrigger))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Invert Trigger",PROC_REF(invertTrigger))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Replace Signal",PROC_REF(toggleReplace))
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting","1") as text
@@ -1529,12 +1529,12 @@
 	New()
 		..()
 		src.outgoing_filters = list()
-		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, .proc/addFilter)
-		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, .proc/removeFilter)
-		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, .proc/runFilter)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, PROC_REF(addFilter))
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING, PROC_REF(removeFilter))
+		RegisterSignal(src, _COMSIG_MECHCOMP_DISPATCH_VALIDATE, PROC_REF(runFilter))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", PROC_REF(dispatch))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",PROC_REF(toggleExactMatching))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",PROC_REF(toggleSingleOutput))
 
 	disposing()
 		var/list/signals = list(\
@@ -1616,14 +1616,14 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string", .proc/addstr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", .proc/addstrsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/sendstr)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", .proc/clrbff)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", .proc/setStartingStringSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", .proc/setEndingStringSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String",.proc/setStartingStringManual)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String",.proc/setEndingStringManual)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string", PROC_REF(addstr))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", PROC_REF(addstrsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(sendstr))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", PROC_REF(clrbff))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", PROC_REF(setStartingStringSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", PROC_REF(setEndingStringSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String",PROC_REF(setStartingStringManual))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String",PROC_REF(setEndingStringManual))
 
 	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
@@ -1710,9 +1710,9 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"relay", .proc/relay)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"relay", PROC_REF(relay))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",.proc/toggleDefault)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",PROC_REF(toggleDefault))
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
@@ -1743,10 +1743,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send file", .proc/sendfile)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add file to signal and send", .proc/addandsendfile)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"save file", .proc/storefile)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", .proc/deletefile)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send file", PROC_REF(sendfile))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add file to signal and send", PROC_REF(addandsendfile))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"save file", PROC_REF(storefile))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", PROC_REF(deletefile))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	disposing()
@@ -1809,11 +1809,11 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", .proc/send)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", .proc/setfreq)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",.proc/setFreqManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",.proc/toggleAddressFiltering)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",.proc/toggleForwardAll)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", PROC_REF(send))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",PROC_REF(toggleAddressFiltering))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",PROC_REF(toggleForwardAll))
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
@@ -1973,24 +1973,24 @@
 	New()
 		..()
 		signals = new/list()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", .proc/additem)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", .proc/remitem)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", .proc/remallitem)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item", .proc/selitem)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item + send", .proc/selitemplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", .proc/next)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous", .proc/previous)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", .proc/nextplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send + next", .proc/plusnext)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", .proc/previousplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", .proc/sendCurrent)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", .proc/popitem)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", .proc/sendRand)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List",.proc/setSignalList)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)",.proc/setDelimetedList)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Announcements",.proc/toggleAnnouncements)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Random",.proc/toggleRandom)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Allow Duplicate Entries",.proc/toggleAllowDuplicates)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", PROC_REF(additem))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", PROC_REF(remitem))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", PROC_REF(remallitem))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item", PROC_REF(selitem))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item + send", PROC_REF(selitemplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", PROC_REF(next))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous", PROC_REF(previous))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", PROC_REF(nextplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send + next", PROC_REF(plusnext))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", PROC_REF(previousplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", PROC_REF(sendCurrent))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", PROC_REF(popitem))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", PROC_REF(sendRand))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List",PROC_REF(setSignalList))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)",PROC_REF(setDelimetedList))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Announcements",PROC_REF(toggleAnnouncements))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Random",PROC_REF(toggleRandom))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Allow Duplicate Entries",PROC_REF(toggleAllowDuplicates))
 
 
 	proc/setSignalList(obj/item/W as obj, mob/user as mob)
@@ -2203,15 +2203,15 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", .proc/activateplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", .proc/deactivate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate and send", .proc/deactivateplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle and send", .proc/toggleplus)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/send)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set On-Signal",.proc/setOnSignal)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal",.proc/setOffSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", PROC_REF(activateplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", PROC_REF(deactivate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate and send", PROC_REF(deactivateplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle and send", PROC_REF(toggleplus))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(send))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set On-Signal",PROC_REF(setOnSignal))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal",PROC_REF(setOffSignal))
 
 	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
@@ -2304,10 +2304,10 @@
 	New()
 		..()
 		START_TRACKING
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", .proc/setidmsg)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID",.proc/setID)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode",.proc/toggleSendOnly)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", PROC_REF(setidmsg))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID",PROC_REF(setID))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode",PROC_REF(toggleSendOnly))
 		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
 		telelight.plane = PLANE_SELFILLUM
 		telelight.alpha = 180
@@ -2405,12 +2405,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/turnon)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", .proc/turnoff)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set rgb", .proc/setrgb)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Color",.proc/setColor)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",.proc/setRange)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggle))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", PROC_REF(turnon))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", PROC_REF(turnoff))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set rgb", PROC_REF(setrgb))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Color",PROC_REF(setColor))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",PROC_REF(setRange))
 
 		light = new /datum/light/point
 		light.attach(src)
@@ -2491,7 +2491,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Show-Source",.proc/toggleSender)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Show-Source",PROC_REF(toggleSender))
 
 	proc/toggleSender(obj/item/W as obj, mob/user as mob)
 		add_sender = !add_sender
@@ -2533,8 +2533,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", .proc/setfreq)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",.proc/setFreqMan)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", PROC_REF(setfreq))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",PROC_REF(setFreqMan))
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
@@ -2600,7 +2600,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", PROC_REF(fire))
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -2714,9 +2714,9 @@
 	New()
 		..()
 		active_buttons = list()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button",.proc/addButton)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button",.proc/removeButton)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", .proc/signalAddButton)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button",PROC_REF(addButton))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button",PROC_REF(removeButton))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", PROC_REF(signalAddButton))
 
 	proc/addButton(obj/item/W as obj, mob/user as mob)
 		if(length(src.active_buttons) >= 10)
@@ -2820,8 +2820,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"fire", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Gun",.proc/removeGun)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"fire", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Gun",PROC_REF(removeGun))
 
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
@@ -2902,7 +2902,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recharge", .proc/recharge)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recharge", PROC_REF(recharge))
 
 	process()
 		..()
@@ -2972,8 +2972,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"play", .proc/fire)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Instrument",.proc/removeInstrument)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"play", PROC_REF(fire))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Instrument",PROC_REF(removeInstrument))
 
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
@@ -3070,14 +3070,14 @@
 		icon_state = "comp_arith"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", .proc/setA)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", .proc/setB)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", .proc/evaluate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",.proc/setAManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",.proc/toggleAutoEval)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Floor",.proc/toggleAutoFloor)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", PROC_REF(setA))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", PROC_REF(setB))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", PROC_REF(evaluate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",PROC_REF(setAManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",PROC_REF(setBManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",PROC_REF(setMode))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",PROC_REF(toggleAutoEval))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Floor",PROC_REF(toggleAutoFloor))
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3189,15 +3189,15 @@
 		icon_state = "comp_counter"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", .proc/doCounting)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", .proc/doImmediateChange)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", .proc/resetCounter)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Value", .proc/setCurrentValue)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", .proc/setChange)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", .proc/setStartingValue)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",.proc/setChangeManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Current Value",.proc/setCurrentValueManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",.proc/setStartingValueManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Count", PROC_REF(doCounting))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Immediately Change By", PROC_REF(doImmediateChange))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Reset", PROC_REF(resetCounter))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Value", PROC_REF(setCurrentValue))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Change", PROC_REF(setChange))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Starting Value", PROC_REF(setStartingValue))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Change",PROC_REF(setChangeManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Current Value",PROC_REF(setCurrentValueManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Starting Value",PROC_REF(setStartingValueManually))
 
 	proc/setStartingValueManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set starting value to what?", "Starting value", startingValue) as num
@@ -3284,11 +3284,11 @@
 		icon_state = "comp_clock"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", .proc/sendTime)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Stopwatch", .proc/startStopwatch)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time", .proc/sendStopwatchTime)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time And Reset", .proc/sendStopwatchTimeAndReset)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Units",.proc/setTimeUnits)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Time", PROC_REF(sendTime))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start Stopwatch", PROC_REF(startStopwatch))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time", PROC_REF(sendStopwatchTime))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Send Stopwatch Time And Reset", PROC_REF(sendStopwatchTimeAndReset))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Units",PROC_REF(setTimeUnits))
 
 	proc/sendTime()
 		if(level == 2) return
@@ -3373,15 +3373,15 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Start",.proc/setActiveManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Stop",.proc/setInactiveManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Interval Length",.proc/setIntervalLengthManually)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Repeat Count",.proc/setRepeatCountManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Start",PROC_REF(setActiveManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Stop",PROC_REF(setInactiveManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Interval Length",PROC_REF(setIntervalLengthManually))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Repeat Count",PROC_REF(setRepeatCountManually))
 
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",.proc/setActive)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",.proc/setInactive)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",.proc/setIntervalLength)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",.proc/setRepeatCount)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Start",PROC_REF(setActive))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Stop",PROC_REF(setInactive))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Interval Length",PROC_REF(setIntervalLength))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Repeat Count",PROC_REF(setRepeatCount))
 
 	// no relation to the flock : )
 	proc/startRepeatingTheSignal()
@@ -3484,15 +3484,15 @@
 	New()
 		..()
 		map = list()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", .proc/addItems)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", .proc/removeItem)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", .proc/sendValue)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send associations as signal", .proc/sendMapAsSignal)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", .proc/setMode)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", .proc/addItemManual)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", .proc/removeItemManual)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", .proc/getMapAsString)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", .proc/clear)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", PROC_REF(addItems))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", PROC_REF(removeItem))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", PROC_REF(sendValue))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send associations as signal", PROC_REF(sendMapAsSignal))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", PROC_REF(setMode))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", PROC_REF(addItemManual))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", PROC_REF(removeItemManual))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", PROC_REF(getMapAsString))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", PROC_REF(clear))
 
 	get_desc()
 		. += {"<br><span class='notice'>Mode: [mode == 0 ? "Mutable" : mode == 1 ? "Immutable" : "List"]<br>
@@ -3654,10 +3654,10 @@
 		src.icon_state = "comp_screen"
 	New()
 		..()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", .proc/setLetterIndex)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", .proc/fire)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", PROC_REF(setLetterIndex))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", PROC_REF(setColorManually))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", PROC_REF(fire))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", PROC_REF(setColor))
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed; negative numbers start from the end)", "Letter Index", letter_index) as num
@@ -3773,12 +3773,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set text", .proc/setTextManually)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", .proc/setColorManually)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set alignment", .proc/setAlignmentManually)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set font", .proc/setFontManually)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set text", .proc/setText)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", .proc/setColor)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set text", PROC_REF(setTextManually))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set color", PROC_REF(setColorManually))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set alignment", PROC_REF(setAlignmentManually))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set font", PROC_REF(setFontManually))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set text", PROC_REF(setText))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set color", PROC_REF(setColor))
 
 	proc/setColor(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -3889,20 +3889,20 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "walk", .proc/do_walk)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "step", .proc/do_step)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "walk", PROC_REF(do_walk))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "step", PROC_REF(do_step))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", PROC_REF(set_speed))
 
 	secure()
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			src.loc.AddComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			src.stored.linked_item.AddComponent(/datum/component/legs/four)
 		else
 			src.loc.AddComponent(/datum/component/legs/six)
 
 	loosen()
 		var/datum/component/C
-		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
-			C = src.loc.GetComponent(/datum/component/legs/four)
+		if (istype(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld))
+			C = src.stored.linked_item.GetComponent(/datum/component/legs/four)
 		else
 			C = src.loc.GetComponent(/datum/component/legs/six)
 		if (C)
@@ -3921,7 +3921,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (direction == null)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3931,7 +3931,7 @@
 			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 			REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 		else
-			RegisterSignals(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
+			RegisterSignals(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(movement_stuff), TRUE)
 			APPLY_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 
 	proc/do_step(var/datum/mechanicsMessage/input)
@@ -3942,7 +3942,7 @@
 			direction = dirname_to_dir(input.signal)
 		if (!direction)
 			return
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			return
 		set_glide_size(S)
@@ -3952,7 +3952,7 @@
 	/// set our glide size in case it was changed
 	/// check if we are in a container or space and stop in that case
 	proc/movement_stuff()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
 			stop_moving()
 			return
@@ -3973,7 +3973,7 @@
 		return TRUE
 
 	proc/stop_moving()
-		var/obj/item/storage/S = src.loc
+		var/obj/item/storage/S = src.stored?.linked_item
 		if (!istype(S))
 			return
 		walk(S, 0)
@@ -4021,9 +4021,9 @@
 	New()
 		..()
 
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "draw pixel", .proc/drawPixel)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset canvas", .proc/resetCanvas)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset canvas", .proc/resetCanvas)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "draw pixel", PROC_REF(drawPixel))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset canvas", PROC_REF(resetCanvas))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "reset canvas", PROC_REF(resetCanvas))
 
 		init_canvas()
 
@@ -4160,10 +4160,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "arm", .proc/arm)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "disarm", .proc/disarm)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "detonate", .proc/detonate)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Code",.proc/setSecretCode)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "arm", PROC_REF(arm))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "disarm", PROC_REF(disarm))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "detonate", PROC_REF(detonate))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Code",PROC_REF(setSecretCode))
 
 	proc/arm(var/datum/mechanicsMessage/input)
 		if (blowing_the_fuck_up || is_armed || (arm_code && input.signal != arm_code))

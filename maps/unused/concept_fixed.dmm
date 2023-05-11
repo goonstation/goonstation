@@ -3520,7 +3520,7 @@
 /area/station/janitor/office)
 "agN" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light/small{
 	dir = 1
 	},
@@ -6965,7 +6965,7 @@
 	icon_state = "woodentable";
 	dir = 10
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor{
 	icon_state = "carpetSW"
 	},
@@ -10243,7 +10243,7 @@
 /area/station/maintenance/east)
 "aug" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -19818,7 +19818,7 @@
 /area/station/crew_quarters/quarters)
 "aMc" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -20911,7 +20911,7 @@
 /area/station/maintenance/southwest)
 "aNY" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -21862,7 +21862,7 @@
 /area/station/maintenance/southwest)
 "aPB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -21894,7 +21894,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24;
@@ -25327,7 +25327,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
@@ -30765,7 +30765,7 @@
 /area/station/security/brig)
 "bfJ" = (
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -31980,7 +31980,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
 "bhR" = (
@@ -32106,7 +32106,7 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -33655,7 +33655,7 @@
 /area/space)
 "bkZ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/white,
 /area/space)
 "bla" = (

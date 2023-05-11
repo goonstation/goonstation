@@ -92,22 +92,22 @@ TYPEINFO(/datum/component/mechanics_holder)
 	..()
 
 /datum/component/mechanics_holder/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, .proc/addInput)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_RECEIVE_MSG, .proc/fireInput)
-	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, .proc/fireOutSignal)
-	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG, .proc/fireOutgoing)
-	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, .proc/fireDefault) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
-	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_INCOMING, .proc/removeIncoming)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_OUTGOING, .proc/removeOutgoing)
-	RegisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS, .proc/WipeConnections)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_OUTGOING, .proc/getOutgoing)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_INCOMING, .proc/getIncoming)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_DROPCONNECT, .proc/dropConnect)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_LINK, .proc/link_devices)
-	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_CONFIG, .proc/addConfig)
-	RegisterSignal(parent, COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL, .proc/allowManualSingalSetting) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
-	RegisterSignal(parent, _COMSIG_MECHCOMP_COMPATIBLE, .proc/compatible)//Better that checking GetComponent()?
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_INPUT, PROC_REF(addInput))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RECEIVE_MSG, PROC_REF(fireInput))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, PROC_REF(fireOutSignal))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_MSG, PROC_REF(fireOutgoing))
+	RegisterSignal(parent, COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, PROC_REF(fireDefault)) //Only use this when also using COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_INCOMING, PROC_REF(removeIncoming))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_RM_OUTGOING, PROC_REF(removeOutgoing))
+	RegisterSignal(parent, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS, PROC_REF(WipeConnections))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_OUTGOING, PROC_REF(getOutgoing))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_GET_INCOMING, PROC_REF(getIncoming))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_DROPCONNECT, PROC_REF(dropConnect))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_LINK, PROC_REF(link_devices))
+	RegisterSignal(parent, COMSIG_MECHCOMP_ADD_CONFIG, PROC_REF(addConfig))
+	RegisterSignal(parent, COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL, PROC_REF(allowManualSingalSetting)) //Only use this when also using COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, _COMSIG_MECHCOMP_COMPATIBLE, PROC_REF(compatible))//Better that checking GetComponent()?
 	return  //No need to ..()
 
 /datum/component/mechanics_holder/UnregisterFromParent()
@@ -239,10 +239,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 	//Need to use comsig_target instead of parent, to access .loc
 	if(A.loc != comsig_target.loc) //If these aren't sharing a container
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(A.loc, /obj/item/storage/mechanics))
-			cabinet = A.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(A, /obj/item))
+			var/obj/item/I = A
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
@@ -274,10 +278,14 @@ TYPEINFO(/datum/component/mechanics_holder)
 		return
 	if(trigger.loc != comsig_target.loc)
 		var/obj/item/storage/mechanics/cabinet = null
-		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
-			cabinet = comsig_target.loc
-		if(istype(trigger.loc, /obj/item/storage/mechanics))
-			cabinet = trigger.loc
+		if(istype(comsig_target, /obj/item))
+			var/obj/item/I = comsig_target
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
+		if(istype(trigger, /obj/item))
+			var/obj/item/I = trigger
+			if (istype(I.stored?.linked_item, /obj/item/storage/mechanics))
+				cabinet = I.stored.linked_item
 		if(cabinet)
 			if(!cabinet.anchored)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
@@ -388,7 +396,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(!ispulsingtool(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.connectee = C
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/stop_linking)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(stop_linking))
 
 /// we remove ourself here, the user no longer wishes to link components via us :(
 /datum/component/mechanics_connector/proc/stop_linking(var/obj/item/thing, mob/user)

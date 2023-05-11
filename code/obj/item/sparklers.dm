@@ -126,7 +126,7 @@
 	var/open = 0
 
 	attack_hand(mob/user)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (opens_if_worn || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
 			else

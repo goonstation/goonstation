@@ -391,10 +391,10 @@
 	pixel_y = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/royal{
+/obj/item/clothing/back/bedsheet/royal{
 	pixel_y = 11
 	},
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /obj/machinery/light{
 	brightness = 1.4;
 	dir = 4;
