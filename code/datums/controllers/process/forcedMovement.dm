@@ -4,8 +4,6 @@ proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
 		spacePushList += A
 		A.temp_flags |= SPACE_PUSHING
-		if(ismob(A))
-			reset_anchored(A)
 
 proc/EndSpacePush(var/atom/movable/A)
 	if(ismob(A))
@@ -85,7 +83,8 @@ proc/EndSpacePush(var/atom/movable/A)
 						EndSpacePush(M)
 						continue
 
-
+				if (M.anchored) // check if magboots should unanchor
+					reset_anchored(M)
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
 					if (! (TIME > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
 						continue
