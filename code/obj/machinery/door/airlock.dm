@@ -59,14 +59,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door/airlock, proc/play_deny, proc/toggle_bo
 		boutput(user, "<span class='alert'>The door has no power - you can't raise/lower the door bolts.</span>")
 		return
 	if(src.locked)
-		src.locked = 0
-		src.UpdateIcon()
-		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+		src.set_unlocked()
 	else
 		logTheThing(LOG_STATION, user || usr, "[user || usr] has bolted a door at [log_loc(src)].")
-		src.locked = 1
-		src.UpdateIcon()
-		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+		src.set_locked()
 
 /obj/machinery/door/airlock/proc/shock_perm(mob/user)
 	if(!src.arePowerSystemsOn() || (src.status & NOPOWER))
@@ -980,16 +976,14 @@ About the new airlock wires panel:
 			//one wire for door bolts. Sending a pulse through this drops door bolts if they're not down (whether power's on or not),
 			//raises them if they are down (only if power's on)
 			if (!src.locked)
-				src.locked = 1
 				logTheThing(LOG_STATION, usr, "[usr] has bolted a door at [log_loc(src)].")
 				boutput(usr, "You hear a clunk from the bottom of the door.")
-				playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+				src.set_locked()
 				tgui_process.update_uis(src)
 			else
 				if(src.arePowerSystemsOn()) //only can raise bolts if power's on
-					src.locked = 0
 					boutput(usr, "You hear a clunk from inside the door.")
-					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+					src.set_unlocked()
 			src.UpdateIcon()
 			SPAWN(1 DECI SECOND)
 				src.shock(usr, 25)
@@ -1832,16 +1826,12 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			if("unlock")
 				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && locked)
-					src.locked = 0
-					playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
-				src.UpdateIcon()
+					src.set_unlocked()
 				src.send_status(,senderid)
 
 			if("lock")
 				if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) && !locked)
-					src.locked = 1
-					playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
-				src.UpdateIcon()
+					src.set_locked()
 				src.send_status()
 
 			if("secure_open")
@@ -1851,18 +1841,13 @@ TYPEINFO(/obj/machinery/door/airlock)
 						send_status(,senderid)
 						return
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.locked = 0
-						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
-					src.UpdateIcon()
+						src.set_unlocked()
 
 					src.open(1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.locked = 1
-						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
-
-					src.UpdateIcon()
+						src.set_locked()
 					sleep(src.operation_time)
 					src.send_status(,senderid)
 
@@ -1873,17 +1858,13 @@ TYPEINFO(/obj/machinery/door/airlock)
 						src.send_status(,senderid)
 						return
 					if(src.locked && !src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.locked = 0
-						playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+						src.set_unlocked()
 
 					src.close(1)
 					sleep(0.5 SECONDS)
 
 					if(!src.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS))
-						src.locked = 1
-						playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
-
-					src.UpdateIcon()
+						src.set_locked()
 					sleep(src.operation_time)
 					src.send_status(,senderid)
 
@@ -1959,6 +1940,15 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 			send_status(user_name)
 			src.last_update_time = ticker.round_elapsed_ticks
+
+	set_locked()
+		. = ..()
+		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+
+	set_unlocked()
+		. = ..()
+		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+
 
 	allowed(mob/living/carbon/human/user)
 		. = ..()
