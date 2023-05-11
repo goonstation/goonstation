@@ -24,6 +24,8 @@
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
+#define MOB_FULL_COVERAGE_LAYER	 (MOB_OVERLAY_BASE - 0.1) ///! For things which fully cover the body, like sheets and boxes
+#define MOB_BACK_SUIT_LAYER (MOB_OVERLAY_BASE - 0.2)	  ///! For capes and scarves and stuff. Technically on back, but we want to layer over helmets/cuffs
 #define MOB_EFFECT_LAYER 	(MOB_OVERLAY_BASE-1)	// FLOAT_LAYER
 #define MOB_HANDCUFF_LAYER 	(MOB_OVERLAY_BASE-2)
 #define MOB_INHAND_LAYER 	(MOB_OVERLAY_BASE-3)

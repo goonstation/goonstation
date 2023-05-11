@@ -733,7 +733,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 
 	setupProperties()
 		..()
@@ -947,7 +947,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 	see_face = 0
@@ -1429,7 +1429,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
@@ -1591,7 +1591,7 @@
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE

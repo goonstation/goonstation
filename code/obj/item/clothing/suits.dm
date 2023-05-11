@@ -33,7 +33,7 @@
 	equipped(mob/user, slot)
 		. = ..()
 		if (slot == SLOT_BACK)
-			src.wear_layer = MOB_OVERLAY_BASE + 0.01 // we are on back, we are above essentially everything (except bedsheets, I guess)
+			src.wear_layer = max(src.wear_layer, MOB_BACK_SUIT_LAYER) // set to a higher layer, unless they're on an even higher layer (bedsheets and boxes)
 
 	unequipped(mob/user)
 		. = ..()
@@ -692,7 +692,7 @@
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 	var/eyeholes = FALSE //Did we remember to cut eyes in the thing?
 	var/cape = FALSE
 	var/obj/stool/bed/bed = null
@@ -805,7 +805,7 @@
 			see_face = FALSE
 			src.c_flags = initial(src.c_flags)
 			over_hair = TRUE
-			wear_layer = MOB_OVERLAY_BASE + 0.02 // we want to be above everything, even above things that want to be above everything
+			wear_layer = MOB_FULL_COVERAGE_LAYER
 
 	proc/cut_eyeholes()
 		if (src.cape || src.eyeholes)
@@ -1640,6 +1640,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	see_face = 0
 	magical = 1
 	over_hair = TRUE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1660,7 +1661,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		desc = "For those who have seen the yellow sign and answered its call.."
 		icon_state = "hasturcultist"
 		item_state = "hasturcultist"
-		wear_layer = MOB_OVERLAY_BASE
 
 	nerd
 		name = "robes of dungeon mastery"
@@ -1679,7 +1679,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_COVERAGE_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
