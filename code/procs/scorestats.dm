@@ -288,7 +288,7 @@ var/datum/score_tracker/score_tracker
 			. += SC.amount
 		else if (istype(A, /obj/item/card/id))
 			var/obj/item/card/id/ID = A
-			. += ID.amount
+			. += ID.money
 		else if (A.storage)
 			for (var/obj/item/I as anything in A.storage.get_contents())
 				. += get_cash_in_thing(I)
