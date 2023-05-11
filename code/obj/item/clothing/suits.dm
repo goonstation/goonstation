@@ -30,6 +30,15 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 2)
 
+	equipped(mob/user, slot)
+		. = ..()
+		if (slot == SLOT_BACK)
+			src.wear_layer = initial(src.wear_layer) + 0.01 // just above suit slot items of similar types
+
+	unequipped(mob/user)
+		. = ..()
+		src.layer = initial(src.wear_layer)
+
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
@@ -678,7 +687,7 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 10
-	c_flags = COVERSEYES | COVERSMOUTH
+	c_flags = COVERSEYES | COVERSMOUTH | ONBACK
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_GLASSES|C_EARS|C_MASK
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
@@ -788,11 +797,13 @@
 			src.item_state = src.icon_state
 			see_face = TRUE
 			over_hair = FALSE
+			src.c_flags = ONBACK
 			wear_layer = MOB_BACK_LAYER + 0.2
 		else
 			src.icon_state = "bedsheet[src.bcolor ? "-[bcolor]" : null][src.eyeholes ? "1" : null]"
 			src.item_state = src.icon_state
 			see_face = FALSE
+			src.c_flags = initial(src.c_flags)
 			over_hair = TRUE
 			wear_layer = MOB_OVERLAY_BASE
 
@@ -1955,6 +1966,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "star_cloak"
 	item_state = "star_cloak"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/cow_jacket
 	name = "cow jacket"
@@ -2009,6 +2021,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "torncape_red"
 	item_state = "torncape_red"
 	body_parts_covered = TORSO|ARMS
+	c_flags = ONBACK
 
 	red
 		name = "Red Torn Cloak"
@@ -2059,6 +2072,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarfcape_white"
 	item_state = "scarfcape_white"
+	c_flags = ONBACK
 
 	red
 		name = "Red Adventurous Scarf"
@@ -2114,3 +2128,4 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "fakebeewings"
 	item_state = "fakebeewings"
+	c_flags = ONBACK

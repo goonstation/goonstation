@@ -1099,7 +1099,10 @@
 	desc = "A stylish red scarf, to add some colour to the monochrome mime get-up."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarf"
+	c_flags = ONBACK
+
 
 	setupProperties()
 		..()
@@ -1603,6 +1606,7 @@
 	desc = "Dracula who?"
 	body_parts_covered = TORSO
 	icon_state = "vampcape"
+	c_flags = ONBACK
 
 /obj/item/clothing/under/gimmick/superhero
 	name = "crimefighting costume"
@@ -1861,6 +1865,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_purple"
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/witchcape_mint
 	name = "Mint Witch Cape"
@@ -1868,6 +1873,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+	c_flags = ONBACK
 
 // marching band stuff
 /obj/item/clothing/under/gimmick/marchingband
