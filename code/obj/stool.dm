@@ -305,7 +305,7 @@
 	icon_state = "bed"
 	anchored = ANCHORED
 	var/security = 0
-	var/obj/item/clothing/suit/bedsheet/sheet = null
+	var/obj/item/clothing/back/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
 	material_amt = 0.2
 
@@ -339,7 +339,7 @@
 			C.buckled = src
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/suit/bedsheet))
+		if (istype(W, /obj/item/clothing/back/bedsheet))
 			src.tuck_sheet(W, user)
 			return
 		if (iswrenchingtool(W) && !src.deconstructable)
@@ -413,7 +413,7 @@
 			src.buckled_guy = null
 			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 
-	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
+	proc/tuck_sheet(var/obj/item/clothing/back/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
 			return // nevermind
 
@@ -451,7 +451,7 @@
 		if (!src.sheet) // vOv
 			return // there's nothing to do here, everyone go home
 
-		var/obj/item/clothing/suit/bedsheet/oldsheet = src.sheet
+		var/obj/item/clothing/back/bedsheet/oldsheet = src.sheet
 
 		if (user)
 			var/mob/somebody
@@ -476,7 +476,7 @@
 	MouseDrop_T(atom/A as mob|obj, mob/user as mob)
 		if (BOUNDS_DIST(src, user) > 0 || A.loc != src.loc || user.restrained() || !isalive(user))
 			..()
-		else if (istype(A, /obj/item/clothing/suit/bedsheet))
+		else if (istype(A, /obj/item/clothing/back/bedsheet))
 			if ((!src.sheet || (src.sheet && src.sheet.loc != src.loc)) && A.loc == src.loc)
 				src.tuck_sheet(A, user)
 				return

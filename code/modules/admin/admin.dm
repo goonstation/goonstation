@@ -1251,7 +1251,8 @@ var/global/noir = 0
 		if("rapture")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				heavenly_spawn(M, reverse = TRUE)
+				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+					heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")

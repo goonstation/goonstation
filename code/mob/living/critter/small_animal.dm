@@ -559,6 +559,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /* -------------------- Jones -------------------- */
 
+TYPEINFO(/mob/living/critter/small_animal/cat/jones)
+	mats = list("viscerite"=25)
+
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
 	desc = "Jones the cat."
@@ -569,6 +572,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 30
 	is_annoying = TRUE
 	is_pet = TRUE
+	is_syndicate = 1
 	var/swiped = 0
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)

@@ -433,7 +433,7 @@
 /area/listeningpost)
 "abs" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "abt" = (
@@ -1574,7 +1574,7 @@
 /area/station/science/lobby)
 "agv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/station/crew_quarters/hor)
 "agw" = (
@@ -3466,7 +3466,7 @@
 /area/space)
 "aoq" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/decal/cleanable/vomit,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -11799,7 +11799,7 @@
 /area/station/medical/robotics)
 "aPO" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/critter/bat/doctor,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/blue/fancy/edge{
@@ -12969,7 +12969,7 @@
 /area/station/crew_quarters/ce)
 "aTP" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/captain,
+/obj/item/clothing/back/bedsheet/captain,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
@@ -13911,7 +13911,7 @@
 /area/station/maintenance/inner/central)
 "aWD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/ce)
 "aWE" = (
@@ -16197,7 +16197,7 @@
 /area/station/crew_quarters/jazz)
 "bdr" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/hop,
+/obj/item/clothing/back/bedsheet/hop,
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
 	dir = 4;
@@ -16930,7 +16930,7 @@
 	tag = ""
 	},
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/blue/fancy/narrow/east,
 /area/station/medical/medbay/treatment1)
@@ -17692,7 +17692,7 @@
 /area/station/security/hos)
 "biS" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/red,
+/obj/item/clothing/back/bedsheet/red,
 /obj/item/toy/plush/small/buddy{
 	desc = "Aw, it even has the same angry face too...";
 	name = "Nuke Commander Buddy Plush Toy"
@@ -18329,10 +18329,6 @@
 	},
 /area/station/security/main)
 "blI" = (
-/obj/stool/bench/red/auto,
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 4;
 	icon_state = "pipe-s"
@@ -18492,10 +18488,6 @@
 /obj/machinery/camera{
 	c_tag = "Security Lobby";
 	dir = 4
-	},
-/obj/stool/bench/red/auto,
-/obj/landmark/start{
-	name = "Security Assistant"
 	},
 /obj/securearea{
 	pixel_x = -32
@@ -19022,6 +19014,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/stool/bench/red/auto,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -26066,7 +26059,7 @@
 "cXf" = (
 /obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -26745,7 +26738,7 @@
 /area/station/medical/dome)
 "dzO" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/decal/cleanable/rust{
 	pixel_y = 34
 	},
@@ -29530,7 +29523,7 @@
 "fIq" = (
 /obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/decal/cleanable/rust{
 	pixel_y = 34
 	},
@@ -30415,17 +30408,17 @@
 /area/station/storage/tools)
 "gvO" = (
 /obj/storage/cart/medcart,
-/obj/item/clothing/suit/bedsheet/blue,
-/obj/item/clothing/suit/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/back/bedsheet/blue,
 /obj/item/clothing/under/patient_gown,
 /obj/item/clothing/under/patient_gown,
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
 "gvW" = (
@@ -30443,7 +30436,7 @@
 /obj/item/device/radio/intercom/brig{
 	dir = 4
 	},
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "gws" = (
@@ -32582,7 +32575,7 @@
 /area/station/engine/inner)
 "iuU" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -32866,7 +32859,7 @@
 /area/station/crew_quarters/captain)
 "iGA" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Janitor"
 	},
@@ -33076,7 +33069,7 @@
 "iQt" = (
 /obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -34543,8 +34536,8 @@
 "kdn" = (
 /obj/storage/cart,
 /obj/item/gun/russianrevolver,
-/obj/item/clothing/suit/bedsheet,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/wood/six,
 /area/station/maintenance/west)
@@ -35833,7 +35826,7 @@
 	network = "arcadevr";
 	throwforce = 0
 	},
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "lhn" = (
@@ -36245,9 +36238,9 @@
 	anchored = 1;
 	name = "costume dresser"
 	},
-/obj/item/clothing/suit/bedsheet/cape/green,
-/obj/item/clothing/suit/bedsheet/cape/blue,
-/obj/item/clothing/suit/bedsheet/cape/red,
+/obj/item/clothing/back/bedsheet/cape/green,
+/obj/item/clothing/back/bedsheet/cape/blue,
+/obj/item/clothing/back/bedsheet/cape/red,
 /obj/item/clothing/suit/monkey,
 /obj/item/clothing/suit/nursedress,
 /obj/item/clothing/suit/robuddy,
@@ -36857,7 +36850,7 @@
 	network = "arcadevr";
 	throwforce = 0
 	},
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "lZU" = (
@@ -36948,7 +36941,7 @@
 /area/station/quartermaster/refinery)
 "mex" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
+/obj/item/clothing/back/bedsheet/black,
 /obj/item/toy/plush/small/monkey/assistant,
 /obj/landmark/start{
 	name = "Bartender"
@@ -38296,6 +38289,10 @@
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 30
 	},
+/obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -39264,6 +39261,10 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4;
 	icon_state = "pipe-c"
+	},
+/obj/stool/bench/red/auto,
+/obj/landmark/start{
+	name = "Security Assistant"
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -46273,7 +46274,7 @@
 	pixel_x = -24
 	},
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet/pink,
+/obj/item/clothing/back/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
@@ -48257,7 +48258,7 @@
 "veF" = (
 /obj/machinery/light/small,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Chef"
 	},
@@ -49215,7 +49216,7 @@
 	throwforce = 0
 	},
 /obj/machinery/light/incandescent,
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "vSE" = (

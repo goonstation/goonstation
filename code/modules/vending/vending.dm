@@ -509,14 +509,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	switch(action)
 		if("cutwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
 			if(params["wire"] && ispulsingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.pulse(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("logout")
@@ -565,6 +574,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(params["target"])
 				if (!src.vend_ready)
 					return
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
@@ -978,14 +990,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
 			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
-				if(R.product_amount > 0)
+				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
 					throw_item_act(R, target)
 					return R
 				return
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || (R.product_hidden && !src.extended_inventory)) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))

@@ -1,4 +1,20 @@
 
+(t)thu may 11 23
+(u)Flaborized
+(p)14003
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Tools now come in additional colors, based on where they're sourced from.
+(t)wed may 10 23
+(u)aloe
+(+)The Head of Security's cape is now worn on the back. Its stats have been slightly lowered to account for this.
+(+)Bedsheets and bedsheet capes too
+(t)tue may 09 23
+(u)LeahTheTech
+(+)Security mind protection health implants now only self destruct *after* sending the death alert.
+(u)Ikea
+(p)13749
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Jones can now be mechscanned with a syndicate analyzer
 (t)mon may 08 23
 (u)Sord
 (*)Added new departmental ID computers. They allow promotion to that department or demotion to Staff Assistant by that department's head. *Not on atlas

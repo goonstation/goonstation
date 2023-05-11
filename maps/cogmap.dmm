@@ -1682,7 +1682,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -1956,7 +1956,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -3389,7 +3389,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -3669,7 +3669,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -14321,7 +14321,7 @@
 	icon_state = "2-8"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -15415,7 +15415,7 @@
 	pixel_y = -24
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -19497,7 +19497,7 @@
 /obj/item/sticker/ribbon/participant{
 	pixel_x = -14
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -22611,7 +22611,7 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -31573,7 +31573,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -41271,7 +41271,7 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -46343,7 +46343,7 @@
 /area/space)
 "cAj" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "cAk" = (
@@ -53105,7 +53105,7 @@
 /obj/item/device/radio/intercom{
 	dir = 1
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -57481,7 +57481,7 @@
 /area/station/hangar/medical)
 "oFI" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -58081,7 +58081,7 @@
 /area/station/quartermaster/refinery)
 "pnt" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "poA" = (
@@ -63035,7 +63035,7 @@
 /area/shuttle/arrival/station)
 "uCP" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor/white,

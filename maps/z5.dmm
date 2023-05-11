@@ -1308,7 +1308,7 @@
 /area/evilreaver/storage/tools)
 "rO" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "rQ" = (
@@ -3367,7 +3367,7 @@
 /area/tech_outpost)
 "Eh" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor,
 /area/mining/quarters)
 "Ej" = (
@@ -3821,7 +3821,7 @@
 /area/evilreaver/bridge)
 "GN" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor{
 	dir = 4;
 	icon_state = "carpetN"
@@ -5557,7 +5557,7 @@
 /area/mining/dock)
 "RZ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/grime,
 /area/mining/quarters)
 "Sd" = (
@@ -5872,7 +5872,7 @@
 /area/noGenerate)
 "Uk" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/quarters)

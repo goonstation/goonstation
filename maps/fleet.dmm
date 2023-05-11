@@ -315,7 +315,7 @@
 /area/station/crew_quarters/maru)
 "aP" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -507,7 +507,7 @@
 	})
 "bi" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -584,7 +584,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -858,7 +858,7 @@
 /area/station/crew_quarters/tenebrae)
 "bR" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -1818,7 +1818,7 @@
 /area/station/science/artifact)
 "dX" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -2313,7 +2313,7 @@
 /area/station/garden/owlery)
 "eW" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -3196,7 +3196,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -4073,7 +4073,7 @@
 	})
 "iM" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -4099,7 +4099,7 @@
 	dir = 8;
 	pixel_x = 32
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -4137,7 +4137,7 @@
 /obj/landmark/start{
 	name = "Chief Engineer"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -5473,7 +5473,7 @@
 /area/station/security/secwing)
 "lu" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -5481,7 +5481,7 @@
 /area/station/security/secwing)
 "lv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -5562,7 +5562,7 @@
 /area/station/security/detectives_office)
 "lD" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -6982,7 +6982,7 @@
 	})
 "ot" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -8242,7 +8242,7 @@
 /obj/landmark/start{
 	name = "Geneticist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8268,7 +8268,7 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8353,7 +8353,7 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8676,7 +8676,7 @@
 /obj/landmark/start{
 	name = "Roboticist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8690,7 +8690,7 @@
 /obj/landmark/start{
 	name = "Roboticist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8931,7 +8931,7 @@
 /obj/landmark/start{
 	name = "Chef"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -9466,7 +9466,7 @@
 /obj/landmark/start{
 	name = "Botanist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -9480,7 +9480,7 @@
 /obj/landmark/start{
 	name = "Botanist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -9768,7 +9768,7 @@
 	})
 "tS" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -10373,7 +10373,7 @@
 /area/station/crew_quarters/bar)
 "uT" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -10814,7 +10814,7 @@
 /area/station/bridge/hos)
 "vK" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -12306,7 +12306,7 @@
 	})
 "yv" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -12682,7 +12682,7 @@
 /obj/landmark/start{
 	name = "Janitor"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -13623,7 +13623,7 @@
 /area/station/chapel/sanctuary)
 "AU" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -15079,7 +15079,7 @@
 	})
 "DO" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -18049,7 +18049,7 @@
 /area/listeningpost)
 "JB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24
@@ -18111,7 +18111,7 @@
 	name = "Security Intercom"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24;
@@ -18732,7 +18732,7 @@
 /area/research_outpost/indigo_rye)
 "Lo" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -19003,7 +19003,7 @@
 /area/research_outpost/indigo_rye)
 "LW" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -19074,7 +19074,7 @@
 /area/research_outpost/indigo_rye)
 "Mc" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -20689,7 +20689,7 @@
 /obj/landmark/start{
 	name = "Geneticist"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -22252,7 +22252,7 @@
 	})
 "QC" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -22605,7 +22605,7 @@
 /obj/landmark/start{
 	name = "Engineer"
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},

@@ -50,7 +50,7 @@
 /obj/item/storage/wall{
 	pixel_y = 32
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -107,7 +107,7 @@
 /obj/item/storage/wall{
 	pixel_y = 32
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -232,7 +232,7 @@
 	pixel_x = 10;
 	pixel_y = 19
 	},
-/obj/item/clothing/suit/bedsheet/yellow,
+/obj/item/clothing/back/bedsheet/yellow,
 /turf/simulated/floor/carpet/grime,
 /area/prefab/silverglass)
 "hk" = (
@@ -853,7 +853,7 @@
 /obj/item/storage/wall{
 	pixel_y = 32
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -1173,7 +1173,7 @@
 	pixel_y = 32
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/orange,
+/obj/item/clothing/back/bedsheet/orange,
 /turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/prefab/silverglass)
 "OC" = (
@@ -1322,7 +1322,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},

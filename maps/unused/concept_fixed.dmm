@@ -2314,7 +2314,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -2662,7 +2662,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -3520,12 +3520,12 @@
 /area/station/janitor/office)
 "agN" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light/small{
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -3569,7 +3569,7 @@
 /area/station/maintenance/northeast)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4199,7 +4199,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -5914,7 +5914,7 @@
 /area/station/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8663,7 +8663,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10243,7 +10243,7 @@
 /area/station/maintenance/east)
 "aug" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -10825,7 +10825,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -19818,7 +19818,7 @@
 /area/station/crew_quarters/quarters)
 "aMc" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -20911,7 +20911,7 @@
 /area/station/maintenance/southwest)
 "aNY" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -21862,7 +21862,7 @@
 /area/station/maintenance/southwest)
 "aPB" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/landmark/start{
 	name = "Assistant"
 	},
@@ -21894,7 +21894,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/machinery/light_switch{
 	name = "E light switch";
 	pixel_x = 24;
@@ -25327,7 +25327,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
@@ -30765,7 +30765,7 @@
 /area/station/security/brig)
 "bfJ" = (
 /obj/machinery/bot/secbot/beepsky,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
@@ -31980,7 +31980,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
 "bhR" = (
@@ -32106,7 +32106,7 @@
 /obj/landmark/start{
 	name = "Captain"
 	},
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -33655,7 +33655,7 @@
 /area/space)
 "bkZ" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet,
+/obj/item/clothing/back/bedsheet,
 /turf/simulated/floor/white,
 /area/space)
 "bla" = (
