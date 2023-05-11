@@ -205,6 +205,8 @@
 		..()
 
 	proc/aftereat()
+		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		src.HealDamage("all", 5, 5, 0)
 		src.eaten++
 		if (src.eaten >= src.rocks_per_gem)
 			var/pickgem = rand(1,3)
