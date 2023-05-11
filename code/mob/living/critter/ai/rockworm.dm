@@ -10,6 +10,11 @@
 
 /datum/aiTask/sequence/goalbased/critter/eat/worm
 
+/datum/aiTask/sequence/goalbased/critter/eat/worm/New(parentHolder, transTask)
+	..()
+	src.subtasks -= /datum/aiTask/succeedable/critter/eat
+	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/eat/worm, list(src.holder)))
+
 /datum/aiTask/succeedable/critter/eat/worm/on_tick()
 	if(!has_started)
 		var/mob/living/critter/rockworm/C = holder.owner
