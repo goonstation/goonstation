@@ -5098,7 +5098,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "OL" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "OM" = (
