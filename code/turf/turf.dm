@@ -431,7 +431,6 @@ proc/generate_space_color()
 	if(ismob(M) && !src.throw_unlimited && !M.no_gravity)
 		var/mob/tmob = M
 		tmob.inertia_dir = 0
-		reset_anchored(M)
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
@@ -503,7 +502,6 @@ proc/generate_space_color()
 			var/mob/M = A
 			if((M.client && M.client.flying) || (ismob(M) && HAS_ATOM_PROPERTY(M, PROP_MOB_NOCLIP)))
 				return//aaaaa
-			reset_anchored(M)
 			BeginSpacePush(M)
 
 	if (src.x <= 1)

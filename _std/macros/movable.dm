@@ -1,8 +1,7 @@
 #define reset_anchored(M) do{\
 if(istype(M, /mob/living/carbon/human)){\
 	var/mob/living/carbon/human/HumToDeanchor = M;\
-	var/turf/TurfToCheck = get_turf(M);\
-	if((HumToDeanchor.shoes?.magnetic || HumToDeanchor.mutantrace?.anchor_to_floor) && !(TurfToCheck?.turf_flags & CAN_BE_SPACE_SAMPLE)){\
+	if((HumToDeanchor.shoes?.magnetic || HumToDeanchor.mutantrace?.anchor_to_floor) && !(HumToDeanchor.temp_flags & SPACE_PUSHING)){\
 		HumToDeanchor.anchored = ANCHORED;}\
 	else{\
 		HumToDeanchor.anchored = UNANCHORED}}\
