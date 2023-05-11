@@ -1,4 +1,9 @@
 
+(t)thu may 11 23
+(u)Flaborized
+(p)14003
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Tools now come in additional colors, based on where they're sourced from.
 (t)tue may 09 23
 (u)LeahTheTech
 (+)Security mind protection health implants now only self destruct *after* sending the death alert.
