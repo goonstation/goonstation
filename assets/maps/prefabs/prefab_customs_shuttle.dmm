@@ -433,7 +433,7 @@
 "zB" = (
 /obj/machinery/computer/card/portable,
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/hop,
+/obj/item/clothing/back/bedsheet/hop,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
 /area/prefab/crashed_hop_shuttle)
 "zM" = (

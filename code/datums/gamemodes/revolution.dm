@@ -316,10 +316,16 @@
 		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
 
 #ifdef DATALOGGER
+	var/total = world.load_intra_round_value("rev_total")
+	world.save_intra_round_value(total + 1)
 	switch(finished)
 		if(1)
+			var/wins = world.load_intra_round_value("rev_win")
+			world.save_intra_round_value("rev_win", wins + 1)
 			game_stats.Increment("traitorwin")
 		if(2)
+			var/losses = world.load_intra_round_value("rev_loss")
+			world.save_intra_round_value("rev_loss", losses + 1)
 			game_stats.Increment("traitorloss")
 #endif
 

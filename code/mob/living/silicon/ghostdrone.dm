@@ -33,7 +33,7 @@
 
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
-	var/obj/item/clothing/suit/bedsheet/bedsheet = null
+	var/obj/item/clothing/back/bedsheet/bedsheet = null
 
 	New()
 		..()
@@ -450,7 +450,7 @@
 		src.hat = null
 		return 1
 
-	proc/putonSheet(obj/item/clothing/suit/bedsheet/W as obj, mob/user as mob)
+	proc/putonSheet(obj/item/clothing/back/bedsheet/W as obj, mob/user as mob)
 		W.set_loc(src)
 		src.bedsheet = W
 		src.setFace(faceType, faceColor) // removes face overlay and lumin (also sets icon)
@@ -524,7 +524,7 @@
 				user.visible_message("<b>[user]</b> gently places a hat on [src]!", "You gently place a hat on [src]!")
 			return
 
-		else if (istype(W, /obj/item/clothing/suit/bedsheet))
+		else if (istype(W, /obj/item/clothing/back/bedsheet))
 			if (src.bedsheet)
 				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
 				return

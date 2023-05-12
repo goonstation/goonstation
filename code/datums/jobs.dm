@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar/blue) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -1657,6 +1657,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Sous-Chef")
 		return
 
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
+
 /datum/job/special/random/waiter
 	name = "Waiter"
 	wages = PAY_UNTRAINED
@@ -2008,7 +2014,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	limit = 1
 	change_name_on_spawn = 1
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
-	slot_suit = list(/obj/item/clothing/suit/bedsheet)
+	slot_suit = list(/obj/item/clothing/back/bedsheet)
 	slot_ears = list(/obj/item/device/radio/headset)
 
 	special_setup(var/mob/living/carbon/human/M)

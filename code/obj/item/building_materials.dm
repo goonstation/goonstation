@@ -728,6 +728,9 @@ MATERIAL
 			head.pixel_x = rand(-8,8)
 			head.pixel_y = rand(-8,8)
 			heads -= head
+			if (head in src.vis_contents)
+				vis_contents -= head
+				head.vis_flags &= ~VIS_INHERIT_ID
 
 			if(!length(heads))
 				head_offset = 0
@@ -772,10 +775,11 @@ MATERIAL
 		return
 
 	proc/update()
-		src.overlays = null
 
 		if((length(heads) < 3 && head_offset > 0) || length(heads) == 0)
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_blood")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_blood"),"blood")
+		else
+			src.UpdateOverlays(null,"blood")
 
 		switch(length(heads)) //fuck it
 			if(0)
@@ -807,16 +811,22 @@ MATERIAL
 		if(length(heads) > 0)
 			var/pixely = 8 - 8*head_offset - 8*length(heads)
 			for(var/obj/item/organ/head/H in heads)
+				if (H in vis_contents) continue
 				H.pixel_x = 0
 				H.pixel_y = pixely
 				pixely += 8
 				H.set_dir(SOUTH)
-				src.overlays += H
+				src.vis_contents += H
+				H.vis_flags |= VIS_INHERIT_ID
 
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_flies")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_flies"),"flies")
+		else
+			src.UpdateOverlays(null,"flies")
 
 		if(anchored)
-			src.overlays += image('icons/obj/metal.dmi',"head_spike_weld")
+			src.UpdateOverlays(image('icons/obj/metal.dmi',"head_spike_weld"),"weld")
+		else
+			src.UpdateOverlays(null,"weld")
 
 
 	proc/has_space()

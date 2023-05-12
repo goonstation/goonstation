@@ -253,7 +253,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/ghost_house)
 "aZ" = (
-/obj/critter/ancient_repairbot/security,
+/mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/floor/void,
 /area/prefab/ghost_house)
 "ba" = (
@@ -528,10 +528,10 @@
 	pixel_y = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/royal{
+/obj/item/clothing/back/bedsheet/royal{
 	pixel_y = 11
 	},
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /mob/living/critter/aberration,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
@@ -563,10 +563,10 @@
 	pixel_y = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/royal{
+/obj/item/clothing/back/bedsheet/royal{
 	pixel_y = 11
 	},
-/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/clothing/back/bedsheet/royal,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)

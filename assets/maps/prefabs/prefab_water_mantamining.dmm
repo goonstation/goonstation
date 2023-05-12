@@ -361,7 +361,7 @@
 "bu" = (
 /obj/stool/bed,
 /obj/item/storage/wall/mining,
-/obj/item/clothing/suit/bedsheet{
+/obj/item/clothing/back/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},

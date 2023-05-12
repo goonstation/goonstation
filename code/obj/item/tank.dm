@@ -453,6 +453,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
 	force = 1

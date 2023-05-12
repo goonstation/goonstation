@@ -441,10 +441,15 @@
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
 	item_state = "ntarmor"
+	coat_style = "ntarmor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
@@ -472,16 +477,3 @@
 		setProperty("disorient_resist", 10)
 		setProperty("movespeed", 0.45)
 		setProperty("exploprot", 60)
-
-/obj/item/clothing/suit/armor/hoscape
-	name = "Head of Security's cape"
-	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
-	icon_state = "hos-cape"
-	item_state = "hos-cape"
-	hides_from_examine = 0
-	setupProperties()
-		..()
-		setProperty("meleeprot", 3)
-		setProperty("rangedprot", 0.7)
-		setProperty("coldprot", 5)
-		setProperty("heatprot", 35)

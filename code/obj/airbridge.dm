@@ -282,7 +282,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
 		if (src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	initialize()
 		..()

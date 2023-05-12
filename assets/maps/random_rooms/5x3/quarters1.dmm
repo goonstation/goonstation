@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "f" = (
@@ -22,7 +22,7 @@
 	pixel_y = 28
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "M" = (
@@ -39,7 +39,7 @@
 	pixel_y = 21
 	},
 /obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/random,
+/obj/item/clothing/back/bedsheet/random,
 /turf/simulated/floor/grime,
 /area/dmm_suite/clear_area)
 "R" = (

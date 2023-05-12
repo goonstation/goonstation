@@ -521,6 +521,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	desc = "A pneumatic delivery chute for sending completed research to the public."
 	icon_style = "sci"
 
+/obj/machinery/disposal/botany
+	name = "produce chute"
+	icon_state = "botanchute"
+	desc = "A pneumatic delivery chute for sending produce to the kitchen."
+	icon_style = "botan"
+
 /obj/machinery/disposal/ore
 	name = "ore chute"
 	icon_state = "orechute"

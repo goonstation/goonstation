@@ -35,8 +35,8 @@
 			src.name = name
 
 		if (target && istype(target, /atom/movable))
-			src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/handle_move)
-			src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, .proc/handle_move)
+			src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, PROC_REF(handle_move))
+			src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 			src.handle_move(target)
 
 		src.can_be_deleted_by_player = can_be_deleted_by_player

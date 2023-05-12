@@ -767,6 +767,12 @@ turf
 					qdel(src.RL_AddOverlay)
 					src.RL_AddOverlay = null
 
+
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = 0
+
 atom
 	var
 		RL_Attached = null
@@ -775,6 +781,22 @@ atom
 		next_light_dir_update = 0
 
 	movable
+
+		// Enables mobs and objs to be mechscannable, also why is this file even in lighting???
+
+		var/is_syndicate = 0
+		/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+		var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+		/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+		var/mechanics_type_override = null
+
+
+		New()
+			. = ..()
+			var/typeinfo/obj/typeinfo = src.get_typeinfo()
+			if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+				src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
+
 		Move(atom/target)
 			var/old_loc = src.loc
 			. = ..()
