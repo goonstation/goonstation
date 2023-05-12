@@ -4606,9 +4606,6 @@ var/global/noir = 0
 	if (!(M.mind in ticker.mode.Agimmicks))
 		ticker.mode.Agimmicks += M.mind
 
-	if (M.mind.current)
-		M.mind.current.antagonist_overlay_refresh(1, 0)
-
 	var/obj_count = 1
 	for(var/datum/objective/OBJ in M.mind.objectives)
 		boutput(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")

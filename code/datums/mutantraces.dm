@@ -960,10 +960,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
 			M.show_antag_popup("zombie")
 
-	on_attach()
-		if(ishuman(src.mob))
-			src.mob.antagonist_overlay_refresh(1)
-
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
