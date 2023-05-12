@@ -692,7 +692,7 @@
 	body_parts_covered = TORSO|ARMS
 	see_face = FALSE
 	over_hair = TRUE
-	wear_layer = MOB_FULL_COVERAGE_LAYER
+	wear_layer = MOB_FULL_SUIT_LAYER
 	var/eyeholes = FALSE //Did we remember to cut eyes in the thing?
 	var/cape = FALSE
 	var/obj/stool/bed/bed = null
@@ -1640,7 +1640,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	see_face = 0
 	magical = 1
 	over_hair = TRUE
-	wear_layer = MOB_FULL_COVERAGE_LAYER
+	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
@@ -1679,7 +1679,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
 	see_face = 0
-	wear_layer = MOB_FULL_COVERAGE_LAYER
+	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
