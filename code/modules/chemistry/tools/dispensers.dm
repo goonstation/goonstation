@@ -432,6 +432,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 
 	bullet_act()
+		..()
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
 
 	red
