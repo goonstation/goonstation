@@ -1525,7 +1525,7 @@
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
 					speak("Critical battery.")
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1883,7 +1883,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -4769,7 +4769,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
+				INVOKE_ASYNC(robot, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 

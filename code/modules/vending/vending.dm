@@ -146,8 +146,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -509,14 +509,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	switch(action)
 		if("cutwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
 			if(params["wire"] && ispulsingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.pulse(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("logout")
@@ -565,6 +574,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(params["target"])
 				if (!src.vend_ready)
 					return
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
@@ -978,14 +990,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
 			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
-				if(R.product_amount > 0)
+				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
 					throw_item_act(R, target)
 					return R
 				return
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || (R.product_hidden && !src.extended_inventory)) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))
@@ -2724,6 +2736,9 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 

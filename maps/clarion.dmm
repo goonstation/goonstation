@@ -14308,13 +14308,11 @@
 	},
 /area/station/crew_quarters/md)
 "aQB" = (
-/obj/table/wood/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/medical,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/reagent_containers/food/drinks/tea,
 /obj/machinery/door_control{
 	id = "pharmacylock";
 	name = "Pharmacy Shutters";
@@ -29527,8 +29525,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "eZa" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/engineering,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -35018,11 +35015,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "kEo" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/card/department/research,
 /obj/item/device/radio/intercom/medical,
 /obj/machinery/light{
 	dir = 8;
@@ -40759,14 +40752,7 @@
 	name = "Crew Quarters S01"
 	})
 "qsX" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
-	},
+/obj/machinery/computer/card/department/security,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -46261,6 +46247,12 @@
 	},
 /obj/item/stamp/hos,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/escape{
 	dir = 6
 	},
@@ -47446,6 +47438,7 @@
 	icon_state = "1-8"
 	},
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/tea,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
