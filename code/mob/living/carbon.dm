@@ -64,7 +64,7 @@
 			if(src.getStatusDuration("slowed")<1)
 				boutput(src, "<span class='notice'>You get slowed down by the sticky floor!</span>")
 			if(src.getStatusDuration("slowed")< 30 SECONDS)
-				src.changeStatus("slowed", 2 SECONDS, optional = 2)
+				src.changeStatus("slowed", 2 SECONDS)
 
 /mob/living/carbon/relaymove(var/mob/user, direction)
 	if(user in src.stomach_contents)
