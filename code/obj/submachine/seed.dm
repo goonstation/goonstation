@@ -5,7 +5,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	name = "PlantMaster Mk4"
 	desc = "An advanced machine used for manipulating the genes of plant seeds. It also features an inbuilt seed extractor."
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
 	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
@@ -675,7 +675,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
@@ -910,7 +910,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "seeds"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 	var/hacked = 0

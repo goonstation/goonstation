@@ -7,7 +7,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
@@ -16,8 +16,8 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/mechcompsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", .proc/mechcompreceive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)

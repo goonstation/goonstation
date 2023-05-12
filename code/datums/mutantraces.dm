@@ -77,6 +77,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
+	///The icon states of the above icon, cached because byond is bad
+	var/icon_states = null
 	var/icon_state = "blank_c"
 	/// The icon used to render their eyes
 	var/eye_icon = 'icons/mob/human_hair.dmi'
@@ -131,6 +133,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/l_robolimb_arm_type_mutantrace = null
 	var/r_robolimb_leg_type_mutantrace = null
 	var/l_robolimb_leg_type_mutantrace = null
+
+	///If true, normal limbs use custom icons for this mutantrace
+	var/override_limb_icons = FALSE
 
 	/// Replace both arms regardless of mob status (new and dispose).
 	var/ignore_missing_limbs = 0
@@ -259,11 +264,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
 			src.load_clothing_icons()
+			src.icon_states = icon_states(src.icon)
 			if (movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 			if (!needs_oxy)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
 			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
+			if (!src.dna_mutagen_banned)
+				AH.original_mutant_race = src
 			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 				MakeMutantDimorphic(M)
 			AppearanceSetter(M, "set")
@@ -413,6 +421,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					AH.s_tone = AH.s_tone_original
 
 				AH.mutant_race = src
+				if (!src.dna_mutagen_banned)
+					AH.original_mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
 				AH.e_icon = src.eye_icon
@@ -699,7 +709,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	New()
 		..()
 		if (src.mob)
-			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, .proc/flub)
+			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, PROC_REF(flub))
 
 	sight_modifier()
 		src.mob.see_in_dark = SEE_DARK_FULL
@@ -1119,14 +1129,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_thrall/abil = src.mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if (abil)
-			if (abil.master)
-				abil.master.remove_thrall(src.mob)
-			else
-				remove_mindhack_status(src.mob, "vthrall", "death")
-		var/datum/component/tracker_hud/vampthrall/component = src.mob.GetComponent(/datum/component/tracker_hud/vampthrall)
-		component?.RemoveComponent()
+		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1538,6 +1541,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
+	override_limb_icons = TRUE
 
 	load_clothing_icons()
 		src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
@@ -1558,6 +1562,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if(ishuman(M))
 			M.add_stam_mod_max("monkey", -50)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+			SPAWN(0) //aaaaaaaaaaaaa
+				M.update_body(TRUE)
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2226,7 +2232,7 @@ TYPEINFO(/datum/mutantrace/pug)
 					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
-		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	disposing()
 		if (ishuman(src.mob))

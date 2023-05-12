@@ -126,7 +126,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 
 		if(smashes_shit)
 			//There be shit near us what can block our way.
@@ -365,7 +365,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
 							src.task = "attacking"
-							src.anchored = 1
+							src.anchored = ANCHORED
 							src.target_lastloc = M.loc
 							if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 
@@ -398,7 +398,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 				// see if he got away
 				if ((BOUNDS_DIST(src, src.target) > 0) || ((src.target:loc != src.target_lastloc)))
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					src.task = "chasing"
 				else
 					if (BOUNDS_DIST(src, src.target) == 0)
@@ -407,7 +407,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 						if (!src.aggressive)
 							src.task = "thinking"
 							src.target = null
-							src.anchored = 0
+							src.anchored = UNANCHORED
 							src.last_found = world.time
 							src.frustration = 0
 							src.attacking = 0
@@ -416,12 +416,12 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 								if (M.health < 0)
 									src.task = "thinking"
 									src.target = null
-									src.anchored = 0
+									src.anchored = UNANCHORED
 									src.last_found = world.time
 									src.frustration = 0
 									src.attacking = 0
 					else
-						src.anchored = 0
+						src.anchored = UNANCHORED
 						src.attacking = 0
 						src.task = "chasing"
 			if("wandering")
@@ -595,7 +595,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 				for(var/obj/O in affected)
-					O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+					O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 					O.name = "Energy"
 					var/turf/src_turf = O.loc
 					for(var/obj/machinery/vehicle/A in src_turf)

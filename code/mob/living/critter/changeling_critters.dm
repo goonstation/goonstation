@@ -160,8 +160,8 @@
 			src.icon_prefix = "robo"
 			src.UpdateIcon()
 
-		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
-		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
+		RegisterSignal(src, COMSIG_MOB_PICKUP, PROC_REF(stop_sprint))
+		RegisterSignal(src, COMSIG_MOB_DROPPED, PROC_REF(enable_sprint))
 
 	disposing()
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
@@ -654,9 +654,7 @@
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = src.mind
-		var/datum/ailment/parasite/headspider/HSD = HS.master
-		HSD.changeling = changeling
+		HS.source = src
 		H.ailments += HS
 
 		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
@@ -689,5 +687,5 @@
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-			obs.boot()
+			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()

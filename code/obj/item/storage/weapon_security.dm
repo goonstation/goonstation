@@ -247,7 +247,7 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
 		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
@@ -261,7 +261,7 @@
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
 		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
@@ -356,12 +356,12 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
+		<I>/[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)

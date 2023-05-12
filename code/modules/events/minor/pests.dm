@@ -37,9 +37,9 @@
 					LAGCHECK(LAG_LOW)
 			if (5)
 				while (spawnamount > 0)
-					type = /obj/critter/spacerattlesnake
+					type = /mob/living/critter/small_animal/rattlesnake
 					new type(pestlandmark)
-					spawnamount -= 11
+					spawnamount -= 4
 					LAGCHECK(LAG_LOW)
 		logTheThing(LOG_STATION, null, "minor pest event spawned [type] at [log_loc(pestlandmark)]")
 

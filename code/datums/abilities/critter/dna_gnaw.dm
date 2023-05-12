@@ -9,8 +9,6 @@
 	target_anything = 1
 	icon_state = "gnaw"
 
-	var/datum/projectile/slam/proj = new
-
 	cast(atom/target)
 		if (..())
 			return 1

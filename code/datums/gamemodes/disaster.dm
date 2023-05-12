@@ -12,13 +12,13 @@
 	var/const/shuttle_waittime = 4000
 
 /datum/game_mode/disaster/pre_setup()
-	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 0)
+	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 1)
 	if (length(candidates))
 		var/datum/mind/twraith = pick(candidates) // Just one for now
 		twraith.special_role = ROLE_WRAITH
 		Agimmicks += twraith
 
-	return 1
+	return TRUE
 
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
@@ -33,6 +33,7 @@
 
 /datum/game_mode/disaster/post_setup()
 	for(var/datum/mind/wraith in Agimmicks)
+		wraith.add_antagonist(ROLE_WRAITH) // this creates the wraith mob and such
 		var/mob/living/intangible/wraith/W = wraith.current
 		if (istype(W))
 			W.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))

@@ -6,7 +6,7 @@
 	var/datum/abilityHolder/arcfiend/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current) || ismobcritter(mind.current)
+		return isliving(mind.current)
 
 	give_equipment()
 		var/datum/abilityHolder/arcfiend/A = src.owner.current.get_ability_holder(/datum/abilityHolder/arcfiend)

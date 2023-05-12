@@ -115,8 +115,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-var/f_color_selector_handler/F_Color_Selector
-
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
 	for(var/A in childrentypesof(/datum/material_property)) //Caching material props
@@ -148,7 +146,7 @@ var/f_color_selector_handler/F_Color_Selector
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = call(lib, "init")()
+	var/init = LIBCALL(lib, "init")()
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif
 
@@ -281,6 +279,9 @@ var/f_color_selector_handler/F_Color_Selector
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
+
+		Z_LOG_DEBUG("Preload", "Generating minimaps...")
+		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -1074,8 +1075,8 @@ var/f_color_selector_handler/F_Color_Selector
 								for (var/obj/item/I in H.contents)
 									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
-									if (istype(I,/obj/item/storage))
-										hudlist += I.contents
+									if (I.storage)
+										hudlist += I.storage.get_contents()
 
 							var/list/close_match = list()
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
@@ -1542,6 +1543,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)

@@ -70,7 +70,8 @@
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses?[type]
+		if(!lifeprocesses) return //sometimes list is null, causes runtime.
+		var/datum/lifeprocess/L = lifeprocesses[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -114,6 +115,7 @@
 
 /mob/living/full_heal()
 	. = ..()
+	if (src.ai && src.is_npc) src.ai.enable()
 	src.remove_ailments()
 	src.change_misstep_chance(-INFINITY)
 	restore_life_processes()
@@ -218,7 +220,6 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -270,7 +271,7 @@
 			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 			if (iscarbon(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR))
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
@@ -612,9 +613,6 @@
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
-				else if (D.spread == "Sight")
-					if (src.eyes_protected_from_light())
-						resist_prob += 190
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")

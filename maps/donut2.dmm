@@ -7393,10 +7393,6 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aBs" = (
-/obj/stool/chair,
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -8377,7 +8373,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -8876,9 +8872,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aGd" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -9370,7 +9364,7 @@
 	name = "crematorium pipe"
 	},
 /obj/table/podium_wood,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_y = 7
 	},
 /obj/machinery/light/small/floor,
@@ -9999,9 +9993,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/west)
 "aJU" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -19119,12 +19111,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"boy" = (
-/obj/critter/fermid,
-/obj/item/raw_material/syreline,
-/obj/item/raw_material/syreline,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "boz" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -20781,19 +20767,6 @@
 "bvN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/storage)
-"bvO" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
-/obj/storage/secure/crate/eng/interdictor,
-/turf/simulated/floor/yellow/corner,
-/area/station/engine/engineering)
 "bvP" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -22507,9 +22480,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "bBZ" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -23802,9 +23773,7 @@
 /turf/simulated/floor/circuit/red,
 /area/station/turret_protected/ai)
 "bGH" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -24083,7 +24052,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24091,9 +24060,7 @@
 	},
 /area/station/solar/east)
 "bHF" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -24190,11 +24157,7 @@
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
-/obj/grille/catwalk/cross{
-	dir = 5;
-	icon_state = "catwalk_cross";
-	tag = "icon-catwalk_cross (NORTHEAST)"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -24327,7 +24290,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24424,7 +24387,7 @@
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24447,7 +24410,7 @@
 /obj/cable/yellow{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24455,9 +24418,7 @@
 	},
 /area/station/solar/south)
 "bIx" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-8"
 	},
@@ -24491,9 +24452,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	layer = 2
@@ -24539,9 +24498,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	layer = 2
@@ -24627,7 +24584,7 @@
 	},
 /area/mining/magnet)
 "bIM" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -24669,9 +24626,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -24717,9 +24672,7 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -27620,9 +27573,7 @@
 	},
 /area/station/crew_quarters/pool)
 "ejB" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -27829,10 +27780,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
-"epI" = (
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "epJ" = (
 /obj/cable,
 /obj/cable{
@@ -29729,6 +29676,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"fLX" = (
+/obj/item/raw_material/gold,
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "fMJ" = (
 /obj/machinery/power/apc{
 	dir = 8;
@@ -30125,11 +30077,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"ggw" = (
-/obj/item/raw_material/gold,
-/obj/critter/fermid,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "ggJ" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
@@ -31217,6 +31164,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"hdb" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/cobryl,
+/obj/item/raw_material/pharosium,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "heK" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -31638,12 +31591,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
-"hxM" = (
-/obj/critter/fermid,
-/obj/item/raw_material/cobryl,
-/obj/item/raw_material/pharosium,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "hxT" = (
 /obj/item/device/prox_sensor{
 	pixel_x = -8;
@@ -33093,7 +33040,7 @@
 	pixel_x = -7;
 	pixel_y = 5
 	},
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = 17;
 	pixel_y = 4
 	},
@@ -35796,8 +35743,8 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "lcr" = (
-/obj/stool/chair,
 /obj/machinery/light/incandescent,
+/obj/mail_booth,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -36166,7 +36113,7 @@
 	icon_state = "bulb1"
 	},
 /obj/table/auto,
-/obj/item/cloth/handkerchief/white,
+/obj/item/cloth/handkerchief/colored/white,
 /obj/item/reagent_containers/food/snacks/lollipop/random_medical,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/wood/six,
@@ -36536,9 +36483,7 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "lGG" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
 	tag = "icon-catwalk (WEST)"
@@ -38302,6 +38247,11 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"ncG" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "ndp" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
@@ -40074,7 +40024,7 @@
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross";
@@ -42805,11 +42755,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"qMf" = (
-/obj/critter/fermid,
-/obj/item/raw_material/syreline,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
-/area/space)
 "qMr" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -46163,9 +46108,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "tlV" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	tag = "icon-catwalk (WEST)"
@@ -46412,6 +46355,12 @@
 	intact = 0
 	},
 /area/station/quartermaster/magnet)
+"txz" = (
+/mob/living/critter/fermid,
+/obj/item/raw_material/syreline,
+/obj/item/raw_material/syreline,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "txI" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47274,6 +47223,19 @@
 /obj/stool/bench/green,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"uiY" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/apc{
+	dir = 8;
+	name = "W APC";
+	pixel_x = -24;
+	pixel_y = 0
+	},
+/obj/machinery/manufacturer/engineering,
+/turf/simulated/floor/yellow/corner,
+/area/station/engine/engineering)
 "ujN" = (
 /obj/stool/chair{
 	dir = 8
@@ -47294,7 +47256,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "uky" = (
-/obj/grille/catwalk/cross,
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -48353,6 +48315,10 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
+"vgP" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/lighted,
+/area/space)
 "vgX" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/mail,
@@ -48803,7 +48769,8 @@
 /area/station/security/checkpoint/research)
 "vAA" = (
 /obj/machinery/conveyor/SE{
-	id = "zeta_mail_in"
+	id = "zeta_mail_in";
+	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -81198,7 +81165,7 @@ bvN
 bsL
 bvN
 bzi
-bvO
+uiY
 bwZ
 bxL
 bys
@@ -133244,7 +133211,7 @@ aaa
 sPP
 sPP
 eaH
-boy
+txz
 wfj
 wfj
 wfj
@@ -133853,7 +133820,7 @@ sPP
 wfj
 wfj
 wfj
-epI
+vgP
 sPP
 sPP
 sPP
@@ -134460,11 +134427,11 @@ pgY
 pgY
 wfj
 pli
-hxM
+hdb
 sPP
 sPP
 sPP
-ggw
+fLX
 wfj
 sPP
 sPP
@@ -135371,7 +135338,7 @@ sVO
 tMS
 wfj
 wfj
-qMf
+ncG
 sPP
 sPP
 sPP
@@ -135663,12 +135630,12 @@ aaa
 sPP
 sPP
 sPP
-epI
+vgP
 wfj
 daS
 wfj
 wfj
-epI
+vgP
 wfj
 tMS
 sPP

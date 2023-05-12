@@ -205,7 +205,7 @@
 	name = "benign kudzu"
 	desc = "A flowering subspecies of the kudzu plant that, is a non-invasive plant on space stations."
 	// invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/misc/kudzu_plus.dmi'
@@ -333,7 +333,7 @@
 	targeted = 0
 	target_anything = 0
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	can_cast_anytime = 1
 	cast(atom/target)
 		if (..())

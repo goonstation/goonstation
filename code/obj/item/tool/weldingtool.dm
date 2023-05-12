@@ -172,7 +172,6 @@
 		src.firesource = !(src.firesource)
 		tooltip_rebuild = TRUE
 		src.set_state(on = !src.welding, user = user)
-		user.update_inhands()
 
 	blob_act(var/power)
 		if (prob(power * 0.5))
@@ -358,6 +357,8 @@
 				set_icon_state("weldingtool-off" + src.icon_state_variant_suffix)
 				src.item_state = "weldingtool-off" + src.item_state_variant_suffix
 				SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
+		if(istype(user))
+			user.update_inhands()
 
 
 /obj/item/weldingtool/yellow

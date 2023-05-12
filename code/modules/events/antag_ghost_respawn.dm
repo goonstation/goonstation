@@ -206,12 +206,13 @@
 			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
 			var/failed = 0
 			log_respawn_event(lucky_dude, src.antagonist_type, source)
+			var/datum/mind/mind = M3.mind
+			mind.wipe_antagonists()
+			M3 = mind.current
 			switch (src.antagonist_type)
 				if ("Blob")
-					var/datum/mind/mind = M3.mind
 					if (istype(mind))
 						send_to = 3
-						mind.wipe_antagonists()
 						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_BLOB
 						M3 = mind.current
@@ -219,25 +220,21 @@
 						failed = 1
 
 				if ("Flockmind")
-					var/datum/mind/mind = M3.mind
 					if (istype(mind))
 						send_to = 3
-						mind.wipe_antagonists()
 						mind.add_antagonist(ROLE_FLOCKMIND, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_FLOCKMIND
 						M3 = mind.current
 						var/mob/living/intangible/flock/flockmind/F = mind.current
 						if (istype(F) && (alive_player_count() > 40)) // Flockmind can have a free trace, as a treat.
 							SPAWN(1)
-								F.partition(TRUE)
+								F.partition(ANTAGONIST_SOURCE_RANDOM_EVENT)
 					else
 						failed = 1
 
 				if ("Wraith")
-					var/datum/mind/mind = M3.mind
 					if (istype(mind))
 						send_to = 3
-						mind.wipe_antagonists()
 						mind.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRAITH
 						M3 = mind.current
@@ -249,7 +246,6 @@
 					if (istype(L))
 						M3 = L
 						send_to = 2
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_WIZARD, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WIZARD
 					else
@@ -259,7 +255,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_WEREWOLF, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WEREWOLF
 					else
@@ -269,7 +264,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_HUNTER
 					else
@@ -279,7 +273,6 @@
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_SALVAGER
 					else
@@ -289,7 +282,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
 						var/antagonist_role = src.antagonist_type
@@ -302,7 +294,6 @@
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
 					if (istype(C))
 						M3 = C
-						C.mind?.wipe_antagonists()
 						C.mind?.add_antagonist(ROLE_WRESTLER, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_WRESTLER
 						var/antagonist_role = src.antagonist_type
@@ -315,7 +306,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_VAMPIRE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_VAMPIRE
 					else
@@ -325,7 +315,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_CHANGELING, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_CHANGELING
 					else
@@ -344,7 +333,6 @@
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
 						M3 = L
-						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_ARCFIEND, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_ARCFIEND
 					else

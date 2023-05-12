@@ -14,7 +14,7 @@
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_mangled"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	requires_power = FALSE
 	var/output = 30000
 	var/lastout = 0
@@ -83,11 +83,11 @@
 		if(get_turf(user) == T)
 			if(src.anchored == 0)
 				boutput(user, "<span class='notice'>You secured the SWORD Engine!</span>")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				//terminal_setup()
 			else
 				boutput(user, "<span class='notice'>You unsecured the SWORD Engine!</span>")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				//for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
 				//	if(temp_term.master == src)
 				//		qdel(temp_term)

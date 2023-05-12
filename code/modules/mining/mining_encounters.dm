@@ -113,6 +113,66 @@
 		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
 		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
 
+/datum/mining_encounter/jean
+	name = "Jasteroid"
+	#ifdef APRIL_FOOLS
+	rarity_tier = 1
+	#else
+	rarity_tier = 3
+	#endif
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+		var/list/generated_turfs
+		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
+
+		var/magnetic_center = mining_controls.magnetic_center
+		var/area_restriction = /area/mining/magnet
+		if (target)
+			magnetic_center = target.magnetic_center
+			area_restriction = null
+			size = min(size,min(target.width,target.height))
+
+		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/jean, size, 1, area_restriction)
+
+		var/quality = rand(-101,101)
+		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+			AST.quality = quality
+			AST.space_overlays()
+			AST.setMaterial(getMaterial("jean"))
+
+		var/list/turf/floors = list()
+		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
+			AST.UpdateIcon()
+			AST.setMaterial(getMaterial("jean"))
+			floors += AST
+
+		for(var/i in 0 to rand(0, 2))
+			var/jean_object_type = pick(
+				50; /obj/item/clothing/suit/jean_jacket,
+				10; /obj/item/clothing/under/misc/casualjeansacid,
+				10; /obj/item/clothing/under/misc/casualjeansblue,
+				10; /obj/item/clothing/under/misc/casualjeansgrey,
+				10; /obj/item/clothing/under/misc/casualjeanskhaki,
+				10; /obj/item/clothing/under/misc/casualjeansgrey,
+				10; /obj/item/clothing/under/misc/casualjeanspurp,
+				10; /obj/item/clothing/under/misc/casualjeansskb,
+				10; /obj/item/clothing/under/misc/casualjeansskr,
+				10; /obj/item/clothing/under/misc/casualjeanswb,
+				10; /obj/item/clothing/under/misc/casualjeansyel,
+				50; /obj/item/clothing/under/gimmick/shirtnjeans,
+				10; /obj/item/material_piece/cloth/jean,
+			)
+			var/turf/simulated/floor/plating/airless/asteroid/jean_floor = pick(floors)
+			floors -= jean_floor
+			var/obj/item/jean_object = new jean_object_type(jean_floor)
+			jean_object.pixel_x = rand(-6, 6)
+			jean_object.pixel_y = rand(-6, 6)
+
+		Turfspawn_Asteroid_SeedOre(generated_turfs,rand(1,2),40)
+		Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs),rand(4,12))
+
 /datum/mining_encounter/wreckage
 	name = "Wreckage"
 	rarity_tier = 2
@@ -771,9 +831,11 @@
 	var/list/generated_turfs = list()
 
 
+	var/turf/simulated/wall/auto/asteroid/rock_dummy = base_rock
+	var/floor_type = initial(rock_dummy.replace_type)
 	var/turf/A = locate(center.x, center.y, center.z)
 	if (hollow)
-		A = A.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
+		A = A.ReplaceWith(floor_type, FALSE, TRUE, FALSE, TRUE)
 	else
 		A = A.ReplaceWith(base_rock, FALSE, TRUE, FALSE, TRUE)
 	generated_turfs += A
@@ -799,7 +861,7 @@
 					continue
 				if (hollow && total_distance < size / 2)
 					var/turf/T = locate(S.x, S.y, S.z)
-					F = T.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
+					F = T.ReplaceWith(floor_type, FALSE, TRUE, FALSE, TRUE)
 					generated_turfs += F
 				else
 					var/turf/T = locate(S.x, S.y, S.z)

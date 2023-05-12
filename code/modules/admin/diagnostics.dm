@@ -182,6 +182,13 @@ proc/debug_map_apc_count(delim,zlim)
 			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
 
+		for (var/client/C as anything in global.clients) //common cause of input loop crashes
+			if (!istype(C))
+				global.clients -= C
+
+		if (TIME - global.last_input_loop_time > 5 SECONDS) //it's probably crashed so restart
+			start_input_loop()
+
 		for(var/mob/M in mobs)
 			if(!M.client)
 				continue

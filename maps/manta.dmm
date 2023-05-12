@@ -2930,7 +2930,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "akq" = (
-/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "akr" = (
@@ -20310,7 +20310,7 @@
 /area/station/chapel/sanctuary)
 "bfe" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/device/radio/intercom,
 /turf/simulated/floor/carpet{
 	icon_state = "purple1"
@@ -40222,7 +40222,7 @@
 "srA" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/holywater,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/card_box/tarot,
 /obj/machinery/light/incandescent/harsh{
 	dir = 4;

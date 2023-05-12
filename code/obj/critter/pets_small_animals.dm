@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		return
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/critter/small_animal/mouse/C in view(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -834,7 +834,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 				return
 			if (istype(FP, /obj/stool))
 				var/obj/stool/S = FP
-				S.anchored = 0
+				S.anchored = UNANCHORED
 			else if (istype(FP, /obj/item/chair/folded))
 				var/obj/item/chair/folded/F = FP
 				F.c_color = "chair[pick("","-b","-y","-r","-g")]"
@@ -1027,6 +1027,16 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		..()
 		if (!src.species)
 			src.apply_species(pick("smacaw","bmacaw","mmacaw","hmacaw"))
+
+	pirate
+		name = "Sharkbait"
+		species = "smacaw"
+		learn_phrase_chance = 0
+		learn_words_chance = 0
+		learned_phrases = list("YARR!")
+		learned_words = list("YARR!")
+		icon_state = "smacaw"
+		dead_state = "smacaw"
 
 /obj/critter/parrot/lovebird
 	name = "space lovebird"

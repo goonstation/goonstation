@@ -3,7 +3,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "freezer_0"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
@@ -16,6 +16,12 @@
 		name = "freezer (kitchen)"
 		current_temperature = 150
 		on = 1
+
+	emergency
+		name = "emergency cooler"
+		current_temperature = 73.15
+		desc = "Emergency cooling for the reactor. Only for use in meltdown scenarios."
+
 
 	New()
 		..()

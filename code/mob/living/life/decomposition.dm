@@ -54,6 +54,7 @@
 		var/max_produce_miasma = H.decomp_stage * 20
 		if (T.active_airborne_liquid && prob(90)) //sometimes just add anyway lol
 			var/obj/fluid/F = T.active_airborne_liquid
+			F.group.reagents.get_reagent("miasma")?.flush(F.group.reagents, 2)
 			if (F.group && F.group.reagents && F.group.reagents.total_volume > max_produce_miasma)
 				max_produce_miasma = 0
 
@@ -61,7 +62,7 @@
 			// Devera-class interdictor: prohibit miasma formation
 			var/miasma_blocked = FALSE
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(30,src,TRUE,ITDR_DEVERA))
+				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA))
 					miasma_blocked = TRUE
 					break
 

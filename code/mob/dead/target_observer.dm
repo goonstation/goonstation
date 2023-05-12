@@ -94,7 +94,7 @@
 		src.target = target
 		src.set_loc(target)
 		if(src.ghost?.auto_tgui_open)
-			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, .proc/open_tgui_if_interactive)
+			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, PROC_REF(open_tgui_if_interactive))
 		set_eye(target)
 
 		var/mob/living/M = target
@@ -106,7 +106,7 @@
 				src.attach_hud(hud)
 
 		if (isobj(target))
-			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, .verb/stop_observing)
+			src.RegisterSignal(target, COMSIG_PARENT_PRE_DISPOSING, VERB_REF(stop_observing))
 
 	click(atom/target, params, location, control)
 		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))

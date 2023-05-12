@@ -1,16 +1,15 @@
 // rest in peace the_very_holy_global_bible_list_amen (??? - 2020)
-var/global/list/bible_contents = list()
 
-/obj/item/storage/bible
+/obj/item/bible
 	name = "bible"
 	desc = "A holy scripture of some sort or another. Someone seems to have hollowed it out for hiding things in."
+	icon = 'icons/obj/items/storage.dmi'
 	icon_state ="bible"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state ="bible"
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	max_wclass = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 	var/mob/affecting = null
@@ -18,6 +17,7 @@ var/global/list/bible_contents = list()
 
 	New()
 		..()
+		src.create_storage(/datum/storage/bible, max_wclass = W_CLASS_SMALL)
 		START_TRACKING
 		#ifdef SECRETS_ENABLED
 		ritualComponent = new/datum/ritualComponent/sanctus(src)
@@ -66,8 +66,8 @@ var/global/list/bible_contents = list()
 			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
 
-	attackby(var/obj/item/W, var/mob/user, obj/item/storage/T)
-		if (istype(W, /obj/item/storage/bible))
+	attackby(var/obj/item/W, var/mob/user)
+		if (istype(W, /obj/item/bible))
 			user.show_text("You try to put \the [W] in \the [src]. It doesn't work. You feel dumber.", "red")
 		else
 			..()
@@ -134,27 +134,6 @@ var/global/list/bible_contents = list()
 			return
 		return ..()
 
-	get_contents()
-		return bible_contents
-
-	get_all_contents()
-		var/list/L = list()
-		L += bible_contents
-		for (var/obj/item/storage/S in bible_contents)
-			L += S.get_all_contents()
-		return L
-
-	contains(var/atom/A)
-		if(!A)
-			return 0
-		return (A in bible_contents)
-
-	add_contents(obj/item/I)
-		bible_contents += I
-		I.set_loc(null)
-		for_by_tcl(bible, /obj/item/storage/bible)
-			bible.hud.update() // fuck bibles
-
 	custom_suicide = 1
 	suicide_distance = 0
 	suicide(var/mob/user as mob)
@@ -201,7 +180,7 @@ var/global/list/bible_contents = list()
 		M.emote("scream")
 		M.gib()
 
-/obj/item/storage/bible/evil
+/obj/item/bible/evil
 	name = "frayed bible"
 	event_handler_flags = USE_FLUID_ENTER | IS_FARTABLE
 
@@ -211,7 +190,7 @@ var/global/list/bible_contents = list()
 			var/mob/living/carbon/human/H = AM
 			H.emote("fart")
 
-/obj/item/storage/bible/mini
+/obj/item/bible/mini
 	//Grif
 	name = "O.C. Bible"
 	desc = "For when you don't want the good book to take up too much space in your life."
@@ -231,7 +210,7 @@ var/global/list/bible_contents = list()
 		smite(user)
 		return TRUE
 
-/obj/item/storage/bible/hungry
+/obj/item/bible/hungry
 	name = "hungry bible"
 	desc = "Huh."
 
@@ -281,16 +260,16 @@ var/global/list/bible_contents = list()
 				sleep(0.3 SECONDS)
 		return 1
 
-/obj/item/storage/bible/loaded
-	spawn_contents = list(/obj/item/gun/kinetic/faith)
+/obj/item/bible/loaded
 
 	New()
 		..()
+		new /obj/item/gun/kinetic/faith(src)
 		desc += " This is the chaplain's personal copy."
 
 	get_desc()
 		. = ..()
-		if(src.contents.len > 0)
+		if (locate(/obj/item/gun/kinetic/faith) in src.contents)
 			. += " It feels a bit heavier than it should."
 
 	attack_hand(mob/user)

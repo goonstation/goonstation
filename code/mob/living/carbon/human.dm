@@ -9,7 +9,6 @@
 #else
 	icon_state = "blank"
 #endif
-	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
@@ -131,7 +130,6 @@
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/blood_image = image('icons/effects/blood.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/handcuff_img = image('icons/mob/mob.dmi')
-	var/static/image/shield_image = image('icons/mob/mob.dmi', "icon_state" = "shield")
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -170,7 +168,6 @@
 	var/datum/humanInventory/inventory = null
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
-	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
 	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -644,7 +641,7 @@
 				spider.hivemind_owner = 0
 			for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
 				boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-				obs.boot()
+				obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 			if (C.hivemind.len > 0)
 				boutput(src, "Contact with the hivemind has been lost.")
 			C.hivemind = list()
@@ -658,7 +655,7 @@
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
@@ -725,7 +722,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
+		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -736,12 +733,6 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(src, "mindhack", "death")
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindhack_status(src, "vthrall", "death")
-		else if (src.mind.master)
-			remove_mindhack_status(src, "otherhack", "death")
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -1379,8 +1370,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("food_bad_breath"))
-		for (var/mob/living/L in view(2,src))
-			if (L == src) continue //You were able to vomit from your own breath. Maybe a good idea?
+		for (var/mob/living/L in oview(2,src))
 			if (prob(20))
 				boutput(L, "<span class='alert'>Good lord, [src]'s breath smells bad!</span>")
 				L.vomit()
@@ -1931,7 +1921,7 @@
 		if (slot_r_store)
 			return src.r_store
 
-/mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
+/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -2024,19 +2014,32 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
+				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
+				if (I.storage && !I.storage.opens_if_worn)
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_in_backpack)
-			if (src.back && istype(src.back, /obj/item/storage))
-				I.set_loc(src.back)
-				equipped = 1
+			if (src.back?.storage)
+				if (role_equipped)
+					src.back.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.back.storage.add_contents_safe(I, src)
+					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				I.set_loc(src.belt)
+			if (src.belt?.storage)
+				if (role_equipped)
+					src.belt.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.belt.storage.add_contents_safe(I, src)
+					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
 	if (equipped)
@@ -2187,15 +2190,11 @@
 				else
 					return TRUE
 		if (slot_in_backpack) // this slot is stupid
-			if (src.back && istype(src.back, /obj/item/storage))
-				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 		if (slot_in_belt) // this slot is also stupid
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
@@ -2206,9 +2205,9 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, role_equipped = TRUE)
 	if (can_equip(I, slot))
-		return force_equip(I, slot)
+		return force_equip(I, slot, role_equipped)
 	else
 		return 0
 
@@ -2541,8 +2540,7 @@
 
 /mob/living/carbon/human/proc/spidergib()
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -2953,7 +2951,6 @@
 	if(.)
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
-		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()
@@ -3406,3 +3403,12 @@
 		src.l_hand?.hear_talk(M, text, real_name, lang_id)
 	. = ..()
 
+///Returns the number of clown items someone is wearing
+/mob/living/carbon/human/proc/clown_tally()
+	. = 0
+	if(istype(src.w_uniform, /obj/item/clothing/under/misc/clown))
+		. += 1
+	if(istype(src.shoes, /obj/item/clothing/shoes/clown_shoes))
+		. += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
+		. += 1

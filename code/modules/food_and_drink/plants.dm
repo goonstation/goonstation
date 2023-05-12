@@ -505,7 +505,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
@@ -1303,7 +1303,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.throwing)
-				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, PROC_REF(someone_landed_on_us))
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
