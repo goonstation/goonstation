@@ -4,6 +4,7 @@
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
+	var/flock_id = "Conduit"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
 	flags = USEDELAY
@@ -22,6 +23,7 @@
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
+	var/datum/flock/flock = null
 
 
 /turf/simulated/floor/feather/New()
@@ -38,7 +40,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Conduit
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -77,6 +79,7 @@
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
+	src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -150,6 +153,12 @@
 	src.light.disable()
 	on = FALSE
 
+/turf/simulated/floor/feather/Del()
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
+	src.flock = null
+	..()
+
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"
 	desc = "Disco's dead, baby."
@@ -172,6 +181,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
+	var/flock_id = "Nanite block"
 	icon = 'icons/turf/walls_flock.dmi'
 	icon_state = "flock0"
 	mod = "flock"
@@ -193,6 +203,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 		//else
 		//	icon_state = icon_state + (src.on ? "on" : "")
 
+/turf/simulated/wall/auto/feather/tutorial
+	opacity = FALSE
+
 /turf/simulated/wall/auto/feather/New()
 	..()
 	setMaterial(getMaterial("gnesis"), copy = FALSE)
@@ -204,7 +217,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Nanite Block
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 

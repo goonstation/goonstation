@@ -69,6 +69,7 @@
 		// And CO2, lets say a PP of more than 10 will be bad (It's a little less really, but eh, being passed out all round aint no fun)
 		var/CO2_pp = (breath.carbon_dioxide/breath_moles)*breath_pressure
 		var/FARD_pp = (breath.farts/breath_moles)*breath_pressure
+		var/Radgas_pp = (breath.radgas/breath_moles)*breath_pressure
 		var/oxygen_used
 
 		if(breaths_oxygen)
@@ -110,10 +111,14 @@
 			donor.take_toxin_damage(min(ratio * 125,20) * mult/LUNG_COUNT)
 			update.show_tox_indicator = TRUE
 
+		if (Radgas_pp > 0) //any fallout is too much fallout
+			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
+			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
+
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
 			if(SA)
-				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
+				var/SA_pp = (SA.moles/breath_moles)*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -218,6 +223,9 @@
 	body_side = R_ORGAN
 	failure_disease = /datum/ailment/disease/respiratory_failure/right
 
+TYPEINFO(/obj/item/organ/lung/cyber)
+	mats = 6
+
 /obj/item/organ/lung/cyber
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
@@ -226,7 +234,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	temp_tolerance = T0C+500
 	var/overloading = 0
 	var/grace_period = 30

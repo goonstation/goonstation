@@ -23,8 +23,9 @@ labels_to_emoji = {
 	'a-catering': '🍝',
 	'a-chemistry': '⚗',
 	'a-clothing': '🎩',
+	'a-events': '🌠',
 	'a-game-objects': '📦',
-	'a-gamemodes': '🧛‍♂️',
+	'a-gamemodes': '🧛',
 	'a-github': '🏗',
 	'a-hydroponics': '🌱',
 	'a-internal': '⚙',
@@ -57,6 +58,7 @@ labels_to_emoji = {
 	'c-sound': '🔊',
 	'c-sprites': '🎨',
 	'e-contest': '🎉',
+	'e-fuck': '❗',
 }
 
 def parse_pr_changelog(pr):

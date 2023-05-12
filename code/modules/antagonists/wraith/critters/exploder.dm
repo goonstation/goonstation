@@ -10,6 +10,7 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
+	faction = MOB_AI_FACTION_WRAITH
 	mob_flags = HEAVYWEIGHT_AI_MOB
 	custom_gib_handler = /proc/gibs
 	// HEALTHS
@@ -74,12 +75,12 @@
 
 		if (!gibbed)
 			gibs(src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			src.drop_item()
 			qdel(src)
 		else
 			gibs(src.loc)
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 
 /mob/living/critter/exploder/New(var/atom/L)
 	..()

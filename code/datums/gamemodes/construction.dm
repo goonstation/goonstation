@@ -1,6 +1,7 @@
 /datum/game_mode/construction
-	name = "Construction"
+	name = "Construction (For testing only. Don't select this!)"
 	config_tag = "construction"
+	regular = FALSE
 	crew_shortage_enabled = 0
 	var/list/enabled_jobs = list()
 	var/list/milestones = list()

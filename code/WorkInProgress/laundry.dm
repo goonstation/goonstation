@@ -10,7 +10,7 @@
 	desc = "A combined washer/dryer unit used for cleaning clothes."
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "laundry"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_WELDER | DECON_WRENCH
 	var/on = 0
@@ -79,14 +79,33 @@
 			src.UpdateIcon()
 		else // drying is done!
 			processing_items.Remove(src)
-			for (var/obj/item/clothing/C in src.contents)
-				C.stains = null
-				C.UpdateName()
+			for (var/obj/item/item in src.contents)
+				if (istype(item, /obj/item/clothing))
+					var/obj/item/clothing/clothing = item
+					clothing.stains = null
+					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
+					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					clothing.UpdateName()
+				else if (istype(item, /obj/item/spacecash))
+					var/obj/item/spacecash/cash = item
+					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
+					for (var/amount in amounts)
+						if (amount >= cash.amount)
+							break
+						var/obj/item/spacecash/newcash = cash.split_stack(amount)
+						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
 			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
+				if (ishuman(src.occupant))
+					H.w_uniform?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					H.wear_suit?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					H.shoes?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					H.gloves?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					H.glasses?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
+					H.head?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 				H.changeStatus("weakened", 1 SECONDS)
 				H.make_dizzy(15) //Makes you dizzy for fifteen seconds due to the spinning
 				H.change_misstep_chance(65)
@@ -165,7 +184,7 @@
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/spacecash))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")
@@ -181,7 +200,7 @@
 /obj/submachine/laundry_machine/attack_hand(mob/user)
 	if (!can_act(user))
 		return
-	src.add_fingerprint(usr)
+	src.add_fingerprint(user)
 	ui_interact(user)
 
 /obj/submachine/laundry_machine/proc/force_into_machine(obj/item/grab/W as obj, mob/user as mob)

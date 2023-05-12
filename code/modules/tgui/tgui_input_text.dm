@@ -19,7 +19,7 @@
  * * multiline -  Bool that determines if the input box is much larger. Good for large messages, laws, etc.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Set to zero for no timeout.
  */
-/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0)
+/proc/tgui_input_text(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, timeout = 0, allowEmpty = FALSE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -30,9 +30,7 @@
 			return
 	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	if (max_length && length(message) > max_length)
-		CRASH("TGUI input text window opened with a message greater than the max length.")
-	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, timeout)
+	var/datum/tgui_input_text/textbox = new(user, message, title, default, max_length, multiline, timeout, allowEmpty)
 	textbox.ui_interact(user)
 	textbox.wait()
 	if (textbox)
@@ -53,7 +51,7 @@
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the textbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
  */
-/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, datum/callback/callback, timeout = 0)
+/proc/tgui_input_text_async(mob/user, message = null, title = "Text Input", default = null, max_length = null, multiline = FALSE, datum/callback/callback, timeout = 0, allowEmpty = FALSE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -66,7 +64,7 @@
 		return
 	if (max_length && length(message) > max_length)
 		CRASH("TGUI input text window opened with a message greater than the max length.")
-	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout)
+	var/datum/tgui_input_text/async/textbox = new(user, message, title, default, max_length, multiline, callback, timeout, allowEmpty)
 	textbox.ui_interact(user)
 
 /**
@@ -96,15 +94,18 @@
 	var/timeout
 	/// The title of the TGUI window
 	var/title
+	/// Makes the text box allow an empty string to be submitted
+	var/allowEmpty
 
 
-/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, timeout)
+/datum/tgui_input_text/New(mob/user, message, title, default, max_length, multiline, timeout, allowEmpty)
 	src.user = user
 	src.default = default
 	src.max_length = max_length
 	src.message = message
 	src.multiline = multiline
 	src.title = title
+	src.allowEmpty = allowEmpty
 	if (timeout)
 		src.timeout = timeout
 		start_time = world.time
@@ -137,14 +138,19 @@
 /datum/tgui_input_text/ui_state(mob/user)
 	return tgui_always_state
 
-/datum/tgui_input_text/ui_data(mob/user)
+/datum/tgui_input_text/ui_static_data(mob/user)
 	. = list(
 		"max_length" = max_length,
 		"message" = message,
 		"multiline" = multiline,
 		"placeholder" = default, /// You cannot use default as a const
 		"title" = title,
+		"allowEmpty" = allowEmpty,
 	)
+
+/datum/tgui_input_text/ui_data(mob/user)
+	. = list("timeout" = null)
+
 	if(timeout)
 		.["timeout"] = clamp(((timeout - (TIME - start_time) - 1 SECONDS) / (timeout - 1 SECONDS)), 0, 1)
 

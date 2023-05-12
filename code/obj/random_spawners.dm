@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -13,19 +13,20 @@
 	var/rare_chance = 0 // chance (out of 100) that the rare item list will be spawned instead of the common one
 	var/list/items2spawn = list()
 	var/list/rare_items2spawn = list() // things that only rarely appear, independent of how big or small the main item list is
-	var/list/guaranteed = list() // things that will always spawn from this - set to a number to spawn that many of the thing
+	var/list/guaranteed = new/list() // things that will always spawn from this - set to a number to spawn that many of the thing
 
 	// TODO: initialize
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(10 SECONDS)
+			sleep(5 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (islist(src.guaranteed) && length(src.guaranteed))
-			for (var/obj/new_item in src.guaranteed)
+			for (var/obj/new_item as anything in src.guaranteed)
 				if (!ispath(new_item))
 					logTheThing(LOG_DEBUG, src, "has a non-path item in its guaranteed list, [new_item]")
 					DEBUG_MESSAGE("[src] has a non-path item in its guaranteed list, [new_item]")
@@ -894,15 +895,6 @@
 	/obj/item/mine/stun/armed,
 	/obj/item/mine/blast/armed)
 
-// Surplus crate picker.
-/obj/random_item_spawner/landmine/surplus
-	name = "random land mine spawner (surplus crate)"
-	amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation,
-	/obj/item/mine/incendiary,
-	/obj/item/mine/stun,
-	/obj/item/mine/blast)
-
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
@@ -936,7 +928,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1106,16 +1098,17 @@
 	max_amt2spawn = 6
 	items2spawn = list(/obj/critter/domestic_bee,
 	/obj/critter/bat,
-	/obj/critter/mouse,
+	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
-	/obj/critter/dog/george/blair,
-	/obj/critter/dog/george/orwell,
-	/obj/critter/dog/george/shiba,
+	/mob/living/critter/small_animal/dog,
+	/mob/living/critter/small_animal/dog/george,
+	/mob/living/critter/small_animal/dog/blair,
+	/mob/living/critter/small_animal/dog/shiba,
 	/obj/critter/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
-	/obj/critter/nicespider,
+	/mob/living/critter/spider/nice,
 	/obj/critter/goose,
 	/obj/critter/goose/swan)
 
@@ -1378,7 +1371,10 @@
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
 		/obj/item/clothing/under/gimmick/ziggy,
-		/obj/item/clothing/under/gimmick/jcdenton)
+		/obj/item/clothing/under/gimmick/jcdenton,
+		/obj/item/clothing/under/misc/mobster,
+		/obj/item/clothing/under/misc/mobster/alt,
+		/obj/item/clothing/under/gimmick/guybrush)
 
 	one
 		amt2spawn = 1
@@ -1868,3 +1864,36 @@
 	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+
+/obj/random_item_spawner/armory_breaching_supplies //random
+	spawn_items()
+		new /obj/rack(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 10;
+			pixel_y = 1
+		}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 4;
+			pixel_y = -2
+		}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = -2;
+			pixel_y = -5
+		}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -3;
+			pixel_y = 7
+		}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -1;
+			pixel_y = 1
+		}(src.loc)
+		new /obj/item/gun/kinetic/riot40mm/breach{
+			pixel_x = -5;
+			pixel_y = 8
+		}(src.loc)
+		new /obj/item/ammo/bullets/breach_flashbang{
+			pixel_x = -4;
+			pixel_y = 3
+		}(src.loc)

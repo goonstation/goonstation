@@ -71,7 +71,7 @@
 	comtype = /obj/critter/domestic_bee
 	amount = 10
 	price_boundary = list(75,120)
-	possible_alt_types = list(/obj/critter/roach)
+	possible_alt_types = list(/mob/living/critter/small_animal/cockroach)
 	alt_type_chance = 50
 	possible_names = list("I have a number of very friendly live insects for sale! Very cute too!",
 	"I'm now selling some very adorable bugs! They could be very useful for hydroponics work!")

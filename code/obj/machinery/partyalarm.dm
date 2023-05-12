@@ -2,6 +2,9 @@
 // Party alarm
 //
 
+TYPEINFO(/obj/machinery/partyalarm)
+	mats = 0
+
 /obj/machinery/partyalarm
 	name = "Party Button"
 	icon = 'icons/obj/monitors.dmi'
@@ -13,8 +16,7 @@
 	var/party = 0
 	var/duration = 60//admemes
 	var/list/lights = list()
-	anchored = 1
-	mats = 0
+	anchored = ANCHORED
 
 /obj/machinery/partyalarm/process()
 	if (timing > 0)

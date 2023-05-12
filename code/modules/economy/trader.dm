@@ -36,6 +36,7 @@
 	var/pickupdialoguefailure = null
 	var/list/trader_area = "/area/trade_outpost/martian"
 	var/doing_a_thing = 0
+	var/log_trades = TRUE
 
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
@@ -144,7 +145,7 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
+			if(usr.mind && (istraitor(usr) || isspythief(usr) || isnukeop(usr) || usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_OMNITRAITOR))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
@@ -195,6 +196,8 @@
 							barter_customers[usr] -= P.price * quantity
 						else
 							account["current_money"] -= P.price * quantity
+						if(log_trades)
+							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -335,12 +338,15 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-					if(account)
-						account["current_money"] += tradetype.price * src.sellitem.amount
-					else
-						barter_customers[usr]  += tradetype.price * src.sellitem.amount
-					sold_item(tradetype, sellitem)
+
+					var/value = sold_item(tradetype, sellitem) * src.sellitem.amount
+					if(log_trades)
+						logTheThing(LOG_STATION, usr, "sold ([src.sellitem.amount])[sellitem.type] to [src] for [value] at [log_loc(get_turf(src))]")
 					qdel (src.sellitem)
+					if(account)
+						account["current_money"] += value
+					else
+						barter_customers[usr]  += value
 					src.sellitem = null
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
@@ -531,7 +537,7 @@
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
 	proc/sold_item(datum/commodity/C, obj/S)
-		return
+		. = C.price
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -575,12 +581,15 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
+				var/list/sold_string = list()
 				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += tradetype.price * sellitem.amount
-						sold_item(tradetype, sellitem)
+						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
 						qdel(sellitem)
+						sold_string[sellitem.type] += sellitem.amount
+				if(log_trades && length(sold_string))
+					logTheThing(LOG_STATION, usr, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
 					if(account)
@@ -806,6 +815,7 @@
 				src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
 				src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
+				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
 				src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
 				src.goods_sell += new /datum/commodity/drugs/crank(src)
 				//src.goods_sell += new /datum/commodity/drugs/bathsalts(src)
@@ -870,7 +880,7 @@
 				src.goods_sell += new /datum/commodity/podparts/artillery(src)
 				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
 				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
-#ifdef MAP_OVERRIDE_MANTA
+#ifdef UNDERWATER_MAP
 				src.goods_sell += new /datum/commodity/HEtorpedo(src)
 #endif
 
@@ -1143,6 +1153,8 @@
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
+
 
 
 		/////////////////////////////////////////////////////////

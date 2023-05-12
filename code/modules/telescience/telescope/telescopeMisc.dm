@@ -1,15 +1,13 @@
 var/datum/telescope_manager/tele_man
 var/list/special_places = list() //list of location names, which are coincidentally also landmark ids
 
-var/list/magnet_locations = list()
-
 /obj/machinery/lrteleporter
 	name = "Experimental long-range teleporter"
 	desc = "Well this looks somewhat unsafe."
 	icon = 'icons/misc/32x64.dmi'
 	icon_state = "lrport"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | CONDUCT | TGUI_INTERACTIVE
 	var/busy = 0
 	layer = 2
@@ -18,8 +16,8 @@ var/list/magnet_locations = list()
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/mechcompsend)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", .proc/mechcompreceive)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
@@ -59,7 +57,7 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
+			flick("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
@@ -84,7 +82,7 @@ var/list/magnet_locations = list()
 			if (!target) //we didnt find a turf to send to
 				return 0
 			src.busy = 1
-			flick("lrport1", src)
+			flick("[src.icon_state]-act", src)
 			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
@@ -137,6 +135,9 @@ var/list/magnet_locations = list()
 		if("receive")
 			var/place = params["name"]
 			src.lrtreceive(place)
+
+/obj/machinery/lrteleporter/mining
+	icon_state = "englrt"
 
 //////////////////////////////////////////////////
 /datum/telescope_manager

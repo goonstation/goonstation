@@ -628,13 +628,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			for (var/obj/item/implant/I in patient.implant)
 
 				// This is kinda important (Convair880).
-				if (istype(I, /obj/item/implant/mindhack))
-					if (patient.mind?.special_role == ROLE_MINDHACK)
-						if(surgeon == patient) continue
-						remove_mindhack_status(patient, "mindhack", "surgery")
-					else if (patient.mind && patient.mind.master)
-						if(surgeon == patient) continue
-						remove_mindhack_status(patient, "otherhack", "surgery")
+				if (istype(I, /obj/item/implant/mindhack) && surgeon == patient)
+					continue
 
 				if (!istype(I, /obj/item/implant/artifact))
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out an implant from [patient == surgeon ? "[him_or_her(patient)]self" : "[patient]"] with [src]!</span>",\
@@ -1124,7 +1119,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
-				surgeon , "<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
+					"<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
 					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your butt's connection to the stomach with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)

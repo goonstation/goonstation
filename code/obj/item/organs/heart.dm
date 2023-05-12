@@ -41,7 +41,7 @@
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
 			playsound(user, squeeze_sound, 30, 1)
-			logTheThing(LOG_COMBAT, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
 			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
 
@@ -132,6 +132,9 @@
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
+TYPEINFO(/obj/item/organ/heart/cyber)
+	mats = 8
+
 /obj/item/organ/heart/cyber
 	name = "cyberheart"
 	desc = "A cybernetic heart. Is this thing really medical-grade?"
@@ -141,7 +144,6 @@
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	mats = 8
 	made_from = "pharosium"
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'

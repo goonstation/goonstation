@@ -8,6 +8,8 @@
 
 	/// The total number of points we've accumulated over our lifetime
 	var/lifetime_energy = 0
+	/// Number of hearts stopped with Jolt
+	var/hearts_stopped = 0
 
 	onAbilityStat()
 		..()

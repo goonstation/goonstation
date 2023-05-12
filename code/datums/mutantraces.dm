@@ -6,6 +6,7 @@
 /// mutant races: cheap way to add new "types" of mobs
 TYPEINFO(/datum/mutantrace)
 	var/list/special_styles // special styles which currently change the icon (sprite sheet)
+ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace
 	var/name = null				// used for identification in diseases, clothing, etc
 	/// The mutation associted with the mutantrace. Saurian genetics for lizards, for instance
@@ -66,7 +67,7 @@ TYPEINFO(/datum/mutantrace)
 	var/voice_message = null
 	var/voice_name = "human"
 	/// Should robots arrest these by default?
-	var/jerk = 0
+	var/jerk = FALSE
 	/// Should stable mutagen not copy from this mutant?
 	var/dna_mutagen_banned = TRUE
 	/// Should a genetics terminal be able to remove this mutantrace?
@@ -76,6 +77,8 @@ TYPEINFO(/datum/mutantrace)
 	/// This is used for static icons if the mutant isn't built from pieces
 	/// For chunked mutantraces this must still point to a valid full-body image to generate a staticky sprite for ghostdrones.
 	var/icon = 'icons/effects/genetics.dmi'
+	///The icon states of the above icon, cached because byond is bad
+	var/icon_states = null
 	var/icon_state = "blank_c"
 	/// The icon used to render their eyes
 	var/eye_icon = 'icons/mob/human_hair.dmi'
@@ -98,18 +101,10 @@ TYPEINFO(/datum/mutantrace)
 	/// If our mutant has a female variant that has different organs, these will be used instead
 	var/list/mutant_organs_f = null
 
-	// icon definitions for mutantrace clothing variants. one icon file per slot.
-	var/clothing_icon_uniform = null
-	var/clothing_icon_id = null
-	var/clothing_icon_hands = null
-	var/clothing_icon_feet = null
-	var/clothing_icon_overcoats = null
-	var/clothing_icon_back = null
-	var/clothing_icon_eyes = null
-	var/clothing_icon_ears = null
-	var/clothing_icon_mask = null
-	var/clothing_icon_head = null
-	var/clothing_icon_belt = null
+	/// icon definitions for mutantrace clothing variants. one icon file per slot.
+	var/clothing_icons = list()
+	/// list of the icon states for each icon file, put here because for some ungodly reason `icon_states()` can take 200ms randomly
+	var/clothing_icon_states = list()
 
 	var/head_offset = 0 // affects pixel_y of clothes
 	var/hand_offset = 0
@@ -138,6 +133,9 @@ TYPEINFO(/datum/mutantrace)
 	var/l_robolimb_arm_type_mutantrace = null
 	var/r_robolimb_leg_type_mutantrace = null
 	var/l_robolimb_leg_type_mutantrace = null
+
+	///If true, normal limbs use custom icons for this mutantrace
+	var/override_limb_icons = FALSE
 
 	/// Replace both arms regardless of mob status (new and dispose).
 	var/ignore_missing_limbs = 0
@@ -226,6 +224,12 @@ TYPEINFO(/datum/mutantrace)
 
 	var/self_click_fluff //used when clicking self on help intent
 
+	///Load all the clothing override icons, should call parent AFTER populating `clothing_icons`
+	proc/load_clothing_icons()
+		SHOULD_CALL_PARENT(TRUE)
+		for (var/category in src.clothing_icons)
+			src.clothing_icon_states[category] = icon_states(src.clothing_icons[category], 1)
+
 	proc/say_filter(var/message)
 		return message
 
@@ -259,11 +263,15 @@ TYPEINFO(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		..() // Cant trust not-humans with a mutantrace, they just runtime all over the place
 		if(ishuman(M) && M?.bioHolder?.mobAppearance)
+			src.load_clothing_icons()
+			src.icon_states = icon_states(src.icon)
 			if (movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(M, movement_modifier, src.type)
 			if (!needs_oxy)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_BREATHLESS, src.type)
 			src.AH = M.bioHolder?.mobAppearance // i mean its called appearance holder for a reason
+			if (!src.dna_mutagen_banned)
+				AH.original_mutant_race = src
 			if(!(src.mutant_appearance_flags & NOT_DIMORPHIC))
 				MakeMutantDimorphic(M)
 			AppearanceSetter(M, "set")
@@ -413,6 +421,8 @@ TYPEINFO(/datum/mutantrace)
 					AH.s_tone = AH.s_tone_original
 
 				AH.mutant_race = src
+				if (!src.dna_mutagen_banned)
+					AH.original_mutant_race = src
 				AH.body_icon = src.mutant_folder
 				AH.body_icon_state = src.icon_state
 				AH.e_icon = src.eye_icon
@@ -694,12 +704,12 @@ TYPEINFO(/datum/mutantrace)
 
 	//override_static = 1
 
-	jerk = 0 //flubber is a good goo person
+	jerk = FALSE //flubber is a good goo person
 
 	New()
 		..()
 		if (src.mob)
-			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, .proc/flub)
+			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, PROC_REF(flub))
 
 	sight_modifier()
 		src.mob.see_in_dark = SEE_DARK_FULL
@@ -781,7 +791,7 @@ TYPEINFO(/datum/mutantrace)
 	voice_message = "hums"
 
 	exclusive_language = 1
-	jerk = 1
+	jerk = TRUE
 	var/original_blood_color = null
 
 	New(var/mob/living/carbon/human/M)
@@ -820,7 +830,7 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/lizard.dmi'
 	icon_state = "body_m"
 	override_attack = 0
-	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS)
+	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR | TORSO_HAS_SKINTONE | WEARS_UNDERPANTS | HAS_LONG_NOSE)
 	voice_override = "lizard"
 	special_head = HEAD_LIZARD
 	special_head_state = "head"
@@ -842,13 +852,16 @@ TYPEINFO(/datum/mutantrace)
 	r_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/right
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/lizard/left
 	race_mutation = /datum/bioEffect/mutantrace // Most mutants are just another form of lizard, didn't you know?
-	clothing_icon_overcoats = icon('icons/mob/lizard/overcoats.dmi')
-	clothing_icon_eyes = icon('icons/mob/lizard/eyes.dmi')
-	clothing_icon_mask = icon('icons/mob/lizard/mask.dmi')
-	clothing_icon_head = icon('icons/mob/lizard/head.dmi')
 	color_channel_names = list("Episcutus", "Ventral Aberration", "Sagittal Crest")
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "scales"
+
+	load_clothing_icons()
+		clothing_icons["overcoats"] = 'icons/mob/lizard/overcoats.dmi'
+		clothing_icons["eyes"] = 'icons/mob/lizard/eyes.dmi'
+		clothing_icons["mask"] = 'icons/mob/lizard/mask.dmi'
+		clothing_icons["head"] = 'icons/mob/lizard/head.dmi'
+		..()
 
 	New(var/mob/living/carbon/human/H)
 		..()
@@ -894,7 +907,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "zombie"
 	human_compatible = FALSE
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_HUMAN_HAIR | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON | HEAD_HAS_OWN_COLORS)
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	needs_oxy = 0
 	movement_modifier = /datum/movement_modifier/zombie
@@ -946,10 +959,6 @@ TYPEINFO(/datum/mutantrace)
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
 			M.show_antag_popup("zombie")
-
-	on_attach()
-		if(ishuman(src.mob))
-			src.mob.antagonist_overlay_refresh(1)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1053,18 +1062,25 @@ TYPEINFO(/datum/mutantrace)
 	l_limb_leg_type_mutantrace = /obj/item/parts/human_parts/leg/mutant/vampiric_thrall/left
 	mutant_folder = 'icons/mob/vampiric_thrall.dmi'
 	special_head = HEAD_VAMPTHRALL
-	jerk = 1
+	jerk = TRUE
 	genetics_removable = FALSE
 
 	var/blood_points = 0
-	var/const/blood_decay = 0.5
+#ifdef RP_MODE
+	var/blood_decay = 0.25
+#else
+	var/blood_decay = 0.5
+#endif
 	var/cleanable_tally = 0
-	var/const/blood_to_health_scalar = 0.5 //200 blood = 100 health
+	var/blood_to_health_scalar = 0.75 //200 blood = 150 health
+	var/min_max_health = 40 //! Minimum health we can get to via blood loss. also lol
 
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
-			src.add_ability(src.mob)
+			M.update_face()
+			M.update_body()
+			M.update_clothing()
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			M.bioHolder.AddEffect("accent_thrall", magical=TRUE)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
@@ -1076,8 +1092,6 @@ TYPEINFO(/datum/mutantrace)
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
-	proc/add_ability(var/mob/living/carbon/human/H)
-		H.make_vampiric_thrall()
 
 	onLife(var/mult = 1)
 		..()
@@ -1094,7 +1108,7 @@ TYPEINFO(/datum/mutantrace)
 			cleanable_tally = 0
 
 		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = max(20,src.mob.max_health)
+		src.mob.max_health = max(src.min_max_health, src.mob.max_health)
 		health_update_queue |= src.mob
 
 	emote(var/act)
@@ -1111,12 +1125,7 @@ TYPEINFO(/datum/mutantrace)
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_thrall/abil = src.mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
-		if (abil)
-			if (abil.master)
-				abil.master.remove_thrall(src.mob)
-			else
-				remove_mindhack_status(src.mob)
+		src.mob?.mind?.remove_antagonist(ROLE_VAMPTHRALL, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1219,7 +1228,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "abomination"
 	human_compatible = 0
 	uses_human_clothes = 0
-	jerk = 1
+	jerk = TRUE
 	brutevuln = 0.2
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/right/abomination
@@ -1321,7 +1330,7 @@ TYPEINFO(/datum/mutantrace)
 	human_compatible = 0
 	uses_human_clothes = 0
 	var/original_name
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/werewolf/left
@@ -1331,8 +1340,6 @@ TYPEINFO(/datum/mutantrace)
 	var/old_client_color = null
 	mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | BUILT_FROM_PIECES | HEAD_HAS_OWN_COLORS)
 	mutant_folder = 'icons/mob/werewolf.dmi'
-	clothing_icon_back = 'icons/mob/werewolf/back.dmi'
-	clothing_icon_mask = 'icons/mob/werewolf/mask.dmi'
 	special_head = HEAD_WEREWOLF
 	mutant_organs = list("tail" = /obj/item/organ/tail/wolf)
 	self_click_fluff = "fur"
@@ -1341,6 +1348,11 @@ TYPEINFO(/datum/mutantrace)
 	head_offset = 5
 	hand_offset = 3
 	arm_offset = 3
+
+	load_clothing_icons()
+		clothing_icons["back"] = 'icons/mob/werewolf/back.dmi'
+		clothing_icons["mask"] = 'icons/mob/werewolf/mask.dmi'
+		..()
 
 	New()
 		..()
@@ -1352,6 +1364,7 @@ TYPEINFO(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
 			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf", 100)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
@@ -1372,6 +1385,7 @@ TYPEINFO(/datum/mutantrace)
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
 			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_COLDPROT, "werewolf")
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")
@@ -1434,7 +1448,7 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/hunter.dmi'
 	icon_state = "full"
 	human_compatible = 0
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	mutant_folder = 'icons/mob/hunter.dmi'
 	special_head = HEAD_HUNTER //heh
@@ -1470,7 +1484,7 @@ TYPEINFO(/datum/mutantrace)
 	name = "ithillid"
 	icon = 'icons/mob/ithillid.dmi'
 	icon_state = "body_m"
-	jerk = 0
+	jerk = FALSE
 	override_attack = 0
 	aquatic = 1
 	voice_override = "blub"
@@ -1513,17 +1527,6 @@ TYPEINFO(/datum/mutantrace)
 	override_language = "monkey"
 	override_attack = FALSE
 	understood_languages = list("english")
-	clothing_icon_uniform = icon('icons/mob/monkey/jumpsuits.dmi')
-	clothing_icon_id = icon('icons/mob/monkey/card.dmi')
-	clothing_icon_hands = icon('icons/mob/monkey/hands.dmi')
-	clothing_icon_feet = icon('icons/mob/monkey/feet.dmi')
-	clothing_icon_overcoats = icon('icons/mob/monkey/overcoats.dmi')
-	clothing_icon_back = icon('icons/mob/monkey/back.dmi')
-	clothing_icon_eyes = icon('icons/mob/monkey/eyes.dmi')
-	clothing_icon_ears = icon('icons/mob/monkey/ears.dmi')
-	clothing_icon_mask = icon('icons/mob/monkey/mask.dmi')
-	clothing_icon_head = icon('icons/mob/monkey/head.dmi')
-	clothing_icon_belt = icon('icons/mob/monkey/belt.dmi')
 	race_mutation = /datum/bioEffect/mutantrace/monkey
 	r_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/right
 	l_limb_arm_type_mutantrace = /obj/item/parts/human_parts/arm/mutant/monkey/left
@@ -1534,12 +1537,29 @@ TYPEINFO(/datum/mutantrace)
 	mutant_organs = list("tail" = /obj/item/organ/tail/monkey)
 	dna_mutagen_banned = FALSE
 	self_click_fluff = "fur"
+	override_limb_icons = TRUE
+
+	load_clothing_icons()
+		src.clothing_icons["uniform"] = 'icons/mob/monkey/jumpsuits.dmi'
+		src.clothing_icons["id"] = 'icons/mob/monkey/card.dmi'
+		src.clothing_icons["hands"] = 'icons/mob/monkey/hands.dmi'
+		src.clothing_icons["feet"] = 'icons/mob/monkey/feet.dmi'
+		src.clothing_icons["overcoats"] = 'icons/mob/monkey/overcoats.dmi'
+		src.clothing_icons["back"] = 'icons/mob/monkey/back.dmi'
+		src.clothing_icons["eyes"] = 'icons/mob/monkey/eyes.dmi'
+		src.clothing_icons["ears"] = 'icons/mob/monkey/ears.dmi'
+		src.clothing_icons["mask"] = 'icons/mob/monkey/mask.dmi'
+		src.clothing_icons["head"] = 'icons/mob/monkey/head.dmi'
+		src.clothing_icons["belt"] = 'icons/mob/monkey/belt.dmi'
+		..()
 
 	New(var/mob/living/carbon/human/M)
 		. = ..()
 		if(ishuman(M))
 			M.add_stam_mod_max("monkey", -50)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
+			SPAWN(0) //aaaaaaaaaaaaa
+				M.update_body(TRUE)
 
 	disposing()
 		if (ishuman(src.mob))
@@ -1668,7 +1688,7 @@ TYPEINFO(/datum/mutantrace)
 	icon_state = "stupidbaby"
 	human_compatible = 0
 	uses_human_clothes = 0
-	jerk = 1
+	jerk = TRUE
 
 	New()
 		..()
@@ -1794,7 +1814,7 @@ TYPEINFO(/datum/mutantrace)
 	name = "cat"
 	icon = 'icons/mob/cat.dmi'
 	icon_state = "body_m"
-	jerk = 1
+	jerk = TRUE
 	override_attack = 0
 	firevuln = 1.5 // very flammable catthings
 	race_mutation = /datum/bioEffect/mutantrace/cat
@@ -1835,7 +1855,7 @@ TYPEINFO(/datum/mutantrace)
 	uses_human_clothes = 1
 	aquatic = 1
 	voice_name = "amphibian"
-	jerk = 0
+	jerk = FALSE
 	head_offset = 0
 	hand_offset = -3
 	body_offset = -3
@@ -1906,7 +1926,7 @@ TYPEINFO(/datum/mutantrace)
 	icon = 'icons/mob/shelterfrog.dmi'
 	icon_state = "body_m"
 	human_compatible = 1
-	jerk = 0
+	jerk = FALSE
 	var/permanent = 0
 	mutant_folder = 'icons/mob/shelterfrog.dmi'
 	special_head = HEAD_SHELTER
@@ -1937,7 +1957,7 @@ TYPEINFO(/datum/mutantrace)
 	human_compatible = 0
 	uses_human_clothes = 0
 	var/original_name
-	jerk = 1 //Not really, but NT doesn't really like treehuggers
+	jerk = TRUE //Not really, but NT doesn't really like treehuggers
 	aquatic = 1
 	needs_oxy = 0 //get their nutrients from the kudzu
 	understood_languages = list("english", "kudzu")
@@ -2208,7 +2228,7 @@ TYPEINFO(/datum/mutantrace/pug)
 					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
-		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	disposing()
 		if (ishuman(src.mob))
@@ -2306,13 +2326,13 @@ TYPEINFO(/datum/mutantrace/pug)
 			return
 		src.mob.throw_at(get_turf(item), 1, 1)
 		src.mob.visible_message("<span class='alert'>[src.mob] staggers.</span>")
-		src.mob.emote("scream")
+		src.mob.emote("woof")
 
 /datum/mutantrace/chicken
 	name = "Chicken"
 	icon_state = "chicken_m"
 	human_compatible = 1
-	jerk = 0
+	jerk = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/chicken
 	mutant_folder = 'icons/mob/chicken.dmi'
 	special_head = HEAD_CHICKEN

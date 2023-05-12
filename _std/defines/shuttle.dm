@@ -15,3 +15,16 @@
 #define SHUTTLETRANSITTIME (2 MINUTES / (1 SECOND))
 
 // you might be asking "why in seconds?" the answer is that shuttle code uses seconds as a base unit and I'm too tired to refactor it
+
+// Shuttle disabled-ness
+
+/// Default; shuttle can be called or auto-calls
+#define SHUTTLE_CALL_ENABLED 0
+/// Shuttle cannot be called manually, only automatically or by admins
+#define SHUTTLE_CALL_MANUAL_CALL_DISABLED 1
+/// Shuttle will not be called, period
+#define SHUTTLE_CALL_FULLY_DISABLED 2
+
+#define SHUTTLE_AVAILABLE_DISABLED 0
+#define SHUTTLE_AVAILABLE_NORMAL 1
+#define SHUTTLE_AVAILABLE_DELAY 2

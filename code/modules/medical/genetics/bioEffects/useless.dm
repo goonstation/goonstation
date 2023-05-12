@@ -257,7 +257,7 @@
 		owner.vis_contents += src.distort
 		src.filter = owner.get_filter("dwarfism")
 		animate(src.filter, size=0, time=0)
-		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
 
 	OnRemove()
 		owner.remove_filter("dwarfism")
@@ -274,7 +274,12 @@
 		. = ..()
 		if(variable == "size" && src.filter)
 			animate(src.filter, size=0, time=0)
-			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+			animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -295,8 +300,9 @@
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
-		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
+		var/reagent_id = islist(reagent_to_add) ? pick(reagent_to_add) : reagent_to_add
+		if (L.reagents && L.reagents.get_reagent_amount(reagent_id) < reagent_threshold)
+			L.reagents.add_reagent(reagent_id,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -486,6 +492,14 @@
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "fireaura", layer = MOB_LIMB_LAYER)
 			overlay_image.color = color_hex
 		..()
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "color_hex")
+			overlay_image.color = color_hex
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
 
 /datum/bioEffect/fire_aura/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0

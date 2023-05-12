@@ -5,7 +5,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "screwdriver"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SCREWING
 	health = 3
@@ -34,6 +35,7 @@
 		user.visible_message("<span class='alert'><b>[user] jams the screwdriver into [his_or_her(user)] eye over and over and over.</b></span>")
 		take_bleeding_damage(user, null, 25, DAMAGE_STAB)
 		user.TakeDamage("head", 160, 0)
+		playsound(user.loc, 'sound/effects/sdriver_suicide.ogg', 80, 0)
 		return 1
 
 /obj/item/screwdriver/vr
@@ -44,3 +46,18 @@
 	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice lemon color."
 	icon_state = "screwdriver-yellow"
 	item_state = "screwdriver-yellow"
+
+/obj/item/screwdriver/grey
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a drab grey color."
+	icon_state = "screwdriver-grey"
+	item_state = "screwdriver-grey"
+
+/obj/item/screwdriver/orange
+	desc = "A tool used to turn slotted screws and other slotted objects. This one has a nice orange color."
+	icon_state = "screwdriver-orange"
+	item_state = "screwdriver-orange"
+
+/obj/item/screwdriver/green
+	desc = "A tool used to turn slotted screws and other slotted objects. The handle is green for added grip."
+	icon_state = "screwdriver-green"
+	item_state = "screwdriver-green"

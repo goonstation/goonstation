@@ -14,22 +14,8 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (istype(atom, /obj/machinery/telejam))
-			var/obj/machinery/telejam/TJ = atom
-			if (!TJ.active)
-				continue
-			if(IN_RANGE(TJ, T, TJ.range))
-				return FALSE
-		if (istype(atom, /obj/item/device/flockblocker))
-			var/obj/item/device/flockblocker/F = atom
-			if (!F.active)
-				continue
-			if(IN_RANGE(F, T, F.range))
-				return FALSE
-
-	for_by_tcl(N, /obj/blob/nucleus)
-		if(IN_RANGE(N, T, 3))
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(A, T, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 			return FALSE
 
 	// first check the always allowed turfs from map landmarks
@@ -48,18 +34,21 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	return TRUE
 
+TYPEINFO(/obj/machinery/networked/telepad)
+	mats = 16
+
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 16
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
+	power_usage = 200
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -420,6 +409,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return
 
 	process()
+		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
 				qdel(start_portal)
@@ -429,8 +419,6 @@ proc/is_teleportation_allowed(var/turf/T)
 				badreceive()
 
 			return
-
-		use_power(200)
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
@@ -494,6 +482,8 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
 		showswirl_out(src.loc)
@@ -524,6 +514,8 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
@@ -608,7 +600,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/networked/telepad, processbadeffect), effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -673,11 +665,11 @@ proc/is_teleportation_allowed(var/turf/T)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				for(var/turf/T in view(5,src.loc))
-					if(!T.reagents)
-						T.create_reagents(1000)
-					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, 1)
+				for (var/i in 1 to rand(3,5))
+					var/datum/projectile/neutron/projectile = new(15)
+					shoot_projectile_DIR(src, projectile, pick(alldirs))
+				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
@@ -747,10 +739,10 @@ proc/is_teleportation_allowed(var/turf/T)
 						new /obj/critter/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/mouse(src.loc)
+							new/mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/roach(src.loc)
+							new/mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
 							new/obj/critter/rockworm(src.loc)
@@ -761,7 +753,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem/, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -793,10 +785,10 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("majorsummon")
 				var/summon = pick(
 					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)
@@ -804,15 +796,17 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 
+TYPEINFO(/obj/machinery/networked/teleconsole)
+	mats = 14
+
 /obj/machinery/networked/teleconsole
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "s_teleport"
 	name = "teleport computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
-	mats = 14
 	var/xtarget = 0
 	var/ytarget = 0
 	var/ztarget = 0
@@ -1085,7 +1079,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
-			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
+			var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
 			title = copytext(adminscrub(title), 1, 128)
 			if(!length(title)) return
 			bm.name = title

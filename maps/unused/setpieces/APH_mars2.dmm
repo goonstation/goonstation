@@ -151,8 +151,7 @@
 	},
 /area/marsoutpost)
 "av" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -163,8 +162,7 @@
 	},
 /area/marsoutpost)
 "aw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_x = 4;
@@ -176,8 +174,7 @@
 	},
 /area/marsoutpost)
 "ax" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	layer = 2.5;
 	name = "factory conveyor belt";
@@ -328,8 +325,7 @@
 	},
 /area/mars)
 "aR" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "robot_factory";
 	layer = 2.5;
 	name = "factory conveyor belt";
@@ -891,8 +887,7 @@
 	},
 /area/marsoutpost)
 "ch" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -907,8 +902,7 @@
 	},
 /area/marsoutpost)
 "cj" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -919,8 +913,7 @@
 	},
 /area/marsoutpost)
 "ck" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	pixel_y = 2
 	},
 /turf/unsimulated/floor{
@@ -1088,8 +1081,7 @@
 	},
 /area/marsoutpost)
 "dd" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2
@@ -1100,8 +1092,7 @@
 	},
 /area/marsoutpost)
 "de" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "robot_factory";
 	name = "factory conveyor belt";
 	pixel_y = 2

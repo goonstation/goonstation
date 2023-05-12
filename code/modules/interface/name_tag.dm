@@ -38,8 +38,10 @@
 		ex_hover_image = new(null, src)
 
 	disposing()
-		dispose(ex_image)
-		dispose(ex_hover_image)
+		qdel(ex_image)
+		ex_image = null
+		qdel(ex_hover_image)
+		ex_hover_image = null
 		..()
 
 	proc/set_visibility(visible)

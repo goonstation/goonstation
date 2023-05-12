@@ -12,14 +12,12 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
-	static_type_override = /datum/mutantrace/monkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("monkey")
-				src.get_static_image()
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
@@ -193,7 +191,6 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
-	static_type_override = /datum/mutantrace/monkey
 	ai_aggressive = 0
 	ai_calm_down = 1
 	ai_default_intent = INTENT_HELP
@@ -305,7 +302,8 @@
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
-			src.emote("scream")
+			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
+				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (GET_DIST(src, pal) > 7)
@@ -322,7 +320,8 @@
 			pal.shitlist[T] ++
 			pals ++
 			if (prob(40))
-				src.emote("scream")
+				if(!ON_COOLDOWN(pal, "monkey_harmed_scream", 5 SECONDS))
+					pal.emote("scream")
 			if(src.client)
 				break
 
@@ -493,7 +492,8 @@
 							"You sound like you singing in two keys at same time!", \
 							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
 							if (prob(40))
-								src.emote("scream")
+								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
+									src.emote("scream")
 		..()
 
 	proc/pursuited_by(atom/movable/AM)
@@ -619,11 +619,16 @@
 	ai_is_valid_target(mob/M)
 		return ..() && !(istype(M, /mob/living/carbon/human/npc/monkey/angry))
 
+/mob/living/carbon/human/npc/monkey/angry/testing
+	ai_attacknpc = TRUE
+
+	ai_is_valid_target(mob/M)
+		return isalive(M)
+
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
 	name = "sea monkey"
 	max_health = 150
-	static_type_override = /datum/mutantrace/monkey/seamonkey
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
 
 	New()
@@ -631,7 +636,6 @@
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
 				src.bioHolder.AddEffect("seamonkey")
-				src.get_static_image()
 				if (src.name == "sea monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name

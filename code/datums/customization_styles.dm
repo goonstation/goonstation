@@ -630,9 +630,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 		dali
 			name = "Dali"
 			id = "dali"
-		hogan
-			name = "Hogan"
-			id = "hogan"
+		handlebar
+			name = "Handlebar"
+			id = "handlebar"
 		devil
 			name = "Old Nick"
 			id = "devil"

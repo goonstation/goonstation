@@ -59,11 +59,6 @@
 
 		return "warbles, \"[text]\"";
 
-
-
-	emote()
-		return
-
 	proc/display_message(var/message, var/quiet = 0, var/emote = 0)
 		//This will make sure the surroundings can hear what the brain thing has to say
 		var/message_range = quiet ? 1 : 7

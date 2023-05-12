@@ -1,6 +1,6 @@
 /obj/item/device/radio/intercom/ship
 	name = "Communication Panel"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/device/radio/intercom/ship/send_hear()
 	if (src.listening)
@@ -118,6 +118,12 @@
 			O.show_message("<font color='green'><b>[bicon(ship)]\[[.]\]</b> says, \"[broadcast]\"</font>")
 
 		return null
+
+	proc/go_home()
+		return FALSE
+
+	proc/get_home_turf()
+		return
 
 /obj/item/device/ship_radio_control
 	name = "Ship Radio Control"

@@ -198,6 +198,7 @@
 /obj/item/gun/kinetic/foamdartgun,
 /obj/item/gun/kinetic/foamdartrevolver,
 /obj/item/gun/kinetic/foamdartrevolver,
+/obj/item/gun/kinetic/foamdartshotgun,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -279,9 +280,7 @@
 /area/prefab/secbot_academy)
 "lu" = (
 /obj/machinery/light/small/floor,
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /area/noGenerate)
 "lA" = (
@@ -770,6 +769,7 @@
 /area/prefab/secbot_academy)
 "JZ" = (
 /obj/storage/secure/crate,
+/obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,

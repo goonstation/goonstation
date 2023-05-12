@@ -128,7 +128,7 @@
 	desc = "A large and complicated audio mixing desk. Complete with fancy displays, dials, knobs and automated faders."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-2"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flags = TGUI_INTERACTIVE
 	var/static/list/accents
@@ -144,7 +144,7 @@
 		src.accents = list()
 		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
 			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
 				continue
 			var/name = effect.id
 			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")
@@ -239,33 +239,47 @@
 	desc = "An old school vinyl record player sat on a set of drawers. Shame you don't have any records."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "mixtable-3"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	var/has_record = 0
-	var/is_playing = 0
+	var/can_play_music = TRUE
+	var/has_record = FALSE
 	var/obj/item/record/record_inside = null
 
 	New()
-		..()
+		. = ..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_music)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
-		if(has_record)
+		if (!src.can_play_music)
+			boutput(user, "<span class='alert'>You insert the record into the record player, but it won't turn on.</span>")
+			return
+		else if(has_record)
 			boutput(user, "The record player already has a record inside!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else
 			boutput(user, "You insert the record into the record player.")
 			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
-			src.has_record = 1
-			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
+			src.has_record = TRUE
+			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", src.record_inside.record_name)), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
-			if(src.is_playing) // someone queuing up several input windows
+			if(is_music_playing()) // someone queuing up several input windows
 				return
 			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
 				return
@@ -278,20 +292,17 @@
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
 #else
-			sleep(3000)
+			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 #endif
-			src.is_playing = 0
 	else
 		..()
 
 /obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
-		if(!is_playing)
+		if(!is_music_playing())
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
 			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
@@ -772,13 +783,13 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
-/obj/item/storage/box/record/radio/host/New()
+/obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
-	for (var/i = 1, i < 8, i++)
+	while (!src.storage.is_full() && length(possibilities))
 		var/obj/item/record/R = pick(possibilities)
-		new R(src)
+		src.storage.add_contents(new R(src))
 		possibilities -= R
 
 // Tape deck
@@ -787,36 +798,52 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	desc = "A large standalone reel-to-reel tape deck."
 	icon = 'icons/obj/radiostation.dmi'
 	icon_state = "tapedeck"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	var/has_tape = 0
-	var/is_playing = 0
+	var/has_tape = FALSE
+	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_tapes)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
+		if(!src.can_play_tapes)
+			boutput(user, "<span class='alert'>You insert the tape into the tape deck, but it won't turn on.</span>")
+			return
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else if(GET_COOLDOWN(src, "play"))
+			boutput(user, "<span class='alert'>The tape deck is still rewinding!</span>")
+		else
 			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
-			src.has_tape = 1
-			src.is_playing = 1
+			src.has_tape = TRUE
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			sleep(6000)
-			is_playing = 0
+			EXTEND_COOLDOWN(src, "play", 600 SECONDS)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
-		if(!is_playing)
+		if(!is_music_playing() && !GET_COOLDOWN(src, "play"))
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
 				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
 				qdel(src.tape_inside)
@@ -1001,8 +1028,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 64
-	bound_height = 64
-	anchored = 1
+	bound_height = 32
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/vacuumtape
@@ -1012,7 +1039,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "gannets_machine2"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/operatorconsole
@@ -1022,21 +1049,21 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "gannets_machine1"
 	bound_width = 32
 	bound_height = 64
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/broadcastcomputer
 	name = "broadcast server"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine11"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/tapedeck
 	name = "reel to reel tape deck"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gannets_machine20"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 //Computer, disk and files.

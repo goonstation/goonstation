@@ -61,7 +61,7 @@
   ..(gibbed)
   if(src)
     src.glow.disable()
-    src.anchored = 1
+    src.anchored = ANCHORED
     src.set_density(0)
     src.name = "weird purple rock thing"
     src.desc = "A weird ultra-dense rock that doesn't want to budge. Huh. Is it plasma?"

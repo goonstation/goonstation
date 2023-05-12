@@ -4,8 +4,8 @@
 	if (src.abilityHolder)
 		if (istype(src.abilityHolder,/datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/C = src.abilityHolder
-			if (!C.getHolder(/datum/abilityHolder/generic))
-				C.addHolder(/datum/abilityHolder/generic)
+			if (!C.getHolder(/datum/abilityHolder/hidden))
+				C.addHolder(/datum/abilityHolder/hidden)
 		if (!chair_flip_ability)
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
@@ -22,16 +22,15 @@
 		src.chair_flip_ability.extrarange = 0
 
 /datum/abilityHolder/generic
+	usesPoints = FALSE
+	regenRate = 0
+
+/datum/abilityHolder/hidden
 	usesPoints = 0
 	regenRate = 0
 	topBarRendered = 0
 	rendered = 0
-
-	//updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
-	//	any_abilities_displayed = 0
-	//	x_occupied = start_x
-	//	y_occupied = start_y
-	//	return
+	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
@@ -40,7 +39,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 1
-	preferred_holder_type = /datum/abilityHolder/generic
+	preferred_holder_type = /datum/abilityHolder/hidden
 	icon = null
 	icon_state = null
 	var/extrarange = 0 //affects next flip only
@@ -66,6 +65,7 @@
 		..()
 
 		var/mob/M = holder.owner
+		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
 		check_mutantrace(M)
 		if (GET_DIST(M,target) > dist)
 			var/steps = 0
@@ -127,8 +127,6 @@
 				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
-			if (prob(25))
-				M.emote("scream")
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
@@ -183,10 +181,9 @@
 		var/mob/living/M = holder.owner
 		if (M.ai && M.is_npc)
 			if(M.ai.enabled )
-				M.ai.enabled = FALSE
+				M.ai.disable()
 			else
-				M.ai.enabled = TRUE
-				M.ai.interrupt()
+				M.ai.enable()
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)

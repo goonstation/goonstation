@@ -1,4 +1,4 @@
-/proc/tomatogibs(turf/T, viral_list, list/ejectables, bdna, btype)
+/proc/tomatogibs(turf/T, list/ejectables, bdna, btype)
 	var/PT = /obj/item/reagent_containers/food/snacks/plant/tomato
 
 	var/list/dirlist = list(list(NORTH, NORTHEAST, NORTHWEST), \
@@ -33,7 +33,7 @@
 	can_throw = 0
 	blood_id = "juice_tomato"
 	add_abilities = list(/datum/targetable/critter/bite/tomato_bite,
-						/datum/targetable/critter/slam_polymorph)
+						/datum/targetable/critter/slam/polymorph)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

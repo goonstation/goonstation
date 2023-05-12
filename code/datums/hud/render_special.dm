@@ -52,12 +52,12 @@
 
 		if(isnull(left_fill))
 			left_fill = create_screen("", "", 'icons/effects/overlays/solid.dmi', "solid", "LEFT-12,CENTER-7", LIGHTING_LAYER_BASE)
-			left_fill.appearance_flags = TILE_BOUND
+			left_fill.appearance_flags = TILE_BOUND | PIXEL_SCALE
 			left_fill.mouse_opacity = 1 // this is meant to OBSCURE ok
 			left_fill.transform = flip
 		if(isnull(right_fill))
 			right_fill = create_screen("", "", 'icons/effects/overlays/solid.dmi', "solid", "RIGHT+12,CENTER-7", LIGHTING_LAYER_BASE)
-			right_fill.appearance_flags = TILE_BOUND
+			right_fill.appearance_flags = TILE_BOUND | PIXEL_SCALE
 			right_fill.mouse_opacity = 1
 			right_fill.transform = flip
 

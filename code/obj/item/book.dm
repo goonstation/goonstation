@@ -92,7 +92,11 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
+#ifdef MAP_OVERRIDE_NADIR
+		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#else
 		file_path = "strings/books/cargo_pocket_guide.txt"
+#endif
 
 /****MatSci and Mining****/
 
@@ -139,6 +143,12 @@ Custom Books
 	icon_state = "interdictorguide"
 	desc = "A handy guide on proper construction and maintenance of Spatial Interdictors"
 	file_path = "strings/books/interdictor_guide.txt"
+
+/obj/item/paper/book/from_file/transception_guide
+	name = "NT-PROTO: Transception Array"
+	icon_state = "orangebook"
+	desc = "A book detailing behaviors and operations of Nadir's transception array"
+	file_path = "strings/books/transception_guide.txt"
 
 /****Civilian Guides****/
 
@@ -239,7 +249,7 @@ Custom Books
 
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -310,11 +320,17 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
-/obj/item/paper/book/from_file/MONOrules
-	name = "MONO card game rules"
-	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+/obj/item/paper/book/from_file/DWrulebook
+	name = "Stationfinder"
+	desc = "A book detailing the ruleset for the tabletop RPG, Stationfinder. It was made based on the Stations and Syndicates 5th edition SRD after a dispute over licensing."
+	icon_state = "bookcc"
+	file_path = "strings/books/stationfinder.txt"
+
+/obj/item/paper/book/from_file/solo_rules
+	name = "SOLO card game rules"
+	desc = "A pamphlet describing the rules of SOLO, the family-friendly and legally distinct card game for all ages!"
 	icon_state = "paper"
-	file_path = "strings/books/MONOrules.txt"
+	file_path = "strings/books/solo_rules.txt"
 
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
@@ -448,6 +464,13 @@ Custom Books
 			..()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
+/obj/item/paper/book/from_file/fleurscookbook
+	name = "Fleur's Cookbook"
+	desc = "A life's work in progress."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "cookbook-fleur"
+	file_path = "strings/books/fleurs_cookbook.txt"
+
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
 	desc = "It looks bedraggled."
@@ -474,6 +497,12 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 		if (voidMessage)
 			boutput(wearer, "[voidMessage]")
 		return
+
+/obj/item/paper/book/from_file/vendbook //Guide for build-a-vends in maint bazaar random room
+	name = "A Treatise on Build-A-Vends"
+	desc = "A hefty looking guide on how to start your own business."
+	icon_state = "vendbook"
+	file_path = "strings/books/buildavend_treatise.txt"
 
 /******************** CUSTOM BOOKS ********************/
 
@@ -525,3 +554,15 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 give me your answer do.<BR/>
 I'm half crazy,<BR/>
 all for the love of you.</tt>"}
+
+/obj/item/paper/book/from_file/nuclear_engineering
+	name = "Nuclear Engineering for Idiots"
+	desc = "A guide to designing and operating nuclear reactors. Should idiots be doing that?"
+	icon_state = "nuclearguide"
+	file_path = "strings/books/nuclear_engineering.txt"
+
+/obj/item/paper/emergencycooler
+	name = "Emergency Cooler Instructions"
+	info = {"<h3>These coolers are for emergency use only</h3></br>
+			In the event of a meltdown scenario, activate the coolers and ensure the gas loop is pressurised.<br>
+			Use of these coolers outside of an emergency scenario will result in a loss of reactor efficiency and stalling of the turbine."}

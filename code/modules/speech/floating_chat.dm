@@ -64,7 +64,7 @@
 	proc/measure(var/client/who)
 		var/measured = 8
 		// MeasureText sleeps and that fucks up a lot, removing for now
-		return measured * (1 + round(length(src.maptext_width) / 32))
+		src.measured_height = measured * (1 + round(length(src.maptext_width) / 32)) // this is an incredibly fancy way to write * 1
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
 	var/image/chat_maptext/text = new /image/chat_maptext
@@ -75,16 +75,26 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 	else
 		// force whatever it is to be shown. for not chat tings. honk.
 		text.maptext = msg
-	if(istype(target, /atom/movable) && target.chat_text)
+
+	var/obj/chat_maptext_holder/holder = target.chat_text
+
+	if(istype(target, /atom/movable) && holder)
 		var/atom/movable/L = target
-		text.loc = L.chat_text
-		if(length(L.chat_text.lines) && L.chat_text.lines[length(L.chat_text.lines)].maptext == text.maptext)
-			L.chat_text.lines[length(L.chat_text.lines)].transform *= 1.05
+		holder = L.chat_text
+		text.loc = holder
+		if (target.layer > HUD_LAYER)
+			text.layer = target.layer+1
+	else
+		text.loc = target
+
+	if (holder)
+		if(length(holder.lines) && holder.lines[length(holder.lines)].maptext == text.maptext)
+			holder.lines[length(holder.lines)].transform *= 1.05
 			qdel(text)
 			return null
-		L.chat_text.lines.Add(text)
-	else // hmm?
-		text.loc = target
+
+		holder.lines.Add(text)
+
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
 	SPAWN(time)

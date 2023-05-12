@@ -72,6 +72,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/turret_deployer/riot)
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
@@ -79,7 +82,6 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
 
@@ -92,7 +94,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
 	icon = 'icons/obj/syndieturret.dmi'
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	var/health = 250
 	var/max_health = 250
@@ -198,7 +200,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 
 			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_anchored), null, W.icon, W.icon_state, \
 			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
@@ -211,7 +213,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 
 			user.show_message("You start to repair the turret.")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair), null, W.icon, W.icon_state, \
 			  "[user] repairs some of the turret's damage.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
@@ -230,7 +232,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			else
 				user.show_message("You begin to disassemble the turret.")
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(spawn_deployer), null, W.icon, W.icon_state, \
 				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
@@ -246,7 +248,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
+			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(toggle_activated), null, W.icon, W.icon_state, \
 			  "[user] powers the turret [src.active ? "off" : "on"].", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
@@ -287,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
 		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
 
@@ -456,7 +458,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/robotic/gunbot/syndicate) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
-	anchored = 1
+	anchored = ANCHORED
 
 	New(loc)
 		..(src.loc, src.dir)
@@ -491,7 +493,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return 0
 
 /obj/deployable_turret/riot/active
-	anchored = 1
+	anchored = ANCHORED
 
 	New(loc)
 		..(src.loc, src.dir)

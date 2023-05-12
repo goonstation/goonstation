@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		return data
 
 	proc/special_attack(var/mob/target, var/mob/living/user)
-		boutput(usr, "Your gloves do nothing special")
+		boutput(user, "Your gloves do nothing special")
 		return
 
 	proc/setSpecialOverride(var/type = null, master = null, active = 1)
@@ -185,7 +185,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
-		src.tooltip_rebuild = true;
+		src.tooltip_rebuild = TRUE
 		return S
 
 
@@ -368,6 +368,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+	icon_state = "combatgauntlets"
+	item_state = "swat_syndie"
 
 	setupProperties()
 		..()
@@ -490,13 +492,33 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	nodescripition = TRUE
 
+	custom_suicide = TRUE
+	suicide_in_hand = FALSE
+
+	suicide(mob/living/carbon/human/user)
+		if (!istype(user) || !src.user_can_suicide(user) || user.gloves != src)
+			return FALSE
+		if (!src.deployed)
+			src.sheathe_blades_toggle(user)
+			user.update_clothing()
+		user.visible_message("<span class='alert'>[user] crosses the blades of [his_or_her(user)] gloves across [his_or_her(user)] neck...</span>",
+			"<span class='alert'>You cross the blades of your gloves across your neck...</span>")
+		src.cant_self_remove = TRUE
+		SPAWN(3 SECONDS)
+			src.cant_self_remove = FALSE
+			user.drop_organ("head", get_turf(user))
+			user.visible_message("<span class='alert'>[user] slices [his_or_her(user)] head clean off! Holy shit!</span>", "<span class='alert'>You slice your head clean off!</span>")
+			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Cut_1.ogg', 70, 1)
+			take_bleeding_damage(user, user, 200, DAMAGE_CUT, TRUE, get_turf(user))
+			user.spread_blood_clothes(user)
+			user.death()
+
 	special_attack(mob/living/target, mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0)
-		user.attack_effects(target, affecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
@@ -637,7 +659,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 					logTheThing(LOG_COMBAT, user, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user.a_intent)
 						if("harm")
-							src.electrocute(victim, 100, netnum)
+							src.electrocute(victim, 100, netnum, ignore_range = TRUE)
 							if(uses)
 								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--

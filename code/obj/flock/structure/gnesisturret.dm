@@ -5,11 +5,12 @@
 /obj/flock_structure/gnesisturret
 	name = "spiky fluid vat"
 	desc = "A vat of bubbling teal fluid, covered in hollow spikes."
-	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits."
+	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits. Consumes 20 compute passively and 50 while synthesizing gnesis."
 	icon_state = "teleblocker-off"
 	flock_id = "Gnesis turret"
 	resourcecost = 150
 	health = 80
+	show_in_tutorial = TRUE
 	///maximum volume of coagualted gnesis that can be stored in the tank
 	var/fluid_level_max = 250
 	///how much gnesis is generated per-tick while there is sufficient compute
@@ -25,6 +26,7 @@
 	var/powered = FALSE
 	// flockdrones can pass through this
 	passthrough = TRUE
+	accepts_sapper_power = TRUE
 
 	var/making_projectiles = FALSE
 	var/fluid_gen_cost = 30 //generating gnesis consumes compute
@@ -122,6 +124,17 @@
 							sleep(src.current_projectile.shot_delay)
 					shoot_projectile_ST_pixel_spread(src, current_projectile, target, 0, 0 , spread)
 
+	sapper_power()
+		if (!src.powered || !..())
+			return FALSE
+		src.accepts_sapper_power = FALSE
+		src.fluid_gen_amt *= 4
+		SPAWN(10 SECONDS)
+			if (!QDELETED(src))
+				src.accepts_sapper_power = TRUE
+				src.fluid_gen_amt = initial(src.fluid_gen_amt)
+		return TRUE
+
 	proc/seek_target()
 		var/list/target_list = list()
 		for (var/mob/living/C in oviewers(src.range,src.loc))
@@ -168,6 +181,16 @@
 				return FALSE
 		if (isflockmob(C))
 			return FALSE
+		//final check, as it's the most expensive: do we have an unobstructed line of sight to the target?
+		//fun fact, we can abuse jpsTurfPassable for this and use path caching!
+		var/test_turf = get_step(src, get_dir(src, C))
+		var/obj/projectile/test_proj = new()
+		test_proj.proj_data = src.current_projectile
+		while(GET_DIST(test_turf, C) > 0)
+			var/next_turf = get_step(test_turf, get_dir(test_turf, C))
+			if(!jpsTurfPassable(test_turf, next_turf, test_proj))
+				return FALSE
+			test_turf = next_turf
 
 		return TRUE
 

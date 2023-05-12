@@ -273,6 +273,12 @@
 	label = "purple"
 	desc = "A high-capacity auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
 
+/obj/item/reagent_containers/emergency_injector/high_capacity/charcoal
+	name = "high-capacity auto-injector (charcoal)"
+	initial_reagents = "charcoal"
+	label = "green"
+	desc = "A high-capacity auto-injector containing charcoal, a reliable anti-tox medicine and poison depletor."
+
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"
 	initial_reagents = "mannitol"
@@ -293,7 +299,7 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations.."
+	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 

@@ -12,7 +12,7 @@
 	icon_state = "medibot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	luminosity = 2
 	req_access = list(access_medical)
 	access_lookup = "Medical Doctor"
@@ -39,7 +39,7 @@
 	var/treatment_brute = "saline"
 	var/treatment_oxy = "salbutamol"
 	var/treatment_fire = "saline"
-	var/treatment_tox = "charcoal"
+	var/treatment_tox = "anti_rad"
 	var/treatment_virus = "spaceacillin"
 	/// the stuff the bot injects when emagged
 	var/list/dangerous_stuff = list()
@@ -80,7 +80,7 @@
 	density = 1
 	emagged = 1
 	terrifying = 1
-	anchored = 1 // don't drag it into space goddamn jerks
+	anchored = ANCHORED // don't drag it into space goddamn jerks
 	no_camera = 1
 	last_patient_cooldown = 5 SECONDS // There's usually only one target anyway, and we want to mess them up right good
 
@@ -829,16 +829,16 @@
 
 /obj/item/storage/firstaid/attackby(var/obj/item/parts/robot_parts/S, mob/user as mob)
 	if (!istype(S, /obj/item/parts/robot_parts/arm/))
-		if (src.contents.len >= 7)
+		if (src.storage.is_full())
 			return
-		if ((S.w_class >= W_CLASS_SMALL || istype(S, /obj/item/storage)))
+		if (S.w_class >= W_CLASS_SMALL || S.storage)
 			if (!istype(S,/obj/item/storage/pill_bottle))
 				boutput(user, "<span class='alert'>[S] won't fit into [src]!</span>")
 				return
 		..()
 		return
 
-	if (src.contents.len >= 1)
+	if (length(src.storage.get_contents()))
 		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 	else

@@ -1,11 +1,13 @@
+TYPEINFO(/obj/submachine/slot_machine)
+	mats = 8
+
 /obj/submachine/slot_machine
 	name = "Slot Machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 8
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SIMPLE
 	var/plays = 0

@@ -172,7 +172,7 @@
 					speechinput = input("[sentence](noun) and (verb) yourself.", "Noun", null) as null|anything in fortune_nouns
 					if(!speechinput) break
 					sentence += "[speechinput] and "
-					speechinput = input("[sentence]and (verb) yourself.", "Verb", null) as null|anything in fortune_verbs
+					speechinput = input("[sentence](verb) yourself.", "Verb", null) as null|anything in fortune_verbs
 					if(!speechinput) break
 					sentence += "[speechinput] yourself."
 				if("Remember to...")
@@ -442,7 +442,7 @@
 				deadpeople += M.real_name
 				if(the_mob == user || (the_mob.client && (get_turf(the_mob) in range(the_mob.client.view, get_turf(user)))))
 					var/mobloc = get_turf(the_mob) // TODO add consent
-					var/mob/living/seanceghost/sg
+					var/mob/living/intangible/seanceghost/sg
 					if(istype(the_mob,/mob/zoldorf))
 						sg = the_mob.make_seance(null,the_mob,deadpeople)
 					else

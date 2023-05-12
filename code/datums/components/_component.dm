@@ -13,12 +13,6 @@
 	var/list/comp_lookup
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
 	var/tmp/list/list/datum/callback/signal_procs
-	/**
-		* Is this datum capable of sending signals?
-		*
-		* Set to true when a signal has been registered
-		*/
-	var/signal_enabled = FALSE
 
 TYPEINFO(/datum/component)
 	var/initialization_args = null // let the user select any initialization arguments
@@ -91,6 +85,7 @@ var/datum/signal_holder/global_signal_holder
   * Do not call `qdel(src)` from this function, `return COMPONENT_INCOMPATIBLE` instead
   */
 /datum/component/proc/Initialize(...)
+	SHOULD_CALL_PARENT(TRUE)
 	return
 
 /**
@@ -103,7 +98,8 @@ var/datum/signal_holder/global_signal_holder
 /datum/component/disposing()
 	if(parent)
 		_RemoveFromParent()
-	SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
+	if(parent)
+		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
 	return ..()
 
@@ -191,57 +187,61 @@ var/datum/signal_holder/global_signal_holder
   * Register to listen for a signal from the passed in target
   *
   * This sets up a listening relationship such that when the target object emits a signal
-  * the source datum this proc is called upon, will recieve a callback to the given proctype
+  * the source datum this proc is called upon, will receive a callback to the given proctype
   * Return values from procs registered must be a bitfield
   *
   * Arguments:
   * * datum/target The target to listen for signals from
-  * * sig_type_or_types Either a string signal name, or a list of signal names (strings).
+  * * signal_type A signal name
 	* 		Complex signals (of the form list(component_type, string) can also be used.)
   * * proctype The proc to call back when the signal is emitted
   * * override If a previous registration exists you must explicitly set this
 	* * other arguments get passed to complexsignal/register in the case of a complex signal
   */
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE, ...)
+/datum/proc/RegisterSignal(datum/target, signal_type, proctype, override = FALSE, ...)
 	if(QDELETED(src) || QDELETED(target))
 		return
+	if (islist(signal_type) && !IS_COMPLEX_SIGNAL(signal_type))
+		var/static/list/known_failures = list()
+		var/list/signal_type_list = signal_type
+		var/message = "([target.type]) is registering [signal_type_list.Join(", ")] as a list, the older method. Change it to RegisterSignals."
+		if (!(message in known_failures))
+			known_failures[message] = TRUE
+			logDiary("[target] [message]")
+		RegisterSignals(target, signal_type, proctype, override, args.Copy(5))
+		return
+	var/list/procs = (signal_procs ||= list())
+	var/list/target_procs = (procs[target] ||= list())
+	var/list/lookup = (target.comp_lookup ||= list())
 
-	var/list/procs = signal_procs
-	if(!procs)
-		signal_procs = procs = list()
-	if(!procs[target])
-		procs[target] = list()
-	var/list/lookup = target.comp_lookup
-	if(!lookup)
-		target.comp_lookup = lookup = list()
+	if(IS_COMPLEX_SIGNAL(signal_type))
+		var/complexsignal_component_type = signal_type[1]
+		var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
+		var/list/register_args = args.Copy()
+		register_args[2] = signal_type[2] // replacing sig_type_or_types
+		register_args[1] = src // comp.register's first argument is the LISTENER not the target
+		comp.register(arglist(register_args))
+		return // exit early since we're done
 
-	var/list/sig_types = (islist(sig_type_or_types) && !IS_COMPLEX_SIGNAL(sig_type_or_types)) ? sig_type_or_types : list(sig_type_or_types)
-	for(var/sig_type in sig_types)
-		if(IS_COMPLEX_SIGNAL(sig_type))
-			var/complexsignal_component_type = sig_type[1]
-			var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
-			var/list/register_args = args.Copy()
-			register_args[2] = sig_type[2] // replacing sig_type_or_types
-			register_args[1] = src // comp.register's first argument is the LISTENER not the target
-			comp.register(arglist(register_args))
-			continue
+	if(!override && target_procs[signal_type])
+		stack_trace("[signal_type] overridden. Use override = TRUE to suppress this warning.\nTarget: [identify_object(target)] Proc: [proctype]")
 
-		if(!override && procs[target][sig_type])
-			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
+	target_procs[signal_type] = proctype
+	var/list/looked_up = lookup[signal_type]
 
-		procs[target][sig_type] = proctype
+	if(isnull(looked_up)) // Nothing has registered here yet
+		lookup[signal_type] = src
+	else if(looked_up == src) // We already registered here
+		; // pass
+	else if(!length(looked_up)) // One other thing registered here
+		lookup[signal_type] = list((looked_up) = TRUE, (src) = TRUE)
+	else // Many other things have registered here
+		looked_up[src] = TRUE
 
-		if(!lookup[sig_type]) // Nothing has registered here yet
-			lookup[sig_type] = src
-		else if(lookup[sig_type] == src) // We already registered here
-			continue
-		else if(!length(lookup[sig_type])) // One other thing registered here
-			lookup[sig_type] = list(lookup[sig_type]=TRUE)
-			lookup[sig_type][src] = TRUE
-		else // Many other things have registered here
-			lookup[sig_type][src] = TRUE
-
-	signal_enabled = TRUE
+/// Registers multiple signals to the same proc.
+/datum/proc/RegisterSignals(datum/target, list/signal_types, proctype, override = FALSE, ...)
+	for (var/signal_type in signal_types)
+		RegisterSignal(target, signal_type, proctype, args.Copy(5))
 
 /**
   * Stop listening to a given signal from target
@@ -255,10 +255,12 @@ var/datum/signal_holder/global_signal_holder
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
-	if (!target)
+	if (!target || !src || src.qdeled)
 		return
 	var/list/lookup = target.comp_lookup
-	if(!signal_procs || !signal_procs[target] || !lookup)
+	if(!signal_procs || (!islist(sig_type_or_types) && (!signal_procs[target] || !lookup)))
+		// if sig_type_or_types is a list it's either a complex signal (in which case the conditions can fail but we still want to remove the signal)
+		// or it is a list which can potentially contain another complex signal in which case ditto
 		return
 	if(!islist(sig_type_or_types) || IS_COMPLEX_SIGNAL(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
@@ -278,7 +280,7 @@ var/datum/signal_holder/global_signal_holder
 			if(2)
 				lookup[sig] = (lookup[sig]-src)[1]
 			if(1)
-				stack_trace("[target] ([target.type]) somehow has single length list inside comp_lookup")
+				stack_trace("[identify_object(target)] somehow has single length list inside comp_lookup")
 				if(src in lookup[sig])
 					lookup -= sig
 					if(!length(lookup))
@@ -294,9 +296,10 @@ var/datum/signal_holder/global_signal_holder
 			else
 				lookup[sig] -= src
 
-	signal_procs[target] -= sig_type_or_types
-	if(!signal_procs[target].len)
-		signal_procs -= target
+	if(signal_procs?[target])
+		signal_procs[target] -= sig_type_or_types
+		if(!signal_procs[target].len)
+			signal_procs -= target
 
 /**
   * Called on a component when a component of the same type was added to the same parent

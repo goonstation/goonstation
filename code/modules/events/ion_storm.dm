@@ -133,12 +133,12 @@
 
 		if (prob(50))
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, FALSE)
 			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, TRUE)
 			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
@@ -160,13 +160,15 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
+	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
-		var/turf/T = null
-		if (found.z != Z_LEVEL_STATION)
+		var/turf/T = get_turf(found)
+		if (!T)
 			return FALSE
-		T = get_turf(found)
+		if (T.z != Z_LEVEL_STATION)
+			return FALSE
 		if (!istype(T.loc,/area/station/))
 			return FALSE
 		return TRUE
@@ -179,13 +181,27 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
-			var/object = pick(targets)
+			var/atom/object = pick(targets)
+
+			//spatial interdictor: shield general hardware from ionic interference. law racks explicitly omitted due to sensitivity (and gameplay fun)
+			//consumes cell charge per hardware item protected, based on the category's interdict cost
+			var/interdicted = FALSE
+			for_by_tcl(IX, /obj/machinery/interdictor)
+				if (IX.expend_interdict(interdict_cost,object))
+					interdicted = TRUE
+					SPAWN(rand(1,8))
+						playsound(object.loc, "sparks", 60, 1) //absorption noise, as a little bit of "force feedback"
+					break
+			if(interdicted)
+				continue
+
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)
 
 /datum/ion_category/APCs
 	amount = 20
+	interdict_cost = 500
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -269,6 +285,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/manufacturers
 	amount = 5
+	interdict_cost = 200
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -281,6 +298,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/venders
 	amount = 5
+	interdict_cost = 250
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)
@@ -301,3 +319,21 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/firealarm/alarm)
 		alarm.alarm()
+
+/datum/ion_category/pda_alerts
+	amount = 3
+
+	valid_instance(var/obj/item/device/pda2/pda)
+		return ..() && pda.owner
+
+	build_targets()
+		for_by_tcl(pda, /obj/item/device/pda2)
+			if (valid_instance(pda))
+				targets += pda
+
+	action(var/obj/item/device/pda2/pda)
+		for (var/datum/computer/file/pda_program/prog in pda.hd.root.contents)
+			if (istype(prog, /datum/computer/file/pda_program/emergency_alert))
+				pda.run_program(prog)
+				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
+				alert_prog.send_alert(rand(1,4), TRUE)

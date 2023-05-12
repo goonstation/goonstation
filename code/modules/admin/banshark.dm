@@ -39,8 +39,6 @@
 	set popup_menu = 0
 	var/startx = 1
 	var/starty = 1
-//	var/startside = pick(cardinal)
-//	var/pickstarter = null
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -48,36 +46,18 @@
 	var/speed = input(usr,"How fast is the shark? Lower is faster.","speed","5") as num
 	if(!speed)
 		return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 	boutput(sharktarget, "Uh oh.")
 	sharktarget << sound('sound/misc/jaws.ogg')
 	sleep(20 SECONDS)
 	startx = sharktarget.x - rand(-11, 11)
 	starty = sharktarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(sharktarget:range(10)))
+
 	var/turf/pickedstart = locate(startx, starty, sharktarget.z)
 	var/obj/gibshark/Q = new /obj/gibshark(pickedstart)
 	Q.sharktarget2 = sharktarget
 	Q.caller = usr
 	Q.sharkspeed = speed
-//				boutput(sharktarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(sharktarget, "<span class='alert'>This is a temporary ban, it will be removed in [sharkmins] minutes.</span>")
-//				logTheThing(LOG_ADMIN, usr, "has sharked [constructTarget(sharktarget,"admin")].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.")
-//				logTheThing(LOG_DIARY, usr, "has sharked [constructTarget(sharktarget,"diary")].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.", "admin")
-//				message_admins("<span class='internal'>[usr.client.ckey] has banned [sharktarget.ckey].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.</span>")
-
 
 /obj/banshark/
 	name = "banshark"
@@ -86,7 +66,7 @@
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/data = null
 	var/caller = null
@@ -157,7 +137,7 @@
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/sharkspeed = 1
 	var/mob/caller = null

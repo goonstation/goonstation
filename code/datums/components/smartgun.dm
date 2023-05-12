@@ -38,8 +38,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
-			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_smart_aim)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_smart_aim)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_smart_aim))
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_smart_aim))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
@@ -70,9 +70,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		src.end_smart_aim(source, user)
 
 /datum/component/holdertargeting/smartgun/proc/init_smart_aim(datum/source, mob/user)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, .proc/retarget)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/shoot_tracked_targets)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, PROC_REF(retarget))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(shoot_tracked_targets))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -119,10 +119,10 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracking = 1
 	shotcount = 0
 	while(!stopping)
-		if(!shooting && checkshots(parent) > shotcount)
+		if(!shooting && checkshots(parent, user) > shotcount)
 			for(var/mob/living/M in range(2, mouse_target))
 				ON_COOLDOWN(M, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
-				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
+				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent, user))
 					tracked_targets[M] += 1
 					shotcount++
 					src.update_targeting_images(M)
@@ -194,11 +194,11 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
 	return M != user && !isdead(M)
 
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G, mob/user)
 	var/list/ret = list()
 	if(istype(G, /obj/item/gun/kinetic))
 		var/obj/item/gun/kinetic/K = G
 		return round(K.ammo.amount_left * K.current_projectile.cost)
 	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 		return round(ret["charge"] / G.current_projectile.cost)
-	else return G.canshoot() * INFINITY //idk, just let it happen
+	else return G.canshoot(user) * INFINITY //idk, just let it happen

@@ -309,7 +309,7 @@ obj/item/paper/hootagenhint
 	desc = "This pipe is kinda warm. Huh."
 	interesting = "Radiological decay detected."
 
-/obj/decal/fakeobjects/pipe/sarin
+/obj/decal/fakeobjects/pipe/sarin // will change to saxitoxin after updating owlery map file
 	desc = "This pipe seems totally normal."
 	interesting = "Trace amounts of hazardous nerve agent detected."
 
@@ -350,7 +350,7 @@ obj/decal/fakeobjects/bustedpod
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "escape"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl/madness
 	critter_type = /obj/critter/madnessowl
@@ -360,7 +360,7 @@ obj/item/gnomechompski/elf
 	desc = "Wait this isn't a gnome..."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnelf"
-	item_state = "gnelf"
+	item_state = "gnome"
 
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
@@ -580,7 +580,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 
@@ -589,7 +589,7 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 
@@ -598,16 +598,15 @@ obj/item/gnomechompski/elf
 	name = "Informational Plaque"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "rip"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 
 /obj/item/device/key/owl
 	name = "Owlish Key"
 	desc = "This key was found in an owl pellet. Yuck."
-	icon = 'icons/misc/aprilfools.dmi'
 	interesting = "Filthy. GROSS"
-	icon_state = "key"
+	icon_state = "key_owl"
 
 /obj/owldoor
 	name = "Strange Looking Wall"
@@ -616,7 +615,7 @@ obj/item/gnomechompski/elf
 	icon_state = "mapwall_r"
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/device/key/owl))
@@ -626,9 +625,8 @@ obj/item/gnomechompski/elf
 
 /datum/projectile/wonk
 	power = 10
-	cost = 20
+	stun = 20
 	dissipation_rate = 1
-	ks_ratio = 0
 	shot_sound = 'sound/vox/wonk.ogg'
 	sname = "Wonkonize"
 	shot_number = 1
@@ -723,7 +721,7 @@ obj/item/gnomechompski/elf
 	icon = 'icons/misc/bird.dmi'
 	icon_state = "smallowl"
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	flash_prob = 80
 	base_state = "smallowl"
@@ -866,7 +864,7 @@ obj/critter/madnessowl/gun
 	desc = "WATCH OUT IT HAS A GUN!"
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
 			if (C.health < 0) continue
@@ -1010,7 +1008,7 @@ obj/critter/madnessowl/switchblade
 			new /obj/item/plutonium_core/hootonium_core (src.loc)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		if (src.target)
 			src.task = "chasing"
 			return

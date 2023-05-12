@@ -25,8 +25,12 @@
 	var/datum/blob_ability/absorb = null
 	var/datum/blob_ability/promote = null
 	var/datum/blob_upgrade/spread_up = null
+	var/datum/blob_upgrade/multi_spread_up = null
 	var/datum/blob_upgrade/gen_up = null
+	var/datum/blob_upgrade/attack_up = null
 	var/datum/blob_upgrade/fireres_up = null
+
+	var/list/datum/blob_upgrade/repeatable_upgrades = list()
 
 	var/turf/last_spread = null
 	var/turf/last_lost = null
@@ -228,9 +232,11 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (client)
+		if (client && !src.admin_override)
 			return
 		if (!blobs.len && state != 1)
+			return
+		if(!isturf(src.loc))
 			return
 		ai_ticks_queued_up++
 		src.ai_process()
@@ -263,9 +269,10 @@
 
 			if (fireres_up)
 				if (fireres_up.check_requirements())
-					fireres_up.take_upgrade()
-					fireres_up = null
-					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
+					if(!fireres_up.take_upgrade())
+						fireres_up = null
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
+						fireres_up.deduct_evo_points()
 
 			if (absorb)
 				for (var/mob/living/carbon/human/H in (mobs + ai_mobs))
@@ -279,7 +286,7 @@
 						var/turf/T = get_turf(H)
 						if (has_adjacent_blob(T) && prob(50))
 							attack_now(T)
-							if (T.can_blob_spread_here())
+							if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								spread_to(T, 0)
 							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
 						continue
@@ -290,7 +297,7 @@
 								var/turf/T = get_step(H, dir)
 								if(H.loc != H_turf)
 									break
-								if(T.can_blob_spread_here())
+								if(T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 									spread_to(T, 0)
 									sleep(spread.cooldown_time + 1)
 					// no explicit `absorb.onUse` call because absorption is now automatic
@@ -337,27 +344,28 @@
 					wall = locate(/datum/blob_ability/build/wall) in abilities
 					absorb = locate(/datum/blob_ability/absorb) in abilities
 					promote = locate(/datum/blob_ability/promote) in abilities
-					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
 					gen_up = locate(/datum/blob_upgrade/extra_genrate) in available_upgrades
+					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
+					multi_spread_up = locate(/datum/blob_upgrade/spread) in available_upgrades
+					attack_up = locate(/datum/blob_upgrade/attack) in available_upgrades
 					fireres_up = locate(/datum/blob_upgrade/fire_resist) in available_upgrades
+					if(gen_up)
+						repeatable_upgrades |= gen_up
+					if(spread_up)
+						repeatable_upgrades |= spread_up
+					if(multi_spread_up)
+						repeatable_upgrades |= multi_spread_up
+					if(attack_up)
+						repeatable_upgrades |= attack_up
 					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Deployed blob to ([T.x], [T.y], [T.z]).")
 					counter = 0
 			if (STATE_EXPANDING)
 				refresh_lists++
 				if (blobs.len > 15 && prob(blobs.len / (ribosome_count + 1)) && bio_points_max >= ribosome.bio_point_cost)
 					state = STATE_DO_LIPIDS
-				if (!(gen_up in available_upgrades))
-					gen_up = null
-				if (!(spread_up in available_upgrades))
-					spread_up = null
-				if (gen_up)
-					if (gen_up.check_requirements())
-						gen_up.take_upgrade()
-						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took generation rate upgrade while expanding.")
-				if (spread_up)
-					if (spread_up.check_requirements())
-						spread_up.take_upgrade()
-						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took spread upgrade while expanding.")
+				
+				src.do_upgrade()
+
 				if(length(open) + length(open_low) + length(open_medium) == 0 && length(closed) > 0)
 					destroying = pick(closed)
 				var/turf/ST = null
@@ -368,7 +376,7 @@
 						return
 					for (var/turf/Q in range(5, last_spread))
 						if (Q in open)
-							if (Q.can_blob_spread_here())
+							if (Q.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								ST = Q
 								break
 							else
@@ -383,7 +391,7 @@
 							if (!open.len)
 								break
 							var/turf/Q = pick(open)
-							if (Q.can_blob_spread_here())
+							if (Q.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								ST = Q
 								break
 							else
@@ -573,7 +581,7 @@
 				if (attacker)
 					var/turf/AT = get_turf(attacker)
 					var/spreaded = 0
-					if (!(locate(/obj/blob) in AT) && AT.can_blob_spread_here())
+					if (!(locate(/obj/blob) in AT) && AT.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 						spreaded = 1
 						spread_to(AT, 0)
 					for (var/obj/reagent_dispensers/fueltank/FU in view(attacker))
@@ -589,7 +597,7 @@
 						create_wall_if_possible(get_turf(B))
 					if (!spreaded)
 						for (var/turf/T in range(2, attacker))
-							if (T.can_blob_spread_here())
+							if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								spread_to(T, 0)
 								logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [log_loc(T)] in response to attack force.")
 								break
@@ -615,7 +623,7 @@
 						var/turf/T = get_turf(F)
 						create_mitochondria_if_possible(T)
 					for (var/turf/T in range(5, nearest))
-						if (T.can_blob_spread_here())
+						if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 							spread_to(T, 0)
 							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [log_loc(T)] in response to attack force.")
 							break
@@ -714,7 +722,29 @@
 			state = STATE_UNDER_ATTACK
 		counter = 0
 
+	proc/do_upgrade()
+		if (!(gen_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			gen_up = null
+		if (!(spread_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			spread_up = null
+		if (!(multi_spread in available_upgrades))
+			repeatable_upgrades -= gen_up
+			multi_spread = null
+		if (!(attack_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			attack_up = null
 
+		if(!length(repeatable_upgrades) || evo_points < 1)
+			return
+
+		for(var/datum/blob_upgrade/chosen in repeatable_upgrades) //prioritize gen, quickspread, multispread, and then attack
+			if(chosen?.check_requirements())
+				if(!chosen.take_upgrade())
+					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took [chosen.name] upgrade while expanding.")
+					chosen.deduct_evo_points()
+					return
 
 /mob/living/intangible/blob_overmind/ai/start_here
 	var/deployment_attempt = 0
@@ -724,6 +754,9 @@
 			return src.loc
 		else
 			return get_step(src.loc, pick(alldirs))
+
+/mob/living/intangible/blob_overmind/ai/start_here/sudo //treated as admin blob. Does whatever the fuck it wants
+	admin_override = TRUE
 
 #undef STATE_UNDER_ATTACK
 #undef STATE_FORTIFYING

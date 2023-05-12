@@ -1,4 +1,7 @@
 // Cleaned up the ancient code that used to be here (Convair880).
+TYPEINFO(/obj/item/mine)
+	mats = 6
+
 /obj/item/mine
 	name = "land mine (parent)"
 	desc = "You shouldn't be able to see this!"
@@ -8,7 +11,6 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "mine"
 	is_syndicate = TRUE
-	mats = 6
 	event_handler_flags = USE_FLUID_ENTER
 	var/suppress_flavourtext = FALSE
 	var/armed = FALSE
@@ -268,6 +270,9 @@
 
 		explosion(src, src.loc, 0, 1, 2, 3)
 
+TYPEINFO(/obj/item/mine/gibs)
+	mats = 0
+
 /obj/item/mine/gibs
 	name = "pustule"
 	desc = "Some kind of weird little meat balloon."
@@ -275,7 +280,6 @@
 	icon_state = "meatmine"
 	suppress_flavourtext = TRUE
 	is_syndicate = FALSE
-	mats = 0
 
 	armed
 		armed = TRUE

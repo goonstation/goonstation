@@ -61,7 +61,7 @@ task-webpack() {
 ## Runs a development server
 task-dev-server() {
   cd "${base_dir}"
-  yarn node packages/tgui-dev-server/index.esm.js "${@}"
+  yarn node --experimental-modules packages/tgui-dev-server/index.js "${@}"
 }
 
 ## Run a linter through all packages
@@ -81,6 +81,11 @@ task-test() {
 ## Mr. Proper
 task-clean() {
   cd "${base_dir}"
+  rm -rf ../browserassets/tgui/.tmp
+  rm -f ../browserassets/tgui/*.map
+  rm -f ../browserassets/tgui/*.chunk.*
+  rm -f ../browserassets/tgui/*.bundle.*
+  rm -f ../browserassets/tgui/*.hot-update.*
   ## Yarn artifacts
   rm -rf .yarn/cache
   rm -rf .yarn/unplugged
@@ -88,7 +93,7 @@ task-clean() {
   rm -f .yarn/build-state.yml
   rm -f .yarn/install-state.gz
   rm -f .yarn/install-target
-  rm -f .pnp.js
+  rm -f .pnp.*
   ## NPM artifacts
   rm -rf **/node_modules
   rm -f **/package-lock.json
@@ -122,6 +127,7 @@ task-install-git-hooks() {
   git config --replace-all merge.tgui-merge-bundle.driver \
     "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
   echo "tgui: Merge drivers have been successfully installed!"
+  exit 0
 }
 
 ## Bundle merge driver

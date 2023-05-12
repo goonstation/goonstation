@@ -1,5 +1,4 @@
 
-ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 /datum/manufacture/mechanics/blob
 	name = "blob"
 	item_paths = list("ORG|RUB")

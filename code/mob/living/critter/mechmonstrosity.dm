@@ -105,7 +105,7 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
-		HH.limb = new /datum/limb/gun/syringe	// if not null, the special limb to use when attack_handing
+		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 		HH.can_attack = 0
 		HH.can_range_attack = 1
@@ -370,9 +370,8 @@
 	icon_state = "syringeproj"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	power = 1
+	damage = 1
 	hit_ground_chance = 10
-	ks_ratio = 1
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15
@@ -452,10 +451,6 @@
 	New()
 		..()
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
-
-	Move()
-		playsound(src.loc, 'sound/machines/glitch4.ogg', 50, 0)
-		. = ..()
 
 	seek_target()
 

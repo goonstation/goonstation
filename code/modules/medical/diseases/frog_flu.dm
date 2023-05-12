@@ -11,6 +11,9 @@
 /datum/ailment/disease/frog_flu/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+	if(!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
 	if(affected_mob.health <= 15 && probmult(33))
 		boutput(affected_mob, "<span class='alert'>You feel the frog essence leaving your battered body.</span>")
 		affected_mob.cure_disease(D)

@@ -141,7 +141,8 @@
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
 							/obj/item/storage/box/body_bag,
-							/obj/item/caution = 6)
+							/obj/item/caution = 6,
+							/obj/item/disk/data/floppy/manudrive/cleaner_grenade)
 
 /obj/storage/closet/law
 	name = "\improper Legal closet"
@@ -164,6 +165,7 @@
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
+	mat_appearances_to_ignore = list("wood")
 
 	wood
 		icon_closed = "woodcoffin"
@@ -218,7 +220,8 @@
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
@@ -240,7 +243,7 @@
 /obj/storage/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = ANCHORED
 
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
@@ -400,7 +403,7 @@
 	icon_welded = "mantacontainerleft-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	open(var/entangleLogic, mob/user)
 		if (src.open)
@@ -581,7 +584,7 @@
 	icon_welded = "mantacontainerright-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"

@@ -28,9 +28,7 @@
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
-		//for fluids
-		if (src.active_liquid && src.active_liquid.group)
-			src.active_liquid.group.displace(src.active_liquid)
+		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
@@ -128,6 +126,9 @@
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
+	if (istype(src,/turf/simulated/wall/auto))
+		newlight.nostick = 0
+		newlight.autoposition()
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)
@@ -136,7 +137,6 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 			if (src.material)
@@ -173,7 +173,6 @@
 
 	else
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )

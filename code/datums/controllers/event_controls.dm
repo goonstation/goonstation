@@ -25,7 +25,8 @@ var/datum/event_controller/random_events
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 8 MINUTES
+	var/time_between_spawn_events_lower = 8 MINUTES
+	var/time_between_spawn_events_upper = 12 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -40,30 +41,32 @@ var/datum/event_controller/random_events
 
 	var/start_events_enabled = FALSE
 	var/list/start_events = list()
+	var/list/datum/random_event/delayed_start = list()
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/random_event/major))
+
+		for (var/X in concrete_typesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag)+concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn)-concrete_typesof(/datum/random_event/major/player_spawn/antag))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/minor))
+		for (var/X in concrete_typesof(/datum/random_event/minor))
 			var/datum/random_event/RE = new X
 			minor_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/special))
+		for (var/X in concrete_typesof(/datum/random_event/special))
 			var/datum/random_event/RE = new X
 			special_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/start))
+		for (var/X in concrete_typesof(/datum/random_event/start))
 			var/datum/random_event/RE = new X
 			start_events += RE
 
@@ -71,6 +74,9 @@ var/datum/event_controller/random_events
 		// prevent random events near round end
 		if (emergency_shuttle.location > SHUTTLE_LOC_STATION || current_state == GAME_STATE_FINISHED)
 			return
+
+		if (ticker.round_elapsed_ticks == 0)
+			roundstart_events()
 
 		if (ticker.round_elapsed_ticks >= major_events_begin)
 			if (ticker.round_elapsed_ticks >= next_major_event)
@@ -118,7 +124,7 @@ var/datum/event_controller/random_events
 			var/aap = get_alive_antags_percentage()
 			var/dcp = get_dead_crew_percentage()
 			if (aap < alive_antags_threshold && (ticker?.mode?.do_antag_random_spawns))
-				do_random_event(list(pick(antag_spawn_events)), source = "spawn_antag")
+				do_random_event(antag_spawn_events, source = "spawn_antag")
 				message_admins("<span class='internal'>Antag spawn event success!<br>[round(100 * aap, 0.1)]% of the alive crew were antags.</span>")
 			else if (dcp > dead_players_threshold)
 				do_random_event(player_spawn_events, source = "spawn_player")
@@ -127,7 +133,7 @@ var/datum/event_controller/random_events
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
 								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 
-		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)
@@ -148,6 +154,11 @@ var/datum/event_controller/random_events
 		else
 			logTheThing(LOG_DEBUG, null, "<b>Random Events:</b> do_random_event couldn't find any eligible events")
 
+	proc/roundstart_events()
+		for(var/datum/random_event/RE in delayed_start)
+			var/source = delayed_start[RE]
+			SPAWN(0) RE.event_effect(source)
+
 	proc/force_event(var/string,var/reason)
 		if (!string)
 			return
@@ -157,7 +168,7 @@ var/datum/event_controller/random_events
 		var/list/allevents = events | minor_events | special_events
 		for (var/datum/random_event/RE in allevents)
 			if (RE.name == string)
-				RE.event_effect(string,reason)
+				RE.event_effect(reason)
 				break
 
 	///////////////////
@@ -223,61 +234,23 @@ var/datum/event_controller/random_events
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
 		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if (href_list["TriggerEvent"] || href_list["TriggerMEvent"] || href_list["TriggerSEvent"] || href_list["TriggerStartEvent"])
+			var/datum/random_event/RE
+			if(href_list["TriggerEvent"])
+				RE = locate(href_list["TriggerEvent"]) in events
+			else if(href_list["TriggerMEvent"])
+				RE = locate(href_list["TriggerMEvent"]) in minor_events
+			else if(href_list["TriggerSEvent"])
+				RE = locate(href_list["TriggerSEvent"]) in special_events
+			else if(href_list["TriggerStartEvent"])
+				RE = locate(href_list["TriggerStartEvent"]) in start_events
 
-		if(href_list["TriggerEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerEvent"]) in events
 			if (!istype(RE,/datum/random_event/))
 				return
 			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
 			if (choice == "Yes")
 				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerMEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerMEvent"]) in minor_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerSEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerSEvent"]) in special_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
-						RE.admin_call(key_name(usr, 1))
-					else
-						RE.event_effect("Triggered by [key_name(usr)]")
-				else
-					RE.event_effect("Triggered by [key_name(usr)]")
-
-		else if(href_list["TriggerStartEvent"])
-			var/datum/random_event/RE = locate(href_list["TriggerStartEvent"]) in start_events
-			if (!istype(RE,/datum/random_event/))
-				return
-			var/choice = alert("Trigger a [RE.name] event?","Random Events","Yes","No")
-			if (choice == "Yes")
-				if (RE.customization_available)
-					var/choice2 = alert("Random or custom variables?","[RE.name]","Random","Custom")
-					if (choice2 == "Custom")
+					if (RE.always_custom || alert("Random or custom variables?","[RE.name]","Random","Custom") == "Custom")
 						RE.admin_call(key_name(usr, 1))
 					else
 						RE.event_effect("Triggered by [key_name(usr)]")

@@ -35,7 +35,7 @@
 
 /mob/living/carbon/human/cluwne/floor
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 
@@ -46,6 +46,7 @@
 			ailments.Cut()
 			real_name = name_override
 			name = name_override
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_HIDE_ICONS, "underfloor")
 
 	cluwnegib()
 		return
@@ -71,7 +72,7 @@
 // Come to collect a poor unfortunate soul
 /mob/living/carbon/human/satan
 	nodamage = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 0
 	plane = PLANE_UNDERFLOOR
 	New()
@@ -85,7 +86,7 @@
 			src.bioHolder.AddEffect("aura_fire", 0, 0, 1)
 
 /mob/living/carbon/human/satan/gimmick
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 	plane = PLANE_DEFAULT
 
@@ -185,14 +186,6 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	New()
 		. = ..()
 		src.ai = new /datum/aiHolder/wanderer(src)
-
-/datum/aiHolder/wanderer
-	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
-
 
 // how you gonna have father ted and father jack and not father dougal? smh
 
@@ -294,8 +287,8 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	for (var/obj/item/I in src.contents)
 		if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts)) continue //FUCK
 		hudlist += I
-		if (istype(I,/obj/item/storage))
-			hudlist += I.contents
+		if (I.storage)
+			hudlist += I.storage.get_contents()
 	hudlist += src.item_abilities
 
 	var/list/close_match = list()
@@ -391,8 +384,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		//src.equip_new_if_possible(/obj/item/clothing/suit, slot_wear_suit)
 		//src.equip_new_if_possible(/obj/item/clothing/head/biker_cap, slot_head)
 
-		var/obj/item/implant/access/infinite/shittybill/implant = new /obj/item/implant/access/infinite/shittybill(src)
-		implant.implanted(src, src)
+		new /obj/item/implant/access/infinite/shittybill(src)
 
 		var/obj/item/power_stones/G = new /obj/item/power_stones/Gall
 		G.set_loc(src)
@@ -926,9 +918,9 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 
 	switch(type)
 		if("spacer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(80)?SPACER_PICK("pejoratives")+" ":SPACER_PICK("superlatives")+" "][prob(10) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")]"
 		if("juicer")
-			constructed_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			constructed_name = "[prob(10) ? SPACER_PICK("honorifics")+" " :""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 
 	return constructed_name
 
@@ -947,7 +939,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
-		src.ai.enabled = 0
+		src.ai.disable()
 
 	initializeBioholder()
 		. = ..()
@@ -964,7 +956,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			say(pick("Oh no you don't - not today, not ever!","Nice try fuckass, but I ain't goin' down so easy!","IMMA SCREAM BUDDY!","You wanna fuck around bucko? You wanna try your luck?"))
 			src.ai.interrupt()
 		src.ai.target = M
-		src.ai.enabled = 1
+		src.ai.enable()
 
 // This is Big Yank, one of John Bill's old buds. Yank owes John a favor. He's a Juicer.
 /mob/living/carbon/human/big_yank
@@ -981,7 +973,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		src.ai = new /datum/aiHolder/human/yank(src)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
-		src.ai.enabled = 0
+		src.ai.disable()
 
 	initializeBioholder()
 		. = ..()
@@ -1001,7 +993,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 		if (prob(30))
 			say(pick("Hey you better back off [pick_string("johnbill.txt", "insults")]- I'm busy.","You feelin lucky, [pick_string("johnbill.txt", "insults")]?"))
 			src.ai.target = null
-			src.ai.enabled = 0
+			src.ai.disable()
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/tug/invoice))
@@ -1020,7 +1012,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 			say(pick("Oh no you don't - not today, not ever!","Nice try asshole, but I ain't goin' down so easy!","Gonna take more than that to take out THIS Juicer!","You wanna fuck around bucko? You wanna try your luck?"))
 			src.ai.interrupt()
 		src.ai.target = M
-		src.ai.enabled = 1
+		src.ai.enable()
 
 
 #undef BILL_PICK

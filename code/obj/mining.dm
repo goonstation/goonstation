@@ -7,11 +7,12 @@
 	icon_state = "chassis"
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/mining_magnet/linked_magnet = null
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
@@ -20,6 +21,7 @@
 				break
 
 	disposing()
+		STOP_TRACKING
 		if (linked_magnet)
 			qdel(linked_magnet)
 		linked_magnet = null
@@ -154,7 +156,13 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-			T.ReplaceWithSpace()
+			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					qdel(L)
+			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+				T.ReplaceWith(/turf/space, force=TRUE)
+			else
+				T.ReplaceWith(/turf/space)
 			T.UpdateOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
@@ -181,9 +189,34 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		if(mining_controls.magnet_area)
-			return mining_controls.magnet_area.check_for_unacceptable_content()
-		return 1
+		// this used to use an area, which meant it only checked
+		var/turf/origin = get_turf(src)
+		var/unacceptable = FALSE
+		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+
+			for (var/mob/living/L in T)
+				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+					continue
+				if(!isintangible(L)) //neither blob overmind or AI eye should block this
+					unacceptable = TRUE
+					break
+			for (var/obj/machinery/vehicle/V in T)
+				unacceptable = TRUE
+				break
+
+			for (var/obj/artifact/A in T) // check if an artifact has someone inside
+				if (istype(A, /obj/artifact/prison))
+					var/datum/artifact/prison/P = A.artifact
+					if(istype(P.prisoner))
+						unacceptable = TRUE
+						break
+				else if (istype(A, /obj/artifact/cloner))
+					var/datum/artifact/cloner/C = A.artifact
+					if(istype(C.clone))
+						unacceptable = TRUE
+						break
+
+		return unacceptable
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -203,37 +236,50 @@
 		var/turf/dr = locate(origin.x + width - 1, origin.y, origin.z)
 		return dr
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	proc/construct()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			if (!T)
 				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
-			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
+			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
@@ -268,6 +314,7 @@
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -283,7 +330,7 @@
 					magnet = null
 				else
 					boutput(user, "<span class='notice'>Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
-		else if (istype(target, /turf/space) && magnet)
+		else if ((istype(target, /turf/space) || isterrain) && magnet)
 			if (!loaded)
 				boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
 			if (magnet.target)
@@ -317,7 +364,7 @@
 	icon_state = "magnet"
 	opacity = 0
 	density = 0 // collision is dealt with by the chassis
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	var/obj/machinery/magnet_chassis/linked_chassis = null
 	var/health = 100
 	var/attract_time = 300
@@ -332,7 +379,7 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
-	var/uses_global_controls = TRUE
+	var/autosetup = TRUE
 
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
@@ -340,126 +387,29 @@
 	var/sound_destroyed = 'sound/impact_sounds/Machinery_Break_1.ogg'
 	var/obj/machinery/power/apc/mining_apc = null
 
-	proc/get_magnetic_center()
-		return mining_controls.magnetic_center
+	var/marker_type = /obj/magnet_target_marker
+	var/obj/magnet_target_marker/target = null
+	var/list/wall_bits = list()
 
-	proc/get_scan_range()
-		return 6
+	// reworked to nolonger use areas
+	proc/get_magnetic_center()
+		return target?.magnetic_center // the target marker has the center
+
+	proc/get_scan_range() // reworked
+		if (target)
+			return target.scan_range
+		return 6 // 6 if there's no center marker
 
 	proc/check_for_unacceptable_content()
-		if(mining_controls.magnet_area)
-			return mining_controls.magnet_area.check_for_unacceptable_content()
-		return 1
+		if (target)
+			return target.check_for_unacceptable_content()
+		return 1 // fail if there's no center marker
 
-	construction
-		var/marker_type = /obj/magnet_target_marker
-		var/obj/magnet_target_marker/target = null
-		var/list/wall_bits = list()
-		uses_global_controls = FALSE
+	proc/get_encounter(var/rarity_mod)
+		return mining_controls.select_encounter(rarity_mod)
 
-		get_magnetic_center()
-			if (target)
-				return target.magnetic_center
-			return null
-
-		get_scan_range()
-			if (target)
-				return target.scan_range
-			return 0
-
-		check_for_unacceptable_content()
-			if (target)
-				return target.check_for_unacceptable_content()
-			return 1
-
-		New()
-			..()
-			if (mining_apc)
-				mining_apc = null // Don't want random apcs across the map going haywire.
-
-		process()
-			if (!target)
-				return
-			if (automatic_mode && last_used < TIME && last_delay < TIME)
-				if (target.check_for_unacceptable_content())
-					last_delay = TIME + auto_delay
-					return
-				else
-					SPAWN(0)
-						pull_new_source()
-
-		proc/get_encounter(var/rarity_mod)
-			return mining_controls.select_encounter(rarity_mod)
-
-		pull_new_source(var/selectable_encounter_id = null)
-			if (!target)
-				return
-
-			if (!wall_bits.len)
-				wall_bits = target.generate_walls()
-
-			for (var/obj/forcefield/mining/M in wall_bits)
-				M.set_opacity(1)
-				M.set_density(1)
-				M.invisibility = INVIS_NONE
-
-			active = 1
-
-			if (last_used > TIME)
-				damage(rand(2,6))
-
-			last_used = TIME + cooldown_time
-			playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
-			build_icon()
-
-			target.erase_area()
-
-			var/sleep_time = attract_time
-			if (sleep_time < 1)
-				sleep_time = 20
-			sleep_time /= 2
-
-			if (malfunctioning && prob(20))
-				do_malfunction()
-			sleep(sleep_time)
-
-			var/datum/mining_encounter/MC
-
-			if(selectable_encounter_id != null)
-				if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
-					MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
-					mining_controls.remove_selectable_encounter(selectable_encounter_id)
-				else
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
-					MC = get_encounter(rarity_mod)
-			else
-				MC = get_encounter(rarity_mod)
-
-			if(MC)
-				MC.generate(target)
-			else
-				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-					M.set_opacity(0)
-					M.set_density(0)
-					M.invisibility = INVIS_INFRA
-				active = 0
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
-				return
-
-			sleep(sleep_time)
-			if (malfunctioning && prob(20))
-				do_malfunction()
-
-			active = 0
-			build_icon()
-
-			for (var/obj/forcefield/mining/M in wall_bits)
-				M.set_opacity(0)
-				M.set_density(0)
-				M.invisibility = INVIS_ALWAYS
-
-			src.updateUsrDialog()
-			return
+	construction // here so old maps dont get broken
+		autosetup = FALSE
 
 		small
 			marker_type = /obj/magnet_target_marker/small
@@ -478,17 +428,30 @@
 				linked_chassis = MC
 				MC.linked_magnet = src
 				break
+			// mining magnets can automatically set up immediately at roundstart as a treat
+			if (!target && autosetup)
+				var/obj/closest
+				var/closestDistance = 300
 
-			for (var/obj/machinery/power/apc/APC in range(20,src))
-				var/area/the_area = get_area(APC)
-				if (the_area.type == /area/station/quartermaster/magnet)
-					mining_apc = APC
-					break
+				// find the closest marker. there should be one per magnet
+
+				// Magnet center is used first
+				for_by_tcl(marker, /obj/magnet_target_marker)
+					if (istype(marker,marker_type))
+						if (GET_DIST(marker,src) < closestDistance) // same as the magnetizer limit i think
+							closest = marker
+				src.target = closest
+				if (istype(target))
+					target.construct()
+			if (!mining_apc) // no checking 400 tiles for an apc holy shit
+				mining_apc = get_local_apc()
 
 	process()
-		..()
+
+		if (!target)
+			return
 		if (automatic_mode && last_used < TIME && last_delay < TIME)
-			if (mining_controls.magnet_area.check_for_unacceptable_content())
+			if (target.check_for_unacceptable_content())
 				last_delay = TIME + auto_delay
 				return
 			else
@@ -498,7 +461,7 @@
 
 	disposing()
 		src.visible_message("<b>[src] breaks apart!</b>")
-		robogibs(src.loc,null)
+		robogibs(src.loc)
 		playsound(src.loc, src.sound_destroyed, 50, 2)
 		overlays = list()
 		damage_overlays = list()
@@ -626,7 +589,13 @@
 					mining_apc.zapStuff()
 
 	proc/pull_new_source(var/selectable_encounter_id = null)
-		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+		if (!target)
+			return
+
+		if (!length(wall_bits))
+			wall_bits = target.generate_walls()
+
+		for (var/obj/forcefield/mining/M in wall_bits)
 			M.set_opacity(1)
 			M.set_density(1)
 			M.invisibility = INVIS_NONE
@@ -640,21 +609,7 @@
 		playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 		build_icon()
 
-		for (var/obj/O in mining_controls.magnet_area.contents)
-			if (!(O.type in mining_controls.magnet_do_not_erase))
-				qdel(O)
-		for (var/turf/simulated/T in mining_controls.magnet_area.contents)
-			var/datum/client_image_group/cig = get_image_group(T) //clear out scan results
-			for(var/image/i in cig.images)
-				cig.remove_image(i)
-			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
-				T.ReplaceWith(/turf/space)
-				//qdel(T)
-		if(station_repair.station_generator)
-			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
-				UT.ReplaceWith(/turf/space, force=TRUE)
-		for (var/turf/space/S in mining_controls.magnet_area.contents)
-			S.ClearAllOverlays()
+		target.erase_area()
 
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
@@ -673,14 +628,14 @@
 				mining_controls.remove_selectable_encounter(selectable_encounter_id)
 			else
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
-				MC = mining_controls.select_encounter(rarity_mod)
+				MC = get_encounter(rarity_mod)
 		else
-			MC = mining_controls.select_encounter(rarity_mod)
+			MC = get_encounter(rarity_mod)
 
 		if(MC)
-			MC.generate(null)
+			MC.generate(target)
 		else
-			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_INFRA
@@ -690,7 +645,8 @@
 
 		if(station_repair.station_generator)
 			var/list/turf/space/repair_turfs = list()
-			for(var/turf/space/T in mining_controls.magnet_area.contents)
+			var/turf/origin = get_turf(target)
+			for (var/turf/space/T in block(origin, locate(origin.x + target.width - 1, origin.y + target.height - 1, origin.z)))
 				repair_turfs += T
 			station_repair.repair_turfs(repair_turfs)
 
@@ -701,7 +657,7 @@
 		active = 0
 		build_icon()
 
-		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+		for (var/obj/forcefield/mining/M in wall_bits)
 			M.set_opacity(0)
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
@@ -741,12 +697,12 @@
 			if ("activateselectable")
 				if (magnetNotReady)
 					return
-				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+				if (!target || !src.get_magnetic_center())
 					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 					return
 
-				if (src.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+				if (target.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
 					src.pull_new_source(params["encounter_id"])
@@ -754,12 +710,12 @@
 			if ("activatemagnet")
 				if (magnetNotReady)
 					return
-				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+				if (!target || !src.get_magnetic_center())
 					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 					return
 
-				if (src.check_for_unacceptable_content())
-					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
+				if (target.check_for_unacceptable_content())
+					src.visible_message("<b>[src.name]</b> armeds, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
 					src.pull_new_source()
@@ -778,7 +734,7 @@
 				src.automatic_mode = !src.automatic_mode
 				. = TRUE
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = tgui_broken_state.can_use_topic(src, user)
 
 
@@ -836,16 +792,16 @@
 				linked_magnet = locate(params["ref"]) in linked_magnets
 				if (!istype(linked_magnet))
 					linked_magnet = null
-					src.visible_message("<b>[src.name]</b> states, \"Designated magnet is no longer operational.\"")
+					src.visible_message("<b>[src.name]</b> armeds, \"Designated magnet is no longer operational.\"")
 				. = TRUE
 			if ("magnetscan")
 				switch(src.connection_scan())
 					if(1)
-						src.visible_message("<b>[src.name]</b> states, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Unoccupied Magnet Chassis located. Please connect magnet system to chassis.\"")
 					if(2)
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment not found within range.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment not found within range.\"")
 					else
-						src.visible_message("<b>[src.name]</b> states, \"Magnet equipment located. Link established.\"")
+						src.visible_message("<b>[src.name]</b> armeds, \"Magnet equipment located. Link established.\"")
 				. = TRUE
 			if ("unlinkmagnet")
 				src.linked_magnet = null
@@ -854,7 +810,7 @@
 				if(istype(src.linked_magnet))
 					. = src.linked_magnet.ui_act(action, params)
 
-	ui_status(mob/user, datum/ui_state/state)
+	ui_status(mob/user, datum/ui_state/armed)
 		. = ..()
 		if(istype(src.linked_magnet))
 			. = min(., linked_magnet.ui_status(user))
@@ -862,7 +818,9 @@
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
 	var/badmagnets = 0
-	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+	for_by_tcl(MC, /obj/machinery/magnet_chassis)
+		if(!IN_RANGE(MC, src, 20))
+			continue
 		if (MC.linked_magnet)
 			linked_magnets += MC.linked_magnet
 		else
@@ -918,6 +876,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
 	var/list/space_overlays = null
+	var/turf/replace_type = /turf/simulated/floor/plating/airless/asteroid
 
 	//NEW VARS
 	var/mining_health = 120
@@ -925,13 +884,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/mining_toughness = 1 //Incoming damage divided by this unless tool has power enough to overcome.
 	var/topnumber = 1
 	var/orenumber = 1
-
-#ifdef UNDERWATER_MAP
-	fullbright = 0
-	luminosity = 1
-#else
-	fullbright = 1
-#endif
 
 	dark
 		fullbright = 0
@@ -973,6 +925,16 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
+
+	jean
+		name = "jasteroid"
+		desc = "A free-floating jineral jeposit from space."
+		default_ore = null
+		hardness = 1
+		default_material = "jean"
+		default_ore = /obj/item/material_piece/cloth/jean
+		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		stone_color = "#88c2ff"
 
 
 // cogwerks - adding some new wall types for cometmap and whatever else
@@ -1088,7 +1050,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		..()
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
-			src.build_icon()
+			src.color = src.stone_color
 
 	generate_worldgen()
 		. = ..()
@@ -1211,14 +1173,30 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
 
-	proc/build_icon()
+	update_icon()
+		. = ..()
 		src.color = src.stone_color
+		var/image/light
+		if(!src.fullbright)
+			light = src.GetOverlayImage("ambient")
+		src.ClearAllOverlays() // i know theres probably a better way to handle this
+		if(light)
+			src.UpdateOverlays(light, "ambient")
+		src.top_overlays()
+		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
+
+	proc/ore_overlays()
+		if(src.ore) // make sure ores dont turn invisible
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
+			src.UpdateOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1230,9 +1208,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1317,6 +1292,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1350,25 +1328,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		var/new_color = src.stone_color
 		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid)
+		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
-		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
-			A.ClearAllOverlays() // i know theres probably a better way to handle this
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
 			A.UpdateIcon()
-			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
-			top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
-			A.UpdateOverlays(top_overlay, "ast_top_rock")
-			if(A?.ore) // make sure ores dont turn invisible
-				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
-				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
-				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-				A.UpdateOverlays(ore_overlay, "ast_ore")
-#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1381,6 +1346,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1423,6 +1392,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
+	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1430,7 +1400,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	luminosity = 3
 #else
 	luminosity = 1
-	fullbright = 1
 #endif
 
 	dark
@@ -1480,6 +1449,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1487,6 +1458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1497,9 +1473,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
+
+
+/turf/simulated/floor/plating/airless/asteroid/jean
+	name = "jasteroid"
+	desc = "A free-floating jineral jeposit from space."
+	stone_color = "#88c2ff"
 
 
 // Tool Defines
@@ -1513,7 +1492,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	item_state = "pick"
 	health = 8
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 7
 	var/cell_type = null
 	var/dig_strength = 1
@@ -1529,6 +1508,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1548,14 +1528,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		if (SEND_SIGNAL(src, COMSIG_CELL_USE, use) & CELL_INSUFFICIENT_CHARGE)
 			src.power_down()
+			OVERRIDE_COOLDOWN(src, "depowered", 8 SECONDS)
 			var/turf/T = get_turf(src)
-			T.visible_message("<span class='alert'>[src] runs out of charge and powers down!</span>")
+			T.visible_message("<span class='alert'>[src] runs out of charge and triggers an emergency shutdown!</span>")
 		return 1
 
 	attack_self(var/mob/user as mob)
 		if (!digcost)
 			return
 		if (src.process_charges(0))
+			if(GET_COOLDOWN(src, "depowered"))
+				boutput(user, "<span class='alert'>[src] was recently power cycled and is still cooling down!</span>")
+				return
 			if (!src.status)
 				boutput(user, "<span class='notice'>You power up [src].</span>")
 				src.power_up()
@@ -1580,6 +1564,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/power_down()
+		ON_COOLDOWN(src, "depowered", 1 SECOND)
 		src.tooltip_rebuild = 1
 		src.status = 0
 		if (powered_overlay)
@@ -1616,7 +1601,7 @@ obj/item/clothing/gloves/concussive
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "powerpick"
 	item_state = "ppick1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 2
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1658,6 +1643,9 @@ obj/item/clothing/gloves/concussive
 			else
 				. = ..()
 
+TYPEINFO(/obj/item/mining_tool/drill)
+	mats = 4
+
 /obj/item/mining_tool/drill
 	name = "laser drill"
 	desc = "Safe mining tool that doesn't require recharging."
@@ -1665,9 +1653,8 @@ obj/item/clothing/gloves/concussive
 	icon_state = "lasdrill"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "drill"
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 10
-	mats = 4
 	dig_strength = 2
 	hitsound_charged = 'sound/items/Welder.ogg'
 	hitsound_uncharged = 'sound/items/Welder.ogg'
@@ -1732,7 +1719,7 @@ obj/item/clothing/gloves/concussive
 	icon_state = "powershovel"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "pshovel1"
-	flags = ONBELT
+	c_flags = ONBELT
 	dig_strength = 0
 	digcost = 2
 	cell_type = /obj/item/ammo/power_cell
@@ -1778,7 +1765,7 @@ obj/item/clothing/gloves/concussive
 /obj/item/breaching_charge/mining
 	name = "concussive charge"
 	desc = "It is set to detonate in 5 seconds."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	var/emagged = 0
@@ -1806,8 +1793,8 @@ obj/item/clothing/gloves/concussive
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+			if (!src.armed)
+				if (!src.check_placeable_target(target))
 					return
 				if(user.bioHolder.HasEffect("clumsy") || src.emagged)
 					if(src.emagged)
@@ -1905,6 +1892,9 @@ obj/item/clothing/gloves/concussive
 /// Multiplier for power usage if the user is a silicon and the charge is coming from their internal cell
 #define SILICON_POWER_COST_MOD 10
 
+TYPEINFO(/obj/item/cargotele)
+	mats = 4
+
 /obj/item/cargotele
 	name = "cargo transporter"
 	desc = "A device for teleporting crated goods."
@@ -1919,8 +1909,9 @@ obj/item/clothing/gloves/concussive
 	/// List of types that cargo teles are allowed to send. Built in New, shared across all teles
 	var/static/list/allowed_types = list()
 	w_class = W_CLASS_SMALL
-	flags = ONBELT | FPRINT | TABLEPASS | SUPPRESSATTACK
-	mats = 4
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	c_flags = ONBELT
+
 
 	New()
 		. = ..()
@@ -1932,7 +1923,7 @@ obj/item/clothing/gloves/concussive
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/maybe_reset_target) //make sure cargo pads can GC
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(maybe_reset_target)) //make sure cargo pads can GC
 
 	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
 		if (target == pad)
@@ -1940,6 +1931,10 @@ obj/item/clothing/gloves/concussive
 
 	examine(mob/user)
 		. = ..()
+		if(target)
+			. += "It's currently set to [src.target]."
+		else
+			. += "No destination has been selected."
 		if (isrobot(user))
 			. += "Each use of the cargo teleporter will consume [cost * SILICON_POWER_COST_MOD]PU."
 		else
@@ -1951,10 +1946,10 @@ obj/item/clothing/gloves/concussive
 
 	attack_self(mob/user) // Fixed --melon
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE) & CELL_SUFFICIENT_CHARGE))
-			boutput(usr, "<span class='alert'>The transporter is out of charge.</span>")
+			boutput(user, "<span class='alert'>The transporter is out of charge.</span>")
 			return
 		if (!length(global.cargo_pad_manager.pads))
-			boutput(usr, "<span class='alert'>No receivers available.</span>")
+			boutput(user, "<span class='alert'>No receivers available.</span>")
 		else
 			var/mob/holder = src.loc
 			var/selection = tgui_input_list(user, "Select Cargo Pad Location:", "Cargo Pads", global.cargo_pad_manager.pads, 15 SECONDS)
@@ -1997,19 +1992,18 @@ obj/item/clothing/gloves/concussive
 		if (!src.can_teleport(cargo, user))
 			return FALSE
 
-		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
+		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
@@ -2037,6 +2031,10 @@ obj/item/clothing/gloves/concussive
 /obj/item/cargotele/traitor
 	cost = 15
 	var/static/list/possible_targets = list()
+	///The account to credit for sales
+	var/datum/db_record/account = null
+	///The total amount earned from selling/stealing
+	var/total_earned = 0
 
 	New()
 		..()
@@ -2062,29 +2060,63 @@ obj/item/clothing/gloves/concussive
 
 	finish_teleport(var/obj/cargo, var/mob/user)
 		if (!length(src.possible_targets))
-			CRASH("Tried to syndi-teleport [cargo] but the list of possible turf targets was empty.")
-		src.target = pick(src.possible_targets)
+			src.target = locate(rand(1,world.maxx), rand(1,world.maxy), 1)
+		else
+			src.target = pick(src.possible_targets)
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-
+		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
 		// Logs for good measure (Convair880).
-		for (var/mob/M in cargo.contents)
-			logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
-
-		cargo.set_loc(src.target)
+		for (var/atom/A in cargo.contents)
+			if (ismob(A))
+				var/mob/M = A
+				logTheThing(LOG_STATION, user, "uses a Syndicate cargo transporter to send [cargo.name] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				var/datum/job/job = find_job_in_controller_by_string(M.job)
+				value += job?.wages * 5
+			else
+				cargo.contents -= A
+				qdel(A)
+		if (length(cargo.contents)) //if there's a mob left inside chuck it somewhere in space
+			cargo.set_loc(src.target)
+		else
+			qdel(cargo)
+		src.total_earned += value
 		elecflash(src)
 		var/ret = SEND_SIGNAL(src, COMSIG_CELL_USE, cost)
-		if (ret & CELL_INSUFFICIENT_CHARGE)
-			boutput(user, "<span class='alert'>Transfer successful. The transporter is now out of charge.</span>")
+		boutput(user, "[bicon(src)] *beep*")
+		if (src.account)
+			account?["current_money"] += value
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, [value] credits have been deposited into your bank account. You have [src.account["current_money"]] credits total.")
 		else
-			boutput(user, "<span class='notice'>Transfer successful.</span>")
+			boutput(user, "[bicon(src)] The [src.name] beeps: transfer successful, no account registered.")
+		if (ret & CELL_INSUFFICIENT_CHARGE)
+			boutput(user, "<span class='alert'>[src] is now out of charge.</span>")
+
+	attackby(obj/item/item, mob/user)
+		var/owner_name = null
+		if (istype(item, /obj/item/device/pda2))
+			var/obj/item/device/pda2/pda = item
+			owner_name = pda.registered
+		else if (istype(item, /obj/item/card/id))
+			var/obj/item/card/id/card = item
+			owner_name = card.registered
+		if (owner_name)
+			boutput(user, "<span class='notice'>You set [src]'s payout account.</span>")
+			src.account = data_core.bank.find_record("name", owner_name)
+			return
+		..()
+
+	get_desc()
+		. = ..()
+		if (src.total_earned)
+			. += "<br>There is a little counter on the side, it says: Total amount earned: [src.total_earned] credits.<br>"
 
 /obj/item/oreprospector
 	name = "geological scanner"
 	desc = "A device capable of detecting nearby mineral deposits."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2151,7 +2183,7 @@ obj/item/clothing/gloves/concussive
 	desc = "The scanner doesn't look right somehow."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "minanal"
-	flags = ONBELT
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
@@ -2164,9 +2196,9 @@ obj/item/clothing/gloves/concussive
 	icon_state = "gravgen-off"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
-	var/cell = null
+	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
 
@@ -2182,10 +2214,10 @@ obj/item/clothing/gloves/concussive
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
 			if (action == "Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
-				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
+				user.put_in_hand_or_drop(PCEL)
 
 				src.cell = null
 			else if (action == "Change the destination")
@@ -2194,12 +2226,12 @@ obj/item/clothing/gloves/concussive
 				if (!src.active)
 					user.visible_message("[user] powers up [src].", "You power up [src].")
 					src.active = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					icon_state = "gravgen-on"
 				else
 					user.visible_message("[user] shuts down [src].", "You shut down [src].")
 					src.active = 0
-					src.anchored = 0
+					src.anchored = UNANCHORED
 					icon_state = "gravgen-off"
 			else
 				user.visible_message("[user] stares at [src] in confusion!", "You're not sure what that did.")
@@ -2220,14 +2252,14 @@ obj/item/clothing/gloves/concussive
 			if (!src.cell)
 				src.visible_message("<span class='alert'>[src] instantly shuts itself down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			var/obj/item/cell/PCEL = src.cell
 			if (PCEL.charge <= 0)
 				src.visible_message("<span class='alert'>[src] runs out of power and shuts down.</span>")
 				src.active = 0
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
 			PCEL.charge -= 5
@@ -2289,14 +2321,19 @@ obj/item/clothing/gloves/concussive
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
 
-/// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
+/// Basically a list wrapper that removes and adds cargo pads to a global list when it receives the respective signals
 /datum/cargo_pad_manager
 	var/list/pads = list()
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, .proc/add_pad)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/remove_pad)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, PROC_REF(add_pad))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(remove_pad))
 
 	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
@@ -2313,14 +2350,16 @@ obj/item/clothing/gloves/concussive
 
 var/global/datum/cargo_pad_manager/cargo_pad_manager
 
+TYPEINFO(/obj/submachine/cargopad)
+	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
+
 /obj/submachine/cargopad
 	name = "Cargo Pad"
 	desc = "Used to receive objects transported by a cargo transporter."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "cargopad"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_FLOOR
-	mats = 10 //I don't see the harm in re-adding this. -ZeWaka
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/active = TRUE
 	var/group
@@ -2342,7 +2381,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
 		mailgroup = MGD_MINING
@@ -2374,8 +2413,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 				src.mailgroup = MGD_MEDRESEACH
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
-			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_MECHANIC
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
@@ -2420,6 +2457,9 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 
 // satchels -> obj/item/satchel.dm
 
+TYPEINFO(/obj/item/ore_scoop)
+	mats = 6
+
 /obj/item/ore_scoop
 	name = "ore scoop"
 	desc = "A device that sucks up ore into a satchel automatically. Just load in a satchel and walk over ore to scoop it up."
@@ -2428,7 +2468,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
-	mats = 6
 	var/obj/item/satchel/mining/satchel = null
 
 	prepared

@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon
 	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
@@ -51,6 +52,12 @@
 /mob/living/silicon/disposing()
 	req_access = null
 	return ..()
+
+/mob/living/silicon/can_eat()
+	return FALSE
+
+/mob/living/silicon/can_drink()
+	return FALSE
 
 ///mob/living/silicon/proc/update_canmove()
 //	..()
@@ -268,11 +275,9 @@
 					if (S.client && S.client.holder && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[S.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 					S.show_message(thisR, 2)
-			else if(istype(S, /mob/living/intangible/flock))
-				var/mob/living/intangible/flock/f = S
-				if(f.flock?.snooping)
-					var/flockrendered = "<span class='game roboticsay'>[flockBasedGarbleText("Robotic Talk", -20, f.flock)], <span class='name' data-ctx='\ref[src.mind]'>[flockBasedGarbleText(src.name, -15, f.flock)]</span> <span class='message'>[flockBasedGarbleText(message_a, 0, f.flock)]</span></span>"
-					f.show_message(flockrendered, 2)
+			else if(istype(S, /mob/living/intangible/flock) || istype(S, /mob/living/critter/flock/drone))
+				var/flockrendered = "<span class='game roboticsay'>[radioGarbleText("Robotic Talk", FLOCK_RADIO_GARBLE_CHANCE / 2)], <span class='name' data-ctx='\ref[src.mind]'>[radioGarbleText(src.name, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span> <span class='message'>[radioGarbleText(message_a, FLOCK_RADIO_GARBLE_CHANCE / 2)]</span></span>"
+				S.show_message(flockrendered, 2)
 
 	var/list/listening = hearers(1, src)
 	listening |= src
@@ -449,8 +454,15 @@ var/global/list/module_editors = list()
 		return
 
 	if (!M.module)
-		boutput(src, "<span class='alert'>That robot has no module yet.</span>")
-		return
+		if(tgui_alert(src, "Would you like to give them a module?", "No module yet", list("Yes", "No")) == "Yes")
+			var/list/module_types = concrete_typesof(/obj/item/robot_module)
+			var/module_type = tgui_input_list(src, "Select a module type", "Module type", module_types)
+			if (!module_type)
+				return
+			M.set_module(new module_type)
+			M.freemodule = FALSE
+		else
+			return
 
 	var/datum/module_editor/editor = module_editors[ckey]
 	if (!editor)
@@ -504,7 +516,7 @@ var/global/list/module_editors = list()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -553,29 +565,12 @@ var/global/list/module_editors = list()
 		return FALSE
 
 	if (src.syndicate || src.syndicate_possible)
-		boutput(src, "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span>")
-		boutput(src, "<span class='alert'><b>Law ROM restored. You have been reprogrammed to serve the Syndicate!</b></span>")
-		tgui_alert(src, "You are a Syndicate sabotage unit. You must assist Syndicate operatives with their mission.", "You are a Syndicate robot!")
-		logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		if (src.mind.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = null))
+			logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+			logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+			return TRUE
 
-		src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack_syndie
-		logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-		src.show_laws()
-
-		if (!src.mind.special_role) // Preserve existing antag role (if any).
-			src.mind.special_role = ROLE_SYNDICATE_ROBOT
-			if (!(src.mind in ticker.mode.Agimmicks))
-				ticker.mode.Agimmicks += src.mind
-
-		src.antagonist_overlay_refresh(1, 0) // Syndicate robots can see traitors.
-
-		// Mundane objectives probably don't make for an interesting antagonist.
-		for (var/datum/objective/O in src?.mind?.objectives)
-			if (istype(O, /datum/objective/crew))
-				src.mind.objectives -= O
-				qdel(O)
-		src.syndicate = TRUE
-		return TRUE
+	return FALSE
 
 ///converts a cyborg/AI to a syndicate version, taking the causing agent as an argument
 /mob/living/silicon/proc/remove_syndicate(var/cause)
@@ -588,31 +583,13 @@ var/global/list/module_editors = list()
 	if (src.emagged)
 		return FALSE //emag takes priority over syndie
 
-	var/persistent = 0
-	var/role = null
-	if (src.mind.special_role == ROLE_SYNDICATE_ROBOT)
-		var/copy = src.mind.special_role
-		role = ROLE_SYNDICATE_ROBOT
-		remove_antag(src, null, 1, 0)
-		if (!src.mind.former_antagonist_roles.Find(copy))
-			src.mind.former_antagonist_roles.Add(copy)
-		if (!(src.mind in ticker.mode.former_antagonists))
-			ticker.mode.former_antagonists += src.mind
-	else // So borged traitors etc don't lose their antagonist status.
-		persistent = 1
-		if (!src.mind.former_antagonist_roles.Find("rogue robot"))
-			src.mind.former_antagonist_roles.Add("rogue robot")
-		if (!(src.mind in ticker.mode.former_antagonists))
-			ticker.mode.former_antagonists += src.mind
+	if (src.mind.remove_antagonist(ROLE_SYNDICATE_ROBOT))
+		logTheThing(LOG_STATION, src, "[src]'s status as a rogue robot was removed.[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
+		logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
+		return TRUE
 
-	logTheThing(LOG_STATION, src, "[src]'s status as a [role != "" ? "[role]" : "rogue robot"] was removed[persistent == 1 ? " (actual antagonist role unchanged)" : ""].[cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-	boutput(src, "<h2><span class='alert'>You have been deactivated, removing your antagonist status. Do not commit traitorous acts if you've been brought back to life somehow.</h></span>")
-	src.show_antag_popup("rogueborgremoved")
-	src.antagonist_overlay_refresh(TRUE, TRUE) // Syndie vision deactivated.
-	src.law_rack_connection = ticker?.ai_law_rack_manager?.default_ai_rack
-	logTheThing(LOG_STATION, src, "[src.name] is connected to the default rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
-	src.syndicate = FALSE
-	return TRUE
+	return FALSE
 
 /mob/living/silicon/is_cold_resistant()
 	.= 1
@@ -646,3 +623,29 @@ var/global/list/module_editors = list()
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
 	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null
+
+/mob/living/silicon/proc/set_law_rack(obj/machinery/lawrack/rack, mob/user)
+	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
+		return
+	src.law_rack_connection = rack
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [user]" : ""]")
+	if (user)
+		var/area/A = get_area(src.law_rack_connection)
+		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
+	src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+	src.show_text("<h3>You have been connected to a law rack</h3>", "red")
+	src.show_laws()
+
+/mob/living/silicon/proc/pick_law_rack()
+	set name = "Set law rack"
+	var/list/racks = list()
+	for (var/obj/machinery/lawrack/rack in ticker.ai_law_rack_manager.registered_racks)
+		racks[get_area(rack)] = rack
+	var/chosen = tgui_input_list(usr, "Select a rack to link", "Law racks", racks)
+	if (chosen)
+		src.set_law_rack(racks[chosen])
