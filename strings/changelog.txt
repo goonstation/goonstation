@@ -1,5 +1,9 @@
 
 (t)thu may 11 23
+(u)DimWhat
+(p)14047
+(e)🪲🎨🎩👽|C-Bug, C-Sprites, A-Clothing, A-Mutantraces
+(+)Added a few extra monkey belt sprites
 (u)Wisemonster
 (p)13855
 (e)⚖📦|C-Balance, A-Game-Objects
