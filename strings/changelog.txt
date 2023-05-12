@@ -1,4 +1,9 @@
 
+(t)fri may 12 23
+(u)Colossusqw
+(p)14064
+(e)⚖|C-Balance
+(+)Sticky floors, such as the ones made by glue, now slow you down to a noticeable amount.
 (t)thu may 11 23
 (u)aloe
 (*)The cape changes have been expanded to scarves and all the other capes (loot crate ones and vampire cape, mostly).
