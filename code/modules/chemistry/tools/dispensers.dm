@@ -401,6 +401,51 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/chemicalbarrel
+	name = "chemical barrel"
+	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "barrel"
+	amount_per_transfer_from_this = 25
+	p_class = 3
+	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
+			var/t = tgui_input_text(user, "Enter a label for the barrel.", "Label", "chemical", 24)
+			if(t && t != src.name)
+				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+			t = copytext(strip_html(t), 1, 24)
+			if (isnull(t) || !length(t) || t == " ")
+				return
+			if (!findtext(t, "barrel"))     //so we don't see lube barrel barrel
+				t += " barrel"          	//so it's clear it's a barrel, and not just "lube"
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.name = t
+
+			src.desc = "For storing medical chemicals and less savory things."
+		else
+			..()
+
+	bullet_act()
+		..()
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
+	red
+		icon_state = "barrel_red"
+	yellow
+		icon_state = "barrel_yellow"
+	oil
+		icon_state = "barrel_flamable"
+		name = "oil barrel"
+		desc = "A barrel for storing large amounts of oil."
+
+		New()
+			..()
+			reagents.add_reagent("oil", 4000)
+
 /obj/reagent_dispensers/beerkeg/rum
 	name = "barrel of rum"
 	desc = "It better not be empty."
@@ -625,4 +670,3 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.underlays += src.fluid_image
 		else
 			src.icon_state = initial(src.icon_state)
-
