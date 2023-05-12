@@ -1,5 +1,9 @@
 
 (t)fri may 12 23
+(u)DimWhat
+(p)13911
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Added some new sprites to some special keys.
 (u)Hans
 (p)11905
 (e)🆕🎨⚖⚗|C-Feature, C-Sprites, C-Balance, A-Chemistry
