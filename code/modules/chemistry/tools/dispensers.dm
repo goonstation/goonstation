@@ -420,7 +420,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			if (isnull(t) || !length(t) || t == " ")
 				return
 			if (!findtext(t, "barrel"))     //so we don't see lube barrel barrel
-				t = addtext(t, " barrel")	//so it's clear it's a barrel, and not just "lube"
+				t += " barrel"          	//so it's clear it's a barrel, and not just "lube"
 			if (!in_interact_range(src, user) && src.loc != user)
 				return
 
