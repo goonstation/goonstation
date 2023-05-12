@@ -1,5 +1,9 @@
 
 (t)thu may 11 23
+(u)Wisemonster
+(p)13855
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Replaced the capsaicin grenades in the security weapon vendor with flashbangs.
 (u)Flaborized
 (p)14003
 (e)🆕🎨|C-Feature, C-Sprites
