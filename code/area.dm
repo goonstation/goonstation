@@ -147,11 +147,6 @@ TYPEINFO(/area)
 	/// set to TRUE to inhibit attacks in this area.
 	var/sanctuary = 0
 
-	/// set to TRUE to inhibit entrance into this area, may not work completely yet.
-	var/blocked = 0
-
-	var/list/blockedTimers
-
 	/// for Battle Royale gamemode
 	var/storming = 0
 
@@ -167,18 +162,7 @@ TYPEINFO(/area)
 	var/allowed_restricted_z = FALSE
 
 	proc/CanEnter(var/atom/movable/A)
-		if( blocked )
-			if( ismob(A) )
-				var/mob/M = A
-				if( !M.client )
-					return 0
-				if( !blockedTimers ) blockedTimers = list()
-				if( !blockedTimers[ M.client.key ] || blockedTimers[ M.client.key ] < world.time )
-					return 0
-			else
-				return 0
-		else
-			return 1
+		return 1
 
 	/// Gets called when a movable atom enters an area.
 	Entered(var/atom/movable/A, atom/oldloc)
@@ -217,11 +201,10 @@ TYPEINFO(/area)
 					//If it's a real fuckin player
 					if (enteringM.ckey && enteringM.client)
 						if( !CanEnter( enteringM ) )
-
 							var/target = get_turf(oldloc)
 							enteringM.set_loc(target)
 						var/area/oldarea = get_area(oldloc)
-						if( sanctuary && !blocked && !(oldarea.sanctuary))
+						if( sanctuary && CanEnter(enteringM) && !(oldarea.sanctuary))
 							boutput( enteringM, "<b style='color:#31BAE8'>You are entering a sanctuary zone. You cannot be harmed by other players here.</b>" )
 						if (src.name != "Space" || src.name != "Ocean") //Who cares about making space active gosh
 							src.population |= enteringM.mind
@@ -259,11 +242,8 @@ TYPEINFO(/area)
 				for (var/mob/exitingM in exitingMobs)
 					if (exitingM.ckey && exitingM.client && exitingM.mind)
 						var/area/the_area = get_area(exitingM)
-						if( sanctuary && !blocked && !(the_area.sanctuary) )
+						if( sanctuary && !CanEnter(exitingM) && !(the_area.sanctuary) )
 							boutput( exitingM, "<b style='color:#31BAE8'>You are leaving the sanctuary zone.</b>" )
-						if( blocked && !exitingM.client.holder )
-							blockedTimers[ exitingM.client.key ] = world.time + 300
-							boutput( exitingM, "<b class='alert'>If you stay out of [name] for 30 seconds, you will be prevented from re-entering.</b>" )
 
 						if (src.name != "Space" || src.name != "Ocean")
 							if (exitingM.mind in src.population)
@@ -3899,12 +3879,12 @@ ABSTRACT_TYPE(/area/mining)
 /// Shamecube area, applied on the admin command. Blocks entry.
 /area/shamecube
 	name = "Shame Cube"
-	blocked = 1
 	sanctuary = 1
 	teleport_blocked = 1
 	mouse_opacity = 1
 	luminosity = 1
 	force_fullbright = 1
+
 	CanEnter(var/atom/movable/A)
 		if(ismob(A) && A:client && A:client:player && A:client:player:shamecubed)
 			return 1
@@ -3914,11 +3894,11 @@ ABSTRACT_TYPE(/area/mining)
 /// Unshame cube area, replaces the previous shamecube area.
 /area/shamecube/unshamefulcube
 	name = "Unshameful Cube"
-	blocked = 0
 	sanctuary = 0
 	mouse_opacity = 0
 	luminosity = 0
 	force_fullbright = 0
+
 	CanEnter()
 		return 1
 

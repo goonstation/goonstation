@@ -278,7 +278,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 /area/centcom/power
 	name = "NT Power Supply"
 	icon_state = "green"
-	blocked = 1
+
+	CanEnter()
+		return 1
 
 /area/centcom/datacenter
 	name = "NT Data Center"

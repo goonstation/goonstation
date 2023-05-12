@@ -1129,7 +1129,7 @@
 
 	var/area/MA = get_area(user)
 	var/area/OA = get_area(src)
-	if( OA && MA && OA != MA && OA.blocked )
+	if( OA && MA && OA != MA && OA.CanEnter())
 		boutput( user, "<span class='alert'>You cannot pick up items from outside a restricted area.</span>" )
 		return 0
 
