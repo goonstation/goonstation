@@ -412,7 +412,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
-			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			var/t = tgui_input_text(user, "Enter a label for the barrel.", "Label", "chemical", 24)
 			if(t && t != src.name)
 				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
 			t = copytext(strip_html(t), 1, 24)
