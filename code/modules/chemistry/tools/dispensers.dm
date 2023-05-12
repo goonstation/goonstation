@@ -409,10 +409,9 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	amount_per_transfer_from_this = 25
 	p_class = 3
 	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
-	var/labeled = FALSE
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/pen) && !src.labeled)
+		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
 			var/t = input(user, "Enter label", "Label", src.name) as null|text
 			if(t && t != src.name)
 				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
@@ -425,7 +424,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 				return
 
 			src.name = t
-			src.labeled = TRUE
+
 			src.desc = "For storing medical chemicals and less savory things."
 		else
 			..()
@@ -441,7 +440,6 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	oil
 		icon_state = "barrel_flamable"
 		name = "oil barrel"
-		labeled = TRUE
 		desc = "A barrel for storing large amounts of oil."
 
 		New()
