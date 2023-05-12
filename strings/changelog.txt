@@ -1,5 +1,8 @@
 
 (t)thu may 11 23
+(u)aloe
+(*)The cape changes have been expanded to scarves and all the other capes (loot crate ones and vampire cape, mostly).
+(+)You can now wear capes and scarves in either the back or suit slot. Wearing them in the back slot layers them higher than in the suit slot.
 (u)DimWhat
 (p)14047
 (e)🪲🎨🎩👽|C-Bug, C-Sprites, A-Clothing, A-Mutantraces
