@@ -154,6 +154,7 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
+	faction = MOB_AI_FACTION_WRAITH
 	health_brute = 15
 	health_burn = 15
 
@@ -165,6 +166,7 @@
 			if (islivingobject(C)) continue //don't attack wraith objects
 			if (istype(C, /mob/living/critter/wraith)) continue // don't attack wraith summons
 			if (istype(C, /mob/living/critter/skeleton)) continue
+			if (src.faction != null && (C.faction & src.faction != 0)) continue //Checks if they are in the same faction
 			. += C
 
 	death()
