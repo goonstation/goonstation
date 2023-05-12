@@ -51,6 +51,10 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
 
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -179,6 +183,10 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 
 	seek_food_target(var/range = 5)
 		. = list()
