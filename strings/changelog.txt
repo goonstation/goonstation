@@ -1,5 +1,9 @@
 
 (t)fri may 12 23
+(u)Hans
+(p)11905
+(e)🆕🎨⚖⚗|C-Feature, C-Sprites, C-Balance, A-Chemistry
+(*)Science can now fabricate unwieldy reagent barrels to aid in chemical production.
 (u)Colossusqw
 (p)14064
 (e)⚖|C-Balance
