@@ -429,7 +429,6 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.desc = "For storing medical chemicals and less savory things."
 		else
 			..()
-			return
 
 	bullet_act()
 		..()
