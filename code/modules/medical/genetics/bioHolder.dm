@@ -153,7 +153,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 								 "fart2" = 'sound/voice/farts/fart2.ogg', \
 								 "fart3" = 'sound/voice/farts/fart3.ogg', \
 								 "fart4" = 'sound/voice/farts/fart4.ogg', \
-								 "fart5" = 'sound/voice/farts/fart5.ogg')
+								 "fart5" = 'sound/voice/farts/fart5.ogg', \
+								 "fart6" = 'sound/voice/farts/fart7.ogg')
 
 	var/list/screamsounds = list("male" = 'sound/voice/screams/male_scream.ogg',\
 								 "female" = 'sound/voice/screams/female_scream.ogg', \
