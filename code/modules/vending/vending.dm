@@ -619,7 +619,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
 							product = R
-					var/atom/movable/vended = src.vend_product(product)
+					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
@@ -638,7 +638,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
 	. = TRUE
 
-/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
+/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product, mob/user)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
 		return
 	var/atom/movable/vended
@@ -3196,3 +3196,47 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
+
+/obj/machinery/vending/player/chemicals
+	name = "medical supply cabinet"
+	desc = ""
+	icon_state = "medchem"
+	acceptcard = FALSE
+	pay = FALSE
+	req_access = list(access_chemistry, access_medical_lockers)
+	///Stuff wot can be put in
+	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/patch,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/ampoule,
+	)
+
+	New()
+		..()
+		START_TRACKING
+		if (length(by_type[/obj/machinery/vending/player/chemicals]))
+			var/obj/machinery/vending/player/chemicals/other = by_type[/obj/machinery/vending/player/chemicals][1]
+			src.player_list = other.player_list
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	vend_product(datum/data/vending_product/product, mob/user)
+		. = ..()
+		SPAWN(0)
+			for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
+				linked.update_static_data(user)
+
+	attackby(obj/item/W, mob/user)
+		for (var/type in src.allowed_types)
+			if (istype(W, type))
+				src.addProduct(W, user)
+				src.update_static_data(user)
+				for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
+					linked.update_static_data(user)
+				return
+		if (istype(W, /obj/item/screwdriver)) //no
+			return
+		. = ..()
