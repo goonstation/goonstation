@@ -165,14 +165,13 @@
 	icon_state = "rockworm"
 	icon_state_dead = "rockworm-dead"
 	hand_count = 1
-	can_lie = FALSE
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
 	health_brute = 40
 	health_brute_vuln = 1
 	health_burn = 40
-	health_brute_vuln = 0.1
+	health_burn_vuln = 0.1
 	ai_type = /datum/aiHolder/rockworm
 	is_npc = TRUE
 	ai_retaliates = TRUE
