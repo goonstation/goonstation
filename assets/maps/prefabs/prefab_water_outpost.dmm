@@ -96,7 +96,7 @@
 /area/prefab/deserted_outpost)
 "t" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/prefab/deserted_outpost)
 "u" = (

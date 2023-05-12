@@ -1460,7 +1460,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
@@ -2076,7 +2076,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "hK" = (
@@ -2608,7 +2608,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "jT" = (
@@ -3978,7 +3978,7 @@
 /area/pod_wars/asteroid/major/maj_3)
 "pb" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pd" = (
@@ -4882,7 +4882,7 @@
 	dir = 1
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
@@ -5690,7 +5690,7 @@
 	dir = 1
 	},
 /obj/item/storage/box/record/radio/guitar,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -6210,7 +6210,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "wZ" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -12967,7 +12967,7 @@
 /obj/window/cubicle{
 	dir = 1
 	},
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
@@ -13711,7 +13711,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "ZS" = (

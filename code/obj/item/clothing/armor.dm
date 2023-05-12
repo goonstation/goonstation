@@ -477,3 +477,19 @@
 		setProperty("disorient_resist", 10)
 		setProperty("movespeed", 0.45)
 		setProperty("exploprot", 60)
+
+/obj/item/clothing/suit/armor/hoscape
+	name = "Head of Security's cape"
+	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
+	icon_state = "hos-cape"
+	item_state = "hos-cape"
+	hides_from_examine = 0
+	wear_layer = MOB_GLASSES_LAYER2
+	c_flags = ONBACK
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 35)

@@ -474,7 +474,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			"img" = R.getBase64Img(),
 			"infinite" = R.infinite
 		))
-
+	if (!length(plist)) //this is needed to make TGUI clear out the list
+		.["productList"] = list()
 
 /obj/machinery/vending/ui_data(mob/user)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)

@@ -236,7 +236,7 @@
 /area/prefab/torpedo_deposit)
 "uL" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/wood/two{
 	name = "wooden floor"
 	},

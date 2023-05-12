@@ -56,7 +56,7 @@
 /area/dmm_suite/clear_area)
 "K" = (
 /obj/storage/crate/trench_loot/drug,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)

@@ -2445,7 +2445,7 @@
 /area/listeningpost)
 "agE" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "agJ" = (
@@ -6036,7 +6036,7 @@
 /area/station/crew_quarters/captain)
 "asq" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -31323,7 +31323,7 @@
 /area/station/hallway/primary/south)
 "nva" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
