@@ -112,7 +112,7 @@
 			pounce.handleCast(target)
 			return TRUE
 
-	valid_target(var/mob/living/C) //apparently they don't have the check for isdead, so gotta do this
+	valid_target(mob/living/C) //apparently they don't have the check for isdead, so gotta do this
 		if (is_incapacitated(C)) return FALSE
 		return ..()
 
