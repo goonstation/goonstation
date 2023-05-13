@@ -584,8 +584,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	//Let's unlock this early I guess.
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card))
+			W = id_card
 		if (istype(W, /obj/item/card/id))
 			if (!src.check_access(W))
 				boutput(user, "<span class='alert'>Access Denied.</span>")

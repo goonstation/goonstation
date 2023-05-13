@@ -3587,7 +3587,8 @@ var/global/noir = 0
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Original Position</th><th>Position</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(H.wear_id, /obj/item/card/id) || istype(H.wear_id, /obj/item/device/pda2)) ? "[H.wear_id:assignment]" : "Unknown Position"]</td></tr>"
+								var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(id_card)) ? "[id_card.assignment]" : "Unknown Position"]</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")

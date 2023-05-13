@@ -590,8 +590,9 @@
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
-	if (istype(I, /obj/item/device/pda2) && I:ID_card)
-		I = I:ID_card
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card))
+		I = id_card
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1

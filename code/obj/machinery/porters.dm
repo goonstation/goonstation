@@ -407,9 +407,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")

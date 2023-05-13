@@ -694,9 +694,8 @@ TYPEINFO(/obj/machinery/field_generator)
 			boutput(user, "You start to cut the field generator free from the floor.")
 			return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -1126,9 +1125,8 @@ TYPEINFO(/obj/machinery/emitter)
 			boutput(user, "You start to cut the emitter free from the floor.")
 			return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

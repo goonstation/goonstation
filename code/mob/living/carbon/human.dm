@@ -3236,11 +3236,9 @@
 	. = ..()
 	if(. || not_worn)
 		return
-	if(istype(src.wear_id, /obj/item/card/id))
-		return src.wear_id
-	if(istype(src.wear_id, /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.wear_id
-		return pda.ID_card
+	var/obj/item/card/id/id_card = get_id_card(src.wear_id)
+	if (istype(id_card))
+		return id_card
 
 /mob/living/carbon/human/is_hulk()
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
@@ -3386,12 +3384,7 @@
 		return get_singleton(/datum/pronouns/abomination)
 	if(src.wear_id)
 		// not using get_id() because we don't want held IDs
-		var/obj/item/card/id/id = null
-		if(istype(src.wear_id, /obj/item/card/id))
-			id = src.wear_id
-		else if(istype(src.wear_id, /obj/item/device/pda2))
-			var/obj/item/device/pda2/pda = src.wear_id
-			id = pda.ID_card
+		var/obj/item/card/id/id = get_id_card(src.wear_id)
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()

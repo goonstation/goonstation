@@ -3062,11 +3062,7 @@
 
 /mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
-	if(istype(src.equipped(), /obj/item/card/id))
-		return src.equipped()
-	if(istype(src.equipped(), /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.equipped()
-		return pda.ID_card
+	return get_id_card(src.equipped())
 
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
