@@ -28,6 +28,10 @@
 
 /obj/item/bell/hop
 	icon_state = "bell_hop" // get it?
+	attack_hand(mob/user)
+		..()
+		for(var/obj/item/pocketwatch/watch in world)
+			watch.the_bell_has_been_rung()
 
 /obj/item/bell/kitchen
 	name = "dinner bell"
