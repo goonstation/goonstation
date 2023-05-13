@@ -28,17 +28,18 @@
 	weight = 1
 	max_dist = 5
 	can_be_adjacent_to_target = FALSE
+	var/max_spiders = 4
 
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/New(parentHolder, transTask)
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/vomit_egg, list(holder)))
 
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/precondition()
-	var/mob/living/critter/C = holder.owner
+	var/mob/living/critter/spider/clownqueen/C = holder.owner
 	var/datum/targetable/critter/vomitegg/egg = C.abilityHolder.getAbility(/datum/targetable/critter/vomitegg)
 	if(!egg)
 		egg = C.abilityHolder.getAbility(/datum/targetable/critter/vomitegg/cluwne)
-	return !egg.disabled
+	return !egg.disabled && (length(C.babies) < max_spiders)
 
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/get_targets()
 	. = list()
