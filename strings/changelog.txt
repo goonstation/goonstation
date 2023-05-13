@@ -1,4 +1,9 @@
 
+(t)sat may 13 23
+(u)Colossusqw
+(p)14073
+(e)⚖|C-Balance
+(+)Reduces max sticky floor slowdown time to 10 seconds.
 (t)fri may 12 23
 (u)DimWhat
 (p)13911
