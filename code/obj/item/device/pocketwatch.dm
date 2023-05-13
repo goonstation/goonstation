@@ -32,6 +32,7 @@
 	"Research Budget Monitor",
 	"Total PTL Net Income",
 	"Step Counter",
+	"Service Bell Ring Counter",
 	"Timer")
 
 	New()
@@ -61,6 +62,7 @@
 			counting_steps = FALSE
 
 	proc/the_bell_has_been_rung()
+		bell_counter += 1
 		if(!alert_overlay)
 			src.alert_overlay = image(src.icon)
 			src.alert_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
@@ -148,6 +150,9 @@
 					timer_time += TIME - src.last_tick
 				src.last_tick = TIME
 				text_to_display = format_time_text(timer_time)
+
+			if("Service Bell Ring Counter")
+				text_to_display = "[bell_counter] rings"
 
 		src.inventory_counter.update_text(text_to_display)
 
