@@ -51,12 +51,9 @@
 		. = ..()
 
 	seek_target(var/range)
-		. = list()
 		if(!src.aggressive) //see above note regarding peacefulness
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (src.valid_target(C))
-				. += C
+		. = ..()
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
