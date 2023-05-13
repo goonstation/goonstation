@@ -602,7 +602,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear a vampire cape."
+	desc = "Requires that you wear a vampire cape in your suit slot."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -620,6 +620,7 @@
 					M.name = "strange vampire outfit"
 					M.real_name = "strange vampire outfit"
 					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					M.c_flags &= ~ONBACK // no wearing the whole suit on your back
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -1373,7 +1374,7 @@ datum/achievementReward/ai_dwaine
 
 	/// [name, desc, callback]
 	var/contrib_rewards = list(
-		list("Silly Screams", "Crazy silly screams for your character!", .proc/sillyscream),
+		list("Silly Screams", "Crazy silly screams for your character!", PROC_REF(sillyscream)),
 	)
 
 	ui_state(mob/user)

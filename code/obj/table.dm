@@ -347,10 +347,7 @@ TYPEINFO_NEW(/obj/table)
 		var/obj/item/I = O
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
-		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			I.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)
@@ -416,7 +413,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = .proc/unset_tablepass_callback
+			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."

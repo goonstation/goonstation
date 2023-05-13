@@ -13497,7 +13497,7 @@
 /area/station/chapel/sanctuary)
 "aMq" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = -4;
 	pixel_y = 3
 	},
@@ -17561,7 +17561,7 @@
 	pixel_x = -5;
 	pixel_y = 9
 	},
-/obj/item/storage/bible{
+/obj/item/bible{
 	pixel_x = -8;
 	pixel_y = 8
 	},
@@ -33030,22 +33030,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "bOV" = (
-/obj/table/reinforced/auto,
-/obj/item/clipboard{
-	pixel_x = 7;
-	pixel_y = 5
-	},
-/obj/item/item_box/postit{
-	pixel_x = 10;
-	pixel_y = 5
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = -7;
-	pixel_y = 8
-	},
-/obj/item/device/radio/headset/engineer{
-	pixel_x = -3;
-	pixel_y = 8
+/obj/machinery/computer/card/department/engineering{
+	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -33840,9 +33826,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hor)
 "bQU" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/green,
-/obj/decal/cleanable/desk_clutter,
+/obj/machinery/computer/card/department/research{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
 "bQW" = (
@@ -34145,6 +34131,10 @@
 /obj/item/stamp/ce{
 	pixel_x = -6;
 	pixel_y = 7
+	},
+/obj/item/item_box/postit{
+	pixel_x = 10;
+	pixel_y = 5
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 10
@@ -47108,18 +47098,13 @@
 /obj/machinery/power/data_terminal{
 	layer = 2
 	},
-/obj/machinery/computer3/generic/personal{
-	pixel_y = 5
-	},
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/table/auto,
-/obj/item/reagent_containers/hypospray,
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/item/item_box/postit,
+/obj/machinery/computer/card/department/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "cCJ" = (
@@ -52119,7 +52104,7 @@
 /area/station/routing/airbridge)
 "hMn" = (
 /obj/machinery/camera/ranch,
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -53337,7 +53322,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "juE" = (
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /obj/disposalpipe/trunk/produce,
@@ -58018,6 +58003,7 @@
 /obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 27
 	},
+/obj/machinery/computer/card/department/security,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "pjA" = (
@@ -59592,6 +59578,8 @@
 /obj/item/device/analyzer/healthanalyzer/upgraded,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/machinery/power/apc/autoname_north,
+/obj/item/item_box/postit,
+/obj/item/reagent_containers/hypospray,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/head)
 "qPX" = (
@@ -62516,7 +62504,7 @@
 	},
 /obj/item/rocko{
 	pixel_x = 5;
-	pixel_y = 19
+	pixel_y = 14
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -62788,10 +62776,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Medical Director";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/command,
 /obj/access_spawn/medical_director,
 /obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay,

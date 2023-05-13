@@ -59,7 +59,7 @@
 			screenObj.overlays += obscurer
 			SPAWN(cd)
 				cooldown_overlay = 0
-				screenObj.overlays -= obscurer
+				screenObj?.overlays -= obscurer
 
 	proc/can_special_attack()
 		if (!holder || !limb) return 0

@@ -77,8 +77,8 @@
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
 				if (src.receives_disk && ishuman(M))
-					if (istype(H.back, /obj/item/storage))
-						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
+					if (H.back?.storage)
+						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
 						if (D)
 							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
 							if (R)
@@ -129,6 +129,11 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
+
+	special_setup(mob/M, no_special_spawn)
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = "head", loc = M)
+		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_image(image)
 
 /datum/job/command/captain
 	name = "Captain"
@@ -662,7 +667,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar/blue) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -928,7 +933,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_lhan = list(/obj/item/storage/bible/loaded)
+	slot_lhan = list(/obj/item/bible/loaded)
 
 	New()
 		..()
@@ -1434,10 +1439,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1471,8 +1474,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/instrument/whistle(B)
+			B.storage.add_contents(new /obj/item/instrument/whistle(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
+			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
 
 		return
@@ -1543,7 +1547,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1569,10 +1573,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1604,10 +1606,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/device/camera_viewer{network = "Zeta"}(B)
-			new /obj/item/clothing/head/helmet/camera(B)
-			new /obj/item/device/audio_log(B)
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
+			B.storage.add_contents(new /obj/item/device/audio_log(B))
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1659,6 +1661,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Sous-Chef")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
 
 /datum/job/special/random/waiter
 	name = "Waiter"
@@ -2482,7 +2490,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_engineer")
 		SPAWN(1)
-			var/obj/item/rcd/rcd = locate() in M.belt
+			var/obj/item/rcd/rcd = locate() in M.belt.storage.stored_items
 			rcd.matter = 100
 			rcd.max_matter = 100
 			rcd.tooltip_rebuild = TRUE
@@ -2833,6 +2841,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
 	var/team = 0 //1 = NT, 2 = SY
+	var/overlay_icon
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2849,6 +2858,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		//stuff for headsets
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.setup_team_overlay(M.mind, overlay_icon)
 			if (team == 1)
 				M.mind.special_role = mode.team_NT?.name
 				setup_headset(M.ears, mode.team_NT?.comms_frequency)
@@ -2871,6 +2881,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_heads, access_medical, access_medical_lockers)
 		team = 1
+		overlay_icon = "nanotrasen"
 
 		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -2897,6 +2908,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
+			overlay_icon = "nanocomm"
 			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = list(/obj/item/clothing/head/NTberet/commander)
@@ -2912,6 +2924,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
 		team = 2
+		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
 		receives_implant = /obj/item/implant/pod_wars/syndicate
@@ -2939,6 +2952,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
+			overlay_icon = "syndcomm"
 			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)

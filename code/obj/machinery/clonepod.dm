@@ -34,7 +34,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	var/emagged = FALSE
 
 	var/clonehack = 0 //Is a traitor mindhacking the clones?
-	var/mob/implant_hacker = null // Who controls the clones?
+	var/datum/mind/implant_hacker = null // Who controls the clones?
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
@@ -341,12 +341,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-		// -- Mode/mind specific stuff goes here
-
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-
-		// -- End mode specific stuff
 
 		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
@@ -359,14 +353,14 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.reagents.trans_to(src.occupant, 1000)
 
 			// Oh boy someone is cloning themselves up an army!
-		if(clonehack && implant_hacker != null)
+		if(clonehack && implant_hacker)
 			// No need to check near as much with a standard implant, as the cloned person is dead and is therefore enslavable upon cloning.
 			// How did this happen. Why is someone cloning you as a mindhack to yourself. WHO KNOWS?!
-			if(implant_hacker == src.occupant)
+			if(implant_hacker == src.occupant.mind)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
-				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
-				src.occupant.setStatus("mindhack", null, implant_hacker)
+				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker.current,"combat")]")
+				src.occupant.setStatus("mindhack", null, implant_hacker.current)
 
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
@@ -639,7 +633,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				return
 			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
-			implant_hacker = user
+			implant_hacker = user.mind
 			light.enable()
 			src.UpdateIcon()
 			user.drop_item()

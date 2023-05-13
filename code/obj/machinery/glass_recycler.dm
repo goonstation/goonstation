@@ -123,16 +123,13 @@ TYPEINFO(/obj/machinery/glass_recycler)
 				return FALSE // early return for custom messageP
 			success = TRUE
 			glass_amt += PLATE_COST
-		else if (istype(W, /obj/item/storage/box))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+		else if (W.storage)
+			for (var/obj/item/I as anything in W.storage.get_contents())
 				if (!.(I, user))
 					break
 
 		if (success)
-			if(istype(W.loc, /obj/item/storage))
-				var/obj/item/storage/storage = W.loc
-				storage.hud.remove_object(W)
+			W.stored?.transfer_stored_item(W, src, user = user)
 
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)

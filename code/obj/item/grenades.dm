@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/wasp
+	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
@@ -744,7 +744,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
-		if (istype(target, /obj/item/storage)) return ..()
+		if (target.storage)
+			return ..()
 		if (!src.armed && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1306,7 +1307,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/check_placeable_target(atom/A)
 		if (!istype(A, /obj/item))
 			return TRUE
-		if (istype(A, /obj/item/storage)) // no blowing yourself up if you have full backpack
+		if (A.storage) // no blowing yourself up if you have full storage
 			return FALSE
 		return A.density
 
@@ -1332,7 +1333,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.armed)
-				if (!src.check_placeable_target(target))
+				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")

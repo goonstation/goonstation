@@ -12516,7 +12516,7 @@
 "aBE" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/beacon,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "aBF" = (

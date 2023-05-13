@@ -16421,7 +16421,7 @@
 /area/station/security/hos)
 "bFF" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
 	},
@@ -31491,7 +31491,7 @@
 /obj/disposalpipe/trunk/food{
 	dir = 1
 	},
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "Produce Chute - Kitchen"
 	},
 /turf/simulated/floor/grass/random,
@@ -51178,7 +51178,7 @@
 /obj/table/wood/auto,
 /obj/item/storage/toolbox/artistic,
 /obj/item/card_box/tarot,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /obj/machinery/camera{
 	c_tag = "autotag";

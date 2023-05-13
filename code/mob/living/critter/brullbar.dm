@@ -117,6 +117,7 @@
 			if (isdead(C)) continue
 			if (isintangible(C)) continue //don't attack what you can't touch
 			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
+			if (src.faction != null && (C.faction & src.faction != 0)) continue //Checks if they are in the same faction
 			if (ishuman(C))
 				var/mob/living/carbon/human/H = C
 				if(!is_king && iswerewolf(H))

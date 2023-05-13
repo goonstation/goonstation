@@ -1231,13 +1231,23 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-			. += A
+			if(isskeleton(A))
+				var/mob/living/carbon/human/H = A
+				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
+					. += A
+			else
+				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
 				var/obj/item/organ/head/found_head = A
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
+			else if (isobj(A)) // is it holding a head
+				for(var/obj/item/organ/head/head in A)
+					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
+						var/mob/linked_mob = head.linked_human
+						. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
@@ -1975,87 +1985,6 @@ proc/countJob(rank)
 	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
 
 	return is_immune
-
-// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
-/proc/remove_mindhack_status(var/mob/M, var/hack_type ="", var/removal_type ="")
-	if (!M || !M.mind || !hack_type || !removal_type)
-		return
-
-	// Find our master's mob reference (if any).
-	var/mob/mymaster = ckey_to_mob(M.mind.master)
-
-	switch (hack_type)
-		if ("mindhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		if ("vthrall")
-			switch (removal_type)
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
-					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
-				ticker.mode.former_antagonists += M.mind
-
-		// This is only used for spy minions and mindhacked antagonists at the moment.
-		if ("otherhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindhack status.")
-
-			// Fix for mindhacked traitors etc losing their antagonist status.
-			if (M.mind && (M.mind.special_role == "spyminion"))
-				remove_antag(M, null, 1, 0)
-			else
-				M.mind.master = null
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		else
-			logTheThing(LOG_DEBUG, M, "<b>Convair880</b>: [M] isn't mindhacked or vampire thrall, can't remove mindhack status.")
-			return
-
-	if (removal_type == "death")
-		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer mindhacked! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		M.show_antag_popup("mindhackdeath")
-	else if (removal_type == "override")
-		boutput(M, "<h2><span class='alert'>Your mindhack implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		M.show_antag_popup("mindhackoverride")
-	else
-		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		M.show_antag_popup("mindhackexpired")
-
-	return
 
 /**
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
