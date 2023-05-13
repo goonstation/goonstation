@@ -15319,6 +15319,9 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor/cool,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
 /turf/simulated/floor/engine/glow/blue{
 	dir = 10
 	},
@@ -42256,6 +42259,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"etl" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northeast)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -44981,6 +44990,12 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"qKb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/light/small/floor/cool,
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "qKr" = (
 /obj/decal/tile_edge/line/red{
 	dir = 10;
@@ -81275,7 +81290,7 @@ aqn
 aqn
 aqn
 aqn
-aie
+qKb
 aiA
 aie
 aha
@@ -102724,7 +102739,7 @@ aqn
 aqn
 aqn
 aqn
-ahO
+etl
 aiO
 ahO
 ajU
