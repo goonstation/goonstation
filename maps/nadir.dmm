@@ -2744,7 +2744,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/sleeper/port_a_medbay,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "bmw" = (
@@ -28999,7 +28999,6 @@
 	name = "Transception Array Control"
 	})
 "mwW" = (
-/obj/machinery/vending/medical,
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -40753,13 +40752,11 @@
 	},
 /area/station/science/hall)
 "sbT" = (
-/obj/stool/chair/blue{
-	dir = 4
-	},
 /obj/noticeboard/persistent{
 	name = "Medbay persistent notice board";
 	persistent_id = "medbay"
 	},
+/obj/machinery/sleeper/port_a_medbay,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "sce" = (
@@ -49948,10 +49945,10 @@
 	},
 /area/station/hallway/primary/southeast)
 "wmX" = (
-/obj/submachine/chem_extractor,
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},

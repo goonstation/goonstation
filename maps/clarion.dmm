@@ -18549,7 +18549,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -19123,7 +19123,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -27333,7 +27333,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/vending/medical,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cPa" = (

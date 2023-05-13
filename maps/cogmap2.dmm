@@ -57915,7 +57915,7 @@
 /obj/machinery/light_switch/west{
 	pixel_y = 11
 	},
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cJn" = (
@@ -60183,6 +60183,7 @@
 /area/station/science/chemistry)
 "cPc" = (
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cPd" = (
