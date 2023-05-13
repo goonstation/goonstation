@@ -1228,7 +1228,7 @@ TYPEINFO(/obj/machinery/wirenav)
 	tour1
 		name = "tour beacon - 'Crew Quarters'"
 		location = "tour1"
-		codes_txt = "tour;next_tour=tour2;desc=Our first stop on our tour is the luxurious Crew Quarters featuring a spacious restroom facility, quiet resting chamber, and in this main room the louge space!"
+		codes_txt = "tour;next_tour=tour2;desc=Our first stop on our tour is the luxurious Crew Quarters featuring a spacious restroom facility, quiet resting chamber, and in this main room the lounge space!"
 
 	tour2
 		name = "tour beacon - 'Chapel'"
