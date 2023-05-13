@@ -126,7 +126,7 @@
 	health_brute = 10
 	health_brute_vuln = 0.5
 	health_burn = 10
-	health_brute_vuln = 0
+	health_burn_vuln = 0
 	speech_void = 1
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
