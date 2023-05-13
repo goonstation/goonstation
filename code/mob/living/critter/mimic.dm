@@ -112,14 +112,11 @@
 			pounce.handleCast(target)
 			return TRUE
 
-	valid_target(mob/living/C) //apparently they don't have the check for isdead, so gotta do this
-		if (isintangible(C)) return FALSE
+	valid_target(var/mob/living/C) //apparently they don't have the check for isdead, so gotta do this
 		if (is_incapacitated(C)) return FALSE
-		if (istype(C, src.type)) return FALSE
-		return TRUE
+		return ..()
 
 	seek_target(var/range = 5)
-		. = ..()
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
