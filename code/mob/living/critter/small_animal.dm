@@ -244,7 +244,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		return ..()
 
 	seek_target(range)
-		. = ..()
 
 	critter_basic_attack(var/mob/target)
 		. = ..()
@@ -1852,12 +1851,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return ..()
 
 	seek_target(var/range = 8)
-		. = list()
 		if(!src.aggressive)
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (src.valid_target(C))
-				. += C
+		. = ..()
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -1991,12 +1987,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return ..()
 
 	seek_target(var/range = 8)
-		. = list()
 		if(!src.aggressive)
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (src.valid_target(C))
-				. += C
+		. = ..()
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
@@ -2876,7 +2869,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return ..()
 
 	seek_target(var/range = 5)
-		. = ..()
 
 	death(var/gibbed)
 		src.can_lie = FALSE
