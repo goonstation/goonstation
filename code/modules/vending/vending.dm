@@ -3258,3 +3258,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		if (istype(W, /obj/item/screwdriver)) //no
 			return
 		. = ..()
+
+	generate_slogans()
+		if (istype(get_area(src), /area/station/science))
+			return
+		if (!length(src.player_list) <= 0)
+			src.slogan_list = list("[src.pick_product_name()] could save a life!",
+				"Fresh supplies of [src.pick_product_name()]!",
+				"Ask your doctor if [src.pick_product_name()] is right for you!",
+				"Prescribe [src.pick_product_name()] today!"
+			)
