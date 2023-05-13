@@ -116,7 +116,6 @@
 		return ..()
 
 	seek_target(var/range = 6)
-		. = ..()
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -163,7 +162,6 @@
 		return ..()
 
 	seek_target(var/range = 7)
-		. = ..()
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
