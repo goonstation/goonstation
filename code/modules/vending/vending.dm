@@ -1832,6 +1832,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		contents += product
 		product_cost = price
 
+	getBase64Img()
+		var/key = "\ref[src]"
+		. = product_base64_cache[key]
+		if(isnull(.))
+			var/icon/dummy_icon = getFlatIcon(src.contents[1], no_anim=TRUE)
+			. = icon2base64(dummy_icon)
+			product_base64_cache[key] = .
+
 TYPEINFO(/obj/item/machineboard)
 	mats = 2
 
@@ -2021,12 +2029,15 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	//Bank account
 	var/datum/db_record/owneraccount = null
 	var/image/crtoverlay = null
+	var/does_crt = TRUE
 	var/image/promoimage = null
 	player_list = list()
 	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
+		if (!src.does_crt)
+			return
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
 		crtoverlay.plane = PLANE_DEFAULT
@@ -3199,10 +3210,12 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 /obj/machinery/vending/player/chemicals
 	name = "medical supply cabinet"
-	desc = ""
+	desc = "Stores and transmits medical chemicals via \"the cloud\", I wouldn't question it."
 	icon_state = "medchem"
 	acceptcard = FALSE
 	pay = FALSE
+	does_crt = FALSE
+	slogan_chance = 0
 	req_access = list(access_chemistry, access_medical_lockers)
 	///Stuff wot can be put in
 	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
@@ -3210,6 +3223,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/patch,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/ampoule,
+		/obj/item/chem_pill_bottle,
 	)
 
 	New()
@@ -3233,9 +3247,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		for (var/type in src.allowed_types)
 			if (istype(W, type))
 				src.addProduct(W, user)
-				src.update_static_data(user)
 				for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
 					linked.update_static_data(user)
+					if (linked != src && !ON_COOLDOWN(linked, "announce", 2 SECONDS))
+						linked.speak(pick("New product received: [W.name]!",
+							"Supplies transmitted: [W.name]!",
+							"Now available for pickup: [W.name]!")
+						)
 				return
 		if (istype(W, /obj/item/screwdriver)) //no
 			return
