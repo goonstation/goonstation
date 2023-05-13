@@ -368,7 +368,6 @@
 		return ..()
 
 	seek_target(var/range = 5)
-		. = ..()
 
 	critter_basic_attack(var/mob/target)
 		if(prob(30))
