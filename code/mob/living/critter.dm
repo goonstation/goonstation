@@ -1300,9 +1300,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_target(var/range = 5)
 		. = list()
-		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		//default behaviour, return all alive, tangible, not-our-type, not-our-faction mobs in range
 		for (var/mob/living/C in hearers(range, src))
-			valid_target()
 			if (src.valid_target(C))
 				. += C
 
