@@ -3208,6 +3208,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
 
+TYPEINFO(/obj/machinery/vending/player/chemicals)
+	mats = list("MET-2" = 30, "telecrystal" = 20, "CRY-1" = 20)
 /obj/machinery/vending/player/chemicals
 	name = "medical supply cabinet"
 	desc = "Stores and transmits medical chemicals via \"the cloud\", I wouldn't question it."
