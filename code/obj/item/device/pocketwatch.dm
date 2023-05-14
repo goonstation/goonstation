@@ -112,12 +112,10 @@
 					hour_minute_divider = " "
 				else
 					hour_minute_divider = ":"
-				var/hour_display = text2num(time2text(TIME, "hh"))
-				var/minute_display
-				if(text2num(time2text(TIME, "mm")) < 10)
-					minute_display = "0[text2num(time2text(TIME, "mm"))]" //to avoid the time being "12:3" ever
-				else
-					minute_display = text2num(time2text(TIME, "mm"))
+				var/hour_display = (time2text(world.timeofday, "hh"))
+				var/minute_display = text2num((time2text(world.timeofday, "mm")))
+				if(minute_display < 10)
+					minute_display = "0[minute_display]" //to avoid the time being "12:3" ever
 				text_to_display = "[hour_display] [hour_minute_divider] [minute_display]"
 
 			if("Total Station Budget Monitor")
