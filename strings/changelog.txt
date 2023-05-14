@@ -1,8 +1,41 @@
-
-(t)wed may 10 23
+(t)sat may 13 23
+(u)Sord
+(+)Nanomeds (portable and normal) now require medical locker access.
+(u)LeahTheTech
+(+)Small bots (cleanbots, firebots etc.) can now be loaded into mail and disposal chutes by click dragging.
+(u)Colossusqw
+(p)14073
+(e)⚖|C-Balance
+(+)Reduces max sticky floor slowdown time to 10 seconds.
+(t)fri may 12 23
+(u)DimWhat
+(p)13911
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Added some new sprites to some special keys.
+(u)Hans
+(p)11905
+(e)🆕🎨⚖⚗|C-Feature, C-Sprites, C-Balance, A-Chemistry
+(*)Science can now fabricate unwieldy reagent barrels to aid in chemical production.
+(u)Colossusqw
+(p)14064
+(e)⚖|C-Balance
+(+)Sticky floors, such as the ones made by glue, now slow you down to a noticeable amount.
+(t)thu may 11 23
 (u)aloe
-(+)The Head of Security's cape is now worn on the back. Its stats have been slightly lowered to account for this.
-(+)Bedsheets and bedsheet capes too
+(*)The cape changes have been expanded to scarves and all the other capes (loot crate ones and vampire cape, mostly).
+(+)You can now wear capes and scarves in either the back or suit slot. Wearing them in the back slot layers them higher than in the suit slot.
+(u)DimWhat
+(p)14047
+(e)🪲🎨🎩👽|C-Bug, C-Sprites, A-Clothing, A-Mutantraces
+(+)Added a few extra monkey belt sprites
+(u)Wisemonster
+(p)13855
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Replaced the capsaicin grenades in the security weapon vendor with flashbangs.
+(u)Flaborized
+(p)14003
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Tools now come in additional colors, based on where they're sourced from.
 (t)tue may 09 23
 (u)LeahTheTech
 (+)Security mind protection health implants now only self destruct *after* sending the death alert.

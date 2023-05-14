@@ -898,7 +898,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 			src.ui_update()
 			return
 
-		if (user.mind && user.mind.special_role != ROLE_SPY_THIEF)
+		if (!user.mind?.get_antagonist(ROLE_SPY_THIEF))
 			user.show_text("You cannot claim a bounty! The PDA doesn't recognize you!", "red")
 			return FALSE
 

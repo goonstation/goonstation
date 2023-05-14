@@ -30,6 +30,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\macros\factions.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -100,6 +101,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\limiter.dm"
 #include "code\datums\manufacturing.dm"
 #include "code\datums\mind.dm"
+#include "code\datums\mind_mob_overlay.dm"
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\mutantraces.dm"
 #include "code\datums\named_colors.dm"
@@ -468,6 +470,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\critter\fermid.dm"
 #include "code\mob\living\critter\firefly.dm"
 #include "code\mob\living\critter\flockcritter_parent.dm"
+#include "code\mob\living\critter\golem.dm"
 #include "code\mob\living\critter\gunbot.dm"
 #include "code\mob\living\critter\hastur.dm"
 #include "code\mob\living\critter\jeans_elemental.dm"
@@ -1702,7 +1705,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\boardgame\gameclock.dm"
 #include "code\obj\item\boardgame\boards\chessboard.dm"
 #include "code\obj\item\clothing\armor.dm"
-#include "code\obj\item\clothing\back.dm"
 #include "code\obj\item\clothing\cardboard.dm"
 #include "code\obj\item\clothing\chameleon_js.dm"
 #include "code\obj\item\clothing\ears.dm"

@@ -794,7 +794,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
@@ -806,7 +806,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
@@ -819,7 +819,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
@@ -832,7 +832,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
@@ -844,7 +844,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28;
 	pixel_y = 32
@@ -869,7 +869,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/clothing/back/bedsheet/hop,
+/obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fgreen2"
@@ -4270,7 +4270,7 @@
 /area/station/maintenance/north)
 "akw" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -4988,7 +4988,7 @@
 /area/station/medical/medbay/treatment1)
 "amd" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -14243,7 +14243,7 @@
 /area/station/janitor/office)
 "aJT" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -16173,7 +16173,7 @@
 /area/station/maintenance/inner/central)
 "aPN" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -16442,7 +16442,7 @@
 /area/listeningpost)
 "aQx" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/listeningpost)
 "aQy" = (
@@ -26748,7 +26748,7 @@
 "bwh" = (
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
-/obj/item/clothing/back/bedsheet/royal,
+/obj/item/clothing/suit/bedsheet/royal,
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "bwi" = (
@@ -32728,7 +32728,7 @@
 /area/station/crew_quarters/radio/lab)
 "bLH" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
@@ -33265,7 +33265,7 @@
 /area/station/security/brig)
 "bNp" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /obj/item/instrument/harmonica,
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor,
@@ -33621,7 +33621,7 @@
 /area/station/security/brig)
 "bOr" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/scorched2,
 /area/station/security/brig)
@@ -34877,7 +34877,7 @@
 /area/station/security/beepsky)
 "bRz" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -35032,7 +35032,7 @@
 /area/station/security/main)
 "bRO" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -36732,7 +36732,7 @@
 /area/station/maintenance/disposal)
 "bWA" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36756,7 +36756,7 @@
 /area/station/maintenance/disposal)
 "bWD" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -38907,7 +38907,7 @@
 /area/tech_outpost)
 "cdB" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/carpet/red/standard/edge/se,
 /area/tech_outpost)
 "cdC" = (
@@ -40502,7 +40502,7 @@
 /area/station/maintenance/southwest)
 "cis" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -45944,7 +45944,7 @@
 /area/station/science/artifact)
 "vVf" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/black,
 /area/station/security/hos)

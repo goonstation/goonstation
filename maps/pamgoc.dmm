@@ -8487,7 +8487,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -11800,7 +11800,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -23328,7 +23328,7 @@
 	pixel_y = -24
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -28517,7 +28517,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bbk" = (
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/stool/bed/moveable,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28528,7 +28528,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "bbl" = (
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/stool/bed/moveable,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -35578,7 +35578,7 @@
 /obj/item/sticker/ribbon/participant{
 	pixel_x = 14
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -53740,7 +53740,7 @@
 /obj/item/device/radio/intercom{
 	dir = 1
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -53789,12 +53789,12 @@
 /area/station/security/checkpoint/cargo)
 "bZP" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "bZQ" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -53810,7 +53810,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -53821,7 +53821,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -53835,7 +53835,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -53849,7 +53849,7 @@
 /obj/window/cubicle{
 	dir = 2
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -53861,7 +53861,7 @@
 	name = "E light switch";
 	pixel_x = -24
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -53873,7 +53873,7 @@
 	name = "E light switch";
 	pixel_x = -24
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -60529,7 +60529,7 @@
 /area/station/security/main)
 "ckF" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "ckG" = (
@@ -70946,7 +70946,7 @@
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "tMc" = (
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/stool/bed/moveable,
 /obj/cable{
 	d1 = 2;

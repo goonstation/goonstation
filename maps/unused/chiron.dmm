@@ -2834,7 +2834,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/machinery/light_switch{
 	name = "N light switch";
 	on = 1;
@@ -2960,7 +2960,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -2999,7 +2999,7 @@
 /area/station/engine/core)
 "afq" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Scientist"
 	},
@@ -6413,7 +6413,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -11959,7 +11959,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/machinery/firealarm{
 	pixel_y = 24;
 	text = "NF"
@@ -12266,7 +12266,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -12725,7 +12725,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_east)
 "ayD" = (
@@ -15117,7 +15117,7 @@
 /area/station/crew_quarters/catering)
 "aDM" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -18369,7 +18369,7 @@
 /area/station/engine/core)
 "aKT" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -21792,7 +21792,7 @@
 /area/station/maintenance/east)
 "aRq" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -23424,7 +23424,7 @@
 /area/station/engine/engineering/ce)
 "aUs" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -26289,7 +26289,7 @@
 	pixel_y = -24
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -30491,7 +30491,7 @@
 	tag = ""
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -31075,7 +31075,7 @@
 /area/station/security/main)
 "bjj" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -33211,7 +33211,7 @@
 /area/listeningpost)
 "bnS" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
 "bnT" = (

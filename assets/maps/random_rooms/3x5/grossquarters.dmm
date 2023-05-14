@@ -17,7 +17,7 @@
 "j" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/decal/cleanable/vomit,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse{
 	icon_state = "body6"

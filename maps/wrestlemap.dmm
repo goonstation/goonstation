@@ -7505,7 +7505,7 @@
 /area/station/crew_quarters/catering)
 "dbK" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /obj/decal/tile_edge/stripe{
 	dir = 8;
 	tag = ""
@@ -11007,7 +11007,7 @@
 /area/station/chapel/sanctuary)
 "ezi" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
@@ -13837,7 +13837,7 @@
 /area/space)
 "fKY" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/orange,
+/obj/item/clothing/suit/bedsheet/orange,
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/crew_quarters/ce)
@@ -14355,7 +14355,7 @@
 /area/station/maintenance/northwest)
 "fWu" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/machinery/light/small/warm,
 /obj/landmark/start{
 	name = "Detective"
@@ -16022,7 +16022,7 @@
 	})
 "gKu" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/hop,
+/obj/item/clothing/suit/bedsheet/hop,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge/hos)
@@ -17025,7 +17025,7 @@
 /area/station/hallway/primary/south)
 "hev" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /obj/item/clothing/under/gimmick/macho,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
@@ -21926,7 +21926,7 @@
 	})
 "jgF" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/listeningpost)
 "jgJ" = (
@@ -25777,7 +25777,7 @@
 /area/station/maintenance/solar/west)
 "kRT" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/cobwebFloor,
 /turf/simulated/floor/wood,
@@ -33667,7 +33667,7 @@
 /area/station/hallway/primary/west)
 "ohs" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ohv" = (
@@ -35491,7 +35491,7 @@
 /area/station/crew_quarters/data)
 "oYv" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/decoration/clock{
 	pixel_y = 30
 	},
@@ -38540,7 +38540,7 @@
 /area/station/quartermaster/office)
 "qqi" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/captain,
+/obj/item/clothing/suit/bedsheet/captain,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -46419,7 +46419,7 @@
 /area/station/hallway/primary/west)
 "tBO" = (
 /obj/stool/bed/moveable/hospital,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/item/clothing/mask/wrestling,
 /obj/item/clothing/gloves/boxing,
 /turf/simulated/floor/specialroom/gym,
@@ -46836,7 +46836,7 @@
 /area/station/science/teleporter)
 "tKt" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_north)
 "tKS" = (
@@ -47373,7 +47373,7 @@
 /area/station/maintenance/inner/the_cage)
 "uav" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_north)
 "uaw" = (
@@ -48438,7 +48438,7 @@
 /area/station/janitor/office)
 "uwX" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/royal,
+/obj/item/clothing/suit/bedsheet/royal,
 /obj/decal/cleanable/ketchup,
 /obj/item/toy/plush/small/bunny,
 /turf/simulated/floor/wood,
@@ -50945,7 +50945,7 @@
 /area/station/maintenance/west)
 "vyr" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "vyu" = (
@@ -52064,7 +52064,7 @@
 /area/station/hallway/secondary/exit)
 "vYm" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/item/toy/plush/small/monkey/assistant,
 /obj/blind_switch/area/east,
@@ -57519,7 +57519,7 @@
 /area/station/maintenance/inner/central)
 "ylE" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)
 "ylF" = (

@@ -697,7 +697,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	icon_state = "recordtrak"
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
-	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT

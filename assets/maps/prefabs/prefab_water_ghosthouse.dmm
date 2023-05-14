@@ -528,10 +528,10 @@
 	pixel_y = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/royal{
+/obj/item/clothing/suit/bedsheet/royal{
 	pixel_y = 11
 	},
-/obj/item/clothing/back/bedsheet/royal,
+/obj/item/clothing/suit/bedsheet/royal,
 /mob/living/critter/aberration,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
@@ -563,10 +563,10 @@
 	pixel_y = 11
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/royal{
+/obj/item/clothing/suit/bedsheet/royal{
 	pixel_y = 11
 	},
-/obj/item/clothing/back/bedsheet/royal,
+/obj/item/clothing/suit/bedsheet/royal,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/ghost_house)
