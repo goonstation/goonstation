@@ -65,6 +65,8 @@
 			src.alert_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 		src.alert_overlay.icon_state = "watch_alert_on"
 		src.UpdateOverlays(src.alert_overlay, "alert")
+		if(current_clock_mode == "Service Bell Ring Counter")
+			update_clock()
 		SPAWN(1 SECONDS)
 			src.alert_overlay.icon_state = "watch_alert_off"
 			src.UpdateOverlays(src.alert_overlay, "alert")
