@@ -18,6 +18,8 @@
 	var/inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	/// set to a colour to make the inhand image be that colour. if the item is coloured though that takes priority over this variable
 	var/inhand_color = null
+	/// storage datum holding it
+	var/datum/storage/stored = null
 
 	/*_______*/
 	/*Burning*/
@@ -206,6 +208,8 @@
 			. += "<br><br><img style=\"float:left;margin:0;margin-right:3px\" src=\"[content]\" width=\"32\" height=\"32\" /><div style=\"overflow:hidden\">[special.name]: [special.getDesc()]<br>To execute a special, use HARM or DISARM intent and click a far-away tile.</div>"
 		. = jointext(., "")
 
+		. += src.storage?.get_capacity_string()
+
 		lastTooltipContent = .
 
 	MouseEntered(location, control, params)
@@ -246,7 +250,7 @@
 					tooltipParams["flags"] = TOOLTIP_TOP2 //space up one tile, not TOP. need other spacing flag thingy
 
 				//If we're over an item that's stored in a container the user has equipped
-				if (src.z == 0 && istype(src.loc, /obj/item/storage) && src.loc.loc == usr)
+				if (src.z == 0 && src.stored?.linked_item.loc == usr)
 					tooltipParams["flags"] = TOOLTIP_RIGHT
 
 				usr.client.tooltipHolder.showHover(src, tooltipParams)
@@ -312,7 +316,16 @@
 		SPAWN(10 SECONDS)
 			src.become_mimic()
 
-/obj/item/set_loc(var/newloc as turf|mob|obj in world)
+/obj/item/set_loc(var/newloc as turf|mob|obj in world, storage_check = TRUE)
+	// storage check is meant as a catch-all/safety check for any explicit cases of
+	// if (src.stored)
+	//     src.stored.transfer_stored_item(src, newloc, user = usr)
+	// else
+	//     src.set_loc(newloc)
+	// this should be fine in most cases but if there's any bugs from using usr or unique functionality wanted, this should be manually defined
+	if (storage_check && src.stored)
+		src.stored.transfer_stored_item(src, newloc)
+		return
 	if (src.temp_flags & IS_LIMB_ITEM)
 		if (istype(newloc,/obj/item/parts/human_parts/arm/left/item) || istype(newloc,/obj/item/parts/human_parts/arm/right/item))
 			..()
@@ -624,7 +637,7 @@
 
 		after_stack(O, user, added)
 
-#define src_exists_inside_user_or_user_storage (src.loc == user || (istype(src.loc, /obj/item/storage) && src.loc.loc == user))
+#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 
 /obj/item/mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -642,7 +655,7 @@
 
 	params = params2list(params)
 
-	if (isliving(over_object) && isliving(usr) && !istype(src,/obj/item/storage)) //pickup action
+	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
 		//else // use laterr, after we improve the 'give' dialog to work with multicontext
@@ -660,12 +673,12 @@
 						//src.pixel_y = text2num(params["icon-y"]) - 16
 						//animate(src, pixel_x = text2num(params["icon-x"]) - 16, pixel_y = text2num(params["icon-y"]) - 16, time = 30, flags = ANIMATION_END_NOW)
 					return
-			else if (src_exists_inside_user_or_user_storage && !istype(src,/obj/item/storage)) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
+			else if (src_exists_inside_user_or_user_storage && !src.storage) //sorry for the storage check, i dont wanna override their mousedrop and to do it Correcly would be a whole big rewrite
 				usr.drop_from_slot(src) //drag from inventory to floor == drop
 				step_to(src,over_object)
 				return
 
-		var/is_storage = istype(over_object,/obj/item/storage)
+		var/is_storage = over_object.storage
 		if (is_storage || istype(over_object, /atom/movable/screen/hud))
 			if (on_turf && isturf(over_object.loc) && is_storage)
 				try_equip_to_inventory_object(usr, over_object, params)
@@ -675,7 +688,7 @@
 				try_equip_to_inventory_object(usr, over_object, params)
 
 		else if (isobj(over_object) && !src.check_valid_stack(over_object))
-			if (src.loc == usr || istype(src.loc,/obj/item/storage))
+			if (src.loc == usr || src.stored)
 				if (try_put_hand_mousedrop(usr))
 					if (can_reach(usr, over_object))
 						usr.click(over_object, params, src_location, over_control)
@@ -720,12 +733,11 @@
 	if (istype(S))
 		if (S.master && istype(S.master,/datum/hud/storage))
 			var/datum/hud/storage/hud = S.master
-			over_object = hud.master //If dragged into backpack HUD, change over_object to the backpack
+			over_object = hud.master.linked_item //If dragged into backpack HUD, change over_object to the backpack
 
-	if (istype(over_object,/obj/item/storage) && over_object != src)
-		var/obj/item/storage/storage = over_object
-		if (istype(storage.loc, /turf))
-			if (!(in_interact_range(src,user) && in_interact_range(storage,user)))
+	if (over_object.storage && over_object != src)
+		if (istype(over_object.loc, /turf))
+			if (!(in_interact_range(src,user) && in_interact_range(over_object,user)))
 				return
 
 		src.pick_up_by(user)
@@ -733,7 +745,7 @@
 		if (succ)
 			SPAWN(1 DECI SECOND)
 				if (user.is_in_hands(src))
-					storage.Attackby(src, user)
+					over_object.Attackby(src, user)
 			return
 
 	if (istype(S))
@@ -752,10 +764,12 @@
 
 
 /obj/item/proc/try_put_hand_mousedrop(mob/user)
-	var/oldloc = src.loc
+	var/atom/was_stored = src.stored?.linked_item
 
 	if(src.equipped_in_slot && src.cant_self_remove)
 		return 0
+
+	was_stored?.storage.transfer_stored_item(src, get_turf(src), user = user)
 
 	var/mob/living/carbon/human/target
 	if (ishuman(user))
@@ -804,11 +818,8 @@
 		user.show_text("This item is anchored to the floor!", "blue")
 		.= 0
 
-	if (. == 1)
-		if (istype(oldloc,/obj/item/storage))
-			var/obj/item/storage/S = oldloc
-			//S.hud.remove_item(src)
-			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
+	if (. == FALSE && was_stored)
+		was_stored.storage.add_contents(src, user, FALSE)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
 	if (W.firesource)
@@ -907,6 +918,8 @@
 			I.remove_from_mob()
 			I.set_item(src)
 
+	src.storage?.storage_item_attack_self(user)
+
 	chokehold?.attack_self(user)
 
 	return
@@ -928,6 +941,8 @@
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onEquipped(src, user, src.properties[prop])
 	user.update_equipped_modifiers()
+	if (src.storage && !src.storage.opens_if_worn) // also used in equipped() code if a wearing to a slot won't call equipped()
+		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
@@ -949,6 +964,7 @@
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_after_attack(target, user, reach)
 	return
 
 /obj/item/dummy/ex_act()
@@ -1075,6 +1091,8 @@
 		checkloc = checkloc:loc
 
 	if(!src.can_pickup(user))
+		// unholdable storage items
+		src.storage?.storage_item_attack_hand(user)
 		return 0
 
 	src.throwing = 0
@@ -1087,6 +1105,10 @@
 		var/in_pocket = 0
 		if(issilicon(user)) //if it's a borg's shit, stop here
 			return 0
+		// storage items in hands or worn
+		if (src.storage && ((src in user.equipped_list()) || src.storage.opens_if_worn))
+			src.storage.storage_item_attack_hand(user)
+			return FALSE
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if(H.l_store == src || H.r_store == src)
@@ -1113,15 +1135,9 @@
 
 	var/atom/oldloc = src.loc
 	var/atom/oldloc_sfx = src.loc
-	src.set_loc(user) // this is to fix some bugs with storage items
-	if (istype(oldloc, /obj/item/storage))
-		var/obj/item/storage/S = oldloc
-		S.hud.remove_item(src) // ugh
+	if (src.stored)
+		src.stored.transfer_stored_item(src, user, user = user)
 		oldloc_sfx = oldloc.loc
-	if (src in bible_contents)
-		bible_contents.Remove(src) // UNF
-		for_by_tcl(bible, /obj/item/storage/bible)
-			bible.hud.remove_item(src)
 	user.put_in_hand_or_drop(src)
 
 	if (src.artifact)
@@ -1439,10 +1455,7 @@
 		qdel(src.inventory_counter)
 		src.inventory_counter = null
 
-	if(istype(src.loc, /obj/item/storage))
-		var/obj/item/storage/storage = src.loc
-		src.set_loc(null) // so the storage doesn't add it back >:(
-		storage.hud?.remove_item(src)
+	src.stored?.transfer_stored_item(src, null)
 
 	var/turf/T = loc
 	if (!istype(T))
@@ -1548,7 +1561,7 @@
 /obj/item/proc/dropped(mob/user)
 	SPAWN(0) //need to spawn to know if we've been dropped or thrown instead
 		if ((firesource == FIRESOURCE_OPEN_FLAME) && throwing)
-			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, .proc/log_firesource)
+			RegisterSignal(src, COMSIG_MOVABLE_THROW_END, PROC_REF(log_firesource))
 		else if (firesource == FIRESOURCE_OPEN_FLAME)
 			log_firesource(src, null, user)
 

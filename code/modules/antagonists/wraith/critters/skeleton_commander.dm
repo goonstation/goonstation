@@ -7,6 +7,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
@@ -160,6 +161,9 @@
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("slashes", "stabs", "pierces")

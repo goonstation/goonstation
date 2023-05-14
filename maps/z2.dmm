@@ -11757,7 +11757,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aMM" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -11969,7 +11969,7 @@
 /turf/unsimulated/floor/airless,
 /area/space)
 "aNu" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
@@ -12146,7 +12146,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12170,7 +12170,7 @@
 	},
 /area/crater/biodome/north)
 "aOd" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -12196,7 +12196,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -12575,7 +12575,7 @@
 	icon_state = "4-8"
 	},
 /obj/spacevine,
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "aPd" = (
@@ -20644,15 +20644,6 @@
 	dir = 4
 	},
 /area/precursor)
-"bld" = (
-/obj/critter/shade,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "ble" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/specialroom/bar,
@@ -21890,19 +21881,6 @@
 /obj/item/crowbar,
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
-"bob" = (
-/obj/landmark{
-	name = "theonyxkeywashere"
-	},
-/obj/critter/shade/scientist/lost,
-/obj/item/device/key/onyx,
-/turf/unsimulated/floor/void{
-	desc = "You can barely see ...";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "deeps";
-	name = "???"
-	},
-/area/precursor/pit)
 "boc" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -23201,22 +23179,6 @@
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
-"brU" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "brV" = (
 /turf/unsimulated/iomoon/ancient_wall{
 	dir = 8
@@ -23564,10 +23526,6 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
-"bsQ" = (
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bsR" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -24644,10 +24602,6 @@
 	},
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
-"bwo" = (
-/obj/critter/ancient_repairbot,
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "bwq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -27273,20 +27227,6 @@
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor2"
 	},
-/area/iomoon/robot_ruins)
-"bFA" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	name = "power conduit"
-	},
-/obj/critter/ancient_repairbot/security,
-/turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
 "bFB" = (
 /obj/decal/cleanable/cobweb,
@@ -32046,10 +31986,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
-"bVi" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor,
-/area/crunch)
 "bVj" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -33423,10 +33359,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/crunch)
-"bZP" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/white,
-/area/crunch)
 "bZQ" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -34313,10 +34245,6 @@
 	dir = 4
 	},
 /area/owlery/staffhall)
-"ccM" = (
-/obj/critter/crunched,
-/turf/unsimulated/floor/plating,
-/area/crunch)
 "ccN" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -68032,6 +67960,10 @@
 	dir = 10
 	},
 /area/centcom/offices/cogwerks)
+"fNh" = (
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "fNL" = (
 /obj/window/crystal/reinforced/south,
 /turf/unsimulated/iomoon/ancient_floor{
@@ -70457,6 +70389,10 @@
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
 	},
+/obj/item/decoration/virvase{
+	pixel_y = 11
+	},
+/obj/table/clothred/auto,
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "kcN" = (
@@ -70867,6 +70803,19 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"kVQ" = (
+/obj/landmark{
+	name = "theonyxkeywashere"
+	},
+/mob/living/critter/shade/crew/lost,
+/obj/item/device/key/onyx,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "kWN" = (
 /obj/table/auto/desk,
 /obj/item/pen/fancy{
@@ -71580,6 +71529,10 @@
 	name = "plating"
 	},
 /area/hospital)
+"miu" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor,
+/area/crunch)
 "mje" = (
 /obj/storage/closet/office,
 /obj/item/pen/fancy,
@@ -72698,12 +72651,10 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/se,
 /area/centcom/offices/rodney)
 "nRm" = (
-/obj/critter/domestic_bee/creepy{
-	name = "Virvatulbee"
-	},
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
+/obj/critter/domestic_bee/virvatulbee,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "nRU" = (
@@ -75476,6 +75427,20 @@
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
+"skj" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "skF" = (
 /obj/storage/closet/dresser,
 /obj/machinery/light/small/floor/warm/very,
@@ -77014,10 +76979,6 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/scrub/purple{
-	name = "old medical scrubs";
-	pixel_y = 3
-	},
 /obj/item/clothing/suit/security_badge{
 	badge_owner_job = "Head of Security";
 	badge_owner_name = "Elika Zamani";
@@ -77026,6 +76987,7 @@
 	pixel_x = 9;
 	pixel_y = -12
 	},
+/obj/item/clothing/under/misc/virvaoutfit1,
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "veg" = (
@@ -77120,6 +77082,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
+"vjF" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/white,
+/area/crunch)
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
@@ -77373,6 +77339,10 @@
 	pixel_x = -3;
 	pixel_y = 10
 	},
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 13;
+	pixel_y = 4
+	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
 /area/centcom/offices/virvatuli)
@@ -77446,6 +77416,10 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"vGO" = (
+/mob/living/critter/crunched,
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "vIb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -78108,6 +78082,22 @@
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"wRU" = (
+/obj/decal/glow{
+	anchored = 1;
+	brightness = 2;
+	color_b = 0.8;
+	color_g = 1;
+	color_r = 0;
+	desc = "Some manner of glowing power conveyor.";
+	dir = 4;
+	icon = 'icons/obj/machines/heavy_fiber.dmi';
+	icon_state = "";
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/repairbot/security,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "wTN" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -78488,6 +78478,15 @@
 	},
 /turf/unsimulated/floor/feather,
 /area/centcom/offices/leah)
+"xzj" = (
+/mob/living/critter/shade,
+/turf/unsimulated/floor/void{
+	desc = "You can barely see ...";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "deeps";
+	name = "???"
+	},
+/area/precursor/pit)
 "xAH" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -78958,6 +78957,10 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
+"ylS" = (
+/mob/living/critter/robotic/repairbot,
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "ymj" = (
 /turf/unsimulated/floor/logo_xg{
 	icon_state = "logo_xg5"
@@ -86764,7 +86767,7 @@ bKw
 bKw
 bKw
 bUY
-bVi
+miu
 bVt
 bKw
 bKw
@@ -87390,7 +87393,7 @@ bUP
 bUP
 cbH
 aDC
-ccM
+vGO
 bUP
 bUP
 bUP
@@ -89196,7 +89199,7 @@ bYB
 bYS
 bZi
 aDC
-bZP
+vjF
 cao
 caK
 cbf
@@ -109627,7 +109630,7 @@ biX
 biX
 biX
 biX
-bld
+xzj
 biX
 bjJ
 biY
@@ -111437,12 +111440,12 @@ biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 bjK
 biC
 biX
-bld
+xzj
 biX
 biX
 bjJ
@@ -114163,10 +114166,10 @@ pHY
 aaa
 biD
 biY
-bld
+xzj
 biX
 biX
-bld
+xzj
 bjJ
 bkr
 aaa
@@ -114466,7 +114469,7 @@ aaa
 aaa
 biD
 biY
-bob
+kVQ
 biX
 bjJ
 bkr
@@ -125972,7 +125975,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+ylS
 bqb
 bpo
 bpo
@@ -126567,7 +126570,7 @@ aaa
 bpo
 bpo
 bxH
-bwo
+ylS
 bqb
 bqb
 bqb
@@ -128067,7 +128070,7 @@ bqb
 brk
 bqb
 bpo
-bsQ
+fNh
 bpo
 brT
 bpo
@@ -129293,7 +129296,7 @@ bBi
 bBY
 bqb
 bBY
-bsQ
+fNh
 bBY
 bqb
 bBY
@@ -130490,7 +130493,7 @@ bpo
 bpo
 bqb
 bqb
-bwo
+ylS
 bqb
 bqb
 bqb
@@ -133215,7 +133218,7 @@ bqb
 bqb
 bpo
 bpo
-bwo
+ylS
 bvb
 bpo
 bpo
@@ -133828,7 +133831,7 @@ bEn
 bEI
 bqH
 bpo
-bFA
+skj
 bpo
 bFN
 bFN
@@ -135615,7 +135618,7 @@ aaa
 aaa
 bpo
 bpo
-brU
+wRU
 bqb
 bqb
 bpo

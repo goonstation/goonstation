@@ -6,9 +6,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -159,9 +157,7 @@
 	},
 /area/space)
 "aaI" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -235,18 +231,14 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaT" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
 /area/space)
 "aaU" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -7626,7 +7618,7 @@
 "auY" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -9879,9 +9871,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aCs" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -10731,9 +10721,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "aEW" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -10834,9 +10822,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "aFx" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -11195,9 +11181,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aGr" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -14324,13 +14308,11 @@
 	},
 /area/station/crew_quarters/md)
 "aQB" = (
-/obj/table/wood/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/medical,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/reagent_containers/food/drinks/tea,
 /obj/machinery/door_control{
 	id = "pharmacylock";
 	name = "Pharmacy Shutters";
@@ -14710,9 +14692,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aSn" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -26194,9 +26174,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bMV" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -26227,9 +26205,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "bMY" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -26243,9 +26219,7 @@
 	},
 /area/station/solar/west)
 "bMZ" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -26281,9 +26255,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bNe" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -26322,9 +26294,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bNC" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -26354,9 +26324,7 @@
 	},
 /area/mining/magnet)
 "bNF" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -28986,11 +28954,11 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -29557,8 +29525,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "eZa" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/engineering,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -30024,11 +29991,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 9;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30279,9 +30246,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -30670,11 +30635,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -35050,11 +35014,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "kEo" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/card/department/research,
 /obj/item/device/radio/intercom/medical,
 /obj/machinery/light{
 	dir = 8;
@@ -36304,9 +36264,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "lJz" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -37407,9 +37365,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -37676,9 +37632,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "ndn" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -39640,9 +39594,7 @@
 	},
 /area/mining/magnet)
 "plf" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -40038,9 +39990,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "pEZ" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -40801,14 +40751,7 @@
 	name = "Crew Quarters S01"
 	})
 "qsX" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
-	},
+/obj/machinery/computer/card/department/security,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -41363,11 +41306,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 4;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -43525,9 +43468,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/md)
 "tiD" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -43602,9 +43543,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -44024,11 +43963,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -44994,11 +44932,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -46307,6 +46245,12 @@
 	},
 /obj/item/stamp/hos,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/escape{
 	dir = 6
 	},
@@ -47058,11 +47002,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 5;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -47492,6 +47436,7 @@
 	icon_state = "1-8"
 	},
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/tea,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -47527,9 +47472,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;

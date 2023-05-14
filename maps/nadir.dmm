@@ -761,15 +761,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "apr" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/mug/HoS{
-	pixel_x = -6;
-	pixel_y = 12
+/obj/machinery/computer/card/department/security{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -3179,20 +3172,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/table/reinforced/bar/auto{
-	name = "wooden table"
-	},
-/obj/item/remote/porter/port_a_nanomed{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/item/stamp/md{
-	pixel_x = 14
-	},
-/obj/item/reagent_containers/hypospray{
-	pixel_x = 3;
-	pixel_y = 6
-	},
+/obj/machinery/computer/card/department/medical,
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "bsR" = (
@@ -4589,12 +4569,8 @@
 /area/station/storage/emergencyinternals)
 "bYc" = (
 /obj/table/reinforced/auto,
-/obj/item/shaker/mustard{
-	pixel_x = -6
-	},
-/obj/item/shaker/ketchup{
-	pixel_x = 6
-	},
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/item/kitchen/utensil/spoon,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "bYs" = (
@@ -5860,6 +5836,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/chem_dispenser/soda,
+/obj/machinery/light/emergency,
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/cafeteria)
 "cEr" = (
@@ -9158,6 +9135,10 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/exit)
+"ecB" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southwest)
 "ecQ" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/wood/two,
@@ -9926,8 +9907,11 @@
 /area/station/security/brig/genpop)
 "evN" = (
 /obj/table/reinforced/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
+/obj/item/shaker/ketchup{
+	pixel_x = 6
+	},
+/obj/item/shaker/mustard{
+	pixel_x = -6
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -12974,7 +12958,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -13477,7 +13461,7 @@
 /obj/item/clothing/gloves/yellow{
 	pixel_y = 7
 	},
-/obj/item/hand_labeler,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -20421,6 +20405,13 @@
 	dir = 4
 	},
 /obj/machinery/light_switch/west,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -22799,11 +22790,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "jTO" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/card/department/research,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -23095,6 +23082,9 @@
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
+	},
+/obj/item/hand_labeler{
+	pixel_y = 4
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -24176,6 +24166,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"kuP" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/decoration/ashtray,
+/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
+/area/station/crew_quarters/cafeteria)
 "kuV" = (
 /obj/rack,
 /obj/machinery/light/incandescent/netural,
@@ -25263,16 +25258,8 @@
 /obj/item_dispenser/icedispenser{
 	pixel_y = 11
 	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/firealarm{
-	pixel_x = 4;
-	pixel_y = 24
+/obj/drink_rack/cup{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
 /area/station/crew_quarters/cafeteria)
@@ -26059,13 +26046,6 @@
 /turf/simulated/floor/engine/glow,
 /area/station/ai_monitored/armory)
 "llT" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/table/auto,
 /obj/item/shaker/salt,
 /obj/item/shaker/pepper{
@@ -28532,13 +28512,6 @@
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/equipment)
-"mlq" = (
-/obj/table/reinforced/bar/auto,
-/obj/machinery/computer/security/wooden_tv/small{
-	pixel_y = 8
-	},
-/turf/simulated/floor/carpet/green/standard/narrow/northsouth,
-/area/station/crew_quarters/cafeteria)
 "mma" = (
 /obj/submachine/tape_deck,
 /turf/simulated/floor/darkblue/checker/other,
@@ -33492,6 +33465,10 @@
 /area/station/crew_quarters/lounge/starboard{
 	name = "Book Nook"
 	})
+"oCi" = (
+/obj/machinery/vending/capsule,
+/turf/simulated/floor/redblack,
+/area/station/hallway/primary/northeast)
 "oCJ" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8
@@ -34008,6 +33985,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black/side{
 	dir = 9
 	},
@@ -34551,6 +34529,12 @@
 "paN" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/staff)
+"paQ" = (
+/obj/table/reinforced/auto,
+/obj/item/plate,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/cafeteria)
 "paY" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -35188,6 +35172,14 @@
 	icon_state = "1-8"
 	},
 /obj/machinery/light_switch/east,
+/obj/item/remote/porter/port_a_nanomed{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/hypospray{
+	pixel_x = 3;
+	pixel_y = 6
+	},
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
@@ -36093,9 +36085,9 @@
 "pPd" = (
 /obj/machinery/chem_dispenser/alcohol,
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
-/obj/machinery/light/emergency{
+/obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -10
+	pixel_x = -24
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/crew_quarters/cafeteria)
@@ -37766,7 +37758,7 @@
 /area/station/crew_quarters/lounge)
 "qCW" = (
 /obj/disposalpipe/segment/food,
-/obj/machinery/vending/capsule,
+/obj/machinery/vending/coffee,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -38040,13 +38032,6 @@
 /obj/item/reagent_containers/food/drinks/eggnog{
 	pixel_x = 5;
 	pixel_y = 10
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
@@ -39303,6 +39288,13 @@
 /area/station/crew_quarters/cafeteria)
 "rsN" = (
 /obj/machinery/vending/jobclothing/catering,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "rsP" = (
@@ -40550,6 +40542,15 @@
 /turf/simulated/floor/greenblack/corner,
 /area/station/storage/emergencyinternals)
 "rXf" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/paper_bin{
+	pixel_x = -5
+	},
+/obj/item/pen/pencil,
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
 "rXj" = (
@@ -40770,10 +40771,6 @@
 /area/station/maintenance/east)
 "scm" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray{
-	pixel_x = -4;
-	pixel_y = 8
-	},
 /obj/item/clothing/head/cakehat,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/green/standard/narrow/northsouth,
@@ -40885,6 +40882,13 @@
 /area/station/medical/medbay/lobby)
 "sec" = (
 /obj/submachine/chef_oven,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "seK" = (
@@ -41512,10 +41516,11 @@
 	name = "prep counter"
 	},
 /obj/machinery/espresso_machine{
-	pixel_y = 7
+	pixel_y = 5
 	},
-/obj/drink_rack/cup{
-	pixel_y = 32
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
@@ -42122,6 +42127,15 @@
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
+	},
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/mug/HoS{
+	pixel_x = -6;
+	pixel_y = 12
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
@@ -44359,6 +44373,9 @@
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/item/stamp/md{
+	pixel_x = 14
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
@@ -49032,6 +49049,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"vNv" = (
+/obj/machinery/computer/card/department/engineering{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/engine/engineering/ce)
 "vOi" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -49618,13 +49641,6 @@
 /obj/item/storage/box/plates{
 	pixel_x = -14;
 	pixel_y = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
@@ -52674,6 +52690,12 @@
 /area/station/science/lobby{
 	name = "Science Lounge"
 	})
+"xCS" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/redblack,
+/area/station/hallway/primary/northeast)
 "xCT" = (
 /obj/stool/chair/office/yellow{
 	dir = 8
@@ -89344,8 +89366,8 @@ maE
 hkx
 iHN
 kVe
-mlq
 cSI
+kuP
 jGI
 scm
 hdI
@@ -90552,7 +90574,7 @@ abu
 diQ
 uel
 cfT
-evN
+paQ
 nea
 jwF
 chV
@@ -95090,7 +95112,7 @@ xVH
 aYv
 jmJ
 jmJ
-eGA
+ecB
 eGA
 eGA
 jcK
@@ -109601,7 +109623,7 @@ kRi
 kAS
 vQR
 fZQ
-jyA
+vNv
 boA
 kdG
 ntb
@@ -110507,7 +110529,7 @@ vTc
 fcf
 eGv
 aKN
-mxV
+jyA
 hFV
 kdG
 sZX
@@ -111975,7 +111997,7 @@ kvK
 jdT
 lsj
 lsj
-rXf
+xCS
 gTj
 acK
 eAl
@@ -112277,7 +112299,7 @@ vpY
 jdT
 lsj
 lsj
-rXf
+oCi
 fmc
 hOi
 xCI

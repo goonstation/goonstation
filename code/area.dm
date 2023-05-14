@@ -1344,6 +1344,7 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/vault
 	name = "Secure Vault"
+
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1441,6 +1442,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/adrift_cargorouter
 	name = "Adrift Cargo Router"
 	icon_state = "yellow"
+
+/area/prefab/larrys_laundry
+	name = "Larry's Laundry"
+	icon_state = "green"
 
 // Sealab trench areas //
 
@@ -3619,8 +3624,8 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
 		SPAWN(5 SECONDS)
 			var/area/A = locate(/area/station/ai_monitored/armory)
 			for(var/obj/item/O in A)

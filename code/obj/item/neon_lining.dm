@@ -136,9 +136,8 @@
 			boutput(user, "You join the lining coils together.")
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
-			if(istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/storage = src.loc
-				storage.hud.remove_object(src)
+			if(src.stored)
+				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 			else if(istype(src.loc, /mob))
 				var/mob/M = src.loc
 				M.u_equip(src)

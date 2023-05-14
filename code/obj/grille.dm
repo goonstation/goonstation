@@ -78,11 +78,12 @@
 	catwalk
 		name = "catwalk surface"
 		icon = 'icons/obj/catwalk.dmi'
-		icon_state = "catwalk"
-		density = 0
+		icon_state = "C15-0"
+		density = FALSE
 		desc = "This doesn't look very safe at all!"
 		layer = CATWALK_LAYER
-		shock_when_entered = 0
+		shock_when_entered = FALSE
+		auto = TRUE
 		plane = PLANE_FLOOR
 		amount_of_rods_when_destroyed = 1
 		var/catwalk_type = "C" // Short for "Catwalk"
@@ -126,13 +127,10 @@
 					src.icon_state += "-1"
 				if(76 to INFINITY)
 					src.icon_state += "-0"
-		cross //HEY YOU! YEAH, YOU LOOKING AT THIS. Use these for the corners of your catwalks!
-			name = "catwalk surface" //Or I'll murder you since you are making things ugly on purpose.
-			icon_state = "catwalk_cross" //(Statement does not apply when you actually want to use the other ones.)
 
 		jen // ^^ no i made my own because i am epic
 			name = "maintenance catwalk"
-			icon_state = "catwalk_jen"
+			icon_state = "M0-0"
 			desc = "This looks marginally more safe than the ones outside, at least..."
 			catwalk_type = "M" // Short for "Maintenance"
 			layer = PIPE_LAYER + 0.01
@@ -148,18 +146,6 @@
 
 			reagent_act(var/reagent_id,var/volume)
 				..()
-
-			side
-				icon_state = "catwalk_jen_side"
-
-			inner
-				icon_state = "catwalk_jen_inner"
-
-			fourcorners
-				icon_state = "catwalk_jen_4corner"
-
-			twosides
-				icon_state = "catwalk_jen_2sides"
 
 		dubious
 			name = "rusty catwalk"

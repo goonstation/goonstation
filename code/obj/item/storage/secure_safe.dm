@@ -60,8 +60,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		boutput(user, "You repair the lock on [src].")
 	return TRUE
 
-/obj/item/storage/secure/attackby(obj/item/W, mob/user, obj/item/storage/T)
-	if ((W.w_class > W_CLASS_NORMAL || istype(W, /obj/item/storage/secure)))
+/obj/item/storage/secure/attackby(obj/item/W, mob/user)
+	if (!(src.storage.check_can_hold(W) == STORAGE_CAN_HOLD) || istype(W, /obj/item/storage/secure))
 		return
 	//Waluigi hates this
 	if (src.hackable)
@@ -305,47 +305,47 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 		var/loot = rand(1,9)
 		switch (loot)
 			if (1)
-				new /obj/item/stamped_bullion(src)
+				src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=6, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (2)
 				for (var/i=2, i>0, i--)
-					new /obj/item/stamped_bullion(src)
+					src.storage.add_contents(new /obj/item/stamped_bullion(src))
 				for (var/i=4, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (3)
 				for (var/i=5, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (4)
 				for (var/i=4, i>0, i--)
-					new /obj/item/skull(src)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (5)
 				for (var/i=2, i>0, i--)
-					new /obj/item/skull(src)
+					src.storage.add_contents(new /obj/item/skull(src))
 				for (var/i=2, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (6)
 				for (var/i=2, i>0, i--)
-					new /obj/item/gun/energy/laser_gun(src)
+					src.storage.add_contents(new /obj/item/gun/energy/laser_gun(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (7)
-				new /obj/item/gun/kinetic/single_action/mts_255(src)
-				new /obj/item/ammo/bullets/pipeshot/scrap/five(src)
+				src.storage.add_contents(new /obj/item/gun/kinetic/single_action/mts_255(src))
+				src.storage.add_contents(new /obj/item/ammo/bullets/pipeshot/scrap/five(src))
 				for (var/i=3, i>0, i--)
 					var/obj/item/spacecash/thousand/S = new /obj/item/spacecash/thousand
-					S.setup(src)
+					S.setup(src, try_add_to_storage = TRUE)
 			if (8)
 				for (var/i=7, i>0, i--)
-					new /obj/item/raw_material/telecrystal(src)
+					src.storage.add_contents(new /obj/item/raw_material/telecrystal(src))
 			if (9)
 				var/list/treasures = list(/obj/item/stamped_bullion,\
 				/obj/item/raw_material/telecrystal,\
@@ -375,19 +375,19 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/device/key/random,\
 				/obj/item/paper/IOU)
 
-				for (var/i=rand(1,7), i>0, i--)
+				for (var/i=rand(1,src.storage.slots), i>0, i--)
 					var/treasure = pick(treasures)
 					if (ispath(treasure))
 						if (ispath(treasures[treasure])) // for things that should spawn with specific other things, ie guns & ammo
 							if (i <= 5) // if there's enough room for two things
-								new treasure(src)
+								src.storage.add_contents(new treasure(src))
 								var/treasure_extra = treasures[treasure]
-								new treasure_extra(src)
+								src.storage.add_contents(new treasure_extra(src))
 								i-- // one less thing since we spawned two
 							else // if there's not enough room
 								i++ // try again
 						else // if there's no matching thing to spawn
-							new treasure(src)
+							src.storage.add_contents(new treasure(src))
 					else // if what we selected wasn't a valid path
 						i++ // try again
 
@@ -615,6 +615,11 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+/obj/item/storage/secure/ssafe/larrys
+	configure_mode = FALSE
+	random_code = TRUE
+	spawn_contents = list(/obj/item/paper/IOU, /obj/item/device/key/generic/larrys, /obj/item/spacecash/buttcoin, /obj/item/spacecash/buttcoin)
 
 #undef KEYPAD_ERR
 #undef KEYPAD_SET

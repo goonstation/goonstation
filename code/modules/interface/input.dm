@@ -326,6 +326,7 @@ var/list/dirty_keystates = list()
 /proc/start_input_loop()
 	SPAWN(0)
 		while (1)
+			last_input_loop_time = TIME
 			process_keystates()
 
 			for(var/client/C as anything in clients) // as() is ok here since we nullcheck

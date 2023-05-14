@@ -2218,7 +2218,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				boutput(user, "<span class='alert'>A wrapped wrapper? That's ridiculous.</span>")
 				return
 
-			else if (W.w_class > src.maximum_wrapped_size || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
+			else if (W.w_class > src.maximum_wrapped_size || W.storage)
 				boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 				return
 

@@ -2,12 +2,12 @@
 	name = "Summon Golem"
 	desc = "Summons a Golem made of the reagent you currently hold."
 	icon_state = "golem"
-	targeted = 0
-	cooldown = 500
-	requires_robes = 1
+	targeted = FALSE
+	cooldown = 75 SECONDS
+	requires_robes = TRUE
 	requires_being_on_turf = TRUE
-	offensive = 1
-	cooldown_staff = 1
+	offensive = TRUE
+	cooldown_staff = TRUE
 	voice_grim = 'sound/voice/wizard/GolemGrim.ogg'
 	voice_fem = 'sound/voice/wizard/GolemFem.ogg'
 	voice_other = 'sound/voice/wizard/GolemLoud.ogg'
@@ -52,18 +52,18 @@
 			holder.owner.say("CLAE MASHON", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/critter/golem/TheGolem
+		var/mob/living/critter/golem/the_golem
 		if (istype(AnItem, /obj/item/reagent_containers/food/snacks/ingredient/egg/bee))
-			TheGolem = new /obj/critter/domestic_bee(get_turf(holder.owner))
-			TheGolem.name = "Bee Golem"
-			TheGolem.desc = "A greater domestic space bee that has been created with magic, but is otherwise completely identical to any other member of its species."
+			the_golem = new /obj/critter/domestic_bee(get_turf(holder.owner))
+			the_golem.name = "Bee Golem"
+			the_golem.desc = "A greater domestic space bee that has been created with magic, but is otherwise completely identical to any other member of its species."
 		else
-			TheGolem = new /obj/critter/golem(get_turf(holder.owner))
-			TheGolem.CustomizeGolem(TheReagents)
+			the_golem = new /mob/living/critter/golem/(get_turf(holder.owner))
+			the_golem.CustomizeGolem(TheReagents)
 
 		qdel(TheReagents)
 		qdel(AnItem)
-		boutput(holder.owner, "<span class='notice'>You conjure up [TheGolem]!</span>")
-		logTheThing(LOG_COMBAT, holder.owner, "created a [constructTarget(TheGolem,"combat")] at [log_loc(holder.owner)].")
-		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [TheGolem]!</span>")
+		boutput(holder.owner, "<span class='notice'>You conjure up [the_golem]!</span>")
+		logTheThing(LOG_COMBAT, holder.owner, "created a [constructTarget(the_golem,"combat")] at [log_loc(holder.owner)].")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [the_golem]!</span>")
 		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

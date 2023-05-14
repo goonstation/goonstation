@@ -146,8 +146,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 		AddComponent(/datum/component/mechanics_holder)
 		AddComponent(/datum/component/bullet_holes, 8, 5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", .proc/vendinput)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", .proc/vendname)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend Random", PROC_REF(vendinput))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Vend by Name", PROC_REF(vendname))
 		light = new /datum/light/point
 		light.attach(src)
 		light.set_brightness(0.6)
@@ -474,7 +474,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			"img" = R.getBase64Img(),
 			"infinite" = R.infinite
 		))
-
+	if (!length(plist)) //this is needed to make TGUI clear out the list
+		.["productList"] = list()
 
 /obj/machinery/vending/ui_data(mob/user)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)
@@ -509,14 +510,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	switch(action)
 		if("cutwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
 			if(params["wire"] && issnippingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
 			if(params["wire"] && ispulsingtool(I))
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				src.pulse(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("logout")
@@ -565,6 +575,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if(params["target"])
 				if (!src.vend_ready)
 					return
+				if (seconds_electrified)
+					if(src.shock(usr,100))
+						return
 				var/datum/db_record/account = null
 				account = FindBankAccountByName(src.scan?.registered)
 				if ((!src.allowed(usr)) && (!src.emagged) && (src.wires & WIRE_SCANID))
@@ -978,14 +991,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	if(length(item_name_to_throw))
 		for(var/datum/data/vending_product/R in src.product_list)
 			if(lowertext(item_name_to_throw) == lowertext(strip_html(R.product_name_cache[R.product_path], no_fucking_autoparse = TRUE)))
-				if(R.product_amount > 0)
+				if(R.product_amount > 0 && !(R.product_hidden && !src.extended_inventory))
 					throw_item_act(R, target)
 					return R
 				return
 	else
 		var/list/datum/data/vending_product/valid_products = list()
 		for(var/datum/data/vending_product/R in src.product_list)
-			if(R.product_amount <= 0) //Try to use a record that actually has something to dump.
+			if(R.product_amount <= 0 || (R.product_hidden && !src.extended_inventory)) //Try to use a record that actually has something to dump.
 				continue
 			valid_products.Add(R)
 		if(length(valid_products))
@@ -1265,7 +1278,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.88
@@ -1376,7 +1389,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "1"
+	req_access = list(access_security)
 	acceptcard = 0
 
 	light_r =1
@@ -1407,7 +1420,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "37"
+	req_access = list(access_maxsec)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8
@@ -1740,7 +1753,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "food-off"
 	icon_broken = "food-broken"
 	icon_fallen = "food-fallen"
-	req_access_txt = "28"
+	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
@@ -2081,7 +2094,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				boutput(user, "<span class='alert'>You can't put [target] into a vending machine while it's attached to you!</span>")
 			return
 		var/obj/item/targetContainer = target
-		if (!istype(targetContainer, /obj/item/storage) && !istype(targetContainer, /obj/item/satchel))
+		if (!targetContainer.storage && !istype(targetContainer, /obj/item/satchel))
 			productListUpdater(target, user)
 			if(!quiet)
 				user.visible_message("<b>[user.name]</b> loads [target] into [src].")
@@ -2101,12 +2114,9 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		if(!quiet)
 			user.visible_message("<b>[user.name]</b> dumps out [targetContainer] into [src].")
 
-		var/obj/item/storage/targetStorage = null
-		if(istype(targetContainer, /obj/item/storage))
-			targetStorage = targetContainer
-		for (var/obj/item/R in targetContainer)
-			targetStorage?.hud.remove_object(R)
-			productListUpdater(R, user)
+		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
+			targetContainer.storage.transfer_stored_item(I, src, user = user)
+			productListUpdater(I, user)
 
 
 	proc/productListUpdater(obj/item/target, mob/user)
@@ -2169,7 +2179,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 				return
 
 			var/num_loaded = 0
-			for (var/obj/item/I in dropped.contents)
+			for (var/obj/item/I in (dropped.storage?.get_contents() || dropped.contents))
 				addProduct(I, user, quiet=TRUE)
 				if(I.loc == src)
 					num_loaded++
@@ -2727,6 +2737,9 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 

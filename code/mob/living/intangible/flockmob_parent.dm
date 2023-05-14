@@ -75,8 +75,6 @@
 /mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
-	if (src.client)
-		src.antagonist_overlay_refresh(0, 0)
 	if (!src.flock.z_level_check(src))
 		src.emote("scream")
 		if (length(src.flock.units[/mob/living/critter/flock/drone]))

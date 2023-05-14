@@ -131,7 +131,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(trigger_chance))
 			explode_count++
 			var/turf/tloc = get_turf(owner)
-			explosion(owner, tloc, 0, 1, 2, 3, 1)
+			explosion(owner, tloc, 0, 1, 2, 3)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
 			qdel(owner)
 		return
@@ -255,7 +255,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(world.time - lastTrigger < 100) return
 		lastTrigger = world.time
 		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 1, 2, 3, 4, 1)
+		explosion(location, tloc, 1, 2, 3, 4)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
 		return
 
@@ -501,7 +501,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		lastTrigger = world.time
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
 		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 0, 1, 2, 3, 1)
+		explosion(location, tloc, 0, 1, 2, 3)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
 		return
 
@@ -516,11 +516,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			location.visible_message("<span class='alert'>[location] explodes!</span>")
 			switch(sev)
 				if(1)
-					explosion(location, tloc, 0, 1, 2, 3, 1)
+					explosion(location, tloc, 0, 1, 2, 3)
 				if(2)
-					explosion(location, tloc, -1, 0, 1, 2, 1)
+					explosion(location, tloc, -1, 0, 1, 2)
 				if(3)
-					explosion(location, tloc, -1, -1, 0, 1, 1)
+					explosion(location, tloc, -1, -1, 0, 1)
 			qdel(location)
 		return
 
