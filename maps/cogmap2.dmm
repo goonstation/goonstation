@@ -74221,14 +74221,6 @@
 	layer = 2.5;
 	name = "Beamline"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
-	},
 /obj/machinery/door/airlock/pyro/external{
 	name = "Pod Bay";
 	req_access_txt = "0"
@@ -76853,14 +76845,6 @@
 	icon_state = "magwarning";
 	layer = 2.5;
 	name = "Beamline"
-	},
-/obj/machinery/door/airlock/pyro/glass{
-	autoclose = 0;
-	density = 0;
-	icon_state = "glass_open";
-	id = "pt_laser";
-	name = "Beamline Interlock";
-	req_access_txt = "54"
 	},
 /obj/machinery/door/airlock/pyro/external{
 	name = "Secure Pod Bay"
