@@ -1837,6 +1837,98 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		setProperty("heatprot", 5)
 		setProperty("meleeprot", 2)
 
+/obj/item/clothing/suit/wintercoat/short_nurse_dress
+	name = "short nurse dress"
+	desc = "A short, easy to move in nurse dress. Give it a twirl!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "short-nurse-dress"
+	item_state = "short-nurse-dress"
+	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_UNIFORM
+
+/obj/item/clothing/suit/wintercoat/nurse_coat
+	name = "nurse coat"
+	desc = "A pristine medical coat, the inside is very soft to the touch."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "nurse-coat"
+	item_state = "nurse-coat"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/science_puffer
+	name = "science puffer"
+	desc = "A big comfy puffer jacket, perfect for the lab!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "science-puffer"
+	item_state = "science-puffer"
+	body_parts_covered = TORSO|ARMS
+
+
+/obj/item/clothing/suit/wintercoat/hi_vis_coat
+	name = "hi-vis coat"
+	desc = "A coat that makes you even more visible!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "hi-vis-coat"
+	item_state = "hi-vis-coat"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/engineering_puffer
+	name = "engineering puffer"
+	desc = "A big comfy puffer jacket, perfect for the engine!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "engineering-puffer"
+	item_state = "engineering-puffer"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/security_puffer
+	name = "security puffer"
+	desc = "A big comfy puffer jacket, perfect for catching criminals!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "sec-puffer"
+	item_state = "sec-puffer"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/botany_puffer
+	name = "botanist puffer"
+	desc = "A big comfy puffer jacket, perfect for gardening!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "botanist-puffer"
+	item_state = "botanist-puffer"
+	hides_from_examine = C_UNIFORM
+
+/obj/item/clothing/suit/wintercoat/geneticist_puffer
+	name = "geneticist puffer"
+	desc = "A big comfy puffer jacket, perfect for defying nature!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "geneticist-puffer"
+	item_state = "geneticist-puffer"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/janitor_jacket
+	name = "janitorial jacket"
+	desc = "Sturdy and easy to wash, inevitably going to be splashed with blood."
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "janitor-jacket"
+	item_state = "janitor-jacket"
+	body_parts_covered = TORSO|ARMS
+
+/obj/item/clothing/suit/wintercoat/rancher_puffer
+	name = "rancher puffer"
+	desc = "A big comfy puffer jacket, perfect for chicken care!"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon_state = "rancher-puffer"
+	item_state = "rancher-puffer"
+	body_parts_covered = TORSO|ARMS
+
 /obj/item/clothing/suit/nursedress
 	name = "nurse dress"
 	desc = "A traditional dress worn by a nurse."
