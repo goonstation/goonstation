@@ -14,6 +14,7 @@
 	var/hour_minute_divider = ":" //used to make the colon in the time blink like a clock display
 	var/display_type = "clock" //used to show analog or screen displays on sprite
 	var/text_to_display
+	var/emagged = FALSE
 
 	var/steps_taken = 0
 	var/counting_steps = FALSE //true when in hands or pockets
@@ -92,11 +93,11 @@
 			if(new_mode == "Timer")
 				last_tick = null
 				timer_time = 0
-			current_clock_mode = new_mode
-			if(current_clock_mode == "Time Keeping" || "Timer")
+			if(new_mode == "Time Keeping")
 				display_type = "clock"
 			else
 				display_type = "screen"
+			current_clock_mode = new_mode
 			icon_state = "watch_open_[display_type]"
 			update_clock()
 
@@ -109,7 +110,6 @@
 			stop_counting_steps(M)
 
 	proc/update_clock()
-
 		switch(current_clock_mode)
 			if("Time Keeping")
 				if(hour_minute_divider == ":")
@@ -154,10 +154,29 @@
 			if("Service Bell Ring Counter")
 				text_to_display = "[bell_counter] rings"
 
-		src.inventory_counter.update_text(text_to_display)
+			if("Head of Personnel Quality Score") //joke emag-only mode
+				text_to_display = "[rand(-10000, 10000)] pnts"
 
+			if("Jones Quantity") //joke emag-only mode
+				var/amount_of_jones
+				for(var/mob/living/critter/small_animal/cat/jones/jones in world)
+					if(!isdead(jones))
+						amount_of_jones += 1
+					text_to_display = "[amount_of_jones] cat(s)"
+
+		src.inventory_counter.update_text(text_to_display)
 
 	process()
 		update_clock()
 		..()
 
+	emag_act(var/mob/user)
+		if(!emagged)
+			if (user)
+				user.show_text("The watch vibrates briefly as you bring the card close to it, and then remains still...", "red")
+			clock_modes += list("Head of Personnel Quality Score", "Jones Quantity")
+			emagged = TRUE
+
+	attack(mob/target, mob/user)
+		user.visible_message("[user] dangles the [src] in front of [target]'s face hypnotically! [pick("How silly!", "How goofy!", "How strange!")]")
+		return

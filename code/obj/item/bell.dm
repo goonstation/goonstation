@@ -20,7 +20,7 @@
 	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
 	if(sends_signal_to_hop_watch)
 		for(var/obj/item/pocketwatch/watch in world)
-				watch.the_bell_has_been_rung()
+			watch.the_bell_has_been_rung()
 
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)
