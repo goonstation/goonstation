@@ -19,7 +19,7 @@
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
 	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
 	if(sends_signal_to_hop_watch)
-		for(var/obj/item/pocketwatch/watch in world)
+		for_by_tcl(watch, /obj/item/pocketwatch)
 			watch.the_bell_has_been_rung()
 
 /obj/item/bell/attack_self(mob/user as mob)

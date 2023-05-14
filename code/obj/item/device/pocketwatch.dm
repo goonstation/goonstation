@@ -11,15 +11,15 @@
 	object_flags = NO_GHOSTCRITTER
 	inventory_counter_enabled = TRUE
 	var/current_clock_mode = "Time Keeping"
-	var/hour_minute_divider = ":" //used to make the colon in the time blink like a clock display
-	var/display_type = "clock" //used to show analog or screen displays on sprite
+	var/hour_minute_divider = ":" //! used to make the colon in the time blink like a clock display
+	var/display_type = "clock" //! used to show analog or screen displays on sprite
 	var/text_to_display
 	var/emagged = FALSE
 
 	var/steps_taken = 0
-	var/counting_steps = FALSE //true when in hands or pockets
+	var/counting_steps = FALSE //! true when in hands or pockets
 
-	var/currently_timing = FALSE //used for timer mode
+	var/currently_timing = FALSE //! used for timer mode
 	var/timer_time = 0
 	var/last_tick
 
@@ -37,20 +37,16 @@
 	"Timer")
 
 	New()
+		START_TRACKING
 		processing_items.Add(src)
 		create_inventory_counter()
 		if(istype(loc, /mob/)) //start counting steps if we spawn in the HoP's pocket!!
 			start_counting_steps(loc)
 		..()
 
-	proc/format_time_text(var/timeValue as num)
-		var/seconds = round((timeValue / 10) % 60)
-		var/minutes = round(((timeValue / 10) - seconds) / 60)
-		if (minutes < 10)
-			minutes = "0[minutes]"
-		if (seconds < 10)
-			seconds = "0[seconds]"
-		return "[minutes]:[seconds]"
+	disposing()
+		STOP_TRACKING
+		..()
 
 	proc/start_counting_steps(mob/user)
 		if(!counting_steps)
@@ -149,7 +145,7 @@
 				if (src.last_tick)
 					timer_time += TIME - src.last_tick
 				src.last_tick = TIME
-				text_to_display = format_time_text(timer_time)
+				text_to_display = formatTimeText(timer_time)
 
 			if("Service Bell Ring Counter")
 				text_to_display = "[bell_counter] rings"
@@ -159,7 +155,7 @@
 
 			if("Jones Quantity") //joke emag-only mode
 				var/amount_of_jones
-				for(var/mob/living/critter/small_animal/cat/jones/jones in world)
+				for_by_tcl(jones, /mob/living/critter/small_animal/cat/jones)
 					if(!isdead(jones))
 						amount_of_jones += 1
 					text_to_display = "[amount_of_jones] cat(s)"
