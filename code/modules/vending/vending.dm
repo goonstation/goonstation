@@ -3211,7 +3211,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 TYPEINFO(/obj/machinery/vending/player/chemicals)
 	mats = list("MET-2" = 30, "telecrystal" = 20, "CRY-1" = 20)
 /obj/machinery/vending/player/chemicals
-	name = "medical supply cabinet"
+	name = "dispensary interlink"
 	desc = "Stores and transmits medical chemicals via \"the cloud\", I wouldn't question it."
 	icon_state = "medchem"
 	acceptcard = FALSE
