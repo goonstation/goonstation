@@ -1278,7 +1278,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.88
@@ -1389,7 +1389,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "1"
+	req_access = list(access_security)
 	acceptcard = 0
 
 	light_r =1
@@ -1420,7 +1420,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "37"
+	req_access = list(access_maxsec)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8
@@ -1753,7 +1753,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "food-off"
 	icon_broken = "food-broken"
 	icon_fallen = "food-fallen"
-	req_access_txt = "28"
+	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
