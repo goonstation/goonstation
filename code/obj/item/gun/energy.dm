@@ -1670,15 +1670,18 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		set_current_projectile(new/datum/projectile/energy_bolt/signifer_tase)
 		projectiles = list(current_projectile,new/datum/projectile/laser/signifer_lethal)
 		..()
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.5, 1.5, 1)
+		..()
 
 	update_icon()
 		..()
 		if(!src.two_handed)// && current_projectile.type == /datum/projectile/energy_bolt)
+			src.current_projectile.fullauto_valid = TRUE
 			src.icon_state = "signifer_2"
 			src.item_state = "signifer_2"
 			muzzle_flash = "muzzle_flash_elec"
 			shoot_delay = 2
-			spread_angle = 0
+			spread_angle = 8
 			force = 9
 			w_class = W_CLASS_NORMAL
 		else //if (current_projectile.type == /datum/projectile/laser)
