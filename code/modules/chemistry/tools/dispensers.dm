@@ -425,7 +425,17 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 			src.name = t
 
-			src.desc = "For storing medical chemicals and less savory things."
+			src.desc = "For storing medical chemicals and less savory things. It's lid is currently open."
+
+		if (istool(W, TOOL_WRENCHING))
+			if(src.flags & OPENCONTAINER)
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid close!")
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.flags ^= OPENCONTAINER
+			else
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+				src.flags ^= OPENCONTAINER
 		else
 			..()
 
