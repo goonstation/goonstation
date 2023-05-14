@@ -2128,6 +2128,8 @@
 				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
+			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
+				return TRUE
 		if (slot_back)
 			if (I.c_flags & ONBACK)
 				return TRUE

@@ -2097,6 +2097,9 @@ TYPEINFO(/obj/item/cargotele)
 		if (istype(item, /obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = item
 			owner_name = pda.registered
+		else if (istype(item, /obj/item/clothing/lanyard))
+			var/obj/item/clothing/lanyard/lanyard = item
+			owner_name = lanyard.registered
 		else if (istype(item, /obj/item/card/id))
 			var/obj/item/card/id/card = item
 			owner_name = card.registered
