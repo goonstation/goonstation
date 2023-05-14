@@ -425,7 +425,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 			src.name = t
 
-			src.desc = "For storing medical chemicals and less savory things. It's lid is currently open."
+			src.desc = "For storing medical chemicals and less savory things."
 
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
