@@ -340,7 +340,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
 			return
 	var/obj/item/card/id/id_card = get_id_card(W)
-	if (istype(W))
+	if (istype(id_card))
 		W = id_card
 	if (istype(W, /obj/item/card/id))
 		if (src.acceptcard)
