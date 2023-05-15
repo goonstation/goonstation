@@ -202,7 +202,7 @@ TYPEINFO(/obj/item/sword)
 			return
 
 		if (!loaded_glowstick.on)
-			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn'tool been cracked!</span>")
+			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
 			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
 			return
 
@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/sword)
 
 /obj/item/dagger/smile/attack(mob/living/target, mob/user)
 	if(prob(10))
-		var/say = pick("Why won'tool you smile?","Smile!","Why aren'tool you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn'tool smile!")
+		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
 		user.say(say)
 	..()
 
@@ -956,7 +956,7 @@ TYPEINFO(/obj/item/sword)
 				set_values()
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
-					boutput(user, "<span class='alert'>Can'tool switch to 2-handed while your other hand is full.</span>")
+					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
 				else
 					set_values()
 		..()
@@ -1112,7 +1112,7 @@ TYPEINFO(/obj/item/bat)
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
-				H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn'tool apply to heads :(
+				H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn't apply to heads :(
 			return ..()
 		if("chest")
 			if (prob(delimb_prob))
@@ -1341,7 +1341,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, "<span class='alert'>The [W] can'tool fit into [src].</span>")
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
@@ -1355,7 +1355,7 @@ TYPEINFO(/obj/item/swords/captain)
 		else
 			..()
 			if(W.cant_drop == 1)
-				boutput(user, "<span class='notice'>You can'tool sheathe the [W] while its attached to your arm.</span>")
+				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
@@ -1370,7 +1370,7 @@ TYPEINFO(/obj/item/swords/captain)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()
 		else
-			boutput(user, "You don'tool have a free hand to draw with!")
+			boutput(user, "You don't have a free hand to draw with!")
 
 /obj/item/swords_sheaths/katana
 	name = "katana sheath"
@@ -1492,7 +1492,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	New()
 		..()
-		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("tool'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
+		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("t'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -1636,8 +1636,8 @@ obj/item/whetstone
 
 /obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
 
-	var/turf/tool = get_turf(user) // no farming in the safety of the Cairngorm
-	if (tool.loc:sanctuary)
+	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
+	if (t.loc:sanctuary)
 		return
 
 	if(src.mode == 1) // only knock back on the sweep attack
@@ -2055,7 +2055,7 @@ obj/item/whetstone
 		..()
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		return TRUE // ignore cant_drop and can'tool other remove since we handle those and need it this way
+		return TRUE // ignore cant_drop and can't other remove since we handle those and need it this way
 
 	proc/setup_props(var/mob/user) // I hate this
 		if (!attached || (src.mode == EMP))
