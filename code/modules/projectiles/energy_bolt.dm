@@ -381,8 +381,8 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
-	cost = 12
-	stun = 11
+	cost = 10
+	stun = 10
 	damage = 1
 
 	sname = "non-lethal"
