@@ -405,10 +405,15 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	name = "chemical barrel"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "barrel"
+	var/base_icon_state = "barrel-blue"
+	icon_state = "barrel-blue-closed"
 	amount_per_transfer_from_this = 25
 	p_class = 3
 	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+
+	New()
+		..()
+		src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
@@ -430,12 +435,11 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.flags ^= OPENCONTAINER
 			else
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				src.flags ^= OPENCONTAINER
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.flags ^= OPENCONTAINER
+			src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
 		else
 			..()
 
@@ -444,11 +448,14 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
 
 	red
-		icon_state = "barrel_red"
+		icon_state = "barrel-red-closed"
+		base_icon_state = "barrel-red"
 	yellow
-		icon_state = "barrel_yellow"
+		icon_state = "barrel-yellow-closed"
+		base_icon_state = "barrel-yellow"
 	oil
-		icon_state = "barrel_flamable"
+		base_icon_state = "barrel-flamable-closed"
+		base_icon_state = "barrel-flamable"
 		name = "oil barrel"
 		desc = "A barrel for storing large amounts of oil."
 
