@@ -2883,6 +2883,14 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/market)
+"boN" = (
+/obj/machinery/siphon/resonator,
+/turf/simulated/floor/engine/caution/misc{
+	dir = 1
+	},
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "boT" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
@@ -4842,9 +4850,7 @@
 /area/station/engine/engineering)
 "ceO" = (
 /obj/machinery/siphon/resonator,
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
-	},
+/turf/simulated/floor/engine/caution/misc,
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
@@ -14354,7 +14360,7 @@
 /area/station/security/equipment)
 "grg" = (
 /obj/machinery/light,
-/obj/machinery/manufacturer/mechanic,
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -21682,7 +21688,6 @@
 	dir = 1;
 	pixel_y = 16
 	},
-/obj/machinery/ore_cloud_storage_container,
 /turf/simulated/floor/engine,
 /area/station/science/construction{
 	name = "Extraction Nexus"
@@ -38641,6 +38646,12 @@
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
+"qQh" = (
+/obj/machinery/manufacturer/mechanic,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "qQo" = (
 /obj/item/storage/wall{
 	name = "bath cabinet";
@@ -45578,6 +45589,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"tTm" = (
+/obj/machinery/ore_cloud_storage_container,
+/turf/simulated/floor/engine,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "tTz" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/food{
@@ -99924,7 +99941,7 @@ drI
 yeJ
 sTJ
 pfr
-drI
+boN
 ceO
 gXP
 lUZ
@@ -100529,7 +100546,7 @@ llF
 hHg
 mPi
 drI
-ceO
+tTm
 gXP
 ssa
 czo
@@ -101133,7 +101150,7 @@ fFi
 puT
 rDR
 drI
-ceO
+qQh
 gXP
 wkR
 bra
@@ -101736,7 +101753,7 @@ drI
 wWl
 hXR
 pfr
-drI
+boN
 ceO
 gXP
 mqx
