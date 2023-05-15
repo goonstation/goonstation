@@ -35,6 +35,7 @@ TYPEINFO(/obj/item/camera/large)
 	var/can_use = 1
 	var/takes_voodoo_pics = 0
 	var/steals_souls = FALSE
+	var/film_cost = 1
 
 	New()
 		..()
@@ -168,6 +169,299 @@ TYPEINFO(/obj/item/camera/large)
 		return
 	else
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
+
+// Victim types
+#define VICTIM_TYPE_HUMAN 0
+#define VICTIM_TYPE_MOB 1
+#define VICTIM_TYPE_CREATURE 1
+#define VICTIM_TYPE_NOTHING 2
+#define VICTIM_TYPE_CYBORG 3
+#define VICTIM_TYPE_AI 4
+// Number of icon states (had to be copied from playing_cards uuughh)
+#define STGCARD_NUMBER_F 4 //female
+#define STGCARD_NUMBER_M 4 //male
+#define STGCARD_NUMBER_N 2 //nonbinary
+#define STGCARD_NUMBER_GENERAL 8
+#define STGCARD_NUMBER_BORG 2
+#define STGCARD_NUMBER_AI 2
+/obj/item/camera/stg // Turns things into StG cards
+	desc = "It seems magical... and it also seems to need a lot of film."
+	film_cost = 10
+
+	examine()
+		. = ..()
+		. += "But only [src.pictures_left < 0 ? "a whole lot of" : round(src.pictures_left/10)] shots can be taken."
+
+	// Imports a specific griffin card datum into a playing card with a victim in mind
+	proc/importGriffDatum(obj/item/playing_card/card, datum/playing_card/griffening/card_data, mob/living/victim)
+		card.name = card_data.card_name
+		card.desc = card_data.card_data // heh
+		if(istype(card_data, /datum/playing_card/griffening/creature))
+			var/datum/playing_card/griffening/creature/card_data_creature = card_data
+			var/atk
+			var/def
+			var/icon_state_num
+			if(card_data_creature.randomized_stats)
+				if(!card_data_creature.LVL)
+					card_data_creature.LVL = rand(1,10)
+				// fun idea would be to add mults for traits like athletic but too much tech debt is here already
+				atk = rand(1, 10) * card_data_creature.LVL
+				def = rand(1, 10) * card_data_creature.LVL
+			else
+				atk = card_data_creature.ATK
+				def = card_data_creature.DEF
+			if(card_data_creature.LVL)
+				card.name = "LVL [card_data_creature.LVL] [victim.real_name]"
+			else
+				card.name = "[victim.real_name]"
+			if(istype(card_data_creature, /datum/playing_card/griffening/creature/mob/ai)) // AIs are named with a suffix
+				card.name += " the AI"
+			card.name += " [atk]/[def]"
+			card.desc = card_data_creature.card_data
+			card.desc += " ATK [atk] | DEF [def]"
+			// good thing these aren't undef'd! dont wanna have to dupe the defines
+			switch(victim.gender)
+				if(MALE)
+					icon_state_num = rand(1,STGCARD_NUMBER_F)
+					card.icon_state = "stg-f-[icon_state_num]"
+				if(FEMALE)
+					icon_state_num = rand(1,STGCARD_NUMBER_M)
+					card.icon_state = "stg-m-[icon_state_num]"
+				else // neuter and plural
+					icon_state_num = rand(1,STGCARD_NUMBER_N)
+					card.icon_state = "stg-n-[icon_state_num]"
+			// Actually silicons have unique iconstates
+			if(istype(card_data_creature, /datum/playing_card/griffening/creature/mob/ai))
+				icon_state_num = rand(1,STGCARD_NUMBER_AI)
+				card.icon_state = "stg-ai-[icon_state_num]"
+			if(istype(card_data_creature, /datum/playing_card/griffening/creature/mob/cyborg))
+				icon_state_num = rand(1,STGCARD_NUMBER_BORG)
+				card.icon_state = "stg-borg-[icon_state_num]"
+		else // is an area or effect
+			card.icon_state = "stg-general-[rand(1,STGCARD_NUMBER_GENERAL)]"
+		card.card_style = "stg"
+		card.update_stored_info()
+		return card
+
+	proc/findSentientOnTurf(turf/the_turf, typepath)
+		// Find things on this space and the last one to the looped through is our victim
+		// but prioritize sentient ones (with clients)
+		var/victim_chosen = null
+		for (var/mob/living/carbon/human/victim in the_turf)
+			if (victim.invisibility)
+				continue
+			victim_chosen = victim
+			if(victim.client)  // Great! A sapient human! Best case scenario, stop checking
+				break
+		return victim_chosen
+
+	create_photo(var/atom/target, var/powerflash = 0)
+		if (!target)
+			return 0
+		var/turf/the_turf = get_turf(target)
+		var/atom/movable/victim_chosen = null // Chosen thing to cardify
+		var/victim_type = VICTIM_TYPE_HUMAN // What is it?
+		var/obj/item/playing_card/card = null // The card item
+		var/datum/playing_card/griffening/card_data = null // Card data once we find something
+
+		victim_chosen = findSentientOnTurf(the_turf, /mob/living/carbon/human)
+		// No humans? Find a borg....
+		if (!victim_chosen)
+			victim_chosen = findSentientOnTurf(the_turf, /mob/living/silicon/robot)
+			victim_type = VICTIM_TYPE_CYBORG
+		// No borgs? Find an AI....
+		if (!victim_chosen)
+			victim_chosen = findSentientOnTurf(the_turf, /mob/living/silicon/ai)
+			victim_type = VICTIM_TYPE_AI
+		// No AI? Find a critter...
+		if (!victim_chosen)
+			victim_chosen = findSentientOnTurf(the_turf, /mob/living/critter)
+			victim_type = VICTIM_TYPE_CREATURE
+		// Oh yeah, object critters are still a thing.
+		if (!victim_chosen)
+			victim_chosen = findSentientOnTurf(the_turf, /obj/critter)
+			victim_type = VICTIM_TYPE_CREATURE
+		// why are bots considered obj/machinery...
+		if (!victim_chosen)
+			victim_chosen = findSentientOnTurf(the_turf, /obj/machinery/bot)
+			victim_type = VICTIM_TYPE_CREATURE
+		// Lost at 20 questions again! Get area card as fallback
+		if (!victim_chosen)
+			victim_type = VICTIM_TYPE_NOTHING
+
+		switch(victim_type)
+			if(VICTIM_TYPE_HUMAN)
+				// Let's dig into your mind and extract some things...
+				// You an antag we know? Just like areas they dont (or shouldnt) map 1:1 to griff. So sad! Atleast we dont need special_role back compat
+				var/mob/living/carbon/human/victim_human = victim_chosen
+				var/list/stg_antag_table = list()
+				stg_antag_table += list(ROLE_TRAITOR, /datum/playing_card/griffening/creature/mob/traitor)
+				stg_antag_table += list(ROLE_CHANGELING, /datum/playing_card/griffening/creature/mob/changeling)
+				stg_antag_table += list(ROLE_VAMPIRE, /datum/playing_card/griffening/creature/mob/vampire)
+				stg_antag_table += list(ROLE_WRAITH, /datum/playing_card/griffening/creature/mob/wraith) // Impressive!
+				stg_antag_table += list(ROLE_NUKEOP, /datum/playing_card/griffening/creature/mob/nukeop)
+				stg_antag_table += list(ROLE_WIZARD, /datum/playing_card/griffening/creature/mob/wizard) // lol
+				var/datum/mind/victim_mind = null
+				if (ismind(victim_human.mind))
+					victim_mind = victim_human.mind
+					for (var/list/compare_antag in stg_antag_table)
+						if(victim_mind && victim_mind.get_antagonist(compare_antag[0]))
+							card_data = new compare_antag[1]
+							break
+					//message_admins(ismind(victim_mind))
+					//message_admins(victim_mind?.assigned_role)
+					// No antag? What's your job? Sadly text2path ended up being too janky, so this is yet another table mess.
+					// Thankfully this time we can do it with a switch without too much redundancy to be painful
+					if(victim_mind)
+						switch(victim_mind.assigned_role)
+							if("Captain")
+								card_data = new /datum/playing_card/griffening/creature/mob/captain
+							if("Head of Personnel")
+								card_data = new /datum/playing_card/griffening/creature/mob/head_of_personnel
+							if("Head of Security")
+								card_data = new /datum/playing_card/griffening/creature/mob/head_of_security
+							if("Research Director")
+								card_data = new /datum/playing_card/griffening/creature/mob/head_of_security
+							if("Scientist")
+								card_data = new /datum/playing_card/griffening/creature/mob/scientist
+							if("Clown")
+								card_data = new /datum/playing_card/griffening/creature/mob/clown
+							if("Chief Engineer")
+								card_data = new /datum/playing_card/griffening/creature/mob/chief_engineer
+							if("Engineer")
+								card_data = new /datum/playing_card/griffening/creature/mob/engineer
+							if("Chaplain")
+								card_data = new /datum/playing_card/griffening/creature/mob/chaplain
+							if("Botanist")
+								card_data = new /datum/playing_card/griffening/creature/mob/botanist
+							if("Janitor")
+								card_data = new /datum/playing_card/griffening/creature/mob/janitor
+							if("Chef")
+								card_data = new /datum/playing_card/griffening/creature/mob/chef
+							if("Bartender")
+								card_data = new /datum/playing_card/griffening/creature/mob/bartender
+							if("Medical Director")
+								card_data = new /datum/playing_card/griffening/creature/mob/medical_director
+							if("Roboticist")
+								card_data = new /datum/playing_card/griffening/creature/mob/roboticist
+							if("Geneticist")
+								card_data = new /datum/playing_card/griffening/creature/mob/geneticist
+							if("Medical Doctor")
+								card_data = new /datum/playing_card/griffening/creature/mob/medical_doctor
+							// more specially named ones below:
+							if("Staff Assistant")
+								card_data = new /datum/playing_card/griffening/creature/mob/assistant
+							if("Medical Assistant")
+								card_data = new /datum/playing_card/griffening/creature/mob/assistant
+							if("Technical Assistant")
+								card_data = new /datum/playing_card/griffening/creature/mob/assistant
+							if("Research Assistant")
+								card_data = new /datum/playing_card/griffening/creature/mob/assistant
+							if("Atmospherish Technician")
+								card_data = new /datum/playing_card/griffening/creature/mob/atmospherics
+							if("Sous Chef")
+								card_data = new /datum/playing_card/griffening/creature/mob/chef
+							if("Security Officer")
+								card_data = new /datum/playing_card/griffening/creature/mob/security
+				if(!card_data) // Absolutely no valid antag or job at all?? Okay, fine, get some random data
+					card_data = new /datum/playing_card/griffening/creature/mob
+					var/datum/playing_card/griffening/creature/mob/temp = card_data
+					temp.card_name = "Human"
+					if(victim_mind)
+						temp.card_data = "Some kinda [victim_mind.assigned_role] card. "
+					temp.card_data += "Wait, this isn't a tournament legal card."
+					temp.randomized_stats = TRUE
+					card_data = temp
+				//message_admins(card_data.type)
+			if(VICTIM_TYPE_CYBORG) // Special silicon cases which have just one card each
+				card_data = new /datum/playing_card/griffening/creature/mob/cyborg
+			if(VICTIM_TYPE_AI)
+				card_data = new /datum/playing_card/griffening/creature/mob/ai
+			if(VICTIM_TYPE_CREATURE) // Critters and creatures in general
+				// Special cases!
+				if(ispath(victim_chosen,/obj/critter/domestic_bee/heisenbee))
+					card_data = new /datum/playing_card/griffening/creature/friend/bee/heisenbee
+				else if(ispath(victim_chosen,/obj/critter/domestic_bee) || ispath(victim_chosen,/obj/critter/domestic_bee_larva) || ispath(victim_chosen,/obj/critter/fake_bee) || ispath(victim_chosen,/mob/living/critter/small_animal/bee))
+					card_data = new /datum/playing_card/griffening/creature/friend/bee
+				else if(ispath(victim_chosen,/obj/machinery/bot/secbot/beepsky))
+					card_data = new /datum/playing_card/griffening/creature/friend/beepsky
+				else if(ispath(victim_chosen,/obj/critter/bat/doctor) || ispath(victim_chosen,/mob/living/critter/small_animal/bat/doctor))
+					card_data = new /datum/playing_card/griffening/creature/friend/dracula
+				else if(ispath(victim_chosen,/mob/living/critter/brullbar/king))
+					card_data = new /datum/playing_card/griffening/creature/friend/brullbar/king
+				else if(ispath(victim_chosen,/mob/living/critter/brullbar))
+					card_data = new /datum/playing_card/griffening/creature/friend/brullbar
+				else if(ispath(victim_chosen,/mob/living/critter/bear))
+					card_data = new /datum/playing_card/griffening/creature/friend/bear
+				else // No special case, randomize!
+					card_data = new /datum/playing_card/griffening/creature/friend
+					var/datum/playing_card/griffening/creature/friend/temp = card_data
+					temp.card_name = "Strange Little Creature"
+					temp.card_data = "Wait, this isn't a tournament-legal card."
+					temp.randomized_stats = TRUE
+					card_data = temp
+			if(VICTIM_TYPE_NOTHING) // Nothing found? Try to find this area and manually cardify from table
+				var/the_area = get_area(the_turf)
+				var/list/stg_area_table = list() // (area, card data)
+				// griffin does not convert 1:1 to station areas so here's a big table of conversions. can't just index the right one, need to typecheck + asoc doesnt do object indexes well(?) if at all(?)
+				// highly unfortunate and ugly. if this fails (like photo'ing an azone's *floor*) then i applaud you for such a total misplay
+				// order does matter here for children - most inherited first please
+				stg_area_table += list(/area/space, /datum/playing_card/griffening/effect/hull_breach)
+				stg_area_table += list(/area/station/turret_protected/armory_outside, /datum/playing_card/griffening/area/security) // There's no one big AI path for turret protected AI areas
+				stg_area_table += list(/area/station/turret_protected, /datum/playing_card/griffening/area/upload) // so assume non-armory area is gonna be AI
+				stg_area_table += list(/area/station/construction, /datum/playing_card/griffening/area/engineering)
+				stg_area_table += list(/area/station/engine, /datum/playing_card/griffening/area/engineering)
+				stg_area_table += list(/area/station/mining, /datum/playing_card/griffening/area/engineering)
+				stg_area_table += list(/area/mining/miningoutpost, /datum/playing_card/griffening/area/engineering)
+				stg_area_table += list(/area/station/medical/robotics, /datum/playing_card/griffening/area/robotics)
+				stg_area_table += list(/area/station/medical/research, /datum/playing_card/griffening/area/genetics)
+				stg_area_table += list(/area/station/medical, /datum/playing_card/griffening/area/medbay)
+				stg_area_table += list(/area/station/chapel, /datum/playing_card/griffening/area/chapel)
+				stg_area_table += list(/area/listeningpost, /datum/playing_card/griffening/area/syndicate) // how tf did you get in there??
+				stg_area_table += list(/area/station/bridge, /datum/playing_card/griffening/area/bridge)
+				stg_area_table += list(/area/station/security, /datum/playing_card/griffening/area/security)
+				stg_area_table += list(/area/station/crew_quarters/kitchen, /datum/playing_card/griffening/area/kitchen)
+				stg_area_table += list(/area/station/crew_quarters/cafeteria, /datum/playing_card/griffening/area/cafeteria)
+				stg_area_table += list(/area/shuttle/escape, /datum/playing_card/griffening/area/shuttle)
+				stg_area_table += list(/area/station/maintenance, /datum/playing_card/griffening/effect/disarm) // surprisingly no maint area card!
+				stg_area_table += list(/area/station/science, /datum/playing_card/griffening/effect/) // or a sci card
+				stg_area_table += list(/area/station, /datum/playing_card/griffening/effect/abandoned_crate) // Atleast you're still on station right?
+
+				for(var/list/compare_area in stg_area_table)
+					if(istype(the_area, compare_area[0]))
+						card_data = new compare_area[1]
+				if(card_data)
+					card = new /obj/item/playing_card(the_turf)
+					importGriffDatum(card, card_data, victim_chosen)
+				else // - ⇀ -
+					card = new /obj/item/playing_card/expensive(the_turf) // consolation prize
+				if(prob(10))
+					card.add_foil()
+				return
+		card = new /obj/item/playing_card(the_turf)
+		importGriffDatum(card, card_data, victim_chosen)
+		if(prob(10))
+			card.add_foil()
+		// Final part! Their soul shall now be trapped inside the card.
+		if(isliving(victim_chosen))
+			var/mob/living/temp = victim_chosen
+			temp.flash(5 SECONDS)
+			temp.pixel_x = 0
+			temp.pixel_y = 0
+			temp.real_name = card.name // so we get "LVL 6 Test Dummy 40/48 says" or "LVL 1 SHODAN the AI 10/12 states"
+			temp.name = temp.real_name
+			victim_chosen = temp
+			victim_chosen.set_loc(card)
+			APPLY_ATOM_PROPERTY(temp, PROP_MOB_BREATHLESS, src.type) // So that you don't choke while being held. Cards don't breathe now do they?
+			boutput(temp, "<span class='alert'>Oh no! You've been turned into a Spaceman: The Griffening card!<br>Don't worry, this doesn't mean you're dead. You can still talk and do certain local things.<br>If the card life isn't for you, maybe consider suicide.</span>")
+#undef VICTIM_TYPE_HUMAN
+#undef VICTIM_TYPE_MOB
+#undef VICTIM_TYPE_NOTHING
+#undef VICTIM_TYPE_AI
+#undef VICTIM_TYPE_CYBORG
+#undef STGCARD_NUMBER_F
+#undef STGCARD_NUMBER_M
+#undef STGCARD_NUMBER_N
 
 TYPEINFO(/obj/item/camera_film)
 	mats = 10
@@ -321,21 +615,21 @@ TYPEINFO(/obj/item/camera_film/large)
 
 /obj/item/camera/afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 	if (!can_use || ismob(target.loc)) return
-	if (src.pictures_left == 0 && user)
-		user.show_text("The film cartridge is used up. You have to replace it first.", "red")
+	if (src.pictures_left >= 0 && src.pictures_left < src.film_cost && user)
+		user.show_text("The film cartridge doesn't have enough film to take a photo. You have to replace it first.", "red")
 		return
 
 	src.create_photo(target)
 	playsound(src, "sound/items/polaroid[rand(1,2)].ogg", 75, 1, -3)
 
 	if (src.pictures_left > 0)
-		src.pictures_left = max(0, src.pictures_left - 1)
+		src.pictures_left = max(0, src.pictures_left - src.film_cost)
 		if (user)
 			boutput(user, "<span class='notice'>[pictures_left] photos left.</span>")
-	can_use = 0
-	SPAWN(5 SECONDS)
+	can_use = FALSE
+	SPAWN(10 SECONDS)
 		if (src)
-			src.can_use = 1
+			src.can_use = TRUE
 
 /obj/item/camera/proc/create_photo(var/atom/target, var/powerflash = 0)
 	if (!target)
