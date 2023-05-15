@@ -111,21 +111,19 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/brullbar)) return FALSE //don't kill other brullbars
+		if (ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(!is_king && iswerewolf(H))
+				src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+				step_away(src, H, 15)
+				src.set_dir(get_dir(src, H))
+				return FALSE
+		return ..()
+
 	seek_target(var/range = 9)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
-			if (src.faction != null && (C.faction & src.faction != 0)) continue //Checks if they are in the same faction
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if(!is_king && iswerewolf(H))
-					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
-					step_away(src, H, 15)
-					src.set_dir(get_dir(src, H))
-					continue
-			. += C
+		. = ..()
 
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)

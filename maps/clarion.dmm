@@ -28954,11 +28954,11 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -29991,11 +29991,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 9;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30635,11 +30635,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -41307,11 +41306,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 4;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -43964,11 +43963,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -44934,11 +44932,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -47004,11 +47002,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 5;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
