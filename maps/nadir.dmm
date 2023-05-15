@@ -16342,7 +16342,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating,
 /area/station/janitor/office)
 "hhc" = (
 /turf/simulated/floor/black,
