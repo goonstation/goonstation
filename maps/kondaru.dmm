@@ -27767,12 +27767,10 @@
 	},
 /area/station/science/teleporter)
 "bSD" = (
-/obj/submachine/chem_extractor{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -31712,7 +31710,7 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},

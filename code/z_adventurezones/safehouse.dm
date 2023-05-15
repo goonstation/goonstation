@@ -92,6 +92,7 @@
 
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
+		bioHolder.ownerType = src.type
 		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
 		bioHolder.mobAppearance.customization_first_color = "#241200"
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
