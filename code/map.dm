@@ -40,7 +40,8 @@ var/global/list/mapNames = list(
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
 	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
 	"blank" =				list("id" = "BLANK",		"settings" = "", 				"playerPickable" = FALSE),
-	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE)
+	"blank_underwater" =	list("id" = "BLANK_UNDERWATER", "settings" = "", 			"playerPickable" = FALSE),
+	"Aetherion" =			list("id" = "AETHERION",	"settings" = "aetherion",		"playerPickable" = TRUE,	"MaxPlayersAllowed" = 40)
 )
 
 /obj/landmark/map
