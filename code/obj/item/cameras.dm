@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/camera/large)
 							if("Head of Security")
 								card_data = new /datum/playing_card/griffening/creature/mob/head_of_security
 							if("Research Director")
-								card_data = new /datum/playing_card/griffening/creature/mob/head_of_security
+								card_data = new /datum/playing_card/griffening/creature/mob/research_director
 							if("Scientist")
 								card_data = new /datum/playing_card/griffening/creature/mob/scientist
 							if("Clown")
