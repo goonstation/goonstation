@@ -295,7 +295,7 @@
 	if (!W)
 		return STORAGE_CANT_HOLD
 
-	if (W.cant_drop)
+	if (W.cant_drop || W.cant_be_placed_into_storage)
 		return STORAGE_WONT_FIT
 
 	for (var/type in src.prevent_holding)

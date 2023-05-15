@@ -1719,10 +1719,12 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			if (src.collapsed)
 				src.w_class = W_CLASS_NORMAL
 				src.has_empty_state = FALSE
+				src.cant_be_placed_into_storage = FALSE
 
 			else
 				src.w_class = W_CLASS_BULKY
 				src.has_empty_state = TRUE
+				src.cant_be_placed_into_storage = TRUE
 
 			src.UpdateIcon()
 			// Update HUD inhands, as they seem to dislike icon file changes paired with changing twohandedness.
