@@ -219,7 +219,6 @@ TYPEINFO(/obj/item/camera/large)
 			card.name += " [atk]/[def]"
 			card.desc = card_data_creature.card_data
 			card.desc += " ATK [atk] | DEF [def]"
-			// good thing these aren't undef'd! dont wanna have to dupe the defines
 			switch(victim.gender)
 				if(MALE)
 					icon_state_num = rand(1,STGCARD_NUMBER_F)
