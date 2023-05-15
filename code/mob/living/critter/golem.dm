@@ -62,17 +62,15 @@
 		HH.icon_state = "handr"				// the icon state of the hand UI background
 		HH.limb_name = "right golem arm"
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/golem)) return FALSE
+		if(iswizard(C) && src.wizard_spawn) return FALSE
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if (H.traitHolder.hasTrait("training_chaplain")) return FALSE
+		return ..()
+
 	seek_target(var/range = 6)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/golem)) continue
-			if (iswizard(C) && src.wizard_spawn) continue
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if (H.traitHolder.hasTrait("training_chaplain")) continue
-			. += C
 
 	proc/CustomizeGolem(var/datum/reagents/CR) //customise it with the reagents in a container
 		for(var/current_id in CR.reagent_list)

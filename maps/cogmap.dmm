@@ -47746,7 +47746,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ddE" = (
-/obj/machinery/vending/medical,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -48095,6 +48094,18 @@
 "dvF" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"dws" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/obj/machinery/vending/player/chemicals,
+/turf/simulated/floor,
+/area/station/science/chemistry)
 "dwx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54181,6 +54192,12 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"kxr" = (
+/obj/storage/secure/closet/medical/medicine,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "kzw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -64021,7 +64038,6 @@
 /turf/simulated/floor,
 /area/station/engine/core)
 "vHP" = (
-/obj/storage/secure/closet/medical/medicine,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -100480,7 +100496,7 @@ ckG
 ckG
 cne
 cne
-pxm
+dws
 vhk
 pxm
 cne
@@ -101993,7 +102009,7 @@ coA
 cpB
 cqC
 cqC
-cqC
+kxr
 oOM
 jxO
 wbX

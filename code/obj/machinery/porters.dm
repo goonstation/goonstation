@@ -847,7 +847,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	icon_state = "vend"
 	icon_deny = "vend-deny"
 	layer = FLOOR_EQUIP_LAYER1
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
 	anchored = UNANCHORED
 	p_class = 1.2

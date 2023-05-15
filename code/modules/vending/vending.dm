@@ -474,7 +474,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			"img" = R.getBase64Img(),
 			"infinite" = R.infinite
 		))
-
+	if (!length(plist)) //this is needed to make TGUI clear out the list
+		.["productList"] = list()
 
 /obj/machinery/vending/ui_data(mob/user)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)
@@ -618,7 +619,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
 							product = R
-					var/atom/movable/vended = src.vend_product(product)
+					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
@@ -637,7 +638,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
 	. = TRUE
 
-/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
+/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product, mob/user)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
 		return
 	var/atom/movable/vended
@@ -1277,7 +1278,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "med"
 	icon_panel = "standard-panel"
 	icon_deny = "med-deny"
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.88
@@ -1388,7 +1389,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "1"
+	req_access = list(access_security)
 	acceptcard = 0
 
 	light_r =1
@@ -1419,7 +1420,7 @@ TYPEINFO(/obj/machinery/vending/medical)
 	icon_state = "sec"
 	icon_panel = "standard-panel"
 	icon_deny = "sec-deny"
-	req_access_txt = "37"
+	req_access = list(access_maxsec)
 	acceptcard = 0
 	light_r =1
 	light_g = 0.8
@@ -1752,7 +1753,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	icon_off = "food-off"
 	icon_broken = "food-broken"
 	icon_fallen = "food-fallen"
-	req_access_txt = "28"
+	req_access = list(access_kitchen)
 	acceptcard = 0
 
 	light_r =1
@@ -1830,6 +1831,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		real_name = product.real_name
 		contents += product
 		product_cost = price
+
+	getBase64Img()
+		var/key = "\ref[src]"
+		. = product_base64_cache[key]
+		if(isnull(.))
+			var/icon/dummy_icon = getFlatIcon(src.contents[1], no_anim=TRUE)
+			. = icon2base64(dummy_icon)
+			product_base64_cache[key] = .
 
 TYPEINFO(/obj/item/machineboard)
 	mats = 2
@@ -2020,12 +2029,15 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	//Bank account
 	var/datum/db_record/owneraccount = null
 	var/image/crtoverlay = null
+	var/does_crt = TRUE
 	var/image/promoimage = null
 	player_list = list()
 	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
+		if (!src.does_crt)
+			return
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
 		crtoverlay.plane = PLANE_DEFAULT
@@ -3195,3 +3207,66 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
+
+TYPEINFO(/obj/machinery/vending/player/chemicals)
+	mats = list("MET-2" = 30, "telecrystal" = 20, "CRY-1" = 20)
+/obj/machinery/vending/player/chemicals
+	name = "dispensary interlink"
+	desc = "Stores and transmits medical chemicals via \"the cloud\", I wouldn't question it."
+	icon_state = "medchem"
+	acceptcard = FALSE
+	pay = FALSE
+	does_crt = FALSE
+	slogan_chance = 0
+	req_access = list(access_chemistry, access_medical_lockers)
+	///Stuff wot can be put in
+	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/patch,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/ampoule,
+		/obj/item/chem_pill_bottle,
+	)
+
+	New()
+		..()
+		START_TRACKING
+		if (length(by_type[/obj/machinery/vending/player/chemicals]))
+			var/obj/machinery/vending/player/chemicals/other = by_type[/obj/machinery/vending/player/chemicals][1]
+			src.player_list = other.player_list
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	vend_product(datum/data/vending_product/product, mob/user)
+		. = ..()
+		SPAWN(0)
+			for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
+				linked.update_static_data(user)
+
+	attackby(obj/item/W, mob/user)
+		for (var/type in src.allowed_types)
+			if (istype(W, type))
+				src.addProduct(W, user)
+				for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
+					linked.update_static_data(user)
+					if (linked != src && !ON_COOLDOWN(linked, "announce", 2 SECONDS))
+						linked.speak(pick("New product received: [W.name]!",
+							"Supplies transmitted: [W.name]!",
+							"Now available for pickup: [W.name]!")
+						)
+				return
+		if (istype(W, /obj/item/screwdriver)) //no
+			return
+		. = ..()
+
+	generate_slogans()
+		if (istype(get_area(src), /area/station/science))
+			return
+		if (!length(src.player_list) <= 0)
+			src.slogan_list = list("[src.pick_product_name()] could save a life!",
+				"Fresh supplies of [src.pick_product_name()]!",
+				"Ask your doctor if [src.pick_product_name()] is right for you!",
+				"Prescribe [src.pick_product_name()] today!"
+			)

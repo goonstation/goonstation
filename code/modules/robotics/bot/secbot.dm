@@ -617,6 +617,9 @@
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			return
 
+		if (istype(src.loc, /obj/machinery/disposal) && prob(20)) //we are a smart security bot, we can climb (hover?) out of chutes
+			src.set_loc(get_turf(src.loc))
+
 		switch(mode)
 			/// No guard orders, start patrol if allowed, also look for people to heck up
 			if(SECBOT_IDLE)
