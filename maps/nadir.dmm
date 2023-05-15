@@ -32248,9 +32248,6 @@
 	dir = 1
 	},
 /area/station/engine/storage)
-"nRY" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/chapel/sanctuary)
 "nSd" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/gym,
@@ -106247,7 +106244,7 @@ wBN
 huI
 wTD
 auw
-xes
+lRC
 sUv
 rJy
 sUv
@@ -106549,7 +106546,7 @@ bXn
 ktZ
 ktZ
 ktZ
-nRY
+ktZ
 jfo
 jfo
 jfo
