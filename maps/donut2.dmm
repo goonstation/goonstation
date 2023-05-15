@@ -13243,11 +13243,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "aUA" = (
-/obj/machinery/vending/medical,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aUB" = (
@@ -35805,6 +35805,13 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
+"lfp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/player/chemicals,
+/turf/simulated/floor/purplewhite,
+/area/station/science/chemistry)
 "lfr" = (
 /obj/machinery/manufacturer/gas,
 /turf/simulated/floor/grime,
@@ -118203,7 +118210,7 @@ aeM
 afg
 afD
 agb
-agI
+lfp
 waD
 ahM
 wSY

@@ -2592,15 +2592,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ain" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
+/obj/machinery/chem_heater,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -9200,7 +9192,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "aDf" = (
-/obj/machinery/chem_heater,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -9212,6 +9203,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -9600,7 +9592,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aEc" = (
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -10753,16 +10745,21 @@
 "aHs" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aHt" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/light{
-	dir = 4;
-	light_type = /obj/item/light/tube/light_purpleish;
-	pixel_x = 10
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
