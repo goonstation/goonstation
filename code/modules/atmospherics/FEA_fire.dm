@@ -93,8 +93,10 @@
 	var/volume = 125
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
 	/// If we've just spawned, don't die right after, wait a cycle.
-	var/just_spawned = FALSE
+	var/just_spawned = TRUE
+	///
 	var/bypassing = FALSE
+	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
 
 /obj/hotspot/New()
@@ -153,7 +155,7 @@
 
 	color = rgb(red, green, blue) //changing obj.color is not expensive, and smooths imperfect light transitions
 
-	// dear lord i apologuize for this conditional which i am about to write and commit. please be with the starving pygmies down in new guinea amen
+	// dear lord i apologise for this conditional which i am about to write and commit. please be with the starving pygmies down in new guinea amen //zewaka is no longer apologuizing
 
 	//hello yes now it's ZeWaka with an even more hellcode implementation that makes no sense
 	//scientific reasoning provided by Mokrzycki, Wojciech & Tatol, Maciej. (2011).
@@ -259,11 +261,8 @@
 
 	perform_exposure()
 
-	if (src.catalyst_active)
-		src.catalyst_active = FALSE
-
-	if (location.wet)
-		location.wet = 0
+	src.catalyst_active = FALSE
+	location.wet = 0
 
 	if (bypassing)
 		icon_state = "3"

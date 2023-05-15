@@ -1,6 +1,6 @@
-/// Basically, join any nearby valid groups.
-/// If more than one, pick one with most members at my borders.
-/// If can not find any but there was an ungrouped at border with me, call for group assembly.
+/** Basically, join any nearby valid groups.
+ *  If more than one, pick one with most members at my borders.
+ *  If can not find any but there was an ungrouped at border with me, call for group assembly. */
 /turf/simulated/proc/find_group()
 	var/turf/simulated/floor/north = get_step(src,NORTH)
 	var/turf/simulated/floor/south = get_step(src,SOUTH)
@@ -8,13 +8,13 @@
 	var/turf/simulated/floor/west = get_step(src,WEST)
 
 	//Clear those we do not have access to
-	if(!gas_cross(north) || !istype(north))
+	if(!gas_cross(north) || !(north?.turf_flags & IS_TYPE_SIMULATED))
 		north = null
-	if(!gas_cross(south) || !istype(south))
+	if(!gas_cross(south) || !(south?.turf_flags & IS_TYPE_SIMULATED))
 		south = null
-	if(!gas_cross(east) || !istype(east))
+	if(!gas_cross(east) || !(east?.turf_flags & IS_TYPE_SIMULATED))
 		east = null
-	if(!gas_cross(west) || !istype(west))
+	if(!gas_cross(west) || !(west?.turf_flags & IS_TYPE_SIMULATED))
 		west = null
 
 	var/new_group_possible = FALSE

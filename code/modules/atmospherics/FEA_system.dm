@@ -1,53 +1,26 @@
-/**
- * Overview:
- * 	The air_master global variable is the workhorse for the system.
- *
- * Why are you archiving data before modifying it?
- * 	The general concept with archiving data and having each tile keep track of when they were last updated is to keep everything symmetric
- * 		and totally independent of the order they are read in an update cycle.
- * 	This prevents abnormalities like air/fire spreading rapidly in one direction and super slowly in the other.
- *
- * Why not just archive everything and then calculate?
- * 	Efficiency. While a for-loop that goes through all tils and groups to archive their information before doing any calculations seems simple, it is
- * 		slightly less efficient than the archive-before-modify/read method.
- *
- * Why is there a cycle check for calculating data as well?
- * 	This ensures that every connection between group-tile, tile-tile, and group-group is only evaluated once per loop.
- *
- * 	atom/Cross(atom/movable/mover, turf/target, height, air_group)
- * 		returns TRUE for allow pass and FALSE for deny pass
- * 		Turfs automatically call this for all objects/mobs in its turf.
- * 		This is called both as source.Cross(target, height, air_group)
- * 			and  target.Cross(source, height, air_group)
- *
- * 		Cases for the parameters
- * 		1. This is called with args (mover, location, height>0, air_group=0) for normal objects.
- * 		2. This is called with args (null, location, height=0, air_group=0) for flowing air.
- * 		3. This is called with args (null, location, height=?, air_group=1) for determining group boundaries.
- *
- * 		Cases 2 and 3 would be different for doors or other objects open and close fairly often.
- * 			(Case 3 would return 0 always while Case 2 would return 0 only when the door is open)
- * 			This prevents the necessity of re-evaluating group geometry every time a door opens/closes.
+/* Overview:
+The air_master global variable is the workhorse for the system.
+
+Why are you archiving data before modifying it?
+	The general concept with archiving data and having each tile keep track of when they were last updated is to keep everything symmetric
+		and totally independent of the order they are read in an update cycle.
+	This prevents abnormalities like air/fire spreading rapidly in one direction and super slowly in the other.
+
+Why not just archive everything and then calculate?
+	Efficiency. While a for-loop that goes through all tiles and groups to archive their information before doing any calculations seems simple, it is
+		slightly less efficient than the archive-before-modify/read method.
+
+Why is there a cycle check for calculating data as well?
+	This ensures that every connection between group-tile, tile-tile, and group-group is only evaluated once per loop.
 */
-
-/atom/proc/gas_cross(turf/target)
-	return !src.gas_impermeable
-
-/turf/gas_cross(turf/target)
-	if(!target)
-		return FALSE
-	if(target?.gas_impermeable || src.gas_impermeable)
-		return FALSE
-	for(var/atom/movable/AM as anything in src)
-		if(!AM.gas_cross(target))
-			return FALSE
-	for(var/atom/movable/AM as anything in target)
-		if(!AM.gas_cross(src))
-			return FALSE
-	return TRUE
 
 var/global/datum/controller/air_system/air_master
 var/global/total_gas_mixtures = 0
+
+/// Checks whether or not gases can pass through. Called by [/turf/gas_cross] for all atoms within the turf.
+/// Returns: TRUE for allowed pass and FALSE for denied pass.
+/atom/proc/gas_cross(turf/target)
+	return !src.gas_impermeable
 
 /datum/controller/air_system
 	/// List of air groups to be processed.
@@ -63,9 +36,9 @@ var/global/total_gas_mixtures = 0
 	///Place turfs in this list rather than call the proc directly to prevent race conditions
 	var/list/turf/tiles_to_update = list()
 
-	/// A list of air groups that have had their geometry occluded and thus may need to be split in half.
-	///	A set of adjacent groups put in here will join together if validly connected.
-	///	This is done before air system calculations for a cycle.
+	/** A list of air groups that have had their geometry occluded and thus may need to be split in half.
+	 *	A set of adjacent groups put in here will join together if validly connected.
+	 *	This is done before air system calculations for a cycle. */
 	var/list/datum/air_group/groups_to_rebuild = list()
 
 	/// Turfs to be converted to space on the next cycle in case we're busy right now.
@@ -73,18 +46,20 @@ var/global/total_gas_mixtures = 0
 	var/list/turf/tiles_to_space = list()
 
 	var/current_cycle = 0
+	/// Don't want to accidentally modify something while still processing. Let's keep track if we're busy.
 	var/is_busy = FALSE
 	var/datum/controller/process/air_system/parent_controller = null
-
-	var/turf/space/space_sample //instead of repeatedly using locate() to find space, we should just cache a space tile ok
+	/// Much better idea to cache a tile than to keep calling locate()
+	var/turf/space/space_sample
 
 /// Updates cached space sample if need be.
-// Returns: New space sample.
+/// Returns: New space sample.
 /datum/controller/air_system/proc/update_space_sample()
 	if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 		space_sample = locate(/turf/space)
 	return space_sample
 
+/// Move every simulated turf into a group, then call [/turf/simulated/proc/update_air_properties] on them.
 /datum/controller/air_system/proc/setup(datum/controller/process/air_system/controller)
 	parent_controller = controller
 
@@ -131,7 +106,7 @@ var/global/total_gas_mixtures = 0
 						possible_space_borders |= test
 						test.length_space_border++
 
-			if(test.length_space_border > 0)
+			if(test.length_space_border)
 				possible_space_length += test.length_space_border
 			possible_members -= test
 
@@ -148,7 +123,7 @@ var/global/total_gas_mixtures = 0
 			test.processing = FALSE
 			active_singletons -= test
 
-			test.dist_to_space = null
+			test.dist_to_space = 0
 			var/dist
 			for(var/turf/simulated/possible as anything in possible_space_borders)
 				if (possible == test)
@@ -159,7 +134,9 @@ var/global/total_gas_mixtures = 0
 					test.dist_to_space = dist
 
 		// Allow groups to determine if group processing is applicable after FEA setup
-		if(current_cycle) group.group_processing = FALSE
+		if(current_cycle)
+			group.group_processing = FALSE
+
 		group.members = members
 		air_groups += group
 
@@ -208,7 +185,8 @@ var/global/total_gas_mixtures = 0
 	is_busy = FALSE
 	return TRUE
 
-/// Do not call. Used by process().
+/// Replaces all queued tiles in [/datum/controller/air_system/var/tiles_to_space] with space.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_tiles_to_space()
 	PROTECTED_PROC(TRUE)
 	if(length(tiles_to_space))
@@ -216,14 +194,16 @@ var/global/total_gas_mixtures = 0
 			T.ReplaceWithSpaceForce() // If we made it this far, force is appropriate as we know it NEEDs to be updated
 		tiles_to_space.len = 0
 
-/// Do not call. Used by process().
+/// Updates queued tiles.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_update_tiles()
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
 		T.update_air_properties()
 	tiles_to_update.len = 0
 
-/// Do not call. Used by process().
+/// Process air groups queued for reconstruction. Deconstructs air groups into tiles, then creates new groups from those tiles.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_rebuild_select_groups()
 	PROTECTED_PROC(TRUE)
 	var/list/turf/turf_list = list()
@@ -249,28 +229,32 @@ var/global/total_gas_mixtures = 0
 
 	groups_to_rebuild.len = 0
 
-/// Do not call. Used by process().
+/// Process all air groups.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_groups()
 	PROTECTED_PROC(TRUE)
 	for(var/datum/air_group/AG as anything in air_groups)
 		AG?.process_group(parent_controller)
 		LAGCHECK(LAG_REALTIME)
 
-/// Do not call. Used by process().
+/// Process any singletons queued for processing.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_singletons()
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/loner as anything in active_singletons)
 		loner.process_cell()
 		LAGCHECK(LAG_REALTIME)
 
-/// Do not call. Used by process().
+/// Process any tiles queued for superconduction.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_super_conductivity()
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
 		hot_potato.super_conduct()
 		LAGCHECK(LAG_REALTIME)
 
-/// Do not call. Used by process().
+/// Process any tiles queued for pressure delta movement.
+/// Do not call. Used by [/datum/controller/air_system/proc/process].
 /datum/controller/air_system/proc/process_high_pressure_delta()
 	PROTECTED_PROC(TRUE)
 	for(var/turf/simulated/pressurized as anything in high_pressure_delta)

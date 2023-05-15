@@ -2,24 +2,22 @@
 /**
  * Air groups are collections of tiles that let us save processing time by treating a bunch of similar tiles as a single tile.
  * This is quite useful because atmospherics processing is quite the time hog and processing one tile is much faster.
- * Whenever our tiles become too different, we can break up and create new smaller groups.
- */
+ * Whenever our tiles become too different, we can break up and create new smaller groups. */
 /datum/air_group
-	/// Processing all tiles as one large tile if TRUE
+	/// Processing all tiles as one large tile if TRUE.
 	var/tmp/group_processing = TRUE
 
-	/// The gas mixture we use for the air group's atmos
+	/// The gas mixture we use for the air group.
 	var/tmp/datum/gas_mixture/air = null
 
 	/// Current cycle of the atmospherics master.
 	var/tmp/current_cycle = 0
 
 	/// Cycle that our archived vars were made.
-	/// The use of archived cycle saves processing power by permitting the archiving step of FET
-	/// to be rolled into the updating step.
+	/// The use of archived cycle saves processing power by permitting the archiving step of FET to be rolled into the updating step.
 	var/tmp/archived_cycle = 0
 
-	/// Tiles that connect this group to other groups/individual tiles
+	/// Our tiles that border this group to other groups/singletons.
 	var/list/turf/simulated/borders
 
 	/// All tiles in this group
@@ -28,19 +26,23 @@
 	/// Tiles that border space
 	var/list/turf/simulated/space_borders
 
-	/// Length of space border
+	/// Length of our border with space
 	var/length_space_border = 0
 
 	// drsingh - lets try caching these lists from process_group, see if we can't reduce the garbage collection
+	/// Tiles that border us that either have no group, aka singletons, or are not in group processing mode.
 	var/list/turf/simulated/border_individual
+	/// Groups that border us and are in group processing mode.
 	var/list/datum/air_group/border_group
 
 	//used to send the appropriate border tile of a group to the group proc
+	/// Tiles that border us and are in another group that is currently processing.
 	var/list/turf/simulated/enemies
+	/// Our tiles that border groups that are processing.
 	var/list/turf/simulated/self_group_borders
+	/// Our tiles that border singletons.
 	var/list/turf/simulated/self_tile_borders
-
-	/// If true, will drain the gasses of the airgroup
+	/// If true, will drain the gasses of the airgroup.
 	var/spaced = FALSE
 
 // overrides
@@ -54,13 +56,13 @@
 
 // Group procs
 
-// Distribute air from the group out to members
+/// Distribute air from the group out to members
 /datum/air_group/proc/suspend_group_processing()
 	ASSERT(group_processing == TRUE)
 	update_tiles_from_group()
 	group_processing = FALSE
 
-// Collect air from the members to the group.
+/// Collect air from the members to the group.
 /datum/air_group/proc/resume_group_processing()
 	ASSERT(group_processing == FALSE)
 	update_group_from_tiles()
@@ -88,7 +90,8 @@
 /// Copy group air information to individual tile air. Used right before turning off group processing.
 /datum/air_group/proc/update_tiles_from_group()
 	for(var/turf/simulated/member as anything in members)
-		if (member.air) member.air.copy_from(air)
+		if (member.air)
+			member.air.copy_from(air)
 
 #ifdef ATMOS_ARCHIVING
 /datum/air_group/proc/archive()
@@ -97,9 +100,9 @@
 	archived_cycle = air_master.current_cycle
 #endif
 
-/// If individually processing tiles, checks all member tiles to see if they are close enough that the group may resume group processing.
-/// Returns: False if group should not continue processing, TRUE if it should.
-/// Warning: Do not call, called by air_master.process()
+/** If individually processing tiles, checks all member tiles to see if they are close enough that the group may resume group processing.
+ *  Returns: False if group should not continue processing, TRUE if it should.
+ * Warning: Do not call, called by air_master.process() */
 /datum/air_group/proc/check_regroup()
 	if(group_processing) return TRUE
 
@@ -116,7 +119,7 @@
 		else
 			return FALSE
 
-	resume_group_processing()
+	src.resume_group_processing()
 	return TRUE
 
 /// Process the various air groups.
@@ -126,10 +129,10 @@
 
 	if (spaced)
 		if (!length_space_border)
-			unspace_group()
-			check_regroup()
+			src.unspace_group()
+			src.check_regroup()
 		else if(!group_processing)
-			check_regroup()
+			src.check_regroup()
 
 	if(group_processing) //See if processing this group as a group
 		border_individual = null
@@ -155,9 +158,7 @@
 					// Tiles can get added to these lists more than once, but that is OK,
 					// because groups sharing more than one edge should transfer more air.
 
-					//if(istype(enemy_tile) && enemy_tile.parent && enemy_tile.parent.group_processing) //trying the other one
 					if(enemy_tile.turf_flags & IS_TYPE_SIMULATED && enemy_tile.parent && enemy_tile.parent.group_processing) //blahh danger
-
 						// Tile is a border with another group, and the other group is in group processing mode.
 						// Build border groups list
 						if(!border_group)
@@ -225,10 +226,7 @@
 						if(connection_difference > 0)
 							self_border.consider_pressure_difference(connection_difference, get_dir(self_border,enemy_border))
 						else
-							var/turf/enemy_turf = enemy_border
-							if(!isturf(enemy_turf))
-								enemy_turf = enemy_border.loc
-							enemy_turf.consider_pressure_difference(-connection_difference, get_dir(enemy_turf,self_border))
+							enemy_border.consider_pressure_difference(-connection_difference, get_dir(enemy_border,self_border))
 
 					border_index++
 
@@ -237,7 +235,7 @@
 		// Process connections to adjacent tiles
 		border_index = 1
 		if(!abort_group && border_individual)
-			for(var/turf/enemy_tile as anything in border_individual)
+			for(var/turf/simulated/enemy_tile as anything in border_individual)
 				ATMOS_TILE_OPERATION_DEBUG(enemy_tile)
 
 				var/connection_difference = 0
@@ -247,15 +245,14 @@
 
 				ATMOS_TILE_OPERATION_DEBUG(self_border)
 
-				//if(istype(enemy_tile, /turf/simulated)) //trying the other one
 				if(enemy_tile.turf_flags & IS_TYPE_SIMULATED) //blahhh danger
 #ifdef ATMOS_ARCHIVING
-					if(enemy_tile:archived_cycle < src.archived_cycle) //archive tile information if not already done
-						enemy_tile:archive()
+					if(enemy_tile.archived_cycle < src.archived_cycle) //archive tile information if not already done
+						enemy_tile.archive()
 #endif
-					if(enemy_tile:current_cycle < src.current_cycle)
-						if(air.check_gas_mixture(enemy_tile:air))
-							connection_difference = air.share(enemy_tile:air)
+					if(enemy_tile.current_cycle < src.current_cycle)
+						if(air.check_gas_mixture(enemy_tile.air))
+							connection_difference = air.share(enemy_tile.air)
 						else
 							abort_group = TRUE
 							break
@@ -269,11 +266,6 @@
 				if(connection_difference)
 					if(connection_difference > 0 && !isnull(self_border))
 						self_border.consider_pressure_difference(connection_difference, get_dir(self_border,enemy_tile))
-					else
-						var/turf/enemy_turf = enemy_tile
-						if(!isturf(enemy_turf))
-							enemy_turf = enemy_tile.loc
-						enemy_turf.consider_pressure_difference(-connection_difference, get_dir(enemy_tile,enemy_turf))
 
 				LAGCHECK(LAG_REALTIME)
 
@@ -302,7 +294,7 @@
 						abort_group = TRUE
 
 				if(connection_difference)
-					for(var/turf/simulated/self_border in space_borders)
+					for(var/turf/simulated/self_border as anything in space_borders)
 						self_border.consider_pressure_difference_space(connection_difference)
 
 		if(abort_group)
@@ -352,9 +344,9 @@
 		air.react()
 
 
-/// If group processing is off, and the air group is bordered by a space tile, execute a fast evacuation of the air in the group.
-/// If the average pressure in the group is < 5kpa, the group will be zeroed.
-/// Returns: TRUE if the group is zeroed, FALSE if not.
+/** If group processing is off, and the air group is bordered by a space tile, execute a fast evacuation of the air in the group.
+ * If the average pressure in the group is < 5kpa, the group will be zeroed.
+ * Returns: TRUE if the group is zeroed, FALSE if not. */
 /datum/air_group/proc/space_fastpath(var/datum/controller/process/parent_controller)
 	var/minDist
 	var/turf/space/sample

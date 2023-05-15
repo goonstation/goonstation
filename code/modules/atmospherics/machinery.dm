@@ -7,15 +7,14 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
  * Note: A single pipe_network represents a completely open space.
  *
  * Pipes -> Pipelines
- * Pipelines + Other Objects -> Pipe network
-*/
+ * Pipelines + Other Objects -> Pipe network */
 /obj/machinery/atmospherics
 	anchored = ANCHORED
-
+	/// Directions to look for other atmospheric devices.
 	var/initialize_directions = 0
 
 /obj/machinery/atmospherics/process()
-	build_network()
+	src.build_network()
 	..()
 
 // override default subscribes to be in a different process loop. that's why they don't call parent ( ..() )
@@ -43,9 +42,9 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
 /// Used when two pipe_networks are combining.
 /obj/machinery/atmospherics/proc/reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
 
-/// Return a list of gas_mixture(s) in the object
-///	associated with reference pipe_network for use in rebuilding the networks gases list.
-/// Is permitted to return null.
+/** Return a list of gas_mixture(s) in the object
+ *  associated with reference pipe_network for use in rebuilding the networks gases list.
+ *  Is permitted to return null. */
 /obj/machinery/atmospherics/proc/return_network_air(datum/pipe_network/reference)
 
 /// Disconnect reference from our nodes.
