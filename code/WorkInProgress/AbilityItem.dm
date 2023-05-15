@@ -959,7 +959,7 @@
 
 /obj/ability_button/armblade_toggle
 	name = "Toggle armblade"
-	icon_state = "saw"
+	icon_state = "attach"
 
 	execute_ability()
 		if(!the_item || !the_mob || !ishuman(the_mob)) return
