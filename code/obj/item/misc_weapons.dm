@@ -202,7 +202,7 @@ TYPEINFO(/obj/item/sword)
 			return
 
 		if (!loaded_glowstick.on)
-			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
+			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn'tool been cracked!</span>")
 			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
 			return
 
@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/sword)
 
 /obj/item/dagger/smile/attack(mob/living/target, mob/user)
 	if(prob(10))
-		var/say = pick("Why won't you smile?","Smile!","Why aren't you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn't smile!")
+		var/say = pick("Why won'tool you smile?","Smile!","Why aren'tool you smiling?","Why is nobody smiling?","Smile like you mean it!","That is not a smile!","Smile, [target.name]!","I will make you smile, [target.name].","[target.name] didn'tool smile!")
 		user.say(say)
 	..()
 
@@ -956,7 +956,7 @@ TYPEINFO(/obj/item/sword)
 				set_values()
 			else
 				if(!setTwoHanded(1)) //Go 2-handed.
-					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+					boutput(user, "<span class='alert'>Can'tool switch to 2-handed while your other hand is full.</span>")
 				else
 					set_values()
 		..()
@@ -1112,7 +1112,7 @@ TYPEINFO(/obj/item/bat)
 	switch(zoney)
 		if("head")
 			if(!H.limbs.r_arm && !H.limbs.l_arm && !H.limbs.l_leg && !H.limbs.r_leg) //Does the target not have all of their limbs?
-				H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn't apply to heads :(
+				H.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1) //sever_limb doesn'tool apply to heads :(
 			return ..()
 		if("chest")
 			if (prob(delimb_prob))
@@ -1341,7 +1341,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
-			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
+			boutput(user, "<span class='alert'>The [W] can'tool fit into [src].</span>")
 			return
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
@@ -1355,7 +1355,7 @@ TYPEINFO(/obj/item/swords/captain)
 		else
 			..()
 			if(W.cant_drop == 1)
-				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
+				boutput(user, "<span class='notice'>You can'tool sheathe the [W] while its attached to your arm.</span>")
 
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
@@ -1370,7 +1370,7 @@ TYPEINFO(/obj/item/swords/captain)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()
 		else
-			boutput(user, "You don't have a free hand to draw with!")
+			boutput(user, "You don'tool have a free hand to draw with!")
 
 /obj/item/swords_sheaths/katana
 	name = "katana sheath"
@@ -1492,7 +1492,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	New()
 		..()
-		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("T'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
+		name = "[pick("Mysterious","Foreboding","Menacing","Terrifying","Malevolent","Ghastly","Bloodthirsty","Vengeful","Loathsome")] [pick("Sword","Blade","Slicer","Knife","Dagger","Cutlass","Gladius","Cleaver","Chopper","Claymore","Zeitgeist")] of [pick("tool'pire Weir Isles","Ballingry","Mossmorran","Auchtertool","Kirkcaldy","Auchmuirbridge","Methil","Muiredge","Swords")]"
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -1636,8 +1636,8 @@ obj/item/whetstone
 
 /obj/item/heavy_power_sword/attack(mob/M, mob/user, def_zone)
 
-	var/turf/t = get_turf(user) // no farming in the safety of the Cairngorm
-	if (t.loc:sanctuary)
+	var/turf/tool = get_turf(user) // no farming in the safety of the Cairngorm
+	if (tool.loc:sanctuary)
 		return
 
 	if(src.mode == 1) // only knock back on the sweep attack
@@ -1941,10 +1941,11 @@ obj/item/whetstone
 
 #define OFFENSIVE_MODE 1
 #define DEFENSIVE_MODE 2
+#define EMP 3 // For EMP only
 
 /obj/item/armblade
 	name = "Visicar Armblade"
-	desc = "An experimental mining device modified by the syndicate for their infiltrators."
+	desc = "An experimental device used by Syndicate infiltators for breaching. Can break through asteroids."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade-D"
@@ -1980,47 +1981,56 @@ obj/item/whetstone
 
 	New()
 		..()
-		var/obj/item/mining_tool/T = new /obj/item/mining_tool(src)
-		src.tool = T
-		T.name = src.name
-		T.desc = src.desc
-		T.dig_strength = 5
-		T.hitsound_charged = 'sound/weapons/cutter.ogg'
-		T.hitsound_uncharged = 'sound/weapons/cutter.ogg'
+		var/obj/item/mining_tool/tool = new /obj/item/mining_tool(src)
+		src.tool = tool
+		tool.name = src.name
+		tool.desc = src.desc
+		tool.dig_strength = 0
+		tool.hitsound_charged = 'sound/impact_sounds/burn_sizzle.ogg'
+		tool.hitsound_uncharged = 'sound/impact_sounds/burn_sizzle.ogg'
 		src.shield = image("icon" = 'icons/obj/items/weapons.dmi', "icon_state" = "shield", "layer" = FLOAT_LAYER)
 		src.setItemSpecial(/datum/item_special/simple)
 
-		AddComponent(/datum/component/cell_holder, /obj/item/ammo/power_cell)
-
 	attack_self(mob/user)
-		if(!attached)
+		if (!attached)
 			boutput(user, "<span class='alert'> You need to attach the [src] first!</span>")
 			return ..()
-		switch(src.mode)
-			if(DEFENSIVE_MODE)
+		if (ON_COOLDOWN(src, "armblade_toggle", 1 SECOND))
+			return
+		switch (src.mode)
+			if (EMP)
+				boutput(user, "<span class='alert'>[src] is totally fried, this will take time to fix!</span>")
+				SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/armblade/proc/fix, user, src.icon, src.icon_state, "[user] resets the [src]!", INTERRUPT_ACT | INTERRUPT_MOVE | INTERRUPT_STUNNED)
+			if (DEFENSIVE_MODE)
 				boutput(user, "<span class='alert'>[src] is now set for offence!</span>")
 				src.mode = OFFENSIVE_MODE
-			if(OFFENSIVE_MODE)
+			if (OFFENSIVE_MODE)
 				boutput(user, "<span class='alert'>[src] is now set for defence!</span>")
 				src.mode = DEFENSIVE_MODE
 		setup_props(user)
 		..()
 
-	emp_act()
-		SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
-		src.visible_message("[src] sparks briefly as it overloads!")
-		playsound(src, "sparks", 75, 1, -1)
-		setup_props(user)
+	emp_act(var/mob/user)
+		if (!src.attached || (src.mode == EMP))
+			return
+		src.mode = EMP
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			boutput(H, "<span class='alert'>[src] closes up on your arm and powers down!</span>")
+			playsound(H, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1, -1)
+			H.TakeDamageAccountArmor("All", 15, 0, 0, DAMAGE_CRUSH)
+			H.emote("scream")
+			setup_props(H)
 
 	attack(var/mob/target, var/mob/user, def_zone)
-		if(attached && src.mode == OFFENSIVE_MODE)
+		if (attached && (src.mode == OFFENSIVE_MODE))
 			target.changeStatus("burning", 10 SECONDS)
 		..()
 
 	proc/attach_unattach(var/mob/living/carbon/human/H)
-		if(!H)
+		if (!H)
 			return
-		if(!attached)
+		if (!attached)
 			boutput(H, "<span class='alert'>The [src] is now attached firmly to your wrist.</span>")
 			attached = TRUE
 			cant_self_remove = TRUE
@@ -2032,8 +2042,13 @@ obj/item/whetstone
 			cant_drop = FALSE
 		setup_props(H)
 
+	proc/fix(var/mob/user)
+		src.mode = OFFENSIVE_MODE
+		playsound(src, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
+		setup_props(user)
+
 	dropped(var/mob/living/carbon/human/H)
-		if(attached)
+		if (attached)
 			attached = FALSE
 			cant_self_remove = FALSE
 			cant_drop = FALSE
@@ -2041,61 +2056,65 @@ obj/item/whetstone
 		..()
 
 	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		return TRUE // ignore cant_drop and can't other remove since we handle those and need it this way
+		return TRUE // ignore cant_drop and can'tool other remove since we handle those and need it this way
 
-	proc/setup_props(var/mob/user)
-		if(!attached)
-			icon_state = initial(icon_state)
-			item_state = initial(item_state)
-			hit_type = initial(hit_type)
-			force = initial(force)
-			throwforce = initial(throwforce)
-			stamina_damage = initial(stamina_damage)
-			stamina_cost = initial(stamina_cost)
-			stamina_crit_chance = initial(stamina_crit_chance)
-			hitsound = initial(hitsound)
+	proc/setup_props(var/mob/user) // I hate this
+		if (!attached || (src.mode == EMP))
+			src.icon_state = initial(icon_state)
+			src.item_state = initial(item_state)
+			src.hit_type = initial(hit_type)
+			src.force = initial(force)
+			src.throwforce = initial(throwforce)
+			src.stamina_damage = initial(stamina_damage)
+			src.stamina_cost = initial(stamina_cost)
+			src.stamina_crit_chance = initial(stamina_crit_chance)
+			src.hitsound = initial(hitsound)
 			setProperty("rangedprot", 0)
 			setProperty("movespeed", 0)
 			setProperty("disorient_resist", 0)
 			src.setItemSpecial(/datum/item_special/simple)
-			can_disarm = FALSE
+			src.can_disarm = FALSE
+			tool.dig_strength = 0
 			user.UpdateOverlays(null, "shield")
-		else if(src.mode == DEFENSIVE_MODE)
-			icon_state = "arm_blade"
-			item_state = "arm_blade-D"
-			hit_type = DAMAGE_BLUNT
-			force = 3
-			throwforce = 5
-			stamina_damage = 20
-			stamina_cost = 10
-			stamina_crit_chance = 30
-			hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
+		else if (src.mode == DEFENSIVE_MODE)
+			src.icon_state = "arm_blade"
+			src.item_state = "arm_blade-D"
+			src.hit_type = DAMAGE_BLUNT
+			src.force = 3
+			src.throwforce = 5
+			src.stamina_damage = 20
+			src.stamina_cost = 10
+			src.stamina_crit_chance = 20
+			src.hitsound = 'sound/impact_sounds/Energy_Hit_1.ogg'
 			setProperty("rangedprot", 0.8)
 			setProperty("movespeed", 0.4)
 			setProperty("disorient_resist", 60)
 			src.setItemSpecial(/datum/item_special/simple)
-			can_disarm = TRUE
+			src.can_disarm = TRUE
+			tool.dig_strength = 0
 			user.UpdateOverlays(src.shield, "shield")
 		else // Offensive mode
-			icon_state = "arm_blade_on"
-			item_state = "arm_blade-A"
-			hit_type = DAMAGE_BURN
-			force = 30
-			throwforce = 20
-			stamina_damage = 25
-			stamina_cost = 20
-			stamina_crit_chance = 10
-			hitsound = 'sound/weapons/visicarimpact.ogg'
+			src.icon_state = "arm_blade_on"
+			src.item_state = "arm_blade-A"
+			src.hit_type = DAMAGE_BURN
+			src.force = 30
+			src.throwforce = 20
+			src.stamina_damage = 25
+			src.stamina_cost = 20
+			src.stamina_crit_chance = 10
+			src.hitsound = 'sound/weapons/visicarimpact.ogg'
 			setProperty("rangedprot", 0)
 			setProperty("movespeed", 0)
 			setProperty("disorient_resist", 0)
 			src.setItemSpecial(/datum/item_special/rangestab)
-			can_disarm = FALSE
+			src.can_disarm = FALSE
+			tool.dig_strength = 5
 			user.UpdateOverlays(null, "shield")
 		src.UpdateIcon()
 		user.update_equipped_modifiers()
 		user.update_inhands()
-		tooltip_rebuild = TRUE
+		src.tooltip_rebuild = TRUE
 
 #undef OFFENSIVE_MODE
 #undef DEFENSIVE_MODE
+#undef EMP
