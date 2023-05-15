@@ -28,8 +28,9 @@ var/global/total_gas_mixtures = 0
 	/// List of turfs without a group to be processed.
 	var/list/turf/simulated/active_singletons = list()
 
-	//Special functions lists
-	var/list/turf/simulated/active_super_conductivity = list() //gets space in here somehow ZEWAKA/ATMOS
+	/// Tiles queued to be processed for superconductivity.
+	var/list/turf/simulated/active_super_conductivity = list()
+	/// Tiles queued to be processed for pressure delta movement.
 	var/list/turf/simulated/high_pressure_delta = list()
 
 	/// Turfs that are in this list have their border data updated before the next air calculations for a cycle.
@@ -44,10 +45,11 @@ var/global/total_gas_mixtures = 0
 	/// Turfs to be converted to space on the next cycle in case we're busy right now.
 	/// Use [/turf/proc/delay_space_conversion] instead of adding to this list directly.
 	var/list/turf/tiles_to_space = list()
-
+	/// Current cycle of air_system.
 	var/current_cycle = 0
 	/// Don't want to accidentally modify something while still processing. Let's keep track if we're busy.
 	var/is_busy = FALSE
+	/// Self-reference apparently.
 	var/datum/controller/process/air_system/parent_controller = null
 	/// Much better idea to cache a tile than to keep calling locate()
 	var/turf/space/space_sample
