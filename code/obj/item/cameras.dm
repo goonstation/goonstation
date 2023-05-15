@@ -424,7 +424,7 @@ TYPEINFO(/obj/item/camera/large)
 				stg_area_table += list(/area/station/crew_quarters/cafeteria, /datum/playing_card/griffening/area/cafeteria)
 				stg_area_table += list(/area/shuttle/escape, /datum/playing_card/griffening/area/shuttle)
 				stg_area_table += list(/area/station/maintenance, /datum/playing_card/griffening/effect/disarm) // surprisingly no maint area card!
-				stg_area_table += list(/area/station/science, /datum/playing_card/griffening/effect/) // or a sci card
+				stg_area_table += list(/area/station/science, /datum/playing_card/griffening/effect/Telescientist) // or a sci card
 				stg_area_table += list(/area/station, /datum/playing_card/griffening/effect/abandoned_crate) // Atleast you're still on station right?
 
 				for(var/list/compare_area in stg_area_table)
