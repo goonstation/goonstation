@@ -1949,7 +1949,6 @@ obj/item/whetstone
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "arm_blade"
 	item_state = "arm_blade-D"
-	var/base_state = "arm_blade"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_BLUNT
 	flags = FPRINT | TABLEPASS
@@ -2018,7 +2017,7 @@ obj/item/whetstone
 			var/mob/living/carbon/human/H = src.loc
 			boutput(H, "<span class='alert'>[src] closes up on your arm and powers down!</span>")
 			playsound(H, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1, -1)
-			H.TakeDamageAccountArmor("All", 15, 0, 0, DAMAGE_CRUSH)
+			H.TakeDamage("All", 15, 0, 0, DAMAGE_CRUSH)
 			H.emote("scream")
 			setup_props(H)
 
