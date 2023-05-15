@@ -429,7 +429,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 
 		if (istool(W, TOOL_WRENCHING))
 			if(src.flags & OPENCONTAINER)
-				user.visible_message("<b>[user]</b> wrenches the [src]'s lid close!")
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.flags ^= OPENCONTAINER
 			else
