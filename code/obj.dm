@@ -574,9 +574,9 @@
 	// connecting to walls
 	if (src.attach_to_wall)
 		for (var/dir_to_w in cardinal)
-			for (var/turf/dummy in get_step(src, dir_to_w))
-				if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
-					src.dirmask |= dir_to_w
+			var/turf/dummy = get_step(src, dir_to_w)
+			if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
+				src.dirmask |= dir_to_w
 	// now we spawn the new lattice and delete ourselves
 	new /obj/lattice(src.loc, src.dirmask)
 	qdel(src)
