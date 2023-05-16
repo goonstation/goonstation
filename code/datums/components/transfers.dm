@@ -13,8 +13,8 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/transfer_output/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, .proc/handle_drop)
-	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, .proc/handle_outgoing)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, PROC_REF(handle_drop))
+	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, PROC_REF(handle_outgoing))
 
 /datum/component/transfer_output/proc/handle_outgoing(comsig_target, obj/item/outgoing)
 	if(!output_target)
@@ -80,9 +80,9 @@
 #undef DEFAULT_TRANSFER_FILTER
 
 /datum/component/transfer_input/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, .proc/handle_incoming)
-	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, .proc/handle_incoming_link)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
+	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, PROC_REF(handle_incoming))
+	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, PROC_REF(handle_incoming_link))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(handle_attackby))
 
 /datum/component/transfer_input/proc/handle_incoming_link(comsig_target, obj/other)
 	return !filter_link_proc || call(parent, filter_link_proc)(other)
@@ -180,7 +180,7 @@
 
 /datum/component/transfer_input/quickloading/RegisterWithParent()
 	..()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, .proc/handle_drop_t)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, PROC_REF(handle_drop_t))
 
 /datum/component/transfer_input/quickloading/proc/handle_drop_t(comsig_target, atom/dropped, mob/user)
 	if(cant_do_shit(user))
