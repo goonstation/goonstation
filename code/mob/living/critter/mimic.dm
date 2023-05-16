@@ -174,3 +174,12 @@
 		HH.can_range_attack = FALSE
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
+
+/mob/living/critter/mimic/virtual
+	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
+		if(!pounce.disabled && pounce.cooldowncheck())
+			pounce.handleCast(target)
+			return TRUE
