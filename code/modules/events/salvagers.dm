@@ -162,7 +162,6 @@
 			lucky_dude.random_event_special_role = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
-			M3.antagonist_overlay_refresh(TRUE, 0)
 
 			if (lucky_dude.current)
 				lucky_dude.current.show_text("<h3>You have been respawned as a Salvager.</h3>", "blue")

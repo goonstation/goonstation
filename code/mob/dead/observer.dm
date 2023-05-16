@@ -205,10 +205,6 @@
 #endif
 	if (..(parent))
 		return 1
-	if (src.client && src.client.holder) //ov1
-		// overlays
-		//src.updateOverlaysClient(src.client)
-		src.antagonist_overlay_refresh(0, 0) // Observer Life() only runs for admin ghosts (Convair880).
 
 #ifdef TWITCH_BOT_ALLOWED
 	if (IS_TWITCH_CONTROLLED(src))
@@ -299,7 +295,7 @@
 	if(src.key || src.client)
 
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, hell_respawn), src.mind)
 			return null
 		var/datum/mind/mind = src.mind
 

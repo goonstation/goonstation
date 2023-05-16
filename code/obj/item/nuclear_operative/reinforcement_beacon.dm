@@ -39,6 +39,7 @@
 		if(!length(candidates))
 			src.visible_message("<span class='alert'>The [src] buzzes, before unbolting itself from the ground. There seems to be no reinforcements available currently.</span>")
 			src.anchored = UNANCHORED
+			return
 		var/datum/mind/chosen = candidates[1]
 		log_respawn_event(chosen, "syndicate gunbot", user)
 		chosen.add_antagonist(ROLE_NUKEOP_GUNBOT, respect_mutual_exclusives = FALSE)
