@@ -8,12 +8,15 @@
 var/global/map_setting = null
 var/global/datum/map_settings/map_settings = null
 
-//id corresponds to the name of the /obj/landmark/map
-//playerPickable defines whether the map can be chosen by players when voting on a new map.
+///id corresponds to the name of the /obj/landmark/map
+///playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
+	// commented out ones were previously non existent.
 	//"Construction" =		list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"pod_wars" =			list("id" = "POD_WARS",		"settings" = "pod_wars",		"playerPickable" = FALSE),
 	"Event" =				list("id" = "EVENT",		"settings" = "destiny/clarion",	"playerPickable" = FALSE),
+	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
+	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 
 #ifdef RP_MODE
 	"Cogmap 1" =			list("id" = "COGMAP",		"settings" = "cogmap",			"playerPickable" = TRUE,	"MinPlayersAllowed" = 14),
@@ -31,7 +34,6 @@ var/global/list/mapNames = list(
 	"Oshan Laboratory"= 	list("id" = "OSHAN",		"settings" = "oshan",			"playerPickable" = TRUE),
 	"Nadir" =				list("id" = "NADIR",		"settings" = "nadir",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 70),
 
-	"1 pamgoC" =			list("id" = "PAMGOC",		"settings" = "pamgoc",			"playerPickable" = FALSE),
 	"Manta" =				list("id" = "MANTA",		"settings" = "manta",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
 	"Destiny" =				list("id" = "DESTINY",		"settings" = "destiny",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 80),
 	"Horizon" =				list("id" = "HORIZON",		"settings" = "horizon",			"playerPickable" = FALSE),
@@ -39,7 +41,6 @@ var/global/list/mapNames = list(
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
 	//"Chiron" =			list("id" = "CHIRON",		"settings" = "chiron",			"playerPickable" = FALSE),
-	"Wrestlemap" =			list("id" = "WRESTLEMAP",	"settings" = "wrestlemap",		"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),

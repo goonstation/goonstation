@@ -21,7 +21,13 @@
 #elif defined(MAP_OVERRIDE_EVENT)
 #include "event.dm"
 
-// actual map ticking down here.
+#elif defined(MAP_OVERRIDE_PAMGOC)
+#include "pamgoc.dm"
+
+#elif defined(MAP_OVERRIDE_WRESTLEMAP)
+#include "wrestlemap.dm"
+
+// rotation maps
 #elif defined(MAP_OVERRIDE_COGMAP)
 #include "cogmap.dm"
 
@@ -49,10 +55,7 @@
 #elif defined(MAP_OVERRIDE_NADIR)
 #include "nadir.dm"
 
-// non rotation maps down here
-#elif defined(MAP_OVERRIDE_PAMGOC)
-#include "pamgoc.dm"
-
+// non rotation maps
 #elif defined(MAP_OVERRIDE_MANTA)
 #include "manta.dm"
 
@@ -73,9 +76,6 @@
 
 #elif defined(MAP_OVERRIDE_CHIRON)
 #include "chiron.dm"
-
-#elif defined(MAP_OVERRIDE_WRESTLEMAP)
-#include "wrestlemap.dm"
 
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"

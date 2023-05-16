@@ -107,9 +107,12 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define DISPOSE_IS_QDEL
 
 //------------- MAP OVERRIDES -------------//
+//-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
 //#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
 //#define MAP_OVERRIDE_EVENT      	// Misc. event maps
+//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 
 //-------Rotation maps:
 //#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
@@ -123,7 +126,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
 
 //-------Discontinued or gimmick maps:
-//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
 //#define MAP_OVERRIDE_MANTA				// manta map
 //#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
 //#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
@@ -131,7 +133,6 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
 //#define MAP_OVERRIDE_CHIRON				// Chiron by Kubius
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 //#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
 //#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
 //#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together

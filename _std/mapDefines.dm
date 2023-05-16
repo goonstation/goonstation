@@ -16,6 +16,11 @@
 #define CHECK_MORE_RUNTIMES 1
 #define PREFAB_CHECKING 1
 
+#elif defined(MAP_OVERRIDE_PAMGOC)
+
+//#elif defined(MAP_OVERRIDE_WRESTLEMAP)
+
+// rotation
 #elif defined(MAP_OVERRIDE_COGMAP)
 
 #elif defined(MAP_OVERRIDE_COGMAP2)
@@ -38,9 +43,7 @@
 #elif defined(MAP_OVERRIDE_NADIR)
 #define UNDERWATER_MAP 1
 
-
-#elif defined(MAP_OVERRIDE_PAMGOC)
-
+// Non rotation
 #elif defined(MAP_OVERRIDE_MANTA)
 
 #define UNDERWATER_MAP 1
@@ -61,9 +64,7 @@
 #elif defined(MAP_OVERRIDE_CHIRON)
 #define REVERSED_MAP
 
-/*#elif defined(MAP_OVERRIDE_WRESTLEMAP)
-
-#elif defined(MAP_OVERRIDE_DENSITY)
+/*#elif defined(MAP_OVERRIDE_DENSITY)
 
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 
