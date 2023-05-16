@@ -343,52 +343,52 @@
 				if (NORTH | SOUTH | EAST | WEST)
 					src.icon_state = "lattice"
 				if (SOUTH | EAST | WEST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = WEST
 				if (NORTH | EAST | WEST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = SOUTHWEST
 				if (NORTH | SOUTH | WEST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = NORTH
 				if (NORTH | SOUTH | EAST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = SOUTHEAST
 				if (NORTHEAST)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = NORTHWEST
 				if (NORTH | SOUTH)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = SOUTH
 				if (NORTHWEST)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = NORTHEAST
 				if (SOUTHEAST)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = SOUTHEAST
 				if (EAST | WEST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = EAST
 				if (SOUTHWEST)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = SOUTHWEST
 				if (NORTH)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = NORTH
 				if (SOUTH)
-					src.icon_state = "lattice_dir_b"
+					src.icon_state = "lattice-dir-b"
 					src.dir = SOUTH
 				if (EAST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = NORTHWEST
 				if (WEST)
-					src.icon_state = "lattice_dir"
+					src.icon_state = "lattice-dir"
 					src.dir = NORTHEAST
 		else if (isnull(temp_dirmask))
 			switch (src.icon_state)
 				if ("lattice")
 					src.dirmask |= (NORTH | SOUTH | EAST | WEST)
-				if ("lattice_dir")
+				if ("lattice-dir")
 					if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)
 					if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
 					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
@@ -397,7 +397,7 @@
 					if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
 					if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
 					if (src.dir == NORTHWEST)	src.dirmask |= EAST
-				if ("lattice_dir_b")
+				if ("lattice-dir-b")
 					if (src.dir == NORTH)	src.dirmask |= NORTH
 					if (src.dir == SOUTH)	src.dirmask |= SOUTH
 					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
@@ -524,13 +524,9 @@
 	meteorhit()
 		src.barricade_damage(1)
 /obj/lattice/directional_icons
-	icon = 'icons/obj/structures.dmi'
-	dir = 2
-	icon_state = "lattice_dir"
+	icon_state = "lattice-dir"
 /obj/lattice/directional_icons_alt
-	icon = 'icons/obj/structures.dmi'
-	dir = 2
-	icon_state = "lattice_dir_b"
+	icon_state = "lattice-dir-b"
 
 /obj/lattice/auto
 	name = "lattice spawner"
