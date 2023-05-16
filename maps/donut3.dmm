@@ -31512,6 +31512,11 @@
 /obj/item/hand_labeler{
 	pixel_y = -8
 	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/dropper,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "jFH" = (
@@ -49140,18 +49145,13 @@
 	},
 /area/station/crew_quarters/market)
 "pgr" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/reagent_containers/dropper,
 /obj/blind_switch/south{
 	pixel_x = 4
 	},
 /obj/machinery/light_switch/south{
 	pixel_x = -4
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pgv" = (
@@ -59774,7 +59774,7 @@
 /turf/simulated/floor/arrival,
 /area/station/hangar/arrivals)
 "slP" = (
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "smc" = (

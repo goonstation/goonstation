@@ -1,3 +1,10 @@
+
+(t)mon may 15 23
+(u)LeahTheTech (name courtesy of Kubius)
+(p)14086
+(e)🗺🎨💊📦⚗|A-Mapping, C-Sprites, A-Medical, A-Game-Objects, A-Chemistry
+(*)Added dispensary interlinks to medbay and chemistry lab for easier and more organised supply of medical chemicals.
+(+)The interlinks replace one existing nanomed, synchronize their contents and accept bottles, pills, pill bottles, patches, ampoules and syringes.
 (t)sat may 13 23
 (u)Sord
 (+)Nanomeds (portable and normal) now require medical locker access.

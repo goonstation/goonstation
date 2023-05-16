@@ -7036,7 +7036,7 @@
 	},
 /area/station/medical/head)
 "ars" = (
-/obj/cabinet/chemistry,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "art" = (
@@ -7420,7 +7420,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "asn" = (
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aso" = (
