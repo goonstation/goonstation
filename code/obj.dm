@@ -330,84 +330,6 @@
 	/// lets the lattice know that it should change its icon state and dir at New()
 	var/use_dirmask = FALSE
 
-	New(turf/newLoc, var/temp_dirmask)
-	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
-	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
-		..()
-		if (!isnull(temp_dirmask))
-			src.dirmask = temp_dirmask
-			src.use_dirmask = TRUE
-		// which came first, the bitmask or the icon?
-		if (src.use_dirmask)
-			switch (src.dirmask)
-				if (0)
-					CRASH("Lattice at [src.x]x and [src.y]y has no bitmask of directions while use_bitmask is true.")
-				if (NORTH | SOUTH | EAST | WEST)
-					src.icon_state = "lattice"
-				if (SOUTH | EAST | WEST)
-					src.icon_state = "lattice-dir"
-					src.dir = WEST
-				if (NORTH | EAST | WEST)
-					src.icon_state = "lattice-dir"
-					src.dir = SOUTHWEST
-				if (NORTH | SOUTH | WEST)
-					src.icon_state = "lattice-dir"
-					src.dir = NORTH
-				if (NORTH | SOUTH | EAST)
-					src.icon_state = "lattice-dir"
-					src.dir = SOUTHEAST
-				if (NORTHEAST)
-					src.icon_state = "lattice-dir-b"
-					src.dir = NORTHWEST
-				if (NORTH | SOUTH)
-					src.icon_state = "lattice-dir"
-					src.dir = SOUTH
-				if (NORTHWEST)
-					src.icon_state = "lattice-dir-b"
-					src.dir = NORTHEAST
-				if (SOUTHEAST)
-					src.icon_state = "lattice-dir-b"
-					src.dir = SOUTHEAST
-				if (EAST | WEST)
-					src.icon_state = "lattice-dir"
-					src.dir = EAST
-				if (SOUTHWEST)
-					src.icon_state = "lattice-dir-b"
-					src.dir = SOUTHWEST
-				if (NORTH)
-					src.icon_state = "lattice-dir-b"
-					src.dir = NORTH
-				if (SOUTH)
-					src.icon_state = "lattice-dir-b"
-					src.dir = SOUTH
-				if (EAST)
-					src.icon_state = "lattice-dir"
-					src.dir = NORTHWEST
-				if (WEST)
-					src.icon_state = "lattice-dir"
-					src.dir = NORTHEAST
-		else if (isnull(temp_dirmask))
-			switch (src.icon_state)
-				if ("lattice")
-					src.dirmask |= (NORTH | SOUTH | EAST | WEST)
-				if ("lattice-dir")
-					if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)
-					if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
-					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
-					if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
-					if (src.dir == NORTHEAST)	src.dirmask |= WEST
-					if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
-					if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
-					if (src.dir == NORTHWEST)	src.dirmask |= EAST
-				if ("lattice-dir-b")
-					if (src.dir == NORTH)	src.dirmask |= NORTH
-					if (src.dir == SOUTH)	src.dirmask |= SOUTH
-					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
-					if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)
-					if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)
-					if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)
-					if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
-					if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST)
 	blob_act(var/power)
 		if(prob(75))
 			qdel(src)
@@ -460,6 +382,87 @@
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
 		return
+
+/obj/lattice/New(turf/newLoc, var/temp_dirmask)
+// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
+// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
+	..()
+	if (!isnull(temp_dirmask))
+		src.dirmask = temp_dirmask
+		src.use_dirmask = TRUE
+	// which came first, the bitmask or the icon?
+	if (src.use_dirmask)
+		if (istype(src,/obj/lattice/auto))
+			return
+		switch (src.dirmask)
+			if (0)
+				CRASH("Lattice at [src.x]x and [src.y]y has no bitmask of directions while use_bitmask is true.")
+			if (NORTH | SOUTH | EAST | WEST)
+				src.icon_state = "lattice"
+			if (SOUTH | EAST | WEST)
+				src.icon_state = "lattice-dir"
+				src.dir = WEST
+			if (NORTH | EAST | WEST)
+				src.icon_state = "lattice-dir"
+				src.dir = SOUTHWEST
+			if (NORTH | SOUTH | WEST)
+				src.icon_state = "lattice-dir"
+				src.dir = NORTH
+			if (NORTH | SOUTH | EAST)
+				src.icon_state = "lattice-dir"
+				src.dir = SOUTHEAST
+			if (NORTHEAST)
+				src.icon_state = "lattice-dir-b"
+				src.dir = NORTHWEST
+			if (NORTH | SOUTH)
+				src.icon_state = "lattice-dir"
+				src.dir = SOUTH
+			if (NORTHWEST)
+				src.icon_state = "lattice-dir-b"
+				src.dir = NORTHEAST
+			if (SOUTHEAST)
+				src.icon_state = "lattice-dir-b"
+				src.dir = SOUTHEAST
+			if (EAST | WEST)
+				src.icon_state = "lattice-dir"
+				src.dir = EAST
+			if (SOUTHWEST)
+				src.icon_state = "lattice-dir-b"
+				src.dir = SOUTHWEST
+			if (NORTH)
+				src.icon_state = "lattice-dir-b"
+				src.dir = NORTH
+			if (SOUTH)
+				src.icon_state = "lattice-dir-b"
+				src.dir = SOUTH
+			if (EAST)
+				src.icon_state = "lattice-dir"
+				src.dir = NORTHWEST
+			if (WEST)
+				src.icon_state = "lattice-dir"
+				src.dir = NORTHEAST
+	else if (isnull(temp_dirmask))
+		switch (src.icon_state)
+			if ("lattice")
+				src.dirmask |= (NORTH | SOUTH | EAST | WEST)
+			if ("lattice-dir")
+				if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)
+				if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
+				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
+				if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
+				if (src.dir == NORTHEAST)	src.dirmask |= WEST
+				if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
+				if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
+				if (src.dir == NORTHWEST)	src.dirmask |= EAST
+			if ("lattice-dir-b")
+				if (src.dir == NORTH)	src.dirmask |= NORTH
+				if (src.dir == SOUTH)	src.dirmask |= SOUTH
+				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
+				if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)
+				if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)
+				if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)
+				if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
+				if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST)
 
 /obj/lattice/barricade
 	name = "barricade"
