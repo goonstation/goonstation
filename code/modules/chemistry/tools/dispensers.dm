@@ -454,7 +454,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		icon_state = "barrel-yellow-closed"
 		base_icon_state = "barrel-yellow"
 	oil
-		base_icon_state = "barrel-flamable-closed"
+		icon_state = "barrel-flamable-closed"
 		base_icon_state = "barrel-flamable"
 		name = "oil barrel"
 		desc = "A barrel for storing large amounts of oil."
