@@ -330,11 +330,13 @@
 	/// lets the lattice know that it should change its icon state and dir at New()
 	var/use_dirmask = FALSE
 
-	New(var/temp_dirmask)
+	New(turf/newLoc, var/temp_dirmask)
 	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
 	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
 		..()
-		src.dirmask = temp_dirmask
+		if (!isnull(temp_dirmask))
+			src.dirmask = temp_dirmask
+			src.use_dirmask = TRUE
 		// which came first, the bitmask or the icon?
 		if (src.use_dirmask)
 			switch (src.dirmask)
@@ -538,7 +540,6 @@
 	var/attach_to_wall = FALSE
 
 /obj/lattice/auto/wall_attaching
-	icon_state = "lattice"
 	attach_to_wall = TRUE
 
 /obj/lattice/auto/New()
@@ -552,8 +553,6 @@
 /obj/lattice/auto/initialize()
 	. = ..()
 	var/list/selftile = list()
-	/// declarer is the dir being checked at present, for iteration purposes.
-	var/declarer = 0
 	// check for duplicates
 	for (var/obj/lattice/auto/self_loc in range(0, src))
 		selftile += self_loc
@@ -563,22 +562,22 @@
 	// note that only north and east are checked because the lattice spawners to the south and west have already replaced themselves.
 	for (var/dir_to_ls in list(NORTH, EAST))
 		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
-			src.dirmask |= declarer
+			src.dirmask |= dir_to_ls
 	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
 	for (var/dir_to_l in alldirs)
 		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
 			if (normal_lattice.dirmask & turn(dir_to_l, 180))
-				src.dirmask |= declarer
+				src.dirmask |= dir_to_l
 	// connecting to walls
 	if (src.attach_to_wall)
 		for (var/dir_to_w in alldirs)
 			for (var/turf/unsimulated/wall/normal_wall in get_step(src, dir_to_w))
-				src.dirmask |= declarer
+				src.dirmask |= dir_to_w
 			for (var/turf/simulated/wall/normal_wall in get_step(src, dir_to_w))
-				src.dirmask |= declarer
+				src.dirmask |= dir_to_w
 
 	// now we spawn the new lattice and delete ourselves
-	new /obj/lattice(src.dirmask)
+	new /obj/lattice(src.loc, src.dirmask)
 	qdel(src)
 
 /obj/overlay
