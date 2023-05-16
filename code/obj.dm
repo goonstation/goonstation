@@ -337,7 +337,32 @@ TYPEINFO(/obj)
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
 	text = "<font color=#333>+"
-
+	/// bitmask of directions it connects to.
+	var/dirmask = 0
+	New()
+	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
+	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
+		switch (icon_state)
+			if ("lattice")
+				src.dirmask |= (NORTH | SOUTH | EAST | WEST)
+			if ("lattice_dir")
+				if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)	// ???
+				if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
+				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
+				if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
+				if (src.dir == NORTHEAST)	src.dirmask |= WEST	// naturally
+				if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
+				if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
+				if (src.dir == NORTHWEST)	src.dirmask |= EAST	// of course it is
+			if ("lattice_dir_b")
+				if (src.dir == NORTH)	src.dirmask |= NORTH
+				if (src.dir == SOUTH)	src.dirmask |= SOUTH
+				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)	// this is different to the one in the other iconstate
+				if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)	// this too
+				if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)	// of course it's north west, why not
+				if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)	// these two actually match :o
+				if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
+				if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST) 	// if this had been swapped with northeast, they couldve matched. But no
 	blob_act(var/power)
 		if(prob(75))
 			qdel(src)
@@ -455,6 +480,56 @@ TYPEINFO(/obj)
 
 	meteorhit()
 		src.barricade_damage(1)
+
+/obj/lattice/auto
+	name = "lattice spawner"
+	desc = "If you're seeing this, call a coder. These are meant to spawn in normal lattices."
+	icon_state = "lattice"
+	dirmask = 0
+
+/obj/lattice/auto/New()
+	..()
+	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		SPAWN(1 SECONDS)
+			if(!src.disposed)
+				initialize()
+
+/obj/lattice/auto/initialize()
+	. = ..()
+	src.check()
+	src.replace()
+
+/obj/lattice/auto/proc/check()
+	var/list/selftile = list()
+	/// declarer is the dir being checked at present, for iteration purposes.
+	var/declarer = 0
+	// check for duplicates
+	for (var/obj/lattice/auto/self_loc in range(0, src))
+		selftile += self_loc
+		if (length(selftile) > 1)
+			CRASH("[length(selftile)] identical lattice spawners on coordinate [src.x] x [src.y] y!")
+			break
+	// checks for lattice spawners around itself
+	for (var/dir_to_ls in list(NORTH, EAST, NORTHWEST, NORTHEAST))
+		declarer = alldirs_unique[alldirs.Find(dir_to_ls)]
+		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
+			if (spawner.color == src.color)
+				src.dirmask |= declarer
+	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
+	for (var/dir_to_l in alldirs)
+		declarer = alldirs_unique[alldirs.Find(dir_to_l)]
+		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
+			normal_lattice
+			if (normal_lattice.dirmask & turn(dir_to_l, 180))
+				src.dirmask |= declarer
+
+
+/obj/lattice/auto/proc/replace()
+
+/obj/lattice/auto/barricade
+	name = "lattice spawner"
+	desc = "If you're seeing this, call a coder. These are meant to spawn in normal lattices."
+	icon_state = "girder"
 
 /obj/overlay
 	name = "overlay"
