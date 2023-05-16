@@ -10,6 +10,10 @@
 
 /datum/aiTask/sequence/goalbased/critter/eat/worm
 
+/datum/aiTask/sequence/goalbased/critter/eat/worm/precondition()
+	var/mob/living/critter/rockworm/C = holder.owner
+	return C.can_critter_eat() && C.seek_ore
+
 /datum/aiTask/sequence/goalbased/critter/eat/worm/New(parentHolder, transTask)
 	..()
 	src.subtasks -= /datum/aiTask/succeedable/critter/eat

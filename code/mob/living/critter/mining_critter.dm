@@ -181,6 +181,8 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
+	var/tamed = FALSE
+	var/seek_ore = TRUE
 	var/eaten = 0
 	var/const/rocks_per_gem = 10
 
@@ -188,9 +190,35 @@
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
 
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (src.tamed && src.ai?.enabled)
+			if (src.ai_type == /datum/aiHolder/rockworm)
+				src.seek_ore = FALSE
+				src.visible_message("<span class='notice'>[user] pats [src] on the back. It won't seek ores now!</span>")
+			else
+				src.seek_ore = TRUE
+				src.visible_message("<span class='notice'>[user] shakes [src] to awaken its hunger!</span>")
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/raw_material) && !isdead(src))
+			if (src.tamed)
+				src.visible_message("[M] tries to feed [src] but they seem full...")
+				return
+			src.visible_message("[M] feeds [src] a bit of [I].", "[M] feeds you some [I].")
+			if(prob(40))
+				src.tamed = TRUE
+				src.visible_message("[src] enjoyed the [I] and seems more docile!")
+				src.emote("burp")
+			qdel(I)
+			src.aftereat()
+			return
+		..()
+
 	seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
+		for (var/obj/item/raw_material/rock/ore in view(range, get_turf(src)))
 			. += ore
 
 	setup_healths()
