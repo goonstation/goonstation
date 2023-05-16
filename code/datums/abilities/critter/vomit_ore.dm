@@ -19,6 +19,5 @@
 		var/obj/item/raw_material/ammo = new created(C.loc)
 		C.visible_message("<b><span class='alert'>[C] vomits up a piece of [ammo]!</span></b>")
 		C.eaten -= C.rocks_per_gem
-		ammo.parent = C
 		ammo.throw_at(T, 32, 2)
 		doCooldown()
