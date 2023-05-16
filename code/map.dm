@@ -207,6 +207,7 @@ var/global/list/mapNames = list(
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
 		return TRUE
+
 /datum/map_settings/pod_wars
 	name = "POD_WARS"
 	default_gamemode = "pod_wars"
@@ -249,6 +250,77 @@ var/global/list/mapNames = list(
 	merchant_right_station = null
 
 	valid_nuke_targets = list()
+
+/datum/map_settings/pamgoc
+	name = "PAMGOC"
+	goonhub_map = "https://goonhub.com/maps/cogmap"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = SOUTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	job_limits_override = list(
+		/datum/job/civilian/clown = 2 // pamgoc can have a little clown, as a treat
+	)
+
+/datum/map_settings/wrestlemap
+	name = "WRESTLEMAP"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = NORTH
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+
+	valid_nuke_targets = list("The Ring (near the bar)" = list(/area/station/crew_quarters/quarters),
+		"the monkeydome arena" = list(/area/station/medical/dome),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"outside the Ringularity" = list(/area/station/engine/inner),
+		"the courtroom" = list(/area/station/storage/warehouse),
+		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
+		"the security lobby" = list(/area/station/security/secwing),
+		"the chapel" = list(/area/station/chapel/sanctuary),
+		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
+
 /datum/map_settings/cogmap
 	name = "COGMAP"
 	goonhub_map = "https://goonhub.com/maps/cogmap"
@@ -758,37 +830,6 @@ var/global/list/mapNames = list(
 
 	job_limits_from_landmarks = TRUE
 
-/datum/map_settings/pamgoc
-	name = "PAMGOC"
-	goonhub_map = "https://goonhub.com/maps/cogmap"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-	airlock_style = "pyro"
-
-	escape_dir = SOUTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-	job_limits_override = list(
-		/datum/job/civilian/clown = 2 // pamgoc can have a little clown, as a treat
-	)
-
 /datum/map_settings/manta
 	name = "MANTA"
 	display_name = "NSS Manta"
@@ -935,45 +976,6 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/destiny
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/destiny
-
-/datum/map_settings/wrestlemap
-	name = "WRESTLEMAP"
-	walls = /turf/simulated/wall/auto/supernorn
-	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-
-	arrivals_type = MAP_SPAWN_CRYO
-
-	windows = /obj/window/auto
-	windows_thin = /obj/window/pyro
-	rwindows = /obj/window/auto/reinforced
-	rwindows_thin = /obj/window/reinforced/pyro
-	windows_crystal = /obj/window/auto/crystal
-	windows_rcrystal = /obj/window/auto/crystal/reinforced
-	window_layer_full = COG2_WINDOW_LAYER
-	window_layer_north = GRILLE_LAYER+0.1
-	window_layer_south = FLY_LAYER+1
-	auto_windows = TRUE
-
-	ext_airlocks = /obj/machinery/door/airlock/pyro/external
-	airlock_style = "pyro"
-
-	escape_dir = NORTH
-
-	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
-	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
-	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
-	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
-
-
-	valid_nuke_targets = list("The Ring (near the bar)" = list(/area/station/crew_quarters/quarters),
-		"the monkeydome arena" = list(/area/station/medical/dome),
-		"the courtroom" = list(/area/station/crew_quarters/courtroom),
-		"outside the Ringularity" = list(/area/station/engine/inner),
-		"the courtroom" = list(/area/station/storage/warehouse),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
-		"the security lobby" = list(/area/station/security/secwing),
-		"the chapel" = list(/area/station/chapel/sanctuary),
-		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
 /datum/map_settings/density // I just copied cog2 for now, ok????
 	name = "density"
