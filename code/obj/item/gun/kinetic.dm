@@ -1420,6 +1420,34 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
 						new src.current_projectile.casing(T, src.forensic_ID)
 
+
+/obj/item/gun/kinetic/bolter
+	name = "The Bolter"
+	desc = "A very large gun that shoots .75cal mass-reactive shells. Explodes your target from the inside. Wow."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "bolter"
+	item_state = "bolter"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_LARGE
+	contraband = 10
+	ammo_cats = list(AMMO_BOLTER)
+	max_ammo_capacity = 30
+	auto_eject = TRUE
+	can_dual_wield = FALSE
+	w_class = W_CLASS_HUGE
+	two_handed = TRUE
+	has_empty_state = TRUE
+	fire_animation = TRUE
+	default_magazine = /obj/item/ammo/bullets/bolts
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/bullet/bolt)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2, 2, 1)
+		..()
+
+
+
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
 	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."

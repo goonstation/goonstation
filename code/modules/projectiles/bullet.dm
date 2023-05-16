@@ -1103,6 +1103,27 @@ datum/projectile/bullet/autocannon
 		on_hit(atom/hit)
 			explosion_new(null,get_turf(hit), 8, 0.75)
 
+/datum/projectile/bullet/bolt
+	name = "bolt"
+	sname = "bolt"
+	window_pass = 0
+	icon_state = "75cal"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_STAB
+	damage = 35
+	dissipation_delay = 30
+	cost = 1
+	fullauto_valid = TRUE
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	on_hit(atom/hit)
+		if (isliving(hit))
+			explosion_new(hit, get_turf(hit), 10, 0.25) //focuses on exploding the target from the inside
+		else
+			explosion_new(null, get_turf(hit), 8, 0.75)
+
+
 /datum/projectile/bullet/smoke
 	name = "smoke grenade"
 	sname = "smokeshot"
