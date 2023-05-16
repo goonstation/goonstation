@@ -585,11 +585,6 @@
 	var/obj/lattice/current = new /obj/lattice(src.dirmask)
 	qdel(src)
 
-/obj/lattice/auto/barricade
-	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn in normal lattices."
-	icon_state = "girder"
-
 /obj/overlay
 	name = "overlay"
 	anchored = ANCHORED
