@@ -181,6 +181,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_ONCE
+	add_abilities = list(/datum/targetable/critter/vomit_ore)
 	var/tamed = FALSE
 	var/seek_ore = TRUE
 	var/eaten = 0
