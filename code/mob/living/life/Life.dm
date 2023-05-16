@@ -288,7 +288,6 @@
 		if (src.client) //ov1
 			// overlays
 			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (src.observers.len)
 			for (var/mob/x in src.observers)

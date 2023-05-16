@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/mindhack
 	id = ROLE_MINDHACK
 	display_name = "mindhack"
+	antagonist_icon = "mindhack"
 	remove_on_death = TRUE
 
 	is_compatible_with(datum/mind/mind)

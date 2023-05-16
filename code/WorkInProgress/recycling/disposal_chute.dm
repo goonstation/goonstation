@@ -171,7 +171,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		//jesus fucking christ
 		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(target, src) > 0 || isAI(user) || is_incapacitated(user) || isghostcritter(user))
 			return
-
+		if (istype(target, /obj/machinery/bot))
+			var/obj/machinery/bot/bot = target
+			bot.set_loc(src)
+			return
 		if (iscritter(target))
 			var/obj/critter/corpse = target
 			if (!corpse.alive)
