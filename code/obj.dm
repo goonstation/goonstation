@@ -550,7 +550,7 @@ TYPEINFO(/obj)
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE
 
-	wall_attaching_variant
+	wall_attaching
 		attach_to_wall = TRUE
 
 /obj/lattice/auto/New()
