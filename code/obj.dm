@@ -330,11 +330,6 @@
 	/// lets the lattice know that it should change its icon state and dir at New()
 	var/use_dirmask = FALSE
 
-	directional_icons
-		icon_state = "lattice_dir"
-	directional_icons_alt
-		icon_state = "lattice_dir_b"
-
 	New(var/temp_dirmask)
 	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
 	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
@@ -528,6 +523,10 @@
 
 	meteorhit()
 		src.barricade_damage(1)
+/obj/lattice/directional_icons
+	icon_state = "lattice_dir"
+/obj/lattice/directional_icons_alt
+	icon_state = "lattice_dir_b"
 
 /obj/lattice/auto
 	name = "lattice spawner"
@@ -538,16 +537,17 @@
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE
 
-	wall_attaching
-		attach_to_wall = TRUE
+/obj/lattice/auto/wall_attaching
+	icon_state = "lattice"
+	attach_to_wall = TRUE
 
 /obj/lattice/auto/New()
-	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		// this delay in theory lets regular lattices get placed in world first.
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
+	..()
 
 /obj/lattice/auto/initialize()
 	. = ..()
