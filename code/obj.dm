@@ -541,9 +541,15 @@
 	dirmask = 0
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE
+	/// makes it attach to all non space turfs
+	var/attach_to_all_turfs = FALSE
 
 /obj/lattice/auto/wall_attaching
 	attach_to_wall = TRUE
+
+/obj/lattice/auto/turf_attaching
+	attach_to_wall = TRUE
+	attach_to_all_turfs = TRUE
 
 /obj/lattice/auto/New()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
@@ -575,7 +581,10 @@
 	if (src.attach_to_wall)
 		for (var/dir_to_w in cardinal)
 			var/turf/dummy = get_step(src, dir_to_w)
-			if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
+			if (src.attach_to_all_turfs) // attach to every side which isn't a space turf
+				if (!istype(dummy, /turf/space))
+					src.dirmask |= dir_to_w
+			else if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
 				src.dirmask |= dir_to_w
 	// now we spawn the new lattice and delete ourselves
 	new /obj/lattice(src.loc, src.dirmask)
