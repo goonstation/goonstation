@@ -1932,7 +1932,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 	text = ""
 	var/pipe_type = /obj/disposalpipe/segment/regular
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	var/dpdir = 0		//! bitmask of pipe directions
+	dpdir = 0		//! bitmask of pipe directions
 	regular
 		pipe_type = /obj/disposalpipe/segment/regular
 		trunk_type = /obj/disposalpipe/trunk/regular
