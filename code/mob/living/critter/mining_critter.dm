@@ -241,19 +241,16 @@
 		..()
 
 	proc/aftereat()
+		var/datum/targetable/critter/vomit_ore/vomit = C.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)
+		var/max_dist = 4
 		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		src.HealDamage("all", 5, 5, 0)
 		src.eaten++
-		if (src.eaten >= src.rocks_per_gem)
-			var/pickgem = rand(1,3)
-			var/obj/item/created = null
-			switch(pickgem)
-				if(1) created = new /obj/item/raw_material/gemstone
-				if(2) created = new /obj/item/raw_material/uqill
-				if(3) created = new /obj/item/raw_material/fibrilith
-			created.set_loc(src.loc)
-			src.visible_message("<b><span class='alert'>[src] vomits up a piece of [created]!</span></b>")
-			src.eaten -= src.rocks_per_gem
+		if (src.eaten >= src.rocks_per_gem && src.ai?.enabled)
+			for(var/turf/T in view(max_dist, holder.owner))
+				if(!is_blocked_turf(T))
+					vomit.handleCast(T)
+					break
 
 /mob/living/critter/rockworm/gary
 	name = "Gary the rockworm"
