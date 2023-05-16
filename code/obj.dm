@@ -339,30 +339,82 @@ TYPEINFO(/obj)
 	text = "<font color=#333>+"
 	/// bitmask of directions it connects to.
 	var/dirmask = 0
+	/// lets the lattice know that it should change its icon state and dir at New()
+	var/use_dirmask = FALSE
 	New()
 	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
 	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
-		switch (icon_state)
-			if ("lattice")
-				src.dirmask |= (NORTH | SOUTH | EAST | WEST)
-			if ("lattice_dir")
-				if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)	// ???
-				if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
-				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
-				if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
-				if (src.dir == NORTHEAST)	src.dirmask |= WEST	// naturally
-				if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
-				if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
-				if (src.dir == NORTHWEST)	src.dirmask |= EAST	// of course it is
-			if ("lattice_dir_b")
-				if (src.dir == NORTH)	src.dirmask |= NORTH
-				if (src.dir == SOUTH)	src.dirmask |= SOUTH
-				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)	// this is different to the one in the other iconstate
-				if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)	// this too
-				if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)	// of course it's north west, why not
-				if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)	// these two actually match :o
-				if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
-				if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST) 	// if this had been swapped with northeast, they couldve matched. But no
+		// which came first, the bitmask or the icon?
+		if (src.use_dirmask)
+			switch (src.dirmask)
+				if (0)
+					CRASH("Lattice at [src.x]x and [src.y]y has no bitmask of directions while use_bitmask is true.")
+				if (NORTH | SOUTH | EAST | WEST)
+					src.icon_state = "lattice"
+				if (SOUTH | EAST | WEST)
+					src.icon_state = "lattice_dir"
+					src.dir = WEST
+				if (NORTH | EAST | WEST)
+					src.icon_state = "lattice_dir"
+					src.dir = SOUTHWEST
+				if (NORTH | SOUTH | WEST)
+					src.icon_state = "lattice_dir"
+					src.dir = NORTH
+				if (NORTH | SOUTH | EAST)
+					src.icon_state = "lattice_dir"
+					src.dir = SOUTHEAST
+				if (NORTHEAST)
+					src.icon_state = "lattice_dir_b"
+					src.dir = NORTHWEST
+				if (NORTH | SOUTH)
+					src.icon_state = "lattice_dir"
+					src.dir = SOUTH
+				if (NORTHWEST)
+					src.icon_state = "lattice_dir_b"
+					src.dir = NORTHEAST
+				if (SOUTHEAST)
+					src.icon_state = "lattice_dir_b"
+					src.dir = SOUTHEAST
+				if (EAST | WEST)
+					src.icon_state = "lattice_dir"
+					src.dir = EAST
+				if (SOUTHWEST)
+					src.icon_state = "lattice_dir_b"
+					src.dir = SOUTHWEST
+				if (NORTH)
+					src.icon_state = "lattice_dir_b"
+					src.dir = NORTH
+				if (SOUTH)
+					src.icon_state = "lattice_dir_b"
+					src.dir = SOUTH
+				if (EAST)
+					src.icon_state = "lattice_dir"
+					src.dir = NORTHWEST
+				if (WEST)
+					src.icon_state = "lattice_dir"
+					src.dir = NORTHEAST
+		else
+			switch (src.icon_state)
+				if ("lattice")
+					src.dirmask |= (NORTH | SOUTH | EAST | WEST)
+				if ("lattice_dir")
+					if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)
+					if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
+					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
+					if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
+					if (src.dir == NORTHEAST)	src.dirmask |= WEST
+					if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
+					if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
+					if (src.dir == NORTHWEST)	src.dirmask |= EAST
+				if ("lattice_dir_b")
+					if (src.dir == NORTH)	src.dirmask |= NORTH
+					if (src.dir == SOUTH)	src.dirmask |= SOUTH
+					if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
+					if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)
+					if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)
+					if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)
+					if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
+					if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST)
 	blob_act(var/power)
 		if(prob(75))
 			qdel(src)
@@ -490,6 +542,7 @@ TYPEINFO(/obj)
 /obj/lattice/auto/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
+		// this delay in theory lets regular lattices get placed in world first.
 		SPAWN(1 SECONDS)
 			if(!src.disposed)
 				initialize()
