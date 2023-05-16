@@ -756,6 +756,45 @@ var/global/list/mapNames = list(
 	job_limits_override = list(
 		/datum/job/civilian/rancher = 2,
 	)
+/datum/map_settings/aetherion
+	name = "AETHERION"
+	goonhub_map = "https://goonhub.com/maps/kondaru"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/kondaru,
+		/atom/movable/screen/parallax_layer/asteroids_far/kondaru,
+		)
+
+	arrivals_type = MAP_SPAWN_SHUTTLE
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = NORTH
+
+	/*merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap*/
+
+	valid_nuke_targets = list()
+
+	job_limits_override = list()
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"

@@ -722,9 +722,12 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/hangar/mining)
 "cN" = (
-/obj/storage/crate/radio,
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/arrival{
+	dir = 10
+	},
+/area/station/hallway/secondary/entry)
 "cO" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -817,12 +820,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/dome)
 "dp" = (
-/obj/stool/bench/blue/auto,
-/obj/landmark/start/latejoin,
-/turf/simulated/floor/arrival{
-	dir = 4
-	},
-/area/station/hallway/secondary/entry)
+/obj/table/glass/auto,
+/turf/simulated/floor/glassblock/large,
+/area/station/bridge)
 "dq" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
@@ -1273,12 +1273,6 @@
 "fF" = (
 /turf/simulated/floor/grass,
 /area/station/hallway/secondary/entry)
-"fG" = (
-/obj/landmark/map{
-	name = "AETHERION"
-	},
-/turf/space,
-/area/space)
 "fH" = (
 /obj/machinery/computer3/generic/med_data,
 /turf/simulated/floor/bluewhite{
@@ -1467,14 +1461,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "gq" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 8
-	},
+/obj/stool/bench/blue/auto,
 /obj/landmark/start/latejoin,
-/turf/unsimulated/floor/shuttle{
+/turf/simulated/floor/arrival{
 	dir = 8
 	},
-/area/shuttle/arrival/station)
+/area/station/hallway/secondary/entry)
 "gr" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/mining_horizontal,
 /turf/simulated/floor/plating,
@@ -1710,11 +1702,12 @@
 	},
 /area/station/medical/medbay)
 "hI" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/arrival{
+	dir = 6
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/area/station/hallway/secondary/entry)
 "hJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
@@ -2239,7 +2232,7 @@
 	},
 /area/space)
 "kk" = (
-/obj/table/glass/frame/auto,
+/obj/table/glass/auto,
 /obj/item/kitchen/food_box/donut_box{
 	desc = "It appears to be a Martian brand of donuts.";
 	name = "Robust Donuts"
@@ -2442,12 +2435,19 @@
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "kZ" = (
-/obj/stool/bench/blue/auto,
-/obj/landmark/start/latejoin,
-/turf/simulated/floor/arrival{
-	dir = 10
+/obj/machinery/conveyor/NS,
+/obj/machinery/door/poddoor/pyro{
+	id = "kd_qmsouth";
+	name = "Cargo Routing Door"
 	},
-/area/station/hallway/secondary/entry)
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "la" = (
 /obj/machinery/vending/medical,
 /turf/simulated/floor/bluewhite{
@@ -2511,11 +2511,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "ln" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
-	},
-/turf/simulated/floor,
-/area/station/maintenance/northwest)
+/obj/machinery/conveyor/NS,
+/obj/grille/catwalk,
+/turf/space,
+/area/space)
 "lo" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/engine,
@@ -3535,12 +3534,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "qo" = (
-/obj/stool/bench/blue/auto,
+/obj/stool/chair,
 /obj/landmark/start/latejoin,
-/turf/simulated/floor/arrival{
-	dir = 8
-	},
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor/glassblock/transparent,
+/area/station/crew_quarters/observatory)
 "qp" = (
 /obj/storage/secure/closet/command/research_director,
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
@@ -3606,11 +3603,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "qJ" = (
-/obj/item/device/radio/intercom{
-	pixel_x = 1
+/obj/stool/chair/comfy/shuttle/green{
+	dir = 8
 	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
+/obj/landmark/start/latejoin,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/arrival/station)
 "qK" = (
 /turf/simulated/floor{
 	icon_state = "SS13-Centred-2-U5"
@@ -3926,11 +3926,6 @@
 	dir = 8
 	},
 /area/station/teleporter)
-"st" = (
-/obj/stool/bench/blue/auto,
-/obj/landmark/start/latejoin,
-/turf/simulated/floor/arrival,
-/area/station/hallway/secondary/entry)
 "su" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -4189,11 +4184,6 @@
 	dir = 1
 	},
 /area/station/science/lab)
-"tD" = (
-/obj/table/glass/reinforced/auto,
-/obj/item/paper_bin,
-/turf/simulated/floor/glassblock/large,
-/area/station/bridge)
 "tE" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -5300,9 +5290,9 @@
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
 "yR" = (
-/obj/table/glass/frame/auto,
-/turf/simulated/floor/glassblock/transparent/red,
-/area/station/security/main)
+/obj/machinery/conveyor/NS,
+/turf/simulated/floor,
+/area/station/maintenance/northwest)
 "yU" = (
 /turf/simulated/floor/purple,
 /area/station/hangar/science)
@@ -6613,25 +6603,10 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/station/crew_quarters/bar)
 "EY" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "kd_qmsouth";
-	name = "Cargo Routing Door"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "kd_qmsouth";
-	name = "Cargo Routing Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/obj/table/glass/auto,
+/obj/item/device/prisoner_scanner,
+/turf/simulated/floor/glassblock/transparent/red,
+/area/station/security/main)
 "EZ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -7396,11 +7371,11 @@
 /turf/simulated/floor/red/redblackchecker,
 /area/station/ai_monitored/armory)
 "IA" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
+/obj/landmark/map{
+	name = "AETHERION"
 	},
-/turf/simulated/floor/grey,
-/area/station/quartermaster)
+/turf/space,
+/area/space)
 "ID" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/device/audio_log{
@@ -7849,7 +7824,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "KJ" = (
-/obj/stool/chair/comfy/shuttle/brown{
+/obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/landmark/start/latejoin,
@@ -8150,9 +8125,10 @@
 /turf/simulated/floor/carpet/grime,
 /area/space)
 "Mb" = (
-/obj/table/glass/reinforced/auto,
-/turf/simulated/floor/glassblock/large,
-/area/station/bridge)
+/obj/stool/bench/blue/auto,
+/obj/landmark/start/latejoin,
+/turf/simulated/floor/arrival,
+/area/station/hallway/secondary/entry)
 "Mc" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
@@ -8494,16 +8470,14 @@
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "NY" = (
-/obj/noticeboard/persistent{
-	name = "Brig persistent notice board";
-	persistent_id = "brig";
-	pixel_x = 32;
-	pixel_y = 0
+/obj/stool/chair/comfy/shuttle/brown{
+	dir = 8
 	},
-/turf/simulated/floor/redblack{
-	dir = 4
+/obj/landmark/start/latejoin,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
 	},
-/area/station/security/main)
+/area/shuttle/arrival/station)
 "NZ" = (
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -8568,14 +8542,10 @@
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "Op" = (
-/obj/stool/chair/comfy/shuttle/green{
-	dir = 8
-	},
-/obj/landmark/start/latejoin,
-/turf/unsimulated/floor/shuttle{
-	dir = 8
-	},
-/area/shuttle/arrival/station)
+/obj/machinery/conveyor/NS,
+/obj/plasticflaps,
+/turf/simulated/floor/plating,
+/area/station/quartermaster)
 "Oq" = (
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2{
@@ -8855,13 +8825,6 @@
 /obj/machinery/meter,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/baroffice)
-"PD" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/quartermaster)
 "PE" = (
 /obj/machinery/manufacturer/hop_and_uniform,
 /turf/simulated/floor/red/side,
@@ -8897,9 +8860,10 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/mining)
 "PR" = (
-/obj/lattice,
-/turf/space,
-/area/space)
+/obj/table/glass/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor/glassblock/large,
+/area/station/bridge)
 "PV" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
@@ -8951,12 +8915,17 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "Qj" = (
-/obj/machinery/conveyor/NS{
-	operating = 1
+/obj/noticeboard/persistent{
+	name = "Brig persistent notice board";
+	persistent_id = "brig";
+	pixel_x = 32;
+	pixel_y = 0
 	},
-/obj/grille/catwalk,
-/turf/space,
-/area/space)
+/obj/storage/closet/wardrobe/orange,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/station/security/main)
 "Qk" = (
 /obj/submachine/chef_oven,
 /obj/noticeboard/persistent{
@@ -10007,11 +9976,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
 "UY" = (
-/obj/storage/closet/wardrobe/orange,
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/station/security/main)
+/obj/machinery/conveyor/NS,
+/turf/simulated/floor/grey,
+/area/station/quartermaster)
 "UZ" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/wood/two,
@@ -10453,7 +10420,7 @@
 /obj/stool/bench/blue/auto,
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/arrival{
-	dir = 6
+	dir = 4
 	},
 /area/station/hallway/secondary/entry)
 "WV" = (
@@ -10516,10 +10483,9 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "Xi" = (
-/obj/stool/chair,
-/obj/landmark/start/latejoin,
-/turf/simulated/floor/glassblock/transparent,
-/area/station/crew_quarters/observatory)
+/obj/machinery/conveyor/NS,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "Xk" = (
 /obj/machinery/light{
 	dir = 4;
@@ -10795,10 +10761,11 @@
 	},
 /area/shuttle/arrival/station)
 "Yu" = (
-/obj/table/glass/frame/auto,
-/obj/item/device/prisoner_scanner,
-/turf/simulated/floor/glassblock/transparent/red,
-/area/station/security/main)
+/obj/item/device/radio/intercom{
+	pixel_x = 1
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/hydroponics/bay)
 "Yv" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -11464,7 +11431,7 @@ VS
 VS
 VS
 VS
-fG
+IA
 "}
 (2,1,1) = {"
 VS
@@ -44520,7 +44487,7 @@ VS
 VS
 VS
 VS
-PR
+VS
 VS
 hn
 DH
@@ -49365,7 +49332,7 @@ eg
 ZE
 YR
 cr
-Yu
+EY
 th
 sT
 aa
@@ -49666,7 +49633,7 @@ iW
 ZT
 lT
 YR
-yR
+cr
 kk
 th
 Yb
@@ -50876,8 +50843,8 @@ Cj
 vV
 Md
 vL
-UY
-NY
+XY
+Qj
 XY
 Xy
 Bo
@@ -55134,22 +55101,22 @@ eq
 eq
 eq
 xx
-qo
-qo
-qo
-qo
+gq
+gq
+gq
+gq
 TE
 eq
 xx
-qo
-qo
-qo
-qo
+gq
+gq
+gq
+gq
 TE
 eq
 xx
-qo
-kZ
+gq
+cN
 BS
 wr
 wr
@@ -55451,12 +55418,12 @@ eq
 eq
 eq
 eq
-st
+Mb
 wr
 wr
 wr
 wr
-Xi
+qo
 wr
 wr
 wr
@@ -55680,13 +55647,13 @@ hn
 hn
 hn
 hn
-Qj
-EY
-hI
-hI
 ln
-PD
-IA
+kZ
+Xi
+Xi
+yR
+Op
+UY
 Yr
 Yr
 Yr
@@ -55738,22 +55705,22 @@ eq
 eq
 eq
 ec
-dp
-dp
-dp
-dp
-oi
-eq
-ec
-dp
-dp
-dp
-dp
-oi
-eq
-ec
-dp
 WT
+WT
+WT
+WT
+oi
+eq
+ec
+WT
+WT
+WT
+WT
+oi
+eq
+ec
+WT
+hI
 BS
 wr
 wr
@@ -56613,8 +56580,8 @@ zX
 zX
 AJ
 DY
-Mb
-Mb
+dp
+dp
 mf
 Kd
 zX
@@ -56915,8 +56882,8 @@ Fo
 zX
 AJ
 DY
-tD
-Mb
+PR
+dp
 mf
 Kd
 zX
@@ -57554,9 +57521,9 @@ hn
 VS
 sS
 Ks
-KJ
+NY
 MM
-KJ
+NY
 Ra
 wK
 VS
@@ -57855,11 +57822,11 @@ gh
 hn
 VS
 Me
-gq
-gq
+KJ
+KJ
 MM
-gq
-gq
+KJ
+KJ
 Me
 VS
 dY
@@ -58157,11 +58124,11 @@ gh
 hn
 VS
 Me
-gq
-gq
+KJ
+KJ
 rx
-gq
-gq
+KJ
+KJ
 Me
 VS
 dY
@@ -58459,11 +58426,11 @@ gh
 hn
 VS
 Me
-gq
-gq
+KJ
+KJ
 MM
-gq
-gq
+KJ
+KJ
 Me
 VS
 dY
@@ -58724,7 +58691,7 @@ eH
 eH
 eH
 eH
-cN
+eH
 eH
 eH
 eH
@@ -58761,11 +58728,11 @@ gh
 hn
 VS
 Me
-gq
-gq
+KJ
+KJ
 MM
-gq
-gq
+KJ
+KJ
 Me
 VS
 VS
@@ -59063,11 +59030,11 @@ gh
 hn
 VS
 Me
-Op
-Op
+qJ
+qJ
 rx
-Op
-Op
+qJ
+qJ
 Me
 VS
 VS
@@ -60847,8 +60814,8 @@ nl
 oE
 cE
 cE
-cE
-qJ
+Yu
+js
 js
 VC
 Yv
