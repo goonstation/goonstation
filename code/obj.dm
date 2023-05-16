@@ -582,7 +582,7 @@
 				src.dirmask |= declarer
 
 	// now we spawn the new lattice and delete ourselves
-	var/obj/lattice/current = new /obj/lattice(src.dirmask)
+	new /obj/lattice(src.dirmask)
 	qdel(src)
 
 /obj/overlay
