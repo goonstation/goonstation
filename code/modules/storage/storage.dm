@@ -63,7 +63,7 @@
 	src.sneaky = sneaky
 	src.opens_if_worn = opens_if_worn
 
-	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, .proc/storage_item_on_drop)
+	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, PROC_REF(storage_item_on_drop))
 
 	if (length(spawn_contents))
 		src.make_my_stuff(spawn_contents)

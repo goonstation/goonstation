@@ -81,7 +81,7 @@
 		src.air_contents = new /datum/gas_mixture()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", .proc/_set_controlrods_mechchomp)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set Control Rods", PROC_REF(_set_controlrods_mechchomp))
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
@@ -499,7 +499,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a [component_grid[x][y]]!</span>", "<span class='alert'>You start removing the [component_grid[x][y]]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/remove_comp_callback, list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(remove_comp_callback), list(x,y,ui.user), component_grid[x][y].icon, component_grid[x][y].icon_state,\
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)
@@ -513,7 +513,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting \a [equipped]!</span>", "<span class='alert'>You start inserting the [equipped]!</span>")
-					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, .proc/insert_comp_callback, list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					var/datum/action/bar/icon/callback/A = new(ui.user, src, 1 SECONDS, PROC_REF(insert_comp_callback), list(x,y,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 					A.maximum_range=3
 					actions.start(A,ui.user)

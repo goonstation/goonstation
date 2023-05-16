@@ -1185,9 +1185,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleactivation))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", PROC_REF(deactivate))
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)

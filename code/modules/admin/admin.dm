@@ -1251,7 +1251,8 @@ var/global/noir = 0
 		if("rapture")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				heavenly_spawn(M, reverse = TRUE)
+				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+					heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
@@ -4604,9 +4605,6 @@ var/global/noir = 0
 
 	if (!(M.mind in ticker.mode.Agimmicks))
 		ticker.mode.Agimmicks += M.mind
-
-	if (M.mind.current)
-		M.mind.current.antagonist_overlay_refresh(1, 0)
 
 	var/obj_count = 1
 	for(var/datum/objective/OBJ in M.mind.objectives)

@@ -15,7 +15,7 @@ TYPEINFO(/datum/component/log_item_pickup)
 		return COMPONENT_INCOMPATIBLE
 	src.authorized_job = authorized_job
 	src.message_admins_too = message_admins_too
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/logging)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(logging))
 
 /datum/component/log_item_pickup/proc/logging(atom/movable/thing, mob/user)
 	var/obj/item/I = src.parent
