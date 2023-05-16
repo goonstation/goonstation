@@ -419,7 +419,7 @@
 	return
 
 /// a cable spawner which can spawn multiple cables to connect to other cables around it.
-/obj/cablespawner
+/obj/cable/auto
 	name = "power cable spawner"
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate"
@@ -434,24 +434,24 @@
 	/// cable_surr uses the unique ordinal dirs to save directions as it needs to store up to 8 at once
 	var/cable_surr = 0
 
-/obj/cablespawner/node
+/obj/cable/auto/node
 	name = "node cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-node"
 
-/obj/cablespawner/reinforced
+/obj/cable/auto/reinforced
 	name = "reinforced power cable spawner"
 	icon = 'icons/obj/power_cond.dmi'
 	icon_state = "superstate-thick"
 	cable_type = /obj/cable/reinforced
 	color = "#075C90"
 
-/obj/cablespawner/reinforced/node
+/obj/cable/auto/reinforced/node
 	name = "node reinforced cable spawner"
 	override_centre_connection = TRUE
 	icon_state = "superstate-thick-node"
 
-/obj/cablespawner/New()
+/obj/cable/auto/New()
 	..()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		SPAWN(1 SECONDS)
@@ -459,26 +459,26 @@
 				initialize()
 
 /// makes the cable spawners actually spawn cables and delete themselves
-/obj/cablespawner/initialize()
+/obj/cable/auto/initialize()
 	. = ..()
 	src.check()
 	src.replace()
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
-/obj/cablespawner/proc/check(var/obj/cable/cable)
+/obj/cable/auto/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
 	var/declarer = 0
 	// first we have to make sure we're checking the correct kind of cable
-	for (var/obj/cablespawner/self_loc in range(0, src))
+	for (var/obj/cable/auto/self_loc in range(0, src))
 		if (self_loc.color == src.color)
 			selftile += self_loc
 	if (length(selftile) > 1)
-		CRASH("[length(selftile)] identical cablespawners on coordinate [src.x] x [src.y] y!")
+		CRASH("[length(selftile)] identical cable spawners on coordinate [src.x] x [src.y] y!")
 	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
-	// checks for cablespawners around itself
+	// checks for cable spawners around itself
 		// declarer is the dir being checked at present
 		declarer = alldirs_unique[alldirs.Find(dir_to_cs)]
-		for (var/obj/cablespawner/spawner in get_step(src, dir_to_cs))
+		for (var/obj/cable/auto/spawner in get_step(src, dir_to_cs))
 			if (spawner.color == src.color)
 				cable_surr |= declarer
 	/*
@@ -509,7 +509,7 @@
 	*/
 	if (cable_surr & EAST)
 	// optimises the outlier case
-		for (var/obj/cablespawner/spawner in get_step(src, EAST))
+		for (var/obj/cable/auto/spawner in get_step(src, EAST))
 			if (src.color == spawner.color)
 				spawner.cable_surr |= WEST
 
@@ -524,8 +524,8 @@
 			if (normal_cable.d1 == turn(dir_to_c, 180) || normal_cable.d2 == turn(dir_to_c, 180))
 				cable_surr |= declarer
 
-/// causes cablespawner to spawn cables (amazing)
-/obj/cablespawner/proc/replace()
+/// causes cable spawner to spawn cables (amazing)
+/obj/cable/auto/proc/replace()
 	var/list/directions = list()
 	if (cable_surr & NORTH)
 		directions += NORTH
@@ -562,7 +562,7 @@
 	qdel(src)
 
 /// places a cable with d1 and d2
-/obj/cablespawner/proc/cable_laying(var/dir1, var/dir2)
+/obj/cable/auto/proc/cable_laying(var/dir1, var/dir2)
 	var/obj/cable/current = new src.cable_type(src.loc)
 	current.icon_state = "[min(dir1, dir2)]-[max(dir1, dir2)]"
 	current.color = src.color
