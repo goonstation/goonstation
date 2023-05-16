@@ -341,9 +341,17 @@ TYPEINFO(/obj)
 	var/dirmask = 0
 	/// lets the lattice know that it should change its icon state and dir at New()
 	var/use_dirmask = FALSE
-	New()
+
+	directional_icons
+		icon_state = "lattice_dir"
+	directional_icons_alt
+		icon_state = "lattice_dir_b"
+
+	New(var/temp_dirmask)
 	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
 	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
+		..()
+		src.dirmask = temp_dirmask
 		// which came first, the bitmask or the icon?
 		if (src.use_dirmask)
 			switch (src.dirmask)
@@ -393,7 +401,7 @@ TYPEINFO(/obj)
 				if (WEST)
 					src.icon_state = "lattice_dir"
 					src.dir = NORTHEAST
-		else
+		else if (isnull(temp_dirmask))
 			switch (src.icon_state)
 				if ("lattice")
 					src.dirmask |= (NORTH | SOUTH | EAST | WEST)
@@ -535,9 +543,15 @@ TYPEINFO(/obj)
 
 /obj/lattice/auto
 	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn in normal lattices."
+	desc = "If you're seeing this, call a coder. These are meant to spawn normal lattices."
 	icon_state = "lattice"
+	use_dirmask = TRUE
 	dirmask = 0
+	/// makes the lattices connect to walls too
+	var/attach_to_wall = FALSE
+
+	wall_attaching_variant
+		attach_to_wall = TRUE
 
 /obj/lattice/auto/New()
 	..()
@@ -549,10 +563,6 @@ TYPEINFO(/obj)
 
 /obj/lattice/auto/initialize()
 	. = ..()
-	src.check()
-	src.replace()
-
-/obj/lattice/auto/proc/check()
 	var/list/selftile = list()
 	/// declarer is the dir being checked at present, for iteration purposes.
 	var/declarer = 0
@@ -561,9 +571,9 @@ TYPEINFO(/obj)
 		selftile += self_loc
 		if (length(selftile) > 1)
 			CRASH("[length(selftile)] identical lattice spawners on coordinate [src.x] x [src.y] y!")
-			break
 	// checks for lattice spawners around itself
-	for (var/dir_to_ls in list(NORTH, EAST, NORTHWEST, NORTHEAST))
+	// note that only north and east are checked because the lattice spawners to the south and west have already replaced themselves.
+	for (var/dir_to_ls in list(NORTH, EAST))
 		declarer = alldirs_unique[alldirs.Find(dir_to_ls)]
 		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
 			if (spawner.color == src.color)
@@ -572,12 +582,20 @@ TYPEINFO(/obj)
 	for (var/dir_to_l in alldirs)
 		declarer = alldirs_unique[alldirs.Find(dir_to_l)]
 		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
-			normal_lattice
 			if (normal_lattice.dirmask & turn(dir_to_l, 180))
 				src.dirmask |= declarer
+	// connecting to walls
+	if (src.attach_to_wall)
+		for (var/dir_to_w in alldirs)
+			declarer = alldirs_unique[alldirs.Find(dir_to_w)]
+			for (var/turf/unsimulated/wall/normal_wall in get_step(src, dir_to_w))
+				src.dirmask |= declarer
+			for (var/turf/simulated/wall/normal_wall in get_step(src, dir_to_w))
+				src.dirmask |= declarer
 
-
-/obj/lattice/auto/proc/replace()
+	// now we spawn the new lattice and delete ourselves
+	var/obj/lattice/current = new /obj/lattice(src.dirmask)
+	qdel(src)
 
 /obj/lattice/auto/barricade
 	name = "lattice spawner"
