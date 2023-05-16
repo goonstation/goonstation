@@ -524,8 +524,12 @@
 	meteorhit()
 		src.barricade_damage(1)
 /obj/lattice/directional_icons
+	icon = 'icons/obj/structures.dmi'
+	dir = 2
 	icon_state = "lattice_dir"
 /obj/lattice/directional_icons_alt
+	icon = 'icons/obj/structures.dmi'
+	dir = 2
 	icon_state = "lattice_dir_b"
 
 /obj/lattice/auto
@@ -562,20 +566,16 @@
 	// checks for lattice spawners around itself
 	// note that only north and east are checked because the lattice spawners to the south and west have already replaced themselves.
 	for (var/dir_to_ls in list(NORTH, EAST))
-		declarer = alldirs_unique[alldirs.Find(dir_to_ls)]
 		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
-			if (spawner.color == src.color)
-				src.dirmask |= declarer
+			src.dirmask |= declarer
 	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
 	for (var/dir_to_l in alldirs)
-		declarer = alldirs_unique[alldirs.Find(dir_to_l)]
 		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
 			if (normal_lattice.dirmask & turn(dir_to_l, 180))
 				src.dirmask |= declarer
 	// connecting to walls
 	if (src.attach_to_wall)
 		for (var/dir_to_w in alldirs)
-			declarer = alldirs_unique[alldirs.Find(dir_to_w)]
 			for (var/turf/unsimulated/wall/normal_wall in get_step(src, dir_to_w))
 				src.dirmask |= declarer
 			for (var/turf/simulated/wall/normal_wall in get_step(src, dir_to_w))
