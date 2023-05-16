@@ -269,7 +269,7 @@
 		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
 			src.dirmask |= dir_to_ls
 	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
-	for (var/dir_to_l in list(SOUTH, WEST))
+	for (var/dir_to_l in cardinal)
 		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
 			if (normal_lattice.dirmask & turn(dir_to_l, 180))
 				src.dirmask |= dir_to_l
