@@ -399,7 +399,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 	proc/assess_sale(obj/storage/crate/sell_crate)
 		var/contents_index = list() ///Registry of everything in crate, including contents of item containers within it
 		var/eval_message = "<font color=#FF9900>Contents insufficient for marked requisition" ///Message returned on failed evaluation, appended later
-		var/successes_needed = length(src.rc_entries) //Decremented with each successful fulfillment, reach 0 to win
+		var/successes_needed = length(src.rc_entries) ///Decremented with each successful fulfillment, reach 0 to win
 
 		contents_index += sell_crate.contents
 
