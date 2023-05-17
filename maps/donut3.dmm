@@ -1713,6 +1713,15 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"awe" = (
+/obj/disposalpipe/segment/brig{
+	dir = 8
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/blue/side{
+	dir = 1
+	},
+/area/station/hallway/primary/south)
 "awJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -3305,6 +3314,11 @@
 "aTA" = (
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
+"aTI" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "aTP" = (
 /obj/decal/tile_edge/line/white{
 	color = "#ffccff";
@@ -5523,6 +5537,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "bBz" = (
@@ -6360,6 +6375,7 @@
 /obj/machinery/computer/chem_requester/medical{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -8686,6 +8702,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "czv" = (
@@ -14014,6 +14031,14 @@
 /obj/cable,
 /turf/simulated/floor/plating/jen,
 /area/listeningpost)
+"ehc" = (
+/obj/disposalpipe/switch_junction/right/east{
+	mail_tag = "chemlink"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 1
+	},
+/area/station/medical/medbay)
 "ehA" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -15223,6 +15248,17 @@
 	dir = 8
 	},
 /area/station/hangar/main)
+"eCt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	level = -1
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay/treatment)
 "eCu" = (
 /obj/disposalpipe/switch_junction/left/south{
 	mail_tag = "brig"
@@ -18685,6 +18721,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -20920,6 +20957,10 @@
 /obj/item/storage/box/syringes{
 	pixel_x = -8;
 	pixel_y = 4
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
@@ -32525,12 +32566,10 @@
 /turf/simulated/wall/auto/jen,
 /area/station/hallway/primary/west)
 "jUu" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/switch_junction/left/east,
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/breakroom)
 "jUv" = (
@@ -33633,6 +33672,7 @@
 /obj/landmark/start{
 	name = "Scientist"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "klP" = (
@@ -33647,6 +33687,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "klS" = (
@@ -34753,6 +34794,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "kDs" = (
@@ -36850,6 +36892,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -43940,6 +43983,11 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"nwy" = (
+/obj/machinery/drainage,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "nwD" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
@@ -46864,6 +46912,7 @@
 "otu" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -49151,7 +49200,10 @@
 /obj/machinery/light_switch/south{
 	pixel_x = -4
 	},
-/obj/machinery/vending/player/chemicals,
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pgv" = (
@@ -49423,6 +49475,11 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"pka" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/treatment)
 "pkd" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 9;
@@ -50324,6 +50381,11 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/medical/medbooth)
+"pyi" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "pyn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50460,6 +50522,7 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/breakroom)
 "pAl" = (
@@ -58556,6 +58619,20 @@
 	},
 /turf/simulated/wall/auto/jen/red,
 /area/station/maintenance/outer/sw)
+"rSa" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/window_blinds/cog2/middle{
+	id = "chemistry"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "rSb" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -59775,6 +59852,7 @@
 /area/station/hangar/arrivals)
 "slP" = (
 /obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "smc" = (
@@ -65567,6 +65645,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -67416,6 +67495,7 @@
 /obj/submachine/chem_extractor{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -67510,6 +67590,7 @@
 /obj/window_blinds/cog2/left{
 	id = null
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/medical/breakroom)
 "uIk" = (
@@ -68909,6 +68990,7 @@
 	},
 /obj/machinery/bot/firebot,
 /obj/machinery/light/small/floor/harsh,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "veA" = (
@@ -74206,6 +74288,7 @@
 /area/station/maintenance/inner/sw)
 "wID" = (
 /obj/storage/secure/closet/medical/anesthetic,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "wIJ" = (
@@ -78005,6 +78088,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "xJx" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "xJF" = (
@@ -119442,29 +119526,29 @@ uIi
 uHm
 bPj
 fFl
-xBf
-xHf
+pka
+aTI
 bBa
 xJx
 xJx
 xJx
-fPh
+eCt
 wID
-nGp
+pyi
 ucp
 lnn
 klP
-qgJ
-pyL
-mZl
-daP
+awe
+jpz
+chM
+rSa
 otu
 klO
 vet
 kDo
 kDo
 cyU
-yhF
+nwy
 gpl
 afo
 vpT
@@ -121553,7 +121637,7 @@ dko
 dko
 sAH
 slP
-jAj
+ehc
 yam
 pNY
 xLh
