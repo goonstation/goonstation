@@ -33,10 +33,12 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/total_volume = 0
 	var/composite_heat_capacity = 0
 
-	var/defer_reactions = 0 ///Set internally to prevent reactions inside reactions.
+	///Set internally to prevent reactions inside reactions.
+	var/defer_reactions = 0
 	var/deferred_reaction_checks = 0
 	var/processing_reactions = 0
-	var/inert = 0 ///Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
+	///Do not react. At all. Do not pass go, do not collect $200. Halt. Stop right there, son.
+	var/inert = 0
 
 	var/list/addiction_tally = null
 
@@ -49,8 +51,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	var/temperature_cap = 10000
 	var/temperature_min = 0
 
-	var/postfoam = 0 ///attempt at killing infinite foam
-	var/can_be_heated = TRUE ///can be heated by external sources
+	///attempt at killing infinite foam
+	var/postfoam = 0
+	///can be heated by external sources
+	var/can_be_heated = TRUE
 
 	New(maximum=100)
 		..()
@@ -306,8 +310,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return trans_to_direct(target_reagents, amount, multiplier, index = index)
 
-	/// MBC note : I added update_target_reagents and update_self_reagents vars for fluid handling. y'see, there are a ton of transfer operations involving fluids that don't need to update reagents immediately as they happen.
-	/// we would rather perform all the transfers, and then batch update the reagents when necessary. Saves us from some lag, and avoids some *buggy shit*!
+	// MBC note : I added update_target_reagents and update_self_reagents vars for fluid handling. y'see, there are a ton of transfer operations involving fluids that don't need to update reagents immediately as they happen.
+	// we would rather perform all the transfers, and then batch update the reagents when necessary. Saves us from some lag, and avoids some *buggy shit*!
 	proc/trans_to_direct(var/datum/reagents/target_reagents, var/amount=1, var/multiplier=1, var/update_target_reagents = 1, var/update_self_reagents = 1, var/index = 0)
 		if (!target_reagents || !total_volume) //Wire & ZeWaka: Fix for Division by zero
 			return
@@ -435,11 +439,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				var/created_volume = src.maximum_volume
 				for(var/B in C.required_reagents)
 					var/B_required_volume = max(CHEM_EPSILON, C.required_reagents[B])
-
-
 					//var/amount = get_reagent_amount(B)
 					//trying to reduce proc call overhead from fluid system
-					///copied get_reagent_amount proc here because it's relatively simple procedure
+					//copied get_reagent_amount proc here because it's relatively simple procedure
 					var/amount = 0
 					try
 						if (reagent_list[B])
@@ -844,8 +846,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return 1
 
-	/// removed a check if reagent_list existed here in the interest of performance
-	/// if this happens again try to figure out why the fuck reagent_list would go null
+	// removed a check if reagent_list existed here in the interest of performance
+	// if this happens again try to figure out why the fuck reagent_list would go null
 	proc/has_reagent(var/reagent, var/amount=0)
 		var/datum/reagent/current_reagent = reagent_list[reagent]
 		return current_reagent && current_reagent.volume >= amount
@@ -1024,7 +1026,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// takes argument of how many tastes
 	proc/get_prevalent_tastes(var/num_val)
 		RETURN_TYPE(/list)
-		/// associative list with key = taste, val = total volume
+		// create associative list with key = taste, val = total volume
 		var/list/reag_list = list()
 		for (var/current_id in src.reagent_list)
 			var/datum/reagent/current_reagent = src.reagent_list[current_id]
@@ -1127,7 +1129,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if (shock)
 			physical_shock(shock)
 
-	/// there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
+	// there were two different implementations, one of which didn't work, so i moved the working one here and both call it now - IM
 	proc/smoke_start(var/volume, var/classic = 0)
 		purge_smoke_blacklist(src)
 
