@@ -7036,7 +7036,8 @@
 	},
 /area/station/medical/head)
 "ars" = (
-/obj/machinery/vending/player/chemicals,
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "art" = (
@@ -7421,6 +7422,7 @@
 /area/research_outpost/toxins)
 "asn" = (
 /obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aso" = (
@@ -7865,6 +7867,9 @@
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/machinery/light/incandescent/cool,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "att" = (
@@ -7928,6 +7933,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/remote/porter/port_a_nanomed,
 /obj/item/gun/implanter,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "atE" = (
@@ -9391,6 +9397,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "axl" = (
@@ -9436,6 +9445,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/medical,
 /obj/machinery/cashreg,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "axr" = (
@@ -10336,12 +10346,12 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "azF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
 /obj/disposalpipe/switch_junction/left/west{
 	mail_tag = "medbay";
 	name = "medbay mail router"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
@@ -12638,6 +12648,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFQ" = (
@@ -20622,6 +20635,9 @@
 	},
 /obj/stool/chair{
 	dir = 1
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -41784,6 +41800,14 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
+"cCV" = (
+/obj/stool/chair/office,
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "cFN" = (
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 8;
@@ -42455,6 +42479,16 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery/storage)
+"frb" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/switch_junction/left/west{
+	mail_tag = "chemlink";
+	name = "dispensary mail router"
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay/lobby)
 "fsJ" = (
 /obj/machinery/firealarm{
 	pixel_x = 1;
@@ -42885,6 +42919,13 @@
 	dir = 9
 	},
 /area/station/ai_monitored/armory)
+"gKo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "gKC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -43648,6 +43689,15 @@
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"kvU" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "kwr" = (
 /obj/lattice{
 	dir = 1;
@@ -44736,6 +44786,16 @@
 /obj/machinery/drainage/big,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
+"pxd" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/lobby)
 "pxv" = (
 /obj/machinery/computer/arcade{
 	desc = "The VR representation of a popular computer game."
@@ -45821,6 +45881,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vxM" = (
+/obj/disposalpipe/switch_junction/left/north,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "vyx" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/access_spawn/chemistry,
@@ -92468,11 +92534,11 @@ apN
 ard
 asn
 atD
-aly
-awh
+gKo
+cCV
 axq
-ayA
-azA
+ciu
+frb
 aAO
 aBN
 cfC
@@ -105465,7 +105531,7 @@ aCN
 aDG
 aEw
 aCN
-aCN
+vxM
 aCN
 aGS
 aHu
@@ -105767,7 +105833,7 @@ aDQ
 aDH
 aEB
 ayP
-ayP
+aEB
 ayP
 aDQ
 aHv
@@ -106371,7 +106437,7 @@ axP
 aDJ
 bZK
 bev
-axP
+kvU
 axP
 axP
 aHw
@@ -106673,7 +106739,7 @@ axQ
 aDK
 bZL
 axQ
-axQ
+pxd
 axQ
 aGU
 axQ
@@ -106975,7 +107041,7 @@ awP
 aDL
 bZM
 aFl
-aFl
+aSM
 aFl
 aGV
 aGV

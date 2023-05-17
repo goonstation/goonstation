@@ -57916,6 +57916,7 @@
 	pixel_y = 11
 	},
 /obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cJn" = (
@@ -58536,6 +58537,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -59099,6 +59101,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -59586,13 +59589,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"cNF" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail/bent/south,
-/turf/simulated/floor/white,
-/area/station/science/chemistry)
 "cNG" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -59600,9 +59596,11 @@
 /obj/machinery/power/data_terminal,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/phone,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cNH" = (
+/obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -60182,12 +60180,12 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cPc" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/vending/player/chemicals,
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cPd" = (
-/obj/disposalpipe/segment/mail/horizontal,
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -60218,6 +60216,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -60797,11 +60796,13 @@
 /area/station/science/chemistry)
 "cQx" = (
 /obj/stool/chair/office,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
 /area/station/science/chemistry)
 "cQy" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cQz" = (
@@ -60819,9 +60820,11 @@
 	pixel_y = 4
 	},
 /obj/decal/stripe_caution,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "cQA" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cQB" = (
@@ -60829,6 +60832,7 @@
 	name = "Medical Doctor"
 	},
 /obj/stool/chair/office,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -60837,6 +60841,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cQD" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -60845,6 +60850,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cQF" = (
@@ -60852,12 +60858,14 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite/corner,
 /area/station/medical/medbay)
 "cQG" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9
 	},
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cQH" = (
@@ -63742,6 +63750,7 @@
 	},
 /obj/access_spawn/medical,
 /obj/decal/stripe_delivery,
+/obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor,
 /area/station/medical/medbay)
 "cXe" = (
@@ -72980,6 +72989,10 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/ranch)
+"jrl" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "jsm" = (
 /obj/machinery/light{
 	dir = 1;
@@ -74345,6 +74358,10 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/coldloop)
+"nlY" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay/pharmacy)
 "nnj" = (
 /obj/railing/orange/reinforced,
 /obj/machinery/light_switch/east,
@@ -106798,8 +106815,8 @@ cHW
 cJc
 cKL
 cMm
-cNF
-cPb
+cNE
+cQw
 cQw
 cSj
 cTE
@@ -107102,7 +107119,7 @@ cKL
 cMn
 cNG
 cPc
-cQw
+cPb
 cSk
 cTD
 cVg
@@ -108914,7 +108931,7 @@ cKR
 cMt
 cNK
 cPg
-cQC
+jrl
 cSp
 qiA
 cVl
@@ -110419,7 +110436,7 @@ cDA
 cFm
 cGI
 cGI
-cGJ
+nlY
 cGI
 cGI
 cGJ

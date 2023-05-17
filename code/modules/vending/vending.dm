@@ -1129,6 +1129,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return 1
 	return 0
 
+/obj/machinery/vending/proc/right()
+	src.can_fall = 1
+	src.layer = initial(src.layer)
+	src.anchored = ANCHORED
+	src.status &= ~BROKEN
+	src.power_change()
+
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1164,12 +1171,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	onEnd()
 		..()
 		if(src.owner && vendor && (src.vendor.status & BROKEN))
-			src.vendor.can_fall = 1
-			src.vendor.layer = initial(src.vendor.layer)
-			src.vendor.anchored = ANCHORED
-			src.vendor.status &= ~BROKEN
-			src.vendor.power_change()
-
+			vendor.right()
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
 
@@ -2031,6 +2033,8 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	var/image/crtoverlay = null
 	var/does_crt = TRUE
 	var/image/promoimage = null
+	///Set this var to update all static data at the end of the machine tick, done like this to avoid updating for every item added in a stack
+	var/static_data_invalid = FALSE
 	player_list = list()
 	icon_panel = "standard-panel"
 
@@ -2044,7 +2048,12 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		//These stop the overlay from being selected instead of the item by your mouse?
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
 		crtoverlay.mouse_opacity = 0
+		src.registerDisposals()
 		updateAppearance()
+
+	disposing()
+		src.unregisterDisposals()
+		. = ..()
 
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
@@ -2099,6 +2108,41 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 
+	proc/acceptsProduct(atom/product)
+		return isitem(product)
+
+	///This is a mild hack, an expel proc to match /obj/disposaloutlet
+	proc/expel(obj/disposalholder/holder)
+		var/turf/expel_loc = get_turf(src)
+		var/turf/target = get_ranged_target_turf(src, src.dir, 10)
+		for (var/atom/movable/AM in holder)
+			if (src.acceptsProduct(AM))
+				src.addProduct(AM, null, TRUE)
+			else
+				AM.set_loc(expel_loc)
+				AM.pipe_eject(src.dir)
+				AM.throw_at(target, 10, 1)
+		qdel(holder)
+		src.static_data_invalid = TRUE
+
+	proc/registerDisposals()
+		var/obj/disposalpipe/trunk/trunk = locate() in get_turf(src)
+		if (trunk && !trunk.linked)
+			trunk.linked = src
+
+	proc/unregisterDisposals()
+		var/obj/disposalpipe/trunk/trunk = locate() in get_turf(src)
+		if (trunk && trunk.linked == src)
+			trunk.linked = null
+
+	fall(mob/living/carbon/victim)
+		src.unregisterDisposals()
+		. = ..()
+
+	right()
+		. = ..()
+		src.registerDisposals()
+
 	proc/addProduct(obj/item/target, mob/user, quiet = FALSE)
 		if (target.cant_drop)
 			if(!quiet)
@@ -2133,7 +2177,7 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
 			return
-		user.u_equip(target)
+		user?.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
 		var/existed = FALSE
@@ -2170,6 +2214,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	process()
 		. = ..()
+		if (src.static_data_invalid)
+			src.static_data_invalid = FALSE
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
+				src.update_static_data(null, ui)
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()
@@ -3208,17 +3256,18 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
 
-TYPEINFO(/obj/machinery/vending/player/chemicals)
-	mats = list("MET-2" = 30, "telecrystal" = 20, "CRY-1" = 20)
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
-	desc = "Stores and transmits medical chemicals via \"the cloud\", I wouldn't question it."
+	desc = "An ID-selective dispenser for advanced medical supplies from chemistry."
 	icon_state = "medchem"
 	acceptcard = FALSE
 	pay = FALSE
 	does_crt = FALSE
 	slogan_chance = 0
 	req_access = list(access_chemistry, access_medical_lockers)
+	///For linking to the chemlink console thingy
+	var/id = "chemlink"
+	var/obj/machinery/disposal/chemlink/linked = null
 	///Stuff wot can be put in
 	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/glass/bottle,
@@ -3231,9 +3280,6 @@ TYPEINFO(/obj/machinery/vending/player/chemicals)
 	New()
 		..()
 		START_TRACKING
-		if (length(by_type[/obj/machinery/vending/player/chemicals]))
-			var/obj/machinery/vending/player/chemicals/other = by_type[/obj/machinery/vending/player/chemicals][1]
-			src.player_list = other.player_list
 
 	disposing()
 		. = ..()
@@ -3242,28 +3288,33 @@ TYPEINFO(/obj/machinery/vending/player/chemicals)
 	vend_product(datum/data/vending_product/product, mob/user)
 		. = ..()
 		SPAWN(0)
-			for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
-				linked.update_static_data(user)
+			src.linked.update_static_data(user)
+
+	acceptsProduct(atom/A)
+		for (var/type in src.allowed_types)
+			if (istype(A, type))
+				return TRUE
+		return FALSE
 
 	attackby(obj/item/W, mob/user)
-		for (var/type in src.allowed_types)
-			if (istype(W, type))
-				src.addProduct(W, user)
-				for_by_tcl(linked, /obj/machinery/vending/player/chemicals)
-					linked.update_static_data(user)
-					if (linked != src && !ON_COOLDOWN(linked, "announce", 2 SECONDS))
-						linked.speak(pick("New product received: [W.name]!",
-							"Supplies transmitted: [W.name]!",
-							"Now available for pickup: [W.name]!")
-						)
-				return
+		if (src.acceptsProduct(W))
+			src.addProduct(W, user)
+			src.update_static_data(user)
+			return
 		if (istype(W, /obj/item/screwdriver)) //no
 			return
 		. = ..()
 
+	addProduct(obj/item/target, mob/user, quiet)
+		. = ..()
+		src.linked.static_data_invalid = TRUE
+		if (!ON_COOLDOWN(src, "announce", 2 SECONDS))
+			src.speak(pick("New product received: [target.name]!",
+				"Supplies received: [target.name]!",
+				"Now available for pickup: [target.name]!")
+			)
+
 	generate_slogans()
-		if (istype(get_area(src), /area/station/science))
-			return
 		if (!length(src.player_list) <= 0)
 			src.slogan_list = list("[src.pick_product_name()] could save a life!",
 				"Fresh supplies of [src.pick_product_name()]!",
