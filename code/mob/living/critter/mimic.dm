@@ -105,10 +105,10 @@
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if(sting != null && !sting.disabled && sting.cooldowncheck())
+		if(sting && !sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
-		if(!pounce.disabled && pounce.cooldowncheck())
+		if(pounce && !pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
 			return TRUE
 
