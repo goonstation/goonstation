@@ -164,6 +164,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Glass Sheets Crate - 50 pack"
 
+/datum/supply_packs/wood10
+	name = "10 Wooden Sheets"
+	desc = "x10 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 10
+	cost = 500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 10 pack"
+
+/datum/supply_packs/wood50
+	name = "50 Wooden Sheets"
+	desc = "x50 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 50
+	cost = 2500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 50 pack"
+
 /datum/supply_packs/dryfoods
 	name = "Catering: Dry Goods Crate"
 	desc = "x25 Assorted Cooking Ingredients"
@@ -246,7 +266,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Engineering Crate"
 	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/mechanical = 2,
+	contains = list(/obj/item/storage/toolbox/mechanical/orange_tools = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
 					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
@@ -257,8 +277,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Electrical Maintenance Crate"
 	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/electrical = 2,
-					/obj/item/device/multitool = 2,
+	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
+					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
 	cost = 2500
 	containertype = /obj/storage/crate
