@@ -1751,6 +1751,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\multitool.dm"
 #include "code\obj\item\device\nanoloom.dm"
 #include "code\obj\item\device\ocular_implanter.dm"
+#include "code\obj\item\device\pocketwatch.dm"
 #include "code\obj\item\device\powersink.dm"
 #include "code\obj\item\device\prox_sensor.dm"
 #include "code\obj\item\device\radio.dm"

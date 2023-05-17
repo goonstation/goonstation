@@ -1232,8 +1232,8 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "acM" = (
-/obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "acN" = (
@@ -1287,8 +1287,11 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/sec_foyer)
+/area/station/security/main)
 "acU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 2;
@@ -1417,8 +1420,11 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
-/area/station/security/checkpoint/sec_foyer)
+/area/station/security/main)
 "adf" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
@@ -1540,6 +1546,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
 "adu" = (
@@ -1550,6 +1557,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
 "adv" = (
@@ -1578,6 +1586,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
 "adx" = (
@@ -2120,13 +2129,13 @@
 	},
 /area/station/engine/elect)
 "aeE" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 4
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
@@ -2301,6 +2310,9 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering)
@@ -2499,6 +2511,7 @@
 /area/station/medical/robotics)
 "afP" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "afQ" = (
@@ -2727,6 +2740,9 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/medical/research{
@@ -2972,8 +2988,11 @@
 	dir = 8
 	},
 /obj/access_spawn/security,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/red,
-/area/station/security/checkpoint/sec_foyer)
+/area/station/security/main)
 "ahg" = (
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/wall/auto/supernorn,
@@ -3131,6 +3150,9 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -3175,7 +3197,12 @@
 	name = "Genetic Research"
 	})
 "ahF" = (
-/obj/machinery/light_switch/auto,
+/obj/blind_switch/area/east{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -3241,13 +3268,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "ahP" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Genetics";
-	req_access_txt = "9"
-	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medlab,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -3464,15 +3488,15 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "aiq" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics";
-	req_access_txt = ""
-	},
 /obj/disposalpipe/segment/mail,
 /obj/access_spawn/robotics,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "2-5"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Morgue";
+	req_access_txt = "29"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/robotics)
@@ -4009,6 +4033,7 @@
 	})
 "ajH" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -4019,6 +4044,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/produce,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/green,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -4562,9 +4588,6 @@
 /area/station/chapel/sanctuary)
 "ale" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left{
-	dir = 8
-	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
 "alg" = (
@@ -5004,6 +5027,7 @@
 /obj/access_spawn/medical,
 /obj/item/storage/firstaid/toxin,
 /obj/item/reagent_containers/emergency_injector/calomel,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "amf" = (
@@ -5390,13 +5414,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/restroom)
 "anf" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
@@ -5678,19 +5702,19 @@
 /area/station/medical/medbay/cloner)
 "anT" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "anU" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Monkey Pen";
-	req_access_txt = "5"
-	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -5698,6 +5722,7 @@
 "anV" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/produce,
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "anX" = (
@@ -6008,8 +6033,13 @@
 /obj/disposalpipe/trunk/morgue{
 	dir = 4
 	},
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
 /obj/machinery/light/incandescent/cool,
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "aoK" = (
@@ -6320,9 +6350,6 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "apC" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment{
@@ -6330,6 +6357,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8
 	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
@@ -6354,19 +6384,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/staff)
 "apG" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Cloning Room";
-	req_access_txt = "5"
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/white/checker2{
-	dir = 5
-	},
+/turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/cloner)
 "apH" = (
 /obj/cable{
@@ -6743,8 +6765,13 @@
 	pixel_y = 3
 	},
 /obj/item/clothing/gloves/yellow,
-/obj/machinery/light_switch/auto,
 /obj/item/clothing/gloves/yellow,
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
+	},
 /turf/simulated/floor,
 /area/station/storage/eeva)
 "aqB" = (
@@ -6889,10 +6916,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/cloner)
 "aqX" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
@@ -6906,13 +6929,11 @@
 	},
 /area/station/medical/medbay/cloner)
 "ara" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Medical Bay";
-	req_access_txt = "5"
-	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "arb" = (
@@ -6988,7 +7009,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "arl" = (
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "arm" = (
@@ -7371,6 +7397,10 @@
 "ash" = (
 /obj/machinery/light/incandescent/cool,
 /obj/storage/secure/closet/medical/cloning,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/white/checker2{
 	dir = 5
 	},
@@ -7788,7 +7818,6 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/obj/machinery/light_switch/auto,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 3;
@@ -8407,6 +8436,7 @@
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "auR" = (
@@ -8421,6 +8451,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "auS" = (
@@ -8429,6 +8460,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "auT" = (
@@ -8874,15 +8906,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
-"avY" = (
-/obj/machinery/light_switch/auto,
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/checker{
-	dir = 8
-	},
-/area/station/engine/engineering)
 "avZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9022,7 +9045,12 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "awr" = (
-/obj/machinery/light_switch/west,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aws" = (
@@ -9245,9 +9273,14 @@
 /obj/item/disk/data/tape{
 	layer = 3.5
 	},
-/obj/machinery/light_switch/auto,
 /obj/item/paper_bin/artifact_paper{
 	pixel_x = 15
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
 	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
@@ -9955,6 +9988,12 @@
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "ayI" = (
@@ -10014,6 +10053,9 @@
 /area/station/science/lobby)
 "ayU" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "ayW" = (
@@ -11139,21 +11181,21 @@
 /area/station/storage/tools)
 "aBH" = (
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aBI" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Tool Storage"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/alt,
 /turf/simulated/floor/green,
 /area/station/storage/tools)
 "aBJ" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aBK" = (
@@ -11983,7 +12025,12 @@
 /area/station/crew_quarters/arcade/dungeon)
 "aEd" = (
 /obj/reagent_dispensers/watertank,
-/obj/machinery/light_switch/auto,
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
 /turf/simulated/floor,
 /area/station/storage/tools)
 "aEe" = (
@@ -13666,7 +13713,6 @@
 	dir = 4;
 	mail_tag = "janitor's office"
 	},
-/obj/machinery/light_switch/auto,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "aID" = (
@@ -14090,6 +14136,9 @@
 /area/station/hangar/main)
 "aJy" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/plating/random,
 /area/station/janitor/office)
 "aJz" = (
@@ -15202,6 +15251,9 @@
 	name = "Botany persistent notice board";
 	persistent_id = "botany"
 	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "aMJ" = (
@@ -15211,8 +15263,13 @@
 /area/station/hangar/main)
 "aMK" = (
 /obj/machinery/portable_reclaimer,
-/obj/machinery/light_switch/auto,
 /obj/decal/stripe_caution,
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "aML" = (
@@ -15293,11 +15350,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "aMU" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = null;
-	name = "Medbay Staff Area"
-	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/medical/alt,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aMW" = (
@@ -15507,6 +15561,9 @@
 /obj/item/paper_bin{
 	pixel_x = 4;
 	pixel_y = -4
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4
 	},
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
@@ -17327,10 +17384,15 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "aSS" = (
-/obj/item/storage/wall/office,
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south{
 	pixel_z = 1
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
 	},
 /turf/simulated/floor,
 /area/station/security/main)
@@ -17398,7 +17460,6 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aSZ" = (
-/obj/machinery/light_switch/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -20887,13 +20948,13 @@
 /turf/simulated/floor/neutral/side,
 /area/station/hallway/primary/east)
 "bft" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
@@ -21680,6 +21741,9 @@
 /area/station/storage/eeva)
 "bhW" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/storage/eeva)
 "bhX" = (
@@ -23525,7 +23589,12 @@
 	},
 /area/station/engine/elect)
 "bno" = (
-/obj/machinery/light_switch/auto,
+/obj/blind_switch/area/north{
+	pixel_x = 4
+	},
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bnp" = (
@@ -23946,10 +24015,6 @@
 	dir = 5
 	},
 /area/station/hallway/primary/west)
-"boB" = (
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/barber_shop)
 "boC" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -23996,6 +24061,9 @@
 /area/station/engine/elect)
 "boH" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "boI" = (
@@ -24149,6 +24217,9 @@
 "bpd" = (
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/barber,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
 "bpf" = (
@@ -24697,6 +24768,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/engineering_mechanic,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/engine/elect)
 "bqE" = (
@@ -26173,9 +26245,6 @@
 /area/space)
 "buC" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/window_blinds/cog2/left{
-	dir = 8
-	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment1)
 "buD" = (
@@ -27360,6 +27429,9 @@
 /area/station/quartermaster/office)
 "bxF" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "bxG" = (
@@ -27696,7 +27768,12 @@
 	},
 /area/station/mining/staff_room)
 "byz" = (
-/obj/machinery/light_switch/auto,
+/obj/blind_switch/area/east{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "byA" = (
@@ -28011,6 +28088,9 @@
 /area/station/quartermaster/office)
 "bzr" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bzs" = (
@@ -28021,6 +28101,7 @@
 	autoclose = 0
 	},
 /obj/access_spawn/cargo,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bzt" = (
@@ -28142,6 +28223,9 @@
 	pixel_x = 1;
 	pixel_y = 26;
 	text = "NF"
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	icon_state = "green1"
@@ -28981,6 +29065,9 @@
 	dir = 4
 	},
 /obj/access_spawn/cargo,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bBO" = (
@@ -29083,7 +29170,12 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/north{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/north{
+	pixel_x = 4
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
@@ -29101,9 +29193,14 @@
 /obj/item/clothing/suit/space/diving/civilian,
 /obj/item/clothing/head/helmet/space/engineer/diving/civilian,
 /obj/item/clothing/mask/breath,
-/obj/machinery/light_switch/auto,
 /obj/item/clothing/shoes/flippers{
 	pixel_y = -12
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
@@ -29380,6 +29477,9 @@
 	dir = 4
 	},
 /obj/access_spawn/cargo,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bCX" = (
@@ -29678,6 +29778,13 @@
 	name = "Customs persistent notice board";
 	persistent_id = "customs"
 	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "green2"
@@ -29881,6 +29988,9 @@
 "bEj" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -30104,6 +30214,10 @@
 /obj/machinery/computer/bank_data{
 	dir = 4
 	},
+/obj/window_blinds/cog2/right{
+	dir = 4;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "green2"
@@ -30121,6 +30235,13 @@
 /obj/table/reinforced/auto,
 /obj/item/bell/hop{
 	pixel_y = 15
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 4;
@@ -30262,11 +30383,6 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
-"bFl" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/light_switch/auto,
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "bFm" = (
 /obj/table/auto,
 /obj/item/paper/book/from_file/minerals{
@@ -30466,6 +30582,10 @@
 /area/station/bridge)
 "bFJ" = (
 /obj/machinery/manufacturer/personnel,
+/obj/window_blinds/cog2/left{
+	dir = 4;
+	pixel_x = -32
+	},
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "green2"
@@ -30482,6 +30602,13 @@
 /obj/item/reagent_containers/food/drinks/mug/random_color{
 	pixel_x = 4;
 	pixel_y = 8
+	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/window_blinds/cog2/left{
+	dir = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -30598,6 +30725,7 @@
 /area/station/hallway/primary/south)
 "bGd" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "bGe" = (
@@ -30618,17 +30746,18 @@
 /area/station/mining/staff_room)
 "bGh" = (
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
 "bGi" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Net Cafe"
-	},
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	name = "Refinery"
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/info{
@@ -30730,8 +30859,8 @@
 "bGu" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/machinery/light/incandescent/cool,
 /obj/access_spawn/head_of_personnel,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGv" = (
@@ -30741,12 +30870,14 @@
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/head_of_personnel,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGw" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/head_of_personnel,
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/wood,
 /area/station/bridge/customs)
 "bGx" = (
@@ -30919,12 +31050,11 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGT" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Quartermaster's Office"
-	},
 /obj/access_spawn/cargo,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGU" = (
@@ -31161,6 +31291,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -31310,10 +31441,6 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bHS" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Quartermaster's Office"
-	},
 /obj/access_spawn/cargo,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31321,6 +31448,9 @@
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/engineering/alt{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -32082,17 +32212,19 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint/sec_foyer)
+/area/station/security/main)
 "bJP" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bJQ" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bJR" = (
@@ -33691,7 +33823,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/checkpoint/sec_foyer)
+/area/station/security/main)
 "bOB" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
@@ -34083,6 +34215,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/item/storage/wall/office{
+	dir = 4;
+	pixel_x = -32;
+	pixel_y = 0
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bPD" = (
@@ -34328,7 +34465,7 @@
 /area/station/maintenance/south)
 "bQe" = (
 /obj/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right{
+/obj/window_blinds/cog2/middle{
 	dir = 4
 	},
 /turf/simulated/floor/wood/two,
@@ -36569,7 +36706,6 @@
 /obj/item/device/camera_viewer{
 	pixel_y = 7
 	},
-/obj/blind_switch/area/east,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bWe" = (
@@ -36853,7 +36989,12 @@
 /obj/stool/chair/comfy/red{
 	dir = 8
 	},
-/obj/machinery/light_switch/east,
+/obj/machinery/light_switch/east{
+	pixel_y = -4
+	},
+/obj/blind_switch/area/east{
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fred6"
@@ -37137,7 +37278,6 @@
 	pixel_x = -24;
 	turretArea = /area/station/ai_monitored/armory
 	},
-/obj/access_spawn/hos,
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "bXB" = (
@@ -37428,6 +37568,16 @@
 /obj/access_spawn/pathology,
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"bYs" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/engine/engineering)
 "bYt" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/kitchen/food_box/donut_box{
@@ -39491,6 +39641,7 @@
 /area/station/maintenance/southwest)
 "cfe" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "cff" = (
@@ -40201,6 +40352,12 @@
 	network = "Mining";
 	tag = ""
 	},
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "chm" = (
@@ -40254,6 +40411,7 @@
 /area/space)
 "cht" = (
 /obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "chu" = (
@@ -40570,6 +40728,9 @@
 /obj/access_spawn/forensics,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/window_blinds/cog2/right{
+	dir = 8
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
@@ -41398,6 +41559,7 @@
 "clq" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
+/obj/window_blinds/cog2/right,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "clr" = (
@@ -41658,6 +41820,7 @@
 /obj/item/paper/book/from_file/pharmacopia,
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/dropper/mechanical,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "cmb" = (
@@ -41685,6 +41848,7 @@
 /obj/item/stamp,
 /obj/item/pen,
 /obj/disposalpipe/segment,
+/obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/medical/medbay/pharmacy)
 "cmg" = (
@@ -41761,11 +41925,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/firedoor_spawn,
 /obj/access_spawn/artlab,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "cBo" = (
@@ -41798,6 +41962,11 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"cHz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "cHH" = (
 /obj/item/furniture_parts/wheelchair,
 /turf/simulated/floor/plating/random,
@@ -41895,6 +42064,11 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"deE" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "diY" = (
 /obj/machinery/status_display{
 	pixel_y = 30
@@ -42233,6 +42407,13 @@
 /obj/item/paper/telecrystal_update,
 /turf/simulated/floor/black,
 /area/listeningpost)
+"eir" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "enj" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/implant/projectile/body_visible/dart/bardart{
@@ -42463,6 +42644,21 @@
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
+"fvx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 9
+	},
+/turf/simulated/floor/white,
+/area/station/medical/robotics)
+"fCx" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "fCI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42630,6 +42826,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
+"fZO" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "fZP" = (
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -42975,6 +43176,16 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"hgC" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/white,
+/area/station/medical/robotics)
+"hgS" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "hkh" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/raw_material/char,
@@ -42999,11 +43210,19 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"hur" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "hzx" = (
 /obj/wingrille_spawn/auto,
 /obj/barber_pole{
 	pixel_x = -17;
 	pixel_y = 1
+	},
+/obj/window_blinds/cog2/left{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
@@ -43103,6 +43322,16 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
+"ilE" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/station/engine/engineering)
 "irg" = (
 /obj/table/auto,
 /obj/item/storage/box/lightbox/tubes,
@@ -43421,6 +43650,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"jDl" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "jEl" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -43556,6 +43792,13 @@
 	dir = 8
 	},
 /area/station/ai_monitored/armory)
+"jXi" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/info{
+	name = "Net Cafe"
+	})
 "jZw" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
@@ -44122,6 +44365,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/blind_switch/area/south{
+	pixel_x = 4
+	},
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "mSm" = (
@@ -44273,12 +44522,12 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "nAL" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
@@ -44630,7 +44879,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/light_switch/auto,
+/obj/machinery/light_switch/south{
+	pixel_x = -4
+	},
+/obj/blind_switch/area/south{
+	pixel_x = 4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "pgk" = (
@@ -44905,6 +45159,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"qog" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/cloner)
 "qqR" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -44986,8 +45247,13 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/blind_switch/area/west,
+/obj/blind_switch/area/west{
+	pixel_y = 4
+	},
 /obj/storage/secure/closet/fridge/blood,
+/obj/machinery/light_switch/west{
+	pixel_y = -4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qLc" = (
@@ -45113,6 +45379,13 @@
 /mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"roX" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area/station/science/artifact)
 "rqc" = (
 /obj/machinery/power/apc/autoname_north{
 	cell_type = 15000
@@ -45178,11 +45451,11 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
 /obj/access_spawn/chemistry,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/sci_alt{
+	dir = 4
+	},
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "rDI" = (
@@ -45203,6 +45476,11 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"rJO" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tools)
 "rNm" = (
 /obj/storage/cart/forensic,
 /obj/item/storage/box/evidence,
@@ -45264,6 +45542,9 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office"
 	},
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "shL" = (
@@ -45305,6 +45586,19 @@
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
+"sBc" = (
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 5
+	},
+/area/station/medical/medbay/cloner)
 "sBY" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -45540,6 +45834,11 @@
 	icon_state = "blue2"
 	},
 /area/station/bridge)
+"tVt" = (
+/obj/wingrille_spawn/auto,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating/random,
+/area/station/storage/tools)
 "tWl" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -45626,6 +45925,13 @@
 /obj/item/toy/handheld/robustris,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"urM" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/mining/staff_room)
 "ush" = (
 /obj/machinery/door/airlock/pyro/sci_alt{
 	dir = 1
@@ -45643,6 +45949,11 @@
 /obj/tree,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
+"uxj" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/yellow,
+/area/station/mining/staff_room)
 "uxl" = (
 /turf/simulated/floor/redwhite{
 	dir = 1
@@ -45687,6 +45998,13 @@
 	dir = 1
 	},
 /area/station/medical/medbay/surgery/storage)
+"uFY" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "uGR" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 8
@@ -45821,6 +46139,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"vwg" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating/random,
+/area/station/ai_monitored/storage/eva)
 "vyx" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
 /obj/access_spawn/chemistry,
@@ -46047,6 +46376,11 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"wCU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "wFP" = (
 /obj/item/mop,
 /turf/simulated/floor/grime,
@@ -46115,6 +46449,11 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"wNp" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/white,
+/area/station/medical/robotics)
 "wOk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
@@ -46149,6 +46488,13 @@
 	dir = 9
 	},
 /area/station/medical/staff)
+"wUP" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/station/storage/eeva)
 "wWU" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 4
@@ -46333,6 +46679,13 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
+"xSE" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/purple,
+/area/station/science/artifact)
 "xVc" = (
 /obj/machinery/vehicle/tank/minisub/secsub,
 /turf/simulated/floor/shuttlebay,
@@ -46390,6 +46743,13 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"yfu" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "yfC" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/mainweapon/taser,
@@ -78637,7 +78997,7 @@ ciq
 bxC
 byu
 bJA
-bzr
+uFY
 bBN
 bCW
 bEj
@@ -78938,7 +79298,7 @@ bua
 bJA
 bxC
 bxC
-bzr
+wCU
 bAx
 bBO
 bBO
@@ -79240,7 +79600,7 @@ btZ
 bJA
 bxD
 bxC
-bzr
+fZO
 bAy
 bAy
 kST
@@ -79844,7 +80204,7 @@ btZ
 bJA
 bxC
 byv
-bzr
+cHz
 bAz
 bAy
 bCY
@@ -80446,7 +80806,7 @@ bot
 bot
 cjd
 bJA
-bxF
+eir
 bxF
 bJA
 aax
@@ -81359,7 +81719,7 @@ bAE
 bvu
 bvu
 aSr
-bFl
+bvu
 bGc
 bHa
 bHU
@@ -81653,15 +82013,15 @@ bul
 buP
 abC
 buS
-buS
-buS
+jDl
+urM
 buS
 axb
 bAF
 bBQ
 buS
-buS
-buS
+jDl
+urM
 buS
 bHb
 bHU
@@ -82848,7 +83208,7 @@ cgw
 bmH
 fJg
 bnP
-boB
+xNc
 xNc
 bpK
 fJg
@@ -83172,7 +83532,7 @@ bwI
 abB
 bDd
 bFn
-bGd
+uxj
 bHe
 bHZ
 bIN
@@ -85588,7 +85948,7 @@ aTe
 bDk
 bEy
 bFt
-bGh
+jXi
 bHb
 bHU
 bII
@@ -86494,7 +86854,7 @@ bBZ
 bDn
 aTh
 bFw
-bGh
+jXi
 bHb
 bIf
 bIT
@@ -86740,7 +87100,7 @@ acM
 aCs
 aCs
 cly
-cht
+rJO
 aig
 aEV
 aqn
@@ -87340,7 +87700,7 @@ cfe
 aoF
 azt
 aAA
-cht
+tVt
 clv
 clv
 clA
@@ -88538,7 +88898,7 @@ aeH
 anf
 buC
 ajD
-ajD
+yfu
 apC
 ajD
 awb
@@ -89747,7 +90107,7 @@ akC
 aqW
 aqW
 apG
-aqW
+sBc
 aqW
 aqW
 auP
@@ -89816,7 +90176,7 @@ bAU
 bDv
 bAU
 bAU
-adu
+vwg
 bHl
 bHU
 lTR
@@ -90046,7 +90406,7 @@ akD
 amm
 amm
 ang
-anT
+hur
 aoJ
 fKh
 aqX
@@ -90348,13 +90708,13 @@ uay
 alm
 amm
 amm
-anT
+deE
 vEt
 apH
 fcV
 aqY
 fcV
-auQ
+fCx
 mZD
 awe
 ayA
@@ -91335,7 +91695,7 @@ acT
 ahe
 ade
 bOA
-bPB
+bJR
 bQH
 bRI
 bJR
@@ -91560,7 +91920,7 @@ ajJ
 aoN
 anS
 ara
-anT
+qog
 anT
 auT
 avd
@@ -94261,7 +94621,7 @@ aqn
 afp
 afq
 afq
-afP
+hgS
 agh
 agC
 agR
@@ -94872,7 +95232,7 @@ agT
 ahq
 ahM
 air
-air
+fvx
 ajO
 akQ
 aly
@@ -95174,7 +95534,7 @@ arA
 agC
 agj
 ais
-air
+wNp
 ajP
 akQ
 aly
@@ -95476,7 +95836,7 @@ agj
 agj
 agj
 agQ
-air
+hgC
 aob
 akQ
 aly
@@ -101864,7 +102224,7 @@ aks
 aks
 aks
 aks
-bhW
+wUP
 bhW
 aQd
 bkf
@@ -104587,8 +104947,8 @@ aAy
 aAy
 bko
 blh
-afg
-afg
+ilE
+bYs
 afg
 aAy
 afo
@@ -104882,7 +105242,7 @@ aPN
 aQt
 akN
 bga
-avY
+awa
 aRj
 bgN
 biJ
@@ -106966,8 +107326,8 @@ aqs
 aui
 avE
 awP
-ayU
-ayU
+xSE
+roX
 ayU
 czf
 awP
