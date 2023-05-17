@@ -1102,19 +1102,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
-/obj/item/ammo/bullets/bolts
-	sname = ".75cal mass-reactive shells magazine"
-	name = ".75cal mass-reactive shells magazine"
-	amount_left = 30
-	max_amount = 30
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "bolter_magazine"
-	ammo_type = new /datum/projectile/bullet/bolt
-	ammo_cat = AMMO_BOLTER
-	w_class = W_CLASS_NORMAL
-	sound_load = 'sound/weapons/gunload_mprt.ogg'
-	delete_on_reload = TRUE
-
 /obj/item/ammo/bullets/mrl
 	sname = "MRL rocket pack"
 	name = "MRL rocket pack"
@@ -1154,6 +1141,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 
 //2.5
 /obj/item/ammo/bullets/flintlock/mortar
@@ -1266,6 +1254,21 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		for(var/i in 1 to src.amount_left)
 			new/obj/item/implant/projectile/staple(get_turf(src))
 		qdel(src)
+
+//bolter ammo (i have no idea where to put it)
+
+/obj/item/ammo/bullets/bolts
+	sname = ".75cal mass-reactive shells magazine"
+	name = ".75cal mass-reactive shells magazine"
+	amount_left = 30
+	max_amount = 30
+	icon = 'icons/obj/items/ammo.dmi'
+	icon_state = "bolter_magazine"
+	ammo_type = new /datum/projectile/bullet/bolt
+	ammo_cat = AMMO_BOLTER
+	w_class = W_CLASS_NORMAL
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+	delete_on_reload = TRUE
 
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
