@@ -1034,7 +1034,7 @@ TYPEINFO(/obj/item/device/appraisal)
 						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
 						out_text = "<strong>Prices from [T.name]</strong><br>"
 				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-					if(C.req_code == "REQ_THIRDPARTY")
+					if(C.delivery_destination == "REQ_THIRDPARTY")
 						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
 					else if (RC.req_code == C.delivery_destination)
 						var/evaluated = RC.assess_sale(C)
