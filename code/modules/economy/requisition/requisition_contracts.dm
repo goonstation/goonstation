@@ -331,10 +331,11 @@ ABSTRACT_TYPE(/datum/req_contract)
 						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
 			src.payout += rce.feemod * rce.count
 
+	///Called when a crate is sold on requisition; handles tallying its contents to evaluate whether they've fulfilled the contract
 	proc/requisify(obj/storage/crate/sell_crate)
-		var/contents_index = list() //registry of everything in crate, including contents of item containers within it
-		var/contents_to_cull = list() //things consumed to fulfill the requisition, extras are sent back
-		var/successes_needed = length(src.rc_entries) //decremented with each successful fulfillment, reach 0 to win
+		var/contents_index = list() ///Registry of everything in crate, including contents of item containers within it
+		var/contents_to_cull = list() ///Things consumed to fulfill the requisition - extras are sent back
+		var/successes_needed = length(src.rc_entries) ///Decremented with each successful fulfillment, reach 0 to win
 
 		contents_index += sell_crate.contents
 
@@ -392,6 +393,51 @@ ABSTRACT_TYPE(/datum/req_contract)
 		else //sale unsuccessful; reset rolling counts of all contract entries in preparation for subsequent fulfillment attempts
 			for(var/datum/rc_entry/shopped in rc_entries)
 				shopped.rollcount = 0
+		return
+
+	///Simulate a sale and return text (in the case of failure, describing which entries are inadequately supplied)
+	proc/assess_sale(obj/storage/crate/sell_crate)
+		var/contents_index = list() ///Registry of everything in crate, including contents of item containers within it
+		var/eval_message = "<font color=#FF9900>Contents insufficient for marked requisition" ///Message returned on failed evaluation, appended later
+		var/successes_needed = length(src.rc_entries) //Decremented with each successful fulfillment, reach 0 to win
+
+		contents_index += sell_crate.contents
+
+		for(var/atom/A in sell_crate.contents)
+			if (A.storage)
+				contents_index += A.storage.get_all_contents()
+
+		//item boxes can require evaluation of items that don't physically exist, so they need special logic
+		for(var/obj/item/item_box/IB in contents_index)
+			LAGCHECK(LAG_LOW)
+			contents_index -= IB
+			if(IB.item_amount < 1) return //no empty or infinite box evals
+			contents_index += IB.contents //evaluate real items through conventional means
+			var/illusory_contents = IB.item_amount - length(IB.contents) //how many nonexistent items we have to iterate over
+
+			if(illusory_contents && IB.contained_item)
+				var/testbench_item = new IB.contained_item //create a temporary example item to check
+				while(illusory_contents > 0)
+					illusory_contents--
+					for(var/datum/rc_entry/shoppin in rc_entries)
+						shoppin.rc_eval(testbench_item)
+
+		for(var/atom/A in contents_index)
+			LAGCHECK(LAG_LOW)
+			for(var/datum/rc_entry/shoppin in rc_entries)
+				shoppin.rc_eval(A)
+
+		for(var/datum/rc_entry/shopped in rc_entries)
+			if(shopped.rollcount >= shopped.count)
+				successes_needed--
+			else
+				eval_message += " | '[shopped.name]' [shopped.rollcount]/[shopped.count]"
+
+		if(!successes_needed) //would successfully sell
+			. = "Contracts sufficient for marked requisition."
+		else //wouldn't successfully sell; close out the red
+			eval_message += "</font>"
+			. = eval_message
 		return
 
 #undef RC_ITEM
