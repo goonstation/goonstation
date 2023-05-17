@@ -135,7 +135,8 @@ proc/ui_describe_reagents(atom/A)
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b,
-				volume = current_reagent.volume
+				volume = current_reagent.volume,
+				state = current_reagent.reagent_state,
 			)))
 	return thisContainerData
 

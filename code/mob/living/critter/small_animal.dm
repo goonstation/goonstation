@@ -574,6 +574,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	is_syndicate = 1
 	var/swiped = 0
 
+	New()
+		START_TRACKING
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (isdead(src) || cattype == "-emagged")
 			return 0
