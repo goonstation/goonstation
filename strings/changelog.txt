@@ -1,5 +1,9 @@
 
 (t)wed may 17 23
+(u)LeahTheTech and Flaborized
+(p)14137
+(e)🗺🎨🔄📄⚗|A-Mapping, C-Sprites, C-Rework, A-UI, A-Chemistry
+(*)Reworked dispensary interlinks to use mail pipes, a linked chute and monitoring terminal is now available in chemistry.
 (u)Flaborized
 (p)14063
 (e)🆕🎨|C-Feature, C-Sprites
