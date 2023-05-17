@@ -41,7 +41,7 @@
 	proc/mutate()
 		src.teleport_count += 1
 		if (src.teleport_count > src.teleport_requirement)
-			if (prob((src.teleport_count-src.teleport_requirement) * 0.01))
+			if (prob(0.01))
 				src.become_mimic()
 
 	attackby(obj/item/W, mob/user)
