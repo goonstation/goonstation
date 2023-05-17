@@ -241,13 +241,13 @@
 		..()
 
 	proc/aftereat()
-		var/datum/targetable/critter/vomit_ore/vomit = C.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)
+		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)
 		var/max_dist = 4
 		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		src.HealDamage("all", 5, 5, 0)
 		src.eaten++
 		if (src.eaten >= src.rocks_per_gem && src.ai?.enabled)
-			for(var/turf/T in view(max_dist, holder.owner))
+			for(var/turf/T in view(max_dist, src))
 				if(!is_blocked_turf(T))
 					vomit.handleCast(T)
 					break

@@ -12,7 +12,7 @@
 		var/mob/living/critter/C = holder.owner
 		if (istype(C, /mob/living/critter/rockworm))
 			var/mob/living/critter/rockworm/worm = C
-			if (worm.eaten >= worm.rocks_per_gem)
+			if (worm.eaten < worm.rocks_per_gem)
 				boutput(C,"<span class='alert'> you don't feel full enough to vomit.</span>")
 				return
 			worm.eaten -= worm.rocks_per_gem
