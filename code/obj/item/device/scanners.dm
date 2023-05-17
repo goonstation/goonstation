@@ -1037,8 +1037,8 @@ TYPEINFO(/obj/item/device/appraisal)
 					if(C.delivery_destination == "REQ_THIRDPARTY")
 						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
 					else if (RC.req_code == C.delivery_destination)
-						var/evaluated = RC.assess_sale(C)
-						if(evaluated == "Contracts sufficient for marked requisition.")
+						var/evaluated = RC.requisify(C,TRUE)
+						if(evaluated == "Contents sufficient for marked requisition.")
 							sell_value = RC.payout
 						out_text = "<strong>[evaluated]</strong><br>"
 
