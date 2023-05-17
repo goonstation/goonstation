@@ -83,6 +83,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/raw_material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
+
+
 /datum/fishing_spot/toilet/random
 	fishing_atom_type = /obj/item/storage/toilet/random
 
