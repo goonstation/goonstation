@@ -2,7 +2,7 @@
 
 /datum/targetable/critter/vomit_ore
 	name = "Vomit ore"
-	desc = "Throw out a piece of raw ore"
+	desc = "Throw up a piece of raw ore"
 	icon_state = "puke"
 	cooldown = 30 SECONDS
 	targeted = TRUE
