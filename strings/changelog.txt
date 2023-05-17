@@ -1,4 +1,9 @@
 
+(t)wed may 17 23
+(u)Caio029
+(p)13900
+(e)📦|A-Game-Objects
+(*)Cargo can now order wooden sheets in two new selections: x10 Wooden Sheets (for 500 credits) and x50 Wooden Sheets (for 2500 credits).
 (t)mon may 15 23
 (u)LeahTheTech (name courtesy of Kubius)
 (p)14086
