@@ -660,7 +660,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 
 /obj/machinery/disposal/chemlink
-	name = "Medical supply chute"
+	name = "dispensary supply chute"
 	desc = "A small chute designed to send chemical supplies to medbay. An attached monitoring console shows the levels of supplies present."
 	icon_state = "chemlink_on"
 	destination_tag = "chemlink"
@@ -689,7 +689,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 		src.UpdateOverlays(screen_image, "screen_image")
 
-		src.flush_dummy = new(src)
+		src.flush_dummy = new()
 		src.flush_dummy.icon = src.icon
 		src.flush_dummy.layer = src.layer + 1
 		src.vis_contents += src.flush_dummy
