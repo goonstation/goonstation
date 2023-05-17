@@ -279,31 +279,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	ui_data(mob/user)
 		. = list()
-		var/list/beakerContentsTemp = list()
 		.["idCardInserted"] = !isnull(src.user_id)
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
-		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
-		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		.["isRecording"] = src.recording_state
 		.["activeRecording"] = src.get_recording_text()
-		if(beaker)
-			var/datum/reagents/R = beaker.reagents
-			var/datum/color/average = R.get_average_color()
-			.["currentBeakerName"] = beaker.name
-			.["finalColor"] = average.to_rgba()
-			if(istype(R) && R.reagent_list.len>0)
-				for(var/reagent in R.reagent_list)
-					var/datum/reagent/current_reagent = R.reagent_list[reagent]
-					beakerContentsTemp.Add(list(list(
-						name = reagents_cache[reagent],
-						id = reagent,
-						colorR = current_reagent.fluid_r,
-						colorG = current_reagent.fluid_g,
-						colorB = current_reagent.fluid_b,
-						state = current_reagent.reagent_state,
-						volume = current_reagent.volume
-					)))
-		.["beakerContents"] = beakerContentsTemp
+		.["container"] = ui_describe_reagents(src.beaker)
 
 	proc/get_recording_text()
 		. = ""

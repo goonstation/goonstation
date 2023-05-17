@@ -1,4 +1,21 @@
 
+(t)wed may 17 23
+(u)Kubius
+(p)14131
+(e)🆕|C-Feature
+(+)Cargo appraisers can now evaluate market requisition fulfillment by scanning a crate with an appropriate bar code applied.
+(u)LeahTheTech and Flaborized
+(p)14137
+(e)🗺🎨🔄📄⚗|A-Mapping, C-Sprites, C-Rework, A-UI, A-Chemistry
+(*)Reworked dispensary interlinks to use mail pipes, a linked chute and monitoring terminal is now available in chemistry.
+(u)Flaborized
+(p)14063
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The HoP now carries a "T-MO Watch" on their person: it can measure a lot more than time, with many modes that can be swapped through by using it in-hand. Thanks to grifflez for helping with the name!
+(u)Caio029
+(p)13900
+(e)📦|A-Game-Objects
+(*)Cargo can now order wooden sheets in two new selections: x10 Wooden Sheets (for 500 credits) and x50 Wooden Sheets (for 2500 credits).
 (t)mon may 15 23
 (u)LeahTheTech (name courtesy of Kubius)
 (p)14086
