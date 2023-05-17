@@ -249,7 +249,8 @@
 		if (src.eaten >= src.rocks_per_gem && src.ai?.enabled)
 			for(var/turf/T in view(max_dist, src))
 				if(!is_blocked_turf(T))
-					vomit.handleCast(T)
+					if (!vomit.disabled && vomit.cooldowncheck())
+						vomit.handleCast(T)
 					break
 
 /mob/living/critter/rockworm/gary
