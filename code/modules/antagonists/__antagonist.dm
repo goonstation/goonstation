@@ -81,12 +81,14 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (take_gear)
 			src.remove_equipment()
 
-		src.remove_from_image_groups()
 		src.remove_objectives()
 
-		if (!src.silent && !src.pseudo)
-			src.announce_removal(source)
-			src.announce_objectives()
+		if (!src.pseudo)
+			src.remove_from_image_groups()
+
+			if (!src.silent)
+				src.announce_removal(source)
+				src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
@@ -250,7 +252,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src.id, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()

@@ -368,7 +368,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
-				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				var/success = src.occupant.mind.remove_antagonist(antag)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else
