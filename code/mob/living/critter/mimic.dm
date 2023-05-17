@@ -105,7 +105,7 @@
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if(!sting.disabled && sting.cooldowncheck())
+		if(sting != null && !sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
 		if(!pounce.disabled && pounce.cooldowncheck())
@@ -176,10 +176,4 @@
 		L.max_wclass = W_CLASS_SMALL
 
 /mob/living/critter/mimic/virtual
-	add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
-
-	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if(!pounce.disabled && pounce.cooldowncheck())
-			pounce.handleCast(target)
-			return TRUE
+		add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)
