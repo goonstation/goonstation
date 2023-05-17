@@ -1,5 +1,9 @@
 
 (t)wed may 17 23
+(u)Kubius
+(p)14131
+(e)🆕|C-Feature
+(+)Cargo appraisers can now evaluate market requisition fulfillment by scanning a crate with an appropriate bar code applied.
 (u)LeahTheTech and Flaborized
 (p)14137
 (e)🗺🎨🔄📄⚗|A-Mapping, C-Sprites, C-Rework, A-UI, A-Chemistry
