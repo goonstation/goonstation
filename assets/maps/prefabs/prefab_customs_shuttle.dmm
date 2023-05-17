@@ -16,7 +16,6 @@
 "aJ" = (
 /obj/table/regal/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_fpen/few,
-/obj/table/regal/auto,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
 	desc = "This bottle, is Ambrosia worthy of the gods, aged using cutting edge technology  f- wha... ITS ALL GONE!";
 	initial_volume = 0;

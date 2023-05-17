@@ -50566,6 +50566,7 @@
 	pixel_x = 1;
 	pixel_y = 10
 	},
+/obj/item/clothing/mask/breath,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "pBK" = (
