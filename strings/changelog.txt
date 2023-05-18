@@ -1,4 +1,9 @@
 
+(t)thu may 18 23
+(u)colossusqw
+(p)14110
+(e)🎨💅🔬|C-Sprites, C-QoL, A-Science
+(+)Chemical barrels can now be wrenched open/closed to avoid horrible chemical leaks.
 (t)wed may 17 23
 (u)Kubius
 (p)14131
