@@ -73,3 +73,10 @@
 		icon_state = "mahimahi"
 		inhand_color = "#A6B967"
 		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+
+/obj/item/fish/koi
+		name = "Koi"
+		desc = "an exquisite and enchanting fish that adds a touch of elegance to any environment."
+		icon_state = "koi"
+		inhand_color = "#FFFFFF"
+		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
