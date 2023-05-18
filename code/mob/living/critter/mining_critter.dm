@@ -222,7 +222,7 @@
 		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
 			if (istype(ore, /obj/item/raw_material/shard)) continue
 			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
-			if (!istype(ore, /obj/item/raw_material/rock)) && prob(30) continue // can eat not rocks with lower chance
+			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
 			. += ore
 
 	setup_healths()
