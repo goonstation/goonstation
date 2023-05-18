@@ -69,7 +69,6 @@
 	var/cant_self_remove = 0 // Can't remove from non-hand slots
 	var/cant_other_remove = 0 // Can't be removed from non-hand slots by others
 	var/cant_drop = 0 // Cant' be removed in general. I guess.
-	var/cant_be_placed_into_storage = FALSE //! Can't be placed into any storage object, regardless of w_class, or the storage's can_hold.
 
 	///This is for things which are stackable! It means that there are [amount] things here, which could be discretely split or stacked!
 	///if you use this to represent something other than a literal stack of items I will break your kneecaps

@@ -1653,7 +1653,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	uses_multiple_icon_states = TRUE
 	has_empty_state = TRUE
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_UNSTORABLE
 	throw_speed = 2
 	throw_range = 4
 	force = MELEE_DMG_LARGE
@@ -1719,12 +1719,10 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			if (src.collapsed)
 				src.w_class = W_CLASS_NORMAL
 				src.has_empty_state = FALSE
-				src.cant_be_placed_into_storage = FALSE
 
 			else
-				src.w_class = W_CLASS_BULKY
+				src.w_class = W_CLASS_UNSTORABLE
 				src.has_empty_state = TRUE
-				src.cant_be_placed_into_storage = TRUE
 
 			src.UpdateIcon()
 			// Update HUD inhands, as they seem to dislike icon file changes paired with changing twohandedness.

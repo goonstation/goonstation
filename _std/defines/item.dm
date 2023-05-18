@@ -194,6 +194,7 @@
 #define W_CLASS_BULKY 4
 #define W_CLASS_HUGE 5
 #define W_CLASS_GIGANTIC 6
+#define W_CLASS_UNSTORABLE 7
 #define W_CLASS_BUBSIAN 10
 
 // for firesource logging
