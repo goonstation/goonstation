@@ -66,7 +66,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/clothing/head/rafflesia = 5)
 
 /datum/fishing_spot/waterborder
-	fishing_atom_type = /turf/unsimulated/waterborder
+	fishing_atom_type = /turf/unsimulated/wall/water/border
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
@@ -74,7 +74,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/red_herring = 5)
 
 /datum/fishing_spot/water
-	fishing_atom_type = /turf/unsimulated/water
+	fishing_atom_type = /turf/unsimulated/wall/water
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
