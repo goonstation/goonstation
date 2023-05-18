@@ -1,6 +1,7 @@
 /datum/antagonist/intangible/wraith
 	id = ROLE_WRAITH
 	display_name = "wraith"
+	antagonist_icon = "wraith"
 	intangible_mob_path = /mob/living/intangible/wraith
 
 	assign_objectives()

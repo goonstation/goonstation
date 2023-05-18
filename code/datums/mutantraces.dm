@@ -709,7 +709,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	New()
 		..()
 		if (src.mob)
-			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, .proc/flub)
+			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, PROC_REF(flub))
 
 	sight_modifier()
 		src.mob.see_in_dark = SEE_DARK_FULL
@@ -959,10 +959,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				M.emote("scream")
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
 			M.show_antag_popup("zombie")
-
-	on_attach()
-		if(ishuman(src.mob))
-			src.mob.antagonist_overlay_refresh(1)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -1323,6 +1319,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
 	drains_dna_on_life = 0
+
+	say_filter(var/message)
+		return message // let admin shamblers talk, for fun
 
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
@@ -2232,7 +2231,7 @@ TYPEINFO(/datum/mutantrace/pug)
 					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
-		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	disposing()
 		if (ishuman(src.mob))

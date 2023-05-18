@@ -1251,7 +1251,8 @@ var/global/noir = 0
 		if("rapture")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				heavenly_spawn(M, reverse = TRUE)
+				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+					heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
@@ -2141,7 +2142,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
 			boutput(usr, "<span class='notice'>Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])...</span>")
-			var/success = M.mind.remove_antagonist(antag.id)
+			var/success = M.mind.remove_antagonist(antag)
 			if (success)
 				boutput(usr, "<span class='notice'>Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]</span>")
 			else
@@ -4605,9 +4606,6 @@ var/global/noir = 0
 	if (!(M.mind in ticker.mode.Agimmicks))
 		ticker.mode.Agimmicks += M.mind
 
-	if (M.mind.current)
-		M.mind.current.antagonist_overlay_refresh(1, 0)
-
 	var/obj_count = 1
 	for(var/datum/objective/OBJ in M.mind.objectives)
 		boutput(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
@@ -5257,7 +5255,6 @@ var/global/noir = 0
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
-	M.Login()
 
 	usr.remove()
 
