@@ -190,6 +190,7 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
+		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
 
 	on_pet(mob/user)
 		if (..())
@@ -203,23 +204,25 @@
 				src.visible_message("<span class='notice'>[user] shakes [src] to awaken its hunger!</span>")
 
 	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/raw_material) && !isdead(src))
+		if(istype(I, /obj/item/raw_material/rock) && !isdead(src))
 			if (src.tamed)
 				src.visible_message("[M] tries to feed [src] but they seem full...")
 				return
-			src.visible_message("[M] feeds [src] a bit of [I].", "[M] feeds you some [I].")
 			if(prob(40))
 				src.tamed = TRUE
 				src.visible_message("[src] enjoyed the [I] and seems more docile!")
 				src.emote("burp")
-			qdel(I)
 			src.aftereat()
+			I.Eat(src, src)
 			return
 		..()
 
 	seek_food_target(var/range = 5)
 		. = list()
-		for (var/obj/item/raw_material/rock/ore in view(range, get_turf(src)))
+		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
+			if (istype(ore, /obj/item/raw_material/shard)) continue
+			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
+			if (!istype(ore, /obj/item/raw_material/rock)) && prob(30) continue // can eat not rocks with lower chance
 			. += ore
 
 	setup_healths()
@@ -243,8 +246,6 @@
 	proc/aftereat()
 		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)
 		var/max_dist = 4
-		playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-		src.HealDamage("all", 5, 5, 0)
 		src.eaten++
 		if (src.eaten >= src.rocks_per_gem && src.ai?.enabled)
 			for(var/turf/T in view(max_dist, src))

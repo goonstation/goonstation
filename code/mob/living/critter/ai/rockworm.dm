@@ -22,9 +22,9 @@
 /datum/aiTask/succeedable/critter/eat/worm/on_tick()
 	if(!has_started)
 		var/mob/living/critter/rockworm/C = holder.owner
-		var/obj/item/reagent_containers/food/snacks/T = holder.target
-		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
-			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			qdel(T) // Eat code is AAAAAAAAAAAAAAA make it actually eat later
+		var/obj/item/I = holder.target
+		if(C && I && BOUNDS_DIST(C, I) == 0)
+			holder.owner.set_dir(get_dir(C, I))
+			I.Eat(C, C)
 			C.aftereat()
 			has_started = TRUE
