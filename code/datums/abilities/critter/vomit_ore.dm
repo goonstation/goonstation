@@ -13,7 +13,7 @@
 		if (istype(C, /mob/living/critter/rockworm))
 			var/mob/living/critter/rockworm/worm = C
 			if (worm.eaten < worm.rocks_per_gem)
-				boutput(C,"<span class='alert'> you don't feel full enough to vomit.</span>")
+				boutput(worm,"<span class='alert'> you don't feel full enough to vomit.</span>")
 				return
 			worm.eaten -= worm.rocks_per_gem
 		var/obj/item/created
