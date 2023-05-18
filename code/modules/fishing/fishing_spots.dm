@@ -72,6 +72,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
+	/obj/item/fish/koi = 30)
 
 /datum/fishing_spot/water
 	fishing_atom_type = /turf/unsimulated/wall/water
@@ -80,6 +81,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5)
+	/obj/item/fish/koi = 30)
 
 /datum/fishing_spot/test
 	fishing_atom_type = /turf/simulated/floor/ancient
