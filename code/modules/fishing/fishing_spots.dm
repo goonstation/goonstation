@@ -65,6 +65,22 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/critter/frog = 10,\
 	/obj/item/clothing/head/rafflesia = 5)
 
+/datum/fishing_spot/waterborder
+	fishing_atom_type = /turf/unsimulated/waterborder
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/herring = 15,\
+	/obj/item/fish/red_herring = 5)
+
+/datum/fishing_spot/water
+	fishing_atom_type = /turf/unsimulated/water
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/herring = 15,\
+	/obj/item/fish/red_herring = 5)
+
 /datum/fishing_spot/test
 	fishing_atom_type = /turf/simulated/floor/ancient
 	fish_available = list(/obj/item/fish/carp = 40,\
