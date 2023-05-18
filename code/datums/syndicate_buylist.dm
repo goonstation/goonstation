@@ -1009,7 +1009,7 @@ This is basically useless for anyone but miners.
 	cost = 8
 	vr_allowed = TRUE
 	not_in_crates = TRUE
-	desc = "A powerful weapon which only works while firmly secured to the users arm. Doubles as a mining weapon but vulnerable to EMP pulses."
+	desc = "A powerful weapon which only works while firmly secured to the users arm. Doubles as a mining tool but vulnerable to EMP pulses."
 	can_buy = UPLINK_TRAITOR
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
