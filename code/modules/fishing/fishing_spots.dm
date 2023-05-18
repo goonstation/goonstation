@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5)
+	/obj/item/fish/red_herring = 5, \
 	/obj/item/fish/koi = 30)
 
 /datum/fishing_spot/water
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5)
+	/obj/item/fish/red_herring = 5, \
 	/obj/item/fish/koi = 30)
 
 /datum/fishing_spot/test
