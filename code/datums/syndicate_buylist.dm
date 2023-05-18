@@ -1003,6 +1003,15 @@ This is basically useless for anyone but miners.
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/visicar
+	name = "Visicar Armblade"
+	item = /obj/item/armblade
+	cost = 8
+	vr_allowed = TRUE
+	not_in_crates = TRUE
+	desc = "A powerful weapon which only works while firmly secured to the users arm. Doubles as a mining weapon but vulnerable to EMP pulses."
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
