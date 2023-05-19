@@ -627,9 +627,23 @@ var/global/list/module_editors = list()
 		return 0
 	if (check_target_immunity(src))
 		return 0
+	var/power = clamp(wattage / 300000 , 2, 12)
+	if (isrobot(src))
+		var/mob/living/silicon/robot/C
+		var/damage = power * 5
+		for (var/obj/item/roboupgrade/physshield/R in C.contents)
+				if (R.activated)
+					src.cell.use(damage * 5)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+					boutput(src,"<span class='alert'>You are shocked but your shield upgrade protects you!</span>")
+					return
+		if (C.opened)
+			C.part_chest?.ropart_take_damage(0, damage)
+		if (C.brainexposed)
+			C.part_head?.ropart_take_damage(0, damage)
+
 	boutput(src,"<span class='alert'>A powerful shock has slowed your movement!</span>")
-	var/slow = clamp(wattage / 2500 , 2, 8)
-	src.setStatus("slowed", slow SECONDS)
+	src.setStatus("slowed", power SECONDS)
 
 /mob/living/silicon/electric_expose(var/power = 1)
 	return 0
