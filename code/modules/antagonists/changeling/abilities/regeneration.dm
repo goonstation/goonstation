@@ -176,28 +176,52 @@
 	var/duration = 30 SECONDS
 
 	cast(atom/target)
-		if (..())
+		var/datum/abilityHolder/changeling/H
+		if (!istype(H))
+			return 1
+		var/mob/living/C
+		if (!istype(C))
 			return 1
 		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
 			return 1
 		if (!src.cooldowncheck())
 			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
 			return 1
-
-		var/mob/living/carbon/human/C = holder.owner
-		if (!istype(C))
-			boutput(holder.owner, "<span class='alert'>We have no idea what we are, but it's damn sure not compatible.</span>")
-			return 1
-		boutput(holder.owner, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
-
+		C.changeStatus("changeling_speedregen", 30 SECONDS)
+		return 0
 
 /datum/statusEffect/regeneration
-	id =
-	name =
-	desc =
-	icon_state =
-	unique =
+
+	id = "changeling_speedregen"
+	name = "Speed regeneration"
+	desc = "You reform your skin around your skeleton and heal the damage"
+	icon_state = "person"
+	unique = TRUE
 	maxDuration = 30 SECONDS
 
-	onAdd()
+	onAdd(optional)
+		. = ..()
+		var/datum/abilityHolder/changeling/H
+		if (!istype(H))
+			return 1
+		var/mob/living/C
+		if (!istype(C))
+			return 1
 
+		boutput(C, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
+		while(C.health < C.max_health)
+			sleep(3 SECONDS)
+			changeling_super_heal_step(C)
+		return
+
+
+	onRemove()
+		. = ..()
+		var/datum/abilityHolder/changeling/H
+		if (!istype(H))
+			return 1
+		var/mob/living/C
+		if (!istype(C))
+			return 1
+		boutput(C, "<span class='notice'>Your skin no longer reforms around your skeleton.</span>")
+		return
