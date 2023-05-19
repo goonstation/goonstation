@@ -1,0 +1,62 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine,
+/turf/simulated/floor/wood/five,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/reagent_dispensers/beerkeg/rum,
+/turf/simulated/floor/wood/five,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 4
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 12;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_y = -3;
+	pixel_x = -9
+	},
+/turf/simulated/floor/wood/five,
+/area/dmm_suite/clear_area)
+"w" = (
+/turf/simulated/wall/false_wall,
+/area/dmm_suite/clear_area)
+"x" = (
+/turf/simulated/wall/auto/supernorn,
+/area/dmm_suite/clear_area)
+"C" = (
+/turf/simulated/floor/wood/five,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/simulated/floor/wood/five,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+p
+x
+C
+C
+C
+"}
+(2,1,1) = {"
+a
+w
+j
+j
+j
+"}
+(3,1,1) = {"
+T
+x
+C
+C
+C
+"}
