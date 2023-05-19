@@ -232,8 +232,6 @@
 		else
 			synd_mind.add_antagonist(ROLE_NUKEOP)
 
-		synd_mind.current.antagonist_overlay_refresh(1, 0)
-
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
 	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
@@ -464,7 +462,7 @@ var/syndicate_name = null
 	name = "Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 

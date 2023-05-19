@@ -719,7 +719,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "xe" = (
@@ -994,7 +994,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
 	},
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "GW" = (

@@ -4,7 +4,7 @@
 /obj/flock_structure/egg
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = FALSE
+	anchored = UNANCHORED
 	density = FALSE
 	name = "glowing doodad"
 	desc = "Some sort of small machine. It looks like its getting ready for something."

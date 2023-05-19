@@ -41,7 +41,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
 	timeout = 10
@@ -600,7 +600,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/networked/telepad, processbadeffect), effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -753,7 +753,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/mob/living/critter/mimic)
+				var/summon = pick(/obj/critter/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem/, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -785,7 +785,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if("majorsummon")
 				var/summon = pick(
 					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,
 					/mob/living/critter/lion,
@@ -804,7 +804,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 	icon_state = "s_teleport"
 	name = "teleport computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
 	var/xtarget = 0

@@ -121,7 +121,7 @@ CONTENTS:
 	name = "complicated contraption"
 	desc = "A big machine with lots of buttons and dials on it. Looks kinda dangerous."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/machines/mindswap.dmi'
 	icon_state = "mindswap"
@@ -392,6 +392,8 @@ CONTENTS:
 		if(istype(M, /mob/living/critter))
 			var/mob/living/critter/C = M
 			if(C.dormant || C.ghost_spawned)
+				. = 0
+			if(C.max_health >= 75)
 				. = 0
 		if(istype(M, /mob/living/critter/small_animal/mouse/weak/mentor) || istype(M, /mob/living/critter/robotic) || istype(M, /mob/living/critter/flock) || istype(M, /mob/living/intangible))
 			. = 0

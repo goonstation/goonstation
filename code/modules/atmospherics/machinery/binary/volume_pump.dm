@@ -12,12 +12,13 @@ Thus, the two variables affect pump operation are set in New():
 			but overall network volume is also increased as this increases...
 */
 
-obj/machinery/atmospherics/binary/volume_pump
-	icon = 'icons/obj/atmospherics/volume_pump.dmi'
-	icon_state = "intact_off"
-
+/obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
 	desc = "A pump"
+	icon = 'icons/obj/atmospherics/volume_pump.dmi'
+	icon_state = "intact_off"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/on = 0
 	var/transfer_rate = 200

@@ -107,6 +107,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
@@ -130,6 +133,7 @@
 	proc/deconstruct()
 		if (!src.deconstructable)
 			return
+		unbuckle()
 		if (ispath(src.parts_type))
 			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
 			if (P && src.material)
@@ -196,7 +200,7 @@
 	desc = "It's a bench! You can sit on it!"
 	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "0"
-	anchored = 1
+	anchored = ANCHORED
 	var/auto = 0
 	var/auto_path = null
 	parts_type = /obj/item/furniture_parts/bench
@@ -299,7 +303,7 @@
 	name = "bed"
 	desc = "A solid metal frame with some padding on it, useful for sleeping on."
 	icon_state = "bed"
-	anchored = 1
+	anchored = ANCHORED
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
@@ -314,7 +318,7 @@
 	moveable
 		name = "roller bed"
 		desc = "A solid metal frame with some padding on it, useful for sleeping on. This one has little wheels on it, neat!"
-		anchored = 0
+		anchored = UNANCHORED
 		securable = 1
 		icon_state = "rollerbed"
 		parts_type = /obj/item/furniture_parts/bed/roller
@@ -379,6 +383,10 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
 		else
@@ -386,7 +394,7 @@
 
 		to_buckle.lying = 1
 		if (src.anchored)
-			to_buckle.anchored = 1
+			to_buckle.anchored = ANCHORED
 		to_buckle.buckled = src
 		src.buckled_guy = to_buckle
 		to_buckle.set_loc(src.loc)
@@ -538,13 +546,13 @@
 	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
 	var/image/butt_img
 	securable = 1
-	anchored = 1
+	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
 	material_amt = 0.1
 
 	moveable
-		anchored = 0
+		anchored = UNANCHORED
 
 	New()
 		if (src.dir == NORTH)
@@ -706,6 +714,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
 				return
@@ -715,7 +726,7 @@
 			to_buckle.set_loc(src.loc)
 			to_buckle.pixel_y = 10
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			H.on_chair = src
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
@@ -729,7 +740,7 @@
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
 			to_buckle.set_loc(src.loc)
@@ -1007,7 +1018,7 @@
 	icon_state = "thronegold"
 	arm_icon_state = "thronegold-arm"
 	comfort_value = 7
-	anchored = 0
+	anchored = UNANCHORED
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/throne_gold
 
@@ -1050,7 +1061,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
 	icon_state = "wheelchair"
 	arm_icon_state = "arm-wheelchair"
-	anchored = 0
+	anchored = UNANCHORED
 	comfort_value = 3
 	buckle_move_delay = 1
 	p_class = 2
@@ -1131,7 +1142,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
 	comfort_value = 3
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
 	mat_appearances_to_ignore = list("wood")
@@ -1160,7 +1171,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	name = "pew"
 	desc = "It's like a bench, but more holy. No, not <i>holey</i>, <b>holy</b>. Like, godly, divine. That kinda thing.<br>Okay, it's actually kind of holey, too, now that you look at it closer."
 	icon_state = "pew"
-	anchored = 1
+	anchored = ANCHORED
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
@@ -1325,7 +1336,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	icon_state = "office_chair"
 	comfort_value = 4
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	buckle_move_delay = 3
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/office_chair

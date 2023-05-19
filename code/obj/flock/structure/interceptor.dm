@@ -114,7 +114,7 @@
 /obj/interceptor_projectile_checker
 	name = null
 	desc = null
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	flags = UNCRUSHABLE
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -151,7 +151,7 @@
 /obj/line_obj/gnesis_bolt
 	name = "gnesis bolt"
 	desc = null
-	anchored = TRUE
+	anchored = ANCHORED
 	density = FALSE
 	flags = UNCRUSHABLE
 	event_handler_flags = IMMUNE_SINGULARITY

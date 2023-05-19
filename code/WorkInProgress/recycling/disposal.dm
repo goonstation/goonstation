@@ -47,6 +47,8 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
+			if (istype(AM, /obj/dummy))
+				continue
 			AM.set_loc(src)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
@@ -175,7 +177,7 @@
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe"
 	desc = "An underfloor disposal pipe."
-	anchored = 1
+	anchored = ANCHORED
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
@@ -305,10 +307,8 @@
 
 		var/turf/target
 
-		if(T.density)		// dense ouput turf, so stop holder
-			H.active = 0
-			H.set_loc(src)
-			return
+		if(!checkTurfPassable(T, source = get_turf(src)))	// dense ouput turf, so default to just ejecting them here
+			T = get_turf(src)
 		if(T.intact && istype(T,/turf/simulated/floor)) //intact floor, pop the tile
 			var/turf/simulated/floor/F = T
 			//F.health	= 100
@@ -435,6 +435,9 @@
 		if (isrestrictedz(z))
 			return
 		var/turf/T = src.loc
+		if (istype(I, /obj/item/tile)) //let people repair floors underneath pipes
+			T.Attackby(I, user)
+			return
 		if (T.intact)
 			return		// prevent interaction with T-scanner revealed pipes
 
@@ -1184,9 +1187,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleactivation))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", PROC_REF(activate))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", PROC_REF(deactivate))
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
@@ -1297,7 +1300,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	name = "smart disposal outlet"
 	desc = "A disposal outlet with a little sonar sensor on the front, so it only dumps contents if it is unblocked."
 	icon_state = "unblockoutlet"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/turf/stuff_chucking_target
 
@@ -1633,6 +1636,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 	proc/getlinked()
 		linked = null
+		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		if (vendor)
+			src.linked = vendor
 		var/obj/machinery/disposal/D = locate() in src.loc
 		if(D)
 			linked = D
@@ -1743,7 +1749,7 @@ TYPEINFO(/obj/disposaloutlet)
 	icon = 'icons/obj/disposal.dmi'
 	icon_state = "outlet"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/active = 0
 	var/turf/target	// this will be where the output objects are 'thrown' to.
 	var/range = 10

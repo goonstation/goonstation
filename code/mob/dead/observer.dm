@@ -9,7 +9,7 @@
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
-	anchored = 1	//  don't get pushed around
+	anchored = ANCHORED	//  don't get pushed around
 	var/observe_round = FALSE
 	var/health_shown = FALSE
 	var/arrest_shown = FALSE
@@ -168,7 +168,7 @@
 	return 1
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost")
+	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -205,10 +205,6 @@
 #endif
 	if (..(parent))
 		return 1
-	if (src.client && src.client.holder) //ov1
-		// overlays
-		//src.updateOverlaysClient(src.client)
-		src.antagonist_overlay_refresh(0, 0) // Observer Life() only runs for admin ghosts (Convair880).
 
 #ifdef TWITCH_BOT_ALLOWED
 	if (IS_TWITCH_CONTROLLED(src))
@@ -299,7 +295,7 @@
 	if(src.key || src.client)
 
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, hell_respawn), src.mind)
 			return null
 		var/datum/mind/mind = src.mind
 

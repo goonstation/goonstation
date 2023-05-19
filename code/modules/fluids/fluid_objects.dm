@@ -18,7 +18,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 /obj/machinery/drainage
 	name = "drain"
 	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/fluid.dmi'
 	var/base_icon = "drain"
@@ -121,7 +121,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 ///////////////////
 
 /obj/channel
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "channel"
@@ -225,7 +225,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	mats = 20
 
 /obj/machinery/fluid_canister
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/fluid.dmi'
 	var/base_icon = "blue"
@@ -391,7 +391,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 	var/obj/sea_ladder_deployed/linked_ladder
 	var/obj/item/sea_ladder/og_ladder_item = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/fold_up()
 		set name = "Fold Up"
@@ -486,7 +486,7 @@ TYPEINFO(/obj/naval_mine)
 	icon = 'icons/obj/sealab_objects.dmi'
 	icon_state = "mine_0"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	flags = FPRINT

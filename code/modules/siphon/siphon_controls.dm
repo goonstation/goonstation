@@ -8,7 +8,7 @@
 	desc = "Console with a sizable lever and hand pad for activation of a harmonic siphon from a distance."
 	icon = 'icons/obj/machines/neodrill_32x32.dmi'
 	icon_state = "siph-control-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/machinery/siphon/core/paired_core = null
 	var/lever_active = 0

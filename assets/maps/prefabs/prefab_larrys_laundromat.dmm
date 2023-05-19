@@ -1,0 +1,886 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"az" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"bU" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"cl" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"cN" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"eL" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"ff" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/prefab/larrys_laundry)
+"fC" = (
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"fZ" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"gI" = (
+/obj/item/paper/employee_notice{
+	pixel_x = 23
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"hp" = (
+/obj/item/reagent_containers/glass/bottle/cleaner{
+	pixel_y = 4
+	},
+/obj/table/auto,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"hv" = (
+/obj/decal/fakeobjects/Laundry,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"hF" = (
+/obj/window/cubicle{
+	dir = 4;
+	icon_state = "cubicle"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"hZ" = (
+/obj/decal/poster/wallsign/stencil/left/y,
+/obj/decal/poster/wallsign/stencil/right/s,
+/turf/simulated/wall/auto/reinforced/jen/green,
+/area/prefab/larrys_laundry)
+"iD" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Larry's laundry"
+	},
+/turf/simulated/floor,
+/area/prefab/larrys_laundry)
+"iR" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"kG" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"kH" = (
+/obj/table/wood/auto,
+/obj/machinery/coffeemaker,
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"kY" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/plating,
+/area/prefab/larrys_laundry)
+"mf" = (
+/obj/table/auto,
+/obj/bedsheetbin,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"mx" = (
+/obj/table/glass/auto,
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"mW" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/decal/fakeobjects/Laundry/drying,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"nq" = (
+/obj/item/storage/secure/ssafe/larrys{
+	pixel_y = 31
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"od" = (
+/obj/decal/tile_edge/stripe{
+	dir = 5;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"om" = (
+/obj/table/auto,
+/obj/random_item_spawner/shoe/one,
+/obj/random_item_spawner/hat/maybe_few,
+/obj/item/clothing/under/gimmick/shirtnjeans,
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"oH" = (
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"ph" = (
+/obj/decal/poster/wallsign/stencil/left/l,
+/obj/decal/poster/wallsign/stencil/right/a,
+/turf/simulated/wall/auto/reinforced/jen/green,
+/area/prefab/larrys_laundry)
+"pl" = (
+/obj/table/wood/auto/desk,
+/obj/item/reagent_containers/food/drinks/mug/random_color{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"pr" = (
+/obj/table/wood/auto/desk,
+/obj/decoration/decorativeplant/plant4{
+	pixel_y = 12;
+	pixel_x = 4
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"pJ" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 9
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"rd" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"rC" = (
+/obj/decal/fakeobjects/Laundry/washing,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"rI" = (
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"sK" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_y = 4;
+	pixel_x = 5
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"sT" = (
+/obj/table/auto,
+/obj/item/paper/laundry_purchase,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"tj" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer3/luggable/personal{
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"tV" = (
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"wk" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"xm" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"yd" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/prefab/larrys_laundry)
+"ye" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer3/generic/personal,
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"yi" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"yA" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/structure/woodwall{
+	icon_state = "woodwall2";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/prefab/larrys_laundry)
+"AI" = (
+/obj/stool/chair/office/red,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"Cs" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"CO" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"Do" = (
+/obj/random_item_spawner/shoe/maybe_few,
+/obj/storage/crate,
+/obj/item/clothing/shoes/thong,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"Ej" = (
+/obj/table/wood/auto/desk,
+/obj/decoration/decorativeplant/plant3{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/obj/machinery/light/incandescent/cool/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"Ek" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Et" = (
+/obj/decal/fakeobjects/skeleton{
+	name = "larry";
+	pixel_y = -7
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"HY" = (
+/obj/submachine/laundry_machine,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"Ip" = (
+/obj/submachine/laundry_machine/portable,
+/obj/decal/cleanable/blood/tracks{
+	icon_state = "drip5"
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"IG" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper/final_notice{
+	pixel_y = 7;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/noodlecup{
+	pixel_y = 14;
+	pixel_x = 15
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"JM" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"JS" = (
+/obj/machinery/door/airlock/pyro/external{
+	name = "Larry's laundry"
+	},
+/turf/simulated/floor,
+/area/prefab/larrys_laundry)
+"Kn" = (
+/obj/table/auto,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 2
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 7;
+	pixel_x = 3
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 12;
+	pixel_x = 4
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 5;
+	pixel_x = 7
+	},
+/obj/item/spacecash/random/really_small{
+	pixel_y = 9;
+	pixel_x = -4
+	},
+/obj/item/spacecash/random/tourist,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"Kp" = (
+/turf/simulated/wall/auto/jen/green,
+/area/prefab/larrys_laundry)
+"KJ" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor,
+/area/prefab/larrys_laundry)
+"Ms" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Mw" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/prefab/larrys_laundry)
+"Ni" = (
+/turf/simulated/wall/auto/reinforced/jen/green,
+/area/prefab/larrys_laundry)
+"NE" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/decal/fakeobjects/Laundry/open,
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"Op" = (
+/obj/item/remote/porter/port_a_laundry,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"QD" = (
+/obj/table/glass/auto,
+/obj/decoration/decorativeplant/plant6{
+	pixel_y = 12;
+	pixel_x = 2
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"QO" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"QU" = (
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/prefab/larrys_laundry)
+"SG" = (
+/obj/machinery/light/incandescent/cool/very{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"Tp" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/decal/fakeobjects/Laundry/open,
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+"Uq" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"Uw" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"UJ" = (
+/obj/machinery/light/incandescent/cool/very,
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"VN" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 4;
+	locked = 1;
+	layer = 2
+	},
+/turf/simulated/floor/carpet/grime,
+/area/prefab/larrys_laundry)
+"WC" = (
+/turf/simulated/floor/twotone/green,
+/area/prefab/larrys_laundry)
+"WE" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/larrys_laundry)
+"WK" = (
+/obj/submachine/ATM/atm_alt{
+	dir = 8
+	},
+/turf/simulated/floor/wood/three,
+/area/prefab/larrys_laundry)
+"XH" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"XT" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/larrys_laundry)
+"Yh" = (
+/obj/decal/poster/wallsign/stencil/left/r,
+/obj/decal/poster/wallsign/stencil/right/r,
+/turf/simulated/wall/auto/reinforced/jen/green,
+/area/prefab/larrys_laundry)
+"YK" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZF" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 10
+	},
+/turf/simulated/floor/twotone/black,
+/area/prefab/larrys_laundry)
+
+(1,1,1) = {"
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(2,1,1) = {"
+Cs
+Cs
+Cs
+Cs
+Cs
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+Ni
+ph
+Cs
+Cs
+Cs
+pJ
+Cs
+Cs
+Cs
+"}
+(3,1,1) = {"
+Ni
+Ni
+XT
+XT
+Ni
+Ni
+mf
+mW
+yi
+rI
+CO
+JM
+Yh
+xm
+cN
+WE
+Uw
+QO
+Cs
+Cs
+"}
+(4,1,1) = {"
+Ni
+ye
+fZ
+oH
+rd
+Kp
+hp
+WC
+WC
+rI
+rI
+JM
+hZ
+Cs
+Ms
+Uw
+iR
+Uw
+Cs
+Cs
+"}
+(5,1,1) = {"
+Ni
+kG
+IG
+oH
+Uq
+Kp
+WC
+WC
+WC
+rI
+rI
+JM
+XT
+Cs
+Ms
+Uw
+tV
+Uw
+Cs
+Cs
+"}
+(6,1,1) = {"
+Ni
+nq
+pr
+oH
+Uq
+Kp
+yi
+NE
+rC
+rI
+rI
+QD
+XT
+Cs
+Ms
+Uw
+iR
+Uw
+Cs
+Cs
+"}
+(7,1,1) = {"
+Ni
+hF
+hF
+oH
+oH
+Kp
+Kp
+XT
+XT
+rI
+rI
+XT
+XT
+XT
+YK
+od
+Uw
+eL
+cN
+aw
+"}
+(8,1,1) = {"
+Ni
+Ej
+fZ
+oH
+UJ
+Kp
+om
+CO
+rI
+rI
+rI
+iD
+ff
+JS
+yd
+yd
+yd
+yd
+yd
+Cs
+"}
+(9,1,1) = {"
+Ni
+AI
+tj
+oH
+oH
+Kp
+cl
+rI
+rI
+rI
+rI
+iD
+KJ
+JS
+yd
+yd
+yd
+yd
+yd
+Cs
+"}
+(10,1,1) = {"
+Ni
+oH
+pl
+oH
+oH
+kY
+rI
+rI
+rI
+rI
+rI
+XT
+XT
+XT
+Ek
+Ek
+bU
+Ek
+Ek
+aw
+"}
+(11,1,1) = {"
+Ni
+oH
+oH
+oH
+oH
+Kp
+rI
+SG
+WK
+WK
+SG
+mx
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(12,1,1) = {"
+Ni
+kH
+sK
+oH
+gI
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Ni
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(13,1,1) = {"
+Ni
+Ni
+Ni
+Ni
+VN
+Kp
+hv
+Tp
+HY
+Kn
+sT
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(14,1,1) = {"
+XH
+XH
+XH
+Ni
+QU
+Kp
+fC
+fC
+fC
+Op
+fC
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(15,1,1) = {"
+XH
+XH
+XH
+Ni
+fC
+fC
+fC
+fC
+fC
+Et
+fC
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(16,1,1) = {"
+XH
+XH
+XH
+Ni
+Do
+ZF
+Ip
+az
+az
+wk
+fC
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}
+(17,1,1) = {"
+XH
+XH
+XH
+Ni
+Ni
+Ni
+Mw
+Mw
+yA
+Ni
+Ni
+Ni
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+Cs
+"}

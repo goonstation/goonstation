@@ -131,7 +131,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(prob(trigger_chance))
 			explode_count++
 			var/turf/tloc = get_turf(owner)
-			explosion(owner, tloc, 0, 1, 2, 3, 1)
+			explosion(owner, tloc, 0, 1, 2, 3)
 			tloc.visible_message("<span class='alert'>[owner] explodes!</span>")
 			qdel(owner)
 		return
@@ -255,7 +255,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(world.time - lastTrigger < 100) return
 		lastTrigger = world.time
 		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 1, 2, 3, 4, 1)
+		explosion(location, tloc, 1, 2, 3, 4)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
 		return
 
@@ -371,11 +371,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/molitz_temp
 	max_generations = 1
+
+	proc/find_molitz(datum/material/material)
+		if (istype(material, /datum/material/crystal/molitz))
+			return material
+		var/datum/material/interpolated/alloy = material
+		if (istype(alloy))
+			return locate(/datum/material/crystal/molitz) in alloy.parent_materials
+
 	execute(var/atom/owner, var/temp, var/agent_b=FALSE)
 		if(temp < 500) return //less than reaction temp
 
-		var/datum/material/crystal/molitz/molitz = owner.material
-		if(!istype(molitz)) CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
+		var/datum/material/crystal/molitz/molitz = src.find_molitz(owner.material)
+		if (!istype(molitz))
+			CRASH("Molitz_temp material proc applied to non-molitz thing") //somehow applied to non-molitz
 
 		if(molitz.iterations <= 0) return
 
@@ -492,7 +501,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		lastTrigger = world.time
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
 		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 0, 1, 2, 3, 1)
+		explosion(location, tloc, 0, 1, 2, 3)
 		location.visible_message("<span class='alert'>[location] explodes!</span>")
 		return
 
@@ -507,11 +516,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			location.visible_message("<span class='alert'>[location] explodes!</span>")
 			switch(sev)
 				if(1)
-					explosion(location, tloc, 0, 1, 2, 3, 1)
+					explosion(location, tloc, 0, 1, 2, 3)
 				if(2)
-					explosion(location, tloc, -1, 0, 1, 2, 1)
+					explosion(location, tloc, -1, 0, 1, 2)
 				if(3)
-					explosion(location, tloc, -1, -1, 0, 1, 1)
+					explosion(location, tloc, -1, -1, 0, 1)
 			qdel(location)
 		return
 

@@ -242,7 +242,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	T = time_type + ": [time2text(world.timeofday, "DD MMM 2053, hh:mm:ss")]"
+	T = time_type + ": [time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")]"
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(

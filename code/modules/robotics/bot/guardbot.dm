@@ -97,7 +97,7 @@
 	icon_state = "robuddy0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_heads)
 	on = 1
 	var/idle = 0 //Sleeping on the job??
@@ -1437,7 +1437,7 @@
 		if((allow_big_explosion && cell && (cell.charge / cell.maxcharge > 0.85) && prob(25)) || istype(src.cell, /obj/item/cell/erebite))
 			src.invisibility = INVIS_ALWAYS_ISH
 			var/obj/overlay/Ov = new/obj/overlay(T)
-			Ov.anchored = 1
+			Ov.anchored = ANCHORED
 			Ov.name = "Explosion"
 			Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			Ov.pixel_x = -92
@@ -1525,7 +1525,7 @@
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
 					speak("Critical battery.")
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1883,7 +1883,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -4345,7 +4345,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 	desc = "A recharging and command station for PR-6S Guardbuddies."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "robuddycharger0"
-	anchored = 1
+	anchored = ANCHORED
 	var/panel_open = 0
 	var/autoeject = 0 //1: Eject fully charged robots automatically. 2: Eject robot when living carbon mob is in view.
 	var/frequency = FREQ_BUDDY
@@ -4769,7 +4769,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
+				INVOKE_ASYNC(robot, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 
@@ -4951,7 +4951,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92

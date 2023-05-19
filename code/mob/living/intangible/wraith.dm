@@ -19,6 +19,7 @@
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
+	faction = MOB_AI_FACTION_WRAITH
 
 	var/atom/movable/overlay/animation = null
 
@@ -106,6 +107,9 @@
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		AH = src.abilityHolder
 		src.abilityHolder.points = 50
+#ifdef BONUS_POINTS
+		src.abilityHolder.points = 99999
+#endif
 		if (!istype(src, /mob/living/intangible/wraith/wraith_trickster) && !istype(src, /mob/living/intangible/wraith/wraith_decay) && !istype(src, /mob/living/intangible/wraith/wraith_harbinger) && !istype(src, /mob/living/intangible/wraith/poltergeist))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
@@ -177,9 +181,6 @@
 			animate(src)
 			animate_levitate(src)
 		#endif
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)

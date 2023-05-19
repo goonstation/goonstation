@@ -309,11 +309,11 @@
 
 		switch(severity)
 			if(1)
-				explosion(src, src.loc, 1, 2, 3, 4, 1)
+				explosion(src, src.loc, 1, 2, 3, 4)
 			if(2)
-				explosion(src, src.loc, 0, 1, 2, 3, 1)
+				explosion(src, src.loc, 0, 1, 2, 3)
 			if(3)
-				explosion(src, src.loc, 0, 0, 1, 2, 1)
+				explosion(src, src.loc, 0, 0, 1, 2)
 			else
 				return
 		// if not on mining z level
@@ -329,7 +329,7 @@
 
 	temperature_expose(null, temp, volume)
 
-		explosion(src, src.loc, 1, 2, 3, 4, 1)
+		explosion(src, src.loc, 1, 2, 3, 4)
 
 		// if not on mining z level
 		if (src.z != MINING_Z)
@@ -693,7 +693,7 @@
 	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
 	var/active = 0
@@ -715,7 +715,7 @@
 		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
-		anchored = 1
+		anchored = ANCHORED
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
@@ -753,7 +753,7 @@
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
-		anchored = 0
+		anchored = UNANCHORED
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
@@ -817,8 +817,11 @@
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
 		if (src.is_valid(W))
-			W.set_loc(src)
-			if (user) user.u_equip(W)
+			if (W.stored)
+				W.stored.transfer_stored_item(W, src, user = user)
+			else
+				W.set_loc(src)
+				if (user) user.u_equip(W)
 			W.dropped(user)
 			. = TRUE
 
@@ -827,19 +830,15 @@
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
-		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
-			var/obj/item/storage/S = W
-			var/obj/item/satchel/B = W
+		if (W.storage || istype(W, /obj/item/satchel))
 			var/items = W
-			if(istype(S))
-				items = S.get_contents()
+			if (W.storage)
+				items = W.storage.get_contents()
 			for(var/obj/item/O in items)
 				if (load_reclaim(O))
 					. = TRUE
-					if (istype(S))
-						S.hud.remove_object(O)
-			if (istype(B) && .)
-				B.UpdateIcon()
+			if (istype(W, /obj/item/satchel) && .)
+				W.UpdateIcon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)

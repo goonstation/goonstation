@@ -9,7 +9,7 @@
 	density = 0
 	canmove = 0
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	alpha = 180
 	stat = 0
 	var/autofree = 0
@@ -103,9 +103,6 @@
 	Life(parent)
 		if (..(parent))
 			return 1
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/zoldorf(src)

@@ -175,8 +175,8 @@
 	not_when_handcuffed = 0
 
 	New()
-		..()
 		desc = "Spend [CONTRACT_COST] souls to summon a random new contract to your location"
+		..()
 
 	cast(mob/target)
 		if (!holder)

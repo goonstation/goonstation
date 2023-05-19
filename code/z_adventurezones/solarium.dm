@@ -27,7 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
-	anchored = 2 // This stopped being funny weeks ago.
+	anchored = ANCHORED_ALWAYS // This stopped being funny weeks ago.
 
 	New()
 		..()
@@ -74,7 +74,7 @@ var/global/derelict_mode = 0
 	desc = "This looks kinda important.  You can barely hear farting and honking coming from a speaker inside.  Weird."
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "server"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()

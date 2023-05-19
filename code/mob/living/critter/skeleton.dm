@@ -49,7 +49,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/skeleton
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
@@ -110,22 +110,18 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
-	seek_target(var/range = 6)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/skeleton)) continue
-			if (C in src.friends) continue
-			if (iswizard(C) && src.wizardSpawn) continue
-			. += C
+	valid_target(mob/living/C)
+		if (C in src.friends) return FALSE //TODO replace with the faction system
+		if (iswizard(C) && src.wizardSpawn) return FALSE
+		return ..()
 
-	critter_attack(mob/target)
+	seek_target(var/range = 6)
+
+	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
-		else
-			return ..()
+			return TRUE
 
 	death(var/gibbed)
 		if (prob(src.revivalChance))
@@ -155,18 +151,17 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
+	faction = MOB_AI_FACTION_WRAITH
 	health_brute = 15
 	health_burn = 15
 
+	valid_target(mob/living/C)
+		if (islivingobject(C)) return FALSE //don't attack wraith objects TODO replace with faction system
+		if (istype(C, /mob/living/critter/wraith)) return FALSE // don't attack wraith summons ^^
+		if (istype(C, /mob/living/critter/skeleton)) return FALSE // ^^
+		return ..()
+
 	seek_target(var/range = 7)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (islivingobject(C)) continue //don't attack wraith objects
-			if (istype(C, /mob/living/critter/wraith)) continue // don't attack wraith summons
-			if (istype(C, /mob/living/critter/skeleton)) continue
-			. += C
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))

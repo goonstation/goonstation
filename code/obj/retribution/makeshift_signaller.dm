@@ -83,7 +83,7 @@ TYPEINFO(/obj/item/makeshift_syndicate_signaller)
 	contraband = 5
 
 	New()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_DRONE_DEATH, .proc/metadata_increase)	//Thanks a bunch to ZeWaka, MarkNstein and Yass for helping me understand what the actual fuck signals are and how they work.
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_DRONE_DEATH, PROC_REF(metadata_increase))	//Thanks a bunch to ZeWaka, MarkNstein and Yass for helping me understand what the actual fuck signals are and how they work.
 		..()
 
 	attack_self(mob/user as mob)

@@ -63,6 +63,8 @@
 	var/list/list/datum/disjoint_turf/connections
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
+	flags = OPENCONTAINER | FPRINT
+
 
 	New()
 		..()
@@ -162,7 +164,7 @@
 
 /obj/overlay/tile_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 	alpha = 255
@@ -175,7 +177,7 @@
 
 /obj/overlay/tile_gas_effect
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	mouse_opacity = 0
 
@@ -868,7 +870,6 @@ proc/generate_space_color()
 	can_write_on = 1
 	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
-	flags = OPENCONTAINER | FPRINT
 
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
@@ -1076,9 +1077,12 @@ proc/generate_space_color()
 		boutput(user, "<span class='alert'>You can't build here.</span>")
 		return
 	var/obj/item/rods/R = C
-	if (istype(R) && R.change_stack_amount(-1))
+	if (istype(R))
+		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
+
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		R.change_stack_amount(-1)
 		ReplaceWithLattice()
 		if (R.material)
 			src.setMaterial(C.material)
