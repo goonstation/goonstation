@@ -679,7 +679,7 @@
 					5 ;"contest-other5",
 					5 ;"contest-other6",
 					5 ;"contest-other7",
-					5 :"contest-other8"
+					5 ;"contest-other8"
 					)
 				switch(which)
 					if("fuckII")
