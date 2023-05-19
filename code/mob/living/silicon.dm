@@ -632,11 +632,11 @@ var/global/list/module_editors = list()
 		var/mob/living/silicon/robot/C
 		var/damage = power * 5
 		for (var/obj/item/roboupgrade/physshield/R in C.contents)
-				if (R.activated)
-					src.cell.use(damage * 5)
-					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
-					boutput(src,"<span class='alert'>You are shocked but your shield upgrade protects you!</span>")
-					return
+			if (R.activated)
+				src.cell.use(damage * 5)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				boutput(src,"<span class='alert'>You are shocked but your shield upgrade protects you!</span>")
+				return
 		if (C.opened)
 			C.part_chest?.ropart_take_damage(0, damage)
 		if (C.brainexposed)
