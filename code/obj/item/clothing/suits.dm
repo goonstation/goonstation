@@ -1845,7 +1845,6 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "short-nurse-dress"
 	item_state = "short-nurse-dress"
 	body_parts_covered = TORSO|ARMS
-	hides_from_examine = C_UNIFORM
 
 /obj/item/clothing/suit/wintercoat/nurse_coat
 	name = "nurse coat"
