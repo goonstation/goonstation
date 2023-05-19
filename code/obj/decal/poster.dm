@@ -678,7 +678,8 @@
 					5 ;"contest-other4",
 					5 ;"contest-other5",
 					5 ;"contest-other6",
-					5 ;"contest-other7"
+					5 ;"contest-other7",
+					5 :"contest-other8"
 					)
 				switch(which)
 					if("fuckII")
@@ -721,6 +722,9 @@
 					if("contest-other7")
 						src.name = "Code"
 						src.icon_state = "code"
+					if("contest-other8")
+						src.name = "Space Opera"
+						src.icon_state = "space_opera"
 
 			attack_hand(mob/user)
 				. = ..()
