@@ -280,7 +280,7 @@
 
 #ifdef DATALOGGER
 	var/total = world.load_intra_round_value("rev_total")
-	world.save_intra_round_value(total + 1)
+	world.save_intra_round_value("rev_total", total + 1)
 	switch(finished)
 		if(1)
 			var/wins = world.load_intra_round_value("rev_win")

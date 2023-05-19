@@ -83,6 +83,17 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/raw_material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
+/datum/fishing_spot/drain
+	fishing_atom_type = /obj/machinery/drainage
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/fish/bass = 9,\
+	/obj/item/fish/salmon = 7,\
+	/obj/item/fish/herring = 6,\
+	/obj/item/fish/red_herring = 7)
+
 /datum/fishing_spot/toilet/random
 	fishing_atom_type = /obj/item/storage/toilet/random
 

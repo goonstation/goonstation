@@ -2592,15 +2592,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ain" = (
-/obj/storage/crate{
-	desc = "null";
-	name = "Chemistry Supplies Crate"
-	},
-/obj/item/reagent_containers/dropper/mechanical,
-/obj/item/storage/box/patchbox,
-/obj/item/paper/book/from_file/pharmacopia,
-/obj/item/storage/box/syringes,
-/obj/item/storage/box/beakerbox,
+/obj/machinery/chem_heater,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -4643,9 +4635,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/east)
 "apn" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side{
 	dir = 10
 	},
@@ -4665,6 +4659,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/eva)
 "apq" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/east)
 "apr" = (
@@ -6842,6 +6837,7 @@
 /area/station/quartermaster/office)
 "awb" = (
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "awc" = (
@@ -7172,6 +7168,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
@@ -8387,6 +8384,7 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aAx" = (
@@ -9095,6 +9093,7 @@
 "aCR" = (
 /obj/machinery/camera/ranch,
 /obj/machinery/light_switch/north,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grasstodirt{
 	dir = 4
 	},
@@ -9200,7 +9199,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "aDf" = (
-/obj/machinery/chem_heater,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -9212,6 +9210,8 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail/east,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -9228,6 +9228,7 @@
 /obj/machinery/glass_recycler/chemistry{
 	pixel_y = 14
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -9247,6 +9248,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aDi" = (
@@ -9284,11 +9286,13 @@
 	light_type = /obj/item/light/tube/blueish;
 	pixel_x = 10
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
 /area/station/medical/medbay)
 "aDm" = (
+/obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -9551,12 +9555,14 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "aDV" = (
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/purple/side{
 	dir = 6
 	},
 /area/station/hallway/primary/east)
 "aDW" = (
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aDY" = (
@@ -9569,6 +9575,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/rancher,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -9600,7 +9607,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aEc" = (
-/obj/machinery/vending/medical,
+/obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail/north,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -10050,6 +10058,7 @@
 	dir = 8
 	},
 /obj/railing/orange/reinforced,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aFt" = (
@@ -10753,16 +10762,21 @@
 "aHs" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aHt" = (
+/obj/storage/crate{
+	desc = "null";
+	name = "Chemistry Supplies Crate"
+	},
+/obj/item/reagent_containers/dropper/mechanical,
+/obj/item/storage/box/patchbox,
+/obj/item/paper/book/from_file/pharmacopia,
+/obj/item/storage/box/syringes,
+/obj/item/storage/box/beakerbox,
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/obj/machinery/light{
-	dir = 4;
-	light_type = /obj/item/light/tube/light_purpleish;
-	pixel_x = 10
-	},
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -14729,6 +14743,7 @@
 /obj/landmark/start{
 	name = "Rancher"
 	},
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "aTY" = (
@@ -17497,6 +17512,10 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
+"guq" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "gBK" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -17920,6 +17939,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"jOg" = (
+/obj/machinery/chem_dispenser/chemical,
+/obj/item/reagent_containers/glass/beaker/large,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/purple,
+/area/station/science/chemistry)
 "jUk" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -18346,6 +18371,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"mBj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "mEx" = (
 /obj/stool/chair/yellow{
 	dir = 8;
@@ -18782,6 +18814,10 @@
 	name = "solar paneling"
 	},
 /area/station/solar/north)
+"oVw" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "oVW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19343,6 +19379,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"tnC" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/science/chemistry)
 "tpD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -20037,6 +20078,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"yln" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay)
 "ylU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62760,7 +62806,7 @@ anu
 aRZ
 axg
 aCA
-aDe
+jOg
 aDO
 aED
 aCA
@@ -63364,7 +63410,7 @@ aAs
 aRZ
 axg
 aCz
-aCA
+tnC
 aCA
 aCz
 aCz
@@ -65478,7 +65524,7 @@ aZT
 aBr
 aWh
 aCC
-aDi
+oVw
 aDi
 aEK
 aGZ
@@ -67592,7 +67638,7 @@ ayg
 ayg
 ayg
 aRn
-aDi
+oVw
 aMQ
 aBx
 aFv
@@ -68196,7 +68242,7 @@ aUC
 aTS
 ayF
 ayF
-ayF
+guq
 aDZ
 aBx
 aBx
@@ -68498,7 +68544,7 @@ aQl
 aUS
 aJT
 aPJ
-ayF
+guq
 aDQ
 aBx
 aFx
@@ -68800,7 +68846,7 @@ adn
 aBx
 aBx
 ajv
-ayF
+guq
 aEa
 aBx
 acq
@@ -69404,7 +69450,7 @@ aCI
 aPI
 aAJ
 aDj
-aAJ
+mBj
 aEM
 aFA
 aFB
@@ -70008,7 +70054,7 @@ adn
 ayg
 aCa
 aCB
-ayg
+yln
 aBx
 aBx
 aXP
