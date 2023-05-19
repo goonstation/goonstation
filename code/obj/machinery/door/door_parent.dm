@@ -613,6 +613,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		close()
 	else return
 
+/// toggles the lock state of the door
+/obj/machinery/door/proc/toggle_locked()
+	if (locked)
+		set_unlocked()
+	else
+		set_locked()
+
+/// locks the door, aka bolt / key lock
+/obj/machinery/door/proc/set_locked()
+	src.locked = TRUE
+	src.UpdateIcon()
+
+/// unlocks the door, aka unbolt / un-key lock
+/obj/machinery/door/proc/set_unlocked()
+	src.locked = FALSE
+	src.UpdateIcon()
+
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
 		attack_particle(user,src)
@@ -760,7 +777,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			if (!(checkdir & src.lock_dir))
 				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
 				return
-		src.locked = !src.locked
+		src.toggle_locked()
 		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 		return
 	else if (isscrewingtool(I) && src.locked)
@@ -770,7 +787,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 		src.operating = -1
-		src.locked = 0
+		src.set_unlocked()
 		open()
 		return 1
 	if (!src.locked)
@@ -808,7 +825,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (!(checkdir & src.lock_dir))
 			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
-	src.locked = !src.locked
+	src.toggle_locked()
 	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
@@ -855,7 +872,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	onEnd()
 		..()
-		src.the_door.locked = 0
+		src.the_door.set_unlocked()
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 
