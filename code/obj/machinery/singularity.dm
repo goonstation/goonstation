@@ -92,16 +92,17 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	name = "gravitational singularity"
 	desc = "Perhaps the densest thing in existence, except for you."
 
-	icon = 'icons/effects/160x160.dmi'
-	icon_state = "Sing2"
+	plane = PLANE_DEFAULT_NOWARP
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "whole"
 	anchored = ANCHORED
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
 
 
-	pixel_x = -64
-	pixel_y = -64
+	pixel_x = -16
+	pixel_y = -16
 
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
@@ -141,6 +142,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/offset = rand(1000)
 	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
+
+	//get all bendy
+
+	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med", pixel_x = -208, pixel_y = -208)
+	lense.plane = PLANE_DISTORTION
+	lense.blend_mode = BLEND_OVERLAY
+	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
+	src.UpdateOverlays(lense, "grav_lensing")
 
 	..()
 

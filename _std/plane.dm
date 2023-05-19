@@ -1,10 +1,12 @@
+#define PLANE_DISTORTION -130 //used as a render source for distortion filter for world, does not render directly
 #define PLANE_SPACE -120
 #define PLANE_PARALLAX -119
 #define PLANE_UNDERFLOOR -115
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
-#define PLANE_NOSHADOW_BELOW -101
-#define PLANE_DEFAULT -100
+#define PLANE_NOSHADOW_BELOW -102
+#define PLANE_DEFAULT -101
+#define PLANE_DEFAULT_NOWARP -100 //for objects which should not be affected by gravitational lensing
 #define PLANE_NOSHADOW_ABOVE -99
 #define PLANE_HIDDENGAME -95
 #define PLANE_LIGHTING -90
@@ -23,17 +25,20 @@
 	icon = null
 	screen_loc = "1,1"
 	var/is_screen
+	///Determines whether this plane is affected by the distortion filter
+	var/distort = TRUE
 
 	// hey you know what would be really cool? if these could be overlays on the same object so we could animate them sanely
 	// haha fuck you of course mouse_opacity on overlays is never gonna work
 	// fucking christ lummox
-	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
+	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = FALSE, distort = TRUE)
 		src.name = name
 		src.plane = plane
 		src.appearance_flags = PLANE_MASTER | PIXEL_SCALE | appearance_flags
 		src.blend_mode = blend_mode
 		src.color = color
 		src.mouse_opacity = mouse_opacity
+		src.distort = distort
 #ifdef COOL_PLANE_STUFF
 		if(is_screen)
 			src.render_target = "[name]"
@@ -61,6 +66,14 @@
 			src.mouse_opacity = pl.mouse_opacity
 		..()
 
+/atom/movable/screen/plane_parent/backdrop
+	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
+		..()
+		var/image/backdrop = image(icon='icons/effects/overlays/solid.dmi', icon_state="solid", layer=BACKGROUND_LAYER)
+		backdrop.color = rgb(128,128,0,255)
+		backdrop.transform = backdrop.transform.Scale(2)
+		src.UpdateOverlays(backdrop, "backdrop")
+
 /atom/movable/screen/plane_display/master
 	screen_loc = "NORTH-0,1"
 	var/keep_together_requests = 0
@@ -81,27 +94,30 @@ client
 
 	New()
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Adding plane_parents")
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_DISTORTION, name = "*distortion_plane", mouse_opacity = 0, is_screen = TRUE, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_UNDERFLOOR, name = "underfloor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SPACE, name = "space_plane"))
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "parallax_plane", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "parallax_plane", is_screen = TRUE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOOR, name = "floor_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_WALL, name = "wall_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT_NOWARP, name = "game_plane_nowarp", distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane", distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_MOB_OVERLAY, mouse_opacity = 0, name = "mob_overlay"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane"))
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
-		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1, distort = FALSE))
 
 
 #ifdef COOL_PLANE_STUFF
 		game_display = new
+		game_display.request_keep_together()
 		src.screen += game_display
 
 		for(var/plane_key in src.plane_parents)
@@ -110,6 +126,8 @@ client
 			plane_displays += display
 			if(!pl.is_screen)
 				game_display.vis_contents += display
+
+		game_display.add_filter("gravitational_lensing", 100, displacement_map_filter(size=100, render_source="*distortion_plane"))
 #endif
 
 		var/atom/movable/screen/plane_parent/P = new /atom/movable/screen/plane_parent(PLANE_HIDDENGAME, name = "hidden_game_plane")
@@ -130,11 +148,16 @@ client
 		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
 		for(var/plane_key in src.plane_parents)
 			var/atom/movable/screen/plane_parent/P = src.plane_parents[plane_key]
-			if (P.name == "game_plane" || P.name == "wall_plane")
+			if (P.name == "game_plane" || P.name == "game_plane_nowarp" || P.name == "wall_plane")
 				if (shadows_checked)
 					P.add_depth_shadow()
 				else
 					P.clear_filters()
+#ifndef COOL_PLANE_STUFF
+			if(P.distort)
+				P.add_filter("gravitational_lensing", 100, displacement_map_filter(size=100, render_source="*distortion_plane"))
+#endif
+
 
 	proc/setup_special_screens()
 		for(var/plane_key in src.plane_parents)
