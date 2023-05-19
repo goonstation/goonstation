@@ -295,7 +295,7 @@
 	if (!W)
 		return STORAGE_CANT_HOLD
 
-	if (W.cant_drop || (W.w_class == W_CLASS_UNSTORABLE))
+	if (W.cant_drop || (W.item_function_flags & UNSTORABLE))
 		return STORAGE_WONT_FIT
 
 	for (var/type in src.prevent_holding)

@@ -97,17 +97,17 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 				aimer.screen -= hudSquares["[x],[y]"]
 	aimer = null
 
-/datum/component/holdertargeting/smartgun/proc/moveRetarget(atom/A, newLoc, direct)
+/datum/component/holdertargeting/smartgun/proc/moveRetarget(mob/M, newLoc, direct)
 	if(src.mouse_target)
 		src.mouse_target = get_step(src.mouse_target, direct)
 
-/datum/component/holdertargeting/smartgun/proc/retarget(atom/A, object, location, control, params)
+/datum/component/holdertargeting/smartgun/proc/retarget(mob/M, object, location, control, params)
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
-		T = locate(A.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
-							A.y + (F.yOffset + -1 - 7),\
-							A.z)
+		T = locate(M.x + (F.xOffset + -1 - ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2),\
+							M.y + (F.yOffset + -1 - 7),\
+							M.z)
 
 		if(T && T != get_turf(parent))
 			src.mouse_target = T
@@ -121,16 +121,12 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	while(!stopping)
 		if(!shooting && checkshots(parent, user) > shotcount)
 			for(var/atom/A as anything in range(2, mouse_target))
-				if (!istype(A, type_to_target))
-					continue
 				ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
 				if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
 					tracked_targets[A] += 1
 					shotcount++
 					src.update_targeting_images(A)
 			for(var/atom/A as anything in tracked_targets)
-				if (!istype(A, type_to_target))
-					continue
 				if(!GET_COOLDOWN(A, "smartgun_last_tracked_\ref[src]"))
 					tracked_targets[A]--
 					shotcount--

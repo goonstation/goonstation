@@ -4,7 +4,7 @@
 	shooting = TRUE
 	var/obj/item/gun/G = parent
 	var/list/local_targets = tracked_targets.Copy()
-	spawn(0)
+	SPAWN(0)
 		if(length(local_targets))
 			G.suppress_fire_msg = TRUE
 			for(var/atom/A as anything in local_targets)
@@ -94,8 +94,6 @@
 /datum/component/holdertargeting/smartgun/homing/pod/proc/get_farthest_tracked_target_from_cursor(mob/user)
 	var/farthest_target_from_cursor
 	for(var/atom/A as anything in tracked_targets)
-		if (!istype(A, type_to_target) && !src.is_valid_target(user, A))
-			continue
 		if (!farthest_target_from_cursor)
 			farthest_target_from_cursor = A
 		if (GET_DIST(mouse_target, farthest_target_from_cursor) < GET_DIST(mouse_target, A))

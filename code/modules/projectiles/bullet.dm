@@ -1518,7 +1518,7 @@ datum/projectile/bullet/autocannon
 		for (var/obj/machinery/vehicle/pod in src.targets)
 			var/message = "Pod-seeking missile lock-on detected!"
 			for(var/mob/M in pod)
-				M << sound('sound/machines/whistlealert.ogg', volume = 25)
+				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit)

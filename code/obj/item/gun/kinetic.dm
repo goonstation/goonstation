@@ -1653,7 +1653,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	uses_multiple_icon_states = TRUE
 	has_empty_state = TRUE
-	w_class = W_CLASS_UNSTORABLE
+	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	force = MELEE_DMG_LARGE
@@ -1717,11 +1717,13 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 			src.collapsed = collapsed
 
 			if (src.collapsed)
+				src.item_function_flags &= ~UNSTORABLE
 				src.w_class = W_CLASS_NORMAL
 				src.has_empty_state = FALSE
 
 			else
-				src.w_class = W_CLASS_UNSTORABLE
+				src.item_function_flags |= UNSTORABLE
+				src.w_class = W_CLASS_BULKY
 				src.has_empty_state = TRUE
 
 			src.UpdateIcon()
