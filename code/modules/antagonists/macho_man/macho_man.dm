@@ -1,6 +1,7 @@
 /datum/antagonist/macho_man
 	id = ROLE_MACHO_MAN
 	display_name = "macho man"
+	antagonist_icon = "wrestler"
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

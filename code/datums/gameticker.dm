@@ -444,8 +444,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 			SPAWN(0)
 				change_ghost_invisibility(INVIS_NONE)
-				for(var/mob/M in global.mobs)
-					M.antagonist_overlay_refresh(bypass_cooldown=TRUE)
+				var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+				for(var/client/client in global.clients)
+					image_group.add_client(client)
 
 			// i feel like this should probably be a proc call somewhere instead but w/e
 			if (!ooc_allowed)

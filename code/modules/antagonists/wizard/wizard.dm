@@ -1,6 +1,7 @@
 /datum/antagonist/wizard
 	id = ROLE_WIZARD
 	display_name = "wizard"
+	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
 
 	/// The ability holder of this wizard, containing their respective abilities.
@@ -96,6 +97,19 @@
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	relocate()
 		if (!job_start_locations["wizard"])
