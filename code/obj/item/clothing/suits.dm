@@ -1899,7 +1899,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "botanist-puffer"
 	item_state = "botanist-puffer"
-	hides_from_examine = C_UNIFORM
+	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/wintercoat/geneticist_puffer
 	name = "geneticist puffer"
