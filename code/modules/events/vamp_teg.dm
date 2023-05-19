@@ -216,10 +216,10 @@ datum/teg_transformation/vampire
 		abilityHolder.addAbility(/datum/targetable/vampire/enthrall/teg)
 		for(var/datum/targetable/vampire/A in abilityHolder.abilities)
 			abilities[A.name] = A
-		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
-		RegisterSignal(src.teg, COMSIG_ATTACKBY, .proc/attackby)
-		RegisterSignal(src.teg.circ1, COMSIG_ATTACKBY, .proc/attackby)
-		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, .proc/attackby)
+		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, PROC_REF(projectile_collide))
+		RegisterSignal(src.teg, COMSIG_ATTACKBY, PROC_REF(attackby))
+		RegisterSignal(src.teg.circ1, COMSIG_ATTACKBY, PROC_REF(attackby))
+		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, PROC_REF(attackby))
 
 		var/image/mask = image('icons/obj/clothing/item_masks.dmi', "death")
 		mask.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
@@ -268,7 +268,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindhack_status(M)
+			M.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 		. = ..()
 
 	on_grump(mult)

@@ -1095,6 +1095,20 @@ datum
 				fluid_g = 197
 				fluid_b = 250
 
+		drug/question_mark
+			name = "???"
+			id = "question_mark"
+			depletion_rate = 2
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (prob(40))
+					if(!M)
+						M = holder.my_atom
+					M.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 3 * mult)
+					M.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 2 * mult)
+					M.reagents.remove_reagent(src, 1 * mult)
+				..()
+
 		drug/hellshroom_extract
 			name = "Hellshroom extract"
 			id = "hellshroom_extract"

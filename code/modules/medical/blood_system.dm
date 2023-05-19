@@ -422,6 +422,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
+		bloodHolder.ownerType = some_idiot.type
 
 		B.add_volume(blood_color_to_pass, some_idiot.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
 		return
@@ -481,6 +482,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		var/datum/bioHolder/bloodHolder = new/datum/bioHolder(null)
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
+		bloodHolder.ownerType = some_idiot.type
 
 		B.add_volume(blood_color_to_pass, H.blood_id, blood_to_transfer, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
@@ -524,6 +526,7 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder = new/datum/bioHolder(null)
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
+		bloodHolder.ownerType = some_idiot.type
 
 	var/datum/reagent/R = null
 

@@ -3624,8 +3624,8 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
 		SPAWN(5 SECONDS)
 			var/area/A = locate(/area/station/ai_monitored/armory)
 			for(var/obj/item/O in A)
@@ -3767,6 +3767,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	do_not_irradiate = 1
 	requires_power = FALSE
 	minimaps_to_render_on = null
 

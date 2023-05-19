@@ -110,6 +110,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/security,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor4"
@@ -162,6 +163,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/medical,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor3"
@@ -473,6 +475,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	hardened = 1
 	},
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -846,6 +849,7 @@
 	opacity = 0
 	},
 /obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"

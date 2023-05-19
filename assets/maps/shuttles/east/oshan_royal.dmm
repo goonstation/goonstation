@@ -232,6 +232,7 @@
 /area/shuttle/escape/centcom)
 "gN" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},

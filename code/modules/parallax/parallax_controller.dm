@@ -145,9 +145,9 @@ var/global/parallax_enabled = TRUE
 
 /mob/proc/register_parallax_signals()
 	if (src.client?.parallax_controller)
-		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, .proc/update_parallax)
-		RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, .proc/update_parallax_z)
-		RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, .proc/update_outermost_movable)
+		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax))
+		RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_parallax_z))
+		RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
 
 		var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
 		src.client.parallax_controller.outermost_movable = C.get_outermost_movable()

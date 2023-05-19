@@ -1,9 +1,7 @@
-#ifdef XMAS
+/*#ifdef XMAS
 //INCLUDE_MAP("../horizon_xmas.dmm")
-INCLUDE_MAP("../horizon.dmm")
-#else
-INCLUDE_MAP("../horizon.dmm")
-#endif
+#else*/
+INCLUDE_MAP("../unused/horizon.dmm")
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")
 #include "z4.dm"
