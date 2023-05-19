@@ -909,7 +909,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -1062,7 +1062,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1117,7 +1117,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1199,7 +1199,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1254,7 +1254,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1370,7 +1370,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -1644,7 +1644,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1699,7 +1699,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -1785,7 +1785,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -2080,7 +2080,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "green2"
@@ -2158,7 +2158,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2213,7 +2213,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2331,7 +2331,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -2592,7 +2592,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2647,7 +2647,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -2728,7 +2728,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/royal,
+/obj/item/clothing/suit/bedsheet/royal,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "red2"
@@ -3028,7 +3028,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -3194,7 +3194,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3249,7 +3249,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3374,7 +3374,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3429,7 +3429,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3574,7 +3574,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 26
 	},
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "purple2"
@@ -3800,7 +3800,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3855,7 +3855,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -3952,7 +3952,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4007,7 +4007,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4467,7 +4467,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4522,7 +4522,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4623,7 +4623,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -4678,7 +4678,7 @@
 /obj/landmark/start{
 	name = "Security Officer"
 	},
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/landmark/start{
 	name = "Chaplain"
 	},
@@ -8685,7 +8685,7 @@
 "ayt" = (
 /obj/stool/bed,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -8880,7 +8880,7 @@
 /area/station/janitor/office)
 "azh" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -10393,7 +10393,7 @@
 /area/station/crew_quarters/kitchen)
 "aDV" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -15337,6 +15337,9 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -17238,7 +17241,7 @@
 	tag = ""
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -17327,7 +17330,7 @@
 	dir = 8
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -17817,7 +17820,7 @@
 /area/station/medical/cdc)
 "bcp" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -17825,7 +17828,7 @@
 /area/station/medical/cdc)
 "bcq" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -18549,7 +18552,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -18564,6 +18570,9 @@
 /obj/item/robodefibrillator,
 /obj/item/storage/box/gl_kit,
 /obj/item/device/radio/intercom/medical,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -18988,7 +18997,7 @@
 /area/station/science/lab)
 "bhb" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -18996,7 +19005,7 @@
 /area/station/medical/cdc)
 "bhc" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -19093,8 +19102,7 @@
 	desc = "An underfloor mail pipe.";
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "artlab";
-	name = "artifact lab mail router"
+	mail_tag = "artlab"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -19103,13 +19111,13 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/chemicompiler_stationary,
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 30
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -19120,10 +19128,10 @@
 	layer = 3.5;
 	pixel_y = 28
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
 	},
-/obj/machinery/chem_heater,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -19132,9 +19140,6 @@
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
 	},
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -19147,9 +19152,6 @@
 /area/station/science/chemistry)
 "bhN" = (
 /obj/machinery/light_switch/north,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/chem_master,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
@@ -19377,6 +19379,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bjf" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -19388,15 +19393,24 @@
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bji" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
 /area/station/science/chemistry)
 "bjk" = (
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple/corner,
 /area/station/science/lobby)
 "bjl" = (
@@ -19405,6 +19419,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -25642,7 +25659,7 @@
 /area/listeningpost)
 "bLb" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -25749,7 +25766,7 @@
 /area/listeningpost)
 "bLs" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -26524,7 +26541,7 @@
 /area/station/medical/medbay)
 "bXO" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white/checker{
 	dir = 1
@@ -27077,6 +27094,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/head/private)
+"czP" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "cAz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -27204,9 +27227,6 @@
 /area/station/science/lab)
 "cGD" = (
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27333,7 +27353,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/vending/medical,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cPa" = (
@@ -27924,7 +27944,7 @@
 /area/station/medical/medbay)
 "dwt" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -28858,6 +28878,13 @@
 /obj/item/clothing/head/beret/random_color,
 /turf/simulated/floor/caution/south,
 /area/station/security/main)
+"eqV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/chemistry)
 "erD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28954,11 +28981,11 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -29418,9 +29445,6 @@
 /turf/space,
 /area/space)
 "eQl" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29991,11 +30015,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 9;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30635,11 +30659,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30739,10 +30762,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/junction/right,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "grl" = (
@@ -31322,11 +31345,11 @@
 	},
 /area/mining/magnet)
 "gZw" = (
+/obj/item/device/radio/intercom/science,
+/obj/machinery/computer/chem_request_receiver,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/science,
-/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -32446,9 +32469,6 @@
 /area/station/hangar/main)
 "ieq" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -33938,7 +33958,7 @@
 /area/station/quartermaster/office)
 "jFB" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -34023,7 +34043,7 @@
 /area/station/hallway/secondary/exit)
 "jLe" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -34257,10 +34277,6 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/security/main)
 "jVE" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
 	locked = 0;
@@ -34610,7 +34626,7 @@
 /area/station/teleporter)
 "klq" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -35777,6 +35793,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"llK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lobby)
 "lmr" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/medbay{
@@ -38254,7 +38281,7 @@
 /area/station/ai_monitored/storage/eva)
 "nTj" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -38857,7 +38884,7 @@
 	pixel_y = -4
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -39990,6 +40017,15 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
+"pEX" = (
+/obj/disposalpipe/switch_junction{
+	dir = 1;
+	icon_state = "pipe-sj2";
+	mail_tag = "chemlink";
+	name = "dispensary mail router"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/west)
 "pEZ" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
@@ -40086,6 +40122,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"pJC" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay)
 "pLb" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -41307,11 +41349,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 4;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -42505,11 +42547,12 @@
 	name = "Crew Quarters P03"
 	})
 "shC" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/computer/chem_requester/science{
 	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -43810,12 +43853,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "txO" = (
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -43964,11 +44010,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -44416,6 +44461,15 @@
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
 	})
+"ubX" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "ucJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -44564,9 +44618,6 @@
 /area/station/hallway/primary/central)
 "und" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -44835,9 +44886,6 @@
 /area/station/science/bot_storage)
 "uBf" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -44854,6 +44902,10 @@
 	name = "Chemistry Blast Shield";
 	opacity = 0;
 	tag = "icon-bdoormidc1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -44934,11 +44986,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -46611,6 +46663,9 @@
 	dir = 8
 	},
 /obj/access_spawn/chemistry,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -47004,11 +47059,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 5;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -47666,6 +47721,9 @@
 	opacity = 0;
 	tag = "icon-bdoormidc1"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "xrG" = (
@@ -47962,6 +48020,9 @@
 	},
 /obj/access_spawn/artlab,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "xDp" = (
@@ -74745,7 +74806,7 @@ xjd
 pXJ
 nnt
 aLA
-aLA
+pJC
 aLA
 aLA
 aLA
@@ -75002,7 +75063,7 @@ baj
 aYX
 bcH
 bIr
-baj
+aYX
 bgh
 bhj
 baj
@@ -75259,7 +75320,7 @@ bak
 aOs
 eLy
 aQO
-bak
+aOs
 bak
 bak
 aNn
@@ -75516,7 +75577,7 @@ aPq
 bbs
 aPq
 bdV
-aPq
+pEX
 bgi
 aPq
 xpa
@@ -86313,7 +86374,7 @@ any
 bbU
 aUr
 shC
-bbU
+ubX
 bbU
 aRt
 bmM
@@ -86568,7 +86629,7 @@ bbV
 uKc
 dFU
 iNX
-bgQ
+eqV
 uBf
 wmY
 gvH
@@ -87084,7 +87145,7 @@ gyl
 fmT
 bgQ
 bhK
-bjg
+czP
 bjg
 bMS
 bmP
@@ -87341,7 +87402,7 @@ beu
 iTE
 bgQ
 bhL
-bjg
+czP
 bks
 blD
 bmQ
@@ -88369,7 +88430,7 @@ aUs
 aUs
 aUs
 eQl
-oXP
+llK
 bkv
 oXP
 bmT
@@ -88882,7 +88943,7 @@ aXe
 lvS
 bfM
 aXe
-jhw
+dDe
 bjl
 wpF
 bgS

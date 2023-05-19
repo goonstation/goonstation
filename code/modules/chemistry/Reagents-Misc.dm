@@ -552,10 +552,12 @@ datum
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
+								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
 								H.gib()
 							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.key)
+					logTheThing(LOG_COMBAT, M, "is resuscitated with strange reagent at [log_loc(M)].")
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")

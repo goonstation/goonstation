@@ -353,7 +353,7 @@
 /area/station/security/main)
 "aP" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},

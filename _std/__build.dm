@@ -54,6 +54,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define NO_SHUTTLE_CALLS // Don't autocall the shuttle
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
+//#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
 
@@ -106,33 +107,38 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define DISPOSE_IS_QDEL
 
 //------------- MAP OVERRIDES -------------//
+//-------Special Events:
+//#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
+//#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
+//#define MAP_OVERRIDE_EVENT      	// Misc. event maps
+//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 
-//#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
-//#define MAP_OVERRIDE_DESTINY			// Destiny/RP
-//#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
-//#define MAP_OVERRIDE_COGMAP
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
-//#define MAP_OVERRIDE_DONUT2			// Updated Donut2
-//#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
+//-------Rotation maps:
+//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
+//#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
+//#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
+//#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
+//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
+//#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
+//#define MAP_OVERRIDE_OSHAN				// Oshan by committee
+//#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+
+//-------Discontinued or gimmick maps:
+//#define MAP_OVERRIDE_MANTA				// manta map
+//#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
+//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
+//#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
-//#define MAP_OVERRIDE_OSHAN			// Oshan
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
-//#define MAP_OVERRIDE_CRASH			// Stupid Crash Gimmick Map
-//#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
-//#define MAP_OVERRIDE_MANTA			// manta map
-//#define MAP_OVERRIDE_DENSITY
-//#define MAP_OVERRIDE_KONDARU
-//#define MAP_OVERRIDE_OZYMANDIAS
-//#define MAP_OVERRIDE_NADIR
-//#define MAP_OVERRIDE_FLEET
+//#define MAP_OVERRIDE_CHIRON				// Chiron by Kubius
+//#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
+//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
+//#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
-//#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
-//#define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
-//#define MAP_OVERRIDE_EVENT      // Misc. event maps
+
 
 //------------ Unit Test Framework ------------//
 
@@ -164,6 +170,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define NO_SHUTTLE_CALLS
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
+#define QUICK_MOB_DELETION
 #endif
 
 //----- Testmerge & Revision Information -----//

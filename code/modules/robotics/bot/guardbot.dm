@@ -518,7 +518,7 @@
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 
-		else if (istype(W, /obj/item/clothing/back/bedsheet))
+		else if (istype(W, /obj/item/clothing/suit/bedsheet))
 			if (src.bedsheet != 0)
 				boutput(user, "<span class='alert'>There is already a sheet draped over [src]! Two sheets would be ridiculous!</span>")
 				return

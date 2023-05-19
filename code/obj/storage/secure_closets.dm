@@ -209,6 +209,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/captain,
 	/obj/item/megaphone)
 
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(5))
+				new /obj/item/clothing/head/bigcaphat(src)
+			return 1
+
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
 	spawn_contents = list(/obj/item/clothing/shoes/brown,
@@ -227,7 +233,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/flash,
 	/obj/item/storage/box/clothing/hos,
 	/obj/item/clothing/suit/det_suit/hos,
-	/obj/item/clothing/back/hoscape,
+	/obj/item/clothing/suit/armor/hoscape,
 	/obj/item/clothing/shoes/brown,
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,

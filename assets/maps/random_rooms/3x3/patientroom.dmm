@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/stool/bed/moveable,
-/obj/item/clothing/back/bedsheet/blue,
+/obj/item/clothing/suit/bedsheet/blue,
 /turf/simulated/floor/bluegreen,
 /area/dmm_suite/clear_area)
 "c" = (

@@ -67,7 +67,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "cX" = (
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /obj/stool/bed,
 /obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. At least whoever it was died while snuggled into a warm and fuzzy bed.";
@@ -1499,7 +1499,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/prefab/von_ricken)
 "WW" = (
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /obj/stool/bed,
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)

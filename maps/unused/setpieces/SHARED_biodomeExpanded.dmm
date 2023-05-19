@@ -1470,7 +1470,7 @@
 /area/crypt/sigma/morgue)
 "bMn" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -4520,7 +4520,7 @@
 /area/crypt/sigma/storage)
 "fpr" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 5;
 	icon_state = "green2"
@@ -7434,7 +7434,7 @@
 /area/crater/biodome/crew)
 "iQU" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/green,
+/obj/item/clothing/suit/bedsheet/green,
 /obj/item/gun/kinetic/riotgun,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse{
 	pixel_x = 1;
@@ -8543,7 +8543,7 @@
 /area/crypt/graveyard)
 "kfM" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 10;
 	icon_state = "green2"
@@ -8558,7 +8558,7 @@
 /area/syndicate_station)
 "kgm" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/pink,
+/obj/item/clothing/suit/bedsheet/pink,
 /turf/unsimulated/floor/wood/two,
 /area/swampzone/interiors/outbuildings)
 "kgq" = (
@@ -8780,7 +8780,7 @@
 /area/crypt/sigma/mainhall)
 "kuK" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 9;
 	icon_state = "green2"
@@ -11869,7 +11869,7 @@
 /obj/stool/bed,
 /obj/item/clothing/under/misc/chaplain/rasta,
 /obj/item/clothing/head/rastacap,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /turf/unsimulated/floor/carpet{
 	dir = 6;
 	icon_state = "green2"
@@ -14336,7 +14336,7 @@
 /area/crater/biodome/crew)
 "rdn" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/psych,
+/obj/item/clothing/suit/bedsheet/psych,
 /obj/critter/zombie,
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
@@ -15093,7 +15093,7 @@
 /area/swampzone/deeps)
 "sch" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/psych,
+/obj/item/clothing/suit/bedsheet/psych,
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
 "sdh" = (
@@ -15248,7 +15248,7 @@
 /area/swampzone/ground/canyon)
 "sld" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -15790,7 +15790,7 @@
 /area/swampzone/interiors/bonktek/lounge)
 "sTR" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -17918,7 +17918,7 @@
 /area/swampzone/interiors/bonktek/shootingrange)
 "vlI" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/red,
+/obj/item/clothing/suit/bedsheet/red,
 /turf/unsimulated/floor/wood/two,
 /area/swampzone/interiors/outbuildings)
 "vlT" = (
@@ -18613,7 +18613,7 @@
 	dir = 8
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
 "vZO" = (
@@ -19199,7 +19199,7 @@
 	dir = 1
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/yellow,
+/obj/item/clothing/suit/bedsheet/yellow,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
 "wHj" = (
@@ -19930,7 +19930,7 @@
 /area/swampzone/ground)
 "xEr" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},

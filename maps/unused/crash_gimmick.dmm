@@ -137,7 +137,7 @@
 /area/space)
 "aoJ" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -153,7 +153,7 @@
 /area/russian/radiation)
 "aoP" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -256,7 +256,7 @@
 /area/space)
 "apY" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -271,7 +271,7 @@
 /area/russian/radiation)
 "aqb" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -304,7 +304,7 @@
 /area/russian/radiation)
 "aqg" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -936,7 +936,7 @@
 /area/russian/radiation)
 "aHk" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -1255,7 +1255,7 @@
 /area/russian/radiation)
 "aKk" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -1535,11 +1535,11 @@
 /area/russian/radiation)
 "aLP" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -1550,11 +1550,11 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -7962,7 +7962,7 @@
 /area/russian/radiation)
 "bnO" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -8674,7 +8674,7 @@
 	icon_state = "2-4"
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -8804,7 +8804,7 @@
 /area/russian/radiation)
 "brt" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -8836,7 +8836,7 @@
 /area/russian/radiation)
 "brw" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/item/clothing/suit/straight_jacket,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/space,
@@ -9392,7 +9392,7 @@
 	icon_state = "1-2"
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -16649,7 +16649,7 @@
 /area/russian/radiation)
 "caH" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -16864,7 +16864,7 @@
 /area/russian/radiation)
 "ccj" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -21382,7 +21382,7 @@
 /area/russian/radiation)
 "csZ" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -21906,7 +21906,7 @@
 	},
 /area/russian/radiation)
 "cuF" = (
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/stool/bed/moveable,
 /turf/simulated/floor/bluewhite/corner{
 	desc = " It is made of steel.";
@@ -24561,7 +24561,7 @@
 	},
 /area/russian/radiation)
 "cCG" = (
-/obj/item/clothing/back/bedsheet,
+/obj/item/clothing/suit/bedsheet,
 /obj/stool/bed/moveable,
 /turf/simulated/floor/bluewhite{
 	broken = 1;
@@ -26893,7 +26893,7 @@
 	pixel_y = 20
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/random,
+/obj/item/clothing/suit/bedsheet/random,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -27647,7 +27647,7 @@
 /area/russian/radiation)
 "cKm" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -29186,7 +29186,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -30287,7 +30287,7 @@
 /area/russian/radiation)
 "cQE" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/red/side{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -31678,7 +31678,7 @@
 /area/russian/radiation)
 "cUG" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -33223,7 +33223,7 @@
 /area/russian/radiation)
 "cYH" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "This colorful and somewhat childish bedsheet helps the captain sleep at night.";
 	icon_state = "bedsheet-captain";
@@ -33249,7 +33249,7 @@
 /area/russian/radiation)
 "cYI" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -33395,7 +33395,7 @@
 /area/russian/radiation)
 "cYU" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
@@ -37998,7 +37998,7 @@
 "dzV" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -38006,7 +38006,7 @@
 /area/space)
 "dzX" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -38058,7 +38058,7 @@
 /area/space)
 "dAz" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -38786,7 +38786,7 @@
 "dEn" = (
 /obj/decal/cleanable/ash,
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -38866,7 +38866,7 @@
 /area/space)
 "dEL" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -38875,7 +38875,7 @@
 /area/space)
 "dEO" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -38914,7 +38914,7 @@
 /turf/space,
 /area/space)
 "dEY" = (
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "hop";
 	icon_state = "bedsheet-hop"
 	},
@@ -41048,7 +41048,7 @@
 /area/russian/radiation)
 "fah" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -44391,7 +44391,7 @@
 /area/russian/radiation)
 "gwM" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
@@ -48121,7 +48121,7 @@
 /area/russian/radiation)
 "ioD" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -48135,7 +48135,7 @@
 /area/russian/radiation)
 "ioT" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -48143,7 +48143,7 @@
 /area/russian/radiation)
 "ipo" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -49687,7 +49687,7 @@
 /area/russian/radiation)
 "iZb" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "red";
 	icon_state = "bedsheet-red"
 	},
@@ -55516,7 +55516,7 @@
 /area/russian/radiation)
 "lJI" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -55538,7 +55538,7 @@
 /area/russian/radiation)
 "lKv" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
@@ -56379,7 +56379,7 @@
 /area/russian/radiation)
 "lZY" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet/black,
+/obj/item/clothing/suit/bedsheet/black,
 /turf/space,
 /area/russian/radiation)
 "maC" = (
@@ -61962,7 +61962,7 @@
 /area/russian/radiation)
 "oCS" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
@@ -68071,7 +68071,7 @@
 	icon_state = "clowncorpse";
 	name = "what used to be Twenty Second Elephant"
 	},
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "captain";
 	desc = "hard to believe...";
 	icon_state = "bedsheet-captain";
@@ -68293,7 +68293,7 @@
 	pixel_y = -7
 	},
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
@@ -79414,7 +79414,7 @@
 /area/space)
 "xWc" = (
 /obj/stool/bed,
-/obj/item/clothing/back/bedsheet{
+/obj/item/clothing/suit/bedsheet{
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},

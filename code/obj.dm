@@ -10,6 +10,7 @@
 	var/deconstruct_flags = DECON_NONE
 
 	var/artifact = null
+	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
 
@@ -265,7 +266,7 @@
 	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/back/bedsheet))
+		if (istype(W, /obj/item/clothing/suit/bedsheet))
 			qdel(W)
 			src.amount++
 		return
@@ -274,7 +275,7 @@
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
-			new /obj/item/clothing/back/bedsheet(src.loc)
+			new /obj/item/clothing/suit/bedsheet(src.loc)
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else

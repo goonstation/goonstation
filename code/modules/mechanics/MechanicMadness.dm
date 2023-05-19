@@ -2638,6 +2638,7 @@
 		icon_state = "[under_floor ? "u":""]comp_pressure"
 		return
 
+ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 /obj/item/mechanics/trigger/button
 	name = "Button"
 	desc = "A button. Its red hue entices you to press it."
@@ -2659,12 +2660,16 @@
 
 	attack_hand(mob/user)
 		if(level == 1)
-			flick(icon_down, src)
-			LIGHT_UP_HOUSING
-			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing(LOG_STATION, user, "presses the mechcomp button at [log_loc(src)].")
+			press(user)
 			return 1
 		return ..(user)
+
+	proc/press(mob/user)
+		set name = "Press"
+		flick(icon_down, src)
+		LIGHT_UP_HOUSING
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
+		logTheThing(LOG_STATION, user || usr, "presses the mechcomp button at [log_loc(src)].")
 
 	Click(location,control,params)
 		..()
