@@ -65,15 +65,6 @@
 			src.blend_mode = pl.blend_mode
 			src.mouse_opacity = pl.mouse_opacity
 		..()
-
-/atom/movable/screen/plane_parent/backdrop
-	New(plane, appearance_flags = 0, blend_mode = BLEND_DEFAULT, color, mouse_opacity = 1, name = "unnamed_plane", is_screen = 0)
-		..()
-		var/image/backdrop = image(icon='icons/effects/overlays/solid.dmi', icon_state="solid", layer=BACKGROUND_LAYER)
-		backdrop.color = rgb(128,128,0,255)
-		backdrop.transform = backdrop.transform.Scale(2)
-		src.UpdateOverlays(backdrop, "backdrop")
-
 /atom/movable/screen/plane_display/master
 	screen_loc = "NORTH-0,1"
 	var/keep_together_requests = 0
