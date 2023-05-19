@@ -173,13 +173,13 @@
 	can_use_in_container = 1
 	lock_holder = FALSE
 	ignore_holder_lock = 1
+	var/duration = 30 SECONDS
 
 	cast(atom/target)
 		if (..())
 			return 1
 		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
 			return 1
-
 		if (!src.cooldowncheck())
 			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
 			return 1
@@ -190,8 +190,14 @@
 			return 1
 		boutput(holder.owner, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
 
-		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
-			if(isdead(C))
-				break
-			sleep(3 SECONDS)
-			changeling_super_heal_step(C)
+
+/datum/statusEffect/regeneration
+	id =
+	name =
+	desc =
+	icon_state =
+	unique =
+	maxDuration = 30 SECONDS
+
+	onAdd()
+
