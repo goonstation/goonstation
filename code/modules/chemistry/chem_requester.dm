@@ -21,6 +21,7 @@ var/list/datum/chem_request/chem_requests = list()
 	name = "Chemical request console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "chemreq"
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/datum/chem_request/request = new
 	var/obj/item/card/id/card = null
 	var/max_volume = 400
@@ -123,6 +124,7 @@ var/list/datum/chem_request/chem_requests = list()
 	icon_state = "chemreq"
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	proc/get_age(var/datum/chem_request/request)
 		var/delta = ticker.round_elapsed_ticks - request.time
