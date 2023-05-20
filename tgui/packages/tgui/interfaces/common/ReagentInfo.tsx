@@ -11,7 +11,28 @@ import { BoxProps } from '../../components/Box';
 import { BooleanLike } from 'common/react';
 import { InfernoNode } from 'inferno';
 
-interface ReagentContainer {
+export enum MatterState {
+  Solid = 1,
+  Liquid = 2,
+  Gas = 3,
+}
+
+export const MatterStateIconMap = {
+  [MatterState.Solid]: {
+    icon: 'square',
+    pr: 0.5,
+  },
+  [MatterState.Liquid]: {
+    icon: 'tint',
+    pr: 0.9,
+  },
+  [MatterState.Gas]: {
+    icon: 'wind',
+    pr: 0.5,
+  },
+};
+
+export interface ReagentContainer {
   name?: string;
   id?: string;
   maxVolume: number;
@@ -22,17 +43,19 @@ interface ReagentContainer {
   fake?: BooleanLike;
 }
 
-interface Reagent {
+export interface Reagent {
   name: string;
   id: string;
   volume: number;
   colorR: number;
   colorG: number;
   colorB: number;
+  state?: MatterState;
 }
 
 export const NoContainer: ReagentContainer = {
   name: "No Beaker Inserted",
+  contents: [],
   id: "inserted",
   maxVolume: 100,
   totalVolume: 0,
@@ -42,7 +65,8 @@ export const NoContainer: ReagentContainer = {
 };
 
 interface ReagentInfoProps extends BoxProps {
-  container: ReagentContainer;
+  container: ReagentContainer | null;
+  sort?: (a: Reagent, b: Reagent) => number;
 }
 
 interface ReagentGraphProps extends ReagentInfoProps {}
@@ -50,12 +74,13 @@ interface ReagentGraphProps extends ReagentInfoProps {}
 export const ReagentGraph = (props: ReagentGraphProps) => {
   const {
     className = '',
-    container,
     height,
+    sort,
     ...rest
   } = props;
+  const container = props.container ?? NoContainer;
   const { maxVolume, totalVolume, finalColor } = container;
-  const contents = container.contents || [];
+  const contents = sort ? container.contents.slice().sort(sort): container.contents || [];
   rest.height = height || "50px";
 
   return (
@@ -76,7 +101,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
               </Flex.Item>
             ))}
             <Flex.Item grow={((maxVolume - totalVolume)/maxVolume)}>
-              <Tooltip content={`Nothing (${maxVolume - totalVolume}u)`} position="bottom">
+              <Tooltip content={`Nothing${container.fake ? "" : ` (${maxVolume - totalVolume}u)`}`} position="bottom">
                 <NoticeBox
                   px={0}
                   my={0}
@@ -115,29 +140,32 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
 };
 
 interface ReagentListProps extends ReagentInfoProps {
-  renderButtons(reagent: Reagent): InfernoNode;
+  renderButtons?(reagent: Reagent): InfernoNode;
+  showState?: BooleanLike;
 }
 
 export const ReagentList = (props: ReagentListProps) => {
   const {
     className = '',
-    container,
     renderButtons,
+    sort,
+    showState,
     height,
     ...rest
   } = props;
-  const contents = container.contents || [];
+  const container = props.container ?? NoContainer;
+  const contents = sort ? container.contents.slice().sort(sort): container.contents || [];
   rest.height = height || 6;
 
   return (
-    <Section scrollable>
+    <Section scrollable={height !== "auto"}>
       <Box {...rest}>
         {contents.length ? contents.map(reagent => (
-          <Flex key={reagent.id} mb={0.5} align="center">
+          <Flex key={reagent.id} mb={0.2} align="center">
             <Flex.Item grow>
               <Icon
-                pr={0.9}
-                name="circle"
+                pr={showState ? MatterStateIconMap[reagent.state].pr : 0.9}
+                name={showState ? MatterStateIconMap[reagent.state].icon : "circle"}
                 style={{
                   "text-shadow": "0 0 3px #000;",
                 }}

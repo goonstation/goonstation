@@ -4,6 +4,7 @@
 	name = "Trickster puppet"
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
+	faction = MOB_AI_FACTION_WRAITH
 	icon_state = "shade"
 	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
