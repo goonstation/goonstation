@@ -736,7 +736,8 @@
 	streak_descriptor = "bloody" //bloody, oily, et
 	remove_object = null
 	handlistPart = null
-	partlistPart = "leg_left_item"
+	partlistPart = "legL-item"
+	no_icon = TRUE
 	skintoned = FALSE
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
@@ -832,7 +833,8 @@
 	streak_descriptor = "bloody" //bloody, oily, et
 	remove_object = null
 	handlistPart = null
-	partlistPart = "leg_right_item"
+	partlistPart = "legR-item"
+	no_icon = TRUE
 	slot = "r_leg"
 	side = "right"
 	skintoned = FALSE
