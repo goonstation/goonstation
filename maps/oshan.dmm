@@ -42504,7 +42504,9 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Cloning Room"
+	name = "Cloning Room";
+	id = "cloning_door";
+	req_access_text = "5"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
