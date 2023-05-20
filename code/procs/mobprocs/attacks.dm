@@ -1,4 +1,4 @@
-/proc/is_allowed_limb(obj/item/W, mob/user)
+/mob/proc/is_allowed_limb(obj/item/W, mob/user)
 	var/deny_arm = W.object_flags & NO_ARM_ATTACH // not allowed on arms
 	var/deny_leg = W.object_flags & NO_LEG_ATTACH // not allowed on legs
 	var/is_arm_sel = user.zone_sel && (user.zone_sel.selecting in list("l_arm", "r_arm")) // targeting arm
