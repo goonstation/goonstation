@@ -744,7 +744,7 @@
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
 	random_limb_blacklisted = TRUE
-	/// Also, item arms are supposedly junk jammed into a severed limb's socket
+	/// Also, item legs are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
 	movement_modifier = /datum/movement_modifier/item_legs/left
@@ -779,10 +779,11 @@
 			I.cant_self_remove = 1
 			I.cant_other_remove = 1
 
-			if (H)
-				H.update_clothing()
-				H.set_body_icon_dirty()
-				H.update_bloody_feet()
+			// if (H)
+			// 	H.update_clothing()
+			// 	H.update_body()
+			// 	H.set_body_icon_dirty()
+			// 	H.update_bloody_feet()
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))
@@ -834,16 +835,15 @@
 	remove_object = null
 	handlistPart = null
 	partlistPart = "legR-item"
-	no_icon = TRUE
-	slot = "r_leg"
 	side = "right"
+	no_icon = TRUE
 	skintoned = FALSE
 	/// uses defines and flags to determine if you can drop or remove it.
 	var/original_flags = 0
 	var/image/handimage = 0
 	var/special_icons = 'icons/mob/human.dmi'
 	random_limb_blacklisted = TRUE
-	/// Also, item arms are supposedly junk jammed into a severed limb's socket
+	/// Also, item legs are supposedly junk jammed into a severed limb's socket
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ITEM)
 	movement_modifier = /datum/movement_modifier/item_legs/right
@@ -878,10 +878,11 @@
 			I.cant_self_remove = 1
 			I.cant_other_remove = 1
 
-			if (H)
-				H.update_clothing()
-				H.set_body_icon_dirty()
-				H.update_bloody_feet()
+			// if (H)
+			// 	H.update_clothing()
+			// 	H.update_body()
+			// 	H.set_body_icon_dirty()
+			// 	H.update_bloody_feet()
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))

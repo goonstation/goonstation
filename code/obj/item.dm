@@ -1394,24 +1394,31 @@
 
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 
-	if (src.object_flags & (NO_ARM_ATTACH || NO_LEG_ATTACH) || src.cant_drop || src.two_handed)
-		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
-		return
-
 	var/obj/item/parts/human_parts/new_limb = null
+	var/is_arm = 0
+	var/is_leg = 0
 	switch(attacher.zone_sel.selecting)
 		if ("l_arm")
+			is_arm = 1
 			new_limb = new /obj/item/parts/human_parts/arm/left/item(attachee)
 			attachee.limbs.l_arm = new_limb
 		if ("r_arm")
+			is_arm = 1
 			new_limb = new /obj/item/parts/human_parts/arm/right/item(attachee)
 			attachee.limbs.r_arm = new_limb
 		if ("l_leg")
+			is_leg = 1
 			new_limb = new /obj/item/parts/human_parts/leg/left/item(attachee)
 			attachee.limbs.l_leg = new_limb
 		if ("r_leg")
+			is_leg = 1
 			new_limb = new /obj/item/parts/human_parts/leg/right/item(attachee)
 			attachee.limbs.r_leg = new_limb
+
+	if (src.object_flags & ((is_arm && NO_ARM_ATTACH) || (is_leg && NO_LEG_ATTACH)) || src.cant_drop || src.two_handed)
+		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
+		return
+
 	if (!new_limb) return //who knows - or they aren't targetting a limb!
 
 	new_limb.holder = attachee
@@ -1429,11 +1436,19 @@
 		else
 			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
+	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/hemostat) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
 	if (attachee != attacher)
-		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
-		boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
+		if (can_secure)
+			boutput(attachee, "<span class='alert'>[attacher] securely attaches [src] to your stump.</span>")
+			boutput(attacher, "<span class='alert'>You securely attach [src] to [attachee]'s stump.</span>")
+		else
+			boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
+			boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
 	else
-		boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
+		if (can_secure)
+			boutput(attacher, "<span class='alert'>You securely attach [src] to your own stump.</span>")
+		else
+			boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
 
 	attachee.set_body_icon_dirty()
 	attachee.hud.update_hands()
