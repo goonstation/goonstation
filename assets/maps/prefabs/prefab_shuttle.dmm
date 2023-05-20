@@ -59,6 +59,9 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor4"
 	},
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "an" = (
@@ -110,12 +113,11 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ax" = (
-/obj/wingrille_spawn/auto/crystal,
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater";
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "ay" = (
 /obj/decal/cleanable/dirt,
@@ -150,6 +152,10 @@
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/blood/gibs/body,
 /obj/decal/cleanable/blood/splatter,
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "aC" = (
@@ -175,9 +181,6 @@
 	},
 /area/noGenerate)
 "aE" = (
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor2"
 	},
@@ -233,16 +236,15 @@
 "aN" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "aO" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
-	},
-/obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 1
 	},
 /obj/item/bloodslide,
 /turf/variableTurf/clear,
@@ -442,12 +444,11 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/obj/wingrille_spawn/auto/crystal,
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater";
 	dir = 8
 	},
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "bq" = (
 /obj/decal/fakeobjects{
@@ -566,6 +567,10 @@
 	anchored = 1
 	},
 /obj/map/light/white,
+/obj/machinery/light/small/broken{
+	dir = 4;
+	pixel_x = 11
+	},
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "bE" = (
@@ -617,9 +622,6 @@
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "bN" = (
-/obj/decal/fakeobjects/lightbulb_broken{
-	dir = 4
-	},
 /obj/decal/cleanable/ash,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
@@ -649,13 +651,10 @@
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "bR" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "door0";
-	name = "rusted hatch"
-	},
 /obj/decal/cleanable/paper,
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "bS" = (
@@ -669,6 +668,13 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"Rw" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion";
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
 
 (1,1,1) = {"
 aq
@@ -688,10 +694,10 @@ aq
 (2,1,1) = {"
 aq
 aq
-ai
-aj
-aw
-aj
+aq
+aq
+Rw
+aq
 bI
 ac
 aw
@@ -703,7 +709,7 @@ aq
 (3,1,1) = {"
 aq
 ac
-aj
+ai
 ae
 ax
 aG
@@ -733,7 +739,7 @@ aq
 (5,1,1) = {"
 aq
 aj
-ao
+aj
 af
 az
 af
@@ -937,7 +943,7 @@ ao
 ao
 aj
 ad
-aj
+aq
 aq
 "}
 (19,1,1) = {"
