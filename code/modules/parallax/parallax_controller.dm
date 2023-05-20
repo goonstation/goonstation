@@ -81,6 +81,11 @@ var/global/parallax_enabled = TRUE
 
 				src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
 
+		src.previous_turf = get_turf(src.owner.eye)
+		var/area/A = get_area(src.previous_turf)
+		for (var/parallax_layer_type as anything in A.area_parallax_layers)
+			src.add_parallax_layer(parallax_layer_type, z_level = A.z)
+
 	/// Creates a new parallax layer of the specified type on the specified z-level.
 	proc/add_parallax_layer(parallax_layer_type, animation_time = 0, z_level = Z_LEVEL_STATION, list/layer_params)
 		var/atom/movable/screen/parallax_layer/parallax_layer = new parallax_layer_type(null, src.owner, layer_params)
