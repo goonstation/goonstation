@@ -3557,7 +3557,9 @@ ABSTRACT_TYPE(/area/station/catwalk)
 		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
+/// Used to allow the exterior of the Cairngorm to render parallax layers.
 /area/syndicate_station_space
+	name = "Syndicate Station Space"
 	area_parallax_layers = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
