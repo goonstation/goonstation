@@ -1392,8 +1392,6 @@
 		var/mob/M = src.loc
 		M.update_inhands()
 
-/obj/item/proc/get_attaching_limb(var/mob/living/carbon/human/attachee, var/mob/attacher)
-
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee, var/mob/attacher)
 
 	var/obj/item/parts/human_parts/new_limb = null
