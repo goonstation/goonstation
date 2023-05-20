@@ -292,7 +292,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				sleep(2.5 SECONDS)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
-				icon_state = "colorfade"
+				o2.icon_state = "colorfade"
 				sleep(2.5 SECONDS)
 
 			if(src)
