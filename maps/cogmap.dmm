@@ -63262,10 +63262,6 @@
 	pixel_x = 10;
 	pixel_y = -7
 	},
-/obj/item/storage/bible{
-	pixel_x = -8;
-	pixel_y = -13
-	},
 /turf/simulated/floor/carpet,
 /area/station/hangar/main)
 "uIM" = (
