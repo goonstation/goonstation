@@ -1436,19 +1436,11 @@
 		else
 			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
-	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
 	if (attachee != attacher)
-		if (can_secure)
-			boutput(attachee, "<span class='alert'>[attacher] securely attaches [src] to your stump.</span>")
-			boutput(attacher, "<span class='alert'>You securely attach [src] to [attachee]'s stump.</span>")
-		else
-			boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
-			boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
+		boutput(attachee, "<span class='alert'>[attacher] attaches [src] to your stump. It doesn't look very secure!</span>")
+		boutput(attacher, "<span class='alert'>You attach [src] to [attachee]'s stump. It doesn't look very secure!</span>")
 	else
-		if (can_secure)
-			boutput(attacher, "<span class='alert'>You securely attach [src] to your own stump.</span>")
-		else
-			boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
+		boutput(attacher, "<span class='alert'>You attach [src] to your own stump. It doesn't look very secure!</span>")
 
 	attachee.set_body_icon_dirty()
 	attachee.hud.update_hands()
