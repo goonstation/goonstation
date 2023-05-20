@@ -220,8 +220,11 @@
 		var/mob/living/carbon/human/C
 		if (ishuman(owner))
 			C = owner
-			C.HealDamage("All", 7, 7, 5)
-			C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+			C.HealDamage("All", 2, 2, 1) //heal less burn since lings are supposed to be vulnerable to it
+			if (prob(20))
+				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				boutput(C, "<span class='notice'>You feel your flesh knitting back together.</span>")
+				C.HealDamage ("All", 3, 3, 1)
 
 	onRemove()
 		. = ..()
@@ -229,9 +232,10 @@
 		if (!istype(H))
 			return 1
 
-		var/mob/living/C
+		var/mob/living/C = owner
 		if (!istype(C))
 			return 1
 
 		boutput(C, "<span class='notice'>Your skin no longer reforms around your skeleton.</span>")
+		C.visible_message("<span class='alert'><B>[C]'s flash starts moving around and sliding, closing up their wounds!</B></span>")
 		return
