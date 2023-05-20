@@ -195,9 +195,6 @@
 "sA" = (
 /turf/simulated/floor/carpet/clowncarpet/border,
 /area/prefab/art_workshop)
-"sQ" = (
-/turf/space,
-/area/noGenerate)
 "tq" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -994,7 +991,7 @@ ry
 ry
 ry
 ry
-sQ
+Xx
 Xx
 Xx
 Xx
