@@ -235,7 +235,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench/nospawn,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "gL" = (
 /obj/forcefield/energyshield/perma/doorlink,
@@ -315,7 +315,7 @@
 /obj/warp_beacon{
 	name = "Subsurface Bay"
 	},
-/turf/space/fluid/trench/nospawn,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "kD" = (
 /obj/item/crowbar,
@@ -339,7 +339,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench/nospawn,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "lZ" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -666,7 +666,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space/fluid/trench/nospawn,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "wk" = (
 /obj/item/cell/charged{
@@ -1269,9 +1269,7 @@
 "Ol" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 8
-	},
+/turf/variableTurf/clear,
 /area/diner/dining)
 "Oo" = (
 /obj/decal/cleanable/gangtag{
@@ -1662,9 +1660,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/kitchen)
-"YD" = (
-/turf/space/fluid/trench/nospawn,
-/area/noGenerate)
 "YO" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/engine,
@@ -1712,7 +1707,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space/fluid/trench/nospawn,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Zp" = (
 /obj/table/auto,
@@ -2717,9 +2712,9 @@ XP
 XP
 XP
 Nl
-YD
-YD
-YD
+Nl
+Nl
+Nl
 XP
 XP
 XP
@@ -2763,13 +2758,13 @@ Nl
 Nl
 XP
 XP
-YD
 Nl
-YD
-YD
 Nl
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
 XP
 XP
 nw
@@ -2807,20 +2802,20 @@ dt
 dt
 TC
 Nl
-YD
 Nl
 Nl
-YD
-YD
-YD
-YD
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
 nw
@@ -2855,26 +2850,26 @@ xI
 Ap
 Ap
 vs
-YD
-YD
 Nl
-YD
 Nl
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
 nw
 Nl
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 Ol
 bd
 Sp
@@ -2904,26 +2899,26 @@ xI
 Vo
 Ap
 vs
-YD
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
 nw
 nw
 nw
 Nl
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 yh
 Iw
 LT
@@ -2954,13 +2949,13 @@ qu
 qu
 bn
 Nl
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 nw
 nw
 nw
@@ -3002,13 +2997,13 @@ et
 qX
 qX
 VJ
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 XP
 nw
 nw
@@ -3051,13 +3046,13 @@ sF
 OT
 oQ
 fG
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 XP
 XP
 nw
@@ -3100,13 +3095,13 @@ Be
 qu
 dC
 gL
-YD
-YD
-YD
+Nl
+Nl
+Nl
 gv
-YD
-YD
-YD
+Nl
+Nl
+Nl
 XP
 XP
 XP
@@ -3154,8 +3149,8 @@ Zf
 Zf
 kx
 vX
-YD
-YD
+Nl
+Nl
 XP
 XP
 XP
@@ -3198,13 +3193,13 @@ Fp
 Fp
 eT
 gL
-YD
-YD
-YD
+Nl
+Nl
+Nl
 lW
-YD
-YD
-YD
+Nl
+Nl
+Nl
 XP
 XP
 nw
@@ -3247,13 +3242,13 @@ sF
 oQ
 ON
 gL
-YD
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 XP
 XP
 nw
@@ -3296,12 +3291,12 @@ Be
 qu
 qu
 tA
-YD
-YD
-YD
-YD
-YD
-YD
+Nl
+Nl
+Nl
+Nl
+Nl
+Nl
 XP
 XP
 nw
@@ -3346,9 +3341,9 @@ qX
 qX
 ma
 Nl
-YD
-YD
-YD
+Nl
+Nl
+Nl
 Nl
 XP
 XP
@@ -3394,11 +3389,11 @@ XP
 XP
 XP
 XP
-YD
-YD
 Nl
-YD
-YD
+Nl
+Nl
+Nl
+Nl
 XP
 XP
 XP
@@ -3446,7 +3441,7 @@ XP
 XP
 Nl
 Nl
-YD
+Nl
 Nl
 XP
 XP

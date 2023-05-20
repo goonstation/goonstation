@@ -1,12 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "d" = (
 /obj/spacevine/living,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8;
-	pixel_x = -10
+/obj/machinery/light/incandescent/broken{
+	dir = 8
 	},
 /turf/unsimulated/floor/grass/random,
 /area/noGenerate)
@@ -51,7 +50,7 @@
 	pixel_x = 7;
 	pixel_y = 11
 	},
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/unsimulated/floor/grass/random,
 /area/noGenerate)
 "z" = (
@@ -93,8 +92,15 @@
 /area/noGenerate)
 "P" = (
 /obj/decal/cleanable/tomatosplat,
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
+"T" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/unsimulated/floor/grass/random,
+/area/noGenerate)
 "U" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/saw,
@@ -206,7 +212,7 @@ a
 a
 a
 J
-N
+T
 N
 t
 B

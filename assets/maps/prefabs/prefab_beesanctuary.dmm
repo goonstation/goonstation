@@ -156,7 +156,7 @@
 /area/prefab/bee_sanctuary)
 "fQ" = (
 /obj/grille/catwalk,
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "gm" = (
 /obj/item/reagent_containers/food/snacks/beefood,
@@ -462,7 +462,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "qg" = (
 /obj/machinery/light/small/warm/very{
@@ -563,7 +563,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "tB" = (
 /obj/table/reinforced/auto,
@@ -641,7 +641,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "xD" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -670,7 +670,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "yC" = (
 /obj/machinery/computer/genetics/portable,
@@ -695,7 +695,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "yT" = (
 /obj/decal/floatingtiles{
@@ -710,7 +710,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "zv" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -768,7 +768,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Ak" = (
 /obj/decal/fakeobjects/pipe{
@@ -835,7 +835,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "BV" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -868,7 +868,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "CO" = (
 /obj/machinery/light{
@@ -984,7 +984,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "EP" = (
 /obj/decal/cleanable/dirt/dirt4,
@@ -1658,7 +1658,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Vn" = (
 /obj/lattice,

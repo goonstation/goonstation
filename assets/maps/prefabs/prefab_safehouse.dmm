@@ -144,7 +144,7 @@
 /obj/item/storage/pill_bottle/methamphetamine{
 	pixel_x = 9;
 	pixel_y = 8;
-	spawn_contents = list(/obj/item/reagent_containers/pill/methamphetamine = 7)
+	spawn_contents = list(/obj/item/reagent_containers/pill/methamphetamine=7)
 	},
 /obj/item/storage/pill_bottle/bathsalts{
 	pixel_y = 9
@@ -420,7 +420,7 @@
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "my" = (
 /obj/decal/tile_edge/stripe/extra_big,
@@ -584,7 +584,7 @@
 	layer = 4;
 	pixel_x = 1
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "rK" = (
 /obj/table/reinforced/bar/auto,
@@ -813,7 +813,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/safehouse)
 "EM" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "EN" = (
 /turf/simulated/floor/carpet/red/standard/narrow/east,
@@ -878,14 +878,14 @@
 /area/prefab/safehouse)
 "KU" = (
 /obj/decal/floatingtiles,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "LI" = (
 /obj/machinery/door_control/podbay/suspiciousdebris,
 /obj/item/parts/robot_parts/arm/right/light{
 	pixel_x = -7
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "MT" = (
 /obj/stool/bar,
@@ -911,11 +911,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/innercorner/omni,
 /area/prefab/safehouse)
-"Pn" = (
-/turf/simulated/wall/auto/asteroid{
-	icon_state = null
-	},
-/area/noGenerate)
 "Qc" = (
 /obj/machinery/power/smes{
 	charge = 1e7;
@@ -936,7 +931,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/safehouse/asteroiddoors)
 "RR" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Sr" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -967,7 +962,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
 "UM" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "UV" = (
 /obj/storage/crate/wooden{
@@ -1076,7 +1071,7 @@
 /turf/simulated/floor/airless/stairs,
 /area/prefab/safehouse)
 "Zd" = (
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/wall,
 /area/noGenerate)
 "Zf" = (
 /obj/storage/crate/packing{
@@ -1781,7 +1776,7 @@ YA
 YA
 YA
 YA
-Pn
+Zd
 Zd
 Zd
 Zd
@@ -1906,7 +1901,7 @@ YA
 YA
 YA
 CW
-Pn
+Zd
 Zd
 Zd
 RR
