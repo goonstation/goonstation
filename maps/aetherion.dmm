@@ -1087,7 +1087,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/pool/no_animate,
-/area/space)
+/area/station/crew_quarters/pool)
 "eL" = (
 /obj/machinery/atmospherics/pipe/manifold,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -1661,7 +1661,7 @@
 "ho" = (
 /obj/pool/perspective,
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "hp" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/specialroom/freezer/white,
@@ -2768,9 +2768,9 @@
 /turf/simulated/floor,
 /area/station/engine/substation/west)
 "mA" = (
-/obj/machinery/door/airlock/pyro/maintenance,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/pool)
 "mB" = (
 /obj/stool/chair/comfy,
 /turf/simulated/floor/glassblock/transparent/grey,
@@ -3210,7 +3210,7 @@
 	tag = "icon-pool (WEST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "oJ" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -4002,7 +4002,7 @@
 "sP" = (
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "sQ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -4026,7 +4026,7 @@
 	tag = "icon-pool (NORTHEAST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "sX" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/white/checker2{
@@ -4224,7 +4224,7 @@
 /area/station/science/lab)
 "tP" = (
 /turf/simulated/wall/auto/supernorn,
-/area/space)
+/area/station/crew_quarters/pool)
 "tR" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
@@ -5100,7 +5100,7 @@
 /area/space)
 "xU" = (
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "xV" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -6276,7 +6276,7 @@
 	tag = "icon-pool (NORTH)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "Db" = (
 /turf/simulated/floor{
 	icon_state = "SS13-Centred-2-U4"
@@ -6660,7 +6660,7 @@
 /area/station/crew_quarters/bar)
 "EX" = (
 /turf/simulated/floor/pool/no_animate,
-/area/space)
+/area/station/crew_quarters/pool)
 "EY" = (
 /turf/simulated/floor/orange/side{
 	dir = 5
@@ -6901,7 +6901,7 @@
 	name = "ladder"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "FY" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -7588,7 +7588,7 @@
 	tag = "icon-pool (SOUTHEAST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "Jd" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -8104,7 +8104,7 @@
 	tag = "icon-pool (SOUTHWEST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "Lv" = (
 /obj/cable/black{
 	icon_state = "4-8"
@@ -8432,7 +8432,7 @@
 	tag = "icon-pool (NORTHWEST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "MX" = (
 /obj/machinery/mass_driver{
 	id = "chapel_driver"
@@ -9241,6 +9241,10 @@
 /obj/storage/secure/closet/brig_automatic/genpop,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"QR" = (
+/obj/landmark/random_room/size3x5,
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "QS" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/glass_recycler{
@@ -10389,7 +10393,7 @@
 	tag = "icon-pool (EAST)"
 	},
 /turf/simulated/floor/white,
-/area/space)
+/area/station/crew_quarters/pool)
 "Wf" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
@@ -60968,7 +60972,7 @@ xU
 xU
 xU
 tP
-xa
+tP
 eH
 cE
 cE
@@ -61264,7 +61268,7 @@ Sz
 wm
 TV
 TV
-Zt
+mA
 xU
 MW
 oI
@@ -61566,7 +61570,7 @@ aI
 wm
 TV
 TV
-Zt
+mA
 xU
 Da
 eK
@@ -61868,7 +61872,7 @@ xV
 wm
 TV
 TV
-Zt
+mA
 xU
 FW
 EX
@@ -62170,7 +62174,7 @@ jc
 fE
 TV
 TV
-Zt
+mA
 xU
 Da
 EX
@@ -62472,7 +62476,7 @@ Lj
 Lj
 TV
 TV
-Zt
+mA
 xU
 sU
 We
@@ -63076,13 +63080,13 @@ DK
 eT
 TV
 TV
-tP
-eD
-eD
-eD
-eD
-xm
-tP
+xa
+eH
+eH
+eH
+eH
+QR
+xa
 eH
 eH
 cE
@@ -63378,13 +63382,13 @@ Zx
 xw
 TV
 TV
-tP
-eD
-eD
-eD
-eD
-eD
-mA
+xa
+eH
+eH
+eH
+eH
+eH
+vv
 eH
 eH
 cE
@@ -63680,13 +63684,13 @@ Zx
 xw
 TV
 TV
-tP
-eD
-eD
-eD
-eD
-eD
-tP
+xa
+eH
+eH
+eH
+eH
+eH
+xa
 eH
 eH
 cE
@@ -63982,13 +63986,13 @@ Zx
 xw
 TV
 TV
-tP
-tP
-tP
-tP
-tP
-tP
-tP
+xa
+xa
+xa
+xa
+xa
+xa
+xa
 xa
 Qt
 cE
