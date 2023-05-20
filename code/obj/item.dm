@@ -1410,11 +1410,9 @@
 
 	new_arm.holder = attachee
 	attacher.remove_item(src)
+
 	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
-	if (can_secure)
-		new_arm.remove_stage = 0
-	else
-		new_arm.remove_stage = 2
+	new_arm.remove_stage = can_secure ? 0 : 2
 
 	new_arm:set_item(src)
 	src.cant_drop = 1
