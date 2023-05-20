@@ -58,7 +58,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3, flags=SOUND_IGNORE_SPACE)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -1792,7 +1792,7 @@ TYPEINFO(/obj/machinery/the_singularitybomb)
 		logTheThing(LOG_BOMBING, src.activator, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5, flags=SOUND_IGNORE_SPACE)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

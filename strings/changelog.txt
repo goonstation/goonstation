@@ -1,5 +1,9 @@
 
 (t)fri may 19 23
+(u)DisturbHerb
+(p)13854
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added the Obon Festival Crate to QM, containing traditional summer robes and fireworks for the observance of the Space Japanese Obon festival. Costs 3000 credits.
 (u)colossusqw
 (p)13977
 (e)⚖⚗|C-Balance, A-Chemistry

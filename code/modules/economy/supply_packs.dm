@@ -1204,6 +1204,27 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/wooden
 	containername = "Kendo Crate"
 
+/datum/supply_packs/obon
+	name = "Obon Festival Crate"
+	desc = {"Contains traditional Space Japanese robes and fireworks for the observance of Obon; a syncretic summer festival fusing indigenous Japanese spiritual beliefs
+			with the Buddhist tradition of reverence for the dead."}
+	contains = list(/obj/item/clothing/under/gimmick/yukata/plain/gray,
+					/obj/item/clothing/under/gimmick/yukata/plain/black,
+					/obj/item/clothing/under/gimmick/yukata/plain/cream,
+					/obj/item/clothing/under/gimmick/yukata/plain/navy,
+					/obj/item/clothing/under/gimmick/yukata/plain/teal,
+					/obj/item/clothing/under/gimmick/yukata/floral/blue,
+					/obj/item/clothing/under/gimmick/yukata/floral/orange,
+					/obj/item/clothing/under/gimmick/yukata/floral/yellow,
+					/obj/item/clothing/under/gimmick/yukata/floral/red,
+					/obj/item/clothing/under/gimmick/yukata/floral/black,
+					/obj/item/clothing/shoes/sandal = 10,
+					/obj/fireworksbox = 2,
+					/obj/item/firework = 5)
+	cost = 3000
+	containertype = /obj/storage/crate/wooden
+	containername = "Obon Festival Crate"
+
 /datum/supply_packs/sponge
 	name = "Sponge Capsule Crate"
 	desc = "For all your watery animal needs!"
