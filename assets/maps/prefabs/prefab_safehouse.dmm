@@ -909,7 +909,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
 	pixel_x = 4
 	},
-/turf/unsimulated/floor/carpet/red/fancy/innercorner/omni,
+/turf/simulated/floor/carpet/red/fancy/innercorner/omni,
 /area/prefab/safehouse)
 "Qc" = (
 /obj/machinery/power/smes{
