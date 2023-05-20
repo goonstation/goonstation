@@ -70389,6 +70389,10 @@
 	triggerable_id = "virva_light";
 	triggerer_id = "virva_trigger"
 	},
+/obj/item/decoration/virvase{
+	pixel_y = 11
+	},
+/obj/table/clothred/auto,
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "kcN" = (
@@ -72206,9 +72210,6 @@
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
-"nrT" = (
-/turf/unsimulated/wall/auto/virtual,
-/area/space)
 "nrU" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/grime,
@@ -72647,12 +72648,10 @@
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/se,
 /area/centcom/offices/rodney)
 "nRm" = (
-/obj/critter/domestic_bee/creepy{
-	name = "Virvatulbee"
-	},
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
+/obj/critter/domestic_bee/virvatulbee,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices/virvatuli)
 "nRU" = (
@@ -76977,10 +76976,6 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/clothing/under/scrub/purple{
-	name = "old medical scrubs";
-	pixel_y = 3
-	},
 /obj/item/clothing/suit/security_badge{
 	badge_owner_job = "Head of Security";
 	badge_owner_name = "Elika Zamani";
@@ -76989,6 +76984,7 @@
 	pixel_x = 9;
 	pixel_y = -12
 	},
+/obj/item/clothing/under/misc/virvaoutfit1,
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "veg" = (
@@ -77339,6 +77335,10 @@
 	name = "studio speaker";
 	pixel_x = -3;
 	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/flask/taskumatti{
+	pixel_x = 13;
+	pixel_y = 4
 	},
 /obj/table/wood/auto,
 /turf/unsimulated/floor/carpet/purple/standard,
@@ -109382,7 +109382,7 @@ jnw
 jnw
 jnw
 bKx
-nrT
+cnw
 aab
 aab
 bMw

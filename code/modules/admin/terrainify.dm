@@ -59,6 +59,12 @@ var/datum/station_zlevel_repair/station_repair = new
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
 		clear_around_beacons()
+		clear_parallax()
+
+	proc/clear_parallax()
+		map_settings.parallax_layers = list()
+		for (var/client/client in clients)
+			client.parallax_controller?.remove_parallax_layer(/atom/movable/screen/parallax_layer)
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -347,7 +353,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
-
+			station_repair.clear_parallax()
 			handle_mining(params, space)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Theta.")

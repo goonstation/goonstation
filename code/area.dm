@@ -3767,6 +3767,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	do_not_irradiate = 1
 	requires_power = FALSE
 	minimaps_to_render_on = null
 

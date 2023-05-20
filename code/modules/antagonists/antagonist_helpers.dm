@@ -64,3 +64,14 @@ proc/get_all_gangs()
 		return FALSE
 
 	return TRUE
+
+/datum/mind/proc/is_head_of_staff()
+	return src.assigned_role in list(
+			"Captain",
+			"Head of Security",
+			"Head of Personnel",
+			"Chief Engineer",
+			"Research Director",
+			"Medical Director",
+			"Communications Officer",
+			)

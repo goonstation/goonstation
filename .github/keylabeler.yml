@@ -83,5 +83,9 @@ labelMappings:
     "[STATUS EFFECTS]": a-status-effects
     "[EVENTS]": a-events
     "[RP]": a-rp
+    "[SPAWN]": a-respawning
+    "[SPAWNING]": a-respawning
+    "[RESPAWN]": a-respawning
+    "[RESPAWNING]": a-respawning
     "[ROLEPLAY]": a-rp
     "[VEHICLES]": a-vehicles
