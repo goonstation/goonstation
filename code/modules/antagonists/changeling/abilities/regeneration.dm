@@ -173,55 +173,65 @@
 	can_use_in_container = 1
 	lock_holder = FALSE
 	ignore_holder_lock = 1
-	var/duration = 30 SECONDS
+
 
 	cast(atom/target)
-		var/datum/abilityHolder/changeling/H
+		if (..())
+			return 1
+
+		var/datum/abilityHolder/changeling/H = holder
 		if (!istype(H))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
-		var/mob/living/C
-		if (!istype(C))
+
+		var/mob/living/carbon/human/C = holder.owner
+		if (tgui_alert(C,"Are we sure?","Speed regen?",list("Yes","No")) != "Yes")
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
-		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
-			return 1
-		if (!src.cooldowncheck())
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
-			return 1
+
 		C.changeStatus("changeling_speedregen", 30 SECONDS)
 		return 0
 
-/datum/statusEffect/regeneration
+// changeling speedregen status effect//
+/datum/statusEffect/c_regeneration
 
 	id = "changeling_speedregen"
 	name = "Speed regeneration"
-	desc = "You reform your skin around your skeleton and heal the damage"
+	desc = "You quickly heal the damage dealt to you."
 	icon_state = "person"
 	unique = TRUE
 	maxDuration = 30 SECONDS
 
-	onAdd(optional)
+	onAdd(optional=null)
 		. = ..()
+
 		var/datum/abilityHolder/changeling/H
 		if (!istype(H))
 			return 1
-		var/mob/living/C
+
+		var/mob/living/carbon/human/C = owner
 		if (!istype(C))
 			return 1
 
-		boutput(C, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
-		while(C.health < C.max_health)
-			sleep(3 SECONDS)
-			changeling_super_heal_step(C)
+		boutput(C, "<span class='notice'>Your skin begins to reform around your skeleton.</span>")
 		return
 
+	onUpdate(timePassed)
+		var/mob/living/carbon/human/C
+		if (ishuman(owner))
+			C = owner
+			C.HealDamage("All", 7, 7, 5)
+			C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
 
 	onRemove()
 		. = ..()
 		var/datum/abilityHolder/changeling/H
 		if (!istype(H))
 			return 1
+
 		var/mob/living/C
 		if (!istype(C))
 			return 1
+
 		boutput(C, "<span class='notice'>Your skin no longer reforms around your skeleton.</span>")
 		return
