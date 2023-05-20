@@ -65063,7 +65063,7 @@
 "wHC" = (
 /obj/item/reagent_containers/food/snacks/plant/melon{
 	desc = "how did this get here?";
-	name = s
+	name = "Terrance"
 	},
 /turf/simulated/floor/carpet,
 /area/station/hangar/main)
