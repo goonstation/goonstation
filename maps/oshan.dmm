@@ -42497,18 +42497,15 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hRy" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "cloning_door";
-	name = "Cloning Room";
-	req_access_txt = "5"
-	},
 /obj/access_spawn/medical,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
-/obj/machinery/door/airlock/pyro/medical/alt,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Cloning Room"
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "hXh" = (
