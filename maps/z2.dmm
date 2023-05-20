@@ -56318,7 +56318,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/wizard_station_space)
 "djN" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -67646,6 +67646,13 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"gdg" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/wizard_station_space)
 "gef" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -67988,6 +67995,13 @@
 	temperature = 372.15
 	},
 /area/iomoon)
+"gGu" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/wizard_station_space)
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
@@ -70469,6 +70483,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"kRU" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/wizard_station_space)
 "kSv" = (
 /obj/tree/sakura_tree/tree_2,
 /turf/unsimulated/grasstodirt{
@@ -77069,6 +77089,13 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"vpg" = (
+/turf/unsimulated/wall{
+	icon = 'icons/obj/singularity.dmi';
+	icon_state = "TheSingMain";
+	name = "cloaking field"
+	},
+/area/wizard_station_space)
 "vqe" = (
 /obj/machinery/coffeemaker/research,
 /obj/table/wood/auto,
@@ -77252,6 +77279,9 @@
 "vBq" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/diner_centcom)
+"vCE" = (
+/turf/space,
+/area/wizard_station_space)
 "vCF" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-0"
@@ -77768,6 +77798,13 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/john/owlery)
+"wAe" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/wizard_station_space)
 "wAT" = (
 /mob/living/critter/small_animal/cat{
 	icon_state = "cat2";
@@ -78208,7 +78245,7 @@
 	pixel_x = 21
 	},
 /turf/space,
-/area/space)
+/area/wizard_station_space)
 "xnI" = (
 /obj/table/reinforced,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -79291,21 +79328,21 @@ axy
 axy
 aaa
 aaa
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
 aaa
 cnw
 cnw
@@ -79593,21 +79630,21 @@ axy
 axy
 aaa
 aaa
-abj
-cnw
-cnw
-cnw
-bEP
-cCS
-cCS
-cCS
-cCS
+vpg
+vCE
+vCE
+vCE
+wAe
+kRU
+kRU
+kRU
+kRU
 xnv
-cnw
-cnw
-cnw
-cnw
-abj
+vCE
+vCE
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -79895,21 +79932,21 @@ cVw
 axy
 aaa
 aaa
-abj
-cnw
-cnw
-cnw
+vpg
+vCE
+vCE
+vCE
 lRx
 tGW
 lNz
 lNz
 tGW
 lRx
-cnw
-cnw
-cnw
-cnw
-abj
+vCE
+vCE
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -80197,8 +80234,8 @@ cVw
 axy
 aaa
 aaa
-abj
-cnw
+vpg
+vCE
 djN
 djN
 lRx
@@ -80209,9 +80246,9 @@ xAH
 lRx
 djN
 djN
-cnw
-cnw
-abj
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -80499,8 +80536,8 @@ cXn
 axy
 aaa
 aaa
-abj
-cnw
+vpg
+vCE
 djw
 djw
 upc
@@ -80511,9 +80548,9 @@ dkj
 lRx
 djw
 djw
-cnw
-cnw
-abj
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -80801,7 +80838,7 @@ cVw
 axy
 aaa
 aaa
-abj
+vpg
 lRx
 lRx
 lRx
@@ -80814,8 +80851,8 @@ lRx
 lRx
 lRx
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -81103,7 +81140,7 @@ cXn
 axy
 aaa
 aaa
-abj
+vpg
 lRx
 dki
 djy
@@ -81116,8 +81153,8 @@ lRx
 dkv
 dkB
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -81405,7 +81442,7 @@ cVw
 axy
 aaa
 aaa
-abj
+vpg
 lRx
 djR
 dkt
@@ -81418,8 +81455,8 @@ kmS
 dkw
 dkC
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -81707,7 +81744,7 @@ cVw
 axy
 aaa
 aaa
-abj
+vpg
 djL
 djR
 dkt
@@ -81720,8 +81757,8 @@ dkp
 dkx
 dkD
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -82009,7 +82046,7 @@ axy
 axy
 aaa
 aaa
-abj
+vpg
 lRx
 djY
 dkt
@@ -82022,8 +82059,8 @@ dkq
 dky
 dkE
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -82311,7 +82348,7 @@ axy
 axy
 aaa
 aaa
-abj
+vpg
 lRx
 djZ
 dkt
@@ -82324,8 +82361,8 @@ dkr
 dkz
 dkF
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -82613,7 +82650,7 @@ aaa
 aaa
 aaa
 aaa
-abj
+vpg
 lRx
 lRx
 dkm
@@ -82626,8 +82663,8 @@ dkm
 lRx
 lRx
 lRx
-cnw
-abj
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -82915,7 +82952,7 @@ axy
 axy
 axy
 aaa
-abj
+vpg
 djM
 lRx
 dkb
@@ -82927,9 +82964,9 @@ dkm
 dkt
 sMO
 lRx
-cOq
-cnw
-abj
+gGu
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -83217,8 +83254,8 @@ axy
 axy
 axy
 aaa
-abj
-cnw
+vpg
+vCE
 lRx
 dkf
 dka
@@ -83229,9 +83266,9 @@ dkn
 dkt
 oYg
 lRx
-cnw
-cnw
-abj
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -83519,8 +83556,8 @@ cnw
 axy
 axy
 aaa
-abj
-cnw
+vpg
+vCE
 lRx
 lRx
 gtW
@@ -83531,9 +83568,9 @@ dkm
 dku
 lRx
 lRx
-cnw
-cnw
-abj
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -83821,9 +83858,9 @@ cnw
 cnw
 axy
 aaa
-abj
-cnw
-cxq
+vpg
+vCE
+gdg
 lRx
 lRx
 lRx
@@ -83832,10 +83869,10 @@ lRx
 lRx
 lRx
 lRx
-cOq
-cnw
-cnw
-abj
+gGu
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -84123,21 +84160,21 @@ cnw
 cnw
 axy
 aaa
-abj
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-cnw
-abj
+vpg
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vCE
+vpg
 aaa
 cnw
 cnw
@@ -84425,21 +84462,21 @@ cnw
 cnw
 axy
 aaa
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
-abj
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
+vpg
 aaa
 cnw
 cnw

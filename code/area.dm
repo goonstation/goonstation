@@ -3597,6 +3597,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	sound_environment = 4
 	teleport_blocked = 1
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
@@ -3606,6 +3611,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
 			return FALSE
 		return TRUE
+
+/area/wizard_station_space
+	name = "Wizard's Den Space"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
