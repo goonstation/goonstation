@@ -220,13 +220,13 @@
 		if (ishuman(owner))
 			C = owner
 			if (!C.getStatusDuration("burning"))
-				C.HealDamage("All", 1, 1, 1)
+				C.HealDamage("All", 2, 2, 1)
 				if (prob(20))
 					C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
 					boutput(C, "<span class='notice'>We feel our flesh knitting back together.</span>")
 					C.HealDamage ("All", 3, 2, 2)
 			else // lings are vulnerable to fire so it stopping their regen made sense to me
-				if(prob(20))
+				if(prob(25))
 					boutput(C, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
 					C.visible_message("<span class='alert'><B>[C]'s flesh is weirdly moving in contact with the fire!</B></span>")
 
