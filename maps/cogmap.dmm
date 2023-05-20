@@ -56635,6 +56635,9 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
+"nsi" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/station/crew_quarters/market)
 "ntb" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -57341,6 +57344,9 @@
 "oct" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"odr" = (
+/turf/simulated/wall/false_wall/reinforced,
+/area/station/hangar/main)
 "odJ" = (
 /obj/storage/secure/closet/research/chemical,
 /obj/item/device/radio/intercom/medical,
@@ -63251,6 +63257,17 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
+"uHF" = (
+/obj/candle_light{
+	pixel_x = 10;
+	pixel_y = -7
+	},
+/obj/item/storage/bible{
+	pixel_x = -8;
+	pixel_y = -13
+	},
+/turf/simulated/floor/carpet,
+/area/station/hangar/main)
 "uIM" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -65047,6 +65064,13 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
+"wHC" = (
+/obj/item/reagent_containers/food/snacks/plant/melon{
+	desc = "how did this get here?";
+	name = s
+	},
+/turf/simulated/floor/carpet,
+/area/station/hangar/main)
 "wHR" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -100229,7 +100253,7 @@ bvF
 oDm
 bAj
 btf
-btf
+odr
 btf
 btf
 adC
@@ -100531,9 +100555,9 @@ bxo
 bxo
 bAk
 btf
-aaG
-adC
-adC
+uHF
+wHC
+btf
 adC
 adC
 adC
@@ -100833,9 +100857,9 @@ bwB
 bwB
 bAl
 cuu
-aaG
-adC
-adC
+btf
+btf
+btf
 adC
 adC
 adC
@@ -101135,7 +101159,7 @@ bwB
 bwB
 bAm
 cvs
-aaG
+btf
 adC
 adC
 adC
@@ -104143,7 +104167,7 @@ blJ
 bqc
 blf
 blf
-bAt
+nsi
 bAt
 bAt
 aaq
