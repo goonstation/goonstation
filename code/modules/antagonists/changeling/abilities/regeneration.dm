@@ -175,24 +175,24 @@
 	ignore_holder_lock = 1
 
 	incapacitationCheck()
-		return 0
+		return FALSE
 
 	cast(atom/target)
 		if (..())
 			return 1
 
-		var/datum/abilityHolder/changeling/H = holder
-		if (!istype(H))
+		var/datum/abilityHolder/changeling/aH = holder
+		if (!istype(aH))
 			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		var/mob/living/carbon/human/C = holder.owner
-		if (tgui_alert(C,"Are we sure?","Speed regen?",list("Yes","No")) != "Yes")
+		var/mob/living/carbon/human/H = holder.owner
+		if (tgui_alert(H,"Are we sure?","Speed regen?",list("Yes","No")) != "Yes")
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
-		C.changeStatus("changeling_speedregen", 30 SECONDS)
-		return 0
+		H.changeStatus("changeling_speedregen", 30 SECONDS)
+		return FALSE
 
 // changeling speedregen status effect//
 /datum/statusEffect/c_regeneration
@@ -206,35 +206,35 @@
 
 	onAdd(optional=null)
 		. = ..()
-		var/mob/living/carbon/human/C
+		var/mob/living/carbon/human/H
 		if (ishuman(owner))
-			C = owner
-			boutput(C, "<span class='notice'>We start regenerating.</span>")
-			C.visible_message("<span class='alert'><B>[C]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
+			H = owner
+			boutput(H, "<span class='notice'>We start regenerating.</span>")
+			H.visible_message("<span class='alert'><B>[H]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
 			return
 		else
 			owner.delStatus("changeling_speedregen")
 
 	onUpdate(timePassed)
-		var/mob/living/carbon/human/C
-		if (ishuman(owner))
-			C = owner
-			if (!C.getStatusDuration("burning"))
-				C.HealDamage("All", 2, 2, 1)
-				if (prob(20))
-					C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
-					boutput(C, "<span class='notice'>We feel our flesh knitting back together.</span>")
-					C.HealDamage ("All", 3, 2, 2)
-			else // lings are vulnerable to fire so it stopping their regen made sense to me
-				if(prob(25))
-					boutput(C, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
-					C.visible_message("<span class='alert'><B>[C]'s flesh is weirdly moving in contact with the fire!</B></span>")
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		if (!H.getStatusDuration("burning"))
+			H.HealDamage("All", 2, 2, 1)
+			if (prob(20))
+				H.visible_message("<span class='alert'><B>[H]'s flesh is moving and sliding around oddly!</B></span>")
+				boutput(H, "<span class='notice'>We feel our flesh knitting back together.</span>")
+				H.HealDamage("All", 3, 2, 2)
+		else // lings are vulnerable to fire so it stopping their regen makes sense
+			if (prob(20))
+				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
+				H.visible_message("<span class='alert'><B>[H]'s flesh is weirdly moving in contact with the fire!</B></span>")
 
 	onRemove()
 		. = ..()
-		var/mob/living/carbon/human/C
-		if (ishuman(owner))
-			C = owner
-			boutput(C, "<span class='notice'>We stop regenerating.</span>")
-			C.visible_message("<span class='alert'><B>[C]'s flesh stops moving and sliding around!</B></span>")
-			return
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		boutput(H, "<span class='notice'>We stop regenerating.</span>")
+		H.visible_message("<span class='alert'><B>[H]'s flesh stops moving and sliding around!</B></span>")
+		return
