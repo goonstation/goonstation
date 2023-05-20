@@ -104,9 +104,6 @@
 		if (..(parent))
 			return 1
 
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
-
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/zoldorf(src)
 

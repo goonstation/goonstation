@@ -10,6 +10,7 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
+	faction = MOB_AI_FACTION_WRAITH
 	mob_flags = HEAVYWEIGHT_AI_MOB
 	custom_gib_handler = /proc/gibs
 	// HEALTHS

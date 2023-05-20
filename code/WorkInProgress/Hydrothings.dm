@@ -605,9 +605,8 @@ obj/item/gnomechompski/elf
 /obj/item/device/key/owl
 	name = "Owlish Key"
 	desc = "This key was found in an owl pellet. Yuck."
-	icon = 'icons/misc/aprilfools.dmi'
 	interesting = "Filthy. GROSS"
-	icon_state = "key"
+	icon_state = "key_owl"
 
 /obj/owldoor
 	name = "Strange Looking Wall"

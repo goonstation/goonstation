@@ -1,12 +1,16 @@
-#define IMG_CONDITION(img, M) (src.always_visible || !img.loc.invisibility || (img.loc == M) || istype(M, /mob/dead/observer))
-
 var/global/list/datum/client_image_group/client_image_groups
 
 /datum/client_image_group
 	var/list/image/images
+	/// Associative list containing images for a given mob.
 	var/list/mob_to_associated_images_lookup
+	/// Associative list containing minds and the images attached to their mobs.
+	var/list/minds_with_associated_mob_image
+	/// Associative list containing subscribed mobs and the amount of times they subscribed to the image group (to handle multiple sources).
 	var/list/subscribed_mobs_with_subcount
+	/// Associative list containing subscribed minds with counts.
 	var/list/subscribed_minds_with_subcount
+	/// Associative list containing subscribed clients with counts.
 	var/list/subscribed_clients_with_subcount
 	var/key = null
 	var/always_visible = FALSE //! If true this image is always visible ignoring loc's invisibiltiy etc
@@ -15,14 +19,22 @@ var/global/list/datum/client_image_group/client_image_groups
 		. = ..()
 		src.key = key
 		images = list()
-		/// Associative list containing images for a given mob.
 		mob_to_associated_images_lookup = list()
-		/// Associative list containing subscribed mobs and the amount of times they subscribed to the image group (to handle multiple sources).
+		minds_with_associated_mob_image = list()
 		subscribed_mobs_with_subcount = list()
-		/// Associative list containing subscribed minds with counts.
 		subscribed_minds_with_subcount = list()
-		/// Associative list containing subscribed clients with counts.
 		subscribed_clients_with_subcount = list()
+
+	/// Checks whether an image is elligible to be attached to be displayed to a client.
+	proc/image_condition(image/image, mob/mob)
+		if (image.loc == mob)
+			var/datum/mind_mob_overlay/overlay = src.minds_with_associated_mob_image[mob.mind]
+			if (overlay && !overlay.see_own_overlay)
+				return FALSE
+			else
+				return TRUE
+
+		return (src.always_visible || !image.loc.invisibility || istype(mob, /mob/dead/observer))
 
 	/// Adds an image to the image list and adds it to all mobs' clients directly where appropriate. Registers signal to track mob invisibility changes.
 	proc/add_image(image/img)
@@ -34,7 +46,7 @@ var/global/list/datum/client_image_group/client_image_groups
 			RegisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY, PROC_REF(on_mob_invisibility_changed))
 
 		for (var/client/iterated_client as() in subscribed_clients_with_subcount)
-			if (IMG_CONDITION(img, iterated_client.mob))
+			if (image_condition(img, iterated_client.mob))
 				iterated_client.images.Add(img)
 
 	/// Removes an image from the image list and from mobs' clients.
@@ -46,6 +58,17 @@ var/global/list/datum/client_image_group/client_image_groups
 			UnregisterSignal(img.loc, COMSIG_ATOM_PROP_MOB_INVISIBILITY)
 		for (var/client/iterated_client as() in subscribed_clients_with_subcount)
 			iterated_client.images.Remove(img)
+
+	/// Add an image that will attempt to attach itself to the mob inhabited by a mind, and update itself should the associated mind move to another mob.
+	proc/add_mind_mob_overlay(datum/mind/mind, image/image, see_own_overlay = TRUE)
+		var/datum/mind_mob_overlay/mind_mob_overlay = new(src, mind, image, see_own_overlay)
+		src.minds_with_associated_mob_image[mind] = mind_mob_overlay
+
+	/// Remove a mind mob image.
+	proc/remove_mind_mob_overlay(datum/mind/mind)
+		var/datum/mind_mob_overlay/mind_mob_overlay = src.minds_with_associated_mob_image[mind]
+		mind_mob_overlay?.remove_self()
+		src.minds_with_associated_mob_image.Remove(mind)
 
 	/// Adds a mob to the mob list, adds all images to its client and registers signals on it.
 	proc/add_mob(mob/added_mob)
@@ -95,7 +118,7 @@ var/global/list/datum/client_image_group/client_image_groups
 		subscribed_clients_with_subcount[added_client] += 1
 		if (subscribed_clients_with_subcount[added_client] == 1)
 			for (var/image/img as() in images)
-				if (IMG_CONDITION(img, added_client.mob))
+				if (image_condition(img, added_client.mob))
 					added_client.images.Add(img)
 			RegisterSignal(added_client, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_client_del))
 
@@ -178,5 +201,3 @@ proc/get_image_group(key)
 		else
 			client_image_groups[key] = new /datum/client_image_group(key)
 	return client_image_groups[key]
-
-#undef IMG_CONDITION

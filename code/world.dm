@@ -1731,6 +1731,8 @@ var/global/mob/twitch_mob = 0
 					response["playtime"] = playtime_response.body
 
 				var/datum/player/player = make_player(plist["ckey"])
+				if(isnull(player.last_seen))
+					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
 				if(player.cloud_fetch())
