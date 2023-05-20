@@ -11,6 +11,8 @@
 #define HAS_DIRECTIONAL_BLOCKING (1<<3)
 /// prevents ghost critter interaction. On obj so it can cover machinery, items etc...
 #define NO_GHOSTCRITTER (1<<4)
+/// illegal for leg attaching
+#define NO_LEG_ATTACH (1<<5)
 
 /// At which alpha do opague objects become see-through?
 #define MATERIAL_ALPHA_OPACITY 190

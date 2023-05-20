@@ -678,7 +678,7 @@ TYPEINFO(/obj/item/sword)
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	w_class = W_CLASS_NORMAL
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_LEG_ATTACH
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	c_flags = EQUIPPED_WHILE_HELD
 	desc = "An ancient and effective weapon. It's not just a stick alright!"

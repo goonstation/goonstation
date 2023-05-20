@@ -232,7 +232,7 @@ CONTAINS:
 	throw_range = 20
 	force = 5
 	c_flags = ONBELT
-	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER | NO_LEG_ATTACH
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
 	stamina_damage = 15
@@ -719,7 +719,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	item_state = "suture"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	hit_type = DAMAGE_STAB
-	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER | NO_LEG_ATTACH
 	w_class = W_CLASS_TINY
 	force = 1
 	throwforce = 1
@@ -779,7 +779,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "bandage"
 	flags = FPRINT | TABLEPASS
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_LEG_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1

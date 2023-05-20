@@ -728,6 +728,200 @@
 		if (src.remove_object)
 			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
 
+/obj/item/parts/human_parts/leg/left/item
+	name = "left item leg"
+	decomp_affected = FALSE
+	limb_type = /datum/limb/item
+	streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
+	streak_descriptor = "bloody" //bloody, oily, et
+	remove_object = null
+	handlistPart = null
+	partlistPart = "leg_left_item"
+	skintoned = FALSE
+	/// uses defines and flags to determine if you can drop or remove it.
+	var/original_flags = 0
+	var/image/handimage = 0
+	var/special_icons = 'icons/mob/human.dmi'
+	random_limb_blacklisted = TRUE
+	/// Also, item arms are supposedly junk jammed into a severed limb's socket
+	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ITEM)
+	movement_modifier = /datum/movement_modifier/item_legs/left
+
+	New(new_holder, var/obj/item/I)
+		..()
+		if (I)
+			src.set_item(I)
+
+	proc/set_item(var/obj/item/I)
+		var/mob/living/carbon/human/H = null
+		if (ishuman(src.holder))
+			H = src.holder
+		else if (ishuman(src.loc))
+			H = src.loc
+
+		name = "left [I.name] leg"
+		remove_object = I//.type
+		I.set_loc(src)
+		remove_object.temp_flags |= IS_LIMB_ITEM
+
+		if (istype(I))
+
+			if (I.cant_drop)
+				original_flags |= ORIGINAL_FLAGS_CANT_DROP
+			if (I.cant_self_remove)
+				original_flags |= ORIGINAL_FLAGS_CANT_SELF_REMOVE
+			if (I.cant_other_remove)
+				original_flags |= ORIGINAL_FLAGS_CANT_OTHER_REMOVE
+
+			I.cant_drop = 1
+			I.cant_self_remove = 1
+			I.cant_other_remove = 1
+
+			if (H)
+				H.update_clothing()
+				H.set_body_icon_dirty()
+				H.update_bloody_feet()
+
+	proc/remove_from_mob(delete = 0)
+		if (isitem(remove_object))
+			remove_object.cant_drop = (original_flags & ORIGINAL_FLAGS_CANT_DROP) ? 1 : 0
+			remove_object.cant_self_remove = (original_flags & ORIGINAL_FLAGS_CANT_SELF_REMOVE) ? 1 : 0
+			remove_object.cant_other_remove = (original_flags & ORIGINAL_FLAGS_CANT_OTHER_REMOVE) ? 1 : 0
+
+			remove_object.temp_flags &= ~IS_LIMB_ITEM
+		if (src.holder)
+			src.holder.u_equip(remove_object)
+
+		if (delete && remove_object)
+			qdel(remove_object)
+
+	getHandIconState()
+		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+			.= handimage
+		else
+			.=..()
+
+	getPartIconState()
+		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+			.= handimage
+		else
+			.=..()
+
+	remove(var/show_message = 1)
+		remove_from_mob(0)
+		..()
+
+	sever()
+		remove_from_mob(0)
+		..()
+
+	disposing()
+		remove_from_mob(1)
+		..()
+
+	on_holder_examine()
+		if (src.remove_object)
+			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
+
+/obj/item/parts/human_parts/leg/right/item
+	name = "right item leg"
+	decomp_affected = FALSE
+	limb_type = /datum/limb/item
+	streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
+	streak_descriptor = "bloody" //bloody, oily, et
+	remove_object = null
+	handlistPart = null
+	partlistPart = "leg_right_item"
+	slot = "r_leg"
+	side = "right"
+	skintoned = FALSE
+	/// uses defines and flags to determine if you can drop or remove it.
+	var/original_flags = 0
+	var/image/handimage = 0
+	var/special_icons = 'icons/mob/human.dmi'
+	random_limb_blacklisted = TRUE
+	/// Also, item arms are supposedly junk jammed into a severed limb's socket
+	limb_is_unnatural = TRUE
+	kind_of_limb = (LIMB_ITEM)
+	movement_modifier = /datum/movement_modifier/item_legs/right
+
+	New(new_holder, var/obj/item/I)
+		..()
+		if (I)
+			src.set_item(I)
+
+	proc/set_item(var/obj/item/I)
+		var/mob/living/carbon/human/H = null
+		if (ishuman(src.holder))
+			H = src.holder
+		else if (ishuman(src.loc))
+			H = src.loc
+
+		name = "right [I.name] leg"
+		remove_object = I//.type
+		I.set_loc(src)
+		remove_object.temp_flags |= IS_LIMB_ITEM
+
+		if (istype(I))
+
+			if (I.cant_drop)
+				original_flags |= ORIGINAL_FLAGS_CANT_DROP
+			if (I.cant_self_remove)
+				original_flags |= ORIGINAL_FLAGS_CANT_SELF_REMOVE
+			if (I.cant_other_remove)
+				original_flags |= ORIGINAL_FLAGS_CANT_OTHER_REMOVE
+
+			I.cant_drop = 1
+			I.cant_self_remove = 1
+			I.cant_other_remove = 1
+
+			if (H)
+				H.update_clothing()
+				H.set_body_icon_dirty()
+				H.update_bloody_feet()
+
+	proc/remove_from_mob(delete = 0)
+		if (isitem(remove_object))
+			remove_object.cant_drop = (original_flags & ORIGINAL_FLAGS_CANT_DROP) ? 1 : 0
+			remove_object.cant_self_remove = (original_flags & ORIGINAL_FLAGS_CANT_SELF_REMOVE) ? 1 : 0
+			remove_object.cant_other_remove = (original_flags & ORIGINAL_FLAGS_CANT_OTHER_REMOVE) ? 1 : 0
+
+			remove_object.temp_flags &= ~IS_LIMB_ITEM
+		if (src.holder)
+			src.holder.u_equip(remove_object)
+
+		if (delete && remove_object)
+			qdel(remove_object)
+
+	getHandIconState()
+		if (handlistPart && !(handlistPart in icon_states(special_icons)))
+			.= handimage
+		else
+			.=..()
+
+	getPartIconState()
+		if (partlistPart && !(partlistPart in icon_states(special_icons)))
+			.= handimage
+		else
+			.=..()
+
+	remove(var/show_message = 1)
+		remove_from_mob(0)
+		..()
+
+	sever()
+		remove_from_mob(0)
+		..()
+
+	disposing()
+		remove_from_mob(1)
+		..()
+
+	on_holder_examine()
+		if (src.remove_object)
+			return "has [bicon(src.remove_object)] \an [src.remove_object] attached as a"
+
 /obj/item/parts/human_parts/arm/left/brullbar
 	name = "left brullbar arm"
 	icon_state = "arm_left_brullbar"

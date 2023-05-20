@@ -850,7 +850,7 @@ proc/Create_Tommyname()
 	desc = "A sturdy wire between two handles. Could be used with both hands to really ruin someone's day."
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
-	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
+	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER | NO_LEG_ATTACH
 	hide_attack = ATTACK_FULLY_HIDDEN //we handle our own attack twitch
 
 	icon = 'icons/obj/items/items.dmi'

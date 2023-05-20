@@ -153,6 +153,13 @@
 	pushpull_multiplier = 0.9
 	mob_pull_multiplier = 0.9
 
+// item legs
+/datum/movement_modifier/item_legs/left
+	additive_slowdown = 0.1
+
+/datum/movement_modifier/item_legs/right
+	additive_slowdown = 0.1
+
 // bioeffects
 
 /datum/movement_modifier/spaceham

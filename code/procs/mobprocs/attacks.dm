@@ -1,10 +1,22 @@
+/proc/is_allowed_limb(obj/item/W, mob/user)
+	var/deny_arm = W.object_flags & NO_ARM_ATTACH // not allowed on arms
+	var/deny_leg = W.object_flags & NO_LEG_ATTACH // not allowed on legs
+	var/is_arm_sel = user.zone_sel && (user.zone_sel.selecting in list("l_arm", "r_arm")) // targeting arm
+	var/is_leg_sel = user.zone_sel && (user.zone_sel.selecting in list("l_leg", "r_leg")) // targeting leg
+
+	// ensure that we've got an item that's allowed on a limb and is being attached to a limb
+	if(!(deny_arm || deny_leg || W.cant_drop || W.two_handed) && (is_arm_sel || is_leg_sel))
+		return 1
+
+	return 0
 
 /mob/attackby(obj/item/W, mob/user, params, is_special = 0)
 	actions.interrupt(src, INTERRUPT_ATTACKED)
 
 	// why is this not in human/attackby?
+	// idk, should it be?
 
-	if (!(W.object_flags & NO_ARM_ATTACH || W.cant_drop || W.two_handed) && (user.zone_sel && (user.zone_sel.selecting in list("l_arm","r_arm"))) && surgeryCheck(src,user) )
+	if (is_allowed_limb(W, user) && surgeryCheck(src, user))
 		var/mob/living/carbon/human/H = src
 
 		if (!H.limbs.vars[user.zone_sel.selecting])

@@ -1393,26 +1393,32 @@
 		M.update_inhands()
 
 /obj/item/proc/attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
-	//if (!src.arm_icon) return //ANYTHING GOES!~!
 
-	if (src.object_flags & NO_ARM_ATTACH || src.cant_drop || src.two_handed)
+	if (src.object_flags & (NO_ARM_ATTACH || NO_LEG_ATTACH) || src.cant_drop || src.two_handed)
 		boutput(attacher, "<span class='alert'>You try to attach [src] to [attachee]'s stump, but it politely declines!</span>")
 		return
 
-	var/obj/item/parts/human_parts/arm/new_arm = null
-	if (attacher.zone_sel.selecting == "l_arm")
-		new_arm = new /obj/item/parts/human_parts/arm/left/item(attachee)
-		attachee.limbs.l_arm = new_arm
-	else if (attacher.zone_sel.selecting == "r_arm")
-		new_arm = new /obj/item/parts/human_parts/arm/right/item(attachee)
-		attachee.limbs.r_arm = new_arm
-	if (!new_arm) return //who knows - or they aren't targetting an arm!
+	var/obj/item/parts/human_parts/new_limb = null
+	switch(attacher.zone_sel.selecting)
+		if ("l_arm")
+			new_limb = new /obj/item/parts/human_parts/arm/left/item(attachee)
+			attachee.limbs.l_arm = new_limb
+		if ("r_arm")
+			new_limb = new /obj/item/parts/human_parts/arm/right/item(attachee)
+			attachee.limbs.r_arm = new_limb
+		if ("l_leg")
+			new_limb = new /obj/item/parts/human_parts/leg/left/item(attachee)
+			attachee.limbs.l_leg = new_limb
+		if ("r_leg")
+			new_limb = new /obj/item/parts/human_parts/leg/right/item(attachee)
+			attachee.limbs.r_leg = new_limb
+	if (!new_limb) return //who knows - or they aren't targetting a limb!
 
-	new_arm.holder = attachee
+	new_limb.holder = attachee
 	attacher.remove_item(src)
-	new_arm.remove_stage = 2
+	new_limb.remove_stage = 2
 
-	new_arm:set_item(src)
+	new_limb:set_item(src)
 	src.cant_drop = 1
 
 	for(var/mob/O in AIviewers(attachee, null))
@@ -1432,10 +1438,8 @@
 	attachee.set_body_icon_dirty()
 	attachee.hud.update_hands()
 
-	//qdel(src)
-
 	SPAWN(rand(150,200))
-		if (new_arm.remove_stage == 2) new_arm.remove()
+		if (new_limb.remove_stage == 2) new_limb.remove()
 
 	return
 

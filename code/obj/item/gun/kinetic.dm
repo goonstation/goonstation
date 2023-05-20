@@ -926,7 +926,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	object_flags = NO_ARM_ATTACH
+	object_flags = NO_ARM_ATTACH | NO_LEG_ATTACH
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBELT
 
 	spread_angle = 2
@@ -1475,7 +1475,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
 	max_ammo_capacity = 1
 	auto_eject = 0
-	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH | NO_LEG_ATTACH
 	spread_angle = 10 // sorry, no sniping with slamguns
 
 	can_dual_wield = 0
@@ -1920,7 +1920,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
-	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH | NO_LEG_ATTACH
 	force = MELEE_DMG_SMG
 	contraband = 4
 	ammo_cats = list(AMMO_SMG_9MM)
