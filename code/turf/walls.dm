@@ -128,7 +128,7 @@
 	newlight.status = 1 // LIGHT_EMPTY
 	if (istype(src,/turf/simulated/wall/auto))
 		newlight.nostick = 0
-		newlight.autoposition()
+		newlight.autoposition(light_dir)
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)

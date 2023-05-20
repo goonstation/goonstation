@@ -112,13 +112,11 @@
 			pounce.handleCast(target)
 			return TRUE
 
+	valid_target(mob/living/C)
+		if (is_incapacitated(C)) return FALSE
+		return ..()
+
 	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (is_incapacitated(C)) continue
-			if (istype(C, src.type)) continue
-			. += C
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()

@@ -98,9 +98,17 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	yellow_tools
 		spawn_contents = list(/obj/item/screwdriver/yellow,\
 		/obj/item/wrench/yellow,\
-		/obj/item/weldingtool,\
+		/obj/item/weldingtool/yellow,\
 		/obj/item/crowbar/yellow,\
 		/obj/item/wirecutters/yellow,\
+		/obj/item/device/analyzer/atmospheric)
+
+	orange_tools //used for QM bought tools
+		spawn_contents = list(/obj/item/screwdriver/orange,\
+		/obj/item/wrench/orange,\
+		/obj/item/weldingtool/orange,\
+		/obj/item/crowbar/orange,\
+		/obj/item/wirecutters/orange,\
 		/obj/item/device/analyzer/atmospheric)
 
 	empty
@@ -142,6 +150,12 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
+
+	orange_tools //used for QM bought tools
+		spawn_contents = list(/obj/item/screwdriver/orange,\
+		/obj/item/wirecutters/orange,\
+		/obj/item/device/t_scanner,\
+		/obj/item/crowbar/orange)
 
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"

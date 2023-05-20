@@ -745,11 +745,11 @@
 
 /obj/item/storage/belt/roboticist/prepared
 	spawn_contents = list(
-	/obj/item/crowbar,
-	/obj/item/weldingtool,
-	/obj/item/wirecutters,
-	/obj/item/screwdriver,
-	/obj/item/wrench,
+	/obj/item/crowbar/grey,
+	/obj/item/weldingtool/grey,
+	/obj/item/wirecutters/grey,
+	/obj/item/screwdriver/grey,
+	/obj/item/wrench/grey,
 	/obj/item/circular_saw,
 	/obj/item/scalpel
 	)

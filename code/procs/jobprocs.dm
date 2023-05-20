@@ -852,8 +852,6 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 		H.mind.special_role = traitor_role
 	else
 		H.mind.special_role = H.name
-	if (H.mind.current)
-		H.mind.current.antagonist_overlay_refresh(1, 0)
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //

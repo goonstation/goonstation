@@ -10,6 +10,7 @@
 	var/deconstruct_flags = DECON_NONE
 
 	var/artifact = null
+	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
 

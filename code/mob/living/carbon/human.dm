@@ -1164,6 +1164,10 @@
 		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		. = FALSE
+	else if (istype(src.back, /obj/item/clothing))
+		var/obj/item/clothing/hider = src.back
+		if (!hider.see_face)
+			. = FALSE
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
