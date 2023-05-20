@@ -174,6 +174,8 @@
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
+	incapacitationCheck()
+		return 0
 
 	cast(atom/target)
 		if (..())
@@ -198,44 +200,36 @@
 	id = "changeling_speedregen"
 	name = "Speed regeneration"
 	desc = "You quickly heal the damage dealt to you."
-	icon_state = "person"
+	icon_state = "heart+"
 	unique = TRUE
 	maxDuration = 30 SECONDS
 
 	onAdd(optional=null)
 		. = ..()
-
-		var/datum/abilityHolder/changeling/H
-		if (!istype(H))
-			return 1
-
-		var/mob/living/carbon/human/C = owner
-		if (!istype(C))
-			return 1
-
-		boutput(C, "<span class='notice'>Your skin begins to reform around your skeleton.</span>")
-		return
+		var/mob/living/carbon/human/C
+		if (ishuman(owner))
+			C = owner
+			boutput(C, "<span class='notice'>We start regenerating.</span>")
+			C.visible_message("<span class='alert'><B>[C]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
+			return
+		else
+			owner.delStatus("changeling_speedregen")
 
 	onUpdate(timePassed)
 		var/mob/living/carbon/human/C
 		if (ishuman(owner))
 			C = owner
-			C.HealDamage("All", 2, 2, 1) //heal less burn since lings are supposed to be vulnerable to it
+			C.HealDamage("All", 2, 2, 1)
 			if (prob(20))
 				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
-				boutput(C, "<span class='notice'>You feel your flesh knitting back together.</span>")
+				boutput(C, "<span class='notice'>We feel our flesh knitting back together.</span>")
 				C.HealDamage ("All", 3, 3, 1)
 
 	onRemove()
 		. = ..()
-		var/datum/abilityHolder/changeling/H
-		if (!istype(H))
-			return 1
-
-		var/mob/living/C = owner
-		if (!istype(C))
-			return 1
-
-		boutput(C, "<span class='notice'>Your skin no longer reforms around your skeleton.</span>")
-		C.visible_message("<span class='alert'><B>[C]'s flash starts moving around and sliding, closing up their wounds!</B></span>")
-		return
+		var/mob/living/carbon/human/C
+		if (ishuman(owner))
+			C = owner
+			boutput(C, "<span class='notice'>We stop regenerating.</span>")
+			C.visible_message("<span class='alert'><B>[C]'s flesh stops moving and sliding around!</B></span>")
+			return
