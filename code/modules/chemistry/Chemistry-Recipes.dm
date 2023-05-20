@@ -4125,9 +4125,9 @@ datum
 			id = "viper_venom"
 			result = "viper_venom"
 			required_reagents = list("mutagen" = 1, "heparin" = 1, "snakebite" = 2)
-			result_amount = 1
-			mix_phrase = "The sssolution producesss a sssnakelike hisss and givesss off a faint sssmell."
-			mix_sound = 'sound/voice/animal/cat_hiss.ogg'
+			result_amount = 1                                                       //smaller amount so it doesn't yield much
+			mix_phrase = "The sssolution rattlesss and givesss off a faint sssmell."
+			mix_sound = 'sound/musical_instruments/tambourine/tambourine_4.ogg'     //same sound used for the rattlesnake's rattle
 
 		mimicillium
 			name = "Mimicillium"
