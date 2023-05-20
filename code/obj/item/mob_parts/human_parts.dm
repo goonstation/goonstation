@@ -779,11 +779,11 @@
 			I.cant_self_remove = 1
 			I.cant_other_remove = 1
 
-			// if (H)
-			// 	H.update_clothing()
-			// 	H.update_body()
-			// 	H.set_body_icon_dirty()
-			// 	H.update_bloody_feet()
+			if (H)
+				H.update_clothing()
+				H.update_body()
+				H.set_body_icon_dirty()
+				H.update_bloody_feet()
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))
@@ -878,11 +878,11 @@
 			I.cant_self_remove = 1
 			I.cant_other_remove = 1
 
-			// if (H)
-			// 	H.update_clothing()
-			// 	H.update_body()
-			// 	H.set_body_icon_dirty()
-			// 	H.update_bloody_feet()
+			if (H)
+				H.update_clothing()
+				H.update_body()
+				H.set_body_icon_dirty()
+				H.update_bloody_feet()
 
 	proc/remove_from_mob(delete = 0)
 		if (isitem(remove_object))
