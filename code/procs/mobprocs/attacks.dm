@@ -5,7 +5,7 @@
 	var/is_leg_sel = user.zone_sel && (user.zone_sel.selecting in list("l_leg", "r_leg")) // targeting leg
 
 	// ensure that we've got an item that's allowed on a limb and is being attached to a limb
-	if(!(deny_arm || deny_leg || W.cant_drop || W.two_handed) && (is_arm_sel || is_leg_sel))
+	if(!(W.cant_drop || W.two_handed) && (is_arm_sel && !deny_arm) || (is_leg_sel && !deny_leg) )
 		return 1
 
 	return 0
