@@ -1436,7 +1436,7 @@
 		else
 			O.show_message("<span class='alert'>[attachee] has [src] attached to [his_or_her(attachee)] stump by [attacher].</span>", 1)
 
-	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/hemostat) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
+	var/can_secure = ismob(attacher) && (attacher?.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
 	if (attachee != attacher)
 		if (can_secure)
 			boutput(attachee, "<span class='alert'>[attacher] securely attaches [src] to your stump.</span>")
