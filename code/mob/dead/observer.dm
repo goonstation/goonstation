@@ -4,7 +4,7 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
 	density = FALSE
 	canmove = TRUE
