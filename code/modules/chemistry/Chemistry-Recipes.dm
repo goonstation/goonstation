@@ -4120,6 +4120,15 @@ datum
 			result_amount = 3
 			mix_phrase = "Irregardless and for all intense and purposes, the coffee becomes stupider."
 
+		viper_venom
+			name = "viper venom"
+			id = "viper_venom"
+			result = "viper_venom"
+			required_reagents = list("mutagen" = 1, "heparin" = 1, "snakebite" = 2)
+			result_amount = 1
+			mix_phrase = "The sssolution producesss a sssnakelike hisss and givesss off a faint sssmell."
+			mix_sound = 'sound/voice/animal/cat_hiss.ogg'
+
 		mimicillium
 			name = "Mimicillium"
 			id = "badmanjuice"
