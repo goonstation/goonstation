@@ -71,6 +71,8 @@
 	#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 	/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
+	/// when an AM is teleported by do_teleport
+	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
 
 	// ---- complex ----
 

@@ -110,15 +110,12 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
+	valid_target(mob/living/C)
+		if (C in src.friends) return FALSE //TODO replace with the faction system
+		if (iswizard(C) && src.wizardSpawn) return FALSE
+		return ..()
+
 	seek_target(var/range = 6)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/skeleton)) continue
-			if (C in src.friends) continue
-			if (iswizard(C) && src.wizardSpawn) continue
-			. += C
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -158,16 +155,13 @@
 	health_brute = 15
 	health_burn = 15
 
+	valid_target(mob/living/C)
+		if (islivingobject(C)) return FALSE //don't attack wraith objects TODO replace with faction system
+		if (istype(C, /mob/living/critter/wraith)) return FALSE // don't attack wraith summons ^^
+		if (istype(C, /mob/living/critter/skeleton)) return FALSE // ^^
+		return ..()
+
 	seek_target(var/range = 7)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (islivingobject(C)) continue //don't attack wraith objects
-			if (istype(C, /mob/living/critter/wraith)) continue // don't attack wraith summons
-			if (istype(C, /mob/living/critter/skeleton)) continue
-			if (src.faction != null && (C.faction & src.faction != 0)) continue //Checks if they are in the same faction
-			. += C
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))

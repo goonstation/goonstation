@@ -1320,6 +1320,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/abomination/admin //This will not revert to human form
 	drains_dna_on_life = 0
 
+	say_filter(var/message)
+		return message // let admin shamblers talk, for fun
+
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
 

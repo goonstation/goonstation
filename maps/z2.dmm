@@ -72210,9 +72210,6 @@
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
-"nrT" = (
-/turf/unsimulated/wall/auto/virtual,
-/area/space)
 "nrU" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/grime,
@@ -109385,7 +109382,7 @@ jnw
 jnw
 jnw
 bKx
-nrT
+cnw
 aab
 aab
 bMw

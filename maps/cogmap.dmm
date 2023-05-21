@@ -42962,6 +42962,9 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cpu" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cpv" = (
@@ -43343,7 +43346,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "cqo" = (
-/obj/storage/closet/biohazard,
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -43386,6 +43392,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cqu" = (
@@ -43681,6 +43688,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "crr" = (
@@ -45479,11 +45487,11 @@
 	},
 /area/station/janitor/supply)
 "cwv" = (
-/obj/table/reinforced/chemistry/auto,
 /obj/item/device/radio/beacon{
 	pixel_x = -13;
 	pixel_y = 15
 	},
+/obj/table/reinforced/chemistry/auto,
 /obj/item/paper/book/from_file/pharmacopia{
 	pixel_x = 8;
 	pixel_y = 2
@@ -46512,6 +46520,10 @@
 	icon_state = "1-2"
 	},
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "cAM" = (
@@ -47746,7 +47758,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ddE" = (
-/obj/machinery/vending/medical,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -47838,6 +47849,13 @@
 "diN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/medical)
+"djA" = (
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "djH" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -48095,6 +48113,21 @@
 "dvF" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"dws" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "chemistry";
+	name = "Chemistry Privacy Shutters";
+	opacity = 0
+	},
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/chemistry)
 "dwx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50630,6 +50663,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
+"fZo" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "fZG" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -54181,6 +54218,12 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"kxr" = (
+/obj/storage/secure/closet/medical/medicine,
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "kzw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -55527,6 +55570,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"mov" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "mpv" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -60077,6 +60128,15 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"ruJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/science/chemistry)
 "rvr" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
@@ -64021,12 +64081,15 @@
 /turf/simulated/floor,
 /area/station/engine/core)
 "vHP" = (
-/obj/storage/secure/closet/medical/medicine,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -97463,7 +97526,7 @@ com
 cpp
 cqp
 cpt
-cpt
+ruJ
 cte
 ctW
 duB
@@ -98670,8 +98733,8 @@ nPo
 coq
 cAL
 cqt
-cpu
-cpu
+fZo
+djA
 ctg
 ctZ
 xal
@@ -100178,7 +100241,7 @@ aaw
 aap
 cne
 cov
-cpv
+mov
 cqy
 cxA
 cne
@@ -100480,7 +100543,7 @@ ckG
 ckG
 cne
 cne
-pxm
+dws
 vhk
 pxm
 cne
@@ -101993,7 +102056,7 @@ coA
 cpB
 cqC
 cqC
-cqC
+kxr
 oOM
 jxO
 wbX
