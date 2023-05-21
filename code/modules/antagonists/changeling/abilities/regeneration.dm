@@ -222,9 +222,11 @@
 		if (!H.getStatusDuration("burning"))
 			H.HealDamage("All", 2, 2, 1)
 			if (prob(20))
+				H.HealDamage("All", 3, 2, 2)
+			if(!ON_COOLDOWN(H, "cling_regen", 3 SECONDS))
 				H.visible_message("<span class='alert'><B>[H]'s flesh is moving and sliding around oddly!</B></span>")
 				boutput(H, "<span class='notice'>We feel our flesh knitting back together.</span>")
-				H.HealDamage("All", 3, 2, 2)
+				playsound(H, 'sound/misc/cling_flesh.ogg', 30)
 		else // lings are vulnerable to fire so it stopping their regen makes sense
 			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
 				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
