@@ -59,6 +59,8 @@
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
+	var/faction = null
+
 	New()
 		..()
 		initial_name = name
@@ -71,6 +73,7 @@
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
+		M.faction = src.faction
 
 		SPAWN(0)
 			if (receives_implant && ispath(receives_implant))
@@ -2263,6 +2266,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	var/leader = FALSE
 	add_to_manifest = FALSE
 
+	faction = SYNDICATE
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M?.mind)
@@ -2301,6 +2306,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	items_in_backpack = list(
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
+
+	faction = SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 
@@ -2342,6 +2349,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge,
 							/obj/item/remote/syndicate_teleporter)
+
+	faction = SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
@@ -2446,6 +2455,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/NTberet,
 							/obj/item/spacecash/fivehundred)
 
+	faction = NANOTRASEN
+
 	New()
 		..()
 		src.access = get_all_accesses()
@@ -2483,6 +2494,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/device/flash,
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
+
+	faction = NANOTRASEN
 
 	New()
 		..()
@@ -2523,7 +2536,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-
+	faction = NANOTRASEN
 
 	New()
 		..()
@@ -2562,6 +2575,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/helmet/space/ntso,
 							/obj/item/clothing/suit/space/ntso,
 							/obj/item/cloth/handkerchief/nt)
+
+	faction = NANOTRASEN
 
 	New()
 		..()
@@ -2885,6 +2900,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 1
 		overlay_icon = "nanotrasen"
 
+		faction = NANOTRASEN
+
 		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
@@ -2928,6 +2945,8 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 2
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
+
+		faction = SYNDICATE
 
 		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)
