@@ -11,9 +11,9 @@
 
 	var/frenzy_low = 6 // minimum number of frenzies
 	var/frenzy_high = 10 // max number of frenzies
-	var/frenzy_damage = 7
+	var/frenzy_damage = 6
 
-	var/weakened_dur = 1.5 SECONDS
+	var/weakened_dur = 1 SECONDS
 	var/bleed_prob = 20
 	var/bleed_damage = 5
 	var/bleed_amount = 5
@@ -130,14 +130,6 @@
 	start_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	attack_sounds = list("sound/impact_sounds/Flesh_Tear_3.ogg", "sound/impact_sounds/Flesh_Stab_1.ogg")
 	attack_verbs = list("lashes at", "whips", "slashes", "tears at", "lacerates")
-
-	cast(atom/target)
-		if (istype(holder.owner, /mob/living/critter/wraith/spiker))
-			var/mob/living/critter/wraith/spiker/the_spiker = holder.owner
-			if (the_spiker.shuffling)
-				boutput(holder.owner, "<span class='notice'>You cannot use this while you're all squished up like that!</span>")
-				return TRUE
-		..()
 
 	onAttach(datum/abilityHolder/holder)
 		..()
