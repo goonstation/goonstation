@@ -65,7 +65,13 @@ export const NoContainer: ReagentContainer = {
 };
 
 interface ReagentInfoProps extends BoxProps {
+  /**
+   * The reagent container object to use. The ui_describe_reagents proc can generate an object like this.
+   */
   container: ReagentContainer | null;
+  /**
+   * Optional sort function for the reagents.
+   */
   sort?: (a: Reagent, b: Reagent) => number;
 }
 
@@ -140,8 +146,18 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
 };
 
 interface ReagentListProps extends ReagentInfoProps {
+  /**
+   * Allows you to render elements (such as buttons) for each reagent in the list.
+   */
   renderButtons?(reagent: Reagent): InfernoNode;
+  /**
+   * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
+   * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
+   */
   renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
+  /**
+   * Whether or not to show the matter state of the elements in the list.
+   */
   showState?: BooleanLike;
 }
 
