@@ -304,6 +304,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
+		reagents.add_reagent("sugar", 5)
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
