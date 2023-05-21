@@ -1,5 +1,9 @@
 
 (t)sun may 21 23
+(u)FlameArrow57
+(p)13888
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Items that can fit on your back will no longer auto-swap with worn backpacks when using the equip hotkey.
 (u)Glamurio (Ryou)
 (p)14183
 (e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
