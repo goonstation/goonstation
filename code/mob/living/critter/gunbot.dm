@@ -146,6 +146,8 @@
 	icon_state = "mars_nuke_bot"
 	eye_light_icon = "mars_nuke_bot_eye"
 
+	faction = SYNDICATE
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]

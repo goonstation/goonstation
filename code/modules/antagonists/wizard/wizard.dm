@@ -62,6 +62,8 @@
 
 		H.assign_gimmick_skull()
 
+		H.faction += WIZARD
+
 		// Permit the wizard to change their name upon spawning.
 		var/randomname
 		if (H.gender == "female")
@@ -94,6 +96,8 @@
 		for (var/datum/targetable/ability in src.ability_holder.abilities)
 			src.ability_holder.removeAbility(ability.type)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/wizard)
+
+		src.owner.current.faction -= WIZARD
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()
