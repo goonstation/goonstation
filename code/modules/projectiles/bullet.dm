@@ -1424,6 +1424,7 @@ datum/projectile/bullet/autocannon
 
         if (length(src.targets))
             P.targets = src.targets
+            src.targets = list()
 
     proc/calc_desired_x_y(var/obj/projectile/P)
         .= 0
