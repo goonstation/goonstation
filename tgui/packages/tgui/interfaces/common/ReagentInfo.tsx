@@ -141,6 +141,7 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
 
 interface ReagentListProps extends ReagentInfoProps {
   renderButtons?(reagent: Reagent): InfernoNode;
+  renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
   showState?: BooleanLike;
 }
 
@@ -221,33 +222,58 @@ const containerCheck = (a: ReagentContainer | null, b: ReagentContainer| null): 
   return false;
 };
 
-// modified version of the shallowDiffers function from common/react.ts
-const reagentInfoDiffers = (a: ReagentInfoProps, b:ReagentInfoProps) => {
-  let i;
-  for (i in a) {
-    if (i === "container") continue;
-    if (!(i in b)) {
-      return true;
-    }
-  }
-  for (i in b) {
-    if (i === "container") continue;
-    if (a[i] !== b[i]) {
-      return true;
-    }
-  }
-  return containerCheck(a.container, b.container);
-};
-
+// modified versions of the shallowDiffers function from common/react.ts
 ReagentGraph.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentGraphProps, b: ReagentGraphProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container") continue;
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
 };
 
 ReagentList.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentListProps, b: ReagentListProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (i === "renderButtonsDeps" && typeof a.renderButtonsDeps === 'object' && typeof b.renderButtonsDeps === 'object') {
+        // The renderButtonsDeps is an array in the previous and next props, so perform a shallow difference check
+        const aDeps = a.renderButtonsDeps;
+        const bDeps = b.renderButtonsDeps;
+        if (aDeps.length !== bDeps.length) {
+          return true;
+        }
+        let j;
+        for (j in aDeps) {
+          if (aDeps[j] !== bDeps[j]) {
+            return true;
+          }
+        }
+        // There is no difference between the deps
+        continue;
+      }
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
 };
 
