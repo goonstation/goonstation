@@ -1,4 +1,63 @@
 
+(t)fri may 19 23
+(u)DisturbHerb
+(p)13854
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added the Obon Festival Crate to QM, containing traditional summer robes and fireworks for the observance of the Space Japanese Obon festival. Costs 3000 credits.
+(u)colossusqw
+(p)13977
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Viper bites no longer make histamine or stun
+(t)thu may 18 23
+(u)colossusqw
+(p)14110
+(e)🎨💅🔬|C-Sprites, C-QoL, A-Science
+(+)Chemical barrels can now be wrenched open/closed to avoid horrible chemical leaks.
+(t)wed may 17 23
+(u)Kubius
+(p)14131
+(e)🆕|C-Feature
+(+)Cargo appraisers can now evaluate market requisition fulfillment by scanning a crate with an appropriate bar code applied.
+(u)LeahTheTech and Flaborized
+(p)14137
+(e)🗺🎨🔄📄⚗|A-Mapping, C-Sprites, C-Rework, A-UI, A-Chemistry
+(*)Reworked dispensary interlinks to use mail pipes, a linked chute and monitoring terminal is now available in chemistry.
+(u)Flaborized
+(p)14063
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The HoP now carries a "T-MO Watch" on their person: it can measure a lot more than time, with many modes that can be swapped through by using it in-hand. Thanks to grifflez for helping with the name!
+(u)Caio029
+(p)13900
+(e)📦|A-Game-Objects
+(*)Cargo can now order wooden sheets in two new selections: x10 Wooden Sheets (for 500 credits) and x50 Wooden Sheets (for 2500 credits).
+(t)mon may 15 23
+(u)LeahTheTech (name courtesy of Kubius)
+(p)14086
+(e)🗺🎨💊📦⚗|A-Mapping, C-Sprites, A-Medical, A-Game-Objects, A-Chemistry
+(*)Added dispensary interlinks to medbay and chemistry lab for easier and more organised supply of medical chemicals.
+(+)The interlinks replace one existing nanomed, synchronize their contents and accept bottles, pills, pill bottles, patches, ampoules and syringes.
+(t)sat may 13 23
+(u)Sord
+(+)Nanomeds (portable and normal) now require medical locker access.
+(u)LeahTheTech
+(+)Small bots (cleanbots, firebots etc.) can now be loaded into mail and disposal chutes by click dragging.
+(u)Colossusqw
+(p)14073
+(e)⚖|C-Balance
+(+)Reduces max sticky floor slowdown time to 10 seconds.
+(t)fri may 12 23
+(u)DimWhat
+(p)13911
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Added some new sprites to some special keys.
+(u)Hans
+(p)11905
+(e)🆕🎨⚖⚗|C-Feature, C-Sprites, C-Balance, A-Chemistry
+(*)Science can now fabricate unwieldy reagent barrels to aid in chemical production.
+(u)Colossusqw
+(p)14064
+(e)⚖|C-Balance
+(+)Sticky floors, such as the ones made by glue, now slow you down to a noticeable amount.
 (t)thu may 11 23
 (u)aloe
 (*)The cape changes have been expanded to scarves and all the other capes (loot crate ones and vampire cape, mostly).

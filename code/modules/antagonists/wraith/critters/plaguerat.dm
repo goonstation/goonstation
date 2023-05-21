@@ -8,6 +8,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	icon_state = "smallRat"
 	density = 1
 	hand_count = 2
+	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/gibs
 	var/eaten_amount = 0	//How much filth did we eat
 	var/amount_to_grow = 0	//How much is needed to grow

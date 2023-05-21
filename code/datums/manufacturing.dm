@@ -677,6 +677,20 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/chembarrel
+	name = "Chemical Barrel"
+	item_paths = list("MET-2", "cobryl")
+	item_amounts = list(6, 9)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
 	item_paths = list("MET-2","CON-1","CRY-1")

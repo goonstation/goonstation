@@ -30,6 +30,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
+#include "_std\macros\factions.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -100,6 +101,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\limiter.dm"
 #include "code\datums\manufacturing.dm"
 #include "code\datums\mind.dm"
+#include "code\datums\mind_mob_overlay.dm"
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\mutantraces.dm"
 #include "code\datums\named_colors.dm"
@@ -1722,6 +1724,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\clothing\uniforms.dm"
 #include "code\obj\item\clothing\uniforms_autocolor.dm"
 #include "code\obj\item\clothing\under\gimmick\hakama.dm"
+#include "code\obj\item\clothing\under\gimmick\yukata.dm"
 #include "code\obj\item\device\accessgun.dm"
 #include "code\obj\item\device\audio_log.dm"
 #include "code\obj\item\device\borg_linker.dm"
@@ -1749,6 +1752,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\device\multitool.dm"
 #include "code\obj\item\device\nanoloom.dm"
 #include "code\obj\item\device\ocular_implanter.dm"
+#include "code\obj\item\device\pocketwatch.dm"
 #include "code\obj\item\device\powersink.dm"
 #include "code\obj\item\device\prox_sensor.dm"
 #include "code\obj\item\device\radio.dm"
