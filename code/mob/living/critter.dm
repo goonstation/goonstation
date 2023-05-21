@@ -1468,7 +1468,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	can_bleed = FALSE
 	metabolizes = FALSE
 	var/emp_vuln = 1
-	var/insulated = FALSE // Does the critter get shocked?
 	blood_id = null
 
 	New()
@@ -1491,16 +1490,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		return TRUE
 
 	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
-		if (!wattage)
-			return 0
-		if (check_target_immunity(src))
-			return 0
-		if (src.insulated)
-			boutput(src,"<span class='alert'>You get shocked but are electrically insulated!</span>")
-			return 0
-		boutput(src,"<span class='alert'>A powerful shock has slowed your movement!</span>")
-		var/power = clamp(wattage / 300000 , 2, 12)
-		src.setStatus("slowed", power SECONDS)
+		return 0
 
 	electric_expose(var/power = 1)
 		return 0
