@@ -196,7 +196,10 @@ export const ReagentList = (props: ReagentListProps) => {
 };
 
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
-  if (a.volume !== b.volume
+  if (a === b) return false;
+  if (!a
+      || !b
+      || a.volume !== b.volume
       || a.name !== b.name
       || a.id !== b.id
       || a.colorR !== b.colorR
@@ -205,7 +208,7 @@ const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   return false;
 };
 
-const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
+const containerCheck = (a: ReagentContainer | null, b: ReagentContainer| null): boolean => {
   if (a === b) return false; // same object or both null, no update
   if (a === null || b === null) return true; // only one object is null, update
   if (a.totalVolume !== b.totalVolume
@@ -213,7 +216,7 @@ const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
       || a.maxVolume !== b.maxVolume) return true; // a property used by ReagentGraph/List has changed, update
   if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
   for (const i in a) {
-    if (reagentCheck(a[i], b[i])) return true; // one of the reagents has changed, update
+    if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
   }
   return false;
 };
