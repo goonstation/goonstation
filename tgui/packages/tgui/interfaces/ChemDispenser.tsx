@@ -201,35 +201,38 @@ export const Beaker = (props, context) => {
         <Table.Cell bold collapsing textAlign="center" />
         <Table.Cell collapsing />
       </Table.Row>
-      <ReagentList container={container} height="auto" showState={iconToggle} renderButtons={reagent => (
-        <>
-          <Button
-            icon="filter"
-            onClick={() => act("isolate", {
-              reagentId: reagent.id,
-            })}>
-            Isolate
-          </Button>
-          <Button
-            icon="minus"
-            onClick={() => act("all", {
-              amount: removeAmount,
-              reagentId: reagent.id,
-            })}>
-            All
-          </Button>
-          {removeReagentButtons.map((amount, indexButtons) => (
+      <ReagentList container={container} height="auto" showState={iconToggle}
+        renderButtons={reagent => (
+          <>
             <Button
-              key={indexButtons}
-              icon="minus"
-              onClick={() => act("remove", {
-                amount: amount, reagentId: reagent.id,
+              icon="filter"
+              onClick={() => act("isolate", {
+                reagentId: reagent.id,
               })}>
-              {amount}
+              Isolate
             </Button>
-          ))}
-        </>
-      )} />
+            <Button
+              icon="minus"
+              onClick={() => act("all", {
+                amount: removeAmount,
+                reagentId: reagent.id,
+              })}>
+              All
+            </Button>
+            {removeReagentButtons.map((amount, indexButtons) => (
+              <Button
+                key={indexButtons}
+                icon="minus"
+                onClick={() => act("remove", {
+                  amount: amount, reagentId: reagent.id,
+                })}>
+                {amount}
+              </Button>
+            ))}
+          </>
+        )}
+        renderButtonsDeps={removeAmount}
+      />
 
     </Section>
   );
