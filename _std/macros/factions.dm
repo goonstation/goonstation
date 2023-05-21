@@ -18,4 +18,5 @@
 #define ICEMOON		(1<<7)
 /// Clowns and other clown like entities
 #define CLOWN		(1<<8)
-
+/// Void stuff / disaster portal / old robots
+#define DERELICT	(1<<9)
