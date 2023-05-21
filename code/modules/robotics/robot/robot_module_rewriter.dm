@@ -21,6 +21,11 @@
 	else
 		..()
 
+/obj/machinery/computer/robot_module_rewriter/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
+	if (isitem(AM) && can_act(user))
+		src.Attackby(AM, user)
+		return
+
 /obj/machinery/computer/robot_module_rewriter/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
