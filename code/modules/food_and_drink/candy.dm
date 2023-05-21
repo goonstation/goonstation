@@ -291,11 +291,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 //#endif
 
-/obj/item/reagent_containers/food/snacks/lollipop
+/obj/item/reagent_containers/food/snacks/candy/lollipop
 	name = "lollipop"
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
+	sugar_content = 5
 	var/icon_random = 0 // does it just choose from the existing random colors?
 	var/image/image_candy
 	heal_amt = 1
@@ -304,7 +305,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	New()
 		..()
-		reagents.add_reagent("sugar", 5)
 		if (src.icon_random)
 			src.icon_state = "lpop-[rand(1,6)]"
 		else
@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.image_candy.color = average.to_rgba()
 			src.UpdateOverlays(src.image_candy, "candy")
 
-/obj/item/reagent_containers/food/snacks/lollipop/random_medical
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_state = "lpop-"
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
