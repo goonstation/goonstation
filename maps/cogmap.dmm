@@ -30937,8 +30937,7 @@
 	pixel_y = 2
 	},
 /obj/item/cargotele{
-	pixel_x = 4;
-	pixel_y = 10
+	pixel_x = 4
 	},
 /obj/item/wrench{
 	pixel_x = 5;
@@ -39016,8 +39015,7 @@
 "cfc" = (
 /obj/table/auto,
 /obj/machinery/recharger{
-	pixel_x = -5;
-	pixel_y = 6
+	pixel_x = 5
 	},
 /obj/machinery/light{
 	dir = 8;
@@ -41093,14 +41091,27 @@
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
 	},
-/turf/simulated/floor,
-/area/station/science/artifact)
-"ckw" = (
 /obj/stool/chair/office{
 	dir = 8
 	},
+/turf/simulated/floor,
+/area/station/science/artifact)
+"ckw" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
+	},
+/obj/table/auto,
+/obj/item/hand_labeler{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/machinery/recharger{
+	pixel_x = 6;
+	pixel_y = 2
+	},
+/obj/item/cargotele{
+	pixel_x = -5;
+	pixel_y = -2
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
