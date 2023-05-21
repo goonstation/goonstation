@@ -57,7 +57,7 @@
 
 	steel
 #ifdef IN_MAP_EDITOR
-		icon_state = "grille0-0"
+		icon_state = "grille-map"
 #endif
 		New()
 			..()
