@@ -596,7 +596,7 @@
 				"wall_poster_beach",
 				"wall_poster_discount",
 				"wall_poster_octocluwne",
-				"wall_poster_eyetest"
+				"wall_poster_eyetest",
 				"space_opera"
 			)
 
