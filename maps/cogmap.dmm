@@ -49933,17 +49933,6 @@
 	name = "tall grass"
 	},
 /area/station/garden/owlery)
-"hFh" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/space,
-/area/space)
 "hFw" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/stripe_delivery,
@@ -53044,16 +53033,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
-"kPH" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/power_monitor{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload_foyer)
 "kQi" = (
 /obj/machinery/atmospherics/valve,
 /obj/cable{
@@ -56723,18 +56702,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"oEr" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	icon_state = "pipe-c";
-	name = "crematorium pipe"
-	},
-/turf/space,
-/area/space)
 "oEu" = (
 /obj/landmark{
 	name = "kudzustart"
@@ -59706,9 +59673,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"ruh" = (
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload_foyer)
 "rvi" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -59724,6 +59688,10 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
+	},
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -60120,6 +60088,12 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "rQc" = (
@@ -60184,13 +60158,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"rSB" = (
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload_foyer)
 "rSU" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -65823,7 +65790,6 @@
 	chargelevel = 15000;
 	output = 10000
 	},
-/obj/cable,
 /turf/simulated/floor/yellow/side,
 /area/station/turret_protected/ai_upload_foyer)
 "xcU" = (
@@ -66594,12 +66560,6 @@
 	icon_state = "wooden"
 	},
 /area/station/crew_quarters/barber_shop)
-"xMi" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/station/turret_protected/ai_upload_foyer)
 "xMr" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -108974,7 +108934,7 @@ aTm
 aSl
 bfj
 aaq
-oEr
+itl
 aLO
 aLO
 iAD
@@ -109301,11 +109261,11 @@ bui
 srJ
 cyC
 buc
-kPH
+bxx
 xcz
 nuF
-ruh
 bZv
+bxx
 bCh
 tiU
 bEe
@@ -109578,7 +109538,7 @@ aSl
 aSl
 aaw
 aaw
-hFh
+rli
 azt
 adC
 bge
@@ -109603,11 +109563,11 @@ buc
 buc
 buc
 buc
-xMi
+bxx
 oXE
 sqL
-rSB
 lbL
+bxx
 bCh
 vaI
 bEf
