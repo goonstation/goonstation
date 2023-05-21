@@ -236,7 +236,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
-	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
 	valid_target(mob/living/C)
