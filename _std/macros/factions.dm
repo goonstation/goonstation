@@ -1,3 +1,18 @@
 //Faction bitmasks, for setting what teams mobs/critters are on. Barebones atm.
 
-#define MOB_AI_FACTION_WRAITH						(1<<0)
+/// Wraith critters and summons
+#define WRAITH		(1<<0)
+/// Maneaters, Tomatoes, Wasps and Plasmaspores
+#define BOTANY		(1<<2)
+/// Trench and Ocean mobs
+#define AQUATIC		(1<<3)
+/// Robots and Drones
+#define SYNDICATE	(1<<4)
+/// Robots and Drones
+#define NANOTRASEN	(1<<5)
+/// Wizard summons
+#define WIZARD		(1<<6)
+/// Sponge capsule spawns
+#define SPONGE		(1<<7)
+/// Ice moon critters
+#define ICEMOON		(1<<7)

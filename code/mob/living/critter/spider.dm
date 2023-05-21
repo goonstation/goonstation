@@ -250,6 +250,8 @@
 	max_skins = 4
 	reacting = 0
 
+	faction = ICEMOON
+
 /mob/living/critter/spider/ice/nice
 	ai_type = /datum/aiHolder/spider_peaceful
 	ai_retaliate_patience = 2 //some patience for peaceful spiders

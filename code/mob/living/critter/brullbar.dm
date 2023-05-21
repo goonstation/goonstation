@@ -28,6 +28,8 @@
 	var/is_king = FALSE
 	var/limb = /datum/limb/brullbar
 
+	faction = ICEMOON
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
 			return ..()

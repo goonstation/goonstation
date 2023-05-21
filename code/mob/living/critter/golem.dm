@@ -82,6 +82,7 @@
 		I.Blend(oldcolor, ICON_ADD)
 		src.icon = I
 		src.wizard_spawn = TRUE
+		src.faction = WIZARD
 		src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
 		src.desc = "An elemental entity composed of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 		return

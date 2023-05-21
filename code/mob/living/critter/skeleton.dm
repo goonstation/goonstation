@@ -143,6 +143,7 @@
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
 		src.wizardSpawn = TRUE
+		src.faction = WIZARD
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
@@ -151,7 +152,6 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	faction = MOB_AI_FACTION_WRAITH
 	health_brute = 15
 	health_burn = 15
 

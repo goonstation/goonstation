@@ -399,6 +399,8 @@
 	health_burn_vuln = 0.6
 	var/activated = FALSE
 
+	faction = SYNDICATE
+
 	active
 		New()
 			..()
