@@ -22,7 +22,7 @@
 	proc/burn_down()
 		return
 
-	/// Properties for open tiles (/floor)
+	// Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
 	#undef _UNSIM_TURF_GAS_DEF
