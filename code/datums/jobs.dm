@@ -888,6 +888,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
+	faction = BOTANY
+
 	New()
 		..()
 		src.access = get_access("Botanist")
@@ -906,6 +908,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc2 = list(/obj/item/device/pda2/botanist)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
+
+	faction = BOTANY
 
 	New()
 		..()
@@ -987,6 +991,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/clown)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
 	change_name_on_spawn = 1
+
+	faction = CLOWN
 
 	New()
 		..()
@@ -1799,6 +1805,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 
+	faction = CLOWN
+
 	New()
 		..()
 		src.access = get_access("Clown")
@@ -2318,6 +2326,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list()
+
+	faction = SYNDICATE
 
 // hidden jobs for nt-so vs syndicate spec-ops
 
