@@ -572,6 +572,12 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_eyetest"
 
+		poster_eyetest
+			name = "Space Opera"
+			desc = "The date and location are scribbled out, huh."
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "spaceopera"
+
 		poster_rand
 			name = "poster"
 			desc = "You aren't really sure what the message is. Is it trying to advertise something?"
@@ -591,6 +597,7 @@
 				"wall_poster_discount",
 				"wall_poster_octocluwne",
 				"wall_poster_eyetest"
+				"space_opera"
 			)
 
 		poster_mining
@@ -678,8 +685,7 @@
 					5 ;"contest-other4",
 					5 ;"contest-other5",
 					5 ;"contest-other6",
-					5 ;"contest-other7",
-					5 ;"contest-other8"
+					5 ;"contest-other7"
 					)
 				switch(which)
 					if("fuckII")
@@ -722,9 +728,6 @@
 					if("contest-other7")
 						src.name = "Code"
 						src.icon_state = "code"
-					if("contest-other8")
-						src.name = "Space Opera"
-						src.icon_state = "space_opera"
 
 			attack_hand(mob/user)
 				. = ..()
