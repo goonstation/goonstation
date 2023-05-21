@@ -1,5 +1,9 @@
 
 (t)sun may 21 23
+(u)Kubius
+(p)14114
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Reduced Nadir's internal reinforcement, improved its extraction nexus, and gave it MULE beacons to accommodate purchased MULEs.
 (u)FlameArrow57
 (p)13888
 (e)💅🔨|C-QoL, A-Player-Actions
