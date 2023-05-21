@@ -216,9 +216,9 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		undies.Blend(src.bioHolder.mobAppearance.u_color ? src.bioHolder.mobAppearance.u_color : "#FFFFFF", ICON_MULTIPLY)
 		return_icon.Blend(undies, ICON_OVERLAY)
 		undies = null
-	var/image/I = src // force the image to have the direction we want
-	I.dir = direction ? direction : null
-	var/icon/comp = getFlatIcon(I, direction ? direction : null)
+	var/image/I = image(src)
+	I.dir = direction // force the direction to prevent it differing from the other icons
+	var/icon/comp = getFlatIcon(I, direction)
 	return_icon.Blend(comp, ICON_OVERLAY)
 	return return_icon
 
