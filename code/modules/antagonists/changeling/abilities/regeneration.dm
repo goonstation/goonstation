@@ -226,7 +226,7 @@
 				boutput(H, "<span class='notice'>We feel our flesh knitting back together.</span>")
 				H.HealDamage("All", 3, 2, 2)
 		else // lings are vulnerable to fire so it stopping their regen makes sense
-			if (prob(20))
+			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
 				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
 				H.visible_message("<span class='alert'><B>[H]'s flesh is weirdly moving in contact with the fire!</B></span>")
 
