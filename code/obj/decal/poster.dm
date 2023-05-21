@@ -576,7 +576,7 @@
 			name = "Space Opera"
 			desc = "The date and location are scribbled out, huh."
 			icon = 'icons/obj/decals/posters.dmi'
-			icon_state = "spaceopera"
+			icon_state = "space_opera"
 
 		poster_rand
 			name = "poster"
