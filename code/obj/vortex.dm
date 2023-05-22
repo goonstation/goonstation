@@ -121,6 +121,8 @@
 			if (ismobcritter(horror))
 				var/mob/living/critter/C = horror
 				C.faction |= DERELICT
+				if (derelict_mode) // In disaster rounds we don't want wraith spawns fighting the local wildlife
+					C.faction |= WRAITH
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else
 			SPAWN(rand(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes
