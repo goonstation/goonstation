@@ -53,8 +53,6 @@
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
 	var/hatcount = 1
-	var/list/friends //! People this skeleton won't attack
-	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton
 
@@ -110,11 +108,6 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
-	valid_target(mob/living/C)
-		if (C in src.friends) return FALSE //TODO replace with the faction system
-		if (iswizard(C) && src.wizardSpawn) return FALSE
-		return ..()
-
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
@@ -135,12 +128,10 @@
 			src.gib()
 		return ..()
 
-
 	proc/CustomiseSkeleton(var/mob/living/carbon/human/target, var/is_monkey)
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
-		src.wizardSpawn = TRUE
 		src.faction = WIZARD
 
 		if (is_monkey)
@@ -156,10 +147,10 @@
 	health_brute = 15
 	health_burn = 15
 
+	faction = WRATIH
+
 	valid_target(mob/living/C)
-		if (islivingobject(C)) return FALSE //don't attack wraith objects TODO replace with faction system
-		if (istype(C, /mob/living/critter/wraith)) return FALSE // don't attack wraith summons ^^
-		if (istype(C, /mob/living/critter/skeleton)) return FALSE // ^^
+		if (istype(C, /mob/living/critter/skeleton)) return FALSE
 		return ..()
 
 	death()
