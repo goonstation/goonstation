@@ -18,47 +18,26 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"e" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/noGenerate)
 "f" = (
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/circuit,
 /area/noGenerate)
 "g" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 6
 	},
-/obj/overlay{
-	anchored = 1;
-	density = 0;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "5-10";
-	name = "structural conduit"
-	},
-/turf/variableTurf/floor,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "h" = (
 /obj/lattice,
-/turf/variableTurf/floor,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "i" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 10
 	},
-/obj/overlay{
-	anchored = 1;
-	density = 0;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "6-9";
-	name = "structural conduit"
-	},
-/turf/variableTurf/floor,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "j" = (
 /obj/item/paper{
@@ -71,16 +50,6 @@
 /obj/item/raw_material/rock,
 /turf/variableTurf/clear,
 /area/noGenerate)
-"l" = (
-/obj/decal/fakeobjects/shuttleengine{
-	desc = "You should probably leave it alone.";
-	dir = 8;
-	name = "sensor array"
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
-/area/noGenerate)
 "m" = (
 /obj/overlay{
 	anchored = 1;
@@ -91,16 +60,7 @@
 	name = "relay dish"
 	},
 /obj/lattice,
-/turf/variableTurf/floor,
-/area/noGenerate)
-"n" = (
-/obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 1
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/variableTurf/clear,
 /area/noGenerate)
 "o" = (
 /obj/critter/gunbot/drone/heavydrone,
@@ -108,65 +68,42 @@
 /area/noGenerate)
 "p" = (
 /obj/ydrone_panel,
-/turf/variableTurf/floor,
+/turf/unsimulated/floor/circuit,
 /area/noGenerate)
 "q" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 9
 	},
-/obj/overlay{
-	anchored = 1;
-	density = 0;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "6-9";
-	name = "structural conduit"
-	},
-/turf/variableTurf/floor,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "r" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
-/obj/overlay{
-	anchored = 1;
-	density = 0;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "5-10";
-	name = "structural conduit"
-	},
-/turf/variableTurf/floor,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "s" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/overlay{
-	anchored = 1;
-	density = 0;
-	desc = "Seems to be full of fiber optic cables.";
-	icon = 'icons/obj/tubing.dmi';
-	icon_state = "1-2";
-	name = "structural conduit"
-	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "t" = (
-/obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 10
-	},
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/noGenerate)
 "u" = (
 /obj/lattice{
 	icon_state = "lattice-dir";
 	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"V" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -261,9 +198,9 @@ a
 b
 b
 b
-b
-b
-l
+s
+s
+t
 b
 b
 b
@@ -278,11 +215,11 @@ a
 b
 b
 b
-e
+t
 f
-e
+t
 p
-e
+t
 b
 b
 b
@@ -294,7 +231,7 @@ a
 a
 d
 b
-b
+V
 f
 g
 h
@@ -311,12 +248,12 @@ a
 a
 b
 b
-b
-e
+t
+t
 h
 m
 h
-e
+t
 t
 b
 b
@@ -346,11 +283,11 @@ a
 b
 b
 b
-e
+t
 f
-e
+t
 f
-e
+t
 u
 b
 b
@@ -365,10 +302,10 @@ b
 b
 b
 j
-n
+t
 s
 s
-e
+t
 b
 b
 c
