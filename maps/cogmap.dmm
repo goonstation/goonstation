@@ -30937,7 +30937,8 @@
 	pixel_y = 2
 	},
 /obj/item/cargotele{
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 10
 	},
 /obj/item/wrench{
 	pixel_x = 5;
@@ -39015,7 +39016,8 @@
 "cfc" = (
 /obj/table/auto,
 /obj/machinery/recharger{
-	pixel_x = 5
+	pixel_x = -5;
+	pixel_y = 6
 	},
 /obj/machinery/light{
 	dir = 8;
