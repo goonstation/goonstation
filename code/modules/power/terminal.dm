@@ -93,7 +93,7 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 		SPAWN(1)
 			if (master)
 				return
-			return ..()
+			..()
 
 /obj/machinery/power/data_terminal
 
