@@ -386,21 +386,21 @@
 //disgusting proc. merge with foods later. PLEASE
 /obj/item/proc/Eat(var/mob/M as mob, var/mob/user, var/by_matter_eater=FALSE)
 	if (!iscarbon(M) && !ismobcritter(M))
-		return 0
+		return FALSE
 	if (M?.bioHolder && !M.bioHolder.HasEffect("mattereater"))
 		if(ON_COOLDOWN(M, "eat", EAT_COOLDOWN))
-			return 0
+			return FALSE
 	var/edibility_override = SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED_PRE, user, src) || SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED_PRE, M, user)
 	var/can_matter_eat = by_matter_eater && (M == user) && M.bioHolder.HasEffect("mattereater")
 	var/edible_check = src.edible || (src.material?.edible) || (edibility_override & FORCE_EDIBILITY)
 	if (!edible_check && !can_matter_eat)
-		return 0
+		return FALSE
 
 	if (M == user)
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.edible || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -415,9 +415,12 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
+			if (src.amount > 1)
+				src.change_stack_amount(-1)
+				return
 			user.u_equip(src)
 			qdel(src)
-		return 1
+		return TRUE
 
 	else
 		user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
@@ -426,16 +429,16 @@
 		logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
 		if (!do_mob(user, M))
-			return 1
+			return TRUE
 		if (BOUNDS_DIST(user, M) > 0)
-			return 1
+			return TRUE
 
 		user.tri_message(M, "<span class='alert'><b>[user]</b> feeds [M] [src]!</span>",\
 			"<span class='alert'>You feed [M] [src]!</span>",\
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.edible || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -450,9 +453,12 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
+			if (src.amount > 1)
+				src.change_stack_amount(-1)
+				return
 			user.u_equip(src)
 			qdel(src)
-		return 1
+		return TRUE
 
 /obj/item/proc/take_damage(brute, burn, tox, disallow_limb_loss)
 	// this is a helper for organs and limbs

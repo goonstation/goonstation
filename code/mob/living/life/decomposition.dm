@@ -21,7 +21,8 @@
 					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
 					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
 					owner.reagents?.has_reagent("formaldehyde") || \
-					owner.reagents?.has_reagent("miasmosa")
+					owner.reagents?.has_reagent("miasmosa") || \
+					istype(owner.loc, /obj/icecube)
 
 			if (istype(owner.loc, /obj/machinery/traymachine/morgue)) //Morgues require power now
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
