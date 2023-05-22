@@ -114,8 +114,8 @@
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
 						var/obj/minion = new src.mob_type(chosen_turf)
 						if (ismobcritter(minion))
-							var/mob/M = minion
-							M.faction += WRAITH
+							var/mob/living/critter/C = minion
+							C.faction += WRAITH
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
