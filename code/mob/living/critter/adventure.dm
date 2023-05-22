@@ -479,6 +479,7 @@
 		HH.suffix = "-R"
 		HH.icon_state = "handr"
 		HH.limb_name = "sword"
+		HH.can_hold_items = FALSE
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
