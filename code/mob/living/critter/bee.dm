@@ -547,6 +547,8 @@
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
