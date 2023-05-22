@@ -15,6 +15,7 @@
 /mob/dead/ex_act(severity)
 	return
 
+// Make sure to keep this JPS-cache safe
 /mob/dead/Cross(atom/movable/mover)
 	return 1
 

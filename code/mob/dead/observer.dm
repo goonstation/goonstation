@@ -152,7 +152,7 @@
 		src.bioHolder = newbio
 
 
-//#ifdef HALLOWEEN
+// Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
