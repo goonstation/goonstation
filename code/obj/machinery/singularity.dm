@@ -145,7 +145,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	//get all bendy
 
-	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med", pixel_x = -208, pixel_y = -208)
+	var/image/lense = image(icon='icons/effects/overlays/lensing.dmi', icon_state="lensing_med_hole", pixel_x = -208, pixel_y = -208)
 	lense.plane = PLANE_DISTORTION
 	lense.blend_mode = BLEND_OVERLAY
 	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
@@ -263,6 +263,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
+	if(istype(A, /obj/dummy))
+		return
 
 	if (A.event_handler_flags & IMMUNE_SINGULARITY)
 		return
@@ -272,6 +274,20 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
+
+	var/icon/spaget = getFlatIcon(A)
+	var/obj/dummy/spaget_overlay = new()
+	spaget_overlay.icon = spaget
+	spaget_overlay.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	spaget_overlay.pixel_x = A.pixel_x+(A.x - src.x)*32
+	spaget_overlay.pixel_y = A.pixel_y+(A.y - src.y)*32
+	spaget_overlay.mouse_opacity = 0
+	var/angle = get_angle(A, src)
+	var/matrix/flatten = matrix(0.1, -cos(angle), -spaget_overlay.pixel_x, src.radius, sin(angle), -spaget_overlay.pixel_y)
+	animate(spaget_overlay, 3 SECONDS, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+	src.vis_contents += spaget_overlay
+	SPAWN(4 SECONDS)
+		qdel(spaget_overlay)
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
