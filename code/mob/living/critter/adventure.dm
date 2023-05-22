@@ -428,6 +428,7 @@
 	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
 	icon_state = "townguard"
+	icon_state_dead = "townguard-dead"
 	hand_count = 2
 	can_throw = TRUE
 	can_grab = TRUE
@@ -441,6 +442,7 @@
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/wanderer_aggressive
+	is_npc = TRUE
 
 	passive
 		ai_retaliate_patience = 2
@@ -503,6 +505,10 @@
 		src.set_a_intent(INTENT_HARM)
 		src.active_hand = 2
 		return ..() // Punch / Kick them
+
+	death(var/gibbed)
+		src.can_lie = FALSE
+		..()
 
 	proc/HALT()
 		if(!ON_COOLDOWN(src, "HALT!", 3 SECONDS))

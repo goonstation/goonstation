@@ -31,7 +31,7 @@
 					/mob/living/critter/brullbar,
 					/obj/critter/bat/buff,
 					/mob/living/critter/spider/ice,
-					/obj/critter/townguard/passive,
+					/mob/living/critter/townguard,
 					/mob/living/critter/lion,
 					/mob/living/critter/fermid)
 
