@@ -445,6 +445,7 @@
 	is_npc = TRUE
 
 	passive
+		desc = "A strange man dressed in medieval armor."
 		ai_retaliate_patience = 2
 		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 		ai_type = /datum/aiHolder/wanderer
