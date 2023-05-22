@@ -102,7 +102,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	disposing()
 		connect_image = null
 		density = 0
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles(need_rebuild=1, selfnotify=1)
 		. = ..()
 
 	Move()
