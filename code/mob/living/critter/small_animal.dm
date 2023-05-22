@@ -242,8 +242,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if (istype(C, /mob/living/critter/small_animal/mouse)) return FALSE
 		return ..()
 
-	seek_target(range)
-
 	critter_basic_attack(var/mob/target)
 		. = ..()
 		if(. && prob(30) && ishuman(target))
@@ -2876,8 +2874,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	valid_target(mob/living/C)
 		if (C.job == "Botanist") return FALSE
 		return ..()
-
-	seek_target(var/range = 5)
 
 	death(var/gibbed)
 		src.can_lie = FALSE
