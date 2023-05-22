@@ -86,6 +86,19 @@ var/global/parallax_enabled = TRUE
 		for (var/parallax_layer_type as anything in A.area_parallax_layers)
 			src.add_parallax_layer(parallax_layer_type, z_level = A.z)
 
+	/// Updates the parallax layers displayed to a client by an area.
+	proc/update_area_parallax_layers(area/new_area, area/old_area)
+		if (old_area && new_area && (old_area.area_parallax_layers ~= new_area.area_parallax_layers))
+			return
+
+		if (old_area)
+			for (var/parallax_layer_type as anything in old_area.area_parallax_layers)
+				src.remove_parallax_layer(parallax_layer_type, z_level = old_area.z)
+
+		if (new_area)
+			for (var/parallax_layer_type as anything in new_area.area_parallax_layers)
+				src.add_parallax_layer(parallax_layer_type, z_level = new_area.z)
+
 	/// Creates a new parallax layer of the specified type on the specified z-level.
 	proc/add_parallax_layer(parallax_layer_type, animation_time = 0, z_level = Z_LEVEL_STATION, list/layer_params)
 		var/atom/movable/screen/parallax_layer/parallax_layer = new parallax_layer_type(null, src.owner, layer_params)

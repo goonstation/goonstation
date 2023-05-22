@@ -200,12 +200,7 @@ TYPEINFO(/area)
 				if (sound_loop)
 					M.client.playAmbience(src, AMBIENCE_LOOPING, sound_loop_vol)
 
-				if (M.client.parallax_controller && !(lastarea.area_parallax_layers ~= src.area_parallax_layers))
-					for (var/parallax_layer_type as anything in lastarea.area_parallax_layers)
-						M.client.parallax_controller.remove_parallax_layer(parallax_layer_type, z_level = lastarea.z)
-
-					for (var/parallax_layer_type as anything in src.area_parallax_layers)
-						M.client.parallax_controller.add_parallax_layer(parallax_layer_type, z_level = src.z)
+				M.client.parallax_controller?.update_area_parallax_layers(src, lastarea)
 
 				if (!played_fx_1 && prob(AMBIENCE_ENTER_PROB))
 					src.pickAmbience()
