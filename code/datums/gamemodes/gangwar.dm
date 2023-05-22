@@ -1431,7 +1431,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A pouch of 4 Shuriken throwing stars."
 	class2 = "weapon"
 	price = 1200
-	item_path = /obj/item/storage/box/shuriken_pouch
+	item_path = /obj/item/storage/shuriken_pouch
 
 /datum/gang_item/ninja/throwing_knife
 	name = "Throwing Knive"

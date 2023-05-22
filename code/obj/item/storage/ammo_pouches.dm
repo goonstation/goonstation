@@ -315,3 +315,11 @@
 		/obj/item/remote/sawflyremote
 	)
 
+/obj/item/storage/shuriken_pouch
+	name = "shuriken pouch"
+	desc = "A pouch for carrying shurikens. Guaranteed to not shred."
+	icon_state = "ammopouch"
+	w_class = W_CLASS_SMALL
+	slots = 4
+	opens_if_worn = TRUE
+	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
