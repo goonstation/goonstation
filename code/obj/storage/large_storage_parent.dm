@@ -365,7 +365,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)

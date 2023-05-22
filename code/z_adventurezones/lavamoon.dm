@@ -1211,52 +1211,90 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	density = 0
 	var/id = null
 	var/broken = FALSE
+	mat_appearances_to_ignore = list("negative matter")
+	mat_changename = FALSE
+	appearance_flags = KEEP_TOGETHER
 
-	broken
-		name = "broken ladder"
-		desc = "it's too damaged to climb."
-		icon_state = "ladder_wall_broken"
-		broken = TRUE
+/obj/ladder/broken
+	name = "broken ladder"
+	desc = "it's too damaged to climb."
+	icon_state = "ladder_wall_broken"
+	broken = TRUE
 
-	New()
-		..()
-		if (!id)
-			id = "generic"
+/obj/ladder/embed
+	name = "gap in the wall"
+	icon_state = "wall_embed"
+	desc = "A section of this wall appears to be missing. Entering it might take you somewhere."
+	plane = PLANE_WALL
 
-		src.update_id()
+/obj/ladder/embed/climb(mob/user as mob)
+	var/obj/ladder/otherLadder = src.get_other_ladder()
+	if (!istype(otherLadder))
+		boutput(user, "You try to enter the gap in the wall, but seriously fail! Perhaps there's nowhere to go?")
+		return
+	boutput(user, "You enter the gap in the wall.")
+	user.set_loc(get_turf(otherLadder))
 
-	proc/update_id(new_id)
-		if(new_id)
-			src.id = new_id
-		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+/obj/ladder/embed/extradimensional/New()
+	..()
+	src.setMaterial(getMaterial("negativematter"))
+/obj/ladder/extradimensional/New()
+	..()
+	src.setMaterial(getMaterial("negativematter"))
 
-	proc/get_other_ladder()
-		RETURN_TYPE(/atom)
-		. = locate("ladder_[id][src.icon_state == "ladder"]")
 
-	attack_hand(mob/user)
-		if (src.broken) return
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+/obj/ladder/New()
+	..()
+	if (!id)
+		id = "generic"
+	src.update_id()
+
+/obj/ladder/onMaterialChanged()
+	. = ..()
+	if(isnull(src.material))
+		return
+	var/found_negative = (src.material.mat_id == "negativematter")
+	if(!found_negative)
+		for(var/datum/material/parent_mat in src.material.parent_materials)
+			if(parent_mat.mat_id == "negativematter")
+				found_negative = TRUE
+				break
+	if(found_negative)
+		src.AddComponent(/datum/component/extradimensional_storage/ladder)
+		src.broken = TRUE // disable ladder behavior
+
+/obj/ladder/proc/update_id(new_id)
+	if(new_id)
+		src.id = new_id
+	src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+
+/obj/ladder/proc/get_other_ladder()
+	RETURN_TYPE(/atom)
+	. = locate("ladder_[id][src.icon_state == "ladder"]")
+
+/obj/ladder/attack_hand(mob/user)
+	if (src.broken) return
+	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+		return
+	src.climb(user)
+
+/obj/ladder/attackby(obj/item/W, mob/user)
+	if (src.broken) return
+	if (istype(W, /obj/item/grab))
+		var/obj/item/grab/grab = W
+		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
-		src.climb(user)
+		user.lastattacked = src
+		src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
+		return climb(grab.affecting)
 
-	attackby(obj/item/W, mob/user)
-		if (src.broken) return
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/grab = W
-			if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
-				return
-			user.lastattacked = src
-			src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
-			return climb(grab.affecting)
-
-	proc/climb(mob/user as mob)
-		var/obj/ladder/otherLadder = src.get_other_ladder()
-		if (!istype(otherLadder))
-			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
-			return
-		boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-		user.set_loc(get_turf(otherLadder))
+/obj/ladder/proc/climb(mob/user as mob)
+	var/obj/ladder/otherLadder = src.get_other_ladder()
+	if (!istype(otherLadder))
+		boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
+		return
+	boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
+	user.set_loc(get_turf(otherLadder))
 
 //Puzzle elements
 
