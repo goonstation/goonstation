@@ -76,16 +76,28 @@
 				break
 		if(!interdicted)
 			if(derelict_mode)
-				horror_path = pick(/mob/living/critter/shade = 5,
-				/mob/living/critter/crunched = 3,
+				horror_path = pick(
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/shade,
+				/mob/living/critter/crunched,
+				/mob/living/critter/crunched,
+				/mob/living/critter/crunched,
 				/obj/critter/bloodling,
-				/obj/critter/ancient_thing = 2,
-				/mob/living/critter/robotic/repairbot = 2,
-				/mob/living/critter/robotic/repairbot/security = 2,
+				/obj/critter/ancient_thing,
+				/obj/critter/ancient_thing,
+				/mob/living/critter/robotic/repairbot,
+				/mob/living/critter/robotic/repairbot,
+				/mob/living/critter/robotic/repairbot/security,
+				/mob/living/critter/robotic/repairbot/security,
 				/obj/critter/gunbot/heavy,
-				/obj/machinery/bot/medbot/terrifying = 2)
+				/obj/machinery/bot/medbot/terrifying,
+				/obj/machinery/bot/medbot/terrifying
+				)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone = 2, /mob/living/critter/aberration)
+					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
 				if (was_eaten && prob(15))
 					horror_path = /obj/critter/blobman/meaty_martha
 			else
