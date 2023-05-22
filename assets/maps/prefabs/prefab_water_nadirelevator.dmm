@@ -950,16 +950,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"FZ" = (
-/obj/grille/catwalk,
-/obj/grille/catwalk,
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/diner/hallway{
-	name = "Space Diner Backhall"
-	})
 "Gq" = (
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/black/grime,
@@ -3755,7 +3745,7 @@ Rv
 xb
 xb
 xb
-FZ
+EG
 Wr
 Wr
 Nl
