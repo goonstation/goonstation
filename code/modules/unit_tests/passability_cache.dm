@@ -23,6 +23,9 @@
 	var/list/unstable_types = list()
 
 	for(var/type in concrete_typesof(/atom))
+		if (ispath(type, /mob/dead)) // exception as /mob/dead overrides Cross() to suppress the /mob/Cross and lways return TRUE
+			continue
+
 		var/atom/atom_type = type
 
 		var/direct_parent_path = type2parent(type)
