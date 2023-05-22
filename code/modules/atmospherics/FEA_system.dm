@@ -153,30 +153,30 @@ var/global/total_gas_mixtures = 0
 
 /// This first processes the air_master update/rebuild lists then processes all groups and tiles for air calculations
 /datum/controller/air_system/proc/process()
-	current_cycle++
+	src.current_cycle++
 
-	process_tiles_to_space()
-	is_busy = TRUE
+	src.process_tiles_to_space()
+	src.is_busy = TRUE
 
 	if(!explosions.exploding)
 		if(length(groups_to_rebuild))
-			process_rebuild_select_groups()
+			src.process_rebuild_select_groups()
 		LAGCHECK(LAG_REALTIME)
 
 		if(length(tiles_to_update))
-			process_update_tiles()
+			src.process_update_tiles()
 		LAGCHECK(LAG_REALTIME)
 
-	process_groups()
+	src.process_groups()
 	LAGCHECK(LAG_REALTIME)
 
-	process_singletons()
+	src.process_singletons()
 	LAGCHECK(LAG_REALTIME)
 
-	process_super_conductivity()
+	src.process_super_conductivity()
 	LAGCHECK(LAG_REALTIME)
 
-	process_high_pressure_delta()
+	src.process_high_pressure_delta()
 	LAGCHECK(LAG_REALTIME)
 
 	if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
@@ -184,7 +184,7 @@ var/global/total_gas_mixtures = 0
 			AG.check_regroup()
 			LAGCHECK(LAG_REALTIME)
 
-	is_busy = FALSE
+	src.is_busy = FALSE
 	return TRUE
 
 /// Replaces all queued tiles in [/datum/controller/air_system/var/tiles_to_space] with space.
@@ -222,7 +222,7 @@ var/global/total_gas_mixtures = 0
 
 	for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
 		if(!S.parent)
-			assemble_group_turf(S)
+			src.assemble_group_turf(S)
 	LAGCHECK(LAG_REALTIME)
 
 	for(var/turf/simulated/S as anything in turf_list)

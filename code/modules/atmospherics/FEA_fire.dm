@@ -1,17 +1,19 @@
 #define HOTSPOT_MEDIUM_LIGHTS
 
+/// Exposes our reagents and material to some temperature, letting them figure out how to react to it.
 /atom/proc/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
+	if (src.reagents)
+		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 
+/// We reacts to the exposed temperature, calls [/atom/proc/temperature_expose] on everything within us, and exposes fluids to electricity if need be.
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
-	if (reagents)
-		reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
+	if (src.reagents)
+		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
 	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
 		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 			for (var/atom/movable/item as anything in src)
@@ -22,28 +24,31 @@
 			for(var/atom/movable/item as anything in src)
 				item.temperature_expose(null, exposed_temperature, exposed_volume)
 
-/// Checks if we should light on fire if we do not have a hotspot already. If we should and don't have one, spawns one.
-/// Returns: TRUE if we ignited, FALSE if we didn't.
+/// * Checks if we should light on fire if we do not have a hotspot already. If we should and don't have one, spawns one.
+/// * Returns: TRUE if we ignited or already have a hotspot, FALSE if we didn't make one or have one.
 /turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = FALSE)
-	. = ..()
+	..()
 	var/datum/gas_mixture/air_contents = src.return_air()
 
 	if (!air_contents)
 		return FALSE
 
-	if (active_hotspot)
+	if (src.active_hotspot)
 		if (locate(/obj/fire_foam) in src)
-			active_hotspot.dispose() // have to call this now to force the lighting cleanup
-			qdel(active_hotspot)
-			active_hotspot = null
+			src.active_hotspot.dispose() // have to call this now to force the lighting cleanup
+			qdel(src.active_hotspot)
+			src.active_hotspot = null
+			return FALSE
 
 		if (soh)
+			// If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
+			// WHY we need this is completely unknown to me. am too dum im just a documenter.
 			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
-				if (active_hotspot.temperature < exposed_temperature)
-					active_hotspot.temperature = exposed_temperature
-					active_hotspot.set_real_color()
-				if (active_hotspot.volume < exposed_volume)
-					active_hotspot.volume = exposed_volume
+				if (src.active_hotspot.temperature < exposed_temperature)
+					src.active_hotspot.temperature = exposed_temperature
+					src.active_hotspot.set_real_color()
+				if (src.active_hotspot.volume < exposed_volume)
+					src.active_hotspot.volume = exposed_volume
 		return TRUE
 
 	var/igniting = FALSE
@@ -61,13 +66,13 @@
 		if (parent?.group_processing)
 			parent.suspend_group_processing()
 
-		active_hotspot = new /obj/hotspot
-		active_hotspot.temperature = exposed_temperature
-		active_hotspot.volume = exposed_volume
-		active_hotspot.set_loc(src)
-		active_hotspot.set_real_color()
+		src.active_hotspot = new /obj/hotspot
+		src.active_hotspot.temperature = exposed_temperature
+		src.active_hotspot.volume = exposed_volume
+		src.active_hotspot.set_loc(src)
+		src.active_hotspot.set_real_color()
 
-		active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
+		src.active_hotspot.just_spawned = (current_cycle < air_master.current_cycle)
 		//remove just_spawned protection if no longer processing this cell
 
 	return igniting
@@ -83,18 +88,19 @@
 	icon = 'icons/effects/fire.dmi' //Icon for fire on turfs, also helps for nurturing small fires until they are full tile
 	icon_state = "1"
 
-	//layer = TURF_LAYER
 	alpha = 160
 	blend_mode = BLEND_ADD
 #ifndef HOTSPOT_MEDIUM_LIGHTS
 	var/datum/light/light
 #endif
-
+	/// Volume to expose to other atoms. Also used while [/obj/hotspot/var/bypassing] is FALSE to act on a volume of gas on our turf.
 	var/volume = 125
+	/// Our temperature.
 	var/temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST
-	/// If we've just spawned, don't die right after, wait a cycle.
+	/// If we've just spawned then don't process yet, wait a cycle.
 	var/just_spawned = TRUE
-	///
+	/// If true, we've reached our last stage and should bypass processing reactions within ourselves.
+	/// We may then start spreading heat and call [/turf/simulated/hotspot_expose] on other tiles.
 	var/bypassing = FALSE
 	/// Are we allowed to pass the temperature limit for non-catalysed fires?
 	var/catalyst_active = FALSE
@@ -188,7 +194,8 @@
 		add_medium_light("hotspot", list(red, green, blue, 100))
 #endif
 
-/// Interact
+/// Interact with our turf, performing reactions, scaling volume up, and exposing things on our turf while [/obj/hotspot/var/bypassing] is FALSE,
+/// and simply scaling up while it is set to TRUE.
 /obj/hotspot/proc/perform_exposure()
 	var/turf/simulated/floor/location = loc
 	if(!(location.turf_flags & IS_TYPE_SIMULATED))
@@ -220,16 +227,17 @@
 			if(src.catalyst_active)
 				// Limit temperature based scaling to not exceed cell volume so spreading and exposure don't inappropriately scale
 				max_temp = HOTSPOT_MAX_CAT_TEMPERATURE
-			var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME /  max_temp), 1, CELL_VOLUME)
+			var/temperature_scaled_volume = clamp((src.temperature * CELL_VOLUME / max_temp), 1, CELL_VOLUME)
 			src.volume = max(src.volume, temperature_scaled_volume)
 
 		location.assume_air(affected)
 
-		for(var/obj/object as anything in location)
-			object.temperature_expose(null, temperature, src.volume)
+		for(var/atom/movable/AM as anything in location)
+			AM.temperature_expose(null, temperature, src.volume)
 
-	set_real_color()
+	src.set_real_color()
 
+///Temperature expose every atom that crosses us, burning living mobs that cross us.
 /obj/hotspot/Crossed(var/atom/A)
 	..()
 	A.temperature_expose(null, temperature, volume)
@@ -238,6 +246,7 @@
 		var/B = clamp(temperature - 100 / 550, 0, 55)
 		H.update_burning(B)
 
+/// Process fire survival, mob burning, hotspot exposure, and heat radiation.
 /obj/hotspot/proc/process(list/turf/simulated/possible_spread)
 	if (src.just_spawned)
 		src.just_spawned = FALSE
@@ -259,7 +268,7 @@
 	for (var/mob/living/L in src.loc)
 		L.update_burning(clamp(temperature / 60, 5, 33))
 
-	perform_exposure()
+	src.perform_exposure()
 
 	src.catalyst_active = FALSE
 	location.wet = 0
@@ -283,6 +292,7 @@
 			icon_state = "1"
 
 	return TRUE
+
 
 /obj/hotspot/ex_act()
 	return

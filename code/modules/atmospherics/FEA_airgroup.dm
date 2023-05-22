@@ -213,9 +213,9 @@
 					ATMOS_TILE_OPERATION_DEBUG(enemy_border)
 
 					var/result = air.check_gas_mixture(AG.air)
-					if(result == 1)
+					if(result == GROUP_CHECK_PASS)
 						connection_difference = air.share(AG.air)
-					else if(result == -1)
+					else if(result == SHARER_CHECK_FAIL)
 						AG.suspend_group_processing()
 						connection_difference = air.share(enemy_border.air)
 					else

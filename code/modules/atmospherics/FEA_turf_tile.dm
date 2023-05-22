@@ -38,11 +38,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 	//  we can't pool the object returned by return_air. Bad news, man.
 	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
-	#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = GAS;
+	#define _TRANSFER_GAS_TO_GM(GAS, ...) GM.GAS = src.GAS;
 	APPLY_TO_GASES(_TRANSFER_GAS_TO_GM)
 	#undef _TRANSFER_GAS_TO_GM
 
-	GM.temperature = temperature
+	GM.temperature = src.temperature
 
 	return GM
 
@@ -55,7 +55,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
 		#undef _TRANSFER_AMOUNT_TO_GM
 
-	GM.temperature = temperature
+	GM.temperature = src.temperature
 
 	return GM
 
@@ -149,55 +149,54 @@ var/global/list/turf/hotly_processed_turfs = list()
  * 	Queues us for pressure delta processing if we previously did not have a pressure difference. */
 /turf/simulated/proc/consider_pressure_difference_space(connection_difference)
 	for(var/direction in cardinal)
-		if(direction & group_border)
+		if(direction & src.group_border)
 			if(!istype(get_step(src,direction),/turf/space))
 				continue
 
-			if(!pressure_difference)
+			if(!src.pressure_difference)
 				air_master.high_pressure_delta += src
-			pressure_direction = direction
-			pressure_difference = connection_difference
+			src.pressure_direction = direction
+			src.pressure_difference = connection_difference
 
 /// Updates, or creates, our overlay if [/datum/gas_mixture/var/graphic] on model is different from [/turf/simulated/var/tmp/visuals_state].
 /// If model doesn't have a graphic, delete our overlay.
 /turf/simulated/proc/update_visuals(datum/gas_mixture/model)
-	if (disposed)
+	if (src.disposed)
 		return
 
 	if (model.graphic)
 		if (model.graphic != visuals_state)
-			if(!gas_icon_overlay)
-				gas_icon_overlay = new /obj/overlay/tile_gas_effect
-				gas_icon_overlay.set_loc(src)
+			if(!src.gas_icon_overlay)
+				src.gas_icon_overlay = new /obj/overlay/tile_gas_effect
+				src.gas_icon_overlay.set_loc(src)
 			else
-				gas_icon_overlay.overlays.len = 0
+				src.gas_icon_overlay.overlays.len = 0
 
-			visuals_state = model.graphic
+			src.visuals_state = model.graphic
 			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_PLASMA)
 			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_N2O)
 			UPDATE_TILE_GAS_OVERLAY(visuals_state, gas_icon_overlay, GAS_IMG_RAD)
-			gas_icon_overlay.dir = pick(cardinal)
+			src.gas_icon_overlay.dir = pick(cardinal)
 	else
-		if (gas_icon_overlay)
+		if (src.gas_icon_overlay)
 			qdel(gas_icon_overlay)
-			gas_icon_overlay = null
-
+			src.gas_icon_overlay = null
 
 /turf/simulated/New()
 	. = ..()
 
-	if(!gas_impermeable)
-		air = new /datum/gas_mixture
+	if(!src.gas_impermeable)
+		src.air = new /datum/gas_mixture
 
 		#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
 		APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
 		#undef _TRANSFER_GAS_TO_AIR
 
-		air.temperature = temperature
+		src.air.temperature = src.temperature
 
 		if(air_master)
 			air_master.tiles_to_update |= src
-			find_group()
+			src.find_group()
 
 	else
 		if(!air_master)
@@ -209,117 +208,117 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /turf/simulated/Del()
 	if(air_master)
-		if(parent)
-			air_master.groups_to_rebuild |= parent
-			parent.members.Remove(src)
+		if(src.parent)
+			air_master.groups_to_rebuild |= src.parent
+			src.parent.members.Remove(src)
 		else
 			air_master.active_singletons.Remove(src)
 
-	if(active_hotspot)
-		active_hotspot.dispose() // have to call this now to force the lighting cleanup
-		if (active_hotspot)
+	if(src.active_hotspot)
+		src.active_hotspot.dispose() // have to call this now to force the lighting cleanup
+		if (src.active_hotspot)
 			qdel(active_hotspot)
-			active_hotspot = null
+			src.active_hotspot = null
 
-	if(being_superconductive)
+	if(src.being_superconductive)
 		air_master.active_super_conductivity.Remove(src)
 
-	if(gas_impermeable)
+	if(src.gas_impermeable)
 		for(var/direction in cardinal)
 			var/turf/simulated/tile = get_step(src,direction)
 			if(air_master && (tile.turf_flags & IS_TYPE_SIMULATED) && !tile.gas_impermeable)
 				air_master.tiles_to_update |= tile
 
 	qdel(air)
-	air = null
+	src.air = null
 
-	if (gas_icon_overlay)
+	if (src.gas_icon_overlay)
 		qdel(gas_icon_overlay)
-		gas_icon_overlay = null
+		src.gas_icon_overlay = null
 
-	air = null
-	parent = null
+	src.air = null
+	src.parent = null
 	..()
 
 /// Merges all air from giver into turf or air group. Deletes giver.
 /turf/simulated/assume_air(datum/gas_mixture/giver)
-	if(!air)
+	if(!src.air)
 		return ..()
 
-	if(parent?.group_processing)
-		if(!parent.air.check_then_merge(giver))
-			parent.suspend_group_processing()
-			air.merge(giver)
+	if(src.parent?.group_processing)
+		if(!src.parent.air.check_then_merge(giver))
+			src.parent.suspend_group_processing()
+			src.air.merge(giver)
 	else
-		air.merge(giver)
+		src.air.merge(giver)
 
-		if(!processing)
-			if(air.check_tile_graphic())
-				update_visuals(air)
+		if(!src.processing)
+			if(src.air.check_tile_graphic())
+				src.update_visuals(air)
 
 	return TRUE
 
 #ifdef ATMOS_ARCHIVING
 /turf/simulated/proc/archive()
-	if(air) //For open space like floors
-		air.archive()
+	if(src.air) //For open space like floors
+		src.air.archive()
 
-	ARCHIVED(temperature) = temperature
-	archived_cycle = air_master.current_cycle
+	src.ARCHIVED(temperature) = src.temperature
+	src.archived_cycle = air_master.current_cycle
 #endif
 
-/// Returns air mixture of turf or air group, if we have one. If we don't, call parent [/turf/return_air].
+/// Returns air mixture of turf or air group, if we have one. If we don't, return [/turf/return_air].
 /turf/simulated/return_air()
-	if(air)
-		if(parent?.group_processing)
-			return parent.air
+	if(src.air)
+		if(src.parent?.group_processing)
+			return src.parent.air
 		else
-			return air
+			return src.air
 
 	else
 		return ..()
 
 /// Removes some moles from turf or air group.
 /turf/simulated/remove_air(amount)
-	if(!air)
+	if(!src.air)
 		return ..()
 
 	var/datum/gas_mixture/removed = null
 
 	if(parent?.group_processing)
-		removed = parent.air.check_then_remove(amount)
+		removed = src.parent.air.check_then_remove(amount)
 		if(!removed)
-			parent.suspend_group_processing()
-			removed = air.remove(amount)
+			src.parent.suspend_group_processing()
+			removed = src.air.remove(amount)
 	else
-		removed = air.remove(amount)
+		removed = src.air.remove(amount)
 
-		if(!processing)
-			if(air.check_tile_graphic())
-				update_visuals(air)
+		if(!src.processing)
+			if(src.air.check_tile_graphic())
+				src.update_visuals(air)
 
 	return removed
 
 /// Updates parent, processing, air checking directions, and space borders.
 /turf/simulated/proc/update_air_properties() //OPTIMIZE - yes this proc right here sir
-	air_check_directions = 0
+	src.air_check_directions = 0
 
 	for(var/direction in cardinal)
 		LAGCHECK(LAG_REALTIME)
-		if(gas_cross(get_step(src,direction)))
-			air_check_directions |= direction
+		if(src.gas_cross(get_step(src,direction)))
+			src.air_check_directions |= direction
 
 	if(src.parent)
 		if(src.parent.borders)
 			src.parent.borders -= src
-		if(length_space_border > 0)
-			parent.length_space_border -= length_space_border
-			length_space_border = 0
+		if(src.length_space_border > 0)
+			src.parent.length_space_border -= length_space_border
+			src.length_space_border = 0
 
-		group_border = 0
+		src.group_border = 0
 		for(var/direction in cardinal)
 			LAGCHECK(LAG_REALTIME)
-			if(air_check_directions & direction)
+			if(src.air_check_directions & direction)
 				var/turf/simulated/T = get_step(src,direction)
 
 				//See if actually a border
@@ -330,25 +329,24 @@ var/global/list/turf/hotly_processed_turfs = list()
 							src.parent.space_borders |= src
 						else
 							src.parent.space_borders = list(src)
-						length_space_border++
-						group_border |= direction
+						src.length_space_border++
+						src.group_border |= direction
 
 					else if(T.turf_flags & IS_TYPE_SIMULATED)
 						if(src.parent.borders)
 							src.parent.borders |= src
 						else
 							src.parent.borders = list(src)
-						group_border |= direction
+						src.group_border |= direction
 
+		src.parent.length_space_border += src.length_space_border
 
-		parent.length_space_border += length_space_border
-
-	if(air_check_directions)
-		processing = TRUE
-		if(!parent)
+	if(src.air_check_directions)
+		src.processing = TRUE
+		if(!src.parent)
 			air_master.active_singletons |= src
 	else
-		processing = FALSE
+		src.processing = FALSE
 
 /// Does a fair amount. Shares with neighbors, updates hotspots, update graphics, checks superconductivity, the whole nine yards.
 /turf/simulated/proc/process_cell()
@@ -364,7 +362,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		if(archived_cycle < air_master.current_cycle) //archive self if not already done
 			archive()
 		#endif
-		current_cycle = air_master.current_cycle
+		src.current_cycle = air_master.current_cycle
 
 		for(var/direction in cardinal)
 			if(air_check_directions&direction) //Grab all valid bordering tiles
@@ -388,7 +386,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 					else
 						if(enemy_tile.current_cycle < current_cycle)
 							connection_difference = src.air.share(enemy_tile.air)
-					if(active_hotspot)
+					if(src.active_hotspot)
 						if(!possible_fire_spreads)
 							possible_fire_spreads = list()
 						possible_fire_spreads += enemy_tile
@@ -405,7 +403,6 @@ var/global/list/turf/hotly_processed_turfs = list()
 		air_master.active_singletons -= src //not active if not processing!
 		return
 
-
 	if(src.air.react() & CATALYST_ACTIVE)
 		src.active_hotspot?.catalyst_active = TRUE
 	else
@@ -415,16 +412,16 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.active_hotspot.process(possible_fire_spreads)
 
 	if(src.air.temperature > MINIMUM_TEMPERATURE_START_SUPERCONDUCTION)
-		consider_superconductivity(starting = 1)
+		src.consider_superconductivity(starting = 1)
 
 	if(src.air.check_tile_graphic())
-		update_visuals(air)
+		src.update_visuals(air)
 
 	if(src.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-		hotspot_expose(air.temperature, CELL_VOLUME)
-		for(var/atom/movable/item as anything in src)
-			item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
-		temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+		src.hotspot_expose(air.temperature, CELL_VOLUME)
+		for(var/atom/movable/AM as anything in src)
+			AM.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+		src.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
 	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
 		for(var/atom/movable/AM as anything in src)
@@ -475,56 +472,52 @@ var/global/list/turf/hotly_processed_turfs = list()
 					#endif
 
 					if(modeled_neighbor.air)
-						if(air) //Both tiles are open
-
+						if(src.air) //Both tiles are open
 							if(modeled_neighbor.parent && modeled_neighbor.parent.group_processing)
-								if(parent?.group_processing)
+								if(src.parent?.group_processing)
 									//both are acting as a group
 									//modified using construct developed in datum/air_group/share_air_with_group(...)
-
-									var/result = parent.air.check_both_then_temperature_share(modeled_neighbor.parent.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-									if(result==0)
+									var/result = src.parent.air.check_both_then_temperature_share(modeled_neighbor.parent.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+									if(result == SELF_CHECK_FAIL)
 										//have to deconstruct parent air group
-
-										parent.suspend_group_processing()
+										src.parent.suspend_group_processing()
 										if(!modeled_neighbor.parent.air.check_me_then_temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT))
 											//may have to deconstruct neighbors air group
-
 											modeled_neighbor.parent.suspend_group_processing()
-											air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
-									else if(result==-1)
-										// have to deconstruct neighbors air group but not mine
+											src.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 
+									else if(result == SHARER_CHECK_FAIL)
+										// have to deconstruct neighbors air group but not mine
 										modeled_neighbor.parent.suspend_group_processing()
-										parent.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+										src.parent.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+
 								else
-									air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+									src.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 							else
-								if(parent?.group_processing)
-									if(!parent.air.check_me_then_temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT))
+								if(src.parent?.group_processing)
+									if(!src.parent.air.check_me_then_temperature_share(air, WINDOW_HEAT_TRANSFER_COEFFICIENT))
 										//may have to deconstruct neighbors air group
 
-										parent.suspend_group_processing()
-										air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+										src.parent.suspend_group_processing()
+										src.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 
 								else
-									air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
+									src.air.temperature_share(modeled_neighbor.air, WINDOW_HEAT_TRANSFER_COEFFICIENT)
 
 						else //Solid but neighbor is open
 							if(modeled_neighbor.parent && modeled_neighbor.parent.group_processing)
 								if(!modeled_neighbor.parent.air.check_me_then_temperature_turf_share(src, modeled_neighbor.thermal_conductivity))
-
 									modeled_neighbor.parent.suspend_group_processing()
 									modeled_neighbor.air.temperature_turf_share(src, modeled_neighbor.thermal_conductivity)
 							else
 								modeled_neighbor.air.temperature_turf_share(src, modeled_neighbor.thermal_conductivity)
 
 					else
-						if(air) //Open but neighbor is solid
-							if(parent?.group_processing)
-								if(!parent.air.check_me_then_temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity))
-									parent.suspend_group_processing()
-									air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
+						if(src.air) //Open but neighbor is solid
+							if(src.parent?.group_processing)
+								if(!src.parent.air.check_me_then_temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity))
+									src.parent.suspend_group_processing()
+									src.air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
 							else
 								air.temperature_turf_share(modeled_neighbor, modeled_neighbor.thermal_conductivity)
 
@@ -534,13 +527,13 @@ var/global/list/turf/hotly_processed_turfs = list()
 					modeled_neighbor.consider_superconductivity()
 
 				else
-					if(air) //Open
-						if(parent?.group_processing)
-							if(!parent.air.check_me_then_temperature_mimic(neighbor, neighbor.thermal_conductivity))
-								parent.suspend_group_processing()
-								air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
+					if(src.air) //Open
+						if(src.parent?.group_processing)
+							if(!src.parent.air.check_me_then_temperature_mimic(neighbor, neighbor.thermal_conductivity))
+								src.parent.suspend_group_processing()
+								src.air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
 						else
-							air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
+							src.air.temperature_mimic(neighbor, neighbor.thermal_conductivity)
 					else
 						src.mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
 
@@ -551,55 +544,54 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.mimic_temperature_solid(sample_space, FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 	//Conduct with air on my tile if I have it
-	if(air)
-		if(parent?.group_processing)
-			if(!parent.air.check_me_then_temperature_turf_share(src, src.thermal_conductivity))
-				parent.suspend_group_processing()
-				air.temperature_turf_share(src, src.thermal_conductivity)
+	if(src.air)
+		if(src.parent?.group_processing)
+			if(!src.parent.air.check_me_then_temperature_turf_share(src, src.thermal_conductivity))
+				src.parent.suspend_group_processing()
+				src.air.temperature_turf_share(src, src.thermal_conductivity)
 		else
-			air.temperature_turf_share(src, src.thermal_conductivity)
-
+			src.air.temperature_turf_share(src, src.thermal_conductivity)
 
 	//Make sure still hot enough to continue conducting heat
-	if(air)
-		if(air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-			being_superconductive = FALSE
+	if(src.air)
+		if(src.air.temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
+			src.being_superconductive = FALSE
 			air_master.active_super_conductivity -= src
 			return FALSE
 
 	else
 		if(temperature < MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION)
-			being_superconductive = FALSE
+			src.being_superconductive = FALSE
 			air_master.active_super_conductivity -= src
 			return FALSE
 
 /// Similar to share_temperature_mutual_solid(...) but the model is not modified.
 /turf/simulated/proc/mimic_temperature_solid(turf/model, conduction_coefficient)
-	var/delta_temperature = (ARCHIVED(temperature) - model.temperature)
+	var/delta_temperature = (src.ARCHIVED(temperature) - model.temperature)
 	if((src.heat_capacity > 0) && (model.heat_capacity > 0) && (abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER))
 
 		var/heat = conduction_coefficient*delta_temperature* \
 			(src.heat_capacity*model.heat_capacity/(src.heat_capacity+model.heat_capacity))
-		temperature -= heat/src.heat_capacity
+		src.temperature -= heat/src.heat_capacity
 
 /// Share heat between solid turfs with a conduction_coefficient as a factor for efficiency.
 /turf/simulated/proc/share_temperature_mutual_solid(turf/simulated/sharer, conduction_coefficient)
-	var/delta_temperature = (ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
+	var/delta_temperature = (src.ARCHIVED(temperature) - sharer.ARCHIVED(temperature))
 	if(abs(delta_temperature) > MINIMUM_TEMPERATURE_DELTA_TO_CONSIDER && src.heat_capacity)
 
 		var/heat = conduction_coefficient*delta_temperature* \
 			(src.heat_capacity*sharer.heat_capacity/(src.heat_capacity+sharer.heat_capacity))
 
-		temperature -= heat/src.heat_capacity
+		src.temperature -= heat/src.heat_capacity
 		sharer.temperature += sharer.heat_capacity != 0 ? heat/sharer.heat_capacity : 0
 
 /// Checks if we're hot enough to start superconducting heat to other tiles.
 /turf/simulated/proc/consider_superconductivity(starting)
-	if(being_superconductive || !src.thermal_conductivity)
+	if(src.being_superconductive || !src.thermal_conductivity)
 		return FALSE
 
-	if(air)
-		if(air.temperature < (starting ? MINIMUM_TEMPERATURE_START_SUPERCONDUCTION : MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
+	if(src.air)
+		if(src.air.temperature < (starting ? MINIMUM_TEMPERATURE_START_SUPERCONDUCTION : MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 			return FALSE
 
 		if(HEAT_CAPACITY(air) < MOLES_CELLSTANDARD*0.1*0.05)
@@ -608,7 +600,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		if(temperature < (starting?MINIMUM_TEMPERATURE_START_SUPERCONDUCTION:MINIMUM_TEMPERATURE_FOR_SUPERCONDUCTION))
 			return FALSE
 
-	being_superconductive = TRUE
+	src.being_superconductive = TRUE
 
 	air_master.active_super_conductivity += src
 

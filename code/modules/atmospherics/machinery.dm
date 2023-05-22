@@ -5,7 +5,6 @@ ABSTRACT_TYPE(/obj/machinery/atmospherics)
  * Pipes combine to form pipelines.
  * Pipelines and other atmospheric objects combine to form pipe_networks.
  * Note: A single pipe_network represents a completely open space.
- *
  * Pipes -> Pipelines
  * Pipelines + Other Objects -> Pipe network */
 /obj/machinery/atmospherics
