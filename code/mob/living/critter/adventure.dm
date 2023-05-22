@@ -4,6 +4,7 @@
 	- Transposed scientist
 	- Shades
 	- Repair bots
+	- Town Guards
 */
 /mob/living/critter/crunched
 	name = "transposed scientist"
@@ -421,3 +422,98 @@
 		src.icon_state = "drone_service_bot"
 		src.desc = "A machine. Of some sort. It looks mad"
 		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
+
+/mob/living/critter/townguard
+	name = "town guard"
+	real_name = "town guard"
+	desc = "An angry man dressed in medieval armor."
+	icon_state = "townguard"
+	hand_count = 2
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	health_brute = 50
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 1
+	death_text = "%src% seizes up and falls limp, his eyes dead and lifeless..."
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/wanderer_aggressive
+
+	passive
+		ai_retaliate_patience = 2
+		ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+		ai_type = /datum/aiHolder/wanderer
+
+	seek_target()
+		. = ..()
+
+		if (length(.) && prob(10))
+			HALT()
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 1.5
+
+	setup_equipment_slots()
+		equipment += new /datum/equipmentHolder/ears(src)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.icon_state = "handl"
+		HH.limb_name = "left arm"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "sword"
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	bullet_act(obj/projectile/P)
+		if (istype(P, /datum/projectile/arrow))
+			src.visible_message("<span class='alert'>[src] is struck by the [P.name] but their fancy armour deflects it!</span>")
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			P.die()
+			return
+
+	critter_basic_attack(mob/target)
+		HALT()
+		// Hand 1 = SWORD Hand 2 = ARM
+		if (!is_incapacitated(target))
+			if (prob(30))
+				src.active_hand = 2
+				src.set_a_intent(INTENT_DISARM)
+				return src.hand_attack(target) // Disarm them
+			src.set_a_intent(INTENT_HARM)
+			src.active_hand = 1
+			return ..() // Stab them
+		src.set_a_intent(INTENT_HARM)
+		src.active_hand = 2
+		return ..() // Punch / Kick them
+
+	proc/HALT()
+		if(!ON_COOLDOWN(src, "HALT!", 3 SECONDS))
+			playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
+			src.say("HALT!")
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard
+	name = "\improper Town Guard egg"
+	desc = "This is not how humans reproduce. They do not lay eggs. <i>What the hell is this?</i>"
+	critter_type = /mob/living/critter/townguard
+	warm_count = 75
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive
+	critter_type = /mob/living/critter/townguard/passive
