@@ -111,6 +111,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/ladder/UnregisterFromParent()
 	var/obj/ladder/ladder = src.parent
 	ladder.UpdateOverlays(null,"extradim")
+	ladder.broken = FALSE
 	UnregisterSignal(src.parent, COMSIG_ATTACKHAND)
 	UnregisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING)
 	. = ..()
