@@ -90,10 +90,10 @@ TYPEINFO(/obj/machinery/power/data_terminal)
 	var/obj/master = null //It can be any obj that can use receive_signal
 
 	ex_act()
-		if (master)
-			return
-
-		return ..()
+		SPAWN(1)
+			if (master)
+				return
+			return ..()
 
 /obj/machinery/power/data_terminal
 
