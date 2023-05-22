@@ -412,12 +412,12 @@
 		eat_twitch(M)
 		SPAWN(0.6 SECOND)
 			if (!src || !M || !user)
-				return FALSE
+				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			if (src.amount < 1)
 				src.change_stack_amount(-1)
-				return TRUE
+				return
 			user.u_equip(src)
 			qdel(src)
 		return TRUE
@@ -450,12 +450,12 @@
 		eat_twitch(M)
 		SPAWN(1 SECOND)
 			if (!src || !M || !user)
-				return FALSE
+				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
 			if (src.amount < 1)
 				src.change_stack_amount(-1)
-				return TRUE
+				return
 			user.u_equip(src)
 			qdel(src)
 		return TRUE
