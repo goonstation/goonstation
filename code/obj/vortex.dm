@@ -97,11 +97,16 @@
 				/obj/machinery/bot/medbot/terrifying
 				)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
+					horror_path = pick(
+					/obj/critter/gunbot/drone/buzzdrone,
+					/obj/critter/gunbot/drone/buzzdrone,
+					/mob/living/critter/aberration
+					)
 				if (was_eaten && prob(15))
 					horror_path = /obj/critter/blobman/meaty_martha
 			else
-				horror_path = pick(/obj/critter/killertomato,
+				horror_path = pick(
+				/obj/critter/killertomato,
 				/obj/critter/spore,
 				/mob/living/critter/small_animal/rattlesnake,
 				/obj/critter/martian/warrior,
@@ -113,7 +118,8 @@
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
 				/mob/living/critter/fermid,
-				/mob/living/critter/bear)
+				/mob/living/critter/bear
+				)
 			var/obj/horror = new horror_path(src.loc)
 			if (ismobcritter(horror))
 				var/mob/living/critter/C = horror
