@@ -147,7 +147,7 @@
 	health_brute = 15
 	health_burn = 15
 
-	faction = WRAITTH
+	faction = WRAITH
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/skeleton)) return FALSE
