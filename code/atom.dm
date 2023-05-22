@@ -42,7 +42,7 @@ TYPEINFO(/atom)
 	var/list/atom_properties
 
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
-	var/tmp/pass_unstable = FALSE
+	var/tmp/pass_unstable = TRUE
 
 	/// Storage for items
 	var/datum/storage/storage = null
