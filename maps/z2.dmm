@@ -68079,6 +68079,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"fZH" = (
+/obj/effects/precipitation/snow/grey/tile,
+/obj/item/device/light/glowstick/virva_on{
+	pixel_y = -5;
+	pixel_x = -3
+	},
+/turf/unsimulated/floor/snowcalm,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fZZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -76944,12 +76954,10 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "vdP" = (
-/obj/item/device/light/glowstick/green_on{
-	pixel_y = -6
-	},
 /obj/storage/secure/closet/fridge{
 	name = "incredible closetfridge"
 	},
+/obj/item/device/light/glowstick/virva_on,
 /obj/item/storage/ntsc_pouch{
 	desc = "A dump pouch for various security accessories. This one has definitely seen better days.";
 	name = "stained tacticool pouch";
@@ -76976,15 +76984,14 @@
 	pixel_x = -2;
 	pixel_y = 4
 	},
-/obj/item/clothing/suit/security_badge{
-	badge_owner_job = "Head of Security";
-	badge_owner_name = "Elika Zamani";
-	desc = "A damaged Nanotrasen security  badge. It has tiny teeth marks all over it.";
-	name = "scratched security badge";
-	pixel_x = 9;
-	pixel_y = -12
+/obj/item/clothing/suit/jacket/plastic/random_color{
+	pixel_y = -5;
+	pixel_x = 5
 	},
-/obj/item/clothing/under/misc/virvaoutfit1,
+/obj/item/clothing/under/misc/virvaoutfit1{
+	pixel_x = 1;
+	pixel_y = 3
+	},
 /turf/unsimulated/floor/minitiles/black,
 /area/centcom/offices/virvatuli)
 "veg" = (
@@ -153654,7 +153661,7 @@ kpg
 aES
 wel
 lfV
-tfB
+fZH
 uFm
 tij
 uyE
