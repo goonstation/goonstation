@@ -42,7 +42,7 @@ TYPEINFO(/atom)
 	var/list/atom_properties
 
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
-	var/tmp/pass_unstable = TRUE
+	var/tmp/pass_unstable = FALSE
 
 	/// Storage for items
 	var/datum/storage/storage = null
@@ -464,9 +464,10 @@ TYPEINFO(/atom)
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
