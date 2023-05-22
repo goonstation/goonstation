@@ -139,16 +139,18 @@ client
 
 	proc/apply_depth_filter()
 		var/shadows_checked = winget( src, "menu.set_shadow", "is-checked" ) == "true"
+		var/distort_checked = winget( src, "menu.set_distort", "is-checked" ) == "true"
 		for(var/plane_key in src.plane_parents)
 			var/atom/movable/screen/plane_parent/P = src.plane_parents[plane_key]
-			if (P.name == "game_plane" || P.name == "game_plane_nowarp" || P.name == "wall_plane")
-				if (shadows_checked)
-					P.add_depth_shadow()
-				else
-					P.clear_filters()
+			if (shadows_checked && (P.name == "game_plane" || P.name == "game_plane_nowarp" || P.name == "wall_plane"))
+				P.add_depth_shadow()
+			else
+				P.remove_filter("depth_shadow")
 #ifndef COOL_PLANE_STUFF
-			if(P.distort)
+			if(distort_checked && P.distort)
 				P.add_filter("gravitational_lensing", 100, displacement_map_filter(size=100, render_source="*distortion_plane"))
+			else
+				P.remove_filter("gravitational_lensing")
 #endif
 
 
