@@ -6,7 +6,9 @@
 		/turf = list("Enter", "Exit"), // newloc smuggling, optimizations & vismirrors
 		/turf/simulated/floor = list("Cross"), // 2x2 pod collision handling (handled in /datum/pathfind by disabling cache for pods)
 		/turf/simulated/shuttle = list("Cross"), // ditto
-		/turf/unsimulated/floor = list("Cross") // ditto
+		/turf/unsimulated/floor = list("Cross"), // ditto
+		/mob/dead = list("Cross"), // overrides Cross() to suppress the /mob/Cross and always returns TRUE
+		/mob/dead/observer = list("Cross") // just projectile collision
 	)
 	/// List of procs that are forbidden to be implemented on stable atoms.
 	var/forbidden_procs = list("Enter", "Exit", "Cross", "Uncross")
@@ -23,9 +25,6 @@
 	var/list/unstable_types = list()
 
 	for(var/type in concrete_typesof(/atom))
-		if (ispath(type, /mob/dead)) // exception as /mob/dead overrides Cross() to suppress the /mob/Cross and lways return TRUE
-			continue
-
 		var/atom/atom_type = type
 
 		var/direct_parent_path = type2parent(type)
