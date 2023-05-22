@@ -400,7 +400,7 @@
 		M.visible_message("<span class='notice'>[M] takes a bite of [src]!</span>",\
 		"<span class='notice'>You take a bite of [src]!</span>")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.edible || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
@@ -438,7 +438,7 @@
 			"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 		logTheThing(LOG_COMBAT, user, "feeds [constructTarget(M,"combat")] [src] [log_reagents(src)]")
 
-		if (src.material && src.material.edible)
+		if (src.material && (src.material.edible || edibility_override))
 			src.material.triggerEat(M, src)
 
 		if (src.reagents && src.reagents.total_volume)
