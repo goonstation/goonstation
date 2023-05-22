@@ -204,7 +204,10 @@
 				src.visible_message("<span class='notice'>[user] shakes [src] to awaken its hunger!</span>")
 
 	attackby(obj/item/I, mob/M)
-		if(istype(I, /obj/item/raw_material/rock) && !isdead(src))
+		if(istype(I, /obj/item/raw_material) && !isdead(src))
+			if((istype(I, /obj/item/raw_material/shard)) || (istype(I, /obj/item/raw_material/scrap_metal)))
+				src.visible_message("[M] tries to feed [src] but they won't take it!")
+				return
 			if (src.tamed)
 				src.visible_message("[M] tries to feed [src] but they seem full...")
 				return
