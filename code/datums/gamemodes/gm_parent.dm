@@ -123,29 +123,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-				if (traitor.special_role == ROLE_FLOCKMIND)
-					for (var/flockname in flocks)
-						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
-							if(length(flock.trace_minds))
-								stuff_to_output += "Flocktraces:"
-								for (var/trace_name in flock.trace_minds)
-									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
-
-							if (flock.relay_finished)
-								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
-								var/time = TIME
-								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
-									if (time - flocktrace.creation_time >= 5 MINUTES)
-										if (!istype(flocktrace.loc, /mob/living/critter/flock/drone))
-											flocktrace.unlock_medal("To the stars", TRUE)
-										else
-											var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
-											flockdrone.unlock_medal("To the stars", TRUE)
-
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
