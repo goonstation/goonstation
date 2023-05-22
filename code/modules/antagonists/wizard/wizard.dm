@@ -3,6 +3,7 @@
 	display_name = "wizard"
 	antagonist_icon = "wizard"
 	success_medal = "You're no Elminster!"
+	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder

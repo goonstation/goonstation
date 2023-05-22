@@ -334,7 +334,7 @@
 /datum/construction_event/siege/rockworm
 	name = "Siege?"
 	warning_text = "We are under attack by the Space Rock Worm Federation!"
-	attacker_types = list(/obj/critter/rockworm)
+	attacker_types = list(/mob/living/critter/rockworm)
 	original_size = 20
 	original_bosses = 0
 	is_abstract = 0
