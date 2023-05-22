@@ -4,6 +4,7 @@
 	antagonist_icon = "wraith"
 	intangible_mob_path = /mob/living/intangible/wraith
 	faction = WRAITH
+	uses_pref_name = FALSE
 
 	assign_objectives()
 		switch (rand(1, 3))

@@ -25,7 +25,6 @@
 
 	return produce
 
-
 /mob/living/critter/skeleton
 	name = "skeleton"
 	real_name = "skeleton"
@@ -53,6 +52,7 @@
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
+	var/hatcount = 1
 	var/list/friends //! People this skeleton won't attack
 	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
@@ -88,7 +88,7 @@
 		equipment += new /datum/equipmentHolder/ears(src)
 		var/list/hats = list(new /datum/equipmentHolder/head/skeleton(src))
 		equipment += hats[1]
-		for (var/i = 1, i <= 10, i++)
+		for (var/i = 1, i <= hatcount, i++)
 			var/datum/equipmentHolder/head/skeleton/S = hats[i]
 			var/datum/equipmentHolder/head/skeleton/S1 = S.spawn_next()
 			hats += S1
@@ -145,6 +145,9 @@
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
+
+/mob/living/critter/skeleton/multihat
+	hatcount = 10
 
 /mob/living/critter/skeleton/wraith
 	desc = "It looks rather crumbly."

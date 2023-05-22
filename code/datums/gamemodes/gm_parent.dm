@@ -261,6 +261,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return candidates
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
+/// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
@@ -270,6 +271,11 @@ ABSTRACT_TYPE(/datum/game_mode)
 			antag.special_role = ROLE_CHANGELING
 
 	antag.add_antagonist(antag.special_role)
+
+	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
+	if (!antag_datum.uses_pref_name)
+		var/datum/player/player = antag.get_player()
+		player.joined_names = list()
 
 /datum/game_mode/proc/check_win()
 
