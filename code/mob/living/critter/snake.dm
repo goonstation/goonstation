@@ -49,7 +49,6 @@
 
 	valid_target(mob/living/C)
 		if (C.ckey == null) return FALSE //do not attack non-threats ie. NPC monkeys and AFK players
-		if (iswizard(C)) return FALSE //do not attack our master
 		. = ..()
 
 	seek_target(var/range)

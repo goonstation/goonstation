@@ -2871,10 +2871,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			else if (prob(1))
 				src.emote("dance")
 
-	valid_target(mob/living/C)
-		if (C.job == "Botanist") return FALSE
-		return ..()
-
 	death(var/gibbed)
 		src.can_lie = FALSE
 		if (!gibbed)
