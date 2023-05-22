@@ -206,10 +206,6 @@
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
-"hF" = (
-/mob/living/critter/rockworm,
-/turf/variableTurf/floor,
-/area/noGenerate)
 "ii" = (
 /obj/decal/cleanable/cobweb2,
 /obj/reagent_dispensers/fueltank,
@@ -320,6 +316,11 @@
 /obj/decal/cleanable/blood/splatter,
 /obj/item/paper/Cloning,
 /turf/simulated/floor/plating/airless,
+/area/noGenerate)
+"sU" = (
+/obj/item/raw_material/scrap_metal,
+/mob/living/critter/rockworm,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "tz" = (
 /obj/lattice,
@@ -896,7 +897,7 @@ aP
 bc
 vy
 bz
-uk
+sU
 ui
 ui
 uI
@@ -911,7 +912,7 @@ aQ
 bd
 bo
 wH
-ui
+aj
 ui
 ui
 uI
@@ -935,7 +936,7 @@ uI
 uI
 uI
 aj
-hF
+aj
 ui
 ui
 be
