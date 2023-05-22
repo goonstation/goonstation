@@ -415,7 +415,7 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
-			if (src.amount < 1)
+			if (src.amount > 1)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
@@ -453,7 +453,7 @@
 				return
 			SEND_SIGNAL(M, COMSIG_MOB_ITEM_CONSUMED, user, src) //one to the mob
 			SEND_SIGNAL(src, COMSIG_ITEM_CONSUMED, M, src) //one to the item
-			if (src.amount < 1)
+			if (src.amount > 1)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
