@@ -39693,6 +39693,11 @@
 	name = "autoname  - SS13";
 	pixel_y = 20
 	},
+/obj/ladder{
+	id = "detective";
+	layer = 2;
+	pixel_y = -4
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ciF" = (
@@ -41522,10 +41527,6 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc/autoname_west,
-/obj/ladder{
-	id = "detective";
-	layer = 2
-	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "eGO" = (

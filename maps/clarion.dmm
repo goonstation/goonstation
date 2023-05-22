@@ -11716,12 +11716,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aIa" = (
-/obj/ladder{
-	desc = "Is this supposed to be here?";
-	id = "smiling";
-	layer = 2.5;
-	pixel_y = -12
-	},
 /obj/item/clothing/under/suit/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
