@@ -335,6 +335,8 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 
+	faction = CLOWN
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -397,8 +399,6 @@
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
-
-
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"
 	desc = "You see this? This is why people hate clowns. This thing right here."
@@ -423,6 +423,9 @@
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
 	ai_type = /datum/aiHolder/clown_spider_queen
+
+	faction = CLOWN
+
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."
