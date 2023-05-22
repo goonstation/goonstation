@@ -202,7 +202,7 @@
 		if (..())
 			return 1
 		if (src.tamed && src.ai?.enabled)
-			if (src.ai_type == /datum/aiHolder/rockworm)
+			if (src.seek_ore)
 				src.seek_ore = FALSE
 				src.visible_message("<span class='notice'>[user] pats [src] on the back. It won't seek ores now!</span>")
 			else
