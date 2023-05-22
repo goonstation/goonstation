@@ -2,6 +2,7 @@
 	id = ROLE_NUKEOP
 	display_name = "\improper Syndicate Operative"
 	antagonist_icon = "syndicate"
+	faction = SYNDICATE
 
 	var/static/commander_title
 	var/static/available_callsigns

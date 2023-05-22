@@ -3,6 +3,7 @@
 	display_name = "wraith"
 	antagonist_icon = "wraith"
 	intangible_mob_path = /mob/living/intangible/wraith
+	faction = WRAITH
 
 	assign_objectives()
 		switch (rand(1, 3))

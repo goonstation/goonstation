@@ -2,6 +2,7 @@
 	id = ROLE_NUKEOP_GUNBOT
 	display_name = "\improper Syndicate gunbot"
 	antagonist_icon = "syndicate"
+	faction = SYNDICATE
 
 	New(datum/mind/new_owner)
 		src.owner = new_owner
