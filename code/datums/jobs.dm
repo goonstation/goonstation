@@ -73,7 +73,7 @@
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
 				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
-		M.faction = src.faction
+		M.faction |= src.faction
 
 		SPAWN(0)
 			if (receives_implant && ispath(receives_implant))
