@@ -66,6 +66,9 @@
 	if(isnull(animal_to_spawn)) // can probably happen if spawned directly in water
 		animal_to_spawn = pick(animals)
 	var/atom/C = new animal_to_spawn(T)
+	if (ismobcritter(C))
+		var/mob/M = C
+		M.faction =| SPONGE
 	T.visible_message("<span class='notice'>What was once [src] has become [C.name]!</span>")
 	qdel(src)
 
