@@ -394,9 +394,7 @@
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
 "pY" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "ql" = (

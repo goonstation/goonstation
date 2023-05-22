@@ -451,9 +451,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "pT" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -557,9 +555,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "tp" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -635,9 +631,7 @@
 /turf/unsimulated/floor/green/side,
 /area/prefab/bee_sanctuary)
 "xf" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -704,9 +698,7 @@
 /turf/unsimulated/floor/void,
 /area/prefab/bee_sanctuary)
 "yW" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -757,9 +749,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Ag" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -827,9 +817,7 @@
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
 "BS" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
@@ -855,9 +843,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "CL" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1486,9 +1472,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/prefab/bee_sanctuary)
 "Rc" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
@@ -1647,9 +1631,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "Vk" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;

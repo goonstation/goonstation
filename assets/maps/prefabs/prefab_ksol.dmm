@@ -994,7 +994,7 @@
 	},
 /area/noGenerate)
 "cz" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cA" = (

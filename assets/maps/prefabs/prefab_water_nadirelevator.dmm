@@ -69,9 +69,7 @@
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/decal/cleanable/cobweb,
 /obj/item/cigbutt{
 	pixel_x = 6;
@@ -126,16 +124,6 @@
 "ec" = (
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
-"eh" = (
-/obj/decal/cleanable/dirt,
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/engine,
-/area/diner/hallway{
-	name = "Space Diner Backhall"
-	})
 "ep" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6;
@@ -199,9 +187,7 @@
 /turf/simulated/floor/engine/caution/corner,
 /area/shuttle/sea_elevator)
 "fP" = (
-/obj/grille/catwalk{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -249,14 +235,6 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/west,
 /area/tech_outpost{
 	name = "The Recluse"
-	})
-"gU" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/engine,
-/area/diner/hallway{
-	name = "Space Diner Backhall"
 	})
 "gZ" = (
 /obj/machinery/light/incandescent/warm{
@@ -490,14 +468,6 @@
 "qu" = (
 /turf/simulated/floor/engine/caution/east,
 /area/shuttle/sea_elevator)
-"qA" = (
-/obj/grille/catwalk{
-	dir = 10
-	},
-/turf/simulated/floor/engine,
-/area/diner/hallway{
-	name = "Space Diner Backhall"
-	})
 "qS" = (
 /obj/machinery/vending/alcohol,
 /obj/decal/cleanable/dirt/dirt5,
@@ -618,9 +588,7 @@
 	name = "Space Diner Backhall"
 	})
 "tX" = (
-/obj/grille/catwalk{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -782,9 +750,7 @@
 	},
 /area/shuttle/sea_elevator)
 "zF" = (
-/obj/grille/catwalk{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -854,10 +820,7 @@
 "Ck" = (
 /obj/machinery/drainage/big,
 /obj/decal/cleanable/dirt/dirt4,
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -907,9 +870,7 @@
 	name = "The Recluse"
 	})
 "EG" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -919,10 +880,7 @@
 	})
 "EL" = (
 /obj/decal/cleanable/dirt,
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -974,9 +932,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
 "Fx" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/machinery/light/incandescent/small,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
@@ -995,12 +951,8 @@
 	name = "The Recluse"
 	})
 "FZ" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
+/obj/grille/catwalk,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -1048,9 +1000,7 @@
 	name = "Space Diner Backhall"
 	})
 "Ir" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -1474,9 +1424,7 @@
 	layer = 2.5;
 	pixel_y = 32
 	},
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -3563,11 +3511,11 @@ Te
 VA
 uP
 Wr
-qA
+Ir
 fP
 zF
 tX
-gU
+Ir
 EL
 Wr
 nw
@@ -3758,7 +3706,7 @@ at
 Ug
 WZ
 Ug
-eh
+EL
 Ck
 dw
 Nl

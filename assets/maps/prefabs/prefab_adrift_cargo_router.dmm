@@ -589,9 +589,7 @@
 /turf/simulated/floor/engine,
 /area/prefab/adrift_cargorouter)
 "Wm" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "XO" = (
