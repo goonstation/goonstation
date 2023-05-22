@@ -41,13 +41,6 @@
 	},
 /turf/variableTurf/clear,
 /area/allowGenerate)
-"R" = (
-/obj/machinery/plantpot/bareplant{
-	opacity = 1;
-	spawn_plant = "/datum/plant/veg/corn"
-	},
-/turf/space,
-/area/allowGenerate)
 
 (1,1,1) = {"
 a
@@ -71,8 +64,8 @@ a
 a
 c
 c
-R
-R
+c
+c
 c
 c
 c
@@ -107,7 +100,7 @@ a
 a
 c
 c
-R
+c
 c
 c
 c
@@ -143,13 +136,13 @@ a
 a
 c
 c
-R
 c
 c
 c
 c
 c
-R
+c
+c
 c
 c
 c
@@ -179,7 +172,7 @@ a
 a
 c
 c
-R
+c
 c
 c
 c
@@ -214,8 +207,8 @@ a
 (10,1,1) = {"
 a
 c
-R
-R
+c
+c
 c
 c
 a
@@ -251,7 +244,7 @@ a
 a
 c
 c
-R
+c
 c
 c
 a
@@ -287,7 +280,7 @@ a
 a
 c
 c
-R
+c
 c
 c
 c

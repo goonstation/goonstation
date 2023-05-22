@@ -83,7 +83,7 @@
 	dir = 4;
 	icon_state = "bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/machinery/light/small/broken,
 /turf/simulated/floor/shuttlebay,
 /area/janitor_setpiece)
 "ao" = (
@@ -107,7 +107,9 @@
 /turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "ar" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "as" = (
@@ -430,6 +432,10 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"iO" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/janitor_setpiece)
 
 (1,1,1) = {"
 aj
@@ -521,7 +527,7 @@ ad
 ah
 ah
 ah
-ar
+iO
 ba
 ba
 ap
