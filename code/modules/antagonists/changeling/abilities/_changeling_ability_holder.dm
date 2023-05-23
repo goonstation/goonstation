@@ -137,15 +137,14 @@
 /datum/targetable/changeling
 	icon = 'icons/mob/spell_buttons.dmi'
 	icon_state = "template" // No longer ToDo thanks to Sundance420.
-	cooldown = 0
-	var/abomination_only = 0
-	var/human_only = 0
+	var/abomination_only = FALSE
+	var/human_only = FALSE
 	preferred_holder_type = /datum/abilityHolder/changeling
 
 	incapacitation_check()
 		. = ..()
 		var/datum/abilityHolder/changeling/AH = src.holder
-		if (AH.in_fakedeath) // if you're fakedeathed, we count you as actionable
+		if (AH.in_fakedeath) // if you're fakedeathed, we count you as dead basically
 			return FALSE
 
 	castcheck()

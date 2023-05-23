@@ -4,20 +4,18 @@
 	var/stealthy = 1
 	var/venom_id = "toxin"
 	var/inject_amount = 50
-	cooldown = 1400
+	cooldown = 140 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
-	target_in_inventory = 1
-	sticky = 1
+	target_in_inventory = TRUE
+	sticky = TRUE
 
 	cast(atom/target)
-		if (..())
-			return 1
-
-		if (isobj(target) && (target.is_open_container() || istype(target,/obj/item/reagent_containers/food) || istype(target,/obj/item/reagent_containers/patch)))
+		. = ..()
+		if (isobj(target) && (target.is_open_container() || istype(target, /obj/item/reagent_containers/food) || istype(target, /obj/item/reagent_containers/patch)))
 			if (BOUNDS_DIST(holder.owner, target) > 0)
 				boutput(holder.owner, "<span class='alert'>We cannot reach that target with our stinger.</span>")
-				return 1
+				return TRUE
 			if (!target.reagents)
 				boutput(holder.owner, "<span class='notice'>We cannot seem to sting [target].</span>")
 				return 1
@@ -30,11 +28,11 @@
 				if (P.medical)
 					//break the seal
 					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
-					P.medical = 0
+					P.medical = FALSE
 			logTheThing(LOG_COMBAT, holder.owner, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
 			target.reagents.add_reagent(venom_id, inject_amount)
 			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
-			return 0
+			return FALSE
 
 
 		if (isobj(target))
@@ -43,9 +41,9 @@
 			target = locate(/mob/living) in target
 			if (!target)
 				boutput(holder.owner, "<span class='alert'>We cannot sting without a target.</span>")
-				return 1
-		if (target == holder.owner)
-			return 1
+				return TRUE
+		if (target == holder.owner) // target_self = FALSE doesn't handle this because of fuckass turf targeting
+			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>We cannot reach that target with our stinger.</span>")
 			return 1

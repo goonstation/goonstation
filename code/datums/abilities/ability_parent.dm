@@ -840,7 +840,7 @@
 	var/ignore_holder_lock = FALSE				//! Can we cast this ability when the holder is locked?
 	var/restricted_area_check = FALSE 			//! Are we prohibited from casting this spell in 1 (all of Z2) or 2 (only the VR)?
 	var/check_range = TRUE						//! Does this check for range at all?
-	var/sticky = FALSE 							//! Targeting stays active after using this ability if this is 1. click button again to disable the active ability.
+	var/sticky = FALSE 							//! Targeting stays active after using this ability if this is TRUE and the ability isn't on cooldown.
 	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability targeting will remain active even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 			//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
 
@@ -979,11 +979,11 @@
 		// Check if we're allowed to cast on ourselves, if relevant
 		else if (!src.target_self && target == src.holder.owner)
 			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] on yourself.</span>")
-			return FALSE
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're actionable enough to cast this
 		else if (!incapacitation_check(src.incapacitation_restriction))
 			boutput(src.holder.owner, "<span class='alert'>You can't use [src.name] while incapacitated!</span>")
-			return FALSE
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this in a restricted area, if we're in one
 		else if (src.restricted_area_check)
 			// TODO maybe move to its own proc? bit out of place here
@@ -1111,8 +1111,11 @@
 			boutput(user, "<span class='alert'>You need to grab hold of the target first!</span>")
 			return FALSE
 
+	/// Check for incapacitation status of the user, with the strictness determined by the arg. Returns FALSE if we can't act, TRUE if we can.
 	proc/incapacitation_check(strictness)
 		var/mob/living/M = src.holder.owner
+		if (!istype(M))
+			return TRUE // if you're already dead or some other bizarre thing, then go right ahead
 		if (!isalive(M))
 			return FALSE
 		// If we don't care about stuns, then skip this block and return TRUE right away
@@ -1120,7 +1123,7 @@
 			// If we're stunned or weakened and we're at max stictness, fail and return FALSE
 			if (M.hasStatus(list("stunned", "weakened")) && strictness == ABILITY_NO_INCAPACITATED_USE)
 				return FALSE
-			// Finally, if we're in the middle and we don't care about stuns or weakened, only paralysis, just check that one
+			// Finally, if we're at medium strictness and we don't care about stuns or weakened, only paralysis, just check that one
 			if (M.hasStatus("paralysis") && strictness == ABILITY_CAN_USE_WHEN_STUNNED) // this could be an 'else', keeping in case more levels are added later
 				return FALSE
 		// If we get here, we can cast the ability

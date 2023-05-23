@@ -13,7 +13,7 @@
 		var/mob/living/carbon/human/C = holder.owner
 		if (tgui_alert(C,"Are we sure?","Enter Regenerative Stasis?",list("Yes","No")) != "Yes")
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
-			return 1
+			return TRUE
 
 		if(!H.in_fakedeath)
 			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")

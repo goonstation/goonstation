@@ -2,23 +2,24 @@
 	name = "Toxic Spit"
 	desc = "Spit homing acid at a target, melting their headgear (if any) or burning their face."
 	icon_state = "acid"
-	cooldown = 900
+	cooldown = 90 SECONDS
+
+	max_range = 10
 	targeted = TRUE
 	target_anything = TRUE
-	sticky = 1
+	target_self = FALSE
+	sticky = TRUE
 
 	cast(atom/target)
-		if (..())
-			return 1
 		if (isobj(target))
 			target = get_turf(target)
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
 				boutput(holder.owner, "<span class='alert'>We cannot spit without a target.</span>")
-				return 1
-		if (target == holder.owner)
-			return 1
+				return  TRUE
+		if (target == holder.owner) // target_self = FALSE doesn't handle this because of fuckass turf targeting
+			return  TRUE
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] spits acid towards [target]!</b></span>")
 		logTheThing(LOG_COMBAT, holder.owner, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
@@ -26,6 +27,9 @@
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
 
+		// You might be wondering "hey, isn't it a bit weird that this is a bizarre overlay object with a for loop instead of a projectile?"
+		// You'd be right! it is weird and terrible!
+		// that's it that's the comment
 		SPAWN(0)
 			var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
 			A.icon_state = "acidspit"
