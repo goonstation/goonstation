@@ -2172,7 +2172,9 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
 			targetContainer.storage.transfer_stored_item(I, src, user = user)
 			productListUpdater(I, user)
-
+		if (istype(targetContainer, /obj/item/satchel))
+			targetContainer.UpdateIcon()
+			targetContainer.tooltip_rebuild = 1
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
