@@ -72,7 +72,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_antag_popups,
 		/client/proc/retreat_to_office,
 		/client/proc/summon_office,
-
+		/client/proc/check_gamemode_stats,
 		),
 
 
@@ -230,7 +230,7 @@ var/list/admin_verbs = list(
 		/datum/admins/proc/togglespeechpopups,
 		/datum/admins/proc/toggle_global_parallax,
 		/datum/admins/proc/togglemonkeyspeakhuman,
-		/datum/admins/proc/toggletraitorsseeeachother,
+		/datum/admins/proc/toggle_antagonists_seeing_each_other,
 		/datum/admins/proc/toggleautoending,
 		/datum/admins/proc/togglelatetraitors,
 		/datum/admins/proc/toggle_pull_slowing,
@@ -2486,3 +2486,19 @@ var/list/fun_images = list()
 	else
 		boutput(usr, "Custom objective cleared, conspiracy will select a random objective.")
 		type.conspirator_objective = null
+
+/client/proc/check_gamemode_stats()
+	var/nukie_wins = world.load_intra_round_value("nukie_win") || 0
+	var/nukie_losses = world.load_intra_round_value("nukie_loss") || 0
+	var/data = "Nukie W/L: [nukie_wins]/[nukie_losses] ([nukie_wins/(nukie_losses + nukie_wins) * 100]%)<br>"
+
+	var/rev_wins = world.load_intra_round_value("rev_win") || 0
+	var/rev_losses = world.load_intra_round_value("rev_loss") || 0
+	data += "Revs W/L: [rev_wins]/[rev_losses] ([rev_wins/(world.load_intra_round_value("rev_total") || 1) * 100]%)<br>"
+
+	var/players = world.load_intra_round_value("flock_plays_total") || 0
+	var/builders = world.load_intra_round_value("flock_relays_total") || 0
+	var/winners = world.load_intra_round_value("flock_wins_total") || 0
+	data += "The Flock has been sighted [players] times, with [builders] building the Relay, and [winners] transmitting the Signal!<br>"
+
+	src.Browse(data, "window=gamemode_stats;size=480x320")

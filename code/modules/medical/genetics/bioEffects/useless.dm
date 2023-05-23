@@ -274,7 +274,12 @@
 		. = ..()
 		if(variable == "size" && src.filter)
 			animate(src.filter, size=0, time=0)
-			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+			animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"

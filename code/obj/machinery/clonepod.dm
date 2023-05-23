@@ -341,12 +341,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-		// -- Mode/mind specific stuff goes here
-
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-
-		// -- End mode specific stuff
 
 		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
@@ -374,7 +368,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
-				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				var/success = src.occupant.mind.remove_antagonist(antag)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else

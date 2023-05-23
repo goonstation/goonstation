@@ -1,3 +1,6 @@
+(t)wed may 10 23
+(u)LeahTheTech
+(*)Added revolution W/L tracking and an admin verb to check nukie/flock/revs W/L stats: Check-gamemode-stats
 (t)thu apr 20 23
 (u)LeahTheTech
 (+)Added new buildmode mode: meteor.
