@@ -3539,7 +3539,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /// Used to allow the exterior of the Magpie to render parallax layers.
 /area/salvager_space
-	name = "Salvager Vessel Magpie"
+	name = "Salvager Vessel Magpie Space"
 	sanctuary = 1
 	teleport_blocked = 1
 	// Must match /area/salvager
