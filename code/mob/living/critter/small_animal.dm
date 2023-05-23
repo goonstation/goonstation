@@ -634,14 +634,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	New(loc)
 		. = ..()
 		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
-
-	OnMove()
-		if(client?.player?.shamecubed)
-			loc = client.player.shamecubed
-			return
-
-		makeWaddle(src)
-		.=..()
+		AddComponent(/datum/component/waddling)
 
 	setup_hands()
 		..()
