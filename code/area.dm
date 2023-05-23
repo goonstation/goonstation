@@ -755,6 +755,12 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/grillnasium
 	name = "John's Bus Factory Dock"
 	icon_state = "shuttle"
+	// Settings should match /area/grillnasium
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/shuttle/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
@@ -3525,6 +3531,23 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "red"
 	sanctuary = 1
 	teleport_blocked = 1
+	area_parallax_layers = list(
+	/atom/movable/screen/parallax_layer/space_1,
+	/atom/movable/screen/parallax_layer/space_2,
+	/atom/movable/screen/parallax_layer/asteroids_far
+	)
+
+/// Used to allow the exterior of the Magpie to render parallax layers.
+/area/salvager_space
+	name = "Salvager Vessel Magpie"
+	sanctuary = 1
+	teleport_blocked = 1
+	// Must match /area/salvager
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
@@ -3555,6 +3578,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /// Used to allow the exterior of the Cairngorm to render parallax layers.
 /area/syndicate_station_space
 	name = "Syndicate Station Space"
+	teleport_blocked = 1
 	area_parallax_layers = list(
 		/atom/movable/screen/parallax_layer/space_1,
 		/atom/movable/screen/parallax_layer/space_2,
