@@ -77,8 +77,8 @@
 				var/mob/living/carbon/human/H = M
 				var/obj/item/implant/I = new receives_implant(M)
 				if (src.receives_disk && ishuman(M))
-					if (istype(H.back, /obj/item/storage))
-						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back
+					if (H.back?.storage)
+						var/obj/item/disk/data/floppy/D = locate(/obj/item/disk/data/floppy) in H.back.storage.get_contents()
 						if (D)
 							var/datum/computer/file/clone/R = locate(/datum/computer/file/clone/) in D.root.contents
 							if (R)
@@ -129,6 +129,11 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
+
+	special_setup(mob/M, no_special_spawn)
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = "head", loc = M)
+		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_image(image)
 
 /datum/job/command/captain
 	name = "Captain"
@@ -201,6 +206,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
+	slot_poc1 = list(/obj/item/pocketwatch)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #else
 	slot_back = list(/obj/item/storage/backpack)
@@ -208,6 +214,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
+	slot_poc1 = list(/obj/item/pocketwatch)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #endif
 
@@ -303,7 +310,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/chiefengineer)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_head = list(/obj/item/clothing/head/helmet/hardhat)
+	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
 	slot_eyes = list(/obj/item/clothing/glasses/meson)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
@@ -350,7 +357,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_belt = list(/obj/item/device/pda2/research_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/research_director)
-	slot_suit = list(/obj/item/clothing/suit/labcoat)
+	slot_suit = list(/obj/item/clothing/suit/labcoat/research_director)
 	slot_rhan = list(/obj/item/clipboard/with_pen)
 	slot_eyes = list(/obj/item/clothing/glasses/spectro)
 	slot_ears = list(/obj/item/device/radio/headset/command/rd)
@@ -447,7 +454,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	allow_spy_theft = 0
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
-	receives_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	receives_disk = 1
 	receives_security_disk = 1
 	receives_badge = 1
@@ -479,6 +486,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		limit = 3
 		cant_spawn_as_con = 1
 		wages = PAY_UNTRAINED
+		receives_implant = /obj/item/implant/health/security
 		slot_back = list(/obj/item/storage/backpack/security)
 		slot_jump = list(/obj/item/clothing/under/rank/security/assistant)
 		slot_suit = list()
@@ -661,7 +669,7 @@ ABSTRACT_TYPE(/datum/job/research)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar/blue) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -769,7 +777,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
+	slot_jump = list(/obj/item/clothing/under/rank/engineer)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
@@ -927,7 +935,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/device/pda2/chaplain)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_lhan = list(/obj/item/storage/bible/loaded)
+	slot_lhan = list(/obj/item/bible/loaded)
 
 	New()
 		..()
@@ -1433,10 +1441,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/secure/sbriefcase/B = M.find_type_in_hand(/obj/item/storage/secure/sbriefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1470,8 +1476,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/instrument/whistle(B)
+			B.storage.add_contents(new /obj/item/instrument/whistle(B))
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
+			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
 
 		return
@@ -1542,7 +1549,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1568,10 +1575,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			var/obj/item/stamped_bullion/G = new /obj/item/stamped_bullion
-			G.set_loc(B)
-			G = new /obj/item/stamped_bullion
-			G.set_loc(B)
+			for (var/i = 1 to 2)
+				B.storage.add_contents(new /obj/item/stamped_bullion(B))
 
 		return
 
@@ -1603,10 +1608,10 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		var/obj/item/storage/briefcase/B = M.find_type_in_hand(/obj/item/storage/briefcase)
 		if (B && istype(B))
-			new /obj/item/device/camera_viewer{network = "Zeta"}(B)
-			new /obj/item/clothing/head/helmet/camera(B)
-			new /obj/item/device/audio_log(B)
-			new /obj/item/clipboard/with_pen(B)
+			B.storage.add_contents(new /obj/item/device/camera_viewer{network = "Zeta"}(B))
+			B.storage.add_contents(new /obj/item/clothing/head/helmet/camera(B))
+			B.storage.add_contents(new /obj/item/device/audio_log(B))
+			B.storage.add_contents(new /obj/item/clipboard/with_pen(B))
 
 		return
 
@@ -1658,6 +1663,12 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Sous-Chef")
 		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_chef")
 
 /datum/job/special/random/waiter
 	name = "Waiter"
@@ -2481,13 +2492,48 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		M?.traitHolder.addTrait("training_engineer")
 		SPAWN(1)
-			var/obj/item/rcd/rcd = locate() in M.belt
+			var/obj/item/rcd/rcd = locate() in M.belt.storage.stored_items
 			rcd.matter = 100
 			rcd.max_matter = 100
 			rcd.tooltip_rebuild = TRUE
 			rcd.UpdateIcon()
 
-// Use this one for late respawns to dael with existing antags. they are weaker cause they dont get a laser rifle or frags
+/datum/job/special/nt_medical
+	linkcolor = "#3348ff"
+	name = "Nanotrasen Emergency Medic"
+	limit = 0
+	wages = PAY_IMPORTANT
+	allow_traitors = 0
+	allow_spy_theft = 0
+	cant_spawn_as_rev = 1
+	slot_back = list(/obj/item/storage/backpack/NT)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
+	slot_jump = list(/obj/item/clothing/under/rank/medical)
+	slot_suit = list(/obj/item/clothing/suit/bio_suit/paramedic/armored)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
+	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
+	slot_card = /obj/item/card/id/command
+	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	items_in_backpack = list(/obj/item/storage/firstaid/regular,
+							/obj/item/device/flash,
+							/obj/item/reagent_containers/glass/bottle/omnizine,
+							/obj/item/reagent_containers/glass/bottle/ether)
+
+
+
+	New()
+		..()
+		src.access = get_all_accesses()
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		M?.traitHolder.addTrait("training_medical")
+
+// Use this one for late respawns to deal with existing antags. they are weaker cause they dont get a laser rifle or frags
 /datum/job/special/nt_security
 	linkcolor = "#3348ff"
 	name = "Nanotrasen Security Consultant"
@@ -2500,7 +2546,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
-	receives_implant = /obj/item/implant/health/security
+	receives_implant = /obj/item/implant/health/security/anti_mindhack
 	slot_back = list(/obj/item/storage/backpack/NT)
 	slot_belt = list(/obj/item/storage/belt/security/ntsc) //special secbelt subtype that spawns with the NTSO gear inside
 	slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2508,7 +2554,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
-	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
 	slot_poc2 = list(/obj/item/spacecash/fivehundred)
@@ -2567,7 +2613,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.machoize()
+		M.mind?.add_antagonist(ROLE_MACHO_MAN)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
@@ -2797,6 +2843,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 	allow_traitors = 0
 	cant_spawn_as_rev = 1
 	var/team = 0 //1 = NT, 2 = SY
+	var/overlay_icon
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2813,6 +2860,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		//stuff for headsets
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
+			mode.setup_team_overlay(M.mind, overlay_icon)
 			if (team == 1)
 				M.mind.special_role = mode.team_NT?.name
 				setup_headset(M.ears, mode.team_NT?.comms_frequency)
@@ -2835,7 +2883,9 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_heads, access_medical, access_medical_lockers)
 		team = 1
+		overlay_icon = "nanotrasen"
 
+		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/nanotrasen)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
@@ -2860,6 +2910,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
+			overlay_icon = "nanocomm"
 			access = list(access_heads, access_captain, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = list(/obj/item/clothing/head/NTberet/commander)
@@ -2875,8 +2926,10 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
 		team = 2
+		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
+		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
 		slot_jump = list(/obj/item/clothing/under/misc/syndicate)
@@ -2901,6 +2954,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 			no_jobban_from_this_job = 0
 			high_priority_job = 1
 			cant_allocate_unwanted = 1
+			overlay_icon = "syndcomm"
 			access = list(access_syndicate_shuttle, access_syndicate_commander, access_medical, access_medical_lockers, access_engineering_power)
 
 			slot_head = list(/obj/item/clothing/head/helmet/space/syndicate/commissar_cap)

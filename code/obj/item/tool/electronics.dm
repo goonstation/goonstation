@@ -289,6 +289,7 @@
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
+	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
 		deconstructed_thing = null
@@ -453,7 +454,7 @@
 
 	New()
 		. = ..()
-		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, .proc/pre_attackby)
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
 
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
@@ -503,7 +504,7 @@
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null

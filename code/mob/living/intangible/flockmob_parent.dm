@@ -11,7 +11,7 @@
 	density = 0
 	canmove = 1
 	blinded = 0
-	anchored = 1
+	anchored = ANCHORED
 	use_stamina = 0//no puff tomfuckery
 	respect_view_tint_settings = TRUE
 	sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
@@ -75,8 +75,6 @@
 /mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
-	if (src.client)
-		src.antagonist_overlay_refresh(0, 0)
 	if (!src.flock.z_level_check(src))
 		src.emote("scream")
 		if (length(src.flock.units[/mob/living/critter/flock/drone]))

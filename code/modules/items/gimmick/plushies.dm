@@ -6,7 +6,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	desc = "Sure we got our health insurance benefits cut, and yeah we don't get any overtime on holidays, but hey - free to play claw machines!"
 	icon = 'icons/obj/plushies.dmi'
 	icon_state = "claw"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	deconstruct_flags = DECON_MULTITOOL | DECON_WRENCH | DECON_CROWBAR
 	var/busy = 0
@@ -176,9 +176,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 		phrase_log.log_phrase("plushie", message)
 		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
 		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
-		var/mob/living/carbon/human/H = user
-		if (H.sims)
-			H.sims.affectMotive("fun", 1)
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			if (H.sims)
+				H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)

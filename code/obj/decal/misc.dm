@@ -3,7 +3,7 @@
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hazard_caution"
 	mouse_opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	plane = PLANE_FLOOR
 
@@ -12,6 +12,6 @@
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hazard_delivery"
 	mouse_opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	plane = PLANE_FLOOR

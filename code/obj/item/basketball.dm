@@ -59,7 +59,7 @@
 				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "bball_spin"
 	. = ..()
 
@@ -97,7 +97,7 @@
 	desc = "Can be mounted on walls."
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
@@ -114,7 +114,7 @@
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
 			src.pixel_x = 0
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.mounted = 0
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
@@ -145,7 +145,7 @@
 					user.drop_item()
 					src.set_loc(get_turf(user))
 					src.mounted = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.set_dir(get_dir(src, target))
 					switch (src.dir)
 						if (NORTH)
@@ -291,7 +291,7 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 

@@ -55,8 +55,8 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
-	holder.stop_move()
-	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK

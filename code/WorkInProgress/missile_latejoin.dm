@@ -4,7 +4,7 @@
 /obj/arrival_missile
 	name = "human capsule missile"
 	desc = "A great way to deliver humans to a research station. Trust me."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "arrival_missile"
@@ -121,7 +121,7 @@
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
 			if (!src.target && istype(T, /turf/simulated/floor) && !AR.teleport_blocked && istype(AR, /area/station) && \
-					!istype(AR, /area/station/solar) && !T.density && T.z == 1)
+					!istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore) && !T.density && T.z == 1)
 				var/ok = TRUE
 				for(var/atom/A in T)
 					if(A.density)

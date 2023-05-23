@@ -571,7 +571,7 @@ TYPEINFO(/obj/item/device/analyzer/atmospheric)
 		if (ismob(src.loc))
 			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
 			arrow?.change_target(src.target)
-		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, .proc/update_breach)
+		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, PROC_REF(update_breach))
 
 	///When our target is replaced (most likely no longer a breach), pick a new one
 	proc/update_breach(turf/replaced, turf/new_turf)
@@ -697,7 +697,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	icon_state = "recordtrak"
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
-	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -708,19 +707,37 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	#define PRISONER_MODE_INCARCERATED 4
 
 	///List of record settings
-	var/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
 	///The current setting
 	var/mode = PRISONER_MODE_NONE
+	/// The sechud flag that will be applied when scanning someone
+	var/sechud_flag = "None"
 
 	var/list/datum/contextAction/contexts = list()
 
 	New()
-		contextLayout = new /datum/contextLayout/experimentalcircle
+		var/datum/contextLayout/experimentalcircle/context_menu = new
+		context_menu.center = TRUE
+		src.contextLayout = context_menu
 		..()
 		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
 			var/datum/contextAction/prisoner_scanner/action = new actionType()
 			if (action.mode in src.modes)
 				src.contexts += action
+
+	get_desc()
+		. = ..()
+		var/mode_string = "None"
+		if (src.mode == PRISONER_MODE_PAROLED)
+			mode_string = "Paroled"
+		else if (src.mode == PRISONER_MODE_RELEASED)
+			mode_string = "Released"
+		else if (src.mode == PRISONER_MODE_INCARCERATED)
+			mode_string = "Incarcerated"
+
+		. += "<br>Arrest mode: <span class='notice'>[mode_string]</span>"
+		if (sechud_flag != initial(src.sechud_flag))
+			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -782,6 +799,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 				if(PRISONER_MODE_INCARCERATED)
 					E["criminal"] = "Incarcerated"
+			E["sec_flag"] = src.sechud_flag
 			return
 
 		src.active2 = new /datum/db_record()
@@ -800,7 +818,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			if(PRISONER_MODE_INCARCERATED)
 				src.active2["criminal"] = "Incarcerated"
 
-		src.active2["sec_flag"] = "None"
+		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -813,28 +831,37 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	attack_self(mob/user as mob)
 		user.showContextActions(src.contexts, src, src.contextLayout)
 
-	proc/switch_mode(var/mode, var/mob/user)
+	proc/switch_mode(var/mode, set_flag, var/mob/user)
+		if (set_flag)
+			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
+			if (!isnull(flag) && src.sechud_flag != flag)
+				src.sechud_flag = flag
+				tooltip_rebuild = TRUE
+		else if (src.mode != mode)
+			src.mode = mode
+			tooltip_rebuild = TRUE
 
-		src.mode = mode
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
 
-		switch (mode)
-			if(PRISONER_MODE_NONE)
-				boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+				if(PRISONER_MODE_PAROLED)
+					boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
 
-			if(PRISONER_MODE_PAROLED)
-				boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+				if(PRISONER_MODE_RELEASED)
+					boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
 
-			if(PRISONER_MODE_RELEASED)
-				boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
-
-			if(PRISONER_MODE_INCARCERATED)
-				boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
+				if(PRISONER_MODE_INCARCERATED)
+					boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
 
 	dropped(var/mob/user)
 		. = ..()
+		if (src.sechud_flag != initial(src.sechud_flag))
+			src.sechud_flag = initial(src.sechud_flag)
+			tooltip_rebuild = TRUE
 		user.closeContextActions()
 
 //// Prisoner Scanner Context Action
@@ -849,15 +876,15 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
 		if(!istype(prisoner_scanner))
 			return
-		prisoner_scanner.switch_mode(src.mode, user)
+		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
 
 	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
 		return prisoner_scanner in user
 
-	none
-		name = "None"
-		icon_state = "none"
-		mode = PRISONER_MODE_NONE
+	// a "mode" that acts as a simple way to set the sechud flag
+	set_sechud_flag
+		name = "Set Flag"
+		icon_state = "flag"
 	Paroled
 		name = "Paroled"
 		icon_state = "paroled"
@@ -870,6 +897,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		name = "Released"
 		icon_state = "released"
 		mode = PRISONER_MODE_RELEASED
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
 
 #undef PRISONER_MODE_NONE
 #undef PRISONER_MODE_PAROLED
@@ -1002,6 +1033,14 @@ TYPEINFO(/obj/item/device/appraisal)
 					if (T.crate_tag == C.delivery_destination)
 						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
 						out_text = "<strong>Prices from [T.name]</strong><br>"
+				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+					if(C.delivery_destination == "REQ_THIRDPARTY")
+						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
+					else if (RC.req_code == C.delivery_destination)
+						var/evaluated = RC.requisify(C,TRUE)
+						if(evaluated == "Contents sufficient for marked requisition.")
+							sell_value = RC.payout
+						out_text = "<strong>[evaluated]</strong><br>"
 
 			if (sell_value == -1)
 				// no trader on the crate

@@ -283,6 +283,32 @@
 		new /obj/item/pod/paintjob/tronthing(get_turf(activator))
 		return 1
 
+/datum/achievementReward/respirator
+	title = "(Skin) Gas Respirator"
+	desc = "Turns a gas mask you're wearing into a high-tech particle-filtered version."
+	required_medal = "Old Enemy"
+	once_per_round = FALSE
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		if (activator.wear_mask && istype(activator.wear_mask, /obj/item/clothing/mask/gas))
+			var/obj/item/clothing/mask/gas/emergency/mask = activator.wear_mask
+			mask.icon_state = "respirator-gas"
+			mask.item_state = "respirator-gas"
+			mask.name = "gas respirator"
+			mask.real_name = "gas respirator"
+			mask.desc = "A close-fitting gas mask with a custom particle filter."
+			mask.color_r = 0.85
+			mask.color_g = 0.85
+			mask.color_b = 0.95
+			activator.set_clothing_icon_dirty()
+			return 1
+
+		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
+		return
+
 /datum/achievementReward/swatgasmask
 	title = "(Skin) SWAT Gas Mask"
 	desc = "Turns your Gas Mask into a SWAT Gas Mask. If you're wearing one."
@@ -294,14 +320,14 @@
 
 		if (activator.wear_mask && istype(activator.wear_mask, /obj/item/clothing/mask/gas))
 			var/obj/item/clothing/mask/gas/emergency/M = activator.wear_mask
-			M.icon_state = "swat"
+			M.icon_state = "swatNT"
 			//M.item_state = "swat"
 			M.name = "SWAT Gas Mask"
 			M.real_name = "SWAT Gas Mask"
 			M.desc = "A snazzy-looking black Gas Mask."
-			M.color_r = 1
+			M.color_r = 0.8
 			M.color_g = 0.8
-			M.color_b = 0.8
+			M.color_b = 1
 			activator.set_clothing_icon_dirty()
 			return 1
 		boutput(activator, "<span class='alert'>Unable to redeem... are you wearing a gas mask?</span>")
@@ -576,7 +602,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear a vampire cape."
+	desc = "Requires that you wear a vampire cape in your suit slot."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -594,6 +620,7 @@
 					M.name = "strange vampire outfit"
 					M.real_name = "strange vampire outfit"
 					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					M.c_flags &= ~ONBACK // no wearing the whole suit on your back
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -621,7 +648,7 @@
 
 /datum/achievementReward/Aerostaticjacket
 	title = "(Skin) Aerostatic Pilot Jacket"
-	desc = "Turns your detectives coat into a orange pilot jacket"
+	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
 
 	rewardActivate(var/mob/activator)
@@ -630,8 +657,8 @@
 			var/obj/item/clothing/suit/det_suit/M = H.wear_suit
 			if (istype(M))
 				var/prev = M.name
-				M.icon_state = "detective_kim"
-				M.item_state = "detective_kim"
+				M.icon_state = findtext(M.icon_state, "_o") ? "detective_kim_o" : "detective_kim"
+				M.coat_style = "detective_kim"
 				M.name = "Aerostatic Pilot Jacket"
 				M.real_name = "Aerostatic pilot jacket"
 				M.desc = "You feel centered while wearing this... Maybe you could put something in the pockets? (Base Item: [prev])"
@@ -656,11 +683,11 @@
 			var/mob/living/carbon/human/H = activator
 			var/succ = FALSE
 			if (H.wear_suit)
-				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/det_suit))
+				var/obj/item/clothing/suit/det_suit/M = H.wear_suit
+				if (istype(M))
 					var/prev = M.name
-					M.icon_state = "inspectorc_o"
-					M.item_state = "inspectorc_o"
+					M.icon_state = findtext(M.icon_state, "_o") ? "inspectorc_o" : "inspectorc"
+					M.coat_style = "inspectorc"
 					M.name = "inspector's short coat"
 					M.real_name = "inspector's short coat"
 					M.desc = "A coat for the modern detective. (Base Item: [prev])"
@@ -877,6 +904,15 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_blue"
+				M.item_state = "megaphone_blue"
+				M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#c1ddf8"
+				M.maptext_outline_color = "#02294d"
+				H.update_inhands()
+				succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
@@ -1013,6 +1049,16 @@
 						M.desc = "A fancy designer bag made out of rare red space snake leather and encrusted with plastic expertly made to look like gold. (Base Item: [prev])"
 						H.set_clothing_icon_dirty()
 						succ = TRUE
+
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_red"
+				M.item_state = "megaphone_red"
+				M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#fcd4d4"
+				M.maptext_outline_color = "#520000"
+				H.update_inhands()
+				succ = TRUE
 
 
 			if (!succ)
@@ -1173,7 +1219,7 @@ datum/achievementReward/ai_dwaine
 	name = "shelterbee"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "shelterbee"
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1238,7 +1284,7 @@ datum/achievementReward/ai_dwaine
 	name = "smug"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "smug"
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1288,6 +1334,31 @@ datum/achievementReward/ai_dwaine
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
 		activator.gib()
 		return 1
+/datum/achievementReward/HotrodHelmet
+	title = "(Skin) Hotrod Welding Helmet"
+	desc = "Requires you to hold a welding helmet."
+	required_medal = "Slow Burn"
+	once_per_round = 0
+
+	rewardActivate(var/mob/activator)
+		if (!istype(activator))
+			return
+
+		var/obj/item/clothing/head/helmet/welding/skin_target = activator.find_type_in_hand(/obj/item/clothing/head/helmet/welding)
+		if (skin_target)
+			var/obj/item/clothing/head/helmet/welding/fire/new_helmet = new /obj/item/clothing/head/helmet/welding/fire(get_turf(activator))
+			new_helmet.fingerprints = skin_target.fingerprints
+			new_helmet.fingerprints_full = skin_target.fingerprints_full
+			new_helmet.fingerprintslast = skin_target.fingerprintslast
+			skin_target.fingerprints = null
+			skin_target.fingerprints_full = null
+			skin_target.fingerprintslast = null
+			qdel(skin_target)
+			activator.put_in_hand_or_drop(new_helmet)
+			return 1
+		else
+			boutput(activator, "<span class='alert'>Unable to redeem... you need to have a welding helmet in your hands.</span>")
+			return
 
 
 // Reward management stuff
@@ -1305,7 +1376,7 @@ datum/achievementReward/ai_dwaine
 
 	/// [name, desc, callback]
 	var/contrib_rewards = list(
-		list("Silly Screams", "Crazy silly screams for your character!", .proc/sillyscream),
+		list("Silly Screams", "Crazy silly screams for your character!", PROC_REF(sillyscream)),
 	)
 
 	ui_state(mob/user)

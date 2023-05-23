@@ -9,8 +9,6 @@
 	target_anything = 1
 	icon_state = "frenzy"
 
-	var/datum/projectile/slam/proj = new
-
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
 			disabled = 0 // break the deadlock
@@ -74,11 +72,9 @@
 	name = "Crustaceous Frenzy"
 	desc = "Go into a primal rage, snipping a weakened target to ribbons with your claws."
 	cooldown = 1 MINUTE
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	icon_state = "claw_maul"
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)

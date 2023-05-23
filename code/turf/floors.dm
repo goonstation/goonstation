@@ -1926,7 +1926,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,0,1)) || iswrenchingtool(C)))
+	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
@@ -1968,7 +1968,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			if(T.change_stack_amount(-1))
+			if(T.amount >= 1)
 				restore_tile()
 				src.plate_mat = src.material
 				if(C.material)
@@ -1977,6 +1977,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 				if(!istype(src.material, /datum/material/metal/steel))
 					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+				T.change_stack_amount(-1)
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return

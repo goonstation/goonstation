@@ -7,14 +7,18 @@
 
 /datum/limb
 	var/obj/item/parts/holder = null
-	///used for ON_COOLDOWN stuff
+	/// used for ON_COOLDOWN stuff
 	var/cooldowns
 	var/special_next = 0
-	var/datum/item_special/disarm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/datum/item_special/harm_special = null //Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/disarm_special = null
+	/// Contains the datum which executes the items special, if it has one, when used beyond melee range.
+	var/datum/item_special/harm_special = null
 	var/can_pickup_item = TRUE
-	var/attack_strength_modifier = 1 // scale from 0 to 1 on how well this limb can attack/hit things with items
-	var/can_gun_grab = TRUE // if the limb can gun grab with a held gun
+	/// scale from 0 to 1 on how well this limb can attack/hit things with items
+	var/attack_strength_modifier = 1
+	/// if the limb can gun grab with a held gun
+	var/can_gun_grab = TRUE
 
 	New(var/obj/item/parts/holder)
 		..()
@@ -167,7 +171,7 @@
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 
 			for(var/obj/O in affected)
-				O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+				O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 				O.name = "Energy"
 				var/turf/src_turf = O.loc
 				for(var/obj/machinery/vehicle/A in src_turf)
@@ -276,7 +280,7 @@
 	harm(mob/living/target, mob/living/user)
 		src.point_blank(target, user)
 
-	//despite the name, this means reloading
+	/// despite the name, this means reloading
 	is_on_cooldown(var/mob/user)
 		return GET_COOLDOWN(user, "\ref[src] reload")
 
@@ -411,10 +415,8 @@
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
-
-
-
-/datum/limb/mouth/small // for cats/mice/etc
+/// for cats/mice/etc
+/datum/limb/mouth/small
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	dam_low = 1
 	dam_high = 3
@@ -498,6 +500,7 @@
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
 
@@ -778,7 +781,7 @@
 	log_name = "severed werewolf limb"
 	quality = 1
 
-// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
+/// Currently used by the High Fever disease which is obtainable from the "Too Much" chem which only shows up in sickly pears, which are currently commented out. Go there to make use of this.
 /datum/limb/hot //because
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
@@ -1292,6 +1295,7 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /datum/limb/eldritch
 	var/static/list/organs = list("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
@@ -1370,7 +1374,7 @@
 		user.lastattacked = target
 
 
-//little critters with teeth, like mice! can pick up small items only.
+/// little critters with teeth, like mice! can pick up small items only.
 /datum/limb/small_critter
 	var/max_wclass = W_CLASS_TINY // biggest thing we can carry
 	var/dam_low = 1
@@ -1475,7 +1479,8 @@
 					return
 		..()
 
-/datum/limb/small_critter/med //same as the previous, but can pick up some heavier shit
+/// same as the parent, but can pick up some heavier shit
+/datum/limb/small_critter/med
 	max_wclass = W_CLASS_SMALL
 	stam_damage_mult = 0.5
 
@@ -1497,18 +1502,21 @@
 	dam_high = 0
 
 /datum/limb/small_critter/med/dash
+	dam_low = 3
+	dam_high = 8
+	actions = list("cuts", "rips", "claws", "slashes")
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_3.ogg'
+
 	New(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/katana_dash/limb)
 		src.setHarmSpecial (/datum/item_special/katana_dash/limb)
-
 
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)
 			return
 		if(check_target_immunity( target ))
 			return
-		//var/quality = src.holder.quality
 
 		if (!istype(user))
 			target.Attackhand(user, params, location, control)
@@ -1520,31 +1528,18 @@
 			return 0
 		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
 			return 0
-		var/quality = src.holder.quality
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")
-		//	var/mob/living/L = target
-		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
+		..()
 
-
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 1, 5, rand(0,2) * quality, can_punch = 0, can_kick = 0)
-		user.attack_effects(target, user.zone_sel?.selecting)
-		var/action = pick("cut", "rip", "claw", "slashe")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
-		msgs.damage_type = DAMAGE_CUT
-		msgs.flush(SUPPRESS_LOGS)
-		user.lastattacked = target
-
-
-//test for crab attack thing
+/// test for crab attack thing
 /datum/limb/swipe_quake
 	New(var/obj/item/parts/holder)
 		..()
 		src.setDisarmSpecial (/datum/item_special/slam/no_item_attack)
 		src.setHarmSpecial (/datum/item_special/swipe/limb)
 
-//I wanted a claw-like limb but without the random item pickup fail
+/// I wanted a claw-like limb but without the random item pickup fail
 /datum/limb/tentacle
 	harm(mob/target, var/mob/living/user)
 		if(check_target_immunity( target ))
@@ -1559,3 +1554,31 @@
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
+
+
+/datum/limb/jean
+
+/datum/limb/golem
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (!user || !target)
+			return 0
+
+		if (!target.melee_attack_test(user))
+			return
+
+		if (no_logs != 1)
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a golem arm at [log_loc(user)].")
+
+		if(target.reagents)
+			if(user.reagents && user.reagents.total_volume)
+				user.reagents.reaction(target, TOUCH)
+				user.reagents.trans_to(target, 5)
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 9, rand(4, 6), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		var/action = pick("pummel", "pound", "mangle")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
+		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
