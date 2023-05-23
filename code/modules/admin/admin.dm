@@ -942,7 +942,7 @@ var/global/noir = 0
 				if (ismob(M))
 					var/id = rand(1, 1000000)
 					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
-					boutput(src, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
+					boutput(usr, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
 					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
 					usr.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
