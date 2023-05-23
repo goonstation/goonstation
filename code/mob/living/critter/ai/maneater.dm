@@ -51,7 +51,7 @@
 					continue
 				if (iskudzuman(potential_target))
 					continue
-				if(!ismobcritter(potential_target)) //Maneaters don't care too much if alive or dead
+				if(!ismobcritter(potential_target) || potential_target.health < 0) //We want it to attack critters, but since they don't taste great we ignore dead ones
 					. += potential_target
 
 	score_target(atom/target)
@@ -82,29 +82,30 @@
 			else
 				src.holder.stop_move()
 
-			if (ismob(src.holder.target)) //should be always the case, but eh, you never know
-				var/mob/living/M = holder.target
-				if (dist <= 1)
-					//let's grab out target :)
-					owncritter.set_a_intent(INTENT_GRAB)
-					owncritter.set_dir(get_dir(owncritter, M))
+			if (ismob(src.holder.target))
+				if (istype(src.holder.target, /mob/living))
+					var/mob/living/victim = src.holder.target
+					if (dist <= 1)
+						//let's grab out target :)
+						owncritter.set_a_intent(INTENT_GRAB)
+						owncritter.set_dir(get_dir(owncritter, victim))
 
-					var/list/params = list()
-					params["left"] = 1
+						var/list/params = list()
+						params["left"] = 1
 
-					if (!owncritter.equipped())
-						owncritter.hand_attack(M, params)
-					else
-						var/obj/item/grab/G = owncritter.equipped()
-						if (istype(G))
-							if (G.affecting == null || G.assailant == null || G.disposed) //ugly safety
-								owncritter.drop_item()
-
-							else if (G.state <= GRAB_PASSIVE)
-								G.AttackSelf(owncritter)
-							//From here on, the maneater should use its munching capabilities
+						if (!owncritter.equipped())
+							owncritter.hand_attack(victim, params)
 						else
-							owncritter.drop_item()
+							var/obj/item/grab/Equipped_grab = owncritter.equipped()
+							if (istype(Equipped_grab))
+								if (Equipped_grab.affecting == null || Equipped_grab.assailant == null || Equipped_grab.disposed) //ugly safety
+									owncritter.drop_item()
+
+								else if (Equipped_grab.state <= GRAB_PASSIVE)
+									Equipped_grab.AttackSelf(owncritter)
+								//From here on, the maneater should use its munching capabilities
+							else
+								owncritter.drop_item()
 			else
 				//dunno how we got an invalid target, but let's handle this case regardless
 				holder.target = null

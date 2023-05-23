@@ -62,20 +62,20 @@
 		return ..()
 
 	setup_equipment_slots()
-		equipment += new /datum/equipmentHolder/ears(src)
-		equipment += new /datum/equipmentHolder/head(src)
+		src.equipment += new /datum/equipmentHolder/ears(src)
+		src.equipment += new /datum/equipmentHolder/head(src)
 
 	setup_hands()
 		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.name = "tendrils"
-		HH = hands[2]
-		HH.name = "mouth"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"				// the icon state of the hand UI background
-		HH.limb_name = "teeth"					// name for the dummy holder
-		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 0
+		var/datum/handHolder/holdinghands = src.hands[1]
+		holdinghands.name = "tendrils"
+		holdinghands = src.hands[2]
+		holdinghands.name = "mouth"						// designation of the hand - purely for show
+		holdinghands.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
+		holdinghands.icon_state = "mouth"				// the icon state of the hand UI background
+		holdinghands.limb_name = "teeth"				// name for the dummy holder
+		holdinghands.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
+		holdinghands.can_hold_items = 0
 
 	HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
 		var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
@@ -86,10 +86,10 @@
 
 		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * health_per_endurance)
 		for (var/T in healthlist)
-			var/datum/healthHolder/HB = healthlist[T]
-			HB.maximum_value = scaled_health
-			HB.value = scaled_health
-			HB.last_value = scaled_health
+			var/datum/healthHolder/lifepool = healthlist[T]
+			lifepool.maximum_value = scaled_health
+			lifepool.value = scaled_health
+			lifepool.last_value = scaled_health
 		src.stamina = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
 		src.stamina_max = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
 		src.stamina_regen = min(STAMINA_REGEN + round(DNA?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg)
