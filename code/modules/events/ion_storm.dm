@@ -134,12 +134,12 @@
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, FALSE)
-			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied AI law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, TRUE)
-			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent AI law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")

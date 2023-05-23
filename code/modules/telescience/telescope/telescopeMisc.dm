@@ -66,7 +66,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(target)
+				SPAWN(6 DECI SECONDS) do_teleport(M,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0
@@ -91,7 +91,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				if(ismob(M))
 					var/mob/O = M
 					O.changeStatus("stunned", 2 SECONDS)
-				SPAWN(6 DECI SECONDS) M.set_loc(src.loc)
+				SPAWN(6 DECI SECONDS) do_teleport(M,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			SPAWN(1 SECOND) busy = 0
 			return 1
 		return 0

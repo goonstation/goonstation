@@ -1244,7 +1244,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	/obj/item/plant/herb/cannabis/spawnable,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
-	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
 	/obj/item/spacecash/random/tourist,
 	/obj/item/spacecash/buttcoin)

@@ -367,8 +367,6 @@
 		if (istype(C, /mob/living/critter/robotic/repairbot)) return FALSE
 		return ..()
 
-	seek_target(var/range = 5)
-
 	critter_basic_attack(var/mob/target)
 		if(prob(30))
 			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)

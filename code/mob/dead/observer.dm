@@ -152,20 +152,22 @@
 		src.bioHolder = newbio
 
 
-//#ifdef HALLOWEEN
+// Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
+
+	return 1
+
 #ifdef HALLOWEEN
+/mob/dead/observer/Crossed(atom/movable/mover)
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
-
-	return 1
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
 	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
