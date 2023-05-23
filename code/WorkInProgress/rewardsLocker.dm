@@ -602,7 +602,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear a vampire cape."
+	desc = "Requires that you wear a vampire cape in your suit slot."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -620,6 +620,7 @@
 					M.name = "strange vampire outfit"
 					M.real_name = "strange vampire outfit"
 					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					M.c_flags &= ~ONBACK // no wearing the whole suit on your back
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -647,7 +648,7 @@
 
 /datum/achievementReward/Aerostaticjacket
 	title = "(Skin) Aerostatic Pilot Jacket"
-	desc = "Turns your detectives coat into a orange pilot jacket"
+	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
 
 	rewardActivate(var/mob/activator)
@@ -903,14 +904,15 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				if(H.find_type_in_hand(/obj/item/megaphone))
-					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
-					M.icon_state = "megaphone_blue"
-					M.item_state = "megaphone_blue"
-					M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
-					M.maptext_color = "#c1ddf8"
-					M.maptext_outline_color = "#02294d"
-					succ = TRUE
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_blue"
+				M.item_state = "megaphone_blue"
+				M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#c1ddf8"
+				M.maptext_outline_color = "#02294d"
+				H.update_inhands()
+				succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
@@ -1048,14 +1050,15 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				if(H.find_type_in_hand(/obj/item/megaphone))
-					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
-					M.icon_state = "megaphone_red"
-					M.item_state = "megaphone_red"
-					M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
-					M.maptext_color = "#fcd4d4"
-					M.maptext_outline_color = "#520000"
-					succ = TRUE
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_red"
+				M.item_state = "megaphone_red"
+				M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#fcd4d4"
+				M.maptext_outline_color = "#520000"
+				H.update_inhands()
+				succ = TRUE
 
 
 			if (!succ)

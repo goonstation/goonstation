@@ -73,12 +73,7 @@
 				src.say( pick("Please! Help! I need help!", "Please...help me!", "Are you real? You're real! YOU'RE REAL", "Everything hurts! Everything hurts!", "Please, make the pain stop! MAKE IT STOP!") )
 
 	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, src.type)) continue
-			. += C
+		.=..()
 
 		if (length(.) && prob(5))
 			src.say(pick("Please...help...it hurts...please", "I'm...sick...help","It went wrong.  It all went wrong.","I didn't mean for this to happen!", "I see everything twice!") )
@@ -125,7 +120,7 @@
 	health_brute = 10
 	health_brute_vuln = 0.5
 	health_burn = 10
-	health_brute_vuln = 0
+	health_burn_vuln = 0
 	speech_void = 1
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -188,13 +183,12 @@
 		SPAWN(1.5 SECONDS)
 			qdel(src)
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/shade)) return FALSE
+		return ..()
+
 	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, /mob/living/critter/shade)) continue
-			. += C
+		. = ..()
 
 		if (length(.) && prob(5))
 			src.speak(pick("siskur, siskur ina na sukkal...","ára ina gíg, úš ina ur zal...","lú-érim! lú-érim!","áš á-zi-ga...bal, na, e-zé ha-lam ina é si-ga..."))
@@ -367,15 +361,11 @@
 		if (src.ai?.enabled && prob(5))
 			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
 
-	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, /mob/living/critter/robotic/repairbot)) continue
-			if (isrobot(C)) continue // Arcflash doesn't hurt borgs
-			if (is_incapacitated(C)) continue // Intruder subdued do not chain stun them
-			. += C
+	valid_target(var/mob/living/C)
+		if (isrobot(C)) return FALSE
+		if (is_incapacitated(C)) return FALSE
+		if (istype(C, /mob/living/critter/robotic/repairbot)) return FALSE
+		return ..()
 
 	critter_basic_attack(var/mob/target)
 		if(prob(30))

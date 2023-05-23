@@ -484,6 +484,9 @@
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
 	hides_from_examine = 0
+	wear_layer = MOB_GLASSES_LAYER2
+	c_flags = ONBACK
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

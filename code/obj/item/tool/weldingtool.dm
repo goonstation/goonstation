@@ -362,10 +362,24 @@
 
 
 /obj/item/weldingtool/yellow
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, all while having a yellow handle."
 	icon_state = "weldingtool-off-yellow"
-	item_state = "weldingtool-off-yellow"
 	icon_state_variant_suffix = "-yellow"
-	uses_multiple_icon_states = TRUE
+
+/obj/item/weldingtool/grey
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with a boring grey handle."
+	icon_state = "weldingtool-off-grey"
+	icon_state_variant_suffix = "-grey"
+
+/obj/item/weldingtool/orange
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with an added efficiently orange handle."
+	icon_state = "weldingtool-off-orange"
+	icon_state_variant_suffix = "-orange"
+
+/obj/item/weldingtool/green
+	desc = "A tool that, when turned on, uses fuel to emit a concentrated flame, welding metal together or slicing it apart, with a green handle."
+	icon_state = "weldingtool-off-green"
+	icon_state_variant_suffix = "-green"
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"

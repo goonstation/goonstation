@@ -462,8 +462,8 @@ TRAYS
 		max_count = 8
 		box_type = "lpop"
 		has_closed_state = 0
-		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
-		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/lollipop
 		contained_food_name = "lollipop"
 		w_class = W_CLASS_SMALL
 
