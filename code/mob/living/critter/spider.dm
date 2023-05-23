@@ -333,6 +333,10 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 
+	New()
+		..()
+		AddComponent(/datum/component/waddling)
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -460,6 +464,7 @@
 			return ..() && !trample?.disabled
 
 	New()
+		AddComponent(/datum/component/waddling)
 		..()
 		babies = list()
 
