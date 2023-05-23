@@ -1,5 +1,8 @@
 
 (t)tue may 23 23
+(u)tarmunora
+(e)⚖|C-Balance
+(+)blobs no longer require level 3 attack to break girders
 (u)Lord_Earthfire
 (p)13617
 (e)🪲⚖💅📦|C-Bug, C-Balance, C-QoL, A-Game-Objects
