@@ -1,4 +1,10 @@
 
+(t)tue may 23 23
+(u)Lord_Earthfire
+(p)13617
+(e)🪲⚖💅📦|C-Bug, C-Balance, C-QoL, A-Game-Objects
+(+)Satchels (e.g. mining, produce satchels) cannot hold stacks of items anymore. Stuffing a stack of items splits part of it up into singular items.
+(+)The ore scoop doesn't need two hands to be reloaded anymore. Enjoy quick reloading of your scoop without annoying dropping of mining satchels!
 (u)tue may 23 23
 (u)pali
 (*)AI status screen BSOD now means that the linked AI is dead. AIs can no longer pick BSOD status screen manually.
