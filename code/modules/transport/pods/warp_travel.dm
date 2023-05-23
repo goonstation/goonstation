@@ -163,6 +163,8 @@
 				else
 					H:bioHolder:RandomEffect("good")
 			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
+	else if (istype(M, /atom/movable))
+		logTheThing(LOG_COMBAT, M, "([M.type]) entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)

@@ -41,8 +41,8 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 					hudSquares["[x],[y]"] = hudSquare
 
 
-			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_aim_mode)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_aim_mode)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_aim_mode))
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_aim_mode))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
@@ -75,7 +75,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 
 
 /datum/component/holdertargeting/windup/proc/init_aim_mode(datum/source, mob/user)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/begin_shootloop)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(begin_shootloop))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -126,9 +126,9 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 			C.throw_item(target,params)
 			return
 
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, .proc/retarget)
-	RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/end_shootloop)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG, PROC_REF(retarget))
+	RegisterSignal(user, COMSIG_MOB_MOUSEUP, PROC_REF(end_shootloop))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
 	for(var/x in ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 - 1 to ((istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)+1)/2 + 1)
 		for(var/y in 7 to 9)
 			aimer.screen += hudSquares["[x],[y]"]
@@ -154,7 +154,7 @@ TYPEINFO(/datum/component/holdertargeting/windup)
 		else
 			winder.interrupt(INTERRUPT_ALWAYS)
 		winder = null
-	
+
 	interrupt = FALSE
 
 	UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDRAG)

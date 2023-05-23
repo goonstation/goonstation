@@ -122,7 +122,7 @@ var/list/clothingbooth_paths = list()
 				src.update_preview()
 				ui_interact(user)
 		else
-			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, .proc/eject, null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(eject), null, src.icon, src.icon_state, "[user] forces open [src]!", INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 	Click()
 		if((usr in src) && (src.open == 0))

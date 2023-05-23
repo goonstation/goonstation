@@ -28,13 +28,13 @@ TYPEINFO(/datum/component/power_cell)
 	src.can_be_recharged = rechargable
 	if(charge < max_charge && recharge_rate)
 		processing_items |= parent
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/attackby)
-	RegisterSignal(parent, COMSIG_CELL_CHARGE, .proc/charge)
-	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, .proc/can_charge)
-	RegisterSignal(parent, COMSIG_CELL_USE, .proc/use)
-	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, .proc/check_charge)
-	RegisterSignal(parent, COMSIG_CELL_IS_CELL, .proc/is_cell)
-	RegisterSignal(parent, COMSIG_ITEM_PROCESS, .proc/process)
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(attackby))
+	RegisterSignal(parent, COMSIG_CELL_CHARGE, PROC_REF(charge))
+	RegisterSignal(parent, COMSIG_CELL_CAN_CHARGE, PROC_REF(can_charge))
+	RegisterSignal(parent, COMSIG_CELL_USE, PROC_REF(use))
+	RegisterSignal(parent, COMSIG_CELL_CHECK_CHARGE, PROC_REF(check_charge))
+	RegisterSignal(parent, COMSIG_CELL_IS_CELL, PROC_REF(is_cell))
+	RegisterSignal(parent, COMSIG_ITEM_PROCESS, PROC_REF(process))
 
 
 /datum/component/power_cell/InheritComponent(datum/component/power_cell/C, i_am_original, max, start_charge, recharge, delay, rechargable)
@@ -130,7 +130,7 @@ TYPEINFO(/datum/component/power_cell)
 
 /datum/component/power_cell/redirect/Initialize(max, start_charge, recharge, delay, rechargable)
 	. = ..( )
-	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/update_redirect)
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(update_redirect))
 	processing_items |= parent
 
 /datum/component/power_cell/redirect/can_charge(parent)
@@ -148,7 +148,7 @@ TYPEINFO(/datum/component/power_cell)
 /datum/component/power_cell/redirect/proc/connect(obj/item/parent, atom/target, mob/user, reach, params)
 	if(istype(target, target_type))
 		redirect_object = target
-		RegisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/check_redirect)
+		RegisterSignal(redirect_object, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
 		boutput(user,"You connect [parent] to [target].")
 
 /datum/component/power_cell/redirect/proc/update_redirect(atom/movable/target, previous_loc, direction)
@@ -158,8 +158,8 @@ TYPEINFO(/datum/component/power_cell)
 
 		if(!cell.internal && !parent_locked)
 			parent_locked = TRUE
-			RegisterSignal(cell.loc, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/check_redirect)
-			RegisterSignal(cell.loc, COMSIG_ITEM_AFTERATTACK, .proc/connect)
+			RegisterSignal(cell.loc, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(check_redirect))
+			RegisterSignal(cell.loc, COMSIG_ITEM_AFTERATTACK, PROC_REF(connect))
 
 		var/obj/O = parent
 		while(istype(O) && !istype(O, target_type))

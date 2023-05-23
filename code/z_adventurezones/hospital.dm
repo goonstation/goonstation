@@ -375,7 +375,7 @@
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
-			var/image/O = image(icon = 'icons/misc/aprilfools.dmi', loc = theKey, icon_state = "key", layer = 20)
+			var/image/O = image(icon = 'icons/obj/artifacts/keys.dmi', loc = theKey, icon_state = "key_niobium", layer = 20)
 			user << O
 
 

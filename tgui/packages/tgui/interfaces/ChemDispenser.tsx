@@ -5,36 +5,53 @@
 * @license ISC
 */
 
+import { BooleanLike } from "common/react";
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Button, NumberInput, Section, Box, Table, Tooltip, Icon, Tabs, Input, Modal } from "../components";
+import { Button, NumberInput, Section, Box, Table, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
+import { ReagentGraph, ReagentContainer, Reagent, ReagentList, MatterStateIconMap } from "./common/ReagentInfo";
 
-const MatterState = {
-  Solid: 1,
-  Liquid: 2,
-  Gas: 3,
+type ChemDispenserData = {
+  beakerName: string;
+  container: ReagentContainer | null;
+  dispensableReagents: Reagent[];
+  groupList: {
+    name: string;
+    info: string;
+    ref: string;
+  }[];
+  idCardInserted: BooleanLike;
+  idCardName: string;
+  isRecording: BooleanLike;
+  activeRecording: string;
 };
 
-const stateMap = {
-  [MatterState.Solid]: {
-    icon: 'square',
-    pr: 0.5,
+const sortMap = [
+  {
+    id: 0,
+    icon: "sort-amount-down",
+    contents: "",
+    compareFunction: (a: Reagent, b: Reagent) => b.volume - a.volume,
   },
-  [MatterState.Liquid]: {
-    icon: 'tint',
-    pr: 0.9,
+  {
+    id: 1,
+    icon: "sort-amount-up",
+    contents: "",
+    compareFunction: (a: Reagent, b: Reagent) => a.volume - b.volume,
   },
-  [MatterState.Gas]: {
-    icon: 'wind',
-    pr: 0.5,
+  {
+    id: 2,
+    contents: "Density",
+    compareFunction: (a: Reagent, b: Reagent) => a.state - b.state,
   },
-};
+  {
+    id: 3,
+    contents: "Order Added",
+    compareFunction: () => 1,
+  },
+];
 
 export const ChemDispenser = (props, context) => {
-  const { data } = useBackend(context);
-  const {
-    beakerContents,
-  } = data;
   return (
     <Window
       width={570}
@@ -44,9 +61,7 @@ export const ChemDispenser = (props, context) => {
         <Box>
           <ReagentDispenser />
           <Beaker />
-          {!!beakerContents.length && (
-            <BeakerContentsGraph />
-          )}
+          <BeakerContentsGraph />
           <ChemGroups />
         </Box>
       </Window.Content>
@@ -55,13 +70,8 @@ export const ChemDispenser = (props, context) => {
 };
 
 export const ReagentDispenser = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    beakerName,
-    currentBeakerName,
-    maximumBeakerVolume,
-    beakerTotalVolume,
-  } = data;
+  const { act, data } = useBackend<ChemDispenserData>(context);
+  const { beakerName, container } = data;
   const [addAmount, setAddAmount] = useSharedState(context, 'addAmount', 10);
   const [iconToggle, setIconToggle] = useSharedState(context, 'iconToggle', false);
   const [hoverOverId, setHoverOverId] = useLocalState(context, 'hoverOver', "");
@@ -95,7 +105,7 @@ export const ReagentDispenser = (props, context) => {
             </Button>
           </Box>
         </>
-      )}
+      ) as any}
       buttons={(
         <Box>
           {"Dispense Amount: "}
@@ -110,17 +120,16 @@ export const ReagentDispenser = (props, context) => {
         </Box>
       )}>
       <Section fitted backgroundColor="rgba(0,0,0,0)">
-        {(!maximumBeakerVolume || maximumBeakerVolume
-        === beakerTotalVolume) && (
+        {!container || container.maxVolume === container.totalVolume && (
           <Modal
             className="chem-dispenser__labels"
             fontSize="20px"
             mr={2}
             p={3}>
             <Box>
-              {!maximumBeakerVolume &&(
+              {!container ? (
                 "No " + beakerName + " Inserted"
-              ) || currentBeakerName + " Full"}
+              ) : container.name + " Full"}
             </Box>
           </Modal>
         )}
@@ -132,7 +141,7 @@ export const ReagentDispenser = (props, context) => {
             width="130px"
             onMouseEnter={() => setHoverOverId(reagent.id)}
             onMouseLeave={() => setHoverOverId("")}
-            disabled={maximumBeakerVolume === beakerTotalVolume}
+            disabled={container?.maxVolume === container?.totalVolume}
             lineHeight={1.75}
             onClick={() => act("dispense", {
               amount: addAmount,
@@ -141,7 +150,7 @@ export const ReagentDispenser = (props, context) => {
           >
             <Icon
               color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
-              name={iconToggle ? stateMap[reagent.state].icon : "circle"}
+              name={iconToggle ? MatterStateIconMap[reagent.state].icon : "circle"}
               pt={1}
               style={{
                 "text-shadow": "0 0 3px #000",
@@ -157,18 +166,12 @@ export const ReagentDispenser = (props, context) => {
 };
 
 export const Beaker = (props, context) => {
-  const { act, data } = useBackend(context);
-  const {
-    beakerName,
-    beakerTotalVolume,
-    currentBeakerName,
-    maximumBeakerVolume,
-  } = data;
+  const { act, data } = useBackend<ChemDispenserData>(context);
+  const { beakerName, container } = data;
 
   const [iconToggle] = useSharedState(context, 'iconToggle', false);
   const [removeAmount, setRemoveAmount] = useSharedState(context, 'removeAmount', 10);
   const removeReagentButtons = [removeAmount, 10, 5, 1];
-  const beakerContents = data.beakerContents || [];
 
   return (
     <Section
@@ -178,8 +181,8 @@ export const Beaker = (props, context) => {
           className="chem-dispenser__buttons"
           icon="eject"
           onClick={() => act("eject")}>
-          {!maximumBeakerVolume ? "Insert " + beakerName : "Eject " + currentBeakerName + " (" + beakerTotalVolume + "/" + maximumBeakerVolume + ")"}
-        </Button>
+          {!container ? "Insert " + beakerName : "Eject " + container.name + " (" + container.totalVolume + "/" + container.maxVolume + ")"}
+        </Button> as any
       }
       buttons={(
         <Box align="left" as="span">
@@ -198,94 +201,48 @@ export const Beaker = (props, context) => {
         <Table.Cell bold collapsing textAlign="center" />
         <Table.Cell collapsing />
       </Table.Row>
-      <Box color="label">
-        {!beakerContents.length && (
-          "No Contents"
-        )}
-      </Box>
-      {beakerContents.map((reagent, indexContents) => (
-        <Table.Row key={indexContents}>
-          <Table.Cell
-            collapsing
-            textAlign="left"
-          >
-            <Icon
-              pr={stateMap[reagent.state].pr}
-              style={{
-                "text-shadow": "0 0 3px #000;",
-              }}
-              color={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
-              name={iconToggle ? stateMap[reagent.state].icon : "circle"}
-            />
-            { `( ${reagent.volume}u ) ${reagent.name}`}
-          </Table.Cell>
-          <Table.Cell collapsing textAlign="left">
-            <Box mt={0.5}>
+      <ReagentList container={container} height="auto" showState={iconToggle}
+        renderButtons={reagent => (
+          <>
+            <Button
+              icon="filter"
+              onClick={() => act("isolate", {
+                reagentId: reagent.id,
+              })}>
+              Isolate
+            </Button>
+            <Button
+              icon="minus"
+              onClick={() => act("all", {
+                amount: removeAmount,
+                reagentId: reagent.id,
+              })}>
+              All
+            </Button>
+            {removeReagentButtons.map((amount, indexButtons) => (
               <Button
-                icon="filter"
-                onClick={() => act("isolate", {
-                  reagentId: reagent.id,
-                })}>
-                Isolate
-              </Button>
-              <Button
+                key={indexButtons}
                 icon="minus"
-                onClick={() => act("all", {
-                  amount: removeAmount,
-                  reagentId: reagent.id,
+                onClick={() => act("remove", {
+                  amount: amount, reagentId: reagent.id,
                 })}>
-                All
+                {amount}
               </Button>
-              {removeReagentButtons.map((amount, indexButtons) => (
-                <Button
-                  key={indexButtons}
-                  icon="minus"
-                  onClick={() => act("remove", {
-                    amount: amount, reagentId: reagent.id,
-                  })}>
-                  {amount}
-                </Button>
-              ))}
-            </Box>
-          </Table.Cell>
-        </Table.Row>))}
+            ))}
+          </>
+        )}
+        renderButtonsDeps={removeAmount}
+      />
+
     </Section>
   );
 };
 
 export const BeakerContentsGraph = (props, context) => {
-  const { data } = useBackend(context);
+  const { data } = useBackend<ChemDispenserData>(context);
   const [sort, setSort] = useSharedState(context, 'sort', 1);
-  const {
-    beakerContents,
-    maximumBeakerVolume,
-    beakerTotalVolume,
-  } = data;
-  const finalColor = data.finalColor || "";
-  const sortMap = [
-    {
-      id: 0,
-      icon: "sort-amount-down",
-      contents: "",
-      compareFunction: (a, b) => b.volume - a.volume,
-    },
-    {
-      id: 1,
-      icon: "sort-amount-up",
-      contents: "",
-      compareFunction: (a, b) => a.volume - b.volume,
-    },
-    {
-      id: 2,
-      contents: "Density",
-      compareFunction: (a, b) => a.state - b.state,
-    },
-    {
-      id: 3,
-      contents: "Order Added",
-      compareFunction: () => 1,
-    },
-  ];
+  const { container } = data;
+
   return (
     <Section align="center" p={0.5}
       title={(
@@ -305,54 +262,15 @@ export const BeakerContentsGraph = (props, context) => {
             </Tabs.Tab>
           ))}
         </Tabs>
-      )}>
-      <Tooltip
-        position="top"
-        content="Current Mixture Color"
-      >
-        <Box
-          position="relative"
-          py={1.5}
-          pl={4}
-          backgroundColor={finalColor.substring(0, 7)}
-        />
-      </Tooltip>
-      {beakerContents.slice().sort(sortMap[sort].compareFunction).map(
-        (reagent, index) => (
-          <Tooltip
-            content={`${reagent.name} ( ${reagent.volume}u )`}
-            key={index}
-            position="top"
-          >
-            <Box
-              position="relative"
-              as="span"
-              pl={((reagent.volume / maximumBeakerVolume)*100) / 1.146}
-              py={1}
-              backgroundColor={"rgba(" + reagent.colorR + "," + reagent.colorG + ", " + reagent.colorB + ", 1)"}
-            />
-          </Tooltip>
-        ))}
-      <Tooltip
-        content={`( ${maximumBeakerVolume - beakerTotalVolume}u )`}
-        position="top"
-      >
-        <Box
-          as="span"
-          position="relative"
-          pl={((maximumBeakerVolume - beakerTotalVolume)
-            / maximumBeakerVolume * 100) / 1.146}
-          py={1}
-          backgroundColor="black"
-        />
-      </Tooltip>
+      ) as any}>
+      <ReagentGraph container={container} sort={sortMap[sort].compareFunction} />
     </Section>
   );
 };
 
 
 export const ChemGroups = (props, context) => {
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend<ChemDispenserData>(context);
   const [groupName, setGroupName] = useLocalState(context, 'groupName', "");
   const [reagents, setReagents] = useLocalState(context, 'reagents', "");
   const {

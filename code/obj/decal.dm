@@ -224,7 +224,7 @@ obj/decal/fakeobjects
 	anchored = ANCHORED
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
+	layer = EFFECTS_LAYER_UNDER_2
 	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/oven

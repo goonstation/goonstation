@@ -2737,7 +2737,7 @@
 /area/station/mining/staff_room)
 "bgz" = (
 /obj/table/auto,
-/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical/empty,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -14148,7 +14148,7 @@
 "fRE" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/table/auto,
-/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical/empty,
 /obj/item/device/multitool{
 	pixel_x = -15
 	},
@@ -37083,7 +37083,6 @@
 "pLE" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/storage/toolbox,
 /obj/item/decoration/ashtray,
 /obj/machinery/light{
 	dir = 1;
@@ -51169,7 +51168,7 @@
 	name = "Seating Area"
 	})
 "vCh" = (
-/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical/empty,
 /obj/table/reinforced/industrial/auto,
 /obj/random_item_spawner/tools/few,
 /turf/simulated/floor/black,
