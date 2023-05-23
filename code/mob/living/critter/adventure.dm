@@ -526,9 +526,9 @@
 		..()
 
 	proc/HALT()
-		if(!ON_COOLDOWN(src, "HALT!", 3 SECONDS))
-			playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
+		if(!ON_COOLDOWN(src, "say_HALT!", 3 SECONDS))
 			src.say("HALT!")
+		playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard
 	name = "\improper Town Guard egg"
