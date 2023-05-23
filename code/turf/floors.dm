@@ -1971,6 +1971,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if(T.amount >= 1)
 				restore_tile()
 				src.plate_mat = src.material
+
+				// if we have a special icon state and it doesn't have a material variant
+				// and at the same time the base floor icon state does have a material variant
+				// we use the material variant from the base floor
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.mat_id]"
+				var/potential_new_base_icon_state = "floor$$[C.material.mat_id]"
+				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
+					src.icon_state = "floor"
+					src.icon = 'icons/turf/floors.dmi'
+
 				if(C.material)
 					src.setMaterial(C.material)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
