@@ -501,7 +501,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
-	color = "#0F0A08"
+	color = "#3F3A38"
 
 	New()
 		..()
