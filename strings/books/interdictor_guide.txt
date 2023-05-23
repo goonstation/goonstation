@@ -100,7 +100,7 @@
 	Due to the advanced technologies incorporated into the Spatial Interdictor's mainboard, it will automatically begin operating when conditions are suitable.
 	<br>
 	<br>
-	Suitable conditions are: Adequate internal cell charge, presence of an area power controller, and active magnetic anchoring.
+	Suitable conditions are: Adequate internal cell charge (70% of capacity or greater), presence of an area power controller, and active magnetic anchoring.
 	<br>
 	<br>
 	For charging or operation, activate magnetic anchoring by touching the control pad located on the front side of the rectangular regulator unit.
@@ -117,7 +117,7 @@
 	The Spatial Interdictor is equipped with three distinct indicators, each representing a different aspect of its functionality:
 	<br>
 	<br>
-	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell, and <b>must be full for interdiction to begin.</b>
+	- The charge meter, located on the side of the interdiction pillar. This represents the current capacity of the buffer cell; while all three segments are illuminated, the interdictor is ready to operate.
 	<br>
 	<br>
 	- The interdiction emitter, located on the top of the interdiction pillar. While illuminated, the Interdictor is currently active and protecting its surroundings.

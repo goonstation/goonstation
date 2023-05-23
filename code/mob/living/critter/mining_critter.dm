@@ -45,11 +45,18 @@
 	health_burn = 25
 	health_burn_vuln = 0.1
 	is_npc = TRUE
-	ai_type = /datum/aiHolder/fermid
+	ai_type = /datum/aiHolder/wanderer_aggressive
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
+
+	is_spacefaring()
+		return TRUE
 
 	setup_hands()
 		..()
@@ -153,3 +160,108 @@
 ///////////////////////////////////////////////
 // FERMID EGG
 ///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// ROCK WORM
+///////////////////////////////////////////////
+
+/mob/living/critter/rockworm
+	name = "rock worm"
+	real_name = "rock worm"
+	desc = "Tough lithovoric worms."
+	icon_state = "rockworm"
+	icon_state_dead = "rockworm-dead"
+	hand_count = 1
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	health_brute = 40
+	health_brute_vuln = 1
+	health_burn = 40
+	health_burn_vuln = 0.1
+	ai_type = /datum/aiHolder/rockworm
+	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_ONCE
+	add_abilities = list(/datum/targetable/critter/vomit_ore)
+	var/tamed = FALSE
+	var/seek_ore = TRUE
+	var/eaten = 0
+	var/const/rocks_per_gem = 10
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 80) // They live in asteroids so they should be resistant
+		AddComponent(/datum/component/consume/can_eat_raw_materials, FALSE)
+
+	is_spacefaring()
+		return TRUE
+
+	on_pet(mob/user)
+		if (..())
+			return 1
+		if (src.tamed && src.ai?.enabled)
+			if (src.seek_ore)
+				src.seek_ore = FALSE
+				src.visible_message("<span class='notice'>[user] pats [src] on the back. It won't seek ores now!</span>")
+			else
+				src.seek_ore = TRUE
+				src.visible_message("<span class='notice'>[user] shakes [src] to awaken its hunger!</span>")
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/raw_material) && !isdead(src))
+			if((istype(I, /obj/item/raw_material/shard)) || (istype(I, /obj/item/raw_material/scrap_metal)))
+				src.visible_message("[M] tries to feed [src] but they won't take it!")
+				return
+			if (src.tamed)
+				src.visible_message("[M] tries to feed [src] but they seem full...")
+				return
+			if(prob(40))
+				src.tamed = TRUE
+				src.visible_message("[src] enjoyed the [I] and seems more docile!")
+				src.emote("burp")
+			src.aftereat()
+			I.Eat(src, src)
+			return
+		..()
+
+	seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/raw_material/ore in view(range, get_turf(src)))
+			if (istype(ore, /obj/item/raw_material/shard)) continue
+			if (istype(ore, /obj/item/raw_material/scrap_metal)) continue
+			if (!(istype(ore, /obj/item/raw_material/rock)) && prob(30)) continue // can eat not rocks with lower chance
+			. += ore
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = FALSE
+
+	death()
+		src.can_lie = FALSE
+		..()
+
+	proc/aftereat()
+		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)
+		var/max_dist = 4
+		src.eaten++
+		if (src.eaten >= src.rocks_per_gem && src.ai?.enabled)
+			for(var/turf/T in view(max_dist, src))
+				if(!is_blocked_turf(T))
+					if (!vomit.disabled && vomit.cooldowncheck())
+						vomit.handleCast(T)
+					break
+
+/mob/living/critter/rockworm/gary
+	name = "Gary the rockworm"

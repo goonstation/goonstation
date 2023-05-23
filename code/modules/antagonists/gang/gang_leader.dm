@@ -1,6 +1,7 @@
 /datum/antagonist/gang_leader
 	id = ROLE_GANG_LEADER
 	display_name = "gang leader"
+	antagonist_icon = "gang_head"
 
 	/// The gang that this gang leader belongs to.
 	var/datum/gang/gang
@@ -17,9 +18,6 @@
 			src.gang.select_gang_name()
 
 		. = ..()
-
-		for(var/datum/mind/M in src.gang.members)
-			M.current?.antagonist_overlay_refresh(TRUE, FALSE)
 
 	disposing()
 		src.gang.leader = null
@@ -52,7 +50,7 @@
 				H.equip_if_possible(src.headset, H.slot_r_store)
 			else if (!H.l_store)
 				H.equip_if_possible(src.headset, H.slot_l_store)
-			else if (istype(H.back, /obj/item/storage/) && length(H.back.contents) < 7)
+			else if (H.back?.storage && !H.back.storage.is_full())
 				H.equip_if_possible(src.headset, H.slot_in_backpack)
 			else
 				H.put_in_hand_or_drop(src.headset)
@@ -65,12 +63,25 @@
 
 		src.headset.remove_radio_upgrade()
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(src.gang)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(src.gang)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang, src)
 
 	announce()
 		. = ..()
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.</span>")
+		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
 		boutput(src.owner.current, "<span class='alert'>You must recruit people to your gang and compete for wealth and territory!</span>")
 		boutput(src.owner.current, "<span class='alert'>You can harm whoever you want, but be careful - the crew can harm gang members too!</span>")
 		boutput(src.owner.current, "<span class='alert'>To set your gang's home turf and spawn your locker, use the Set Gang Base ability in the top left. Make sure to pick somewhere safe, as your locker can be broken into and looted. You can only do this once!</span>")

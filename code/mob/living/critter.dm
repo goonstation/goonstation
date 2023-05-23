@@ -814,7 +814,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
-			I.set_loc(src)
+			if (I.stored)
+				I.stored.transfer_stored_item(I, src, user = src)
+			else
+				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -1297,12 +1300,16 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_target(var/range = 5)
 		. = list()
-		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		//default behaviour, return all alive, tangible, not-our-type, not-our-faction mobs in range
 		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, src.type)) continue
-			. += C
+			if (src.valid_target(C))
+				. += C
+
+	proc/valid_target(var/mob/living/C)
+		if (isintangible(C)) return FALSE
+		if (isdead(C)) return FALSE
+		if (istype(C, src.type)) return FALSE
+		return !(C.faction & src.faction)
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
@@ -1485,7 +1492,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 /mob/living/critter/Logout()
 	..()
-	if (src.ai && !src.ai.enabled && src.is_npc)
+	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.key)
 		ai.enable()
 
 /mob/living/critter/Login()

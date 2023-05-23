@@ -42,7 +42,7 @@
 				H.equip_if_possible(src.headset, H.slot_r_store)
 			else if (!H.l_store)
 				H.equip_if_possible(src.headset, H.slot_l_store)
-			else if (istype(H.back, /obj/item/storage/) && H.back.contents.len < 7)
+			else if (H.back?.storage && !H.back.storage.is_full())
 				H.equip_if_possible(src.headset, H.slot_in_backpack)
 			else
 				H.put_in_hand_or_drop(src.headset)

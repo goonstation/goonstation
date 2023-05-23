@@ -7,6 +7,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
+	faction = MOB_AI_FACTION_WRAITH
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state_dead = "dead_spiker"
 	icon_state = "spiker"

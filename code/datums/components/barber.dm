@@ -19,8 +19,8 @@ TYPEINFO(/datum/component/toggle_tool_use)
 	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/toggle_force_use_as_tool)
+	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), PROC_REF(on_drop_or_pickup))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(toggle_force_use_as_tool))
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
@@ -102,7 +102,7 @@ TYPEINFO_NEW(/datum/component/barber/haircut)
 	if (. == COMPONENT_INCOMPATIBLE)
 		return .
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, PROC_REF(do_haircut))
 
 TYPEINFO(/datum/component/barber/shave)
 TYPEINFO_NEW(/datum/component/barber/shave)
@@ -117,7 +117,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	if (. == COMPONENT_INCOMPATIBLE)
 		return .
 
-	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_shave)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, PROC_REF(do_shave))
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
@@ -483,6 +483,11 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	if (isnull(src.preview))
 		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
 		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
+
+		if (src.barbee.hud.layout_style == "tg")
+			var/mob/living/carbon/human/preview_mob = src.preview.preview_thing // So the game understands we are manipulating a human
+			preview_mob.hud.layout_style = "tg"
+
 		src.preview.add_background("#242424", 2)
 		src.reference_clothes(src.barbee, src.preview.preview_thing)
 		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
@@ -605,8 +610,6 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 	to_paste.wear_id = to_copy.wear_id
 	to_paste.r_store = to_copy.r_store
 	to_paste.l_store = to_copy.l_store
-
-	to_paste.update_clothing()
 
 /datum/component/barber/proc/nullify_clothes(var/mob/living/carbon/human/to_nullify)
 	to_nullify.wear_suit = null

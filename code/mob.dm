@@ -23,7 +23,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
 
@@ -136,6 +135,9 @@
 	var/deathhunted = null
 
 	var/job = null
+
+	/// For assigning mobs various factions, see factions.dm for definitions
+	var/faction = 0
 
 	var/nodamage = 0
 
@@ -306,7 +308,7 @@
 
 	src.update_grab_loc()
 
-	if (src.s_active && !(s_active.master in src))
+	if (src.s_active && !(s_active.master?.linked_item in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
 
@@ -501,7 +503,6 @@
 			O.client_login(src)
 
 	src.need_update_item_abilities = 1
-	src.antagonist_overlay_refresh(1, 0)
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
@@ -916,7 +917,9 @@
 
 /mob/proc/has_medal(var/medal) //This is not spawned because of return values. Make sure the proc that uses it uses spawn or you lock up everything.
 	LAGCHECK(LAG_HIGH)
-
+#ifdef SHUT_UP_AND_GIVE_ME_MEDAL_STUFF
+	return TRUE
+#else
 	if (IsGuestKey(src.key))
 		return null
 	else if (!config)
@@ -926,6 +929,7 @@
 
 	var/result = world.GetMedal(medal, src.key, config.medal_hub, config.medal_password)
 	return result
+#endif
 
 /mob/verb/list_medals()
 	set name = "Medals"
@@ -1125,6 +1129,11 @@
 
 	if(!can_reach(src, A) || src.restrained())
 		return
+
+	if(istype(A, /obj/stool))
+		var/obj/stool/C = A
+		if(C?.buckled_guy == src)
+			return
 
 	src.pulling = A
 
@@ -1496,7 +1505,6 @@
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
-	M.Login()
 	return
 
 /mob/verb/show_preferences()
@@ -2203,60 +2211,9 @@
 	. = list()
 	. += src.contents // Item slots.
 
-	for (var/obj/item/storage/S in src.contents) // Backpack, belt, briefcases etc.
-		var/list/T1 = S.get_all_contents()
-		for (var/obj/O1 in T1)
-			. |= O1
-
-	for (var/obj/item/gift/G in src.contents)
-		. |= G.gift
-		if (istype(G.gift, /obj/item/storage))
-			var/obj/item/storage/S2 = G.gift
-			var/list/T2 = S2.get_all_contents()
-			for (var/obj/O2 in T2)
-				. |= O2
-
-	for (var/obj/item/storage/backpack/BP in src.contents) // Backpack boxes etc.
-		for (var/obj/item/storage/S3 in BP.contents)
-			var/list/T3 = S3.get_all_contents()
-			for (var/obj/O3 in T3)
-				. |= O3
-
-		for (var/obj/item/gift/G2 in BP.contents)
-			. |= G2.gift
-			if (istype(G2.gift, /obj/item/storage))
-				var/obj/item/storage/S4 = G2.gift
-				var/list/T4 = S4.get_all_contents()
-				for (var/obj/O4 in T4)
-					. |= 04
-
-	for (var/obj/item/storage/belt/BL in src.contents) // Stealth storage in belts etc.
-		for (var/obj/item/storage/S5 in BL.contents)
-			var/list/T5 = S5.get_all_contents()
-			for (var/obj/O5 in T5)
-				. |= O5
-
-		for (var/obj/item/gift/G3 in BL.contents)
-			. |= G3.gift
-			if (istype(G3.gift, /obj/item/storage))
-				var/obj/item/storage/S6 = G3.gift
-				var/list/T6 = S6.get_all_contents()
-				for (var/obj/O6 in T6)
-					. |= O6
-
-	for (var/obj/item/storage/box/syndibox/SB in .) // For those "belt-in-stealth storage-in-backpack" situations.
-		for (var/obj/item/storage/S7 in SB.contents)
-			var/list/T7 = S7.get_all_contents()
-			for (var/obj/O7 in T7)
-				. |= O7
-
-		for (var/obj/item/gift/G4 in SB.contents)
-			. |= G4.gift
-			if (istype(G4.gift, /obj/item/storage))
-				var/obj/item/storage/S8 = G4.gift
-				var/list/T8 = S8.get_all_contents()
-				for (var/obj/O8 in T8)
-					. |= O8
+	for (var/atom/A as anything in src.contents)
+		if (A.storage)
+			. += A.storage.get_all_contents()
 
 // Made these three procs use get_all_items_on_mob(). "Steal X" objective should work more reliably as a result (Convair880).
 /mob/proc/check_contents_for(A, var/accept_subtypes = 0)
@@ -2979,7 +2936,7 @@
 		src.mind.transfer_to(newbody)
 	else //Oh welp, still need to move that key!
 		newbody.key = src.key
-
+	qdel(src)
 	////////////Now play the degibbing animation and move them to the turf.////////////////
 
 	var/atom/movable/overlay/animation = new(reappear_turf)

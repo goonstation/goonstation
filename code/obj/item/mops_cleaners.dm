@@ -181,7 +181,7 @@ WET FLOOR SIGN
 	var/lastUse = null
 
 	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (istype(A, /obj/item/storage))
+		if (A.storage)
 			return
 		if (!isturf(user.loc))
 			return
@@ -206,7 +206,7 @@ WET FLOOR SIGN
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/item/storage))
+	if (A.storage)
 		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
@@ -729,10 +729,15 @@ WET FLOOR SIGN
 			src.payload = W
 			W.set_loc(src)
 			return
+		else if (isscrewingtool(W))
+			user.show_message("You [src.anchored ? "un" : ""]screw [src] [src.anchored ? "from" : "to"] the floor.")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = !src.anchored
+			return
 		. = ..()
 
 	HasProximity(atom/movable/AM)
-		if(iscarbon(AM) && isturf(src.loc) && prob(20) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))

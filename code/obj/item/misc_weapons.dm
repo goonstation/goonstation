@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -1158,6 +1158,17 @@ TYPEINFO(/obj/item/bat)
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
+/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+	. = FALSE
+	if (!istype(user))
+		return
+	if (!istype(user.belt, /obj/item/swords_sheaths))
+		return
+	var/obj/item/swords_sheaths/sheath = user.belt
+	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
+		sheath.Attackby(src, user)
+		return TRUE
+
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
 	mats = list("MET-3"=20, "FAB-1"=5)
@@ -1601,7 +1612,7 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()

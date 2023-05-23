@@ -42,7 +42,7 @@
 
 	var/bite_transfer_amt = 1
 
-	ai_type = /datum/aiHolder/spider
+	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //no patience for spiders
@@ -138,14 +138,14 @@
 		SPAWN(0)
 			src.make_critter(src.adultpath)
 
+	valid_target(mob/living/C)
+		if (C.bioHolder.HasEffect("husk")) return FALSE
+		if (istype(C, /mob/living/critter/spider)) return FALSE
+		. = ..()
+
 	seek_target(range)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue //maybe dont attack blob overminds
-			if (isdead(C)) continue
-			if (C.bioHolder.HasEffect("husk")) continue
-			if (istype(C, /mob/living/critter/spider)) continue
-			. += C
+		. = ..()
+
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")

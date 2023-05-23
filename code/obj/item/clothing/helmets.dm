@@ -44,7 +44,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer
 	name = "engineering space helmet"
-	desc = "Comes equipped with a builtin flashlight."
+	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
@@ -599,6 +599,19 @@
 		item_state = "hardhat_chief_engineer0"
 		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
 
+		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
+			on = !on
+			src.icon_state = "hardhat_chief_engineer[on]"
+			if (on)
+				light_dir.update(1)
+			else
+				light_dir.update(0)
+			user.update_clothing()
+			if (activated_inhand)
+				var/obj/ability_button/flashlight_engiehelm/flashlight_button = locate(/obj/ability_button/flashlight_engiehelm) in src.ability_buttons
+				flashlight_button.icon_state = src.on ? "lighton" : "lightoff"
+			return
+
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
@@ -709,6 +722,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	m_amt = 3000
 	g_amt = 1000
 	var/up = FALSE // The helmet's current position
+	var/decal = null
+
+	New()
+		..()
+		src.icon_state = "welding[src.decal ? "-[decal]" : null]"
+		src.item_state = "welding[src.decal ? "-[decal]" : null]"
 
 	setupProperties()
 		..()
@@ -730,7 +749,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	proc/flip_down(var/mob/living/carbon/human/user)
 		up = FALSE
 		see_face = FALSE
-		icon_state = "welding"
+		icon_state = "welding[decal ? "-[decal]" : null]"
+		item_state = "welding[decal ? "-[decal]" : null]"
 		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
@@ -745,7 +765,8 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
-		icon_state = "welding-up"
+		icon_state = "welding-up[decal ? "-[decal]" : null]"
+		item_state = "welding-up[decal ? "-[decal]" : null]"
 		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
@@ -777,6 +798,12 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 			toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
 		..()
 
+	fire
+		name = "hotrod welding helmet"
+		desc = "A head-mounted face cover designed to make you look slick while avoiding searing eye pain. Can be flipped up for if you don't want to avoid aforementioned searing eye pain."
+		icon_state = "welding-fire"
+		item_state = "welding-fire"
+		decal = "fire"
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
 
