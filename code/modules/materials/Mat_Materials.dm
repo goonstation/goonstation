@@ -507,6 +507,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
+		addTrigger(triggersOnAdd, new /datum/materialProc/spacelag_add())
 
 
 /datum/material/metal/iridiumalloy
