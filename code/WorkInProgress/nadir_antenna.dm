@@ -746,7 +746,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			var/atom/movable/inbound_target
 			if(manual_receive)
 				inbound_target = manual_receive
-			else if(shippingmarket.pending_crates[cargo_index])
+			else if(length(shippingmarket.pending_crates) >= cargo_index)
 				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return

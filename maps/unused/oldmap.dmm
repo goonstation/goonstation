@@ -20203,7 +20203,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Sn" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "So" = (

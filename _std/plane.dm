@@ -7,6 +7,8 @@
 #define PLANE_DEFAULT -100
 #define PLANE_NOSHADOW_ABOVE -99
 #define PLANE_HIDDENGAME -95
+#define PLANE_FOREGROUND_PARALLAX -93
+#define PLANE_FOREGROUND_PARALLAX_OCCLUSION -92
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
 #define PLANE_ABOVE_LIGHTING -50
@@ -89,6 +91,8 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_FOREGROUND_PARALLAX, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "foreground_parallax_plane", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_FOREGROUND_PARALLAX_OCCLUSION, appearance_flags = TILE_BOUND, mouse_opacity = 0, name = "foreground_parallax_occlusion_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
@@ -99,6 +103,10 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
 
+		var/atom/movable/screen/plane_parent/occlusion_plane = src.get_plane(PLANE_FOREGROUND_PARALLAX_OCCLUSION)
+		occlusion_plane.render_target = "*\ref[occlusion_plane]"
+		var/atom/movable/screen/plane_parent/parallax_plane = src.get_plane(PLANE_FOREGROUND_PARALLAX)
+		parallax_plane.add_filter("occlusion_plane", 1, alpha_mask_filter(render_source = "*\ref[occlusion_plane]", flags = MASK_INVERSE))
 
 #ifdef COOL_PLANE_STUFF
 		game_display = new
