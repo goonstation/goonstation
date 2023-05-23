@@ -122,7 +122,7 @@
 	light.disable(queued_run = TRUE)
 #endif
 	var/turf/simulated/floor/location = loc
-	if (location.turf_flags & IS_TYPE_SIMULATED)
+	if (issimulatedturf(location))
 		location.active_hotspot = null
 	..()
 
@@ -198,7 +198,7 @@
 /// and simply scaling up while it is set to TRUE.
 /obj/hotspot/proc/perform_exposure()
 	var/turf/simulated/floor/location = loc
-	if(!(location.turf_flags & IS_TYPE_SIMULATED))
+	if(!issimulatedturf(location))
 		return FALSE
 
 	if(src.volume > CELL_VOLUME*0.95)
@@ -253,7 +253,7 @@
 		return FALSE
 
 	var/turf/simulated/floor/location = src.loc
-	if (!(location.turf_flags & IS_TYPE_SIMULATED) || (locate(/obj/fire_foam) in location))
+	if (!issimulatedturf(location) || (locate(/obj/fire_foam) in location))
 		qdel(src)
 		return FALSE
 

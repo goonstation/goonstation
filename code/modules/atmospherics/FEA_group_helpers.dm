@@ -8,13 +8,13 @@
 	var/turf/simulated/floor/west = get_step(src,WEST)
 
 	//Clear those we do not have access to
-	if(!gas_cross(north) || !(north?.turf_flags & IS_TYPE_SIMULATED))
+	if(!gas_cross(north) || !issimulatedturf(north))
 		north = null
-	if(!gas_cross(south) || !(south?.turf_flags & IS_TYPE_SIMULATED))
+	if(!gas_cross(south) || !issimulatedturf(south))
 		south = null
-	if(!gas_cross(east) || !(east?.turf_flags & IS_TYPE_SIMULATED))
+	if(!gas_cross(east) || !issimulatedturf(east))
 		east = null
-	if(!gas_cross(west) || !(west?.turf_flags & IS_TYPE_SIMULATED))
+	if(!gas_cross(west) || !issimulatedturf(west))
 		west = null
 
 	var/new_group_possible = FALSE

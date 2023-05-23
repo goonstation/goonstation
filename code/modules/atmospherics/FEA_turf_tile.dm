@@ -203,7 +203,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 			return
 		for(var/direction in cardinal)
 			var/turf/simulated/floor/target = get_step(src,direction)
-			if(target.turf_flags & IS_TYPE_SIMULATED)
+			if(issimulatedturf(target))
 				air_master.tiles_to_update |= target
 
 /turf/simulated/Del()
@@ -226,7 +226,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(src.gas_impermeable)
 		for(var/direction in cardinal)
 			var/turf/simulated/tile = get_step(src,direction)
-			if(air_master && (tile.turf_flags & IS_TYPE_SIMULATED) && !tile.gas_impermeable)
+			if(air_master && issimulatedturf(tile) && !tile.gas_impermeable)
 				air_master.tiles_to_update |= tile
 
 	qdel(air)
@@ -322,7 +322,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 				var/turf/simulated/T = get_step(src,direction)
 
 				//See if actually a border
-				if(!(T.turf_flags & IS_TYPE_SIMULATED) || (T.parent != src.parent))
+				if(!issimulatedturf(T) || (T.parent != src.parent))
 					//See what kind of border it is
 					if(istype(T,/turf/space) && !istype(T,/turf/space/fluid))
 						if(src.parent.space_borders)
@@ -332,7 +332,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 						src.length_space_border++
 						src.group_border |= direction
 
-					else if(T.turf_flags & IS_TYPE_SIMULATED)
+					else if(issimulatedturf(T))
 						if(src.parent.borders)
 							src.parent.borders |= src
 						else
@@ -369,7 +369,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 				var/turf/simulated/enemy_tile = get_step(src, direction)
 				var/connection_difference = 0
 
-				if (enemy_tile.turf_flags & IS_TYPE_SIMULATED)
+				if (issimulatedturf(enemy_tile))
 					#ifdef ATMOS_ARCHIVING
 					if(enemy_tile.archived_cycle < archived_cycle) //archive bordering tile information if not already done
 						enemy_tile.archive()
@@ -463,7 +463,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 				var/turf/neighbor = get_step(src,direction)
 				if (!neighbor) continue
 
-				if(neighbor.turf_flags & IS_TYPE_SIMULATED) //blahhh danger
+				if(issimulatedturf(neighbor)) //blahhh danger
 					var/turf/simulated/modeled_neighbor = neighbor
 
 					#ifdef ATMOS_ARCHIVING
@@ -617,49 +617,49 @@ var/global/list/turf/hotly_processed_turfs = list()
 	var/turf/simulated/west = get_step(src,WEST)
 
 	if(need_rebuild) // time to make new groups
-		if(center?.turf_flags & IS_TYPE_SIMULATED) //Rebuild/update nearby group geometry
+		if(issimulatedturf(center)) //Rebuild/update nearby group geometry
 			if(center.parent)
 				air_master.groups_to_rebuild |= center.parent
 			else
 				air_master.tiles_to_update |= src
 
-		if(north?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(north))
 			north.tilenotify(src)
 			if(north.parent)
 				air_master.groups_to_rebuild |= north.parent
 			else
 				air_master.tiles_to_update |= north
-		if(south?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(south))
 			south.tilenotify(src)
 			if(south.parent)
 				air_master.groups_to_rebuild |= south.parent
 			else
 				air_master.tiles_to_update |= south
-		if(east?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(east))
 			east.tilenotify(src)
 			if(east.parent)
 				air_master.groups_to_rebuild |= east.parent
 			else
 				air_master.tiles_to_update |= east
-		if(west?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(west))
 			west.tilenotify(src)
 			if(west.parent)
 				air_master.groups_to_rebuild |= west.parent
 			else
 				air_master.tiles_to_update |= west
 	else // or not. just update neigbors.
-		if(center?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(center))
 			air_master.tiles_to_update |= src
-		if(north?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(north))
 			north.tilenotify(src)
 			air_master.tiles_to_update |= north
-		if(south?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(south))
 			south.tilenotify(src)
 			air_master.tiles_to_update |= south
-		if(east?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(east))
 			east.tilenotify(src)
 			air_master.tiles_to_update |= east
-		if(west?.turf_flags & IS_TYPE_SIMULATED)
+		if(issimulatedturf(west))
 			west.tilenotify(src)
 			air_master.tiles_to_update |= west
 

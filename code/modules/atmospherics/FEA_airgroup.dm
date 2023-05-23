@@ -158,7 +158,7 @@
 					// Tiles can get added to these lists more than once, but that is OK,
 					// because groups sharing more than one edge should transfer more air.
 
-					if(enemy_tile.turf_flags & IS_TYPE_SIMULATED && enemy_tile.parent && enemy_tile.parent.group_processing) //blahh danger
+					if(issimulatedturf(enemy_tile) && enemy_tile.parent && enemy_tile.parent.group_processing) //blahh danger
 						// Tile is a border with another group, and the other group is in group processing mode.
 						// Build border groups list
 						if(!border_group)
@@ -174,7 +174,7 @@
 						if(!self_group_borders)
 							self_group_borders = list()
 						self_group_borders += border_tile
-					else if(enemy_tile.turf_flags & IS_TYPE_SIMULATED)
+					else if(issimulatedturf(enemy_tile))
 						// Tile is a border with a singleton, not a group in group processing mode.
 						// Build individual border list
 						if(!border_individual)
@@ -245,7 +245,7 @@
 
 				ATMOS_TILE_OPERATION_DEBUG(self_border)
 
-				if(enemy_tile.turf_flags & IS_TYPE_SIMULATED) //blahhh danger
+				if(issimulatedturf(enemy_tile)) //blahhh danger
 #ifdef ATMOS_ARCHIVING
 					if(enemy_tile.archived_cycle < src.archived_cycle) //archive tile information if not already done
 						enemy_tile.archive()

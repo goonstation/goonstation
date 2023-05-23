@@ -96,7 +96,7 @@ var/global/total_gas_mixtures = 0
 			for(var/direction in cardinal)
 				var/turf/T = get_step(test,direction)
 				if(T && !(T in members) && test.gas_cross(T))
-					if(T.turf_flags & IS_TYPE_SIMULATED)
+					if(issimulatedturf(T))
 						if(!T:parent)
 							possible_members += T
 							members += T
