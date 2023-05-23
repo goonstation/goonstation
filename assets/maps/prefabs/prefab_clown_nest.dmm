@@ -413,13 +413,6 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"TB" = (
-/turf/simulated/wall/auto/asteroid{
-	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
-	hardness = 5;
-	name = "dense asteroid"
-	},
-/area/prefab/clown_nest)
 "Ut" = (
 /obj/item/item_box/balloon{
 	pixel_x = -6;
@@ -1257,7 +1250,7 @@ XY
 XY
 XY
 HL
-TB
+HL
 wI
 wI
 XY

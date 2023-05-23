@@ -716,8 +716,8 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/critter/boogiebot,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged3,
 /area/noGenerate)
 "bN" = (
@@ -751,8 +751,8 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/item/caution,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged1,
 /area/noGenerate)
 "bU" = (
@@ -1874,7 +1874,7 @@ ae
 ae
 aq
 as
-bX
+as
 aN
 bb
 bq

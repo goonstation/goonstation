@@ -63,14 +63,13 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "q" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	icon_state = "tube-broken";
-	dir = 8
-	},
 /obj/item/cell/cerenkite,
 /obj/storage/crate/bloody,
 /obj/item/peripheral/card_scanner/register,
 /obj/item/clothing/under/gimmick/jetson,
+/obj/machinery/light/incandescent/broken{
+	dir = 8
+	},
 /turf/variableTurf/clear,
 /area/noGenerate)
 "r" = (

@@ -60,6 +60,13 @@
 /obj/decoration/ceilingfan,
 /turf/simulated/floor/carpet/purple/fancy/narrow/west,
 /area/prefab/crashed_hop_shuttle)
+"dy" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/incandescent/broken{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
+/area/prefab/crashed_hop_shuttle)
 "eo" = (
 /obj/fluid_spawner{
 	amount = 200;
@@ -306,7 +313,7 @@
 	dir = 8;
 	icon_state = "floattiles4"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
 /turf/simulated/floor/airless,
@@ -401,10 +408,6 @@
 /area/prefab/crashed_hop_shuttle)
 "xh" = (
 /obj/item/furniture_parts/comfy_chair,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8;
-	icon_state = "tube-broken"
-	},
 /turf/simulated/floor/damaged3,
 /area/prefab/crashed_hop_shuttle)
 "xl" = (
@@ -499,7 +502,7 @@
 /obj/decoration/decorativeplant/plant4{
 	desc = "Is it flora or is it fauna? Hm. Oh, it's plastic."
 	},
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Dg" = (
@@ -609,7 +612,7 @@
 /area/prefab/crashed_hop_shuttle)
 "MK" = (
 /obj/lattice,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
 /turf/variableTurf/floor,
@@ -1185,7 +1188,7 @@ EQ
 OQ
 CS
 xh
-PZ
+dy
 Zs
 WZ
 HO

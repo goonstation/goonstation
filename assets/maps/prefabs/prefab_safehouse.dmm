@@ -765,9 +765,8 @@
 /obj/machinery/atmospherics/pipe/tank/air{
 	volume = 0
 	},
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 1;
-	pixel_y = 10
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
@@ -1043,9 +1042,7 @@
 	id = "saferoom";
 	pixel_y = 20
 	},
-/obj/decal/fakeobjects/lighttube_broken{
-	pixel_y = -10
-	},
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/neutral,
 /area/prefab/safehouse)
 "YA" = (
@@ -1080,15 +1077,6 @@
 /obj/item/storage/box/lightbox/bulbs{
 	pixel_x = 5
 	},
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 4;
-	icon_state = "tube0";
-	layer = 4;
-	name = "inactive light tube";
-	pixel_x = 10;
-	tag = "icon-tube-broken (NORTH)"
-	},
 /obj/item/paper/safehouse/contractors_note{
 	layer = 3.2;
 	pixel_x = -5;
@@ -1097,6 +1085,9 @@
 /obj/decal/cleanable/dirt,
 /obj/item/device/reagentscanner{
 	pixel_x = -5
+	},
+/obj/machinery/light/incandescent/broken{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)

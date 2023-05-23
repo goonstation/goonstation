@@ -370,11 +370,8 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bt" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
@@ -395,7 +392,7 @@
 /area/station/turret_protected/sea_crashed)
 "by" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
@@ -632,7 +629,7 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "cq" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "cs" = (
@@ -1015,11 +1012,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dq" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
@@ -1072,11 +1066,8 @@
 /area/station/turret_protected/sea_crashed)
 "dx" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
