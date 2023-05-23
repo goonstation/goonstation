@@ -33126,7 +33126,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "iQu" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
@@ -36140,7 +36140,7 @@
 	},
 /obj/table/auto,
 /obj/item/cloth/handkerchief/colored/white,
-/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/wood/six,
 /area/station/maintenance/west)
@@ -45115,7 +45115,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "sAo" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "sAp" = (
@@ -50420,7 +50420,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "wSZ" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /obj/item/raw_material/gold,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless/asteroid/lighted,

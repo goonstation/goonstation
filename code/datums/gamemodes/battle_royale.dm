@@ -65,6 +65,15 @@ var/global/area/current_battle_spawn = null
 		S.UpdateOverlays(station_repair.ambient_light, "ambient")
 	station_repair.clean_up_station_level()
 	map_settings.space_turf_replacement = /turf/simulated/floor/void
+	map_settings.parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
+	for (var/client/client in clients)
+		if (client.parallax_controller)
+			client.parallax_controller.setup_z_level_parallax_layers()
+			client.parallax_controller.update_parallax_z()
 
 	// Dense borders to prevent leaving the station Z
 	for(var/x in 1 to world.maxx)

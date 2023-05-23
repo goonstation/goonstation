@@ -25,7 +25,6 @@
 
 	return produce
 
-
 /mob/living/critter/skeleton
 	name = "skeleton"
 	real_name = "skeleton"
@@ -53,6 +52,7 @@
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
+	var/hatcount = 1
 	var/list/friends //! People this skeleton won't attack
 	var/wizardSpawn = FALSE
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
@@ -88,7 +88,7 @@
 		equipment += new /datum/equipmentHolder/ears(src)
 		var/list/hats = list(new /datum/equipmentHolder/head/skeleton(src))
 		equipment += hats[1]
-		for (var/i = 1, i <= 10, i++)
+		for (var/i = 1, i <= hatcount, i++)
 			var/datum/equipmentHolder/head/skeleton/S = hats[i]
 			var/datum/equipmentHolder/head/skeleton/S1 = S.spawn_next()
 			hats += S1
@@ -114,8 +114,6 @@
 		if (C in src.friends) return FALSE //TODO replace with the faction system
 		if (iswizard(C) && src.wizardSpawn) return FALSE
 		return ..()
-
-	seek_target(var/range = 6)
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
@@ -147,6 +145,9 @@
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
 
+/mob/living/critter/skeleton/multihat
+	hatcount = 10
+
 /mob/living/critter/skeleton/wraith
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
@@ -160,8 +161,6 @@
 		if (istype(C, /mob/living/critter/wraith)) return FALSE // don't attack wraith summons ^^
 		if (istype(C, /mob/living/critter/skeleton)) return FALSE // ^^
 		return ..()
-
-	seek_target(var/range = 7)
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
