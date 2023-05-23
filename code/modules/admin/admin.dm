@@ -940,12 +940,13 @@ var/global/noir = 0
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_SA)
 				if (ismob(M))
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src]")
+					var/id = rand(1, 1000000)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
 					boutput(src, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
 					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
 					SPAWN(5 SECONDS)
-						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src]")
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
 
