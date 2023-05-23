@@ -293,7 +293,7 @@
 /turf/simulated/floor/green/checker,
 /area/prefab/mobius)
 "ba" = (
-/obj/critter/golem,
+/mob/living/critter/golem,
 /turf/simulated/floor/blue/checker,
 /area/prefab/mobius/mfortuna)
 "bb" = (

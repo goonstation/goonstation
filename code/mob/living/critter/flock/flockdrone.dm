@@ -54,7 +54,7 @@
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
 
 	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
@@ -355,7 +355,7 @@
 	src.visible_message("<span class='notice'><b>[src]</b> begins to glow and hover.</span>")
 	src.set_a_intent(INTENT_HELP)
 	src.add_simple_light("drone_light", rgb2num(glow_color))
-	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
+	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
 	if(src.client)
 		if(src.flock)
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -1211,7 +1211,7 @@
 	if (istype(drone))
 		drone.cell = src.cell
 	src.holder.holder.contents |= cell
-	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, PROC_REF(update_overlay))
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
 	var/mob/living/critter/flock/drone/flockdrone = holder.holder
@@ -1319,6 +1319,8 @@
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE
+		for (var/obj/item/W as anything in I.storage?.get_contents())
+			I.storage.transfer_stored_item(W, get_turf(flock_owner), user = flock_owner)
 		for(var/obj/O in I.contents)
 			if(istype(O, /obj/item))
 				O.set_loc(flock_owner.loc)

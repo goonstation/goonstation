@@ -949,7 +949,7 @@ proc/broadcast_to_all_gangs(var/message)
 					user.equip_if_possible(headset, user.slot_r_store)
 				else if (!user.l_store)
 					user.equip_if_possible(headset, user.slot_l_store)
-				else if (istype(user.back, /obj/item/storage/) && length(user.back.contents) < 7)
+				else if (user.back?.storage && !user.back.storage.is_full())
 					user.equip_if_possible(headset, user.slot_in_backpack)
 				else
 					user.put_in_hand_or_drop(headset)
@@ -962,11 +962,7 @@ proc/broadcast_to_all_gangs(var/message)
 			user.put_in_hand_or_drop(new /obj/item/spray_paint(user.loc))
 
 		if(user.mind.special_role == ROLE_GANG_LEADER)
-			var/obj/item/storage/box/gang_flyers/case = new /obj/item/storage/box/gang_flyers(user.loc)
-			case.name = "[src.gang.gang_name] recruitment material"
-			case.desc = "A briefcase full of flyers advertising the [src.gang.gang_name] gang."
-			case.gang = src.gang
-			user.put_in_hand_or_drop(case)
+			user.put_in_hand_or_drop(new /obj/item/storage/box/gang_flyers(user.loc, src.gang))
 
 		src.gang.gear_cooldown += user
 		SPAWN(300 SECONDS)
@@ -1313,10 +1309,16 @@ proc/broadcast_to_all_gangs(var/message)
 	spawn_contents = list(/obj/item/gang_flyer = 7)
 	var/datum/gang/gang = null
 
-	make_my_stuff()
-		..() //spawn the flyers
+	New(turf/newloc, datum/gang/gang)
+		src.name = "[gang.gang_name] recruitment material"
+		src.desc = "A briefcase full of flyers advertising the [gang.gang_name] gang."
+		src.gang = gang
+		..()
 
-		for(var/obj/item/gang_flyer/flyer in contents)
+	make_my_stuff()
+		..()
+
+		for(var/obj/item/gang_flyer/flyer in src.storage.get_contents())
 			var/gang_name = gang?.gang_name || "C0D3R"
 			flyer.name = "[gang_name] recruitment flyer"
 			flyer.desc = "A flyer offering membership in the [gang_name] gang."

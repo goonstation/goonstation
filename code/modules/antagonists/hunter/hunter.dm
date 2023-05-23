@@ -1,6 +1,7 @@
 /datum/antagonist/hunter
 	id = ROLE_HUNTER
 	display_name = "hunter"
+	antagonist_icon = "predator"
 
 	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/hunter/ability_holder

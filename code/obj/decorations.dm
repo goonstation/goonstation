@@ -575,7 +575,7 @@
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
-	layer = FLY_LAYER+1.01 // just above windows
+	layer = EFFECTS_LAYER_UNDER_3 // below lights, above windoors
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null

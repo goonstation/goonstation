@@ -6,9 +6,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -159,9 +157,7 @@
 	},
 /area/space)
 "aaI" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -235,18 +231,14 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaT" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
 /area/space)
 "aaU" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -7626,7 +7618,7 @@
 "auY" = (
 /obj/table/wood/auto,
 /obj/item/card_box/tarot,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
@@ -9879,9 +9871,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aCs" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
@@ -10731,9 +10721,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "aEW" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5
@@ -10834,9 +10822,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/fitness)
 "aFx" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -11195,9 +11181,7 @@
 	},
 /area/station/crew_quarters/bar)
 "aGr" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
@@ -14324,13 +14308,11 @@
 	},
 /area/station/crew_quarters/md)
 "aQB" = (
-/obj/table/wood/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/medical,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/item/reagent_containers/food/drinks/tea,
 /obj/machinery/door_control{
 	id = "pharmacylock";
 	name = "Pharmacy Shutters";
@@ -14710,9 +14692,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aSn" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -15356,6 +15336,9 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -18569,7 +18552,10 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/storage/secure/closet/medical/medkit,
+/obj/machinery/vending/player/chemicals,
+/obj/disposalpipe/trunk/mail{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -18584,6 +18570,9 @@
 /obj/item/robodefibrillator,
 /obj/item/storage/box/gl_kit,
 /obj/item/device/radio/intercom/medical,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 5
 	},
@@ -19113,8 +19102,7 @@
 	desc = "An underfloor mail pipe.";
 	dir = 2;
 	icon_state = "pipe-sj2";
-	mail_tag = "artlab";
-	name = "artifact lab mail router"
+	mail_tag = "artlab"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
@@ -19123,13 +19111,13 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/chemicompiler_stationary,
 /obj/item/storage/wall/fire{
 	dir = 1;
 	pixel_y = 30
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -19140,10 +19128,10 @@
 	layer = 3.5;
 	pixel_y = 28
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
+/obj/machinery/disposal/chemlink,
+/obj/disposalpipe/trunk/mail{
+	dir = 8
 	},
-/obj/machinery/chem_heater,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -19152,9 +19140,6 @@
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4
 	},
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
@@ -19167,9 +19152,6 @@
 /area/station/science/chemistry)
 "bhN" = (
 /obj/machinery/light_switch/north,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/chem_master,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
@@ -19397,6 +19379,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bjf" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -19408,15 +19393,24 @@
 /obj/stool/chair/office/purple{
 	dir = 1
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bji" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
 /area/station/science/chemistry)
 "bjk" = (
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple/corner,
 /area/station/science/lobby)
 "bjl" = (
@@ -19425,6 +19419,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -26194,9 +26191,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bMV" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-8"
 	},
@@ -26227,9 +26222,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/west)
 "bMY" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -26243,9 +26236,7 @@
 	},
 /area/station/solar/west)
 "bMZ" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "2-4"
 	},
@@ -26281,9 +26272,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bNe" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
@@ -26322,9 +26311,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bNC" = (
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -26354,9 +26341,7 @@
 	},
 /area/mining/magnet)
 "bNF" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -27109,6 +27094,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/head/private)
+"czP" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/chemistry)
 "cAz" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -27236,9 +27227,6 @@
 /area/station/science/lab)
 "cGD" = (
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27365,7 +27353,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/machinery/vending/medical,
+/obj/storage/secure/closet/medical/medkit,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "cPa" = (
@@ -28890,6 +28878,13 @@
 /obj/item/clothing/head/beret/random_color,
 /turf/simulated/floor/caution/south,
 /area/station/security/main)
+"eqV" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/chemistry)
 "erD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28986,11 +28981,11 @@
 	},
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 6;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -29450,9 +29445,6 @@
 /turf/space,
 /area/space)
 "eQl" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -29557,8 +29549,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "eZa" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal,
+/obj/machinery/computer/card/department/engineering,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
@@ -30024,11 +30015,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 9;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30279,9 +30270,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -30670,11 +30659,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -30774,10 +30762,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/junction/right,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "grl" = (
@@ -31357,11 +31345,11 @@
 	},
 /area/mining/magnet)
 "gZw" = (
+/obj/item/device/radio/intercom/science,
+/obj/machinery/computer/chem_request_receiver,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/item/device/radio/intercom/science,
-/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 9
 	},
@@ -32481,9 +32469,6 @@
 /area/station/hangar/main)
 "ieq" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -34292,10 +34277,6 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/security/main)
 "jVE" = (
-/obj/disposalpipe/segment/mail{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
 /obj/machinery/networked/storage/tape_drive{
 	bank_id = "Artlab";
 	locked = 0;
@@ -35050,11 +35031,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "kEo" = (
-/obj/machinery/computer/security/wooden_tv{
-	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
-	name = "Television";
-	network = "Zeta"
-	},
+/obj/machinery/computer/card/department/research,
 /obj/item/device/radio/intercom/medical,
 /obj/machinery/light{
 	dir = 8;
@@ -35816,6 +35793,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"llK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/station/science/lobby)
 "lmr" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/medbay{
@@ -36304,9 +36292,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "lJz" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "1-4"
 	},
@@ -37407,9 +37393,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -37676,9 +37660,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "ndn" = (
-/obj/grille/catwalk/cross{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /obj/cable/yellow{
 	icon_state = "4-8"
 	},
@@ -39640,9 +39622,7 @@
 	},
 /area/mining/magnet)
 "plf" = (
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -40037,10 +40017,17 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"pEZ" = (
-/obj/grille/catwalk/cross{
-	dir = 6
+"pEX" = (
+/obj/disposalpipe/switch_junction{
+	dir = 1;
+	icon_state = "pipe-sj2";
+	mail_tag = "chemlink";
+	name = "dispensary mail router"
 	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/west)
+"pEZ" = (
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -40135,6 +40122,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"pJC" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/medbay)
 "pLb" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -40801,14 +40794,7 @@
 	name = "Crew Quarters S01"
 	})
 "qsX" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger,
-/obj/item/reagent_containers/food/drinks/bottle/vodka,
-/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
-/obj/item/kitchen/utensil/fork{
-	pixel_x = 9;
-	pixel_y = 3
-	},
+/obj/machinery/computer/card/department/security,
 /turf/simulated/floor/escape{
 	dir = 10
 	},
@@ -41363,11 +41349,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 4;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -42561,11 +42547,12 @@
 	name = "Crew Quarters P03"
 	})
 "shC" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/machinery/computer/chem_requester/science{
 	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
@@ -43525,9 +43512,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/md)
 "tiD" = (
-/obj/grille/catwalk/cross{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/landmark/magnet_shield,
 /obj/securearea{
 	desc = "A warning that demarcates where the magnetic area begins.";
@@ -43602,9 +43587,7 @@
 /obj/cable/black{
 	icon_state = "1-2"
 	},
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -43870,12 +43853,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "txO" = (
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -44024,11 +44010,10 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -44476,6 +44461,15 @@
 /area/station/hallway/secondary/entry{
 	name = "Entry Hallway"
 	})
+"ubX" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "ucJ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
@@ -44624,9 +44618,6 @@
 /area/station/hallway/primary/central)
 "und" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -44895,9 +44886,6 @@
 /area/station/science/bot_storage)
 "uBf" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -44914,6 +44902,10 @@
 	name = "Chemistry Blast Shield";
 	opacity = 0;
 	tag = "icon-bdoormidc1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
@@ -44994,11 +44986,11 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 10;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -46307,6 +46299,12 @@
 	},
 /obj/item/stamp/hos,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/reagent_containers/food/snacks/spaghetti/spicy,
+/obj/item/kitchen/utensil/fork{
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
 /turf/simulated/floor/escape{
 	dir = 6
 	},
@@ -46665,6 +46663,9 @@
 	dir = 8
 	},
 /obj/access_spawn/chemistry,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -47058,11 +47059,11 @@
 	icon_state = "0-2"
 	},
 /obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/blast/single{
+/obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	icon_state = "bdoorsingle0";
+	dir = 5;
+	icon_state = "pdoor0";
 	id = "ai_core";
-	layer = 4;
 	name = "AI Core Shield";
 	opacity = 0
 	},
@@ -47492,6 +47493,7 @@
 	icon_state = "1-8"
 	},
 /obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/tea,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fblue2"
@@ -47527,9 +47529,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/cross{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
@@ -47720,6 +47720,9 @@
 	name = "Chemistry Blast Shield";
 	opacity = 0;
 	tag = "icon-bdoormidc1"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -48017,6 +48020,9 @@
 	},
 /obj/access_spawn/artlab,
 /obj/firedoor_spawn,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "xDp" = (
@@ -74800,7 +74806,7 @@ xjd
 pXJ
 nnt
 aLA
-aLA
+pJC
 aLA
 aLA
 aLA
@@ -75057,7 +75063,7 @@ baj
 aYX
 bcH
 bIr
-baj
+aYX
 bgh
 bhj
 baj
@@ -75314,7 +75320,7 @@ bak
 aOs
 eLy
 aQO
-bak
+aOs
 bak
 bak
 aNn
@@ -75571,7 +75577,7 @@ aPq
 bbs
 aPq
 bdV
-aPq
+pEX
 bgi
 aPq
 xpa
@@ -86368,7 +86374,7 @@ any
 bbU
 aUr
 shC
-bbU
+ubX
 bbU
 aRt
 bmM
@@ -86623,7 +86629,7 @@ bbV
 uKc
 dFU
 iNX
-bgQ
+eqV
 uBf
 wmY
 gvH
@@ -87139,7 +87145,7 @@ gyl
 fmT
 bgQ
 bhK
-bjg
+czP
 bjg
 bMS
 bmP
@@ -87396,7 +87402,7 @@ beu
 iTE
 bgQ
 bhL
-bjg
+czP
 bks
 blD
 bmQ
@@ -88424,7 +88430,7 @@ aUs
 aUs
 aUs
 eQl
-oXP
+llK
 bkv
 oXP
 bmT
@@ -88937,7 +88943,7 @@ aXe
 lvS
 bfM
 aXe
-jhw
+dDe
 bjl
 wpF
 bgS

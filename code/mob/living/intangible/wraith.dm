@@ -19,6 +19,7 @@
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
+	faction = MOB_AI_FACTION_WRAITH
 
 	var/atom/movable/overlay/animation = null
 
@@ -180,9 +181,6 @@
 			animate(src)
 			animate_levitate(src)
 		#endif
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)

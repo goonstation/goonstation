@@ -3442,7 +3442,7 @@
 "hp" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Export" = 8, "Storage" = 4);
+	destinations = list("Export"=8,"Storage"=4);
 	name = "Maru Cargo Router"
 	},
 /turf/simulated/floor/plating,
@@ -9057,8 +9057,7 @@
 	})
 "sz" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 2;
-
+	dir = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
@@ -9076,8 +9075,7 @@
 	})
 "sB" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 2;
-
+	dir = 2
 	},
 /obj/cable{
 	d1 = 2;
@@ -9090,8 +9088,7 @@
 	})
 "sC" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 2;
-
+	dir = 2
 	},
 /obj/cable{
 	d2 = 8;
@@ -11174,7 +11171,6 @@
 	name = "Asclepius Primary Zone"
 	})
 "wr" = (
-/obj/machinery/computer/mining_shuttle,
 /turf/simulated/floor,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -13771,7 +13767,7 @@
 /area/station/chapel/sanctuary)
 "Bj" = (
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
@@ -14074,7 +14070,7 @@
 /area/station/chapel/sanctuary)
 "BV" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "BW" = (
@@ -16454,10 +16450,7 @@
 	})
 "Gq" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/toolbox{
-	desc = "Looks suspiciously similar to a toolbox.";
-	name = "lunchbox"
-	},
+/obj/item/storage/lunchbox/food1,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -24159,7 +24152,7 @@
 "Wl" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /turf/simulated/floor/black,

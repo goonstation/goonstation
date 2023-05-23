@@ -218,9 +218,9 @@
 			return 0
 
 		if(donor.traitHolder?.hasTrait("weakorgans"))
-			brute *=2
-			burn *=2
-			tox *=2
+			brute *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			burn *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			tox *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
 
 		if (islist(src.organ_list))
 			var/obj/item/organ/O = src.organ_list[organ]

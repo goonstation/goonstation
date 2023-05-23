@@ -26,7 +26,7 @@
 			boutput(src.holder.owner, "<span class='alert'>You cannot force your consciousness into a body while corporeal.</span>")
 			return FALSE
 
-		if (istype(target, /obj/item/storage/bible))
+		if (istype(target, /obj/item/bible))
 			boutput(holder.owner, "<span class='alert'><b>You feel rebuffed by a holy force!<b></span>")
 			return FALSE
 

@@ -605,9 +605,8 @@ obj/item/gnomechompski/elf
 /obj/item/device/key/owl
 	name = "Owlish Key"
 	desc = "This key was found in an owl pellet. Yuck."
-	icon = 'icons/misc/aprilfools.dmi'
 	interesting = "Filthy. GROSS"
-	icon_state = "key"
+	icon_state = "key_owl"
 
 /obj/owldoor
 	name = "Strange Looking Wall"
@@ -665,18 +664,15 @@ obj/item/gnomechompski/elf
 	rechargeable = 0
 	custom_cell_max_capacity = 100
 	cell_type = /obj/item/ammo/power_cell/self_charging
+	uses_multiple_icon_states = 1
+	muzzle_flash = "muzzle_flash_plaser"
+	uses_charge_overlay = TRUE
+	charge_icon_state = "bullpup"
 
 	New()
 		set_current_projectile(new/datum/projectile/wonk)
 		projectiles = list(current_projectile)
 		..()
-
-		UpdateIcon()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "bullpup[ratio]"
 
 //FUCKABLE MOBS
 /obj/critter/owl_mannequin

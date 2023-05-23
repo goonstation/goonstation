@@ -26,7 +26,7 @@
 				return TRUE
 			switch(mob_choice)
 				if("Crunched")
-					mob_choice = /obj/critter/crunched
+					mob_choice = /mob/living/critter/crunched
 				if("Ancient things")
 					mob_choice = /obj/critter/ancient_thing
 				if("Ancient repairbots")

@@ -3,7 +3,7 @@
 
 /datum/component/wearertargeting/unarmedblock/concussive/on_equip(datum/source, mob/equipper, slot)
 	. = ..()
-	RegisterSignal(parent, COMSIG_ITEM_SPECIAL_POST, .proc/used_special)
+	RegisterSignal(parent, COMSIG_ITEM_SPECIAL_POST, PROC_REF(used_special))
 
 /datum/component/wearertargeting/unarmedblock/concussive/on_unequip(datum/source, mob/user)
 	. = ..()
@@ -13,8 +13,8 @@
 
 /datum/component/wearertargeting/unarmedblock/concussive/on_block_begin(mob/living/carbon/source, obj/item/grab/block/B)
 	. = ..()
-	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, .proc/blocked_hit)
-	RegisterSignal(B, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, PROC_REF(blocked_hit))
+	RegisterSignal(B, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, PROC_REF(append_to_tooltip))
 	charged = 0
 
 

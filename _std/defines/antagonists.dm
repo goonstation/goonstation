@@ -7,6 +7,11 @@
 #define ANTAGONIST_SOURCE_MUTANT "antag-mutantrace "
 #define ANTAGONIST_SOURCE_SUMMONED "antag-summoned "
 
+#define ANTAGONIST_REMOVAL_SOURCE_DEATH "death"
+#define ANTAGONIST_REMOVAL_SOURCE_OVERRIDE "override"
+#define ANTAGONIST_REMOVAL_SOURCE_EXPIRED "expired"
+#define ANTAGONIST_REMOVAL_SOURCE_SURGERY "surgery"
+
 // wraith forms
 #define WRAITH_FORM_DEFAULT 0
 #define WRAITH_FORM_PLAGUEBRINGER 1

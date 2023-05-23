@@ -14,6 +14,7 @@
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
+	faction = MOB_AI_FACTION_WRAITH
 	use_stamina = FALSE
 	flags = FPRINT | NO_MOUSEDROP_QOL
 	gender = NEUTER
@@ -334,6 +335,7 @@
 
 /mob/living/object/ai_controlled
 	is_npc = TRUE
+	faction = MOB_AI_FACTION_WRAITH
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)

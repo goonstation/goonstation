@@ -453,7 +453,6 @@
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
 	seek_target()
-
 		if (!src.alive) return
 		var/mob/living/Cc
 		for (var/mob/living/C in hearers(src.seekrange,src))

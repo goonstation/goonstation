@@ -30,7 +30,7 @@
 		spawnable -= invalid_carts
 		for (var/i = 1, i <= 3, i++)
 			var/cartpath = pick(spawnable)
-			new cartpath(src)
+			src.storage.add_contents(new cartpath(src))
 
 /obj/item/storage/box/diskbox
 	name = "diskette box"
@@ -138,5 +138,5 @@
 				/obj/item/device/light/glowstick/yellow,
 				/obj/item/device/light/glowstick/pink,
 				/obj/item/device/light/glowstick/purple)
-				new glowstick(src)
+				src.storage.add_contents(new glowstick(src))
 

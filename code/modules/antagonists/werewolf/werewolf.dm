@@ -1,6 +1,7 @@
 /datum/antagonist/werewolf
 	id = ROLE_WEREWOLF
 	display_name = "werewolf"
+	antagonist_icon = "werewolf"
 
 	/// The ability holder of this werewolf, containing their respective abilities.
 	var/datum/abilityHolder/werewolf/ability_holder
