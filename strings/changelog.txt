@@ -1,4 +1,7 @@
 
+(u)tue may 23 23
+(u)pali
+(*)AI status screen BSOD now means that the linked AI is dead. AIs can no longer pick BSOD status screen manually.
 (t)mon may 22 23
 (u)Cheffie
 (p)14055
