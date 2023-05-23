@@ -287,7 +287,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
 						// warm if it can
 						if (istype(src.extra_item,/obj/item/organ) || src.extra_item.reagents)
-							src.visible_message("<span class='notice'>The microwave begins warming something!</span>")
+							src.visible_message("<span class='notice'>The microwave begins warming [src.extra_item]!</span>")
 							src.cook(MW_COOK_WARM)
 						else
 							src.cook(MW_COOK_BREAK)
