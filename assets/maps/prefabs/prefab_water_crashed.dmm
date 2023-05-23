@@ -664,12 +664,8 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "cv" = (
-/obj/decal/fakeobjects/lightbulb_broken{
-	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
-	dir = 1;
-	icon_state = "bulb0";
-	name = "inactive light bulb";
-	tag = ""
+/obj/machinery/light/small/sticky/broken{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
