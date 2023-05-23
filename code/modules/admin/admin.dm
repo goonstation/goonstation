@@ -936,7 +936,7 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
-		if ("stop")
+		if ("halt")
 			var/mob/M = locate(href_list["target"])
 			if (src.level >= LEVEL_SA)
 				if (ismob(M))
@@ -945,6 +945,8 @@ var/global/noir = 0
 					boutput(src, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
 					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
+					usr.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					M.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
 					SPAWN(5 SECONDS)
 						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
 			else
