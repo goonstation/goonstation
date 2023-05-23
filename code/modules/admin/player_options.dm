@@ -253,7 +253,8 @@
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
+						<a href='[playeropt_link(M, "stop")]'>Stop</a>
 					</div>
 				</div>
 			</div>
