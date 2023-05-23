@@ -456,6 +456,19 @@
 		if (length(.) && prob(10))
 			HALT()
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","halt")
+				if (src.emote_check(voluntary, 50))
+					HALT()
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream","halt")
+				return 2
+		return ..()
+
 	get_melee_protection(zone, damage_type)
 		return 4
 
