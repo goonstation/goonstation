@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/flocktrace
 	id = ROLE_FLOCKTRACE
 	display_name = "flocktrace"
+	uses_pref_name = FALSE
 
 	/// The flock that this flocktrace belongs to.
 	var/datum/flock/flock

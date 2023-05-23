@@ -2832,7 +2832,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "ahZ" = (
-/obj/table,
+/obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
@@ -2935,7 +2935,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "aiw" = (
-/obj/table,
+/obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/bluegreen/side{
 	dir = 10

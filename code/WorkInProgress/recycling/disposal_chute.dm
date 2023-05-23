@@ -692,6 +692,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		src.flush_dummy = new()
 		src.flush_dummy.icon = src.icon
 		src.flush_dummy.layer = src.layer + 1
+		src.flush_dummy.mouse_opacity = FALSE
 		src.vis_contents += src.flush_dummy
 
 		SPAWN(1)

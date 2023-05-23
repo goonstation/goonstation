@@ -15530,7 +15530,7 @@
 /area/station/hallway/primary/east)
 "aPu" = (
 /obj/item/cigpacket,
-/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/listeningpost)

@@ -648,7 +648,7 @@
 
 /datum/achievementReward/Aerostaticjacket
 	title = "(Skin) Aerostatic Pilot Jacket"
-	desc = "Turns your detectives coat into a orange pilot jacket"
+	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
 
 	rewardActivate(var/mob/activator)
