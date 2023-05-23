@@ -2838,7 +2838,7 @@
 		return
 
 	if (waddle_walking)
-		if(isdead(L) || L.getStatusDuration("stunned") || L.lying)
+		if(isdead(src) || is_incapacitated(src) || src.lying)
 			return
 		makeWaddle(src)
 
