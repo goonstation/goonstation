@@ -1603,11 +1603,12 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a sword arm at [log_loc(user)].")
 
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, 4, can_punch = FALSE, can_kick = FALSE)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe", "cut")
-		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their sword!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)

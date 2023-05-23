@@ -486,8 +486,8 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
-	bullet_act(obj/projectile/P)
-		if (istype(P, /datum/projectile/arrow))
+	bullet_act(var/obj/projectile/P)
+		if (istype(P.proj_data, /datum/projectile/arrow))
 			src.visible_message("<span class='alert'>[src] is struck by the [P.name] but their fancy armour deflects it!</span>")
 			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
 			P.die()
@@ -495,18 +495,18 @@
 
 	critter_basic_attack(mob/target)
 		HALT()
-		// Hand 1 = SWORD Hand 2 = ARM
-		if (!is_incapacitated(target))
-			if (prob(30))
-				src.active_hand = 2
-				src.set_a_intent(INTENT_DISARM)
-				return src.hand_attack(target) // Disarm them
+		// Hand 2 = SWORD Hand 1 = ARM
+		if (is_incapacitated(target))
 			src.set_a_intent(INTENT_HARM)
 			src.active_hand = 1
-			return ..() // Stab them
+			return ..() // Punch / Kick them
+		if (prob(30))
+			src.active_hand = 1
+			src.set_a_intent(INTENT_DISARM)
+			return src.hand_attack(target) // Disarm them
 		src.set_a_intent(INTENT_HARM)
 		src.active_hand = 2
-		return ..() // Punch / Kick them
+		return ..() // Stab them
 
 	death(var/gibbed)
 		src.can_lie = FALSE
