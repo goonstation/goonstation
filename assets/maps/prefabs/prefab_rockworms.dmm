@@ -6,9 +6,7 @@
 /turf/variableTurf/floor,
 /area/space)
 "c" = (
-/obj/critter/rockworm{
-	task = "sleeping"
-	},
+/mob/living/critter/rockworm,
 /turf/variableTurf/floor,
 /area/space)
 

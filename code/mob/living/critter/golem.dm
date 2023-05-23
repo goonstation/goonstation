@@ -70,8 +70,6 @@
 			if (H.traitHolder.hasTrait("training_chaplain")) return FALSE
 		return ..()
 
-	seek_target(var/range = 6)
-
 	proc/CustomizeGolem(var/datum/reagents/CR) //customise it with the reagents in a container
 		for(var/current_id in CR.reagent_list)
 			var/datum/reagent/R = CR.reagent_list[current_id]

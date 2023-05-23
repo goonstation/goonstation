@@ -1,4 +1,22 @@
 
+(t)mon may 22 23
+(u)Cheffie
+(p)14055
+(e)🗺⚖🔄📡|A-Mapping, C-Balance, C-Rework, A-AI
+(+)Rockworms can now be tamed to not eat ores and can vomit up ores while alive. make a friend today!
+(t)sun may 21 23
+(u)Kubius
+(p)14114
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Reduced Nadir's internal reinforcement, improved its extraction nexus, and gave it MULE beacons to accommodate purchased MULEs.
+(u)FlameArrow57
+(p)13888
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Items that can fit on your back will no longer auto-swap with worn backpacks when using the equip hotkey.
+(u)Glamurio (Ryou)
+(p)14183
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Lollipops are now candy, and thus contain sugar.
 (t)fri may 19 23
 (u)DisturbHerb
 (p)13854
