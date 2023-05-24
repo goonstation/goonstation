@@ -742,7 +742,9 @@ datum
 						return
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
 					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
-					M.set_loc(pick(randomturfs))
+					var/turf/destination = pick(randomturfs)
+					logTheThing(LOG_COMBAT, M, "was teleported by Port reagent from [log_loc(M)] to [log_loc(destination)].")
+					M.set_loc(destination)
 				..()
 				return
 

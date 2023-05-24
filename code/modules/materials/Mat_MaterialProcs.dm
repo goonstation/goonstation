@@ -589,6 +589,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			animate_levitate(owner)
 		return
 
+/datum/materialProc/spacelag_add
+	execute(atom/owner)
+		if (!isturf(owner))
+			animate_lag(owner)
+
 /datum/materialProc/temp_miraclium
 	execute(var/atom/location, var/temp)
 		if(temp < T0C + 100)
