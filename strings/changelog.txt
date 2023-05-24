@@ -1,8 +1,8 @@
 
 (t)wed may 24 23
-(u)pali
-(*)Floodlights!<br>Engineering lockers now start with one floodlight each (power cell included) and the engineering fabricator can create more (power cell not included but the fab can now make power cells).<br>You can deploy them with a wrench (if you have a floodlight in one hand and a wrench in the other you can just use the light in hand to do this).<br>They use APC power if available and internal power cell if not (they use the large APC power cells).<br>Clickdrag to rotate!
 (u)DisturbHerb & BatElite & pali
+(*)Floodlights!<br>Engineering lockers now start with one floodlight each (power cell included) and the engineering fabricator can create more (power cell not included but the fab can now make power cells).<br>You can deploy them with a wrench (if you have a floodlight in one hand and a wrench in the other you can just use the light in hand to do this).<br>They use APC power if available and internal power cell if not (they use the large APC power cells).<br>Clickdrag to rotate!
+(u)pali
 (*)In chat options you can now toggle mild highlighting on odd/even lines for better readability
 (u)pali
 (+)Various record programs now show pronouns of the person
