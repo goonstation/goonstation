@@ -502,7 +502,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		src.light.enable()
 
 TYPEINFO(/obj/item/device/light/floodlight)
-	mats = list("CRY-2" = 10, "CON-1" = 1, "MET-1" = 4)
+	mats = list("CRY-1" = 10, "CON-1" = 1, "MET-1" = 4)
 
 /obj/item/device/light/floodlight
 	name = "floodlight"
