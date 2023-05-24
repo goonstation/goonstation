@@ -556,7 +556,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		. = ..()
 		if (in_interact_range(src, usr) && can_act(usr) && rotatable)
 			var/new_dir = get_dir(src, over_object)
-			if (new_dir == src.dir)
+			if (!new_dir || new_dir == src.dir)
 				return
 			src.set_dir(new_dir)
 
