@@ -2526,7 +2526,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
+		/obj/item/material_piece/cloth/cottonfabric,
+		/obj/item/raw_material/cobryl)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
@@ -2537,6 +2538,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
@@ -2648,6 +2652,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/bad_mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
@@ -2913,6 +2918,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/floodlight,
+		/datum/manufacture/powercell,
+		/datum/manufacture/powercellE,
+		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

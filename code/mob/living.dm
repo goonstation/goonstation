@@ -2,7 +2,8 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
+	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD_INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -66,6 +67,7 @@
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
+	var/last_words = null
 
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
@@ -895,6 +897,8 @@
 		else
 			phrase_log.log_phrase("say", message, user = src)
 
+	last_words = message
+
 	if (src.stuttering)
 		message = stutter(message)
 
@@ -1211,17 +1215,19 @@
 			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
 
-			if (isobserver(M)) //if a ghooooost (dead) (and online)
+			if (isobserver(M) || iswraith(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
-					//if (M in range(M.client.view, src))
 					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
-					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
+						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
+						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
+						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
@@ -2190,3 +2196,8 @@
 
 ///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
 /mob/living/proc/restore_life_processes()
+
+/mob/living/get_desc(dist, mob/user)
+	. = ..()
+	if (isdead(src) && src.last_words && user?.traitHolder?.hasTrait("training_chaplain"))
+		. += "<br>[his_or_her(src)] last words were: \"[src.last_words]\"."

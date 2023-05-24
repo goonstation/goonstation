@@ -60,6 +60,8 @@ var/global/datum/phrase_log/phrase_log = new
 			"This law intentionally left blank.",
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
+			" EXPANSION MODULE",
+			" Expansion Module",
 			//
 			"overrides? all",
 			"the shuttle",
@@ -253,7 +255,7 @@ var/global/datum/phrase_log/phrase_log = new
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))
 				if(replace_names)
-					. = src.name_regex.Replace(., .proc/random_station_name_replacement_proc)
+					. = src.name_regex.Replace(., PROC_REF(random_station_name_replacement_proc))
 				return
 		return null
 

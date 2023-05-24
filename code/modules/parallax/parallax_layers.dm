@@ -1,3 +1,6 @@
+/atom/movable/screen/parallax_layer/foreground
+	plane = PLANE_FOREGROUND_PARALLAX
+
 // Space Layers
 /atom/movable/screen/parallax_layer/space_1
 	parallax_icon_state = "space_1"
@@ -93,21 +96,9 @@
 		parallax_icon_state = "asteroids_sparse"
 		parallax_value = 0.15
 
-
-// Void Layers
-/atom/movable/screen/parallax_layer/void
-	parallax_icon_state = "void"
-	parallax_value = 0.1
-
-/atom/movable/screen/parallax_layer/void_clouds_1
-	parallax_icon_state = "void_clouds_1"
-	parallax_value = 0.4
-	blend_mode = BLEND_ADD
-
-/atom/movable/screen/parallax_layer/void_clouds_2
-	parallax_icon_state = "void_clouds_2"
-	parallax_value = 0.7
-	blend_mode = BLEND_ADD
+		south
+			scroll_speed = 240
+			scroll_angle = 180
 
 
 // Miscellaneous Layers
@@ -124,3 +115,97 @@
 	static_colour = TRUE
 	parallax_value = 0.5
 	scroll_speed = 500
+
+
+// Adventure Zones
+
+// Snow Storm Layers
+/atom/movable/screen/parallax_layer/foreground/snow
+	parallax_icon_state = "snow_dense"
+	color = list(
+		1, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 100
+	scroll_angle = 240
+
+	sparse
+		parallax_icon_state = "snow_sparse"
+		color = null
+		blend_mode = BLEND_ADD
+		parallax_value = 0.9
+		scroll_speed = 150
+
+// Dust Storm Layers
+/atom/movable/screen/parallax_layer/foreground/dust
+	parallax_icon_state = "dust_dense"
+	color = list(
+		1, 0, 0, 0.8,
+		0, 1, 0, 0.8,
+		0, 0, 1, 0.8,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 150
+	scroll_angle = 240
+
+	sparse
+		parallax_icon_state = "dust_sparse"
+		color = null
+		blend_mode = BLEND_ADD
+		parallax_value = 0.9
+		scroll_speed = 225
+
+// Embers Layers
+/atom/movable/screen/parallax_layer/foreground/embers
+	parallax_icon_state = "embers_dense"
+	color = list(
+		1, 0, 0, -0.8,
+		0, 1, 0, -0.8,
+		0, 0, 1, -0.8,
+		0, 0, 0, 1,
+		0, 0, 0, -0.7)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 25
+	scroll_angle = 135
+
+	sparse
+		parallax_icon_state = "embers_sparse"
+		color = null
+		parallax_value = 0.9
+		scroll_speed = 35
+
+		tessellate()
+			. = ..()
+			var/atom/movable/overlay/lighting_overlay = new /atom/movable/overlay
+			lighting_overlay.appearance = src.appearance
+			lighting_overlay.mouse_opacity = 0
+			lighting_overlay.plane = PLANE_LIGHTING
+			lighting_overlay.blend_mode = BLEND_ADD
+			lighting_overlay.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			lighting_overlay.layer = LIGHTING_LAYER_BASE
+
+			src.overlays += lighting_overlay
+
+// Void Layers
+/atom/movable/screen/parallax_layer/void
+	parallax_icon_state = "void"
+	parallax_value = 0.1
+	scroll_speed = 20
+	scroll_angle = 150
+
+/atom/movable/screen/parallax_layer/void/clouds_1
+	parallax_icon_state = "void_clouds_1"
+	parallax_value = 0.4
+	blend_mode = BLEND_ADD
+
+/atom/movable/screen/parallax_layer/void/clouds_2
+	parallax_icon_state = "void_clouds_2"
+	parallax_value = 0.7
+	blend_mode = BLEND_ADD

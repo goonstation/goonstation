@@ -23,7 +23,6 @@
 
 	var/atom/movable/screen/internals = null
 	var/atom/movable/screen/stamina_bar/stamina_bar = null
-	var/last_overlay_refresh = 1 // In relation to world time. Used for traitor/nuke ops overlays certain mobs can see.
 
 	var/robot_talk_understand = 0
 
@@ -136,6 +135,9 @@
 	var/deathhunted = null
 
 	var/job = null
+
+	/// For assigning mobs various factions, see factions.dm for definitions
+	var/faction = 0
 
 	var/nodamage = 0
 
@@ -501,7 +503,6 @@
 			O.client_login(src)
 
 	src.need_update_item_abilities = 1
-	src.antagonist_overlay_refresh(1, 0)
 
 	var/atom/illumplane = client.get_plane( PLANE_LIGHTING )
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
@@ -3215,3 +3216,10 @@
 ///Returns the default HUD of the mob, whatever that may be
 /mob/proc/get_hud()
 	return null
+
+///like step_towards(), but respects move delay etc.
+/mob/proc/step_towards_movedelay(atom/trg)
+	var/move_dir_old = src.move_dir
+	src.move_dir = get_dir(src, trg)
+	src.process_move()
+	src.move_dir = move_dir_old

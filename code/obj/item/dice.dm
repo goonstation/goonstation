@@ -729,9 +729,10 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W, mob/living/user)
-		if(src.icon_state != "dicebox")
-			addDice(W,"diceboxt",user)
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/dice))
+			if(src.icon_state != "dicebox")
+				addDice(I,"diceboxt",user)
 
 /obj/item/diceholder/dicecup
 	name = "dice cup"
@@ -750,15 +751,17 @@ var/list/rollList = list()
 			hiddenroll()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)
 
+
 	attack_self(mob/user as mob)
 		if(src.icon_state == "dicecup")
-			if(diceposition != 0)
+			if(dicelist.len)
 				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
 	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
-			removeDie(user)
+			if(dicelist.len)
+				removeDie(user)
 		else if(src.icon_state == "dicecupf")
 			if(user.a_intent == "help")
 				if(user.name == diceowner)
@@ -774,9 +777,10 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W, mob/living/user)
-		if(src.icon_state == "dicecup")
-			addDice(W,"dicecup",user)
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/dice))
+			if(src.icon_state == "dicecup")
+				addDice(I,"dicecup",user)
 
 /obj/item/storage/dicepouch
 	name = "dice pouch"

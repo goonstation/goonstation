@@ -108,7 +108,7 @@
 
 	/// Performs the above function after the mob moves. Used for cloning (only apply)
 	proc/apply_to_on_move(mob/living/carbon/human/target)
-		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, .proc/apply_to)
+		RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, PROC_REF(apply_to))
 
 	/// Returns TRUE if this holder contains the given defect type, FALSE otherwise
 	proc/has_defect(defect_type)
@@ -322,8 +322,8 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 		// Ugly fix because I can't 'hook' into the brain damage proc- don't want to instantly kill people with weak organs
 		var/damage = src.data["amount"]
 		if (src.owner.traitHolder.hasTrait("weakorgans"))
-			damage /= 2 // ends up the same for frail people and non-frail
-		src.owner.take_brain_damage(data["amount"])
+			damage /= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+		src.owner.take_brain_damage(damage)
 
 
 /datum/cloner_defect/brain_damage/minor
