@@ -146,6 +146,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+	fullauto_valid = 1
 
 /datum/projectile/bullet/minigun/turret
 	damage = 15
