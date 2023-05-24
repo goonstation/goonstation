@@ -248,8 +248,8 @@ TYPEINFO(/obj/item/device/chameleon)
 			boutput(user, "<span class='notice'>Scanned [target].</span>")
 			src.name = target.name
 			src.real_name = target.name
-			src.desc = target.desc
-			src.real_desc = target.desc
+			src.desc = target.get_desc(0, user) || target.desc
+			src.real_desc = src.desc
 			src.icon = target.icon
 			src.icon_state = target.icon_state
 			src.set_dir(target.dir)

@@ -2804,6 +2804,9 @@ Returns:
 		if(target && istype(target))
 			if(ismob(AM))
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = AM
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")

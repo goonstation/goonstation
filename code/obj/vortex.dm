@@ -107,7 +107,7 @@
 				/obj/machinery/bot/secbot/emagged,
 				/obj/machinery/bot/medbot/mysterious/emagged,
 				/obj/machinery/bot/cleanbot/emagged,
-				/obj/critter/wasp/angry,
+				/mob/living/critter/small_animal/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
 				/mob/living/critter/fermid,

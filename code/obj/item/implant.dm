@@ -312,7 +312,7 @@ THROWING DARTS
 		if(inafterlife(src.owner))
 			return
 		DEBUG_MESSAGE("[src] calling to report crit")
-		SPAWN(rand(15, 25) SECONDS)
+		SPAWN(rand(15, 20) SECONDS)
 			health_alert()
 		..()
 
@@ -359,7 +359,7 @@ THROWING DARTS
 	icon_state = "implant-b"
 	impcolor = "b"
 
-	on_death()
+	death_alert()
 		. = ..()
 		src.on_remove(src.owner)
 		qdel(src)
