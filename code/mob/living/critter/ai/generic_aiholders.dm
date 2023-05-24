@@ -4,24 +4,25 @@ if there is otherwise unique behaviour which you add to another mob consider mov
 /// Wanderer
 /datum/aiHolder/wanderer
 	New()
-		. = ..()
-		var/datum/aiTask/timed/wander/W =  get_instance(/datum/aiTask/timed/wander, list(src))
-		W.transition_task = W
-		default_task = W
+		..()
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer, list(src))
+
+/datum/aiTask/prioritizer/critter/wanderer/New()
+	..()
+	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(src.holder, src))
 
 /// Aggressive Wanderer
-/datum/aiHolder/wanderer_aggressive
+/datum/aiHolder/wanderer/aggressive
 	New()
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive, list(src))
 
 /datum/aiTask/prioritizer/critter/wanderer_aggressive/New()
 	..()
-	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander/critter/aggressive, list(src.holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(src.holder, src))
 
 /// Agressive Wanderer scavenger
-/datum/aiHolder/wanderer_aggressive/scavenger
+/datum/aiHolder/wanderer/aggressive/scavenger
 	New()
 		..()
 		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive/scavenger, list(src))

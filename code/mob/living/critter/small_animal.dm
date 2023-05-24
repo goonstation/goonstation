@@ -1766,7 +1766,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	can_lie = 0
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/wanderer/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
@@ -1891,7 +1891,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	can_lie = FALSE
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/wanderer/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -2842,7 +2842,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/wanderer/aggressive
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 	ai_attacks_per_ability = 0
