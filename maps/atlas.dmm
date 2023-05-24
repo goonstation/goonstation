@@ -6490,26 +6490,6 @@
 /obj/submachine/ATM,
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/eva)
-"avf" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4;
-	name = "Customs"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/heads,
-/obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/blue,
-/area/station/bridge/customs)
 "avg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -76991,7 +76971,7 @@ hpN
 asp
 atH
 auo
-avf
+hpN
 aFO
 aWz
 azt
