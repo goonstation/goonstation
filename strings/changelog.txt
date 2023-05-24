@@ -1,6 +1,8 @@
 
 (t)wed may 24 23
 (u)pali
+(*)In chat options you can now toggle mild highlighting on odd/even lines for better readability
+(u)pali
 (+)Various record programs now show pronouns of the person
 (t)tue may 23 23
 (u)Sord
