@@ -65,7 +65,7 @@
 
 				var/out_text = "<h1 class='alert'>[ALERT_GENERAL]</h1>"
 				if(title != "") out_text += "<h2 class='alert'>[title]</h2>"
-				out_text += "<span class='alert'>[text]</span><br>"
+				out_text += "<span class='alert'>[text]</span><br><br>"
 				boutput(M, out_text)
 
 	if (sound_to_play && length(sound_to_play) > 0)
