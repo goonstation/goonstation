@@ -375,6 +375,24 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		src.catnip = 45
 		src.visible_message("[src]'s eyes dilate.")
 
+	Move(turf/NewLoc, direct)
+		. = ..()
+		if ((locate(/obj/table) in src.loc) && prob(20))
+			knock_stuff_off_table()
+
+	proc/knock_stuff_off_table()
+		var/list/obj/item/items_here = list()
+		for (var/obj/item/item_here in src.loc)
+			items_here += item_here
+		var/list/target_turfs = list()
+		for (var/turf/T in range(1, src))
+			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
+				target_turfs += T
+		if (length(items_here) && length(target_turfs))
+			var/obj/item/item = pick(items_here)
+			src.visible_message("<span class='alert'>[src] [pick("knocks","pushes","shoves")] [item] off the table!</span>")
+			item.throw_at(pick(target_turfs), 2, 1)
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
