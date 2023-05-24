@@ -1,5 +1,7 @@
 
 (t)wed may 24 23
+(u)Sord
+(+)The comically large captain's hat can now be recolored using the normal medal rewards.
 (u)pali
 (*)Chaplains can now examine dead mobs to see their last words.<br><small>Possibly subject to change, idk, ping me with feedback.</small>
 (u)DisturbHerb & BatElite & pali
