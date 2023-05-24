@@ -512,6 +512,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	icon_state = "floodlight_item"
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
+	rand_pos = FALSE
 	m_amt = 50
 	g_amt = 20
 	col_r = 0.85
