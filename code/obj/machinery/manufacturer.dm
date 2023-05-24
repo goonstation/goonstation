@@ -2918,6 +2918,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/floodlight,
+		/datum/manufacture/powercell,
+		/datum/manufacture/powercellE,
+		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
