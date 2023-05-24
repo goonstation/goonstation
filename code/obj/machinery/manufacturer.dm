@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#info {
 				position: absolute;
 				right: 0.5em;
-				top: 0;
+				top: 50px;
 				width: 25%;
 				padding: 0.5em;
 				}
