@@ -1248,8 +1248,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
-	var/attack_damage = 5
-	var/use_custom_color = FALSE
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl
