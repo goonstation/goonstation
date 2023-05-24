@@ -25,6 +25,7 @@
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
 	ai_type = /datum/aiHolder/wanderer/aggressive
+	is_npc = TRUE
 
 	setup_hands()
 		..()
