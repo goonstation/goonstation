@@ -17,7 +17,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer/aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	var/reagent_id = null
 	var/wizard_spawn = FALSE
@@ -63,7 +63,7 @@
 		HH.limb_name = "right golem arm"
 
 	valid_target(mob/living/C)
-		if (istype(C, /mob/living/critter/golem)) return FALSE
+		if(istype(C, /mob/living/critter/golem)) return FALSE
 		if(iswizard(C) && src.wizard_spawn) return FALSE
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C

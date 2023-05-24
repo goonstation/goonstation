@@ -42,7 +42,7 @@
 
 	var/bite_transfer_amt = 1
 
-	ai_type = /datum/aiHolder/wanderer/aggressive/scavenger
+	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //no patience for spiders
