@@ -2652,6 +2652,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/bad_mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,

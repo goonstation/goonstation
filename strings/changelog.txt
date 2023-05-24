@@ -1,5 +1,7 @@
 
 (t)tue may 23 23
+(u)Sord
+(+)You can now make pod mining phasers in the ship component fabricator.
 (u)tarmunora
 (e)⚖|C-Balance
 (+)blobs no longer require level 3 attack to break girders
