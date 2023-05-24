@@ -1,4 +1,7 @@
 
+(t)wed may 24 23
+(u)pali
+(+)Various record programs now show pronouns of the person
 (t)tue may 23 23
 (u)Sord
 (+)You can now make pod mining phasers in the ship component fabricator.
