@@ -2200,4 +2200,4 @@
 /mob/living/get_desc(dist, mob/user)
 	. = ..()
 	if (isdead(src) && src.last_words && user?.traitHolder?.hasTrait("training_chaplain"))
-		. += "<br>Their last words were: \"[src.last_words]\"."
+		. += "<br>[his_or_her(src)] last words were: \"[src.last_words]\"."
