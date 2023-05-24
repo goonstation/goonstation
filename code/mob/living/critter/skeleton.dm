@@ -108,6 +108,10 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/skeleton)) return FALSE
+		return ..()
+
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
@@ -132,7 +136,7 @@
 		src.name = "[capitalize(target)]'s skeleton"
 		src.desc = "A horrible skeleton, raised from the corpse of [target] by a wizard."
 		src.revivalChance = 100
-		src.faction = WIZARD
+		src.faction = FACTION_WIZARD
 
 		if (is_monkey)
 			icon = 'icons/mob/monkey.dmi'
@@ -147,11 +151,7 @@
 	health_brute = 15
 	health_burn = 15
 
-	faction = WRAITH
-
-	valid_target(mob/living/C)
-		if (istype(C, /mob/living/critter/skeleton)) return FALSE
-		return ..()
+	faction = FACTION_WRAITH
 
 	death()
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))

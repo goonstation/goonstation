@@ -146,7 +146,7 @@
 	icon_state = "mars_nuke_bot"
 	eye_light_icon = "mars_nuke_bot_eye"
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 
 	setup_hands()
 		..()

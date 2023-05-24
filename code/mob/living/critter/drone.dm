@@ -24,7 +24,7 @@
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 
 	New()
 		..()

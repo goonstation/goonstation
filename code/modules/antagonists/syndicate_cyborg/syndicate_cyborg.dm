@@ -4,7 +4,7 @@
 	antagonist_icon = "syndieborg"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 
 	is_compatible_with(datum/mind/mind)
 		return isrobot(mind.current)

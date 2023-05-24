@@ -42,7 +42,7 @@
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/slam/polymorph, /datum/targetable/critter/devour)
 
-	faction = BOTANY
+	faction = FACTION_BOTANY
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

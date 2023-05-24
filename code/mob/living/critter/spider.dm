@@ -250,7 +250,7 @@
 	max_skins = 4
 	reacting = 0
 
-	faction = ICEMOON
+	faction = FACTION_ICEMOON
 
 /mob/living/critter/spider/ice/nice
 	ai_type = /datum/aiHolder/spider_peaceful
@@ -335,7 +335,7 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 
-	faction = CLOWN
+	faction = FACTION_CLOWN
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -424,7 +424,7 @@
 	var/max_defensive_babies = 100
 	ai_type = /datum/aiHolder/clown_spider_queen
 
-	faction = CLOWN
+	faction = FACTION_CLOWN
 
 	cluwne
 		name = "queen cluwnespider"

@@ -19,7 +19,7 @@
 	health_burn_vuln = 1.5
 	is_npc = 1
 
-	faction = WRAITH
+	faction = FACTION_WRAITH
 
 	use_stamina = 0
 

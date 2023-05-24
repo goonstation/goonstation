@@ -19,7 +19,7 @@
 	var/traps_laid = 0
 	var/datum/abilityHolder/wraith/AH = null
 
-	faction = WRAITH
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
 		..(T)

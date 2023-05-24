@@ -76,7 +76,7 @@
 		var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
 		I.Blend(oldcolor, ICON_ADD)
 		src.icon = I
-		src.faction = WIZARD
+		src.faction = FACTION_WIZARD
 		src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
 		src.desc = "An elemental entity composed of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 		return

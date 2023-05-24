@@ -3,7 +3,7 @@
 	display_name = "wraith"
 	antagonist_icon = "wraith"
 	intangible_mob_path = /mob/living/intangible/wraith
-	faction = WRAITH
+	faction = FACTION_WRAITH
 	uses_pref_name = FALSE
 
 	assign_objectives()

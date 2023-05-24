@@ -21,7 +21,7 @@
 	var/mob/living/intangible/wraith/master = null
 	var/cloaked = FALSE
 
-	faction = WRAITH
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)

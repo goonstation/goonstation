@@ -57,7 +57,7 @@
 
 	var/datum/movement_controller/movement_controller
 
-	faction = WRAITH
+	faction = FACTION_WRAITH
 
 	//////////////
 	// Wraith Overrides

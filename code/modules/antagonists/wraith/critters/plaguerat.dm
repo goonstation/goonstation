@@ -37,7 +37,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	butcherable = 1
 	max_skins = 1
 
-	faction = WRAITH
+	faction = FACTION_WRAITH
 
 	blood_id = "miasma"
 	/// venom injected per bite

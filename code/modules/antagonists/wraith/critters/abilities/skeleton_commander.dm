@@ -55,7 +55,6 @@
 		var/turf/T = get_turf(target)
 		if (isturf(T))
 			var/mob/living/critter/skeleton/wraith/S = new /mob/living/critter/skeleton/wraith(T)
-			S.faction |= WRAITH
 			S.alpha = 0
 			animate(S, alpha=255, time=2 SECONDS)
 			playsound(S.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)

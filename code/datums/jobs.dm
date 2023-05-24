@@ -59,7 +59,8 @@
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
-	var/faction = null
+	/// The faction to be assigned to the mob on setup uses flags from factions.dm
+	var/faction = 0
 
 	New()
 		..()
@@ -888,7 +889,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_poc1 = list(/obj/item/paper/botany_guide)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
-	faction = BOTANY
+	faction = FACTION_BOTANY
 
 	New()
 		..()
@@ -909,7 +910,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 
-	faction = BOTANY
+	faction = FACTION_BOTANY
 
 	New()
 		..()
@@ -992,7 +993,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	items_in_belt = list(/obj/item/cloth/towel/clown)
 	change_name_on_spawn = 1
 
-	faction = CLOWN
+	faction = FACTION_CLOWN
 
 	New()
 		..()
@@ -1805,7 +1806,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	slot_poc2 = list(/obj/item/device/pda2/clown)
 	slot_lhan = list(/obj/item/instrument/bikehorn)
 
-	faction = CLOWN
+	faction = FACTION_CLOWN
 
 	New()
 		..()
@@ -2274,7 +2275,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	var/leader = FALSE
 	add_to_manifest = FALSE
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2315,7 +2316,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		/obj/item/clothing/head/helmet/space/syndicate,
 		/obj/item/clothing/suit/space/syndicate)
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 
@@ -2327,7 +2328,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	name = "Poorly Equipped Junior Syndicate Operative"
 	slot_poc2 = list()
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 
 // hidden jobs for nt-so vs syndicate spec-ops
 
@@ -2360,7 +2361,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/breaching_charge,
 							/obj/item/remote/syndicate_teleporter)
 
-	faction = SYNDICATE
+	faction = FACTION_SYNDICATE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
@@ -2465,7 +2466,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/head/NTberet,
 							/obj/item/spacecash/fivehundred)
 
-	faction = NANOTRASEN
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2505,7 +2506,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/sheet/steel/fullstack,
 							/obj/item/sheet/glass/reinforced/fullstack)
 
-	faction = NANOTRASEN
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2546,7 +2547,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/reagent_containers/glass/bottle/omnizine,
 							/obj/item/reagent_containers/glass/bottle/ether)
 
-	faction = NANOTRASEN
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2586,7 +2587,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/clothing/suit/space/ntso,
 							/obj/item/cloth/handkerchief/nt)
 
-	faction = NANOTRASEN
+	faction = FACTION_NANOTRASEN
 
 	New()
 		..()
@@ -2910,7 +2911,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		team = 1
 		overlay_icon = "nanotrasen"
 
-		faction = NANOTRASEN
+		faction = FACTION_NANOTRASEN
 
 		receives_implant = /obj/item/implant/pod_wars/nanotrasen
 		slot_back = list(/obj/item/storage/backpack/NT)
@@ -2956,7 +2957,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		overlay_icon = "syndicate"
 		add_to_manifest = FALSE
 
-		faction = SYNDICATE
+		faction = FACTION_SYNDICATE
 
 		receives_implant = /obj/item/implant/pod_wars/syndicate
 		slot_back = list(/obj/item/storage/backpack/syndie)

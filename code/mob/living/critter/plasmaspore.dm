@@ -9,7 +9,7 @@
 	can_throw = 0
 	blood_id = "plasma"
 
-	faction = BOTANY
+	faction = FACTION_BOTANY
 
 	death(var/gibbed)
 		. = ..()
