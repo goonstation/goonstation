@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/variableTurf/clear,
-/area/space)
+/area/allowGenerate)
 "ab" = (
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ad" = (
 /obj/item/raw_material/shard,
 /turf/simulated/floor/airless/plating,
@@ -29,8 +29,8 @@
 /area/station/turret_protected/sea_crashed)
 "ah" = (
 /obj/item/raw_material/shard,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ai" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
@@ -86,7 +86,7 @@
 "au" = (
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/clear,
-/area/space)
+/area/noGenerate)
 "av" = (
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
@@ -110,11 +110,11 @@
 "aB" = (
 /obj/item/raw_material/shard,
 /turf/variableTurf/clear,
-/area/space)
+/area/noGenerate)
 "aC" = (
 /obj/item/scrap,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "aD" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/darkblue,
@@ -255,8 +255,8 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "bc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -409,30 +409,8 @@
 "bC" = (
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/sea_crashed)
-"bD" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 9;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
-"bE" = (
-/obj/decal/cleanable/rust,
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
 "bF" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
-"bG" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 5;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "bH" = (
 /turf/simulated/floor/caution/east,
@@ -451,9 +429,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
-"bL" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray,
-/area/station/turret_protected/sea_crashed)
 "bM" = (
 /obj/critter/gunbot/heavy{
 	dir = 4;
@@ -465,7 +440,8 @@
 /obj/machinery/door/poddoor{
 	id = "transportship";
 	layer = 9;
-	name = "Blast Door"
+	name = "Blast Door";
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -506,12 +482,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/sea_crashed)
-"bV" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 8;
-	icon_state = "leadjunction_gray"
-	},
-/area/station/turret_protected/sea_crashed)
 "bW" = (
 /obj/machinery/networked/nuclear_charge,
 /turf/simulated/floor/black/grime,
@@ -527,12 +497,6 @@
 	name = "old mainframe"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/turret_protected/sea_crashed)
-"bY" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadjunction_gray"
-	},
 /area/station/turret_protected/sea_crashed)
 "bZ" = (
 /obj/decal/fakeobjects{
@@ -558,12 +522,13 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ce" = (
+/obj/decal/cleanable/oil/streak,
 /obj/machinery/door/poddoor{
 	id = "transportship";
 	layer = 9;
-	name = "Blast Door"
+	name = "Blast Door";
+	dir = 4
 	},
-/obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
 "cf" = (
@@ -582,10 +547,7 @@
 /area/station/turret_protected/sea_crashed)
 "ci" = (
 /obj/decal/cleanable/rust,
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 10;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "cj" = (
 /obj/decal/fakeobjects{
@@ -595,10 +557,7 @@
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "ck" = (
 /obj/decal/cleanable/oil/streak,
@@ -608,12 +567,6 @@
 	name = "Blast Door"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/turret_protected/sea_crashed)
-"cl" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 6;
-	icon_state = "leadwall_gray"
-	},
 /area/station/turret_protected/sea_crashed)
 "cm" = (
 /turf/simulated/floor/caution/corner/sw,
@@ -780,8 +733,8 @@
 /area/station/turret_protected/sea_crashed)
 "cL" = (
 /obj/decal/cleanable/machine_debris,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "cM" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -826,8 +779,8 @@
 /area/station/turret_protected/sea_crashed)
 "cS" = (
 /obj/item/raw_material/scrap_metal,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "cT" = (
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/red,
@@ -887,8 +840,8 @@
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "da" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -981,8 +934,8 @@
 "dl" = (
 /obj/decal/cleanable/machine_debris,
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dm" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/security/alt,
@@ -1235,8 +1188,8 @@
 "dI" = (
 /obj/lattice,
 /obj/decal/floatingtiles,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dJ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1324,45 +1277,48 @@
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dU" = (
 /obj/decal/cleanable/rust,
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dV" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dW" = (
 /obj/item/raw_material/scrap_metal,
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dX" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ec" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 2;
 	icon_state = "alt_propulsion"
 	},
-/turf/variableTurf/wall,
+/turf/variableTurf/floor,
 /area/station/turret_protected/sea_crashed)
 "ee" = (
 /obj/grille/catwalk,
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
+"pO" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
 "sR" = (
 /obj/critter/gunbot/heavy{
 	dir = 4;
@@ -1371,13 +1327,16 @@
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
+"vj" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
 aa
 aa
-aa
-aa
-aa
+vj
+vj
+vj
 aa
 aa
 aa
@@ -1407,14 +1366,14 @@ aa
 aa
 "}
 (2,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vj
+vj
+vj
+vj
+vj
+vj
+vj
+vj
 aa
 aa
 aa
@@ -1441,19 +1400,19 @@ aa
 aa
 "}
 (3,1,1) = {"
-aa
-aa
-aa
+vj
+vj
+vj
 au
 aB
-aa
+vj
 aV
 ai
 ai
 be
 be
 be
-bo
+be
 be
 be
 be
@@ -1475,8 +1434,8 @@ aa
 aa
 "}
 (4,1,1) = {"
-ab
-ab
+pO
+pO
 ah
 ab
 aC
@@ -1509,7 +1468,7 @@ aa
 aa
 "}
 (5,1,1) = {"
-ab
+pO
 ad
 ak
 ax
@@ -1543,7 +1502,7 @@ aa
 aa
 "}
 (6,1,1) = {"
-ab
+pO
 af
 al
 ay
@@ -1577,7 +1536,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-ab
+pO
 ag
 am
 az
@@ -1611,7 +1570,7 @@ aa
 aa
 "}
 (8,1,1) = {"
-ab
+pO
 ai
 an
 ao
@@ -1623,10 +1582,10 @@ bj
 bp
 as
 bA
-bD
-bL
-bL
-bL
+bF
+bF
+bF
+bF
 ci
 cn
 as
@@ -1640,12 +1599,12 @@ be
 dr
 dD
 be
-aa
+vj
 aa
 aa
 "}
 (9,1,1) = {"
-ab
+pO
 ai
 ao
 aA
@@ -1657,7 +1616,7 @@ bh
 be
 as
 bA
-bE
+ci
 sR
 bF
 bM
@@ -1674,8 +1633,8 @@ be
 ds
 dD
 be
-aa
-aa
+vj
+vj
 aa
 "}
 (10,1,1) = {"
@@ -1693,7 +1652,7 @@ bx
 bA
 bF
 bN
-bV
+bF
 bN
 bF
 cn
@@ -1708,9 +1667,9 @@ be
 dt
 dE
 bo
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (11,1,1) = {"
 aa
@@ -1744,7 +1703,7 @@ dF
 be
 ee
 ee
-aa
+vj
 "}
 (12,1,1) = {"
 aa
@@ -1778,7 +1737,7 @@ cC
 dm
 ee
 ee
-aa
+vj
 "}
 (13,1,1) = {"
 aa
@@ -1812,7 +1771,7 @@ cC
 dM
 ee
 ee
-aa
+vj
 "}
 (14,1,1) = {"
 aa
@@ -1846,7 +1805,7 @@ dF
 be
 ee
 ee
-aa
+vj
 "}
 (15,1,1) = {"
 aa
@@ -1863,7 +1822,7 @@ bx
 bA
 bF
 bN
-bY
+bF
 ce
 bF
 cn
@@ -1878,9 +1837,9 @@ be
 dt
 dG
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (16,1,1) = {"
 aa
@@ -1899,7 +1858,7 @@ bF
 bQ
 bF
 bQ
-bE
+ci
 cn
 as
 ct
@@ -1912,9 +1871,9 @@ bp
 dv
 dD
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (17,1,1) = {"
 aa
@@ -1929,11 +1888,11 @@ aD
 bo
 as
 bA
-bG
-bL
-bL
-bL
-cl
+bF
+bF
+bF
+bF
+bF
 cn
 ar
 be
@@ -1946,9 +1905,9 @@ be
 dw
 dD
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (18,1,1) = {"
 aa
@@ -1970,7 +1929,7 @@ bH
 bH
 co
 cq
-be
+bo
 cG
 cI
 cI
@@ -1980,9 +1939,9 @@ be
 dx
 dC
 bo
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (19,1,1) = {"
 aa
@@ -2014,9 +1973,9 @@ be
 dp
 dH
 be
+pO
 ab
-ab
-aa
+vj
 "}
 (20,1,1) = {"
 aa
@@ -2050,14 +2009,14 @@ dJ
 dL
 ec
 ab
-aa
+vj
 "}
 (21,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+pO
 ai
 ai
 ae
@@ -2084,14 +2043,14 @@ dK
 dL
 ec
 ab
-aa
+vj
 "}
 (22,1,1) = {"
 aa
 aa
 aa
-aa
-ab
+vj
+pO
 ab
 aC
 ah
@@ -2124,29 +2083,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aB
+vj
+vj
+vj
+ab
+ah
 aC
 ab
 ah
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+pO
+pO
+pO
+pO
+pO
+pO
+pO
+pO
 cL
 cS
 ab
 ab
-ab
+pO
 be
 dW
 dX
@@ -2158,23 +2117,23 @@ aa
 aa
 aa
 aa
+vj
+vj
+vj
+vj
+vj
+vj
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
+vj
+vj
+pO
+pO
+pO
 ab
 ab
 ab
