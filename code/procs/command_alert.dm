@@ -4,7 +4,7 @@
 	if (title && length(title) > 0)
 		out_text += "<h2 class='alert'>[title]</h2>"
 
-	out_text += "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span><br>"
+	out_text += "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span><br><br>"
 	boutput(world, out_text)
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
