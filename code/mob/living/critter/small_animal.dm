@@ -1240,8 +1240,16 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	flags = null
 	fits_under_table = 0
+	health_brute = 30
+	health_burn = 30
 	species = "penguin"
-
+	ai_type = /datum/aiHolder/penguin
+	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
+	var/attack_damage = 5
+	var/use_custom_color = FALSE
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl
