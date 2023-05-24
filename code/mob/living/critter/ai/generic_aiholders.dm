@@ -15,7 +15,7 @@ if there is otherwise unique behaviour which you add to another mob consider mov
 /datum/aiHolder/wanderer/aggressive
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer/aggressive, list(src))
 
 /datum/aiTask/prioritizer/critter/wanderer_aggressive/New()
 	..()
@@ -25,9 +25,9 @@ if there is otherwise unique behaviour which you add to another mob consider mov
 /datum/aiHolder/wanderer/aggressive/scavenger
 	New()
 		..()
-		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer_aggressive/scavenger, list(src))
+		default_task = get_instance(/datum/aiTask/prioritizer/critter/wanderer/aggressive/scavenger, list(src))
 
-/datum/aiTask/prioritizer/critter/wanderer_aggressive/scavenger/New()
+/datum/aiTask/prioritizer/critter/wanderer/aggressive/scavenger/New()
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/scavenge, list(holder, src))
 
