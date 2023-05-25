@@ -101,7 +101,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "mm" = (
-/obj/item/clothing/shoes/clown_shoes/pink{
+/obj/item/clothing/shoes/clown_shoes/pink/waddle{
 	pixel_x = 1;
 	pixel_y = 17
 	},

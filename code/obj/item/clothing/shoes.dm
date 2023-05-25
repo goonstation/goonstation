@@ -318,16 +318,6 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
-	equipped(var/mob/user, var/slot)
-		..()
-		user.AddComponent(/datum/component/waddling)
-
-	unequipped(mob/user)
-		..()
-		var/datum/component/waddling/component = user.GetComponent(/datum/component/waddling)
-		component.RemoveComponent()
-
-
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))

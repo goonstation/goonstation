@@ -229,7 +229,7 @@
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "aT" = (
-/obj/item/clothing/shoes/clown_shoes/pink,
+/obj/item/clothing/shoes/clown_shoes/pink/waddle,
 /obj/item/reagent_containers/food/snacks/candy/peach_ring,
 /obj/item/clothing/mask/clown_hat/pink,
 /obj/decal/cleanable/slime,
