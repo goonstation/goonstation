@@ -44471,12 +44471,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
-"oHI" = (
-/obj/mail_booth,
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/station/crew_quarters/market)
 "oID" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -102010,7 +102004,7 @@ buv
 btM
 bvO
 bwu
-oHI
+bxh
 byd
 ady
 bzU
