@@ -8,9 +8,6 @@
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "blank_underwater.dm"
 
-#elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
-#include "gottagofast.dm"
-
 // special modes
 #elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"
@@ -94,6 +91,9 @@
 
 #elif defined(MAP_OVERRIDE_GEHENNA)
 #include "gehenna.dm"
+
+#elif defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#include "gottagofast.dm"
 
 //Entry below is the "default" map
 #else

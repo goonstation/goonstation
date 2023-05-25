@@ -67,6 +67,7 @@
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
+	var/last_words = null
 
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
@@ -895,6 +896,8 @@
 			phrase_log.log_phrase("radio", message, user = src)
 		else
 			phrase_log.log_phrase("say", message, user = src)
+
+	last_words = message
 
 	if (src.stuttering)
 		message = stutter(message)
@@ -2193,3 +2196,8 @@
 
 ///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
 /mob/living/proc/restore_life_processes()
+
+/mob/living/get_desc(dist, mob/user)
+	. = ..()
+	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+		. += "<br>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\"."

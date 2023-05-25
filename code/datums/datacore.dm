@@ -45,6 +45,8 @@
 	else
 		G["sex"] = "Male"
 
+	G["pronouns"] = H.get_pronouns().name
+
 	G["age"] ="[H.bioHolder.age]"
 	G["fingerprint"] = "[H.bioHolder.fingerprints]"
 	G["dna"] = H.bioHolder.Uid

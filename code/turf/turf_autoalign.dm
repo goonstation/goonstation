@@ -349,6 +349,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	mod = "norn-"
 	light_mod = "wall-"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -358,7 +361,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn)
 	connect_overlay = 1
@@ -382,6 +384,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	mod = "norn-R-"
 	light_mod = "wall-"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -441,6 +446,25 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	explosion_resistance = 11
 
+TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
+	connect_diagonal = 0
+TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn/wood)
+	. = ..()
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
+	))
+	connects_with_overlay = typecacheof(list(
+		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
+	))
+/turf/simulated/wall/auto/supernorn/wood
+	default_material = "wood"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall$$wood"
+#endif
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	connect_overlay = 1
@@ -483,27 +507,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-
-
-TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
-	connect_diagonal = 0
-TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn/wood)
-	. = ..()
-	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
-	))
-	connects_with_overlay = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
-	))
-/turf/simulated/wall/auto/supernorn/wood
-	icon = 'icons/turf/walls_wood.dmi'
-	mod = ""
-	default_material = "wood"
-
 
 TYPEINFO(/turf/simulated/wall/auto/gannets)
 TYPEINFO_NEW(/turf/simulated/wall/auto/gannets)
@@ -724,6 +727,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
 	mod = "norn-"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/unsimulated/wall/auto/reinforced/supernorn)
@@ -746,6 +752,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	light_mod = "wall-"
 	mod = "norn-R-"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall_r"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 
@@ -770,8 +779,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/wingrille_spawn,
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	icon = 'icons/turf/walls_wood.dmi'
-	mod = ""
+#ifdef IN_MAP_EDITOR
+	icon_state = "mapwall$$wood"
+#endif
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/gannets)

@@ -827,14 +827,14 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
