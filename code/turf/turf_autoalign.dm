@@ -214,6 +214,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 	))
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
+	icon_state = "mapwall"
 	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -281,6 +282,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
+	icon_state = "mapwall_r"
 	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -533,13 +535,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/marsoutpost)
 	))
 /turf/simulated/wall/auto/marsoutpost
 	icon = 'icons/turf/walls_marsoutpost.dmi'
+	icon_state = "interior-map"
 	light_mod = "wall-"
 
 	update_neighbors()
 		..()
 		for (var/obj/window/auto/O in orange(1,src))
 			O.UpdateIcon()
-
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/gannets)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/gannets)
@@ -568,10 +570,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "old-"
-	icon_state = "old"
+	icon_state = "old-map"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/old)
 	connect_overlay = 1
@@ -591,10 +592,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
 	))
+
 /turf/simulated/wall/auto/reinforced/old
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "oldr-"
-	icon_state = "oldr"
+	icon_state = "oldr-map"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -620,6 +622,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 	name = "hedge"
 	desc = "This hedge is sturdy! No light seems to pass through it..."
 	icon = 'icons/turf/walls_hedge.dmi'
+	icon_state = "hedge-map"
 	mod = "hedge-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -871,14 +874,14 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner
 	))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
-//ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure)
+
+ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is not meant for spawning, the icons aren't even right for lead
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
 	name = "lead wall"
 	icon = 'icons/turf/walls_overgrown.dmi'
+	icon_state = "root-0"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-
-
 
 /turf/unsimulated/wall/auto/adventure/overgrown1
 	name = "overgrown wall"
@@ -899,7 +902,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/overgrown2)
 	mod = "rock-"
 	icon_state = "rock-0"
 
-
 /turf/unsimulated/wall/auto/adventure/ancient
 	name = "strange wall"
 	desc = "A weird jet black metal wall indented with strange grooves and lines."
@@ -907,13 +909,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/overgrown2)
 	mod = "ancient-"
 	icon_state = "ancient-0"
 
-
 /turf/unsimulated/wall/auto/adventure/cave
 	name = "cave wall"
 	icon = 'icons/turf/walls_cave.dmi'
 	mod = "cave-"
 	icon_state = "cave-0"
-
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle)
@@ -922,6 +922,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle)
 /turf/unsimulated/wall/auto/adventure/shuttle // fancy walls part 2: enough for debris field
 	name = "shuttle wall"
 	icon = 'icons/turf/walls_shuttle-debris.dmi'
+	icon_state = "shuttle-map"
 	mod = "shuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
@@ -929,9 +930,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
 	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/shuttle/dark
+	icon_state = "dshuttle-map"
 	mod = "dshuttle-"
-	icon_state = "dshuttle"
-
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/bee)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
@@ -942,12 +942,13 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	name = "hive wall"
 	desc = "Honeycomb's big, yeah yeah yeah."
 	icon = 'icons/turf/walls_beehive.dmi'
+	icon_state = "bee-map"
 	mod = "bee-"
 	plane = PLANE_WALL-1 //We don't want depth shadows
-	icon_state = "cave-0"
 
 	exterior // so i dont have to make more parts for it to look good
 		mod = "beeout-"
+		icon_state = "beeout-map"
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/martian)
@@ -958,9 +959,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 /turf/unsimulated/wall/auto/adventure/martian
 	name = "organic wall"
 	icon = 'icons/turf/walls_martian.dmi'
+	icon_state = "martian-map"
 	mod = "martian-"
 
 	exterior
+		icon_state = "martout-map"
 		mod = "martout-"
 
 
@@ -1098,13 +1101,12 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	name = "wall"
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "old-"
-	icon_state = ""
+	icon_state = "old-map"
 
 	reinforced
 		name = "reinforced wall"
-		icon = 'icons/turf/walls_derelict.dmi'
 		mod = "oldr-"
-		icon_state = "oldr"
+		icon_state = "oldr-map"
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/hedge)
@@ -1118,6 +1120,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	name = "hedge"
 	desc = "This hedge is sturdy! No light seems to pass through it..."
 	icon = 'icons/turf/walls_hedge.dmi'
+	icon_state = "hedge-map"
 	mod = "hedge-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
