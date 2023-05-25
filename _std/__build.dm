@@ -30,7 +30,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
+#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
@@ -115,7 +115,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 
 //-------Rotation maps:
-//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
+#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
 //#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
