@@ -583,6 +583,7 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
+	anchored = ANCHORED_ALWAYS
 	var/nextAttackMsg = 0
 
 	New()

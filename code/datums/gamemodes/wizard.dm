@@ -61,8 +61,7 @@
 			src.traitors.Remove(wizard)
 			continue
 
-		if(istype(wizard))
-			wizard.add_antagonist(ROLE_WIZARD)
+		equip_antag(wizard)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

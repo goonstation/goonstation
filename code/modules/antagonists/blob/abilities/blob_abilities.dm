@@ -1066,7 +1066,7 @@
 /datum/blob_upgrade/attack
 	name = "Passive: Attack Upgrade"
 	icon_state = "blob-attack-upgrade"
-	desc = "Increases your attack damage and the chance of mob knockdown. Level 3+ of this upgrade will allow you to punch down girders. Can be repeated."
+	desc = "Increases your attack damage and the chance of mob knockdown. Can be repeated."
 	evo_point_cost = 1
 	scaling_cost_add = 1
 	repeatable = -1
