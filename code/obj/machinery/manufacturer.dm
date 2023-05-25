@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#info {
 				position: absolute;
 				right: 0.5em;
-				top: 0;
+				top: 50px;
 				width: 25%;
 				padding: 0.5em;
 				}
@@ -2652,6 +2652,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/bad_mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
@@ -2917,6 +2918,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/floodlight,
+		/datum/manufacture/powercell,
+		/datum/manufacture/powercellE,
+		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

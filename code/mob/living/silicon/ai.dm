@@ -8,7 +8,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Surprised" = "ai_surprised",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
-	"BSOD" = "ai_bsod",\
+	/*"BSOD" = "ai_bsod", RESERVED FOR BEING DEAD*/\
 	"Text" = "ai_text",\
 	"Text (Inverted)" = "ai_text-inverted",\
 	"Blank" = "ai_blank",\
@@ -195,6 +195,13 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	STOP_TRACKING
 	if (light)
 		light.dispose()
+	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+		if (O.owner == src)
+			O.is_on = FALSE
+			O.owner = null
+			O.emotion = null
+			O.message = null
+			O.face_color = null
 	..()
 
 /mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
@@ -1386,17 +1393,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
-	// Only turn off the status displays if we're dead.
-	if (isdead(src))
-		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (O.owner == src)
-				O.is_on = FALSE
-				O.owner = null
-				O.emotion = null
-				O.message = null
-				O.face_color = null
 	..()
-	return
 
 /mob/living/silicon/ai/say_understands(var/other)
 	if (ishuman(other))

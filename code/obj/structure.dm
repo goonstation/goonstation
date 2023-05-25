@@ -22,9 +22,7 @@ obj/structure
 			desc = "A reinforced metal support for an incomplete wall. Reinforced metal could turn it into a reinforced wall, or it could be disassembled with various tools."
 
 	blob_act(var/power)
-		if (power < 30)
-			return
-		if (prob(power - 29))
+		if (prob(power))
 			qdel(src)
 
 	meteorhit(obj/O as obj)
