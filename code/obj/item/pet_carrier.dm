@@ -16,10 +16,10 @@
 	/// The icon_state for the src.release_animal() actionbar.
 	var/release_animal_icon_state = "carrier-full-open"
 
-	// Grate overlay image.
-	var/image/grate_overlay = null
 	// Alpha mask to cut out the animal on non-transparent pixels.
 	var/carrier_alpha_mask = "carrier-mask"
+	/// Grate object to be held in src.vis_contents
+	var/obj/dummy/grate_proxy
 	/// Proxy object for storing the vis_contents of each occupant, which itself is contained in the vis_contents of the parent carrier.
 	var/obj/dummy/vis_contents_proxy
 
@@ -28,6 +28,15 @@
 	var/grate_closed_icon_state = "grate-closed"
 	var/carrier_front_icon_state = "carrier-front"
 	var/carrier_rear_icon_state = "carrier-rear"
+
+	// Carrier item state names.
+	var/carrier_open_item_state = "carrier-open"
+	var/carrier_closed_item_state = "carrier-closed"
+
+	/// Carrier-related (grate_proxy, vis_contents_proxy) vis_flags.
+	var/carrier_vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+	/// Animal-specific vis_flags.
+	var/animal_vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 
 	/// By default, the carrier can only fit small animals. Override this with FALSE to make it not so.
 	var/small_animals_only = TRUE
@@ -48,10 +57,17 @@
 		// Instantiate the vis_contents proxy for later.
 		src.vis_contents_proxy = new()
 		src.vis_contents_proxy.layer = OBJ_LAYER + 0.001
-		src.vis_contents_proxy.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
+		src.vis_contents_proxy.vis_flags |= src.carrier_vis_flags
 		src.vis_contents_proxy.appearance_flags |= KEEP_TOGETHER
 		src.vis_contents_proxy.add_filter("carrier-mask", 1, alpha_mask_filter(icon = icon(src.icon, src.carrier_alpha_mask)))
 		src.vis_contents.Add(src.vis_contents_proxy)
+
+		// Instantiate the grate.
+		src.grate_proxy = new()
+		src.grate_proxy.icon = src.icon
+		src.grate_proxy.layer = OBJ_LAYER + 0.002
+		src.grate_proxy.vis_flags |= src.carrier_vis_flags
+		src.vis_contents.Add(src.grate_proxy)
 
 		src.UpdateIcon()
 
@@ -86,13 +102,11 @@
 		..()
 		// Update the grate overlay depending on whether or not there's anyone in the carrier.
 		if (length(src.carrier_occupants))
-			src.grate_overlay = new(src.icon, "[src.grate_closed_icon_state]")
-			src.item_state = "carrier-closed"
+			src.grate_proxy.icon_state = "[src.grate_closed_icon_state]"
+			src.item_state = "[src.carrier_closed_item_state]"
 		else
-			src.grate_overlay = new(src.icon, "[src.grate_open_icon_state]")
-			src.item_state = "carrier-open"
-		src.grate_overlay.layer = OBJ_LAYER + 0.002
-		src.UpdateOverlays(src.grate_overlay, "grate")
+			src.grate_proxy.icon_state = "[src.grate_open_icon_state]"
+			src.item_state = "[src.carrier_open_item_state]"
 
 	attack(mob/M, mob/user)
 		if (user.a_intent == INTENT_HARM)
@@ -155,7 +169,7 @@
 			return
 		animal_to_add.remove_pulling()
 		animal_to_add.set_loc(src)
-		animal_to_add.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
+		animal_to_add.vis_flags |= src.animal_vis_flags
 		src.carrier_occupants.Add(animal_to_add)
 		src.vis_contents_proxy.vis_contents.Add(animal_to_add)
 		src.UpdateIcon()
@@ -165,7 +179,7 @@
 		if (!animal_to_eject)
 			return
 		MOVE_OUT_TO_TURF_SAFE(animal_to_eject, src)
-		animal_to_eject.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY)
+		animal_to_eject.vis_flags &= ~(src.animal_vis_flags)
 		src.carrier_occupants.Remove(animal_to_eject)
 		src.vis_contents_proxy.vis_contents.Remove(animal_to_eject)
 		src.UpdateIcon()
