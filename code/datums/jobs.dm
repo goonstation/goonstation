@@ -910,8 +910,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/device/camera_viewer/ranch,/obj/item/storage/box/knitting)
 
-	faction = FACTION_BOTANY
-
 	New()
 		..()
 		src.access = get_access("Rancher")
@@ -1640,6 +1638,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/bee_egg_carton, /obj/item/reagent_containers/food/snacks/beefood, /obj/item/reagent_containers/food/snacks/beefood)
 	alt_names = list("Apiculturist", "Apiarist")
+
+	faction = FACTION_BOTANY
 
 	New()
 		..()
