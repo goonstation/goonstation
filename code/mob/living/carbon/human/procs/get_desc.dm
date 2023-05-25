@@ -13,6 +13,7 @@
 		return // heh
 
 	. = list()
+	. += ..()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
 		sleep(GET_DIST(usr.client.eye, src) + 1)

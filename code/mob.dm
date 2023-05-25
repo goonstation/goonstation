@@ -3216,3 +3216,10 @@
 ///Returns the default HUD of the mob, whatever that may be
 /mob/proc/get_hud()
 	return null
+
+///like step_towards(), but respects move delay etc.
+/mob/proc/step_towards_movedelay(atom/trg)
+	var/move_dir_old = src.move_dir
+	src.move_dir = get_dir(src, trg)
+	src.process_move()
+	src.move_dir = move_dir_old

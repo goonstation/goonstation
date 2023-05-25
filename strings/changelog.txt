@@ -1,4 +1,29 @@
 
+(t)wed may 24 23
+(u)Sord
+(+)The comically large captain's hat can now be recolored using the normal medal rewards.
+(u)pali
+(*)Chaplains can now examine dead mobs to see their last words.<br><small>Possibly subject to change, idk, ping me with feedback.</small>
+(u)DisturbHerb & BatElite & pali
+(*)Floodlights!<br>Engineering lockers now start with one floodlight each (power cell included) and the engineering fabricator can create more (power cell not included but the fab can now make power cells).<br>You can deploy them with a wrench (if you have a floodlight in one hand and a wrench in the other you can just use the light in hand to do this).<br>They use APC power if available and internal power cell if not (they use the large APC power cells).<br>Clickdrag to rotate!
+(u)pali
+(*)In chat options you can now toggle mild highlighting on odd/even lines for better readability
+(u)pali
+(+)Various record programs now show pronouns of the person
+(t)tue may 23 23
+(u)Sord
+(+)You can now make pod mining phasers in the ship component fabricator.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)blobs no longer require level 3 attack to break girders
+(u)Lord_Earthfire
+(p)13617
+(e)🪲⚖💅📦|C-Bug, C-Balance, C-QoL, A-Game-Objects
+(+)Satchels (e.g. mining, produce satchels) cannot hold stacks of items anymore. Stuffing a stack of items splits part of it up into singular items.
+(+)The ore scoop doesn't need two hands to be reloaded anymore. Enjoy quick reloading of your scoop without annoying dropping of mining satchels!
+(u)tue may 23 23
+(u)pali
+(*)AI status screen BSOD now means that the linked AI is dead. AIs can no longer pick BSOD status screen manually.
 (t)mon may 22 23
 (u)Cheffie
 (p)14055

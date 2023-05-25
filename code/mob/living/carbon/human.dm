@@ -1592,6 +1592,7 @@
 	message = messages[1]
 	if(src.client)
 		phrase_log.log_phrase(forced ? "say" : "whisper", message)
+	last_words = message
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
