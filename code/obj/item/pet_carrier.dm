@@ -53,31 +53,30 @@
 		src.vis_contents_proxy.add_filter("carrier-mask", 1, alpha_mask_filter(icon = icon(src.icon, src.carrier_alpha_mask)))
 		src.vis_contents.Add(src.vis_contents_proxy)
 
+		src.UpdateIcon()
+
 		// Spawn a default animal inside if there is one.
 		if (src.default_animal)
 			if (!ispath(src.default_animal, /mob/living/critter/small_animal) && src.small_animals_only)
 				return
 			var/mob/living/spawned_animal = new src.default_animal
-			// There should really be a user-less proc for this.
-			spawned_animal.set_loc(src)
-			src.carrier_occupants.Add(spawned_animal)
-			spawned_animal.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
-			src.vis_contents_proxy.vis_contents.Add(spawned_animal)
-		src.UpdateIcon()
+			if (spawned_animal)
+				src.add_animal(spawned_animal)
 
 	disposing()
 		if (length(src.carrier_occupants))
 			for (var/occupant in src.carrier_occupants)
-				src.release_animal(occupant)
+				src.eject_animal(occupant)
 		src.carrier_occupants = null
 		src.overlays = null
 		..()
 
 	examine()
 		. = ..()
-		if (length(src.carrier_occupants))
+		var/carrier_occupants_length = length(src.carrier_occupants)
+		if (carrier_occupants_length)
 			// Since you'll basically never see this.
-			if (length(src.carrier_occupants) > 1)
+			if (carrier_occupants_length > 1)
 				. += "There's a whole zoo inside!"
 				return
 			else
@@ -92,10 +91,7 @@
 		else
 			src.grate_overlay = new(src.icon, "[src.grate_open_icon_state]")
 			src.item_state = "carrier-open"
-		// src.grate_overlay.layer = OBJ_LAYER + 0.002
-		// Thanks Amy.
-		src.grate_overlay.plane = FLOAT_PLANE
-		src.grate_overlay.layer = FLOAT_LAYER + 1
+		src.grate_overlay.layer = OBJ_LAYER + 0.002
 		src.UpdateOverlays(src.grate_overlay, "grate")
 
 	attack(mob/M, mob/user)
@@ -119,7 +115,10 @@
 		if (length(src.carrier_occupants))
 			// Remove the first animal in the list of occupants.
 			var/mob/living/critter/small_animal/animal_to_remove = src.carrier_occupants[1]
-			actions.start(new /datum/action/bar/icon/pet_carrier(animal_to_remove, src, src.icon, src.release_animal_icon_state, RELEASE_ANIMAL), user)
+			if (animal_to_remove)
+				actions.start(new /datum/action/bar/icon/pet_carrier(animal_to_remove, src, src.icon, src.release_animal_icon_state, RELEASE_ANIMAL), user)
+			else
+				boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
 		..()
 
 	// Ensure that things inside can actually breathe.
@@ -131,33 +130,45 @@
 		var/turf/current_turf = get_turf(src)
 		. = current_turf.return_air()
 
+	/// Called when a given mob/user steals an animal after an actionbar.
 	proc/trap_animal(mob/living/animal_to_trap, mob/user)
 		if (!animal_to_trap)
 			return
 		if (animal_to_trap == user)
 			user.drop_item(src)
-		animal_to_trap.remove_pulling()
-		animal_to_trap.set_loc(src)
-		animal_to_trap.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
-		src.carrier_occupants.Add(animal_to_trap)
-		src.vis_contents_proxy.vis_contents.Add(animal_to_trap)
-		src.UpdateIcon()
+		src.add_animal(animal_to_trap)
 		user.update_inhands()
 
+	/// Called when a given mob/user releases an animal after an actionbar.
 	proc/release_animal(mob/living/animal_to_release, mob/user)
 		// Check if the animal being released exists in the carrier's contents.
-		var/animal_to_releaseExists = FALSE
 		for (var/occupant in src.carrier_occupants)
 			if (occupant == animal_to_release)
-				animal_to_releaseExists = TRUE
-		if (!animal_to_releaseExists)
+				src.eject_animal(animal_to_release)
+				user.update_inhands()
+				return
+		boutput(user, "<span class='alert'>Unable to release anyone from [src]!</span>")
+
+	/// Directly adds a target animal to the carrier.
+	proc/add_animal(mob/living/animal_to_add)
+		if (!animal_to_add)
 			return
-		MOVE_OUT_TO_TURF_SAFE(animal_to_release, src)
-		animal_to_release.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY)
-		src.carrier_occupants.Remove(animal_to_release)
-		src.vis_contents_proxy.vis_contents.Remove(animal_to_release)
+		animal_to_add.remove_pulling()
+		animal_to_add.set_loc(src)
+		animal_to_add.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
+		src.carrier_occupants.Add(animal_to_add)
+		src.vis_contents_proxy.vis_contents.Add(animal_to_add)
 		src.UpdateIcon()
-		user.update_inhands()
+
+	/// Directly ejects a target animal from the carrier.
+	proc/eject_animal(mob/living/animal_to_eject)
+		if (!animal_to_eject)
+			return
+		MOVE_OUT_TO_TURF_SAFE(animal_to_eject, src)
+		animal_to_eject.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY)
+		src.carrier_occupants.Remove(animal_to_eject)
+		src.vis_contents_proxy.vis_contents.Remove(animal_to_eject)
+		src.UpdateIcon()
 
 /obj/item/pet_carrier/jones
 	default_animal = /mob/living/critter/small_animal/cat/jones
