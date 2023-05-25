@@ -1293,7 +1293,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.charge -= 5
+					src.cell.use(5)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")

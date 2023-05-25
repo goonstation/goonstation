@@ -2262,20 +2262,20 @@ TYPEINFO(/obj/item/cargotele)
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
