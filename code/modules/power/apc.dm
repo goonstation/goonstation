@@ -1432,7 +1432,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if(!get_connection() || !operating || shorted)
 		return
 	if( cell?.charge>=20)
-		cell.charge-=20;
+		cell.use(20)
 		SPAWN(0)
 			for(var/obj/machinery/light/L in area)
 				if (L.type == /obj/machinery/light/emergency && omit_emergency_lights)

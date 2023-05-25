@@ -1921,7 +1921,7 @@
 				src.show_text("You do not have a power cell!", "red")
 				return
 			if (src.cell.charge >= upgrade.drainrate)
-				src.cell.charge -= upgrade.drainrate
+				src.cell.use(upgrade.drainrate)
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
 				return

@@ -756,6 +756,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				//Update Information
 				R["name"] = M.name
 				R["sex"] = M.gender
+				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
@@ -773,6 +774,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			//Update Information
 			src.active1["name"] = M.name
 			src.active1["sex"] = M.gender
+			src.active1["pronouns"] = M.get_pronouns().name
 			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)

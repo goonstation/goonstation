@@ -765,15 +765,15 @@ Frequency:
 				src.module_states[1] = null
 				src.module_states[2] = null
 				src.module_states[3] = null
-				src.cell.charge -=1
+				src.cell.use(1)
 			else
 				if (src.module_states[1])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[2])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[3])
-					src.cell.charge -=1
-				src.cell.charge -=1
+					src.cell.use(1)
+				src.cell.use(1)
 				setalive(src)
 		else
 			if (isalive(src))

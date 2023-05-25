@@ -27,6 +27,7 @@ var opts = {
     'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
 	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
+    'msgOdd': false, //Is the last message odd or even?
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -36,6 +37,7 @@ var opts = {
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
     'messageLimitEnabled': true, // whether old messages get deleted
+	'oddMsgHighlight': false, // whether odd messages get highlighted
 
     //Ping display
     'pingCounter': 0, //seconds counter
@@ -278,6 +280,12 @@ function output(message, group, skipNonEssential, forceScroll) {
 			if (!addedClass) {
 				entry.className += ' misc';
 			}
+
+			if (opts.msgOdd && opts.oddMsgHighlight) {
+				entry.className += ' odd-highlight';
+			}
+
+			opts.msgOdd = !opts.msgOdd;
 
             entry.innerHTML = message;
             $lastEntry = $($messages[0].appendChild(entry));
@@ -596,7 +604,8 @@ $(function() {
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
-        'smessageLimitEnabled': getCookie('messageLimitEnabled')
+        'smessageLimitEnabled': getCookie('messageLimitEnabled'),
+		'soddMsgHighlight': getCookie('oddMsgHighlight')
     };
 
     if (savedConfig.sfontSize) {
@@ -638,6 +647,9 @@ $(function() {
     if (savedConfig.smessageLimitEnabled) {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
+	if (savedConfig.soddMsgHighlight) {
+		opts.oddMsgHighlight = savedConfig.soddMsgHighlight;
+	}
 
     (function() {
         var dataCookie = getCookie('connData');
@@ -885,6 +897,12 @@ $(function() {
         setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
         output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
     });
+
+	$('#toggleOddMsgHighlight').click(function(e) {
+		opts.oddMsgHighlight = !opts.oddMsgHighlight;
+		setCookie('oddMsgHighlight', opts.oddMsgHighlight, 365);
+		output('<span class="internal boldnshit">'+(opts.oddMsgHighlight ? 'Odd messages will be highlighted.' : 'Odd messages will no longer be highlighted.')+'</span>');
+	});
 
     $('#saveLog').click(function(e) {
         var saved = '';

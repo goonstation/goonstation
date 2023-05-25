@@ -195,7 +195,7 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L)) // we don't care about critters
 					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
@@ -2262,20 +2262,20 @@ TYPEINFO(/obj/item/cargotele)
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
@@ -2488,11 +2488,14 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
-				if (satchel)
-					user.put_in_hand_or_drop(satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
 				S.set_loc(src)
-				satchel = S
-				icon_state = "scoop-bag"
+				src.satchel = S
+				if (old_satchel)
+					user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
 				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
@@ -2526,9 +2529,32 @@ TYPEINFO(/obj/item/ore_scoop)
 			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
-			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
-			src.attackby(target, user)
-			user.swap_hand()
+			if (!issilicon(user))
+				var/obj/item/satchel/mining/new_satchel = target
+				var/atom/old_location = null //this stores the old location so we know where the clicked item came from
+				var/was_stored = FALSE //For stuff with storage datums, we can move the item to that storage
+				if (new_satchel.stored)
+					old_location = new_satchel.stored.linked_item
+					was_stored = TRUE
+				else
+					old_location = new_satchel.loc
+				if (ismob(old_location) && !was_stored)
+					var/mob/old_user = old_location
+					old_user.drop_item(new_satchel) // not only user since you could click on a satchel carried by someone else... ugh
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
+				new_satchel.set_loc(src)
+				src.satchel = new_satchel
+				if (old_satchel && old_location)
+					if (was_stored) //if the old satchel was in a storage item, the new item should fit as well
+						old_location.storage.add_contents(old_satchel, user, FALSE)
+					else
+						user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
