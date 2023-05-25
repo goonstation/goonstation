@@ -143,34 +143,7 @@
 	src.hand = !src.hand
 
 /mob/living/carbon/lastgasp(allow_dead=FALSE)
-	set waitfor = FALSE
-	if (!allow_dead && !isalive(src)) return
-	if (src.disposed || !src.client) return // break if it's an npc or a disconnected player
-	var/found_text = FALSE
-	var/enteredtext = winget(src, "mainwindow.input", "text") // grab the text from the input bar
-	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
-		winset(src, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
-		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
-		if (length(enteredtext))
-			found_text = TRUE
-	if (!found_text)
-		enteredtext = winget(src, "saywindow.say-input", "text")
-		if (length(enteredtext))
-			winset(src, "saywindow.say-input", "text=\"\"")
-			winset(src, "saywindow", "is-visible=false")
-			src.cancel_typing("say")
-			found_text = TRUE
-	if (found_text)
-		if (length(enteredtext) > 20)
-			enteredtext = copytext(enteredtext, 1, length(enteredtext) - rand(1, 10))
-		var/grunt = pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK") // pick a grunt to append
-		var/message = enteredtext + "--" + grunt
-		logTheThing(LOG_SAY, src, "lastgasp SAY: [html_encode(message)] [log_loc(src)]")
-		var/old_stat = src.stat
-		setalive(src) // okay so we need to be temporarily alive for this in case it's happening as we were dying...
-		src.say(message, ignore_stamina_winded = 1) // say the thing they were typing and grunt
-		src.stat = old_stat // back to being dead 😌
-
+	..(allow_dead, grunt=pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK") )
 
 
 /mob/living/carbon/full_heal()
