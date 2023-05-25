@@ -708,7 +708,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	icon_state = "mapwall"
-	ight_mod = "wall-"
+	light_mod = "wall-"
 	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
