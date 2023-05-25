@@ -441,6 +441,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	explosion_resistance = 11
 
+TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
+	connect_overlay = 0
+
 /turf/simulated/wall/auto/supernorn/wood
 	icon_state = "mapwall$$wood"
 	default_material = "wood"
