@@ -954,7 +954,10 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/martian)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 	. = ..()
 	connect_overlay = 0
-	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian, /turf/unsimulated/wall/auto/adventure/martian/exterior,/obj/indestructible/shuttle_corner))
+	connects_to = typecacheof(list(
+		/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian,
+		/obj/indestructible/shuttle_corner, /turf/simulated/wall/auto/martian))
+
 /turf/unsimulated/wall/auto/adventure/martian
 	name = "organic wall"
 	icon = 'icons/turf/walls_martian.dmi'
@@ -962,7 +965,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 
 	exterior
 		mod = "martout-"
-
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/iomoon)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/iomoon)
