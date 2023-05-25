@@ -1,4 +1,9 @@
 
+(t)thu may 25 23
+(u)Amylizzle
+(p)14156
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)The singularity has received a visual overhaul. Tell someone in #imcoder if it makes your framerate suck. Bendy space.
 (t)wed may 24 23
 (u)Sord
 (+)The comically large captain's hat can now be recolored using the normal medal rewards.
