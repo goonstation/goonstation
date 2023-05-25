@@ -5,17 +5,6 @@
 "ab" = (
 /turf/space,
 /area/noGenerate)
-"ac" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/wall{
-	dir = 8;
-	icon_state = "diagonalWall"
-	},
-/area/noGenerate)
 "ad" = (
 /obj/machinery/door/unpowered/martian,
 /obj/lattice,
@@ -50,7 +39,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "aw" = (
-/turf/unsimulated/wall/auto/adventure/martian/exterior,
+/turf/simulated/wall/auto/martian,
 /area/noGenerate)
 "ax" = (
 /obj/machinery/light_switch{
@@ -399,17 +388,6 @@
 /obj/item/scrap,
 /obj/landmark/artifact,
 /turf/simulated/floor/plating/damaged3,
-/area/noGenerate)
-"jT" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/wall{
-	dir = 5;
-	icon_state = "diagonalWall"
-	},
 /area/noGenerate)
 "jZ" = (
 /obj/machinery/door/poddoor{
@@ -1126,7 +1104,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "qE" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/genetics)
 "qH" = (
 /obj/machinery/power/data_terminal,
@@ -1313,7 +1291,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "rQ" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
 "rS" = (
 /obj/crevice{
@@ -1853,9 +1831,6 @@
 	dir = 4
 	},
 /area/mining/hangar)
-"vf" = (
-/turf/unsimulated/wall/auto/adventure/martian/exterior,
-/area/space)
 "vj" = (
 /obj/grille/catwalk,
 /obj/rail{
@@ -1891,7 +1866,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "vw" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/chapel)
 "vz" = (
 /obj/grille/catwalk{
@@ -2187,7 +2162,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/atmospherics)
 "xb" = (
 /obj/machinery/firealarm{
@@ -2535,9 +2510,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/south,
 /area/mining/hangar)
-"yX" = (
-/turf/unsimulated/wall/auto/adventure/martian/exterior,
-/area/evilreaver/security)
 "yY" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
@@ -3372,7 +3344,7 @@
 /turf/simulated/floor,
 /area/mining/quarters)
 "Ej" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
 "Ek" = (
 /obj/grille/catwalk,
@@ -3423,7 +3395,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Ey" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
 "EJ" = (
 /obj/lattice{
@@ -4121,9 +4093,6 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
-"IB" = (
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/evilreaver/bar)
 "ID" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
@@ -4162,7 +4131,7 @@
 "IS" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
 "IT" = (
 /obj/table/auto,
@@ -5272,7 +5241,7 @@
 /area/tech_outpost)
 "Qi" = (
 /obj/map/light/white,
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/noGenerate)
 "Qm" = (
 /obj/grille/catwalk{
@@ -5990,9 +5959,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/mining/quarters)
-"US" = (
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/noGenerate)
 "UT" = (
 /turf/simulated/floor/black,
 /area/mining/hangar)
@@ -6081,9 +6047,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
-"Vr" = (
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/martian_trader)
 "Vu" = (
 /turf/space,
 /turf/simulated/wall/auto/asteroid{
@@ -6182,7 +6145,7 @@
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
 "Wm" = (
-/turf/unsimulated/wall/auto/adventure/martian/exterior,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/bar)
 "Wo" = (
 /obj/decal/cleanable/machine_debris,
@@ -6371,7 +6334,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
 "Xs" = (
 /obj/machinery/portable_reclaimer,
@@ -6523,7 +6486,7 @@
 "Ys" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
 "Yt" = (
 /obj/decal/floatingtiles{
@@ -6609,7 +6572,7 @@
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "YW" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
 "YZ" = (
 /obj/cable{
@@ -6694,7 +6657,7 @@
 "Zw" = (
 /obj/decal/aliencomputer,
 /obj/map/light/dimred,
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/evilreaver/security)
 "Zx" = (
 /obj/decal/cleanable/dirt,
@@ -14127,8 +14090,8 @@ ab
 ab
 ab
 ab
-ac
-jT
+NG
+dK
 ab
 ab
 ab
@@ -14430,11 +14393,11 @@ ab
 ab
 NG
 aw
-US
+aw
 To
 To
 To
-US
+aw
 aw
 dK
 ab
@@ -14731,13 +14694,13 @@ ab
 ab
 Kx
 aw
-US
+aw
 lx
 To
 To
 To
 pH
-US
+aw
 aw
 ab
 ab
@@ -15032,19 +14995,19 @@ ab
 ab
 ab
 aw
-US
-US
+aw
+aw
 Oo
 To
 To
 To
 To
-US
+aw
 aw
 vF
 ab
 Kx
-vf
+vw
 vM
 vM
 vM
@@ -15335,14 +15298,14 @@ ab
 ab
 Rk
 aw
-US
+aw
 lM
 To
 To
 To
 pL
-US
-US
+aw
+aw
 aw
 aw
 aw
@@ -15353,12 +15316,12 @@ Aw
 Bb
 vw
 Gv
-IB
-IB
-IB
-IB
-IB
-IB
+Wm
+Wm
+Wm
+Wm
+Wm
+Wm
 aw
 dK
 ab
@@ -15637,13 +15600,13 @@ ab
 ab
 ab
 aw
-US
+aw
 nl
 To
 To
 To
 Uz
-Vr
+YW
 YW
 YW
 YW
@@ -15660,8 +15623,8 @@ Yy
 cm
 St
 xM
-IB
-IB
+Wm
+Wm
 aw
 vF
 ab
@@ -15939,12 +15902,12 @@ ab
 ab
 ab
 aw
-US
-US
+aw
+aw
 Qi
 Rp
-US
-US
+aw
+aw
 YW
 YW
 qT
@@ -15963,8 +15926,8 @@ KP
 bn
 kz
 xM
-IB
-IB
+Wm
+Wm
 aw
 ab
 ab
@@ -16241,12 +16204,12 @@ ab
 ab
 ab
 Rk
-US
-US
-US
+aw
+aw
+aw
 UM
-US
-US
+aw
+aw
 YW
 Xa
 ru
@@ -16265,8 +16228,8 @@ yh
 KP
 Yz
 LM
-IB
-IB
+Wm
+Wm
 aw
 vF
 ab
@@ -16543,12 +16506,12 @@ ab
 ab
 ab
 ab
-US
-US
+aw
+aw
 Qc
 UM
-US
-US
+aw
+aw
 YW
 Xd
 rx
@@ -16567,8 +16530,8 @@ iW
 yh
 YB
 Fr
-IB
-IB
+Wm
+Wm
 Wm
 aw
 ab
@@ -16845,12 +16808,12 @@ ab
 ab
 ab
 Kx
-US
-US
+aw
+aw
 nH
 UM
-US
-US
+aw
+aw
 YW
 qs
 rG
@@ -16870,8 +16833,8 @@ Gv
 or
 Gv
 Gv
-IB
-IB
+Wm
+Wm
 aw
 ab
 ab
@@ -17147,12 +17110,12 @@ ab
 ab
 ab
 aw
-US
-US
+aw
+aw
 nR
-US
-US
-US
+aw
+aw
+aw
 XJ
 Xr
 Yr
@@ -17448,13 +17411,13 @@ ab
 ab
 ab
 Kx
-US
-US
+aw
+aw
 Qc
 UM
 oz
 Qi
-US
+aw
 XJ
 Xx
 Yf
@@ -17749,8 +17712,8 @@ ab
 ab
 ab
 Kx
-US
-US
+aw
+aw
 Qc
 Oq
 UM
@@ -18051,8 +18014,8 @@ ab
 ab
 ab
 aw
-US
-US
+aw
+aw
 MA
 Ug
 Ug
@@ -18353,7 +18316,7 @@ ab
 ab
 ab
 aw
-US
+aw
 Qi
 MI
 Ou
@@ -18655,8 +18618,8 @@ ab
 ab
 ab
 aw
-US
-US
+aw
+aw
 MM
 OA
 nW
@@ -18957,7 +18920,7 @@ ab
 ab
 ab
 Rk
-US
+aw
 XJ
 je
 OD
@@ -19262,7 +19225,7 @@ ab
 Rk
 XJ
 XJ
-US
+aw
 Qi
 oD
 UM
@@ -19564,11 +19527,11 @@ ab
 ab
 SX
 XJ
-US
-US
-US
+aw
+aw
+aw
 UM
-US
+aw
 XJ
 XJ
 YW
@@ -19589,7 +19552,7 @@ Kt
 AU
 Ej
 Ej
-yX
+Ej
 aw
 ab
 ab
@@ -22598,7 +22561,7 @@ ab
 ab
 ab
 Rk
-US
+aw
 Ey
 Ey
 Ys

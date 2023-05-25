@@ -67140,14 +67140,6 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base)
-"fmw" = (
-/obj/decal/aliencomputer{
-	desc = "This appears to be some sort of martian computer. Or maybe a television.  Or an arcade machine.  Who the hell knows?";
-	icon_state = "display_off";
-	pixel_x = 30
-	},
-/turf/unsimulated/martian/floor,
-/area/crunch)
 "fnl" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -67371,18 +67363,6 @@
 	name = "broken door"
 	},
 /area/meat_derelict/soviet)
-"fFc" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/turf/simulated/martian/wall{
-	dir = 8;
-	icon_state = "diagonalWall"
-	},
-/area/crunch)
 "fFv" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -68858,18 +68838,6 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
-"ihi" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/turf/simulated/martian/wall{
-	dir = 1;
-	icon_state = "diagonalWall"
-	},
-/area/crunch)
 "iho" = (
 /obj/machinery/computer3/generic/personal/personel_alt{
 	pixel_y = 7
@@ -70047,9 +70015,7 @@
 /turf/space,
 /area/syndicate_station_space)
 "kbk" = (
-/obj/decal/aliencomputer{
-	desc = "This appears to be some sort of martian computer. A broken one, at that.";
-	icon_state = "display_broken";
+/obj/decal/aliencomputer/broken{
 	pixel_y = 30
 	},
 /turf/unsimulated/martian/floor,
@@ -73504,9 +73470,7 @@
 	},
 /area/centcom/offices/pali)
 "pAL" = (
-/obj/decal/aliencomputer{
-	desc = "This appears to be some sort of martian computer. A broken one, at that.";
-	icon_state = "display_broken";
+/obj/decal/aliencomputer/off{
 	pixel_x = 30
 	},
 /turf/unsimulated/martian/floor,
@@ -77152,18 +77116,6 @@
 /mob/living/critter/small_animal/firefly/ai_controlled,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
-"vtS" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/turf/simulated/martian/wall{
-	dir = 5;
-	icon_state = "diagonalWall"
-	},
-/area/crunch)
 "vug" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 8
@@ -77582,6 +77534,12 @@
 /obj/item/ammo/ammobox/shootingrange,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
+"wjl" = (
+/obj/decal/aliencomputer/off{
+	pixel_y = 30
+	},
+/turf/unsimulated/martian/floor,
+/area/crunch)
 "wjn" = (
 /obj/item/cable_coil,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -78428,18 +78386,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
-"xxK" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/turf/simulated/martian/wall{
-	dir = 4;
-	icon_state = "diagonalWall"
-	},
-/area/crunch)
 "xya" = (
 /obj/item/reagent_containers/food/snacks/beefood{
 	pixel_x = -5;
@@ -78706,14 +78652,6 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
-"xTo" = (
-/obj/decal/aliencomputer{
-	desc = "This appears to be some sort of martian computer. Or maybe a television.  Or an arcade machine.  Who the hell knows?";
-	icon_state = "display_off";
-	pixel_y = -30
-	},
-/turf/unsimulated/martian/floor,
-/area/crunch)
 "xTO" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1
@@ -81930,10 +81868,10 @@ bKw
 bKw
 bKw
 bTU
-xxK
+tdn
 rtI
 rtI
-ihi
+noq
 bTU
 bTU
 bIY
@@ -82236,7 +82174,7 @@ rtI
 rtI
 rtI
 rtI
-ihi
+noq
 bTU
 bIY
 bIY
@@ -82534,7 +82472,7 @@ bKw
 bRa
 bKw
 bTU
-vtS
+oLy
 rtI
 rtI
 rtI
@@ -82837,14 +82775,14 @@ bKw
 bKw
 agw
 bTU
-vtS
+oLy
 rtI
 rtI
 rtI
 bTU
-xxK
+tdn
 rtI
-ihi
+noq
 bTU
 tZy
 rtI
@@ -83140,9 +83078,9 @@ bKw
 bKw
 bTU
 bTU
-vtS
+oLy
 rtI
-fmw
+pAL
 bTU
 rtI
 rtI
@@ -83456,7 +83394,7 @@ rtI
 bTU
 uKg
 rtI
-fFc
+sHX
 bTU
 oLy
 pAL
@@ -83754,9 +83692,9 @@ rtI
 bTU
 hQy
 rtI
-xTo
-bTU
 rtI
+bTU
+wjl
 rtI
 bTU
 bTU
@@ -84050,9 +83988,9 @@ bTU
 rtI
 rtI
 bTU
-vtS
+oLy
 rtI
-fFc
+sHX
 bTU
 oLy
 rtI
@@ -84351,7 +84289,7 @@ bIY
 bTU
 owK
 rtI
-ihi
+noq
 bTU
 wJM
 bTU
@@ -84664,7 +84602,7 @@ rtI
 rtI
 rtI
 rtI
-fFc
+sHX
 bTU
 bTU
 aDC
@@ -84953,14 +84891,14 @@ bIY
 bIY
 bIY
 bTU
-vtS
+oLy
 rtI
 rtI
 rtI
 riK
 rtI
 rtI
-fmw
+pAL
 rtI
 rtI
 rtI
@@ -85258,7 +85196,7 @@ bTU
 bTU
 uKg
 rtI
-fFc
+sHX
 bTU
 bTU
 bTU
