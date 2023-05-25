@@ -383,7 +383,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	proc/knock_stuff_off_table()
 		var/list/obj/item/items_here = list()
 		for (var/obj/item/item_here in src.loc)
-			items_here += item_here
+			if (!item_here.anchored)
+				items_here += item_here
 		var/list/target_turfs = list()
 		for (var/turf/T in range(1, src))
 			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
