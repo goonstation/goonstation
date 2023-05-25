@@ -1,5 +1,7 @@
 
 (t)thu may 25 23
+(u)pali
+(*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.
 (u)Amylizzle
 (p)14156
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
