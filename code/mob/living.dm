@@ -2221,7 +2221,7 @@
 			enteredtext = winget(client, "[window_type]window.say-input", "text")
 			if (isnull(client)) return
 			if (length(enteredtext))
-				if (winow_type == "radiosay")
+				if (window_type == "radiosay")
 					enteredtext = ";" + enteredtext
 				winset(client, "[window_type]window.say-input", "text=\"\"")
 				if (isnull(client)) return
