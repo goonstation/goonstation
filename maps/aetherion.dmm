@@ -1705,9 +1705,8 @@
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
 "fQ" = (
-/obj/machinery/door/airlock/pyro/reinforced,
-/turf/simulated/floor/blue/checker,
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor/plating/airless,
+/area/station/routing/security)
 "fS" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1;
@@ -3460,6 +3459,10 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw)
 "lJ" = (
@@ -3794,8 +3797,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "mM" = (
-/turf/simulated/floor/blue/checker,
-/area/station/hallway/secondary/entry)
+/turf/simulated/floor/plating/airless,
+/area/station/routing/medsci{
+	name = "Research Router"
+	})
 "mN" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4048,12 +4053,6 @@
 "nE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/showers)
-"nG" = (
-/obj/machinery/door/airlock/pyro/reinforced{
-	dir = 8
-	},
-/turf/simulated/floor/blue/checker,
-/area/station/hallway/secondary/entry)
 "nH" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8
@@ -5863,11 +5862,9 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "ui" = (
-/obj/machinery/mass_driver{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/nw)
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/station/routing/engine)
 "uj" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/storage)
@@ -7606,12 +7603,10 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/solitary)
 "Al" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/nw)
+/turf/simulated/floor/plating/airless,
+/area/station/routing{
+	name = "Medical Router"
+	})
 "Am" = (
 /obj/machinery/vending/hydroponics,
 /turf/simulated/floor,
@@ -7794,7 +7789,10 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "AR" = (
-/obj/machinery/launcher_loader/east,
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/routing/engine)
 "AS" = (
@@ -8076,8 +8074,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "BK" = (
-/obj/grille/steel,
-/turf/space,
+/turf/simulated/floor/plating/airless,
 /area/station/routing)
 "BL" = (
 /turf/simulated/floor/black,
@@ -11328,6 +11325,10 @@
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
+	},
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
 	},
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -42328,7 +42329,7 @@ Pa
 Pa
 Pa
 Pa
-Pa
+VS
 VS
 VS
 VS
@@ -42630,7 +42631,7 @@ yd
 Cw
 OV
 hu
-Pa
+VS
 VS
 VS
 VS
@@ -42932,7 +42933,7 @@ YJ
 YJ
 sW
 hw
-Pa
+VS
 VS
 VS
 VS
@@ -43171,9 +43172,9 @@ VS
 DH
 pE
 sy
-DH
+eD
 BK
-DH
+VS
 VS
 VS
 VS
@@ -43209,10 +43210,10 @@ VS
 VS
 VS
 VS
-VS
+ui
 AR
 Wn
-VS
+ui
 VS
 VS
 VS
@@ -43229,12 +43230,12 @@ VS
 VS
 VS
 VS
-Pa
+VS
+fQ
 Fu
-Pa
 sY
 hw
-Pa
+VS
 VS
 VS
 VS
@@ -43473,7 +43474,7 @@ VS
 DH
 IC
 sy
-eD
+BK
 VS
 VS
 VS
@@ -43533,10 +43534,10 @@ VS
 VS
 VS
 VS
-Fu
+fQ
 Dc
 hw
-Pa
+VS
 VS
 VS
 VS
@@ -43775,7 +43776,7 @@ VS
 DH
 IC
 sy
-DH
+VS
 VS
 VS
 VS
@@ -43814,8 +43815,8 @@ RB
 vd
 Lc
 iu
-Al
-ui
+oc
+Bf
 iu
 VS
 VS
@@ -43835,10 +43836,10 @@ VS
 VS
 VS
 VS
-Pa
+VS
 Dc
 hw
-Pa
+VS
 VS
 VS
 VS
@@ -44116,8 +44117,8 @@ RB
 RB
 Lc
 iu
-oc
-Bf
+bS
+hl
 iu
 VS
 VS
@@ -44418,8 +44419,8 @@ RB
 RB
 Lc
 iu
-bS
-hl
+Vy
+Vy
 iu
 VS
 VS
@@ -55349,11 +55350,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -55651,11 +55652,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -55953,11 +55954,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -56255,11 +56256,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -56557,11 +56558,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -56859,11 +56860,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -57162,9 +57163,6 @@ VS
 VS
 VS
 VS
-to
-nG
-to
 VS
 dY
 dY
@@ -57172,6 +57170,9 @@ dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -57465,15 +57466,15 @@ Ce
 Ce
 Ce
 to
-mM
-to
-to
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -57767,15 +57768,15 @@ gq
 gq
 Pj
 vx
-mM
-mM
-fQ
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -58069,15 +58070,15 @@ CJ
 CJ
 BF
 to
-to
-to
-to
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -58368,18 +58369,18 @@ LK
 Ce
 Ce
 Ce
-Ce
+to
 wr
-Ce
+to
+dY
+dY
+dY
+dY
+dY
+dY
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
-dY
 VS
 VS
 VS
@@ -60784,18 +60785,18 @@ LK
 Ce
 Ce
 Ce
-Ce
+to
 wr
-Ce
+to
+dY
+dY
+dY
+dY
+dY
+dY
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
-dY
 VS
 VS
 VS
@@ -61089,15 +61090,15 @@ Ap
 Ap
 ZP
 to
-to
-to
-to
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -61391,15 +61392,15 @@ pX
 pX
 qJ
 vx
-mM
-mM
-fQ
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -61693,15 +61694,15 @@ Ce
 Ce
 Ce
 to
-mM
-to
-to
 dY
 dY
 dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -61994,9 +61995,6 @@ VS
 VS
 VS
 VS
-to
-nG
-to
 VS
 dY
 dY
@@ -62004,6 +62002,9 @@ dY
 dY
 dY
 dY
+VS
+VS
+VS
 VS
 VS
 VS
@@ -62295,11 +62296,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -62597,11 +62598,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -62899,11 +62900,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -63201,11 +63202,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -63503,11 +63504,11 @@ VS
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -63805,11 +63806,11 @@ Fe
 VS
 VS
 VS
-dY
-dY
-dY
-dY
-dY
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -65314,12 +65315,12 @@ Fe
 VS
 VS
 VS
-Wf
-Wf
-Wf
-Wf
-Wf
-Wf
+VS
+VS
+VS
+VS
+VS
+VS
 VS
 VS
 VS
@@ -68237,8 +68238,8 @@ VS
 NW
 SA
 Dv
-NW
-NW
+mM
+VS
 VS
 VS
 VS
@@ -68540,7 +68541,7 @@ NW
 SA
 by
 VK
-NW
+mM
 VS
 VS
 VS
@@ -69446,7 +69447,7 @@ NW
 DS
 IE
 VK
-NW
+mM
 VS
 VS
 VS
@@ -69747,8 +69748,8 @@ VS
 NW
 yT
 IE
-NW
-NW
+mM
+VS
 VS
 VS
 VS
@@ -77901,7 +77902,6 @@ VS
 DH
 wT
 ku
-DH
 VS
 VS
 VS
@@ -77954,12 +77954,13 @@ VS
 VS
 VS
 VS
-Wj
+VS
+VS
 YH
-Wj
-Wj
+VS
+VS
 Xz
-Wj
+VS
 VS
 VS
 VS
@@ -78000,7 +78001,7 @@ VS
 VS
 VS
 VS
-DH
+BK
 wT
 ku
 DH
@@ -78203,7 +78204,7 @@ VS
 DH
 wT
 ku
-eD
+BK
 VS
 VS
 VS
@@ -78256,12 +78257,12 @@ VS
 VS
 VS
 VS
-YV
+Al
 YH
-YV
-YV
+Al
+Al
 Xz
-YV
+Al
 VS
 VS
 VS
@@ -78302,7 +78303,7 @@ VS
 VS
 VS
 VS
-eD
+BK
 wT
 ku
 DH
@@ -78505,9 +78506,8 @@ VS
 DH
 wT
 Dh
-DH
 eD
-DH
+BK
 VS
 VS
 VS
@@ -78556,16 +78556,17 @@ VS
 VS
 VS
 VS
-Wj
+VS
+VS
+Al
 YV
-Wj
 YH
-Wj
-Wj
-TF
-Wj
 YV
-Wj
+YV
+TF
+YV
+Al
+VS
 VS
 VS
 VS
@@ -78602,9 +78603,9 @@ VS
 VS
 VS
 VS
-DH
+BK
+BK
 eD
-DH
 wT
 Dh
 DH
