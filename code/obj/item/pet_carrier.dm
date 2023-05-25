@@ -20,6 +20,8 @@
 	var/image/grate_overlay = null
 	// Alpha mask to cut out the animal on non-transparent pixels.
 	var/carrier_alpha_mask = "carrier-mask"
+	/// Proxy object for storing the vis_contents of each occupant, which itself is contained in the vis_contents of the parent carrier.
+	var/obj/dummy/vis_contents_proxy
 
 	// Overlay and base icon state names.
 	var/grate_open_icon_state = "grate-open"
@@ -42,11 +44,25 @@
 		src.icon_state = "[src.carrier_rear_icon_state]"
 		var/image/carrier_front_overlay = new(src.icon, "[src.carrier_front_icon_state]")
 		src.UpdateOverlays(carrier_front_overlay, "carrier_front")
+
+		// Instantiate the vis_contents proxy for later.
+		src.vis_contents_proxy = new()
+		src.vis_contents_proxy.layer = OBJ_LAYER + 0.001
+		src.vis_contents_proxy.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
+		src.vis_contents_proxy.appearance_flags |= KEEP_TOGETHER
+		src.vis_contents_proxy.add_filter("carrier-mask", 1, alpha_mask_filter(icon = icon(src.icon, src.carrier_alpha_mask)))
+		src.vis_contents.Add(src.vis_contents_proxy)
+
 		// Spawn a default animal inside if there is one.
-		if (ismob(src.default_animal))
-			if (!issmallanimal(src.default_animal) && src.small_animals_only)
+		if (src.default_animal)
+			if (!ispath(src.default_animal, /mob/living/critter/small_animal) && src.small_animals_only)
 				return
-			src.carrier_occupants.Add(new src.default_animal)
+			var/mob/living/spawned_animal = new src.default_animal
+			// There should really be a user-less proc for this.
+			spawned_animal.set_loc(src)
+			src.carrier_occupants.Add(spawned_animal)
+			spawned_animal.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
+			src.vis_contents_proxy.vis_contents.Add(spawned_animal)
 		src.UpdateIcon()
 
 	disposing()
@@ -76,7 +92,10 @@
 		else
 			src.grate_overlay = new(src.icon, "[src.grate_open_icon_state]")
 			src.item_state = "carrier-open"
-		src.grate_overlay.layer = src.layer + 0.001
+		// src.grate_overlay.layer = OBJ_LAYER + 0.002
+		// Thanks Amy.
+		src.grate_overlay.plane = FLOAT_PLANE
+		src.grate_overlay.layer = FLOAT_LAYER + 1
 		src.UpdateOverlays(src.grate_overlay, "grate")
 
 	attack(mob/M, mob/user)
@@ -103,17 +122,25 @@
 			actions.start(new /datum/action/bar/icon/pet_carrier(animal_to_remove, src, src.icon, src.release_animal_icon_state, RELEASE_ANIMAL), user)
 		..()
 
+	// Ensure that things inside can actually breathe.
+	remove_air(amount)
+		var/turf/current_turf = get_turf(src)
+		. = current_turf.remove_air(amount)
+
+	return_air()
+		var/turf/current_turf = get_turf(src)
+		. = current_turf.return_air()
+
 	proc/trap_animal(mob/living/animal_to_trap, mob/user)
 		if (!animal_to_trap)
 			return
-		if (animal_to_trap = user)
+		if (animal_to_trap == user)
 			user.drop_item(src)
 		animal_to_trap.remove_pulling()
 		animal_to_trap.set_loc(src)
-		animal_to_trap.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR
-		animal_to_trap.add_filter("carrier-mask", 20, alpha_mask_filter(icon = icon(src.icon, src.carrier_alpha_mask)))
+		animal_to_trap.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY
 		src.carrier_occupants.Add(animal_to_trap)
-		src.vis_contents.Add(animal_to_trap)
+		src.vis_contents_proxy.vis_contents.Add(animal_to_trap)
 		src.UpdateIcon()
 		user.update_inhands()
 
@@ -126,12 +153,14 @@
 		if (!animal_to_releaseExists)
 			return
 		MOVE_OUT_TO_TURF_SAFE(animal_to_release, src)
-		animal_to_release.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_DIR)
-		animal_to_release.remove_filter("carrier-mask")
+		animal_to_release.vis_flags &= ~(VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_UNDERLAY)
 		src.carrier_occupants.Remove(animal_to_release)
-		src.vis_contents.Remove(animal_to_release)
+		src.vis_contents_proxy.vis_contents.Remove(animal_to_release)
 		src.UpdateIcon()
 		user.update_inhands()
+
+/obj/item/pet_carrier/jones
+	default_animal = /mob/living/critter/small_animal/cat/jones
 
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
