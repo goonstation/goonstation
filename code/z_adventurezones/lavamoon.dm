@@ -1226,6 +1226,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	icon_state = "wall_embed"
 	desc = "A section of this wall appears to be missing. Entering it might take you somewhere."
 	plane = PLANE_WALL
+	var/hidden = FALSE
 
 /obj/ladder/embed/climb(mob/user as mob)
 	var/obj/ladder/otherLadder = src.get_other_ladder()
@@ -1234,6 +1235,31 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		return
 	boutput(user, "You enter the gap in the wall.")
 	user.set_loc(get_turf(otherLadder))
+
+/obj/ladder/embed/New()
+	. = ..()
+	src.UpdateIcon()
+
+/obj/ladder/embed/update_icon()
+	. = ..()
+	if (!src.hidden)
+		var/turf/T = get_step(src,NORTH)
+		if (!istype(T,/turf/simulated/wall) && !istype(T,/turf/unsimulated/wall))
+			src.alpha = 0 // if there's no wall above us, hide in a way that the turf can update us
+			src.mouse_opacity = FALSE
+		else
+			src.alpha = 255
+			src.mouse_opacity = TRUE
+	else
+		src.alpha = 0
+		src.mouse_opacity = FALSE
+
+
+/obj/ladder/embed/ex_act(severity,last_touched)
+	if (src.hidden)
+		src.hidden = FALSE
+		src.UpdateIcon()
+	. = ..(severity, last_touched)
 
 /obj/ladder/embed/extradimensional/New()
 	..()
@@ -1245,9 +1271,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 /obj/ladder/New()
 	..()
+	START_TRACKING
 	if (!id)
 		id = "generic"
 	src.update_id()
+
+/obj/ladder/disposing()
+	STOP_TRACKING
+	. = ..()
 
 /obj/ladder/onMaterialChanged()
 	. = ..()
@@ -1271,6 +1302,17 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 /obj/ladder/proc/get_other_ladder()
 	RETURN_TYPE(/atom)
 	. = locate("ladder_[id][src.icon_state == "ladder"]")
+
+/obj/ladder/embed/update_id(new_id)
+	if(new_id)
+		src.id = new_id
+	src.tag = "ladder_[id]embed"
+
+/obj/ladder/embed/get_other_ladder() // these literally do not care which is the top
+	RETURN_TYPE(/atom)
+	for_by_tcl(ladder,/obj/ladder)
+		if (ladder.id == src.id && ladder != src)
+			return ladder
 
 /obj/ladder/attack_hand(mob/user)
 	if (src.broken) return
