@@ -7144,6 +7144,12 @@
 /obj/decal/poster/wallsign/stencil/right/r,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
+"iOc" = (
+/obj/decal/boxingrope{
+	dir = 9
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "iOn" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/black,
@@ -8150,6 +8156,12 @@
 "kem" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northeast)
+"kfr" = (
+/obj/decal/boxingrope{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "kgc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8958,6 +8970,12 @@
 	dir = 10
 	},
 /area/station/medical/robotics)
+"liV" = (
+/obj/railing/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "ljZ" = (
 /obj/table/auto,
 /obj/item/electronics/soldering,
@@ -9663,6 +9681,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
+"mkt" = (
+/turf/simulated/floor/stairs{
+	dir = 4
+	},
+/area/station/maintenance/south)
 "mkK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11864,6 +11887,12 @@
 	dir = 1
 	},
 /area/station/medical/medbooth)
+"oTq" = (
+/obj/decal/boxingrope{
+	dir = 6
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "oTN" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/office)
@@ -12095,6 +12124,12 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"pjK" = (
+/obj/decal/boxingrope{
+	dir = 5
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "pjW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -14982,6 +15017,12 @@
 	},
 /turf/simulated/floor/glassblock/transparent/cyan,
 /area/station/medical/medbay/lobby)
+"swa" = (
+/obj/decal/boxingrope{
+	dir = 10
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "swM" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/cryo,
@@ -16806,6 +16847,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"uUy" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/plating,
+/area/station/maintenance/south)
 "uUV" = (
 /obj/machinery/vehicle/miniputt/indyputt/armed,
 /turf/simulated/floor/engine/caution/west,
@@ -17986,6 +18031,9 @@
 	},
 /turf/simulated/floor/glassblock/transparent/grey,
 /area/station/bridge)
+"wts" = (
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "wuk" = (
 /obj/table/wood/auto,
 /obj/item/card/id/captains_spare,
@@ -18049,6 +18097,12 @@
 	},
 /turf/simulated/floor/purplewhite,
 /area/station/maintenance/northeast)
+"wzs" = (
+/obj/decal/boxingrope{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "wzv" = (
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/grey,
@@ -18065,8 +18119,8 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig/solitary)
 "wBn" = (
-/obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating,
+/obj/decal/boxingrope,
+/turf/simulated/floor/specialroom/gym,
 /area/station/maintenance/south)
 "wCl" = (
 /obj/shrub{
@@ -18175,6 +18229,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
+"wHC" = (
+/obj/decal/boxingropeenter{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/gym,
+/area/station/maintenance/south)
 "wHK" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
@@ -70290,9 +70350,9 @@ xfd
 xfd
 iHI
 xfd
-xfd
-xfd
-xfd
+uUy
+mkt
+liV
 xfd
 xfd
 xfd
@@ -70591,11 +70651,11 @@ oTN
 oTN
 oTN
 eHx
-xfd
-xfd
-xfd
-xfd
-xfd
+iOc
+kfr
+wHC
+kfr
+swa
 gdT
 bqm
 qND
@@ -70893,11 +70953,11 @@ jZI
 icL
 oTN
 eHx
-xfd
-xfd
-xfd
-xfd
-xfd
+wBn
+wts
+wts
+wts
+wBn
 gdT
 xfd
 xfd
@@ -71195,11 +71255,11 @@ pcp
 pcp
 cur
 eHx
-kSi
-gdT
-gdT
-bqm
-gdT
+wBn
+wts
+wts
+wts
+wBn
 gdT
 xfd
 xfd
@@ -71497,10 +71557,10 @@ pXq
 pcp
 gCw
 eHx
-xVU
-gdT
-xfd
-xfd
+wBn
+wts
+wts
+wts
 wBn
 gdT
 xfd
@@ -71799,11 +71859,11 @@ oTN
 tGB
 oTN
 eHx
-kSi
-vus
-xfd
-xfd
-xfd
+pjK
+wzs
+wzs
+wzs
+oTq
 gdT
 xfd
 xfd
@@ -72102,10 +72162,10 @@ cye
 oTN
 eHx
 xVU
-gdT
-xfd
-xfd
-xfd
+kSi
+xVU
+kSi
+xVU
 gdT
 xfd
 xfd
