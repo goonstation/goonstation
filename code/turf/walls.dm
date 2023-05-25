@@ -36,7 +36,7 @@
 			xmasify()
 		#endif
 
-		if (!src.material)// Wall uses material to set icons
+		if (!src.material)
 			src.setMaterial(getMaterial(src.default_material), src.uses_material_appearance, setname = FALSE, copy = FALSE)
 
 
