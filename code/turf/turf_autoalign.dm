@@ -25,6 +25,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 	connects_with_overlay_exceptions = list()
 /turf/simulated/wall/auto
 	icon = 'icons/turf/walls_auto.dmi'
+	icon_state = "mapwall"
 	var/mod = null
 	var/light_mod = null
 	/// The image we're using to connect to stuff with
@@ -382,9 +383,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+	icon_state = "mapwall_r"
 	mod = "norn-R-"
 	light_mod = "wall-"
-	icon_state = "mapwall_r"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -546,8 +547,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	))
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls_derelict.dmi'
-	mod = "old-"
 	icon_state = "old-map"
+	mod = "old-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -572,8 +573,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 
 /turf/simulated/wall/auto/reinforced/old
 	icon = 'icons/turf/walls_derelict.dmi'
-	mod = "oldr-"
 	icon_state = "oldr-map"
+	mod = "oldr-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -630,6 +631,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 // but that will have to wait for another day so for now, copy/paste it is
 /turf/unsimulated/wall/auto
 	icon = 'icons/turf/walls_auto.dmi'
+	icon_state = "mapwall"
 	var/mod = null
 	var/light_mod = null
 	var/image/connect_image = null
@@ -706,7 +708,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	icon_state = "mapwall"
-	light_mod = "wall-"
+	ight_mod = "wall-"
+	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 TYPEINFO(/turf/unsimulated/wall/auto/reinforced/supernorn)
@@ -776,8 +779,10 @@ TYPEINFO(/turf/unsimulated/wall/auto/virtual)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/virtual)
+
 /turf/unsimulated/wall/auto/virtual
 	icon = 'icons/turf/walls_destiny.dmi'
+	icon_state = "mapwall"
 	name = "virtual wall"
 	desc = "that sure is a wall, yep."
 
