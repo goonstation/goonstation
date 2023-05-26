@@ -52252,7 +52252,9 @@
 "hRW" = (
 /obj/item/toy/plush/small{
 	layer = 3.1;
-	pixel_y = 4
+	pixel_y = 4;
+	name = "Paul";
+	desc = "You found a new friend! A faded tag on his foot says \"For Paige\"."
 	},
 /obj/stool/chair/comfy,
 /obj/cable{
