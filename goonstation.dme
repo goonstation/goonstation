@@ -1278,6 +1278,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\parallax\parallax_controller.dm"
 #include "code\modules\parallax\parallax_layer_parent.dm"
 #include "code\modules\parallax\parallax_layers.dm"
+#include "code\modules\parallax\parallax_procs.dm"
 #include "code\modules\power\apc.dm"
 #include "code\modules\power\cable.dm"
 #include "code\modules\power\cablecolors.dm"
