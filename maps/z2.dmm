@@ -73613,10 +73613,6 @@
 	temperature = 313.15
 	},
 /area/iomoon)
-"pIi" = (
-/obj/mail_booth,
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar/sanctuary)
 "pJw" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -98554,7 +98550,7 @@ crf
 cpq
 aaa
 daM
-pIi
+daZ
 daZ
 daM
 daM

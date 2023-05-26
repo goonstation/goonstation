@@ -735,7 +735,7 @@
 
 
 /obj/item/device/pda2/verb/eject()
-	set name = "Eject ID"
+	set name = "Eject PDA ID"
 	set desc = "Eject the currently loaded ID card from this PDA."
 	set category = "Local"
 	set src in usr

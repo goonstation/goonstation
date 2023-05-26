@@ -699,8 +699,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				src.UpdateOverlays(null, "light-lightplane")
 		else
 			if (!src.light.enabled)
-				src.light.attach_x = 0.5 + pixel_x / world.icon_size
-				src.light.attach_y = 0.5 + pixel_y / world.icon_size
+				src.light.attach_x = pixel_x / world.icon_size
+				src.light.attach_y = pixel_y / world.icon_size
 				src.light.enable()
 				src.UpdateOverlays(image(src.icon, "floodlight-light"), "light")
 				var/image/light_lightplane = image(src.icon, "floodlight-light")

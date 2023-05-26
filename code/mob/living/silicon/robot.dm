@@ -1237,7 +1237,7 @@
 				boutput(user, "The head compartment has been [brainexposed ? "opened" : "closed"].")
 			src.update_appearance()
 
-		else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))	// trying to unlock the interface with an ID card
+		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
 			if (opened)
 				boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 			else if (wiresexposed)
@@ -1921,7 +1921,7 @@
 				src.show_text("You do not have a power cell!", "red")
 				return
 			if (src.cell.charge >= upgrade.drainrate)
-				src.cell.charge -= upgrade.drainrate
+				src.cell.use(upgrade.drainrate)
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
 				return

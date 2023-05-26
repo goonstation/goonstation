@@ -16,6 +16,7 @@
 
 	/// The material name (string) that this will default to if a material is not otherwise set
 	var/default_material = "steel"
+	var/uses_material_appearance = FALSE // Uses material for appearances, Bamboo / Wood / Mauxite / etc
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
@@ -35,8 +36,8 @@
 			xmasify()
 		#endif
 
-		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
+		if (!src.material)
+			src.setMaterial(getMaterial(src.default_material), src.uses_material_appearance, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
