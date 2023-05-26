@@ -37,8 +37,12 @@
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/precondition()
 	var/mob/living/critter/spider/clownqueen/C = holder.owner
 	var/datum/targetable/critter/vomitegg/egg = C.abilityHolder.getAbility(/datum/targetable/critter/vomitegg)
-	if(!egg)
+	if (!egg)
 		egg = C.abilityHolder.getAbility(/datum/targetable/critter/vomitegg/cluwne)
+	if (C.babies)
+		for (var/datum/weakref/ref as anything in C.babies)
+			if (ref.deref() == null)
+				C.babies.Remove(ref)
 	return !egg.disabled && (length(C.babies) < max_spiders)
 
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/get_targets()
