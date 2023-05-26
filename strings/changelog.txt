@@ -1,5 +1,9 @@
 
 (t)fri may 26 23
+(u)Tyrant
+(p)14228
+(e)🗺|A-Mapping
+(+)Mail booths are now gone. No more penpals.  Should've been removed a while ago actually.
 (u)Wisemonster
 (p)13883
 (e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
