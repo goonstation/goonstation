@@ -482,6 +482,10 @@
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
+		C.color = src.color
+		C.name = src.name
+		if (src.material)
+			C.setMaterial(src.material, copy=FALSE)
 		C.update()
 
 		qdel(src)
