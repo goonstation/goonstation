@@ -1,5 +1,9 @@
 
 (t)fri may 26 23
+(u)Flaborized
+(p)14005
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The HoS and Captain now have slightly unique looking eguns, to match their usual outfits.
 (u)FlameArrow57 and Flaborized
 (p)14093
 (e)🆕🔎📦|C-Feature, C-Code-Quality, A-Game-Objects
