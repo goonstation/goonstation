@@ -215,9 +215,6 @@
 
 		src.AttackSelf(user)
 
-/obj/item/pet_carrier/jones
-	default_animal = /mob/living/critter/small_animal/cat/jones
-
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
 	duration = 2 SECONDS
