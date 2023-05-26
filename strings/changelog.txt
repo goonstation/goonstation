@@ -1,5 +1,9 @@
 
 (t)fri may 26 23
+(u)Skeletonman0
+(p)14031
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Microwaves can now warm chemicals and skeleton skulls / other organs are now microwavable
 (u)Tyrant
 (p)14228
 (e)🗺|A-Mapping
