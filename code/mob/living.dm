@@ -2207,6 +2207,7 @@
 	set waitfor = FALSE
 	if (!allow_dead && !isalive(src)) return
 	if (src.disposed || !src.client) return // break if it's an npc or a disconnected player
+	if (ON_COOLDOWN(src, "lastgasp", 0.7 SECONDS)) return
 	var/client/client = src.client
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
