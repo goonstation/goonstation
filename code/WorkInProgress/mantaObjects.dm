@@ -750,16 +750,22 @@ var/obj/manta_speed_lever/mantaLever = null
 			..(user)
 
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/clothing/head/constructioncone))
-			var/success = stack_item(W)
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/clothing/head/constructioncone))
+			if (src.loc == user)
+				if (ishuman(user))
+					var/mob/living/carbon/human/H = user
+					if (H.head == src)
+						boutput(user, "<span class='alert'>You can't stack cones when they are on your head!</span>")
+						return
+			var/success = stack_item(I)
 			if (!success)
 				boutput(user, "<span class='alert'>You can't put any more cones in this stack!</span>")
 			else
 				if(!user.is_in_hands(src))
 					user.put_in_hand(src)
 				if(isrobot(user))
-					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [W.amount] cones.</span>")
+					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [I.amount] cones.</span>")
 				else
 					boutput(user, "<span class='notice'>You add [success] cones to the stack. It now has [src.amount] cones.</span>")
 
