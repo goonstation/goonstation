@@ -160,6 +160,7 @@
 		if (prob(25))
 			if (changer)
 				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				playsound(C, 'sound/misc/cling_flesh.ogg', 30)
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
@@ -223,10 +224,6 @@
 			H.HealDamage("All", 1, 1, 1)
 			if (prob(20))
 				changeling_super_heal_step(H, 25, 25)
-			if(!ON_COOLDOWN(H, "cling_regen", 3 SECONDS))
-				H.visible_message("<span class='alert'><B>[H]'s flesh is moving and sliding around oddly!</B></span>")
-				boutput(H, "<span class='notice'>We feel our flesh knitting back together.</span>")
-				playsound(H, 'sound/misc/cling_flesh.ogg', 30)
 		else // lings are vulnerable to fire so it stopping their regen makes sense
 			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
 				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
