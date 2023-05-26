@@ -21,9 +21,11 @@ TYPEINFO(/turf/simulated/wall/auto/martian)
 TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian,
+		/obj/machinery/door/unpowered/martian, /turf/simulated/wall/auto/old,
 		/obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure,
-		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/martian))
+		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/martian,
+		/turf/simulated/wall/auto/reinforced/old
+		))
 
 /turf/simulated/wall/auto/martian
 	name = "organic wall"
@@ -37,12 +39,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 
 	health = 40
 
-	proc/take_damage(var/damage)
+	proc/take_damage(var/damage) // Let other walls support this later
 		src.health -= damage
 		if (src.health <= 0)
 			src.gib()
 
 	attackby(obj/item/W, mob/user, params)
+		user.lastattacked = src
 		if(istype(W, /obj/item/spray_paint) || istype(W, /obj/item/gang_flyer))
 			return
 
@@ -58,9 +61,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 		else
 			if(src.material)
 				src.material.triggerOnHit(src, W, user, 1)
-			src.visible_message("<span class='alert'>[usr ? usr : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
+				attack_particle(user, src)
+			src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
 			src.take_damage(W.force / 2)
-			attack_particle(user, src)
 
 	dismantle_wall(devastated=0, keep_material = 1)
 		src.gib()
@@ -80,7 +83,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 	blob_act(var/power)
 		src.take_damage(20)
 
-	proc/gib(atom/location)
-		martiangibs(src.loc)
+	proc/gib()
 		ReplaceWithFloor()
+		gibs(src)
 
