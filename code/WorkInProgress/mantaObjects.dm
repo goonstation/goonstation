@@ -119,9 +119,7 @@ var/obj/manta_speed_lever/mantaLever = null
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if(istype(W, /obj/item/card/id))
+		if(istype(get_id_card(W), /obj/item/card/id))
 			if (src.allowed(user))
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked

@@ -336,15 +336,14 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
-	if (istype(I, /obj/item/device/pda2) && I:ID_card)
-		I = I:ID_card
+	var/obj/item/card/id/id_card = get_id_card(I)
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/card/id) || !I:access) //not ID or no access
+	if(!istype(id_card, /obj/item/card/id) || !id_card:access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
-		if(!(req in I:access)) //doesn't have this access
+		if(!(req in id_card:access)) //doesn't have this access
 			return 0
 	return 1
 
