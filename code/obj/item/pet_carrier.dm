@@ -40,8 +40,12 @@
 
 	/// By default, the carrier can only fit small animals. Override this with FALSE to make it not so.
 	var/small_animals_only = TRUE
+	/// If FALSE, an occupant cannot escape the carrier on their own.
+	var/can_break_out = TRUE
 	/// How many animals can fit inside the crate. Usually not overridden by anything, this is to let the system be permissive for var-editing.
 	var/carrier_max_capacity = 1
+	/// The probability that an occupant can break out per *flip, from 0 to 100.
+	var/break_out_probability = 10
 	/// A list of the current occupants inside the carrier. The mob overlay uses the first animal in the list.
 	var/list/mob/living/carrier_occupants = list()
 	/// If not null, the pet carrier will spawn with one of this mob on New().
@@ -144,6 +148,24 @@
 		var/turf/current_turf = get_turf(src)
 		. = current_turf.return_air()
 
+	// If allowed, mobs that are inside can try to break out of the cage.
+	mob_flip_inside(mob/user)
+		..(user)
+
+		if (!src.can_break_out)
+			boutput(src, "<span class='alert'>It's no use! You can't leave [src]!</span>")
+			return
+		if (prob(src.break_out_probability))
+			if (length(src.carrier_occupants) > 1)
+				for (var/occupant in src.carrier_occupants)
+					src.eject_animal(occupant)
+				src.visible_message("<span class='alert'>[user] kicks the door of [src] open and OH GOD THEY'RE ALL ESCAPING!</span>")
+				return
+			src.eject_animal(user)
+			src.visible_message("<span class='alert'>[user] kicks the door of [src] open and crawls right out!</span>")
+			return
+		boutput(user, "<span class='alert'>Maybe this door could give out if you put up some more effort!</span>")
+
 	/// Called when a given mob/user steals an animal after an actionbar.
 	proc/trap_animal(mob/living/animal_to_trap, mob/user)
 		if (!animal_to_trap)
@@ -155,12 +177,10 @@
 
 	/// Called when a given mob/user releases an animal after an actionbar.
 	proc/release_animal(mob/living/animal_to_release, mob/user)
-		// Check if the animal being released exists in the carrier's contents.
-		for (var/occupant in src.carrier_occupants)
-			if (occupant == animal_to_release)
-				src.eject_animal(animal_to_release)
-				user.update_inhands()
-				return
+		if (animal_to_release)
+			src.eject_animal(animal_to_release)
+			user.update_inhands()
+			return
 		boutput(user, "<span class='alert'>Unable to release anyone from [src]!</span>")
 
 	/// Directly adds a target animal to the carrier.
