@@ -1,4 +1,9 @@
 
+(t)fri may 26 23
+(u)Wisemonster
+(p)13883
+(e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
+(+)The generic space cola is no longer hidden in soda vending machines, but the off-brand colas now require hacking the vendor to access
 (t)thu may 25 23
 (u)pali
 (*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.
