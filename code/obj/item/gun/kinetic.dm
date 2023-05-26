@@ -660,13 +660,12 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	two_handed = TRUE
 	auto_eject = 1
 	has_empty_state = 1
-	spread_angle = 10 //10 degrees is a lot
+	spread_angle = 15 //15 degrees is a lot
 	can_dual_wield = TRUE //if you can figure it out, you can do it
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-
-	slowdown = 5
-	slowdown_time = 15
+	c_flags = EQUIPPED_WHILE_HELD
 
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/minigun
@@ -674,12 +673,12 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
-		AddComponent(/datum/component/holdertargeting/fullauto, 0.5 DECI SECONDS, 0.5 DECI SECONDS, 1)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.4)
+		setProperty("movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"

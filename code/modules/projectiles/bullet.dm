@@ -136,10 +136,9 @@ toxic - poisons
 /datum/projectile/bullet/minigun
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
-	damage = 8
-	cost = 10
-	shot_number = 10
-	shot_delay = 0.07 SECONDS
+	damage = 10
+	cost = 1
+	shot_number = 1 //dont question it
 	dissipation_delay = 7
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
