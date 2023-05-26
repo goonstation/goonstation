@@ -181,6 +181,7 @@ proc/voidify_world()
 					space.name = "stomach acid"
 					if (space.z == Z_LEVEL_STATION)
 						new /obj/stomachacid(space)
+			remove_all_parallax_layers()
 		else
 			generate_void(TRUE)
 
