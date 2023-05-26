@@ -1,5 +1,7 @@
 
 (t)fri may 26 23
+(u)pali
+(*)Two new accents. One shuffles letter and the other one words.<br><img width="210" src="https://cdn.discordapp.com/attachments/1092955375889809418/1111708097682079784/image.png"><img width="200" src="https://cdn.discordapp.com/attachments/182254222694285312/1111712245844562021/image.png">
 (u)Flaborized
 (p)14005
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
