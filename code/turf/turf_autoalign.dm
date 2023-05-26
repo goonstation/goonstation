@@ -861,7 +861,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 		/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 
 ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is not meant for spawning, the icons aren't even right for lead
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
