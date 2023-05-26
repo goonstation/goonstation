@@ -120,7 +120,7 @@
 	},
 /area/noGenerate)
 "av" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "aw" = (

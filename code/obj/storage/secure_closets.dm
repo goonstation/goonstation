@@ -206,7 +206,14 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain,
+	/obj/item/megaphone)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(5))
+				new /obj/item/clothing/head/bigcaphat(src)
+			return 1
 
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
@@ -268,6 +275,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
+	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd)
 
 	make_my_stuff()
@@ -760,6 +768,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
+	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining

@@ -1,6 +1,7 @@
 /datum/antagonist/head_revolutionary
 	id = ROLE_HEAD_REVOLUTIONARY
 	display_name = "head revolutionary"
+	antagonist_icon = "rev_head"
 
 	var/static/list/datum/mind/heads_of_staff
 
@@ -9,18 +10,8 @@
 			src.heads_of_staff = list()
 
 			for(var/mob/living/carbon/human/player in mobs)
-				if(player.mind)
-					var/role = player.mind.assigned_role
-					if(role in list(
-							"Captain",
-							"Head of Security",
-							"Head of Personnel",
-							"Chief Engineer",
-							"Research Director",
-							"Medical Director",
-							"Communications Officer"
-							))
-						src.heads_of_staff += player.mind
+				if(player.mind?.is_head_of_staff())
+					src.heads_of_staff += player.mind
 
 		. = ..()
 
@@ -28,7 +19,6 @@
 			var/datum/game_mode/revolution/gamemode = ticker.mode
 			if (!(src.owner in gamemode.head_revolutionaries))
 				gamemode.head_revolutionaries += src.owner
-			gamemode.update_rev_icons_added(src.owner)
 
 	disposing()
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
@@ -102,6 +92,23 @@
 			boutput(H, "The Syndicate have provided you with a standalone head revolutionary uplink [loc_string]. Simply dial the frequency <b>\"[uplink.lock_code]\"</b> to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Head revolutionary standalone uplink created: [uplink_source.name]. Location given: [loc_string]. Frequency: [uplink.lock_code]")
 			src.owner.store_memory("<b>Uplink frequency:</b> [uplink.lock_code].")
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_REVOLUTIONARY)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
+		get_image_group(CLIENT_IMAGE_GROUP_HEADS_OF_STAFF).remove_mind(src.owner)
 
 	assign_objectives()
 		for(var/datum/mind/head_mind in src.heads_of_staff)

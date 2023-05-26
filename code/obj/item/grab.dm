@@ -40,7 +40,7 @@
 		src.assailant = assailant
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, PROC_REF(check_hostage))
 		if (assailant != affecting)
 			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 

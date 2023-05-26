@@ -146,7 +146,7 @@ var/global/mob/twitch_mob = 0
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = call(lib, "init")()
+	var/init = LIBCALL(lib, "init")()
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif
 
@@ -526,14 +526,6 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 
-	if (derelict_mode)
-		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
-		creepify_station()
-		voidify_world()
-		signal_loss = 80 // heh
-		bust_lights()
-		master_mode = "disaster" // heh pt. 2
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
@@ -558,6 +550,14 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
 	#endif
+
+	if (derelict_mode)
+		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
+		creepify_station()
+		voidify_world()
+		signal_loss = 80 // heh
+		bust_lights()
+		master_mode = "disaster" // heh pt. 2
 
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
@@ -1075,8 +1075,8 @@ var/global/mob/twitch_mob = 0
 								for (var/obj/item/I in H.contents)
 									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
-									if (istype(I,/obj/item/storage))
-										hudlist += I.contents
+									if (I.storage)
+										hudlist += I.storage.get_contents()
 
 							var/list/close_match = list()
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
@@ -1731,6 +1731,8 @@ var/global/mob/twitch_mob = 0
 					response["playtime"] = playtime_response.body
 
 				var/datum/player/player = make_player(plist["ckey"])
+				if(isnull(player.last_seen))
+					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
 				if(player.cloud_fetch())

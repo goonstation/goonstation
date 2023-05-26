@@ -195,7 +195,7 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L)) // we don't care about critters
 					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
@@ -1292,6 +1292,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1343,6 +1346,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1442,6 +1449,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1449,6 +1458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (fullbright)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
+
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
 
 	proc/space_overlays() //For overlays ON THE SPACE TILE
 		for (var/turf/space/A in orange(src,1))
@@ -1494,7 +1508,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1909,7 +1923,7 @@ TYPEINFO(/obj/item/cargotele)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/maybe_reset_target) //make sure cargo pads can GC
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(maybe_reset_target)) //make sure cargo pads can GC
 
 	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
 		if (target == pad)
@@ -1980,17 +1994,16 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
@@ -2249,20 +2262,20 @@ TYPEINFO(/obj/item/cargotele)
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
@@ -2319,8 +2332,8 @@ TYPEINFO(/obj/item/cargotele)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, .proc/add_pad)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/remove_pad)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, PROC_REF(add_pad))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(remove_pad))
 
 	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
@@ -2475,11 +2488,14 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
-				if (satchel)
-					user.put_in_hand_or_drop(satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
 				S.set_loc(src)
-				satchel = S
-				icon_state = "scoop-bag"
+				src.satchel = S
+				if (old_satchel)
+					user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
 				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
@@ -2513,9 +2529,32 @@ TYPEINFO(/obj/item/ore_scoop)
 			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
-			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
-			src.attackby(target, user)
-			user.swap_hand()
+			if (!issilicon(user))
+				var/obj/item/satchel/mining/new_satchel = target
+				var/atom/old_location = null //this stores the old location so we know where the clicked item came from
+				var/was_stored = FALSE //For stuff with storage datums, we can move the item to that storage
+				if (new_satchel.stored)
+					old_location = new_satchel.stored.linked_item
+					was_stored = TRUE
+				else
+					old_location = new_satchel.loc
+				if (ismob(old_location) && !was_stored)
+					var/mob/old_user = old_location
+					old_user.drop_item(new_satchel) // not only user since you could click on a satchel carried by someone else... ugh
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
+				new_satchel.set_loc(src)
+				src.satchel = new_satchel
+				if (old_satchel && old_location)
+					if (was_stored) //if the old satchel was in a storage item, the new item should fit as well
+						old_location.storage.add_contents(old_satchel, user, FALSE)
+					else
+						user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 

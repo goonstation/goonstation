@@ -61,17 +61,16 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	/// set to TRUE if this limb has decomposition icons
 	var/decomp_affected = TRUE
-	var/current_decomp_stage_l = -1
 	var/current_decomp_stage_s = -1
 
 	var/mob/living/holder = null
 
 	/// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
-	var/image/standImage
-	/// Appears to be unused, since we just rotate the sprite through animagic
-	var/image/lyingImage
+	var/image/bodyImage
 	/// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
 	var/partIcon = 'icons/mob/human.dmi'
+	/// The part of the icon state that differs per part, ie "brullbar" for brullbar arms
+	var/partIconModifier = null
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
 	/// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
 	var/handlistPart
@@ -250,7 +249,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			object.streak_object(direction, src.streak_decal)
 
 		if(prob(60))
-			INVOKE_ASYNC(holder, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -322,35 +321,32 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if(no_icon) return 0
+	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
+		if(no_icon)
+			return 0
+		if (force)
+			qdel(src.bodyImage)
+			src.bodyImage = null
+		var/used_icon = mutantrace_override || getAttachmentIcon(decomp_stage)
+		if (src.bodyImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
+			return src.bodyImage
+		current_decomp_stage_s = decomp_stage
+		var/icon_state = src.getMobIconState(decomp_stage)
+		src.bodyImage = image(used_icon, icon_state)
+		return bodyImage
+
+	proc/getMobIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
-		var/used_icon = getAttachmentIcon(decomp_stage)
-
-		if (lying)
-			if (src.lyingImage && ((src.decomp_affected && src.current_decomp_stage_l == decomp_stage) || !src.decomp_affected))
-				return src.lyingImage
-			//boutput(world, "Attaching lying limb [src.slot][decomp]_l on decomp stage [decomp_stage].")
-			current_decomp_stage_l = decomp_stage
-			src.lyingImage = image(used_icon, "[src.slot][decomp]_l")
-			return lyingImage
-
-		else
-			if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
-				return src.standImage
-			//boutput(world, "Attaching standing limb [src.slot][decomp]_s on decomp stage [decomp_stage].")
-			current_decomp_stage_s = decomp_stage
-			src.standImage = image(used_icon, "[src.slot][decomp]")
-			return standImage
+		return "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
 
 	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	proc/getHandIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -358,7 +354,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
+	proc/getPartIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"

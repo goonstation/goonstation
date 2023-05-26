@@ -119,11 +119,11 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 		return "has [bicon(src)] \an [src.name] attached as a"
 
 	getMobIcon()
-		if (src.standImage)
-			return src.standImage
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
-		return standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
+		return bodyImage
 
 	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
 		if(!ishuman(M))
@@ -157,8 +157,8 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
 			return ..()
 		var/mob/living/carbon/human/H = holder
 		src.handlistPart = (!H.w_uniform && !H.wear_suit) ? initial(src.handlistPart) : "[initial(src.handlistPart)]-clothing"
-		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
-		return src.standImage
+		src.bodyImage = image('icons/mob/human.dmi', src.handlistPart)
+		return src.bodyImage
 
 ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
 /obj/item/parts/artifact_parts/leg
@@ -307,9 +307,9 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 		if (!..())
 			return
 		if (src.side == "left")
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_L)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_L))
 		else
-			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, .proc/precursor_move_R)
+			RegisterSignal(src.holder, COMSIG_MOVABLE_MOVED, PROC_REF(precursor_move_R))
 
 	on_remove()
 		if (!..())
@@ -368,7 +368,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 
 	cast(atom/target)
 		playsound(get_turf(holder.owner), pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
-		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, .proc/eldritch_move)
+		RegisterSignal(holder.owner, COMSIG_MOVABLE_MOVED, PROC_REF(eldritch_move))
 		SPAWN(10 SECONDS)
 			UnregisterSignal(holder.owner, COMSIG_MOVABLE_MOVED)
 

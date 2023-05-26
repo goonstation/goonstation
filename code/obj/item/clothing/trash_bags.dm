@@ -54,11 +54,9 @@
 			boutput(user, "<span class='alert'>\The [src] is too full for [W] to fit!</span>")
 			return
 		else
-			if (istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/S = src.loc
-				if (S.max_wclass < W.w_class) // too big to fit in the thing we're in already!
-					boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [S]!</span>")
-					return
+			if (src.stored && src.stored.check_can_hold(W) == STORAGE_WONT_FIT) // too big to fit in the thing we're in already!
+				boutput(user, "<span class='alert'>You can't fit [W] in [src] while [src] is inside [src.stored.linked_item]!</span>")
+				return
 			user.u_equip(W)
 			W.set_loc(src)
 			playsound(src.loc, "rustle", 50, 1, -5)

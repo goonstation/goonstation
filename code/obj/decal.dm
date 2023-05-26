@@ -224,7 +224,7 @@ obj/decal/fakeobjects
 	anchored = ANCHORED
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
+	layer = EFFECTS_LAYER_UNDER_2
 	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/oven
@@ -409,6 +409,47 @@ obj/decal/fakeobjects/teleport_pad
 	icon_state = "sealedsleeper"
 	anchored = ANCHORED
 	density = 1
+
+// Laundry machines
+
+/obj/decal/fakeobjects/Laundry
+	name = "laundry machine"
+	desc = "The door has been pried off..."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "laundry"
+	anchored = ANCHORED
+	density = 1
+	var/image/cycle = null
+	var/image/light = null
+
+	New()
+		..()
+		src.UpdateOverlays(src.cycle, "door")
+
+	drying
+		desc = "Will those clothes ever be dry?"
+		New()
+			icon_state = "laundry-d1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	washing
+		desc = "Around and around..."
+		New()
+			icon_state = "laundry-w1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	open
+		desc = "Who left these clothes?"
+		New()
+			icon_state = "laundry-p"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
+			..()
 
 //sealab prefab fakeobjs
 

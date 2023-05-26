@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#info {
 				position: absolute;
 				right: 0.5em;
-				top: 0;
+				top: 50px;
 				width: 25%;
 				padding: 0.5em;
 				}
@@ -318,9 +318,33 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#products {
 				position: absolute;
 				left: 0;
-				top: 0;
+				top:50px;
 				width: 73%;
 				padding: 0.25em;
+			}
+			.tabs {
+				position:fixed;
+				background-color: inherit;
+				z-index:1;
+				top: 0;
+				left: 0;
+			}
+			.tabs a {
+				background-color: inherit;
+				float: left;
+				border: none;
+				outline: none;
+				padding: 14px 16px;
+                margin-left: 10px;
+                margin-top: 6px;
+                margin-bottom: 6px;
+				border-radius: 5px;
+			}
+			.tabs a:hover {
+				background-color: #ddd;
+			}
+			.tabs a.active {
+				background-color: #ccc;
 			}
 
 			.queue, .product {
@@ -457,7 +481,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 			user.Browse(dat, "window=manufact;size=750x500")
 			onclose(user, "manufact")
 			return
-
+		dat += "<div class='tabs'>"
+		for (var/category in list("All") + src.categories)
+			var/actual_category = category == "All" ? null : category
+			dat += "<a [actual_category == src.category ? "class='active" : ""]' href='?src=\ref[src];category=[category]'>[category]</a>"
+		dat += "</div>"
 		dat += "<div id='products'>"
 
 		// Get the list of stuff we can print ...
@@ -525,8 +553,6 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		//Search
 		dat += " <A href='?src=\ref[src];search=1'>(Search: \"[istext(src.search) ? html_encode(src.search) : "----"]\")</A><BR>"
-		//Filter
-		dat += " <A href='?src=\ref[src];category=1'>(Filter: \"[istext(src.category) ? html_encode(src.category) : "----"]\")</A><HR>"
 		// This is not re-formatted yet just b/c i don't wanna mess with it
 		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
 		if(scan)
@@ -679,8 +705,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 					src.search = null
 
 			if (href_list["category"])
-				var/selection = input("Select which category to filter by.","Manufacturing Unit") as null|anything in list("REMOVE FILTER") + src.categories
-				src.category = ((selection == "REMOVE FILTER") ? null : selection)
+				var/category = href_list["category"]
+				if (category == "All")
+					src.category = null
+				else if (category in src.categories)
+					src.category = category
 
 			if (href_list["continue"])
 				if (length(src.queue) < 1)
@@ -2497,7 +2526,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/copper,
 		/obj/item/material_piece/glass,
-		/obj/item/material_piece/cloth/cottonfabric)
+		/obj/item/material_piece/cloth/cottonfabric,
+		/obj/item/raw_material/cobryl)
 	available = list(
 		/datum/manufacture/flashlight,
 		/datum/manufacture/gps,
@@ -2508,6 +2538,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/atmos_can,
 		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
+		/datum/manufacture/chembarrel,
+		/datum/manufacture/chembarrel/yellow,
+		/datum/manufacture/chembarrel/red,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
@@ -2619,6 +2652,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/bad_mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
@@ -2884,6 +2918,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/floodlight,
+		/datum/manufacture/powercell,
+		/datum/manufacture/powercellE,
+		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

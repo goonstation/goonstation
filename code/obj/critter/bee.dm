@@ -840,7 +840,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	New()
 		src.tier = world.load_intra_round_value("heisenbee_tier")
 		src.original_tier = src.tier
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, PROC_REF(save_upgraded_tier))
 		heisentier_hat()
 		..()
 		START_TRACKING
@@ -1234,9 +1234,9 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 						var/key_dodgy = (src.name == "sun bee" && !derelict_mode) || (src.name == "moon bee" && derelict_mode)
 
 						if(src.name == "sun bee")
-							K = new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+							K = new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 						else
-							K = new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+							K = new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 						K.dodgy = key_dodgy
 
 				if(prob(15))

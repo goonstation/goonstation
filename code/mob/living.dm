@@ -2,7 +2,8 @@
 
 /mob/living
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
-	var/spell_soulguard = 0		//0 = none, 1 = normal_soulgruard, 2 = wizard_ring_soulguard
+	/// Tracks status of soalguard respawn on mob. SOULGUARD_INACTIVE, SOULGUARD_SPELL when from wizard ability, SOULGUARD_RING when from wizard ring.
+	var/spell_soulguard = SOULGUARD_INACTIVE
 
 	// this is a read only variable. do not set it directly.
 	// use set_burning or update_burning instead.
@@ -38,9 +39,8 @@
 	var/has_typing_indicator = FALSE
 	var/static/mutable_appearance/speech_bubble = living_speech_bubble
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
+	var/image/silhouette
 	var/image/static_image = null
-	var/static_type_override = null
-	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
@@ -67,6 +67,7 @@
 	var/speechbubble_enabled = 1
 	var/speechpopupstyle = null
 	var/isFlying = 0 // for player controled flying critters
+	var/last_words = null
 
 	var/canbegrabbed = 1
 	var/grabresistmessage = null //Format: target.visible_message("<span class='alert'><B>[src] tries to grab [target], [target.grabresistmessage]</B></span>")
@@ -125,6 +126,7 @@
 	var/const/singing_prefix = "%"
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
@@ -138,7 +140,6 @@
 		//eventual hud merger pls
 
 	SPAWN(0)
-		src.get_static_image()
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
 		if(!ishuman(src))
 			init_preferences?.apply_post_new_stuff(src)
@@ -167,6 +168,10 @@
 	for(var/mob/living/intangible/aieye/E in src.contents)
 		E.cancel_camera()
 
+	if (src.silhouette)
+		get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).remove_image(src.silhouette)
+		src.silhouette = null
+
 	if (src.static_image)
 		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
 		src.static_image = null
@@ -178,6 +183,7 @@
 /mob/living/death(gibbed)
 	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
+	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
 	if (src.key) statlog_death(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
@@ -892,6 +898,8 @@
 		else
 			phrase_log.log_phrase("say", message, user = src)
 
+	last_words = message
+
 	if (src.stuttering)
 		message = stutter(message)
 
@@ -1053,12 +1061,46 @@
 			say_location = S.head_tracker
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
+		if (ismob(say_location))
+			for(var/mob/M in say_location)
+				listening |= M
+			for (var/obj/item/W in say_location) // let the skeleton skulls in the bag / pockets hear the nerd
+				if (istype(W,/obj/item/organ/head))
+					var/obj/item/organ/head/H = W
+					if (H.linked_human)
+						listening |= H.linked_human
+				else
+					for(var/obj/item/organ/head/H in W)
+						if (H.linked_human)
+							listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
 	else
-		olocs = obj_loc_chain(src)
+		olocs = obj_loc_chain(say_location)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
 				thickness += AM.soundproofing
-			listening = all_hearers(message_range, olocs[olocs.len])
+
+			// nerd we're inside
+			var/mob/living/inside = locate() in olocs
+			if (inside)
+				for(var/mob/M in inside)
+					listening |= M
+				for (var/obj/item/W in inside) // let the skeleton skulls in the bag / pockets hear the nerd
+					if (istype(W,/obj/item/organ/head))
+						var/obj/item/organ/head/H = W
+						if (H.linked_human)
+							listening |= H.linked_human
+					else
+						for(var/obj/item/organ/head/H in W)
+							if (H.linked_human)
+								listening |= H.linked_human
+					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
+						listening |= M
+
+				listening |= inside
+			else
+				listening = all_hearers(message_range, olocs[olocs.len])
 
 
 	listening |= src
@@ -1104,19 +1146,32 @@
 		else
 			maptext_color = src.last_chat_color
 
+		var/popup_style = src.speechpopupstyle
+
+		if (src.find_type_in_hand(/obj/item/megaphone))
+			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+			maptext_color = megaphone.maptext_color
+
 		if(unique_maptext_style)
 			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
 		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
 
 		if(maptext_animation_colors)
 			oscillate_colors(chat_text, maptext_animation_colors)
 
 		if(chat_text)
 			chat_text.measure(src.client)
-			for(var/image/chat_maptext/I in src.chat_text.lines)
-				if(I != chat_text)
-					I.bump_up(chat_text.measured_height)
+			var/obj/chat_maptext_holder/holder = src.chat_text
+			if (is_decapitated_skeleton) // for skeleton heads
+				var/mob/living/carbon/human/H = src
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				holder = S.head_tracker?.chat_text
+			if (holder)
+				for(var/image/chat_maptext/I in holder.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
 
 	var/rendered = null
 	if (length(heard_a))
@@ -1150,7 +1205,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
+				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1161,17 +1216,19 @@
 			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.ctxFlag]'>[rendered]</span>"
 
-			if (isobserver(M)) //if a ghooooost (dead) (and online)
+			if (isobserver(M) || iswraith(M)) //if a ghooooost (dead) (and online)
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
-					//if (M in range(M.client.view, src))
 					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
-					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
+						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
+						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
+						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
@@ -1234,42 +1291,66 @@
 
 	src.misstep_chance = clamp(misstep_chance + amount, 0, 100)
 
-/mob/living/proc/get_static_image()
-	if (src.disposed)
+/mob/living/update_body()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_clothing()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/update_inhands()
+	. = ..()
+	SPAWN(1)
+		src.update_mob_silhouette()
+
+/mob/living/proc/create_mob_silhouette()
+	src.silhouette = new(src, src)
+	src.silhouette.plane = PLANE_MOB_OVERLAY
+	src.update_mob_silhouette()
+
+	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
+
+	src.new_static_image()
+
+/mob/living/proc/update_mob_silhouette()
+	if (!src.silhouette)
 		return
-	if (!islist(default_mob_static_icons))
+
+	src.silhouette.icon = src
+	src.silhouette.overlays = src.overlays
+	src.silhouette.vis_contents = src.vis_contents
+
+	src.update_static_image()
+
+/mob/living/proc/new_static_image()
+	src.static_image = new(null, src)
+
+	src.static_image.appearance_flags = KEEP_TOGETHER
+	src.static_image.plane = PLANE_LIGHTING
+	src.static_image.override = TRUE
+	src.static_image.color = list(
+		-0.5, 0, 0, -0.3,
+		0, -0.5, 0, -0.3,
+		0, 0, -0.5, -0.3,
+		0, 0, 0, 1,
+		0, 0, 0, 0,)
+
+	get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
+
+/mob/living/proc/update_static_image()
+	if (!src.silhouette || !src.static_image)
 		return
-	if (src.static_image)
-		get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).remove_image(src.static_image)
-	var/checkpath = src.static_type_override ? src.static_type_override : src.type
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (istype(H.mutantrace))
-			checkpath = H.mutantrace.type
-	if (ispath(checkpath))
-		var/generate_static = 1
-		if (checkpath in default_mob_static_icons)
-			if (istype(default_mob_static_icons[checkpath], /image))
-				src.static_image = image(default_mob_static_icons[checkpath])
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-				generate_static = 0
-		if (generate_static)
-			if (ispath(checkpath, /datum/mutantrace) && ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if (H.mutantrace)
-					src.static_image = getTexturedImage(icon(H.mutantrace.icon, H.mutantrace.icon_state), "static", ICON_OVERLAY)
-			else
-				src.static_image = getTexturedImage(src.default_static_icon ? src.default_static_icon : icon(src.icon, src.icon_state), "static", ICON_OVERLAY)
-			if (src.static_image)
-				default_mob_static_icons[checkpath] = image(src.static_image)
-				src.static_image.override = 1
-				src.static_image.loc = src
-				src.static_image.plane = PLANE_LIGHTING
-				get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_image(src.static_image)
-		return src.static_image
+
+	src.static_image.icon = src.silhouette.icon
+	src.static_image.overlays = src.silhouette.overlays
+	src.static_image.vis_contents = src.silhouette.vis_contents
+
+	var/image/static_overlay = image('icons/effects/atom_textures_64.dmi', "static")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+	src.static_image.overlays += static_overlay
 
 /proc/check_static_defaults()
 	if (!islist(default_mob_static_icons))
@@ -1279,8 +1360,6 @@
 		var/image/i = default_mob_static_icons[Type]
 		if (i)
 			DEBUG_MESSAGE(bicon(i) + "\ref[i][Type]")
-
-var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.dmi', "body_m")
 
 
 /mob/living/verb/give_item()
@@ -2118,3 +2197,51 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 ///Init function for adding life processes. Called on New() and when being revived. The counterpart to reduce_lifeprocess_on_death
 /mob/living/proc/restore_life_processes()
+
+/mob/living/get_desc(dist, mob/user)
+	. = ..()
+	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
+		. += "<br>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\"."
+
+/mob/living/lastgasp(allow_dead=FALSE, grunt=null)
+	set waitfor = FALSE
+	if (!allow_dead && !isalive(src)) return
+	if (src.disposed || !src.client) return // break if it's an npc or a disconnected player
+	var/client/client = src.client
+	var/found_text = FALSE
+	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
+	if (isnull(client)) return
+	if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+		winset(client, "mainwindow.input", "text=\"\"") // clear the player's input bar to register death / unconsciousness
+		enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+		if (length(enteredtext))
+			found_text = TRUE
+	if (!found_text)
+		for (var/window_type in list("say", "radiosay", "whisper"))
+			enteredtext = winget(client, "[window_type]window.say-input", "text")
+			if (isnull(client)) return
+			if (length(enteredtext))
+				if (window_type == "radiosay")
+					enteredtext = ";" + enteredtext
+				winset(client, "[window_type]window.say-input", "text=\"\"")
+				if (isnull(client)) return
+				winset(client, "[window_type]window", "is-visible=false")
+				if (isnull(client)) return
+				src.cancel_typing(window_type)
+				found_text = TRUE
+				break
+	if (found_text)
+		if (length(enteredtext) > 20)
+			enteredtext = copytext(enteredtext, 1, length(enteredtext) - rand(1, 10))
+		var/message = enteredtext + "--" + grunt
+		var/logname = isalive(src) ? "interruptgasp" : "lastgasp"
+		if (!allow_dead && !isalive(src)) return
+		logTheThing(LOG_SAY, src, "[logname] SAY: [html_encode(message)] [log_loc(src)]")
+		var/old_stat = src.stat
+		setalive(src) // okay so we need to be temporarily alive for this in case it's happening as we were dying...
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.say(message, ignore_stamina_winded = 1) // say the thing they were typing and grunt
+		else
+			src.say(message)
+		src.stat = old_stat // back to being dead 😌

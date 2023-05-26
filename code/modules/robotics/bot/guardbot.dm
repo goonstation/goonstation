@@ -1126,7 +1126,7 @@
 		if (istype(src.budgun, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/shootgun = src.budgun	// first check if we have enough charge to reload
 			if (src?.cell?.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL && ((cell.charge - ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))) > (GUARDBOT_LOWPOWER_ALERT_LEVEL)))	// *scream
-				cell.charge -= ((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
+				cell.use((shootgun.ammo.max_amount - shootgun.ammo.amount_left) * (shootgun.ammo.ammo_type.power * shootgun.ammo.ammo_type.ks_ratio * 0.75))
 				shootgun.ammo.amount_left = shootgun.ammo.max_amount
 				return 1 // good2shoot!
 			else if (CheckMagCellWhatever())	// if not, do we have enough ammo to shoot?
@@ -1136,7 +1136,7 @@
 		else if (istype(src.budgun, /obj/item/gun/bling_blaster) && ammofab)	// Ammo is ammo, even if its money
 			var/obj/item/gun/bling_blaster/funds = src.budgun	// not sure why you'd do this, but it's an option, so functionality
 			if (cell.charge && (cell.charge >= GUARDBOT_LOWPOWER_ALERT_LEVEL)) // I mean you can't even make much (if any) money off of this
-				cell.charge -= (funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
+				cell.use(funds.cash_max - funds.cash_amt)	// maybe you'd get lucky and the buddy'll shoot some diamonds
 				funds.cash_amt = funds.cash_max		// but on average, the payout is crap and takes forever and you have to keep charging the bot
 				return 1 // good2shoot!
 			else if (CheckMagCellWhatever()) // so i figured if you really want to do this, go for it
@@ -1199,7 +1199,7 @@
 				if(SEND_SIGNAL(budgun, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 					if (ret["charge"] < ret["max_charge"]) // is our gun not full?
 						if (src.cell.charge > (GUARDBOT_LOWPOWER_ALERT_LEVEL - 10 + (ret["max_charge"] - ret["charge"]))) // Can we charge it without tanking our battery?
-							src.cell.charge -= (ret["max_charge"] - ret["charge"]) // discharge us
+							src.cell.use(ret["max_charge"] - ret["charge"]) // discharge us
 							SEND_SIGNAL(budgun, COMSIG_CELL_CHARGE, ret["max_charge"])
 							return 1 // and we're good2shoot
 						else if (CheckMagCellWhatever()) // is there enough charge left in the gun?
@@ -1525,7 +1525,7 @@
 			if(cell.charge < GUARDBOT_LOWPOWER_IDLE_LEVEL)
 				if(!ON_COOLDOWN(src, "critical_battery_speak", 5 SECONDS))
 					speak("Critical battery.")
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 				return 0
 
 			if(cell.charge < GUARDBOT_LOWPOWER_ALERT_LEVEL && !(locate(/datum/computer/file/guardbot_task/recharge) in src.tasks) )
@@ -1883,7 +1883,7 @@
 		if(src.charge_dock)
 			if(charge_dock.loc == src.loc)
 				if(!src.idle)
-					INVOKE_ASYNC(src, /obj/machinery/bot/guardbot.proc/snooze)
+					INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			else
 				src.charge_dock = null
 				src.wakeup()
@@ -4769,7 +4769,7 @@ TYPEINFO(/obj/machinery/guardbot_dock)
 			robot.charge_dock = src
 			src.autoeject = aeject
 			if(!robot.idle)
-				INVOKE_ASYNC(robot, /obj/machinery/bot/guardbot.proc/snooze)
+				INVOKE_ASYNC(robot, TYPE_PROC_REF(/obj/machinery/bot/guardbot, snooze))
 			if(src.host_id)
 				src.post_wire_status(src.host_id,"command","term_message","data","command=status&status=connect&botid=[current.net_id]")
 

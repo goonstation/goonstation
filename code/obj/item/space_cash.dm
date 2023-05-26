@@ -32,8 +32,14 @@
 		..(loc)
 		src.UpdateStackAppearance()
 
-	proc/setup(var/atom/L, var/amt = 1 as num)
-		set_loc(L)
+	proc/setup(var/atom/L, var/amt = 1 as num, try_add_to_storage = FALSE)
+		if (!try_add_to_storage)
+			set_loc(L)
+		else
+			if (L.storage)
+				L.storage.add_contents(src)
+			else
+				src.set_loc(L)
 		set_amt(amt)
 
 	proc/set_amt(var/amt = 1 as num)
@@ -370,3 +376,159 @@
 	New()
 		. = ..()
 		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
+
+
+/obj/item/fakecash // im the king of bad ideas
+	name = "1 discount credit"
+	real_name = "discount credit"
+	desc = "You gotta have mon- Wait why does this say Discount Dan's Genuine Authentic Credit-like Currency?"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "cashgreen"
+	uses_multiple_icon_states = 1
+	opacity = 0
+	density = 0
+	anchored = UNANCHORED
+	force = 1
+	throwforce = 1
+	throw_speed = 1
+	throw_range = 8
+	w_class = W_CLASS_TINY
+	burn_point = 400
+	burn_possible = 2
+	burn_output = 750
+	amount = 1
+	max_stack = 1000000
+	stack_type = /obj/item/fakecash // so all FAKE cash types can stack iwth each other
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 1
+	inventory_counter_enabled = 1
+	var/default_min_amount = 0
+	var/default_max_amount = 0
+
+	New(var/atom/loc, var/amt = 1 as num)
+		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
+		src.amount = max(amt,default_amount) //take higher
+		..(loc)
+		src.UpdateStackAppearance()
+
+	proc/setup(var/atom/L, var/amt = 1 as num, try_add_to_storage = FALSE)
+		if (!try_add_to_storage)
+			set_loc(L)
+		else
+			if (L.storage)
+				L.storage.add_contents(src)
+			else
+				src.set_loc(L)
+		set_amt(amt)
+
+	proc/set_amt(var/amt = 1 as num)
+		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
+		src.amount = max(amt,default_amount)
+		src.UpdateStackAppearance()
+
+	_update_stack_appearance()
+		src.UpdateName()
+		src.inventory_counter.update_number(src.amount)
+		switch (src.amount)
+			if (-INFINITY to 9)
+				src.icon_state = "cashgreen"
+			if (10 to 49)
+				src.icon_state = "cashblue"
+			if (50 to 499)
+				src.icon_state = "cashindi"
+			if (500 to 999)
+				src.icon_state = "cashpurp"
+			if (1000 to 999999)
+				src.icon_state = "cashred"
+			else // 1mil bby
+				src.icon_state = "cashrbow"
+
+	UpdateName()
+		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
+
+	before_stack(atom/movable/O as obj, mob/user as mob)
+		user.visible_message("<span class='notice'>[user] is stacking cash!</span>")
+
+	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		boutput(user, "<span class='notice'>You finish stacking cash.</span>")
+
+	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
+		boutput(user, "<span class='alert'>You need another stack!</span>")
+
+	attackby(var/obj/item/I, mob/user)
+		if (istype(I, /obj/item/fakecash) && src.amount < src.max_stack)
+			user.visible_message("<span class='notice'>[user] stacks some cash.</span>")
+			stack_item(I)
+		else
+			..(I, user)
+
+	attack_hand(mob/user)
+		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
+			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
+			if (isnum_safe(amt) && src.loc == user && !user.equipped())
+				if (amt > src.amount || amt < 1)
+					boutput(user, "<span class='alert'>You wish!</span>")
+					return
+				change_stack_amount( 0 - amt )
+				var/obj/item/fakecash/young_money = new /obj/item/fakecash
+				young_money.setup(user.loc, amt)
+				young_money.Attackhand(user)
+		else
+			..(user)
+
+	onMaterialChanged()
+		. = ..()
+		if(src.amount > 1)
+			src.visible_message("[src] melds together into a single credit. What?")
+			src.desc += " It looks all melted together or something."
+			src.change_stack_amount(-(src.amount-1))
+			UpdateStackAppearance()
+
+//	attack_self(mob/user as mob)
+//		user.visible_message("fart")
+
+/obj/item/fakecash/five
+	name = "5 discount credits" //names are so they show up correctly in vendors and stuff
+	default_min_amount = 5
+	default_max_amount = 5
+
+/obj/item/fakecash/ten
+	name = "10 discount credits"
+	default_min_amount = 10
+	default_max_amount = 10
+
+/obj/item/fakecash/twenty
+	name = "20 discount credits"
+	default_min_amount = 20
+	default_max_amount = 20
+
+/obj/item/fakecash/fifty
+	name = "50 discount credits"
+	default_min_amount = 50
+	default_max_amount = 50
+
+/obj/item/fakecash/hundred
+	name = "100 discount credits"
+	default_min_amount = 100
+	default_max_amount = 100
+
+/obj/item/fakecash/fivehundred
+	name = "500 discount credits"
+	default_min_amount = 500
+	default_max_amount = 500
+
+/obj/item/fakecash/thousand
+	name = "1000 discount credits"
+	default_min_amount = 1000
+	default_max_amount = 1000
+
+/obj/item/fakecash/hundredthousand
+	name = "100000 discount credits"
+	default_min_amount = 100000
+	default_max_amount = 100000
+
+/obj/item/fakecash/million
+	name = "1000000 discount credits"
+	default_min_amount = 1000000
+	default_max_amount = 1000000

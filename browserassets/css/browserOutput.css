@@ -308,6 +308,8 @@ img.emoji {
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 
+.odd-highlight { background-color: #efefef; }
+
 /* ADD HERE FOR ITALIC */
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
@@ -408,6 +410,7 @@ h1.alert, h2.alert {color: #000000;}
 
 /* bog-standard dark theme with easy, unsaturated colors */
 body.theme-dark { background-color: #23272a; color: #dfdfcf; }
+body.theme-dark .odd-highlight { background-color: #191c20; }
 body.theme-dark .regular { color: #dfdfcf; }
 body.theme-dark .mhelp {color: #e75ae0;}
 body.theme-dark .ahelp {color:  #ffa135;}
@@ -517,12 +520,12 @@ body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .connectionClosed.restored {background: green;}
 
 body.theme-dark .rstandard {color: #3fcc3f;}
-body.theme-dark .rintercom {color: #4dc1c9;}
-body.theme-dark .rcommand {color: #7ca6d6;}
+body.theme-dark .rintercom {color: #81f7ff;}
+body.theme-dark .rcommand {color: #7397c0;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #51DBCB;}
+body.theme-dark .rmedical {color: #00bbff;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}

@@ -1,6 +1,7 @@
 /datum/antagonist/wrestler
 	id = ROLE_WRESTLER
 	display_name = "wrestler"
+	antagonist_icon = "wrestler"
 	success_medal = "Cream of the Crop"
 	var/fake = FALSE
 

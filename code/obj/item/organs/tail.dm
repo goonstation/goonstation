@@ -199,6 +199,7 @@
 	icon_piece_1 = "tail-lizard-detail-1"
 	icon_piece_2 = "tail-lizard-detail-2"
 	organ_image_icon = 'icons/mob/lizard.dmi'
+	clothing_image_icon = 'icons/mob/lizard/tail.dmi'
 	organ_image_under_suit_1 = "lizard_under_suit_1"
 	organ_image_under_suit_2 = "lizard_under_suit_2"
 	organ_image_over_suit = "lizard_over_suit"

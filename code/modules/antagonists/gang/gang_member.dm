@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/gang_member
 	id = ROLE_GANG_MEMBER
 	display_name = "gang member"
+	antagonist_icon = "gang"
 
 	/// The gang that this gang member belongs to.
 	var/datum/gang/gang
@@ -13,10 +14,6 @@
 		src.gang.members += new_owner
 
 		. = ..()
-
-		src.gang.leader.current?.antagonist_overlay_refresh(TRUE, FALSE)
-		for(var/datum/mind/M in src.gang.members)
-			M.current?.antagonist_overlay_refresh(TRUE, FALSE)
 
 	disposing()
 		src.gang.members -= src.owner
@@ -41,7 +38,7 @@
 				H.equip_if_possible(src.headset, H.slot_r_store)
 			else if (!H.l_store)
 				H.equip_if_possible(src.headset, H.slot_l_store)
-			else if (istype(H.back, /obj/item/storage/) && length(H.back.contents) < 7)
+			else if (H.back?.storage && !H.back.storage.is_full())
 				H.equip_if_possible(src.headset, H.slot_in_backpack)
 			else
 				H.put_in_hand_or_drop(src.headset)
@@ -51,13 +48,26 @@
 	remove_equipment()
 		src.headset.remove_radio_upgrade()
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(src.gang)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(src.gang)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/specialist/gang/member, src)
 
 	announce()
 		. = ..()
 		boutput(src.owner.current, "<span class='alert'>You are now a member of [src.gang.gang_name]!</span>")
-		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :g to communicate on this channel.</span>")
+		boutput(src.owner.current, "<span class='alert'>Your headset has been tuned to your gang's frequency. Prefix a message with :z to communicate on this channel.</span>")
 		boutput(src.owner.current, "<span class='alert'>Your boss is denoted by the blue G and your fellow gang members are denoted by the red G! Work together and do some crime!</span>")
 		boutput(src.owner.current, "<span class='alert'>You are free to harm anyone who isn't in your gang, but be careful, they can do the same to you!</span>")
 		boutput(src.owner.current, "<span class='alert'>You should only use bombs if you have a good reason to, and also run any bombings past your gang!</span>")

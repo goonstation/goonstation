@@ -17,7 +17,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 25
 	health_burn_vuln = 0.25
-	ai_type = /datum/aiHolder/snake
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -45,17 +45,15 @@
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.can_hold_items = 0
 
+	valid_target(mob/living/C)
+		if (C.ckey == null) return FALSE //do not attack non-threats ie. NPC monkeys and AFK players
+		if (iswizard(C)) return FALSE //do not attack our master
+		. = ..()
+
 	seek_target(var/range)
-		. = list()
 		if(!src.aggressive) //see above note regarding peacefulness
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (istype(C, src.type)) continue //don't attack other snakes
-			if (C.ckey == null) continue //do not attack non-threats ie. NPC monkeys and AFK players
-			if (iswizard(C)) continue //do not attack our master
-			. += C
+		. = ..()
 
 		if(length(.) && prob(30))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
