@@ -922,3 +922,35 @@
 			return ""
 		message = pirateify(message)
 		return message
+
+
+/datum/bioEffect/speech/scrambled
+	name = "Fonratl Guyrs Alrtateion Tpye-SC"
+	desc = "Mkaes the lgnauage cnetre of the sbuejct's vicoe to eimt cuirous sntecenes."
+	id = "accent_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Yuo feel lkie yuor vicoe is sramlcbing."
+	msgLose = "Yuo feel yuor vicoe is no lnoger sramlcbing."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_scramble(message)
+		return message
+
+
+/datum/bioEffect/speech/word_scrambled
+	name = "Alteration Type Frontal Gyrus-WSC"
+	desc = "The to subject's emit the sentences brain language center curious of makes."
+	id = "accent_word_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Words your scrambled out come."
+	msgLose = "Scrambled no longer are your words."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_shuffle_words(message)
+		return message
