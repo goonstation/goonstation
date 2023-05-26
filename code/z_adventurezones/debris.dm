@@ -61,7 +61,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 		else
 			if(src.material)
 				src.material.triggerOnHit(src, W, user, 1)
-				attack_particle(user, src)
+			attack_particle(user, src)
 			src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
 			src.take_damage(W.force / 2)
 
