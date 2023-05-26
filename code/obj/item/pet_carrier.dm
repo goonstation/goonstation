@@ -17,7 +17,7 @@
  * For more specificity in what mob types are excluded from being carried, refer to the child types of `/obj/item/pet_carrier`.
  */
 
-IS_ABSTRACT(/obj/item/pet_carrier)
+ABSTRACT_TYPE(/obj/item/pet_carrier)
 /obj/item/pet_carrier
 	name = "pet carrier"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
