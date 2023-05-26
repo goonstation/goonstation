@@ -2432,3 +2432,15 @@ proc/accent_shuffle_words(string)
 			else
 				sentence_ended = FALSE
 	return jointext(modded_tokens, "")
+
+
+proc/accent_mocking(string)
+	var/list/letters = list()
+	var/letter_count = 0
+	for(var/i = 1, i <= length(string), i++)
+		var/letter = lowertext(copytext(string, i, i + 1))
+		var/letter_ascii = text2ascii(letter)
+		if (letter_ascii >= text2ascii("a") && letter_ascii <= text2ascii("z") && (letter_count++) % 2)
+			letter = capitalize(letter)
+		letters += letter
+	return jointext(letters, "")

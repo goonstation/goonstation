@@ -954,3 +954,21 @@
 			return ""
 		message = accent_shuffle_words(message)
 		return message
+
+
+/datum/bioEffect/speech/mocking
+	name = "FrOnTaL gYrUs AlTeRaTiOn TyPe-Mc"
+	desc = "mAkEs ThE lAnGuAgE cEnTeR oF tHe SuBjEcT's BrAiN tO cOnStRuCt SeNtEnCeS aS mOcKiNg ThE sUbJeCt."
+	id = "accent_mocking"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	occur_in_genepools = FALSE
+	probability = 0
+	msgGain = "YoU fEeL lIkE mOcKiNg pEoPlE."
+	msgLose = "YoU dOn'T fEeL lIkE mOcKiNg pEoPlE aNyMoRe."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_mocking(message)
+		return message
