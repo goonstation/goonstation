@@ -211,7 +211,7 @@
 		set category = "Local"
 		set src in oview(1)
 
-		if (is_incapacitated(user))
+		if (can_act(user))
 			return
 
 		src.AttackSelf(user)
