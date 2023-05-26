@@ -87,6 +87,7 @@
 	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
 	force = MELEE_DMG_REVOLVER
 	shotsMax = 1 //griff
+	contraband = 4
 	var/fakeshots = 0
 	New()
 		fakeshots = rand(2, 7)

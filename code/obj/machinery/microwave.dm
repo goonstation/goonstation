@@ -3,6 +3,7 @@
 #define MW_COOK_EGG 3
 #define MW_COOK_DIRTY 4
 #define MW_COOK_EMPTY 5
+#define MW_COOK_WARM 6
 
 #define MW_STATE_WORKING 0
 #define MW_STATE_BROKEN_1 1
@@ -278,14 +279,18 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 						if(R.extra_item == null || (src.extra_item && src.extra_item.type == R.extra_item)) // Just in case the recipe doesn't have an extra item in it
 							src.cooked_recipe = R
 							cooked_item = R.creates // Store the item that will be created
-
 				if(cooked_item == "") //Oops that wasn't a recipe dummy!!!
 					if(src.flour_amount > 0 || src.water_amount > 0 || src.monkeymeat_amount > 0 || src.synthmeat_amount > 0 || src.humanmeat_amount > 0 || src.donkpocket_amount > 0 && src.extra_item == null) //Make sure there's something inside though to dirty it
 						src.cook(MW_COOK_DIRTY)
 					else if(src.egg_amount > 0) // egg was inserted alone
 						src.cook(MW_COOK_EGG)
 					else if(src.extra_item != null) // However if there's a weird item inside we want to break it, not dirty it
-						src.cook(MW_COOK_BREAK)
+						// warm if it can
+						if (istype(src.extra_item,/obj/item/organ) || src.extra_item.reagents)
+							src.visible_message("<span class='notice'>The microwave begins warming [src.extra_item]!</span>")
+							src.cook(MW_COOK_WARM)
+						else
+							src.cook(MW_COOK_BREAK)
 					else //Otherwise it was empty, so just turn it on then off again with nothing happening
 						src.visible_message("<span class='notice'>You're grilling nothing!</span>")
 						src.cook(MW_COOK_EMPTY)
@@ -315,71 +320,101 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 	src.updateUsrDialog()
 	switch(result)
 		if(MW_COOK_VALID_RECIPE)
-			sleep(cook_time)
-			if(isnull(src))
-				return
-			src.icon_state = "mw"
-			if(!isnull(src.being_cooked))
-				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-				if(istype(src.being_cooked, /obj/item/reagent_containers/food/snacks/burger/humanburger))
-					src.being_cooked.name = "[humanmeat_name] [src.being_cooked.name]"
-				if(istype(src.being_cooked, /obj/item/reagent_containers/food/snacks/donkpocket))
-					src.being_cooked:warm = 1
-					src.being_cooked.name = "warm " + src.being_cooked.name
-					src.being_cooked:cooltime()
-				if (src.emagged)
-					src.being_cooked.reagents.add_reagent("radium", 25)
-				if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
-					qdel(src.extra_item)
-				if(prob(1))
-					src.being_cooked.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
-				src.being_cooked.set_loc(get_turf(src)) // Create the new item
-				src.extra_item = null
-				src.cooked_recipe = null
-				src.being_cooked = null // We're done!
+			SPAWN(cook_time)
+				if(isnull(src))
+					return
+				src.icon_state = "mw"
+				if(!isnull(src.being_cooked))
+					playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+					if(istype(src.being_cooked, /obj/item/reagent_containers/food/snacks/burger/humanburger))
+						src.being_cooked.name = "[humanmeat_name] [src.being_cooked.name]"
+					if(istype(src.being_cooked, /obj/item/reagent_containers/food/snacks/donkpocket))
+						src.being_cooked:warm = 1
+						src.being_cooked.name = "warm " + src.being_cooked.name
+						src.being_cooked:cooltime()
+					if (src.emagged)
+						src.being_cooked.reagents.add_reagent("radium", 25)
+					if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
+						qdel(src.extra_item)
+					if(prob(1))
+						src.being_cooked.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+					src.being_cooked.set_loc(get_turf(src)) // Create the new item
+					src.clean_up()
 		if(MW_COOK_BREAK)
-			sleep(6 SECONDS) // Wait a while
-			if(isnull(src))
-				return
-			elecflash(src,power=2)
-			icon_state = "mwb"
-			src.visible_message("<span class='alert'>The microwave breaks!</span>")
-			src.microwave_state = MW_STATE_BROKEN_2
-			src.extra_item.set_loc(get_turf(src)) // Eject the extra item so important shit like the disk can't be destroyed in there
-			src.extra_item = null
+			SPAWN(6 SECONDS) // Wait a while
+				if(isnull(src))
+					return
+				elecflash(src,power=2)
+				icon_state = "mwb"
+				src.visible_message("<span class='alert'>The microwave breaks!</span>")
+				src.microwave_state = MW_STATE_BROKEN_2
+				src.clean_up()
 		if(MW_COOK_EGG)
-			sleep(4 SECONDS)
-			if(isnull(src))
-				return
-			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-			icon_state = "mweggexplode1"
-			sleep(4 SECONDS)
-			if(isnull(src))
-				return
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			src.visible_message("<span class='alert'>The microwave gets covered in cooked egg!</span>")
-			src.dirty = TRUE
-			src.icon_state = "mweggexplode"
+			SPAWN(4 SECONDS)
+				if(isnull(src))
+					return
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				icon_state = "mweggexplode1"
+			SPAWN(8 SECONDS)
+				if(isnull(src))
+					return
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+				src.visible_message("<span class='alert'>The microwave gets covered in cooked egg!</span>")
+				src.dirty = TRUE
+				src.icon_state = "mweggexplode"
+				src.clean_up()
 		if(MW_COOK_DIRTY)
-			sleep(4 SECONDS)
-			if(isnull(src))
-				return
-			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
-			icon_state = "mwbloody1"
-			sleep(4 SECONDS)
-			if(isnull(src))
-				return
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-			src.visible_message("<span class='alert'>The microwave gets covered in muck!</span>")
-			src.dirty = TRUE
-			src.icon_state = "mwbloody"
+			SPAWN(4 SECONDS)
+				if(isnull(src))
+					return
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				icon_state = "mwbloody1"
+			SPAWN(8	SECONDS)
+				if(isnull(src))
+					return
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+				src.visible_message("<span class='alert'>The microwave gets covered in muck!</span>")
+				src.dirty = TRUE
+				src.icon_state = "mwbloody"
+				src.clean_up()
 		if(MW_COOK_EMPTY)
-			sleep(8 SECONDS)
-			if(isnull(src))
-				return
-			src.icon_state = "mw"
-			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
-	src.clean_up()
+			SPAWN(8 SECONDS)
+				if(isnull(src))
+					return
+				src.icon_state = "mw"
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+				src.clean_up()
+		if(MW_COOK_WARM)
+			SPAWN(3 SECONDS)
+				if(isnull(src))
+					return
+				if (istype(src.extra_item,/obj/item/organ/head))
+					var/obj/item/organ/head/head = src.extra_item
+
+					var/mob/living/carbon/human/H = head.linked_human
+					if (H && head.head_type == HEAD_SKELETON && isskeleton(H))
+						head.linked_human.emote("scream")
+						boutput(H, "<span class='alert'>The microwave burns your skull!</span>")
+
+						if (!(head.glasses && istype(head.glasses, /obj/item/clothing/glasses/sunglasses))) //Always wear protection
+							H.take_eye_damage(1, 2)
+							H.change_eye_blurry(2)
+							H.changeStatus("stunned", 1 SECOND)
+							H.change_misstep_chance(5)
+
+			SPAWN(6 SECONDS)
+				if(isnull(src))
+					return
+				if (src.extra_item.reagents)
+					src.extra_item.reagents.temperature_reagents(4000,400)
+
+				if(prob(1))
+					src.extra_item.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+				src.icon_state = "mw"
+				src.clean_up()
+
 	src.operating = FALSE
 	src.power_usage = 5
 
@@ -420,6 +455,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 #undef MW_COOK_EGG
 #undef MW_COOK_DIRTY
 #undef MW_COOK_EMPTY
+#undef MW_COOK_WARM
 #undef MW_STATE_WORKING
 #undef MW_STATE_BROKEN_1
 #undef MW_STATE_BROKEN_2

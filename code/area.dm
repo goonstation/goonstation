@@ -144,6 +144,11 @@ TYPEINFO(/area)
 	/// default environment for sounds - see sound datum vars documentation for the presets.
 	var/sound_environment = 1
 
+	/// A list of parallax layer types to be added to a client's screen on entering this area.
+	var/list/area_parallax_layers = list()
+	/// Whether foreground parallax layers should be occluded from rendering over the contents of this area.
+	var/occlude_foreground_parallax_layers = FALSE
+
 	/// set to TRUE to inhibit attacks in this area.
 	var/sanctuary = 0
 
@@ -194,6 +199,8 @@ TYPEINFO(/area)
 
 				if (sound_loop)
 					M.client.playAmbience(src, AMBIENCE_LOOPING, sound_loop_vol)
+
+				M.client.parallax_controller?.update_area_parallax_layers(src, lastarea)
 
 				if (!played_fx_1 && prob(AMBIENCE_ENTER_PROB))
 					src.pickAmbience()
@@ -733,6 +740,13 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/owlery
 	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_far,
+		/atom/movable/screen/parallax_layer/asteroids_near,
+		)
 
 /area/shuttle/john/mining
 	name = "John's Bus Outpost Dock"
@@ -741,6 +755,12 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/grillnasium
 	name = "John's Bus Factory Dock"
 	icon_state = "shuttle"
+	// Settings should match /area/grillnasium
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/shuttle/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
@@ -748,6 +768,11 @@ ABSTRACT_TYPE(/area/shuttle)
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
 	force_fullbright = 0
 	sound_group = "ice_moon"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/snow,
+		/atom/movable/screen/parallax_layer/foreground/snow/sparse,
+		)
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/icebase_elevator/lower
 	name = "Chasm Lift Lower Section"
@@ -1300,6 +1325,11 @@ TYPEINFO(/area/diner)
 	name = "Void Diner"
 	icon_state = "purple"
 	requires_power = FALSE
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
 
 /area/tech_outpost
 	name = "Tech Outpost"
@@ -3501,6 +3531,23 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "red"
 	sanctuary = 1
 	teleport_blocked = 1
+	area_parallax_layers = list(
+	/atom/movable/screen/parallax_layer/space_1,
+	/atom/movable/screen/parallax_layer/space_2,
+	/atom/movable/screen/parallax_layer/asteroids_far
+	)
+
+/// Used to allow the exterior of the Magpie to render parallax layers.
+/area/salvager_space
+	name = "Salvager Vessel Magpie Space"
+	sanctuary = 1
+	teleport_blocked = 1
+	// Must match /area/salvager
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
@@ -3522,23 +3569,43 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 2
 	teleport_blocked = 1
 	sound_group = "syndicate_station"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
+/// Used to allow the exterior of the Cairngorm to render parallax layers.
+/area/syndicate_station_space
+	name = "Syndicate Station Space"
+	teleport_blocked = 1
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 /area/syndicate_station/battlecruiser
-		name = "Syndicate Battlecruiser Cairngorm"
-		icon_state = "red"
-		sanctuary = 1
+	name = "Syndicate Battlecruiser Cairngorm"
+	icon_state = "red"
+	sanctuary = 1
 
 /area/syndicate_station/firing_range
-		name = "firing range"
-		icon_state = "blue"
+	name = "firing range"
+	icon_state = "blue"
 
 /area/syndicate_station/assault_pod
-		name = "forward assault pod"
-		icon_state = "red"
+	name = "forward assault pod"
+	icon_state = "red"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/south,
+		/atom/movable/screen/parallax_layer/space_2/south,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse/south,
+		)
 
 /area/syndicate_station/medbay
-		name = "medical bay"
-		icon_state = "purple"
+	name = "medical bay"
+	icon_state = "purple"
 
 // end syndie //
 
@@ -3549,6 +3616,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	sound_environment = 4
 	teleport_blocked = 1
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
@@ -3558,6 +3630,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
 			return FALSE
 		return TRUE
+
+/area/wizard_station_space
+	name = "Wizard's Den Space"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
@@ -3767,6 +3847,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	do_not_irradiate = 1
 	requires_power = FALSE
 	minimaps_to_render_on = null
 

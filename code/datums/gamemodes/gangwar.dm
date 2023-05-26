@@ -1149,6 +1149,7 @@ proc/broadcast_to_all_gangs(var/message)
 			for(var/obj/item/plant/herb/cannabis/C in S.contents)
 				insert_item(C,null)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				hadcannabis = 1
 
 			if(hadcannabis)

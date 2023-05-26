@@ -47,6 +47,8 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
+			if (istype(AM, /obj/dummy))
+				continue
 			AM.set_loc(src)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
@@ -480,6 +482,10 @@
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
+		C.color = src.color
+		C.name = src.name
+		if (src.material)
+			C.setMaterial(src.material, copy=FALSE)
 		C.update()
 
 		qdel(src)
@@ -1634,6 +1640,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 	proc/getlinked()
 		linked = null
+		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		if (vendor)
+			src.linked = vendor
 		var/obj/machinery/disposal/D = locate() in src.loc
 		if(D)
 			linked = D

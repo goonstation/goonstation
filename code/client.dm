@@ -552,7 +552,7 @@
 		// when an admin logs in check all clients again per Mordent's request
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
-	winset(src, "rpanewindow.left", "infowindow")
+	winset(src, null, "rpanewindow.left=infowindow")
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -1060,7 +1060,7 @@ var/global/curr_day = null
 			if (!usr || !usr.client)
 				return
 			var/target = href_list["nick"]
-			var/t = input("Message:", text("Mentor Message")) as null|text
+			var/t = input("Message:", text("Mentor Message")) as null|message
 			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
 				t = strip_html(t, 1500)
 			if (!( t ))
@@ -1096,7 +1096,7 @@ var/global/curr_day = null
 				if (!usr || !usr.client)
 					return
 
-				var/t = input("Message:", text("Mentor Message")) as null|text
+				var/t = input("Message:", text("Mentor Message")) as null|message
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))

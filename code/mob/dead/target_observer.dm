@@ -45,8 +45,6 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (src.client && src.client.holder)
-			src.antagonist_overlay_refresh(0, 0)
 
 #ifdef TWITCH_BOT_ALLOWED
 		if (IS_TWITCH_CONTROLLED(src))
@@ -78,7 +76,10 @@
 		//If there's an existing target we should clean up after ourselves
 		if(src.target == target)
 			return //No sense in doing all this if we're not changing targets
+
+		var/area/old_area
 		if(src.target)
+			old_area = get_area(src.target)
 			var/mob/living/M = src.target
 			src.target = null
 			M.removeOverlaysClient(src.client)
@@ -93,6 +94,7 @@
 		//Let's have a proc so as to make it easier to reassign an observer.
 		src.target = target
 		src.set_loc(target)
+		src.client?.parallax_controller?.update_area_parallax_layers(get_area(src.target), old_area)
 		if(src.ghost?.auto_tgui_open)
 			RegisterSignal(target, COMSIG_TGUI_WINDOW_OPEN, PROC_REF(open_tgui_if_interactive))
 		set_eye(target)

@@ -323,7 +323,7 @@
 	},
 /area/prefab/raceway)
 "aT" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/shrub{
 	icon_state = "shrub";
 	dir = 6
@@ -379,7 +379,7 @@
 	},
 /area/prefab/raceway)
 "bb" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

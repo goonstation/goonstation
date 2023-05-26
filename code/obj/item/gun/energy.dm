@@ -116,7 +116,7 @@ TYPEINFO(/obj/item/gun/energy)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell)
 				if(R.cell.charge >= src.robocharge)
-					R.cell.charge -= src.robocharge
+					R.cell.use(src.robocharge)
 					return 1
 			return 0
 		else
@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				UpdateIcon()
+				//UpdateIcon()
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
-	charge_icon_state = "egunstun"
+	charge_icon_state = "energystun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
@@ -369,11 +369,11 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "energykill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-kill"
 		else if (current_projectile.type == /datum/projectile/energy_bolt)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "energystun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun"
 		..()
@@ -384,6 +384,14 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 	proc/noreward()
 		src.nojobreward = 1
+
+	captain
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. Decorated to match standard NT captain attire."
+		icon_state = "energy-cap"
+
+	head_of_security
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
+		icon_state = "energy-hos"
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)

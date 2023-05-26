@@ -401,6 +401,68 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		..()
 		reagents.add_reagent("beer",1000)
 
+/obj/reagent_dispensers/chemicalbarrel
+	name = "chemical barrel"
+	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	icon = 'icons/obj/objects.dmi'
+	var/base_icon_state = "barrel-blue"
+	icon_state = "barrel-blue-closed"
+	amount_per_transfer_from_this = 25
+	p_class = 3
+	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+
+	New()
+		..()
+		src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen) && (src.name == initial(src.name)))
+			var/t = tgui_input_text(user, "Enter a label for the barrel.", "Label", "chemical", 24)
+			if(t && t != src.name)
+				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+			t = copytext(strip_html(t), 1, 24)
+			if (isnull(t) || !length(t) || t == " ")
+				return
+			if (!findtext(t, "barrel"))     //so we don't see lube barrel barrel
+				t += " barrel"          	//so it's clear it's a barrel, and not just "lube"
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.name = t
+
+			src.desc = "For storing medical chemicals and less savory things."
+
+		if (istool(W, TOOL_WRENCHING))
+			if(src.flags & OPENCONTAINER)
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
+			else
+				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.flags ^= OPENCONTAINER
+			src.set_icon_state(base_icon_state + (src.is_open_container() ? "-open" : "-closed"))
+		else
+			..()
+
+	bullet_act()
+		..()
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 30, 1)
+
+	red
+		icon_state = "barrel-red-closed"
+		base_icon_state = "barrel-red"
+	yellow
+		icon_state = "barrel-yellow-closed"
+		base_icon_state = "barrel-yellow"
+	oil
+		icon_state = "barrel-flamable-closed"
+		base_icon_state = "barrel-flamable"
+		name = "oil barrel"
+		desc = "A barrel for storing large amounts of oil."
+
+		New()
+			..()
+			reagents.add_reagent("oil", 4000)
+
 /obj/reagent_dispensers/beerkeg/rum
 	name = "barrel of rum"
 	desc = "It better not be empty."
@@ -625,4 +687,3 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			src.underlays += src.fluid_image
 		else
 			src.icon_state = initial(src.icon_state)
-

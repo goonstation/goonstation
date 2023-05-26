@@ -1,3 +1,9 @@
+(t)tue may 23 23
+(u)pali
+(*)There's now a <b>Halt!</b> button in player options. It stops the player's movement for 5 seconds.<br>Intended for when someone prays and you want to fulfull their prayer but they just keep running away like a silly goose.
+(t)wed may 10 23
+(u)LeahTheTech
+(*)Added revolution W/L tracking and an admin verb to check nukie/flock/revs W/L stats: Check-gamemode-stats
 (t)thu apr 20 23
 (u)LeahTheTech
 (+)Added new buildmode mode: meteor.
