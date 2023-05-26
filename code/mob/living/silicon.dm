@@ -316,15 +316,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
-/mob/living/silicon/lastgasp()
-	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN(0)
-		if (!src || !src.client) return											// break if it's an npc or a disconnected player
-		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
-		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
-			winset(src, "mainwindow.input", "text=\"\"")						// clear the player's input bar to register death / unconsciousness
-			var/grunt = pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP")	// pick a grunt to append
-			src.say(copytext(enteredtext,6,0) + "--" + grunt)					// say the thing they were typing and grunt
+/mob/living/silicon/lastgasp(allow_dead=FALSE)
+	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
 /mob/living/silicon/proc/allowed(mob/M)
 	//check if it doesn't require any access at all

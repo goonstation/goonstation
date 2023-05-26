@@ -6,7 +6,7 @@ TYPEINFO(/datum/component/auto_reagent)
 		ARG_INFO("overflowing", DATA_INPUT_BOOL, "Should overflow?", FALSE),
 	)
 /datum/component/auto_reagent
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_ALLOWED //! but like probably don't do multiple ones with overflowing=TRUE, ok???
 	/// Reagent ID to produce
 	var/reagent_id = null
 	/// Number of reagents to produce per item process

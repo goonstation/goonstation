@@ -116,7 +116,7 @@ TYPEINFO(/obj/item/gun/energy)
 			var/mob/living/silicon/robot/R = user
 			if(R.cell)
 				if(R.cell.charge >= src.robocharge)
-					R.cell.charge -= src.robocharge
+					R.cell.use(src.robocharge)
 					return 1
 			return 0
 		else

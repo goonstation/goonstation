@@ -1537,7 +1537,7 @@
 	id = "art";
 	name = "Emergency Artfiact Flusher Shutter"
 	},
-/obj/disposalpipe/trunk{
+/obj/disposalpipe/trunk/ejection{
 	dir = 1
 	},
 /turf/simulated/floor/plating/random,
@@ -5224,8 +5224,8 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -5446,8 +5446,8 @@
 	name = "Combustion Chamber Heat Shield Control";
 	pixel_x = -25
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -5455,21 +5455,21 @@
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "ase" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "asf" = (
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /obj/item/paper/engine{
 	pixel_x = 12;
@@ -5790,8 +5790,8 @@
 /area/space)
 "ati" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_west"
@@ -5799,15 +5799,15 @@
 /area/station/engine/combustion_chamber)
 "atj" = (
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
 "atk" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_east"
@@ -5845,24 +5845,24 @@
 /area/station/engine/combustion_chamber)
 "ats" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "att" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/item/device/radio/beacon,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "atu" = (
 /obj/machinery/atmospherics/valve,
 /obj/submachine/cargopad/engineering,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/caution/west,
 /area/station/engine/core)
@@ -5885,8 +5885,8 @@
 	icon_state = "2-4"
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
@@ -6490,26 +6490,6 @@
 /obj/submachine/ATM,
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/eva)
-"avf" = (
-/obj/machinery/door/airlock/pyro/command/alt{
-	dir = 4;
-	name = "Customs"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/access_spawn/heads,
-/obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/blue,
-/area/station/bridge/customs)
 "avg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7292,8 +7272,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -7810,8 +7790,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -9063,8 +9043,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -9361,8 +9341,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -10353,7 +10333,7 @@
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "aGi" = (
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/artifact)
 "aGj" = (
@@ -13079,7 +13059,7 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/teleporter)
 "aPg" = (
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
@@ -13537,8 +13517,8 @@
 /obj/landmark/start{
 	name = "Engineer"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -14051,8 +14031,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -14375,8 +14355,8 @@
 	id = "engine_room"
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
@@ -14937,8 +14917,8 @@
 /obj/machinery/atmospherics/valve{
 	dir = 4
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -15051,7 +15031,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "aUP" = (
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /obj/decal/poster/wallsign/warning3{
 	pixel_x = -6;
 	pixel_y = -6
@@ -15849,8 +15829,8 @@
 	id = "vent";
 	name = "Combustion Chamber Vent"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
@@ -15912,8 +15892,8 @@
 	level = 2
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -16258,7 +16238,7 @@
 /area/station/science/lab)
 "aYl" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "aYm" = (
@@ -16529,8 +16509,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -16545,8 +16525,8 @@
 	id = "burn_chamber"
 	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/combustion_chamber)
@@ -16636,8 +16616,8 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -16831,7 +16811,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "aZQ" = (
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "aZS" = (
@@ -17053,8 +17033,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum{
 	icon_state = "engine_caution_we"
@@ -17527,8 +17507,8 @@
 /area/station/teleporter)
 "gFd" = (
 /obj/machinery/power/generatorTemp,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /obj/item/paper/engine,
 /obj/cable/brown{
@@ -17802,6 +17782,11 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"iCx" = (
+/obj/disposalpipe/segment/ejection,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "iEp" = (
 /obj/machinery/light,
 /obj/decal/mule/beacon,
@@ -18353,7 +18338,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "mAg" = (
@@ -19143,6 +19128,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/west)
+"rdF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/ejection,
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "rnV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -19428,8 +19420,8 @@
 	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment{
-	dir = 4
+/obj/disposalpipe/segment/ejection{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -20087,7 +20079,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/ejection,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
@@ -60079,13 +60071,13 @@ puT
 opJ
 alt
 ylU
-aWF
-aWF
+rdF
+rdF
 mxP
-aWF
-aWF
-aWF
-aWF
+rdF
+rdF
+rdF
+rdF
 adj
 aJy
 aDc
@@ -65222,7 +65214,7 @@ aAD
 alP
 aWl
 aYl
-aDW
+iCx
 aPg
 aZQ
 aZQ
@@ -76991,7 +76983,7 @@ hpN
 asp
 atH
 auo
-avf
+hpN
 aFO
 aWz
 azt

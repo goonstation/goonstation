@@ -1128,7 +1128,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	process_ammo(mob/user)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
-			S.cell?.charge -= src.power_requirement
+			S.cell?.use(src.power_requirement)
 		return TRUE
 
 
