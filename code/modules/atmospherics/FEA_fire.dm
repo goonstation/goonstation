@@ -7,14 +7,16 @@
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 
-/// We reacts to the exposed temperature, calls [/atom/proc/temperature_expose] on everything within us, and exposes fluids to electricity if need be.
+/// We react to the exposed temperature, call [/atom/proc/temperature_expose] on everything within us, and expose things within fluids to electricity if need be.
 /turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
 	if (src.reagents)
 		src.reagents.temperature_reagents(exposed_temperature, exposed_volume, 350, 300, 1)
-	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
+	if(!ON_COOLDOWN(src, "hotspot_expose_to_atoms__1", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__2", 1 SECOND) || \
+		!ON_COOLDOWN(src, "hotspot_expose_to_atoms__3", 1 SECOND) || !ON_COOLDOWN(src, "hotspot_expose_to_atoms__4", 1 SECOND) || \
+		!ON_COOLDOWN(src, "hotspot_expose_to_atoms__5", 1 SECOND))
 		if (electric) //mbc : i'm putting electric zaps on here because eleczaps ALWAYS happen alongside hotspot expose and i dont want to loop all atoms twice
 			for (var/atom/movable/item as anything in src)
 				item.temperature_expose(null, exposed_temperature, exposed_volume)

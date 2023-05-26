@@ -209,6 +209,7 @@ What are the archived variables for?
 		if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 			src.temperature = (src.temperature * old_heat_capacity + energy_released) / new_heat_capacity
 
+	ASSERT(src.fuel_burnt >= 0)
 	return src.fuel_burnt
 
 
