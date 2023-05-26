@@ -17139,6 +17139,7 @@
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
+/obj/forcefield/energyshield/perma/vehicle,
 /turf/simulated/martian/floor,
 /area/space)
 "aTK" = (
