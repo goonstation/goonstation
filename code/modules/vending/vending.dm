@@ -339,8 +339,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		else
 			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
 			return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
+		W = id_card
 	if (istype(W, /obj/item/card/id))
 		if (src.acceptcard)
 			src.scan_card(W, user)
@@ -1450,7 +1451,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/10, hidden = 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, 10, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=PAY_UNTRAINED/5,hidden=1)
 		if(prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza, rand(1, 3), cost=PAY_UNTRAINED/5, hidden = 1)
@@ -1475,7 +1476,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10) //does this even work??
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1, 5), cost=PAY_UNTRAINED/10, hidden = 1)
 
 	blue
 		icon_state = "grife"
@@ -1497,7 +1498,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1,5), cost=PAY_UNTRAINED/10, hidden = 1)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -2172,7 +2173,9 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
 			targetContainer.storage.transfer_stored_item(I, src, user = user)
 			productListUpdater(I, user)
-
+		if (istype(targetContainer, /obj/item/satchel))
+			targetContainer.UpdateIcon()
+			targetContainer.tooltip_rebuild = 1
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
@@ -3170,7 +3173,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/atmos, 2, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/engineering, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/engineering, 2)
-		product_list += new/datum/data/vending_product(/obj/item/constructioncone, 12)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/constructioncone, 16)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)

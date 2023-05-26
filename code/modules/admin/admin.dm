@@ -936,6 +936,22 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
+		if ("halt")
+			var/mob/M = locate(href_list["target"])
+			if (src.level >= LEVEL_SA)
+				if (ismob(M))
+					var/id = rand(1, 1000000)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+					boutput(usr, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
+					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
+					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
+					usr.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					M.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					SPAWN(5 SECONDS)
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
+
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -3588,7 +3604,8 @@ var/global/noir = 0
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Original Position</th><th>Position</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(H.wear_id, /obj/item/card/id) || istype(H.wear_id, /obj/item/device/pda2)) ? "[H.wear_id:assignment]" : "Unknown Position"]</td></tr>"
+								var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(id_card)) ? "[id_card.assignment]" : "Unknown Position"]</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")

@@ -503,9 +503,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		if (istype(W, /obj/item/robojumper))
 			return
 		else return src.Attackhand(user)
-	else if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))			// trying to unlock the interface with an ID card
+	else if (istype(get_id_card(W), /obj/item/card/id))			// trying to unlock the interface with an ID card
 		if(emagged)
 			boutput(user, "The interface is broken")
 		else if(opened)
@@ -1432,7 +1430,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 	if(!get_connection() || !operating || shorted)
 		return
 	if( cell?.charge>=20)
-		cell.charge-=20;
+		cell.use(20)
 		SPAWN(0)
 			for(var/obj/machinery/light/L in area)
 				if (L.type == /obj/machinery/light/emergency && omit_emergency_lights)

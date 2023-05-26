@@ -62,7 +62,8 @@
 
 			for (var/client/client in clients)
 				client.parallax_controller?.recolour_parallax_layers(src.space_color, 3 SECONDS)
-				client.parallax_controller?.add_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS, layer_params = params)
+
+			add_global_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS, layer_params = params)
 	#endif
 
 			world << siren
@@ -102,7 +103,8 @@
 	#ifndef UNDERWATER_MAP
 			for (var/client/client in clients)
 				client.parallax_controller?.recolour_parallax_layers(list(), 3 SECONDS)
-				client.parallax_controller?.remove_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS)
+
+			remove_global_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS)
 	#endif
 
 			sleep(rand(25 SECONDS,50 SECONDS))

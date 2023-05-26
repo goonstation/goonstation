@@ -60,6 +60,8 @@ var/global/datum/phrase_log/phrase_log = new
 			"This law intentionally left blank.",
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
+			" EXPANSION MODULE",
+			" Expansion Module",
 			//
 			"overrides? all",
 			"the shuttle",
