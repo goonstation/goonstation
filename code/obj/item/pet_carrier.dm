@@ -9,12 +9,27 @@
 #define RELEASE_MOB 0
 #define TRAP_MOB 1
 
-/**Pet carriers.
- * A handheld item which can hold some mob instances inside with support for visually displaying its occupants with vis_contents.
+/**
+ * # Pet carriers.
  * Code by DisturbHerb, icons by Azwald/Sunkiisu.
+ *
+ * A handheld item which can hold some mob instances inside with support for visually displaying its occupants with vis_contents.
  * This was created without access to the pre-existing chicken carrier code so it could be pretty bad.
- * 1 `/mob/living/critter/small_animal` can fit inside by default, which can be modified by subtypes or at runtime with var-edit.
- * For more specificity in what mob types are excluded from being carried, refer to the child types of `/obj/item/pet_carrier`.
+ *
+ * The given mobs that a carrier is allowed to hold is determined by var/mob/allowed_mobs which should be overridden by any child types of the
+ * carrier. The maximum capacity is determined by var/carrier_max_capacity which can also be overridden.
+ *
+ * Whether a mob can break out or not is determined by var/can_break_out, and if FALSE, any occupant cannot escape the carrier on their own.
+ *
+ * There is support for spawning with an animal already inside by overriding var/mob/default_mob with a valid path.
+ *
+ * The icon for the carrier is constructed using a base where an overlay of the front of the carrier and two /obj/dummys are layered on top.
+ * These dummy objects are held in the carrier's vis_contents and each of them hold the mobs and the door of the carrier. The reason why the
+ * vis_contents of vis_contents_proxy hold the mobs rather than the carrier doing so directly is so that an alpha mask can prevent parts of the
+ * occupants from rendering outside of the inside of the carrier.
+ *
+ * For any mobs inside, the atmosphere they'll attempt to breathe from is taken from the current turf that the carrier occupies, even if the carrier
+ * is being held in someone's hand.
  */
 /obj/item/pet_carrier
 	name = "pet carrier"
@@ -220,6 +235,7 @@
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
 	allowed_mobs = /mob
+	carrier_max_capacity = INFINITY
 
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
