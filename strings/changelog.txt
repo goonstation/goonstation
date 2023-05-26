@@ -1,5 +1,9 @@
 
 (t)fri may 26 23
+(u)glowbold
+(p)13820
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(+)Construction cones stack up to five at a time, can be placed on the ground by clicking, and can be worn on your head.
 (u)Skeletonman0
 (p)14031
 (e)💅📦|C-QoL, A-Game-Objects
