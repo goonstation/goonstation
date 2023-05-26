@@ -2396,11 +2396,7 @@ proc/accent_scramble(string)
 	return jointext(modded_tokens, "")
 
 
-proc/accent_shuffle_words_in_sentences(string)
-	var/regex/sentence_split = regex("\\.\\s+|\\!\\s+|\\?\\s+", "i")
-
-
-proc/accent_shuffle_words_full(string)
+proc/accent_shuffle_words(string)
 	var/list/tokens = splittext(string, regex("\\b", "i"))
 	var/regex/word_check = regex("^\\w+$", "i")
 	var/list/just_words = list()
