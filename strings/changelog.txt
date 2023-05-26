@@ -1,4 +1,25 @@
 
+(t)fri may 26 23
+(u)FlameArrow57 and Flaborized
+(p)14093
+(e)🆕🔎📦|C-Feature, C-Code-Quality, A-Game-Objects
+(+)Added lanyards as a random lootcrate item! These are three item storages that can hold tiny items and fit in your ID slot. They accept IDs and can be used for ID checks if holding one.
+(u)glowbold
+(p)13820
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(+)Construction cones stack up to five at a time, can be placed on the ground by clicking, and can be worn on your head.
+(u)Skeletonman0
+(p)14031
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Microwaves can now warm chemicals and skeleton skulls / other organs are now microwavable
+(u)Tyrant
+(p)14228
+(e)🗺|A-Mapping
+(+)Mail booths are now gone. No more penpals.  Should've been removed a while ago actually.
+(u)Wisemonster
+(p)13883
+(e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
+(+)The generic space cola is no longer hidden in soda vending machines, but the off-brand colas now require hacking the vendor to access
 (t)thu may 25 23
 (u)pali
 (*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.

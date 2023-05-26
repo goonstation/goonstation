@@ -44204,12 +44204,6 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
-"kpI" = (
-/obj/mail_booth,
-/turf/simulated/floor/neutral/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "kqg" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -120858,7 +120852,7 @@ woB
 rtj
 izx
 twQ
-kpI
+aUG
 bDT
 aKX
 aMc
