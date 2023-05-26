@@ -220,9 +220,9 @@
 		if (!ishuman(owner)) return
 		H = owner
 		if (!H.getStatusDuration("burning"))
-			H.HealDamage("All", 2, 2, 1)
+			H.HealDamage("All", 1, 1, 1)
 			if (prob(20))
-				H.HealDamage("All", 3, 2, 2)
+				changeling_super_heal_step(H, 25, 25)
 			if(!ON_COOLDOWN(H, "cling_regen", 3 SECONDS))
 				H.visible_message("<span class='alert'><B>[H]'s flesh is moving and sliding around oddly!</B></span>")
 				boutput(H, "<span class='notice'>We feel our flesh knitting back together.</span>")
