@@ -96,11 +96,10 @@
 		var/carrier_occupants_length = length(src.carrier_occupants)
 		if (carrier_occupants_length)
 			// Since you'll basically never see this.
-			if (carrier_occupants_length > 1)
+			if (carrier_occupants_length > 3)
 				. += "There's a whole zoo inside!"
 				return
-			else
-				. += "It's carrying [src.carrier_occupants[1].name]."
+			. += "It's carrying [english_list(src.carrier_occupants)]."
 
 	update_icon()
 		..()
@@ -204,6 +203,18 @@
 		src.vis_contents_proxy.vis_contents.Remove(animal_to_eject)
 		src.UpdateIcon()
 
+	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
+	verb/release_animal_verb(mob/user)
+		set name = "Release animal"
+		set desc = "Release one of the animals from this carrier."
+		set category = "Local"
+		set src in oview(1)
+
+		if (is_incapacitated(user))
+			return
+
+		src.AttackSelf(user)
+
 /obj/item/pet_carrier/jones
 	default_animal = /mob/living/critter/small_animal/cat/jones
 
@@ -232,7 +243,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.mob_owner = owner
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || mob_owner.equipped() != carrier)
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_ANIMAL && mob_owner.equipped() != carrier))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -244,13 +255,13 @@
 
 	onUpdate()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || mob_owner.equipped() != carrier)
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_ANIMAL && mob_owner.equipped() != carrier))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || mob_owner.equipped() != carrier)
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_ANIMAL && mob_owner.equipped() != carrier))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
