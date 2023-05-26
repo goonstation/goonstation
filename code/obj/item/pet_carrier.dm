@@ -13,23 +13,20 @@
  * A handheld item which can hold some mob instances inside with support for visually displaying its occupants with vis_contents.
  * Code by DisturbHerb, icons by Azwald/Sunkiisu.
  * This was created without access to the pre-existing chicken carrier code so it could be pretty bad.
- * 1 `/mob` can fit inside by default, which can be modified by subtypes or at runtime with var-edit.
+ * 1 `/mob/living/critter/small_animal` can fit inside by default, which can be modified by subtypes or at runtime with var-edit.
  * For more specificity in what mob types are excluded from being carried, refer to the child types of `/obj/item/pet_carrier`.
  */
-
-ABSTRACT_TYPE(/obj/item/pet_carrier)
 /obj/item/pet_carrier
 	name = "pet carrier"
-	desc = "A surprisingly roomy carrier for transporting living things. All of them."
+	desc = "A surprisingly roomy carrier for transporting small animals."
 	icon = 'icons/obj/items/pet_carrier.dmi'
 	icon_state = "carrier-full"
 	item_state = "carrier-open"
 	w_class = W_CLASS_BULKY
 	two_handed = TRUE
 
-	/**Please override this in child types to specify what can actually fit in. It's probably bad for a given object to be able to hold literally any
-	 * mob in the game.*/
-	var/mob/allowed_mobs = /mob
+	/// Please override this in child types to specify what can actually fit in.
+	var/mob/allowed_mobs = /mob/living/critter/small_animal
 	/// If FALSE, an occupant cannot escape the carrier on their own.
 	var/can_break_out = TRUE
 	/// How many mobs can fit inside the crate. Usually not overridden by anything, this is to let the system be permissive for var-editing.
@@ -137,13 +134,11 @@ ABSTRACT_TYPE(/obj/item/pet_carrier)
 		..()
 
 	attack_self(mob/user)
-		if (length(src.carrier_occupants))
-			// Remove the first mob in the list of occupants.
+		if (length(src.carrier_occupants) && ismob(src.carrier_occupants[1]))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
-			if (mob_to_remove)
-				actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB), user)
-			else
-				boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
+			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB), user)
+		else
+			boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
 		..()
 
 	// Ensure that things inside can actually breathe.
@@ -211,9 +206,8 @@ ABSTRACT_TYPE(/obj/item/pet_carrier)
 		src.UpdateIcon()
 
 	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
-	verb/release_mob_verb(mob/user)
-		set name = "Release mob"
-		set desc = "Release one of the mobs from this carrier."
+	verb/release_occupant_verb(mob/user)
+		set name = "Release occupant"
 		set category = "Local"
 		set src in oview(1)
 
@@ -224,10 +218,8 @@ ABSTRACT_TYPE(/obj/item/pet_carrier)
 
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
-
-/obj/item/pet_carrier/small_animals
-	desc = "A surprisingly roomy carrier for small animals."
-	allowed_mobs = /mob/living/critter/small_animal
+	desc = "A surprisingly roomy carrier for transporting living things. All of them."
+	allowed_mobs = /mob
 
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
