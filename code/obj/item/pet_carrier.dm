@@ -56,11 +56,12 @@
 	// Alpha mask icon state for cutting out the mob on non-transparent pixels.
 	var/carrier_alpha_mask = "carrier-mask"
 
-	// Overlay and base icon state names.
+	// Empty carrier icon state name.
+	var/empty_carrier_icon_state = "carrier"
+
+	// Grate icon state names.
 	var/grate_open_icon_state = "grate-open"
 	var/grate_closed_icon_state = "grate-closed"
-	var/carrier_front_icon_state = "carrier-front"
-	var/carrier_rear_icon_state = "carrier-rear"
 
 	// Carrier item state names.
 	var/carrier_open_item_state = "carrier-open"
@@ -80,12 +81,10 @@
 
 	New()
 		..()
-		// Replace the initial icon state with an empty version built with a base icon and overlays.
-		src.icon_state = "[src.carrier_rear_icon_state]"
-		var/image/carrier_front_overlay = new(src.icon, "[src.carrier_front_icon_state]")
-		src.UpdateOverlays(carrier_front_overlay, "carrier_front")
+		// Build the icon with all its overlays and funny containers.
+		src.icon_state = "[src.empty_carrier_icon_state]"
 
-		// Instantiate the vis_contents proxy for later.
+		// Instantiate the vis_contents proxy.
 		src.vis_contents_proxy = new()
 		src.vis_contents_proxy.vis_flags |= src.carrier_vis_flags
 		src.vis_contents_proxy.appearance_flags |= KEEP_TOGETHER
