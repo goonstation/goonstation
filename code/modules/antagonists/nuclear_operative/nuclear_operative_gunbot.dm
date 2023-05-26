@@ -1,7 +1,8 @@
-/datum/antagonist/nuclear_operative_gunbot
+/datum/antagonist/mob/nuclear_operative_gunbot
 	id = ROLE_NUKEOP_GUNBOT
 	display_name = "\improper Syndicate gunbot"
 	antagonist_icon = "syndicate"
+	mob_path = /mob/living/critter/robotic/gunbot/syndicate
 
 	New(datum/mind/new_owner)
 		src.owner = new_owner
@@ -12,17 +13,6 @@
 				gamemode.syndicates += src.owner
 
 		. = ..()
-
-	give_equipment()
-		var/mob/current_mob = src.owner.current
-		var/mob/living/critter/robotic/gunbot/syndicate/gunbot = new/mob/living/critter/robotic/gunbot/syndicate(get_turf(current_mob))
-		src.owner.transfer_to(gunbot)
-		qdel(current_mob)
-
-	remove_equipment()
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
 
 	add_to_image_groups()
 		. = ..()

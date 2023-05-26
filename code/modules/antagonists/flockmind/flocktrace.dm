@@ -1,8 +1,8 @@
-/datum/antagonist/subordinate/intangible/flocktrace
+/datum/antagonist/subordinate/mob/intangible/flocktrace
 	id = ROLE_FLOCKTRACE
 	display_name = "flocktrace"
 	uses_pref_name = FALSE
-	intangible_mob_path = /mob/living/intangible/flock/trace
+	mob_path = /mob/living/intangible/flock/trace
 
 	/// The flock that this flocktrace belongs to.
 	var/datum/flock/flock

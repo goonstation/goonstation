@@ -1,8 +1,8 @@
-/datum/antagonist/intangible/wraith
+/datum/antagonist/mob/intangible/wraith
 	id = ROLE_WRAITH
 	display_name = "wraith"
 	antagonist_icon = "wraith"
-	intangible_mob_path = /mob/living/intangible/wraith
+	mob_path = /mob/living/intangible/wraith
 	uses_pref_name = FALSE
 
 	assign_objectives()
