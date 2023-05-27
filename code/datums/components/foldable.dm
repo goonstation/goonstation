@@ -31,6 +31,7 @@ TYPEINFO(/datum/component/foldable)
 		object.name = "foldable [object.name]"
 		object.desc += " Whoa, this one can be folded into a briefcase!"
 	object.verbs += /obj/proc/foldUpIntoBriefcase
+	RegisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE, PROC_REF(get_help_msg))
 
 /datum/component/foldable/UnregisterFromParent()
 	. = ..()
@@ -39,7 +40,11 @@ TYPEINFO(/datum/component/foldable)
 	if(src.change_name)
 		object.name = src.original_name
 		object.desc = src.original_desc
+	UnregisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE)
 	qdel(src.the_briefcase)
+
+/datum/component/foldable/proc/get_help_msg(atom/movable/parent, mob/user, list/lines)
+	lines += "[parent] can be <b>folded</b> up into a briefcase using the right click menu."
 
 /obj/proc/foldUpIntoBriefcase()
 	set category = "Local"

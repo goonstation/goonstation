@@ -120,6 +120,12 @@
 	// TODO: Add help message signals so components can add their own help messages
 	// for example in the future ideally unscrewing / screwing / wrenching etc. would be handled like that
 	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+	var/list/additional_help_messages = list()
+	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
+	if (length(additional_help_messages))
+		if (help_message)
+			additional_help_messages = list(help_message)	+ additional_help_messages
+		help_message = jointext(additional_help_messages, "<br>")
 	if (help_message)
 		boutput(src, "<span class='helpmsg'>[help_message]</span>")
 		return TRUE
