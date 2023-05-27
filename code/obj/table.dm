@@ -356,7 +356,7 @@ TYPEINFO_NEW(/obj/table)
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
-				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
+				S.tooltip_rebuild = 1
 				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
@@ -413,7 +413,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = .proc/unset_tablepass_callback
+			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."

@@ -188,7 +188,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	* Returns the angle between two given atoms
 	*/
 proc/get_angle(atom/a, atom/b)
-    .= arctan(b.y - a.y, b.x - a.x)
+	var/turf/a_turf = get_turf(a)
+	var/turf/b_turf = get_turf(b)
+	if (isnull(a_turf) || isnull(b_turf))
+		return null
+	. = arctan(b_turf.y - a_turf.y, b_turf.x - a_turf.x)
 
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
@@ -1231,13 +1235,23 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-			. += A
+			if(isskeleton(A))
+				var/mob/living/carbon/human/H = A
+				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
+					. += A
+			else
+				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
 				var/obj/item/organ/head/found_head = A
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
+			else if (isobj(A)) // is it holding a head
+				for(var/obj/item/organ/head/head in A)
+					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
+						var/mob/linked_mob = head.linked_human
+						. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
@@ -1601,6 +1615,16 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 	var/the_time = "[final_minutes][get_english_num(final_hour)] o'clock"
 	return the_time
+
+/// Returns time input as mm:ss
+proc/formatTimeText(var/timeValue as num)
+	var/seconds = round((timeValue / 10) % 60)
+	var/minutes = round(((timeValue / 10) - seconds) / 60)
+	if (minutes < 10)
+		minutes = "0[minutes]"
+	if (seconds < 10)
+		seconds = "0[seconds]"
+	return "[minutes]:[seconds]"
 
 /// Returns shift time as a string in hh:mm format. Call with TRUE to get time in hh:mm:ss format.
 /proc/formattedShiftTime(var/doSeconds)

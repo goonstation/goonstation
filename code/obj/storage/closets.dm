@@ -507,6 +507,7 @@
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
+				W.tooltip_rebuild = 1
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else

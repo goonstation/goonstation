@@ -4,6 +4,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/id = null
 	/// Human-readable name for displaying this antagonist for admin menus, round-end summary, etc.
 	var/display_name = null
+	/// The icon state that should be used for the antagonist overlay for this antagonist type. Icons may be found in `icons/mob/antag_overlays.dmi`.
+	var/image/antagonist_icon = "generic"
+
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
 	/// If FALSE, this antagonist will not be displayed at the end of the round.
@@ -20,6 +23,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Does the owner of this antagonist role use their normal name set in character preferences as opposed to being assigned a random or chosen name?
+	var/uses_pref_name = TRUE
 	/// Whether the addition or removal of this antagonist role is announced to the player.
 	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
@@ -80,9 +85,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		src.remove_objectives()
 
-		if (!src.silent && !src.pseudo)
-			src.announce_removal(source)
-			src.announce_objectives()
+		if (!src.pseudo)
+			src.remove_from_image_groups()
+
+			if (!src.silent)
+				src.announce_removal(source)
+				src.announce_objectives()
 
 	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
@@ -118,6 +126,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
+		src.add_to_image_groups()
+
 		if (!src.silent)
 			src.announce()
 			src.do_popup()
@@ -129,6 +139,24 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_relocate)
 			src.relocate()
+
+	proc/add_to_image_groups()
+		if (!src.antagonist_icon)
+			return
+
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.add_mind_mob_overlay(src.owner, image)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.add_mind(src.owner)
+
+	proc/remove_from_image_groups()
+		var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+		antagonist_image_group.remove_mind_mob_overlay(src.owner)
+
+		if (antagonists_see_each_other)
+			antagonist_image_group.remove_mind(src.owner)
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()
@@ -226,7 +254,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	proc/on_death()
 		if (src.remove_on_death)
-			src.owner.remove_antagonist(src.id, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()

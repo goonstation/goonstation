@@ -907,3 +907,68 @@
 			return ""
 		message = lolcat(message)
 		return message
+
+/datum/bioEffect/speech/pirate
+	name = "Frontal Gyrus Alteration Type-AR"
+	desc = "Forces the language center of the subject's brain to construct sentences as sailing on the Seven Seas."
+	id = "accent_pirate"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Ye feel like a swashbucklin' pirate!"
+	msgLose = "You stop feeling like sailing the Seven Seas."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = pirateify(message)
+		return message
+
+
+/datum/bioEffect/speech/scrambled
+	name = "Fonratl Guyrs Alrtateion Tpye-SC"
+	desc = "Mkaes the lgnauage cnetre of the sbuejct's vicoe to eimt cuirous sntecenes."
+	id = "accent_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Yuo feel lkie yuor vicoe is sramlcbing."
+	msgLose = "Yuo feel yuor vicoe is no lnoger sramlcbing."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_scramble(message)
+		return message
+
+
+/datum/bioEffect/speech/word_scrambled
+	name = "Alteration Type Frontal Gyrus-WSC"
+	desc = "The to subject's emit the sentences brain language center curious of makes."
+	id = "accent_word_scrambled"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Words your scrambled out come."
+	msgLose = "Scrambled no longer are your words."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_shuffle_words(message)
+		return message
+
+
+/datum/bioEffect/speech/mocking
+	name = "FrOnTaL gYrUs AlTeRaTiOn TyPe-Mc"
+	desc = "mAkEs ThE lAnGuAgE cEnTeR oF tHe SuBjEcT's BrAiN tO cOnStRuCt SeNtEnCeS aS mOcKiNg ThE sUbJeCt."
+	id = "accent_mocking"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	occur_in_genepools = FALSE
+	probability = 0
+	msgGain = "YoU fEeL lIkE mOcKiNg pEoPlE."
+	msgLose = "YoU dOn'T fEeL lIkE mOcKiNg pEoPlE aNyMoRe."
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		message = accent_mocking(message)
+		return message

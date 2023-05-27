@@ -901,7 +901,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", .proc/runscript)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", PROC_REF(runscript))
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
@@ -1267,6 +1267,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
 			S.UpdateIcon()
+			S.tooltip_rebuild = 1
 			src.updateUsrDialog()
 
 		else

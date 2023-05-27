@@ -29,6 +29,14 @@ TYPEINFO(/obj/item/device/multitool)
 		user.TakeDamage("head", 0, 160)
 		return 1
 
+	grey
+		desc = "You can use this on airlocks or APCs to try to hack them without cutting wires. This one comes with a handy grey stripe."
+		icon_state = "multitool-grey"
+
+	orange
+		desc = "You can use this on airlocks or APCs to try to hack them without cutting wires. This one comes with a nifty orange stripe."
+		icon_state = "multitool-orange"
+
 /obj/item/device/multitool/afterattack(atom/target, mob/user , flag)
 	//Get the NETID from bots/computers/everything else
 	//There's a lot of local vars so this is somewhat evil code
@@ -80,3 +88,4 @@ TYPEINFO(/obj/item/device/multitool)
 	if (test_link)
 		if (length(test_link.powernet?.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
+

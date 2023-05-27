@@ -63,7 +63,7 @@
 	src.sneaky = sneaky
 	src.opens_if_worn = opens_if_worn
 
-	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, .proc/storage_item_on_drop)
+	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, PROC_REF(storage_item_on_drop))
 
 	if (length(spawn_contents))
 		src.make_my_stuff(spawn_contents)
@@ -176,11 +176,11 @@
 			if (H.limbs)
 				if ((src.linked_item == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || \
 						(src.linked_item == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-					return
+					return FALSE
 		// open storage
 		user.s_active?.master.hide_hud(user)
 		if (src.mousetrap_check(user))
-			return
+			return FALSE
 		src.show_hud(user)
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
@@ -190,6 +190,7 @@
 			if (M != user)
 				src.hide_hud(M)
 		src.hud.update(user)
+	return TRUE
 
 /// storage item is mouse dropped onto something
 /datum/storage/proc/storage_item_mouse_drop(mob/user, atom/over_object, src_location, over_location)
@@ -341,7 +342,7 @@
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
 	// for storages that change icon with contents
-	src.linked_item.UpdateIcon()
+	src.linked_item.UpdateIcon(user)
 
 	if (!istype(user))
 		return
@@ -375,7 +376,7 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
-	src.linked_item.UpdateIcon()
+	src.linked_item.UpdateIcon(user)
 	if (location?.storage && add_to_storage)
 		location.storage.add_contents(I, user)
 	else

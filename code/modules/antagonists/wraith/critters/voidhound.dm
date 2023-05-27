@@ -10,6 +10,7 @@
 	can_throw = 1
 	can_grab = 0
 	can_disarm = 1
+	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "voidhound"

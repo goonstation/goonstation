@@ -12,7 +12,7 @@
 	src.flock = flock
 
 /datum/component/flock_interest/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, .proc/handle_flock_attack)
+	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, PROC_REF(handle_flock_attack))
 
 /// If flockdrone is in our flock, deny the attack, otherwise scream and cry
 /datum/component/flock_interest/proc/handle_flock_attack(atom/source, atom/attacker, intentional, projectile_attack)
@@ -78,10 +78,10 @@
 	src.report_proj = report_proj
 
 /datum/component/flock_protection/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/handle_attackhand)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/handle_hitby_thrown)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/handle_hitby_proj)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(handle_attackhand))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(handle_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, PROC_REF(handle_hitby_thrown))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(handle_hitby_proj))
 
 /// Protect against punches/kicks/etc.
 /datum/component/flock_protection/proc/handle_attackhand(atom/source, mob/user)
