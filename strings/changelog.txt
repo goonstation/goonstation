@@ -1,7 +1,7 @@
 (t)sat may 27 23
 (u)LeahTheTech
 (+)Soviet engineers figured out how to glue pod weapons in place really really well.
-(u)pali
+(u)Soleilan & pali
 (*)L337 Hacker accent added, slightly rarer than the rest.
 (t)fri may 26 23
 (u)pali
