@@ -135,6 +135,9 @@
 "Aw" = (
 /turf/simulated/wall/auto/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
+"AH" = (
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/prefab/mauxite_hideout)
 "AJ" = (
 /obj/item/raw_material/mauxite,
 /mob/living/critter/fermid{
@@ -244,6 +247,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
+"QT" = (
+/obj/item/rods/mauxite,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
 "Rb" = (
 /obj/table/mauxite/auto,
 /obj/item/plate,
@@ -287,9 +294,6 @@
 "Wi" = (
 /obj/railing/yellow{
 	dir = 1
-	},
-/obj/railing/yellow{
-	dir = 8
 	},
 /obj/item/raw_material/mauxite,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
@@ -415,7 +419,7 @@ qR
 qR
 qR
 Wi
-Gc
+AH
 Gc
 Gc
 Gc
@@ -438,7 +442,7 @@ tC
 tV
 Gj
 iM
-Gj
+QT
 Aw
 Aw
 qR
