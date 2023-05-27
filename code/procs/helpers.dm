@@ -344,15 +344,6 @@ proc/get_angle(atom/a, atom/b)
 	// html_encode(t) will convert < and > to &lt; and &gt;
 	// which will allow them to be used (safely) in messages
 	t = html_encode(t)
-
-	// var/index = findtext(t, "<")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
-	// 	index = findtext(t, "<")
-	// index = findtext(t, ">")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
-	// 	index = findtext(t, ">")
 	. = sanitize(t)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
