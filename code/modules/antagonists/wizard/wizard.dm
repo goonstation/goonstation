@@ -47,7 +47,7 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/staff(H), H.slot_r_hand)

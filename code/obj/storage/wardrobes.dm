@@ -154,7 +154,7 @@
 	/obj/item/clothing/shoes/black,
 	/obj/item/clothing/under/misc/chaplain/nun,
 	/obj/item/clothing/head/nunhood,
-	/obj/item/clothing/shoes/sandal)
+	/obj/item/clothing/shoes/sandal/magic)
 
 /obj/storage/closet/wardrobe/black/formalwear
 	name = "formalwear closet"
