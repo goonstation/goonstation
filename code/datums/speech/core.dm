@@ -111,6 +111,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 				src.listeners[channel] -= heard
 			else
 				heard.process(message)
+		qdel(message)
 
 	/// Register a listener for hearing messages on a channel
 	proc/RegisterInput(var/datum/listen_module/input/registree)
@@ -153,6 +154,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 	proc/make_safe_for_chat(var/message as text)
 		return message //TODO
+
+	disposing()
+		. = ..()
+		src.speaker = null
+		src.language = null
 
 /// The tree containing speech modules for the parent atom. All input goes through here.
 /// Admittedly "tree" is a bit of a stretch, since only the outputs can branch, but :shrug:
