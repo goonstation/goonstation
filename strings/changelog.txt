@@ -1,4 +1,9 @@
+
 (t)sat may 27 23
+(u)pali
+(p)12361
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)You can now Alt+Doubleclick things to see a help message on how to use them. So far this is only implemented for a few things (disposal pipes) but expect this to be more widespread in the future. (Rightclick + clicking Help also works.)
 (u)LeahTheTech
 (+)Soviet engineers figured out how to glue pod weapons in place really really well.
 (u)Soleilan & pali
