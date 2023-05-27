@@ -2491,6 +2491,6 @@ proc/leetspeakify(string, chance=100)
 	for(var/i = 1, i <= length(string), i++)
 		var/letter = copytext(string, i, i + 1)
 		if ((lowertext(letter) in leetspeak_translation) && prob(chance))
-			letter = leetspeak_translation[letter]
+			letter = leetspeak_translation[lowertext(letter)]
 		letters += letter
 	return jointext(letters, "")
