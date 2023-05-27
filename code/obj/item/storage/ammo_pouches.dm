@@ -102,6 +102,12 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/lmg = 5)
 
+	shuriken
+		name = "shuriken pouch"
+		desc = "A pouch for carrying shurikens. Guaranteed to not shred."
+		slots = 4
+		spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
+
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
 	icon_state = "ammopouch"
@@ -315,11 +321,3 @@
 		/obj/item/remote/sawflyremote
 	)
 
-/obj/item/storage/shuriken_pouch
-	name = "shuriken pouch"
-	desc = "A pouch for carrying shurikens. Guaranteed to not shred."
-	icon_state = "ammopouch"
-	w_class = W_CLASS_SMALL
-	slots = 4
-	opens_if_worn = TRUE
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
