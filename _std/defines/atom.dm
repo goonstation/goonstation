@@ -97,9 +97,11 @@
 /// Makes it so the target is given the Help verb
 /// Note that we never remove the help verb and this is mostly because it's easier, unlikely to happen often and also not a big deal
 /// as the help verb just says that there's no help message if there's no help message.
+/// The reason why we skip mob is that mob.verbs is different from obj.verbs etc. Basically if you are trying to do this to a mob
+/// probably you will need to include HELP_MESSAGE_OVERRIDE on the mob to give it the static help verb. Sorry.
 #define RegisterHelpMessageHandler(target, help_message_handler) \
 	RegisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE, help_message_handler); \
-	target.verbs |= /atom/proc/help_verb_dynamic
+	if(!ismob(target)) target.verbs |= /atom/proc/help_verb_dynamic
 
 /// Wrapper around UnregisterSignal for help messages, identical to UnregisterSignal but here for parity
 #define UnregisterHelpMessageHandler(target) \
