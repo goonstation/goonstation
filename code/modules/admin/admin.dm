@@ -1582,17 +1582,24 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
+				var/successes = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
-						M.bioHolder.AddEffect(pick, magical = 1)
+						if(M.bioHolder.AddEffect(pick, magical = 1))
+							successes++
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					if(successes == length(picklist))
+						message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					else if(successes > 0)
+						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
+					else
+						boutput(usr, "<b><span class='alert'>Failed to add [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].</span></b>")
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 

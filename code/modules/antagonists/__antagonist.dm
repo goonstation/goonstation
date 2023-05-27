@@ -23,7 +23,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
-	/// Does this antag use the normal name set in preferences as oppose to assigning a random or chosen name?
+	/// Does the owner of this antagonist role use their normal name set in character preferences as opposed to being assigned a random or chosen name?
 	var/uses_pref_name = TRUE
 	/// Whether the addition or removal of this antagonist role is announced to the player.
 	var/silent = FALSE

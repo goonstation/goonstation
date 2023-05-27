@@ -188,7 +188,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	* Returns the angle between two given atoms
 	*/
 proc/get_angle(atom/a, atom/b)
-    .= arctan(b.y - a.y, b.x - a.x)
+	var/turf/a_turf = get_turf(a)
+	var/turf/b_turf = get_turf(b)
+	if (isnull(a_turf) || isnull(b_turf))
+		return null
+	. = arctan(b_turf.y - a_turf.y, b_turf.x - a_turf.x)
 
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
@@ -340,15 +344,6 @@ proc/get_angle(atom/a, atom/b)
 	// html_encode(t) will convert < and > to &lt; and &gt;
 	// which will allow them to be used (safely) in messages
 	t = html_encode(t)
-
-	// var/index = findtext(t, "<")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
-	// 	index = findtext(t, "<")
-	// index = findtext(t, ">")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
-	// 	index = findtext(t, ">")
 	. = sanitize(t)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
