@@ -972,3 +972,25 @@
 			return ""
 		message = accent_mocking(message)
 		return message
+
+
+/datum/bioEffect/speech/leetspeak
+	name = "Fr0nT4l Gyrus 4lt3r4t10n TYP3-1337"
+	desc = "Makes you speak the secret language of hackers."
+	id = "accent_hacker"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = TRUE
+	msgGain = "Y0u f33l l1k3 4 h4ck3r."
+	msgLose = "You don't feel like a hacker anymore."
+	probability = 15
+	var/leet_chance = 35
+
+	// TODO: maybe apply to PDA messages and robospeak too?
+
+	OnSpeak(var/message)
+		if (!istext(message))
+			return ""
+		var/leet_chance = src.leet_chance
+		leet_chance *= (src.power - 1) * 2 + 1
+		message = accent_hacker(message, leet_chance)
+		return message
