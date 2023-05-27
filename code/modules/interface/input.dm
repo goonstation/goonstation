@@ -130,7 +130,7 @@ var/list/dirty_keystates = list()
 		SEND_SIGNAL(user, COMSIG_MOB_MOUSEUP, object,location,control,params)
 
 
-		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not recieve mouse events from unseen tiles.
+		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not receive mouse events from unseen tiles.
 		//Handle the null object by finding the turf that lies in the screenloc of the null click.
 		//How should we distinguish whether the original click was 'null' later on if we need to? location will == "map", that might be fine to identify with?
 		//(this fixes the behavior of guns not firing if you clicked a hidden tile. now you can actually shoot in the dark or in a small tunnel!)
@@ -242,6 +242,9 @@ var/list/dirty_keystates = list()
 				filtered.Add(A)
 			if(filtered.len) object = pick(filtered)
 
+		if(control == "infowindow.info" && text2num(parameters["icon-x"]) > 32)
+			parameters["icon-x"] = "16"
+
 		var/next = user.click(object, parameters, location, control)
 
 		if (isnum(next) && src.preferences.use_click_buffer && src.queued_click != object && next <= max(user.click_delay, user.combat_click_delay))
@@ -335,6 +338,7 @@ var/list/dirty_keystates = list()
 /proc/start_input_loop()
 	SPAWN(0)
 		while (1)
+			last_input_loop_time = TIME
 			process_keystates()
 
 			for(var/client/C as anything in clients) // as() is ok here since we nullcheck

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
-	anchored = 0
+	anchored = UNANCHORED
 	speaker_range = 7
 	broadcasting = 0
 	listening = 0
@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		return hear
 
 	speech_bubble()
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
 		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -188,9 +188,9 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
-			frame_img.appearance_flags = RESET_COLOR
+			frame_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 			rocked_out_img = image('icons/misc/abilities.dmi',"rocked_out")
-			rocked_out_img.appearance_flags = RESET_COLOR
+			rocked_out_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()

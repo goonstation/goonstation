@@ -29,6 +29,8 @@
 	var/fallen_offset_z = -6
 	/// we want to use Z rather than Y incase anything gets rotated, it would look all jank
 
+	var/material_piece = /obj/item/material_piece/cloth/cottonfabric
+
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -82,12 +84,12 @@
 	// here for consistency; not all clothing can be ripped up
 	proc/try_rip_up(mob/user)
 		boutput(user, "You begin ripping up [src].")
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_rip_up, list(user), null, null, "You rip up [src].", null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_rip_up), list(user), null, null, "You rip up [src].", null)
 		return TRUE
 
 	proc/finish_rip_up(mob/user)
 		for (var/i in 1 to 3)
-			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			var/obj/item/material_piece/CF = new material_piece
 			CF.pixel_x = rand(-4,4)
 			CF.pixel_y = rand(-4,4)
 			CF.set_loc(get_turf(src))

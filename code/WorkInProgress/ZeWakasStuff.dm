@@ -100,7 +100,7 @@
 	desc = "A sharp cliff face formed by rocks"
 	icon = 'icons/turf/adventure_gannets.dmi'
 	icon_state = "cave-wall"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 
@@ -142,7 +142,7 @@
 	atksilicon = 1
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue

@@ -99,7 +99,7 @@
 		user.lastattacked = target
 		return
 
-	if (!safety && !istype(target, /obj/item/storage) && !istype(target, /obj/item/storage/secure))
+	if (!safety && !target.storage)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
 			return
@@ -116,9 +116,7 @@
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.owner = M
-				M.implant += implanted
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 			qdel(src)

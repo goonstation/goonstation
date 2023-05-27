@@ -1,5 +1,6 @@
 #define KNOCK_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
@@ -19,7 +20,7 @@
 	var/panel_open = FALSE
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
-	anchored = TRUE
+	anchored = ANCHORED
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
@@ -41,6 +42,9 @@
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
+	var/atom/movable/bumper = null
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
@@ -142,7 +146,7 @@
 	return !density
 
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	var/turf/simulated/source = loc
+	var/turf/source = src.loc
 	if (istype(source))
 		return source.update_nearby_tiles(need_rebuild)
 
@@ -163,7 +167,7 @@
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -361,12 +365,11 @@
 	if(world.time-last_used <= 10)
 		return 0
 	src.add_fingerprint(AM)
-	if (!src.requiresID())
-		AM = null
 
-	if (src.allowed(AM))
+	if (!src.requiresID() || src.allowed(AM))
 		if (src.density)
 			last_used = world.time
+			src.bumper = AM
 			if (src.open() == 1)
 				return 1
 			else
@@ -512,6 +515,8 @@
 		src.update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
+		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
+		src.bumper = null
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
@@ -608,6 +613,23 @@
 		close()
 	else return
 
+/// toggles the lock state of the door
+/obj/machinery/door/proc/toggle_locked()
+	if (locked)
+		set_unlocked()
+	else
+		set_locked()
+
+/// locks the door, aka bolt / key lock
+/obj/machinery/door/proc/set_locked()
+	src.locked = TRUE
+	src.UpdateIcon()
+
+/// unlocks the door, aka unbolt / un-key lock
+/obj/machinery/door/proc/set_unlocked()
+	src.locked = FALSE
+	src.UpdateIcon()
+
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
 		attack_particle(user,src)
@@ -650,6 +672,7 @@
 	src.add_fingerprint(user)
 	if (src.allowed(user))
 		if (src.density)
+			src.bumper = user
 			open()
 		else
 			close()
@@ -701,8 +724,9 @@
 	panel_open = 0
 	operating = 0
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = TRUE
+	anchored = ANCHORED
 	autoclose = TRUE
+	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
@@ -753,7 +777,7 @@
 			if (!(checkdir & src.lock_dir))
 				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
 				return
-		src.locked = !src.locked
+		src.toggle_locked()
 		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 		return
 	else if (isscrewingtool(I) && src.locked)
@@ -763,7 +787,7 @@
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 		src.operating = -1
-		src.locked = 0
+		src.set_unlocked()
 		open()
 		return 1
 	if (!src.locked)
@@ -801,7 +825,7 @@
 		if (!(checkdir & src.lock_dir))
 			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
-	src.locked = !src.locked
+	src.toggle_locked()
 	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
@@ -848,7 +872,7 @@
 
 	onEnd()
 		..()
-		src.the_door.locked = 0
+		src.the_door.set_unlocked()
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 

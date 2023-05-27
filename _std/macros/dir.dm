@@ -6,7 +6,9 @@
 var/global/list
 	cardinal = list(NORTH, SOUTH, EAST, WEST)
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+	ordinal_unique = list(NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+	alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
 	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 
@@ -90,6 +92,21 @@ proc/dir_to_angle(dir)
 		if(NORTHWEST)
 			.= 315
 
+/// Checks if an angle is between two other angles
+proc/angle_inbetween(angle, low, high)
+	angle = ((angle % 360) + 360) % 360
+	low = ((low % 360) + 360) % 360
+	high = ((high % 360) + 360) % 360
+	if(low > high)
+		return (angle >= low || angle <= high)
+	return (angle >= low && angle <= high)
+
+/// Returns the distance between two angles
+proc/angle_distance(angle1, angle2)
+	angle1 = ((angle1 % 360) + 360) % 360
+	angle2 = ((angle2 % 360) + 360) % 360
+	. = min(abs(angle1 - angle2), abs(angle1 - angle2 + 360), abs(angle1 - angle2 - 360))
+
 /**
   * Transforms a given angle to vec2 in a list
   */
@@ -103,8 +120,9 @@ proc/angle_to_vector(ang)
 #define turn_needed(dir_from, dir_to) (-(dir_to_angle(dir_to) - dir_to_angle(dir_from)))
 // note that the - is necessary because dir_to_angle returns a clockwise angle, but turn() takes a counter-clockwise angle
 
-/// Overrides the BYOND built-in get_step_rand which is broken
-#define get_step_rand(O) get_step(O, pick(alldirs))
+/// BYOND's default get_step_rand() is not actually uniformly random (heavily biased towards dir).
+/// This is a replacement that is actually uniformly random.
+#define get_step_truly_rand(O) get_step(O, pick(alldirs))
 
 /// Returns a tile in a random cardinal direction
 #define get_step_rand_cardinal(O) get_step(O, pick(cardinal))

@@ -75,6 +75,15 @@
 #define TOOL_WRENCHING 512
 #define TOOL_CHOPPING 1024 // for firaxes, does additional damage to doors.
 
+//omnitool flags
+#define OMNI_MODE_PRYING 1
+#define OMNI_MODE_SNIPPING 2
+#define OMNI_MODE_WRENCHING 3
+#define OMNI_MODE_SCREWING 4
+#define OMNI_MODE_PULSING 5
+#define OMNI_MODE_CUTTING 6
+#define OMNI_MODE_WELDING 7
+
 //tooltip flags for rebuilding
 
 /// rebuild tooltip every single time without exception

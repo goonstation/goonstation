@@ -146,6 +146,7 @@
 	name = "bubblegum"
 	desc = "Some chewable gum. You can blow bubbles with it!"
 	icon_state = "anime"	// todo: decent sprites
+	c_flags = null
 	var/mob/chewer = null
 	var/chew_size = 0.2		// unit amount transferred when gum is chewed
 	var/spam_flag = 0		// counts down from spam_timer after each time the chew message is shown
@@ -255,27 +256,27 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/species = "critter"
 
 /datum/species_info/parrot
-	name = "space parrot" // ....................................... obj|mob
-	desc = "A spacefaring species of parrot." // ................... obj|mob
-	species = "parrot" // .......................................... obj|mob
-	var/list/subspecies = null // .................................. obj|mob
-	var/icon = 'icons/misc/bird.dmi' // ............................ obj|mob
-	var/gender = PLURAL // ............................................. mob
-	var/learned_words = null // .................................... obj ...
-	var/learned_phrases = null // .................................. obj ...
-	var/learn_words_chance = 33 // ................................. obj ...
-	var/learn_phrase_chance = 10 // ................................ obj ...
-	var/learn_words_max = 64 // .................................... obj ...
-	var/learn_phrase_max = 32 // ................................... obj ...
-	var/chatter_chance = 2 // ...................................... obj ...
-	var/find_treasure_chance = 2 // ................................ obj ...
-	var/destroys_treasure = 0 // ................................... obj ...
-	var/sells_furniture = 0 // ..................................... obj ...
-	var/hops = 0 // ................................................ obj|mob
-	var/pixel_x = 0 // ............................................. obj|mob
-	var/hat_offset_y = -5 // ....................................... obj|mob
-	var/hat_offset_x = 0 // ........................................ obj|mob
-	var/feather_color = "#ba1418" // ................................obj|mob
+	name = "space parrot" //						obj|mob
+	desc = "A spacefaring species of parrot." //	obj|mob
+	species = "parrot" //							obj|mob
+	var/list/subspecies = null //					obj|mob
+	var/icon = 'icons/misc/bird.dmi' //				obj|mob
+	var/gender = PLURAL //								mob
+	var/learned_words = null //						obj ...
+	var/learned_phrases = null //					obj ...
+	var/learn_words_chance = 33 //					obj ...
+	var/learn_phrase_chance = 10 //					obj ...
+	var/learn_words_max = 64 //						obj ...
+	var/learn_phrase_max = 32 //					obj ...
+	var/chatter_chance = 2 //						obj ...
+	var/find_treasure_chance = 2 //					obj ...
+	var/destroys_treasure = 0 //					obj ...
+	var/sells_furniture = 0 //						obj ...
+	var/hops = 0 //									obj|mob
+	var/pixel_x = 0 //								obj|mob
+	var/hat_offset_y = -5 //						obj|mob
+	var/hat_offset_x = 0 //							obj|mob
+	var/feather_color = "#ba1418" //				obj|mob
 
 /datum/species_info/parrot/eclectus
 	name = "space eclectus"
@@ -536,12 +537,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.update_stack_appearance()
+		src.UpdateStackAppearance()
 
 	UpdateName()
 		src.name = "[src.amount > 1 ? "[src.amount] " : null][name_prefix(null, 1)][src.value]-credit [src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		src.UpdateName()
 		if (src.amount <= 1)
 			src.icon_state = "chip"
@@ -649,7 +650,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette wheel and a little ball."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_e/partner = null
 	var/running = 0
@@ -698,7 +699,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette layout, used for placing bets."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_e"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_w/partner = null
 	var/list/bets = null
@@ -791,7 +792,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "BJ1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/on = 1
 	var/plays = 0
@@ -1154,7 +1155,7 @@ TYPEINFO(/obj/submachine/blackjack)
 				usagi.set_dir(turn(usagi.dir, -90))
 				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
-			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
+			var/mob/living/critter/small_animal/cat/luna = new /mob/living/critter/small_animal/cat (usagi.loc)
 			luna.name = "Luna"
 			luna.desc = "A cat with a little crescent moon on her forehead."
 			luna.cattype = 3
@@ -1381,7 +1382,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
 			C.amount -= max_accept
-			C.update_stack_appearance()
+			C.UpdateStackAppearance()
 			src.cash_amt = src.cash_max
 		else
 			src.cash_amt += C.amount
@@ -1660,7 +1661,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_switch1-throw"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Switch Icon"
@@ -1684,7 +1685,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_base1"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Board Icon"
@@ -1702,14 +1703,6 @@ TYPEINFO(/obj/item/space_thing)
 	attack_hand(mob/user)
 		src.change_icon()
 		return
-
-// tOt I ain't agree to no universal corgi ban
-// and no one's gunna get it if they just see George and Blair okay!!
-// and I can't just rename the pug!!!
-/obj/critter/dog/george/orwell
-	name = "Orwell"
-	icon_state = "corgi"
-	doggy = "corgi"
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=+KALI-MA+=-=-=-=-=-=-=-=-=-=-=-=-=-*/

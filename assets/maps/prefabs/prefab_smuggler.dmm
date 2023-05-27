@@ -76,7 +76,7 @@
 /area/prefab/smuggler_den)
 "ao" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray{
 	butts = 5;
 	icon_state = "ashtray";
@@ -365,7 +365,7 @@
 /turf/simulated/floor/plating,
 /area/prefab/smuggler_den)
 "aT" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "aU" = (

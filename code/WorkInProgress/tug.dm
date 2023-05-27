@@ -163,7 +163,7 @@ TYPEINFO(/obj/vehicle/tug)
 	health = 80
 	health_max = 80
 	var/obj/tug_cart/cart = null
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	ability_buttons_to_initialize = list(/obj/ability_button/vehicle_speed)
 	var/start_with_cart = 1
 	delay = 4
@@ -214,7 +214,7 @@ TYPEINFO(/obj/vehicle/tug)
 		if (start_with_cart)
 			cart = new/obj/tug_cart/(get_turf(src))
 
-	eject_rider(var/crashed, var/selfdismount)
+	eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 		var/mob/living/rider = src.rider
 		..()
 		if(rider)

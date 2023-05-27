@@ -4,7 +4,7 @@
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "celltop-P"
 	density = TRUE
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE//MOB_EFFECT_LAYER
 	flags = NOSPLASH
 	power_usage = 50
@@ -22,15 +22,6 @@
 	var/reagent_scan_enabled = 0
 	var/reagent_scan_active = 0
 	var/obj/item/robodefibrillator/defib
-
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
 
 	New()
 		..()

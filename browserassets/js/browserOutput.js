@@ -27,6 +27,7 @@ var opts = {
     'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
 	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
+    'msgOdd': false, //Is the last message odd or even?
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
@@ -35,8 +36,8 @@ var opts = {
     'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
-    'twemoji': true, // whether Twemoji are used instead of the default emoji
     'messageLimitEnabled': true, // whether old messages get deleted
+	'oddMsgHighlight': false, // whether odd messages get highlighted
 
     //Ping display
     'pingCounter': 0, //seconds counter
@@ -161,16 +162,8 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    if (opts.twemoji) {
-      return twemoji.parse(message, {
-        folder: 'svg',
-        ext: '.svg'
-      });
-    }
-    else {
-      var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-      return message.replace(pattern, '<span class="emoji">$1</span>');
-    }
+	var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+	return message.replace(pattern, '<span class="emoji">$1</span>');
 }
 
 //Send a message to the client
@@ -287,6 +280,12 @@ function output(message, group, skipNonEssential, forceScroll) {
 			if (!addedClass) {
 				entry.className += ' misc';
 			}
+
+			if (opts.msgOdd && opts.oddMsgHighlight) {
+				entry.className += ' odd-highlight';
+			}
+
+			opts.msgOdd = !opts.msgOdd;
 
             entry.innerHTML = message;
             $lastEntry = $($messages[0].appendChild(entry));
@@ -605,8 +604,8 @@ $(function() {
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
         'stheme': getCookie('theme'),
-        'stwemoji': getCookie('twemoji'),
-        'smessageLimitEnabled': getCookie('messageLimitEnabled')
+        'smessageLimitEnabled': getCookie('messageLimitEnabled'),
+		'soddMsgHighlight': getCookie('oddMsgHighlight')
     };
 
     if (savedConfig.sfontSize) {
@@ -645,12 +644,12 @@ $(function() {
         opts.currentTheme = savedConfig.stheme;
         output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
     }
-    if (savedConfig.stwemoji) {
-      opts.twemoji = true;
-    }
     if (savedConfig.smessageLimitEnabled) {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
+	if (savedConfig.soddMsgHighlight) {
+		opts.oddMsgHighlight = savedConfig.soddMsgHighlight;
+	}
 
     (function() {
         var dataCookie = getCookie('connData');
@@ -893,17 +892,17 @@ $(function() {
         setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
     });
 
-    $('#toggleEmojiFont').click(function(e) {
-        opts.twemoji = !opts.twemoji;
-        setCookie('twemoji', opts.twemoji, 365);
-        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
-    });
-
     $('#toggleMessageLimit').click(function(e) {
         opts.messageLimitEnabled = !opts.messageLimitEnabled;
         setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
         output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
     });
+
+	$('#toggleOddMsgHighlight').click(function(e) {
+		opts.oddMsgHighlight = !opts.oddMsgHighlight;
+		setCookie('oddMsgHighlight', opts.oddMsgHighlight, 365);
+		output('<span class="internal boldnshit">'+(opts.oddMsgHighlight ? 'Odd messages will be highlighted.' : 'Odd messages will no longer be highlighted.')+'</span>');
+	});
 
     $('#saveLog').click(function(e) {
         var saved = '';

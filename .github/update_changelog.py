@@ -35,6 +35,7 @@ labels_to_emoji = {
 	'a-medical': '💊',
 	'a-mutantraces': '👽',
 	'a-player-actions': '🔨',
+	'a-respawning': '🐣',
 	'a-science': '🔬',
 	'a-secret': '🔒',
 	'a-silicons': '🤖',

@@ -36,7 +36,7 @@ dmm_suite
 		var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
 		var startData = findtext(dmm_text, "\"")
 		var linesText = copytext(dmm_text, startData + 1, startGridPos)
-		var /list/modelLines = splittext(linesText, regex(@{"\n\""}))
+		var /list/modelLines = splittext(linesText, regex("\n\""))
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
 			var endQuote = findtext(modelLine, quote, 2, 0)
 			if(endQuote <= 1)
@@ -205,6 +205,10 @@ dmm_suite
 				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
+				#ifdef RUNTIME_CHECKING
+				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
+					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
+				#endif
 
 		loadModel(atomPath, list/attributes, list/strings, xcrd, ycrd, zcrd)
 			// Cancel if atomPath is a placeholder (DMM_IGNORE flags used to write file)
@@ -238,7 +242,10 @@ dmm_suite
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
-					instance.set_dir(initial(instance.dir))
+					if(instance) // I hate that we made it so ReplaceWith can return null, it sucks so much
+						instance.set_dir(initial(instance.dir))
+					else
+						location.set_dir(initial(instance.dir))
 				else
 					if (atomPath)
 						instance = new atomPath(location)

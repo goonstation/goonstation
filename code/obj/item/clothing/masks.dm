@@ -7,6 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
 	body_parts_covered = HEAD
+	c_flags = COVERSMOUTH
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
 	var/is_muzzle = 0
@@ -129,6 +130,15 @@
 		..()
 		setProperty("disorient_resist_eye", 20)
 
+/obj/item/clothing/mask/gas/respirator
+	name = "gas respirator"
+	desc = "A close-fitting gas mask with a custom particle filter."
+	icon_state = "respirator-gas"
+	item_state = "respirator-gas"
+	color_r = 0.85 // glass visor gives more visibility
+	color_g = 0.85
+	color_b = 0.95
+
 TYPEINFO(/obj/item/clothing/mask/moustache)
 	mats = 2
 
@@ -139,6 +149,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	item_state = "moustache"
 	see_face = 0
 	w_class = W_CLASS_TINY
+	c_flags = null
 	is_syndicate = 1
 
 	setupProperties()
@@ -211,6 +222,12 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 
 	syndicate
 		name = "syndicate field protective mask"
+		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
+		icon_state = "gas_mask_syndicate"
+		item_state = "gas_mask_syndicate"
+		color_r = 0.8 //this one's also green
+		color_g = 1
+		color_b = 0.8
 		item_function_flags = IMMUNE_TO_ACID
 
 		New()
@@ -220,6 +237,15 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		disposing()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
+
+/obj/item/clothing/mask/gas/swat/NT
+	name = "SWAT mask"
+	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
+	icon_state = "swatNT"
+	item_state = "swatNT"
+	color_r = 0.8
+	color_g = 0.8
+	color_b = 1
 
 TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	mats = 6
@@ -627,6 +653,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
 	see_face = 0
+	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
@@ -634,6 +661,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon_state = "peacock"
 	item_state = "peacock"
 	see_face = 0
+	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana
@@ -663,38 +691,38 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"
 	item_state = "bandana_white"
-	handkerchief = /obj/item/cloth/handkerchief/white
+	handkerchief = /obj/item/cloth/handkerchief/colored/white
 
 /obj/item/clothing/mask/bandana/yellow
 	name = "yellow bandana"
 	item_state = "bandana_yellow"
 	icon_state = "bandana_yellow"
-	handkerchief = /obj/item/cloth/handkerchief/yellow
+	handkerchief = /obj/item/cloth/handkerchief/colored/yellow
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
 	item_state = "bandana_red"
 	icon_state = "bandana_red"
-	handkerchief = /obj/item/cloth/handkerchief/red
+	handkerchief = /obj/item/cloth/handkerchief/colored/red
 
 /obj/item/clothing/mask/bandana/purple
 	name = "purple bandana"
 	item_state = "bandana_purple"
 	icon_state = "bandana_purple"
-	handkerchief = /obj/item/cloth/handkerchief/purple
+	handkerchief = /obj/item/cloth/handkerchief/colored/purple
 
 /obj/item/clothing/mask/bandana/pink
 	name = "pink bandana"
 	item_state = "bandana_pink"
 	icon_state = "bandana_pink"
 	desc = "The fashionable bandit's choice."
-	handkerchief = /obj/item/cloth/handkerchief/pink
+	handkerchief = /obj/item/cloth/handkerchief/colored/pink
 
 /obj/item/clothing/mask/bandana/orange
 	name = "orange bandana"
 	item_state = "bandana_orange"
 	icon_state = "bandana_orange"
-	handkerchief = /obj/item/cloth/handkerchief/orange
+	handkerchief = /obj/item/cloth/handkerchief/colored/orange
 
 /obj/item/clothing/mask/bandana/nt
 	name = "nt bandana"
@@ -707,13 +735,13 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "green bandana"
 	item_state = "bandana_green"
 	icon_state = "bandana_green"
-	handkerchief = /obj/item/cloth/handkerchief/green
+	handkerchief = /obj/item/cloth/handkerchief/colored/green
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	item_state = "bandana_blue"
 	icon_state = "bandana_blue"
-	handkerchief = /obj/item/cloth/handkerchief/blue
+	handkerchief = /obj/item/cloth/handkerchief/colored/blue
 
 /obj/item/clothing/mask/bandana/random
 	var/list/possible_bandana = list(/obj/item/clothing/mask/bandana/white,

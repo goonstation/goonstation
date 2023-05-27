@@ -377,9 +377,16 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	icon_state = "ziggy"
 
 /obj/item/clothing/shoes/sandal
+	name = "sandals"
+	desc = "Standard beach footwear, just in case you happen to find a space beach."
+	icon_state = "wizard"
+	laces = LACES_NONE
+	step_sound = "step_flipflop"
+	step_priority = STEP_PRIORITY_LOW
+
+/obj/item/clothing/shoes/sandal/magic
 	name = "magic sandals"
 	desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
-	icon_state = "wizard"
 	c_flags = NOSLIP
 	magical = 1
 	laces = LACES_NONE
@@ -388,8 +395,8 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	duration_remove = 10 SECONDS
 
 	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
-	wizard
-		compatible_species = list("human", "cow")
+/obj/item/clothing/shoes/sandal/magic/wizard
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"

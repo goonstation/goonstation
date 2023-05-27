@@ -1,3 +1,5 @@
+var/global/totally_random_jobs = FALSE
+
 /proc/SetupOccupationsList()
 	set background = 1
 
@@ -24,26 +26,32 @@
 			continue
 		var/datum/preferences/P  = player.client.preferences
 		if(checktraitor(player))
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && J.cant_spawn_as_rev)
-				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
-				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
-				continue
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
+				if (J.cant_spawn_as_rev || ("loyalist" in P.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
+					continue
 			else if((ticker?.mode && istype(ticker.mode, /datum/game_mode/gang)) && (job != "Staff Assistant"))
 				continue
 			else if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy)) && J.cant_spawn_as_con)
 				continue
 
+		if (jobban_isbanned(player, job))
+			continue
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			if(set_antag_fallthrough)
 				player.antag_fallthrough = TRUE
 			continue
 		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
 			continue
+
+		if (global.totally_random_jobs)
+			candidates += player
+			continue
+
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
 		if (J.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
-		if (jobban_isbanned(player, job) || P.jobs_unwanted.Find(J.name) )
+		if (P.jobs_unwanted.Find(J.name))
 			continue
 		if (level == 1 && P.job_favorite == J.name)
 			candidates += player
@@ -70,7 +78,7 @@
 	var/percent_readied_up = length(clients) ? (length(unassigned)/length(clients)) * 100 : 0
 	logTheThing(LOG_DEBUG, null, "<b>Aloe</b>: roughly [percent_readied_up]% of players were readied up at roundstart (blobs and wraiths don't count).")
 
-	if (unassigned.len == 0)
+	if (!length(unassigned))
 		return 0
 
 	// If the mode is construction, ignore all this shit and sort everyone into the construction worker job.
@@ -122,7 +130,7 @@
 	// Though we don't want to do this in sandbox mode where it won't matter anyway
 	if(master_mode != "sandbox")
 		for(var/datum/job/JOB in high_priority_jobs)
-			if (unassigned.len == 0) break
+			if (!length(unassigned)) break
 
 			if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 
@@ -136,7 +144,7 @@
 			// horrible multicore PC station round.. (i HOPE anyway)
 			for(var/mob/new_player/candidate in pick1)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv1")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -144,7 +152,7 @@
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick2)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv2")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -152,7 +160,7 @@
 				JOB.assigned++
 			for(var/mob/new_player/candidate in pick3)
 				if(!candidate.client) continue
-				if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
+				if (JOB.assigned >= JOB.limit || !length(unassigned)) break
 				logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from High Priority Job Picker Lv3")
 				candidate.mind.assigned_role = JOB.name
 				logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -169,6 +177,8 @@
 	for (var/mob/new_player/player in unassigned)
 		// If they don't have a favorite, skip em
 		if (derelict_mode) // stop freaking out at the weird jobs
+			continue
+		if (global.totally_random_jobs) //  we don't care about favorites
 			continue
 		if (!player?.client?.preferences || player?.client?.preferences.job_favorite == null)
 			continue
@@ -212,7 +222,7 @@
 	// sometimes cause you to get that instead of a higher prioritized job
 	for(var/datum/job/JOB in available_job_roles)
 		// If we've got everyone a job, then stop wasting cycles and get on with the show
-		if (unassigned.len == 0) break
+		if (!length(unassigned)) break
 		// If there's no more slots for this job available, move onto the next one
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 		// First, rebuild the lists of who wants to be this job
@@ -220,7 +230,7 @@
 		// Now loop through the candidates in order of priority, and elect them to the
 		// job position if possible - if at any point the job is filled, break the loops
 		for(var/mob/new_player/candidate in pick2)
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
 
 			if (istype(JOB, /datum/job/engineering/engineer))
@@ -240,7 +250,7 @@
 
 	// And then again for low priority
 	for(var/datum/job/JOB in available_job_roles)
-		if (unassigned.len == 0)
+		if (!length(unassigned))
 			break
 
 		if (JOB.limit == 0)
@@ -251,7 +261,7 @@
 
 		pick3 = FindOccupationCandidates(unassigned,JOB.name,3, TRUE)
 		for(var/mob/new_player/candidate in pick3)
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+			if (JOB.assigned >= JOB.limit || !length(unassigned))
 				break
 
 			if (istype(JOB, /datum/job/engineering/engineer))
@@ -298,7 +308,7 @@
 
 	// If there's anyone left without a job after this, lump them with a randomly
 	// picked low priority role and be done with it
-	if (!low_priority_jobs.len)
+	if (!length(low_priority_jobs))
 		// we really need to fix this or it'll be some kinda weird inf loop shit
 		low_priority_jobs += "Staff Assistant"
 	for (var/mob/new_player/player in unassigned)
@@ -315,7 +325,7 @@
 	var/list/picks = FindOccupationCandidates(staff,JOB.name,2)
 
 	//If there are no acceptable candidates (no inappropriate antags, no job bans) who have it in their medium priority list
-	if (!picks.len)
+	if (!length(picks))
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
@@ -339,7 +349,7 @@
 		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
 	else if (length(JOB.slot_belt))
 		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
-	if (JOB.slot_belt && length(JOB.items_in_belt) && istype(H.belt, /obj/item/storage))
+	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
 				H.equip_new_if_possible(X, H.slot_in_belt)
@@ -400,9 +410,19 @@
 	else if (length(JOB.slot_rhan))
 		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
 
+	#ifdef APRIL_FOOLS
+	H.back?.setMaterial(getMaterial("jean"))
+	H.gloves?.setMaterial(getMaterial("jean"))
+	H.wear_suit?.setMaterial(getMaterial("jean"))
+	H.wear_mask?.setMaterial(getMaterial("jean"))
+	H.w_uniform?.setMaterial(getMaterial("jean"))
+	H.shoes?.setMaterial(getMaterial("jean"))
+	H.head?.setMaterial(getMaterial("jean"))
+	#endif
+
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
-
+	SHOULD_NOT_SLEEP(TRUE)
 	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB)
 		boutput(src, "<span class='alert'><b>Something went wrong setting up your rank and equipment! Report this to a coder.</b></span>")
@@ -441,10 +461,6 @@
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
-		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
-			if(H.traitHolder.hasTrait("pilot"))
-				H.traitHolder.removeTrait("pilot")
-				boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
 
 		H.Equip_Job_Slots(JOB)
 
@@ -473,7 +489,7 @@
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (src.traitHolder && !src.traitHolder.hasTrait("stowaway"))
-			H.spawnId(rank)
+			H.spawnId(JOB)
 		if (src.traitHolder && src.traitHolder.hasTrait("stowaway"))
 			//Has the stowaway trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
@@ -485,29 +501,30 @@
 					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
 						SL.Add(S)
 
-			if(SL.len > 0)
+			if(length(SL) > 0)
 				src.set_loc(pick(SL))
 				logTheThing(LOG_STATION, src, "has the Stowaway trait and spawns in storage at [log_loc(src)]")
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
-			var/turf/pilotSpawnLocation = null
+			SPAWN(0) //pod creation sleeps for... reasons
+				var/turf/pilotSpawnLocation = null
 
-			#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-			while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-			if (pilotSpawnLocation)										//Sanity check.
-				src.set_loc(pilotSpawnLocation)
-			var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-			#else														//This part of the code executes only if the map is a space one.
-			while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-				pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-			if (pilotSpawnLocation)										//Sanity check.
-				src.set_loc(pilotSpawnLocation)
-			var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
-			#endif
-			for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-				qdel(snappedDrone)
-			V.finish_board_pod(src)
+				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
+				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+				#else														//This part of the code executes only if the map is a space one.
+				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
+				if (pilotSpawnLocation)										//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				#endif
+				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+					qdel(snappedDrone)
+				V.finish_board_pod(src)
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
@@ -536,10 +553,10 @@
 				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
-
-		set_clothing_icon_dirty()
-		sleep(0.1 SECONDS)
-		update_icons_if_needed()
+		SPAWN(0)
+			set_clothing_icon_dirty()
+			sleep(0.1 SECONDS)
+			update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
@@ -575,7 +592,7 @@
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
 	if (JOB.slot_back)
-		if (istype(src.back, /obj/item/storage))
+		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
 				src.equip_if_possible(D, slot_in_backpack)
@@ -620,21 +637,21 @@
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack)
+		src.force_equip(E, slot_in_backpack, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack)
+		src.force_equip(SSW, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack)
+		src.force_equip(SHW, slot_in_backpack, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack)
+		src.force_equip(SSS, slot_in_backpack, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack)
+		src.force_equip(SHS, slot_in_backpack, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack)
+		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -678,9 +695,9 @@
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (istype(src.back, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
 			equipped = 1
-		else if (istype(src.belt, /obj/item/storage) && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
 			equipped = 1
 		if (!equipped)
 			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
@@ -699,12 +716,13 @@
 		if (src.traitHolder && src.traitHolder.hasTrait("onearmed"))
 			if (src.limbs)
 				SPAWN(6 SECONDS)
-					if (prob(50))
-						if (src.limbs.l_arm)
-							qdel(src.limbs.l_arm.remove(0))
-					else
-						if (src.limbs.r_arm)
-							qdel(src.limbs.r_arm.remove(0))
+					if (ishuman(src))
+						if (prob(50))
+							if (src.limbs.l_arm)
+								qdel(src.limbs.l_arm.remove(0))
+						else
+							if (src.limbs.r_arm)
+								qdel(src.limbs.r_arm.remove(0))
 					boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
 
 		if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
@@ -722,14 +740,13 @@
 		else if (src.traitHolder && src.traitHolder.hasTrait("skeleton"))
 			src.put_in_hand_or_drop(new /obj/item/joint_wax)
 
-		src.equip_sensory_items()
+	src.equip_sensory_items()
 
-/mob/living/carbon/human/proc/spawnId(rank)
+/mob/living/carbon/human/proc/spawnId(var/datum/job/JOB)
 #ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
-	rank = "Captain"
+	JOB = new /datum/job/command/captain
 #endif
 	var/obj/item/card/id/C = null
-	var/datum/job/JOB = find_job_in_controller_by_string(rank)
 	if (!JOB || !JOB.slot_card)
 		return null
 
@@ -804,7 +821,7 @@
 	equip_job_items(JOB, src)
 
 	if (ishuman(src) && JOB.spawn_id)
-		src.spawnId(rank)
+		src.spawnId(JOB)
 
 	JOB.special_setup(src, no_special_spawn)
 
@@ -814,19 +831,20 @@
 	return
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick)
+proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
 		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
 		return
 	if (!agimmick)
-		var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-		var/num_objectives = rand(1,3)
-		for(var/i = 0, i < num_objectives, i++)
-			var/select_objective = pick(eligible_objectives)
-			new select_objective(null, H.mind)
-			H.show_antag_popup("traitorhard")
-			ticker.mode.traitors |= H.mind
+		if (do_objectives)
+			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
+			var/num_objectives = rand(1,3)
+			for(var/i = 0, i < num_objectives, i++)
+				var/select_objective = pick(eligible_objectives)
+				new select_objective(null, H.mind)
+				H.show_antag_popup("traitorhard")
+				ticker.mode.traitors |= H.mind
 	else
 		ticker.mode.Agimmicks |= H.mind
 		H.show_antag_popup("traitorgeneric")
@@ -834,8 +852,6 @@ proc/antagify(mob/H, var/traitor_role, var/agimmick)
 		H.mind.special_role = traitor_role
 	else
 		H.mind.special_role = H.name
-	if (H.mind.current)
-		H.mind.current.antagonist_overlay_refresh(1, 0)
 
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //

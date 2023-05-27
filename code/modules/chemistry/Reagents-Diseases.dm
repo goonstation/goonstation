@@ -342,6 +342,7 @@ datum
 			fluid_g = 40
 			fluid_b = 40
 			transparency = 50
+			random_chem_blacklisted = TRUE
 			disease = /datum/ailment/disease/space_plague
 
 		disease/loose_screws // Space Madness

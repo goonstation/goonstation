@@ -12,6 +12,7 @@
 	var/id = null
 	weld_image_offset_X = -6
 	weld_image_offset_Y = 2
+	mat_appearances_to_ignore = list("wood")
 
 /obj/storage/closet/wardrobe
 	name = "wardrobe"
@@ -153,7 +154,7 @@
 	/obj/item/clothing/shoes/black,
 	/obj/item/clothing/under/misc/chaplain/nun,
 	/obj/item/clothing/head/nunhood,
-	/obj/item/clothing/shoes/sandal)
+	/obj/item/clothing/shoes/sandal/magic)
 
 /obj/storage/closet/wardrobe/black/formalwear
 	name = "formalwear closet"

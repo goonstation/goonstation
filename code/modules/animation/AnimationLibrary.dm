@@ -190,7 +190,7 @@
 	if(prob(10))
 		playsound(A, "sound/effects/creaking_metal[pick("1", "2")].ogg", 40, 1)
 	var/image/underneath = image('icons/effects/white.dmi')
-	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+	underneath.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 	A.underlays += underneath
 	var/matrix/pivot = matrix()
 	pivot.Scale(0.2, 1.0)
@@ -203,7 +203,7 @@
 /mob/New()
 	..()
 	src.attack_particle = new /obj/particle/attack //don't use pooling for these particles
-	src.attack_particle.appearance_flags = TILE_BOUND
+	src.attack_particle.appearance_flags = TILE_BOUND | PIXEL_SCALE
 	src.attack_particle.add_filter("attack blur", 1, gauss_blur_filter(size=0.2))
 	src.attack_particle.add_filter("attack drop shadow", 2, drop_shadow_filter(x=1, y=-1, size=0.7))
 
@@ -223,7 +223,7 @@
 		icon = 'icons/mob/mob.dmi'
 		icon_state = "sprint_cloud"
 		layer = MOB_LAYER_BASE - 0.1
-		appearance_flags = TILE_BOUND
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	muzzleflash
 		icon = 'icons/mob/mob.dmi'
@@ -243,6 +243,8 @@
 //	..()
 /proc/attack_particle(var/mob/M, var/atom/target)
 	if (!M || !target || !M.attack_particle) return
+	if(istype(M, /mob/dead))
+		return
 	var/diff_x = target.x - M.x
 	var/diff_y = target.y - M.y
 
@@ -287,6 +289,8 @@
 /mob/var/last_interact_particle = 0
 
 /proc/interact_particle(var/mob/M, var/atom/target)
+	if(istype(M, /mob/dead))
+		return
 	if (!M || !target) return
 	if (world.time <= M.last_interact_particle + M.combat_click_delay) return
 	var/diff_x = target.x - M.x
@@ -795,6 +799,27 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
+/proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
+	if (!istype(A))
+		return
+	for (var/i in 1 to steps)
+		if (i == 1)
+			animate(A,
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+		else
+			animate(
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+
 /proc/animate_revenant_shockwave(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
 	if (!istype(A))
 		return
@@ -1105,7 +1130,19 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if(!istype(A))
 		return
 
-	animate(A, pixel_x = px, pixel_y = py, time = T, easing = ease, flags=ANIMATION_PARALLEL)
+	var/image/underlay
+	if (isturf(A))
+		underlay = image('icons/turf/floors.dmi', icon_state = "solid_black")
+		underlay.appearance_flags |= RESET_TRANSFORM
+		underlay.plane = PLANE_UNDERFLOOR
+		A.underlays += underlay
+
+	animate(A, transform = list(1, 0, px, 0, 1, py), time = T, easing = ease, flags=ANIMATION_PARALLEL)
+
+	if (underlay)
+		SPAWN(T)
+			A.underlays -= underlay
+			qdel(underlay)
 
 /proc/animate_rest(var/atom/A, var/stand)
 	if(!istype(A))
@@ -1346,33 +1383,51 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(time = 10, pixel_y = 512, easing = CUBIC_EASING)
 	sleep(1.5 SECONDS)
 
-/proc/heavenly_spawn(var/atom/movable/A)
+/proc/heavenly_spawn(var/atom/movable/A, reverse = FALSE)
 	var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 	lightbeam.set_loc(A.loc)
 	var/was_anchored = A.anchored
 	var/oldlayer = A.layer
+	var/old_canbegrabbed = null
 	A.layer = EFFECTS_LAYER + 1
-	A.anchored = 1
-	A.alpha = 0
-	A.pixel_y = 176
+	A.anchored = ANCHORED
+	if (!reverse)
+		A.alpha = 0
+		A.pixel_y = 176
 	lightbeam.alpha = 0
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			old_canbegrabbed = living.canbegrabbed
+			living.canbegrabbed = FALSE
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	playsound(A.loc, 'sound/voice/heavenly3.ogg', 50,0)
 	animate(lightbeam, alpha=255, time=45)
 	animate(A,alpha=255,time=45)
 	sleep(4.5 SECONDS)
-	animate(A, pixel_y = 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
+	animate(A, pixel_y = reverse ? 176 : 0, time = 120, easing = SINE_EASING, flags = ANIMATION_PARALLEL)
 	sleep(12 SECONDS)
 	A.anchored = was_anchored
 	A.layer = oldlayer
 	animate(lightbeam,alpha = 0, time=15)
+	if (reverse)
+		animate(A,alpha=0,time=15)
 	sleep(1.5 SECONDS)
 	qdel(lightbeam)
 	if (ismob(A))
 		var/mob/M = A
+		if (isliving(M))
+			var/mob/living/living = M
+			living.canbegrabbed = old_canbegrabbed
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
+	if (reverse)
+		if (ismob(A))
+			var/mob/M = A
+			M.ghostize()
+			M.set_loc(null)
+			M.death()
+		qdel(A)
 
 /obj/effects/heavenly_light
 	icon = 'icons/obj/large/32x192.dmi'
@@ -1391,7 +1446,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	if (!center) return
 
 	A.plane = PLANE_UNDERFLOOR
-	A.anchored = TRUE
+	A.anchored = ANCHORED
 	A.density = FALSE
 	if (ismob(A))
 		var/mob/M = A
@@ -1431,7 +1486,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	desc = "just standing next to it burns your very soul."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_floor"
-	anchored = TRUE
+	anchored = ANCHORED
 	plane = PLANE_UNDERFLOOR
 	layer = -100
 
@@ -1499,7 +1554,6 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	orig.color = T.color
 	orig.appearance_flags |= RESET_TRANSFORM
 	T.ReplaceWith(new_turf_type)
-	T.underlays += orig
 	T.layer--
 	switch(dir)
 		if(WEST)

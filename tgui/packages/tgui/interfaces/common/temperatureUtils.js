@@ -19,13 +19,13 @@ export const neutralTemperature = 293.15;
 const deviation = 200;
 const highTemperature = neutralTemperature + deviation;
 
-export const getTemperatureColor = (temperature) => {
+export const getTemperatureColor = (temperature, veryHighTemperature=1000) => {
   const { cold, neutral, hot, veryhot } = TemperatureColors;
 
   if (temperature < highTemperature) {
     return Color.lookup((temperature - neutralTemperature) / (deviation * 2) + 0.5, [cold, neutral, hot]);
   }
-  return Color.lookup((temperature - highTemperature) / (1000 - highTemperature), [hot, veryhot]);
+  return Color.lookup((temperature - highTemperature) / (veryHighTemperature - highTemperature), [hot, veryhot]);
 };
 
 export const getTemperatureIcon = (temperature) => {

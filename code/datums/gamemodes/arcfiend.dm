@@ -1,5 +1,5 @@
 /datum/game_mode/mixed/arcfiend
-	name = "arcfiend"
+	name = "Arcfiend"
 	config_tag = "arcfiend"
 	antag_token_support = TRUE
 	latejoin_antag_compatible = 1

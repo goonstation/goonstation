@@ -25,8 +25,12 @@
 	var/datum/blob_ability/absorb = null
 	var/datum/blob_ability/promote = null
 	var/datum/blob_upgrade/spread_up = null
+	var/datum/blob_upgrade/multi_spread_up = null
 	var/datum/blob_upgrade/gen_up = null
+	var/datum/blob_upgrade/attack_up = null
 	var/datum/blob_upgrade/fireres_up = null
+
+	var/list/datum/blob_upgrade/repeatable_upgrades = list()
 
 	var/turf/last_spread = null
 	var/turf/last_lost = null
@@ -265,9 +269,10 @@
 
 			if (fireres_up)
 				if (fireres_up.check_requirements())
-					fireres_up.take_upgrade()
-					fireres_up = null
-					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
+					if(!fireres_up.take_upgrade())
+						fireres_up = null
+						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took fire resistance upgrade.")
+						fireres_up.deduct_evo_points()
 
 			if (absorb)
 				for (var/mob/living/carbon/human/H in (mobs + ai_mobs))
@@ -339,27 +344,28 @@
 					wall = locate(/datum/blob_ability/build/wall) in abilities
 					absorb = locate(/datum/blob_ability/absorb) in abilities
 					promote = locate(/datum/blob_ability/promote) in abilities
-					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
 					gen_up = locate(/datum/blob_upgrade/extra_genrate) in available_upgrades
+					spread_up = locate(/datum/blob_upgrade/quick_spread) in available_upgrades
+					multi_spread_up = locate(/datum/blob_upgrade/spread) in available_upgrades
+					attack_up = locate(/datum/blob_upgrade/attack) in available_upgrades
 					fireres_up = locate(/datum/blob_upgrade/fire_resist) in available_upgrades
+					if(gen_up)
+						repeatable_upgrades |= gen_up
+					if(spread_up)
+						repeatable_upgrades |= spread_up
+					if(multi_spread_up)
+						repeatable_upgrades |= multi_spread_up
+					if(attack_up)
+						repeatable_upgrades |= attack_up
 					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Deployed blob to ([T.x], [T.y], [T.z]).")
 					counter = 0
 			if (STATE_EXPANDING)
 				refresh_lists++
 				if (blobs.len > 15 && prob(blobs.len / (ribosome_count + 1)) && bio_points_max >= ribosome.bio_point_cost)
 					state = STATE_DO_LIPIDS
-				if (!(gen_up in available_upgrades))
-					gen_up = null
-				if (!(spread_up in available_upgrades))
-					spread_up = null
-				if (gen_up)
-					if (gen_up.check_requirements())
-						gen_up.take_upgrade()
-						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took generation rate upgrade while expanding.")
-				if (spread_up)
-					if (spread_up.check_requirements())
-						spread_up.take_upgrade()
-						logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took spread upgrade while expanding.")
+				
+				src.do_upgrade()
+
 				if(length(open) + length(open_low) + length(open_medium) == 0 && length(closed) > 0)
 					destroying = pick(closed)
 				var/turf/ST = null
@@ -716,7 +722,29 @@
 			state = STATE_UNDER_ATTACK
 		counter = 0
 
+	proc/do_upgrade()
+		if (!(gen_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			gen_up = null
+		if (!(spread_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			spread_up = null
+		if (!(multi_spread in available_upgrades))
+			repeatable_upgrades -= gen_up
+			multi_spread = null
+		if (!(attack_up in available_upgrades))
+			repeatable_upgrades -= gen_up
+			attack_up = null
 
+		if(!length(repeatable_upgrades) || evo_points < 1)
+			return
+
+		for(var/datum/blob_upgrade/chosen in repeatable_upgrades) //prioritize gen, quickspread, multispread, and then attack
+			if(chosen?.check_requirements())
+				if(!chosen.take_upgrade())
+					logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Took [chosen.name] upgrade while expanding.")
+					chosen.deduct_evo_points()
+					return
 
 /mob/living/intangible/blob_overmind/ai/start_here
 	var/deployment_attempt = 0

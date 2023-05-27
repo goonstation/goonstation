@@ -146,7 +146,6 @@
 		return
 
 	else if (isdead(src) && !src.client)
-		var/list/virus = src.ailments
 		var/atom/A = src.loc
 
 		var/bdna = null // For forensics (Convair880).
@@ -155,7 +154,7 @@
 			bdna = src.bioHolder.Uid
 			btype = src.bioHolder.bloodType
 		SPAWN(0)
-			gibs(A, virus, null, bdna, btype)
+			gibs(A, null, bdna, btype)
 
 		qdel(src)
 		return
@@ -172,13 +171,6 @@
 	var/exploprot = src.get_explosion_resistance()
 	var/reduction = 0
 	var/shielded = 0
-
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			exploprot += 0.3
-			shielded = 1
-			reduction += 1
-			break
 
 	if (src.spellshield)
 		reduction += 2
@@ -214,10 +206,11 @@
 		if (-INFINITY to 0) //blocked
 			boutput(src, "<span class='alert'><b>You are shielded from the blast!</b></span>")
 			return
-		if (6 to INFINITY) //gib
-			SPAWN(1 DECI SECOND)
-				src.gib(1)
-			return
+		if (6 to INFINITY) //gib?
+			if(src.health < 0 || power >= 7)
+				SPAWN(1 DECI SECOND)
+					src.gib(1)
+				return
 	src.apply_sonic_stun(0, 0, 0, 0, 0, round(power*7), round(power*7), power*40)
 
 	if (prob(b_loss) && !shielded && !reduction)
@@ -232,9 +225,6 @@
 	if (isdead(src) || src.nodamage)
 		return
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 
@@ -242,6 +232,10 @@
 	var/damage = null
 	if (!isdead(src))
 		damage = rand(modifier, 12 + 8 * modifier)
+
+	var/list/shield_amt = list()
+	SEND_SIGNAL(src, COMSIG_MOB_SHIELD_ACTIVATE, damage * 2, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
 
 	if (shielded)
 		damage /= 4
@@ -620,7 +614,7 @@
 
 	if (src.organHolder && src.organHolder.brain && src.organHolder.brain.get_damage() >= 120 && isalive(src))
 		src.visible_message("<span class='alert'><b>[src.name]</b> goes limp, their facial expression utterly blank.</span>")
-		INVOKE_ASYNC(src, /mob/living/carbon/human.proc/death)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/mob/living/carbon/human, death))
 
 /mob/living/carbon/human/get_brain_damage()
 	if (src.organHolder && src.organHolder.brain)

@@ -37,7 +37,7 @@
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
 			M.can_be_adjacent_to_target = src.can_be_adjacent_to_target
-			M.move_target = get_turf(holder.target)
+			M.move_target = holder.target
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
@@ -55,8 +55,8 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
-	holder.stop_move()
-	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
+	holder?.stop_move() // Just in case they yeet themselves out of existance
+	holder?.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -81,7 +81,7 @@
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
-	if(!move_target)
+	if(QDELETED(src.move_target))
 		fails++
 		return
 	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= can_be_adjacent_to_target)

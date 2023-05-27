@@ -4,12 +4,13 @@
 	icon_state = "grey_target_prism"
 	var/raised = 0
 	var/enabled = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 	invisibility = INVIS_CLOAK
 	density = 0
 	machine_registry_idx = MACHINES_TURRETS
+	power_usage = 50
 	var/lasers = 0
 	var/health = 100
 	var/obj/machinery/turretcover/cover = null
@@ -27,7 +28,7 @@
 	name = "pop-up turret cover"
 	icon = 'icons/obj/turrets.dmi'
 	icon_state = "turretCover"
-	anchored = 1
+	anchored = ANCHORED
 	layer = OBJ_LAYER+0.5
 	density = 0
 
@@ -88,7 +89,6 @@
 
 	if (src.cover==null)
 		src.cover = new /obj/machinery/turretcover(src.loc)
-	use_power(50)
 	var/area/area = get_area(loc)
 	if (istype(area))
 		if(!target_list)
@@ -126,9 +126,9 @@
 			continue
 		if (isdead(C) || isghostcritter(C))
 			continue
-		if (!istype(C.loc,/turf))
+		if (!(istype(C.loc,/turf) || istype(C.loc, /obj/vehicle)))
 			continue
-		if (!istype(C.loc.loc,A))
+		if (!(get_area(C) == A))
 			continue
 		if ((src.req_access || src.req_access_txt) && src.allowed(C))
 			continue //optional access whitelist
@@ -340,11 +340,12 @@
 
 		src.link.post_signal(src, signal)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/turretid, proc/toggle_active, proc/toggle_lethal)
 /obj/machinery/turretid
 	name = "Turret deactivation control"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "ai3"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	plane = PLANE_NOSHADOW_ABOVE
 	var/enabled = 1
@@ -447,22 +448,27 @@
 
 	if(user.client.check_key(KEY_OPEN))
 		. = 1
-		src.enabled = !src.enabled
-		boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
-		logTheThing(LOG_COMBAT, user, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
-		src.updateTurrets()
+		src.toggle_active()
 	else if(user.client.check_key(KEY_BOLT))
 		. = 1
-		src.lethal = !src.lethal
-		boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
-		if(src.lethal)
-			logTheThing(LOG_COMBAT, user, "set turrets to LETHAL from control \[[log_loc(src)]].")
-			message_admins("[key_name(user)] set turrets to LETHAL from control \[[log_loc(src)]].")
-		else
-			logTheThing(LOG_COMBAT, user, "set turrets to STUN from control \[[log_loc(src)]].")
-			message_admins("[key_name(user)] set turrets to STUN from control \[[log_loc(src)]].")
-		src.updateTurrets()
+		src.toggle_lethal()
 
+/obj/machinery/turretid/proc/toggle_active(mob/user)
+	src.enabled = !src.enabled
+	boutput(user, "You have <B>[src.enabled ? "en" : "dis"]abled</B> the turrets.")
+	logTheThing(LOG_COMBAT, user || usr, "turned [enabled ? "ON" : "OFF"] turrets from control \[[log_loc(src)]].")
+	src.updateTurrets()
+
+/obj/machinery/turretid/proc/toggle_lethal(mob/user)
+	src.lethal = !src.lethal
+	boutput(user, "You have set the turrets to <B>[src.lethal ? "laser" : "stun"]</B> mode.")
+	if(src.lethal)
+		logTheThing(LOG_COMBAT, user || usr, "set turrets to LETHAL from control \[[log_loc(src)]].")
+		message_admins("[key_name(user || usr)] set turrets to LETHAL from control \[[log_loc(src)]].")
+	else
+		logTheThing(LOG_COMBAT, user || usr, "set turrets to STUN from control \[[log_loc(src)]].")
+		message_admins("[key_name(user || usr)] set turrets to STUN from control \[[log_loc(src)]].")
+	src.updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
 	for_by_tcl(turret, /obj/machinery/turret)

@@ -140,6 +140,12 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
+	mat_appearances_to_ignore = list("wood")
+
+	constructed //no "wood wood table"
+		name = "table parts"
+		furniture_name = "table"
+		furniture_type = /obj/table/wood/constructed
 
 /obj/item/furniture_parts/table/wood/round
 	name = "round wood table parts"
@@ -299,20 +305,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/rack
 	furniture_name = "rack"
 	material_amt = 0.1
-
-//bookshelf part construction
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/plank))
-			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
-			if (!do_after(user, 2 SECONDS))
-				return
-			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
-			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
-			new /obj/item/furniture_parts/bookshelf(get_turf(src))
-			qdel(src)
-			qdel(W)
-		else
-			..()
 
 /* ------- Single Table Parts ------- */
 

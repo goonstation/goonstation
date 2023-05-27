@@ -5,14 +5,14 @@ TYPEINFO(/obj/machinery/power/furnace)
 	name = "Zaojun-2 5kW Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/active = 0
 	var/last_active = 0
 	var/fuel = 0
 	var/last_fuel_state = 0
 	var/maxfuel = 1000
-	var/genrate = 5000
+	var/genrate = 20000
 	var/stoked = 0 // engine ungrump
 	custom_suicide = 1
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
@@ -122,7 +122,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
 			if (src.fuel >= src.maxfuel)
@@ -193,7 +193,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
-					F.update_stack_appearance()
+					F.UpdateStackAppearance()
 		return amtload
 
 	// this is run after it's checked a person isn't being loaded in with a grab

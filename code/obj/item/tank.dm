@@ -161,12 +161,11 @@ Contains:
 			range = min(range, 12)
 
 			if(src in bible_contents)
-				for_by_tcl(B, /obj/item/storage/bible)
+				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
-				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
@@ -200,7 +199,7 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
@@ -282,6 +281,14 @@ Contains:
 			if(isnum(target_pressure))
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
+
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
 
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
@@ -417,9 +424,9 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
-	item_state = "microjetpack0"
+	item_state = "microjetpack"
 	base_icon_state = "microjetpack"
-	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
 	force = 6
 
 	New()
@@ -446,6 +453,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
 	force = 1
@@ -541,13 +549,12 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for_by_tcl(B, /obj/item/storage/bible)//world)
+			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)
 			if(src.master)
 				qdel(src.master)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 

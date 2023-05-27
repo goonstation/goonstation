@@ -28,12 +28,14 @@ var/list/depth_levels = list(2,50,100,200)
 
 var/mutable_appearance/fluid_ma
 
+ADMIN_INTERACT_PROCS(/obj/fluid, proc/admin_clear_fluid)
+
 /obj/fluid
 	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
@@ -655,6 +657,12 @@ var/mutable_appearance/fluid_ma
 			animate( F, color = F.finalcolor, alpha = finalalpha, time = 5 )
 			sleep(0.1 SECONDS)
 
+	proc/admin_clear_fluid()
+		set name = "Clear Fluid"
+		if(src.group)
+			src.group.evaporate()
+		else
+			qdel(src)
 
 
 

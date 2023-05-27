@@ -1846,7 +1846,7 @@
 	},
 /area/space)
 "fh" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/unsimulated/floor/carpet{
 	dir = 3;
 	icon_state = "green2"
@@ -3267,7 +3267,7 @@
 /area/space)
 "jc" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen/odd,
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -6442,7 +6442,7 @@
 /area/space)
 "rf" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "rg" = (
@@ -10534,7 +10534,7 @@
 /area/space)
 "AJ" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/yellowblack,
 /area/space)
 "AK" = (

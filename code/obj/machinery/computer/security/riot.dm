@@ -127,6 +127,8 @@
 		src.authorized = null
 		src.authorized_registered = null
 
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_AUTH)
+
 		for (var/obj/machinery/door/airlock/D in armory_area)
 			if (D.has_access(access_maxsec))
 				D.req_access = list(access_security)
@@ -156,6 +158,8 @@
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
 			src.UpdateIcon()
+
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_ARMORY_UNAUTH)
 
 			for (var/obj/machinery/door/airlock/D in armory_area)
 				if (D.has_access(access_security))
@@ -193,11 +197,12 @@
 	if (!user)
 		return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (!istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+
+	if (!istype(id_card, /obj/item/card/id))
 		boutput(user, "No ID given.")
 		return
+	W = id_card
 
 	if (!W:access) //no access
 		src.add_fingerprint(user)
@@ -266,7 +271,8 @@
 				src.authorized += user //authorize by USER, not by registered ID. prevent the captain from printing out 3 unique ID cards and getting in by themselves.
 			src.authorized_registered += W:registered
 
-			if (src.authorized.len < auth_need)
+			if (length(src.authorized) < auth_need)
+				logTheThing(LOG_STATION, user, "added an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 				print_auth_needed(user)
 			else
 				authorize()
@@ -279,5 +285,5 @@
 			else
 				src.authorized -= user
 			src.authorized_registered -= W:registered
-
+			logTheThing(LOG_STATION, user, "removed an approval for armory access using [W]. [length(src.authorized)] total approvals.")
 			print_auth_needed(user)

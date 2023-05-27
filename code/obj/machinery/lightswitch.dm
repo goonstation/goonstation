@@ -5,12 +5,13 @@
 TYPEINFO(/obj/machinery/light_switch)
 	mats = list("MET-1"=10,"CON-1"=15)
 
+ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch
 	desc = "A light switch"
 	name = null
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1
@@ -38,7 +39,7 @@ TYPEINFO(/obj/machinery/light_switch)
 		UpdateIcon()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", PROC_REF(trigger))
 
 		if (on)
 			light.set_color(0.5, 1, 0.5)
@@ -107,9 +108,7 @@ TYPEINFO(/obj/machinery/light_switch)
 
 /obj/machinery/light_switch/proc/toggle(mob/user=null)
 	on = !on
-
 	area.lightswitch = on
-
 	area.power_change()
 
 	if(user)

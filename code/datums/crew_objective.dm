@@ -72,6 +72,8 @@
 ABSTRACT_TYPE(/datum/objective/crew)
 /datum/objective/crew
 
+/datum/objective/crew/custom
+
 ABSTRACT_TYPE(/datum/objective/crew/captain)
 /datum/objective/crew/captain/hat
 	explanation_text = "Don't lose your hat!"
@@ -470,7 +472,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/donkpocket_w,
 		/obj/item/reagent_containers/food/snacks/surstromming,
 		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
-		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
 		/obj/item/reagent_containers/food/snacks/pancake/classic,
 		/obj/item/reagent_containers/food/snacks/wonton_spawner,
 		/obj/item/reagent_containers/food/snacks/agar_block,
@@ -484,7 +486,9 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/slimjim,
 		/obj/item/reagent_containers/food/snacks/bite,
 		/obj/item/reagent_containers/food/snacks/pickle_holder,
-		/obj/item/reagent_containers/food/snacks/snack_cake
+		/obj/item/reagent_containers/food/snacks/snack_cake,
+		/obj/item/reagent_containers/food/snacks/ice_cream/random,
+		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
@@ -983,8 +987,10 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(in_centcom(H) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(in_centcom(H) && H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 
 /datum/objective/crew/staffassistant/clown
 	explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
@@ -1062,8 +1068,10 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 /datum/objective/crew/technicalassistant/spacesuit
 	explanation_text = "Get your grubby hands on a spacesuit."
 	medal_name = "Vacuum Sealed"
@@ -1086,8 +1094,11 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
+
 /datum/objective/crew/medicalassistant/healself
 	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
 	medal_name = "Smooth Operator"

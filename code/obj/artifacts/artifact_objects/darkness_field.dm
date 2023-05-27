@@ -27,7 +27,7 @@
 		if (..())
 			return
 		O.visible_message("<span class='alert'><b>[O]</b> emits a wave of absolute darkness!</span>")
-		O.anchored = 1
+		O.anchored = ANCHORED
 		var/turf/T = get_turf(O)
 		darkfields += new /obj/overlay/darkness_field(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
 		darkfields += new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, null, radius = 0.5 + field_radius, max_alpha = max_alpha)
@@ -38,7 +38,7 @@
 	effect_deactivate(obj/O)
 		if(..())
 			return
-		O.anchored = 0
+		O.anchored = UNANCHORED
 		for(var/obj/overlay/darkness_field/D as anything in darkfields)
 			D.deactivate()
 
@@ -49,10 +49,10 @@
 	pixel_y = -(480 - 32) / 2 // centering
 	blend_mode = BLEND_SUBTRACT
 	event_handler_flags = IMMUNE_SINGULARITY
-	appearance_flags = LONG_GLIDE
+	appearance_flags = LONG_GLIDE // PIXEL_SCALE omitted intentionally
 	layer = LIGHTING_LAYER_DARKNESS_EFFECTS
 	plane = PLANE_LIGHTING
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	New(var/loc, var/duration=null, var/radius=7.5, var/max_alpha=255)
 		..()

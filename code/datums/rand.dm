@@ -53,4 +53,4 @@
 		for(item in L)
 			total -= L[item]
 			if(total <= 0)
-				. = item
+				return item

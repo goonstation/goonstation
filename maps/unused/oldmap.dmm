@@ -2021,7 +2021,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "eA" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "Head of mouse-catching and tuna taste-testing.";
 	health = 15;
 	name = "Jones"
@@ -13603,7 +13603,6 @@
 /area/zeta/security)
 "Fa" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
@@ -13902,7 +13901,6 @@
 /area/zeta/security)
 "Fy" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
@@ -14219,7 +14217,7 @@
 	dir = 8
 	},
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
@@ -20205,7 +20203,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Sn" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "So" = (

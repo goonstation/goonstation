@@ -53,7 +53,7 @@
 		fowner.reset()
 		fowner.flock.perish(FALSE)
 		fowner.flock.enemies = list()
-		fowner.flock.reset_stats()
+		fowner.flock.stats.reset_stats()
 		fowner.tutorial = null
 		fowner.sight = initial(fowner.sight)
 		for (var/mob/living/intangible/flock/trace/trace as anything in src.fowner.flock.traces)
@@ -254,7 +254,7 @@
 		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
 		first_drone.set_tutorial_ai(FALSE)
 		SPAWN(1 SECOND)
-			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS, TRUE)
+			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 10, 0.1 SECONDS, tutorial=TRUE)
 		for (var/i = 1 to 4)
 			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3, 3), src.ftutorial.center.y + rand(-3, 3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
@@ -410,7 +410,7 @@
 		..()
 		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
 		var/datum/allocated_region/region = prefab.load()
-		for (var/turf/T in REGION_TILES(region))
+		for (var/turf/T in REGION_TURFS(region))
 			var/obj/spawner/flock_structure/structure_spawner = locate() in T
 			structure_spawner?.spawn_structure(ftutorial.fowner.flock)
 			var/mob/living/carbon/human/bad_immortal/fake_tdummy = locate() in T

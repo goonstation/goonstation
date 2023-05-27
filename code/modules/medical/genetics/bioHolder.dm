@@ -101,6 +101,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	/// Used by changelings to determine which type of limbs their victim had
 	var/datum/mutantrace/mutant_race = null
+	/// The last mutant race that the owner of this appearance holder possessed that was not mutagen banned.
+	var/datum/mutantrace/original_mutant_race = null
 
 	var/e_color = "#101010"
 	var/e_color_original = "#101010"
@@ -151,7 +153,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 								 "fart2" = 'sound/voice/farts/fart2.ogg', \
 								 "fart3" = 'sound/voice/farts/fart3.ogg', \
 								 "fart4" = 'sound/voice/farts/fart4.ogg', \
-								 "fart5" = 'sound/voice/farts/fart5.ogg')
+								 "fart5" = 'sound/voice/farts/fart5.ogg', \
+								 "fart6" = 'sound/voice/farts/fart7.ogg')
 
 	var/list/screamsounds = list("male" = 'sound/voice/screams/male_scream.ogg',\
 								 "female" = 'sound/voice/screams/female_scream.ogg', \
@@ -191,6 +194,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		mob_oversuit_1_offset_y = toCopy.mob_oversuit_1_offset_y
 
 		mutant_race = toCopy.mutant_race
+		original_mutant_race = toCopy.original_mutant_race
 
 		e_color = toCopy.e_color
 		e_icon = toCopy.e_icon
@@ -295,6 +299,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			pronouns = toCopy.pronouns
 			special_style = toCopy.special_style
 			mutant_race = toCopy.mutant_race
+			original_mutant_race = toCopy.original_mutant_race
 
 		if(progress >= 10) //Finalize the copying here, with anything we may have missed.
 			src.CopyOther(toCopy)
@@ -349,11 +354,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/ownerName = null
+	var/ownerType = null //mostly meaningless for bioHolders created for mobs; only used for ownerless bioHolders in blood and such
 
 	var/bloodType = "AB+-"
 	var/bloodColor = null
 	var/age = 30
-	var/genetic_stability = 125
+	var/genetic_stability = 100
 	var/clone_generation = 0 //Get this high enough and you can be like Arnold. Maybe. I found that movie fun. Don't judge me.
 
 	var/datum/appearanceHolder/mobAppearance = null
@@ -376,6 +382,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
+				ownerType = owner.type
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
 
 		BuildEffectPool()
@@ -655,7 +662,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		age += (toCopy.age - age) / (11 - progress)
 
-	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0)
+	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
 
 		if(HasEffect(idToAdd))
@@ -684,17 +691,24 @@ var/list/datum/bioEffect/mutini_effects = list()
 				newEffect.degrade_to = null
 				newEffect.can_copy = 0
 
+			if(safety && istype(newEffect, /datum/bioEffect/power))
+				// Only powers have safety ("synced" i.e. safe for user)
+				var/datum/bioEffect/power/TEMP = newEffect
+				TEMP.safety = safety
+
 			effects[newEffect.id] = newEffect
 			newEffect.owner = owner
 			newEffect.holder = src
 			if(owner)
 				newEffect.OnAdd()
+
 			if (do_stability)
-				src.genetic_stability -= newEffect.stability_loss
-				src.genetic_stability = max(0,src.genetic_stability)
-				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+				if(newEffect.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
 					newEffect.timeLeft = rand(20, 60)
 					newEffect.degrade_after = TRUE
+
+				src.genetic_stability -= newEffect.stability_loss
+				src.genetic_stability = max(0,src.genetic_stability)
 			if(owner && length(newEffect.msgGain) > 0)
 				if (newEffect.isBad)
 					boutput(owner, "<span class='alert'>[newEffect.msgGain]</span>")
@@ -732,12 +746,12 @@ var/list/datum/bioEffect/mutini_effects = list()
 		BE.OnAdd()
 
 		if (do_stability)
-			src.genetic_stability -= BE.stability_loss
-			src.genetic_stability = max(0,src.genetic_stability)
-
-			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability, 0, 100), 100, 0.5)))
+			if(BE.degrade_to && !prob(lerp(clamp(src.genetic_stability+10, 0, 100), 100, 0.5)))
 				BE.timeLeft = rand(20, 60)
 				BE.degrade_after = TRUE
+
+			src.genetic_stability -= BE.stability_loss
+			src.genetic_stability = max(0,src.genetic_stability)
 
 		if(length(BE.msgGain) > 0)
 			if (BE.isBad)
@@ -784,7 +798,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 
@@ -797,7 +811,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				BE.holder = null
 				if(istype(BE, /datum/bioEffect/power))
 					var/datum/bioEffect/power/BEP = BE
-					BEP?.ability.owner = null
+					BEP?.ability?.owner = null
 				//qdel(BE)
 		return 1
 

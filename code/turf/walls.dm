@@ -16,6 +16,7 @@
 
 	/// The material name (string) that this will default to if a material is not otherwise set
 	var/default_material = "steel"
+	var/uses_material_appearance = FALSE // Uses material for appearances, Bamboo / Wood / Mauxite / etc
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
@@ -35,8 +36,8 @@
 			xmasify()
 		#endif
 
-		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
+		if (!src.material)
+			src.setMaterial(getMaterial(src.default_material), src.uses_material_appearance, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
@@ -128,7 +129,7 @@
 	newlight.status = 1 // LIGHT_EMPTY
 	if (istype(src,/turf/simulated/wall/auto))
 		newlight.nostick = 0
-		newlight.autoposition()
+		newlight.autoposition(light_dir)
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)
@@ -137,7 +138,6 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 			if (src.material)
@@ -174,7 +174,6 @@
 
 	else
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )

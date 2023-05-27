@@ -509,7 +509,7 @@ Returns:
 	desc = ""
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetX = 2
 	var/targetY = 2
 	var/targetZ = 2
@@ -597,7 +597,7 @@ Returns:
 	desc = ""
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetZ = 2
 
 	onVarChanged(variable, oldval, newval)
@@ -776,7 +776,7 @@ Returns:
 	desc = "You can see a skeleton down there. It seems to be holding some sort of key."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "valterak"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -785,7 +785,7 @@ Returns:
 	desc = "Upon closer inspection these seem to be the burnt remnants of a whip. How they are still there or even recognizable is beyond you."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "vwhip"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -874,7 +874,7 @@ Returns:
 	canmove = 0
 	invisibility = INVIS_ALWAYS
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/shake(var/steps = 20, var/length = 1, var/delay = 0, var/strength = 32, var/anim_easing = LINEAR_EASING)
 		SPAWN(0)
@@ -907,7 +907,7 @@ Returns:
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
-				source.anchored = 1
+				source.anchored = ANCHORED
 		return
 
 	proc/stop()
@@ -918,7 +918,7 @@ Returns:
 		if(freeze_source)
 			source.nodamage = 0
 			source.canmove = 1
-			source.anchored = 0
+			source.anchored = UNANCHORED
 
 		del(src)
 		return
@@ -942,7 +942,7 @@ Returns:
 /obj/wormhole
 	name = "nascent wormhole"
 	desc = "a small baby wormhole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "whole-nascent"
@@ -979,7 +979,7 @@ Returns:
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_1
 
 	New()
@@ -1024,7 +1024,7 @@ Returns:
 	desc = ""
 	icon = null
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
 		src.set_loc(location)
 		var/image/I = image(S)
@@ -1609,38 +1609,47 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion()
+/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
 	set desc = "Enter pixel explosion mode."
 	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic()
+	pixelmagic(mode == "explode")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
 	targeted = 1
 	max_range = 3000
+	var/explode = TRUE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
 			return 1
 
 	handleCast(var/atom/selected)
-		dothepixelthing(selected)
+		if(src.explode)
+			dothepixelthing(selected)
+		else
+			dothepixelthing(selected, /obj/item/apixel, FALSE)
 		var/mob/M = usr
 		var/datum/targetable/pixelpicker/R = new()
+		R.explode = src.explode
 		M.targeting_ability = R
 		M.update_cursor()
 		return 1
 
-/proc/pixelmagic()
+/proc/pixelmagic(explode=TRUE)
 	var/mob/M = usr
 	var/datum/targetable/pixelpicker/R = new()
+	R.explode = explode
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A)
+/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1651,37 +1660,65 @@ Returns:
 	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
 
-	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+	if(explode)
+		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
 			var/color = I.GetPixel(x, y)
 			if(color != null)
-				var/actX = A.pixel_x + x - 1
-				var/actY = A.pixel_y + y - 1
-				var/obj/apixel/P = new /obj/apixel
-				P.set_loc(A.loc)
+				var/actX = A.pixel_x + x - 1 - 16
+				var/actY = A.pixel_y + y - 1 - 16
+				var/obj/P = new pixel_type(A.loc, A)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
 				P.layer = 15
-				animate_explode_pixel(P)
+				if(explode)
+					animate_explode_pixel(P)
 				pixels += P
 
 	qdel(A)
-	SPAWN(7 SECONDS)
-		for(var/datum/D in pixels)
-			qdel(D)
-
-	return
+	if(explode)
+		SPAWN(7 SECONDS)
+			for(var/datum/D in pixels)
+				qdel(D)
 
 /obj/apixel
 	name = ""
 	desc = "this is a single pixel. wow."
 	icon = 'icons/effects/1x1.dmi'
 	icon_state = "pixel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	pixel_z = 16
+	pixel_w = 16
+
+/obj/item/apixel
+	name = ""
+	desc = "This is a single pixel. Wow."
+	icon = 'icons/effects/1x1.dmi'
+	icon_state = "pixel"
+	pixel_z = 16
+	pixel_w = 16
+	var/got_renamed = FALSE
+
+	New(loc, atom/original)
+		..(loc)
+		src.name = original.name
+		src.desc = "This is a single pixel of [original.name]. Wow."
+
+	pickup(mob/user)
+		. = ..()
+		icon = 'icons/effects/white.dmi'
+		if(!got_renamed)
+			got_renamed = TRUE
+			name = "pixel of [name]"
+
+	dropped(mob/user)
+		. = ..()
+		src.icon = initial(icon)
+
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1850,7 +1887,7 @@ Returns:
 /obj/largetest
 	name = "test"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	icon = 'icons/misc/512x512.dmi'
@@ -1859,7 +1896,7 @@ Returns:
 /obj/peninscription
 	name = "mysterious inscription"
 	desc = "It's some form of inscription. It reads 'nij ud-bi-ta la-ba-jal-la: ki-sikil tur ur dam-ma-na-ka ce nu-ub-dur-re'. There is a small pictogram below it."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/obj/decals/misc.dmi'
@@ -1878,7 +1915,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -1887,7 +1924,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -1896,7 +1933,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1904,7 +1941,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1912,7 +1949,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1921,7 +1958,7 @@ Returns:
 	desc = "a swirling blue vortex"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "swirlthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1979,7 +2016,7 @@ Returns:
 	name = "ProcTrigger"
 	desc = "If you see this and you're not an admin then that's sorta bad."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
@@ -2070,7 +2107,7 @@ Returns:
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rup"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
@@ -2133,7 +2170,7 @@ Returns:
 	icon = 'icons/effects/lines.dmi'
 	icon_state = "lght"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_y = -16
@@ -2148,7 +2185,7 @@ Returns:
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/datum/light/light
 
@@ -2174,7 +2211,7 @@ Returns:
 	name = "candle"
 	desc = "It's a big candle"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/point/light
@@ -2194,14 +2231,14 @@ Returns:
 	name = "electricity"
 	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -2257,7 +2294,7 @@ Returns:
 	desc = "Pew Pew"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuttlecannonthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/ready = 1
 
@@ -2317,7 +2354,7 @@ Returns:
 	desc = "Don't move this thing or you're gonna have a bad time."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/areasize = ""
 	var/moving = 0
@@ -2487,7 +2524,7 @@ Returns:
 	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2512,7 +2549,7 @@ Returns:
 	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2745,7 +2782,7 @@ Returns:
 /obj/perm_portal
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/atom/target = null
@@ -2767,6 +2804,9 @@ Returns:
 		if(target && istype(target))
 			if(ismob(AM))
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = AM
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -2871,7 +2911,7 @@ var/list/lag_list = new/list()
 /obj/item/spook
 	var/active = 0
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "null"
@@ -3241,7 +3281,7 @@ var/list/lag_list = new/list()
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "signpost"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)

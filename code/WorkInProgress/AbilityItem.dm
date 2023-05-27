@@ -294,7 +294,7 @@
 /obj/effect/smoketemp
 	name = "smoke"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "smoke"
@@ -431,6 +431,20 @@
 		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/helmet_thermal_toggle
+	name = "Toggle Helmet Visor"
+	icon_state = "meson0"
+
+	execute_ability()
+		var/obj/item/clothing/head/helmet/space/industrial/J = the_item
+		if(J.has_visor)
+			J.AttackSelf(the_mob)
+			if(J.visor_enabled) icon_state = "meson1"
+			else  icon_state = "meson0"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -826,7 +840,7 @@
 	icon_state = "test"
 	layer = HUD_LAYER
 	plane = PLANE_HUD
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
@@ -931,10 +945,12 @@
 		if (bandana.is_pulled_down)
 			boutput(H, "<span class='notice'>You pull down [bandana].</span>")
 			bandana.see_face = TRUE
+			bandana.c_flags ^= COVERSMOUTH
 			src.icon_state = "bandana_up"
 		else
 			boutput(H, "<span class='notice'>You pull up [bandana].</span>")
 			bandana.see_face = FALSE
+			bandana.c_flags |= COVERSMOUTH
 			src.icon_state = "bandana_down"
 		bandana.icon_state = "[initial(bandana.icon_state)][bandana.is_pulled_down ? "_down" : ""]"
 		if (H.wear_mask == bandana)

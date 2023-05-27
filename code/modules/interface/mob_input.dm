@@ -35,7 +35,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+			if (!S.target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
 				src.show_text("It would have no effect on this target.", "red")
 				if(S.sticky)
 					src.targeting_ability = S
