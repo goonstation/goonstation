@@ -5,7 +5,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	name = "PlantMaster Mk4"
 	desc = "An advanced machine used for manipulating the genes of plant seeds. It also features an inbuilt seed extractor."
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
 	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
@@ -112,6 +112,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.mode == "overview" && src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "Plantmaster")
@@ -541,6 +543,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
 					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 						update_static_data(ui.user, ui)
@@ -581,7 +584,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		else ..()
 
 	proc/SpliceChance(var/obj/item/seed/seed1, var/obj/item/seed/seed2)
-		if (seed1 && seed2)
+		if (istype(seed1) && istype(seed2) && seed1.planttype && seed2.planttype)
 			var/datum/plant/P1 = seed1.planttype
 			var/datum/plant/P2 = seed2.planttype
 			var/splice_chance = 100
@@ -606,6 +609,9 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						splice_chance += S.splice_mod
 
 			return clamp(splice_chance, 0, 100)
+		else
+			logTheThing(LOG_DEBUG, src, "Attempt to splice invalid seeds. Object details: seed1: [json_encode(seed1)], seed2: [json_encode(seed2)]")
+			return 0
 
 	proc/SpliceMK2(var/allele1,var/allele2,var/value1,var/value2)
 		var/dominance = allele1 - allele2
@@ -618,13 +624,23 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			return round((value1 + value2)/2)
 
 	proc/QuickAnalysisRow(var/obj/scanned, var/datum/plant/P, var/datum/plantgenes/DNA)
-		if (!DNA) return
+		var/result = list()
+		if (!scanned || !P || P.cantscan || !DNA) //this shouldn't happen, but if it does, return a valid (if confusing) row, and report the error
+			result["name"] = list(scanned ? scanned.name : "???", FALSE)
+			result["species"] = list("???", FALSE)
+			result["genome"] = list("???", FALSE)
+			result["generation"] = list("???", FALSE)
+			result["growtime"] = list("???", FALSE)
+			result["harvesttime"] = list("???", FALSE)
+			result["lifespan"] = list("???", FALSE)
+			result["cropsize"] = list("???", FALSE)
+			result["potency"] = list("???", FALSE)
+			result["endurance"] = list("???", FALSE)
+			result["ref"]= list("\ref[scanned]", FALSE) //in the event that scanned is somehow null, \ref[null] = [0x0]
+			logTheThing(LOG_DEBUG, src, "An invalid object was placed in the plantmaster. Error recovery prevents a TGUI bluescreen. Object details: scanned: [json_encode(scanned)], P: [json_encode(P)], DNA: [json_encode(DNA)]")
+			return result
 
 		var/generation = 0
-
-		if (P.cantscan)
-			return list()
-
 		if (istype(scanned, /obj/item/seed/))
 			var/obj/item/seed/S = scanned
 			generation = S.generation
@@ -632,7 +648,6 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 			var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 			generation = F.generation
 
-		var/result = list()
 		//list of attributes and their dominance flag
 		result["name"] = list(scanned.name, FALSE)
 		result["species"] = list(P.name, DNA.d_species)
@@ -661,7 +676,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
@@ -675,7 +690,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	var/obj/item/reagent_containers/glass/storage_tank_1 = null
 	var/obj/item/reagent_containers/glass/storage_tank_2 = null
 	var/list/ingredients = list()
-	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/seashell)
+	var/list/allowed = list(/obj/item/reagent_containers/food/snacks/,/obj/item/plant/,/obj/item/clothing/head/flower/,/obj/item/seashell)
 
 	New()
 		..()
@@ -693,6 +708,8 @@ TYPEINFO(/obj/submachine/chem_extractor)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
+		if (src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ReagentExtractor", src.name)
@@ -894,7 +911,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "seeds"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 	var/hacked = 0

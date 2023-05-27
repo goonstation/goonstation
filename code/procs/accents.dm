@@ -2349,3 +2349,98 @@ var/list/zalgo_mid = list(
 	while (pos > 0 && (string[pos] in end_punctuation))
 		string = copytext(string, 1, pos--)
 	return string + "..."
+
+/proc/pirateify(var/string)
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/pirate.txt", lowertext(original_word), 1)
+		if(matching_token)
+			modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+			modified_token += punct
+		else
+			modified_token = token
+
+		modded_tokens += modified_token
+	var/modded = jointext(modded_tokens, " ")
+	if(prob(33))
+		modded += pick("Arrr!"," Arr!", "Yarrrrr!")
+	return modded
+
+
+proc/accent_scramble(string)
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/regex/word_check = regex("^\\w+$", "i")
+	var/list/modded_tokens = list()
+	for(var/token in tokens)
+		if (length(token) <= 2 || !word_check.Find(token))
+			modded_tokens += token
+		else
+			var/list/letters = list()
+			for(var/i = 1, i <= length(token), i++)
+				letters += copytext(token, i, i + 1)
+			shuffle_list_interval(letters, 2, length(letters) - 1)
+			modded_tokens += jointext(letters, "")
+	return jointext(modded_tokens, "")
+
+
+proc/accent_shuffle_words(string)
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/regex/word_check = regex("^\\w+$", "i")
+	var/list/just_words = list()
+	var/sentence_ended = TRUE
+	for(var/token in tokens)
+		if (length(token) > 2 && word_check.Find(token))
+			if (sentence_ended)
+				token = lowertext(token)
+			just_words += token
+			sentence_ended = FALSE
+		else
+			var/last_char = copytext(token, length(token), 0)
+			if (last_char in list(".", "!", "?"))
+				sentence_ended = TRUE
+			else
+				sentence_ended = FALSE
+	shuffle_list(just_words)
+	sentence_ended = TRUE
+	var/i = 1
+	var/list/modded_tokens = list()
+	for(var/token in tokens)
+		if (length(token) > 2 && word_check.Find(token))
+			var/word_to_add = just_words[i++]
+			if (sentence_ended)
+				word_to_add = capitalize(word_to_add)
+			modded_tokens += word_to_add
+			sentence_ended = FALSE
+		else
+			modded_tokens += token
+			var/last_char = copytext(token, length(token), 0)
+			if (last_char in list(".", "!", "?"))
+				sentence_ended = TRUE
+			else
+				sentence_ended = FALSE
+	return jointext(modded_tokens, "")
+
+
+proc/accent_mocking(string)
+	var/list/letters = list()
+	var/letter_count = 0
+	for(var/i = 1, i <= length(string), i++)
+		var/letter = lowertext(copytext(string, i, i + 1))
+		var/letter_ascii = text2ascii(letter)
+		if (letter_ascii >= text2ascii("a") && letter_ascii <= text2ascii("z") && (letter_count++) % 2)
+			letter = capitalize(letter)
+		letters += letter
+	return jointext(letters, "")

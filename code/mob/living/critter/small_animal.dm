@@ -107,18 +107,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	canRideMailchutes()
 		return src.fits_under_table
 
-	proc/reduce_lifeprocess_on_death() //used for AI mobs we dont give a dang about them after theyre dead
-		remove_lifeprocess(/datum/lifeprocess/blood)
-		remove_lifeprocess(/datum/lifeprocess/canmove)
-		remove_lifeprocess(/datum/lifeprocess/disability)
-		remove_lifeprocess(/datum/lifeprocess/fire)
-		remove_lifeprocess(/datum/lifeprocess/hud)
-		remove_lifeprocess(/datum/lifeprocess/mutations)
-		remove_lifeprocess(/datum/lifeprocess/organs)
-		remove_lifeprocess(/datum/lifeprocess/sight)
-		remove_lifeprocess(/datum/lifeprocess/skin)
-		remove_lifeprocess(/datum/lifeprocess/statusupdate)
-		remove_lifeprocess(/datum/lifeprocess/radiation)
+
 
 /* =============================================== */
 /* -------------------- Mouse -------------------- */
@@ -140,6 +129,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 8
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 	var/attack_damage = 3
 	var/use_custom_color = TRUE
 
@@ -222,10 +214,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return
 		. = ..()
 
-	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
+	critter_basic_attack(var/mob/target)
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
-		random_brute_damage(target, rand(src.attack_damage, src.attack_damage+2))
+		src.set_hand(2)
+		..()
 
 	can_critter_eat()
 		src.active_hand = 2 // mouth hand
@@ -244,20 +236,16 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
+	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
-	seek_target(range)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, /mob/living/critter/small_animal/mouse) || istype(C, /mob/living/critter/wraith/plaguerat)) continue
-			. += C
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/small_animal/mouse)) return FALSE
+		return ..()
 
-	critter_attack(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> bites [target]!</span>", "<span class='combat'>You bite [target]!</span>")
-		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 50, 1, -1)
-		if(prob(30) && ishuman(target))
+	critter_basic_attack(var/mob/target)
+		. = ..()
+		if(. && prob(30) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(!H.clothing_protects_from_chems())
 				src.visible_message("<span class='alert'>[src] bites you hard enough to draw blood!</span>", "<span class='alert'>You bite [H] with all your might!</span>")
@@ -326,6 +314,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	add_abilities = list(/datum/targetable/critter/pounce)
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2 //hit back when you've been hit twice
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until they're knocked down
 	ai_type = /datum/aiHolder/cat
 	is_npc = TRUE
 	var/cattype = 1
@@ -383,6 +374,25 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	proc/catnip_effect()
 		src.catnip = 45
 		src.visible_message("[src]'s eyes dilate.")
+
+	Move(turf/NewLoc, direct)
+		. = ..()
+		if ((locate(/obj/table) in src.loc) && prob(20) && !ON_COOLDOWN(src, "knock_stuff_off_table", 10 SECONDS))
+			knock_stuff_off_table()
+
+	proc/knock_stuff_off_table()
+		var/list/obj/item/items_here = list()
+		for (var/obj/item/item_here in src.loc)
+			if (!item_here.anchored)
+				items_here += item_here
+		var/list/target_turfs = list()
+		for (var/turf/T in range(1, src))
+			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
+				target_turfs += T
+		if (length(items_here) && length(target_turfs))
+			var/obj/item/item = pick(items_here)
+			src.visible_message("<span class='alert'>[src] [pick("knocks","pushes","shoves")] [item] off the table!</span>")
+			item.throw_at(pick(target_turfs), 2, 1)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -502,44 +512,53 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 			src.visible_message("<span class='alert'>[src] hisses!</span>")
 
-	critter_attack(var/the_target)
-		if (istype(the_target, /obj/critter))
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
+		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+			src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
+			pounce.handleCast(target)
+			return TRUE
+
+		if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
+			var/attackCount = rand(5, 9)
+			var/iteration = 0
+			target.setStatus("weakened", 2 SECONDS)
+			src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!</span>")
+			SPAWN(0)
+				while (iteration <= attackCount && (get_dist(src, target) <= 1))
+					src.set_hand(1) //claws
+					src.set_a_intent(INTENT_HARM)
+					src.hand_attack(target)
+					iteration++
+					sleep(0.3 SECONDS)
+			return TRUE
+
+	critter_basic_attack(var/the_target)
+		if (istype(the_target, /obj/critter)) //grrrr obj critters
 			var/obj/critter/C = the_target
 			if (C.health <= 0 && C.alive)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 				C.health -= 2
-		else if (istype(the_target, /mob))
-			var/mob/target = the_target
-			if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
-				src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
-				return
-			if ((src.catnip || prob(2) ) && (!ON_COOLDOWN(src, "claw_fury", 20 SECONDS)))
-				var/attackCount = rand(5, 9)
-				var/iteration = 0
-				target.setStatus("weakened", 2 SECONDS)
-				src.visible_message("<span class='combat'>[src] [pick("starts to claw the living <b>shit</b> out of ", "unleashes a flurry of claw at ")] [target]!</span>")
-				SPAWN(0)
-					while (iteration <= attackCount && (get_dist(src, target) <= 1))
-						random_brute_damage(target, src.attack_damage + 2, 1)
-						playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 60, 1)
-						iteration++
-						sleep(0.3 SECONDS)
-			var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
-			if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
-				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target] and trips them!</span>", "<span class='combat'>You pounce on [target]!</span>")
-				pounce.handleCast(target)
-				return
-			if (prob(50))
-				src.visible_message("<span class='combat'><B>[src]</B> pounces on [target]!</span>", "<span class='combat'>You pounce on [target]!</span>")
-				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-				random_brute_damage(target, src.attack_damage, 1)
-			else
-				src.visible_message("<span class='combat'><B>[src]</B> scratches [target]!</span>", "<span class='combat'>You scratch on [target]!</span>")
-				playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, -1)
-				random_brute_damage(target, src.attack_damage + 2, 1)
-				if (prob(10))
-					bleed(target, 2)
-					boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
+				return TRUE
+			return FALSE
+		if (!ismob(the_target))
+			return
+		var/mob/target = the_target
+		if(istype(target, /mob/living/critter/small_animal/mouse/weak/mentor) && prob(90))
+			src.visible_message("<span class='combat'><B>[src]</B> tries to bite [target] but \the [target] dodges [pick("nimbly", "effortlessly", "gracefully")]!</span>")
+			return FALSE
+		if (prob(50))
+			src.set_hand(2) //mouth
+			src.set_a_intent(INTENT_HARM)
+			src.hand_attack(target)
+		else
+			src.set_hand(1) //claws
+			src.set_a_intent(INTENT_HARM)
+			src.hand_attack(target)
+			if (prob(10))
+				bleed(target, 2)
+				boutput(target, "<span class='alert'>[src] scratches you hard enough to draw some blood! [pick("Bad kitty", "Piece of shit", "Ow")]!</span>")
+		return TRUE
 
 /mob/living/critter/small_animal/cat/weak
 	add_abilities = list()
@@ -556,6 +575,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /* -------------------- Jones -------------------- */
 
+TYPEINFO(/mob/living/critter/small_animal/cat/jones)
+	mats = list("viscerite"=25)
+
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
 	desc = "Jones the cat."
@@ -566,7 +588,16 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 30
 	is_annoying = TRUE
 	is_pet = TRUE
+	is_syndicate = 1
 	var/swiped = 0
+
+	New()
+		START_TRACKING
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (isdead(src) || cattype == "-emagged")
@@ -603,10 +634,25 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "yips"
 	health_brute = 30
 	health_burn = 30
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 4 //dogoos are big softies, you can hit them 4 times before they attack back
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //attack until you're knocked down
+	can_lie = FALSE
+	ai_type = /datum/aiHolder/dog
+	is_npc = TRUE
 	var/dogtype = "pug"
 	var/sound/sound_bark = 'sound/voice/animal/dogbark.ogg'
 	var/gabe = 0 //sniff. bark bork. brork.
+	var/attack_damage = 3
+	///The item we run after if we are playing fetch
+	var/obj/item/fetch_item = null
+	///Who threw the item we are fetching?
+	var/mob/living/fetch_playmate = null
 	pull_w_class = W_CLASS_BULKY
+
+	New(loc)
+		. = ..()
+		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
 
 	OnMove()
 		if(client?.player?.shamecubed)
@@ -619,7 +665,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/small_critter
+		HH.limb = new /datum/limb/small_critter/med
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
 		HH.name = "paw"
@@ -677,6 +723,44 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
+	Life(datum/controller/process/mobs/parent)
+		if (..())
+			return TRUE
+
+		//Dogs bark sometimes
+		if (src.ai?.enabled && prob(1))
+			src.emote("scream", TRUE)
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/pounce/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/pounce)
+		if (!pounce.disabled && pounce.cooldowncheck() && prob(50))
+			src.visible_message("<span class='combat'><B>[src]</B> barrels into [target] and trips them!</span>", "<span class='combat'>You run into [target]!</span>")
+			pounce.handleCast(target)
+			return TRUE
+
+	critter_basic_attack(mob/target)
+		src.set_hand(2) //mouth
+		return ..()
+
+	disposing()
+		. = ..()
+		UnregisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY)
+
+	proc/throw_response(target, obj/item/item, mob/thrower)
+		// Only ai dogs should play fetch
+		if (src == thrower || is_incapacitated(src) || !istype(item) || !src.ai?.enabled || length(src.ai.priority_tasks) > 0)
+			return
+		if(prob(30)) //sometimes dogs don't feel like playing fetch
+			return
+		var/obj/item/the_item = item
+		if (the_item.w_class >= W_CLASS_NORMAL)
+			return
+		src.fetch_item = item
+		src.fetch_playmate = thrower
+		src.ai.priority_tasks += src.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/dog/fetch, list(src.ai, src.ai.default_task))
+		src.ai.interrupt()
+		src.visible_message("<span class='alert'>[src] barks and starts running after [item].</span>")
+		src.emote("scream")
 
 	pug
 		weak
@@ -760,7 +844,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		switch (act)
 			if ("scream","bark","howl")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 1, channel=VOLUME_CHANNEL_EMOTE) // FUCK hearing a dog howling like it's dying at that volume as a near constant
 					return "<span class='emote'><b>[src]</b> [pick("barks","howls")]!</span>"
 		return ..()
 
@@ -817,21 +901,21 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	proc/howl()
 		src.audible_message("<span class='combat'><b>[src]</b> [pick("howls","bays","whines","barks","croons")] to the music! [capitalize(he_or_she(src))] thinks [he_or_she(src)]'s singing!</span>")
-		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 100, 0)
+		playsound(src, "sound/voice/animal/howl[rand(1,6)].ogg", 30, 0) // FUCK hearing a dog howling like it's dying at that volume as a near constant
 
 
 /* -------------------- Shiba -------------------- */
-
 /mob/living/critter/small_animal/dog/shiba
 	icon_state = "shiba"
 	icon_state_dead = "shiba-lying"
 	dogtype = "shiba"
 	var/randomize_shiba = 1
+	var/static/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pecan", "Daikon", "Seaweed")
 
 	New()
 		..()
 		if (src.randomize_shiba)
-			src.name = pick(shiba_names)
+			src.name = pick(src.shiba_names)
 			src.real_name = src.name
 
 	weak
@@ -859,6 +943,23 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	icon_state_dead = "patrick-dead"
 	dogtype = "patrick"
 
+/* -------------------- Blair -------------------- */
+
+/mob/living/critter/small_animal/dog/blair
+	name = "Blair"
+	real_name = "Blair"
+	icon_state = "pug"
+	dogtype = "pug"
+
+	attack_hand(mob/user)
+		if (prob(5) && isalive(src) && ispug(user))
+			src.visible_message("<span class='combat'><b>[src]</b> pets [user]!</span>")
+
+/mob/living/critter/small_animal/dog/george/orwell
+	name = "Orwell"
+	icon_state = "corgi"
+	dogtype = "corgi"
+
 /* ============================================== */
 /* -------------------- Bird -------------------- */
 /* ============================================== */
@@ -881,6 +982,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	hand_count = 2
 	pet_text = list("pets","cuddles","snuggles","scritches")
 	add_abilities = list(/datum/targetable/critter/peck)
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	var/species = "parrot"
 	var/hops = 0
 	var/hat_offset_y = -5
@@ -1158,8 +1261,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	flags = null
 	fits_under_table = 0
+	health_brute = 30
+	health_burn = 30
 	species = "penguin"
-
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl
@@ -1595,6 +1702,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_type = /datum/aiHolder/roach
 	is_npc = TRUE
 
+	New()
+		.=..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+
 	setup_healths()
 		. = ..()
 		qdel(src.healthlist["toxin"])
@@ -1679,6 +1790,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	density = 1
 	flags = TABLEPASS
 	fits_under_table = 1
+	can_lie = 0
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	var/aggressive = TRUE
+	var/list/friends = list()
+
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
 
@@ -1690,6 +1810,42 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "pincers"
 		HH.name = "pincers"
 		HH.limb_name = "pincers"
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks) && ishuman(M) && !isdead(src))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			src.health_brute = min(60, src.health_brute + 6)
+			src.health_burn = min(60, src.health_burn + 6)
+			if(M in src.friends)
+				src.emote("chitter")
+			else
+				if(prob(20))
+					friends += M
+					src.visible_message("[src] chitters happily at the \the [I], and seems a little friendlier with [M].")
+					src.emote("chitter")
+				else
+					src.visible_message("<span class='notice'>[src] hated \the [I] and bit [M]'s hand!</span>")
+					random_brute_damage(M, rand(6,12),1)
+					src.emote("snip")
+					M.emote("scream")
+			I.Eat(src, src, TRUE)
+			return
+		. = ..()
+
+	attack_hand(mob/M)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				return
+			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				return
+		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -1707,6 +1863,179 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream","chitter", "snip", "snap")
 				return 2
+		return ..()
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/wasp_sting/scorpion_sting/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/scorpion_sting)
+		var/datum/targetable/critter/pincer_grab/pincer_grab = src.abilityHolder.getAbility(/datum/targetable/critter/pincer_grab)
+
+		if (!sting.disabled && sting.cooldowncheck() && prob(50))
+			sting.handleCast(target)
+			return TRUE
+		if (!pincer_grab.disabled && pincer_grab.cooldowncheck() && prob(50))
+			pincer_grab.handleCast(target)
+			return TRUE
+
+	valid_target(mob/living/C)
+		if (C in src.friends) return FALSE //don't attack frens :)
+		if (istype(C, /mob/living/critter/small_animal/rattlesnake)) return FALSE //don't attack space rattlesnakes(the snake would lose)
+		return ..()
+
+	seek_target(var/range = 8)
+		if(!src.aggressive)
+			return .
+		. = ..()
+
+		if(length(.) && prob(25))
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> snips it's pincers!</span>")
+
+	death()
+		src.reagents.add_reagent("toxin", 20, null)
+		src.reagents.add_reagent("neurotoxin", 80, null)
+		qdel(friends)
+		return ..()
+
+/* =================================================== */
+/* ------------------- Rattlesnake ------------------- */
+/* =================================================== */
+
+/mob/living/critter/small_animal/rattlesnake
+	name = "rattlesnake"
+	real_name = "rattlesnake"
+	blood_id = "blood"
+	desc = "A snake. With a rattle. A rattlesnake."
+	icon_state = "rattlesnake"
+	icon_state_dead = "rattlesnake_dead"
+	speechverb_say = "hisses"
+	speechverb_exclaim = "rattles"
+	speechverb_ask = "hisses"
+	health_brute = 20
+	health_burn = 20
+	density = 0
+	flags = TABLEPASS
+	fits_under_table = TRUE
+	can_lie = FALSE
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 2
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
+	var/aggressive = TRUE
+	var/list/friends = list()
+	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
+
+	New()
+		..()
+		src.event_handler_flags |= USE_PROXIMITY
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "teeth"
+		HH.can_hold_items = 0
+
+	attackby(obj/item/I, mob/M)
+		if(istype(I, /obj/item/reagent_containers/food/snacks) && ishuman(M) && !isdead(src))
+			src.visible_message("[M] feeds \the [src] some [I].", "[M] feeds you some [I].")
+			for(var/damage_type in src.healthlist)
+				var/datum/healthHolder/hh = src.healthlist[damage_type]
+				hh.HealDamage(5)
+			src.health_brute = min(60, src.health_brute + 6)
+			src.health_burn = min(60, src.health_burn + 6)
+			if(M in src.friends)
+				src.emote("rattle")
+			else
+				if(prob(20))
+					friends += M
+					src.visible_message("[src] hisses happily at the \the [I], and seems a little friendlier with [M].")
+				else
+					src.visible_message("<span class='notice'>[src] hated \the [I] and bit [M]'s hand!</span>")
+					random_brute_damage(M, rand(6,12),1)
+					src.emote("hiss")
+					M.emote("scream")
+			I.Eat(src, src, TRUE)
+			return
+		. = ..()
+
+	attack_hand(mob/M)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				return
+			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				return
+		..()
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream","hiss")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> hisses!</span>"
+			if ("rattle", "snap")
+				if (src.emote_check(voluntary, 50) && icon_state == "rattlesnake")
+					icon_state = "rattlesnake_rattle"
+					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					SPAWN(1 SECONDS)
+						icon_state = "rattlesnake"
+					return "<span class='emote'><b>[src]</b> rattles it's tail!</span>"
+		return null
+
+	specific_emote_type(var/act)
+		if(act in list("scream", "hiss", "snip", "snap"))
+			return 2
+		return ..()
+
+	critter_ability_attack(var/mob/target)
+		var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
+
+		if (!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+			return TRUE
+
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
+		if (C in src.friends) return FALSE //don't attack frens :) TODO replace with faction system
+		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
+			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
+				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
+					icon_state = "rattlesnake_rattle"
+					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					SPAWN(1 SECONDS)
+						icon_state = "rattlesnake"
+					src.visible_message("<span class='combat'><B>[src]</B> rattles, better not get much closer!</span>")
+				return FALSE
+			else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
+				return FALSE
+		return ..()
+
+	seek_target(var/range = 8)
+		if(!src.aggressive)
+			return .
+		. = ..()
+
+		if(length(.) && prob(25))
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+			src.visible_message("<span class='alert'><B>[src]</B> hisses!</span>")
+
+	HasProximity(atom/movable/AM as mob|obj) //the part where it bites you if you pass by
+		if ((ishuman(AM) || issilicon(AM)) && !isintangible(AM) && src.aggressive && !isdead(src) && !src.client && !(AM in src.friends))
+			var/datum/targetable/critter/wasp_sting/snake_bite/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting/snake_bite)
+			if (!sting.disabled && sting.cooldowncheck())
+				sting.handleCast(AM)
+		return
+
+	death()
+		src.reagents.add_reagent("viper_venom", 40, null)
+		src.friends = null
 		return ..()
 
 /mob/living/critter/small_animal/cockroach/weak
@@ -1744,6 +2073,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	weak
 		health_brute = 5
 		health_burn = 5
+
+		setup_hands()
+			..()
+			var/datum/handHolder/HH = hands[1]
+			HH.limb = new /datum/limb/small_critter
+			HH.icon = 'icons/mob/critter_ui.dmi'
+			HH.icon_state = "handn"
+			HH.name = "weird grabby foot thing"
+			HH.limb_name = "foot"
 
 /* ================================================ */
 /* -------------------- Ferret -------------------- */
@@ -2130,7 +2468,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /* ================================================ */
@@ -2184,8 +2521,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.can_hold_items = 0
 
 	hand_attack(atom/target, params)
-		if (istype(target, /obj/tree1))
-			var/obj/tree1/T = target
+		if (istype(target, /obj/tree))
+			var/obj/tree/T = target
 			var/can_attach = FALSE
 			var/fall_left_or_right
 			var/new_pixel_x
@@ -2258,7 +2595,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 /* ================================================ */
@@ -2521,12 +2857,20 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	speechverb_say = "buzzes"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "hums"
-	health_brute = 10
-	health_burn = 10
+	health_brute = 5
+	health_brute_vuln = 1
+	health_burn = 5
+	health_burn_vuln = 1
 	reagent_capacity = 100
 	flags = TABLEPASS
-	fits_under_table = 1
+	fits_under_table = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
+	ai_attacks_per_ability = 0
 
 	setup_hands()
 		..()
@@ -2537,11 +2881,36 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.name = "weird grabby foot thing"
 		HH.limb_name = "foot"
 
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled)
+			if (prob(5))
+				src.emote("scream")
+			else if (prob(1))
+				src.emote("dance")
+
+	valid_target(mob/living/C)
+		if (C.job == "Botanist") return FALSE
+		return ..()
+
 	death(var/gibbed)
+		src.can_lie = FALSE
 		if (!gibbed)
 			src.reagents.add_reagent("toxin", 50, null)
 			src.reagents.add_reagent("histamine", 50, null)
 		return ..()
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/sting = src.abilityHolder.getAbility(/datum/targetable/critter/wasp_sting)
+		if (!sting.disabled && sting.cooldowncheck())
+			sting.handleCast(target)
+			return TRUE
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -2563,6 +2932,40 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","buzz")
 				return 2
 		return ..()
+
+/mob/living/critter/small_animal/wasp/angry // Wasp bow & grenade
+	desc = "A wasp in space. it looks angry"
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 0.8
+
+/mob/living/critter/small_animal/wasp/strong // Polymorph and admin spawn
+	desc = "A wasp in space. it looks buff... somehow."
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.8
+	is_npc = FALSE
+
+	setup_hands() // Stronger grip
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "weird grabby foot thing"
+		HH.limb_name = "foot"
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp
+	name = "space wasp egg"
+	desc = "That doesn't seem right..."
+	critter_type = /mob/living/critter/small_animal/wasp
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+	name = "space wasp egg?"
+	desc = "There is ALOT OF BUZZING coming from this thing..."
+	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
 /* -------------------- Raccoon -------------------- */
@@ -2807,7 +3210,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/vomit)
 		abilityHolder.updateButtons()
@@ -2872,7 +3274,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter(src)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/blood_bite)
 		abilityHolder.updateButtons()
@@ -3329,7 +3730,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
-					var/obj/item/storage/bible/B = locate(/obj/item/storage/bible) in get_turf(src)
+					var/obj/item/bible/B = locate(/obj/item/bible) in get_turf(src)
 					if(B)
 						SPAWN(0.1 SECONDS) // so that this message happens second
 							playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
@@ -3349,7 +3750,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
-		if(src.client && src.client && !src.client.is_mentor())
+		if(src.client && !src.client.is_mentor() && !src.client.holder)
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 
@@ -3522,7 +3923,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 4
 	base_walk_delay = 5
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
 
 	New()
 		..()
@@ -3564,6 +3968,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			new /obj/item/raw_material/chitin(src.loc)
 		..()
 
+	critter_attack(mob/target)
+		if (isliving(target) && prob(60)) //might be attacking a sub
+			//dash attack
+			src.set_dir(get_dir(src,target))
+			src.set_a_intent(prob(66) ? INTENT_DISARM : INTENT_HARM)
+			var/list/params = list()
+			params["left"] = TRUE
+			params["ai"] = TRUE
+			src.hand_range_attack(target, params)
+		else
+			src.set_dir(get_dir(src,target))
+			..() //punch attack
+
+
+
+
 	ai_controlled
 		is_npc = 1
 		New()
@@ -3576,7 +3996,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -3649,7 +4068,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()
 
 
@@ -3672,7 +4090,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 2.3
 	base_walk_delay = 4
 
-//	var/mob/living/target = null
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
 	New()
 		..()
@@ -3706,7 +4126,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		switch (act)
 			if ("scream","chitter")
 				return 2
+		return ..()
+
+	emote(act, voluntary)
 		if (act == "flip")
+			if (!emote_check(voluntary, 2 SECONDS))
+				return
 			for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
 				var/mob/living/M = G.affecting
 				if (M == src)
@@ -3722,13 +4147,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					G.affecting.TakeDamage("head", rand(2,8), 0, 0, DAMAGE_BLUNT)
 					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, pitch = 1.3)
 					src.visible_message("<span class='alert'><B>[src] crunches [G.affecting]!</B></span>")
-		return ..()
+		else
+			return ..()
 
 	death(var/gibbed)
 		playsound(src, 'sound/misc/talk/blub.ogg', 80, 1, pitch = 0.6)
 		new /obj/item/reagent_containers/food/snacks/greengoo(get_turf(src))
 
 		..()
+
+	critter_attack(mob/target)
+		src.set_a_intent(INTENT_GRAB)
+		src.set_dir(get_dir(src, target))
+
+		var/list/params = list()
+		params["left"] = TRUE
+		params["ai"] = TRUE
+
+		var/obj/item/grab/G = src.equipped()
+		if (!istype(G)) //if it hasn't grabbed something, try to
+			if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+				src.drop_item()
+			src.hand_attack(target, params)
+		else
+			if (G.affecting == null || G.assailant == null || G.disposed || isdead(G.affecting))
+				src.drop_item()
+				return
+
+			if (G.state <= GRAB_PASSIVE)
+				G.AttackSelf(src)
+			else
+				src.emote("flip")
+				src.ai.move_away(target,1)
+
 
 	ai_controlled
 		is_npc = 1
@@ -3741,5 +4192,4 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		death(var/gibbed)
 			qdel(src.ai)
 			src.ai = null
-			reduce_lifeprocess_on_death()
 			..()

@@ -1,7 +1,7 @@
 //
 // Firealarm
 //
-
+ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -10,11 +10,12 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
+	power_channel = ENVIRON
 	var/alarm_frequency = FREQ_ALARM
 	var/detecting = 1
 	var/working = 1
 	var/lockdownbyai = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0
@@ -48,7 +49,7 @@
 	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
@@ -119,9 +120,7 @@
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
-
-	use_power(power_usage, ENVIRON)
-
+	..()
 
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))

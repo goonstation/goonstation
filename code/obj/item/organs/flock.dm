@@ -5,7 +5,7 @@
 	blood_color = "#1bdebd"
 	desc = "That thing should not be in there, nopenopenope."
 	icon = 'icons/obj/materials.dmi'
-	icon_state = "starstone" //wooo reused sprites
+	icon_state = "ore$$starstone" //wooo reused sprites
 	made_from = "gnesis"
 	broken = TRUE
 	unusual = TRUE

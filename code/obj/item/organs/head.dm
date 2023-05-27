@@ -38,6 +38,7 @@
 	var/head_state = null
 
 	var/image/head_image_eyes = null
+	var/image/head_image_nose = null
 	var/image/head_image_cust_one = null
 	var/image/head_image_cust_two = null
 	var/image/head_image_cust_three = null
@@ -53,6 +54,8 @@
 	var/obj/item/ears = null //can be either obj/item/clothing/ears/ or obj/item/device/radio/headset, but those paths diverge a lot
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
+
+	appearance_flags = KEEP_TOGETHER
 
 	New()
 		..()
@@ -72,6 +75,9 @@
 					src.donor.set_eye(null)
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
+			if (!src.chat_text)
+				src.chat_text = new
+			src.vis_contents += src.chat_text
 
 	disposing()
 		if (src.linked_human)
@@ -96,6 +102,7 @@
 		wear_mask = null
 		glasses = null
 		linked_human = null
+		chat_text = null
 
 		..()
 
@@ -181,6 +188,13 @@
 			src.head_image_eyes = image('icons/mob/human_hair.dmi', "none", layer = MOB_FACE_LAYER)
 		src.head_image_eyes.color = AHead.e_color
 
+		// Add long nose if they have one
+		if (src.head_appearance_flags & HAS_LONG_NOSE)
+			src.head_image_nose = image(src.head_icon, "snout", layer = MOB_GLASSES_LAYER)
+			src.head_image_nose.color = src.skintone
+		else
+			src.head_image_nose = null
+
 		// Remove their hair first
 		src.head_image_cust_one = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
 		src.head_image_cust_two = image('icons/mob/human_hair.dmi', "none", layer = MOB_HAIR_LAYER2)
@@ -249,6 +263,9 @@
 		src.head_image_eyes.pixel_y = 0
 		src.overlays += src.head_image_eyes
 
+		if(src.head_image_nose)
+			src.overlays += src.head_image_nose
+
 		if (src.glasses && src.glasses.wear_image_icon)
 			src.overlays += image(src.glasses.wear_image_icon, src.glasses.icon_state, layer = MOB_GLASSES_LAYER)
 
@@ -304,9 +321,15 @@
 	on_removal()
 		src.transplanted = 1
 		if (src.linked_human)
-			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
-			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, .proc/remove_typing_indicator)
-			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, .proc/speech_bubble)
+		 	// if we're typing, attempt to seamlessly transfer it
+			if (src.linked_human.has_typing_indicator && isskeleton(src.linked_human))
+				src.linked_human.remove_typing_indicator()
+				src.linked_human.has_typing_indicator = TRUE // proc above removes it
+				src.create_typing_indicator()
+
+			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, PROC_REF(create_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_REMOVE_TYPING, PROC_REF(remove_typing_indicator))
+			src.RegisterSignal(src.linked_human, COMSIG_SPEECH_BUBBLE, PROC_REF(speech_bubble))
 		. = ..()
 
 	///Taking items off a head

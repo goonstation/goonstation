@@ -14,12 +14,13 @@
 	var/datum/hud/object/hud
 	density = 0
 	canmove = 1
+	faction = MOB_AI_FACTION_WRAITH
 	use_stamina = FALSE
 	flags = FPRINT | NO_MOUSEDROP_QOL
 	gender = NEUTER
 
 	blinded = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	a_intent = "disarm"
 	can_bleed = FALSE
 	var/name_prefix = "living "
@@ -35,9 +36,6 @@
 		src.attach_hud(hud)
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
-
-		if (controller)
-			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
 
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
@@ -332,8 +330,12 @@
 	proc/update_density()
 		src.density = src.possessed_thing.density
 
+	get_hud()
+		return src.hud
+
 /mob/living/object/ai_controlled
 	is_npc = 1
+	faction = MOB_AI_FACTION_WRAITH
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)
@@ -468,6 +470,5 @@
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff
-		spooker.hud.update_intent()
 
 	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

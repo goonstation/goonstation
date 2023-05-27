@@ -83,6 +83,17 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/raw_material/scrap_metal = 5, \
 	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
 
+/datum/fishing_spot/drain
+	fishing_atom_type = /obj/machinery/drainage
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/fish/bass = 9,\
+	/obj/item/fish/salmon = 7,\
+	/obj/item/fish/herring = 6,\
+	/obj/item/fish/red_herring = 7)
+
 /datum/fishing_spot/toilet/random
 	fishing_atom_type = /obj/item/storage/toilet/random
 
@@ -103,7 +114,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 #ifdef SECRETS_ENABLED
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
-	/obj/critter/aberration = 1,\
+	/mob/living/critter/aberration = 1,\
 	/mob/living/critter/small_animal/cat = 2,\
 	/obj/item/clothing/head/void_crown = 1,\
 	/obj/item/record/spacebux = 4,\
@@ -132,3 +143,22 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 20,\
 	/obj/item/fish/bass = 15,\
 	/obj/item/fish/red_herring = 5)
+
+
+/datum/fishing_spot/nuclear_reactor
+	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor
+	fish_available = list(/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/herring = 15,\
+	/obj/item/fish/red_herring = 5,\
+	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
+
+	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
+		var/atom/result = ..()
+		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
+		return result
+
+
+/datum/fishing_spot/nuclear_reactor/prefilled
+	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal

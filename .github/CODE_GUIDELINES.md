@@ -19,6 +19,8 @@
 * Bitflags (`&`) - Write as `bitfield & bitflag`
 * Use `'foo.ogg'` instead of `"foo.ogg"` for resources unless you need to build a string (e.g. `"foo_[rand(2)].ogg"`).
 * Use `FALSE` and `TRUE` instead of `0` and `1` for booleans.
+* Use `x in y` rather than `y.Find(x)` unless you need the index.
+    * Does not apply to regexes, of course.
 
 # Syntax
 
@@ -277,83 +279,7 @@ proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
 ```
 
 ## Flowchart: Check distances between things
-```mermaid
-%%{init: {'themeVariables': { 'fontSize': '26px'}}}%%
-flowchart TD
-    root([I need to check something's distance to some other thing])
-    literal([I need the literal range value])
-    diag([Diagonal Moves Allowed])
-    tile([Tile-Based])
-    notile([Non-Tile-Based])
-    ndiag([Diagonal Moves Not Allowed])
-    adj([I need to check if two things are literally touching/directly adjacent])
-    touch([I need to check if a mob can touch something])
-    goto([I need to check if a mob go to a tile])
-    subgraph in_interact_range["in_interact_range(atom/target, mob/user)" - can i use a thing]
-        direction RL
-        IIR("Checks that a mob is in range to interact with a target.
-        Accounts for corner cases like telekinesis, silicon
-        machinery interactions, and bibles.")
-    end
-    subgraph GET_DIST["GET_DIST(atom/A, atom/B) - distance in tiles"]
-        direction RL
-        GD("Gets the distance in tiles between A and B.
-        The position of objects is equivalent to the position of 
-        the turf the object is on, through any number of layers
-        (a pen in a bag on a person on a tile is calculated as being on the tile).
-        Different Z levels returns INFINITY.")
-    end
-    subgraph euclidean["Euclidean Distance - direct line distance"]
-        direction RL
-        subgraph euclidean_dist["GET_EUCLIDEAN_DIST"]
-            ED("The exact euclidean distance from A to B.")
-        end
-        subgraph squared_euclidean_dist["GET_SQUARED_EUCLIDEAN_DIST"]
-            SED("The squared euclidean distance sqrt(x^2 + y^2) from A to B.<br>Avoids a square root which saves on performance,<br>so this should be used if possible (such as if you're<br>calculating a ratio of squared distances).<br>Different Z levels returns INFINITY.")
-        end
-    end
-    subgraph manhattan["GET_MANHATTAN_DIST(A, B) - distance in city blocks"]
-        direction RL
-        MAN("The exact manhattan distance from A to B.")
-    end
-    subgraph BOUNDS_DIST["BOUNDS_DIST(atom/A, atom/B) - distance in pixels"]
-        direction RL
-        BD("Wrapper around BYOND's 'bounds_dist' built-in proc.
-        Returns the number of pixels A would have to move to be touching B,
-        Returning a negative value if they are already overlapping.
-        We don't ordinarily care about pixel distances, so this should
-        only be used to check adjacency.
-        Notably, functions fine for large (2x2 tile, 3x3 tile, etc) objects.")
-        subgraph bounds_dist_notouch["BOUNDS_DIST(A, B) > 0"]
-            BDNT("returns TRUE if A and B are not adjacent or overlapping.")
-        end
-        subgraph bounds_dist_touch["BOUNDS_DIST(A, B) == 0"]
-            BDT("returns TRUE if A and B are adjacent or overlapping.")
-        end
-    end
-    subgraph pathfind["get_path_to(atom/movable/mover, atom/target, ...optional args)" - can i go somewhere]
-        direction RL
-        PA("Attempts to pathfind a mover to the turf the target(s) is on.
-        Returns a list of turfs from the caller to the target or
-        a list of lists of the former if multiple targets are specified.
-        If no paths were found, returns an empty list.")
-    end
-    
-    root ------> literal
-    literal --> tile
-    tile --> diag
-    diag --> GET_DIST
-    tile --> ndiag
-    ndiag --> manhattan
-    literal --> notile
-    notile ---> euclidean
-    root --> adj
-    adj ---> BOUNDS_DIST
-    root --> touch
-    touch --> in_interact_range
-    root --> goto
-    goto ----> pathfind
-```
+![](https://mermaid.ink/img/pako:eNqVV21vGkcQ_iujkyxAxU7lSP1gNZYguClSQlobN0pNg5a7BTY-dvHunjG1_N_7zN4bbw0JH-DYm5l9duaZl32OYpPI6CI6OXlWWvkLem74uVzIv4RVYpJK18ASNaZG-xv1r8S_xvkvy6fGy8vLyclIT1OziufCehr2Rprwscb45l2ftJQJeUPxXMb35MxC-rnSs4ajRDkvdCz5La-TwY6Wwut_WrmVVHlpRVobmstyjazQM0mPIs1kKZ4oMWve9fBtNCQ-mEfpqJMCnExKGa9S2bwb4vu0K1y9rk3-ZmD06YG3B00PjN81L5Kv-8dWU_Irkx_NkbDVIdI1hLKY118lysrYYwUmRCy1rxCzxEGjghZmQrHQuUzt3lJ1Zrz5hubM8KIIPilVXDaZWbGck9JjpRll7MfB13ejaG-tKbxZvPLCzqRvs81XmZO2NYroNOBShP-8Q0CV75BHig-rjKbr9_Vqv3_dHEVvGaSDivAFTuWApgg4AJcQaKX8nI2H7c9qO504Npn2jqbGUmysBq9ihNPB7_cwIVN5r7R0yrXJqVTFRtfKC8HxkHZd7QOYEBQ6oYniXDgbRYWzpE52vPbuajju9W-GcFb5mPuoAwv8223BNRX3cSx2vhtFR53zrgffvJPehSzYs0AT6VdSauoEpN0NdwwhvzROBZNmSmbyFfYdu1U-ZAopBLaxY_2OYG2C3_jMTsNDrs_qRrexYk02Qxz0mnS2mMDXUE3FWlpXG2gKWgIc0AqaiBk0iVes4510wUE2GYs0zlLhQVjBhwJvWCAAgEhr41w9NZ1Ky9j_plQ-ytSRlUCpHfUHv_UH_eHnb4VKZnGqEik0YnVVPsNo4djTIg7gjK79_R2B2t9gzNoFI65u377v9646g8CNLXP8ueIoc8DkEzO8MlEHfGrNAkFGuLr16bZOuAXCPWQoOMn4IJibP28711e9Y6BuKlSFtUO43IP1zacv5_QTrb-ct7Zw_jqxl51HoxJUv8JG6BC0miuuW4KrKdwIQiBlF2yvzTouFE1Hbm6yFOknuZwkXMBAU8fJSE3HlQ9UweLaZA0rWbFkEbNHoHIgSMzKEn4J2rUCtB8i0par91kF8ChcPrCKXfyhM_i9MxwWrm2iDOxVgFj5NU1Sg6r3HfSCwS2KVBseocg-1O7H20HvpixXG_-OVKyleoKLvgNql2nzCXshrmh7qMkoTJ8_Dnpo_40J_3WBjQ2aZCr1p2zbmngjxa-LMHD618UlB4ATrgIt5qAPH3Zh8t-JrLoqddu7xnJKaDkDKR6LASJ06Llch94sUitFsiZYsymwQ2ED0SfUAqMbnoxNlMZ4hI4dBzUcyOfQan6hv2xRuLZjNBRLQletuej98XpjR0wZGMHWbZpmOm9GNOWSxM0t5dZHzfOn81Ad2_T66XXxJH3cKkv9NnsrAmyEYIz5h322Q4Scrpf0815N6PYGQ0S3zJPh9e0Ve7HoPsGRMFkNM3DXtkOPV65NdP-P7c2bg-COYfsxXPu5sxR-jigkwITZY8x_ATJPHPCQZ2b-lbZIonJEOjs7M0sOIoZILLnNUWmWD8IrjMHyaG790cEJO97LxZJHAlMhCjPTI0_SZrtt5xCarpV37gNZJtDrnOcMYyWX1xFWRTlNNywGQ_BcbaHW5F8XTMwDRRfQg-8XWerVMi2V8ynYLWWspkomG1j6U_AmHMbRCo6ADdCgXRVkeIqPvA4bHahu9fWDTsPnshy2t64UxC84UepbQVjiOb--TISlco7bkdS1qK5kq2K8v1l-wdi8bFBAV7XSLeSXzNDqSpFLbpB_Rzakx8ZtISzuDes7Snw5qK8JlPuqZFHUjhC5hVAJboXPLDaKwo1wFF3gMRH2fhSN9AvkRObNzVrH0cVUpE62o2yZYH7ju5IVi2L15T-fxKZS?bgColor=5B5F67)
 
 ## Flowchart: Get things in an area around a thing
 ![](https://mermaid.ink/img/pako:eNqlV19v2zYQ_yoHvdgGtAZD34Ihw4BkW4BlA-KgRTEPASWebK4S6ZGUPaPod-_dUbIk2w2CVg-xdP_vx7vj5VNWOo3ZdVbVbl9ulI_wdLuyQI93Ls7_XmX3YBE1RAdrjKCgNiGCqwB36A9xY-wajIXgGgTlUeWgytJ5zXTSEfoGW09aplxl_yyS9fR3Z4JxNnkpSRtU4drYkQfhUtkCA6JIPridKmoMEDcqMgsKBGZC5V3TBRJd81Phb-bL5Y9vKeL1JnI8WvmPFkMAE8C6KJG2NlJ2lfOLiT8yyM7uOEloXDF4I87gJOkkrQ0qf5YKE8n1WM6rvSY0kqiz9WEsT0xgrrIljpVi66swPg7-HguUSImIf7iHvbIRZok0A2U1mBigdPRt6YXOhTAztqxbTbbo-OIGwWNoa-LKAc9NRYQad2Rp8fMIGrH5fEAJ5gOqzRnPOmb9OeYorZ-F-ovWMHMzjoBdUp5eiok_tt6VYBUhO3c7g_scnFd2jTlgLBfjXENbrL3aboDFyCr_zHvU8i4O1kji_GjjsYxUVfD4x0CdGHp2xb_PjCtZTCa4TujEiX7F9IlBft69_-tpvsoekbg2jHqj6Wt0b7hDJL0-vrO6ndqUImb53usswNYFw7HnYo9KF8IWS6PqrlP4ZIPR6BVLhTdTix9cy9gWFNGBSj62qqYXKRFOG32YL96sssWghVZ_DSNqhSk83BwXgHn4Llym1qS5i4NIk7e8q1zuaGUPPQYedZtO2HlQ7bqhGAWPEzjuq8ElJeAaE2kC5KSfopW5Js3dO-zb_tUglbUh5yc4JeIFqLoh-CJegg2Hk6wMEU1sLU1jauX77qKJsqN2KGis0HyD_YZg3KNMm6le447zZ3_ZEQdguReM1WZnNNUQI_N90J7mchHd48sEYiraru-5fIfWZ9tXr-__d--XhPuSZ044ULn8DyqI_fki4eZPj2TQpS5iCML0ZpC8xP-Qz3kKMtcoAfn99vAffxtVzQjcobtGFcoTozI07o9H1M3drkhZ86WY-SZLsHdv3x7374-X4z4iyR5gkD-NclzoxxGWj44mhLbpu8Zt1X-tjFOKJEBRu_IjXeCt1S9lK2KUq_zOeQ5fyWWVy817RQqvSfTpV0r0iaLvG1qu7f7CfXvbRaOxMhZH4-R4CaQLktIkh53yXKZfMDtcjNpvKYImiBbtcgRVjRWh6bxFn8Md7wCJG90WPK9Ek_zTUjasfvADPTf9KnZK5gOaEG_6teZMNG0qZ0uf6BwXu0scop-sf5Aiwv14TTsSqQrGbrp4utioz3oyvSYXUlHj7Q361MRUHxPuJ-I9kWTO6J3uBfPpa6DzBvUVjnUn65SYkxVqsg0KWQooy7MGfaOMpk3-E4usMjrphjbIa3rltXeVrexnkmu3WkW80yY6n11Xqg6YZ6qNbnmwZXYdfYu90K1R1AvNUQpF6SH9vyD_Nnz-Aqqx9s0?bgColor=5B5F67)

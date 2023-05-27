@@ -975,7 +975,7 @@
 		playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
 		src.take_damage(C.force)
 
-/obj/machinery/door/poddoor/bumpopen(mob/user)
+/obj/machinery/door/poddoor/bumpopen(atom/movable/AM)
 	return 0
 
 /obj/machinery/door/poddoor/open()
@@ -1084,7 +1084,7 @@
 			return
 	return
 
-/obj/machinery/door/poddoor/blast/bumpopen(mob/user)
+/obj/machinery/door/poddoor/blast/bumpopen(atom/movable/AM)
 	return 0
 
 /obj/machinery/door/poddoor/blast/open()

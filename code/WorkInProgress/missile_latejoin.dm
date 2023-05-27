@@ -4,7 +4,7 @@
 /obj/arrival_missile
 	name = "human capsule missile"
 	desc = "A great way to deliver humans to a research station. Trust me."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "arrival_missile"
@@ -121,7 +121,7 @@
 			var/area/AR = get_area(src)
 			var/turf/T = get_turf(src)
 			if (!src.target && istype(T, /turf/simulated/floor) && !AR.teleport_blocked && istype(AR, /area/station) && \
-					!istype(AR, /area/station/solar) && !T.density && T.z == 1)
+					!istype(AR, /area/station/solar) && !istype(AR, /area/station/engine/singcore) && !T.density && T.z == 1)
 				var/ok = TRUE
 				for(var/atom/A in T)
 					if(A.density)
@@ -146,7 +146,7 @@
 		var/turf/start = get_step(get_edge_target_turf(target, turn(dir, 180)), dir)
 		src.set_loc(start)
 
-proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite)
+proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_sprite, async=FALSE)
 	var/obj/arrival_missile/missile = new /obj/arrival_missile
 	if(missile_sprite)
 		missile.icon_state = "[missile_sprite]"
@@ -155,7 +155,12 @@ proc/launch_with_missile(atom/movable/thing, turf/target, dir=null, missile_spri
 	else
 		missile.reset_to_aim_at(target, dir)
 		missile.target = target
-	missile.lunch(thing)
+
+	if(async)
+		SPAWN(0)
+			missile.lunch(thing)
+	else
+		missile.lunch(thing)
 	return missile
 
 proc/latejoin_missile_spawn(var/mob/character)

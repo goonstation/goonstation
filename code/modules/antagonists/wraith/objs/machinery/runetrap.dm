@@ -7,7 +7,7 @@
 	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "rune_trap"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/visible = FALSE
 	var/armed = FALSE
 	var/mob/living/intangible/wraith/wraith_trickster/master = null

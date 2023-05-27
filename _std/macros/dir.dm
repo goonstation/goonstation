@@ -6,7 +6,9 @@
 var/global/list
 	cardinal = list(NORTH, SOUTH, EAST, WEST)
 	ordinal = list(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+	ordinal_unique = list(NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	alldirs = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST)
+	alldirs_unique = list(NORTH, SOUTH, EAST, WEST, NORTHEAST_UNIQUE, SOUTHEAST_UNIQUE, SOUTHWEST_UNIQUE, NORTHWEST_UNIQUE)
 	modulo_angle_to_dir = list(NORTH,NORTHEAST,EAST,SOUTHEAST,SOUTH,SOUTHWEST,WEST,NORTHWEST)
 	dirnames = list("north"=NORTH, "south"=SOUTH, "east"=EAST, "west"=WEST, "northeast"=NORTHEAST, "southeast"=SOUTHEAST, "southwest"=SOUTHWEST, "northwest"=NORTHWEST)
 
@@ -89,6 +91,21 @@ proc/dir_to_angle(dir)
 			.= 270
 		if(NORTHWEST)
 			.= 315
+
+/// Checks if an angle is between two other angles
+proc/angle_inbetween(angle, low, high)
+	angle = ((angle % 360) + 360) % 360
+	low = ((low % 360) + 360) % 360
+	high = ((high % 360) + 360) % 360
+	if(low > high)
+		return (angle >= low || angle <= high)
+	return (angle >= low && angle <= high)
+
+/// Returns the distance between two angles
+proc/angle_distance(angle1, angle2)
+	angle1 = ((angle1 % 360) + 360) % 360
+	angle2 = ((angle2 % 360) + 360) % 360
+	. = min(abs(angle1 - angle2), abs(angle1 - angle2 + 360), abs(angle1 - angle2 - 360))
 
 /**
   * Transforms a given angle to vec2 in a list

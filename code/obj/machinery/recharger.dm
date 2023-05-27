@@ -25,7 +25,7 @@ TYPEINFO(/obj/machinery/recharger)
 	mats = 16
 
 /obj/machinery/recharger
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
@@ -122,7 +122,6 @@ TYPEINFO(/obj/machinery/recharger)
 		src.charging.set_loc(src.loc)
 		src.charging = null
 
-		power_usage = 50
 		charge_status = STATUS_INACTIVE
 		src.UpdateIcon()
 
@@ -160,13 +159,6 @@ TYPEINFO(/obj/machinery/recharger)
 		UpdateIcon()
 		return
 
-
-	if (src.charging && charge_status != STATUS_INACTIVE)
-		power_usage = ACTIVE_POWER_DRAIN * mult
-	else
-		power_usage = 50 * mult
-
-
 	if(charge_status == STATUS_ACTIVE && src.charging)
 		var/ret = SEND_SIGNAL(src.charging, COMSIG_CELL_CHARGE, CHARGE_AMOUNT * mult)
 		if(ret & CELL_FULL)
@@ -181,8 +173,8 @@ TYPEINFO(/obj/machinery/recharger)
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50)
 			UpdateIcon()
 
-	if(src.charging)
-		use_power(power_usage)
+	if(src.charging && charge_status != STATUS_INACTIVE)
+		use_power(ACTIVE_POWER_DRAIN)
 	..()
 
 #undef CHARGE_AMOUNT

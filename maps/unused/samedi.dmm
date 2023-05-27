@@ -245,7 +245,7 @@
 /area/station/storage/primary)
 "aaH" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray{
 	butts = 5;
 	icon_state = "ashtray";
@@ -666,7 +666,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/power)
 "abC" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid{
 	name = "asteroid"
 	},
@@ -870,7 +870,7 @@
 	},
 /area/station/solar/east)
 "abT" = (
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "abU" = (
@@ -2175,7 +2175,7 @@
 /area/station/engine/storage)
 "aeC" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -3783,7 +3783,7 @@
 /area/station/engine/engineering)
 "ahI" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
@@ -3994,7 +3994,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "ain" = (
-/obj/tree1{
+/obj/tree{
 	desc = "It's a tree. You see the phrase 'Haine <3 SpyGuy' carved into it."
 	},
 /turf/simulated/floor/grass/leafy,
@@ -5854,7 +5854,7 @@
 /area/mining/magnet)
 "amm" = (
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen,
 /obj/item/deconstructor,
@@ -6417,7 +6417,7 @@
 /area/station/mining/staff_room)
 "anA" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor/wood,
 /area/station/mining/staff_room)
@@ -10932,7 +10932,7 @@
 "aye" = (
 /obj/machinery/light/lamp/green,
 /obj/table/wood/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/blind_switch/area{
 	pixel_x = -6;
 	pixel_y = 28
@@ -12300,7 +12300,7 @@
 /area/station/maintenance/disposal)
 "aBi" = (
 /obj/table/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/decal/cleanable/dirt,
 /obj/item/instrument/bikehorn,
 /obj/item/reagent_containers/food/snacks/pie/cream,
@@ -12516,7 +12516,7 @@
 "aBE" = (
 /obj/table/wood/auto,
 /obj/item/device/radio/beacon,
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "aBF" = (
@@ -17450,7 +17450,7 @@
 	pixel_x = -12
 	},
 /obj/table/wood/auto,
-/obj/item/game_kit,
+/obj/item/boardgame/chess,
 /obj/item/decoration/ashtray,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
@@ -20335,7 +20335,7 @@
 /area/station/maintenance/disposal)
 "aSZ" = (
 /obj/table/wood/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/vertical,
@@ -37937,7 +37937,7 @@
 /area/station/science/gen_storage)
 "bGg" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/storage/toolbox/emergency,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/science/artifact)
@@ -38537,7 +38537,7 @@
 /area/station/turret_protected/ai_upload)
 "bHE" = (
 /obj/item/raw_material/gold,
-/obj/critter/fermid,
+/mob/living/critter/fermid,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bHF" = (
@@ -41158,22 +41158,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quarters_south)
-"bMO" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 9
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	layer = 2
-	},
-/area/space)
 "bMP" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -41408,10 +41392,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
@@ -41789,7 +41770,7 @@
 /area/station/crew_quarters/hor)
 "bOc" = (
 /obj/table/wood/round/auto,
-/obj/item/game_kit{
+/obj/item/boardgame/chess{
 	pixel_y = 4
 	},
 /obj/disposalpipe/segment/vertical,
@@ -48185,10 +48166,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -49194,10 +49172,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9;
@@ -49208,10 +49183,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/grille/catwalk/cross{
-	icon_state = "catwalk_cross";
-	dir = 6
-	},
+/obj/grille/catwalk,
 /turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
@@ -71473,7 +71445,7 @@ aaa
 aaa
 aaa
 apV
-bMO
+cbC
 bMR
 bNl
 aab

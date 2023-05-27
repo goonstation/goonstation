@@ -335,8 +335,11 @@
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
+		else if (user.client)
+			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				return ..()
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
 
@@ -545,6 +548,8 @@
 
 	New()
 		..()
+		if (!cigtype)
+			return
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
 
@@ -569,6 +574,13 @@
 	cigtype = /obj/item/clothing/mask/cigarette/propuffs
 	icon_state = "cigpacket-r"
 	package_style = "cigpacket-r"
+
+/obj/item/cigpacket/paperpack
+	name = "paper cigarette packet"
+	desc = "A flavor surprise in each cigarette, lovingly wrapped in the finest papers."
+	cigtype = null
+	icon_state = "cigpacket-wo"
+	package_style = "cigpacket-w"
 
 /obj/item/cigpacket/random
 	name = "odd cigarette packet"
@@ -1159,7 +1171,6 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
 			user.update_inhands()
 
@@ -1172,7 +1183,6 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
 			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 			user.update_inhands()
 
@@ -1342,7 +1352,7 @@
 
 	New()
 		. = ..()
-		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), PROC_REF(update_hotbox_flag))
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

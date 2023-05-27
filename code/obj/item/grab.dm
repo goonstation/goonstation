@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
@@ -34,13 +34,13 @@
 
 			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
-			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
+			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, PROC_REF(check_hostage))
 		if (assailant != affecting)
 			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
@@ -256,7 +256,10 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-
+		if (istype(src.loc, /obj/item/cloth))
+			var/obj/item/cloth/cloth = src.loc
+			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -519,7 +522,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!G || !istype(G) || G.affecting != target)
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -529,10 +532,15 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 || !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)

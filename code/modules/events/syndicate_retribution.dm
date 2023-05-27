@@ -36,7 +36,7 @@
 
 		if(!sword_summoned_before)
 			new/obj/critter/sword(T)
-			sword_summoned_before = true
+			sword_summoned_before = TRUE
 			disabled = 1
 
 #undef ALIVE_ANTAGS_THRESHOLD

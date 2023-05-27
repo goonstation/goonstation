@@ -5,10 +5,11 @@
 	density = 1
 	layer = STORAGE_LAYER
 	flags = FPRINT | NOSPLASH
-	anchored = 1
+	anchored = ANCHORED
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
 	event_handler_flags = USE_FLUID_ENTER
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+	material_amt = 0.1
 
 	proc/rackbreak()
 		icon_state += "-broken"
@@ -70,7 +71,7 @@
 			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
-			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
+			S.tooltip_rebuild = 1
 			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
