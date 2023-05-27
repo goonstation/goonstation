@@ -181,6 +181,12 @@
 			return
 		boutput(user, "<span class='alert'>Maybe this door could give out if you put up some more effort!</span>")
 
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		..()
+		if (src.carrier_occupants)
+			for (var/mob/occupant in src.carrier_occupants)
+				occupant.throw_impact(hit_atom, thr)
+
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
 		if (!mob_to_trap)
