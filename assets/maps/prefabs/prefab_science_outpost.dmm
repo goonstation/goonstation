@@ -1,0 +1,804 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"dx" = (
+/obj/grille/catwalk/dubious,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/prefab/mauxite_hideout)
+"dW" = (
+/obj/railing/yellow,
+/obj/railing/yellow{
+	dir = 4
+	},
+/obj/item/device/light/floodlight/starts_on{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"hO" = (
+/obj/railing/yellow,
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"iM" = (
+/obj/random_item_spawner/junk,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"ks" = (
+/obj/item/clothing/suit/bedsheet/black,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"lY" = (
+/mob/living/critter/rockworm/gary,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"os" = (
+/obj/table/mauxite/auto,
+/obj/random_item_spawner/med_kit,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"pq" = (
+/obj/item/raw_material/mauxite,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"pG" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"qE" = (
+/obj/railing/yellow{
+	dir = 4
+	},
+/obj/railing/yellow,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"qR" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"sZ" = (
+/obj/table/mauxite/auto,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"tA" = (
+/obj/item/device/light/floodlight/starts_on{
+	dir = 10
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"tC" = (
+/obj/item/device/light/floodlight/starts_on{
+	dir = 6
+	},
+/obj/railing/yellow{
+	dir = 1
+	},
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"tV" = (
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"uk" = (
+/obj/item/raw_material/mauxite,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"uX" = (
+/obj/item/raw_material/mauxite,
+/obj/railing/yellow{
+	dir = 8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"vg" = (
+/obj/item/device/light/floodlight/starts_on{
+	dir = 5
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"vF" = (
+/turf/simulated/wall/auto/asteroid/comet/iron,
+/area/noGenerate)
+"xD" = (
+/obj/item/clothing/head/helmet/space,
+/obj/item/clothing/suit/space,
+/obj/item/storage/firstaid/oxygen,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"xK" = (
+/obj/table/mauxite/auto,
+/obj/item/sheet/mauxite,
+/obj/item/sheet/mauxite{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"xQ" = (
+/obj/table/mauxite/auto,
+/obj/item/grenade_fuse{
+	pixel_y = 3
+	},
+/obj/item/grenade_fuse{
+	pixel_y = 8;
+	pixel_x = 9
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Aw" = (
+/turf/simulated/wall/auto/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"AJ" = (
+/obj/item/raw_material/mauxite,
+/mob/living/critter/fermid{
+	dir = 8
+	},
+/obj/decal/fakeobjects/skeleton,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/uqill{
+	pixel_y = 5;
+	pixel_x = -5
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"AY" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"De" = (
+/obj/table/mauxite/auto,
+/obj/item/tank/jetpack,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Ek" = (
+/obj/railing/yellow,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"El" = (
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/noGenerate)
+"FJ" = (
+/obj/item/device/light/floodlight/starts_on{
+	dir = 6
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"Gc" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/prefab/mauxite_hideout)
+"Gj" = (
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"Gz" = (
+/obj/table/mauxite/auto,
+/obj/random_item_spawner/snacks/two,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Hj" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"HU" = (
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Jy" = (
+/turf/simulated/wall/auto/supernorn/material/mauxite,
+/area/prefab/mauxite_hideout)
+"JS" = (
+/obj/stool/chair/material/mauxite{
+	dir = 4
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Mc" = (
+/obj/railing/yellow{
+	dir = 1
+	},
+/obj/railing/yellow{
+	dir = 8
+	},
+/mob/living/critter/fermid,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"Mx" = (
+/obj/table/mauxite/auto,
+/obj/item/chem_grenade,
+/obj/item/chem_grenade{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/screwdriver/orange{
+	pixel_x = -4;
+	pixel_y = 8
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"MD" = (
+/obj/item/raw_material/gold{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/raw_material/gold{
+	pixel_y = -10
+	},
+/obj/item/raw_material/gold{
+	pixel_x = -8
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"NQ" = (
+/obj/structure/girder,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"PW" = (
+/obj/item/mining_tools/pick,
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"Rb" = (
+/obj/table/mauxite/auto,
+/obj/item/plate,
+/obj/item/raw_material/rock,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"TS" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/obj/random_item_spawner/organs,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"UV" = (
+/obj/landmark/spawner/loot,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"UW" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"VJ" = (
+/obj/item/sheet/mauxite{
+	pixel_y = 4;
+	pixel_x = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"VO" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"VS" = (
+/obj/random_item_spawner/junk,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Wb" = (
+/mob/living/critter/fermid,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Wi" = (
+/obj/railing/yellow{
+	dir = 1
+	},
+/obj/railing/yellow{
+	dir = 8
+	},
+/obj/item/raw_material/mauxite,
+/turf/simulated/floor/plating/airless/asteroid/comet/iron,
+/area/prefab/mauxite_hideout)
+"Ww" = (
+/obj/stool/chair/material/mauxite{
+	dir = 1
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"WQ" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"Yv" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+"ZM" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
+
+(1,1,1) = {"
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+qR
+qR
+qR
+qR
+qR
+"}
+(2,1,1) = {"
+qR
+qR
+qR
+qR
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+qR
+qR
+qR
+Aw
+Aw
+Aw
+qR
+"}
+(3,1,1) = {"
+qR
+vF
+vF
+qR
+AY
+AY
+AY
+AY
+AY
+AY
+qR
+qR
+qR
+qR
+qR
+Aw
+Aw
+Aw
+Aw
+qR
+"}
+(4,1,1) = {"
+qR
+qR
+vF
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+Aw
+tA
+pq
+Aw
+qR
+"}
+(5,1,1) = {"
+AY
+AY
+qR
+qR
+qR
+qR
+qR
+Wi
+Gc
+Gc
+Gc
+Gc
+dx
+dx
+Gc
+Gc
+iM
+qE
+qR
+qR
+"}
+(6,1,1) = {"
+AY
+qR
+qR
+qR
+qR
+tC
+tV
+Gj
+iM
+Gj
+Aw
+Aw
+qR
+qR
+qR
+qR
+Gc
+qR
+qR
+qR
+"}
+(7,1,1) = {"
+qR
+qR
+qR
+qR
+Mc
+iM
+pq
+Aw
+Aw
+Aw
+Aw
+Aw
+Aw
+Aw
+qR
+qR
+Gc
+El
+qR
+qR
+"}
+(8,1,1) = {"
+qR
+qR
+qR
+qR
+Aw
+Aw
+Aw
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Jy
+Aw
+qR
+Gc
+El
+qR
+qR
+"}
+(9,1,1) = {"
+qR
+qR
+qR
+Aw
+Aw
+Aw
+Jy
+Jy
+ks
+HU
+Jy
+Wb
+vg
+Jy
+Jy
+uX
+Gc
+El
+qR
+AY
+"}
+(10,1,1) = {"
+qR
+qR
+qR
+Aw
+Aw
+FJ
+pq
+VS
+ZM
+HU
+VS
+HU
+HU
+De
+Jy
+iM
+Gc
+qR
+qR
+AY
+"}
+(11,1,1) = {"
+AY
+qR
+qR
+Aw
+MD
+PW
+Hj
+VO
+Yv
+VO
+HU
+HU
+WQ
+xD
+Jy
+Gj
+Ek
+qR
+qR
+AY
+"}
+(12,1,1) = {"
+AY
+qR
+qR
+Aw
+UV
+TS
+Jy
+Gz
+Ww
+HU
+Jy
+HU
+VS
+HU
+Jy
+Gj
+Ek
+qR
+qR
+AY
+"}
+(13,1,1) = {"
+AY
+AY
+qR
+Aw
+Aw
+uk
+Jy
+Rb
+VS
+HU
+Jy
+HU
+Wb
+pG
+iM
+Gj
+Ek
+qR
+qR
+AY
+"}
+(14,1,1) = {"
+AY
+AY
+AY
+Aw
+Aw
+AJ
+Jy
+sZ
+os
+xK
+Jy
+JS
+HU
+Gj
+Gj
+Gj
+hO
+qR
+AY
+AY
+"}
+(15,1,1) = {"
+AY
+AY
+AY
+AY
+Aw
+Aw
+Jy
+HU
+HU
+HU
+Jy
+Mx
+xQ
+VJ
+UW
+Ek
+qR
+qR
+AY
+AY
+"}
+(16,1,1) = {"
+AY
+AY
+AY
+AY
+Aw
+Aw
+Jy
+VS
+lY
+HU
+Jy
+Jy
+Jy
+Jy
+NQ
+dW
+qR
+qR
+AY
+AY
+"}
+(17,1,1) = {"
+AY
+AY
+AY
+AY
+AY
+Aw
+Jy
+HU
+HU
+HU
+Jy
+Aw
+Aw
+Aw
+Aw
+qR
+qR
+AY
+AY
+AY
+"}
+(18,1,1) = {"
+qR
+qR
+AY
+AY
+AY
+AY
+Jy
+Jy
+Jy
+Jy
+Jy
+Aw
+Aw
+Aw
+qR
+qR
+AY
+AY
+AY
+AY
+"}
+(19,1,1) = {"
+vF
+vF
+qR
+AY
+AY
+AY
+AY
+Aw
+Aw
+Aw
+Aw
+Aw
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+"}
+(20,1,1) = {"
+vF
+vF
+vF
+qR
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+"}
+(21,1,1) = {"
+qR
+vF
+vF
+qR
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+"}
+(22,1,1) = {"
+qR
+qR
+qR
+qR
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+AY
+"}
