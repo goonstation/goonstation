@@ -353,7 +353,7 @@
 	sleep(4 SECONDS)
 	icon_state = "screen-off"
 
-/obj/flock_screen/proc/say(var/message)
+/obj/flock_screen/say(var/message)
 	if(!message)
 		return
 	src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\"")

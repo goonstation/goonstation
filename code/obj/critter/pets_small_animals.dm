@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		thing_to_say = "[quote][thing_to_say][quote]"
 		src.say(thing_to_say)
 
-	proc/say(var/text) // mehhh
+	say(var/text) // mehhh
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [text]</span>")
 

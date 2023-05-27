@@ -1,5 +1,4 @@
-/mob/proc/say()
-	return
+
 
 /mob/proc/whisper(message, forced=FALSE)
 	return

@@ -281,6 +281,22 @@ TYPEINFO(/atom)
 /atom/proc/allow_drop()
 	return 1
 
+
+/// Speech module tree. Lazy loaded on first say() call.
+/atom/var/datum/speech_module_tree/say_tree = null
+/// Accents this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_accents = null
+/// Speech modifiers this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_modifiers = null
+/// Speech outputs this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_outputs = null
+///Primary entry point for all say code
+/atom/proc/say(var/message as text)
+	var/datum/say_message/said = new(message, src)
+	if(!src.say_tree)
+		src.say_tree = new(src.start_speech_accents ? src.start_speech_accents : list(), src.start_speech_modifiers ? src.start_speech_modifiers : list(), src.start_speech_outputs ? src.start_speech_outputs : list())
+	src.say_tree.process(said)
+
 // not actually overriden because we want to avoid the overhead if possible. This provides documentation
 #ifdef SPACEMAN_DMM
 /**
