@@ -439,7 +439,7 @@
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
-	default_material = "neutronium""
+	default_material = "neutronium"
 	uses_material_appearance = TRUE
 	mat_changename = TRUE
 
