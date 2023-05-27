@@ -125,6 +125,13 @@
 
 	var/const/singing_prefix = "%"
 
+	//new speech vars
+	start_listen_modifiers = null
+	start_listen_inputs = list("spoken")
+	start_speech_accents = null
+	start_speech_modifiers = list("brain_damage")
+	start_speech_outputs = list("spoken")
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	src.create_mob_silhouette()
 	..()
