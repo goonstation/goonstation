@@ -12,8 +12,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 	VAR_PRIVATE/list/language_cache = list()
 
-	/// List of weakrefs to everyone that has requested to hear messages, keys are channels
-	VAR_PRIVATE/list/datum/weakref/listeners = list()
+	/// List of channel listeners to everyone that has requested to hear messages, keys are channels
+	VAR_PRIVATE/list/list/datum/listen_module/input/listeners = list()
 
 	New()
 		. = ..()
@@ -101,6 +101,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		else
 			CRASH("Invalid language lookup: [lang_id]")
 
+	/// Pass a message from an output module to the listeners on that channel
 	proc/PassToListeners(var/datum/say_message/message, var/channel as text)
 		var/list/listener_list = src.listeners[channel]
 		if(!length(listener_list)) //nobody on this channel
@@ -111,11 +112,18 @@ var/global/datum/speech_manager/SpeechManager = new()
 			else
 				heard.process(message)
 
-	proc/RegisterInput(var/datum/listen_module/input/registree, var/channel)
-		if(!src.listeners[channel])
-			src.listeners[channel] = list()
-		src.listeners[channel] += registree
+	/// Register a listener for hearing messages on a channel
+	proc/RegisterInput(var/datum/listen_module/input/registree)
+		if(!src.listeners[registree.channel])
+			src.listeners[registree.channel] = list()
+		src.listeners[registree.channel] += registree
 
+
+	/// Unregister a listener so it no longer receieves messages
+	proc/UnregisterInput(var/datum/listen_module/input/registered)
+		if(!src.listeners[registered.channel])
+			return
+		src.listeners[registered.channel] -= registered
 
 /// Message base class - once something has been passed to say(), it becomes this. Any and all metadata about the message should be stored here
 /datum/say_message
@@ -140,7 +148,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 			cutpos = findtext(message, " ", 1)
 			src.prefix = copytext(message, 1, cutpos) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
 
-		src.content = copytext(message, cutpos, length(src.content)) //content now contains the message without the radio prefix
+		src.content = copytext(message, cutpos, MAX_MESSAGE_LEN) //content now contains the message without the radio prefix
 		src.content = make_safe_for_chat(src.content)
 
 	proc/make_safe_for_chat(var/message as text)
@@ -184,7 +192,19 @@ var/global/datum/speech_manager/SpeechManager = new()
 		for(var/datum/speech_module/module in src.output_modules)
 			module.process(message) //output modules always consume the message, there is no further processing required
 
-	//TODO disposal cleanup
+	disposing()
+		. = ..()
+		for(var/datum/speech_module/acc in src.accents)
+			qdel(acc)
+		for(var/datum/speech_module/mod in src.speech_modifiers)
+			qdel(mod)
+		for(var/datum/speech_module/out in src.output_modules)
+			qdel(out)
+		qdel(src.accents)
+		qdel(src.speech_modifiers)
+		qdel(src.output_modules)
+
+
 /datum/listen_module_tree
 	var/list/datum/listen_module/modifier/listen_modifiers
 	var/list/datum/listen_module/input/input_modules
@@ -198,8 +218,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 		for(var/mod_id in modifiers)
 			src.listen_modifiers += global.SpeechManager.GetListenModifierInstance(mod_id)
-		for(var/out_id in inputs)
-			src.input_modules += global.SpeechManager.GetInputInstance(out_id, src)
+		for(var/in_id in inputs)
+			src.input_modules += global.SpeechManager.GetInputInstance(in_id, src)
 
 		//TODO module sort
 
@@ -215,6 +235,15 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 		boutput(src.parent, "[message.speaker] [message.say_verb] [message.content]") //finally we are done
 
+	disposing()
+		. = ..()
+		for(var/datum/listen_module/input/inp in src.input_modules)
+			qdel(inp)
+		for(var/datum/listen_module/mod in src.listen_modifiers)
+			qdel(mod)
+		qdel(src.listen_modifiers)
+		qdel(src.input_modules)
+		src.parent = null
 
 
 ABSTRACT_TYPE(/datum/speech_module)
@@ -264,17 +293,29 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 
 	VAR_PRIVATE/datum/listen_module_tree/parent_tree
 
-	New(var/datum/listen_module_tree/parent)
+	New(var/datum/listen_module_tree/parent, var/channel_override = null)
 		. = ..()
 		if(!istype(parent))
 			CRASH("Tried to instantiate a listen input without a parent listen tree. You can't do that!")
 		src.parent_tree = parent
-		global.SpeechManager.RegisterInput(src, channel)
+		if(istext(channel_override))
+			src.channel = channel_override
+		global.SpeechManager.RegisterInput(src)
 
 	/// Return early to prevent the message being processed, or call ..() to pass it down the listen tree
 	process(var/datum/say_message/message)
 		src.parent_tree.process(message)
 
+	disposing()
+		. = ..()
+		global.SpeechManager.UnregisterInput(src)
+		src.parent_tree = null
+
+	/// Change the channel this listener is on and re-register
+	proc/ChangeChannel(var/new_channel)
+		global.SpeechManager.UnregisterInput(src)
+		src.channel = new_channel
+		global.SpeechManager.RegisterInput(src)
 
 ABSTRACT_TYPE(/datum/listen_module/modifier)
 /datum/listen_module/modifier

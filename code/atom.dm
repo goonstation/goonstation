@@ -178,6 +178,8 @@ TYPEINFO(/atom)
 			ClearAllOverlays()
 
 		src.remove_storage()
+		qdel(src.listen_tree)
+		qdel(src.say_tree)
 		..()
 
 	proc/Turn(var/rot)
@@ -291,7 +293,7 @@ TYPEINFO(/atom)
 
 /atom/New() //I hate this syntax
 	if(length(src.start_listen_inputs)) //only instantiate the tree if we're gonna use it
-		src.listen_tree = new(src, src.start_listen_inputs ? src.start_listen_inputs : list(), src.start_listen_modifiers ? src.start_listen_modifiers : list())
+		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers)
 	..()
 
 /// Speech module tree. Lazy loaded on first say() call.
@@ -306,7 +308,7 @@ TYPEINFO(/atom)
 /atom/proc/say(var/message as text)
 	var/datum/say_message/said = new(message, src)
 	if(!src.say_tree)
-		src.say_tree = new(src.start_speech_accents ? src.start_speech_accents : list(), src.start_speech_modifiers ? src.start_speech_modifiers : list(), src.start_speech_outputs ? src.start_speech_outputs : list())
+		src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
 	src.say_tree.process(said)
 
 // not actually overriden because we want to avoid the overhead if possible. This provides documentation
