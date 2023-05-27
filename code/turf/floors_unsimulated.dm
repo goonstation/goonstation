@@ -10,6 +10,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
+	var/plate_mat = null // Stop making the macro crash
 
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)

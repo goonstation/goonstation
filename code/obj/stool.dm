@@ -26,6 +26,8 @@
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
+	default_material = "steel"
+	uses_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -873,6 +875,23 @@
 			src.visible_message("<span class='alert'>[src] trips [AM]!</span>", "<span class='alert'>You hear someone fall.</span>")
 			AM.changeStatus("weakened", 2 SECONDS)
 		return
+
+/* ======================================================= */
+/* -------------------- Material Chairs ------------------ */
+/* ======================================================= */
+
+/obj/stool/chair/material
+	name = "material chair"
+	desc = "A chair made from a material"
+	uses_material_appearance = TRUE
+	comfort_value = 4
+
+	mauxite
+		name = "mauxite chair"
+		icon_state = "chair$$mauxite"
+		desc = "A sturdy chair made from mauxite. It doesn't look very comfortable..."
+		comfort_value = -2
+		default_material = "mauxite"
 
 /* ======================================================= */
 /* -------------------- Folded Chairs -------------------- */

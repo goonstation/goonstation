@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	constructed //no "wood wood table"
 		name = "table parts"
 		furniture_name = "table"
-		furniture_type = /obj/table/wood/constructed
+		//furniture_type = /obj/table/wood/constructed
 
 /obj/item/furniture_parts/table/wood/round
 	name = "round wood table parts"
@@ -220,14 +220,8 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_name = "glass table"
 	density_check = FALSE //FOR NOW
 	var/has_glass = 1
-	var/default_material = "glass"
+	default_material = "glass"
 
-	New()
-		..()
-		if (!src.material && default_material)
-			var/datum/material/M
-			M = getMaterial(default_material)
-			src.setMaterial(M)
 
 	UpdateName()
 		if (!src.has_glass)
