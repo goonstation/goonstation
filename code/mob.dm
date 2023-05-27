@@ -3140,6 +3140,19 @@
 	if(!success)
 		boutput(usr, "Sadly \the [src] has no help message attached.")
 
+/// Same as help_verb but this one except visible, added dynamically when requested by signals
+/atom/proc/help_verb_dynamic()
+	set name = "Help"
+	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = TRUE
+	set hidden = FALSE
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
+
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
 	set category = "Local"

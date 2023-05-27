@@ -93,6 +93,17 @@
 		..(); \
 	}
 
+/// Wrapper around RegisterSignal for help messages. Use this when you want a component to add a custom help message to its parent.
+/// Makes it so the target is given the Help verb
+/// Note that we never remove the help verb and this is mostly because it's easier, unlikely to happen often and also not a big deal
+/// as the help verb just says that there's no help message if there's no help message.
+#define RegisterHelpMessageHandler(target, help_message_handler) \
+	RegisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE, help_message_handler); \
+	target.verbs |= /atom/proc/help_verb_dynamic
+
+/// Wrapper around UnregisterSignal for help messages, identical to UnregisterSignal but here for parity
+#define UnregisterHelpMessageHandler(target) \
+	UnregisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE)
 
 /// For an unanchored movable atom
 #define UNANCHORED 0

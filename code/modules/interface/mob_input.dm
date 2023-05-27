@@ -117,8 +117,6 @@
 			return TRUE
 
 /mob/proc/help_examine(atom/target)
-	// TODO: Add help message signals so components can add their own help messages
-	// for example in the future ideally unscrewing / screwing / wrenching etc. would be handled like that
 	var/help_message = target.get_help_message(GET_DIST(src, target), src)
 	var/list/additional_help_messages = list()
 	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
