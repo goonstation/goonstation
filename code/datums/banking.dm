@@ -780,7 +780,7 @@
 			if (src.scan)
 				return
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			attack_hand(user)
 			return
 		if (istype(I, /obj/item/spacecash/))
