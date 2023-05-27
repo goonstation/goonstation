@@ -240,6 +240,7 @@
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
 	allowed_mobs = /mob
+	can_break_out = FALSE
 	carrier_max_capacity = INFINITY
 
 /// Pertains to actions executed by the pet carrier.
