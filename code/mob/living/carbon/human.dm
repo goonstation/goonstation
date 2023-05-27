@@ -72,6 +72,7 @@
 	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
+	var/robotic_organs = 0
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
@@ -200,6 +201,7 @@
 	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	implant_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	for (var/implant in implant_icons)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
 

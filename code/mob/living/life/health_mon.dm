@@ -55,4 +55,9 @@
 			I.icon_state = has_cloner ? "implant-cloner" : null
 			I = H.implant_icons["other"]
 			I.icon_state = has_other ? "implant-other" : null
+
+			I = H.implant_icons["robotic_organs"]
+			I.icon_state = null
+			if (H.robotic_organs > 0)
+				I.icon_state = "organs-cyber"
 		..()
