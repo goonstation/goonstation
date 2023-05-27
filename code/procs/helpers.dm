@@ -334,7 +334,7 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
-/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0)
+/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0, strip_newlines=TRUE)
 	t = html_decode(copytext(t,1,limit))
 	if (no_fucking_autoparse == 1)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
@@ -343,7 +343,7 @@ proc/get_angle(atom/a, atom/b)
 
 	// html_encode(t) will convert < and > to &lt; and &gt;
 	// which will allow them to be used (safely) in messages
-	t = html_encode(t)
+	. = html_encode(t)
 
 	// var/index = findtext(t, "<")
 	// while(index)
@@ -353,7 +353,8 @@ proc/get_angle(atom/a, atom/b)
 	// while(index)
 	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
 	// 	index = findtext(t, ">")
-	. = sanitize(t)
+	if (strip_newlines)
+		. = sanitize(.)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
 	. = html_decode(copytext(t,1,limit))
