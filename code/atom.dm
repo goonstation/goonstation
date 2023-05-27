@@ -282,6 +282,18 @@ TYPEINFO(/atom)
 	return 1
 
 
+/// Listen module tree. Can be null if no input modules are registered.
+/atom/var/datum/listen_module_tree/listen_tree = null
+/// Listen modifiers this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_listen_modifiers = null
+/// Listen inputs this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_listen_inputs = null
+
+/atom/New() //I hate this syntax
+	if(length(src.start_listen_inputs)) //only instantiate the tree if we're gonna use it
+		src.listen_tree = new(src, src.start_listen_inputs ? src.start_listen_inputs : list(), src.start_listen_modifiers ? src.start_listen_modifiers : list())
+	..()
+
 /// Speech module tree. Lazy loaded on first say() call.
 /atom/var/datum/speech_module_tree/say_tree = null
 /// Accents this atom *starts* with. It will not be updated or used again after init.
@@ -289,7 +301,7 @@ TYPEINFO(/atom)
 /// Speech modifiers this atom *starts* with. It will not be updated or used again after init.
 /atom/var/list/start_speech_modifiers = null
 /// Speech outputs this atom *starts* with. It will not be updated or used again after init.
-/atom/var/list/start_speech_outputs = null
+/atom/var/list/start_speech_outputs = list("spoken")
 ///Primary entry point for all say code
 /atom/proc/say(var/message as text)
 	var/datum/say_message/said = new(message, src)

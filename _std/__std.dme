@@ -83,7 +83,6 @@
 #include "defines\shuttle.dm"
 #include "defines\sight.dm"
 #include "defines\sims.dm"
-#include "defines\singing.dm"
 #include "defines\sound.dm"
 #include "defines\spacebee_extension.dm"
 #include "defines\speed.dm"
