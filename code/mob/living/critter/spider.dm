@@ -417,7 +417,7 @@
 						/datum/targetable/critter/spider_drain)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
-	var/list/babies = null
+	var/list/babies = null // FULL OF WEAKREFS
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
 	ai_type = /datum/aiHolder/clown_spider_queen
@@ -495,7 +495,10 @@
 			return
 		var/defenders = 0		//this is the amount of babies that will defend you
 		var/count = 0
-		for (var/mob/living/critter/spider/clown/CS in babies)
+		for (var/datum/weakref/ref as anything in babies)
+			var/mob/living/critter/spider/clown/CS = ref.deref()
+			if (CS == null)
+				babies.Remove(ref)
 			count++
 			if (count > max_defensive_babies)
 				break
