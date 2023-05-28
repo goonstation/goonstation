@@ -14,7 +14,7 @@
 	var/move_triggered = 0
 	var/object_flags = 0
 
-	/// Material of this object as a string, set on New()
+	/// Material id of this object as a lowercase string, set on New()
 	var/default_material = null
 	/// Does this object use appearance from the material?
 	var/uses_material_appearance = FALSE

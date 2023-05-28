@@ -420,7 +420,7 @@
 	mat_changename = TRUE
 
 /obj/item/material_piece/gnesisglass
-	name = "gnesisglass wafer"
+	name = "wafer"
 	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
