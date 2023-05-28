@@ -129,15 +129,7 @@
 		src.req_access = null
 		return 1
 
-	if (istype(I, /obj/item/device/pda2))
-		var/obj/item/device/pda2/P = I
-		if (P.ID_card)
-			I = P.ID_card
-	else if (istype(I, /obj/item/magtractor))
-		var/obj/item/magtractor/mag = I
-		if (istype(mag.holding, /obj/item/card/id))
-			I = mag.holding
-	var/obj/item/card/id/ID = I
+	var/obj/item/card/id/ID = get_id_card(I)
 	// not ID
 	if (!istype(ID))
 		return 0

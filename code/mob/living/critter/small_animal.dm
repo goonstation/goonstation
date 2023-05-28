@@ -382,7 +382,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	proc/knock_stuff_off_table()
 		var/list/obj/item/items_here = list()
 		for (var/obj/item/item_here in src.loc)
-			items_here += item_here
+			if (!item_here.anchored)
+				items_here += item_here
 		var/list/target_turfs = list()
 		for (var/turf/T in range(1, src))
 			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
@@ -980,6 +981,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	hand_count = 2
 	pet_text = list("pets","cuddles","snuggles","scritches")
 	add_abilities = list(/datum/targetable/critter/peck)
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	var/species = "parrot"
 	var/hops = 0
 	var/hat_offset_y = -5
@@ -1257,8 +1260,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	flags = null
 	fits_under_table = 0
+	health_brute = 30
+	health_burn = 30
 	species = "penguin"
-
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl

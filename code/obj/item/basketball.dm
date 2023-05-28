@@ -16,11 +16,13 @@
 	stamina_crit_chance = 5
 	custom_suicide = 1
 	contraband = 2 // Due to the illegalization of basketball in 2041
+	var/base_icon_state = "bball"
+	var/spinning_icon_state = "bball_spin"
 
 /obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
-		src.icon_state = "bball"
+		src.icon_state = base_icon_state
 
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
@@ -32,7 +34,7 @@
 
 /obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
-	src.icon_state = "bball"
+	src.icon_state = base_icon_state
 	if(hit_atom)
 		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
@@ -60,7 +62,7 @@
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
-	src.icon_state = "bball_spin"
+	src.icon_state = spinning_icon_state
 	. = ..()
 
 /obj/item/basketball/attackby(obj/item/W, mob/user)

@@ -17,7 +17,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "cs" = (
 /obj/machinery/light/incandescent/harsh,
@@ -107,12 +107,6 @@
 	},
 /turf/simulated/floor/longtile/red,
 /area/prefab/art_workshop)
-"lc" = (
-/obj/grille/catwalk{
-	dir = 10
-	},
-/turf/space,
-/area/noGenerate)
 "ly" = (
 /obj/table/wood/auto/desk,
 /obj/decal/woodclutter,
@@ -195,15 +189,6 @@
 "sA" = (
 /turf/simulated/floor/carpet/clowncarpet/border,
 /area/prefab/art_workshop)
-"sQ" = (
-/turf/space,
-/area/noGenerate)
-"tq" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/space,
-/area/noGenerate)
 "tC" = (
 /obj/table/wood/auto/desk,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen/some,
@@ -328,7 +313,7 @@
 /area/prefab/art_workshop)
 "DH" = (
 /obj/grille/catwalk,
-/turf/space,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Eq" = (
 /turf/simulated/floor/white,
@@ -362,11 +347,11 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "HB" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Ib" = (
 /obj/table/clothred/auto,
@@ -431,7 +416,7 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "PD" = (
 /obj/table/wood/auto/desk,
@@ -509,7 +494,7 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "UM" = (
 /obj/table/clothred/auto,
@@ -519,7 +504,7 @@
 /turf/simulated/floor/longtile/blue,
 /area/prefab/art_workshop)
 "VB" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "Ws" = (
 /obj/stool/bench/wooden/auto,
@@ -532,6 +517,9 @@
 "Xm" = (
 /turf/simulated/floor/longtile/blue,
 /area/prefab/art_workshop)
+"Xx" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 "Yc" = (
 /obj/item/storage/wall/toolshelf,
 /turf/simulated/floor/white,
@@ -549,9 +537,9 @@ VB
 VB
 VB
 VB
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 VB
 VB
 VB
@@ -567,14 +555,14 @@ VB
 VB
 VB
 VB
-sQ
+Xx
 NZ
 DH
 DH
 UB
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 VB
 VB
 VB
@@ -586,17 +574,17 @@ VB
 VB
 VB
 VB
-sQ
+Xx
 NZ
 HB
-lc
-tq
+DH
+DH
 HB
 UB
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 "}
@@ -604,9 +592,9 @@ VB
 VB
 VB
 VB
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 Yp
 Yp
 jm
@@ -616,7 +604,7 @@ Yp
 Yp
 Yp
 Yp
-sQ
+Xx
 VB
 VB
 "}
@@ -662,7 +650,7 @@ VB
 "}
 (7,1,1) = {"
 VB
-sQ
+Xx
 GL
 GL
 NZ
@@ -682,7 +670,7 @@ VB
 "}
 (8,1,1) = {"
 VB
-sQ
+Xx
 GL
 GL
 GL
@@ -702,7 +690,7 @@ VB
 "}
 (9,1,1) = {"
 VB
-sQ
+Xx
 Yp
 Yp
 Yp
@@ -722,7 +710,7 @@ VB
 "}
 (10,1,1) = {"
 VB
-sQ
+Xx
 Yp
 nQ
 fs
@@ -742,7 +730,7 @@ VB
 "}
 (11,1,1) = {"
 VB
-sQ
+Xx
 Yp
 oO
 eB
@@ -762,7 +750,7 @@ VB
 "}
 (12,1,1) = {"
 VB
-sQ
+Xx
 Yp
 wC
 Gb
@@ -782,7 +770,7 @@ VB
 "}
 (13,1,1) = {"
 VB
-sQ
+Xx
 Yp
 TO
 Gb
@@ -802,7 +790,7 @@ VB
 "}
 (14,1,1) = {"
 VB
-sQ
+Xx
 Yp
 wG
 AB
@@ -822,7 +810,7 @@ VB
 "}
 (15,1,1) = {"
 VB
-sQ
+Xx
 Yp
 lD
 wD
@@ -842,7 +830,7 @@ VB
 "}
 (16,1,1) = {"
 VB
-sQ
+Xx
 Yp
 KP
 Ua
@@ -862,7 +850,7 @@ VB
 "}
 (17,1,1) = {"
 VB
-sQ
+Xx
 Yp
 tC
 QP
@@ -881,8 +869,8 @@ VB
 VB
 "}
 (18,1,1) = {"
-sQ
-sQ
+Xx
+Xx
 Yp
 DC
 EI
@@ -901,8 +889,8 @@ VB
 VB
 "}
 (19,1,1) = {"
-sQ
-sQ
+Xx
+Xx
 Yp
 sy
 gY
@@ -921,8 +909,8 @@ VB
 VB
 "}
 (20,1,1) = {"
-sQ
-sQ
+Xx
+Xx
 ry
 ry
 LL
@@ -933,17 +921,17 @@ gB
 gB
 ry
 ry
-sQ
-sQ
+Xx
+Xx
 VB
 VB
 VB
 VB
 "}
 (21,1,1) = {"
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 ry
 gB
 qB
@@ -952,18 +940,18 @@ Cw
 gB
 gB
 ry
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 VB
 "}
 (22,1,1) = {"
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 ry
 ry
 Xm
@@ -972,50 +960,50 @@ No
 Xm
 ry
 ry
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 VB
 "}
 (23,1,1) = {"
 VB
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
 ry
 ry
 ry
 ry
 ry
 ry
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 "}
 (24,1,1) = {"
 VB
 VB
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 VB
@@ -1023,20 +1011,20 @@ VB
 (25,1,1) = {"
 VB
 VB
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
-sQ
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
+Xx
 VB
 VB
 "}

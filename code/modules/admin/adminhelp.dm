@@ -114,7 +114,7 @@
 
 	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|message
 
-	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
+	msg = copytext(strip_html(msg, strip_newlines=FALSE), 1, MAX_MESSAGE_LEN * 4)
 	if (client.can_see_mentor_pms())
 		msg = linkify(msg)
 

@@ -2579,6 +2579,13 @@ datum
 			mix_phrase = "The neurotoxin breaks down, bubbling violently."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		solipsizine
+			name = "Solipsizine"
+			id = "solipsizine"
+			result = "solipsizine"
+			required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
+			result_amount = 3
+
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
 			name = "Mutadone"
 			id = "mutadone"
