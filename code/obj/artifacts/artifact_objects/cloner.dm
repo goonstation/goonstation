@@ -68,7 +68,10 @@
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE
+			clone.buckled = O // hack to suppress lay down sound
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
+			clone.force_laydown_standup()
+			clone.buckled = null
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)
 
@@ -107,7 +110,7 @@
 				clone.ai_init()
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
-				SPAWN(randfloat(5 SECONDS, 10 SECONDS))
+				SPAWN(imprison_time)
 					while (isalive(clone) && isnull(clone.client))
 						clone.say(phrase_log.random_phrase("say"))
 						sleep(randfloat(3 SECOND, 20 SECONDS))
