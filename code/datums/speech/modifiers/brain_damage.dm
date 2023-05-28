@@ -1,3 +1,5 @@
+TYPEINFO(/datum/speech_module/modifier/brain_damage)
+	id = "brain_damage"
 /datum/speech_module/modifier/brain_damage
 	id = "brain_damage"
 
@@ -38,3 +40,4 @@
 			message.content = replacetext(message.content, "pain", "hurt")
 			message.content = replacetext(message.content, "damage", "hurt")
 			message.content = replacetext(message.content, "they", "them")
+		return message

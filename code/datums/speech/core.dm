@@ -19,36 +19,36 @@ var/global/datum/speech_manager/SpeechManager = new()
 		. = ..()
 		//Populate module cache
 		for (var/T in concrete_typesof(/datum/speech_module/accent))
-			var/datum/speech_module/accent/acc_instance = new T()
-			if(accent_cache[acc_instance.id])
-				CRASH("Non unique accent found: [acc_instance.id]. These MUST be unique.")
-			accent_cache[acc_instance.id] = T
+			var/typeinfo/datum/speech_module/accent/acc_info = get_type_typeinfo(T)
+			if(accent_cache[acc_info.id])
+				CRASH("Non unique accent found: [acc_info.id]. These MUST be unique.")
+			accent_cache[acc_info.id] = T
 
 		for (var/T in concrete_typesof(/datum/speech_module/modifier))
-			var/datum/speech_module/modifier/mod_instance = new T()
-			if(modifier_cache[mod_instance.id])
-				CRASH("Non unique modifier found: [mod_instance.id]. These MUST be unique.")
-			modifier_cache[mod_instance.id] = T
+			var/typeinfo/datum/speech_module/modifier/mod_info = get_type_typeinfo(T)
+			if(modifier_cache[mod_info.id])
+				CRASH("Non unique modifier found: [mod_info.id]. These MUST be unique.")
+			modifier_cache[mod_info.id] = T
 
 		for (var/T in concrete_typesof(/datum/speech_module/output))
-			var/datum/speech_module/output/out_instance = new T()
-			if(output_cache[out_instance.id])
-				CRASH("Non unique output found: [out_instance.id]. These MUST be unique.")
-			output_cache[out_instance.id] = T
+			var/typeinfo/datum/speech_module/output/out_info = get_type_typeinfo(T)
+			if(output_cache[out_info.id])
+				CRASH("Non unique output found: [out_info.id]. These MUST be unique.")
+			output_cache[out_info.id] = T
 
 		for (var/T in concrete_typesof(/datum/listen_module/input))
-			var/datum/listen_module/input/in_instance = new T()
-			if(input_cache[in_instance.id])
-				CRASH("Non unique input found: [in_instance.id]. These MUST be unique.")
-			input_cache[in_instance.id] = T
+			var/typeinfo/datum/listen_module/input/in_info = get_type_typeinfo(T)
+			if(input_cache[in_info.id])
+				CRASH("Non unique input found: [in_info.id]. These MUST be unique.")
+			input_cache[in_info.id] = T
 
 		for (var/T in concrete_typesof(/datum/listen_module/modifier))
-			var/datum/listen_module/modifier/mod_instance = new T()
-			if(listen_mod_cache[mod_instance.id])
-				CRASH("Non unique listen modifer found: [mod_instance.id]. These MUST be unique.")
-			listen_mod_cache[mod_instance.id] = T
+			var/typeinfo/datum/listen_module/modifier/mod_info = get_type_typeinfo(T)
+			if(listen_mod_cache[mod_info.id])
+				CRASH("Non unique listen modifer found: [mod_info.id]. These MUST be unique.")
+			listen_mod_cache[mod_info.id] = T
 
-		//Populate language cache
+		//Populate language cache - these are singletons, but the modules aren't
 		for (var/T in typesof(/datum/language))
 			var/datum/language/L = new T()
 			language_cache[L.id] = L
@@ -251,27 +251,33 @@ var/global/datum/speech_manager/SpeechManager = new()
 		qdel(src.input_modules)
 		src.parent = null
 
-
+TYPEINFO(/datum/speech_module)
+	var/id = "abstract_base"
 ABSTRACT_TYPE(/datum/speech_module)
 /// Base class for speech_modules - subclass this to create a modifier for messages
 /datum/speech_module
 	/// ID string for cache lookups. This is what your module is called, and it *MUST* be unique
-	var/id = "abstract"
+	var/id = "abstract_base"
 	/// How far up the tree this module should go. High values get processed before low values.
 	var/priority = 0
 	/// Return null to prevent the message being processed further, or a /datum/say_message
 	proc/process(var/datum/say_message/message)
 		return message
 
-
+TYPEINFO(/datum/speech_module/accent)
+	id = "accent_base"
 ABSTRACT_TYPE(/datum/speech_module/accent)
 /datum/speech_module/accent
 	id = "accent_base"
 
+TYPEINFO(/datum/speech_module/modifier)
+	id = "modifier_base"
 ABSTRACT_TYPE(/datum/speech_module/modifier)
 /datum/speech_module/modifier
 	id = "modifier_base"
 
+TYPEINFO(/datum/speech_module/output)
+	id = "output_base"
 ABSTRACT_TYPE(/datum/speech_module/output)
 /datum/speech_module/output
 	id = "output_base"
@@ -280,16 +286,21 @@ ABSTRACT_TYPE(/datum/speech_module/output)
 	process(datum/say_message/message)
 		global.SpeechManager.PassToListeners(message, channel)
 
+
+TYPEINFO(/datum/listen_module)
+	var/id = "abstract_base"
 ABSTRACT_TYPE(/datum/listen_module)
 /datum/listen_module
 	/// ID string for cache lookups. This is what your module is called, and it *MUST* be unique
-	var/id = "abstract"
+	var/id = "abstract_base"
 	/// How far up the tree this module should go. High values get processed before low values.
 	var/priority = 0
 	/// Return null to prevent the message being processed further, or a /datum/say_message
 	proc/process(var/datum/say_message/message)
 		return message
 
+TYPEINFO(/datum/listen_module/input)
+	id = "input_base"
 ABSTRACT_TYPE(/datum/listen_module/input)
 /datum/listen_module/input
 	/// ID string for cache lookups. This is what your module is called, and it *MUST* be unique
@@ -323,6 +334,8 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 		src.channel = new_channel
 		global.SpeechManager.RegisterInput(src)
 
+TYPEINFO(/datum/listen_module/modifier)
+	id = "modifier_base"
 ABSTRACT_TYPE(/datum/listen_module/modifier)
 /datum/listen_module/modifier
 	id = "modifier_base"

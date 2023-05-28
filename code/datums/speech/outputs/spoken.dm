@@ -1,3 +1,5 @@
+TYPEINFO(/datum/speech_module/output/spoken)
+	id = "spoken"
 /datum/speech_module/output/spoken
 	id = "spoken"
 	channel = SAY_CHANNEL_OUTLOUD
