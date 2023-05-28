@@ -499,13 +499,6 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
-	bullet_act(var/obj/projectile/P)
-		if (istype(P.proj_data, /datum/projectile/arrow))
-			src.visible_message("<span class='alert'>[src] is struck by the [P.name] but their fancy armour deflects it!</span>")
-			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
-			P.die()
-			return
-
 	critter_basic_attack(mob/target)
 		HALT()
 		// Hand 2 = SWORD Hand 1 = ARM
