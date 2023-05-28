@@ -1048,7 +1048,7 @@
 
 	var/heardname = src.real_name
 
-	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !(src.organHolder.head?.head_type == HEAD_SKELETON)
 
 	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
@@ -1079,6 +1079,11 @@
 					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
 						listening |= M
 	else
+		if (ismob(say_location.loc) && is_decapitated_skeleton) // if we're the head of a talking mob we arent linked to
+			var/mob/living/L = say_location.loc
+			if (L.organHolder.head == say_location)
+				say_location = L
+
 		olocs = obj_loc_chain(say_location)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
@@ -1170,7 +1175,8 @@
 			if (is_decapitated_skeleton) // for skeleton heads
 				var/mob/living/carbon/human/H = src
 				var/datum/mutantrace/skeleton/S = H.mutantrace
-				holder = S.head_tracker?.chat_text
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
 			if (holder)
 				for(var/image/chat_maptext/I in holder.lines)
 					if(I != chat_text)
