@@ -664,8 +664,7 @@ datum/preferences
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
-				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
-				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
 					AH.special_style = new_style
 					update_preview_icon()

@@ -31,7 +31,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 /datum/phrase_log
 	var/list/phrases
-	var/max_length = 200
+	var/max_length = 600
 	var/filename = "data/logged_phrases.json"
 	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
@@ -60,6 +60,8 @@ var/global/datum/phrase_log/phrase_log = new
 			"This law intentionally left blank.",
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
+			" EXPANSION MODULE",
+			" Expansion Module",
 			//
 			"overrides? all",
 			"the shuttle",

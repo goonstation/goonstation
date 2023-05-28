@@ -295,13 +295,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 			if (selected_product.cost <= 0)
 				.= 1
 			else
-				var/obj/item/card/id/perp_id = M.equipped()
+				var/obj/item/card/id/perp_id = get_id_card(M.equipped())
 				if (!istype(perp_id))
-					if (istype(M.wear_id,/obj/item/device/pda2))
-						var/obj/item/device/pda2/PDA = M.wear_id
-						perp_id = PDA.ID_card
-					else
-						perp_id = M.wear_id
+					perp_id = get_id_card(M.wear_id)
 				if (istype(perp_id))
 
 					//subtract from perp bank account

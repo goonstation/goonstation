@@ -67,39 +67,60 @@ var/global/parallax_enabled = TRUE
 		src.z_level_parallax_layers = list()
 
 		for (var/z_level in Z_LEVEL_NULL to Z_LEVEL_MINING)
-			if (z_level == Z_LEVEL_STATION)
-				var/list/atom/movable/screen/parallax_layer/station_parallax_layers = list()
-				for (var/parallax_layer_type as anything in map_settings.parallax_layers)
-					station_parallax_layers += new parallax_layer_type(null, src.owner)
+			var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
+			for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
+				z_parallax_layers += new parallax_layer_type(null, src.owner)
 
-				src.z_level_parallax_layers["[Z_LEVEL_STATION]"] = station_parallax_layers
+			src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
 
-			else
-				var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
-				for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
-					z_parallax_layers += new parallax_layer_type(null, src.owner)
+		src.previous_turf = get_turf(src.owner.eye)
+		var/area/A = get_area(src.previous_turf)
+		src.add_parallax_layer(A.area_parallax_layers, z_level = A.z)
 
-				src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
+	/// Updates the parallax layers displayed to a client by an area.
+	proc/update_area_parallax_layers(area/new_area, area/old_area)
+		if (old_area && new_area && (old_area.area_parallax_layers ~= new_area.area_parallax_layers))
+			return
 
-	/// Creates a new parallax layer of the specified type on the specified z-level.
-	proc/add_parallax_layer(parallax_layer_type, animation_time = 0, z_level = Z_LEVEL_STATION, list/layer_params)
-		var/atom/movable/screen/parallax_layer/parallax_layer = new parallax_layer_type(null, src.owner, layer_params)
+		if (old_area)
+			src.remove_parallax_layer(old_area.area_parallax_layers, z_level = old_area.z)
+
+		if (new_area)
+			src.add_parallax_layer(new_area.area_parallax_layers, z_level = new_area.z)
+
+	/// Creates a new parallax layer of the specified type, or various layers should `parallax_layer_type_or_types` be a list, on the specified z-level.
+	proc/add_parallax_layer(parallax_layer_type_or_types, animation_time = 0, z_level = Z_LEVEL_STATION, list/layer_params)
+		var/list/parallax_layer_types
+		if (islist(parallax_layer_type_or_types))
+			parallax_layer_types = parallax_layer_type_or_types
+		else if (ispath(parallax_layer_type_or_types))
+			parallax_layer_types = list(parallax_layer_type_or_types)
+
 		var/list/parallax_layer_list = src.z_level_parallax_layers["[z_level]"]
-		parallax_layer_list += parallax_layer
+		for (var/parallax_layer_type in parallax_layer_types)
+			var/atom/movable/screen/parallax_layer/parallax_layer = new parallax_layer_type(null, src.owner, layer_params)
+			parallax_layer_list += parallax_layer
 
-		parallax_layer.alpha = 0
-		animate(parallax_layer, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
+			parallax_layer.alpha = 0
+			animate(parallax_layer, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
 
 		if (src.previous_turf.z == z_level)
 			src.owner.screen -= src.parallax_layers
 			src.parallax_layers = parallax_layer_list
 			src.owner.screen |= src.parallax_layers
 
-	/// Removes all parallax layers of a specified type, including children types, from a specified z-level.
-	proc/remove_parallax_layer(parallax_layer_type, animation_time = 0, z_level = Z_LEVEL_STATION)
+	/// Removes all parallax layers of a specified type, or various types should `parallax_layer_type_or_types` be a list, not including children types, from a specified z-level.
+	proc/remove_parallax_layer(parallax_layer_type_or_types, animation_time = 0, z_level = Z_LEVEL_STATION)
+		var/list/parallax_layer_types
+		if (islist(parallax_layer_type_or_types))
+			parallax_layer_types = parallax_layer_type_or_types
+		else if (ispath(parallax_layer_type_or_types))
+			parallax_layer_types = list(parallax_layer_type_or_types)
+
+
 		var/list/parallax_layer_list = src.z_level_parallax_layers["[z_level]"]
 		for (var/atom/movable/screen/parallax_layer/parallax_layer as anything in parallax_layer_list)
-			if (istype(parallax_layer, parallax_layer_type))
+			if (parallax_layer.type in parallax_layer_types)
 				animate(parallax_layer, animation_time, alpha = 0, flags = ANIMATION_PARALLEL)
 
 				SPAWN(animation_time)
