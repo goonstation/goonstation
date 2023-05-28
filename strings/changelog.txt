@@ -1,5 +1,9 @@
 
 (t)sun may 28 23
+(u)Skeletonman0
+(p)14252
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Headless skeletons can now have their contents poured into open containers with an aggressive grab
 (u)Hans
 (p)11942
 (e)🆕🔊⚗|C-Feature, C-Sound, A-Chemistry
