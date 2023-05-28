@@ -363,7 +363,7 @@ TYPEINFO(/obj/vehicle/segway)
 		// drsingh for undef variable silicon/robot/var/shoes
 		// i guess a borg got on a segway? maybe someone was riding one with nanites
 		if (ishuman(M))
-			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal))
+			if(!istype(M:shoes, /obj/item/clothing/shoes/sandal/magic))
 				M.changeStatus("stunned", 5 SECONDS)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.force_laydown_standup()

@@ -52,28 +52,8 @@ var/global/area/current_battle_spawn = null
 				living_battlers.Add(player.mind)
 
 	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
-	// Stolen from /datum/terrainify/void
-	var/datum/station_zlevel_repair/station_repair = new
-	station_repair.ambient_light = new /image/ambient
-	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
-	station_repair.station_generator = new/datum/map_generator/void_generator
-	var/list/space = list()
-	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-		space += S
-	station_repair.station_generator.generate_terrain(space, flags=MAPGEN_IGNORE_FAUNA)
-	for (var/turf/S in space)
-		S.UpdateOverlays(station_repair.ambient_light, "ambient")
-	station_repair.clean_up_station_level()
+	generate_void()
 	map_settings.space_turf_replacement = /turf/simulated/floor/void
-	map_settings.parallax_layers = list(
-		/atom/movable/screen/parallax_layer/void,
-		/atom/movable/screen/parallax_layer/void/clouds_1,
-		/atom/movable/screen/parallax_layer/void/clouds_2,
-		)
-	for (var/client/client in clients)
-		if (client.parallax_controller)
-			client.parallax_controller.setup_z_level_parallax_layers()
-			client.parallax_controller.update_parallax_z()
 
 	// Dense borders to prevent leaving the station Z
 	for(var/x in 1 to world.maxx)

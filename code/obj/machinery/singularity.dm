@@ -282,8 +282,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	spaget_overlay.pixel_x = A.pixel_x+(A.x - src.x)*32
 	spaget_overlay.pixel_y = A.pixel_y+(A.y - src.y)*32
 	spaget_overlay.mouse_opacity = 0
+	spaget_overlay.transform = A.transform
 	var/angle = get_angle(A, src)
-	var/matrix/flatten = matrix(0.1, -cos(angle), 16-spaget_overlay.pixel_x, src.radius, sin(angle), 16-spaget_overlay.pixel_y)
+	var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, 16-spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, 16-spaget_overlay.pixel_y)
 	animate(spaget_overlay, 3 SECONDS, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
 	src.vis_contents += spaget_overlay
 	SPAWN(4 SECONDS)
@@ -719,9 +720,8 @@ TYPEINFO(/obj/machinery/field_generator)
 			boutput(user, "You start to cut the field generator free from the floor.")
 			return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -1151,9 +1151,8 @@ TYPEINFO(/obj/machinery/emitter)
 			boutput(user, "You start to cut the emitter free from the floor.")
 			return
 
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

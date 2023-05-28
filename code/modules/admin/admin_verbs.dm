@@ -407,7 +407,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions,
 		/client/proc/debug_image_deletions_clear,
 #endif
-
+		/client/proc/distribute_tokens,
 		),
 
 	7 = list(
@@ -2502,3 +2502,18 @@ var/list/fun_images = list()
 	data += "The Flock has been sighted [players] times, with [builders] building the Relay, and [winners] transmitting the Signal!<br>"
 
 	src.Browse(data, "window=gamemode_stats;size=480x320")
+
+/client/proc/distribute_tokens()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Distribute Tokens"
+	set desc = "Give all roundstart antagonists an antag token. For when you blown up server oops."
+	ADMIN_ONLY
+	var/total = 0
+	for (var/client/client in clients)
+		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START)
+				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
+				total += 1
+				client.set_antag_tokens(client.antag_tokens + 1)
+				break
+	boutput(src, "Roundstart antags given tokens: [total]")

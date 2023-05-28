@@ -193,7 +193,9 @@
 /obj/decal/fakeobjects/pipe{
 	icon_state = "exposed"
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "hg" = (
 /obj/machinery/light{
@@ -235,7 +237,9 @@
 /area/prefab/bee_sanctuary)
 "jj" = (
 /obj/decal/floatingtiles,
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "jn" = (
 /obj/cable{
@@ -271,7 +275,9 @@
 /obj/decal/floatingtiles{
 	dir = 1
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "jJ" = (
 /obj/table/reinforced/chemistry/auto,
@@ -701,7 +707,9 @@
 /obj/decal/floatingtiles{
 	dir = 4
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "yW" = (
 /obj/grille/catwalk{
@@ -815,7 +823,9 @@
 	dir = 8;
 	icon_state = "floattiles6"
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "BC" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -997,7 +1007,9 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "EY" = (
 /obj/critter/domestic_bee,
@@ -1047,11 +1059,15 @@
 /obj/decal/floatingtiles{
 	dir = 8
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "GD" = (
 /obj/critter/domestic_bee/zombee,
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "GY" = (
 /turf/unsimulated/floor/purpleblack/corner{
@@ -1395,7 +1411,9 @@
 	icon_state = "floattiles6"
 	},
 /obj/critter/domestic_bee/zombee,
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "Po" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -1440,7 +1458,9 @@
 	dir = 4;
 	icon_state = "floattiles3"
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "Qn" = (
 /obj/machinery/light{
@@ -1472,7 +1492,9 @@
 /area/prefab/bee_sanctuary)
 "QB" = (
 /obj/map/light/void,
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "QV" = (
 /obj/decal/fakeobjects/pipe{
@@ -1506,7 +1528,9 @@
 	pixel_x = -14;
 	pixel_y = 1
 	},
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "Ro" = (
 /obj/decal/fakeobjects/pipe{
@@ -1762,7 +1786,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/prefab/bee_sanctuary)
 "Ym" = (
-/turf/unsimulated/floor/void,
+/turf/unsimulated/floor/void{
+	plane = -110
+	},
 /area/prefab/bee_sanctuary)
 "Yp" = (
 /obj/river{

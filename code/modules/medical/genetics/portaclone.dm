@@ -47,7 +47,7 @@
 				scanner.Attackby(W,user)
 				src.add_fingerprint(user)
 
-			else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card) || istype(W, /obj/item/card/emag) || istype(W, /obj/item/reagent_containers/glass))
+			else if (istype(get_id_card(W), /obj/item/card/id) || istype(W, /obj/item/card/emag) || istype(W, /obj/item/reagent_containers/glass))
 				pod1.Attackby(W,user)
 				src.add_fingerprint(user)
 

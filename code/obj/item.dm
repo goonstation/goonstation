@@ -1539,6 +1539,13 @@
 			if(src in M.equipped_list())
 				src.inventory_counter.show_count()
 
+/obj/item/proc/remove_inventory_counter()
+	if (!src.inventory_counter)
+		return
+	src.vis_contents -= src.inventory_counter
+	qdel(src.inventory_counter)
+	src.inventory_counter = null
+
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
 	if (!O?.firesource == FIRESOURCE_OPEN_FLAME) return

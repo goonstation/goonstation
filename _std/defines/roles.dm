@@ -9,6 +9,7 @@
 #define ROLE_WEREWOLF "werewolf"
 #define ROLE_BLOB "blob"
 #define ROLE_WRAITH "wraith"
+#define ROLE_POLTERGEIST "poltergeist"
 #define ROLE_HEAD_REVOLUTIONARY "head_revolutionary"
 #define ROLE_REVOLUTIONARY "revolutionary"
 #define ROLE_CONSPIRATOR "conspirator"

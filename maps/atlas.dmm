@@ -19035,13 +19035,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/sanctuary)
-"qAK" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mail_booth,
-/turf/simulated/floor,
-/area/station/hallway/primary/west)
 "qCC" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -66100,7 +66093,7 @@ agu
 agz
 ahG
 axq
-qAK
+aca
 alU
 akM
 aqo

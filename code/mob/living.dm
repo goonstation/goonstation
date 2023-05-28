@@ -681,10 +681,16 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
+
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
 		return ..(message)
 #endif
+
+	// shittery that breaks text or worse
+	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+	message = replacetext(message, shittery_regex, "")
+
 	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -2212,12 +2218,13 @@
 /mob/living/get_desc(dist, mob/user)
 	. = ..()
 	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
-		. += "<br>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\"."
+		. += "<br><span class='deadsay' style='font-size:1.2em;font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/living/lastgasp(allow_dead=FALSE, grunt=null)
 	set waitfor = FALSE
 	if (!allow_dead && !isalive(src)) return
 	if (src.disposed || !src.client) return // break if it's an npc or a disconnected player
+	if (ON_COOLDOWN(src, "lastgasp", 0.7 SECONDS)) return
 	var/client/client = src.client
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
