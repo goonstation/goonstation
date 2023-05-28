@@ -505,14 +505,13 @@ datum
 			transparency = 50
 			var/counter = 1
 			var/list/invisible_people
-			var/list/image/invisible_list
 			var/list/mob/not_yet_invisible
+			var/datum/client_image_group/invisible_group
 			var/tick_counter = 0 // we actually count ticks, no mult here
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(isnull(invisible_people))
 					invisible_people = list()
-					invisible_list = list()
 				if(!M) M = holder.my_atom
 				src.counter += 1 * mult //around half realtime
 				src.tick_counter += 1
@@ -539,13 +538,14 @@ datum
 					not_yet_invisible &= current_viewers
 
 					if(length(candidates) > 0)  //makes the other people disappear
+						if (isnull(invisible_group))
+							invisible_group = new /datum/client_image_group
+							invisible_group.add_mob(M)
 						for(var/mob/living/carbon/human/chosen in candidates)
 							var/image/invisible_img = image(null, chosen, null, chosen.layer)
 							invisible_img.name = "\u200b"
 							invisible_img.override = TRUE
-							var/client/client = M.client //hold a reference to the client directly
-							client?.images.Add(invisible_img)
-							invisible_list.Add(invisible_img)
+							invisible_group.add_image(invisible_img)
 							invisible_people += chosen
 
 				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
@@ -560,21 +560,18 @@ datum
 				if (ismob(holder.my_atom))
 					var/mob/M = holder.my_atom
 
-					if((length(invisible_people) > 0) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
 						M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>",\
 											"You feel as if your body is tearing itself apart!")
 						M.setStatusMin("weakened", 10 SECONDS)
 						M.make_jittery(500)
 
-					if (M.client)
-						var/client/client = M.client
-						client?.images.Remove(invisible_list)//brings everyone back
-						for(var/image/I in invisible_list)
-							qdel(I)
-						qdel(invisible_list)
-						invisible_list = null
-						invisible_people = null
-						not_yet_invisible = null
+				qdel(invisible_group)
+				qdel(invisible_people)
+				qdel(not_yet_invisible)
+				invisible_group = null
+				invisible_people = null
+				not_yet_invisible = null
 
 		drug/THC
 			name = "tetrahydrocannabinol"
