@@ -9,6 +9,7 @@
 	var/disabled = 0                     // Event won't occur if this is true.
 	var/announce_to_admins = 1
 	var/customization_available = 0
+	var/always_custom = FALSE
 	var/weight = 100					//for weighted probability picker. 100 is base
 
 	proc/event_effect(var/source)
@@ -42,12 +43,33 @@
 
 		return 1
 
+	proc/cleanup()
+		return
+
 /datum/random_event/minor
 	announce_to_admins = 0
+
+/datum/random_event/start
+	proc/is_crew_affected(var/mob/living/player)
+		. = TRUE
+
+	proc/apply_to_player(var/mob/living/player)
+		return
+
+	proc/get_affected_crew()
+		. = list()
+		for(var/mob/living/player in mobs)
+			if(is_crew_affected(player))
+				. += player
+
+/datum/random_event/start/until_playing
+	var/include_latejoin = FALSE
 
 ABSTRACT_TYPE(/datum/random_event/major)
 ABSTRACT_TYPE(/datum/random_event/major/antag)
 ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
+ABSTRACT_TYPE(/datum/random_event/major/player_spawn/antag)
 ABSTRACT_TYPE(/datum/random_event/minor)
 ABSTRACT_TYPE(/datum/random_event/special)
 ABSTRACT_TYPE(/datum/random_event/start)
+ABSTRACT_TYPE(/datum/random_event/start/until_playing)

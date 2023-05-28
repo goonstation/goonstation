@@ -5,13 +5,14 @@
 	var/datum/flock/flock
 
 /datum/component/flock_interest/Initialize(datum/flock/flock)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.flock = flock
 
 /datum/component/flock_interest/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, .proc/handle_flock_attack)
+	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, PROC_REF(handle_flock_attack))
 
 /// If flockdrone is in our flock, deny the attack, otherwise scream and cry
 /datum/component/flock_interest/proc/handle_flock_attack(atom/source, atom/attacker, intentional, projectile_attack)
@@ -46,7 +47,9 @@
 	else if (hasvar(source, "flock_id"))
 		report_name = "the " + source.vars["flock_id"]
 
-	if (!snitch.flock.isEnemy(attacker))
+	if (snitch.flock.isIgnored(attacker))
+		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]", snitch.flock)
+	else if (!snitch.flock.isEnemy(attacker))
 		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
 	snitch.flock.updateEnemy(attacker)
 
@@ -65,6 +68,7 @@
 	var/report_proj
 
 /datum/component/flock_protection/Initialize(report_unarmed=TRUE, report_attack=TRUE, report_thrown=TRUE, report_proj=TRUE)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -74,10 +78,10 @@
 	src.report_proj = report_proj
 
 /datum/component/flock_protection/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/handle_attackhand)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, .proc/handle_hitby_thrown)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/handle_hitby_proj)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(handle_attackhand))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(handle_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_THROWN, PROC_REF(handle_hitby_thrown))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(handle_hitby_proj))
 
 /// Protect against punches/kicks/etc.
 /datum/component/flock_protection/proc/handle_attackhand(atom/source, mob/user)

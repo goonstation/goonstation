@@ -30,7 +30,7 @@ const SBPurchaseEntry = (props) => {
             {pname}
           </Box>
           <Box>
-            {`Cost: ${cost}⪽`}
+            {`Cost: ${cost}`} <i class="fa-solid fa-coins" />
           </Box>
         </Flex.Item>
         <Flex.Item>
@@ -81,7 +81,7 @@ export const SpendSpacebux = (_props, context) => {
                 <Flex direction="row" align="center">
                   <Flex.Item grow={1}>
                     <Box>
-                      Balance: {balance}⪽
+                      Balance: {balance} <i class="fa-solid fa-coins" />
                     </Box>
                   </Flex.Item>
                   <Flex.Item>

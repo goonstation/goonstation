@@ -9,10 +9,16 @@
 //////Drainage/////
 ///////////////////
 
+TYPEINFO(/obj/machinery/drainage)
+	mats = 8
+
+TYPEINFO(/obj/machinery/drainage/big)
+	mats = 12
+
 /obj/machinery/drainage
 	name = "drain"
 	desc = "A drainage pipe embedded in the floor to prevent flooding. Where does the drain go? Nobody knows."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/fluid.dmi'
 	var/base_icon = "drain"
@@ -23,14 +29,12 @@
 	var/welded = 0 //permanent block
 	var/drain_min = 2
 	var/drain_max = 7
-	mats = 8
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 
 
 	big
 		base_icon = "bigdrain"
 		icon_state = "bigdrain"
-		mats = 12
 		drain_min = 6
 		drain_max = 14
 
@@ -117,7 +121,7 @@
 ///////////////////
 
 /obj/channel
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "channel"
@@ -217,8 +221,11 @@
 ///////////////////
 
 
+TYPEINFO(/obj/machinery/fluid_canister)
+	mats = 20
+
 /obj/machinery/fluid_canister
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/fluid.dmi'
 	var/base_icon = "blue"
@@ -228,7 +235,6 @@
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick
-	mats = 20
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER
 
 	var/slurping = 0
@@ -385,7 +391,7 @@
 
 	var/obj/sea_ladder_deployed/linked_ladder
 	var/obj/item/sea_ladder/og_ladder_item = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/fold_up()
 		set name = "Fold Up"
@@ -419,6 +425,9 @@
 			user.show_text("You climb [src].")
 
 
+TYPEINFO(/obj/item/sea_ladder)
+	mats = 7
+
 /obj/item/sea_ladder
 	name = "sea ladder"
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
@@ -433,7 +442,6 @@
 	stamina_cost = 20
 	stamina_crit_chance = 6
 	var/c_color = null
-	mats = 7
 
 	New()
 		..()
@@ -469,15 +477,17 @@
 		L.og_ladder_item = src
 		L.linked_ladder.og_ladder_item = src
 
+TYPEINFO(/obj/naval_mine)
+	mats = 16
+
 /obj/naval_mine
 	name = "naval mine"
 	desc = "This looks explosive!"
 	icon = 'icons/obj/sealab_objects.dmi'
 	icon_state = "mine_0"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 
-	mats = 16
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 	flags = FPRINT
 

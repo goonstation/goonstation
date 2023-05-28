@@ -78,7 +78,6 @@
 	icon_state = "5"
 	},
 /obj/item/storage/box/clothing/chef{
-	name = "ÿChef's equipment";
 	dir = 8
 	},
 /obj/item/kitchen/rollingpin{
@@ -91,7 +90,6 @@
 	icon_state = "9"
 	},
 /obj/item/storage/box/clothing/chef{
-	name = "ÿChef's equipment";
 	dir = 8
 	},
 /obj/item/kitchen/rollingpin{
@@ -161,7 +159,6 @@
 	icon_state = "6"
 	},
 /obj/item/storage/box/clothing/chef{
-	name = "ÿChef's equipment";
 	dir = 8
 	},
 /obj/item/kitchen/rollingpin{
@@ -174,7 +171,6 @@
 	icon_state = "10"
 	},
 /obj/item/storage/box/clothing/chef{
-	name = "ÿChef's equipment";
 	dir = 8
 	},
 /obj/item/kitchen/rollingpin{
@@ -193,7 +189,6 @@
 	dir = 8
 	},
 /obj/item/storage/box/clothing/chef{
-	name = "ÿChef's equipment";
 	dir = 8
 	},
 /obj/item/kitchen/rollingpin{
@@ -468,6 +463,27 @@
 	dir = 4
 	},
 /area/noGenerate)
+"W" = (
+/obj/machinery/shuttle/engine/heater/seaheater_middle,
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 4
+	},
+/area/noGenerate)
+"X" = (
+/obj/machinery/shuttle/engine/heater/seaheater_left,
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 4
+	},
+/area/noGenerate)
+"Y" = (
+/obj/machinery/shuttle/engine/heater/seaheater_right,
+/turf/unsimulated/wall/setpieces/leadwall/gray{
+	name = "Shielded Wall";
+	dir = 4
+	},
+/area/noGenerate)
 
 (1,1,1) = {"
 a
@@ -557,7 +573,7 @@ i
 i
 i
 i
-d
+X
 b
 a
 "}
@@ -580,7 +596,7 @@ v
 r
 m
 i
-d
+W
 b
 a
 "}
@@ -603,7 +619,7 @@ w
 s
 n
 i
-d
+Y
 b
 a
 "}
@@ -718,7 +734,7 @@ y
 r
 m
 i
-d
+X
 b
 a
 "}
@@ -741,7 +757,7 @@ w
 s
 n
 i
-d
+W
 b
 a
 "}
@@ -764,7 +780,7 @@ i
 i
 i
 i
-d
+Y
 b
 a
 "}

@@ -258,8 +258,7 @@
 /area/shuttle/arrival/station)
 "le" = (
 /obj/machinery/manufacturer/general{
-	free_resource_amt = 999;
-	mats = 999
+	free_resource_amt = 999
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -713,8 +712,7 @@
 	tag = ""
 	},
 /obj/machinery/manufacturer/mechanic{
-	free_resource_amt = 999;
-	mats = 999
+	free_resource_amt = 999
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -737,7 +735,7 @@
 	},
 /area/built_zone)
 "Db" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -49812,8 +49810,8 @@ ay
 ay
 ay
 AG
-Db
 jc
+Db
 AG
 ay
 ay

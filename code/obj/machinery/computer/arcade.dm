@@ -2,11 +2,13 @@
  *	Arcade -- An arcade cabinet.
  */
 
+TYPEINFO(/obj/machinery/computer/arcade)
+	mats = 10
+
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	mats = 10
 	deconstruct_flags = DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/arcade
 	var/enemy_name = "Space Villian"
@@ -155,7 +157,7 @@
 				else
 					prize = new /obj/item/device/radio/beacon(src.loc)
 					prize.name = "electronic blink toy game"
-					prize.anchored = FALSE
+					prize.anchored = UNANCHORED
 					prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo(src.loc)

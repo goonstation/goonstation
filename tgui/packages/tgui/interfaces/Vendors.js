@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Section, Table } from 'tgui/components';
+import { Box, Button, Section, Table, Image } from 'tgui/components';
 import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
 
 export const Vendors = (props, context) => {
@@ -21,6 +21,9 @@ export const Vendors = (props, context) => {
     owner,
     unlocked,
     loading,
+    busy,
+    busyphrase,
+    currentlyVending,
   } = data;
 
   const canVend = (a) => (
@@ -110,66 +113,81 @@ export const Vendors = (props, context) => {
 
             </Stack.Item>
           )}
-
           <Stack.Item grow minHeight="1%" maxHeight="100%">
             <Section fill scrollable height="100%">
-              {productList.map(product => {
-                return (
-                  <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
-                    <Flex.Item direction="row">
-                      {product.img && (
-                        <Box style={{ "overflow": "show", "height": "24px" }}>
-                          <img
-                            src={`data:image/png;base64,${product.img}`}
-                            style={{
-                              'transform': 'translate(0, -4px)',
-                            }}
-                          />
-                        </Box>)}
-                    </Flex.Item>
-                    <Flex.Item direction="row"
-                      grow style={{
+              {!busy && (
+                productList.map(product => {
+                  return (
+                    <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
+                      <Flex.Item direction="row">
+                        {product.img && (
+                          <Box style={{ "overflow": "show", "height": "24px" }}>
+                            <img
+                              src={`data:image/png;base64,${product.img}`}
+                              style={{
+                                'transform': 'translate(0, -4px)',
+                              }}
+                            />
+                          </Box>)}
+                      </Flex.Item>
+                      <Flex.Item direction="row"
+                        grow style={{
+                          "display": "flex",
+                          "justify-content": "center",
+                          "flex-direction": "column",
+                        }}>
+                        <Box>
+                          <Box inline italic>
+                            {!product.infinite && `${product.amount} x`}&nbsp;
+                          </Box>
+                          <Box inline>
+                            {product.name}
+                            {(playerBuilt && wiresOpen) && <Button inline
+                              color="green"
+                              icon="images"
+                              style={{ "margin-left": "5px" }}
+                              onClick={() => act('setIcon', { target: product.path })}
+                            />}
+                          </Box>
+                        </Box>
+                      </Flex.Item>
+                      <Flex.Item bold direction="row" style={{ "margin-left": "5px",
                         "display": "flex",
                         "justify-content": "center",
                         "flex-direction": "column",
                       }}>
-                      <Box>
-                        <Box inline italic>
-                          {`${product.amount} x`}&nbsp;
-                        </Box>
-                        <Box inline>
-                          {product.name}
-                          {(playerBuilt && wiresOpen) && <Button inline
-                            color="green"
-                            icon="images"
-                            style={{ "margin-left": "5px" }}
-                            onClick={() => act('setIcon', { target: product.path })}
-                          />}
-                        </Box>
-                      </Box>
-                    </Flex.Item>
-                    <Flex.Item bold direction="row" style={{ "margin-left": "5px",
-                      "display": "flex",
-                      "justify-content": "center",
-                      "flex-direction": "column",
-                    }}>
-                      {(playerBuilt && unlocked) ? <Button.Input
-                        color={canVend(product) ? "green" : "grey"}
-                        content={getCost(product)}
-                        style={{ "width": "50px", "text-align": "center" }}
-                        onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
-                      /> : <Button
-                        color={canVend(product) ? "green" : "grey"}
-                        content={getCost(product)}
-                        disabled={canVend(product) ? false : true}
-                        style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
-                        onClick={() => act('vend', {
-                          target: product.path, cost: product.cost, amount: product.amount })}
-                      />}
-                    </Flex.Item>
-                  </Flex>
-                );
-              })}
+                        {(playerBuilt && unlocked) ? <Button.Input
+                          color={canVend(product) ? "green" : "grey"}
+                          content={getCost(product)}
+                          style={{ "width": "50px", "text-align": "center" }}
+                          onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
+                        /> : <Button
+                          color={canVend(product) ? "green" : "grey"}
+                          content={getCost(product)}
+                          disabled={canVend(product) ? false : true}
+                          style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
+                          onClick={() => act('vend', {
+                            target: product.path, cost: product.cost, amount: product.amount })}
+                        />}
+                      </Flex.Item>
+                    </Flex>
+                  );
+                })
+              )}
+              {!!busy && (
+                <Stack vertical>
+                  <Stack.Item align="center">
+                    <Image
+                      height="128px"
+                      width="128px"
+                      pixelated
+                      src={
+                        `data:image/png;base64,${productList.find(product => product.name === currentlyVending).img}`
+                      } />
+                  </Stack.Item>
+                  <Stack.Item align="center">{busyphrase}</Stack.Item>
+                </Stack>
+              )}
             </Section>
           </Stack.Item>
           {requiresMoney > 0 && (

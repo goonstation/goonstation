@@ -13,7 +13,8 @@
 	name = ""
 	desc = ""
 	mouse_opacity = 0
-	anchored = 1
+	pass_unstable = FALSE
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE

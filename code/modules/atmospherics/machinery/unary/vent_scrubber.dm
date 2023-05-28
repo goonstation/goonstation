@@ -8,9 +8,9 @@
 	level = 1
 
 	var/id = null
-	var/frequency = "1439"
+	var/frequency = FREQ_AIR_ALARM_CONTROL
 
-	var/on = 1
+	var/on = TRUE
 	var/scrubbing = 1 //0 = siphoning, 1 = scrubbing
 	#define _DEF_SCRUBBER_VAR(GAS, ...) var/scrub_##GAS = 1;
 	APPLY_TO_GASES(_DEF_SCRUBBER_VAR)
@@ -28,16 +28,8 @@
 		UpdateIcon()
 
 	update_icon()
-		if(on&&node)
-			if(scrubbing)
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-			else
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
-		else
-			icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
-
-		return
+		var/turf/T = get_turf(src)
+		src.hide(T.intact)
 
 	process()
 		..()
@@ -93,16 +85,15 @@
 
 		return 1
 
-	hide(var/i) //to make the little pipe section invisible, the icon changes.
+	hide(var/intact) //to make the little pipe section invisible, the icon changes.
 		if(on&&node)
 			if(scrubbing)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]on"
 			else
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]in"
+				icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]in"
 		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-			on = 0
-		return
+			icon_state = "[intact && istype(loc, /turf/simulated) && level == 1 ? "h" : "" ]off"
+			on = FALSE
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -110,10 +101,10 @@
 
 		switch(signal.data["command"])
 			if("power_on")
-				on = 1
+				on = TRUE
 
 			if("power_off")
-				on = 0
+				on = FALSE
 
 			if("power_toggle")
 				on = !on

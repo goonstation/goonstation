@@ -28,7 +28,7 @@
 		else
 			..(user)
 
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
 		return

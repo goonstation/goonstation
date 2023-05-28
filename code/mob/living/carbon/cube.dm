@@ -10,7 +10,7 @@
 	icon_state = "meatcube"
 	a_intent = "disarm" // just so they don't swap with help intent users
 	health = INFINITY
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	nodamage = 1
 	opacity = 0
@@ -48,7 +48,6 @@
 			if(2)
 				if (prob(25))
 					src.gib(1)
-			else
 		return
 
 	proc/get_cube_idle()
@@ -70,6 +69,7 @@
 		return 1
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 
 		if (findtext(act, " ", 1, null))

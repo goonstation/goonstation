@@ -52,6 +52,15 @@
 "aw" = (
 /turf/unsimulated/wall/auto/adventure/martian/exterior,
 /area/noGenerate)
+"ax" = (
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
+/turf/simulated/floor/orangeblack/side{
+	dir = 1
+	},
+/area/mining/hangar)
 "aE" = (
 /obj/item/cigbutt,
 /obj/landmark/artifact,
@@ -159,6 +168,16 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
+"cm" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/obj/item/cigbutt,
+/mob/living/critter/small_animal/mouse{
+	name = "Sgt. Pepper"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
 "cs" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -172,6 +191,19 @@
 	},
 /turf/space,
 /area/noGenerate)
+"cB" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/obj/machinery/door/poddoor{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "MINdoorS";
+	name = "South Conveyor Door";
+	opacity = 0
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/manufacturing)
 "cT" = (
 /obj/effects/background_objects/star_blue{
 	pixel_x = -64;
@@ -228,12 +260,6 @@
 /obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
-"fh" = (
-/obj/machinery/computer/mining_shuttle{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/mining/dock)
 "fA" = (
 /obj/decal/fakeobjects/lighttube_broken,
 /obj/decal/cleanable/dirt,
@@ -302,6 +328,21 @@
 	},
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"hA" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/obj/machinery/door/poddoor{
+	id = "MINdoorS";
+	name = "South Conveyor Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/mining/manufacturing)
 "hK" = (
 /obj/computerframe{
 	anchored = 1;
@@ -410,6 +451,12 @@
 /obj/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
+"lp" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/manufacturing)
 "lx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -700,6 +747,7 @@
 "oH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
+/obj/item/shipcomponent/mainweapon/bad_mining,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -874,7 +922,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/refinery)
 "pK" = (
 /turf/simulated/floor/grime,
@@ -1008,10 +1057,6 @@
 /obj/machinery/recharger,
 /turf/simulated/floor/caution/west,
 /area/mining/miningoutpost)
-"qn" = (
-/obj/grille/steel,
-/turf/simulated/floor/plating/airless,
-/area/station/solar/small_backup3)
 "qo" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -1155,7 +1200,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "rf" = (
 /obj/decal/cleanable/ripped_poster{
@@ -1246,7 +1292,6 @@
 /area/mining/manufacturing)
 "rI" = (
 /obj/table/auto,
-/obj/machinery/recharger,
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/grime,
 /area/tech_outpost)
@@ -1376,7 +1421,8 @@
 	req_access_txt = "51"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/power)
 "sB" = (
 /obj/disposalpipe/segment/transport,
@@ -1459,11 +1505,6 @@
 	name = "reinforced plating"
 	},
 /area/mining/refinery)
-"sS" = (
-/obj/decal/cleanable/dirt,
-/obj/machinery/computer/shuttle_bus,
-/turf/simulated/floor/plating/damaged3,
-/area/mining/miningoutpost)
 "sT" = (
 /obj/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
@@ -1491,7 +1532,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "te" = (
 /obj/item/rods/steel,
@@ -1573,7 +1615,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "tF" = (
-/obj/item/satchel/mining/large,
+/obj/item/satchel/mining,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "tH" = (
@@ -1707,7 +1749,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "uA" = (
 /obj/effects/background_objects/regis,
@@ -1935,16 +1978,6 @@
 	},
 /turf/simulated/floor/caution/south,
 /area/mining/miningoutpost)
-"vW" = (
-/obj/crevice{
-	pixel_x = -28
-	},
-/obj/item/cigbutt,
-/obj/critter/mouse{
-	name = "Sgt. Pepper"
-	},
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/bar)
 "vX" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -1985,7 +2018,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/manufacturing)
 "we" = (
 /obj/grille/catwalk{
@@ -2033,7 +2067,8 @@
 /area/evilreaver/storage/tools)
 "wo" = (
 /obj/machinery/door/airlock/pyro,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/tech_outpost)
 "wr" = (
 /obj/storage/crate/furnacefuel,
@@ -2116,12 +2151,6 @@
 /obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
-"wL" = (
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/turf/simulated/floor/plating/airless,
-/area/mining/manufacturing)
 "wO" = (
 /obj/rail{
 	dir = 8;
@@ -2301,7 +2330,8 @@
 /area/mining/manufacturing)
 "xL" = (
 /obj/disposalpipe/segment/transport,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "xM" = (
 /obj/indestructible/shuttle_corner{
@@ -2498,7 +2528,8 @@
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "yV" = (
 /obj/decal/cleanable/dirt,
@@ -2686,7 +2717,8 @@
 /area/evilreaver/atmospherics)
 "Af" = (
 /obj/disposalpipe/segment/bent/north,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "Ai" = (
 /turf/simulated/floor/yellow/side{
@@ -2757,12 +2789,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
-"Av" = (
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/turf/simulated/floor/plating/airless,
-/area/mining/mainasteroid)
 "Aw" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/carpet/grime,
@@ -2983,6 +3009,12 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor,
 /area/mining/manufacturing)
+"BH" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/turf/simulated/floor/plating/airless,
+/area/mining/mainasteroid)
 "BJ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3255,13 +3287,6 @@
 	dir = 1
 	},
 /area/evilreaver/security)
-"Dy" = (
-/obj/plasticflaps,
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/turf/simulated/floor/plating,
-/area/mining/manufacturing)
 "Dz" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3316,8 +3341,8 @@
 	icon_state = "1-4"
 	},
 /obj/storage/crate,
-/obj/item/clothing/under/misc/rusmob,
-/obj/item/clothing/under/misc/colmob,
+/obj/item/clothing/under/misc/mobster,
+/obj/item/clothing/under/misc/mobster/alt,
 /turf/simulated/floor/plating/damaged3,
 /area/spyshack)
 "Ec" = (
@@ -3325,7 +3350,8 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ed" = (
 /turf/simulated/floor/caution/west,
@@ -3418,7 +3444,8 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "EM" = (
 /obj/indestructible/shuttle_corner{
@@ -3558,16 +3585,6 @@
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"FA" = (
-/obj/machinery/light_switch{
-	name = "N light switch";
-	pixel_y = 24
-	},
-/obj/machinery/computer/shuttle_bus,
-/turf/simulated/floor/orangeblack/side{
-	dir = 1
-	},
-/area/mining/hangar)
 "FD" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -3704,7 +3721,8 @@
 /area/station/solar/small_backup3)
 "Gi" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/manufacturing)
 "Gk" = (
 /obj/machinery/light/emergency{
@@ -3719,6 +3737,12 @@
 /obj/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"Gq" = (
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/mining/dock)
 "Gr" = (
 /obj/lattice,
 /obj/item/device/infra_sensor,
@@ -4021,6 +4045,16 @@
 /obj/critter/martian/warrior/dead,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
+"Ij" = (
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag12";
+	pixel_x = 28
+	},
+/turf/simulated/floor,
+/area/mining/manufacturing)
 "Im" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -4247,7 +4281,7 @@
 /area/mining/refinery)
 "JG" = (
 /obj/rack,
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/power_pick,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "JI" = (
@@ -4513,7 +4547,8 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "Lw" = (
 /obj/item/rods/steel,
@@ -4663,7 +4698,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "LW" = (
 /turf/simulated/floor/stairs{
@@ -4701,7 +4737,8 @@
 /turf/simulated/floor/grime,
 /area/mining/comms)
 "Mq" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "Ms" = (
 /obj/table/auto,
@@ -4857,23 +4894,9 @@
 "Nt" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
-"Nu" = (
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/obj/machinery/door/poddoor{
-	id = "MINdoorS";
-	name = "South Conveyor Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/mining/manufacturing)
 "Ny" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5032,13 +5055,15 @@
 	name = "Mining Outpost Airlock";
 	req_access_txt = "51"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "Os" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/tech_outpost)
 "Ou" = (
 /obj/npc/trader/martian,
@@ -5074,7 +5099,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "OL" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "OM" = (
@@ -5126,6 +5151,10 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
+"Pl" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/station/solar/small_backup3)
 "Pm" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
@@ -5173,6 +5202,13 @@
 "PC" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/dock)
+"PD" = (
+/obj/plasticflaps,
+/obj/machinery/conveyor/NS{
+	id = "MINSouth"
+	},
+/turf/simulated/floor/plating,
+/area/mining/manufacturing)
 "PK" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -5186,16 +5222,6 @@
 	dir = 4
 	},
 /area/mining/mainasteroid)
-"PO" = (
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/obj/decal/cleanable/gangtag{
-	icon_state = "gangtag12";
-	pixel_x = 28
-	},
-/turf/simulated/floor,
-/area/mining/manufacturing)
 "PP" = (
 /obj/stool/chair{
 	dir = 8
@@ -5379,7 +5405,8 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/comms)
 "Rk" = (
 /obj/indestructible/shuttle_corner{
@@ -5471,7 +5498,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/magnet_control)
 "RF" = (
 /obj/grille/catwalk,
@@ -5546,7 +5574,8 @@
 /area/evilreaver/security)
 "Si" = (
 /obj/machinery/manufacturer/general,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/hangar)
 "Sk" = (
 /obj/lattice{
@@ -5558,7 +5587,8 @@
 /area/noGenerate)
 "Sr" = (
 /obj/machinery/vending/cola/red,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ss" = (
 /turf/simulated/floor/grime,
@@ -5581,7 +5611,15 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
+/area/mining/miningoutpost)
+"SB" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/computer/transit_shuttle/johnbus{
+	dir = 4
+	},
+/turf/simulated/floor/plating/damaged3,
 /area/mining/miningoutpost)
 "SC" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -5816,7 +5854,8 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/tech_outpost)
 "Ud" = (
 /obj/decal/cleanable/dirt,
@@ -5870,7 +5909,8 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/manufacturing)
 "Uv" = (
 /obj/machinery/door/poddoor{
@@ -5945,19 +5985,6 @@
 "UM" = (
 /turf/simulated/martian/floor,
 /area/noGenerate)
-"UN" = (
-/obj/machinery/conveyor/NS{
-	id = "MINSouth"
-	},
-/obj/machinery/door/poddoor{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "MINdoorS";
-	name = "South Conveyor Door";
-	opacity = 0
-	},
-/turf/simulated/floor/plating/airless,
-/area/mining/manufacturing)
 "UP" = (
 /obj/stool/chair,
 /obj/machinery/light/incandescent,
@@ -6076,8 +6103,8 @@
 /area/tech_outpost)
 "VE" = (
 /obj/rack,
-/obj/item/satchel/mining/large,
-/obj/item/satchel/mining/large,
+/obj/item/satchel/mining,
+/obj/item/satchel/mining,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "VF" = (
@@ -6319,7 +6346,8 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "Xj" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/mining/miningoutpost)
 "Xk" = (
 /turf/simulated/floor/caution/south,
@@ -6442,7 +6470,8 @@
 /area/evilreaver/bridge)
 "Ya" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/mining/dock)
 "Ye" = (
 /obj/machinery/door/airlock/pyro/engineering{
@@ -15628,7 +15657,7 @@ vw
 Gv
 IS
 Yy
-vW
+cm
 St
 xM
 IB
@@ -49171,7 +49200,7 @@ aX
 XD
 Fu
 eT
-fh
+Gq
 XD
 ce
 ab
@@ -51600,7 +51629,7 @@ zP
 GA
 GA
 sP
-FA
+ax
 RO
 ya
 ya
@@ -53143,7 +53172,7 @@ Kc
 Kc
 Kc
 Cv
-sS
+SB
 BL
 Cv
 Cx
@@ -53712,32 +53741,32 @@ Mb
 yl
 xN
 nq
-PO
-Dy
-Nu
-wL
-wL
-wL
-wL
-wL
-UN
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
-Av
+Ij
+PD
+hA
+lp
+lp
+lp
+lp
+lp
+cB
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
+BH
 PK
 aY
 aY
@@ -54878,9 +54907,9 @@ aa
 ab
 ab
 ab
-qn
-qn
-qn
+Pl
+Pl
+Pl
 ab
 ab
 WF
@@ -55180,7 +55209,7 @@ aa
 ab
 ab
 ab
-qn
+Pl
 KA
 ET
 ab
@@ -55482,7 +55511,7 @@ aa
 ab
 ab
 ab
-qn
+Pl
 FD
 AA
 wj
@@ -55784,7 +55813,7 @@ aa
 ab
 ab
 ab
-qn
+Pl
 KA
 ET
 ab
@@ -56086,9 +56115,9 @@ aa
 ab
 ab
 ab
-qn
-qn
-qn
+Pl
+Pl
+Pl
 ab
 ab
 WF

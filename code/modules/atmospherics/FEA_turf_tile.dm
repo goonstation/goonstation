@@ -89,15 +89,19 @@ var/global/list/turf/hotly_processed_turfs = list()
 			return TRUE
 
 /turf/simulated
+	pass_unstable = FALSE
 	var/static/list/mutable_appearance/gas_overlays = list(
 			#ifdef ALPHA_GAS_OVERLAYS
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 			#else
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 			#endif
 		)
+
 
 	var/tmp/dist_to_space = null
 
@@ -390,6 +394,21 @@ var/global/list/turf/hotly_processed_turfs = list()
 			item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 		temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
+	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
+		for(var/atom/movable/AM in src)
+			if(isintangible(AM) || isobserver(AM) || istype(AM, /obj/overlay) || istype(AM, /obj/effects) || istype(AM, /obj/particle))
+				continue
+			if(AM.invisibility > INVIS_CLOAK) //invisible things don't get to be radioactive. Because space science reasons.
+				continue
+			var/list/rad_level = list()
+			SEND_SIGNAL(AM, COMSIG_ATOM_RADIOACTIVITY, rad_level)
+			if(max(rad_level) > RADGAS_MAXIMUM_CONTAMINATION)
+				continue
+			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas + max(rad_level), max(rad_level) + RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
+			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
+			if(src.air.radgas < RADGAS_MINIMUM_CONTAMINATION_MOLES)
+				break //no point continuing if we've dropped below threshold
+
 	return 1
 
 /turf/simulated/proc/super_conduct()
@@ -562,21 +581,21 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	air_master.active_super_conductivity += src
 
-/turf/simulated/proc/update_nearby_tiles(need_rebuild)
+/turf/proc/update_nearby_tiles(need_rebuild)
 	if(!air_master)
 		return FALSE
 
 	src.selftilenotify() //used in fluids.dm for displaced fluid
-
+	var/turf/simulated/center = src //this is fine and normal
 	var/turf/simulated/north = get_step(src,NORTH)
 	var/turf/simulated/south = get_step(src,SOUTH)
 	var/turf/simulated/east = get_step(src,EAST)
 	var/turf/simulated/west = get_step(src,WEST)
 
 	if(need_rebuild)
-		if(istype(src)) //Rebuild/update nearby group geometry
-			if(src.parent)
-				air_master.groups_to_rebuild |= src.parent
+		if(istype(center)) //Rebuild/update nearby group geometry
+			if(center.parent)
+				air_master.groups_to_rebuild |= center.parent
 			else
 				air_master.tiles_to_update |= src
 
@@ -605,7 +624,8 @@ var/global/list/turf/hotly_processed_turfs = list()
 			else
 				air_master.tiles_to_update |= west
 	else
-		if(istype(src)) air_master.tiles_to_update |= src
+		if(istype(center))
+			air_master.tiles_to_update |= src
 		if(istype(north))
 			north.tilenotify(src)
 			air_master.tiles_to_update |= north

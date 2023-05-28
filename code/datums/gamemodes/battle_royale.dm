@@ -18,6 +18,7 @@ var/global/area/current_battle_spawn = null
 /datum/game_mode/battle_royale
 	name = "Battle Royale"
 	config_tag = "battle_royale"
+	regular = FALSE
 	var/list/drop_locations = list()
 	var/list/datum/mind/living_battlers = list()
 	var/last_shuttle_move = 0
@@ -51,18 +52,7 @@ var/global/area/current_battle_spawn = null
 				living_battlers.Add(player.mind)
 
 	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
-	// Stolen from /datum/terrainify/void
-	var/datum/station_zlevel_repair/station_repair = new
-	station_repair.ambient_light = new /image/ambient
-	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
-	station_repair.station_generator = new/datum/map_generator/void_generator
-	var/list/space = list()
-	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-		space += S
-	station_repair.station_generator.generate_terrain(space, flags=MAPGEN_IGNORE_FAUNA)
-	for (var/turf/S in space)
-		S.UpdateOverlays(station_repair.ambient_light, "ambient")
-	station_repair.clean_up_station_level()
+	generate_void()
 	map_settings.space_turf_replacement = /turf/simulated/floor/void
 
 	// Dense borders to prevent leaving the station Z
@@ -184,7 +174,7 @@ var/global/area/current_battle_spawn = null
 	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
 
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale", "BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.", 1, TRUE, TRUE)
 
 	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 

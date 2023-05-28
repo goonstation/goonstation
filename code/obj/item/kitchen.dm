@@ -43,7 +43,8 @@ TRAYS
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 10
 	stamina_crit_chance = 15
@@ -151,7 +152,8 @@ TRAYS
 /obj/item/kitchen/utensil/knife
 	name = "knife"
 	icon_state = "knife"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
@@ -460,8 +462,8 @@ TRAYS
 		max_count = 8
 		box_type = "lpop"
 		has_closed_state = 0
-		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
-		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/lollipop
 		contained_food_name = "lollipop"
 		w_class = W_CLASS_SMALL
 
@@ -538,6 +540,10 @@ TRAYS
 //TRAYS AND PLATES OH MY||
 //=-=-=-=-=-=-=-=-=-=-=-=-
 
+/** Number of pixels in each direction which we allow initial foods to be positioned in.
+ *  Really should be a var, but I'm not bothering to get more specific icon bounds rn
+ */
+#define FOOD_POSITION_RADIUS 6
 /obj/item/plate
 	name = "plate"
 	desc = "It's like a frisbee, but more dangerous!"
@@ -559,7 +565,15 @@ TRAYS
 	/// Used to measure what you can fit on the plate before it gets full
 	var/space_left = 3
 	/// Used to track all the non-plate items inside the plate
-	var/food_inside = list()
+	var/list/obj/food_inside = list()
+	/** List of types of initial food on this plate; added and positioned in New(). Can be associative. For subtypes for mapping.
+	 *  Will runtime if the food doesn't fit.
+	 *  Ex: list(/obj/item/reagent_containers/food/snacks/plant/peach = 2, /obj/item/reagent_containers/food/snacks/plant/apple)
+	 *  [2 peaches and 1 apple]
+	 */
+	var/initial_foods = null
+	/// For mapping overrides- should this plate automatically place food on the same tile on it?
+	var/grabs_food_on_spawn = TRUE
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
@@ -572,6 +586,34 @@ TRAYS
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
+		for (var/type in src.initial_foods)
+			var/amt = src.initial_foods[type] || 1 // use value if assoc, otherwise just 1
+			for (var/i in 1 to amt)
+				. = src.add_contents(new type(src.loc))
+				if (!.)
+					stack_trace("Couldn't add food to plate with intitial foods [identify_object(src)]- likely ran out of space.")
+
+		/* Position initial foods. Will need to be refactored if we want to support mapped plate stacks. Uses regular polygons.
+		 * We prioritize initial foods over grabbing existing ones because initial foods are consistent; adding on-ground foods first would cause
+		 * inconsistent errors.
+		 */
+		var/n = length(src.food_inside) //! Number of foods we're placing/number of vertices
+		if (n)
+			// First one always goes in the middle
+			food_inside[1].pixel_x = 0
+			food_inside[1].pixel_y = 0
+			var/rad = FOOD_POSITION_RADIUS //! Radius which we're placing foods inside/radius of circumscribing circle
+			var/ang = 360 / n //! Angle between foods, in degrees
+			for (var/i in 2 to n)
+				food_inside[i].pixel_x = rad * sin(i * ang)
+				food_inside[i].pixel_y = rad * cos(i * ang)
+
+		if (src.grabs_food_on_spawn)
+			SPAWN(1 DECI SECOND)
+				if (isturf(src.loc))
+					for (var/obj/item/food_maybe in src.loc)
+						// This will fail for non-edibles so we can just blindfire the proc at everything
+						src.add_contents(food_maybe)
 
 	proc/check_height()
 		. = 1
@@ -630,8 +672,8 @@ TRAYS
 		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		food.event_handler_flags |= NO_MOUSEDROP_QOL
-		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
-		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
+		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, PROC_REF(indirect_pickup))
+		RegisterSignal(food, COMSIG_ATTACKHAND, PROC_REF(remove_contents))
 		src.UpdateIcon()
 		boutput(user, "You put [food] [src.is_plate ? "on" : "in"] \the [src].")
 
@@ -774,6 +816,20 @@ TRAYS
 			src.food_inside -= food
 			src.space_left += food.w_class
 		. = ..()
+
+#undef FOOD_POSITION_RADIUS
+
+/obj/item/plate/breakfast
+	initial_foods = list(/obj/item/reagent_containers/food/snacks/breakfast)
+
+/obj/item/plate/monster
+	initial_foods = list(/obj/item/reagent_containers/food/snacks/burger/monsterburger)
+
+/obj/item/plate/bigtest
+	max_space = INFINITY
+	space_left = INFINITY
+	initial_foods = list(/obj/item/reagent_containers/food/snacks/scotch_egg = 6)
+
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."

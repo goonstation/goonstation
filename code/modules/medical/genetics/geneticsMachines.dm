@@ -67,11 +67,7 @@
 		else
 			src.Attackhand(user)
 	else
-		var/obj/item/device/pda2/PDA = W
-		if (istype(PDA) && PDA.ID_card)
-			W = PDA.ID_card
-
-		var/obj/item/card/id/ID = W
+		var/obj/item/card/id/ID = get_id_card(W)
 		if (istype(ID))
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
@@ -192,7 +188,7 @@
 
 			// The person trying to use the computer should be inside the scanner, they know what they're doing
 			if(usr == scanner.occupant)
-				stack_trace("[usr] (\ref[usr]) is using [src] (\ref [src]) while being inside [scanner] (\ref [src]). That's weird and they might be cheating!")
+				stack_trace("[identify_object(usr)] is using [identify_object(src)] while being inside a clone scanner. That's weird and they might be cheating!")
 
 			scanner.occupant = null
 			scanner.icon_state = "scanner_0"
@@ -221,7 +217,7 @@
 		return null
 	if (!src.scanner.occupant_preview)
 		src.scanner.occupant_preview = new()
-		src.scanner.occupant_preview.add_background("#092426")
+		src.scanner.occupant_preview.add_background("#092426", height_mult=2)
 		src.scanner.update_occupant()
 	return src.scanner.occupant_preview
 
@@ -626,7 +622,7 @@
 					copy_datum_vars(E, NEW)
 					GB.offered_genes += new /datum/geneboothproduct(NEW,booth_effect_desc,booth_effect_cost,registered_id)
 					if (GB.offered_genes.len == 1)
-						GB.just_pick_anything()
+						GB.select_product(GB.offered_genes[1])
 					scanner_alert(ui.user, "Sent 5 of '[NEW.name]' to gene booth.")
 					GB.reload_contexts()
 			on_ui_interacted(ui.user)
@@ -975,7 +971,7 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
-		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+		var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 		P?.add_client(user?.client)
 		.["subject"] = list(
 			"preview" = P?.preview_id,
@@ -1123,7 +1119,7 @@
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
-	var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+	var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
 

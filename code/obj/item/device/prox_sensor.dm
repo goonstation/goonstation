@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/prox_sensor)
+	mats = 2
+
 /obj/item/device/prox_sensor
 	name = "Proximity Sensor"
 	icon_state = "motion0"
@@ -12,7 +15,6 @@
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	m_amt = 300
-	mats = 2
 	desc = "A device which transmits a signal when it detects movement nearby."
 
 /obj/item/device/prox_sensor/dropped()

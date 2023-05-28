@@ -5,13 +5,19 @@
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
+
+//Put any items that NPCs physically cannot pickup here
+#define IS_NPC_ILLEGAL_ITEM(x) ( \
+		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
+	)
+
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
 			istype(x, /obj/item/device/radio/headset) || \
 			istype(x, /obj/item/card/id) || \
-			x.flags & ONBELT || \
-			x.flags & ONBACK \
+			x.c_flags & ONBELT || \
+			x.c_flags & ONBACK \
 		) && !IS_NPC_HATED_ITEM(x) \
 	)
 
@@ -31,7 +37,18 @@
 		SPAWN(1 SECOND)
 			set_clothing_icon_dirty()
 		SPAWN(2 SECONDS)
-			ai_init()
+			if (src.is_npc)
+				ai_init()
+
+/mob/living/carbon/human/npc/mutantrace
+	var/spawn_mutantrace
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			if(spawn_mutantrace)
+				src.set_mutantrace(text2path(spawn_mutantrace))
+				randomize_look(src, change_gender=1, change_blood=1, change_age=1, change_name=(!real_name), change_underwear=1, remove_effects=0)
 
 /mob/living/carbon/human/npc/assistant
 	ai_aggressive = 1
@@ -159,7 +176,7 @@
 	ai_attacked = 0
 
 	if(abilityHolder)
-		if(!abilityHolder.getAbility(/datum/targetable/ai_toggle))
+		if(src.use_ai_toggle && !abilityHolder.getAbility(/datum/targetable/ai_toggle))
 			abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 /mob/living/carbon/human/proc/ai_stop()
@@ -199,6 +216,13 @@
 		ai_lastaction = world.time
 		walk_towards(src, null)
 		return
+
+	// Strange to have this so high up, but we're considered 'restrained' if we have a missing limb on our active hand
+	// thus the AI thinks it's cuffed or whatever and never does anything other than moving if it loses the active arm
+	if(!src.limbs.l_arm)
+		src.swap_hand(0)
+	else if(!src.limbs.r_arm)
+		src.swap_hand(1)
 
 	if(!src.restrained() && !src.lying && !src.buckled)
 		ai_action()
@@ -551,21 +575,21 @@
 		throw_equipped |= prob(80)
 
 	// pull things out of other things!
-	if(istype(src.equipped(), /obj/item/storage))
-		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+	var/obj/item/I = src.equipped()
+	if(I.storage)
+		if(!length(I.storage.get_contents()) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else if(length(storage.contents))
-			var/obj/item/taken = pick(storage.contents)
-			src.u_equip(storage)
-			storage.set_loc(src.loc)
-			storage.dropped(src)
-			storage.layer = initial(storage.layer)
-			taken.set_loc(storage.loc)
+		else if(length(I.storage.get_contents()))
+			var/obj/item/taken = pick(I.storage.get_contents())
+			src.u_equip(I)
+			I.set_loc(src.loc)
+			I.dropped(src)
+			I.layer = initial(I.layer)
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
-	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.flags & ONBELT) || prob(0.1)))
+	if(src.hand && IS_NPC_CLOTHING(src.equipped()) && prob(80) && (!(src.equipped()?.c_flags & ONBELT) || prob(0.1)))
 		src.hud.relay_click("invtoggle", src, list())
 		if(src.equipped())
 			throw_equipped |= prob(80)
@@ -595,7 +619,7 @@
 					poured = TRUE
 					break
 		if(poured || istype(src.equipped(), /obj/item/reagent_containers/glass) && prob(80))
-			// do nothing
+			; // do nothing
 		else if((istype(src.equipped(), /obj/item/reagent_containers/food/snacks) || src.equipped().reagents?.total_volume > 0) && ai_useitems)
 			src.ai_attack_target(src, src.equipped())
 		else
@@ -704,7 +728,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(G)) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -724,7 +748,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1
@@ -779,10 +803,8 @@
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(src.back && istype(src.back,/obj/item/storage/backpack))
-			var/obj/item/storage/backpack/B = src.back
-			if(B.contents.len < 7)
-				B.Attackby(GN,src)
+		else if(src.back?.storage && !src.back.storage.is_full())
+			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup
 
@@ -991,3 +1013,4 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
+#undef IS_NPC_ILLEGAL_ITEM

@@ -4,7 +4,7 @@
 	desc = "A dartboard."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "dartboard"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/last_score = 0

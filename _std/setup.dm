@@ -3,7 +3,7 @@
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1 //Uncomment this to just skip everything possible and get into the game asap.
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1 // uncomment this to use atlas as the single map and disable all other z levels. Speeds up compile/boot times but will mess up anything relying on other z-levels
 
-#ifdef RUNTIME_CHECKING
+#ifdef CHECK_MORE_RUNTIMES
 #define ABSTRACT_VIOLATION_CRASH
 #endif
 

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/multitool)
+	mats = 6
+
 /obj/item/device/multitool
 	name = "multitool"
 	desc = "You can use this on airlocks or APCs to try to hack them without cutting wires."
@@ -5,7 +8,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/multitool.dmi'
 	icon_state = "multitool"
 
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_PULSING
 	w_class = W_CLASS_SMALL
 
@@ -16,7 +20,6 @@
 
 	m_amt = 50
 	g_amt = 20
-	mats = 6
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -25,6 +28,14 @@
 		user.visible_message("<span class='alert'><b>[user] connects the wires from the multitool onto [his_or_her(user)] tongue and presses pulse. It's pretty shocking to look at.</b></span>")
 		user.TakeDamage("head", 0, 160)
 		return 1
+
+	grey
+		desc = "You can use this on airlocks or APCs to try to hack them without cutting wires. This one comes with a handy grey stripe."
+		icon_state = "multitool-grey"
+
+	orange
+		desc = "You can use this on airlocks or APCs to try to hack them without cutting wires. This one comes with a nifty orange stripe."
+		icon_state = "multitool-orange"
 
 /obj/item/device/multitool/afterattack(atom/target, mob/user , flag)
 	//Get the NETID from bots/computers/everything else
@@ -77,3 +88,4 @@
 	if (test_link)
 		if (length(test_link.powernet?.cables) < 1)
 			boutput(user, "<span class='alert'>ERR#NOTATERM</span>")
+

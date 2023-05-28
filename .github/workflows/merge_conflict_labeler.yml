@@ -2,18 +2,16 @@ name: "Label Merge Conflicts"
 on:
   push:
     branches: [master]
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches: [master]
 
 jobs:
   label_conflicts:
     runs-on: ubuntu-latest
     if: github.repository == 'goonstation/goonstation'
     steps:
-      - uses: prince-chrismc/label-merge-conflicts-action@v2
+      - uses: goonstation/label-merge-conflicts-action@v3-G
         with:
           CONFLICT_LABEL_NAME: "S-Merge-Conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAX_RETRIES: 12
-          WAIT_MS: 8008
+          MAX_RETRIES: 8
+          WAIT_MS: 9000
+          conflict_comment: ''

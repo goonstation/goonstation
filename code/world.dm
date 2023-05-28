@@ -52,12 +52,14 @@ var/global/mob/twitch_mob = 0
 		var/list/lines = splittext(text, "\n")
 		if (lines[1])
 			master_mode = lines[1]
+			next_round_mode = master_mode
 			logDiary("Saved mode is '[master_mode]'")
 
 /world/proc/save_mode(var/the_mode)
 	var/F = file("data/mode.txt")
 	fdel(F)
 	F << the_mode
+	next_round_mode = the_mode
 
 /world/proc/load_intra_round_value(var/field) //Currently for solarium effects, could also be expanded to that pickle jar idea.
 	var/path = "data/intra_round.sav"
@@ -113,8 +115,6 @@ var/global/mob/twitch_mob = 0
 		create_turf_html = grabResource("html/admin/create_object.html")
 		create_turf_html = replacetext(create_turf_html, "null /* object types */", "\"[turfjs]\"")
 
-var/f_color_selector_handler/F_Color_Selector
-
 /proc/buildMaterialPropertyCache()
 	if(materialProps.len) return
 	for(var/A in childrentypesof(/datum/material_property)) //Caching material props
@@ -146,7 +146,7 @@ var/f_color_selector_handler/F_Color_Selector
 		if(UNIX) lib = "libprof.so"
 		else CRASH("unsupported platform")
 
-	var/init = call(lib, "init")()
+	var/init = LIBCALL(lib, "init")()
 	if("0" != init) CRASH("[lib] init error: [init]")
 #endif
 
@@ -279,6 +279,9 @@ var/f_color_selector_handler/F_Color_Selector
 		cargo_pad_manager = new /datum/cargo_pad_manager()
 		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
 		camera_coverage_controller = new /datum/controller/camera_coverage()
+
+		Z_LOG_DEBUG("Preload", "Generating minimaps...")
+		minimap_renderer = new
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -481,7 +484,8 @@ var/f_color_selector_handler/F_Color_Selector
 		"[R_FREQ_COMMAND]" = "Command",
 		"[R_FREQ_SECURITY]" = "Security",
 		"[R_FREQ_CIVILIAN]" = "Civilian",
-		"[R_FREQ_DEFAULT]" = "General"
+		"[R_FREQ_DEFAULT]" = "General",
+		"[R_FREQ_INTERCOM_AI]" = "AI Intercom",
 		)
 
 	UPDATE_TITLE_STATUS("Starting processes")
@@ -509,6 +513,7 @@ var/f_color_selector_handler/F_Color_Selector
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
 #ifndef RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
+	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
 
 	Z_LOG_DEBUG("World/Init", "Notifying hub of new round")
@@ -521,17 +526,10 @@ var/f_color_selector_handler/F_Color_Selector
 	Z_LOG_DEBUG("World/Init", "Loading intraround jars...")
 	load_intraround_jars()
 
-	if (derelict_mode)
-		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
-		creepify_station()
-		voidify_world()
-		signal_loss = 80 // heh
-		bust_lights()
-		master_mode = "disaster" // heh pt. 2
-
 	//SpyStructures and caches live here
 	UPDATE_TITLE_STATUS("Updating cache")
 	Z_LOG_DEBUG("World/Init", "Building various caches...")
+	build_valid_game_modes()
 	build_chem_structure()
 	build_reagent_cache()
 	build_supply_pack_cache()
@@ -553,6 +551,14 @@ var/f_color_selector_handler/F_Color_Selector
 	makeMiningLevel()
 	#endif
 
+	if (derelict_mode)
+		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
+		creepify_station()
+		voidify_world()
+		signal_loss = 80 // heh
+		bust_lights()
+		master_mode = "disaster" // heh pt. 2
+
 	UPDATE_TITLE_STATUS("Lighting up")
 	Z_LOG_DEBUG("World/Init", "RobustLight2 init...")
 	RL_Start()
@@ -568,6 +574,7 @@ var/f_color_selector_handler/F_Color_Selector
 	UPDATE_TITLE_STATUS("Loading gallery artwork")
 	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
 	initialize_gallery_manager()
+	initialize_mail_system()
 	#endif
 
 	UPDATE_TITLE_STATUS("Generating terrain")
@@ -672,6 +679,8 @@ var/f_color_selector_handler/F_Color_Selector
 	processScheduler.stop()
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_REBOOT)
 	save_intraround_jars()
+	var/list/spacemas_ornaments = get_spacemas_ornaments(only_if_loaded=TRUE)
+	if(spacemas_ornaments) world.save_intra_round_value("tree_ornaments", spacemas_ornaments)
 	global.save_noticeboards()
 	for_by_tcl(canvas, /obj/item/canvas/big_persistent)
 		canvas.save()
@@ -954,9 +963,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 							if (msg == INTENT_HELP || msg == INTENT_DISARM || msg == INTENT_GRAB || msg == INTENT_HARM)
 								twitch_mob.set_a_intent(lowertext(msg))
-								if (ishuman(twitch_mob))
-									var/mob/living/carbon/human/H = twitch_mob
-									H.hud.update_intent()
 							return 1
 
 						if("attack")
@@ -983,7 +989,6 @@ var/f_color_selector_handler/F_Color_Selector
 
 								if (twitch_mob.a_intent != INTENT_HARM && twitch_mob.a_intent != INTENT_DISARM)
 									twitch_mob.set_a_intent(INTENT_HARM)
-									H.hud.update_intent()
 
 								var/obj/item/equipped = H.equipped()
 								var/list/p = list()
@@ -1070,8 +1075,8 @@ var/f_color_selector_handler/F_Color_Selector
 								for (var/obj/item/I in H.contents)
 									if (istype(I,/obj/item/organ) || istype(I,/obj/item/skull) || istype(I,/obj/item/parts) || istype(I,/atom/movable/screen/hud)) continue //FUCK
 									hudlist += I
-									if (istype(I,/obj/item/storage))
-										hudlist += I.contents
+									if (I.storage)
+										hudlist += I.storage.get_contents()
 
 							var/list/close_match = list()
 							for (var/obj/item/I in view(1,twitch_mob) + hudlist)
@@ -1538,6 +1543,8 @@ var/f_color_selector_handler/F_Color_Selector
 			if ("health")
 				var/ircmsg[] = new()
 				ircmsg["cpu"] = world.cpu
+				ircmsg["map_cpu"] = world.map_cpu
+				ircmsg["clients"] = length(clients)
 				ircmsg["queue_len"] = delete_queue ? delete_queue.count() : 0
 				var/curtime = world.timeofday
 				sleep(1 SECOND)
@@ -1559,7 +1566,10 @@ var/f_color_selector_handler/F_Color_Selector
 
 			if ("rev")
 				var/ircmsg[] = new()
-				ircmsg["msg"] = "[vcs_revision] by [vcs_author]"
+				var/message_to_send = ORIGIN_REVISION + " by " + ORIGIN_AUTHOR
+				if (UNLINT(VCS_REVISION != ORIGIN_REVISION))
+					message_to_send += " + testmerges"
+				ircmsg["msg"] = message_to_send
 				return ircbot.response(ircmsg)
 
 			if ("version")
@@ -1719,6 +1729,18 @@ var/f_color_selector_handler/F_Color_Selector
 				var/datum/http_response/playtime_response = playtime_request.into_response()
 				if (!playtime_response.errored && playtime_response.body)
 					response["playtime"] = playtime_response.body
+
+				var/datum/player/player = make_player(plist["ckey"])
+				if(isnull(player.last_seen))
+					player.cache_round_stats_blocking()
+				if(player)
+					response["last_seen"] = player.last_seen
+				if(player.cloud_fetch())
+					for(var/kkey in player.clouddata)
+						if(kkey in list("admin_preferences", "buildmode"))
+							continue
+						response[kkey] = player.clouddata[kkey]
+					response["cloudsaves"] = player.cloudsaves
 
 				return json_encode(response)
 

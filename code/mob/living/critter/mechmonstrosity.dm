@@ -105,7 +105,7 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 		HH.icon_state = "syringegun"				// the icon state of the hand UI background
 		HH.limb_name = "Injector"					// name for the dummy holder
-		HH.limb = new /datum/limb/gun/syringe	// if not null, the special limb to use when attack_handing
+		HH.limb = new /datum/limb/gun/kinetic/syringe	// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 0
 		HH.can_attack = 0
 		HH.can_range_attack = 1
@@ -453,7 +453,6 @@
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
 	seek_target()
-
 		if (!src.alive) return
 		var/mob/living/Cc
 		for (var/mob/living/C in hearers(src.seekrange,src))

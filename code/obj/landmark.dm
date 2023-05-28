@@ -10,7 +10,7 @@ proc/pick_landmark(name, default=null)
 	name = "landmark"
 	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
@@ -272,6 +272,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/character_preview_spawn
 	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
+/obj/landmark/tutorial/flock_conversion
+	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
 
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"

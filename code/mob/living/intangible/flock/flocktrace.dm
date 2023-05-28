@@ -25,16 +25,23 @@
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
-		src.flock.partitions_made++
+		src.flock.stats.partitions_made++
+		if (free)
+			src.flock.free_traces++
 	else
 		src.death()
 
 	src.real_name = src.flock ? src.flock.pick_name("flocktrace") : name
 	src.name = src.real_name
 	src.update_name_tag()
+	if (src.flock.relay_in_progress)
+		var/obj/flock_structure/relay/relay = locate() in src.flock.structures
+		if (relay)
+			src.AddComponent(/datum/component/tracker_hud/flock, relay)
 
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/directSay)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
 
@@ -64,6 +71,11 @@
 		<br><span class='bold'>Cognition:</span> SYNAPTIC PROCESS
 		<br>###=-</span></span>"}
 
+/mob/living/intangible/flock/trace/select_drone(mob/living/critter/flock/drone/drone)
+	if (src.flock?.flockmind.tutorial)
+		return
+	..()
+
 /mob/living/intangible/flock/trace/proc/promoteToFlockmind(remove_flockmind_from_flock)
 	var/was_in_drone = FALSE
 	var/mob/living/critter/flock/drone/controlled = src.loc
@@ -75,6 +87,7 @@
 	flock_speak(null, "Flocktrace [src.real_name] has been promoted to Flockmind.", src.flock)
 
 	var/mob/living/intangible/flock/flockmind/original = src.flock.flockmind
+	original.tutorial?.Finish()
 	if (remove_flockmind_from_flock)
 		var/mob/living/intangible/flock/flockmind/F = new (get_turf(src), src.flock)
 		src.mind.transfer_to(F)
@@ -95,7 +108,7 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.flock && src.compute != 0 && src.flock.total_compute() - src.flock.used_compute < -FLOCKTRACE_COMPUTE_COST * src.flock.queued_trace_deaths && !src.dying)
+	if (src.flock && src.compute != 0 && length(src.flock.traces) > src.flock.max_trace_count + src.flock.queued_trace_deaths && !src.dying)
 		src.dying = TRUE
 		src.flock.queued_trace_deaths++
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness! You will die soon!</span>")
@@ -107,7 +120,7 @@
 			flockdrone.updateOverlaysClient(src.client)
 		SPAWN(5 SECONDS)
 			if (src?.flock)
-				if (src.flock.total_compute() < src.flock.used_compute)
+				if (length(src.flock.traces) > src.flock.max_trace_count)
 					src.death()
 				else
 					src.dying = FALSE

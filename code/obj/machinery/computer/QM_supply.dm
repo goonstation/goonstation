@@ -1,3 +1,5 @@
+#define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
+
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -147,6 +149,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
 		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
+		src.req_access = list()
 		return 1
 	return 0
 
@@ -155,6 +158,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	if(user)
 		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
+	src.req_access = initial(src.req_access)
 	src.hacked = 0
 	return 1
 
@@ -530,11 +534,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
-						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
-						O.comment = copytext(html_encode(tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE)), 1, MAX_MESSAGE_LEN)
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+						if (isnull(O.comment))
+							return .("list") // The user cancelled the order
+						O.comment = html_encode(O.comment)
+						wagesystem.shipping_budget -= P.cost
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -562,11 +569,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return
 
 						if(wagesystem.shipping_budget >= P.cost)
-							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
-							O.comment = copytext(html_encode(tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE)), 1, MAX_MESSAGE_LEN)
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+							if (isnull(O.comment))
+								return .("list") // The user cancelled the order
+							O.comment = html_encode(O.comment)
+							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -1277,3 +1287,5 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+
+#undef ORDER_LABEL_MAX_LEN

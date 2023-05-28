@@ -1,0 +1,2777 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"ab" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 1;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"ac" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"af" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"al" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 9;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"aB" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"aQ" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"aZ" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It's a pipe manifold.";
+	dir = 6;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"bh" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"bs" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"bD" = (
+/obj/shrub{
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"cd" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"cl" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cm" = (
+/obj/decal/tile_edge/line/black{
+	dir = 5;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"cr" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"cM" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"cV" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"cX" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"cY" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/carpet/regalcarpet/border,
+/area/shuttle/escape/centcom)
+"dB" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"dC" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
+"dF" = (
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"dH" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = -32
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"dK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"dW" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14"
+	},
+/area/shuttle/escape/centcom)
+"eu" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"ew" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"eA" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 10;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"eG" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"eQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"fa" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/shuttle/escape/centcom)
+"ft" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"fw" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"fH" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"fW" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
+"gA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"gC" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"gG" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
+"gL" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_x = -32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"gP" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 10;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"hx" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = -6;
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_x = 7;
+	pixel_y = 15;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = 5;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread{
+	pixel_y = -6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread{
+	pixel_y = -13;
+	rand_pos = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"ip" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It's a pipe manifold.";
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"iC" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"iD" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"jp" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"jx" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"jS" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"jY" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "A pipe.";
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"kt" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ky" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"kz" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"kB" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"lK" = (
+/obj/machinery/computer/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"lW" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 19;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 2;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -9;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"mD" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 9;
+	pixel_y = 22;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 2;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -5;
+	pixel_y = 16;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -7;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 2;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"mY" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"nI" = (
+/turf/unsimulated/floor/marble,
+/area/shuttle/escape/centcom)
+"nP" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"oC" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"oO" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_y = 18;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = 10;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	pixel_x = -1;
+	pixel_y = 9;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/banana{
+	pixel_x = -5;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet{
+	pixel_y = -10;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = 6;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"oZ" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 10;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 8;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_y = 9;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"pj" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7"
+	},
+/area/shuttle/escape/centcom)
+"pm" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"pp" = (
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 6
+	},
+/obj/item/clothing/head/crown,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"px" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"qb" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"qn" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 19;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 2;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -9;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"qx" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"qy" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"qH" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"qZ" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/centcom/outside)
+"rc" = (
+/obj/decal/lightshaft,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"rl" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"ro" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -7;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 2;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 9;
+	pixel_y = 15;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = 3;
+	pixel_y = -8;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"rF" = (
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"rK" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"rN" = (
+/obj/decal/lightshaft,
+/obj/shrub{
+	dir = 10
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"rP" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"rQ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"rR" = (
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"rZ" = (
+/obj/indestructible/shuttle_corner,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"sd" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ss" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"sB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"sE" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 6
+	},
+/area/centcom)
+"sR" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ta" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 4
+	},
+/area/centcom/outside)
+"tC" = (
+/obj/shrub{
+	dir = 10
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"tD" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"uF" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = 7;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = -5;
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"uY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"vd" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"vp" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"vx" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"vW" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/danish_cherry{
+	pixel_x = -7;
+	pixel_y = 15;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = 5;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = -6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = -11;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = 7;
+	pixel_y = 23;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_cherry{
+	pixel_x = 8;
+	pixel_y = 17;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = 7;
+	rand_pos = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"wm" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"wR" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 1
+	},
+/area/centcom/outside)
+"xh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"xw" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"yZ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 10;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"zb" = (
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"zi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"zj" = (
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"zo" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
+"zr" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"zx" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"zy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"zA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"zN" = (
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"Ad" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner,
+/area/shuttle/escape/centcom)
+"Ae" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"AI" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13"
+	},
+/area/shuttle/escape/centcom)
+"Bv" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
+"BA" = (
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"BC" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"BD" = (
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"CC" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"CF" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"CK" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border,
+/area/shuttle/escape/centcom)
+"Da" = (
+/turf/unsimulated/floor/stairs/dark/wide,
+/area/centcom/outside)
+"DC" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"DI" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/item/clothing/head/crown,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"DK" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
+"DN" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 2;
+	icon = 'icons/obj/atmospherics/valve.dmi';
+	icon_state = "valve0";
+	name = "valve"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"DX" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"DY" = (
+/obj/stool/chair/wooden/regal{
+	anchored = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"Em" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Er" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"EF" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"EH" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"EQ" = (
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/table/regal/auto,
+/obj/random_item_spawner/med_kit/two{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/decoration/floralarrangement{
+	pixel_y = -5
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"ET" = (
+/obj/decal/tile_edge/line/black{
+	dir = 6;
+	icon_state = "line2"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"FC" = (
+/obj/rack,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Gb" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"Gc" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"GN" = (
+/obj/machinery/light,
+/obj/random_item_spawner/med_kit/two{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/obj/table/regal/auto,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/decoration/floralarrangement{
+	pixel_y = -7
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"GU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/arrival,
+/area/centcom)
+"GV" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"HG" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = -4;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 4;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 11;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = -6;
+	pixel_y = -8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = -6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = -6;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = -9;
+	pixel_y = 14;
+	rand_pos = 0
+	},
+/obj/decoration/floralarrangement{
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"If" = (
+/obj/stool/chair/comfy/throne_gold{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"Il" = (
+/turf/unsimulated/floor/marble/border_bw,
+/area/shuttle/escape/centcom)
+"It" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Iw" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 19;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 10;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -1;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 7;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/pear{
+	pixel_x = -7;
+	pixel_y = -9;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/strawberry{
+	pixel_x = 10;
+	pixel_y = -11;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"Iy" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Iz" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/plant/banana{
+	pixel_x = -8;
+	pixel_y = 16;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_x = 8;
+	pixel_y = 14;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape/green{
+	pixel_x = -7;
+	pixel_y = 10;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/pumpkin{
+	pixel_x = 4;
+	pixel_y = 4;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"IK" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"IV" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom)
+"IW" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 9;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 14;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = -4;
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = -7;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = -8;
+	pixel_y = 24;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_cherry{
+	pixel_x = -6;
+	pixel_y = 17;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"Jd" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"JY" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 10
+	},
+/area/centcom)
+"Kg" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"KW" = (
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/shuttle/escape/centcom)
+"Lk" = (
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Ls" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
+/area/shuttle/escape/centcom)
+"LN" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"LP" = (
+/turf/unsimulated/floor/marble/border_bw{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
+"LT" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"LV" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"LZ" = (
+/obj/decal/tile_edge/line/black{
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"ME" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 11;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -5;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 1;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"MK" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 19;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = -7;
+	pixel_y = 10;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -1;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 7;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/pear{
+	pixel_x = -7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/strawberry{
+	pixel_x = 15;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"Nd" = (
+/turf/unsimulated/floor/carpet/regalcarpet/innercorner,
+/area/shuttle/escape/centcom)
+"NK" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"NR" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/obj/decal/fakeobjects{
+	density = 1;
+	icon = 'icons/obj/atmospherics/atmos.dmi';
+	icon_state = "orange";
+	name = "Canister \[Plasma\]"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Oo" = (
+/obj/shrub,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
+"Ot" = (
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"Ou" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = 6;
+	pixel_y = 11;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/pear{
+	pixel_x = -6;
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/decoration/floralarrangement{
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"Ox" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big{
+	dir = 8
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"PL" = (
+/obj/decal/fakeobjects/tallsmes,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"PU" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"Qp" = (
+/turf/unsimulated/floor/stairs/dark/wide{
+	dir = 10
+	},
+/area/centcom/outside)
+"Rb" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/marble/black,
+/area/shuttle/escape/centcom)
+"Rh" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"Rs" = (
+/obj/table/regal/auto,
+/obj/decoration/floralarrangement,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/shuttle/escape/centcom)
+"Rw" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = 8;
+	pixel_y = 11;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -8;
+	pixel_y = 17;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = -2;
+	pixel_y = 11;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/shuttle/escape/centcom)
+"RC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Sp" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"Te" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Ti" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"TZ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"Uk" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	pixel_y = 12;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"Un" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold";
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Uz" = (
+/obj/table/regal/auto,
+/obj/machinery/light/small/floor/netural,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/wine{
+	pixel_x = -7;
+	pixel_y = 3;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = 2;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 9;
+	pixel_y = 15;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_x = 7;
+	pixel_y = 6;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/apple{
+	pixel_x = 3;
+	pixel_y = -8;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"UQ" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"UT" = (
+/obj/shrub{
+	dir = 1
+	},
+/turf/unsimulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/shuttle/escape/centcom)
+"Vi" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/plant/grape{
+	pixel_y = 18;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/plant/grapefruit{
+	pixel_x = 10;
+	pixel_y = 13;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/garlicbread_ch{
+	pixel_x = -1;
+	pixel_y = 9;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/banana{
+	pixel_x = -5;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet{
+	pixel_y = -10;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/painauchocolat{
+	pixel_x = 6;
+	rand_pos = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"Vz" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
+"VM" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -7;
+	pixel_y = 15;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/flute{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne{
+	pixel_x = 8;
+	pixel_y = 16;
+	rand_pos = 0
+	},
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+"VP" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"XE" = (
+/obj/stool/chair/blue{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
+"XO" = (
+/turf/unsimulated/wall{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_1";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom)
+"XZ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "pipe"
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/outside)
+"Ya" = (
+/obj/decal/tile_edge/line/orange{
+	icon_state = "line1"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"Yd" = (
+/obj/decal/tile_edge/line/orange{
+	dir = 9;
+	icon_state = "line2"
+	},
+/turf/unsimulated/floor/black,
+/area/centcom/outside)
+"YL" = (
+/obj/decoration/regallamp{
+	anchored = 1;
+	lit = 1
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/shuttle/escape/centcom)
+"YN" = (
+/obj/machinery/computer/announcement{
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/shuttle/escape/centcom)
+"ZJ" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
+"ZY" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6;
+	name = "pipe"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/centcom/outside)
+"ZZ" = (
+/obj/table/regal/auto,
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 9;
+	pixel_y = 7;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 14;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_x = 10;
+	pixel_y = 21;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_apple{
+	pixel_x = -4;
+	pixel_y = 5;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_blueb{
+	pixel_x = -7;
+	pixel_y = 8;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	pixel_x = -8;
+	pixel_y = 24;
+	rand_pos = 0
+	},
+/obj/item/reagent_containers/food/snacks/danish_cherry{
+	pixel_x = -6;
+	pixel_y = 17;
+	rand_pos = 0
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/shuttle/escape/centcom)
+
+(1,1,1) = {"
+IV
+IV
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+IV
+"}
+(2,1,1) = {"
+IV
+PL
+ky
+Ae
+rR
+gL
+ZY
+jY
+ip
+ip
+ip
+jY
+jY
+jY
+jY
+ip
+ip
+ip
+jY
+ip
+jY
+jY
+It
+UQ
+NR
+IV
+"}
+(3,1,1) = {"
+IV
+zb
+UQ
+LZ
+rR
+rR
+kt
+sB
+EH
+EH
+EH
+LV
+rR
+rR
+dK
+EH
+EH
+EH
+Em
+kt
+rR
+rR
+Un
+DN
+aZ
+IV
+"}
+(4,1,1) = {"
+zj
+PL
+ky
+qx
+rR
+sB
+EH
+cl
+Ti
+Ti
+Ti
+zi
+LV
+dK
+cr
+Ti
+Ti
+Ti
+zy
+EH
+Em
+rR
+XZ
+zb
+mY
+zj
+"}
+(5,1,1) = {"
+IV
+zb
+zb
+LZ
+rR
+CC
+Ti
+Sp
+pj
+Gb
+qb
+qH
+zy
+cl
+Sp
+Ls
+Gb
+gG
+qH
+Ti
+eQ
+rR
+XZ
+zb
+NR
+IV
+"}
+(6,1,1) = {"
+IV
+PL
+ky
+qx
+rR
+CC
+dB
+fa
+vp
+pp
+vp
+gA
+EF
+EF
+xh
+fH
+DI
+fH
+fa
+dB
+eQ
+rR
+yZ
+DN
+aZ
+IV
+"}
+(7,1,1) = {"
+zj
+sd
+Kg
+ET
+rR
+sR
+dW
+AI
+cV
+cV
+cV
+KW
+kB
+UT
+zN
+rl
+rl
+rl
+dW
+AI
+zr
+rR
+cm
+Kg
+kz
+zj
+"}
+(8,1,1) = {"
+IV
+VP
+rR
+iC
+LN
+tD
+dW
+AI
+eG
+DY
+DY
+DY
+DY
+DY
+DY
+DY
+DY
+Jd
+dW
+AI
+eQ
+rR
+rR
+rR
+rR
+IV
+"}
+(9,1,1) = {"
+IV
+ac
+Iy
+ta
+eA
+CC
+dW
+Rb
+CF
+ro
+Iz
+HG
+vW
+hx
+Uk
+Ou
+lW
+oC
+fw
+AI
+eQ
+Yd
+ta
+Iy
+dH
+IV
+"}
+(10,1,1) = {"
+zj
+Lk
+Lk
+af
+Ya
+CC
+fa
+rN
+nI
+DC
+GV
+GV
+GV
+GV
+GV
+GV
+cd
+nI
+tC
+fa
+eQ
+ab
+af
+Lk
+Lk
+zj
+"}
+(11,1,1) = {"
+IV
+IV
+pm
+Rh
+pm
+IV
+fa
+qy
+nI
+Il
+YL
+cM
+cM
+cM
+cM
+cX
+Bv
+nI
+zx
+fa
+IV
+pm
+Rh
+pm
+IV
+IV
+"}
+(12,1,1) = {"
+IK
+jS
+IK
+ZJ
+JY
+IV
+aQ
+vx
+nI
+Il
+DK
+Iw
+Vi
+ZZ
+mD
+CK
+Bv
+nI
+vx
+aQ
+IV
+dC
+ZJ
+IK
+jS
+IK
+"}
+(13,1,1) = {"
+ss
+ss
+ss
+ss
+GU
+BC
+NK
+nI
+nI
+Il
+jp
+aB
+aB
+aB
+aB
+ew
+Bv
+nI
+nI
+NK
+BC
+uY
+ss
+ss
+ss
+ss
+"}
+(14,1,1) = {"
+XE
+XE
+XE
+XE
+BD
+IV
+aQ
+Ot
+nI
+oC
+LP
+LP
+LP
+LP
+LP
+LP
+CF
+nI
+Ot
+aQ
+IV
+zo
+XE
+XE
+XE
+XE
+"}
+(15,1,1) = {"
+iD
+iD
+iD
+iD
+BD
+IV
+aQ
+jx
+cd
+rl
+rl
+zN
+rl
+cV
+KW
+cV
+cV
+DC
+jx
+aQ
+IV
+zo
+iD
+iD
+iD
+iD
+"}
+(16,1,1) = {"
+ss
+ss
+ss
+ss
+GU
+BC
+NK
+rc
+BA
+oZ
+bh
+DX
+DX
+DX
+DX
+bh
+Rw
+BA
+BA
+NK
+BC
+uY
+ss
+ss
+ss
+ss
+"}
+(17,1,1) = {"
+aa
+Vz
+aa
+rP
+sE
+IV
+aQ
+tC
+bD
+Rs
+dF
+dF
+gC
+gC
+dF
+dF
+cY
+bD
+tC
+aQ
+IV
+Oo
+rP
+aa
+Vz
+aa
+"}
+(18,1,1) = {"
+IV
+IV
+pm
+Rh
+pm
+IV
+eu
+PU
+jx
+qn
+nP
+ft
+oO
+IW
+Ad
+nP
+Uz
+jx
+rZ
+Er
+IV
+pm
+Rh
+pm
+IV
+IV
+"}
+(19,1,1) = {"
+zj
+FC
+Lk
+Ox
+Ya
+rR
+RC
+eu
+EF
+PU
+jx
+DK
+uF
+MK
+CK
+jx
+rZ
+EF
+Er
+TZ
+rR
+ab
+Ox
+Lk
+FC
+zj
+"}
+(20,1,1) = {"
+IV
+Lk
+Lk
+Lk
+Qp
+rR
+zA
+vd
+RC
+aQ
+EQ
+fW
+ME
+VM
+xw
+GN
+aQ
+TZ
+vd
+rK
+rR
+Da
+Lk
+Lk
+Lk
+IV
+"}
+(21,1,1) = {"
+IV
+FC
+Lk
+Lk
+wR
+rR
+rR
+rR
+CC
+aQ
+wm
+rF
+px
+px
+Nd
+If
+aQ
+eQ
+rR
+rR
+rR
+qZ
+Lk
+Lk
+FC
+IV
+"}
+(22,1,1) = {"
+zj
+Lk
+Lk
+Gc
+Lk
+eA
+rR
+rR
+CC
+eu
+PU
+jp
+YN
+lK
+ew
+LT
+Er
+eQ
+rR
+rR
+Yd
+Lk
+Gc
+Lk
+Lk
+zj
+"}
+(23,1,1) = {"
+IV
+Lk
+Lk
+Lk
+Lk
+gP
+eA
+rR
+zA
+RC
+eu
+aQ
+aQ
+aQ
+aQ
+Er
+TZ
+rK
+rR
+Yd
+al
+Lk
+Lk
+Lk
+Lk
+IV
+"}
+(24,1,1) = {"
+IV
+Lk
+Lk
+Lk
+Lk
+Gc
+Ya
+rR
+rR
+rQ
+vd
+vd
+vd
+vd
+vd
+vd
+bs
+rR
+rR
+ab
+Gc
+Lk
+Lk
+Lk
+Lk
+IV
+"}
+(25,1,1) = {"
+IV
+Lk
+Lk
+Lk
+Lk
+Lk
+gP
+Iy
+Te
+Iy
+Iy
+Te
+Iy
+Iy
+Te
+Iy
+Iy
+Te
+Iy
+al
+Lk
+Lk
+Lk
+Lk
+Lk
+IV
+"}
+(26,1,1) = {"
+IV
+IV
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+XO
+IV
+IV
+IV
+"}

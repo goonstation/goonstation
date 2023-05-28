@@ -25,6 +25,7 @@
 			var/reagents_present = length(T.required_reagents)
 			for(var/R as anything in T.required_reagents)
 				if(generator.circ1.reagents.get_reagent_amount(R) + generator.circ2.reagents.get_reagent_amount(R) >= T.required_reagents[R])
+					; // Do nothing
 				else
 					reagents_present = FALSE
 					break
@@ -48,7 +49,7 @@
 	/// is present to activate NANITES!
 	proc/check_material_transformation()
 		if(!generator.active_form || istype(generator.active_form, /datum/teg_transformation/matsci))
-			if(generator.semiconductor?.material && ((src.generator.semiconductor.material.mat_id != src.generator.material?.mat_id) || !src.generator.material))
+			if(generator.semiconductor?.can_transform && generator.semiconductor?.material && ((src.generator.semiconductor.material.mat_id != src.generator.material?.mat_id) || !src.generator.material))
 				if(src.generator.semiconductor_state == 0 && src.generator.powered())
 					SPAWN(1.5 SECONDS)
 						src.generator.use_power(500 WATTS)
@@ -128,7 +129,6 @@ datum/teg_transformation
 	  */
 	matsci
 		mat_id = null
-		var/prev_efficiency
 
 		on_transform()
 			var/electrical_conductivity
@@ -136,7 +136,6 @@ datum/teg_transformation
 			var/efficiency_shift
 
 			. = ..()
-			prev_efficiency = src.teg.efficiency_controller
 			/*
 			FOM zT for Themoelectric Devices
 				zT = S2σT/κ
@@ -161,9 +160,4 @@ datum/teg_transformation
 			/*  2*25 / 75 = 0.66 -2  = -1.34 		 TERRIBAD */
 			/* Use above offset * 10 to put it in the -20 to 40 ballpark */
 			efficiency_shift = (2 * electrical_conductivity / thermal_conductivity) - 2 //center on zero
-			efficiency_shift = clamp(efficiency_shift*10, -20, 40) //scale shift by 10 which gets it in the ballpark!
-			src.teg.efficiency_controller = clamp(src.teg.efficiency_controller + efficiency_shift, 25, 75) //ensure nothing goes bonkers
-
-		on_revert()
-			src.teg.efficiency_controller = prev_efficiency
-			. = ..()
+			src.teg.semiconductor.efficiency_offset = clamp(efficiency_shift*10, -20, 40) //scale shift by 10 which gets it in the ballpark!

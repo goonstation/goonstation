@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 4
+	pellets_to_fire = 6
 	casing = /obj/item/casing/shotgun/pipe
 	spread_projectile_type = /datum/projectile/bullet/improvplasglass
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 6
+	pellets_to_fire = 7
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 3
+	pellets_to_fire = 5
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40
@@ -287,6 +287,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_sound = 'sound/weapons/radxbow.ogg'
 
 
+/datum/projectile/special/spreader/buckshot_burst/foamdarts
+	name = "foam dart"
+	sname = "foam dart"
+	spread_angle_variance = 22.5
+	damage = 0
+	speed_max = 32
+	speed_min = 20
+	cost = 6
+	casing = null
+	pellets_to_fire = 6
+	spread_projectile_type = /datum/projectile/bullet/foamdart
+	shot_sound = 'sound/effects/syringeproj.ogg'
 
 // Really crazy shit
 
@@ -433,9 +445,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	sname  = "meowitzer"
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "cat1"
-	dissipation_delay = 75
-	dissipation_rate = 300
+	max_range = 75
+	dissipation_rate = 0
 	projectile_speed = 26
+	damage = 10
 	cost = 1
 
 	var/explosive_hits = 1
@@ -459,6 +472,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		return
 
 /datum/projectile/special/meowitzer/inert
+	damage = 0
 	explosive_hits = 0
 
 /datum/projectile/special/spewer
@@ -511,8 +525,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	brightness = 0
 	sname = "punch"
 	shot_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
-	dissipation_delay = 1
-	dissipation_rate = 35
+	max_range = 1
+	dissipation_rate = 0
 	impact_image_state = null
 
 	on_hit(atom/hit)
@@ -930,6 +944,16 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/typetospawn = null
 	var/hasspawned = null
 	var/hit_sound = null
+	///Do we get our icon from typetospawn?
+	var/use_type_icon = FALSE
+
+	New()
+		..()
+		if (!src.use_type_icon)
+			return
+		var/atom/thing = src.typetospawn
+		src.icon = initial(thing.icon)
+		src.icon_state = initial(thing.icon_state)
 
 	on_hit(atom/hit, direction, projectile)
 		if(src.hit_sound)
@@ -1040,6 +1064,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "extinguish"
 	shot_sound = 'sound/weapons/flamethrower.ogg'
 	stun = 0
+	damage = 0
 	cost = 1
 	damage_type = D_SPECIAL
 	shot_delay = 0.1 SECONDS
@@ -1135,3 +1160,20 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(O)
 		src.emit_chems(T, O)
 		src.emit_gas(T, 1)
+
+/datum/projectile/special/spawner/handcuff
+	name = "handcuffs"
+	typetospawn = /obj/item/handcuffs/guardbot //ziptie cuffs
+	use_type_icon = TRUE
+	shot_sound = null
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		if (ishuman(hit))
+			var/obj/item/handcuffs/cuffs = new src.typetospawn
+			cuffs.try_cuff(hit, instant = TRUE)
+			src.hasspawned = TRUE
+		else
+			..()
+
+	on_pointblank(var/obj/projectile/O, var/mob/target)
+		src.on_hit(target, O = O)

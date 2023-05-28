@@ -5,14 +5,15 @@
 	alpha = 180
 	icon = null
 	mouse_opacity = 0
-	var/name_tag = null
 
 	New()
 		..()
 		src.examine_tag = new (null, src)
 		src.examine_hover_tag = new (null, src)
-		dispose(src.ex_image)
-		dispose(src.ex_hover_image)
+		qdel(src.ex_image)
+		src.ex_image = null
+		qdel(src.ex_hover_image)
+		src.ex_hover_image = null
 
 	disposing()
 		dispose(src.examine_tag)

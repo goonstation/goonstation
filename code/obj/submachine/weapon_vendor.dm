@@ -2,7 +2,7 @@
 	==>	Syndicate Weapons Vendor	<==
 	Designed for use on the Syndicate Battlecruiser Cairngorm.
 	Stocked with weapons and gear for nuclear operatives to pick between, instead of using traditional uplinks.
-	Operatives recieve a token on spawn that provides them with one sidearm credit and one loadout credit in the vendor.
+	Operatives receive a token on spawn that provides them with one sidearm credit and one loadout credit in the vendor.
 
 	Index:
 	- Vendor
@@ -26,14 +26,18 @@
 	desc = "dont see this"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER //cry about it
 	layer = OBJ_LAYER - 0.1	// Match vending machines
 
 	var/sound_token = 'sound/machines/capsulebuy.ogg'
 	var/sound_buy = 'sound/machines/spend.ogg'
+#ifdef BONUS_POINTS
+	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 999, WEAPON_VENDOR_CATEGORY_LOADOUT = 999, WEAPON_VENDOR_CATEGORY_UTILITY = 999, WEAPON_VENDOR_CATEGORY_AMMO = 999, WEAPON_VENDOR_CATEGORY_ASSISTANT = 999)
+#else
 	var/list/credits = list(WEAPON_VENDOR_CATEGORY_SIDEARM = 0, WEAPON_VENDOR_CATEGORY_LOADOUT = 0, WEAPON_VENDOR_CATEGORY_UTILITY = 0, WEAPON_VENDOR_CATEGORY_AMMO = 0, WEAPON_VENDOR_CATEGORY_ASSISTANT = 0)
+#endif
 	var/list/datum/materiel_stock = list()
 	var/token_accepted = /obj/item/requisition_token
 	var/log_purchase = FALSE
@@ -94,12 +98,12 @@
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
-			logTheThing(LOG_DEBUG, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
 
 	proc/vended(var/atom/A)
 		if(log_purchase)
-			logTheThing(LOG_DEBUG, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_STATION, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
 
 /obj/submachine/weapon_vendor/security
@@ -118,7 +122,7 @@
 		materiel_stock += new/datum/materiel/loadout/justabaton
 		materiel_stock += new/datum/materiel/utility/morphineinjectors
 		materiel_stock += new/datum/materiel/utility/donuts
-		materiel_stock += new/datum/materiel/utility/crowdgrenades
+		materiel_stock += new/datum/materiel/utility/flashbangs
 		materiel_stock += new/datum/materiel/utility/detscanner
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
@@ -130,15 +134,14 @@
 	vended(var/atom/A)
 		..()
 		if (istype(A,/obj/item/storage/belt/security))
-			SPAWN(2 DECI SECONDS) //ugh belts do this on spawn and we need to wait
-				var/list/tracklist = list()
-				for(var/atom/C in A.contents)
-					if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
-						tracklist += C
+			var/list/tracklist = list()
+			for(var/atom/C in A.storage.get_contents())
+				if (istype(C,/obj/item/gun) || istype(C,/obj/item/baton))
+					tracklist += C
 
-				if (length(tracklist))
-					var/obj/item/pinpointer/secweapons/P = new(src.loc)
-					P.track(tracklist)
+			if (length(tracklist))
+				var/obj/item/pinpointer/secweapons/P = new(src.loc)
+				P.track(tracklist)
 
 	accepted_token(var/token)
 		if (istype(token, /obj/item/requisition_token/security/assistant))
@@ -193,7 +196,7 @@
 		materiel_stock += new/datum/materiel/utility/knife
 		materiel_stock += new/datum/materiel/utility/rpg_ammo
 		materiel_stock += new/datum/materiel/utility/donk
-		materiel_stock += new/datum/materiel/utility/sarin_grenade
+		materiel_stock += new/datum/materiel/utility/saxitoxin_grenade
 		//materiel_stock += new/datum/materiel/utility/noslip_boots
 		materiel_stock += new/datum/materiel/utility/bomb_decoy
 		materiel_stock += new/datum/materiel/utility/comtac
@@ -209,6 +212,27 @@
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+/obj/submachine/weapon_vendor/pirate
+	name = "Pirate Weapons Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon-pirates"
+	desc = "An automated quartermaster service for supplying your pirate crew with weapons and gear."
+	token_accepted = /obj/item/requisition_token/pirate
+	log_purchase = TRUE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/loadout/musketeer
+		materiel_stock += new/datum/materiel/loadout/buccaneer
+		..()
+
+	accepted_token()
+		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		..()
 
 // Materiel avaliable for purchase:
@@ -293,10 +317,10 @@
 	path = /obj/item/storage/lunchbox/robustdonuts
 	description = "One Robust Donut and one Robusted Donut, which are loaded with helpful chemicals that help you resist stuns and heal you!"
 
-/datum/materiel/utility/crowdgrenades
-	name = "Crowd Dispersal Grenades"
-	path = /obj/item/storage/box/crowdgrenades
-	description = "Four 'Crowd Dispersal' pepper gas grenades, capable of clearing out riots. Also seasons food quite well!"
+/datum/materiel/utility/flashbangs
+	name = "Flashbang Grenades"
+	path = /obj/item/storage/box/flashbang_kit/vendor
+	description = "Four flash bangs, capable of inhibiting riots."
 
 /datum/materiel/utility/detscanner
 	name = "Forensics Scanner"
@@ -373,7 +397,7 @@
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	description = "Tranquilizer pistol with a pouch of darts, emag, tools to help you blend in with the crew and pod beacon deployer to help get your team closer to the target location."
+	description = "Tranquilizer pistol with a pouch of darts, emag and a variety of tools to help you blend in with regular crew."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
@@ -383,7 +407,7 @@
 /datum/materiel/loadout/medic
 	name = "Field Medic"
 	path = /obj/storage/crate/classcrate/medic_rework
-	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch."
+	description = "Comprehensive combat casualty care supplies provided in a satchel, belt and pouch. As well as an armor-piercing personal defence weapon with single and burst fire capability."
 
 /datum/materiel/loadout/firebrand
 	name = "Firebrand"
@@ -406,9 +430,9 @@
 	description = "A powerful melee focused class. Equipped with massive, heavy armour and a versatile sword that can switch special attack modes."
 
 /datum/materiel/loadout/bard
-	name = "Bard (Prototype)"
+	name = "Bard"
 	path = /obj/storage/crate/classcrate/bard
-	description = "An experimental musician class that supports their team with area of effect buffs centered around amp stacks and hitting things with a cool guitar."
+	description = "A musical support class that buffs their team with area of effect songs centered around amp stacks and hitting things with their cool guitar."
 
 /datum/materiel/loadout/custom
 	name = "Custom Class Uplink"
@@ -453,9 +477,9 @@
 	path = /obj/item/reagent_containers/food/snacks/donkpocket_w
 	description = "A tasty donk pocket, heated by futuristic vending machine technology!"
 
-/datum/materiel/utility/sarin_grenade
-	name = "Sarin Grenade"
-	path = /obj/item/chem_grenade/sarin
+/datum/materiel/utility/saxitoxin_grenade
+	name = "Saxitoxin Grenade"
+	path = /obj/item/chem_grenade/saxitoxin
 	description = "A terrifying grenade containing a potent nerve gas. Try not to get caught in the smoke."
 
 /datum/materiel/utility/noslip_boots
@@ -489,8 +513,20 @@
 	name = "Sawfly pouch"
 	path = /obj/item/storage/sawfly_pouch
 	description = "A pouch of 3 reusable anti-personnel drones."
-// Requisition tokens
 
+// PIRATE
+/datum/materiel/loadout/musketeer
+	name = "Musketeer"
+	path = /obj/item/storage/backpack/satchel/flintlock_rifle_satchel
+	description = "Flintlock rifle and 15 rounds of ammunition provided in a specialised satchel."
+
+/datum/materiel/loadout/buccaneer
+	name = "Buccaneer"
+	path = /obj/item/storage/backpack/satchel/flintlock_pistol_satchel
+	description = "A set of two flintlock pistols and 15 rounds of ammunition."
+
+
+// Requisition tokens
 /obj/item/requisition_token
 	name = "requisition token"
 	desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
@@ -518,6 +554,11 @@
 		utility
 			desc = "An NT-provided token that entitles the owner to one additional utility purchase."
 			icon_state = "req-token-secass"
+
+	pirate
+		name = "doubloon"
+		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
+		icon_state = "doubloon"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT

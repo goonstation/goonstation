@@ -18,7 +18,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	ma.layer = 100
 	ma.color = "#777777"
 	ma.dir = pick(alldirs)
-	ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
+	ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	ma.name = " "
 
 	game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
@@ -64,6 +64,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	for(var/turf/T as anything in turfs_to_update)
 		if (global.explosions.exploding || ON_COOLDOWN(T, "camera_coverage_update", CAM_TURF_UPDATE_COOLDOWN))
 			LAZYLISTADDUNIQUE(src.turf_update_queue, turfs_to_update)
+			return
 		T.aiImage?.loc = length(T.camera_coverage_emitters) ? null : T
 
 /**

@@ -260,7 +260,7 @@ proc/is_weak_rollable_contract(type)
 	stamina_cost = 20 //nerfed from 10
 	stamina_crit_chance = 40 //buffed from 25
 	spawn_contents = list(/obj/item/paper/soul_selling_kit, /obj/item/storage/box/evil, /obj/item/clothing/under/misc/lawyer/red/demonic)
-	var/merchant = null
+	var/mob/merchant = null
 
 	New()
 		..()
@@ -270,21 +270,17 @@ proc/is_weak_rollable_contract(type)
 		STOP_TRACKING_CAT(TR_CAT_SOUL_TRACKING_ITEMS)
 		..()
 
+	// merchants on contracts need to be set elsewhere when merchant is known
 	make_my_stuff()
 		..()
-		SPAWN(0.5 SECONDS) //to give the buylist enough time to assign a merchant var to the briefcase
+		var/tempcontract = pick(strongcontracts)
+		src.storage.add_contents(new tempcontract(src))
 
-			var/tempcontract = null
-			tempcontract = pick(strongcontracts)
-			var/obj/item/contract/I = new tempcontract(src)
-			I.merchant = src.merchant
-
-			var/list/tempweakcontracts = weakcontracts.Copy()
-			for (var/i in 1 to 3)
-				tempcontract = pick(tempweakcontracts)
-				tempweakcontracts.Remove(tempcontract)
-				var/obj/item/contract/T = new tempcontract(src)
-				T.merchant = src.merchant
+		var/list/tempweakcontracts = weakcontracts.Copy()
+		while (!src.storage.is_full() && length(tempweakcontracts))
+			tempcontract = pick(tempweakcontracts)
+			tempweakcontracts.Remove(tempcontract)
+			src.storage.add_contents(new tempcontract(src))
 
 	attack(mob/M, mob/user, def_zone)
 		..()
@@ -294,6 +290,11 @@ proc/is_weak_rollable_contract(type)
 				L.update_burning(total_souls_value) //sets people on fire above 5 souls sold, scales with souls.
 		if (total_souls_value >= 10)
 			wrestler_backfist(user, M) //sends people flying above 10 souls sold, does not scale with souls.
+
+	proc/set_merchant(mob/merchant)
+		src.merchant = merchant
+		for (var/obj/item/contract/contract in src.storage.get_contents())
+			contract.merchant = merchant
 
 /obj/item/storage/briefcase/satan/verb/summon_contract()
 	set name = "Summon Contract"
@@ -565,7 +566,7 @@ obj/item/contract/macho
 		SPAWN(1 DECI SECOND)
 			user.unequip_all()
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
-			user.machoize(1)
+			user.mind?.add_antagonist(ROLE_MACHO_MAN, do_pseudo = TRUE)
 
 		return 1
 
@@ -579,9 +580,8 @@ obj/item/contract/wrestle
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = "Faustian Wrestler"
 			sleep(0.1 SECONDS)
-			user.make_wrestler(1)
+			user.mind?.add_antagonist(ROLE_WRESTLER, respect_mutual_exclusives = FALSE, do_pseudo = TRUE)
 			user.traitHolder.addTrait("addict") //HEH
 			user.traitHolder.addTrait("clutz")
 			user.traitHolder.addTrait("leftfeet")
@@ -629,7 +629,6 @@ obj/item/contract/genetic
 					user.bioHolder.AddEffect("mutagenic_field_prenerf", 0, 0, 1)
 					SPAWN(0.2 SECONDS)
 						boutput(user, "<span class='success'>You have ascended beyond mere humanity!</span>")
-						user.mind.special_role = "Genetic Demigod"
 
 		return 1
 
@@ -672,7 +671,6 @@ obj/item/contract/horse
 			user.horse()
 			user.traitHolder.addTrait("soggy")
 			boutput(user, "<span class='alert'><font size=6><B>NEIGH</b></font></span>")
-			user.mind.special_role = "Faustian Horse"
 
 		return 1
 
@@ -712,8 +710,7 @@ obj/item/contract/vampire
 		if(!..())
 			return 0
 		SPAWN(1 DECI SECOND)
-			user.mind.special_role = ROLE_VAMPIRE
-			user.make_vampire(1)
+			user.mind?.add_antagonist(ROLE_VAMPIRE, do_pseudo = TRUE)
 			boutput(user, "<span style=\"color:red; font-size:150%\"><b>Note that you are not an antagonist (unless you were already one), you simply have some of the powers of one.</b></span>")
 
 		return 1

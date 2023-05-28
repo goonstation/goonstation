@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/telejam)
+	mats = 9
+
 /obj/machinery/telejam
 	name = "teleportation jammer"
 	desc = "Generates a force field interferes with teleportation devices."
@@ -5,8 +8,7 @@
 	icon_state = "shieldgen"
 	density = 1
 	opacity = 0
-	anchored = 0
-	mats = 9
+	anchored = UNANCHORED
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -60,7 +62,7 @@
 			if(!PCEL)
 				turn_off()
 				return
-			PCEL.charge -= 5 * src.range
+			PCEL.use(5 * src.range)
 
 			var/charge_percentage = 0
 			var/current_battery_level = 0
@@ -159,14 +161,14 @@
 		if (PCEL.charge < 0)
 			return
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
 
 	proc/turn_off()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.active = 0
 		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		playsound(src.loc, src.sound_off, 50, 1)

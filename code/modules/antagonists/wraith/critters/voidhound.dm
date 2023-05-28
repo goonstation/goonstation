@@ -10,6 +10,7 @@
 	can_throw = 1
 	can_grab = 0
 	can_disarm = 1
+	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "voidhound"
@@ -60,3 +61,20 @@
 			boutput(src, "<span class='alert'>We reappear</span>")
 		..()
 
+	Life()
+		var/life_time_passed = max(tick_spacing, TIME - last_life_tick)
+		var/life_mult = life_time_passed / tick_spacing
+		var/turf/local_turf = get_turf(src)
+		if (local_turf.RL_GetBrightness() < 0.3 || src.cloaked)
+			if ((src.health < (src.health_brute + src.health_burn)))
+				for(var/damage_type in src.healthlist)
+					var/datum/healthHolder/hh = src.healthlist[damage_type]
+					hh.HealDamage(2 * life_mult)
+			src.setStatus("darkness_stam_regen", 5 SECONDS * life_mult)
+		..()
+
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+			src.master = null
+		return ..()

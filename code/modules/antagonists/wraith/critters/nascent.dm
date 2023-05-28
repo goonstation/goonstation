@@ -6,6 +6,7 @@
 	real_name = "???"
 	desc = "It looks unfinished"
 	density = 1
+	faction = MOB_AI_FACTION_WRAITH
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "poltergeist-corp"
 	hand_count = 0
@@ -37,6 +38,9 @@
 
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
 		if (!gibbed)
 			playsound(src, src.deathsound, 50, 0)
 			qdel(src)

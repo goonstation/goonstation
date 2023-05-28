@@ -112,7 +112,8 @@
 	desc = "Used to cut facial hair"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "razorblade"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	force = 7
@@ -212,7 +213,7 @@
 	name = "barber chair"
 	desc = "A special chair designed for haircutting. You don't feel like any other chair would be good enough, it HAS to be one like this. You don't know why."
 	icon_state = "barberchair"
-	anchored = 1
+	anchored = ANCHORED
 	arm_icon_state = "arm-barber"
 	parts_type = /obj/item/furniture_parts/barber_chair
 
@@ -221,7 +222,7 @@
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "pole"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
 
 
@@ -334,14 +335,16 @@
 //////////////////////////////
 /////Dye Bottle Dispenser/////
 //////////////////////////////
+TYPEINFO(/obj/machinery/hair_dye_dispenser)
+	mats = 15
+
 /obj/machinery/hair_dye_dispenser
 	name = "Hair Dye Mixer 3000"
 	desc = "Mixes hair dye for whatever color you want"
 	icon = 'icons/obj/barber_shop.dmi'
 	icon_state = "dyedispenser"
 	density = 1
-	anchored = 1
-	mats = 15
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 
 	var/obj/item/dye_bottle/bottle = null

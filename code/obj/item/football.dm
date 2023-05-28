@@ -201,6 +201,7 @@
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
 		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	pickup(mob/M)
 		..()
@@ -239,6 +240,12 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
+	// just in case someone has to hard del a ball
+	Del()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom)
 			if(ismob(hit_atom) && ishuman(hit_atom))
@@ -251,12 +258,11 @@
 					return
 
 		..()
-
 	ex_act(severity)
 		return
 
 /obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
 	. = ..()
 

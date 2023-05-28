@@ -16,6 +16,9 @@
 
 
 /// Cyalume saber/esword, famed traitor item
+TYPEINFO(/obj/item/sword)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -40,16 +43,15 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
+	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
-	var/active_stamina_dmg = 40
-	var/active_stamina_cost = 40
-	var/inactive_stamina_dmg = 35
+	var/active_stamina_dmg = 30
+	var/active_stamina_cost = 30
+	var/inactive_stamina_dmg = 40
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
@@ -104,7 +106,7 @@
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -217,7 +219,7 @@
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -231,7 +233,7 @@
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
 			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
@@ -480,6 +482,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	New()
 		..()
@@ -504,7 +507,6 @@
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(ismob(target))
 		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
@@ -574,6 +576,45 @@
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 
+// Revolutionary sign.
+/obj/item/revolutionary_sign
+	name = "revolutionary sign"
+	desc = "A sign bearing revolutionary propaganda. Good for picketing."
+
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "revsign"
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
+	item_state = "revsign"
+
+	w_class = W_CLASS_BULKY
+	throwforce = 8
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 7
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 10
+	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (isrevolutionary(owner))
+				for (var/mob/M in viewers(5, owner))
+					if (isrevolutionary(M))
+						M.changeStatus("revspirit", 20 SECONDS)
+
 /obj/item/storage/box/shuriken_pouch
 	name = "Shuriken Pouch"
 	desc = "Contains four throwing stars!"
@@ -594,12 +635,10 @@
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			src.implanted(M)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			src.set_loc(M)
-			src.implanted = 1
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -795,7 +834,8 @@
 
 	disposing()
 		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+		if (hunter_key)
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
@@ -870,7 +910,8 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
@@ -937,6 +978,9 @@
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/bat)
+	mats = list("wood" = 8)
+
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -950,7 +994,6 @@
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
-	mats = list("wood" = 8)
 
 	attack(mob/M, mob/user, def_zone, is_special)
 		. = ..()
@@ -1026,6 +1069,8 @@
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
 	var/delimb_prob = 1
+	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1113,14 +1158,29 @@
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
+/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+	. = FALSE
+	if (!istype(user))
+		return
+	if (!istype(user.belt, /obj/item/swords_sheaths))
+		return
+	var/obj/item/swords_sheaths/sheath = user.belt
+	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
+		sheath.Attackby(src, user)
+		return TRUE
+
 //PS the description can be shortened if you find it annoying and you are a jerk.
+TYPEINFO(/obj/item/swords/katana)
+	mats = list("MET-3"=20, "FAB-1"=5)
+
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	hitsound = 'sound/impact_sounds/katana_slash.ogg'
+	midair_fruit_slice = TRUE
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
@@ -1173,16 +1233,19 @@
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+TYPEINFO(/obj/item/swords/captain)
+	mats = list("MET-2"=15)
+
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-	mats = list("MET-2"=15)
 	force = 16 //not awful but not amazing
 	contraband = 4
 	tooltip_flags = REBUILD_USER
@@ -1247,7 +1310,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
@@ -1412,7 +1476,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
-	flags = ONBACK
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1522,7 +1586,8 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
-	flags = ONBACK | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1547,7 +1612,7 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
@@ -1652,7 +1717,8 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS
+	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
@@ -1750,8 +1816,8 @@ obj/item/whetstone
 	var/guard = null //! used to keep track of what melee properties we're using
 
 	hit_type = DAMAGE_CUT
-	flags = FPRINT | TABLEPASS | USEDELAY | ONBACK
-	c_flags = EQUIPPED_WHILE_HELD
+	flags = FPRINT | TABLEPASS | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
 	New()

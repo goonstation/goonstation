@@ -91,6 +91,7 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
+		hit.emp_act()
 		impact_image_effect(ie_type, hit)
 		return
 
@@ -132,7 +133,7 @@ toxic - poisons
 
 /datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	stun = 18
+	stun = 15.5
 	dissipation_delay = 2
 	dissipation_rate = 2
 	max_range = 8
@@ -333,12 +334,13 @@ toxic - poisons
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		var/pow = O.power
-		if (ishuman(hit))
+		if (isliving(hit))
 			O.die()
-			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
-			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-			H.emote("twitch_v")
+			var/mob/living/mob = hit
+			mob.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
+			var/throw_type = mob.can_lie ? THROW_GUNIMPACT : THROW_NORMAL //fallback to just chucking them if they can't be knocked down
+			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = throw_type)
+			mob.emote("twitch_v")
 
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
@@ -396,6 +398,12 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/smgburst
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
@@ -417,7 +425,7 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
-	stun = 12
+	stun = 11
 	cost = 8
 	max_range = 8
 	sname = "full-auto"
@@ -454,3 +462,35 @@ toxic - poisons
 	disruption = 2
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/dazzler
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_brute"
+	stun = 4
+	cost = 20
+	max_range = 12
+	window_pass = 1 // maybe keep
+	dissipation_rate = 0 // weak enough as is
+	sname = "dazzle"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 1
+	damage_type = D_ENERGY
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+	on_pointblank(var/obj/projectile/P, var/mob/living/M)
+		M.changeStatus("disorient", 4 SECOND)
+		M.changeStatus("slowed", 3 SECOND)
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("disorient", 2 SECOND)
+			L.changeStatus("slowed", 1.5 SECOND)
+		return

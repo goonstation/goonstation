@@ -120,7 +120,7 @@
 							src.master.add_fingerprint(usr)
 							return
 
-						if(isAI(usr) || src.authenticated == "AIUSR")
+						if(issilicon(usr) || src.authenticated == "AIUSR")
 							src.print_text("<b>Error:</b> Shuttle recall from AIUSR blocked by Central Command.")
 							return
 
@@ -259,7 +259,7 @@
 			if(MENU_TRANSMIT_MESSAGE)
 				menu = MENU_MAIN
 
-				if(isnull(game_servers.get_buddy()))
+				if(isnull(game_servers.get_buddy()) && transmit_type == "station")
 					src.print_text("No partner station detected. Unable to send message.")
 					return
 

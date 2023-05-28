@@ -197,7 +197,7 @@
 	var/block_it_up = TRUE
 	if (!src.lying && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis"))
 		for(var/obj/stool/stool_candidate in src.loc)
-			if (stool_candidate.buckle_in(src, src, 1))
+			if (stool_candidate.buckle_in(src, src, src.a_intent == INTENT_GRAB))
 				block_it_up = FALSE
 				break //found one, no need to continue
 
@@ -313,9 +313,12 @@
 
 	//if (target.melee_attack_test(src, null, null, 1) != 1)
 	//	return
+	for(var/obj/item/grab/grab in target.equipped_list()) //if we're disarming the person grabbing us then resist instead
+		if (grab.affecting == src)
+			grab.do_resist()
+			return
 
-	var/obj/item/affecting = target.get_affecting(src)
-	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, affecting, 0, 0, extra_damage, is_special)
+	var/datum/attackResults/disarm/msgs = calculate_disarm_attack(target, 0, 0, extra_damage, is_special)
 	msgs.damage_type = damtype
 	msgs.flush(suppress_flags)
 	return
@@ -324,21 +327,16 @@
 // I needed a harm intent-like attack datum for some limbs (Convair880).
 // is_shove flag removes the possibility of slapping the item out of someone's hand. instead there is a chance to shove them backwards. The 'shove to the ground' chance remains unchanged. (mbc)
 // mbc also added disarming_item flag - for when a disarm is performed BY something. Doesn't do anything but change text currently.
-/mob/proc/calculate_disarm_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/is_shove = 0, var/obj/item/disarming_item = 0)
+/mob/proc/calculate_disarm_attack(var/mob/target, var/base_damage_low = 0, var/base_damage_high = 0, var/extra_damage = 0, var/is_shove = 0, var/obj/item/disarming_item = 0)
 	var/datum/attackResults/disarm/msgs = new(src)
 	msgs.clear(target)
 	msgs.valid = 1
 	msgs.disarm = 1
 	msgs.disarm_RNG_result = list()
 	var/list/obj/item/items = target.equipped_list()
-	var/def_zone = null
-	if (zone_sel)
-		def_zone = zone_sel.selecting
-		msgs.affecting = def_zone
-	else
-		def_zone = "All"
-		msgs.affecting = def_zone
 
+	var/def_zone = target.get_def_zone(src, src.zone_sel?.selecting)
+	msgs.def_zone = def_zone
 	if(prob(target.get_deflection())) //chance to deflect disarm attempts entirely
 		msgs.played_sound = 'sound/impact_sounds/Generic_Swing_1.ogg'
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves at [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
@@ -575,13 +573,12 @@
 	if (!target.melee_attack_test(src))
 		return
 
-	var/obj/item/affecting = target.get_affecting(src)
-	var/datum/attackResults/msgs = calculate_melee_attack(target, affecting, 2, 9, extra_damage)
+	var/datum/attackResults/msgs = calculate_melee_attack(target, 2, 9, extra_damage)
 	msgs.damage_type = damtype
-	attack_effects(target, affecting)
+	attack_effects(target, zone_sel?.selecting)
 	msgs.flush(suppress_flags)
 
-/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -593,21 +590,8 @@
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
 	//get defense zone and 'organ' to hit
-	var/def_zone = null
-	if (istype(affecting, /obj/item/organ))
-		var/obj/item/organ/O = affecting
-		def_zone = O.organ_name
-		msgs.affecting = affecting
-	else if (istype(affecting, /obj/item/parts))
-		var/obj/item/parts/P = affecting
-		def_zone = P.slot
-		msgs.affecting = affecting
-	else if (zone_sel)
-		def_zone = zone_sel.selecting
-		msgs.affecting = def_zone
-	else
-		def_zone = "All"
-		msgs.affecting = def_zone
+	var/def_zone = target.get_def_zone(src, src.zone_sel?.selecting)
+	msgs.def_zone = def_zone
 
 	//get damage multiplers based on self and target.
 	var/self_damage_multiplier = get_base_damage_multiplier(def_zone)
@@ -653,9 +637,13 @@
 
 
 	var/pre_armor_damage = damage
+	var/list/shield_amt = list()
+	SEND_SIGNAL(target, COMSIG_MOB_SHIELD_ACTIVATE, damage, shield_amt)
+	damage *= max(0, (1-shield_amt["shield_strength"]))
 	if(do_armor)
 		//get target armor
 		var/armor_mod = 0
+
 		armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
 
 		//flat damage reduction by armor
@@ -678,6 +666,7 @@
 			stam_power *= (1/3) //do the least
 		else
 			stam_power *= clamp(damage/pre_armor_damage, 1, 1/3)
+		stam_power *= max(0, (1-shield_amt["shield_strength"]))
 
 		//record the stamina damage to do
 		msgs.stamina_target -= max(stam_power, 0)
@@ -691,11 +680,12 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
-	//set attack message
-	if(pre_armor_damage > 0 && damage <= 0 )
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+	if(!do_kick)
+		//set attack message
+		if(pre_armor_damage > 0 && damage <= 0 )
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()
@@ -791,7 +781,7 @@
 	var/stamina_crit = 0
 	var/damage = 0
 	var/damage_type = DAMAGE_BLUNT
-	var/obj/item/affecting = null
+	var/def_zone = null
 	var/valid = 0
 	var/disarm = 0 // Is this a disarm as opposed to harm attack?
 	var/disarm_RNG_result = null // Blocked, shoved down etc.
@@ -821,12 +811,12 @@
 		stamina_crit = 0
 		damage = 0
 		damage_type = DAMAGE_BLUNT
-		affecting = null
 		valid = 0
 		disarm = 0
 		disarm_RNG_result = null
 		bleed_always = 0 //Will cause bleeding regardless of damage type.
 		bleed_bonus = 0 //bonus to bleed damage specifically.
+		def_zone = null
 
 		after_effects.Cut()
 
@@ -852,15 +842,15 @@
 			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO TARGET FLUSH! EMERGENCY!")
 			return
 
-		if (!affecting)
+		if (!def_zone)
 			clear(null)
-			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
+			logTheThing(LOG_DEBUG, owner, "<b>tarmunora/Melee Attack Refactor2:</b> NO DEF_ZONE FLUSH! WARNING!")
 			return
 
 		var/list/disarm_log = list()
 
 		if (!msg_group)
-			msg_group = "[affecting]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
+			msg_group = "[owner]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
 
 		if (!(suppress & SUPPRESS_SOUND) && played_sound)
 			var/obj/item/grab/block/G = target.check_block()
@@ -991,13 +981,7 @@
 			if (damage_type == DAMAGE_BLUNT && prob(25 + (damage * 2)) && damage >= 8)
 				damage_type = DAMAGE_CRUSH
 
-			if (istype(affecting))
-				affecting.take_damage((damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
-				hit_twitch(target)
-			else if (affecting)
-				target.TakeDamage(affecting, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
-			else
-				target.TakeDamage("chest", (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
+			target.TakeDamage(def_zone, (damage_type != DAMAGE_BURN ? damage : 0), (damage_type == DAMAGE_BURN ? damage : 0), 0, damage_type)
 
 			if ((damage_type & (DAMAGE_CUT | DAMAGE_STAB)) || bleed_always)
 				take_bleeding_damage(target, owner, damage + bleed_bonus, damage_type)
@@ -1030,33 +1014,28 @@
 				target.attackby_finished(owner)
 			target.UpdateDamageIcon()
 
+			if (damage > 1)
+				if (isrevolutionary(owner))	//attacker is rev, all heads who see the attack get mutiny buff
+					for (var/datum/mind/M in ticker?.mode?.get_living_heads())
+						if (M.current)
+							if (GET_DIST(owner,M.current) <= 7)
+								if (owner in viewers(7,M.current))
+									M.current.changeStatus("mutiny", 10 SECONDS)
 
-			if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-				var/datum/game_mode/revolution/R = ticker.mode
-
-				if (damage > 1)
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))	//attacker is rev, all heads who see the attack get mutiny buff
-						for (var/datum/mind/M in R.get_living_heads())
-							if (M.current)
-								if (GET_DIST(owner,M.current) <= 7)
-									if (owner in viewers(7,M.current))
-										M.current.changeStatus("mutiny", 10 SECONDS)
-
-				if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
-					if ((owner.mind in R.revolutionaries) || (owner.mind in R.head_revolutionaries))
-						if (R.add_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+			if(target.client && target.health < 0 && ishuman(target)) //Only do rev stuff if they have a client and are low health
+				var/mob/living/carbon/human/H = target
+				if (H.can_be_converted_to_the_revolution())
+					if (isrevolutionary(owner))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY))
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 					else
-						if (R.remove_revolutionary(target.mind))
-							for (var/datum/mind/M in target)
-								if (M.current)
-									M.current.changeStatus("newcause", 5 SECONDS)
-							target.HealDamage("All", max(30 - target.health,0), 0)
-							target.HealDamage("All", 0, max(30 - target.health,0))
+						if (H.mind?.remove_antagonist(ROLE_REVOLUTIONARY))
+							H.delStatus("derevving") //Make sure they lose this status upon completion
+							H.changeStatus("newcause", 5 SECONDS)
+							H.HealDamage("All", max(30 - H.health,0), 0)
+							H.HealDamage("All", 0, max(30 - H.health,0))
 		clear(null)
 
 /datum/attackResults/disarm
@@ -1081,23 +1060,23 @@
 
 	return 1
 
-/mob/proc/get_affecting(mob/attacker, def_zone = null)
+/mob/proc/get_def_zone(mob/attacker, def_zone = null)
 	if (def_zone)
 		return def_zone
 	var/t = pick("head", "chest")
 	if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
-	return t
+	return check_target_zone(t)
 
-/mob/living/carbon/human/get_affecting(mob/attacker, def_zone = null)
+/mob/living/carbon/human/get_def_zone(mob/attacker, def_zone = null)
 	var/t = pick("head", "chest")
 	if(def_zone)
 		t = def_zone
 	else if(attacker.zone_sel)
 		t = attacker.zone_sel.selecting
-	var/r_zone = ran_zone(t)
+	t = ran_zone(t)
 
-	return r_zone
+	return check_target_zone(t)
 
 /mob/proc/check_target_zone(var/def_zone)
 	return def_zone
@@ -1121,7 +1100,7 @@
 	if (sims) //this is still a thing. huh.
 		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
 
-///multipler to unarmed damage recieved
+///multipler to unarmed damage received
 /mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
 	SHOULD_CALL_PARENT(TRUE)
 	return 1
@@ -1251,14 +1230,14 @@
 
 /////////////////////////////////////////////////////////// After attack ////////////////////////////////////////////
 
-/mob/proc/attack_effects(var/target, var/obj/item/affecting)
+/mob/proc/attack_effects(var/target, def_zone)
 	return
 
-/mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
+/mob/living/carbon/human/attack_effects(var/mob/target, def_zone)
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
 		if (R.ghoulTouchActive)
-			R.ghoulTouch(target, affecting)
+			R.ghoulTouch(target, def_zone)
 
 //variant, using for werewolf pounce, to send mobs in a random direction and 50% chance to weaken them.
 /proc/wrestler_knockdown(var/mob/H, var/mob/T, var/variant)
@@ -1319,24 +1298,27 @@
 		if (istype(gloves, /obj/item/clothing/gloves/boxing))
 			sims.affectMotive("fun", 2.5)
 
-//return 1 on successful dodge or parry, 0 on fail
-/mob/living/proc/parry_or_dodge(mob/M, obj/item/W)
-	.= 0
-	if (prob(60) && M && src.stance == "defensive" && iswerewolf(src) && src.stat)
+/// return 1 on successful dodge or parry, 0 on fail
+/mob/proc/parry_or_dodge(mob/M, obj/item/W)
+	return 0
+
+/mob/living/parry_or_dodge(mob/M, obj/item/W)
+	if(!(M && src.stance == "defensive" && !src.stat))
+		return ..()
+	if(iswerewolf(src) && prob(60) || !iswerewolf(src) && prob(40))//dodge more likely, we're more agile than macho
 		src.set_dir(get_dir(src, M))
 		playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 1)
-		//dodge more likely, we're more agile than macho
 		if (prob(60))
 			src.visible_message("<span class='alert'><B>[src] dodges the blow by [M]!</B></span>")
 		else
-			src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 			if (prob(50))
 				step_away(M, src, 15)
 			else
+				src.visible_message("<span class='alert'><B>[src] parries [M]'s attack, knocking them to the ground!</B></span>")
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		playsound(src.loc, 'sound/impact_sounds/kendo_parry_1.ogg', 65, 1)
-		.= 1
+		return 1
 
 /mob/living/proc/werewolf_tainted_saliva_transfer(var/mob/target)
 	if (iswerewolf(src))

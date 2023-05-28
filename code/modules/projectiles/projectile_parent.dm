@@ -13,7 +13,7 @@
 	name = "projectile"
 	flags = TABLEPASS | UNCRUSHABLE
 	layer = EFFECTS_LAYER_BASE
-	anchored = TRUE
+	anchored = ANCHORED
 	animate_movement = FALSE
 
 	/// Projectile data; almost all specific projectile information and functionality lives here
@@ -214,7 +214,7 @@
 			for (var/obj/O in A)
 				O.bullet_act(src)
 			T = A
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (T.density && !goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (!goes_through_walls && !(sigreturn & PROJ_PASSWALL) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (proj_data?.hit_object_sound)
 					playsound(A, proj_data.hit_object_sound, 60, 0.5)
 				die()
@@ -244,7 +244,7 @@
 					pierces_left--
 
 		else if (isobj(A))
-			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (A.density && !goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
+			if ((sigreturn & PROJ_ATOM_CANNOT_PASS) || (!goes_through_walls && !(sigreturn & PROJ_PASSOBJ) && !(sigreturn & PROJ_ATOM_PASSTHROUGH)))
 				if (iscritter(A))
 					if (proj_data?.hit_mob_sound)
 						playsound(A.loc, proj_data.hit_mob_sound, 60, 0.5)
@@ -602,6 +602,13 @@ ABSTRACT_TYPE(/datum/projectile)
 		. = ..()
 		generate_stats()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		switch(variable)
+			if("damage", "stun")
+				generate_stats()
+			if("power", "ks_ratio")
+				generate_inverse_stats()
 
 	proc
 		generate_stats()
@@ -614,6 +621,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		generate_inverse_stats() //in case you want to turn ks_ratio and power back into damage and stun? idk.
 			src.damage = src.power * src.ks_ratio
 			src.stun = src.power * (1-src.ks_ratio)
+
 
 		impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)		//3 types, K = Kinetic, E = Energy, T = Taser
 			var/obj/itemspecialeffect/impact/E = null

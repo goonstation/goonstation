@@ -14,16 +14,6 @@
 	name = "organic floor"
 	icon_state = "floor1"
 
-/turf/simulated/floor/martian/attackby(obj/item/C, mob/user, params)
-	if (istype(C, /obj/item/martianSeed))
-		var/obj/item/martianSeed/S = C
-		if(S)
-			S.plant(src)
-			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
-			return
-	else
-		..()
-
 /turf/simulated/martian/wall
 	name = "organic wall"
 	icon_state = "wall1"

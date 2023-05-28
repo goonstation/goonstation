@@ -506,7 +506,7 @@
 	name = "supply telepad"
 	desc = "It's a Nanotrasen 'Waterloo 1.0' cargo teleportation pad used to teleport goods instantly between distant locations. Requires a telecrystal to function."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/has_crystal = 0
@@ -548,15 +548,19 @@
 	bullet_act()
 		return
 
+TYPEINFO(/obj/supply_pad/incoming)
+	mats = 10
+
 /obj/supply_pad/incoming
 	name = "Incoming supply pad"
 	direction = 0
+
+TYPEINFO(/obj/supply_pad/outgoing)
 	mats = 10
 
 /obj/supply_pad/outgoing
 	name = "Outgoing supply pad"
 	direction = 1
-	mats = 10
 
 /obj/machinery/computer/special_supply
 	// This is a grade 1 workstation. Contains bare-bones supplies.
@@ -564,7 +568,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/obj/supply_pad/in_target

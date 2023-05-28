@@ -80,8 +80,10 @@
 		src.user = user
 		src.target = target
 		src.holder = holder
-		src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
 		P = src.user.GetParticles("arcfiend")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
+			P = src.user.GetParticles("arcfiend")
 
 	onUpdate()
 		..()
