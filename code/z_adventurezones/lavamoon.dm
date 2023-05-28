@@ -1210,7 +1210,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	anchored = ANCHORED
 	density = 0
 	var/id = null
-	var/broken = FALSE
+	/// if true, disables ladder climbing behavior
+	var/unclimbable = FALSE
 	mat_appearances_to_ignore = list("negative matter")
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER
@@ -1219,7 +1220,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	name = "broken ladder"
 	desc = "it's too damaged to climb."
 	icon_state = "ladder_wall_broken"
-	broken = TRUE
+	unclimbable = TRUE
 
 /obj/ladder/embed
 	name = "gap in the wall"
@@ -1245,7 +1246,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	if (!src.hidden)
 		var/turf/T = get_step(src,NORTH)
 		if (!istype(T,/turf/simulated/wall) && !istype(T,/turf/unsimulated/wall))
-			src.alpha = 0 // if there's no wall above us, hide in a way that the turf can update us
+			// if there's no wall above us, hide in a way that we still show up in orange(1)
+			// so the wall can update us
+			src.alpha = 0
 			src.mouse_opacity = FALSE
 		else
 			src.alpha = 255
@@ -1293,7 +1296,6 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				break
 	if(found_negative)
 		src.AddComponent(/datum/component/extradimensional_storage/ladder)
-		src.broken = TRUE // disable ladder behavior
 
 /obj/ladder/proc/update_id(new_id)
 	if(new_id)
@@ -1316,13 +1318,13 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			return ladder
 
 /obj/ladder/attack_hand(mob/user)
-	if (src.broken) return
+	if (src.unclimbable) return
 	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
 
 /obj/ladder/attackby(obj/item/W, mob/user)
-	if (src.broken) return
+	if (src.unclimbable) return
 	if (istype(W, /obj/item/grab))
 		var/obj/item/grab/grab = W
 		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)

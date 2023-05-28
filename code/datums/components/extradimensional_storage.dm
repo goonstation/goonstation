@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/datum/allocated_region/region
@@ -87,13 +88,13 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/ladder
 
 /datum/component/extradimensional_storage/ladder/Initialize(width=9, height=9, region_init_proc=null)
-	. = ..()
 	if(!istype(parent, /obj/ladder))
 		return COMPONENT_INCOMPATIBLE
 	exit = get_turf(src.parent)
 	. = ..()
 
 	var/obj/ladder/ladder = src.parent
+	ladder.unclimbable = TRUE
 	var/image/I = image(ladder.icon,ladder,"[ladder.icon_state]-extra")
 	ladder.UpdateOverlays(I,"extradim")
 
@@ -111,7 +112,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 /datum/component/extradimensional_storage/ladder/UnregisterFromParent()
 	var/obj/ladder/ladder = src.parent
 	ladder.UpdateOverlays(null,"extradim")
-	ladder.broken = FALSE
+	ladder.unclimbable = FALSE
 	UnregisterSignal(src.parent, COMSIG_ATTACKHAND)
 	UnregisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING)
 	. = ..()
