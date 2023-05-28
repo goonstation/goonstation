@@ -154,9 +154,7 @@
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")

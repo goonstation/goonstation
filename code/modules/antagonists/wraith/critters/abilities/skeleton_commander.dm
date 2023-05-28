@@ -10,7 +10,7 @@
 	var/list/critter_list = list(/mob/living/critter/shade,
 	/mob/living/critter/crunched,
 	/obj/critter/ancient_thing,
-	/obj/critter/ancient_repairbot/security,
+	/mob/living/critter/robotic/repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,
 	/obj/critter/mechmonstrositycrawler,
 	/obj/critter/bat/buff,

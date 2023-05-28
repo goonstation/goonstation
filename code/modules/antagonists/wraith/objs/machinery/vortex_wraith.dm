@@ -20,7 +20,7 @@
 	var/datum/light/portal_light
 	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
-								/obj/critter/ancient_repairbot/security,
+								/mob/living/critter/robotic/repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
 								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
@@ -113,6 +113,9 @@
 					minion_value = getMobValue(src.mob_type)
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
 						var/obj/minion = new src.mob_type(chosen_turf)
+						if (ismobcritter(minion))
+							var/mob/living/critter/C = minion
+							C.faction |= FACTION_WRAITH
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)

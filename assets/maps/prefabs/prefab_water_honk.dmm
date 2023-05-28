@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/unsimulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/slimy_honk)
 "ab" = (
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar,
@@ -54,7 +54,9 @@
 /turf/simulated/floor/carpet/blue,
 /area/prefab/slimy_honk)
 "am" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue,
 /area/prefab/slimy_honk)
 "an" = (
@@ -69,7 +71,9 @@
 /turf/simulated/floor/black,
 /area/prefab/slimy_honk)
 "ap" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/prefab/slimy_honk)
 "aq" = (
@@ -207,7 +211,7 @@
 	},
 /area/prefab/slimy_honk)
 "aP" = (
-/obj/machinery/door/airlock/gannets/glass/alt,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -279,7 +283,9 @@
 /area/prefab/slimy_honk)
 "ba" = (
 /obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "bb" = (
@@ -497,7 +503,7 @@
 "bF" = (
 /obj/item/shaker/ketchup,
 /obj/item/shaker/ketchup,
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "bG" = (
@@ -560,8 +566,8 @@
 /turf/simulated/floor/carpet/green,
 /area/prefab/slimy_honk)
 "bS" = (
-/obj/machinery/door/airlock/gannets/glass,
 /obj/lattice/barricade,
+/obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "bT" = (
@@ -601,7 +607,9 @@
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
 "ca" = (
-/obj/machinery/door/airlock/gannets/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
 "cb" = (
@@ -901,6 +909,17 @@
 /obj/decal/ballpit,
 /turf/unsimulated/floor/ballpit,
 /area/prefab/slimy_honk)
+"wM" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Dp" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
 
 (1,1,1) = {"
 aw
@@ -1030,7 +1049,7 @@ aa
 aa
 aa
 aa
-aP
+Dp
 aa
 aa
 aa
@@ -1173,7 +1192,7 @@ aa
 am
 aa
 aa
-aP
+Dp
 aa
 aa
 aa
@@ -1383,7 +1402,7 @@ aw
 aw
 "}
 (21,1,1) = {"
-aw
+wM
 aa
 aj
 aj
@@ -1407,7 +1426,7 @@ aw
 aw
 "}
 (22,1,1) = {"
-aw
+wM
 aa
 aa
 ap
@@ -1431,14 +1450,14 @@ aw
 aw
 "}
 (23,1,1) = {"
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
+wM
+wM
+wM
+wM
+wM
+wM
+wM
+wM
 aw
 aw
 aw
@@ -1455,12 +1474,12 @@ aw
 aw
 "}
 (24,1,1) = {"
-aw
-aw
-aw
-aw
-aw
-aw
+wM
+wM
+wM
+wM
+wM
+wM
 aw
 aw
 aw

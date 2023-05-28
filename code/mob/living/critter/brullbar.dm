@@ -28,6 +28,8 @@
 	var/is_king = FALSE
 	var/limb = /datum/limb/brullbar
 
+	faction = FACTION_ICEMOON
+
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
 			return ..()
@@ -111,20 +113,19 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/brullbar)) return FALSE //don't kill other brullbars
+		if (ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(!is_king && iswerewolf(H))
+				src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+				step_away(src, H, 15)
+				src.set_dir(get_dir(src, H))
+				return FALSE
+		return ..()
+
 	seek_target(var/range = 9)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if(!is_king && iswerewolf(H))
-					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
-					step_away(src, H, 15)
-					src.set_dir(get_dir(src, H))
-					continue
-			. += C
+		. = ..()
 
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)

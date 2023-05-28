@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -614,12 +614,6 @@ TYPEINFO(/obj/item/sword)
 				for (var/mob/M in viewers(5, owner))
 					if (isrevolutionary(M))
 						M.changeStatus("revspirit", 20 SECONDS)
-
-/obj/item/storage/box/shuriken_pouch
-	name = "Shuriken Pouch"
-	desc = "Contains four throwing stars!"
-	icon_state = "ammopouch"
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
@@ -1612,7 +1606,7 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()

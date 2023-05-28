@@ -1,5 +1,236 @@
 
+(t)sun may 28 23
+(u)Skeletonman0
+(p)13957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)Skeleton heads will now also speak when attached to corpses while their skull has no brain
+(u)Glamurio (Ryou)
+(p)14190
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Added showers to Cogmap Medbay bathroom.
+(u)Skeletonman0
+(p)14252
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Headless skeletons can now have their contents poured into open containers with an aggressive grab
+(u)Hans
+(p)11942
+(e)🆕🔊⚗|C-Feature, C-Sound, A-Chemistry
+(*)Added Solipsizine, a drug that causes you to be unable to hear or see other people!
+(t)sat may 27 23
+(u)pali
+(p)12361
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)You can now Alt+Doubleclick things to see a help message on how to use them. So far this is only implemented for a few things (disposal pipes) but expect this to be more widespread in the future. (Rightclick + clicking Help also works.)
+(u)LeahTheTech
+(+)Soviet engineers figured out how to glue pod weapons in place really really well.
+(u)Soleilan & pali
+(*)L337 Hacker accent mutation added, slightly rarer than the rest.
+(t)fri may 26 23
+(u)pali
+(*)Two new accent mutations. One shuffles letter and the other one words.<br><img width="210" src="https://cdn.discordapp.com/attachments/1092955375889809418/1111708097682079784/image.png"><img width="200" src="https://cdn.discordapp.com/attachments/182254222694285312/1111712245844562021/image.png">
+(u)Flaborized
+(p)14005
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The HoS and Captain now have slightly unique looking eguns, to match their usual outfits.
+(u)FlameArrow57 and Flaborized
+(p)14093
+(e)🆕🔎📦|C-Feature, C-Code-Quality, A-Game-Objects
+(+)Added lanyards as a random lootcrate item! These are three item storages that can hold tiny items and fit in your ID slot. They accept IDs and can be used for ID checks if holding one.
+(u)glowbold
+(p)13820
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(+)Construction cones stack up to five at a time, can be placed on the ground by clicking, and can be worn on your head.
+(u)Skeletonman0
+(p)14031
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Microwaves can now warm chemicals and skeleton skulls / other organs are now microwavable
+(u)Tyrant
+(p)14228
+(e)🗺|A-Mapping
+(+)Mail booths are now gone. No more penpals.  Should've been removed a while ago actually.
+(u)Wisemonster
+(p)13883
+(e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
+(+)The generic space cola is no longer hidden in soda vending machines, but the off-brand colas now require hacking the vendor to access
+(t)thu may 25 23
+(u)pali
+(*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.
+(u)Amylizzle
+(p)14156
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)The singularity has received a visual overhaul. Tell someone in #imcoder if it makes your framerate suck. Bendy space.
+(t)wed may 24 23
+(u)Sord
+(+)The comically large captain's hat can now be recolored using the normal medal rewards.
+(u)pali
+(*)Chaplains can now examine dead mobs to see their last words.<br><small>Possibly subject to change, idk, ping me with feedback.</small>
+(u)DisturbHerb & BatElite & pali
+(*)Floodlights!<br>Engineering lockers now start with one floodlight each (power cell included) and the engineering fabricator can create more (power cell not included but the fab can now make power cells).<br>You can deploy them with a wrench (if you have a floodlight in one hand and a wrench in the other you can just use the light in hand to do this).<br>They use APC power if available and internal power cell if not (they use the large APC power cells).<br>Clickdrag to rotate!
+(u)pali
+(*)In chat options you can now toggle mild highlighting on odd/even lines for better readability
+(u)pali
+(+)Various record programs now show pronouns of the person
+(t)tue may 23 23
+(u)Sord
+(+)You can now make pod mining phasers in the ship component fabricator.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)blobs no longer require level 3 attack to break girders
+(u)Lord_Earthfire
+(p)13617
+(e)🪲⚖💅📦|C-Bug, C-Balance, C-QoL, A-Game-Objects
+(+)Satchels (e.g. mining, produce satchels) cannot hold stacks of items anymore. Stuffing a stack of items splits part of it up into singular items.
+(+)The ore scoop doesn't need two hands to be reloaded anymore. Enjoy quick reloading of your scoop without annoying dropping of mining satchels!
+(u)tue may 23 23
+(u)pali
+(*)AI status screen BSOD now means that the linked AI is dead. AIs can no longer pick BSOD status screen manually.
+(t)mon may 22 23
+(u)Cheffie
+(p)14055
+(e)🗺⚖🔄📡|A-Mapping, C-Balance, C-Rework, A-AI
+(+)Rockworms can now be tamed to not eat ores and can vomit up ores while alive. make a friend today!
+(t)sun may 21 23
+(u)Kubius
+(p)14114
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Reduced Nadir's internal reinforcement, improved its extraction nexus, and gave it MULE beacons to accommodate purchased MULEs.
+(u)FlameArrow57
+(p)13888
+(e)💅🔨|C-QoL, A-Player-Actions
+(+)Items that can fit on your back will no longer auto-swap with worn backpacks when using the equip hotkey.
+(u)Glamurio (Ryou)
+(p)14183
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Lollipops are now candy, and thus contain sugar.
+(t)fri may 19 23
+(u)DisturbHerb
+(p)13854
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(*)Added the Obon Festival Crate to QM, containing traditional summer robes and fireworks for the observance of the Space Japanese Obon festival. Costs 3000 credits.
+(u)colossusqw
+(p)13977
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Viper bites no longer make histamine or stun
+(t)thu may 18 23
+(u)colossusqw
+(p)14110
+(e)🎨💅🔬|C-Sprites, C-QoL, A-Science
+(+)Chemical barrels can now be wrenched open/closed to avoid horrible chemical leaks.
+(t)wed may 17 23
+(u)Kubius
+(p)14131
+(e)🆕|C-Feature
+(+)Cargo appraisers can now evaluate market requisition fulfillment by scanning a crate with an appropriate bar code applied.
+(u)LeahTheTech and Flaborized
+(p)14137
+(e)🗺🎨🔄📄⚗|A-Mapping, C-Sprites, C-Rework, A-UI, A-Chemistry
+(*)Reworked dispensary interlinks to use mail pipes, a linked chute and monitoring terminal is now available in chemistry.
+(u)Flaborized
+(p)14063
+(e)🆕🎨|C-Feature, C-Sprites
+(+)The HoP now carries a "T-MO Watch" on their person: it can measure a lot more than time, with many modes that can be swapped through by using it in-hand. Thanks to grifflez for helping with the name!
+(u)Caio029
+(p)13900
+(e)📦|A-Game-Objects
+(*)Cargo can now order wooden sheets in two new selections: x10 Wooden Sheets (for 500 credits) and x50 Wooden Sheets (for 2500 credits).
+(t)mon may 15 23
+(u)LeahTheTech (name courtesy of Kubius)
+(p)14086
+(e)🗺🎨💊📦⚗|A-Mapping, C-Sprites, A-Medical, A-Game-Objects, A-Chemistry
+(*)Added dispensary interlinks to medbay and chemistry lab for easier and more organised supply of medical chemicals.
+(+)The interlinks replace one existing nanomed, synchronize their contents and accept bottles, pills, pill bottles, patches, ampoules and syringes.
+(t)sat may 13 23
+(u)Sord
+(+)Nanomeds (portable and normal) now require medical locker access.
+(u)LeahTheTech
+(+)Small bots (cleanbots, firebots etc.) can now be loaded into mail and disposal chutes by click dragging.
+(u)Colossusqw
+(p)14073
+(e)⚖|C-Balance
+(+)Reduces max sticky floor slowdown time to 10 seconds.
+(t)fri may 12 23
+(u)DimWhat
+(p)13911
+(e)🗺🎨📦|A-Mapping, C-Sprites, A-Game-Objects
+(+)Added some new sprites to some special keys.
+(u)Hans
+(p)11905
+(e)🆕🎨⚖⚗|C-Feature, C-Sprites, C-Balance, A-Chemistry
+(*)Science can now fabricate unwieldy reagent barrels to aid in chemical production.
+(u)Colossusqw
+(p)14064
+(e)⚖|C-Balance
+(+)Sticky floors, such as the ones made by glue, now slow you down to a noticeable amount.
+(t)thu may 11 23
+(u)aloe
+(*)The cape changes have been expanded to scarves and all the other capes (loot crate ones and vampire cape, mostly).
+(+)You can now wear capes and scarves in either the back or suit slot. Wearing them in the back slot layers them higher than in the suit slot.
+(u)DimWhat
+(p)14047
+(e)🪲🎨🎩👽|C-Bug, C-Sprites, A-Clothing, A-Mutantraces
+(+)Added a few extra monkey belt sprites
+(u)Wisemonster
+(p)13855
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Replaced the capsaicin grenades in the security weapon vendor with flashbangs.
+(u)Flaborized
+(p)14003
+(e)🆕🎨|C-Feature, C-Sprites
+(+)Tools now come in additional colors, based on where they're sourced from.
+(t)tue may 09 23
+(u)LeahTheTech
+(+)Security mind protection health implants now only self destruct *after* sending the death alert.
+(u)Ikea
+(p)13749
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Jones can now be mechscanned with a syndicate analyzer
+(t)mon may 08 23
+(u)Sord
+(*)Added new departmental ID computers. They allow promotion to that department or demotion to Staff Assistant by that department's head. *Not on atlas
+(u)Flappybat
+(p)13986
+(e)🗺⛔|A-Mapping, C-Removal
+(+)Removed shields from Atlas
+(u)DimWhat
+(p)13935
+(e)⚖🎩|C-Balance, A-Clothing
+(+)Made the MDir and RD labcoats slightly more chemical resistant
+(u)RubberRats
+(p)13993
+(e)🪲🔎💅📦|C-Bug, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Bloody footprints are moppable again.
+(t)sun may 07 23
+(u)Sord
+(+)You can now buy fake money in the card vending machine.
+(+)You will only see what cards are in a hand if you're holding them (or on the same tile as them)
+(u)Kubius
+(p)13994
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Minor Nadir fixbatch, including new vending machines and a mechanical toolbox for Security.
+(t)sat may 06 23
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Ghost critters may now only nibble at food.
+(u)Flappybat
+(+)Pest respawn roboroach has been nerfed to small critter limbs instead of medium.
+(t)fri may 05 23
+(u)Flaborized
+(p)13925
+(e)🎨|C-Sprites
+(+)Added a unique sprite for the "syndicate field protective mask". (That's the mask nukeops spawn with.)
 (t)thu may 04 23
+(u)Kubius
+(p)13949
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Kondaru's security wing teleporter beacon has been moved to the brig.
+(u)Kubius
+(p)13950
+(e)🗺|A-Mapping
+(+)Reduced the complement of televisions in Nadir's cafeteria for ease of rearrangement.
+(u)Flaborized
+(p)13826
+(e)|
+(+)Added a new accent mutation, Frontal Gyrus Alteration Type-AR. Arrr!!🏴‍☠️
 (u)DimWhat, LeahTheTech
 (p)13975
 (e)🪲🆕🎨💅|C-Bug, C-Feature, C-Sprites, C-QoL

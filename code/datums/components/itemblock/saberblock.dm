@@ -47,7 +47,7 @@ TYPEINFO(/datum/component/itemblock/saberblock)
 /datum/component/itemblock/saberblock/on_block_begin(obj/item/I, var/obj/item/grab/block/B)
 	. = ..()//Always call your parents
 	if(!can_block_check || isnum(can_block_check) || (call(I, can_block_check)()))
-		RegisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED, .proc/do_reflect_animation)
+		RegisterSignal(B.assailant, COMSIG_ATOM_PROJECTILE_REFLECTED, PROC_REF(do_reflect_animation))
 		B.setProperty("reflection", 1)
 		B.setProperty("disorient_resist", 75)
 

@@ -239,7 +239,6 @@ datum/mind
 				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 				if (!new_datum || QDELETED(new_datum))
 					return FALSE
-				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
@@ -256,24 +255,34 @@ datum/mind
 				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
 				if (!new_datum || QDELETED(new_datum))
 					return FALSE
-				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return TRUE
 		return FALSE
 
-	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
-	proc/remove_antagonist(role_id, source = null)
-		for (var/datum/antagonist/A as anything in src.antagonists)
-			if (A.id == role_id)
-				A.remove_self(TRUE, source)
-				src.antagonists.Remove(A)
-				if (!length(src.antagonists) && src.special_role == A.id)
-					src.special_role = null
-					ticker.mode.traitors.Remove(src)
-					ticker.mode.Agimmicks.Remove(src)
-				qdel(A)
-				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return TRUE
-		return FALSE
+	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
+	proc/remove_antagonist(role, source = null)
+		var/datum/antagonist/antagonist_role
+		if (istype(role, /datum/antagonist))
+			antagonist_role = role
+
+		else if (istext(role))
+			for (var/datum/antagonist/A as anything in src.antagonists)
+				if (A.id == role)
+					antagonist_role = A
+					break
+
+		if (!antagonist_role)
+			return FALSE
+		if (antagonist_role.faction)
+			antagonist_role.owner.current.faction &= ~antagonist_role.faction
+		antagonist_role.remove_self(TRUE, source)
+		src.antagonists.Remove(antagonist_role)
+		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
+			src.special_role = null
+			ticker.mode.traitors.Remove(src)
+			ticker.mode.Agimmicks.Remove(src)
+		qdel(antagonist_role)
+
+		return TRUE
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()

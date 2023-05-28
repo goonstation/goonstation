@@ -2929,10 +2929,6 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"akq" = (
-/obj/item/storage/toolbox,
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "akr" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -20308,14 +20304,6 @@
 	icon_state = "purple1"
 	},
 /area/station/chapel/sanctuary)
-"bfe" = (
-/obj/table/wood/auto,
-/obj/item/bible,
-/obj/item/device/radio/intercom,
-/turf/simulated/floor/carpet{
-	icon_state = "purple1"
-	},
-/area/station/chapel/sanctuary)
 "bff" = (
 /obj/decoration/candles{
 	pixel_x = -2;
@@ -35057,18 +35045,6 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/orange,
 /area/station/mining/staff_room)
-"fLG" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 8;
-	pixel_x = -10
-	},
-/obj/item/constructioncone,
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction)
 "fOY" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35464,14 +35440,6 @@
 	},
 /turf/simulated/floor/engine/glow/blue,
 /area/station/engine/singcore)
-"gKb" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/item/constructioncone,
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction)
 "gLj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -35768,6 +35736,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/security/brig/solitary)
+"hrZ" = (
+/obj/item/storage/toolbox/mechanical,
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "hsB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -36153,6 +36125,14 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
+"igv" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/item/clothing/head/constructioncone,
+/turf/simulated/floor,
+/area/station/hallway/secondary/construction)
 "igT" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Interrogation"
@@ -36461,6 +36441,10 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"iTa" = (
+/obj/item/clothing/head/constructioncone,
+/turf/simulated/floor,
+/area/station/hallway/secondary/construction)
 "iUq" = (
 /obj/decal/tile_edge/line/black{
 	dir = 5;
@@ -38296,6 +38280,18 @@
 	dir = 8
 	},
 /area/station/ranch)
+"nQe" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/glass/bottle/holywater,
+/obj/item/bible,
+/obj/item/card_box/tarot,
+/obj/machinery/light/incandescent/harsh{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "nRd" = (
 /obj/storage/closet/fire,
 /obj/item/clothing/suit/fire/heavy,
@@ -39731,6 +39727,14 @@
 	},
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
+"rkb" = (
+/obj/table/wood/auto,
+/obj/item/bible,
+/obj/item/device/radio/intercom,
+/turf/simulated/floor/carpet{
+	icon_state = "purple1"
+	},
+/area/station/chapel/sanctuary)
 "rkw" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -40219,18 +40223,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
-"srA" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/glass/bottle/holywater,
-/obj/item/bible,
-/obj/item/card_box/tarot,
-/obj/machinery/light/incandescent/harsh{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "stp" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -41518,6 +41510,18 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"vPV" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	pixel_x = -10
+	},
+/obj/item/clothing/head/constructioncone,
+/turf/simulated/floor,
+/area/station/hallway/secondary/construction)
 "vQJ" = (
 /obj/machinery/networked/artifact_console,
 /obj/machinery/power/data_terminal,
@@ -42573,10 +42577,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/centralhallway)
-"ygy" = (
-/obj/item/constructioncone,
-/turf/simulated/floor,
-/area/station/hallway/secondary/construction)
 "yhc" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64577,7 +64577,7 @@ ajZ
 aju
 akj
 aiB
-akq
+hrZ
 aiw
 aiw
 aiw
@@ -76589,7 +76589,7 @@ aeJ
 bbJ
 bcE
 aEi
-bfe
+rkb
 bgf
 bhf
 bhX
@@ -77794,7 +77794,7 @@ aoW
 api
 aeJ
 aeM
-srA
+nQe
 aeJ
 aEi
 aEi
@@ -83248,13 +83248,13 @@ bdg
 bdg
 aZM
 bte
-fLG
+vPV
 qrl
 byQ
 vfw
 iFt
 lYV
-ygy
+iTa
 ogC
 tPi
 boc
@@ -84160,7 +84160,7 @@ lYV
 lYV
 tcL
 lYV
-ygy
+iTa
 ogC
 boc
 bIh
@@ -84456,7 +84456,7 @@ bqu
 brH
 bsQ
 aCM
-gKb
+igv
 lYV
 byR
 lYV
