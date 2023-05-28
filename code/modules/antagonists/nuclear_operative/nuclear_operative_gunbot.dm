@@ -2,6 +2,7 @@
 	id = ROLE_NUKEOP_GUNBOT
 	display_name = "\improper Syndicate gunbot"
 	antagonist_icon = "syndicate"
+	faction = FACTION_SYNDICATE
 	mob_path = /mob/living/critter/robotic/gunbot/syndicate
 
 	New(datum/mind/new_owner)

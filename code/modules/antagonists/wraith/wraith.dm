@@ -2,6 +2,7 @@
 	id = ROLE_WRAITH
 	display_name = "wraith"
 	antagonist_icon = "wraith"
+	faction = FACTION_WRAITH
 	mob_path = /mob/living/intangible/wraith
 	uses_pref_name = FALSE
 
