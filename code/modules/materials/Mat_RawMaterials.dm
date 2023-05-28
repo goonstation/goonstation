@@ -189,7 +189,6 @@
 	name = "frozen fart"
 	desc = "Remarkable! The cold temperatures in the freezer have frozen the fart in mid-air."
 	amount = 5
-	generic_name = FALSE
 	default_material = "frozenfart"
 	mat_changename = FALSE
 	uses_material_appearance = FALSE
