@@ -551,7 +551,7 @@
 	icon_state = "scrap"
 	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = 0
-	set_name = TRUE
+	mat_changename = TRUE
 	material_name = "Steel"
 	default_material = "steel"
 
@@ -585,7 +585,7 @@
 	material_amt = 0.1
 	material_name = "Glass"
 	default_material = "glass"
-	set_name = TRUE
+	mat_changename = TRUE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
