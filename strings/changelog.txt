@@ -1,5 +1,9 @@
 
 (t)sun may 28 23
+(u)Skeletonman0
+(p)13957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)Skeleton heads will now also speak when attached to corpses while their skull has no brain
 (u)Glamurio (Ryou)
 (p)14190
 (e)🗺💅💊|A-Mapping, C-QoL, A-Medical
