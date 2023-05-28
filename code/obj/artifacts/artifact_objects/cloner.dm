@@ -77,26 +77,40 @@
 				// make original body evil
 				H.attack_alert = 0
 				H.ai_init()
-				SPAWN(rand(1 SECOND, 10 SECONDS))
+				SPAWN(randfloat(1 SECOND, 3 SECONDS))
 					if(H) // completely convincing dialogue
-						H.say(pick(
-							"Well, that was weird!",
-							"Huh",
-							"Maybe it's a [pick("healer","teleporter","plant helper")] type artifact?",
-							"What do you think it does?",
-							"That activated it, didn't it?",
-							"I don't feel any different.",
-							""))
+						if (prob(33))
+							H.say(pick(
+								"Well, that was weird!",
+								"Huh",
+								"Maybe it's a [pick("healer","teleporter","plant helper")] type artifact?",
+								"What do you think it does?",
+								"That activated it, didn't it?",
+								"I don't feel any different.",
+								""))
+							sleep(randfloat(1 SECOND, 3 SECONDS))
+							H.say(phrase_log.random_phrase("say"))
+						else
+							H.say(phrase_log.random_phrase("say"))
+							sleep(randfloat(1 SECOND, 3 SECONDS))
+							H.say(phrase_log.random_phrase("say"))
 					sleep(evil_delay)
 					if(H)
 						H.ai_aggressive = 1
 						H.ai_calm_down = 0
+					while (isalive(H) && isnull(H.client))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
+						H.say(phrase_log.random_phrase("say"))
 			else
 				// make clone evil
 				clone.attack_alert = 0
 				clone.ai_init()
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
+				SPAWN(randfloat(5 SECONDS, 10 SECONDS))
+					while (isalive(clone) && isnull(clone.client))
+						clone.say(phrase_log.random_phrase("say"))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
 
 			SPAWN(imprison_time)
 				if (!O.disposed)
