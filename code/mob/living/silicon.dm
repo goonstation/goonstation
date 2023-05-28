@@ -222,6 +222,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 			return
 	return ..()
 /mob/living/silicon/say(var/message)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	if (!message)
 		return
 

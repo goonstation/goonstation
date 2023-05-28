@@ -681,6 +681,10 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)

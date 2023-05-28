@@ -1,3 +1,4 @@
+#define NEWSPEECH 1 //turns on the new speech system for all things - undef to disable
 
 // Bitflags and defines related to say()
 //channel defines

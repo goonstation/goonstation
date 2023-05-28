@@ -204,6 +204,10 @@
 	return "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
 
 /mob/living/intangible/flock/say(message, involuntary = 0)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	if (!message || message == "" || stat)
 		return
 	if (src.client && src.client.ismuted())

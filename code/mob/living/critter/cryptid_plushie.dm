@@ -163,6 +163,10 @@
 			src.UpdateOverlays(eye_light, "eye_light")
 
 	say(message) // gross workaround to allow emotes despite canspeak = 0
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..(message)
+#endif
 		if(dd_hasprefix(message, "*"))
 			canspeak = 1
 			. = ..()

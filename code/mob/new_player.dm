@@ -876,6 +876,10 @@ a.latejoin-card:hover {
 			qdel(src)
 
 	say(message)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..(message)
+#endif
 		if(dd_hasprefix(message, "*"))
 			return
 		src.ooc(message)

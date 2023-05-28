@@ -16,6 +16,10 @@
 		return 1
 
 	say(var/message)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..(message)
+#endif
 		message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 		if (!message)

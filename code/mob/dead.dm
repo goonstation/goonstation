@@ -64,6 +64,10 @@
 	return P.hits_ghosts
 
 /mob/dead/say(var/message)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
 	if (!message)

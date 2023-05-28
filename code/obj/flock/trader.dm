@@ -354,6 +354,10 @@
 	icon_state = "screen-off"
 
 /obj/flock_screen/say(var/message)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	if(!message)
 		return
 	src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"[gradientText("#3cb5a3", "#124e43", message)]\"")

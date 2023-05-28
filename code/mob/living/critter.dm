@@ -1435,6 +1435,10 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	src.visible_message(msg)
 
 /mob/living/critter/say(var/message)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
 	if (dd_hasprefix(message, "*") || isdead(src))

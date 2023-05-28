@@ -162,6 +162,10 @@
 	src.resources -= amount
 
 /mob/living/critter/flock/say(message, involuntary = FALSE)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	if(isdead(src) && src.is_npc)
 		return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))

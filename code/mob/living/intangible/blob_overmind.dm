@@ -319,9 +319,6 @@
 	say_understands() return 1
 	can_use_hands()	return 0
 
-	say(var/message)
-		return ..(message)
-
 	say_quote(var/text)
 		var/speechverb = pick("wobbles", "wibbles", "jiggles", "wiggles", "undulates", "fidgets", "joggles", "twitches", "waggles", "trembles", "quivers")
 		return "[speechverb], \"[text]\""

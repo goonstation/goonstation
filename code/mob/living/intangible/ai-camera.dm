@@ -254,6 +254,10 @@
 		return ..()
 
 	say(var/message)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..(message)
+#endif
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else

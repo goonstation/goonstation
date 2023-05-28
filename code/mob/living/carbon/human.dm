@@ -1350,6 +1350,10 @@
 	return rendered
 
 /mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language

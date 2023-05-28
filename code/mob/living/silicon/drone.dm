@@ -217,6 +217,10 @@
 		return
 
 	say(var/message)
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..(message)
+#endif
 		if (!message)
 			return
 

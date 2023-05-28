@@ -1,4 +1,4 @@
-/datum/speech_module/modifer/brain_damage
+/datum/speech_module/modifier/brain_damage
 	id = "brain_damage"
 
 	process(datum/say_message/message)

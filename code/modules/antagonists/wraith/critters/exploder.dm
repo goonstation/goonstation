@@ -101,6 +101,10 @@
 
 
 /mob/living/critter/exploder/say(message, involuntary = 0)	//Should probably remove this
+#ifdef NEWSPEECH
+	if(message) //suppress unreachable code error
+		return ..(message)
+#endif
 	if(isdead(src) && src.is_npc)
 		return
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
