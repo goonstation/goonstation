@@ -1,5 +1,9 @@
 
 (t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14190
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Added showers to Cogmap Medbay bathroom.
 (u)Skeletonman0
 (p)14252
 (e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
