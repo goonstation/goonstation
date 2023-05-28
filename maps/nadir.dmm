@@ -48260,7 +48260,7 @@
 /area/station/security/brig)
 "veC" = (
 /obj/structure/girder/reinforced,
-/obj/item/raw_material/scrap_metal/steel,
+/obj/item/raw_material/scrap_metal,
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veU" = (
