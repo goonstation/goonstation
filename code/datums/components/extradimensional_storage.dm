@@ -56,7 +56,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	qdel(region)
 	. = ..()
 
-// subtype of the component that handles storage
+/// subtype of the component that handles storage
 /datum/component/extradimensional_storage/storage
 
 /datum/component/extradimensional_storage/storage/Initialize(width=9, height=9, region_init_proc=null)
@@ -83,7 +83,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	UnregisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING)
 	. = ..()
 
-// subtype of the component that instead handles ladders
+/// subtype of the component that instead handles ladders
 /datum/component/extradimensional_storage/ladder
 
 /datum/component/extradimensional_storage/ladder/Initialize(width=9, height=9, region_init_proc=null)
@@ -102,7 +102,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 
 /datum/component/extradimensional_storage/ladder/on_entered(atom/movable/thing,mob/user)
 	var/obj/ladder/ladder = src.parent
-	if (istype(ladder,/obj/ladder/embed))
+	if (istype(ladder, /obj/ladder/embed))
 		boutput(user, "You enter the gap in the wall.")
 	else
 		boutput(user, "You climb [ladder.icon_state == "ladder" ? "down" : "up"] the ladder.")

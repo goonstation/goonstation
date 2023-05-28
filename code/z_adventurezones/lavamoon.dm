@@ -1264,6 +1264,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 /obj/ladder/embed/extradimensional/New()
 	..()
 	src.setMaterial(getMaterial("negativematter"))
+
 /obj/ladder/extradimensional/New()
 	..()
 	src.setMaterial(getMaterial("negativematter"))
