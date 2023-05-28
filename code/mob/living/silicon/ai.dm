@@ -422,7 +422,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
-	else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	else if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.dismantle_stage >= 2)
 			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 		else
@@ -2252,7 +2252,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 		return 0
 	if (istype(M, /mob/new_player))
 		return 0
-	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 		return 0
 	if(M.z != 1 && M.z != usr.z)
 		return 0
@@ -2283,7 +2283,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 			continue
-		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 			continue
 		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue

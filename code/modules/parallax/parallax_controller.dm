@@ -67,19 +67,11 @@ var/global/parallax_enabled = TRUE
 		src.z_level_parallax_layers = list()
 
 		for (var/z_level in Z_LEVEL_NULL to Z_LEVEL_MINING)
-			if (z_level == Z_LEVEL_STATION)
-				var/list/atom/movable/screen/parallax_layer/station_parallax_layers = list()
-				for (var/parallax_layer_type as anything in map_settings.parallax_layers)
-					station_parallax_layers += new parallax_layer_type(null, src.owner)
+			var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
+			for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
+				z_parallax_layers += new parallax_layer_type(null, src.owner)
 
-				src.z_level_parallax_layers["[Z_LEVEL_STATION]"] = station_parallax_layers
-
-			else
-				var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
-				for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
-					z_parallax_layers += new parallax_layer_type(null, src.owner)
-
-				src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
+			src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
 
 		src.previous_turf = get_turf(src.owner.eye)
 		var/area/A = get_area(src.previous_turf)

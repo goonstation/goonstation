@@ -480,9 +480,7 @@
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			if (src.gunlocklock)
 				speak(pick("Pass.", "No thanks.", "Nah, I'd rather not.", "Hands off the merchandise!",\
 				"Yeah I'm going to need a signed permission slip from your mother first",\

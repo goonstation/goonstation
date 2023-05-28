@@ -137,6 +137,15 @@
 
 		UpdateIcon()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
+				var/trans = src.affecting.reagents.trans_to(target, 10)
+				if (trans)
+					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
+
 	attack(atom/target, mob/user)
 		if (check())
 			return

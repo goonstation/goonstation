@@ -895,7 +895,6 @@
 	},
 /area/station/hallway/secondary/entry)
 "adv" = (
-/obj/mail_booth,
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -2137,8 +2136,6 @@
 	anchored = 1;
 	dir = 4
 	},
-/obj/item/reagent_containers/bath_bomb,
-/obj/item/reagent_containers/bath_bomb,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "ahr" = (
@@ -30469,18 +30466,9 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "bIA" = (
-/obj/window/cubicle{
-	dir = 1
-	},
-/obj/machinery/door/window/eastleft,
-/obj/item/storage/toilet{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
+/obj/machinery/light{
+	dir = 8;
+	tag = ""
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -37038,6 +37026,16 @@
 	pixel_y = 24
 	},
 /obj/machinery/power/apc/autoname_east,
+/obj/table/auto,
+/obj/item/reagent_containers/bath_bomb{
+	pixel_x = 9;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/bath_bomb{
+	pixel_point = 5;
+	pixel_y = 12
+	},
+/obj/item/paper_bin,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "bZz" = (
@@ -38883,13 +38881,17 @@
 	},
 /area/station/medical/medbay/lobby)
 "cez" = (
-/obj/cable{
-	icon_state = "0-4"
+/obj/window/cubicle{
+	dir = 1
 	},
-/obj/machinery/power/apc/autoname_west,
-/obj/machinery/space_heater,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
+/obj/machinery/door/window/eastleft,
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "ceA" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -39338,8 +39340,9 @@
 /obj/landmark{
 	name = "kudzustart"
 	},
-/obj/machinery/light/small{
-	dir = 1
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -40494,8 +40497,19 @@
 /turf/space,
 /area/space)
 "ciZ" = (
-/obj/table/auto,
-/obj/item/paper_bin,
+/obj/window/cubicle{
+	dir = 1
+	},
+/obj/machinery/door/window/westright,
+/obj/item/storage/toilet{
+	dir = 8
+	},
+/obj/landmark{
+	name = "shitty_bill_respawn"
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cja" = (
@@ -41514,6 +41528,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/space_heater,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "clz" = (
@@ -45225,15 +45240,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cvK" = (
-/obj/machinery/light/small{
-	dir = 8
-	},
 /obj/machinery/bathtub{
 	anchored = 1;
 	dir = 4
 	},
-/obj/item/reagent_containers/bath_bomb,
-/obj/item/reagent_containers/bath_bomb,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cvM" = (
@@ -52252,7 +52266,9 @@
 "hRW" = (
 /obj/item/toy/plush/small{
 	layer = 3.1;
-	pixel_y = 4
+	pixel_y = 4;
+	name = "Paul";
+	desc = "You found a new friend! A faded tag on his foot says \"For Paige\"."
 	},
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -57487,6 +57503,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"oBh" = (
+/obj/machinery/shower{
+	dir = 8;
+	pixel_x = -8
+	},
+/obj/window/cubicle{
+	dir = 1
+	},
+/obj/machinery/door/window/eastleft,
+/obj/machinery/drainage,
+/turf/simulated/floor/sanitary,
+/area/station/crew_quarters/toilets)
 "oCb" = (
 /obj/machinery/bot/medbot/no_camera,
 /obj/item/device/radio/intercom/security{
@@ -58451,6 +58479,12 @@
 /area/station/hydroponics/bay)
 "pLh" = (
 /mob/living/critter/small_animal/cockroach,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "pMj" = (
@@ -110209,9 +110243,9 @@ bWU
 bYe
 cvK
 bIA
-bIA
-bYe
+oBh
 cez
+bYe
 pLh
 ahd
 ahd
@@ -110512,9 +110546,9 @@ kTd
 bZx
 caZ
 cce
+cce
 mdG
 ceA
-chb
 chb
 chb
 cnu
@@ -110814,14 +110848,14 @@ bYe
 bZy
 cba
 ciZ
+ciZ
 bYe
-ceG
 ahd
 ahd
 cly
 cnO
 ahd
-ahd
+ceG
 ahh
 cir
 ahh
@@ -111117,7 +111151,7 @@ caY
 bYe
 caY
 caY
-aif
+bYe
 hpb
 aif
 ahh

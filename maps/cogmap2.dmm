@@ -73965,15 +73965,6 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
-"mcz" = (
-/obj/mail_booth,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
 "mde" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -141447,7 +141438,7 @@ arJ
 aaa
 aaa
 aKm
-mcz
+aOn
 aOn
 aFz
 aIP

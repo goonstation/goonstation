@@ -846,12 +846,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
+	icon_state = "asteroid-map"
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
+	color = "#D1E6FF"
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -916,12 +918,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	ice
 		name = "comet chunk"
 		desc = "That's some cold stuff right there."
+		color = "#9cc4f5"
 		stone_color = "#9cc4f5"
 		default_ore = /obj/item/raw_material/ice
 
 	geode
 		name = "compacted stone"
 		desc = "This rock looks really hard to dig out."
+		color = "#4c535c"
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
@@ -934,6 +938,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_material = "jean"
 		default_ore = /obj/item/material_piece/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		color = "#88c2ff"
 		stone_color = "#88c2ff"
 
 
@@ -1015,6 +1020,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		color = "#6090a0"
 		stone_color = "#6090a0"
 		fullbright = 0
 		luminosity = 1
@@ -2097,6 +2103,9 @@ TYPEINFO(/obj/item/cargotele)
 		if (istype(item, /obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = item
 			owner_name = pda.registered
+		else if (istype(item, /obj/item/clothing/lanyard))
+			var/obj/item/clothing/lanyard/lanyard = item
+			owner_name = lanyard.registered
 		else if (istype(item, /obj/item/card/id))
 			var/obj/item/card/id/card = item
 			owner_name = card.registered

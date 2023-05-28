@@ -1915,7 +1915,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
