@@ -227,7 +227,7 @@ var/list/headset_channel_lookup
 	var/real_name = "Unknown"
 	var/voice_name = "Unknown"
 	var/voice_message = "broadcasts"
-	var/say_language = "english"
+	say_language = "english"
 
 	proc/say_quote(var/text)
 		return "[src.voice_message], \"[text]\""
