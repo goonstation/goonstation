@@ -38,7 +38,6 @@
 	icon_state = "carrier-full"
 	item_state = "carrier-open"
 	w_class = W_CLASS_BULKY
-	two_handed = TRUE
 
 	/// Please override this in child types to specify what can actually fit in.
 	var/mob/allowed_mobs = /mob/living/critter/small_animal
@@ -134,20 +133,26 @@
 
 	attack(mob/M, mob/user)
 		if (user.a_intent == INTENT_HARM)
-			. = ..()
+			return ..()
 		if (ismob(M))
+			if (!src.return_other_hand_empty(user))
+				boutput(user, "<span class='alert'>You need a free hand to scoop up [M]!</span>")
+				return ..()
 			if (!istype(M, src.allowed_mobs))
 				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
-				return
+				return ..()
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
 				boutput(user, "<span class='alert'>[src] is too crowded to fit one more!</span>")
-				return
+				return ..()
 			var/mob/target_mob = M
 			actions.start(new /datum/action/bar/icon/pet_carrier(target_mob, src, src.icon, src.trap_mob_icon_state, TRAP_MOB), user)
 			return
 		..()
 
 	attack_self(mob/user)
+		if (!src.return_other_hand_empty(user))
+			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
+			return ..()
 		if (length(src.carrier_occupants) && ismob(src.carrier_occupants[1]))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
 			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB), user)
@@ -225,6 +230,16 @@
 		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
 		src.UpdateIcon()
 
+	// There has to be a better way of checking that the other hand is empty. Please.
+	proc/return_other_hand_empty(mob/living/carbon/human/mob_to_check)
+		if (!ishuman(mob_to_check))
+			return FALSE
+		if (mob_to_check.hand && !mob_to_check.r_hand)
+			return TRUE
+		else if (!mob_to_check.l_hand)
+			return TRUE
+		else return FALSE
+
 	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
 	verb/release_occupant_verb(mob/user)
 		set name = "Release occupant"
@@ -268,7 +283,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.mob_owner = owner
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -280,13 +295,13 @@
 
 	onUpdate()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
