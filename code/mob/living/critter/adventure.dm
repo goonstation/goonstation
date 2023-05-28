@@ -487,11 +487,11 @@
 		HH.limb_name = "left arm"
 
 		HH = hands[2]
-		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb = new /datum/limb/sword
 		HH.name = "right hand"
 		HH.suffix = "-R"
-		HH.icon_state = "handr"
+		HH.icon_state = "blade"
 		HH.limb_name = "sword"
 		HH.can_hold_items = FALSE
 
@@ -507,8 +507,8 @@
 			src.active_hand = 1
 			return ..() // Punch / Kick them
 		if (prob(30))
-			src.active_hand = 1
 			src.set_a_intent(INTENT_DISARM)
+			src.active_hand = 1
 			return src.hand_attack(target) // Disarm them
 		src.set_a_intent(INTENT_HARM)
 		src.active_hand = 2
