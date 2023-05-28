@@ -2,6 +2,16 @@
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
 
+	Entered(atom/movable/AM, atom/old_loc)
+		. = ..()
+		if(isliving(AM))
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
+
+	Exited(atom/movable/AM, atom/new_loc)
+		. = ..()
+		if(isliving(AM))
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
+
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
 	type_name = "Cloner"
@@ -68,10 +78,8 @@
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE
-			clone.buckled = O // hack to suppress lay down sound
+			APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
-			clone.force_laydown_standup()
-			clone.buckled = null
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)
 
