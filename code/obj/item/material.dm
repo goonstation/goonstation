@@ -287,7 +287,7 @@
 	name = "pharosium ore"
 	desc = "A chunk of Pharosium, a conductive metal."
 	material_name = "Pharosium"
-	default_material = "pharosium
+	default_material = "pharosium"
 	metal = 1
 	conductor = 1
 
