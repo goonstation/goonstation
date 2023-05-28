@@ -1900,18 +1900,6 @@
 /obj/lattice,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
-"vF" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "placeholder";
-	name = "space"
-	},
-/area/noGenerate)
 "vH" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -2999,11 +2987,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "placeholder";
-	name = "space"
-	},
+/turf/space,
 /area/noGenerate)
 "BL" = (
 /obj/machinery/light/small{
@@ -4366,18 +4350,6 @@
 "Kv" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/magnet_control)
-"Kx" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "placeholder";
-	name = "space"
-	},
-/area/noGenerate)
 "Kz" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
@@ -5383,11 +5355,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/simulated/floor/plating/airless/shuttlebay{
-	icon = 'icons/turf/space.dmi';
-	icon_state = "placeholder";
-	name = "space"
-	},
+/turf/space,
 /area/noGenerate)
 "Rl" = (
 /obj/indestructible/shuttle_corner{
@@ -14095,8 +14063,8 @@ dK
 ab
 ab
 ab
-Kx
-vF
+NG
+dK
 ab
 ab
 ab
@@ -14692,7 +14660,7 @@ ab
 ab
 ab
 ab
-Kx
+NG
 aw
 aw
 lx
@@ -15004,9 +14972,9 @@ To
 To
 aw
 aw
-vF
+dK
 ab
-Kx
+NG
 vw
 vM
 vM
@@ -15020,7 +14988,7 @@ aw
 aw
 aw
 aw
-vF
+dK
 ab
 ab
 ab
@@ -15626,7 +15594,7 @@ xM
 Wm
 Wm
 aw
-vF
+dK
 ab
 ab
 ab
@@ -16231,7 +16199,7 @@ LM
 Wm
 Wm
 aw
-vF
+dK
 ab
 ab
 ab
@@ -16807,7 +16775,7 @@ ab
 ab
 ab
 ab
-Kx
+NG
 aw
 aw
 nH
@@ -17410,7 +17378,7 @@ ab
 ab
 ab
 ab
-Kx
+NG
 aw
 aw
 Qc
@@ -17711,7 +17679,7 @@ aa
 ab
 ab
 ab
-Kx
+NG
 aw
 aw
 Qc
