@@ -5,7 +5,7 @@
 	var/datum/plant/planttype = null //! saves the plattype the critter came from. Whenever someone wants a critter to replant itself :)
 	var/datum/plantgenes/plantgenes = null //! saves the plantgenes of the critter. Important for seed creation as well as scaling with plant attributes
 	var/generation = 0 //! For genetics tracking.
-	var/list/growers //! This contains people who contributed to the plant. For AI purposes
+	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
 
 	New()
 
