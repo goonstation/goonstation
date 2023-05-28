@@ -131,6 +131,7 @@
 	start_speech_accents = null
 	start_speech_modifiers = list("brain_damage")
 	start_speech_outputs = list("spoken")
+	start_listen_languages = list("english")
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	src.create_mob_silhouette()

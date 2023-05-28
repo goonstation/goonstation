@@ -112,7 +112,6 @@
 	var/network_device = null
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
-	var/say_language = "english"
 	var/literate = 1 // im liturit i kin reed an riet
 
 	var/list/movement_modifiers = list()

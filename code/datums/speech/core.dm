@@ -223,13 +223,18 @@ var/global/datum/speech_manager/SpeechManager = new()
 /datum/listen_module_tree
 	var/list/datum/listen_module/modifier/listen_modifiers
 	var/list/datum/listen_module/input/input_modules
+	var/list/datum/language/known_languages
 	var/atom/parent
 
-	New(var/atom/parent, var/list/inputs = list(), var/list/modifiers = list())
+	New(var/atom/parent, var/list/inputs = list(), var/list/modifiers = list(), var/list/languages = list())
 		. = ..()
 		src.listen_modifiers = list()
 		src.input_modules = list()
+		src.known_languages = list()
 		src.parent = parent
+
+		for(var/lang_id in languages)
+			src.known_languages += global.SpeechManager.GetLanguageInstance(lang_id)
 
 		for(var/mod_id in modifiers)
 			src.listen_modifiers += global.SpeechManager.GetListenModifierInstance(mod_id)
@@ -242,6 +247,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 	proc/process(var/datum/say_message/message)
 		if(!istype(message))
 			CRASH("A non say_message thing was passed to a listen_module_tree. This should never happen.")
+
+		if(message.language in src.known_languages)
+			message.content = message.language.heard_understood(message.content)
+		else
+			message.content = message.language.heard_not_understood(message.content)
 
 		for(var/datum/listen_module/module in src.listen_modifiers)
 			message = module.process(message)

@@ -297,10 +297,12 @@ TYPEINFO(/atom)
 /atom/var/list/start_listen_modifiers = null
 /// Listen inputs this atom *starts* with. It will not be updated or used again after init.
 /atom/var/list/start_listen_inputs = null
+/// Listen languages this atom *starts* with. It will not be updated or used again after init. Note this is the languages that the atom understands when heard.
+/atom/var/list/start_listen_languages = null
 
 /atom/New() //I hate this syntax
 	if(length(src.start_listen_inputs)) //only instantiate the tree if we're gonna use it
-		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers)
+		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
 	..()
 
 /// Speech module tree. Lazy loaded on first say() call.
@@ -311,9 +313,11 @@ TYPEINFO(/atom)
 /atom/var/list/start_speech_modifiers = null
 /// Speech outputs this atom *starts* with. It will not be updated or used again after init.
 /atom/var/list/start_speech_outputs = list("spoken")
+/// Default language for speaking
+/atom/var/say_language = "english"
 ///Primary entry point for all say code
 /atom/proc/say(var/message as text)
-	var/datum/say_message/said = new(message, src)
+	var/datum/say_message/said = new(message, src, src.say_language)
 	if(!src.say_tree)
 		src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
 	src.say_tree.process(said)
