@@ -127,7 +127,7 @@
 
 	//new speech vars
 	start_listen_modifiers = null
-	start_listen_inputs = list("spoken")
+	start_listen_inputs = list("ears")
 	start_speech_accents = null
 	start_speech_modifiers = list("brain_damage")
 	start_speech_outputs = list("spoken")

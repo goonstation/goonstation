@@ -128,13 +128,22 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 /// Message base class - once something has been passed to say(), it becomes this. Any and all metadata about the message should be stored here
 /datum/say_message
+	/// Radio prefix
 	var/prefix = ""
+	/// Raw original message
 	var/orig_message = ""
+	/// Atom that sent the message
 	var/atom/speaker = null
+	/// Language that this message was sent in
 	var/datum/language/language = null
+	/// Processed content of the message
 	var/content = ""
+	/// Verb to display when the message is recieved, ie "Jeff [say_verb] [message]"
 	var/say_verb = "says"
+	/// Message flags
 	var/flags = 0
+	/// Range of the heard message
+	var/heard_range = 5
 
 	/// Create a new message datum with associated metadata, parsing and sanitization.
 	New(var/message as text, var/atom/speaker, var/language_id = "english")
