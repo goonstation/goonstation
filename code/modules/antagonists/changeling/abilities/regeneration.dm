@@ -221,7 +221,8 @@
 		if (!ishuman(owner)) return
 		H = owner
 		if (!H.getStatusDuration("burning"))
-			changeling_super_heal_step(H, 25, 25)
+			if (!ON_COOLDOWN(H, "cling_regen", 3 SECONDS))
+				changeling_super_heal_step(H, 25, 25)
 		else // lings are vulnerable to fire so it stopping their regen makes sense
 			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
 				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
