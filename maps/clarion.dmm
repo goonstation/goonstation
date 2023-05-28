@@ -33602,7 +33602,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/mail_booth,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 9
 	},

@@ -74,13 +74,8 @@
 		var/datum/mind/lucky_dude = candidates[1]
 
 		//add plague rat to master's list is done in /mob/living/critter/wraith/plaguerat/New
-		if (lucky_dude.current)
-			var/mob/living/critter/wraith/plaguerat/young/P = new /mob/living/critter/wraith/plaguerat/young(T, W)
-			lucky_dude.transfer_to(P)
-			antagify(lucky_dude.current, null, 1)
-			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
-			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+		if (lucky_dude.add_subordinate_antagonist(ROLE_PLAGUE_RAT, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "plague rat", src.holder.owner)
-			boutput(P, "<span class='notice'><b>You have been respawned as a plague rat!</b></span>")
-			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to spread disease and consume rot! Work with your master to turn the station into a rat den!</b></span>")
+			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)

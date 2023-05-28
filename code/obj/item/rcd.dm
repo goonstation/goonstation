@@ -534,7 +534,7 @@ TYPEINFO(/obj/item/rcd)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (S.cell)
-				S.cell.charge -= checkamt * silicon_cost_multiplier
+				S.cell.use(checkamt * silicon_cost_multiplier)
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")

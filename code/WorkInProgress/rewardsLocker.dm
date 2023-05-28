@@ -876,6 +876,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/bigcaphat))
+					var/prev = M.name
+					M.name = "commander of commander's hat"
+					M.desc = "A symbol of the commander's rank, signifying they're the greatest commander, and the source of all their power. (Base Item: [prev])"
+					M.icon_state = "captainbig-blue"
+					M.item_state = "captainbig-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/swords_sheaths/captain))
@@ -1019,6 +1028,15 @@
 					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting an executive. (Base Item: [prev])"
 					M.icon_state = "helmet-captain-red"
 					M.item_state = "helmet-captain-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/bigcaphat))
+					var/prev = M.name
+					M.name = "\improper CentCom Executive of Executive's hat"
+					M.desc = "A symbol of the CentCom Executive's rank, signifying they're the greatest VentCom Executive, and the source of all their power. (Base Item: [prev])"
+					M.icon_state = "captainbig-red"
+					M.item_state = "captainbig-red"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
