@@ -100,7 +100,7 @@
 /area/noGenerate)
 "hB" = (
 /turf/variableTurf/clear,
-/area/space)
+/area/allowGenerate)
 "jk" = (
 /obj/machinery/light/incandescent/netural,
 /obj/cable{
@@ -267,10 +267,6 @@
 /turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "rW" = (
-/obj/storage/secure/closet/command/chief_engineer/puzzle{
-	locked = 0;
-	pixel_x = -8
-	},
 /obj/item_dispenser/idcarddispenser{
 	pixel_x = 7
 	},
@@ -374,14 +370,6 @@
 /area/prefab/sequestered_cloner)
 "xI" = (
 /obj/cable,
-/obj/machinery/power/apc/puzzle_apc/nopoweralert{
-	autoname_on_spawn = 0;
-	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
-	name = "Engine Test APC";
-	pixel_x = -24;
-	pixel_y = -2;
-	start_charge = 0
-	},
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/yellow,
 /area/prefab/sequestered_cloner/puzzle)

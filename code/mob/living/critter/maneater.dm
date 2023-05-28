@@ -40,8 +40,9 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	add_abilities = list(/datum/targetable/critter/slam/polymorph,     //Changed how it added abilities to mimic ?newer? code from tomatoes.
-						/datum/targetable/critter/devour)    //I guess?
+	add_abilities = list(/datum/targetable/critter/slam/polymorph, /datum/targetable/critter/devour)
+
+	faction = FACTION_BOTANY
 	planttype = /datum/plant/maneater
 	stamina = 300
 	stamina_max = 300

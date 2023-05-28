@@ -6,9 +6,10 @@
 #define Z_LEVEL_MINING 5	//! The mining Z-level. Trench on underwater maps
 #define Z_LEVEL_DYNAMIC 6	//! The Z-level used for dynamically loaded maps. See: region_allocator
 
-/// A list of each z-level define and it's associated parallax layer types. See `code\map\map_settings.dm` for station-level parallax layers.
-var/list/z_level_parallax_settings = list(
+/// A list of each z-level define and it's default associated parallax layer types. See `code\map\map_settings.dm` for station-level parallax layers.
+var/list/default_z_level_parallax_settings = list(
 	"[Z_LEVEL_NULL]" = list(),
+	"[Z_LEVEL_STATION]" = list(),
 	"[Z_LEVEL_ADVENTURE]" = list(),
 	"[Z_LEVEL_DEBRIS]" = list(
 		/atom/movable/screen/parallax_layer/space_1,
@@ -24,6 +25,9 @@ var/list/z_level_parallax_settings = list(
 		/atom/movable/screen/parallax_layer/asteroids_near,
 		),
 	)
+
+/// A list of each z-level define and it's current associated parallax layer types.
+var/list/z_level_parallax_settings
 
 ///Map generation defines
 #define PERLIN_LAYER_HEIGHT "perlin_height"

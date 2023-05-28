@@ -236,7 +236,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
-	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
 	valid_target(mob/living/C)
@@ -374,6 +373,25 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	proc/catnip_effect()
 		src.catnip = 45
 		src.visible_message("[src]'s eyes dilate.")
+
+	Move(turf/NewLoc, direct)
+		. = ..()
+		if ((locate(/obj/table) in src.loc) && prob(20) && !ON_COOLDOWN(src, "knock_stuff_off_table", 10 SECONDS))
+			knock_stuff_off_table()
+
+	proc/knock_stuff_off_table()
+		var/list/obj/item/items_here = list()
+		for (var/obj/item/item_here in src.loc)
+			if (!item_here.anchored)
+				items_here += item_here
+		var/list/target_turfs = list()
+		for (var/turf/T in range(1, src))
+			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
+				target_turfs += T
+		if (length(items_here) && length(target_turfs))
+			var/obj/item/item = pick(items_here)
+			src.visible_message("<span class='alert'>[src] [pick("knocks","pushes","shoves")] [item] off the table!</span>")
+			item.throw_at(pick(target_turfs), 2, 1)
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -963,6 +981,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	hand_count = 2
 	pet_text = list("pets","cuddles","snuggles","scritches")
 	add_abilities = list(/datum/targetable/critter/peck)
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	var/species = "parrot"
 	var/hops = 0
 	var/hat_offset_y = -5
@@ -1240,8 +1260,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	flags = null
 	fits_under_table = 0
+	health_brute = 30
+	health_burn = 30
 	species = "penguin"
-
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl
@@ -1766,7 +1790,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	can_lie = 0
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
@@ -1891,7 +1915,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	can_lie = FALSE
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -2842,10 +2866,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 	ai_attacks_per_ability = 0
+
+	faction = FACTION_BOTANY
 
 	setup_hands()
 		..()
@@ -2869,10 +2895,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("scream")
 			else if (prob(1))
 				src.emote("dance")
-
-	valid_target(mob/living/C)
-		if (C.job == "Botanist") return FALSE
-		return ..()
 
 	death(var/gibbed)
 		src.can_lie = FALSE
@@ -3805,6 +3827,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
 
+	faction = FACTION_AQUATIC
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -3849,6 +3873,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 20
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
 	add_abilities = list(/datum/targetable/critter/crabmaul)
+
+	faction = FACTION_AQUATIC
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -3902,6 +3928,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
+	faction = FACTION_AQUATIC
 
 	New()
 		..()
@@ -3995,6 +4022,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 13
 	base_walk_delay = 15
 
+	faction = FACTION_AQUATIC
+
 //	var/mob/living/target = null
 
 	New()
@@ -4068,6 +4097,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
+	faction = FACTION_AQUATIC
 
 	New()
 		..()

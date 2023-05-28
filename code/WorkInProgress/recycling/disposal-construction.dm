@@ -11,6 +11,12 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 	m_amt = 1850
 	level = 2
+	HELP_MESSAGE_OVERRIDE({"
+		You can use a <b>wrench</b> to (un)anchor the pipe segment,
+		a <b>crowbar</b> to rotate it,
+		a <b>screwdriver</b> to disassemble it,
+		and a <b>welding tool</b> to turn it into a functional immovable pipe."})
+
 	var/ptype = 0
 	// 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk, 6 & 7=switching junction, 8 & 9=mob filter junction, 10 = loafer, 11 = mechanics controlled junction
 
@@ -183,6 +189,10 @@
 					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
+					P.color = src.color
+					P.name = src.name
+					if (src.material)
+						P.setMaterial(src.material, copy=FALSE)
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")

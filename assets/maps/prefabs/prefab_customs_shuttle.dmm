@@ -5,7 +5,7 @@
 	icon_state = "floattiles1"
 	},
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aH" = (
 /turf/simulated/wall/auto/shuttle{
@@ -38,7 +38,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "bj" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "bY" = (
 /turf/simulated/floor/plating/airless{
@@ -59,6 +59,13 @@
 "dg" = (
 /obj/decoration/ceilingfan,
 /turf/simulated/floor/carpet/purple/fancy/narrow/west,
+/area/prefab/crashed_hop_shuttle)
+"dy" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/incandescent/broken{
+	dir = 8
+	},
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "eo" = (
 /obj/fluid_spawner{
@@ -92,7 +99,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/structure/girder/displaced,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "fd" = (
 /obj/decal/cleanable/vomit,
@@ -116,7 +123,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "gv" = (
 /obj/rack,
@@ -140,7 +147,7 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "gR" = (
 /obj/wingrille_spawn/auto,
@@ -198,7 +205,7 @@
 	dir = 4;
 	opacity = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "lh" = (
 /obj/machinery/light{
@@ -224,14 +231,14 @@
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "mY" = (
 /obj/decal/floatingtiles{
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "nE" = (
 /obj/machinery/light{
@@ -244,7 +251,7 @@
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "ph" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -274,7 +281,7 @@
 /area/prefab/crashed_hop_shuttle)
 "ro" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "rL" = (
 /obj/computerframe{
@@ -292,7 +299,7 @@
 	dir = 1;
 	icon_state = "floattiles3"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "sA" = (
 /turf/simulated/floor/damaged4,
@@ -306,7 +313,7 @@
 	dir = 8;
 	icon_state = "floattiles4"
 	},
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
 /turf/simulated/floor/airless,
@@ -346,14 +353,14 @@
 "uZ" = (
 /obj/grille/steel,
 /obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "vk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	opacity = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "vq" = (
 /obj/indestructible/shuttle_corner{
@@ -370,7 +377,7 @@
 	dir = 0;
 	opacity = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "wu" = (
 /obj/rack,
@@ -401,21 +408,17 @@
 /area/prefab/crashed_hop_shuttle)
 "xh" = (
 /obj/item/furniture_parts/comfy_chair,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8;
-	icon_state = "tube-broken"
-	},
 /turf/simulated/floor/damaged3,
 /area/prefab/crashed_hop_shuttle)
 "xl" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "yf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	opacity = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle{
 	opacity = 1
 	})
@@ -487,7 +490,7 @@
 	dir = 4;
 	icon_state = "floattiles2"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "CS" = (
 /obj/decal/floatingtiles{
@@ -499,7 +502,7 @@
 /obj/decoration/decorativeplant/plant4{
 	desc = "Is it flora or is it fauna? Hm. Oh, it's plastic."
 	},
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Dg" = (
@@ -514,7 +517,7 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Ge" = (
 /obj/table/reinforced/bar/auto,
@@ -526,7 +529,7 @@
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "GO" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "Hg" = (
 /turf/simulated/wall/auto/shuttle{
@@ -551,10 +554,10 @@
 "HO" = (
 /obj/lattice,
 /obj/structure/girder/displaced,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "Ij" = (
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/wall,
 /area/noGenerate)
 "IT" = (
 /obj/fluid_spawner{
@@ -581,7 +584,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Ke" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Kk" = (
 /obj/fluid_spawner{
@@ -601,7 +604,7 @@
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "MD" = (
 /obj/wingrille_spawn/auto,
@@ -609,10 +612,10 @@
 /area/prefab/crashed_hop_shuttle)
 "MK" = (
 /obj/lattice,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "MQ" = (
 /obj/decoration/decorativeplant/plant4,
@@ -673,7 +676,7 @@
 	icon_state = "floattiles3"
 	},
 /obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "Pu" = (
 /obj/fluid_spawner{
@@ -743,7 +746,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Uh" = (
 /obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "Vb" = (
 /obj/stool/bar,
@@ -780,7 +783,7 @@
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/simulated/floor/airless,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "Xn" = (
 /turf/simulated/wall/auto/shuttle{
@@ -806,14 +809,14 @@
 	dir = 8;
 	icon_state = "alt_heater-M"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "Yz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
 	opacity = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "YP" = (
 /obj/table/reinforced/bar/auto,
@@ -1185,7 +1188,7 @@ EQ
 OQ
 CS
 xh
-PZ
+dy
 Zs
 WZ
 HO

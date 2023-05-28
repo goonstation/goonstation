@@ -67,11 +67,7 @@
 		else
 			src.Attackhand(user)
 	else
-		var/obj/item/device/pda2/PDA = W
-		if (istype(PDA) && PDA.ID_card)
-			W = PDA.ID_card
-
-		var/obj/item/card/id/ID = W
+		var/obj/item/card/id/ID = get_id_card(W)
 		if (istype(ID))
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")

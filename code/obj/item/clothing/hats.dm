@@ -258,7 +258,7 @@ proc/filter_trait_hats(var/type)
 	name = "Captain of Captain's hat"
 	icon_state = "captainbig"
 	item_state = "caphat"
-	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power. There's a tag on the inside that reads 'Only comes in green.'"
+	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 6)
