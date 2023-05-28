@@ -73970,7 +73970,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "qjb" = (
-/obj/item/clothing/under/misc/flame_purple,
+/obj/item/basketball/catball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},

@@ -648,7 +648,11 @@ $(function() {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
 	if (savedConfig.soddMsgHighlight) {
-		opts.oddMsgHighlight = savedConfig.soddMsgHighlight;
+		if (savedConfig.soddMsgHighlight == 'true') {
+			opts.oddMsgHighlight = true;
+		} else if (savedConfig.soddMsgHighlight == 'false') {
+			opts.oddMsgHighlight = false;
+		}
 	}
 
     (function() {

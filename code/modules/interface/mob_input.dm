@@ -106,6 +106,28 @@
 				else if (dir & WEST)
 					set_dir(WEST)
 
+/**
+ * This proc is called when a mob double clicks on something with the left mouse button.
+ * Return TRUE if the click was handled, FALSE otherwise. Handled doubleclicks will suppress the Click() call that follows.
+ * (Note that the Click() call for the *first* click always happens.)
+ */
+/mob/proc/double_click(atom/target, location, control, list/params)
+	if(src.client?.check_key(KEY_EXAMINE))
+		if(src.help_examine(target))
+			return TRUE
+
+/mob/proc/help_examine(atom/target)
+	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+	var/list/additional_help_messages = list()
+	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
+	if (length(additional_help_messages))
+		if (help_message)
+			additional_help_messages = list(help_message)	+ additional_help_messages
+		help_message = jointext(additional_help_messages, "<br>")
+	if (help_message)
+		boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		return TRUE
+
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")

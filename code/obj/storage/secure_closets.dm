@@ -865,7 +865,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/rabbihat,\
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
-	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/shoes/sandal/magic,\
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\
