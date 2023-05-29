@@ -2236,11 +2236,7 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
-				var/obj/item/I = src.wear_id
-				if (istype(I, /obj/item/device/pda2))
-					var/obj/item/device/pda2/P = I
-					if(P.ID_card)
-						I = P.ID_card
+				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing

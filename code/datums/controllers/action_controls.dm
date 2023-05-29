@@ -676,6 +676,7 @@ var/datum/action_controller/actions
 #if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
 			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif

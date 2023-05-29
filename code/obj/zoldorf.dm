@@ -191,8 +191,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		//dress player sprite
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			holderim = image(H.flat_icon)
-		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
+			holderim = image(H.build_flat_icon(SOUTH))
+		holderim.filters += filter(type="alpha", icon=icon('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
 		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
 		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
@@ -292,7 +292,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				sleep(2.5 SECONDS)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
-				icon_state = "colorfade"
+				o2.icon_state = "colorfade"
 				sleep(2.5 SECONDS)
 
 			if(src)

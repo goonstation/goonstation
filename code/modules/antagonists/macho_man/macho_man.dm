@@ -1,7 +1,8 @@
-/datum/antagonist/macho_man
+/datum/antagonist/mob/macho_man
 	id = ROLE_MACHO_MAN
 	display_name = "macho man"
 	antagonist_icon = "wrestler"
+	mob_path = /mob/living/carbon/human/machoman
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current
@@ -21,10 +22,7 @@
 			src.owner.current.assign_gimmick_skull()
 
 	remove_equipment()
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
-
+		. = ..()
 		src.owner.current.traitHolder.removeTrait("deathwish")
 		src.owner.current.traitHolder.removeTrait("glasscannon")
 

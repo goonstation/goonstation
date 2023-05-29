@@ -252,8 +252,8 @@
 	New()
 		..()
 
-		new /obj/item/reagent_containers/food/drinks/bottle/hospital (src)
-		new /obj/item/device/audio_log/hospital_01 (src)
+		src.storage.add_contents(new /obj/item/reagent_containers/food/drinks/bottle/hospital(src))
+		src.storage.add_contents(new /obj/item/device/audio_log/hospital_01(src))
 
 /obj/item/device/audio_log/hospital_01
 
