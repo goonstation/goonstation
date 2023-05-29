@@ -1225,9 +1225,6 @@
 	return null
 
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
-	if (!(I in src.contents))
-		return null
-
 	//wanted the following to be a switch case but those expect constant expressions
 
 	if (src.w_uniform == I)
