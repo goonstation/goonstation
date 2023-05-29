@@ -140,6 +140,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
+	default_material = "wood"
 	mat_appearances_to_ignore = list("wood")
 	mat_changename = TRUE
 
