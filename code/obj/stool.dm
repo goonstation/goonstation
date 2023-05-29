@@ -880,7 +880,6 @@
 /* -------------------- Material Chairs ------------------ */
 /* ======================================================= */
 
-ABSTRACT_TYPE(/obj/stool/chair/material)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
