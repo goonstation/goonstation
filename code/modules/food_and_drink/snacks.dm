@@ -1022,8 +1022,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if(prob(30))
 					H.changeStatus("stunned", 2 SECONDS)
 					boutput(H, "<span class='alert'>[stinkString()]</span>")
-					H.visible_message("<span class='alert'>[H] vomits, unable to handle the fishy stank!</span>")
-					H.vomit()
+					var/vomit_message = "<span class='alert'>[H] vomits, unable to handle the fishy stank!</span>"
+					H.vomit(0, null, vomit_message)
 
 	disposing()
 		processing_items.Remove(src)
@@ -1040,8 +1040,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			switch(effect)
 				if(1 to 5)
 					boutput(M, "<span class='alert'>aaaaaAAAAA<b>AAAAAAAA</b></span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+					M.vomit(0, null, vomit_message)
 					M.changeStatus("weakened", 4 SECONDS)
 				if(6 to 10)
 					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
@@ -1114,16 +1114,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					else
 						boutput(user, "<span class='alert'><font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font></span>")
 						user.changeStatus("weakened", 8 SECONDS)
-						user.visible_message("<span class='alert'>[user] suddenly and violently vomits!</span>")
-						user.vomit()
+						var/vomit_message = "<span class='alert'>[user] suddenly and violently vomits!</span>"
+						user.vomit(0, null, vomit_message)
 				else
 					if(M.bioHolder.HasEffect("accent_swedish"))
 						boutput(M, "<span class='notice'>Hey, something smells good!</span>")
 					else
 						boutput(M, "<span class='alert'><font size=4><B>WHAT THE FUCK IS THAT SMELL!?</b></font></span>")
 						M.changeStatus("weakened", 4 SECONDS)
-						M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 
 /obj/item/reagent_containers/food/snacks/chips
 	name = "chips"

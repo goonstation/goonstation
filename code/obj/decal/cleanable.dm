@@ -1070,8 +1070,8 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 						M.show_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [I]. It's all slimy and stringy. Oh god.</span>", 1)
 						if (prob(33) && ishuman(M) && !isdead(M))
 							M.show_message("<span class='alert'>You feel ill from watching that.</span>")
-							M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]. Thanks, [user].</span>", 1)
-							M.vomit()
+							var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+							M.vomit(0, null, vomit_message)
 
 				I.reagents.handle_reactions()
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
