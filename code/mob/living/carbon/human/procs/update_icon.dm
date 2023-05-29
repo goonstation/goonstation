@@ -116,6 +116,8 @@
 		else
 			suit_image.icon = src.w_uniform.wear_image_icon
 		suit_image.icon_state = wear_state
+		if (!is_valid_icon_state(suit_image.icon_state,suit_image.icon))
+			CRASH("invalid iconstate [suit_image.icon_state] in [suit_image.icon] used for [src.w_uniform]'s clothing overlay")
 
 		suit_image.layer = src.w_uniform.wear_layer
 		suit_image.alpha = src.w_uniform.alpha
@@ -159,6 +161,8 @@
 		else
 			src.wear_id.wear_image.icon = src.wear_id.wear_image_icon
 		src.wear_id.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.wear_id.wear_image.icon_state,src.wear_id.wear_image.icon))
+			CRASH("invalid iconstate [src.wear_id.wear_image.icon_state] in [src.wear_id.wear_image.icon] used for [src.wear_id]'s clothing overlay")
 
 		if (!no_offset)
 			src.wear_id.wear_image.pixel_x = 0
@@ -206,6 +210,10 @@
 			UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
 		else
 			UpdateOverlays(null, "wear_gloves_r")
+
+		if (!is_valid_icon_state(src.gloves.wear_image.icon_state,src.gloves.wear_image.icon))
+			CRASH("invalid iconstate [src.gloves.wear_image.icon_state] in [src.gloves.wear_image.icon] used for [src.gloves]'s clothing overlay")
+
 
 		if (!no_offset)
 			src.gloves.wear_image.pixel_x = 0
@@ -282,6 +290,9 @@
 				right_shoe_overlay.filters = src.shoes.filters.Copy()
 				src.shoes.wear_image.overlays += right_shoe_overlay
 
+		if (!is_valid_icon_state(src.shoes.wear_image.icon_state,src.shoes.wear_image.icon))
+			CRASH("invalid iconstate [src.shoes.wear_image.icon_state] in [src.shoes.wear_image.icon] used for [src.shoes]'s clothing overlay")
+
 
 		if(shoes_count)
 			src.shoes.wear_image.filters = src.shoes.filters.Copy()
@@ -322,6 +333,9 @@
 		else
 			src.wear_suit.wear_image.icon = src.wear_suit.wear_image_icon
 		src.wear_suit.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.wear_suit.wear_image.icon_state,src.wear_suit.wear_image.icon))
+			CRASH("invalid iconstate [src.wear_suit.wear_image.icon_state] in [src.wear_suit.wear_image.icon] used for [src.wear_suit]'s clothing overlay")
+
 
 		src.wear_suit.update_wear_image(src, src.wear_suit.wear_image.icon != src.wear_suit.wear_image_icon)
 		src.wear_suit.wear_image.color = src.wear_suit.color
@@ -384,6 +398,9 @@
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
 		src.back.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.back.wear_image.icon_state,src.back.wear_image.icon))
+			CRASH("invalid iconstate [src.back.wear_image.icon_state] in [src.back.wear_image.icon] used for [src.back]'s clothing overlay")
+
 		if (!no_offset)
 			src.back.wear_image.pixel_x = 0
 			src.back.wear_image.pixel_y = body_offset
@@ -417,6 +434,9 @@
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
 		src.glasses.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.glasses.wear_image.icon_state,src.glasses.wear_image.icon))
+			CRASH("invalid iconstate [src.glasses.wear_image.icon_state] in [src.glasses.wear_image.icon] used for [src.glasses]'s clothing overlay")
+
 		src.glasses.wear_image.layer = src.glasses.wear_layer
 		if (!no_offset)
 			src.glasses.wear_image.pixel_x = 0
@@ -446,6 +466,9 @@
 		else
 			src.ears.wear_image.icon = src.ears.wear_image_icon
 		src.ears.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state((src.ears.wear_image.icon_state),(src.ears.wear_image.icon)))
+			CRASH("invalid iconstate [src.ears.wear_image.icon_state] in [src.ears.wear_image.icon] used for [src.ears]'s clothing overlay")
+
 		src.ears.wear_image.layer = src.ears.wear_layer
 		if (!no_offset)
 			src.ears.wear_image.pixel_x = 0
@@ -475,6 +498,8 @@
 		else
 			src.wear_mask.wear_image.icon = src.wear_mask.wear_image_icon
 		src.wear_mask.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.wear_mask.wear_image.icon_state,src.wear_mask.wear_image.icon))
+			CRASH("invalid iconstate [src.wear_mask.wear_image.icon_state] in [src.wear_mask.wear_image.icon] used for [src.wear_mask]'s clothing overlay")
 
 		if (!no_offset)
 			src.wear_mask.wear_image.pixel_x = 0
@@ -518,6 +543,8 @@
 		else
 			src.head.wear_image.icon = src.head.wear_image_icon
 		src.head.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.head.wear_image.icon_state,src.head.wear_image.icon))
+			CRASH("invalid iconstate [src.head.wear_image.icon_state] in [src.head.wear_image.icon] used for [src.head]'s clothing overlay")
 
 		src.head.wear_image.layer = src.head.wear_layer
 		if (!no_offset)
@@ -560,6 +587,9 @@
 		else
 			src.belt.wear_image.icon = src.belt.wear_image_icon
 		src.belt.wear_image.icon_state = wear_state
+		if (!is_valid_icon_state(src.belt.wear_image.icon_state,src.belt.wear_image.icon))
+			CRASH("invalid iconstate [src.belt.wear_image.icon_state] in [src.belt.wear_image.icon] used for [src.belt]'s clothing overlay")
+
 		if (!no_offset)
 			src.belt.wear_image.pixel_x = 0
 			src.belt.wear_image.pixel_y = body_offset
