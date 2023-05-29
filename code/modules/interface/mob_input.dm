@@ -123,7 +123,8 @@
 	if (length(additional_help_messages))
 		if (help_message)
 			additional_help_messages = list(help_message)	+ additional_help_messages
-		help_message = jointext(additional_help_messages, "<br>")
+		help_message = jointext(additional_help_messages, "\n")
+	help_message = replacetext(trim(help_message), "\n", "<br>")
 	if (help_message)
 		boutput(src, "<span class='helpmsg'>[help_message]</span>")
 		return TRUE

@@ -27,6 +27,9 @@ var/list/datum/chem_request/chem_requests = list()
 	var/max_volume = 400
 	var/area_name = null
 
+	get_help_message(dist, mob/user)
+		return null
+
 	ui_data(mob/user)
 		. = list()
 		if (src.card)
@@ -124,6 +127,9 @@ var/list/datum/chem_request/chem_requests = list()
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
+	get_help_message(dist, mob/user)
+		return null
 
 	proc/get_age(var/datum/chem_request/request)
 		var/delta = ticker.round_elapsed_ticks - request.time

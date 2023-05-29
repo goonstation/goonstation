@@ -156,7 +156,7 @@
 /area/prefab/bee_sanctuary)
 "fQ" = (
 /obj/grille/catwalk,
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "gm" = (
 /obj/item/reagent_containers/food/snacks/beefood,
@@ -457,9 +457,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/prefab/bee_sanctuary)
 "pT" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -468,7 +466,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "qg" = (
 /obj/machinery/light/small/warm/very{
@@ -563,13 +561,11 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "tp" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "tB" = (
 /obj/table/reinforced/auto,
@@ -641,13 +637,11 @@
 /turf/unsimulated/floor/green/side,
 /area/prefab/bee_sanctuary)
 "xf" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "xD" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -676,7 +670,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "yC" = (
 /obj/machinery/computer/genetics/portable,
@@ -701,7 +695,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "yT" = (
 /obj/decal/floatingtiles{
@@ -712,13 +706,11 @@
 	},
 /area/prefab/bee_sanctuary)
 "yW" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "zv" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -765,9 +757,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Ag" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -776,7 +766,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Ak" = (
 /obj/decal/fakeobjects/pipe{
@@ -837,15 +827,13 @@
 /turf/unsimulated/grass,
 /area/prefab/bee_sanctuary)
 "BS" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "BV" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -865,9 +853,7 @@
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "CL" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -878,7 +864,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "CO" = (
 /obj/machinery/light{
@@ -994,7 +980,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "EP" = (
 /obj/decal/cleanable/dirt/dirt4,
@@ -1508,9 +1494,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/prefab/bee_sanctuary)
 "Rc" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
@@ -1671,9 +1655,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "Vk" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -1682,7 +1664,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "Vn" = (
 /obj/lattice,
