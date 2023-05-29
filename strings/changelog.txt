@@ -1,5 +1,9 @@
 
 (t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a new robotics winter coat.
 (u)Skeletonman0
 (p)13957
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
