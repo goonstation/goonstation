@@ -1029,7 +1029,7 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
+		SEND_SIGNAL(source, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
@@ -1120,6 +1120,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		if(owner && target && BOUNDS_DIST(owner, target) == 0)
+			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if(remove_internals)
 				target.internal.add_fingerprint(owner)
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -1260,6 +1261,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		if(owner && target?.hasStatus("handcuffed"))
+			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			H.update_inv()

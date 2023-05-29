@@ -511,7 +511,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc))) || (ismob(target.loc) && target != src && target.loc != src)) // dont want to check for a cloaker every click if we're not invisible
 					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)

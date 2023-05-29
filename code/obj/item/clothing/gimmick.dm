@@ -566,6 +566,19 @@
 	wear_state = "pinkclown"
 	//item_state = "pinkclown"
 
+	waddle
+		desc = "Pink clown shoes, they look a bit funny..."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			user.AddComponent(/datum/component/waddling)
+
+		unequipped(mob/user)
+			..()
+			var/datum/component/waddling/component = user.GetComponent(/datum/component/waddling)
+			component.RemoveComponent()
+
+
 /obj/item/clothing/mask/clown_hat/yellow
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
