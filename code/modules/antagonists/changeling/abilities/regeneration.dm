@@ -195,7 +195,7 @@
 		H.changeStatus("changeling_speedregen", 30 SECONDS)
 		return FALSE
 
-// changeling speedregen status effect//
+/// changeling speedregen status effect
 /datum/statusEffect/c_regeneration
 
 	id = "changeling_speedregen"
@@ -226,7 +226,7 @@
 		else // lings are vulnerable to fire so it stopping their regen makes sense
 			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
 				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
-				H.visible_message("<span class='alert'><B>[H]'s flesh is weirdly moving in contact with the fire!</B></span>")
+				H.visible_message("<span class='alert'><B>[H]'s flesh is moving weirdly in contact with the fire!</B></span>")
 
 	onRemove()
 		. = ..()
