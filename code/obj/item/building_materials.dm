@@ -61,7 +61,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_material_appearance = TRUE
 
 	New()
 		..()
