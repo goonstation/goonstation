@@ -43,6 +43,11 @@ CONTENTS:
 		for(var/mob/living/carbon/human/H in src)
 			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
+/area/crunch/artifact_boh_pocket_dimension
+	name = "unknown dimension"
+	ambient_light = null
+	area_parallax_layers = list()
+
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'

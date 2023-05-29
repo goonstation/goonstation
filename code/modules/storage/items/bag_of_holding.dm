@@ -141,7 +141,17 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			playsound(boh_1.loc, "warp", 50, TRUE)
 			boutput(user, "<span class='alert'><B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B></span>")
 		if (4)
-			return
+			if (user)
+				playsound(boh_1.loc, 'sound/effects/bamf.ogg', 50, TRUE)
+
+				for (var/mob/M in viewers(7, boh_1))
+					M.flash(3 SECONDS)
+
+				var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/artifact_stranded)
+				var/datum/allocated_region/region = prefab.load()
+				user.set_loc(region.get_center())
+				SPAWN(5 SECONDS)
+					boutput(user, "<span class='alert'>Yeah... you're not getting out of this place alive.</span>")
 
 	for (var/obj/item/I as anything in (boh_1.storage.get_contents() + boh_2.storage.get_contents()))
 		qdel(I)
