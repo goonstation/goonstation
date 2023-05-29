@@ -616,7 +616,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
-	wear_states = "silvermask"
+	wear_state = "silvermask"
 	see_face = 0
 
 	black

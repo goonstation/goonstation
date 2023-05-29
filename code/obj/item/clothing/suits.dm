@@ -694,7 +694,7 @@
 	icon_state = "SCIlabcoat"
 	item_state = "SCIlabcoat"
 	coat_style = "SCIlabcoat"
-	wear_State = "SCIlabcoat"
+	wear_state = "SCIlabcoat"
 
 	april_fools
 		icon_state = "SCIlabcoat-alt"
