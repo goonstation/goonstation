@@ -1,10 +1,3 @@
-/// How many mobs can fit in the carrier by default.
-#define DEFAULT_MAX_CAPACITY 1
-/// Probability that a mob can break out of the carrier with *flip, from 0 to 100.
-#define BREAK_OUT_PROB 10
-/// Number of mobs named explicitly on examine() before switching to "there's a lot of mobs in here wow".
-#define EXPLICIT_NAME_LIMIT 3
-
 // Actionbar action defines
 #define RELEASE_MOB 0
 #define TRAP_MOB 1
@@ -16,20 +9,10 @@
  * A handheld item which can hold some mob instances inside with support for visually displaying its occupants with vis_contents.
  * This was created without access to the pre-existing chicken carrier code so it could be pretty bad.
  *
- * The given mobs that a carrier is allowed to hold is determined by var/mob/allowed_mobs which should be overridden by any child types of the
- * carrier. The maximum capacity is determined by var/carrier_max_capacity which can also be overridden.
- *
- * Whether a mob can break out or not is determined by var/can_break_out, and if FALSE, any occupant cannot escape the carrier on their own.
- *
- * There is support for spawning with an animal already inside by overriding var/mob/default_mob with a valid path.
- *
  * The icon for the carrier is constructed using a base where an overlay of the front of the carrier and two /obj/dummys are layered on top.
  * These dummy objects are held in the carrier's vis_contents and each of them hold the mobs and the door of the carrier. The reason why the
  * vis_contents of vis_contents_proxy hold the mobs rather than the carrier doing so directly is so that an alpha mask can prevent parts of the
  * occupants from rendering outside of the inside of the carrier.
- *
- * For any mobs inside, the atmosphere they'll attempt to breathe from is taken from the current turf that the carrier occupies, even if the carrier
- * is being held in someone's hand.
  */
 /obj/item/pet_carrier
 	name = "pet carrier"
@@ -40,36 +23,40 @@
 	w_class = W_CLASS_BULKY
 
 	/// Please override this in child types to specify what can actually fit in.
-	var/mob/allowed_mobs = /mob/living/critter/small_animal
+	var/mob/allowed_mob_type = /mob/living/critter/small_animal
 	/// If FALSE, an occupant cannot escape the carrier on their own.
 	var/can_break_out = TRUE
+	/// Probability that a mob can break out of the carrier with *flip, from 0 to 100.
+	var/break_out_prob = 10
 	/// How many mobs can fit inside the crate. Usually not overridden by anything, this is to let the system be permissive for var-editing.
-	var/carrier_max_capacity = DEFAULT_MAX_CAPACITY
+	var/carrier_max_capacity = 1
+	/// Number of mobs named explicitly on examine() before switching to "there's a lot of mobs in here wow".
+	var/explicit_name_limit = 3
 	/// If not null, the pet carrier will spawn with one of this mob on New().
 	var/mob/default_mob = null
 
 	/// The icon_state for the src.TRAP_MOB() actionbar.
-	var/trap_mob_icon_state = "carrier-full"
+	var/const/trap_mob_icon_state = "carrier-full"
 	/// The icon_state for the src.RELEASE_MOB() actionbar.
-	var/release_mob_icon_state = "carrier-full-open"
+	var/const/release_mob_icon_state = "carrier-full-open"
 	// Alpha mask icon state for cutting out the mob on non-transparent pixels.
-	var/carrier_alpha_mask = "carrier-mask"
+	var/const/carrier_alpha_mask = "carrier-mask"
 
 	// Empty carrier icon state name.
-	var/empty_carrier_icon_state = "carrier"
+	var/const/empty_carrier_icon_state = "carrier"
 
 	// Grate icon state names.
-	var/grate_open_icon_state = "grate-open"
-	var/grate_closed_icon_state = "grate-closed"
+	var/const/grate_open_icon_state = "grate-open"
+	var/const/grate_closed_icon_state = "grate-closed"
 
 	// Carrier item state names.
-	var/carrier_open_item_state = "carrier-open"
-	var/carrier_closed_item_state = "carrier-closed"
+	var/const/carrier_open_item_state = "carrier-open"
+	var/const/carrier_closed_item_state = "carrier-closed"
 
 	/// Carrier-related (grate_proxy, vis_contents_proxy) vis_flags.
-	var/carrier_vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+	var/const/carrier_vis_flags = VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 	/// Mob-specific vis_flags.
-	var/mob_vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+	var/const/mob_vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
 
 	/// Grate object to be held in src.vis_contents
 	var/obj/dummy/grate_proxy
@@ -81,7 +68,7 @@
 	New()
 		..()
 		// Build the icon with all its overlays and funny containers.
-		src.icon_state = "[src.empty_carrier_icon_state]"
+		src.icon_state = src.empty_carrier_icon_state
 
 		// Instantiate the vis_contents proxy.
 		src.vis_contents_proxy = new()
@@ -99,25 +86,28 @@
 		src.UpdateIcon()
 
 		if (src.default_mob)
-			if (!ispath(src.default_mob, src.allowed_mobs))
+			if (!ispath(src.default_mob, src.allowed_mob_type))
 				return
 			var/mob/spawned_mob = new src.default_mob
 			if (spawned_mob)
 				src.add_mob(spawned_mob)
 
 	disposing()
-		if (length(src.carrier_occupants))
-			for (var/occupant in src.carrier_occupants)
-				src.eject_mob(occupant)
-		src.carrier_occupants = null
+		for (var/occupant in src.carrier_occupants)
+			src.eject_mob(occupant)
 		src.overlays = null
+		src.vis_contents = null
+		qdel(src.grate_proxy)
+		src.grate_proxy = null
+		qdel(src.vis_contents_proxy)
+		src.vis_contents_proxy = null
 		..()
 
 	examine()
 		. = ..()
 		var/carrier_occupants_length = length(src.carrier_occupants)
 		if (carrier_occupants_length)
-			if (carrier_occupants_length > EXPLICIT_NAME_LIMIT)
+			if (carrier_occupants_length > src.explicit_name_limit)
 				. += "There's a whole zoo inside!"
 				return
 			. += "It's carrying [english_list(src.carrier_occupants)]."
@@ -125,11 +115,11 @@
 	update_icon()
 		..()
 		if (length(src.carrier_occupants))
-			src.grate_proxy.icon_state = "[src.grate_closed_icon_state]"
-			src.item_state = "[src.carrier_closed_item_state]"
+			src.grate_proxy.icon_state = src.grate_closed_icon_state
+			src.item_state = src.carrier_closed_item_state
 		else
-			src.grate_proxy.icon_state = "[src.grate_open_icon_state]"
-			src.item_state = "[src.carrier_open_item_state]"
+			src.grate_proxy.icon_state = src.grate_open_icon_state
+			src.item_state = src.carrier_open_item_state
 
 	attack(mob/M, mob/user)
 		if (user.a_intent == INTENT_HARM)
@@ -138,14 +128,13 @@
 			if (!src.return_other_hand_empty(user))
 				boutput(user, "<span class='alert'>You need a free hand to scoop up [M]!</span>")
 				return ..()
-			if (!istype(M, src.allowed_mobs))
+			if (!istype(M,src.allowed_mob_type))
 				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
 				return ..()
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
 				boutput(user, "<span class='alert'>[src] is too crowded to fit one more!</span>")
 				return ..()
-			var/mob/target_mob = M
-			actions.start(new /datum/action/bar/icon/pet_carrier(target_mob, src, src.icon, src.trap_mob_icon_state, TRAP_MOB), user)
+			actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.trap_mob_icon_state, TRAP_MOB), user)
 			return
 		..()
 
@@ -153,7 +142,7 @@
 		if (!src.return_other_hand_empty(user))
 			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
 			return ..()
-		if (length(src.carrier_occupants) && ismob(src.carrier_occupants[1]))
+		if (length(src.carrier_occupants))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
 			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB), user)
 		else
@@ -175,7 +164,7 @@
 		if (!src.can_break_out)
 			boutput(src, "<span class='alert'>It's no use! You can't leave [src]!</span>")
 			return
-		if (prob(BREAK_OUT_PROB))
+		if (prob(src.break_out_prob))
 			if (length(src.carrier_occupants) > 1)
 				for (var/occupant in src.carrier_occupants)
 					src.eject_mob(occupant)
@@ -188,9 +177,8 @@
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
-		if (src.carrier_occupants)
-			for (var/mob/occupant in src.carrier_occupants)
-				occupant.throw_impact(hit_atom, thr)
+		for (var/mob/occupant in src.carrier_occupants)
+			occupant.throw_impact(hit_atom, thr)
 
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
@@ -225,15 +213,13 @@
 		if (!mob_to_eject)
 			return
 		MOVE_OUT_TO_TURF_SAFE(mob_to_eject, src)
-		mob_to_eject.vis_flags &= ~(src.mob_vis_flags)
+		mob_to_eject.vis_flags &= ~src.mob_vis_flags
 		src.carrier_occupants.Remove(mob_to_eject)
 		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
 		src.UpdateIcon()
 
 	// There has to be a better way of checking that the other hand is empty. Please.
 	proc/return_other_hand_empty(mob/living/carbon/human/mob_to_check)
-		if (!ishuman(mob_to_check))
-			return FALSE
 		if (mob_to_check.hand && !mob_to_check.r_hand)
 			return TRUE
 		else if (!mob_to_check.l_hand)
@@ -254,7 +240,7 @@
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
-	allowed_mobs = /mob
+	allowed_mob_type = /mob
 	can_break_out = FALSE
 	carrier_max_capacity = INFINITY
 
@@ -267,13 +253,13 @@
 	var/obj/item/pet_carrier/carrier
 	var/action
 
-	New(var/mob/target, var/item, var/icon, var/icon_state, var/carrier_action)
+	New(mob/target, obj/item/pet_carrier/item, icon, icon_state, carrier_action)
 		..()
 		src.target = target
 		if (istype(item, /obj/item/pet_carrier))
 			src.carrier = item
 		else
-			logTheThing(LOG_DEBUG, src, "/datum/action/bar/icon/pet_carrier called with invalid type [item].")
+			logTheThing(LOG_DEBUG, src, "/datum/action/bar/icon/pet_carrier called with invalid type [item?.type].")
 		src.icon = icon
 		src.icon_state = icon_state
 		src.action = carrier_action
@@ -283,7 +269,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.mob_owner = owner
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -295,13 +281,13 @@
 
 	onUpdate()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -312,8 +298,5 @@
 				carrier.trap_mob(target, mob_owner)
 				src.mob_owner.visible_message("<span class='alert'>[src.mob_owner] coaxes [target] into [src.carrier]!</span>")
 
-#undef DEFAULT_MAX_CAPACITY
-#undef BREAK_OUT_PROB
-#undef EXPLICIT_NAME_LIMIT
 #undef RELEASE_MOB
 #undef TRAP_MOB
