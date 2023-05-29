@@ -426,6 +426,7 @@
 		src.desc = "A machine. Of some sort. It looks mad"
 		src.visible_message("<span class='combat'>[src] seems to power up!</span>")
 
+////////////// Town guards ////////////////
 /mob/living/critter/townguard
 	name = "town guard"
 	real_name = "town guard"
@@ -535,6 +536,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive
 	critter_type = /mob/living/critter/townguard/passive
 
+////////////// Blobman ////////////////
 /mob/living/critter/blobman
 	name = "mutant"
 	real_name = "mutant"
