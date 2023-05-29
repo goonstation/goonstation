@@ -92,7 +92,7 @@ TYPEINFO(/obj/machinery/plantpot/bareplant)
 /obj/machinery/plantpot/bareplant
 	name = "arable soil"
 	desc = "A small mound of arable soil for planting and plant based activities."
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = 0
 	icon_state = null
 	power_usage = 0
@@ -212,7 +212,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	desc = "A tray filled with nutrient solution capable of sustaining plantlife."
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "tray"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
 	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
@@ -268,7 +268,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, report_freq)
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", .proc/mechcompScanPlant)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "scan plant", PROC_REF(mechcompScanPlant))
 
 	proc/post_alert(var/list/alert_data)
 		if(status & (NOPOWER|BROKEN)) return
@@ -573,11 +573,11 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(src.anchored)
 				user.visible_message("<b>[user]</b> unbolts the [src] from the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
 				user.visible_message("<b>[user]</b> secures the [src] to the floor.")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 		else if(isweldingtool(W) || istype(W, /obj/item/device/light/zippo) || istype(W, /obj/item/device/igniter))
 			// These are for burning down plants with.
@@ -660,8 +660,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			SEED.set_loc(src)
 			if(SEED.planttype)
 				src.HYPnewplant(SEED)
-				if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-					logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(src)].")
 				if(!(user in src.contributors))
 					src.contributors += user
 			else
@@ -1415,14 +1414,15 @@ TYPEINFO(/obj/machinery/plantpot)
 						boutput(user, "<span class='alert'>Your satchel is full! You dump the rest on the floor.</span>")
 						break
 					if(istype(I,/obj/item/seed/))
-						if(!satchelpick || seeds_only)
+						if(SA.check_valid_content(I) && (!satchelpick || seeds_only))
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 					else
-						if(!satchelpick || produce_only)
+						if(SA.check_valid_content(I) && (!satchelpick || produce_only))
 							I.set_loc(SA)
 							I.add_fingerprint(user)
 				SA.UpdateIcon()
+				SA.tooltip_rebuild = 1
 
 			// if the satchel got filled up this will dump any unharvested items on the floor
 			// if we're harvesting by hand it'll just default to this anyway! truly magical~
@@ -1891,7 +1891,7 @@ TYPEINFO(/obj/machinery/hydro_growlamp)
 	icon = 'icons/obj/hydroponics/machines_hydroponics.dmi'
 	icon_state = "growlamp0" // sprites by Clarks
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/datum/light/light
 
@@ -1966,7 +1966,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 	icon_state = "hydro_mister0"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/active = 0
 	var/mode = 1
 

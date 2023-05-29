@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Crowbar"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/crowbar)
+	item_outputs = list(/obj/item/crowbar/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Screwdriver"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/screwdriver)
+	item_outputs = list(/obj/item/screwdriver/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Wirecutters"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/wirecutters)
+	item_outputs = list(/obj/item/wirecutters/green)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -206,7 +206,43 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Wrench"
 	item_paths = list("MET-1")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/wrench)
+	item_outputs = list(/obj/item/wrench/green)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/crowbar/yellow
+	name = "Crowbar"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/crowbar/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/screwdriver/yellow
+	name = "Screwdriver"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/screwdriver/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/wirecutters/yellow
+	name = "Wirecutters"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/wirecutters/yellow)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/wrench/yellow
+	name = "Wrench"
+	item_paths = list("MET-1")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/wrench/yellow)
 	time = 5 SECONDS
 	create = 1
 	category = "Tool"
@@ -350,7 +386,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Welding Tool"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(1,1)
-	item_outputs = list(/obj/item/weldingtool)
+	item_outputs = list(/obj/item/weldingtool/green)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/welder/yellow
+	name = "Welding Tool"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(1,1)
+	item_outputs = list(/obj/item/weldingtool/yellow)
 	time = 8 SECONDS
 	create = 1
 	category = "Tool"
@@ -632,6 +677,20 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Machinery"
 
+/datum/manufacture/chembarrel
+	name = "Chemical Barrel"
+	item_paths = list("MET-2", "cobryl")
+	item_amounts = list(6, 9)
+	item_outputs = list(/obj/reagent_dispensers/chemicalbarrel)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+	red
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/red)
+	yellow
+		item_outputs = list(/obj/reagent_dispensers/chemicalbarrel/yellow)
+
 /datum/manufacture/shieldgen
 	name = "Energy-Shield Gen."
 	item_paths = list("MET-2","CON-1","CRY-1")
@@ -733,6 +792,25 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 10 SECONDS
 	create = 1
 	category = "Tool"
+
+/datum/manufacture/engivac
+	name = "Materiel Vacuum"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(10,5,5)
+	item_outputs = list(/obj/item/engivac)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/lampmanufacturer
+	name = "Lamp Manufacturer"
+	item_paths = list("MET-1","CON-1","CRY-1")
+	item_amounts = list(5,10,20)
+	item_outputs = list(/obj/item/lamp_manufacturer/organic)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 
 ////////////////////////////////
 
@@ -2758,7 +2836,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Handkerchief"
 	item_paths = list("FAB-1")
 	item_amounts = list(4)
-	item_outputs = list(/obj/item/cloth/handkerchief/white)
+	item_outputs = list(/obj/item/cloth/handkerchief/colored/white)
 	time = 4 SECONDS
 	create = 1
 	category = "Resource"
@@ -2909,6 +2987,15 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 ABSTRACT_TYPE(/datum/manufacture/pod)
 
 ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
+
+/datum/manufacture/pod/weapon/bad_mining
+	name = "Mining Phaser System"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,20)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
+	time = 20 SECONDS
+	create = 1
+	category = "Tool"
 
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
@@ -3459,3 +3546,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/datum/manufacture/floodlight
+	name = "Floodlight"
+	item_outputs = list(/obj/item/device/light/floodlight)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"

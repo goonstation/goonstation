@@ -1383,23 +1383,30 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(mult)
-				bleed(M, 6 * mult, 6 * mult)
+
+				if (isliving(M))
+					var/mob/living/H = M
+					if(H.blood_volume > 300)        //slows down your bleeding when you have less blood to bleed
+						H.blood_volume -= 5 * mult
+					else
+						H.blood_volume -= 3 * mult
 				if (probmult(6))
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
 											"<span class='alert'><B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!</span>"))
-
-				if (prob(15))
-					M.reagents.add_reagent("histamine", rand(8,10) * mult)
-
+					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1) //some bloody effects
+					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
+				else if (probmult(20))
+					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc) //some extra bloody effects
 				if (probmult(10))
-					M.setStatus("stunned", max(M.getStatusDuration("stunned"), 2 SECONDS))
+					M.make_jittery(50)
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
 					boutput(M, "<span class='alert'><b>Your body hurts so much.</b></span>")
 					if (!isdead(M))
 						M.emote(pick("cry", "tremble", "scream"))
-
 				if (probmult(10))
-					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 8 SECONDS))
+					M.change_eye_blurry(6, 6)
+					M.setStatus("slowed", max(M.getStatusDuration("slowed"), 5 SECONDS))
 					boutput(M, "<span class='alert'><b>Everything starts hurting.</b></span>")
 					if (!isdead(M))
 						M.emote(pick("shake", "tremble", "shudder"))
@@ -1962,7 +1969,7 @@ datum
 					H.ai_aggressive = 1 //Fak
 					H.ai_calm_down = 0
 					logTheThing(LOG_COMBAT, H, "has their AI enabled by [src.id]")
-					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
+					H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 50, 1)
 					lastSpook = world.time
 
 				if (t6 && ticks >= t6)
@@ -1975,7 +1982,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 75, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 75, 1) // LOUD
 						lastSpook = world.time
 
 
@@ -2014,7 +2021,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 100, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 100, 1) // LOUD
 						lastSpook = world.time
 
 

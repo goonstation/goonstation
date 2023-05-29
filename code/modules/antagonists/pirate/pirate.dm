@@ -1,6 +1,7 @@
 /datum/antagonist/pirate
 	id = ROLE_PIRATE
 	display_name = "\improper Pirate"
+	antagonist_icon = "pirate"
 
 	is_compatible_with(datum/mind/mind)
 		return isliving(mind.current)
@@ -57,14 +58,29 @@
 
 		H.traitHolder.addTrait("training_drinker")
 
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_PIRATE)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_PIRATE)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
+
 
 	first_mate
 		id = ROLE_PIRATE_FIRST_MATE
 		display_name = "\improper Pirate First Mate"
+		antagonist_icon = "pirate_first_mate"
 
 	captain
 		id = ROLE_PIRATE_CAPTAIN
 		display_name = "\improper Pirate Captain"
+		antagonist_icon = "pirate_captain"
 
 
 /obj/gold_bee
@@ -75,7 +91,7 @@
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/list/gibs = list()
 
 	New()

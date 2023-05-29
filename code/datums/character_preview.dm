@@ -67,7 +67,7 @@
 	STOP_TRACKING
 	SPAWN(0)
 		if (src.viewer)
-			winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=")
+			winset(src.viewer, "[src.window_id].[src.preview_id]", "parent=none")
 	if (src.handler)
 		if (src.viewer)
 			src.viewer.screen -= src.handler
@@ -171,7 +171,7 @@
 		. = ..()
 		SPAWN(0)
 			if (src.viewer)
-				winset(src.viewer, "[src.window_id]", "parent=")
+				winset(src.viewer, "[src.window_id]", "parent=none")
 
 	/// Shows (or hides if the argument is false) the window.
 	proc/show(shown = TRUE)

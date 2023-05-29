@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "smes"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -18,7 +18,7 @@
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 
@@ -48,7 +48,7 @@
 			TheAI.set_loc(src)
 			B.set_loc(TheAI)
 			TheAI.brain = B
-			TheAI.anchored = 0
+			TheAI.anchored = UNANCHORED
 			TheAI.dismantle_stage = 3
 			TheAI.update_appearance()
 			qdel(src)
@@ -574,20 +574,27 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedicon is the file we selected
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
+			selectedtype = null
 			states += icon_states('icons/turf/construction_floors.dmi')
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
 			selectedicon = 'icons/turf/construction_floors.dmi'
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+
 		if (mode == "walls")
+			selectedtype = null
+			selectedicon = null
+			selectedmod = null
 			states += wallicons
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
-			selectedicon = wallicons[selectedtype]
-			selectedmod = wallmods[selectedtype]
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+				selectedicon = wallicons[selectedtype]
+				selectedmod = wallmods[selectedtype]
 
-
+		if (isnull(selectedtype))
+			selecting = 0
+			return
 
 		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
 			turf_op = 0
@@ -627,7 +634,7 @@ TYPEINFO(/obj/item/room_planner)
 				break
 		if (old)
 			old.Attackby(src, user)
-		else
+		else if (!isnull(selectedtype))
 			var/class = marker_class[mode]
 			old = new class(T, selectedicon, selectedtype, mode)
 
@@ -636,6 +643,9 @@ TYPEINFO(/obj/item/room_planner)
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
 			old:check(selectedmod)
+		else
+			boutput(user, "<span class='alert'>No type selected for current mode!</span>")
+			return 0
 		boutput(user, "<span class='notice'>Done.</span>")
 
 		return 1
@@ -644,7 +654,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Plan Marker"
 	icon = 'icons/turf/construction_walls.dmi'
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION
@@ -673,7 +683,7 @@ TYPEINFO(/obj/item/room_planner)
 	name = "\improper Window Plan Marker"
 	icon = 'icons/obj/grille.dmi'
 	icon_state = "grille-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION

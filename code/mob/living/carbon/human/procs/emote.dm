@@ -141,8 +141,8 @@
 											src.add_karma(10)
 									fart_on_other = 1
 									break
-								else if (istype(A,/obj/item/storage/bible))
-									var/obj/item/storage/bible/B = A
+								else if (istype(A,/obj/item/bible))
+									var/obj/item/bible/B = A
 									B.farty_heresy(src)
 									fart_on_other = 1
 									break
@@ -235,7 +235,7 @@
 									var/found_bible = 0
 									for (var/atom/A as anything in H.loc)
 										if (A.event_handler_flags & IS_FARTABLE)
-											if (istype(A,/obj/item/storage/bible))
+											if (istype(A,/obj/item/bible))
 												found_bible = 1
 									if (found_bible)
 										src.visible_message("<span class='alert'><b>A mysterious force smites [src.name] for inciting blasphemy!</b></span>")
@@ -2236,11 +2236,7 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
-				var/obj/item/I = src.wear_id
-				if (istype(I, /obj/item/device/pda2))
-					var/obj/item/device/pda2/P = I
-					if(P.ID_card)
-						I = P.ID_card
+				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
@@ -2299,7 +2295,7 @@
 						dab_id?.brain_damage_count += 10
 						if(src.get_brain_damage() > 60)
 							src.show_text("<span class='alert'>Your head hurts!</span>")
-					if(locate(/obj/item/storage/bible) in src.loc)
+					if(locate(/obj/item/bible) in src.loc)
 						if(H.limbs.l_arm)
 							src.limbs.l_arm.sever()
 							dab_id?.arm_count++

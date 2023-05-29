@@ -335,8 +335,11 @@
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
+		else if (user.client)
+			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				return ..()
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
 
@@ -1349,7 +1352,7 @@
 
 	New()
 		. = ..()
-		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), PROC_REF(update_hotbox_flag))
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

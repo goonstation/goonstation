@@ -1,9 +1,10 @@
 obj/machinery/atmospherics/filter
+	name = "Gas filter"
 	icon = 'icons/obj/atmospherics/filter.dmi'
 	icon_state = "intact_off"
 	density = 1
-//
-	name = "Gas filter"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH|WEST

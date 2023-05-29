@@ -1,5 +1,3 @@
-var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. if ip = true, thats a vpn ip. if its false, its a normal ip.
-
 /client
 #ifdef PRELOAD_RSC_URL
 	preload_rsc = PRELOAD_RSC_URL
@@ -139,7 +137,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		// technically not disposing but it really should be here for feature parity
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 	catch(var/exception/E)
-		logTheThing("debug", src, "caught [E] in /client/Del() signal stuff.")
+		logTheThing(LOG_DEBUG, src, "caught [E] in /client/Del() signal stuff.")
 
 	src.mob?.move_dir = 0
 
@@ -345,61 +343,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
-//vpn check (for ban evasion purposes)
-#ifdef DO_VPN_CHECKS
-	if (vpn_blacklist_enabled)
-		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
-
-		// We have already checked this user this round and they are indeed on a VPN, kick em
-		if (is_vpn_address)
-			src.vpn_bonk(repeat_attempt = TRUE)
-			return
-
-		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
-		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
-		if (isnull(is_vpn_address) && (src.player.rounds_participated < 5 || src.player.rounds_seen < 20))
-			var/list/data
-			try
-				if (vpn_prescan()) return
-				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
-				// Goonhub API error encountered
-				if (data["error"])
-					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
-					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
-
-				// Successful Goonhub API query
-				else
-					var/result = postscan(data)
-					if (result == 2 || data["whitelisted"])
-						// User is explicitly whitelisted from VPN checks, ignore
-						global.vpn_ip_checks["[src.address]"] = FALSE
-
-					else
-						data = json_decode(html_decode(data["response"]))
-
-						// VPN checker service returns error responses in a "message" property
-						if (data["success"] == FALSE)
-							// Yes, we're forcing a cache for a no-VPN response here on purpose
-							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
-							//			  so we want to avoid spamming the goonhub API this round for literally no gain
-							global.vpn_ip_checks["[src.address]"] = FALSE
-							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
-							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
-
-						// Successful VPN check
-						// IP is a known VPN, cache locally and kick
-						else if (result || (((data["vpn"] == TRUE) || (data["tor"] == TRUE)) && (data["fraud_score"] > 75)))
-							vpn_bonk(data["host"], data["ASN"], data["organization"], data["fraud_score"])
-							return
-						// IP is not a known VPN
-						else
-							global.vpn_ip_checks["[src.address]"] = FALSE
-
-			catch(var/exception/e)
-				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
-				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
-#endif
-
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -500,18 +443,19 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #ifdef LIVE_SERVER
 		// check client version validity
 		if (src.byond_version < 514 || src.byond_build < 1584)
+			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
 			if (tgui_alert(src, "Please update BYOND to the latest version! Would you like to be taken to the download page now? Make sure to download the stable release.", "ALERT", list("Yes", "No"), 30 SECONDS) == "Yes")
 				src << link("http://www.byond.com/download/")
-			else // warn out of date clients
-				tgui_alert(src, "Version enforcement will be enabled soon. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
-			logTheThing(LOG_ADMIN, src, "connected with outdated client version [byond_version].[byond_build]. Request to update client sent to user.")
-/*
+	#if (BUILD_TIME_UNIX < 1682899200) //cut off may 1st, 2023
+			else
+				tgui_alert(src, "Version enforcement will be enabled May 1st, 2023. To avoid interruption to gameplay please be sure to update as soon as you can.", "ALERT", timeout = 30 SECONDS)
+	#else
 			// kick out of date clients
-			tgui_alert(src, "You will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 5 SECONDS)
+			tgui_alert(src, "Version enforcement is enabled, you will now be forcibly booted. Please be sure to update your client before attempting to rejoin", "ALERT", timeout = 30 SECONDS)
 			del(src)
 			tgui_process.close_user_uis(src.mob)
 			return
-*/
+	#endif
 		if (src.byond_version >= 515)
 			if (alert(src, "Please DOWNGRADE BYOND to version 514.1589! Many things will break otherwise. Would you like to be taken to the download page?", "ALERT", "Yes", "No") == "Yes")
 				src << link("http://www.byond.com/download/")
@@ -608,7 +552,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		// when an admin logs in check all clients again per Mordent's request
 		for(var/client/C)
 			C.ip_cid_conflict_check(log_it=FALSE, alert_them=FALSE, only_if_first=TRUE, message_who=src)
-
+	winset(src, null, "rpanewindow.left=infowindow")
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - new() finished.")
 
 	login_success = 1
@@ -623,7 +567,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (splitter_value < 67.0)
 			src.set_widescreen(1)
 
-	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkHiRes))
+	src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkHiRes)))
 
 	var/is_vert_splitter = winget( src, "menu.horiz_split", "is-checked" ) != "true"
 
@@ -632,7 +576,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		if (splitter_value >= 67.0) //Was this client using widescreen last time? save that!
 			src.set_widescreen(1, splitter_value)
 
-		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, .proc/checkScreenAspect))
+		src.screenSizeHelper.registerOnLoadCallback(CALLBACK(src, PROC_REF(checkScreenAspect)))
 	else
 
 		set_splitter_orientation(0, splitter_value)
@@ -1116,9 +1060,9 @@ var/global/curr_day = null
 			if (!usr || !usr.client)
 				return
 			var/target = href_list["nick"]
-			var/t = input("Message:", text("Mentor Message")) as null|text
+			var/t = input("Message:", text("Mentor Message")) as null|message
 			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
-				t = strip_html(t, 1500)
+				t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -1152,11 +1096,11 @@ var/global/curr_day = null
 				if (!usr || !usr.client)
 					return
 
-				var/t = input("Message:", text("Mentor Message")) as null|text
+				var/t = input("Message:", text("Mentor Message")) as null|message
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
-					t = strip_html(t, 1500)
+					t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
@@ -1316,50 +1260,28 @@ var/global/curr_day = null
 
 	C.screen += M
 
-/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE)
-	var/vpn_kick_string = {"
-				<!doctype html>
-				<html>
-					<head>
-						<title>VPN or Proxy Detected</title>
-					</head>
-					<body>
-						<h1>Warning: VPN or proxy connection detected</h1>
-
-						Please disable your VPN or proxy, close the game, and rejoin.<br>
-						<h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
-					</body>
-				</html>
-			"}
-
-	if (repeat_attempt)
-		logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn that they've already logged in with during this round.")
-		logTheThing(LOG_DIARY, src, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
-		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-	else
-		global.vpn_ip_checks["[src.address]"] = TRUE
-		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
-
-		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
-		logTheThing(LOG_ADMIN, src, msg_txt)
-		logTheThing(LOG_DIARY, src, msg_txt, "admin")
-		message_admins("[key_name(src)] [msg_txt]")
-		ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg=msg_txt))
-	if(do_compid_analysis)
-		do_computerid_test(src) //Will ban yonder fucker in case they are prix
-		check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
-	src.Browse(vpn_kick_string, "window=vpnbonked")
-	sleep(3 SECONDS)
-	if (src)
-		del(src)
-	return
-
 /client/verb/apply_depth_shadow()
 	set hidden = 1
 	set name ="apply-depth-shadow"
 
 	apply_depth_filter() //see _plane.dm
+
+/client/verb/toggle_parallax()
+	set hidden = 1
+	set name = "toggle-parallax"
+
+#ifndef UNDERWATER_MAP
+	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
+		src.screen -= src.parallax_controller?.parallax_layers
+		src.parallax_controller = new(null, src)
+		src.mob?.register_parallax_signals()
+
+	else if (src.parallax_controller)
+		src.screen -= src.parallax_controller.parallax_layers
+		qdel(src.parallax_controller)
+		src.parallax_controller = null
+		src.mob?.unregister_parallax_signals()
+#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1
@@ -1658,13 +1580,6 @@ if([removeOnFinish])
 </body>
 </html>
 	"}, "window=pregameBrowser")
-
-#ifndef SECRETS_ENABLED
-/client/proc/postscan(list/data)
-	return
-/client/proc/vpn_prescan()
-	return
-#endif
 
 /world/proc/showCinematic(var/name, var/removeOnFinish = 0)
 	for(var/client/C)

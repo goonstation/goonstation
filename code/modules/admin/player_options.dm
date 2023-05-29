@@ -129,7 +129,11 @@
 			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 
 		if (number_of_antagonists)
-			number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
+			if (number_of_antagonists == 1)
+				var/datum/antagonist/antagonist_role = M.mind.antagonists[1]
+				number_of_antagonist_roles = " <b><span class='antag'>Antagonist: [capitalize(antagonist_role.display_name)]</span></b>"
+			else
+				number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
 
 	//General info
 	//  Logs link:
@@ -249,7 +253,8 @@
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
 					</div>
 				</div>
 			</div>
@@ -338,7 +343,8 @@
 						<a href='[playeropt_link(M, "giveantagtoken")]'>Antag Tokens</a> &bull;
 						<a href='[playeropt_link(M, "setspacebux")]'>Spacebux</a> &bull;
 						<a href='[playeropt_link(M, "viewantaghistory")]'>Antag History</a> &bull;
-						<a href='[playeropt_link(M, "chatbans")]'>Chat Bans</a>
+						<a href='[playeropt_link(M, "chatbans")]'>Chat Bans</a> &bull;
+						<a href='[playeropt_link(M, "flavortext")]'>Flavor text</a>
 					</div>
 				"}
 

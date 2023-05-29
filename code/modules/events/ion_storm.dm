@@ -134,12 +134,12 @@
 		if (prob(50))
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, FALSE)
-			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied AI law to law number [num]: [pickedLaw]")
 			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
 			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw, num, TRUE)
-			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent AI law [num]: [pickedLaw]")
 			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
@@ -160,11 +160,13 @@
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
-	var/interdict_cost = 250 //how much energy an interdictor needs to invest to keep this from malfunctioning
+	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
 		var/turf/T = get_turf(found)
+		if (!T)
+			return FALSE
 		if (T.z != Z_LEVEL_STATION)
 			return FALSE
 		if (!istype(T.loc,/area/station/))
@@ -199,7 +201,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/APCs
 	amount = 20
-	interdict_cost = 900
+	interdict_cost = 500
 
 	build_targets()
 		for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
@@ -228,24 +230,24 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/doors
 	amount = 40
 
-	valid_instance(var/obj/machinery/door/door)
+	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
 
 	build_targets()
-		for_by_tcl(door, /obj/machinery/door)
+		for_by_tcl(door, /obj/machinery/door/airlock)
 			if (valid_instance(door))
 				targets += door
 
-	action(var/obj/machinery/door/door)
+	action(var/obj/machinery/door/airlock/door)
 		var/door_diceroll = rand(1,3)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
 				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
 			if(2)
-				door.locked = 1
-				door.UpdateIcon()
-				logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				if (!door.locked)
+					door.set_locked()
+					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
 			if(3)
 				if (door.density)
 					door.open()
@@ -283,7 +285,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/manufacturers
 	amount = 5
-	interdict_cost = 500
+	interdict_cost = 200
 
 	build_targets()
 		for_by_tcl(man, /obj/machinery/manufacturer)
@@ -296,7 +298,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/venders
 	amount = 5
-	interdict_cost = 600
+	interdict_cost = 250
 
 	build_targets()
 		for_by_tcl(vender, /obj/machinery/vending)

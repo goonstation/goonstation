@@ -12,6 +12,9 @@
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
 
+	/// Can it be removed by a player
+	var/removable = TRUE
+
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
 
@@ -164,6 +167,7 @@
 	firerate = 5
 	icon_state = "strelka"
 	muzzle_flash = "muzzle_flash_laser"
+	removable = FALSE
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"
@@ -477,7 +481,7 @@
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))

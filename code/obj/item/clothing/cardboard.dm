@@ -8,7 +8,7 @@
 	density = 1
 	see_face = 0
 	over_hair = 1
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_LAYER_OVER_FUCKING_EVERYTHING_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK

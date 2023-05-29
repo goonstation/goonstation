@@ -48,7 +48,7 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 	flora_types = list(/obj/stone/random = 100, /obj/decal/fakeobjects/smallrocks = 100)
 	flora_density = 1
 
-	fauna_types = list(/mob/living/critter/small_animal/scorpion=15, /mob/living/critter/small_animal/rattlesnake=1, /mob/living/critter/small_animal/armadillo/ai_controlled=1, /obj/critter/wasp=5)
+	fauna_types = list(/mob/living/critter/small_animal/scorpion=15, /mob/living/critter/small_animal/rattlesnake=1, /mob/living/critter/small_animal/armadillo/ai_controlled=1, /mob/living/critter/small_animal/wasp=5)
 	fauna_density = 0.2
 
 /datum/biome/desert/rough

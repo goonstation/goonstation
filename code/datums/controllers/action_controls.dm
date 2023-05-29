@@ -676,6 +676,7 @@ var/datum/action_controller/actions
 #if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
 			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif
@@ -1441,7 +1442,7 @@ var/datum/action_controller/actions
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
 	icon = 'icons/ui/actions.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = 5
@@ -2202,6 +2203,6 @@ var/datum/action_controller/actions
 		..()
 		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
 		if(unanchor)
-			target.anchored = FALSE
+			target.anchored = UNANCHORED
 		else
-			target.anchored = TRUE
+			target.anchored = ANCHORED

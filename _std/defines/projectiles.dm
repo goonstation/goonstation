@@ -82,6 +82,7 @@
 #define AMMO_GYROJET "gyrojet"
 #define AMMO_FLECHETTE "flechette"
 #define AMMO_BLOWDART "blowdart"
+#define AMMO_STAPLE "staple"
 
 #define AMMO_DART_ALL AMMO_FOAMDART,AMMO_BLOWDART
 

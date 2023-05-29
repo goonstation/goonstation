@@ -3,7 +3,7 @@
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
 	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_small"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mat_appearances_to_ignore = list("wood")
 	var/capacity = 30 //how many books can it hold?
@@ -47,7 +47,7 @@
 	src.UpdateIcon()
 
 /obj/bookshelf/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/storage/bible))
+	if(istype(W, /obj/item/bible))
 		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		return
 

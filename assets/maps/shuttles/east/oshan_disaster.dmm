@@ -184,6 +184,7 @@
 /area/shuttle/escape/centcom)
 "gN" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -759,7 +760,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "Eh" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "Ew" = (

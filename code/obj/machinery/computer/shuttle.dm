@@ -351,8 +351,11 @@ var/bombini_saved
 /obj/machinery/computer/shuttle/attackby(var/obj/item/W, var/mob/user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
+
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
+		W = id_card
+
 	if ((!( istype(W, /obj/item/card) ) || !( ticker ) || emergency_shuttle.location != SHUTTLE_LOC_STATION || !( user )))
 		return
 
@@ -548,7 +551,7 @@ var/bombini_saved
 	icon_state = "accidents_sign"
 	flags = FPRINT
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	get_desc()
 		return "It says \"[bioele_shifts_since_accident] shifts since the last elevator accident. ([bioele_accidents] accidents in total.)\"."

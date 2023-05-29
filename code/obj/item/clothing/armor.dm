@@ -449,11 +449,16 @@
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor"
+	icon_state = "ntarmor_o"
 	item_state = "ntarmor"
+	coat_style = "ntarmor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 	obstructs = C_UNIFORM
+
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
@@ -491,6 +496,9 @@
 	item_state = "hos-cape"
 	hides_from_examine = null
 	obstructs = null
+	wear_layer = MOB_GLASSES_LAYER2
+	c_flags = ONBACK
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

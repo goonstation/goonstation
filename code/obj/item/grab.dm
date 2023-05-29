@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
@@ -40,7 +40,7 @@
 		src.assailant = assailant
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, PROC_REF(check_hostage))
 		if (assailant != affecting)
 			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
@@ -136,6 +136,15 @@
 			I.process_grab(mult)
 
 		UpdateIcon()
+
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
+				var/trans = src.affecting.reagents.trans_to(target, 10)
+				if (trans)
+					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
 
 	attack(atom/target, mob/user)
 		if (check())

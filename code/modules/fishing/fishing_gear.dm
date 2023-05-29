@@ -117,7 +117,7 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/machinery/active_fish_portal
 	name = "Fishing Portal"
 	desc = "A portal you can fish in. It's not big enough to go through."
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal-active"
 

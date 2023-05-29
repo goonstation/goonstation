@@ -53,12 +53,14 @@ var/datum/station_zlevel_repair/station_repair = new
 					if(!E)
 						new src.weather_effect(T)
 
-	proc/clean_up_station_level(replace_with_cars, add_sub)
+	proc/clean_up_station_level(replace_with_cars, add_sub, remove_parallax = TRUE)
 		mass_driver_fixup()
 		shipping_market_fixup()
 		land_vehicle_fixup(replace_with_cars, add_sub)
 		copy_gas_to_airless()
 		clear_around_beacons()
+		if (remove_parallax)
+			remove_all_parallax_layers(Z_LEVEL_STATION)
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -273,24 +275,46 @@ ABSTRACT_TYPE(/datum/terrainify)
 
 	convert_station_level(params, datum/tgui/ui)
 		if(..())
-			station_repair.ambient_light = new /image/ambient
-			station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+			generate_void()
 
-			station_repair.station_generator = new/datum/map_generator/void_generator
-
-			var/list/space = list()
-			for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-				space += S
-			convert_turfs(space)
-			for (var/turf/S in space)
-				S.UpdateOverlays(station_repair.ambient_light, "ambient")
-
-			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS)
+			station_repair.clean_up_station_level(params["vehicle"] & TERRAINIFY_VEHICLE_CARS, params["vehicle"] & TERRAINIFY_VEHICLE_FABS, FALSE)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into an THE VOID.")
 			logTheThing(LOG_DIARY, ui.user, "turned space into an THE VOID.", "admin")
 			message_admins("[key_name(ui.user)] turned space into THE VOID.")
 
+
+/proc/generate_void(all_z_levels = FALSE)
+	station_repair.ambient_light = new /image/ambient
+	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+
+	station_repair.station_generator = new/datum/map_generator/void_generator
+
+	var/list/space = list()
+	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		space += S
+	if (all_z_levels)
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_DEBRIS), locate(world.maxx, world.maxy, Z_LEVEL_DEBRIS)))
+			space += S
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_MINING), locate(world.maxx, world.maxy, Z_LEVEL_MINING)))
+			space += S
+
+	station_repair.station_generator.generate_terrain(space, flags = MAPGEN_ALLOW_VEHICLES * station_repair.allows_vehicles)
+	for (var/turf/S in space)
+		S.UpdateOverlays(station_repair.ambient_light, "ambient")
+
+	station_repair.clean_up_station_level()
+
+	var/list/void_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
+
+	add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_STATION)
+	if (all_z_levels)
+		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_DEBRIS)
+		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_MINING)
 
 /datum/terrainify/ice_moon
 	name = "Ice Moon Station"
@@ -347,7 +371,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
-
+			remove_all_parallax_layers(Z_LEVEL_STATION)
 			handle_mining(params, space)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Theta.")

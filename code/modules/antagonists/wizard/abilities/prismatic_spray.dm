@@ -34,7 +34,7 @@
 
 	New()
 		..()
-		for (var/X in filtered_concrete_typesof(/datum/projectile, .proc/filter_projectile))
+		for (var/X in filtered_concrete_typesof(/datum/projectile, PROC_REF(filter_projectile)))
 			var/datum/projectile/A = new X
 			A.is_magical = 1
 			proj_types += A

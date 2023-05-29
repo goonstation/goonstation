@@ -604,8 +604,8 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
-	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
+	for(var/obj/item/storage/I in view(max_dist, holder.owner)) // flock can only see /obj/item/storage
+		if(length(I.storage.get_contents()) && I.loc != holder.owner)
 			. += I
 
 
@@ -625,7 +625,7 @@ stare
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(container_target) // fix runtime Cannot read null.contents
-		return !length(container_target.contents) || (F.absorber.item == container_target)
+		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
 		return FALSE
@@ -649,7 +649,7 @@ stare
 				return
 			else
 				// we've opened a HUD, do a fake HUD click
-				container_target.hud.relay_click("boxes", F, dummy_params)
+				container_target.storage.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					F.drop_item()
 					return

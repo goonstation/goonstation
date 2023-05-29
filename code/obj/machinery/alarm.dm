@@ -8,7 +8,7 @@
 	icon_state = "alarm0"
 	power_usage = 5
 	power_channel = ENVIRON
-	anchored = 1
+	anchored = ANCHORED
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
@@ -140,7 +140,7 @@
 		src.add_fingerprint(user)
 		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
 		return
-	if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (status & (BROKEN|NOPOWER))
 			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
 			return

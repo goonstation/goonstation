@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/variableTurf/clear,
-/area/space)
+/area/allowGenerate)
 "b" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	real_name = "propulsion unit";
@@ -22,10 +22,7 @@
 	},
 /area/noGenerate)
 "e" = (
-/obj/machinery/door/airlock/external{
-	name = "Space";
-	dir = 8
-	},
+/obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/white{
 	dir = 8
 	},
@@ -484,6 +481,9 @@
 	dir = 4
 	},
 /area/noGenerate)
+"Z" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
 a
@@ -643,8 +643,8 @@ t
 o
 i
 d
-a
-a
+Z
+Z
 "}
 (8,1,1) = {"
 a
@@ -666,8 +666,8 @@ i
 i
 i
 e
-a
-a
+Z
+Z
 "}
 (9,1,1) = {"
 a
@@ -689,8 +689,8 @@ i
 i
 i
 e
-a
-a
+Z
+Z
 "}
 (10,1,1) = {"
 a
@@ -712,8 +712,8 @@ t
 o
 i
 d
-a
-a
+Z
+Z
 "}
 (11,1,1) = {"
 a

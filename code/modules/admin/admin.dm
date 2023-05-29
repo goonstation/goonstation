@@ -936,6 +936,22 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
+		if ("halt")
+			var/mob/M = locate(href_list["target"])
+			if (src.level >= LEVEL_SA)
+				if (ismob(M))
+					var/id = rand(1, 1000000)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+					boutput(usr, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
+					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
+					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
+					usr.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					M.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					SPAWN(5 SECONDS)
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
+
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -1042,7 +1058,7 @@ var/global/noir = 0
 					var/obj/item/card/id
 					var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
 					sortList(jobs, /proc/cmp_text_asc)
-					var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
+					var/datum/job/job = tgui_input_list(usr, "Select job outfit", "Job outfit", jobs)
 					if(!istype(job))
 						return
 					delete_choice = tgui_alert(usr, "Delete ALL currently worn items? Caution: you may delete traitor uplinks.", "Confirmation", list("No", "Yes", "Cancel"))
@@ -1251,7 +1267,8 @@ var/global/noir = 0
 		if("rapture")
 			if(src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				heavenly_spawn(M, reverse = TRUE)
+				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+					heavenly_spawn(M, reverse = TRUE)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
 		if("transform")
@@ -1565,17 +1582,24 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
+				var/successes = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
-						M.bioHolder.AddEffect(pick, magical = 1)
+						if(M.bioHolder.AddEffect(pick, magical = 1))
+							successes++
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					if(successes == length(picklist))
+						message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					else if(successes > 0)
+						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
+					else
+						boutput(usr, "<b><span class='alert'>Failed to add [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].</span></b>")
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -2124,7 +2148,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
 			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
-			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE, master = master.mind)
+			var/success = M.mind.add_subordinate_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, master = master.mind)
 			if (success)
 				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
 			else
@@ -2141,7 +2165,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
 			boutput(usr, "<span class='notice'>Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])...</span>")
-			var/success = M.mind.remove_antagonist(antag.id)
+			var/success = M.mind.remove_antagonist(antag)
 			if (success)
 				boutput(usr, "<span class='notice'>Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]</span>")
 			else
@@ -3587,7 +3611,8 @@ var/global/noir = 0
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Original Position</th><th>Position</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(H.wear_id, /obj/item/card/id) || istype(H.wear_id, /obj/item/device/pda2)) ? "[H.wear_id:assignment]" : "Unknown Position"]</td></tr>"
+								var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(id_card)) ? "[id_card.assignment]" : "Unknown Position"]</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
@@ -3852,6 +3877,19 @@ var/global/noir = 0
 				src.show_chatbans(M.client)
 			else
 				tgui_alert( "You must be at least a Primary Admin to manage chat bans." )
+		if ("flavortext")
+			if( src.level >= LEVEL_SA )
+				var/mob/M = locate(href_list["target"])
+				if (!M || !M.client)
+					tgui_alert( "That player doesn't exist!" )
+					return
+				var/html = "Flavor Text: \"[M.client.preferences?.flavor_text]\"<br>"
+				html += "Security Note: \"[M.client.preferences.security_note]\"<br>"
+				html += "Medical Note: \"[M.client.preferences.medical_note]\"<br>"
+				html += "Syndicate Intelligence: \"[M.client.preferences.synd_int_note]\""
+				usr.Browse(html, "window=flavortext;title=Flavor text")
+			else
+				tgui_alert( "You must be at least a Secondary Admin to manage chat bans." )
 		if ("change_station_name")
 			if (!station_name_changing)
 				return tgui_alert(usr,"Station name changing is currently disabled.")
@@ -4592,9 +4630,6 @@ var/global/noir = 0
 	if (!(M.mind in ticker.mode.Agimmicks))
 		ticker.mode.Agimmicks += M.mind
 
-	if (M.mind.current)
-		M.mind.current.antagonist_overlay_refresh(1, 0)
-
 	var/obj_count = 1
 	for(var/datum/objective/OBJ in M.mind.objectives)
 		boutput(M, "<B>Objective #[obj_count]</B>: [OBJ.explanation_text]")
@@ -5219,12 +5254,13 @@ var/global/noir = 0
 	var/mob/new_player/newM = new()
 	newM.adminspawned = 1
 
-	newM.key = M.key
 	if (M.mind)
 		M.mind.damned = 0
 		M.mind.transfer_to(newM)
+	else
+		newM.key = M.key
+		newM.Login()
 	M.mind = null
-	newM.Login()
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 	qdel(M)
 
@@ -5243,7 +5279,6 @@ var/global/noir = 0
 	var/mob/new_player/M = new()
 
 	M.key = usr.client.key
-	M.Login()
 
 	usr.remove()
 
