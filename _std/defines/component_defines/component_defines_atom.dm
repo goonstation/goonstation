@@ -13,6 +13,9 @@
 	#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 	/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 	#define COMSIG_ATOM_EXAMINE "atom_examine"
+	/// When an atom is examined for its help message (/mob/examiner, /list/lines), append to lines for more description
+	/// Use [RegisterHelpMessageHandler] instead as it adds the help verb on registration
+	#define COMSIG_ATOM_HELP_MESSAGE "atom_help_message"
 	/// when something happens that should trigger an icon update. Or something.
 	#define COMSIG_UPDATE_ICON "atom_update_icon"
 	/// when something triggers Crossed by entering this atom's turf (/atom/movable)

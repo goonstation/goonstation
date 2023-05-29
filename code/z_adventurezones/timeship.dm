@@ -387,6 +387,7 @@ Turfs and decal for the space rift
 	name = "time-space breach"
 	desc = "Uhh.  UHHHH.  uh."
 	fullbright = 0
+	plane = PLANE_FLOOR
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "timehole"
 

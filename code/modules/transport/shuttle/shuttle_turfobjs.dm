@@ -99,6 +99,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
 	icon = 'icons/turf/walls_shuttle.dmi'
+	icon_state = "mapwall"
 	light_mod = "wall-"
 	opacity = 0
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID

@@ -19,6 +19,11 @@ CONTENTS:
 	sound_group = "void"
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
 
 /area/crunch/New()
 	. = ..()
@@ -44,6 +49,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
+	plane = PLANE_SPACE
 	mat_appearances_to_ignore = list("steel")
 #ifdef IN_MAP_EDITOR
 	icon_state = "darkvoid-map" //so we can actually the walls from the floor
@@ -59,6 +65,7 @@ CONTENTS:
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
 	mat_appearances_to_ignore = list("steel")
 
 /turf/unsimulated/floor/void/crunch
@@ -71,6 +78,7 @@ CONTENTS:
 	desc = "It seems solid..."
 	opacity = 1
 	density = 1
+	plane = PLANE_SPACE
 	mat_appearances_to_ignore = list("steel")
 
 	ex_act()
@@ -94,6 +102,7 @@ CONTENTS:
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
+	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 	mat_appearances_to_ignore = list("steel")

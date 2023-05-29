@@ -25,7 +25,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE // They don't really want to hurt you
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	setup_hands()
@@ -126,7 +126,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	setup_hands()
@@ -280,7 +280,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	death_text = "%src% blows apart!"
 	custom_gib_handler = /proc/robogibs
@@ -397,6 +397,8 @@
 	health_burn = 20
 	health_burn_vuln = 0.6
 	var/activated = FALSE
+
+	faction = FACTION_SYNDICATE
 
 	active
 		New()

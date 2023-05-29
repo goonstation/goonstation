@@ -181,6 +181,8 @@
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
+
 	var/spawner_type = /obj/disposalpipespawner
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
@@ -482,6 +484,10 @@
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
+		C.color = src.color
+		C.name = src.name
+		if (src.material)
+			C.setMaterial(src.material, copy=FALSE)
 		C.update()
 
 		qdel(src)

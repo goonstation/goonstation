@@ -155,6 +155,9 @@
 	proc/UpdateDirBlocks()
 		src.blocked_dirs = 0
 		for (var/obj/O in src.contents)
+			if (istype(O, /obj/window) && !is_cardinal(O.dir)) // full window
+				src.blocked_dirs = NORTH | SOUTH | EAST | WEST
+				return
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
@@ -259,11 +262,13 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+	#ifndef RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
+	#endif
 
 	UpdateIcon() // for starlight
 

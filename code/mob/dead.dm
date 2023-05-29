@@ -1,6 +1,7 @@
 /mob/dead
 	stat = 2
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse
 
@@ -14,6 +15,7 @@
 /mob/dead/ex_act(severity)
 	return
 
+// Make sure to keep this JPS-cache safe
 /mob/dead/Cross(atom/movable/mover)
 	return 1
 

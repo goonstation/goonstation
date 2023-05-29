@@ -463,7 +463,7 @@ obj/item/gnomechompski/elf
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
 
 		if(2)
-			playsound(affected_mob, 'sound/effects/Heart Beat.ogg', 70, 1)
+			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, 1)
 			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
 					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
@@ -1253,6 +1253,13 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_group = "owl"
 	teleport_blocked = 1
 	sound_environment = 12
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_far,
+		/atom/movable/screen/parallax_layer/asteroids_near,
+		)
 
 	New()
 		..()
