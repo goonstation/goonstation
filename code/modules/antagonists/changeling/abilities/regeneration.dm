@@ -157,10 +157,10 @@
 			if(istype(O))
 				O.unbreakme()
 
-		if (prob(25))
+		if (!ON_COOLDOWN(C, "cling_visible_message", 3 SECONDS))
 			if (changer)
 				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
-				playsound(C, 'sound/misc/cling_flesh.ogg', 30)
+				playsound(C, 'sound/misc/cling_flesh.ogg', 30, TRUE)
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
@@ -188,7 +188,7 @@
 			return 1
 
 		var/mob/living/carbon/human/H = holder.owner
-		if (tgui_alert(H,"Are we sure?","Speed regen?",list("Yes","No")) != "Yes")
+		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
