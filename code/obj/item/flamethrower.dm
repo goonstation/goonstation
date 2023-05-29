@@ -193,6 +193,7 @@ A Flamethrower in various states of assembly
 /obj/item/tank/jetpack/backtank
 	name = "fuelpack"
 	icon_state = "syndflametank0"
+	wear_state = "syndflametank0"
 	base_icon_state = "syndflametank"
 	desc = "A back mounted fueltank/jetpack system for use with a tactical flamethrower."
 	flags = FPRINT | TABLEPASS | CONDUCT | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS

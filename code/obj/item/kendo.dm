@@ -184,6 +184,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "shinaibag-closed"
 	item_state = "shinaibag-closed"
+	wear_state = "shinaibag-closed"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
@@ -194,9 +195,11 @@
 		if(!open)
 			src.icon_state = "shinaibag-closed"
 			src.item_state = "shinaibag-closed"
+			src.wear_state = "shinaibag-closed"
 		else
 			src.icon_state = "shinaibag-[shinai+src.contents.len]"
 			src.item_state = "shinaibag-[shinai+src.contents.len]"
+			src.wear_state = "shinaibag-[shinai+src.contents.len]"
 
 		if(src.loc == user)
 			user.update_clothing()

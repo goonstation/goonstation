@@ -7,6 +7,7 @@
 	icon_state = "black"
 	uses_multiple_icon_states = TRUE
 	item_state = "black"
+	wear_state = "black"
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_jumpsuit_pattern
 
@@ -35,6 +36,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -55,6 +57,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			src.wear_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -77,6 +80,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -89,6 +93,7 @@
 	var/desc = "A generic jumpsuit with no rank markings."
 	var/icon_state = "black"
 	var/item_state = "black"
+	var/wear_state = "black"
 	var/sprite_item = 'icons/obj/clothing/uniforms/item_js.dmi'
 	var/sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js.dmi'
 	var/sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js.dmi'
@@ -97,40 +102,48 @@
 		name = "white jumpsuit"
 		icon_state = "white"
 		item_state = "white"
+		wear_state = "white"
 
 	grey
 		name = "grey jumpsuit"
 		icon_state = "grey"
 		item_state = "grey"
+		wear_state = "grey"
 
 	green
 		name = "green jumpsuit"
 		icon_state = "green"
 		item_state = "green"
+		wear_state = "green"
 
 	aqua
 		name = "cyan jumpsuit"
 		icon_state = "aqua"
 		item_state  = "aqua"
+		wear_state = "aqua"
 
 	lightblue
 		name = "sky blue jumpsuit"
 		icon_state = "lightblue"
 		item_state  = "lightblue"
+		wear_state = "lightblue"
 	blue
 		name = "blue jumpsuit"
 		icon_state = "blue"
 		item_state = "blue"
+		wear_state = "blue"
 
 	darkblue
 		name = "indigo jumpsuit"
 		icon_state = "darkblue"
 		item_state  = "darkblue"
+		wear_state = "darkblue"
 
 	purple
 		name = "purple jumpsuit"
 		icon_state = "purple"
 		item_state  = "purple"
+		wear_state = "purple"
 
 	lightpurple
 		name = "violet jumpsuit"
@@ -141,22 +154,26 @@
 		name = "magenta jumpsuit"
 		icon_state = "magenta"
 		item_state = "magenta"
+		wear_state = "magenta"
 
 	pink
 		name = "pink jumpsuit"
 		icon_state = "pink"
 		item_state = "pink"
+		wear_state = "pink"
 
 	red
 		name = "red jumpsuit"
 		icon_state = "red"
 		item_state = "red"
+		wear_state = "red"
 
 	rank
 		name = "staff assistant's jumpsuit"
 		desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
 		icon_state = "assistant"
 		item_state = "assistant"
+		wear_state = "assistant"
 		sprite_item = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
 		sprite_worn = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
 		sprite_hand = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
@@ -166,132 +183,154 @@
 		desc = "If this suit was non-conductive, maybe engineers would actually do their damn job."
 		icon_state = "engine"
 		item_state = "engine"
+		wear_state = "engine"
 
 	rank/medical
 		name = "medical doctor's jumpsuit"
 		desc = "It's got a red plus on it, that's a good thing right?"
 		icon_state = "medical"
 		item_state = "medical"
+		wear_state = "medical"
 
 	rank/roboticist
 		name = "roboticist's jumpsuit"
 		desc = "Black and white, like ethics."
 		icon_state = "robotics"
 		item_state = "robotics"
+		wear_state = "robotics"
 
 	rank/scientist
 		name = "scientist's jumpsuit"
 		desc = "A research jumpsuit, supposedly more resistant to biohazards. It had better be!"
 		icon_state = "scientist"
 		item_state = "scientist"
+		wear_state = "scientist"
 
 	rank/geneticist
 		name = "geneticist's jumpsuit"
 		desc = "Genetics is very green these days, isn't it?"
 		icon_state = "genetics"
 		item_state = "genetics"
+		wear_state = "genetics"
 
 	rank/hydroponics
 		name = "botanist's jumpsuit"
 		desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
 		icon_state = "hydro"
 		item_state = "hydro"
+		wear_state = "hydro"
 
 	rank/janitor
 		name = "janitor's jumpsuit"
 		desc = "You don't really want to think about what those stains are from."
 		icon_state = "janitor"
 		item_state = "janitor"
+		wear_state = "janitor"
 
 	rank/bartender
 		name = "bartender's suit"
 		desc = "A nice and tidy outfit. Shame about the bar though."
 		icon_state = "barman"
 		item_state = "barman"
+		wear_state = "barman"
 
 	rank/chef
 		name = "chef's uniform"
 		desc = "Issued only to the most hardcore chefs in space."
 		icon_state = "chef"
 		item_state = "chef"
+		wear_state = "chef"
 
 	rank/chaplain
 		name = "chaplain jumpsuit"
 		desc = "A protestant vicar's outfit. Used to be a nun's, but it was a rather bad habit."
 		icon_state = "chaplain"
 		item_state = "chaplain"
+		wear_state = "chaplain"
 
 	rank/cargo
 		name = "quartermaster's jumpsuit"
 		desc = "What can brown do for you?"
 		icon_state = "qm"
 		item_state = "qm"
+		wear_state = "qm"
 
 	rank/overalls
 		name = "miner's overalls"
 		desc = "Durable overalls for the hard worker who likes to smash rocks into little bits."
 		icon_state = "miner"
 		item_state = "miner"
+		wear_state = "miner"
 
 	rank/security
 		name = "security uniform"
 		desc = "Is anyone who wears a jacket like that EVER good?"
 		icon_state = "security"
 		item_state = "security"
+		wear_state = "security"
 
 	rank/det
 		name = "hard worn suit"
 		desc = "Someone who wears this means business. Either that or they're a total dork."
 		icon_state = "detective"
 		item_state = "detective"
+		wear_state = "detective"
 
 	rank/head_of_personnel
 		name = "head of personnel's uniform"
 		desc = "Rather bland and inoffensive. Perfect for vanishing off the face of the universe."
 		icon_state = "hop"
 		item_state = "hop"
+		wear_state = "hop"
 
 	rank/head_of_securityold
 		name = "head of security's uniform"
 		desc = "It's bright red and rather crisp, much like security's victims tend to be."
 		icon_state = "hos"
 		item_state = "hos"
+		wear_state = "hos"
 
 	rank/chief_engineer
 		name = "chief engineer's uniform"
 		desc = "It's an old, battered boiler suit with faded oil stains."
 		icon_state = "chief"
 		item_state = "chief"
+		wear_state = "chief"
 
 	rank/research_director
 		name = "research director's uniform"
 		desc = "This suit is ludicrously cheap. They must be embezzling the research budget again."
 		icon_state = "director"
 		item_state = "director"
+		wear_state = "director"
 
 	rank/medical_director
 		name = "medical director's uniform"
 		desc = "There's some odd stains on this thing. Hm."
 		icon_state = "med_director"
 		item_state = "med_director"
+		wear_state = "med_driector"
 
 	rank/security_assistant
 		name = "security assistant uniform"
 		desc = "Wait, is that velcro?"
 		icon_state = "security-assistant"
 		item_state = "security-assistant"
+		wear_state = "security-assistant"
 
 	rank/rancher
 		name = "rancher's overalls"
 		desc = "Smells like a barn; hopefully its wearer wasn't raised in one."
 		icon_state = "rancher"
 		item_state = "rancher"
+		wear_state = "rancher"
 
 /obj/item/clothing/head/chameleon
 	name = "hat"
 	desc = "A knit cap in red."
 	icon_state = "red"
 	item_state = "rgloves"
+	wear_state = "red"
 	wear_image_icon = 'icons/mob/clothing/head.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	icon = 'icons/obj/clothing/item_hats.dmi'
@@ -327,6 +366,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -346,6 +386,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "bgloves"
+			src.wear_state = "psyche"
 			src.seal_hair = FALSE
 			M.set_clothing_icon_dirty()
 
@@ -370,6 +411,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -383,6 +425,7 @@
 	var/desc = "A knit cap in red."
 	var/icon_state = "red"
 	var/item_state = "rgloves"
+	var/wear_state = "red"
 	var/sprite_item = 'icons/obj/clothing/item_hats.dmi'
 	var/sprite_worn = 'icons/mob/clothing/head.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
@@ -394,12 +437,14 @@
 		desc = "For the inner space dictator in you."
 		icon_state = "ntberet"
 		item_state = "ntberet"
+		wear_state = "ntberet"
 		seal_hair = FALSE
 
 	HoS_beret
 		name = "HoS Beret"
 		icon_state = "hosberet"
 		item_state = "hosberet"
+		wear_state = "hosberet"
 		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 		seal_hair = FALSE
 
@@ -407,6 +452,7 @@
 		name = "HoS Hat"
 		icon_state = "hoscap"
 		item_state = "hoscap"
+		wear_state = "hoscap"
 		desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
 		seal_hair = FALSE
 
@@ -414,6 +460,7 @@
 		name = "Captain's hat"
 		icon_state = "captain"
 		item_state = "caphat"
+		wear_state = "captain"
 		desc = "A symbol of the captain's rank, and the source of all their power."
 		seal_hair = FALSE
 
@@ -422,6 +469,7 @@
 		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 		icon_state = "janitorberet"
 		item_state = "janitorberet"
+		wear_state = "janitorberet"
 		seal_hair = FALSE
 
 	janihat
@@ -429,12 +477,14 @@
 		desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 		icon_state = "janitorhat"
 		item_state = "janitorhat"
+		wear_state = "janitorhat"
 		seal_hair = FALSE
 
 	hardhat
 		name = "hard hat"
 		icon_state = "hardhat0"
 		item_state = "hardhat0"
+		wear_state = "hardhat0"
 		desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
 		seal_hair = FALSE
 
@@ -442,6 +492,7 @@
 		name = "helmet"
 		icon_state = "helmet-sec"
 		item_state = "helmet"
+		wear_state = "helmet-sec"
 		desc = "Somewhat protects your head from being bashed in."
 		seal_hair = FALSE
 		hides_from_examine = C_EARS
@@ -450,6 +501,7 @@
 		name = "fancy hat"
 		icon_state = "rank-fancy"
 		item_state = "that"
+		wear_state = "rank-fancy"
 		desc = "What do you mean this is hat isn't fancy?"
 		seal_hair = FALSE
 
@@ -458,12 +510,14 @@
 		desc = "Someone who wears this will look very smart."
 		icon_state = "detective"
 		item_state = "det_hat"
+		wear_state = "detective"
 		seal_hair = FALSE
 
 	space_helmet
 		name = "space helmet"
 		icon_state = "space"
 		item_state = "s_helmet"
+		wear_state = "space"
 		desc = "Helps protect against vacuum."
 		seal_hair = TRUE
 		hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -472,6 +526,7 @@
 		name = "emergency hood"
 		icon_state = "emerg"
 		item_state = "emerg"
+		wear_state = "emerg"
 		desc = "Helps protect from vacuum for a short period of time."
 		seal_hair = TRUE
 		hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -480,6 +535,7 @@
 		name = "engineering space helmet"
 		desc = "Comes equipped with a builtin flashlight."
 		icon_state = "espace0"
+		wear_state = "espace0"
 		item_state = "s_helmet"
 		seal_hair = TRUE
 		hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -487,6 +543,7 @@
 	industrial_helmet
 		icon_state = "indus"
 		item_state = "indus"
+		wear_state = "indus"
 		name = "industrial space helmet"
 		desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 		seal_hair = TRUE
@@ -495,6 +552,7 @@
 	industrial_diving_helmet
 		icon_state = "diving_suit-industrial"
 		item_state = "diving_suit-industrial"
+		wear_state = "diving_suit-industrial"
 		name = "industrial diving helmet"
 		desc = "Goes with Industrial Diving Suit. Now with a fresh mint-scented visor!"
 		seal_hair = TRUE
@@ -505,6 +563,7 @@
 		desc = "Yeehaw!"
 		icon_state = "cowboy"
 		item_state = "cowboy"
+		wear_state = "cowboy"
 		seal_hair = FALSE
 
 	turban
@@ -512,6 +571,7 @@
 		desc = "A very comfortable cotton turban."
 		icon_state = "turban"
 		item_state = "that"
+		wear_state = "turban"
 		seal_hair = FALSE
 
 	top_hat
@@ -519,6 +579,7 @@
 		desc = "An stylish looking hat"
 		icon_state = "tophat"
 		item_state = "that"
+		wear_state = "tophat"
 		seal_hair = FALSE
 
 	chef_hat
@@ -526,12 +587,14 @@
 		desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 		icon_state = "chef"
 		item_state = "chefhat"
+		wear_state = "chef"
 		seal_hair = FALSE
 
 	bio_hood
 		name = "bio hood"
 		icon_state = "bio"
 		item_state = "bio_hood"
+		wear_state = "bio"
 		desc = "This hood protects you from harmful biological contaminants."
 		seal_hair = TRUE
 		hides_from_examine = C_EARS
@@ -541,6 +604,7 @@
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
 	item_state = "hoodie"
+	wear_state = "hoodie"
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
@@ -574,6 +638,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -593,6 +658,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "hoodie-psyche"
 			src.item_state = "hoodie-psyche"
+			src.wear_state = "hoodie-psyche"
 			src.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 			src.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 			M.set_clothing_icon_dirty()
@@ -619,6 +685,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.over_hair = T.over_hair
 			src.wear_image_icon = T.sprite_worn
@@ -632,6 +699,7 @@
 	var/desc = "Nice and comfy on those cold space evenings."
 	var/icon_state = "hoodie"
 	var/item_state = "hoodie"
+	var/wear_state = "hoodie"
 	var/sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	var/sprite_worn = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	var/sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
@@ -643,42 +711,49 @@
 		desc = "A suit that protects against minor chemical spills and biohazards."
 		icon_state = "labcoat"
 		item_state = "labcoat"
+		wear_state = "labcoat"
 
 	labcoat_genetics
 		name = "geneticist's labcoat"
 		desc = "A protective laboratory coat with the green markings of a Geneticist."
 		icon_state = "GNlabcoat"
 		item_state = "GNlabcoat"
+		wear_state = "GNlabcoat"
 
 	labcoat_robotics
 		name = "roboticist's labcoat"
 		desc = "A protective laboratory coat with the black markings of a Roboticist."
 		icon_state = "ROlabcoat"
 		item_state = "ROlabcoat"
+		wear_state = "ROlabcoat"
 
 	labcoat_medical
 		name = "doctor's labcoat"
 		desc = "A protective laboratory coat with the red markings of a Medical Doctor."
 		icon_state = "MDlabcoat"
 		item_state = "MDlabcoat"
+		wear_state = "MDlabcoat"
 
 	labcoat_sciene
 		name = "scientist's labcoat"
 		desc = "A protective laboratory coat with the purple markings of a Scientist."
 		icon_state = "SCIlabcoat"
 		item_state = "SCIlabcoat"
+		wear_state = "SCIlabcoat"
 
 	labcoat_MD
 		name = "medical director's labcoat"
 		desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
 		icon_state = "MDlonglabcoat"
 		item_state = "MDlonglabcoat"
+		wear_state = "MDlonglabcoat"
 
 	paramedic
 		name = "paramedic suit"
 		desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
 		icon_state = "paramedic"
 		item_state = "paramedic"
+		wear_state = "paramedic"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -689,6 +764,7 @@
 		desc = "A suit that protects against fire and heat."
 		icon_state = "fire"
 		item_state = "fire_suit"
+		wear_state = "fire"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -699,6 +775,7 @@
 		desc = "An armored vest that protects against some damage. Contains carbon fibres."
 		icon_state = "armorvest"
 		item_state = "armorvest"
+		wear_state = "armorvest"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
@@ -708,6 +785,7 @@
 		desc = "A suit of protective formal armor made for the station's captain."
 		icon_state = "caparmor"
 		item_state = "caparmor"
+		wear_state = "caparmor"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
@@ -718,6 +796,7 @@
 		desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 		icon_state = "hos-cape"
 		item_state = "hos-cape"
+		wear_state = "hos-cape"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
@@ -727,6 +806,7 @@
 		desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 		icon_state = "hoscoat"
 		item_state = "hoscoat"
+		wear_state = "hoscoat"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
@@ -736,48 +816,56 @@
 		desc = "Someone who wears this means business."
 		icon_state = "detective"
 		item_state = "det_suit"
+		wear_state = "detective"
 
 	winter_coat_medical
 		name = "medical winter coat"
 		desc = "A padded coat to protect against the cold."
 		icon_state = "wintercoat-medical"
 		item_state = "wintercoat-medical"
+		wear_state = "wintercoat-medical"
 
 	winter_coat_research
 		name = "research winter coat"
 		desc = "A padded coat to protect against the cold."
 		icon_state = "wintercoat-research"
 		item_state = "wintercoat-research"
+		wear_state = "wintercoat-research"
 
 	winter_coat_engineering
 		name = "engineering winter coat"
 		desc = "A padded coat to protect against the cold."
 		icon_state = "wintercoat-engineering"
 		item_state = "wintercoat-engineering"
+		wear_state = "wintercoat-engineering"
 
 	winter_coat_security
 		name = "security winter coat"
 		desc = "A padded coat to protect against the cold."
 		icon_state = "wintercoat-security"
 		item_state = "wintercoat-security"
+		wear_state = "wintercoat-security"
 
 	winter_coat_command
 		name = "command winter coat"
 		desc = "A padded coat to protect against the cold."
 		icon_state = "wintercoat-command"
 		item_state = "wintercoat-command"
+		wear_state = "wintercoat-command"
 
 	winter_coat_detective
 		name = "detective's winter coat"
 		desc = "A comfy coat to protect against the cold. Popular with private investigators."
 		icon_state = "wintercoat-detective"
 		item_state = "wintercoat-detective"
+		wear_state = "wintercoat-detective"
 
 	badge
 		name = "Security Badge"
 		desc = "An official badge for a Nanotrasen Security Worker."
 		icon_state = "security_badge"
 		item_state = "security_badge"
+		wear_state = "security_badge"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
@@ -787,6 +875,7 @@
 		desc = "A suit that protects against low pressure environments."
 		icon_state = "space"
 		item_state = "s_suit"
+		wear_state = "space"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -797,6 +886,7 @@
 		desc = "A suit that protects against low pressure environments for a short time. Amazingly, it's even more bulky and uncomfortable than the engineering suits."
 		icon_state = "emerg"
 		item_state = "emerg"
+		wear_state = "emerg"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -807,6 +897,7 @@
 		desc = "An overly bulky space suit designed mainly for maintenance and mining."
 		icon_state = "espace"
 		item_state = "es_suit"
+		wear_state = "espace"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -816,6 +907,7 @@
 		name = "industrial space armor"
 		icon_state = "indus"
 		item_state = "indus"
+		wear_state = "indus"
 		desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
@@ -827,6 +919,7 @@
 		desc = "Very heavy armour for prolonged industrial activity. Protects from radiation and explosions."
 		icon_state = "diving_suit-industrial"
 		item_state = "diving_suit-industrial"
+		wear_state = "diving_suit-industrial"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -837,6 +930,7 @@
 		desc = "A suit that protects against biological contamination."
 		icon_state = "bio_suit"
 		item_state = "bio_suit"
+		wear_state = "bio_suit"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
@@ -847,12 +941,14 @@
 		desc = "This will keep you safe from tomato stains. Unless they're the exploding ones"
 		icon_state = "apron-botany"
 		item_state = "apron-botany"
+		wear_state = "apron-botany"
 
 	adeptus //the only outer suit chaplains get weirdly
 		name = "adeptus mechanicus robe"
 		desc = "A robe of a member of the adeptus mechanicus."
 		icon_state = "adeptus"
 		item_state = "adeptus"
+		wear_state = "adeptus"
 		sprite_item = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
@@ -864,12 +960,14 @@
 		desc = "BuRK BuRK BuRK - Bork Bork Bork!"
 		icon_state = "chef"
 		item_state = "chef"
+		wear_state = "chef"
 
 /obj/item/clothing/glasses/chameleon
 	name = "prescription glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	icon_state = "glasses"
 	item_state = "glasses"
+	wear_state = "glasses"
 	icon = 'icons/obj/clothing/item_glasses.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
@@ -902,6 +1000,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -919,6 +1018,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			src.wear_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -941,6 +1041,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -953,6 +1054,7 @@
 	var/desc = "Corrective lenses, perfect for the near-sighted."
 	var/icon_state = "glasses"
 	var/item_state = "glasses"
+	var/wear_state = "glasses"
 	var/sprite_item = 'icons/obj/clothing/item_glasses.dmi'
 	var/sprite_worn = 'icons/mob/clothing/eyes.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_headgear.dmi'
@@ -962,42 +1064,50 @@
 		desc = "Goggles that allow you to see the structure of the station through walls."
 		icon_state = "meson"
 		item_state = "glasses"
+		wear_state = "meson"
 
 	sunglasses
 		name = "sunglasses"
 		desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
 		icon_state = "sun"
 		item_state = "sunglasses"
+		wear_state = "sun"
 
 	sechud
 		name = "\improper Security HUD"
 		desc = "Sunglasses with a high tech sheen."
 		icon_state = "sec"
+		wear_state = "sec"
 
 	thermal
 		name = "optical thermal scanner"
 		icon_state = "thermal"
 		item_state = "glasses"
+		wear_state = "thermal"
 
 	visor
 		name = "\improper VISOR goggles"
 		icon_state = "visor"
 		item_state = "glasses"
+		wear_state = "visor"
 
 	prodoc
 		name = "\improper ProDoc Healthgoggles"
 		desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 		icon_state = "prodocs-upgraded"
+		wear_state = "prodocs-upgraded"
 
 	spectro
 		name = "spectroscopic scanner goggles"
 		icon_state = "spectro"
 		item_state = "glasses"
+		wear_state = "spectro"
 
 /obj/item/clothing/shoes/chameleon
 	name = "black shoes"
 	desc = "These shoes somewhat protect you from fire."
 	icon_state = "black"
+	wear_state = "black"
 	icon = 'icons/obj/clothing/item_shoes.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
@@ -1035,6 +1145,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -1052,6 +1163,7 @@
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
+			src.wear_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1074,6 +1186,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -1087,6 +1200,7 @@
 	var/desc = "These shoes somewhat protect you from fire."
 	var/icon_state = "black"
 	var/item_state = "black"
+	var/wear_state = "black"
 	var/sprite_item = 'icons/obj/clothing/item_shoes.dmi'
 	var/sprite_worn = 'icons/mob/clothing/feet.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
@@ -1096,6 +1210,7 @@
 		name = "brown shoes"
 		icon_state = "brown"
 		item_state = "brown"
+		wear_state = "brown"
 		desc = "Brown shoes, camouflage on this kind of station."
 		step_sound = "step_default"
 
@@ -1103,12 +1218,14 @@
 		name = "red shoes"
 		icon_state = "red"
 		item_state = "red"
+		wear_state = "red"
 		step_sound = "step_default"
 
 	orange
 		name = "orange shoes"
 		icon_state = "orange"
 		item_state = "orange"
+		wear_state = "orange"
 		desc = "Shoes, now in prisoner orange! Can be made into shackles."
 		step_sound = "step_default"
 
@@ -1116,6 +1233,7 @@
 		name = "white shoes"
 		icon_state = "white"
 		item_state = "white"
+		wear_state = "white"
 		desc = "Protects you against biohazards that would enter your feet."
 		step_sound = "step_default"
 
@@ -1124,6 +1242,7 @@
 		desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 		icon_state = "magboots"
 		item_state = "magboots"
+		wear_state = "magboots"
 		step_sound = "step_plating"
 
 	swat
@@ -1131,6 +1250,7 @@
 		desc = "Polished and very shiny military boots."
 		icon_state = "swat"
 		item_state = "swat"
+		wear_state = "swat"
 		step_sound = "step_military"
 
 	galoshes
@@ -1138,6 +1258,7 @@
 		desc = "Rubber boots that prevent slipping on wet surfaces."
 		icon_state = "galoshes"
 		item_state = "galoshes"
+		wear_state = "galoshes"
 		step_sound = "step_rubberboot"
 
 	detective
@@ -1145,6 +1266,7 @@
 		desc = "This pair of leather boots has seen better days."
 		icon_state = "detective"
 		item_state = "detective"
+		wear_state = "detective"
 		step_sound = "step_default"
 
 	magic_sandals
@@ -1152,24 +1274,28 @@
 		desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
 		icon_state = "wizard"
 		item_state = "wizard"
+		wear_state = "wizard"
 		step_sound = "step_flipflop"
 
 	chef
 		name = "chef's clogs"
 		desc = "Sturdy shoes that minimize injury from falling objects or knives."
 		icon_state = "chef"
+		wear_state = "chef"
 		step_sound = "step_wood"
 
 	mechanised_diving_boots
 		name = "mechanised diving boots"
 		icon_state = "divindboots"
 		item_state = "divindboots"
+		wear_state = "divindboots"
 		desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 		step_sound = "step_default"
 
 	mechanised_boots
 		icon_state = "indboots"
 		item_state = "indboots"
+		wear_state = "indboots"
 		name = "mechanised boots"
 		desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 		step_sound = "step_default"
@@ -1179,6 +1305,7 @@
 	desc = "These thick leather gloves are fire-resistant."
 	icon_state = "black"
 	item_state = "bgloves"
+	wear_state = "bgloves"
 	icon = 'icons/obj/clothing/item_gloves.dmi'
 	wear_image_icon = 'icons/mob/clothing/hands.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
@@ -1214,6 +1341,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -1232,6 +1360,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			src.wear_state = "psyche"
 			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
@@ -1255,6 +1384,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -1268,6 +1398,7 @@
 	var/desc = "These thick leather gloves are fire-resistant."
 	var/icon_state = "black"
 	var/item_state = "bgloves"
+	var/wear_state = "bgloves"
 	var/sprite_item = 'icons/obj/clothing/item_gloves.dmi'
 	var/sprite_worn = 'icons/mob/clothing/hands.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_feethand.dmi'
@@ -1280,6 +1411,7 @@
 		name = "insulated gloves"
 		icon_state = "yellow"
 		item_state = "ygloves"
+		wear_state = "ygloves"
 		print_type = "insulative fibers"
 		hide_prints = TRUE
 		scramble_prints = FALSE
@@ -1288,6 +1420,7 @@
 		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
 		name = "fingerless gloves"
 		icon_state = "fgloves"
+		wear_state = "finger-"
 		item_state = "finger-"
 		hide_prints = FALSE
 		scramble_prints = FALSE
@@ -1296,6 +1429,7 @@
 		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
+		wear_state = "lgloves"
 		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
 		scramble_prints = TRUE
 
@@ -1304,6 +1438,7 @@
 		desc = "Big soft gloves used in competitive boxing. Gives your punches a bit more weight, at the cost of precision."
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
+		wear_state = "bogloves"
 		print_type = "red leather fibers"
 		hide_prints = TRUE
 		scramble_prints = FALSE
@@ -1313,6 +1448,7 @@
 		name = "cleaning gloves"
 		icon_state = "long_gloves"
 		item_state = "long_gloves"
+		wear_state = "long_gloves"
 		print_type = "synthetic silicone rubber fibers"
 		hide_prints = TRUE
 		scramble_prints = FALSE
@@ -1322,6 +1458,7 @@
 		desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 		icon_state = "cgaunts"
 		item_state = "bgloves"
+		wear_state = "bgloves"
 		print_type = "industrial-grade mineral fibers"
 		hide_prints = TRUE
 		scramble_prints = FALSE
@@ -1331,6 +1468,7 @@
 	desc = "Can hold various small objects."
 	icon_state = "utilitybelt"
 	item_state = "utility"
+	wear_state = "utility"
 	icon = 'icons/obj/items/belts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
@@ -1364,6 +1502,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -1381,6 +1520,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			src.wear_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1403,6 +1543,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -1415,6 +1556,7 @@
 	var/desc = "Can hold various small objects."
 	var/icon_state = "utilitybelt"
 	var/item_state = "utility"
+	var/wear_state = "utility"
 	var/sprite_item = 'icons/obj/items/belts.dmi'
 	var/sprite_worn = 'icons/mob/clothing/belt.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
@@ -1424,47 +1566,55 @@
 		desc = "An utility belt for usage in high-risk salvage operations. Contains a personal shield generator. Can be activated to overcharge the shields temporarily."
 		icon_state = "cebelt"
 		item_state = "cebelt"
+		wear_state = "cebelt"
 
 	security
 		name = "security toolbelt"
 		desc = "For the trend-setting officer on the go. Has a place on it to clip a baton and a holster for a small gun."
 		icon_state = "secbelt"
 		item_state = "secbelt"
+		wear_state = "secbelt"
 
 	medical
 		name = "medical belt"
 		desc = "A specialized belt for treating patients outside medbay in the field. A unique attachment point lets you carry defibrillators."
 		icon_state = "injectorbelt"
 		item_state = "medical"
+		wear_state = "medical"
 
 	shoulder_holster
 		name = "shoulder holster"
 		icon_state = "shoulder_holster"
 		item_state = "shoulder_holster"
+		wear_state = "shoulder_holster"
 
 	miner
 		name = "miner's belt"
 		desc = "Can hold various mining tools."
 		icon_state = "minerbelt"
 		item_state = "mining"
+		wear_state = "mining"
 
 	robotics
 		name = "Roboticist's belt"
 		desc = "A utility belt, in the departmental colors of someone who loves robots and surgery."
 		icon_state = "utilrobotics"
 		item_state = "robotics"
+		wear_state = "robotics"
 
 	rancher
 		name = "rancher's belt"
 		desc = "A sturdy belt with hooks for chicken carriers."
 		icon_state = "rancherbelt"
 		item_state = "rancher"
+		wear_state = "rancher"
 
 /obj/item/storage/backpack/chameleon
 	name = "backpack"
 	desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	icon_state = "backpack"
 	item_state = "backpack"
+	wear_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	uses_multiple_icon_states = TRUE
@@ -1530,6 +1680,7 @@
 			P.desc = U.desc
 			P.icon_state = U.icon_state
 			P.item_state = U.item_state
+			P.wear_state = U.wear_state
 			P.sprite_item = U.icon
 			P.sprite_worn = U.wear_image_icon
 			P.sprite_hand = U.inhand_image_icon
@@ -1547,6 +1698,7 @@
 			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche_backpack"
 			src.item_state = "psyche_backpack"
+			src.wear_state = "psyche_backpack"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1569,6 +1721,7 @@
 			src.desc = T.desc
 			src.icon_state = T.icon_state
 			src.item_state = T.item_state
+			src.wear_state = T.wear_state
 			src.icon = T.sprite_item
 			src.wear_image_icon = T.sprite_worn
 			src.inhand_image_icon = T.sprite_hand
@@ -1581,6 +1734,7 @@
 	var/desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's back."
 	var/icon_state = "backpack"
 	var/item_state = "backpack"
+	var/wear_state = "backpack"
 	var/sprite_item = 'icons/obj/items/storage.dmi'
 	var/sprite_worn =  'icons/mob/clothing/back.dmi'
 	var/sprite_hand = 'icons/mob/inhand/hand_storage.dmi'
@@ -1590,90 +1744,105 @@
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a crewmember's shoulder."
 		icon_state = "satchel"
 		item_state = "satchel"
+		wear_state = "satchel"
 
 	engineer
 		name = "engineering backpack"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the back of engineering personnel."
 		icon_state = "bp_engineering"
 		item_state = "bp_engineering"
+		wear_state = "bp_engineering"
 
 	engineer_satchel
 		name = "engineering satchel"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects effectively on the shoulder of engineering personnel."
 		icon_state = "satchel_engineering"
 		item_state = "satchel_engineering"
+		wear_state = "satchel_engineering"
 
 	research
 		name = "research backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the back of research personnel."
 		icon_state = "bp_research"
 		item_state = "bp_research"
+		wear_state = "bp_research"
 
 	research_satchel
 		name = "research satchel"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects efficiently on the shoulder of research personnel."
 		icon_state = "satchel_research"
 		item_state = "satchel_research"
+		wear_state = "satchel_research"
 
 	security
 		name = "security backpack"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects adequately on the back of security personnel."
 		icon_state = "bp_security"
 		item_state = "bp_security"
+		wear_state = "bp_security"
 
 	security_satchel
 		name = "security satchel"
 		desc = "A sturdy, wearable container made of synthetic fibers, able to carry a number of objects stylishly on the shoulder of security personnel."
 		icon_state = "satchel_security"
 		item_state = "satchel_security"
+		wear_state = "satchel_security"
 
 	robotics
 		name = "robotics backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the back of roboticists."
 		icon_state = "bp_robotics"
 		item_state = "bp_robotics"
+		wear_state = "bp_robotics"
 
 	robotics_satchel
 		name = "robotics satchel"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists."
 		icon_state = "satchel_robotics"
 		item_state = "satchel_robotics"
+		wear_state = "satchel_robotics"
 
 	genetics
 		name = "genetics backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the back of geneticists."
 		icon_state = "bp_genetics"
 		item_state = "bp_genetics"
+		wear_state = "bp_genetics"
 
 	genetics_satchel
 		name = "genetics satchel"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects safely on the shoulder of geneticists."
 		icon_state = "satchel_genetics"
 		item_state = "satchel_genetics"
+		wear_state = "satchel_genetics"
 
 	medic
 		name = "medic's backpack"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's back."
 		icon_state = "bp_medic"
 		item_state = "bp-medic"
+		wear_state = "bp_medic"
 
 	medic_satchel
 		name = "medic's satchel"
 		desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects comfortably on a Medical Doctor's shoulder."
 		icon_state = "satchel_medic"
 		item_state = "satchel_medic"
+		wear_state = "satchel_medic"
 
 	captain
 		name = "Captain's Backpack"
 		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capbackpack"
 		item_state = "capbackpack"
+		wear_state = "capbackpack"
 
 	captain_satchel
 		name = "Captain's Satchel"
 		desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
 		icon_state = "capsatchel"
 		item_state = "capsatchel"
+		wear_state = "capsatchel"
 
 /obj/item/remote/chameleon
 	name = "chameleon outfit remote"

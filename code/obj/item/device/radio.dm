@@ -766,6 +766,7 @@ TYPEINFO(/obj/item/radiojammer)
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBACK
 	item_state = "electropack"
+	wear_state = "electropack0"
 	desc = "A device that, when signaled on the correct frequency, causes a disabling electric shock to be sent to the animal (or human) wearing it."
 	cant_self_remove = 1
 
@@ -816,6 +817,7 @@ TYPEINFO(/obj/item/radiojammer)
 				if (href_list["power"])
 					src.on = !( src.on )
 					src.icon_state = text("electropack[]", src.on)
+					src.wear_state = src.icon_state
 		if (!( src.master ))
 			if (ismob(src.loc))
 				attack_self(src.loc)

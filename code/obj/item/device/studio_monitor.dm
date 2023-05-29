@@ -6,6 +6,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
 	icon = 'icons/obj/loudspeakers.dmi'
 	icon_state = "amp_stack"
+	wear_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
 	anchored = UNANCHORED
@@ -56,6 +57,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 
 	proc/play_song(notes=TRUE)
 		icon_state = "amp_stack_actv"
+		wear_state = "amp_stack_actv"
 		if(notes)
 			effect.play_notes()
 		if(ismob(src.loc))
@@ -64,6 +66,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 
 	proc/stop_song()
 		icon_state = "amp_stack"
+		wear_state = "amp_stack"
 		effect.stop_notes()
 		if(ismob(src.loc))
 			var/mob/M = src.loc

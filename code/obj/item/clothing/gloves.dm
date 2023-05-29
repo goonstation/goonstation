@@ -131,6 +131,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				C.use(1000)
 				src.icon_state = "stun"
 				src.item_state = "stun"
+				src.wear_state = "stun"
 				src.overridespecial = 1
 				C.UpdateIcon()
 				user.update_clothing() // Required to update the worn sprite (Convair880).
@@ -205,6 +206,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "cleaning gloves"
 	icon_state = "long_gloves"
 	item_state = "long_gloves"
+	wear_state = "long_gloves"
 	protective_temperature = 550
 	material_prints = "synthetic silicone rubber fibers"
 	setupProperties()
@@ -218,6 +220,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "fingerless gloves"
 	icon_state = "fgloves"
 	item_state = "finger-"
+	wear_state = "finger-"
 	hide_prints = 0
 
 	setupProperties()
@@ -229,6 +232,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "black gloves"
 	icon_state = "black"
 	item_state = "bgloves"
+	wear_state = "bgloves"
 	protective_temperature = 1500
 	material_prints = "black leather fibers"
 
@@ -262,6 +266,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "cyborg gloves"
 	icon_state = "black"
 	item_state = "r_hands"
+	wear_state = "r_hands"
 	setupProperties()
 		..()
 		setProperty("conductivity", 1)
@@ -270,6 +275,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "latex gloves"
 	icon_state = "latex"
 	item_state = "lgloves"
+	wear_state = "lgloves"
 	desc = "Thin, disposable medical gloves used to help prevent the spread of germs."
 	protective_temperature = 310
 	scramble_prints = 1
@@ -297,6 +303,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "gloves"
 	icon_state = "latex"
 	item_state = "lgloves"
+	wear_state = "lgloves"
 	desc = "Custom made gloves."
 	scramble_prints = 1
 
@@ -323,6 +330,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	armored
 		icon_state = "black"
 		item_state = "swat_gl"
+		wear_state = "swat_gl"
 
 		onMaterialChanged()
 			..()
@@ -348,6 +356,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "\improper SWAT gloves"
 	icon_state = "swat_syndie"
 	item_state = "swat_syndie"
+	wear_state = "swat_syndie"
 	protective_temperature = 1100
 	material_prints = "high-quality synthetic fibers"
 
@@ -370,6 +379,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
 	icon_state = "combatgauntlets"
 	item_state = "swat_syndie"
+	wear_state = "swat_syndie"
 
 	setupProperties()
 		..()
@@ -379,12 +389,14 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
+	wear_state = "swat_NT"
 
 /obj/item/clothing/gloves/stungloves/
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"
 	item_state = "stun"
+	wear_state = "stun"
 	material_prints = "insulative fibers, electrically charged"
 	stunready = 1
 	can_be_charged = 1
@@ -403,6 +415,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "insulated gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
+	wear_state = "ygloves"
 	material_prints = "insulative fibers"
 	can_be_charged = 1
 	max_uses = 4
@@ -432,6 +445,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Big soft gloves used in competitive boxing."
 	icon_state = "boxinggloves"
 	item_state = "bogloves"
+	wear_state = "bogloves"
 	material_prints = "red leather fibers"
 	crit_override = 1
 	bonus_crit_chance = 0
@@ -487,6 +501,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "transparent gloves"
 	icon_state = "transparent"
 	item_state = "transparent"
+	wear_state = "transparent"
 	material_prints = "transparent high-quality synthetic fibers"
 	var/deployed = FALSE
 
@@ -546,6 +561,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			desc = initial(desc)
 			icon_state = initial(icon_state)
 			item_state = initial(item_state)
+			wear_state = initial(wear_state)
 
 			nodescripition = initial(nodescripition)
 
@@ -567,6 +583,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			desc = "These transparent gloves have blades protruding from them."
 			icon_state = "bladed"
 			item_state = "gloves_bladed"
+			wear_state = "gloves_bladed"
 
 			nodescripition = FALSE
 
@@ -577,6 +594,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	name = "power gloves"
 	icon_state = "yellow"
 	item_state = "ygloves"
+	wear_state = "ygloves"
 	material_prints = "insulative fibers and nanomachines"
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
@@ -687,6 +705,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 				if (src.uses < 1)
 					src.icon_state = "yellow"
 					src.item_state = "ygloves"
+					src.wear_state = "ygloves"
 					user.update_clothing() // Was missing (Convair880).
 					user.show_text("The gloves are no longer electrically charged.", "red")
 					src.overridespecial = 0
@@ -721,6 +740,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			use_power(1000)
 			src.icon_state = "stun"
 			src.item_state = "stun"
+			src.wear_state = "stun"
 			src.overridespecial = 1
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] [src].</span>", "<span class='notice'>\The [src] now hold [src.uses]/[src.max_uses] charges!</span>")
@@ -732,6 +752,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Inflatable armbands that don't help you keep afloat at all! At least they look fun."
 	icon_state = "water_wings"
 	item_state = "water_wings"
+	wear_state = "water_wings"
 	hide_prints = 0
 
 	setupProperties()
@@ -745,6 +766,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A strange gauntlet made of cogs and brass machinery. It has seven slots along the side."
 	icon_state = "brassgauntlet"
 	item_state = "brassgauntlet"
+	wear_state = "brassgauntlet"
 	punch_damage_modifier = 3
 	burn_possible = 0
 	cant_self_remove = 1
@@ -816,6 +838,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "Glimmer glimmer!"
 	icon_state = "princess"
 	item_state = "princess"
+	wear_state = "princess"
 	material_prints = "silk fibres and glitter"
 
 	setupProperties()

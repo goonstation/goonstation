@@ -27,6 +27,7 @@
 	name = "glasses"
 	icon_state = "crafted"
 	item_state = "crafted"
+	wear_state = "crafted"
 	desc = "A simple pair of glasses."
 
 	onMaterialChanged()
@@ -43,6 +44,7 @@
 	name = "blindfold"
 	icon_state = "blindfold"
 	item_state = "blindfold"
+	wear_state = "blindfold"
 	desc = "A strip of cloth painstakingly designed to wear around your eyes so you cannot see."
 	block_vision = 1
 
@@ -71,6 +73,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	icon_state = "meson"
 	var/base_state = "meson"
 	item_state = "glasses"
+	wear_state = "meson"
 	desc = "Goggles that allow you to see the structure of the station through walls."
 	color_r = 0.92
 	color_g = 1
@@ -125,6 +128,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	name = "prescription glasses"
 	icon_state = "glasses"
 	item_state = "glasses"
+	wear_state = "glasses"
 	desc = "Corrective lenses, perfect for the near-sighted."
 	correct_bad_vision = 1
 
@@ -132,6 +136,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	name = "peculiar spectacles"
 	desc = "Admittedly, they are rather strange."
 	icon_state = "ectoglasses"
+	wear_state = "ectoglasses"
 	color_r = 0.89
 	color_g = 1
 	color_b = 0.85
@@ -152,12 +157,14 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	name = "ectoplasmoleic imager"
 	desc = "A pair of goggles with a dumb name."
 	icon_state = "ectogoggles"
+	wear_state = "ectogoggles"
 
 /obj/item/clothing/glasses/sunglasses
 	name = "sunglasses"
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. Enhanced shielding blocks many flashes."
 	icon_state = "sun"
 	item_state = "sunglasses"
+	wear_state = "sun"
 	protective_temperature = 1300
 	var/already_worn = 0
 	color_r = 0.9 // darken a little
@@ -194,6 +201,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	name = "\improper Security HUD"
 	desc = "Sunglasses with a high tech sheen."
 	icon_state = "sec"
+	wear_state = "sec"
 	color_r = 0.95 // darken a little, kinda red
 	color_g = 0.9
 	color_b = 0.9
@@ -224,6 +232,7 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	desc = "Perfect for hiding your identity while fighting crime."
 	icon_state = "superhero"
 	item_state = "superhero"
+	wear_state = "superhero"
 	color_r = 1
 	color_g = 1
 	color_b = 1
@@ -236,6 +245,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	name = "optical thermal scanner"
 	icon_state = "thermal"
 	item_state = "glasses"
+	wear_state = "thermal"
 	desc = "High-tech glasses that can see through cloaking technology. Also helps you see further in the dark."
 	color_r = 1
 	color_g = 0.8 // red tint
@@ -290,6 +300,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	name = "orange-tinted glasses"
 	desc = "A pair of glasses with an orange tint to them."
 	icon_state = "oglasses"
+	wear_state = "oglasses"
 	color_r = 1
 	color_g = 0.9 // orange tint?
 	color_b = 0.8
@@ -301,6 +312,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "\improper VISOR goggles"
 	icon_state = "visor"
 	item_state = "glasses"
+	wear_state = "visor"
 	desc = "VIS-tech Optical Rejuvinator goggles allow the blind to see while worn."
 	allow_blind_sight = 1
 	color_r = 0.92
@@ -330,6 +342,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	name = "medical eyepatch"
 	desc = "Only the coolest eye-wear around."
 	icon_state = "eyepatch-R"
+	wear_state = "eyepatch-R"
 	uses_multiple_icon_states = 1
 	item_state = "headset"
 	block_eye = "R"
@@ -376,6 +389,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 		else
 			src.block_eye = "R"
 		src.icon_state = "eyepatch-[src.block_eye]"
+		src.wear_state = "eyepatch-[src.block_eye]"
 		boutput(user, "You flip [src] around.")
 		if (pinhole)
 			block_eye = null
@@ -393,12 +407,14 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 			else
 				eye_covered = "R"
 			src.icon_state = "eyepatch-[eye_covered]"
+			src.wear_state = "eyepatch-[eye_covered]"
 
 /obj/item/clothing/glasses/vr
 	name = "\improper VR goggles"
 	desc = "A pair of VR goggles running a personal simulation."
 	icon_state = "vr"
 	item_state = "sunglasses"
+	wear_state = "vr"
 	var/network = LANDMARK_VR_DET_NET
 
 	setupProperties()
@@ -433,6 +449,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	desc = "A pair of VR goggles connected to a remote scuttlebot. Use them on the scuttlebot to turn it back into a hat."
 	icon_state = "vr"
 	item_state = "sunglasses"
+	wear_state = "vr"
 	var/mob/living/critter/robotic/scuttlebot/connected_scuttlebot = null
 
 	equipped(var/mob/user, var/slot) //On equip, if there's a scuttlebot, control it
@@ -486,6 +503,7 @@ TYPEINFO(/obj/item/clothing/glasses/visor)
 	desc = "A pair of VR goggles running a personal simulation.  You should know this, being IN the simulation and all."
 	icon_state = "vr"
 	item_state = "sunglasses"
+	wear_state = "vr"
 
 	unequipped(var/mob/user)
 		..()
@@ -507,6 +525,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 	name = "\improper ProDoc Healthgoggles"
 	desc = "Fitted with an advanced miniature sensor array that allows the user to quickly determine the physical condition of others."
 	icon_state = "prodocs"
+	wear_state = "prodocs"
 	uses_multiple_icon_states = 1
 	var/scan_upgrade = 0
 	var/health_scan = 0
@@ -543,6 +562,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 				if (istype(human_user) && human_user.glasses == src)
 					APPLY_ATOM_PROPERTY(user,PROP_MOB_EXAMINE_HEALTH,src)
 				src.icon_state = "prodocs-upgraded"
+				src.wear_state = "prodocs-upgraded"
 				boutput(user, "<span class='notice'>Health scan upgrade installed.</span>")
 				playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 				user.u_equip(W)
@@ -562,6 +582,7 @@ TYPEINFO(/obj/item/clothing/glasses/healthgoggles)
 
 /obj/item/clothing/glasses/healthgoggles/upgraded
 	icon_state = "prodocs-upgraded"
+	wear_state = "prodocs-upgraded"
 	scan_upgrade = 1
 	health_scan = 1
 
@@ -573,6 +594,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "spectroscopic scanner goggles"
 	icon_state = "spectro"
 	item_state = "glasses"
+	wear_state = "spectro"
 	desc = "Goggles with an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	color_r = 1 // pink tint?
 	color_g = 0.8
@@ -594,6 +616,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "spectroscopic monocle"
 	icon_state = "spectro_monocle"
 	item_state = "spectro_monocle"
+	wear_state = "spectro_monocle"
 	desc = "Such a dapper eyepiece! And a practical one at that."
 
 // testing thing for static overlays
@@ -601,6 +624,7 @@ TYPEINFO(/obj/item/clothing/glasses/spectro)
 	name = "goggles"
 	desc = "wha"
 	icon_state = "machoglasses"
+	wear_state = "machoglasses"
 	color = "#FF00FF"
 	var/active = FALSE
 
@@ -623,6 +647,7 @@ TYPEINFO(/obj/item/clothing/glasses/noir)
 	name = "Noir-Tech Glasses"
 	desc = "A pair of glasses that simulate what the world looked like before the invention of color."
 	icon_state = "noir"
+	wear_state = "noir"
 	equipped(var/mob/user, var/slot)
 		..()
 		var/mob/living/carbon/human/H = user
@@ -649,6 +674,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	name = "night vision goggles"
 	icon_state = "nightvision"
 	item_state = "glasses"
+	wear_state = "nightvision"
 	desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	color_r = 0.5
 	color_g = 1
@@ -677,6 +703,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	sechud
 		name = "night vision sechud goggles"
 		icon_state = "nightvisionsechud"
+		wear_state = "nightvisionsechud"
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
 		color_r = 1
 		color_g = 0.5
@@ -706,6 +733,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	desc = "These let you see wireless packets like some sort of a hackerman."
 	item_state = "glasses"
 	icon_state = "glasses"
+	wear_state = "glasses"
 	color = "#a0ffa0"
 	color_r = 0.9
 	color_g = 1

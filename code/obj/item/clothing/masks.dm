@@ -102,6 +102,7 @@
 	name = "gas mask"
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_mask"
+	wear_state = "gas_mask"
 	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
 	see_face = 0
@@ -122,6 +123,7 @@
 	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen security personnel from environmental threats."
 	icon_state = "gas_mask_NT"
 	item_state = "gas_mask_NT"
+	wear_state = "gas_mask_NT"
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
 	color_g = 0.8
 	color_b = 1
@@ -135,6 +137,7 @@
 	desc = "A close-fitting gas mask with a custom particle filter."
 	icon_state = "respirator-gas"
 	item_state = "respirator-gas"
+	wear_state = "respirator-gas"
 	color_r = 0.85 // glass visor gives more visibility
 	color_g = 0.85
 	color_b = 0.95
@@ -147,6 +150,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Nobody will know who you are if you put this on. Nobody."
 	icon_state = "moustache"
 	item_state = "moustache"
+	wear_state = "moustache"
 	see_face = 0
 	w_class = W_CLASS_TINY
 	c_flags = null
@@ -162,6 +166,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Almost as good as a REAL fake moustache."
 	icon_state = "moustache"
 	item_state = "moustache"
+	wear_state = "moustache"
 	see_face = 1
 
 /obj/item/clothing/mask/moustache/Italian
@@ -169,6 +174,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
 	item_state = "moustache-i"
+	wear_state = "moustache-i"
 	see_face = 1
 
 
@@ -176,6 +182,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	name = "emergency gas mask"
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
+	wear_state = "gas_alt"
 
 	unremovable
 		name = "slasher's gas mask"
@@ -184,6 +191,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		cant_other_remove = 1
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
+		wear_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
 		see_face = 1
 		setupProperties()
@@ -206,6 +214,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
+		wear_state = "slasher_mask"
 		see_face = 1
 		setupProperties()
 			..()
@@ -216,6 +225,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swat"
 	item_state = "swat"
+	wear_state = "swat"
 	color_r = 1
 	color_g = 0.8
 	color_b = 0.8
@@ -225,6 +235,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		desc = "A tight-fitting mask designed to protect syndicate operatives from all manner of toxic inhalants. Worn with a buckle around the back of the head."
 		icon_state = "gas_mask_syndicate"
 		item_state = "gas_mask_syndicate"
+		wear_state = "gas_mask_syndicate"
 		color_r = 0.8 //this one's also green
 		color_g = 1
 		color_b = 0.8
@@ -243,6 +254,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "A close-fitting tactical mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "swatNT"
 	item_state = "swatNT"
+	wear_state = "swatNT"
 	color_r = 0.8
 	color_g = 0.8
 	color_b = 1
@@ -255,6 +267,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/voice)
 	desc = "A close-fitting mask that can filter some environmental toxins or be connected to an air supply."
 	icon_state = "gas_alt"
 	item_state = "gas_alt"
+	wear_state = "gas_alt"
 	//vchange = 1
 	is_syndicate = 1
 
@@ -269,6 +282,7 @@ TYPEINFO(/obj/item/voice_changer)
 	name = "voice changer"
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
+	wear_state = "blank"
 	is_syndicate = 1
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
@@ -291,6 +305,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "breath mask"
 	icon_state = "breath"
 	item_state = "breath"
+	wear_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
 
@@ -333,6 +348,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "Death Commando mask"
 	icon_state = "death_commando_mask"
 	item_state = "death_commando_mask"
+	wear_state = "death_commando_mask"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
@@ -343,6 +359,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
+	wear_state = "clown"
 	see_face = 0
 
 	var/spam_flag = 0
@@ -370,6 +387,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.name = "wigless clown mask"
 			src.desc = bald_desc_state
 			src.icon_state = "[src.icon_state]_bald"
+			src.wear_state = "[src.wear_state]_bald"
 			src.item_state = "clown_bald"
 			user.show_text("You tuck back the wig on the [src].")
 		else
@@ -377,6 +395,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.name = initial(src.name)
 			src.desc = initial(src.desc)
 			src.icon_state = initial(src.icon_state)
+			src.wear_state = initial(src.wear_state)
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
@@ -384,6 +403,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."
 	icon_state = "clown"
+	wear_state = "clown"
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
@@ -455,6 +475,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "medical mask"
 	desc = "This mask does not work very well in low pressure environments."
 	icon_state = "medical"
+	wear_state = "medical"
 	item_state = "medical"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
@@ -464,6 +485,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "muzzle"
 	icon_state = "muzzle"
 	item_state = "muzzle"
+	wear_state = "muzzle"
 	c_flags = COVERSMOUTH
 	w_class = W_CLASS_SMALL
 	desc = "You'd probably say something like 'Hello Clarice.' if you could talk while wearing this."
@@ -474,6 +496,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Helps protect from viruses and bacteria."
 	icon_state = "sterile"
 	item_state = "s_mask"
+	wear_state = "sterile"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
 	path_prot = 0
@@ -488,6 +511,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "For those really, <i>really</i> messy surgeries."
 	icon_state = "surgicalshield"
 	item_state = "surgicalshield"
+	wear_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
 	var/bee = FALSE
@@ -534,6 +558,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	name = "unfinished paper mask"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "domino"
+	wear_state = "domino"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "domino"
 	desc = "A little mask, made of paper. It isn't gunna stay on anyone's face like this, though."
@@ -565,6 +590,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A little mask, made of paper."
 	icon_state = "domino"
 	item_state = "domino"
+	wear_state = "domino"
 	see_face = 0
 	burn_point = 220
 	burn_output = 900
@@ -582,6 +608,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
+	wear_state = "melons"
 	see_face = 0
 
 /obj/item/clothing/mask/wrestling
@@ -589,25 +616,30 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
+	wear_states = "silvermask"
 	see_face = 0
 
 	black
 		icon_state = "blackmask"
 		item_state = "blackmask"
+		wear_state = "blackmask"
 
 	green
 		icon_state = "greenmask"
 		item_state = "greenmask"
+		wear_state = "greenmask"
 
 	blue
 		icon_state = "bluemask"
 		item_state = "bluemask"
+		wear_state = "bluemask"
 
 /obj/item/clothing/mask/anime
 	name = "moeblob mask"
 	desc = "Looking at this thing gives you the heebie-jeebies. And a weird urge to go rob a bank, for some reason."
 	icon_state = "anime"
 	item_state = "anime"
+	wear_state = "anime"
 	see_face = 0
 
 /obj/item/clothing/mask/gas/plague
@@ -615,6 +647,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A beak-shaped mask filled with pleasant-smelling herbs to help protect you from miasma, the leading cause of the spread of disease*.<br><small><i>*This information may be slightly outdated, please use caution if using mask later than the 17th century.</i></small>"
 	icon_state = "plague"
 	item_state = "plague"
+	wear_state = "plague"
 	color_r = 0.95 // darken just a little
 	color_g = 0.95
 	color_b = 0.95
@@ -625,6 +658,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Just your ordinary chicken mask that induces no violent feelings towards anyone or anything."
 	icon_state = "chicken"
 	item_state = "chicken"
+	wear_state = "chicken"
 	see_face = 0
 
 /obj/item/clothing/mask/jester
@@ -632,6 +666,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "The mask of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
+	wear_state = "jester"
 	see_face = 0
 
 /obj/item/clothing/mask/hastur
@@ -639,6 +674,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "The mask of a cultist who has seen the yellow sign and answered its call.."
 	icon_state = "hasturmask"
 	item_state = "hasturmask"
+	wear_state = "hasturmask"
 	see_face = 0
 
 /obj/item/clothing/mask/kitsune
@@ -646,6 +682,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "The mask of a mythical fox creature from folklore."
 	icon_state = "kitsune"
 	item_state = "kitsune"
+	wear_state = "kitsune"
 	see_face = 0
 
 /obj/item/clothing/mask/blossommask
@@ -653,6 +690,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
+	wear_state = "cherryblossom"
 	see_face = 0
 	c_flags = null
 
@@ -661,6 +699,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "peacock"
 	item_state = "peacock"
+	wear_state = "peacock"
 	see_face = 0
 	c_flags = null
 
@@ -692,30 +731,35 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana/white
 	icon_state = "bandana_white"
 	item_state = "bandana_white"
+	wear_state = "bandana_white"
 	handkerchief = /obj/item/cloth/handkerchief/colored/white
 
 /obj/item/clothing/mask/bandana/yellow
 	name = "yellow bandana"
 	item_state = "bandana_yellow"
 	icon_state = "bandana_yellow"
+	wear_state = "bandana_yellow"
 	handkerchief = /obj/item/cloth/handkerchief/colored/yellow
 
 /obj/item/clothing/mask/bandana/red
 	name = "red bandana"
 	item_state = "bandana_red"
 	icon_state = "bandana_red"
+	wear_state = "bandana_red"
 	handkerchief = /obj/item/cloth/handkerchief/colored/red
 
 /obj/item/clothing/mask/bandana/purple
 	name = "purple bandana"
 	item_state = "bandana_purple"
 	icon_state = "bandana_purple"
+	wear_state = "bandana_purple"
 	handkerchief = /obj/item/cloth/handkerchief/colored/purple
 
 /obj/item/clothing/mask/bandana/pink
 	name = "pink bandana"
 	item_state = "bandana_pink"
 	icon_state = "bandana_pink"
+	wear_state = "bandana_pink"
 	desc = "The fashionable bandit's choice."
 	handkerchief = /obj/item/cloth/handkerchief/colored/pink
 
@@ -723,12 +767,14 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "orange bandana"
 	item_state = "bandana_orange"
 	icon_state = "bandana_orange"
+	wear_state = "bandana_orange"
 	handkerchief = /obj/item/cloth/handkerchief/colored/orange
 
 /obj/item/clothing/mask/bandana/nt
 	name = "nt bandana"
 	item_state = "bandana_nt"
 	icon_state = "bandana_nt"
+	wear_state = "bandana_nt"
 	desc = "The rebel outlaw's choice."
 	handkerchief = /obj/item/cloth/handkerchief/nt
 
@@ -736,12 +782,14 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	name = "green bandana"
 	item_state = "bandana_green"
 	icon_state = "bandana_green"
+	wear_state = "bandana_green"
 	handkerchief = /obj/item/cloth/handkerchief/colored/green
 
 /obj/item/clothing/mask/bandana/blue
 	name = "blue bandana"
 	item_state = "bandana_blue"
 	icon_state = "bandana_blue"
+	wear_state = "bandana_blue"
 	handkerchief = /obj/item/cloth/handkerchief/colored/blue
 
 /obj/item/clothing/mask/bandana/random

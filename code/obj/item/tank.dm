@@ -304,6 +304,7 @@ Contains:
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
+	wear_state = "anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
 	distribute_pressure = 81
 
@@ -336,11 +337,13 @@ TYPEINFO(/obj/item/tank/jetpack)
 	// jetpacks have special behavior on Manta, hence the overrides here
 	#if defined(MAP_OVERRIDE_MANTA)
 	icon_state = "jetpack_mag0"
+	wear_state = "jetpack_mag0"
 	item_state = "jetpack_mag"
 	c_flags = IS_JETPACK
 	var/base_icon_state = "jetpack_mag"
 	#else
 	icon_state = "jetpack0"
+	wear_state = "jetpack0"
 	item_state = "jetpack"
 	var/base_icon_state = "jetpack"
 	#endif
@@ -356,6 +359,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	proc/toggle()
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
+		src.wear_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		update_icon()
@@ -396,6 +400,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	icon_state = "jetpack_mk2_0"
 	base_icon_state = "jetpack_mk2_"
 	item_state = "jetpack_mk2_0"
+	wear_state = "jetpack_mk2_0"
 	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
 	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
 
@@ -408,6 +413,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 	icon_state = "sjetpack_mag0"
 	base_icon_state = "sjetpack_mag"
 	item_state = "redjetpack"
+	wear_state = "sjetpack_mag0"
 	extra_desc = "It's painted in a sinister yet refined shade of red."
 
 	New()
@@ -426,6 +432,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	icon_state = "microjetpack0"
 	item_state = "microjetpack"
 	base_icon_state = "microjetpack"
+	wear_state = "microjetpack0"
 	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
 	force = 6
 
@@ -439,6 +446,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/oxygen
 	name = "gas tank (oxygen)"
 	icon_state = "oxygen"
+	wear_state = "oxygen"
 	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
 	distribute_pressure = 17
 
@@ -452,6 +460,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/emergency_oxygen
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
+	wear_state = "pocket_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = null
 	health = 5
@@ -472,6 +481,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	name = "extended capacity pocket oxygen tank"
 	desc = "A an extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
+	wear_state = "ex_pocket_oxtank"
 
 	New()
 		..()
@@ -491,6 +501,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
+	wear_state = "mini_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
@@ -514,6 +525,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	name = "gas tank (air mix)"
 	icon_state = "airmix"
 	item_state = "airmix"
+	wear_state = "airmix"
 	extra_desc = "The white paintwork indicates a breathable air mix."
 	distribute_pressure = 81
 
@@ -530,6 +542,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
+	wear_state = "plasma"
 
 	New()
 		..()

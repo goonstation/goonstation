@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/injector_belt)
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
+	wear_state = "injector"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 
@@ -138,6 +139,7 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 	c_flags =  COVERSMOUTH | MASKINTERNALS
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
+	wear_state = "gas_injector"
 
 	var/can_trigger = 1
 	var/mob/owner = null

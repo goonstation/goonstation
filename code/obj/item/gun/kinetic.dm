@@ -1652,6 +1652,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
+	wear_state = "rpg7"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
@@ -1681,8 +1682,10 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		..()
 		if (src.ammo.amount_left < 1)
 			src.item_state = "rpg7_empty"
+			src.wear_state = "rpg7_empty"
 		else
 			src.item_state = "rpg7"
+			src.wear_state = "rpg7"
 		if (ishuman(src.loc))
 			var/mob/living/carbon/human/H = src.loc
 			H.update_inhands()
@@ -1705,6 +1708,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "mrls"
 	item_state = "mrls"
+	wear_state = "mrls"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
@@ -1746,6 +1750,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
+	wear_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK

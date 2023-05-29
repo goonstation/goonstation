@@ -15,6 +15,7 @@
 	desc = "Keeps you warm, makes it hard to hear."
 	icon_state = "earmuffs"
 	item_state = "earmuffs"
+	wear_state = "earmuffs"
 	protective_temperature = 500
 
 	setupProperties()
@@ -27,6 +28,7 @@
 	desc = "Protects you from sonic attacks."
 	icon_state = "earplugs"
 	item_state = "nothing"
+	wear_state = "earplugs"
 	protective_temperature = 0
 
 	setupProperties()
@@ -39,6 +41,7 @@
 	desc = "Keeps you warm without making it hard to hear."
 	icon_state = "yetiearmuffs"
 	item_state = "yetiearmuffs"
+	wear_state = "yetiearmuffs"
 	block_hearing_when_worn = HEARING_NORMAL
 
 	setupProperties()

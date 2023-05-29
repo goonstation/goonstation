@@ -5,6 +5,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 	icon = 'icons/obj/items/assemblies.dmi' //TODO: as of 02/02/2020 missing sprite for regular air tank
 	name = "tank transfer valve" // because that's what it is exadv1 and don't you dare change it
 	icon_state = "valve_1"
+	wear_state = "valve"
 	desc = "Regulates the transfer of air between two tanks."
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -232,6 +233,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			return
 
 		icon_state = "valve"
+		wear_state = "valve"
 		var/device_icon = ""
 
 		if(tank_one)

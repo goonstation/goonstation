@@ -8,6 +8,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "armor"
 	item_state = "armor"
+	wear_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
@@ -26,6 +27,7 @@
 	icon_state = "armorvest"
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
+	wear_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
@@ -62,10 +64,13 @@
 		user.show_text("You change the armor vest's style.")
 		if (src.icon_state == "armorvest")
 			src.icon_state = "armorvest-old"
+			src.wear_state = "armorvest-old"
 		else if (src.icon_state == "armorvest-old")
 			src.icon_state = "armorvest-light"
+			src.wear_state = "armorvest-light"
 		else
 			src.icon_state = "armorvest"
+			src.wear_state = "armorvest"
 
 /obj/item/clothing/suit/armor/vest/light
 	name = "light armor vest"
@@ -73,6 +78,7 @@
 	icon_state = "armorvest-old"
 	uses_multiple_icon_states = 0
 	item_state = "armorvest-old"
+	wear_state = "armorvest-old"
 
 	setupProperties()
 		..()
@@ -92,6 +98,7 @@
 	icon_state = "bombvest0"
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
+	wear_state = "bombvest0"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
@@ -132,6 +139,7 @@
 					src.grenade = CG
 					src.payload = CG.name
 					src.icon_state = "bombvest1"
+					src.wear_state = "bombvest1"
 					user.show_text("You attach [CG.name]'s detonator to [src].", "blue")
 			else
 				user.show_text("There's already a payload attached.", "red")
@@ -146,6 +154,7 @@
 					src.grenade_old = OG
 					src.payload = OG.name
 					src.icon_state = "bombvest1"
+					src.wear_state = "bombvest1"
 					user.show_text("You attach [OG.name]'s detonator to [src].", "blue")
 			else
 				user.show_text("There's already a payload attached.", "red")
@@ -160,6 +169,7 @@
 					src.pipebomb = PB
 					src.payload = PB.name
 					src.icon_state = "bombvest1"
+					src.wear_state = "bombvest1"
 					user.show_text("You attach [PB.name]'s detonator to [src].", "blue")
 			else
 				user.show_text("There's already a payload attached.", "red")
@@ -175,6 +185,7 @@
 				src.beaker = W
 				src.payload = "beaker" // Keep this "beaker" so the log_reagents() call can fire correctly.
 				src.icon_state = "bombvest1"
+				src.wear_state = "bombvest1"
 				user.show_text("You attach [W.name] to [src]'s igniter assembly.", "blue")
 			else
 				user.show_text("There's already a payload attached.", "red")
@@ -187,6 +198,7 @@
 				src.grenade = null
 				src.payload = ""
 				src.icon_state = "bombvest0"
+				src.wear_state = "bombvest0"
 
 			else if (src.grenade_old)
 				user.show_text("You detach [src.grenade_old].", "blue")
@@ -194,6 +206,7 @@
 				src.grenade_old = null
 				src.payload = ""
 				src.icon_state = "bombvest0"
+				src.wear_state = "bombvest0"
 
 			else if (src.pipebomb)
 				user.show_text("You detach [src.pipebomb].", "blue")
@@ -201,6 +214,7 @@
 				src.pipebomb = null
 				src.payload = ""
 				src.icon_state = "bombvest0"
+				src.wear_state = "bombvest0"
 
 			else if (src.beaker)
 				user.show_text("You detach [src.beaker].", "blue")
@@ -208,6 +222,7 @@
 				src.beaker = null
 				src.payload = ""
 				src.icon_state = "bombvest0"
+				src.wear_state = "bombvest0"
 
 			else if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 				var/turf/T = get_turf(user)
@@ -249,18 +264,21 @@
 			src.grenade = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
+			src.wear_state = "bombvest0"
 
 		else if (src.grenade_old)
 			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
+			src.wear_state = "bombvest0"
 
 		else if (src.pipebomb)
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 			src.payload = ""
 			src.icon_state = "bombvest0"
+			src.wear_state = "bombvest0"
 
 		else if (src.beaker)
 			var/turf/T = get_turf(wearer)
@@ -275,6 +293,7 @@
 	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
 	icon_state = "makeshift"
 	item_state = "makeshift"
+	wear_state = "makeshift"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 
@@ -291,6 +310,7 @@
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	wear_state = "caparmor"
 
 	setupProperties()
 		..()
@@ -302,6 +322,7 @@
 	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+	wear_state = "capcoat"
 	hides_from_examine = 0
 
 	setupProperties()
@@ -316,6 +337,7 @@
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
+	wear_state = "hopcoat"
 	hides_from_examine = 0
 
 	setupProperties()
@@ -329,6 +351,7 @@
 	desc = "A suit of protective formal armor. It is made specifically for NanoTrasen commanders."
 	icon_state = "centcom"
 	item_state = "centcom"
+	wear_state = "centcom"
 	setupProperties()
 		..()
 		setProperty("meleeprot", 7)
@@ -337,12 +360,14 @@
 	red
 		icon_state = "centcom-red"
 		item_state = "centcom-red"
+		wear_state = "centcom-red"
 
 /obj/item/clothing/suit/armor/centcommcoat //coat version of the centcom armour
 	name = "administator's coat"
 	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
 	icon_state = "centcoat"
 	item_state = "centcoat"
+	wear_state = "centcoat"
 	hides_from_examine = 0
 	setupProperties()
 		..()
@@ -354,12 +379,14 @@
 	red //for the red reward
 		icon_state = "centcoat-red"
 		item_state = "centcoat-red"
+		wear_state = "centcoat-red"
 
 /obj/item/clothing/suit/armor/pirate_captain_coat
 	name = "pirate captain's coat"
 	desc = "A luxurious yet dread inducing red and gold greatcoat, worn by only the greatest of mass larcenists. Probably stolen."
 	icon_state = "pirate_captain"
 	item_state = "pirate_captain"
+	wear_state = "pirate_captain"
 	hides_from_examine = 0
 	setupProperties()
 		..()
@@ -373,6 +400,7 @@
 	desc = "A rugged, protective, and pragmatic brown greatcoat, popular among pirates."
 	icon_state = "pirate_first_mate"
 	item_state = "pirate_first_mate"
+	wear_state = "pirate_first_mate"
 	hides_from_examine = 0
 	setupProperties()
 		..()
@@ -386,6 +414,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
+	wear_state = "heavy"
 	hides_from_examine = C_UNIFORM
 	setupProperties()
 		..()
@@ -400,6 +429,7 @@
 	desc = "Armor used by NanoTrasen's top secret purge unit. You're not sure how you know this."
 	icon_state = "death"
 	item_state = "death"
+	wear_state = "death"
 	c_flags = SPACEWEAR
 
 /obj/item/clothing/suit/armor/tdome
@@ -407,6 +437,7 @@
 	desc = "A set of official Thunderdome armor. It bears no team insignia or colors."
 	icon_state = "td"
 	item_state = "td"
+	wear_state = "td"
 	body_parts_covered = TORSO|LEGS
 
 /obj/item/clothing/suit/armor/tdome/red
@@ -414,29 +445,34 @@
 	desc = "Official Thunderdome armor of the Red Skulls team."
 	icon_state = "tdred"
 	item_state = "tdred"
+	wear_state = "tdred"
 
 /obj/item/clothing/suit/armor/tdome/green
 	name = "green stars raiment"
 	desc = "Official Thunderdome armor of the Green Stars team."
 	icon_state = "tdgreen"
 	item_state = "tdgreen"
+	wear_state = "tdgreen"
 
 /obj/item/clothing/suit/armor/tdome/blue
 	name = "blue moons raiment"
 	desc = "Official Thunderdome armor of the Blue Moons team."
 	icon_state = "tdblue"
 	item_state = "tdblue"
+	wear_state = "tdblue"
 
 /obj/item/clothing/suit/armor/tdome/yellow
 	name = "yellow thunder raiment"
 	desc = "Official Thunderdome armor of the Yellow Thunder team."
 	icon_state = "tdyellow"
 	item_state = "tdyellow"
+	wear_state = "tdyellow"
 
 /obj/item/clothing/suit/armor/turd
 	name = "T.U.R.D.S. Tactical Gear"
 	icon_state = "turd"
 	item_state = "turd"
+	wear_state = "turd"
 
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
@@ -444,6 +480,7 @@
 	icon_state = "ntarmor_o"
 	item_state = "ntarmor"
 	coat_style = "ntarmor"
+	wear_state = "ntarmor_o"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 
@@ -456,6 +493,7 @@
 	desc = "A grungy surplus armored vest. Smelly and not very clean."
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
+	wear_state = "nt2armor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 	setupProperties()
@@ -468,6 +506,7 @@
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
+	wear_state = "eod"
 	w_class = W_CLASS_NORMAL
 	hides_from_examine = C_UNIFORM|C_GLOVES
 	setupProperties()
@@ -483,6 +522,7 @@
 	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
+	wear_state = "hos-cape"
 	hides_from_examine = 0
 	wear_layer = MOB_GLASSES_LAYER2
 	c_flags = ONBACK

@@ -67,6 +67,7 @@
 	name = "rocket shoes"
 	desc = "A gas tank taped to some shoes. Brilliant. They also look kind of silly."
 	icon_state = "rocketshoes"
+	wear_state = "rocketshoes"
 	protective_temperature = 0
 	var/uses = 6
 	var/emagged = 0
@@ -106,6 +107,7 @@
 /obj/item/clothing/shoes/sonic
 	name = "Sahnic the Bushpig's Shoes"
 	icon_state = "red"
+	wear_state = "red"
 	desc = "Have got to go swiftly."
 	var/soniclevel = 9.999
 	var/soniclength = 50
@@ -121,6 +123,7 @@
 /obj/item/clothing/shoes/black
 	name = "black shoes"
 	icon_state = "black"
+	wear_state = "black"
 	desc = "These shoes somewhat protect you from fire."
 	protective_temperature = 1500
 
@@ -131,19 +134,23 @@
 /obj/item/clothing/shoes/brown
 	name = "brown shoes"
 	icon_state = "brown"
+	wear_state = "brown"
 	desc = "Brown shoes, camouflage on this kind of station."
 
 /obj/item/clothing/shoes/red
 	name = "red shoes"
 	icon_state = "red"
+	wear_state = "red"
 
 /obj/item/clothing/shoes/blue
 	name = "blue shoes"
 	icon_state = "blu"
+	wear_state = "blu"
 
 /obj/item/clothing/shoes/orange
 	name = "orange shoes"
 	icon_state = "orange"
+	wear_state = "orange"
 	uses_multiple_icon_states = 1
 	desc = "Shoes, now in prisoner orange! Can be made into shackles."
 
@@ -154,6 +161,7 @@
 			new /obj/item/handcuffs(get_turf(user))
 			src.name = "orange shoes"
 			src.icon_state = "orange"
+			src.wear_state = "orange"
 			src.desc = "Shoes, now in prisoner orange! Can be made into shackles."
 
 	attackby(H as obj, loc)
@@ -164,11 +172,13 @@
 			src.name = "shackles"
 			src.desc = "Used to restrain prisoners."
 			src.icon_state = "orange1"
+			src.wear_state = "orange1"
 		..()
 
 /obj/item/clothing/shoes/pink
 	name = "pink shoes"
 	icon_state = "pink"
+	wear_state = "pink"
 
 TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	mats = 8
@@ -177,6 +187,7 @@ TYPEINFO(/obj/item/clothing/shoes/magnetic)
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
+	wear_state = "magboots"
 	// c_flags = NOSLIP
 	burn_possible = 0
 	laces = LACES_NONE
@@ -205,6 +216,7 @@ TYPEINFO(/obj/item/clothing/shoes/hermes)
 	name = "sacred sandals" // The ultimate goal of material scientists.
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
+	wear_state = "wizard"
 	c_flags = NOSLIP
 	magical = 1
 	burn_possible = 0
@@ -224,9 +236,11 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 #ifdef UNDERWATER_MAP
 	name = "mechanised diving boots"
 	icon_state = "divindboots"
+	wear_state = "divindboots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #else
 	icon_state = "indboots"
+	wear_state = "indboots"
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
@@ -246,6 +260,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "white shoes"
 	desc = "Protects you against biohazards that would enter your feet."
 	icon_state = "white"
+	wear_state = "white"
 
 	setupProperties()
 		..()
@@ -255,6 +270,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "galoshes"
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
+	wear_state = "galoshes"
 	c_flags = NOSLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
@@ -275,6 +291,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "clown shoes"
 	desc = "Damn, thems some big shoes."
 	icon_state = "clown"
+	wear_state = "clown"
 	item_state = "clown_shoes"
 	step_sound = "clownstep"
 	compatible_species = list("human", "cow")
@@ -328,6 +345,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "flippers"
 	desc = "A pair of rubber flippers that improves swimming ability when worn."
 	icon_state = "flippers"
+	wear_state = "flippers"
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -344,6 +362,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "moon shoes"
 	desc = "Recent developments in trampoline-miniaturization technology have made these little wonders possible."
 	icon_state = "moonshoes"
+	wear_state = "moonshoes"
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -359,12 +378,14 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/cowboy
 	name = "Cowboy boots"
 	icon_state = "cowboy"
+	wear_state = "cowboy"
 	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/cowboy/boom
 	name = "Boom Boots"
 	desc = "Boom shake shake shake the room. Tick tick tick tick boom!"
 	icon_state = "cowboy"
+	wear_state = "cowboy"
 	color = "#FF0000"
 	step_sound = "explosion"
 	contraband = 10
@@ -375,11 +396,13 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "familiar boots"
 	desc = "A pair of striking red boots. Though they look clean, the soles are absolutely coated in a really fine, white powder."
 	icon_state = "ziggy"
+	wear_state = "ziggy"
 
 /obj/item/clothing/shoes/sandal
 	name = "sandals"
 	desc = "Standard beach footwear, just in case you happen to find a space beach."
 	icon_state = "wizard"
+	wear_state = "wizard"
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -402,6 +425,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "flip-flops"
 	desc = "These cheap sandals don't look very comfortable."
 	icon_state = "tourist"
+	wear_state = "tourist"
 	protective_temperature = 0
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
@@ -416,11 +440,13 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "worn boots"
 	desc = "This pair of leather boots has seen better days."
 	icon_state = "detective"
+	wear_state = "detective"
 
 /obj/item/clothing/shoes/chef
 	name = "chef's clogs"
 	desc = "Sturdy shoes that minimize injury from falling objects or knives."
 	icon_state = "chef"
+	wear_state = "chef"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -433,6 +459,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "military boots"
 	desc = "Polished and very shiny military boots."
 	icon_state = "swat"
+	wear_state = "swat"
 	protective_temperature = 1250
 	step_sound = "step_military"
 	step_priority = STEP_PRIORITY_LOW
@@ -450,6 +477,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "hi-grip assault boots"
 	desc = "Specialist combat boots designed to provide enhanced grip and ankle stability."
 	icon_state = "swatheavy"
+	wear_state = "swatheavy"
 	compatible_species = list("cow", "human")
 	c_flags = NOSLIP
 
@@ -457,6 +485,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "heavy military boots"
 	desc = "Fairly worn out military boots."
 	icon_state = "swatheavy"
+	wear_state = "swatheavy"
 	step_sound = "step_heavyboots"
 	step_priority = STEP_PRIORITY_LOW
 	tooltip_flags = REBUILD_DIST | REBUILD_USER
@@ -472,6 +501,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "combat sabatons"
 	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
 	icon_state = "knightboots"
+	wear_state = "knightboots"
 	magnetic = 1
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
@@ -480,6 +510,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."
 	icon_state = "fuzzy"
+	wear_state = "fuzzy"
 	step_sound = "step_carpet"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -491,6 +522,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "go-go boots"
 	desc = "These boots complete your Space Age look."
 	icon_state = "gogo"
+	wear_state = "gogo"
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
 
@@ -503,6 +535,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "jet boots"
 	desc = "Some kind of fancy boots with little propulsion rockets attached to them, that let you move through space with ease and grace! Okay, maybe not grace. That part depends on you. Also, they are a fashion disaster. On the plus side, you can more easily escape the fashion police while wearing them!"
 	icon_state = "rocketboots"
+	wear_state = "rocketboots"
 	laces = LACES_NONE
 	burn_possible = 0
 	step_sound = "step_plating"
@@ -596,6 +629,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "witchfinder general's boots"
 	desc = "You can almost hear the authority in each step."
 	icon_state = "witchfinder"
+	wear_state = "witchfinder"
 	kick_bonus = 1
 	step_sound = "step_wood"
 	step_priority = STEP_PRIORITY_LOW
@@ -604,16 +638,19 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "jester's shoes"
 	desc = "The shoes of a not-so-funny-clown."
 	icon_state = "jester"
+	wear_state = "jester"
 
 /obj/item/clothing/shoes/scream
 	name = "scream shoes"
 	icon_state = "pink"
+	wear_state = "pink"
 	step_sound = list('sound/voice/screams/male_scream.ogg', 'sound/voice/screams/mascream6.ogg', 'sound/voice/screams/mascream7.ogg')
 	desc = "AAAAAAAAAAAAAAAAAAAAAAA"
 
 /obj/item/clothing/shoes/fart
 	name = "fart-flops"
 	icon_state = "tourist"
+	wear_state = "tourist"
 	step_sound = list('sound/voice/farts/poo2.ogg', 'sound/voice/farts/fart4.ogg', 'sound/voice/farts/poo2_robot.ogg')
 	desc = "Do I really need to tell you what these do?"
 
@@ -621,6 +658,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	name = "shoes"
 	desc = "A custom pair of shoes"
 	icon_state = "white"
+	wear_state = "white"
 
 	onMaterialChanged()
 		..()
@@ -642,75 +680,89 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/bootsblk
 	name = "Black Boots"
 	icon_state = "bootsblk"
+	wear_state = "bootsblk"
 	desc = "Fashionable, synthleather black boots."
 
 /obj/item/clothing/shoes/bootswht
 	name = "White Boots"
 	icon_state = "bootswht"
+	wear_state = "bootswht"
 	desc = "Fashionable, synthleather white boots."
 
 /obj/item/clothing/shoes/bootsbrn
 	name = "Brown Boots"
 	icon_state = "bootsbrn"
+	wear_state = "bootsbrn"
 	desc = "Fashionable, synthleather brown boots."
 
 /obj/item/clothing/shoes/bootsblu
 	name = "Blue Boots"
 	icon_state = "bootsblu"
+	wear_state = "bootsblu"
 	desc = "Fashionable, synthleather blue boots."
 
 /obj/item/clothing/shoes/flatsblk
 	name = "Black Flats"
 	icon_state = "flatsblk"
+	wear_state = "flatsblk"
 	desc = "Simple black flats. Goes with anything!"
 
 /obj/item/clothing/shoes/flatswht
 	name = "White Flats"
 	icon_state = "flatswht"
+	wear_state = "flatswht"
 	desc = "Simple white flats. Minimal."
 
 /obj/item/clothing/shoes/flatsbrn
 	name = "Brown Flats"
 	icon_state = "flatsbrn"
+	wear_state = "flatsbrn"
 	desc = "Simple brown flats. Would look great with tweed."
 
 /obj/item/clothing/shoes/flatsblu
 	name = "Blue Flats"
 	icon_state = "flatsblu"
+	wear_state = "flatsblu"
 	desc = "Simple blue flats. Reminds you of the ocean."
 
 /obj/item/clothing/shoes/flatspnk
 	name = "Pink Flats"
 	icon_state = "flatspnk"
+	wear_state = "flatspnk"
 	desc = "Simple pink flats. So bright they almost glow! Almost."
 
 /obj/item/clothing/shoes/mjblack
 	name = "Black Mary Janes"
 	icon_state = "mjblack"
+	wear_state = "mjblack"
 	desc = "Dainty and formal. This pair is black."
 	step_sound = "footstep"
 
 /obj/item/clothing/shoes/mjbrown
 	name = "Brown Mary Janes"
 	icon_state = "mjbrown"
+	wear_state = "mjbrown"
 	desc = "Dainty and formal. This pair is brown."
 	step_sound = "footstep"
 
 /obj/item/clothing/shoes/mjnavy
 	name = "Navy Mary Janes"
 	icon_state = "mjnavy"
+	wear_state = "mjnavy"
 	desc = "Dainty and formal. This pair is navy."
 	step_sound = "footstep"
 
 /obj/item/clothing/shoes/mjwhite
 	name = "White Mary Janes"
 	icon_state = "mjwhite"
+	wear_state = "mjwhite"
 	desc = "Dainty and formal. This pair is white."
 	step_sound = "footstep"
 
 /obj/item/clothing/shoes/slasher_shoes
 	name = "Industrial Boots"
 	icon_state = "boots"
+	wear_state = "boots"
 	desc = "Bulky boots with thick soles, protecting your feet."
 	step_sound = "step_plating"
 
@@ -730,6 +782,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/witchboots
 	name = "Witch Boots"
 	icon_state = "witchboots"
+	wear_state = "witchboots"
 	desc = "The curved front of these boots is reminiscent of a crescent moon, how magical."
 	step_sound = "footstep"
 
@@ -738,20 +791,24 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 /obj/item/clothing/shoes/westboot
 	name = "Real Cowboy Boots"
 	icon_state = "westboot"
+	wear_state = "westboot"
 	desc = "Perfect for riding horses, if only you had one!"
 	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/westboot/black
 	name = "Black Cowboy Boots"
 	icon_state = "westboot_black"
+	wear_state = "westboot_black"
 
 /obj/item/clothing/shoes/westboot/dirty
 	name = "Dirty Cowboy Boots"
 	icon_state = "westboot_dirty"
+	wear_state = "westboot_dirty"
 
 /obj/item/clothing/shoes/westboot/brown
 	name = "Brown Cowboy Boots"
 	icon_state = "westboot_brown"
+	wear_state = "westboot_brown"
 
 /obj/item/clothing/shoes/westboot/brown/rancher
 	name = "Rancher Boots"

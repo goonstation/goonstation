@@ -1470,6 +1470,7 @@ TYPEINFO(/obj/item/swords/captain)
 	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
+	wear_state = "claymore"
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
@@ -1580,6 +1581,7 @@ obj/item/whetstone
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
+	wear_state = "hadar_sword2"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
@@ -1657,6 +1659,7 @@ obj/item/whetstone
 			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
+			wear_state = "hadar_sword1"
 			src.mode = STAB_MODE
 			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
@@ -1664,6 +1667,7 @@ obj/item/whetstone
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
+			wear_state = "hadar_sword2"
 			src.mode = SWIPE_MODE
 			hit_type = DAMAGE_CUT
 			src.setItemSpecial(/datum/item_special/swipe)

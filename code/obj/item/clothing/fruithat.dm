@@ -2,6 +2,7 @@
 	name = "fruit basket hat"
 	desc = "Where do these things even come from? It reeks of welch, and it's not the grapes."
 	icon_state = "fruithat"
+	wear_state = "fruithat"
 	var/bites = 8
 	var/list/youarebad = list("You're a liar.", "You're a cheat.","You're a fraud.") // h e h
 

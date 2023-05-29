@@ -31,66 +31,79 @@ proc/filter_trait_hats(var/type)
 	desc = "A knit cap in red."
 	icon_state = "red"
 	item_state = "rgloves"
+	wear_state = "red"
 
 /obj/item/clothing/head/blue
 	desc = "A knit cap in blue."
 	icon_state = "blue"
 	item_state = "bgloves"
+	wear_state = "blue"
 
 /obj/item/clothing/head/yellow
 	desc = "A knit cap in yellow."
 	icon_state = "yellow"
 	item_state = "ygloves"
+	wear_state = "yellow"
 
 /obj/item/clothing/head/pink
 	desc = "A knit cap in pink."
 	icon_state = "pink"
 	item_state = "pgloves"
+	wear_state = "pink"
 
 /obj/item/clothing/head/orange
 	desc = "A knit cap in orange."
 	icon_state = "orange"
 	item_state = "ogloves"
+	wear_state = "orange"
 
 /obj/item/clothing/head/purple
 	desc = "A knit cap in orange."
 	icon_state = "purple"
 	item_state = "jgloves"
+	wear_state = "purple"
 
 /obj/item/clothing/head/dolan
 	name = "Dolan's hat"
 	desc = "A plsing hat."
 	icon_state = "dolan"
 	item_state = "dolan"
+	wear_state = "dolan"
 
 /obj/item/clothing/head/green
 	desc = "A knit cap in green."
 	icon_state = "green"
 	item_state = "ggloves"
+	wear_state = "green"
 
 /obj/item/clothing/head/black
 	desc = "A knit cap in black."
 	icon_state = "black"
 	item_state = "swat_gl"
+	wear_state = "black"
 
 /obj/item/clothing/head/white
 	desc = "A knit cap in white."
 	icon_state = "white"
 	item_state = "lgloves"
+	wear_state = "white"
 
 /obj/item/clothing/head/psyche
 	desc = "A knit cap in...what the hell?"
 	icon_state = "psyche"
 	item_state = "bgloves"
+	wear_state = "psyche"
 
 /obj/item/clothing/head/serpico
 	icon_state = "serpico"
 	item_state = "serpico"
+	wear_state = "serpico"
 
 /obj/item/clothing/head/bio_hood
 	name = "bio hood"
 	icon_state = "bio"
 	item_state = "bio_hood"
+	wear_state = "bio"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
 
@@ -113,10 +126,12 @@ proc/filter_trait_hats(var/type)
 	desc = "This hood protects you from harmful biological contaminants. This one has a blue visor."
 	icon_state = "bio_jani"
 	item_state = "bio_jani"
+	wear_state = "bio_jani"
 
 /obj/item/clothing/head/bio_hood/nt
 	name = "NT bio hood"
 	icon_state = "ntbiohood"
+	wear_state = "ntbiohood"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
@@ -125,6 +140,7 @@ proc/filter_trait_hats(var/type)
 	name = "emergency hood"
 	icon_state = "emerg"
 	item_state = "emerg"
+	wear_state = "emerg"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -142,6 +158,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
+	wear_state = "radiation"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
@@ -161,6 +178,7 @@ proc/filter_trait_hats(var/type)
 	name = "cakehat"
 	desc = "It is a cakehat"
 	icon_state = "cakehat0"
+	wear_state = "cakehat0"
 	uses_multiple_icon_states = 1
 	var/status = 0
 	var/processing = 0
@@ -207,6 +225,7 @@ proc/filter_trait_hats(var/type)
 			src.force = 10
 			src.hit_type = DAMAGE_BURN
 			src.icon_state = "cakehat1"
+			src.wear_state = "cakehat1"
 			tooltip_rebuild = 1
 			light.enable()
 			c_flags |= SPACEWEAR
@@ -218,6 +237,7 @@ proc/filter_trait_hats(var/type)
 			tooltip_rebuild = 1
 			src.hit_type = DAMAGE_BLUNT
 			src.icon_state = "cakehat0"
+			src.wear_state = "cakehat0"
 			light.disable()
 
 		user.update_clothing()
@@ -249,6 +269,7 @@ proc/filter_trait_hats(var/type)
 	name = "Captain's hat"
 	icon_state = "captain"
 	item_state = "caphat"
+	wear_state = "captain"
 	desc = "A symbol of the captain's rank, and the source of all their power."
 	setupProperties()
 		..()
@@ -258,6 +279,7 @@ proc/filter_trait_hats(var/type)
 	name = "Captain of Captain's hat"
 	icon_state = "captainbig"
 	item_state = "caphat"
+	wear_state = "captainbig"
 	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
 	setupProperties()
 		..()
@@ -268,6 +290,7 @@ proc/filter_trait_hats(var/type)
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
 	item_state = "centcom"
+	wear_state = "centcom"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 4)
@@ -275,11 +298,13 @@ proc/filter_trait_hats(var/type)
 	red
 		icon_state = "centcom-red"
 		item_state = "centcom-red"
+		wear_state = "centcom-red"
 
 /obj/item/clothing/head/sea_captain
 	desc = "A dashing white sea captain's hat. Probably blown off of some poor sod's head in a storm."
 	icon_state = "sea_captain"
 	item_state = "sea_captain"
+	wear_state = "sea_captain"
 
 	comm_officer_hat //Need the same hat but with different description
 		desc = "Hat that is awarded to only the finest navy officers. And a few others."
@@ -289,6 +314,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Someone who wears this will look very smart."
 	icon_state = "detective"
 	item_state = "det_hat"
+	wear_state = "detective"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -298,6 +324,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Someone who wears this will look very mysterious."
 	icon_state = "inspector"
 	item_state = "ins_hat"
+	wear_state = "inspector"
 
 //A robot in disguise, ready to go and spy on everyone for you
 /obj/item/clothing/head/det_hat/folded_scuttlebot
@@ -458,24 +485,28 @@ proc/filter_trait_hats(var/type)
 	proc/make_inspector()
 		src.inspector = TRUE
 		src.icon_state = "inspector"
+		src.wear_state = "inspector"
 
 /obj/item/clothing/head/powdered_wig
 	name = "powdered wig"
 	desc = "A powdered wig"
 	icon_state = "pwig"
 	item_state = "pwig"
+	wear_state = "pwig"
 
 /obj/item/clothing/head/that
 	name = "hat"
 	desc = "An stylish looking hat"
 	icon_state = "tophat"
 	item_state = "that"
+	wear_state = "tophat"
 
 /obj/item/clothing/head/that/purple
 	name = "purple hat"
 	desc = "A purple tophat."
 	icon_state = "ptophat"
 	item_state = "pthat"
+	wear_state = "ptophat"
 	protective_temperature = 500
 
 	setupProperties()
@@ -488,6 +519,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A golden tophat."
 	icon_state = "gtophat"
 	item_state = "gthat"
+	wear_state = "gtophat"
 	protective_temperature = 500
 	mat_changename = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
@@ -506,12 +538,14 @@ proc/filter_trait_hats(var/type)
 	desc = "When you look at this hat you can only think of how many monkeys you could fit in it."
 	icon_state = "ltophat"
 	item_state = "lthat"
+	wear_state = "ltophat"
 
 /obj/item/clothing/head/chefhat
 	name = "Chef's hat"
 	desc = "Your toque blanche, coloured as such so that your poor sanitation is obvious, and the blood shows up nice and crazy."
 	icon_state = "chef"
 	item_state = "chefhat"
+	wear_state = "chef"
 
 /obj/item/clothing/head/chefhatpuffy
 	name = "Puffy Chef's Hat"
@@ -524,35 +558,41 @@ proc/filter_trait_hats(var/type)
 	name = "Sous-Chef's hat"
 	icon_state = "souschef"
 	item_state = "chefhat" //TODO: unique inhand sprite?
+	wear_state = "souschef"
 
 /obj/item/clothing/head/itamaehat
 	name = "Itamae hat"
 	desc = "A hat commonly worn by Japanese Chefs. Itamae translates literally to \"In front of the board\"."
 	icon_state = "itamae"
 	item_state = "itamae"
+	wear_state = "itamae"
 
 /obj/item/clothing/head/dramachefhat
 	name = "Dramatic Chef's Hat"
 	icon_state = "drama"
 	item_state = "chefhat" //TODO: unique inhand sprite?
+	wear_state = "drama"
 
 /obj/item/clothing/head/mailcap
 	name = "Mailman's hat"
 	desc = "The hat of a mailman."
 	icon_state = "mailcap"
 	item_state = "mailcap"
+	wear_state = "mailcap"
 
 /obj/item/clothing/head/chefhattall
     name = "Tall Chef's Hat"
     desc = "Your toque blanche, now at least 50% taller!"
     icon_state = "cheftall"
     item_state = "cheftall"
+	wear_state = "cheftall"
 
 /obj/item/clothing/head/policecap
 	name = "Police hat"
 	desc = "An old surplus-issue police hat."
 	icon_state = "mailcap"
 	item_state = "mailcap"
+	wear_state = "mailcap"
 
 /obj/item/clothing/head/plunger
 	name = "plunger"
@@ -560,6 +600,7 @@ proc/filter_trait_hats(var/type)
 	icon_state = "plunger"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "plunger"
+	wear_state = "plunger"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
@@ -581,6 +622,7 @@ proc/filter_trait_hats(var/type)
 	desc = "This makes you feel like Che Guevara."
 	icon_state = "hosberet"
 	item_state = "hosberet"
+	wear_state = "hosberet"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -590,12 +632,14 @@ proc/filter_trait_hats(var/type)
 	desc = "For the inner space dictator in you."
 	icon_state = "ntberet"
 	item_state = "ntberet"
+	wear_state = "ntberet"
 
 /obj/item/clothing/head/NTberet/commander
 	name = "Nanotrasen beret"
 	desc = "For the inner space commander in you."
 	icon_state = "ntberet_commander"
 	item_state = "ntberet_commander"
+	wear_state = "ntberet_commander"
 	team_num = TEAM_NANOTRASEN
 	#ifdef MAP_OVERRIDE_POD_WARS
 	attack_hand(mob/user)
@@ -621,24 +665,28 @@ proc/filter_trait_hats(var/type)
 	desc = "Some unfortunate soldier's charred scalp. The hair is intact."
 	icon_state = "xcomhair"
 	item_state = "xcomhair"
+	wear_state = "xcomhair"
 
 /obj/item/clothing/head/apprentice
 	name = "Apprentice's cap"
 	desc = "Legends tell about space sorcerors taking on apprentices. Such apprentices would wear a magical cap, and this is one such ite- hey! This is just a cardboard cone with wrapping paper on it!"
 	icon_state = "apprentice"
 	item_state = "apprentice"
+	wear_state = "apprentice"
 
 	dan
 		name = "Royal Apprentice's Cap"
 		desc = "Part of a collaboration between Dastardly Dan's and Zoldorf Co."
 		icon_state = "dan_apprentice"
 		item_state = "dan_apprentice"
+		wear_state = "dan_apprentice"
 
 /obj/item/clothing/head/snake
 	name = "dirty rag"
 	desc = "A rag that looks like it was dragged through the jungle. Yuck."
 	icon_state = "snake"
 	item_state = "snake"
+	wear_state = "snake"
 
 // Chaplain Hats
 
@@ -647,18 +695,21 @@ proc/filter_trait_hats(var/type)
 	desc = "Complete with peyois. Perfect for Purim!"
 	icon_state = "rabbihat"
 	item_state = "that"
+	wear_state = "rabbihat"
 
 /obj/item/clothing/head/nunhood
 	name = "nun hood"
 	desc = "A black hood with white adornment, typically worn by nuns. Wearing this does not give enhanced singing capabilities."
 	icon_state = "nun_hood"
 	item_state = "nun_hood"
+	wear_state = "nun_hood"
 
 /obj/item/clothing/head/formal_turban
 	name = "formal turban"
 	desc = "A very stylish formal turban."
 	icon_state = "formal_turban"
 	item_state = "egg5"
+	wear_state = "formal_turban"
 
 	setupProperties()
 		..()
@@ -670,6 +721,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A very comfortable cotton turban."
 	icon_state = "turban"
 	item_state = "that"
+	wear_state = "turban"
 
 	setupProperties()
 		..()
@@ -681,12 +733,14 @@ proc/filter_trait_hats(var/type)
 	desc = "Comes with pre-attached dreadlocks for that authentic look."
 	icon_state = "rastacap"
 	item_state = "that"
+	wear_state = "rastacap"
 
 /obj/item/clothing/head/fedora
 	name = "fedora"
 	desc = "Tip your fedora to the fair maiden and win her heart. A foolproof plan."
 	icon_state = "fdora"
 	item_state = "fdora"
+	wear_state = "fdora"
 
 	New()
 		..()
@@ -697,6 +751,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Yeehaw!"
 	icon_state = "cowboy"
 	item_state = "cowboy"
+	wear_state = "cowboy"
 
 /obj/item/clothing/head/longbee
 	name = "Longbee"
@@ -704,16 +759,19 @@ proc/filter_trait_hats(var/type)
 	hides_from_examine = C_EARS
 	icon_state = "longbee"
 	item_state = "longbee"
+	wear_state = "longbee"
 
 /obj/item/clothing/head/fancy // placeholder icons until someone sprites an actual fancy hat
 	name = "fancy hat"
 	icon_state = "rank-fancy"
 	item_state = "that"  // todo actual inhands for this and children ?
+	wear_state = "rank-fancy"
 	desc = "What do you mean this is hat isn't fancy?"
 
 /obj/item/clothing/head/fancy/captain
 	name = "Captain's hat"
 	icon_state = "captain-fancy"
+	wear_state = "captain-fancy"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -721,6 +779,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/fancy/rank
 	name = "Officer's hat"
 	icon_state = "rank-fancy"
+	wear_state = "rank-fancy"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -730,6 +789,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A slightly crumply and foldy blue hat. Every self-respecting Wizard has one of these."
 	icon_state = "wizard"
 	item_state = "wizard"
+	wear_state = "wizard"
 	magical = 1
 	item_function_flags = IMMUNE_TO_ACID
 	duration_remove = 10 SECONDS
@@ -744,18 +804,21 @@ proc/filter_trait_hats(var/type)
 	desc = "An elegant red hat with some nice gold trim on it."
 	icon_state = "wizardred"
 	item_state = "wizardred"
+	wear_state = "wizardred"
 
 /obj/item/clothing/head/wizard/purple
 	name = "purple wizard hat"
 	desc = "A very nice purple hat with a big, sassy buckle on it!"
 	icon_state = "wizardpurple"
 	item_state = "wizardpurple"
+	wear_state = "wizardpurple"
 
 /obj/item/clothing/head/wizard/green
 	name = "green wizard hood"
 	desc = "A green hood, full of magic, wonder, cromulence, and maybe a spider or two."
 	icon_state = "wizardgreen"
 	item_state = "wizardgreen"
+	wear_state = "wizardgreen"
 	seal_hair = 1
 
 /obj/item/clothing/head/wizard/witch
@@ -763,12 +826,14 @@ proc/filter_trait_hats(var/type)
 	desc = "Broomstick and cat not included."
 	icon_state = "witch"
 	item_state = "wizardnec"
+	wear_state = "witch"
 
 /obj/item/clothing/head/wizard/necro
 	name = "necromancer hood"
 	desc = "Good god, this thing STINKS. Is that mold on the inner lining? Ugh."
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
+	wear_state = "wizardnec"
 	see_face = 0
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -777,12 +842,14 @@ proc/filter_trait_hats(var/type)
 	name = "pink wizard hat"
 	desc = "A pink wizard hat. Must've been a reject from the assembly line."
 	icon_state = "wizardpink"
+	wear_state = "wizardpink"
 
 /obj/item/clothing/head/paper_hat
 	name = "paper hat"
 	desc = "It's a paper hat!"
 	icon_state = "paper"
 	item_state = "lgloves"
+	wear_state = "paper"
 	see_face = 1
 	body_parts_covered = HEAD
 
@@ -800,6 +867,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
 	icon_state = "towelhat"
 	item_state = "lgloves"
+	wear_state = "towelhat"
 	see_face = 1
 	body_parts_covered = HEAD
 
@@ -807,6 +875,7 @@ proc/filter_trait_hats(var/type)
 	name = "crown"
 	desc = "Yeah, big deal, you got a fancy crown, what does that do for you against the <b>HORRORS OF SPACE</b>, tough guy?"
 	icon_state = "crown"
+	wear_state = "crown"
 	see_face = 1
 	body_parts_covered = HEAD
 	setupProperties()
@@ -817,11 +886,13 @@ proc/filter_trait_hats(var/type)
 	desc = "Baby's first hat ALSO BY ME WRONGEND DON'T STEAL" // You are a fucking disgrace hat HOW DID YOU BREAK HELMET CODE AND MAKE THE RSC NOT WORK FUCK please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me please kill me
 	icon_state = "WRONGEND_HAT"
 	item_state = "WRONGEND_HAT"
+	wear_state = "WRONGEND_HAT"
 
 /obj/item/clothing/head/oddjob // by cyberTripping
 	name = "odd hat"
 	desc = "Looking sharp."
 	icon_state = "mime_bowler"
+	wear_state = "mime_bowler"
 	uses_multiple_icon_states = 1
 	item_state = "that"
 	hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
@@ -847,6 +918,7 @@ proc/filter_trait_hats(var/type)
 			src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 			src.force = 10
 			src.icon_state = "oddjob"
+			src.wear_state = "oddjob"
 			src.throw_source = null
 		else
 			if (user)
@@ -855,6 +927,7 @@ proc/filter_trait_hats(var/type)
 			src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 			src.force = 1
 			src.icon_state = "mime_bowler"
+			src.wear_state = "mime_bowler"
 			src.throw_source = null
 		return
 
@@ -909,6 +982,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A recreation of the late Big Tex's hat, commisioned by Ol' Harner."
 	icon_state = "bigtex"
 	item_state = "bigtex"
+	wear_state = "bigtex"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -917,6 +991,7 @@ proc/filter_trait_hats(var/type)
 	name = "beret"
 	desc = "A blue beret with no affiliations to NanoTrasen."
 	icon_state = "beret_base"
+	wear_state = "beret_base"
 
 	New()
 		..()
@@ -941,6 +1016,7 @@ proc/filter_trait_hats(var/type)
 	name = "bandana"
 	desc = "A bandana. You've seen space action stars wear these things."
 	icon_state = "bandana_base"
+	wear_state = "bandana_base"
 
 	random_color
 		desc = "A colorful bandana."
@@ -953,11 +1029,13 @@ proc/filter_trait_hats(var/type)
 		name = "red bandana"
 		desc = "A red bandana, colored by blood, sweat, and tears."
 		icon_state = "bandana_red"
+		wear_state = "bandana_red"
 
 /obj/item/clothing/head/laurels
 	name = "laurels"
 	desc = "Symbols of victory and achievement."
 	icon_state = "laurels"
+	wear_state = "laurels"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -966,11 +1044,13 @@ proc/filter_trait_hats(var/type)
 		name = "gold laurels"
 		desc = "Symbols of victory and achievement. These laurels are gold, and therefore extra symbolic and special."
 		icon_state = "glaurels"
+		wear_state = "glaurels"
 
 /obj/item/clothing/head/purplebutt
 	name = "purple butt hat"
 	desc = "A hat that looks like a purple butt."
 	icon_state = "purplebutt"
+	wear_state = "purplebutt"
 	c_flags = COVERSEYES
 
 // BIGHATS - taller than normal hats! To a max icon size of 64px
@@ -980,6 +1060,7 @@ proc/filter_trait_hats(var/type)
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "tophat"
+	wear_state = "tophat"
 	w_class = W_CLASS_BULKY
 	blocked_from_petasusaphilic = TRUE
 
@@ -988,6 +1069,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A commitment."
 	icon_state = "syndicate_top"
 	item_state = "syndicate_top"
+	wear_state = "syndicate_top"
 	interesting = "It kinda stinks now..."
 	c_flags = SPACEWEAR // can't take it off, so may as well make it spaceworthy
 	contraband = 10 //let's set off some alarms, boys
@@ -1090,6 +1172,7 @@ proc/filter_trait_hats(var/type)
 	desc = "An actual war crime, under the space geneva convention"
 	icon_state = "syndicate_top_biggest"
 	item_state = "syndicate_top"
+	wear_state = "syndicate_top_biggest"
 	contraband = 100 // heh
 
 	suicide(var/mob/user as mob)
@@ -1120,11 +1203,13 @@ proc/filter_trait_hats(var/type)
 	desc = "To hide most of your emotionless facial features."
 	icon_state = "witchfinder"
 	item_state = "witchfinder"
+	wear_state = "witchfinder"
 
 /obj/item/clothing/head/aviator
 	name = "aviator hat and goggles"
 	desc = "Won't you run, live to fly, fly to live, Aces high."
 	icon_state = "aviator"
+	wear_state = "aviator"
 
 	setupProperties()
 		..()
@@ -1136,16 +1221,19 @@ proc/filter_trait_hats(var/type)
 		if (src.icon_state == "aviator")
 			src.icon_state = "aviator_alt"
 			src.item_state = "aviator_alt"
+			src.wear_state = "aviator_alt"
 			c_flags = COVERSEYES
 		else if (src.icon_state == "aviator_alt")
 			src.icon_state = "aviator"
 			src.item_state = "aviator"
+			src.wear_state = "aviator"
 
 /obj/item/clothing/head/sunhat
 	name = "sunhat"
 	desc = "It's good to hide away from the sun. With this hat."
 	icon_state = "sunhatb"
 	item_state = "sunhatb"
+	wear_state = "sunhatb"
 	var/max_uses = 1 // If can_be_charged == 1, how many charges can this stupid hat store?
 	var/stunready = 0
 	var/uses = 0 //this is stupid but I love it
@@ -1153,16 +1241,19 @@ proc/filter_trait_hats(var/type)
 	sunhatr
 		icon_state = "sunhatr"
 		item_state = "sunhatr"
+		wear_state = "sunhatr"
 
 	sunhatg
 		icon_state = "sunhatg"
 		item_state = "sunhatg"
+		wear_state = "sunhatg"
 
 	stunhatr
 		stunready = 1
 		uses = 1
 		icon_state = "sunhatr-stun"
 		item_state = "sunhatr-stun"
+		wear_state = "sunhatr-stun"
 
 	examine()
 		. = ..()
@@ -1200,6 +1291,7 @@ proc/filter_trait_hats(var/type)
 			C.use(1000)
 			src.icon_state = text("[]-stun",src.icon_state)
 			src.item_state = text("[]-stun",src.item_state)
+			src.wear_state = text("[]-stun",src.wear_state)
 			C.UpdateIcon()
 			user.update_clothing() // Required to update the worn sprite (Convair880).
 			user.visible_message("<span class='alert'><b>[user]</b> charges [his_or_her(user)] stunhat.</span>", "<span class='notice'>The stunhat now holds [src.uses]/[src.max_uses] charges!</span>")
@@ -1213,18 +1305,21 @@ proc/filter_trait_hats(var/type)
 	desc = "Old diagnostic device which allowed shadow free inspection of the patient."
 	icon_state = "headmirror"
 	item_state = "headmirror"
+	wear_state = "headmirror"
 
 /obj/item/clothing/head/nursehat
 	name = "nurse hat"
 	desc = "A hat often worn by a nurse. And nurse enthusiasts."
 	icon_state = "nursehat"
 	item_state = "nursehat"
+	wear_state = "nursehat"
 
 /obj/item/clothing/head/traditionalnursehat
 	name = "Traditional Nurse Hat"
 	desc = "A nurse hat from the past."
 	icon_state = "traditionalnursehat"
 	item_state = "traditionalnursehat"
+	wear_state = "traditionalnursehat"
 	seal_hair = 1
 
 /obj/item/clothing/head/chemhood
@@ -1232,6 +1327,7 @@ proc/filter_trait_hats(var/type)
 	desc = "A thick rubber hood which protects you from almost any harmful chemical substance."
 	icon_state = "chemhood"
 	item_state = "chemhood"
+	wear_state = "chemhood"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	seal_hair = 1
@@ -1248,12 +1344,14 @@ proc/filter_trait_hats(var/type)
 	desc = "The hat of not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
+	wear_state = "jester"
 	seal_hair = 1
 
 /obj/item/clothing/head/party
 	name = "party hat"
 	icon_state = "party-cardboard"
 	item_state = "party-cardboard"
+	wear_state = "party-cardboard"
 	desc = "A party hat made of cardboard. How tacky."
 
 /obj/item/clothing/head/party/random
@@ -1266,17 +1364,20 @@ proc/filter_trait_hats(var/type)
 			src.style = rand(1,8)
 			src.icon_state = "party-[style]"
 			src.item_state = "party-[style]"
+			src.wear_state = "party-[style]"
 
 /obj/item/clothing/head/party/birthday
 	name = "birthday hat"
 	icon_state = "birthday-pink"
 	item_state = "birthday-pink"
+	wear_state = "birthday-pink"
 	desc = "Happy birthday to you, happy birthday to you, the rest of this hat is copyrighted."
 
 /obj/item/clothing/head/party/birthday/blue
 	name = "birthday hat"
 	icon_state = "birthday-blue"
 	item_state = "birthday-blue"
+	wear_state = "birthday-blue"
 	desc = "Happy birthday to you, happy birthday to you, in 200 years nobody will remember you."
 
 /obj/item/clothing/head/pokervisor
@@ -1284,24 +1385,28 @@ proc/filter_trait_hats(var/type)
 	desc = "Do both gambling and accounting with style."
 	icon_state = "pokervis"
 	item_state = "pokervis"
+	wear_state = "pokervis"
 
 /obj/item/clothing/head/graduation_cap
 	name = "graduation cap"
 	desc = "Hey, kid. You did it. Despite everything, you persevered. I'm proud of you."
 	icon_state = "graduation_cap"
 	item_state = "graduation_cap"
+	wear_state = "graduation_cap"
 
 /obj/item/clothing/head/danberet
 	name = "Discount Dan's beret"
 	desc = "A highly advanced textile experience!"
 	icon_state = "danberet"
 	item_state = "danberet"
+	wear_state = "danberet"
 
 /obj/item/clothing/head/janiberet
 	name = "Head of Sanitation beret"
 	desc = "The Chief of Cleaning, the Superintendent of Scrubbing, whatever you call yourself, you know how to make those tiles shine. Good job."
 	icon_state = "janitorberet"
 	item_state = "janitorberet"
+	wear_state = "janitorberet"
 	uses_multiple_icon_states = 1
 	var/folds = 0
 
@@ -1311,12 +1416,14 @@ proc/filter_trait_hats(var/type)
 		src.name = "Head of Sanitation beret"
 		src.icon_state = "janitorberet"
 		src.item_state = "janitorberet"
+		src.wear_state = "janitorberet"
 		boutput(user, "<span class='notice'>You fold the hat back into a beret.</span>")
 	else
 		src.folds = 1
 		src.name = "Head of Sanitation hat"
 		src.icon_state = "janitorcap"
 		src.item_state = "janitorcap"
+		src.wear_state = "janitorcap"
 		boutput(user, "<span class='notice'>You unfold the beret into a hat.</span>")
 	return
 
@@ -1325,24 +1432,28 @@ proc/filter_trait_hats(var/type)
 	desc = "Is it truly a good night without one?"
 	icon_state = "pajama_hat"
 	item_state = "pajama_hat"
+	wear_state = "pajama_hat"
 
 /obj/item/clothing/head/that/white
 	name = "white hat"
 	desc = "A white tophat."
 	icon_state = "whtophat"
 	item_state = "whtophat"
+	wear_state = "whtophat"
 
 /obj/item/clothing/head/headsprout
 	name = "leaf hairclip"
 	desc = "A sign of a healthy, growing Staff Assistant."
 	icon_state = "headsprout"
 	item_state = "headsprout"
+	wear_state = "headsprout"
 
 /obj/item/clothing/head/hos_hat
 	name = "HoS Hat"
 	icon_state = "hoscap"
 	uses_multiple_icon_states = 1
 	item_state = "hoscap"
+	wear_state = "hoscap"
 	c_flags = SPACEWEAR
 	var/folds = 0
 	desc = "Actually, this hat is from a fast-food restaurant, that's why it folds like it was made of paper."
@@ -1357,12 +1468,14 @@ proc/filter_trait_hats(var/type)
 			src.name = "HoS Beret"
 			src.icon_state = "hosberet"
 			src.item_state = "hosberet"
+			src.wear_state = "hosberet"
 			boutput(user, "<span class='notice'>You fold the hat into a beret.</span>")
 		else
 			src.folds = 0
 			src.name = "HoS Hat"
 			src.icon_state = "hoscap"
 			src.item_state = "hoscap"
+			src.wear_state = "hoscap"
 			boutput(user, "<span class='notice'>You unfold the beret back into a hat.</span>")
 		return
 
@@ -1371,24 +1484,28 @@ proc/filter_trait_hats(var/type)
 	desc = "A fun hat with a little spinny wheel on it."
 	icon_state = "pinwheel_hat"
 	item_state = "pinwheel_hat"
+	wear_state = "pinwheel_hat"
 
 /obj/item/clothing/head/frog_hat
 	name = "frog"
 	desc = "A hat shaped like a frog's head. Not made of frogs."
 	icon_state = "frog_hat"
 	item_state = "frog_hat"
+	wear_state = "frog_hat"
 
 /obj/item/clothing/head/boater_hat
 	name = "boater hat"
 	desc = "A hat useful for cutting hair and singing songs in a quartet."
 	icon_state = "boater_hat"
 	item_state = "boater_hat"
+	wear_state = "boater_hat"
 
 /obj/item/clothing/head/ushanka
 	name = "ushanka"
 	desc = "A hat favored by those in cold climates."
 	icon_state = "ushanka"
 	item_state = "ushanka"
+	wear_state = "ushanka"
 
 	setupProperties()
 		..()
@@ -1399,6 +1516,7 @@ proc/filter_trait_hats(var/type)
 	desc = "Still smells faintly of hairspray."
 	icon_state = "waitresshat"
 	item_state = "waitresshat"
+	wear_state = "waitresshat"
 
 // HEADBANDS
 
@@ -1410,6 +1528,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 	wear_image_icon = 'icons/mob/clothing/ears.dmi'
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
+	wear_state = "cat-gray"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "earsheadband"
 	w_class = W_CLASS_TINY
@@ -1425,6 +1544,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband)
 			H.icon_state = src.icon_state
 			H.wear_image_icon = src.wear_image_icon
 			H.wear_image = src.wear_image
+			H.wear_state = src.wear_state
 			H.desc = "Aww, cute and fuzzy. Someone has taped a radio headset onto the headband."
 			qdel(src)
 
@@ -1434,6 +1554,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	desc = "Aww, cute and fuzzy."
 	icon_state = "cat-gray"
 	item_state = "cat-gray"
+	wear_state = "cat-gray"
 
 	random
 		New()
@@ -1442,55 +1563,68 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 			name = "[color] cat ears"
 			item_state = "cat-[color]"
 			icon_state = "cat-[color]"
+			wear_state = "cat-[color]"
 
 	white
 		name = "white cat ears"
 		icon_state = "cat-white"
 		item_state = "cat-white"
+		wear_state = "cat-white"
 	gray
 		name = "gray cat ears"
 		icon_state = "cat-gray"
 		item_state = "cat-gray"
+		wear_state = "cat-gray"
 	black
 		name = "black cat ears"
 		icon_state = "cat-black"
 		item_state = "cat-black"
+		wear_state = "cat-black"
 	red
 		name = "red cat ears"
 		icon_state = "cat-red"
 		item_state = "cat-red"
+		wear_state = "cat-red"
 	orange
 		name = "orange cat ears"
 		icon_state = "cat-orange"
 		item_state = "cat-orange"
+		wear_state = "cat-orange"
 	yellow
 		name = "yellow cat ears"
 		icon_state = "cat-yellow"
 		item_state = "cat-yellow"
+		wear_state = "cat-yellow"
 	green
 		name = "green cat ears"
 		icon_state = "cat-green"
 		item_state = "cat-green"
+		wear_state = "cat-green"
 	blue
 		name = "blue cat ears"
 		icon_state = "cat-blue"
 		item_state = "cat-blue"
+		wear_state = "cat-blue"
 	purple
 		name = "purple cat ears"
 		icon_state = "cat-purple"
 		item_state = "cat-purple"
+		wear_state = "cat-purple"
 	leopard
 		name = "leopard ears"
 		icon_state = "cat-leopard"
 		item_state = "cat-leopard"
+		wear_state = "cat-leopard"
 	snowleopard
 		name = "snow leopard ears"
 		icon_state = "cat-leopardw"
 		item_state = "cat-leopardw"
+		wear_state = "cat-leopardw"
 	tiger
 		name = "tiger ears"
 		icon_state = "cat-tiger"
 		item_state = "cat-tiger"
+		wear_state = "cat-tiger"
 
 /obj/item/clothing/head/headband/antlers
 	name = "antlers"
@@ -1499,6 +1633,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "antlers"
 	item_state = "antlers"
+	wear_state = "antlers"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1509,6 +1644,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "giraffe"
 	item_state = "giraffe"
+	wear_state = "giraffe"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1519,6 +1655,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/headband/nyan)
 	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "antennae"
 	item_state = "antennae"
+	wear_state = "antennae"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1530,6 +1667,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 	desc = "Not to be confused with a beret."
 	icon_state = "barrette-blue"
 	item_state = "barrette-blue"
+	wear_state = "barrette-blue"
 	blocked_from_petasusaphilic = TRUE
 	w_class = W_CLASS_TINY
 	throwforce = 0
@@ -1539,35 +1677,43 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
 		icon_state = "barrette-butterflyblu"
 		item_state = "barrette-butterflyblu"
+		wear_state = "barrette-butterflyblu"
 	butterflyorg
 		name = "orange butterfly hairclip"
 		desc = "A fashionable hair clip shaped like a butterfly to keep your hair from fly-ing all over the place."
 		icon_state = "barrette-butterflyorg"
 		item_state = "barrette-butterflyorg"
+		wear_state = "barrette-butterflyorg"
 	blue
 		name = "blue barrettes"
 		icon_state = "barrette-blue"
 		item_state = "barrette-blue"
+		wear_state = "barrette-blue"
 	green
 		name = "green barrettes"
 		icon_state = "barrette-green"
 		item_state = "barrette-green"
+		wear_state = "barrette-green"
 	pink
 		name = "pink barrettes"
 		icon_state = "barrette-pink"
 		item_state = "barrette-pink"
+		wear_state = "barrette-pink"
 	gold
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+		wear_state = "barrette-gold"
 	black
 		name = "black barrettes"
 		icon_state = "barrette-black"
 		item_state = "barrette-black"
+		wear_state = "barrette-black"
 	silver
 		name = "silver barrettes"
 		icon_state = "barrette-silver"
 		item_state = "barrette-silver"
+		wear_state = "barrette-silver"
 
 // HAIRBOWS (jan.antilles loves you)
 
@@ -1577,6 +1723,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 	desc = "A huge bow that goes on your head."
 	icon_state = "hbow-magenta"
 	item_state = "hbow-magenta"
+	wear_state = "hbow-magenta"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1585,95 +1732,113 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		desc = "A huge bow that goes on your head. This one is magenta."
 		icon_state = "hbow-magenta"
 		item_state = "hbow-magenta"
+		wear_state = "hbow-magenta"
 	pink
 		name = "pink hairbow"
 		desc = "A huge bow that goes on your head. This one is pink."
 		icon_state = "hbow-pink"
 		item_state = "hbow-pink"
+		wear_state = "hbow-pink"
 	red
 		name = "red hairbow"
 		desc = "A huge bow that goes on your head. This one is red."
 		icon_state = "hbow-red"
 		item_state = "hbow-red"
+		wear_state = "hbox-red"
 	gold
 		name = "gold hairbow"
 		desc = "A huge bow that goes on your head. This one is gold."
 		icon_state = "hbow-gold"
 		item_state = "hbow-gold"
+		wear_state = "hbow-gold"
 	green
 		name = "green hairbow"
 		desc = "A huge bow that goes on your head. This one is green."
 		icon_state = "hbow-green"
 		item_state = "hbow-green"
+		wear_state = "hbow-green"
 	mint
 		name = "mint hairbow"
 		desc = "A huge bow that goes on your head. This one is mint."
 		icon_state = "hbow-mint"
 		item_state = "hbow-mint"
+		wear_state = "hbow-mint"
 	blue
 		name = "blue hairbow"
 		desc = "A huge bow that goes on your head. This one is blue."
 		icon_state = "hbow-blue"
 		item_state = "hbow-blue"
+		wear_state = "hbow-blue"
 	navy
 		name = "navy hairbow"
 		desc = "A huge bow that goes on your head. This one is navy."
 		icon_state = "hbow-navy"
 		item_state = "hbow-navy"
+		wear_state = "hbow-navy"
 	purple
 		name = "purple hairbow"
 		desc = "A huge bow that goes on your head. This one is purple."
 		icon_state = "hbow-purple"
 		item_state = "hbow-purple"
+		wear_state = "hbow-purple"
 	shinyblack
 		name = "shiny black hairbow"
 		desc = "A huge bow that goes on your head. This one is shiny black."
 		icon_state = "hbow-shinyblack"
 		item_state = "hbow-shinyblack"
+		wear_state = "hbow-shinyblack"
 	matteblack
 		name = "matte black hairbow"
 		desc = "A huge bow that goes on your head. This one is matte black."
 		icon_state = "hbow-matteblack"
 		item_state = "hbow-matteblack"
+		wear_state = "hbow-matteblack"
 	white
 		name = "white hairbow"
 		desc = "A huge bow that goes on your head. This one is white."
 		icon_state = "hbow-white"
 		item_state = "hbow-white"
+		wear_state = "hbow-white"
 	rainbow
 		name = "rainbow hairbow"
 		desc = "A huge bow that goes on your head. This one has stripes in all the colors of the rainbow."
 		icon_state = "hbow-rainbow"
 		item_state = "hbow-rainbow"
+		wear_state = "hbow-rainbow"
 	flashy
 		name = "flashy hairbow"
 		desc = "A huge bow that goes on your head. This one is flashing all kinds of colors! Whoa."
 		icon_state = "hbow-flashy"
 		item_state = "hbow-flashy"
+		wear_state = "hbow-flashy"
 
 	yellowpolkadot
 		name = "yellow polka-dot hairbow"
 		desc = "A huge bow that goes on your head. This one is yellow and has polka dots. Not itsy bitsy or teeny weeny."
 		icon_state = "hbow-yellowpolkadot"
 		item_state = "hbow-yellowpolkadot"
+		wear_state = "hbow-yellowpolkadot"
 
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
 	desc = "A hat for hunting space deer or solving a mystery."
 	icon_state = "deerstalker"
 	item_state = "deerstalker"
+	wear_state = "deerstalker"
 
 /obj/item/clothing/head/pomhat_blue
    name = "blue pomhat"
    desc = "A cobalt hat with a fun little pom!"
    icon_state = "pomhat_blue"
    item_state = "pomhat_blue"
+   wear_state = "pomhat_blue"
 
 /obj/item/clothing/head/pomhat_red
    name = "red pomhat"
    desc = "A crimson hat with an enjoyable little pom!"
    icon_state = "pomhat_red"
    item_state = "pomhat_red"
+   wear_state = "pomhat_red"
 
 // Mime Beret recolours (mime beret is located elsewhere weirdly)
 
@@ -1683,6 +1848,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 	desc = "Much more artistic than your standard beret."
 	icon_state = "beret_wht"
 	item_state = "beret_wht"
+	wear_state = "beret_wht"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1690,41 +1856,49 @@ ABSTRACT_TYPE(/obj/item/clothing/head/frenchberet)
 		name = "white French beret"
 		icon_state = "beret_wht"
 		item_state = "beret_wht"
+		wear_state = "beret_wht"
 
 	yellow
 		name = "yellow French beret"
 		icon_state = "beret_yel"
 		item_state = "beret_yel"
+		wear_state = "beret_yel"
 
 	mint
 		name = "mint French beret"
 		icon_state = "beret_mnt"
 		item_state = "beret_mnt"
+		wear_state = "beret_mnt"
 
 	purple
 		name = "purple French beret"
 		icon_state = "beret_prp"
 		item_state = "beret_prp"
+		wear_state = "beret_prp"
 
 	blue
 		name = "blue French beret"
 		icon_state = "beret_blu"
 		item_state = "beret_blu"
+		wear_state = "beret_blu"
 
 	pink
 		name = "pink French beret"
 		icon_state = "beret_pnk"
 		item_state = "beret_pnk"
+		wear_state = "beret_pnk"
 
 	strawberry
 		name = "strawberry beret"
 		icon_state = "beret_strawb"
 		item_state = "beret_strawb"
+		wear_state = "beret_strawb"
 
 	blueberry
 		name = "blueberry beret"
 		icon_state = "beret_blueb"
 		item_state = "beret_blueb"
+		wear_state = "beret_blueb"
 
 // Costume goggles
 
@@ -1734,6 +1908,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 	desc = "They don't even fit over your eyes! How cheap."
 	icon_state = "goggles_red"
 	item_state = "goggles_red"
+	wear_state = "goggles_red"
 	w_class = W_CLASS_TINY
 	throwforce = 0
 
@@ -1741,26 +1916,31 @@ ABSTRACT_TYPE(/obj/item/clothing/head/goggles)
 		name = "red costume goggles"
 		icon_state = "goggles_red"
 		item_state = "goggles_red"
+		wear_state = "goggles_red"
 
 	purple
 		name = "purple costume goggles"
 		icon_state = "goggles_prp"
 		item_state = "goggles_prp"
+		wear_state = "goggles_prp"
 
 	green
 		name = "green costume goggles"
 		icon_state = "goggles_grn"
 		item_state = "goggles_grn"
+		wear_state = "goggles_grn"
 
 	blue
 		name = "blue costume goggles"
 		icon_state = "goggles_blu"
 		item_state = "goggles_blu"
+		wear_state = "goggles_blu"
 
 	yellow
 		name = "yellow costume goggles"
 		icon_state = "goggles_yel"
 		item_state = "goggles_yel"
+		wear_state = "goggles_yel"
 
 // Baseball Caps
 
@@ -1781,9 +1961,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 		src.hatflip = !src.hatflip
 		src.icon_state = "basecap_[hatcolour]"
 		src.item_state = "basecap_[hatcolour]"
+		src.wear_state = "basecap_[hatcolour]"
 		if(src.hatflip)
 			src.icon_state = "basecapflip_[hatcolour]"
 			src.item_state = "basecapflip_[hatcolour]"
+			src.wear_state = "basecapflip_[hatcolour]"
 			boutput(user, "<span class='notice'>You flip your baseball cap around. Now it's backwards.</span>")
 		else
 			boutput(user, "<span class='notice'>You flip your baseball cap back into the standard baseball cap position.</span>")
@@ -1792,65 +1974,77 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 		hatcolour = "black"
 		item_state = "basecap_black"
 		icon_state = "basecap_black"
+		wear_state = "basecap_black"
 
 	purple
 		hatcolour = "purple"
 		item_state = "basecap_purple"
 		icon_state = "basecap_purple"
+		wear_state = "basecap_purple"
 
 	red
 		hatcolour = "red"
 		item_state = "basecap_red"
 		icon_state = "basecap_red"
+		wear_state = "basecap_red"
 
 	yellow
 		hatcolour = "yellow"
 		item_state = "basecap_yellow"
 		icon_state = "basecap_yellow"
+		wear_state = "basecap_yellow"
 
 	green
 		hatcolour = "green"
 		item_state = "basecap_green"
 		icon_state = "basecap_green"
+		wear_state = "basecap_green"
 
 	blue
 		hatcolour = "blue"
 		item_state = "basecap_blue"
 		icon_state = "basecap_blue"
+		wear_state = "basecap_blue"
 
 	white
 		hatcolour = "white"
 		item_state = "basecap_white"
 		icon_state = "basecap_white"
+		wear_state = "basecap_white"
 
 	pink
 		hatcolour = "pink"
 		item_state = "basecap_pink"
 		icon_state = "basecap_pink"
+		wear_state = "basecap_pink"
 
 /obj/item/clothing/head/pirate_blk
 	name = "black pirate hat"
 	desc = "Heroic!"
 	icon_state = "pirate_blk"
 	item_state = "pirate_blk"
+	wear_state = "pirate_blk"
 
 /obj/item/clothing/head/pirate_brn
 	name = "brown pirate hat"
 	desc = "Heroic!"
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
+	wear_state = "pirate_brn"
 
 /obj/item/clothing/head/pirate_captain
 	name = "pirate captain's hat"
 	desc = "A traditional pirate tricorne, adorned with a crimson feather, just to tell everyone who's boss."
 	icon_state = "pirate_captain"
 	item_state = "pirate_captain"
+	wear_state = "pirate_captain"
 
 /obj/item/clothing/head/pirate_first_mate
 	name = "pirate first mate's hat"
 	desc = "Who needs a fancy red feather to show authority?"
 	icon_state = "pirate_first_mate"
 	item_state = "pirate_first_mate"
+	wear_state = "pirate_first_mate"
 
 //Lesbian Hat
 
@@ -1862,6 +2056,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	desc = "And they say subtlety is dead."
 	icon_state = "lesbeean"
 	item_state = "lesbeean"
+	wear_state = "lesbeean"
 
 //Western Ten-Gallon hats!
 
@@ -1870,31 +2065,37 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	desc = "Channel your true cowboy and call everyone partner!"
 	icon_state = "westhat"
 	item_state = "westhat"
+	wear_state = "westhat"
 
 /obj/item/clothing/head/westhat/black
 	name = "Black Ten-Gallon hat"
 	icon_state = "westhat_black"
 	item_state = "westhat_black"
+	wear_state = "westhat_black"
 
 /obj/item/clothing/head/westhat/red
 	name = "Red Ten-Gallon hat"
 	icon_state = "westhat_red"
 	item_state = "westhat_red"
+	wear_state = "westhat_red"
 
 /obj/item/clothing/head/westhat/blue
 	name = "Blue Ten-Gallon hat"
 	icon_state = "westhat_blue"
 	item_state = "westhat_blue"
+	wear_state = "westhat_blue"
 
 /obj/item/clothing/head/westhat/tan
 	name = "Tan Ten-Gallon hat"
 	icon_state = "westhat_tan"
 	item_state = "westhat_tan"
+	wear_state = "westhat_tan"
 
 /obj/item/clothing/head/westhat/brown
 	name = "Brown Ten-Gallon hat"
 	icon_state = "westhat_brown"
 	item_state = "westhat_brown"
+	wear_state = "westhat_brown"
 
 //Witchy Hats
 
@@ -1903,18 +2104,21 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
 	icon_state = "witchhat_purple"
 	item_state = "witchhat_purple"
+	wear_state = "witchhat_purple"
 
 /obj/item/clothing/head/witchhat_mint
 	name = "mint witch hat"
 	desc = "Magical, but the friendship and imagination kind, not the remove-your-butt kind."
 	icon_state = "witchhat_mint"
 	item_state = "witchhat_mint"
+	wear_state = "witchhat_mint"
 
 /obj/item/clothing/head/bouffant
 	name = "bouffant scrub hat"
 	desc = "A surgical hat designed to keep the wearers hair from falling into the patient, essentially a fancier hair net."
 	icon_state = "bouffant"
 	item_state = "bouffant"
+	wear_state = "bouffant"
 
 // Crate Loot
 
@@ -1923,34 +2127,40 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	desc = "A hat in the shape of the mythical Earth-bear."
 	icon_state = "bear"
 	item_state = "bear"
+	wear_state = "bear"
 
 /obj/item/clothing/head/rugged
 	name = "rugged hat"
 	desc = "A cool hat that's come pre-torn. Huh."
 	icon_state = "rugged"
 	item_state = "rugged"
+	wear_state = "rugged"
 
 /obj/item/clothing/head/star_tophat
 	name = "starry tophat"
 	desc = "A fancy tophat with a detailed rendition of the night sky sewn in."
 	icon_state = "star_tophat"
 	item_state = "star_tophat"
+	wear_state = "star_tophat"
 
 /obj/item/clothing/head/cow
 	name = "cow"
 	desc = "It looks like a cow and goes on your head. Wow."
 	icon_state = "cow"
 	item_state = "cow"
+	wear_state = "cow"
 
 /obj/item/clothing/head/torch
 	name = "torch hat"
 	desc = "A pretty dangerous looking hat."
 	icon_state = "torch"
 	item_state = "torch"
+	wear_state = "torch"
 
 /obj/item/clothing/head/helmet/space/replica
 	name = "replica space helmet"
 	icon_state = "space_replica"
 	item_state = "space_replica"
+	wear_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 

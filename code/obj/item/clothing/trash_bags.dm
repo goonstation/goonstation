@@ -14,6 +14,7 @@
 	tooltip_flags = REBUILD_DIST
 	body_parts_covered = TORSO
 	var/base_state = "trashbag"
+	wear_state = "trashbag"
 
 	New()
 		..()
@@ -79,3 +80,4 @@
 	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
 	icon_state = "biobag-f"
 	base_state = "biobag"
+	wear_state = "biobag"

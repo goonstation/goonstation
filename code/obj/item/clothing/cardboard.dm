@@ -5,6 +5,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_cardboard.dmi'
 	icon_state = "c_box"
 	item_state = "c_box"
+	wear_state = "c_box"
 	density = 1
 	see_face = 0
 	over_hair = 1
@@ -128,6 +129,7 @@
 /obj/item/clothing/suit/cardboard_box/colorful
 	desc = "There are paint splatters on this box. Paint splatters? Blood splatters. Colorful blood splatters."
 	icon_state = "c_box-colorful"
+	wear_state = "c_box-colorful"
 
 /obj/item/clothing/suit/cardboard_box/colorful/clown
 	name = "cardboard box - 'Clown'"

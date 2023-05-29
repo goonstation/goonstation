@@ -5,6 +5,7 @@
 	icon_state = "helmet"
 	c_flags = COVERSEYES
 	item_state = "helmet"
+	wear_state = "helmet"
 	desc = "Somewhat protects your head from being bashed in."
 	protective_temperature = 500
 	duration_remove = 5 SECONDS
@@ -18,6 +19,7 @@
 /obj/item/clothing/head/helmet/space
 	name = "space helmet"
 	icon_state = "space"
+	wear_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	see_face = 0
 	item_state = "s_helmet"
@@ -46,6 +48,7 @@
 	name = "engineering space helmet"
 	desc = "Comes equipped with a built-in flashlight."
 	icon_state = "espace0"
+	wear_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = 0
@@ -68,6 +71,7 @@
 	proc/flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
 		src.icon_state = "espace[on]"
+		src.wear_state = "espace[on]"
 		if (on)
 			light_dir.update(1)
 		else
@@ -80,10 +84,12 @@
 
 /obj/item/clothing/head/helmet/space/engineer/april_fools
 	icon_state = "espace0-alt"
+	wear_state = "espace0-alt
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
 		src.icon_state = "espace[on]-alt"
+		src.wear_state = "espace[on]-alt"
 		if (on)
 			light_dir.update(1)
 		else
@@ -100,6 +106,7 @@
 	name = "captain's space helmet"
 	icon_state = "space-captain"
 	item_state = "space-captain"
+	wear_state = "space-captain"
 	desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
 
 	setupProperties()
@@ -110,24 +117,28 @@
 		name = "commander's space helmet"
 		icon_state = "space-captain-blue"
 		item_state = "space-captain-blue"
+		wear_state = "space-captain-blue"
 		desc = "Helps protect against vacuum. Comes in a fasionable blue befitting a commander."
 
 	red
 		name = "commander's space helmet"
 		icon_state = "space-captain-red"
 		item_state = "space-captain-red"
+		wear_state = "space-captain-red"
 		desc = "Helps protect against vacuum. Comes in a fasionable red befitting a commander."
 
 /obj/item/clothing/head/helmet/space/neon
 	name = "neon space helmet"
 	icon_state = "space-cute"
 	item_state = "space-cute"
+	wear_state = "space-cute"
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
 /obj/item/clothing/head/helmet/space/custom
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
 	icon_state = "spacemat"
+	wear_state = "spacemat"
 
 	var/image/fabrItemImg = null
 	var/image/fabrWornImg = null
@@ -181,11 +192,13 @@
 	name = "diving helmet"
 	desc = "Comes equipped with a builtin flashlight."
 	icon_state = "diving0"
+	wear_state = "diving0"
 	acid_survival_time = 8 MINUTES
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
 		src.icon_state = "diving[on]"
+		src.wear_state = "diving[on]"
 		if (on)
 			light_dir.update(1)
 		else
@@ -199,10 +212,12 @@
 	security
 		name = "security diving helmet"
 		icon_state = "diving-sec0"
+		wear_state = "diving-sec0"
 
 		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 			on = !on
 			src.icon_state = "diving-sec[on]"
+			src.wear_state = "diving-sec[on]"
 			if (on)
 				light_dir.update(1)
 			else
@@ -216,10 +231,12 @@
 	civilian
 		name = "civilian diving helmet"
 		icon_state = "diving-civ0"
+		wear_state = "diving-civ0"
 
 		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 			on = !on
 			src.icon_state = "diving-civ[on]"
+			src.wear_state = "diving-civ[on]"
 			if (on)
 				light_dir.update(1)
 			else
@@ -233,9 +250,11 @@
 	command
 		name = "command diving helmet"
 		icon_state = "diving-com0"
+		wear_state = "diving-com0"
 
 		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 			on = !on
+			src.icon_state = "diving-com[on]"
 			src.icon_state = "diving-com[on]"
 			if (on)
 				light_dir.update(1)
@@ -250,10 +269,12 @@
 	engineering
 		name = "engineering diving helmet"
 		icon_state = "diving-eng0"
+		wear_state = "diving-eng0"
 
 		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 			on = !on
 			src.icon_state = "diving-eng[on]"
+			src.wear_state = "diving-eng[on]"
 			if (on)
 				light_dir.update(1)
 			else
@@ -270,6 +291,7 @@
 	name = "light space helmet"
 	desc = "A lightweight space helmet."
 	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
+	wear_state = "spacelight-e"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	see_face = 0
 	item_state = "s_helmet"
@@ -293,10 +315,12 @@
 		name = "engineering light space helmet"
 		desc = "A lightweight engineering space helmet. It's lacking any major padding or reinforcement."
 		icon_state = "spacelight-e"
+		wear_state = "spacelight-e"
 
 /obj/item/clothing/head/helmet/space/syndicate
 	name = "red space helmet"
 	icon_state = "syndicate"
+	wear_state = "syndicate"
 	item_state = "space_helmet_syndicate"
 	desc = "The standard space helmet of the dreaded Syndicate."
 	item_function_flags = IMMUNE_TO_ACID
@@ -331,12 +355,14 @@
 
 	old
 		icon_state = "syndicate-OLD"
+		wear_state = "syndicate-OLD"
 		desc = "A relic of the past."
 		item_state = null
 
 	commissar_cap
 		name = "commander's cap"
 		icon_state = "syndie_commander"
+		wear_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
 		see_face = 1
@@ -362,6 +388,7 @@
 		name = "specialist combat helmet"
 		desc = "A modified combat helmet for syndicate operative specialists."
 		icon_state = "syndie_specialist"
+		wear_state = "syndie_specialist"
 		item_state = "syndie_specialist"
 
 		setupProperties()
@@ -374,11 +401,13 @@
 			desc = "A modified combat helmet for syndicate operative specialists."
 			icon_state = "syndie_specialist-infiltrator"
 			item_state = "syndie_specialist-infiltrator"
+			wear_state = "syndie_specialist-infiltrator"
 
 		firebrand
 			name = "specialist combat helmet"
 			icon_state = "syndie_specialist-firebrand"
 			item_state = "syndie_specialist-firebrand"
+			wear_state = "syndie_specialist-firebrand"
 
 		unremovable
 			cant_self_remove = 1
@@ -388,6 +417,7 @@
 			name = "specialist welding helmet"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
+			wear_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
 			see_face = 0
 			protective_temperature = 1300
@@ -429,6 +459,7 @@
 			name = "specialist health monitor"
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
+			wear_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 
 			setupProperties()
@@ -453,12 +484,14 @@
 			name = "specialist combat cover"
 			icon_state = "syndie_specialist-sniper"
 			item_state = "syndie_specialist-sniper"
+			wear_state = "syndie_specialist-sniper"
 
 		knight
 			name = "heavy specialist great helm"
 			desc = "A menacing full-face helmet for syndicate super-heavies."
 			icon_state = "syndie_specialist-knight"
 			item_state = "syndie_specialist-knight"
+			wear_state = "syndie_specialist-knight"
 
 			setupProperties()
 				..()
@@ -473,6 +506,7 @@
 			desc = "The tall decorative mohawk inspires both fear and envy."
 			icon_state = "syndie_specialist-bard"
 			item_state = "syndie_specialist-bard"
+			wear_state = "syndie_specialist-bard"
 
 
 /obj/item/clothing/head/helmet/space/ntso //recoloured nuke class suits for ntso vs syndicate specialist
@@ -480,6 +514,7 @@
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	wear_state = "ntso_specialist"
 	acid_survival_time = 6 MINUTES
 
 	setupProperties()
@@ -495,12 +530,14 @@
 	name = "Nanotrasen Heavy Helmet"
 	icon_state = "nthelm2"
 	item_state = "nthelm2"
+	wear_state = "nthelm2"
 	desc = "Well protected helmet used by certain Nanotrasen bodyguards."
 
 /obj/item/clothing/head/helmet/space/nanotrasen/pilot
 	name = "Nanotrasen Pilot Helmet"
 	icon_state = "nanotrasen_pilot"
 	item_state = "nanotrasen_pilot"
+	wear_state = "nanotrasen_pilot"
 	desc = "A space helmet used by certain Nanotrasen pilots."
 	team_num = TEAM_NANOTRASEN
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -523,6 +560,7 @@
 /obj/item/clothing/head/helmet/swat
 	name = "swat helmet"
 	icon_state = "swat"
+	wear_state = "swat"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "swat_hel"
 	setupProperties()
@@ -532,6 +570,7 @@
 /obj/item/clothing/head/helmet/turd
 	name = "T.U.R.D.S. helmet"
 	icon_state = "turdhelm"
+	wear_state = "turdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	item_state = "turdhelm"
@@ -542,6 +581,7 @@
 /obj/item/clothing/head/helmet/thunderdome
 	name = "Thunderdome helmet"
 	icon_state = "thunderdome"
+	wear_state = "thunderdome"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "tdhelm"
 	setupProperties()
@@ -551,6 +591,7 @@
 /obj/item/clothing/head/helmet/hardhat
 	name = "hard hat"
 	icon_state = "hardhat0"
+	wear_state = "hardhat0"
 	uses_multiple_icon_states = 1
 	item_state = "hardhat0"
 	desc = "Protects your head from falling objects, and comes with a flashlight. Safety first!"
@@ -576,6 +617,7 @@
 		on = !on
 		src.icon_state = "hardhat[on]"
 		src.item_state = "hardhat[on]"
+		src.wear_state = "hardhat[on]"
 		user.update_clothing()
 		if (on)
 			light_dir.update(1)
@@ -596,12 +638,14 @@
 	chief_engineer
 		name = "chief engineer's hard hat"
 		icon_state = "hardhat_chief_engineer0"
+		wear_state = "hardhat_chief_engineer0"
 		item_state = "hardhat_chief_engineer0"
 		desc = "A dented old helmet with a bright green stripe. An engraving on the inside reads 'CE'."
 
 		flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 			on = !on
 			src.icon_state = "hardhat_chief_engineer[on]"
+			src.wear_state = "hardhat_chief_engineer[on]"
 			if (on)
 				light_dir.update(1)
 			else
@@ -615,6 +659,7 @@
 /obj/item/clothing/head/helmet/hardhat/security // Okay it's not actually a HARDHAT but why write extra code?
 	name = "helmet"
 	icon_state = "helmet-sec"
+	wear_state = "helmet-sec"
 	uses_multiple_icon_states = 1
 	c_flags = COVERSEYES | BLOCKCHOKE
 	item_state = "helmet"
@@ -641,19 +686,24 @@
 		if (src.icon_state == "helmet-sec")
 			src.icon_state = "helmet"
 			src.item_state = "helmet"
+			src.wear_state = "helmet"
 		else if (src.icon_state == "helmet")
 			src.icon_state = "helmet-sec-alt"
 			src.item_state = "helmet-sec-alt"
+			src.wear_state = "helmet-sec-alt"
 		else if (src.icon_state == "helmet-sec-alt")
 			src.icon_state = "helmet-sec-alt2"
 			src.item_state = "helmet-sec-alt2"
+			src.wear_state = "helmet-sec-alt2"
 		else
 			src.icon_state = "helmet-sec"
 			src.item_state = "helmet-sec"
+			src.wear_state = "helmet-sec"
 
 /obj/item/clothing/head/helmet/hardhat/security/improved // Azungar's more out of style helmet that can only be bought through QM.
 	name = "elite helmet"
 	icon_state = "helmet-sec-elite"
+	wear_state = "helmet-sec-elite"
 	desc = "Better protection from getting your head bashed in."
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	seal_hair = 1
@@ -679,6 +729,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A helmet with a built in camera."
 	icon_state = "camhat"
 	item_state = "camhat"
+	wear_state = "camhat"
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Helmet Cam"
 	var/camera_network = "Zeta"
@@ -698,6 +749,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	desc = "A red helmet with a built in camera. It has a little note taped to it that says \"Security\"."
 	icon_state = "redcamhat"
 	item_state = "redcamhat"
+	wear_state = "redcamhat"
 	camera_tag = "Security Helmet Cam"
 
 /obj/item/clothing/head/helmet/jetson
@@ -706,6 +758,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	icon_state = "jetson1"
 	icon_state = "jetson"
 	item_state = "jetson"
+	wear_state = "jetson"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 3)
@@ -714,6 +767,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "welding helmet"
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
+	wear_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = FALSE
@@ -728,6 +782,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		..()
 		src.icon_state = "welding[src.decal ? "-[decal]" : null]"
 		src.item_state = "welding[src.decal ? "-[decal]" : null]"
+		src.wear_state = "welding[src.decal ? "-[decal]" : null]"
 
 	setupProperties()
 		..()
@@ -751,6 +806,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		see_face = FALSE
 		icon_state = "welding[decal ? "-[decal]" : null]"
 		item_state = "welding[decal ? "-[decal]" : null]"
+		wear_state = "welding[decal ? "-[decal]" : null]"
 		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine |= (C_EARS|C_MASK|C_GLASSES)
@@ -767,6 +823,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		see_face = TRUE
 		icon_state = "welding-up[decal ? "-[decal]" : null]"
 		item_state = "welding-up[decal ? "-[decal]" : null]"
+		wear_state = "welding-up[decal ? "-[decal]" : null]"
 		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		src.hides_from_examine &= ~(C_EARS|C_MASK|C_GLASSES)
@@ -803,6 +860,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		desc = "A head-mounted face cover designed to make you look slick while avoiding searing eye pain. Can be flipped up for if you don't want to avoid aforementioned searing eye pain."
 		icon_state = "welding-fire"
 		item_state = "welding-fire"
+		wear_state = "welding-fire"
 		decal = "fire"
 
 /obj/item/clothing/head/helmet/welding/abilities = list(/obj/ability_button/mask_toggle)
@@ -811,6 +869,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "blast helmet"
 	desc = "A thick head cover made of layers upon layers of space kevlar."
 	icon_state = "EOD"
+	wear_state = "EOD"
 	item_state = "tdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
@@ -828,6 +887,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	name = "siren helmet"
 	desc = "A big flashing light that you put on your head. It also plays a siren for when you need to arrest someone!"
 	icon_state = "siren0"
+	wear_state = "siren0"
 	uses_multiple_icon_states = 1
 	item_state = "siren"
 	abilities = list(/obj/ability_button/weeoo) // is near segway code in vehicle.dm
@@ -856,6 +916,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 			light.enable()
 			src.icon_state = "siren1"
+			src.wear_state = "siren1"
 			for (weeoo_in_progress, weeoo_in_progress > 0, weeoo_in_progress--)
 				light.set_color(0.9, 0.1, 0.1)
 				if (!weeoo_in_progress)
@@ -867,6 +928,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 				sleep(0.3 SECONDS)
 			light.disable()
 			src.icon_state = "siren0"
+			src.wear_state = "siren0"
 			weeoo_in_progress = 0
 
 	unequipped(var/mob/user)
@@ -889,6 +951,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	desc = "Good Lord, this thing is heavy. How the hell is anyone supposed to see out of this?"
 	icon_state = "riot"//Awww yeah, sprites
 	item_state = "riot"//go buttes, go
+	wear_state = "riot"
 	color_r = 0.7
 	color_g = 0.7
 	color_b = 0.8
@@ -905,6 +968,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	desc = "Security has the constitutionality of a vending machine."
 	icon_state = "nthelm"
 	item_state = "nthelm"
+	wear_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = 0
@@ -920,12 +984,14 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 #ifdef UNDERWATER_MAP
 	icon_state = "diving_suit-industrial"
 	item_state = "diving_suit-industrial"
+	wear_state = "diving_suit_industrial"
 	name = "industrial diving helmet"
 	desc = "Goes with Industrial Diving Suit. Now with a fresh mint-scented visor!"
 
 #else
 	icon_state = "indus"
 	item_state = "indus"
+	wear_state = "indus"
 	name = "industrial space helmet"
 	desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 #endif
@@ -1016,6 +1082,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 	desc = "Ooh, fancy."
 	icon_state = "indusred"
 	item_state = "indusred"
+	wear_state = "indusred"
 	is_syndicate = 1
 	blocked_from_petasusaphilic = TRUE
 
@@ -1032,6 +1099,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial/salvager)
 	desc = "A heavily modified industrial mining helmet, it's been retrofitted for combat use."
 	icon_state = "salvager-heavy"
 	item_state = "salvager-heavy"
+	wear_state = "salvager-heavy"
 	blocked_from_petasusaphilic = TRUE
 	has_visor = TRUE
 	visor_color_lst = list(
@@ -1053,6 +1121,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Goes with Mining Combat Armor. Now with sweet strawberry-scented visor!"
 	icon_state = "mining_combat"
 	item_state = "mining_combat"
+	wear_state = "mining_combat"
 
 	setupProperties()
 		..()
@@ -1067,6 +1136,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Someone's cut out a bit of this bucket so you can put it on your head."
 	icon_state = "buckethelm"
 	item_state = "buckethelm"
+	wear_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
@@ -1080,6 +1150,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		desc = "Someone's cut out a bit of this bucket so you can put it on your head. It's red, and it kinda remind you of something."
 		icon_state = "buckethelm-r"
 		item_state = "buckethelm-r"
+		wear_state = "buckethelm-r"
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -1095,6 +1166,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Looks like this bucket has been turned upside down so it can be used as a hat."
 	icon_state = "buckethat"
 	item_state = "buckethat"
+	wear_state = "buckethat"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	block_vision = 1
 	seal_hair = 1
@@ -1121,6 +1193,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		desc = "Looks like this bucket has been turned upside down so it can be used as a hat. It's red."
 		icon_state = "buckethat-r"
 		item_state = "buckethat-r"
+		wear_state = "buckethat-r"
 		bucket_type = /obj/item/reagent_containers/glass/bucket/red
 
 /obj/item/clothing/head/helmet/greek
@@ -1128,6 +1201,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	desc = "Is this what the gladiators wore?"
 	c_flags = COVERSEYES
 	icon_state = "gr_helmet"
+	wear_state = "gr_helmet"
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 2)
@@ -1144,6 +1218,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "firefighter"
 	item_state = "firefighter"
+	wear_state = "firefighter"
 	seal_hair = 1
 
 	setupProperties()
@@ -1160,6 +1235,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 	c_flags = COVERSEYES | BLOCKCHOKE
 	icon_state = "helmet-captain"
 	item_state = "helmet-captain"
+	wear_state = "helmet-captain"
 
 	setupProperties()
 		..()
@@ -1170,9 +1246,11 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/mining_combat)
 		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of blue befitting of a commander"
 		icon_state = "helmet-captain-blue"
 		item_state = "helmet-captain-blue"
+		wear_state = "helmet-captain-blue"
 
 	red
 		name = "\improper CentCom helmet"
 		desc = "Somewhat protects an important person's head from being bashed in. Comes in a stylish shade of red befitting of an executive"
 		icon_state = "helmet-captain-red"
 		item_state = "helmet-captain-red"
+		wear_state = "helmet-captain-red"

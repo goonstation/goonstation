@@ -6,6 +6,7 @@
 	icon_state = "headset"
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	item_state = "headset"
+	wear_state = "headset"
 	w_class = W_CLASS_TINY
 	rand_pos = 0
 	var/protective_temperature = 0
@@ -74,6 +75,7 @@
 	name = "command headset"
 	desc = "A radio headset capable of communicating over the Command frequency, for use by support staff."
 	icon_state = "command headset"
+	wear_state = "command headset"
 	secure_frequencies = list("h" = R_FREQ_COMMAND)
 	secure_classes = list("h" = RADIOCL_COMMAND)
 	icon_override = "head"
@@ -122,6 +124,7 @@
 	name = "captain's headset"
 	desc = "So the captain can know exactly what's going on around the station while doing nothing about any of it."
 	icon_state = "captain headset"
+	wear_state = "captain headset"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
@@ -145,6 +148,7 @@
 	name = "radio show host's headphones"
 	desc = "This is a pair of wireless studio headphones with a pastel retro look and a flip-down mic. Either someone's really passionate about their work, or they want to look old-school. Maybe both!"
 	icon_state = "radio"
+	wear_state = "radio"
 	secure_frequencies = list(
 		"e" = R_FREQ_ENGINEERING,
 		"r" = R_FREQ_RESEARCH,
@@ -271,6 +275,7 @@
 	name = "security headset"
 	desc = "Worn by security officers, this thing could cause real problems in the wrong ears."
 	icon_state = "sec headset"
+	wear_state = "sec headset"
 	secure_frequencies = list("g" = R_FREQ_SECURITY)
 	secure_classes = list(
 		"g" = RADIOCL_SECURITY,
@@ -288,6 +293,7 @@
 	name = "detective's headset"
 	desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."
 	icon_state = "sec headset" //I see no use for a special sprite for the det headset itself.
+	wear_state = "sec headset"
 	secure_frequencies = list(
 		"g" = R_FREQ_SECURITY,
 		"d" = R_FREQ_DETECTIVE,
@@ -303,6 +309,7 @@
 	name = "engineering headset"
 	desc = "They stopped spending extra money trying to make these heat-resistant a while ago."
 	icon_state = "engine headset"
+	wear_state = "engine headset"
 	secure_frequencies = list("e" = R_FREQ_ENGINEERING)
 	secure_classes = list(
 		"e" = RADIOCL_ENGINEERING,
@@ -314,6 +321,7 @@
 	name = "medical headset"
 	desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
 	icon_state = "med headset"
+	wear_state = "med headset"
 	secure_frequencies = list("m" = R_FREQ_MEDICAL)
 	secure_classes = list(
 		"m" = RADIOCL_MEDICAL,
@@ -325,6 +333,7 @@
 	name = "research headset"
 	desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
 	icon_state = "research headset"
+	wear_state = "research headset"
 	secure_frequencies = list("r" = R_FREQ_RESEARCH)
 	secure_classes = list(
 		"r" = RADIOCL_RESEARCH,
@@ -336,6 +345,7 @@
 	name = "civilian headset"
 	desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
 	icon_state = "civ headset"
+	wear_state = "civ headset"
 	secure_frequencies = list("c" = R_FREQ_CIVILIAN)
 	secure_classes = list(
 		"c" = RADIOCL_CIVILIAN,
@@ -346,6 +356,7 @@
 	name = "shipping headset"
 	desc = "Used by the station's quartermasters, who move freight and master the art of watching numbers go up and down."
 	icon_state = "shipping headset"
+	wear_state = "shipping headset"
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING,
 	"c" = R_FREQ_CIVILIAN)
@@ -360,6 +371,7 @@
 	name = "mining headset"
 	desc = "Rumor has it that these grow naturally in space, typically alongside discarded breath masks or space suits drenched in human blood. Nature is beautiful."
 	icon_state = "shipping headset"
+	wear_state = "shipping headset"
 	secure_frequencies = list(
 	"e" = R_FREQ_ENGINEERING)
 	secure_classes = list(
@@ -372,6 +384,7 @@
 	name = "mailman's headset"
 	desc = "In a land of belt hells, the pit fiend is king."
 	icon_state = "command headset"
+	wear_state = "command headset"
 	secure_frequencies = list(
 	"h" = R_FREQ_COMMAND,
 	"e" = R_FREQ_ENGINEERING)
@@ -392,6 +405,7 @@
 	name = "\improper Ghost Buster's headset"
 	desc = "So you can hear those who are calling you when there's something strange in their department."
 	icon_state = "multi headset"
+	wear_state = "multi headset"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY,
@@ -415,6 +429,7 @@
 	name = "\improper NT Commander's headset"
 	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
 	icon_state = "command headset"
+	wear_state = "command headset"
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"g" = R_FREQ_SECURITY
@@ -430,6 +445,7 @@
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
 	icon_state = "headset"
+	wear_state = "headset"
 	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
@@ -456,6 +472,7 @@
 		secure_frequencies = list("z" = R_FREQ_SYNDICATE, "l"=R_FREQ_LOUDSPEAKERS)
 		secure_classes = list("z" = RADIOCL_SYNDICATE, "l"=RADIOC_OTHER)
 		icon_state = "comtac"
+		wear_state = "comtac"
 
 		New()
 			..()
@@ -472,6 +489,7 @@
 					plugs.name = src.name
 					plugs.desc = src.desc
 					plugs.icon_state = src.icon_state
+					plugs.wear_state = src.wear_state
 					user.u_equip(src)
 					qdel(src)
 					user.put_in_hand_or_drop(plugs)
@@ -483,6 +501,7 @@
 	comtac
 		name = "military headset"
 		icon_state = "comtac"
+		wear_state = "comtac"
 		desc = "A two-way radio headset designed to protect the wearer from dangerous levels of noise during gunfights."
 
 		New()
@@ -501,6 +520,7 @@
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
 	icon_state = "headset"
+	wear_state = "headset"
 	chat_class = RADIOCL_SYNDICATE
 	locked_frequency = TRUE
 	secure_frequencies = list("p" = R_FREQ_PIRATE)
@@ -526,6 +546,7 @@
 	name = "auditory headset"
 	desc = "A radio headset that also interfaces with the ear canal, allowing the deaf to hear normally while wearing it."
 	icon_state = "deaf headset"
+	wear_state = "deaf headset"
 	item_state = "headset"
 	block_hearing_when_worn = HEARING_ANTIDEAF
 
@@ -540,6 +561,7 @@
 	name = "multi-frequency headset"
 	desc = "A radio headset that can communicate over multiple customizable channels."
 	icon_state = "multi headset"
+	wear_state = "multi headset"
 	secure_frequencies = list("q" = R_FREQ_MULTI)
 	secure_classes = list(RADIOCL_OTHER)
 

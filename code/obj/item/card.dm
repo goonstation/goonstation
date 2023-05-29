@@ -33,6 +33,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "Electromagnetic Card"
 	icon_state = "emag"
 	item_state = "card-id"
+	wear_state = "emag"
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	layer = 6.0 // TODO fix layer
 	is_syndicate = 1
@@ -63,6 +64,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "data card"
 	icon_state = "data"
 	item_state = "card-id"
+	wear_state = "data"
 	desc = "A microchipped card used for storing data."
 	var/datum/reagent_group_account/reagent_account = null
 
@@ -73,6 +75,7 @@ TYPEINFO(/obj/item/card/emag)
 	icon_state = "id"
 	uses_multiple_icon_states = 1
 	item_state = "card-id"
+	wear_state = "id"
 	desc = "A standardized NanoTrasen microchipped identification card that contains data that is scanned when attempting to access various doors and computers."
 	flags = FPRINT | TABLEPASS | ATTACK_SELF_DELAY
 	click_delay = 0.4 SECONDS
@@ -117,18 +120,23 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/command
 	icon_state = "id_com"
+	wear_state = "id_com"
 
 /obj/item/card/id/security
 	icon_state = "id_sec"
+	wear_state = "id_sec"
 
 /obj/item/card/id/research
 	icon_state = "id_res"
+	wear_state = "id_res"
 
 /obj/item/card/id/engineering
 	icon_state = "id_eng"
+	wear_state = "id_eng"
 
 /obj/item/card/id/civilian
 	icon_state = "id_civ"
+	wear_state = "id_civ"
 
 /obj/item/card/id/clown
 	icon_state = "id_clown"
@@ -139,6 +147,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "identification card"
 	icon_state = "gold"
 	item_state = "gold_id"
+	wear_state = "gold"
 	desc = "This card is important!"
 	keep_icon = TRUE
 
@@ -146,6 +155,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "Deluxe ID"
 	icon_state = "gold"
 	item_state = "gold_id"
+	wear_state = "gold"
 	registered = "Member"
 	assignment = "Member"
 	keep_icon = TRUE
@@ -154,6 +164,7 @@ TYPEINFO(/obj/item/card/emag)
 	name = "Captain's spare ID"
 	icon_state = "gold"
 	item_state = "gold_id"
+	wear_state = "gold"
 	registered = "Captain"
 	assignment = "Captain"
 	keep_icon = TRUE
@@ -185,6 +196,7 @@ TYPEINFO(/obj/item/card/emag)
 	nanotrasen
 		name = "NanoTrasen Pilot"
 		icon_state = "polaris"
+		wear_state = "polaris"
 		assignment = "NanoTrasen Pilot"
 		access = list(access_heads)
 		team = 1
@@ -197,6 +209,7 @@ TYPEINFO(/obj/item/card/emag)
 	syndicate
 		name = "Syndicate Pilot"
 		icon_state = "id_syndie"
+		wear_state = "id_syndie"
 		assignment = "Syndicate Pilot"
 		access = list(access_syndicate_shuttle)
 		team = 2
@@ -209,6 +222,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/dabbing_license
 	name = "Dabbing License"
 	icon_state = "id_dab"
+	wear_state = "id_dab"
 	registered = "Dabber"
 	assignment = "Dabber"
 	desc = "This card authorizes the person wearing it to perform sick dabs."
@@ -299,18 +313,25 @@ TYPEINFO(/obj/item/card/emag)
 				src.icon_state = "id_clown"
 			if ("golden")
 				src.icon_state = "gold"
+				src.wear_state = "gold"
 			if ("No band")
 				src.icon_state = "id"
+				src.wear_state = "id"
 			if ("blue")
 				src.icon_state = "id_civ"
+				src.wear_state = "id_civ"
 			if ("red")
 				src.icon_state = "id_sec"
+				src.wear_state = "id_sec"
 			if ("green")
 				src.icon_state = "id_com"
+				src.wear_state = "id_com"
 			if ("purple")
 				src.icon_state = "id_res"
+				src.wear_state = "id_res"
 			if ("yellow")
 				src.icon_state = "id_eng"
+				src.wear_state = "id_eng"
 			else
 				return // Abort process.
 		src.registered = reg
@@ -345,6 +366,7 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/temporary
 	name = "temporary identification card"
 	icon_state = "id"
+	wear_state = "id"
 	item_state = "card-id"
 	desc = "A temporary NanoTrasen Identification Card. Its access will be revoked once it expires."
 	var/duration = 60 //seconds
@@ -399,21 +421,27 @@ TYPEINFO(/obj/item/card/emag)
 				assignment = "Gauntlet Newbie ([matches] rounds played)"
 			if (1 to 10)
 				icon_state = "id_civ"
+				wear_state = "id_civ"
 				assignment = "Rookie Gladiator ([matches] rounds played)"
 			if (11 to 20)
 				icon_state = "id_res"
+				wear_state = "id_res"
 				assignment = "Beginner Gladiator ([matches] rounds played)"
 			if (21 to 35)
 				icon_state = "id_eng"
+				wear_state = "id_eng"
 				assignment = "Skilled Gladiator ([matches] rounds played)"
 			if (36 to 55)
 				icon_state = "id_sec"
+				wear_state = "id_sec"
 				assignment = "Advanced Gladiator ([matches] rounds played)"
 			if (56 to 75)
 				icon_state = "id_com"
+				wear_state = "id_com"
 				assignment = "Expert Gladiator ([matches] rounds played)"
 			if (76 to INFINITY)
 				icon_state = "gold"
+				wear_state = "gold"
 				assignment = "Legendary Gladiator ([matches] rounds played)"
 			else
 				assignment = "what the fuck ([matches] rounds played)"

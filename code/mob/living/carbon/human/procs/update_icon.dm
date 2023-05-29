@@ -110,7 +110,7 @@
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
 		suit_image.filters = src.w_uniform.filters.Copy()
-		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
+		var/wear_state = src.w_uniform.wear_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["uniform"])
 			suit_image.icon = src.mutantrace.clothing_icons["uniform"]
 		else
@@ -153,7 +153,7 @@
 /mob/living/carbon/human/proc/update_id(head_offset)
 	if (src.wear_id)
 		wear_sanity_check(src.wear_id)
-		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
+		var/wear_state = src.wear_id.wear_state
 		var/no_offset = 0
 		if (wear_state in src.mutantrace?.clothing_icon_states?["id"])
 			src.wear_id.wear_image.icon = src.mutantrace.clothing_icons["id"]
@@ -258,7 +258,7 @@
 /mob/living/carbon/human/proc/update_shoes()
 	if (src.shoes)
 		wear_sanity_check(src.shoes)
-		var/wear_state = src.shoes.wear_state || src.shoes.icon_state
+		var/wear_state = src.shoes.wear_state
 		src.shoes.wear_image.layer = src.shoes.wear_layer
 		src.shoes.wear_image.color = src.shoes.color
 		src.shoes.wear_image.alpha = src.shoes.alpha
@@ -327,7 +327,7 @@
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
 		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy()
 
-		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
+		var/wear_state = src.wear_suit.wear_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["overcoats"])
 			src.wear_suit.wear_image.icon = src.mutantrace.clothing_icons["overcoats"]
 		else
@@ -390,7 +390,7 @@
 /mob/living/carbon/human/proc/update_back(body_offset)
 	if (src.back)
 		wear_sanity_check(src.back)
-		var/wear_state = src.back.wear_state || src.back.icon_state
+		var/wear_state = src.back.wear_state
 		var/no_offset = FALSE
 		if (wear_state in src.mutantrace?.clothing_icon_states?["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = src.mutantrace.clothing_icons["back"]
@@ -426,7 +426,7 @@
 /mob/living/carbon/human/proc/update_glasses(head_offset)
 	if (src.glasses)
 		wear_sanity_check(src.glasses)
-		var/wear_state = src.glasses.wear_state || src.glasses.icon_state
+		var/wear_state = src.glasses.wear_state
 		var/no_offset = FALSE
 		if (wear_state in src.mutantrace?.clothing_icon_states?["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
 			src.glasses.wear_image.icon = src.mutantrace.clothing_icons["eyes"]
@@ -459,7 +459,7 @@
 	if (src.ears)
 		wear_sanity_check(src.ears)
 		var/no_offset = FALSE
-		var/wear_state = src.ears.wear_state || src.ears.icon_state
+		var/wear_state = src.ears.wear_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
 			src.ears.wear_image.icon = src.mutantrace.clothing_icons["ears"]
 			no_offset = TRUE
@@ -491,7 +491,7 @@
 		wear_sanity_check(src.wear_mask)
 		var/no_offset = FALSE
 
-		var/wear_state = src.wear_mask.wear_state || src.wear_mask.icon_state
+		var/wear_state = src.wear_mask.wear_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["mask"])
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icons["mask"]
 			no_offset = TRUE
@@ -536,7 +536,7 @@
 		wear_sanity_check(src.head)
 
 		var/no_offset = FALSE
-		var/wear_state = src.head.wear_state || src.head.icon_state
+		var/wear_state = src.head.wear_state
 		if (wear_state in src.mutantrace?.clothing_icon_states?["head"])
 			src.head.wear_image.icon = src.mutantrace.clothing_icons["head"]
 			no_offset = TRUE
@@ -576,9 +576,9 @@
 		UpdateOverlays(null, "material_head")
 
 /mob/living/carbon/human/proc/update_belt(body_offset)
-	if (src.belt)
+	if (src.belt && src.belt.wear_state)
 		wear_sanity_check(src.belt)
-		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
+		var/wear_state = src.belt.wear_state
 		var/no_offset = FALSE
 		//
 		if (wear_state in src.mutantrace?.clothing_icon_states?["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
