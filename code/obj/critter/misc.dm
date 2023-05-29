@@ -367,38 +367,6 @@
 	cleanable_type = /obj/decal/cleanable/tomatosplat
 	what_is_sucked_out = "ketchup"
 
-/obj/critter/blobman
-	name = "mutant"
-	desc = "Some sort of horrific, pulsating blob of flesh."
-	icon_state = "blobman"
-	density = 1
-	health = 15
-	aggressive = 1
-	defensive = 0
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
-	atkcarbon = 1
-	atksilicon = 1
-	atcritter = 1
-	firevuln = 0.75
-	brutevuln = 0.5
-	death_text = "%src% collapses into viscera."
-	atk_text = "flails against"
-	atk_brute_amt = 6
-	crit_text = "flails heavily against"
-	crit_brute_amt = 12
-	chase_text = "headbutts"
-
-	CritterAttack(mob/M)
-		..()
-		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
-
-	ChaseAttack(mob/M)
-		..()
-		if(iscarbon(M))
-			if (prob(5)) M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, rand(2,5),1)
-
 /obj/critter/ancient_thing
 	name = "???"
 	desc = "What the hell is that?"
