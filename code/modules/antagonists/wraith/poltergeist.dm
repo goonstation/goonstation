@@ -1,7 +1,7 @@
-/datum/antagonist/subordinate/intangible/poltergeist
+/datum/antagonist/subordinate/mob/intangible/poltergeist
 	id = ROLE_POLTERGEIST
 	display_name = "poltergeist"
-	intangible_mob_path = /mob/living/intangible/wraith/poltergeist
+	mob_path = /mob/living/intangible/wraith/poltergeist
 
 	give_equipment()
 		var/mob/current_mob = src.owner.current

@@ -698,7 +698,7 @@
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
 "VY" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Xo" = (
 /turf/simulated/wall/auto/reinforced/jen/dark4,

@@ -674,6 +674,9 @@
 	. = ..()
 
 /mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
+	// shittery that breaks text or worse
+	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+	message = replacetext(message, shittery_regex, "")
 	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
@@ -1045,7 +1048,7 @@
 
 	var/heardname = src.real_name
 
-	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !(src.organHolder.head?.head_type == HEAD_SKELETON)
 
 	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
@@ -1076,6 +1079,11 @@
 					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
 						listening |= M
 	else
+		if (ismob(say_location.loc) && is_decapitated_skeleton) // if we're the head of a talking mob we arent linked to
+			var/mob/living/L = say_location.loc
+			if (L.organHolder.head == say_location)
+				say_location = L
+
 		olocs = obj_loc_chain(say_location)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
@@ -1167,7 +1175,8 @@
 			if (is_decapitated_skeleton) // for skeleton heads
 				var/mob/living/carbon/human/H = src
 				var/datum/mutantrace/skeleton/S = H.mutantrace
-				holder = S.head_tracker?.chat_text
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
 			if (holder)
 				for(var/image/chat_maptext/I in holder.lines)
 					if(I != chat_text)
@@ -2201,7 +2210,7 @@
 /mob/living/get_desc(dist, mob/user)
 	. = ..()
 	if (isdead(src) && src.last_words && (user?.traitHolder?.hasTrait("training_chaplain") || istype(user, /mob/dead/observer)))
-		. += "<br>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\"."
+		. += "<br><span class='deadsay' style='font-size:1.2em;font-weight:bold;'>[capitalize(his_or_her(src))] last words were: \"[src.last_words]\".</span>"
 
 /mob/living/lastgasp(allow_dead=FALSE, grunt=null)
 	set waitfor = FALSE

@@ -35,6 +35,8 @@
 	//note: this is not the best way to do this, but I'm showing it here as an example. It is better to create a peaceful AI holder with no attack tasks and use that.
 	var/aggressive = TRUE
 
+	faction = FACTION_WIZARD
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -47,7 +49,6 @@
 
 	valid_target(mob/living/C)
 		if (C.ckey == null) return FALSE //do not attack non-threats ie. NPC monkeys and AFK players
-		if (iswizard(C)) return FALSE //do not attack our master
 		. = ..()
 
 	seek_target(var/range)

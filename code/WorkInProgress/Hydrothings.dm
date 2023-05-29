@@ -463,7 +463,7 @@ obj/item/gnomechompski/elf
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
 
 		if(2)
-			playsound(affected_mob, 'sound/effects/Heart Beat.ogg', 70, 1)
+			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, 1)
 			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
 					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
