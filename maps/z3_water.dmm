@@ -10,197 +10,15 @@
 /obj/item/raw_material/rock,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
-"ad" = (
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/evilreaver/security)
-"ae" = (
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ag" = (
-/obj/crevice{
-	pixel_y = 30
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ai" = (
-/obj/landmark/artifact,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aj" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib3"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ak" = (
-/obj/item/clothing/suit/cardboard_box/captain,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"al" = (
-/obj/storage/crate/loot,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"am" = (
-/obj/npc/trader/martian,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ao" = (
-/obj/map/light/dimred,
-/obj/portalmartian,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ap" = (
-/obj/storage/crate,
-/obj/item/clothing/head/genki,
-/obj/item/storage/rockit,
-/obj/item/raw_material/miracle,
-/obj/item/clothing/suit/space/suv,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aq" = (
-/obj/critter/martian/soldier,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"ar" = (
-/obj/decal/cleanable/blood,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"as" = (
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"at" = (
-/obj/critter/martian/soldier/dead,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aw" = (
-/obj/map/light/white,
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/evilreaver/security)
 "ax" = (
 /turf/unsimulated/wall/auto/supernorn,
 /area/dank_trench)
-"az" = (
-/obj/decal/aliencomputer{
-	pixel_x = 32
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aA" = (
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aB" = (
-/obj/critter/martian/warrior,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aC" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aD" = (
-/obj/marker/supplymarker,
-/obj/decal/fakeobjects/teleport_pad,
-/obj/map/light/dimred,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aF" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibdown1"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aI" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some manner of martian experimentation thingamajig.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "martian-2";
-	name = "martian machine"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aK" = (
-/obj/crevice{
-	pixel_y = -30
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibmid2"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aL" = (
-/obj/machinery/door/unpowered/martian,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aM" = (
-/obj/machinery/martianbomb,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aN" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aO" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aP" = (
-/obj/item/paper/courtroom{
-	name = "paper- 'A Crash Course in Legal SOP"
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aQ" = (
-/obj/decal/aliencomputer{
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aR" = (
-/obj/item/device/infra_sensor,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
 "aS" = (
 /turf/unsimulated/wall/trench,
 /area/space)
-"aT" = (
-/obj/critter/martian/psychic,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aU" = (
-/obj/portrait_sneaky,
-/turf/unsimulated/wall/auto/adventure/martian,
-/area/evilreaver/security)
 "aW" = (
 /turf/unsimulated/wall/trench/side,
 /area/space)
-"aX" = (
-/obj/item/paper/sop,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
-"aY" = (
-/obj/storage/crate,
-/obj/item/aiboss_tape/martian,
-/obj/item/clothing/head/XComHair,
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
 "aZ" = (
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside)
@@ -3212,19 +3030,77 @@
 /obj/decoration/ntcratesmall,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
-"ps" = (
+"jF" = (
+/obj/item/reagent_containers/glass/bottle/holywater,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"kw" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib1"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"lr" = (
+/obj/item/clothing/suit/cardboard_box/captain,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"ne" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian experimentation thingamajig.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-2";
+	name = "martian machine"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"nE" = (
+/obj/storage/crate,
+/obj/item/clothing/head/genki,
+/obj/item/storage/rockit,
+/obj/item/raw_material/miracle,
+/obj/item/clothing/suit/space/suv,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"pX" = (
+/obj/storage/crate/loot,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"rt" = (
+/obj/decal/aliencomputer{
+	pixel_x = 32
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"rU" = (
+/obj/portrait_sneaky,
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/evilreaver/security)
+"sM" = (
+/obj/item/paper/sop,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"tO" = (
+/obj/crevice{
+	pixel_y = -30
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid2"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"uV" = (
 /obj/indestructible/shuttle_corner{
-	dir = 9;
+	dir = 10;
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
-"pQ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+"xd" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
 	},
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
@@ -3258,12 +3134,6 @@
 "Bg" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/mantavault)
-"Bq" = (
-/obj/crevice{
-	pixel_x = -28
-	},
-/turf/unsimulated/martian/floor,
-/area/evilreaver/security)
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
@@ -3271,11 +3141,141 @@
 /turf/space,
 /turf/space,
 /area/space)
+"Dz" = (
+/obj/item/device/infra_sensor,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Em" = (
+/obj/map/light/dimred,
+/obj/portalmartian,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"FF" = (
+/obj/crevice{
+	pixel_x = -28
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"FT" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Gj" = (
+/obj/critter/martian/soldier/dead,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Go" = (
+/obj/critter/martian/warrior,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Hn" = (
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/evilreaver/security)
+"Hv" = (
+/obj/storage/crate,
+/obj/item/aiboss_tape/martian,
+/obj/item/clothing/head/XComHair,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"In" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
-"WI" = (
-/obj/item/reagent_containers/glass/bottle/holywater,
+"Iz" = (
+/obj/critter/martian/psychic,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"JZ" = (
+/obj/critter/martian/soldier,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"KR" = (
+/obj/landmark/artifact,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Mi" = (
+/obj/marker/supplymarker,
+/obj/decal/fakeobjects/teleport_pad,
+/obj/map/light/dimred,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Na" = (
+/obj/item/paper/courtroom{
+	name = "paper- 'A Crash Course in Legal SOP"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Ns" = (
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Pt" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Qm" = (
+/obj/machinery/martianbomb,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Qw" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Rb" = (
+/obj/decal/aliencomputer{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"RH" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib3"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Sk" = (
+/obj/npc/trader/martian,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"Td" = (
+/obj/machinery/door/unpowered/martian,
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"TR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"UF" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/turf/unsimulated/martian/floor,
+/area/evilreaver/security)
+"XC" = (
+/obj/map/light/white,
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/evilreaver/security)
+"Yb" = (
+/obj/decal/cleanable/blood,
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 
@@ -3583,11 +3583,11 @@ gW
 "}
 (2,1,1) = {"
 ab
-ad
-ad
-ad
-ad
-ad
+Hn
+Hn
+Hn
+Hn
+Hn
 ab
 ab
 ab
@@ -3885,11 +3885,11 @@ gW
 "}
 (3,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ad
+Hn
+Ns
+Ns
+Ns
+Hn
 ab
 ab
 ab
@@ -4187,11 +4187,11 @@ gW
 "}
 (4,1,1) = {"
 ab
-ad
-ae
-ao
-ae
-ad
+Hn
+Ns
+Em
+Ns
+Hn
 ab
 ab
 ab
@@ -4489,11 +4489,11 @@ gW
 "}
 (5,1,1) = {"
 ab
-ad
-ae
-ae
-az
-ad
+Hn
+Ns
+Ns
+rt
+Hn
 ab
 ab
 ab
@@ -4791,13 +4791,13 @@ gW
 "}
 (6,1,1) = {"
 ab
-ad
-ad
-aL
-aw
-ad
-ad
-ad
+Hn
+Hn
+Td
+XC
+Hn
+Hn
+Hn
 ab
 aS
 aS
@@ -4822,10 +4822,10 @@ br
 br
 br
 bw
-bt
-bt
-bt
-bt
+br
+br
+br
+br
 fv
 dn
 bt
@@ -5093,13 +5093,13 @@ gW
 "}
 (7,1,1) = {"
 ab
-ad
-ps
-ae
-ae
-aO
-ad
-ad
+Hn
+TR
+Ns
+Ns
+uV
+Hn
+Hn
 ab
 aS
 aS
@@ -5395,13 +5395,13 @@ gW
 "}
 (8,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ae
-ae
-ad
+Hn
+Ns
+Ns
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -5697,13 +5697,13 @@ gW
 "}
 (9,1,1) = {"
 ab
-ad
-ag
-aq
-ar
-aF
-ai
-ad
+Hn
+In
+JZ
+Yb
+UF
+KR
+Hn
 ab
 aS
 aS
@@ -5999,13 +5999,13 @@ gW
 "}
 (10,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ae
-ae
-ad
+Hn
+Ns
+Ns
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -6301,13 +6301,13 @@ gW
 "}
 (11,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ae
-aq
-ad
+Hn
+Ns
+Ns
+Ns
+Ns
+JZ
+Hn
 ab
 aS
 aS
@@ -6603,13 +6603,13 @@ gW
 "}
 (12,1,1) = {"
 ab
-ad
-ai
-ae
-aA
-as
-ae
-ad
+Hn
+KR
+Ns
+xd
+Qw
+Ns
+Hn
 ab
 aS
 aS
@@ -6905,13 +6905,13 @@ gW
 "}
 (13,1,1) = {"
 ab
-ad
-ae
-ae
-aB
-ae
-aK
-ad
+Hn
+Ns
+Ns
+Go
+Ns
+tO
+Hn
 ab
 aS
 aS
@@ -7207,13 +7207,13 @@ gW
 "}
 (14,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ae
-ae
-ad
+Hn
+Ns
+Ns
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -7509,13 +7509,13 @@ gW
 "}
 (15,1,1) = {"
 ab
-ad
-ae
-aq
-ae
-ae
-ae
-ad
+Hn
+Ns
+JZ
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -7811,13 +7811,13 @@ gW
 "}
 (16,1,1) = {"
 ab
-ad
-ag
-ar
-aC
-ae
-ai
-ad
+Hn
+In
+Yb
+kw
+Ns
+KR
+Hn
 ab
 aS
 aS
@@ -8113,13 +8113,13 @@ gW
 "}
 (17,1,1) = {"
 ab
-ad
-aj
-as
-ae
-ae
-ae
-ad
+Hn
+RH
+Qw
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -8415,13 +8415,13 @@ gW
 "}
 (18,1,1) = {"
 ab
-ad
-pQ
-ae
-aq
-ae
-ae
-ad
+Hn
+Pt
+Ns
+JZ
+Ns
+Ns
+Hn
 ab
 aS
 aS
@@ -8717,13 +8717,13 @@ gW
 "}
 (19,1,1) = {"
 ab
-ad
-ad
-ad
-pQ
-ae
-ae
-ad
+Hn
+Hn
+Hn
+Pt
+Ns
+Ns
+Hn
 ab
 ab
 ab
@@ -9019,19 +9019,19 @@ gW
 "}
 (20,1,1) = {"
 ab
-ad
-ad
-ad
-ad
-ad
-aL
-ad
-ad
-ad
-ad
-ad
-ad
-ad
+Hn
+Hn
+Hn
+Hn
+Hn
+Td
+Hn
+Hn
+Hn
+Hn
+Hn
+Hn
+Hn
 ab
 aS
 aW
@@ -9321,19 +9321,19 @@ gW
 "}
 (21,1,1) = {"
 ab
-ad
-ad
-ad
-ad
-ps
-ae
-ae
-ae
-aO
-ad
-ad
-ad
-ad
+Hn
+Hn
+Hn
+Hn
+TR
+Ns
+Ns
+Ns
+uV
+Hn
+Hn
+Hn
+Hn
 ab
 aS
 aW
@@ -9623,19 +9623,19 @@ gW
 "}
 (22,1,1) = {"
 ab
-ad
-ae
-Bq
-ae
-ae
-ae
-ae
-ae
-WI
-ae
-aM
-ae
-ad
+Hn
+Ns
+FF
+Ns
+Ns
+Ns
+Ns
+Ns
+jF
+Ns
+Qm
+Ns
+Hn
 ab
 aS
 aW
@@ -9925,19 +9925,19 @@ gW
 "}
 (23,1,1) = {"
 ab
-ad
-al
-at
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ae
-ap
-ad
+Hn
+pX
+Gj
+Ns
+Ns
+Ns
+Ns
+Ns
+Ns
+Ns
+Ns
+nE
+Hn
 ab
 aS
 aW
@@ -10227,19 +10227,19 @@ gW
 "}
 (24,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-aI
-ae
-aN
-pQ
-ae
-ae
-aI
-ae
-ad
+Hn
+Ns
+Ns
+Ns
+ne
+Ns
+FT
+Pt
+Ns
+Ns
+ne
+Ns
+Hn
 ab
 aS
 aW
@@ -10529,19 +10529,19 @@ gW
 "}
 (25,1,1) = {"
 ab
-ad
-am
-ae
-ae
-ae
-ae
-ad
-ad
-aP
-ae
-ae
-aX
-ad
+Hn
+Sk
+Ns
+Ns
+Ns
+Ns
+Hn
+Hn
+Na
+Ns
+Ns
+sM
+Hn
 ab
 aS
 aW
@@ -10831,19 +10831,19 @@ gW
 "}
 (26,1,1) = {"
 ab
-ad
-ae
-ae
-ae
-ae
-aM
-ad
-aw
-aQ
-ae
-ae
-aY
-ad
+Hn
+Ns
+Ns
+Ns
+Ns
+Qm
+Hn
+XC
+Rb
+Ns
+Ns
+Hv
+Hn
 ab
 aS
 aW
@@ -11133,19 +11133,19 @@ gW
 "}
 (27,1,1) = {"
 ab
-ad
-al
-ae
-at
-ae
-aN
-ad
-ad
-aR
-ae
-ae
-ae
-ad
+Hn
+pX
+Ns
+Gj
+Ns
+FT
+Hn
+Hn
+Dz
+Ns
+Ns
+Ns
+Hn
 ab
 aS
 aW
@@ -11435,19 +11435,19 @@ gW
 "}
 (28,1,1) = {"
 ab
-ad
-ae
-az
-aD
-ae
-ad
-ad
-ad
-ak
-ae
-aT
-ae
-ad
+Hn
+Ns
+rt
+Mi
+Ns
+Hn
+Hn
+Hn
+lr
+Ns
+Iz
+Ns
+Hn
 ab
 aS
 aW
@@ -11737,19 +11737,19 @@ gW
 "}
 (29,1,1) = {"
 ab
-ad
-ad
-aw
-ad
-ad
-ad
-ad
-ad
-ad
-ad
-aU
-ad
-ad
+Hn
+Hn
+XC
+Hn
+Hn
+Hn
+Hn
+Hn
+Hn
+Hn
+rU
+Hn
+Hn
 ab
 aS
 aS

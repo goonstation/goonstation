@@ -54,12 +54,13 @@
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		//if (src.client)
-		//	src.client.show_popup_menus = 0
-		for(var/key in aiImages)
-			var/image/I = aiImages[key]
-			src.client << I
-		SPAWN(0)
+		var/client_color = src.client.color
+		src.client.color = "#000000"
+		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
+			for(var/key in aiImages)
+				var/image/I = aiImages[key]
+				src.client << I
+			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]
@@ -68,14 +69,13 @@
 					LAGCHECK(LAG_LOW)
 
 	Logout()
-		//if (src.client)
-		//	src.client.show_popup_menus = 1
 		var/client/cl = src.last_client
-		if(cl)
+		if (!cl)
+			return ..()
+		SPAWN(0)
 			for(var/key in aiImages)
 				var/image/I = aiImages[key]
-				cl.images -= I
-		SPAWN(0)
+				cl?.images -= I
 			var/sleep_counter = 0
 			for(var/key in aiImagesLowPriority)
 				var/image/I = aiImagesLowPriority[key]

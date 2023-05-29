@@ -72,6 +72,8 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
+
+			setup_z_level_parallax_settings()
 		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm

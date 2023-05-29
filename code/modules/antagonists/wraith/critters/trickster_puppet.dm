@@ -4,7 +4,6 @@
 	name = "Trickster puppet"
 	desc = "A strange shell of a person looking straight ahead with lifeless eyes."
 	density = 1
-	faction = MOB_AI_FACTION_WRAITH
 	icon_state = "shade"
 	speechverb_say = "says"
 	speechverb_exclaim = "exclaims"
@@ -19,6 +18,8 @@
 	var/last_life_update = 0
 	var/traps_laid = 0
 	var/datum/abilityHolder/wraith/AH = null
+
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
 		..(T)

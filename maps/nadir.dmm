@@ -2487,14 +2487,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
-"bgC" = (
-/obj/mail_booth,
-/turf/simulated/floor/blackwhite{
-	dir = 10
-	},
-/area/station/hallway/secondary/entry{
-	name = "Arrival Shuttle Hallway"
-	})
 "bgG" = (
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -82821,7 +82813,7 @@ rJg
 fDm
 gfS
 aiq
-bgC
+hxY
 eMn
 jQa
 aiq

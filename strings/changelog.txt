@@ -1,4 +1,61 @@
 
+(t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a new robotics winter coat.
+(u)Skeletonman0
+(p)13957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)Skeleton heads will now also speak when attached to corpses while their skull has no brain
+(u)Glamurio (Ryou)
+(p)14190
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Added showers to Cogmap Medbay bathroom.
+(u)Skeletonman0
+(p)14252
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Headless skeletons can now have their contents poured into open containers with an aggressive grab
+(u)Hans
+(p)11942
+(e)🆕🔊⚗|C-Feature, C-Sound, A-Chemistry
+(*)Added Solipsizine, a drug that causes you to be unable to hear or see other people!
+(t)sat may 27 23
+(u)pali
+(p)12361
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)You can now Alt+Doubleclick things to see a help message on how to use them. So far this is only implemented for a few things (disposal pipes) but expect this to be more widespread in the future. (Rightclick + clicking Help also works.)
+(u)LeahTheTech
+(+)Soviet engineers figured out how to glue pod weapons in place really really well.
+(u)Soleilan & pali
+(*)L337 Hacker accent mutation added, slightly rarer than the rest.
+(t)fri may 26 23
+(u)pali
+(*)Two new accent mutations. One shuffles letter and the other one words.<br><img width="210" src="https://cdn.discordapp.com/attachments/1092955375889809418/1111708097682079784/image.png"><img width="200" src="https://cdn.discordapp.com/attachments/182254222694285312/1111712245844562021/image.png">
+(u)Flaborized
+(p)14005
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The HoS and Captain now have slightly unique looking eguns, to match their usual outfits.
+(u)FlameArrow57 and Flaborized
+(p)14093
+(e)🆕🔎📦|C-Feature, C-Code-Quality, A-Game-Objects
+(+)Added lanyards as a random lootcrate item! These are three item storages that can hold tiny items and fit in your ID slot. They accept IDs and can be used for ID checks if holding one.
+(u)glowbold
+(p)13820
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(+)Construction cones stack up to five at a time, can be placed on the ground by clicking, and can be worn on your head.
+(u)Skeletonman0
+(p)14031
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Microwaves can now warm chemicals and skeleton skulls / other organs are now microwavable
+(u)Tyrant
+(p)14228
+(e)🗺|A-Mapping
+(+)Mail booths are now gone. No more penpals.  Should've been removed a while ago actually.
+(u)Wisemonster
+(p)13883
+(e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
+(+)The generic space cola is no longer hidden in soda vending machines, but the off-brand colas now require hacking the vendor to access
 (t)thu may 25 23
 (u)pali
 (*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.

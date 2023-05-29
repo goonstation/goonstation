@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
-	charge_icon_state = "egunstun"
+	charge_icon_state = "energystun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
@@ -369,11 +369,11 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "energykill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-kill"
 		else if (current_projectile.type == /datum/projectile/energy_bolt)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "energystun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun"
 		..()
@@ -384,6 +384,14 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 	proc/noreward()
 		src.nojobreward = 1
+
+	captain
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. Decorated to match standard NT captain attire."
+		icon_state = "energy-cap"
+
+	head_of_security
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
+		icon_state = "energy-hos"
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)

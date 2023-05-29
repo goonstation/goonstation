@@ -70014,12 +70014,6 @@
 /obj/lattice,
 /turf/space,
 /area/syndicate_station_space)
-"kbk" = (
-/obj/decal/aliencomputer/broken{
-	pixel_y = 30
-	},
-/turf/unsimulated/martian/floor,
-/area/crunch)
 "kbq" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 9
@@ -71648,6 +71642,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"mWO" = (
+/obj/decal/aliencomputer/broken{
+	pixel_y = 30
+	},
+/turf/unsimulated/martian/floor,
+/area/crunch)
 "mWP" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -72330,6 +72330,12 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"nOo" = (
+/obj/item/basketball/catball,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/offices/pali)
 "nOv" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light{
@@ -73469,12 +73475,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
-"pAL" = (
-/obj/decal/aliencomputer/off{
-	pixel_x = 30
-	},
-/turf/unsimulated/martian/floor,
-/area/crunch)
 "pAZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -73577,10 +73577,6 @@
 	temperature = 313.15
 	},
 /area/iomoon)
-"pIi" = (
-/obj/mail_booth,
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar/sanctuary)
 "pJw" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -73937,12 +73933,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
-"qjb" = (
-/obj/item/clothing/under/misc/flame_purple,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/centcom/offices/pali)
 "qjg" = (
 /obj/grille/catwalk{
 	dir = 6
@@ -74269,6 +74259,12 @@
 	tag = "icon-fblue2"
 	},
 /area/centcom/gallery)
+"qTN" = (
+/obj/decal/aliencomputer/off{
+	pixel_y = 30
+	},
+/turf/unsimulated/martian/floor,
+/area/crunch)
 "qUi" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 1
@@ -75067,6 +75063,12 @@
 	dir = 6
 	},
 /area/centcom/offices/varshie)
+"rYd" = (
+/obj/decal/aliencomputer/off{
+	pixel_x = 30
+	},
+/turf/unsimulated/martian/floor,
+/area/crunch)
 "rYJ" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
@@ -77534,12 +77536,6 @@
 /obj/item/ammo/ammobox/shootingrange,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/firing_range)
-"wjl" = (
-/obj/decal/aliencomputer/off{
-	pixel_y = 30
-	},
-/turf/unsimulated/martian/floor,
-/area/crunch)
 "wjn" = (
 /obj/item/cable_coil,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -83080,7 +83076,7 @@ bTU
 bTU
 oLy
 rtI
-pAL
+rYd
 bTU
 rtI
 rtI
@@ -83384,7 +83380,7 @@ bTU
 wJM
 bTU
 bTU
-kbk
+mWO
 rtI
 riK
 bTU
@@ -83397,7 +83393,7 @@ rtI
 sHX
 bTU
 oLy
-pAL
+rYd
 sHX
 bTU
 bLy
@@ -83694,7 +83690,7 @@ hQy
 rtI
 rtI
 bTU
-wjl
+qTN
 rtI
 bTU
 bTU
@@ -84898,7 +84894,7 @@ rtI
 riK
 rtI
 rtI
-pAL
+rYd
 rtI
 rtI
 rtI
@@ -98492,7 +98488,7 @@ crf
 cpq
 aaa
 daM
-pIi
+daZ
 daZ
 daM
 daM
@@ -152715,7 +152711,7 @@ dCF
 eTm
 wel
 iOu
-qjb
+nOo
 iOu
 wel
 wvy
