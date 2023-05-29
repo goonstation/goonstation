@@ -3546,3 +3546,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/datum/manufacture/floodlight
+	name = "Floodlight"
+	item_outputs = list(/obj/item/device/light/floodlight)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"

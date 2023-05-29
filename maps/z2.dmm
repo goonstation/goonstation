@@ -32316,7 +32316,7 @@
 	},
 /area/meat_derelict/main)
 "bYh" = (
-/obj/critter/blobman/meaty_martha,
+/mob/living/critter/blobman/meat,
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_2";
 	name = "Fleshy Floor"
@@ -34455,7 +34455,7 @@
 	},
 /area/meat_derelict/main)
 "cfd" = (
-/obj/critter/blobman/meaty_martha,
+/mob/living/critter/blobman/meat,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -36268,7 +36268,7 @@
 	},
 /area/meat_derelict/guts)
 "cjS" = (
-/obj/critter/blobman/meaty_martha,
+/mob/living/critter/blobman/meat,
 /turf/unsimulated/floor/setpieces/bloodfloor{
 	icon_state = "bloodfloor_2";
 	name = "Fleshy Floor"
@@ -73613,10 +73613,6 @@
 	temperature = 313.15
 	},
 /area/iomoon)
-"pIi" = (
-/obj/mail_booth,
-/turf/unsimulated/floor/wood,
-/area/afterlife/bar/sanctuary)
 "pJw" = (
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
@@ -73974,7 +73970,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "qjb" = (
-/obj/item/clothing/under/misc/flame_purple,
+/obj/item/basketball/catball,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -98554,7 +98550,7 @@ crf
 cpq
 aaa
 daM
-pIi
+daZ
 daZ
 daM
 daM

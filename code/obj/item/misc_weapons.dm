@@ -615,12 +615,6 @@ TYPEINFO(/obj/item/sword)
 					if (isrevolutionary(M))
 						M.changeStatus("revspirit", 20 SECONDS)
 
-/obj/item/storage/box/shuriken_pouch
-	name = "Shuriken Pouch"
-	desc = "Contains four throwing stars!"
-	icon_state = "ammopouch"
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
-
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
 	desc = "A cheap replica of an ancient japanese throwing star."

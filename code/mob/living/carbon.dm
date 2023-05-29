@@ -142,18 +142,8 @@
 		qdel(B)
 	src.hand = !src.hand
 
-/mob/living/carbon/lastgasp()
-	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN(0)
-		if (!src || !src.client) return														// break if it's an npc or a disconnected player
-		var/enteredtext = winget(src, "mainwindow.input", "text")							// grab the text from the input bar
-		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)				// check if the player is trying to say something
-			winset(src, "mainwindow.input", "text=\"\"")									// clear the player's input bar to register death / unconsciousness
-			var/grunt = pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK")				// pick a grunt to append
-			var/message = copytext(enteredtext,6,0) + "--" + grunt
-			logTheThing(LOG_SAY, src, "lastgasp SAY: [html_encode(message)] [log_loc(src)]")
-			src.say(message, ignore_stamina_winded = 1)	// say the thing they were typing and grunt
-
+/mob/living/carbon/lastgasp(allow_dead=FALSE)
+	..(allow_dead, grunt=pick("NGGH","OOF","UGH","ARGH","BLARGH","BLUH","URK") )
 
 
 /mob/living/carbon/full_heal()

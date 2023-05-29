@@ -1503,6 +1503,12 @@
 	else
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand."
 
+
+//This proc handles any manipulation that happens due to plantstats
+//This proc returns the item in question. This is needed to enable a switcheroo with new, randomed items e.g. glowstick tree
+/obj/item/proc/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+	return src
+
 /obj/item/proc/HY_set_species()
 	return
 
@@ -1538,6 +1544,13 @@
 			var/mob/M = src.loc
 			if(src in M.equipped_list())
 				src.inventory_counter.show_count()
+
+/obj/item/proc/remove_inventory_counter()
+	if (!src.inventory_counter)
+		return
+	src.vis_contents -= src.inventory_counter
+	qdel(src.inventory_counter)
+	src.inventory_counter = null
 
 /obj/item/proc/log_firesource(obj/item/O, datum/thrown_thing/thr, mob/user)
 	UnregisterSignal(O, COMSIG_MOVABLE_THROW_END)
@@ -1576,7 +1589,7 @@
 		#ifdef COMSIG_MOB_DROPPED
 		SEND_SIGNAL(user, COMSIG_MOB_DROPPED, src)
 		#endif
-	if (src.c_flags & EQUIPPED_WHILE_HELD && src == user.equipped())
+	if (src.c_flags & EQUIPPED_WHILE_HELD && (src in user.equipped_list()))
 		src.unequipped(user)
 	#ifdef COMSIG_ITEM_DROPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_DROPPED, user)

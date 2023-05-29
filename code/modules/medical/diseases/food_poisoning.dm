@@ -48,7 +48,7 @@
 			if(probmult(1))
 				boutput(affected_mob, "<span class='alert'>You feel sick.</span>")
 			if(probmult(5))
-				if (affected_mob.nutrition > 10)
+				if (affected_mob.nutrition > 10 && !affected_mob.reagents?.has_reagent("promethazine"))
 					for(var/mob/O in viewers(affected_mob, null))
 						O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", affected_mob), 1)
 					affected_mob.vomit(rand(3,5))

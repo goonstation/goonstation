@@ -1309,7 +1309,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
-		return !(C.faction & src.faction)
+		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
@@ -1538,3 +1538,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	isBlindImmune()
 		return TRUE
+
+	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+		return 0
+
+	electric_expose(var/power = 1)
+		return 0

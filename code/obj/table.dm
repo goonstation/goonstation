@@ -27,7 +27,7 @@ TYPEINFO_NEW(/obj/table)
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
 	var/hulk_immune = FALSE
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
 	New(loc, obj/a_drawer)
 		..()
@@ -677,6 +677,15 @@ TYPEINFO_NEW(/obj/table/reinforced)
 
 	auto
 		auto = 1
+
+	get_help_message(dist, mob/user)
+		if (src.status == 2)
+			return {"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to weaken it for disassembly."}
+		else if (src.status == 1)
+			return{"
+				You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it,
+				or a <b>welding tool</b> on <span class='harm'>harm</span> intent to strengthen it.
+			"}
 
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
