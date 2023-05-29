@@ -207,6 +207,89 @@ var/global/datum/speech_manager/SpeechManager = new()
 		for(var/datum/speech_module/module in src.output_modules)
 			module.process(message) //output modules always consume the message, there is no further processing required
 
+	//ACCENTS
+
+	/// Add a new accent module to the tree, and return a handle to the new accent module on success. Return null on failure.
+	proc/AddAccent(var/accent_type as text)
+		var/datum/speech_module/accent/new_accent = global.SpeechManager.GetAccentInstance(accent_type)
+		if(!istype(new_accent))
+			return null
+		src.accents += new_accent
+		return new_accent
+
+	/// Remove an accent from the tree. Returns true on success, false on failure. Get the accent to remove using the GetAccentBy() call
+	proc/RemoveAccent(var/datum/speech_module/accent/existing_accent)
+		if(existing_accent in src.accents)
+			src.accents -= existing_accent
+			qdel(existing_accent)
+			return TRUE
+		else
+			return FALSE
+
+	/// Returns a list of all matching accents filtered by id. Leave arguments null to get all accents.
+	proc/GetAccentBy(var/id=null)
+		var/list/datum/speech_module/accent/result = list()
+		for(var/datum/speech_module/accent/test_accent in src.accents)
+			if((!id || test_accent.id == id))
+				result += test_accent
+		return result
+
+	//MODIFIERS
+
+	/// Add a new modifier module to the tree, and return a handle to the new modifier module on success. Return null on failure.
+	proc/AddModifier(var/mod_type as text)
+		var/datum/speech_module/modifier/new_mod = global.SpeechManager.GetModifierInstance(mod_type)
+		if(!istype(new_mod))
+			return null
+		src.speech_modifiers += new_mod
+		//TODO module sort
+		return new_mod
+
+	/// Remove a modifier from the tree. Returns true on success, false on failure. Get the modifier to remove using the GetModifierBy() call
+	proc/RemoveModifier(var/datum/speech_module/modifier/existing_modifier)
+		if(existing_modifier in src.speech_modifiers)
+			src.speech_modifiers -= existing_modifier
+			qdel(existing_modifier)
+			return TRUE
+		else
+			return FALSE
+
+	/// Returns a list of all matching inputs filtered by id. Leave id as null to get all modifiers
+	proc/GetModifierBy(var/id=null)
+		var/list/datum/speech_module/modifier/result = list()
+		for(var/datum/speech_module/modifier/test_mod in src.speech_modifiers)
+			if((!id || test_mod.id == id))
+				result += test_mod
+		return result
+
+	//OUTPUTS
+
+	/// Add a new output module to the tree, and return a handle to the new output module on success. Return null on failure.
+	proc/AddOutput(var/out_type as text)
+		var/datum/speech_module/output/new_out = global.SpeechManager.GetOutputInstance(out_type)
+		if(!istype(new_out))
+			return null
+		src.output_modules += new_out
+		//TODO module sort
+		return new_out
+
+	/// Remove an output from the tree. Returns true on success, false on failure. Get the output to remove using the GetOutputBy() call
+	proc/RemoveOutput(var/datum/speech_module/output/existing_output)
+		if(existing_output in src.output_modules)
+			src.output_modules -= existing_output
+			qdel(existing_output)
+			return TRUE
+		else
+			return FALSE
+
+	/// Returns a list of all matching outputs filtered by channel, id, or both. Leave both arguments null to get all outputs.
+	proc/GetOutputBy(var/channel=null, var/id=null)
+		var/list/datum/speech_module/output/result = list()
+		for(var/datum/speech_module/output/test_output in src.output_modules)
+			if((!channel || test_output.channel == channel) && (!id || test_output.id == id))
+				result += test_output
+		return result
+
 	disposing()
 		. = ..()
 		for(var/datum/speech_module/acc in src.accents)
@@ -258,7 +341,84 @@ var/global/datum/speech_manager/SpeechManager = new()
 			if(message == null)
 				return //the module consumed the message, so process it no further
 
-		boutput(src.parent, "[message.speaker] [message.say_verb] [message.content]") //finally we are done
+		src.parent.hear(message) //finally we are done
+
+
+	//INPUTS
+
+	/// Add a new input module to the tree, and return a handle to the new input module on success. Return null on failure.
+	proc/AddInput(var/input_type as text)
+		var/datum/listen_module/input/new_input = global.SpeechManager.GetInputInstance(input_type, src)
+		if(!istype(new_input))
+			return null
+		src.input_modules += new_input
+		return new_input
+
+	/// Remove an input from the tree. Returns true on success, false on failure. Get the input to remove using the GetInputBy() call
+	proc/RemoveInput(var/datum/listen_module/input/existing_input)
+		if(existing_input in src.input_modules)
+			src.input_modules -= existing_input
+			qdel(existing_input)
+			return TRUE
+		else
+			return FALSE
+
+	/// Returns a list of all matching inputs filtered by channel, id, or both. Leave both arguments null to get all inputs.
+	proc/GetInputBy(var/channel=null, var/id=null)
+		var/list/datum/listen_module/input/result = list()
+		for(var/datum/listen_module/input/test_input in src.input_modules)
+			if((!channel || test_input.channel == channel) && (!id || test_input.id == id))
+				result += test_input
+		return result
+
+	//MODIFIERS
+
+	/// Add a new modifier module to the tree, and return a handle to the new modifier module on success. Return null on failure.
+	proc/AddModifier(var/mod_type as text)
+		var/datum/listen_module/modifier/new_mod = global.SpeechManager.GetListenModifierInstance(mod_type, src)
+		if(!istype(new_mod))
+			return null
+		src.listen_modifiers += new_mod
+		//TODO module sort
+		return new_mod
+
+	/// Remove a modifier from the tree. Returns true on success, false on failure. Get the modifier to remove using the GetModifierBy() call
+	proc/RemoveModifier(var/datum/listen_module/modifier/existing_modifier)
+		if(existing_modifier in src.listen_modifiers)
+			src.listen_modifiers -= existing_modifier
+			qdel(existing_modifier)
+			return TRUE
+		else
+			return FALSE
+
+	/// Returns a list of all matching inputs filtered by id. Leave id as null to get all modifiers
+	proc/GetModifierBy(var/id=null)
+		var/list/datum/listen_module/modifier/result = list()
+		for(var/datum/listen_module/modifier/test_mod in src.listen_modifiers)
+			if((!id || test_mod.id == id))
+				result += test_mod
+		return result
+
+	//LANGUAGE
+
+	/// Add a known language to this listen tree. Known languages allow messages to be understood. Returns true on success, false on failure.
+	proc/AddKnownLanguage(var/lang_id as text)
+		var/datum/language/lang = global.SpeechManager.GetLanguageInstance(lang_id)
+		if(!istype(lang))
+			return FALSE
+		if(!(lang in src.known_languages))
+			src.known_languages += lang
+		return TRUE
+
+	/// Removes a known language from this listen tree. Known languages allow messages to be understood. Returns true on success, false on failure.
+	proc/RemoveKnownLanguage(var/lang_id as text)
+		var/datum/language/lang = global.SpeechManager.GetLanguageInstance(lang_id)
+		if(!istype(lang))
+			return FALSE
+		if((lang in src.known_languages))
+			src.known_languages -= lang
+		return TRUE
+
 
 	disposing()
 		. = ..()

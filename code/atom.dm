@@ -305,6 +305,10 @@ TYPEINFO(/atom)
 		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
 	..()
 
+/// This proc is the final call from the listen tree, and determines what happens when this atom recieves a message. It is essentially the counterpart to say()
+/atom/proc/hear(var/datum/say_message/message)
+	boutput(src, "[message.speaker] [message.say_verb], \"[message.content]\"")
+
 /// Speech module tree. Lazy loaded on first say() call.
 /atom/var/datum/speech_module_tree/say_tree = null
 /// Accents this atom *starts* with. It will not be updated or used again after init.
