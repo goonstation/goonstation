@@ -1,5 +1,18 @@
 
+(t)mon may 29 23
+(u)Cheffie
+(p)14163
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Robotic critters are now immune to electric shocks
+(u)Cheffie
+(p)14216
+(e)🗺🔨|A-Mapping, A-Player-Actions
+(+)Clown shoes in deep space look funny...
 (t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a new robotics winter coat.
 (u)Skeletonman0
 (p)13957
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
