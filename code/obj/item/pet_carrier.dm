@@ -124,7 +124,7 @@
 	attack(mob/M, mob/user)
 		if (user.a_intent == INTENT_HARM)
 			return ..()
-		if (ismob(M))
+		if (istype(M))
 			if (!src.return_other_hand_empty(user))
 				boutput(user, "<span class='alert'>You need a free hand to scoop up [M]!</span>")
 				return ..()
