@@ -433,7 +433,6 @@
 	icon_state_dead = "blobman-dead"
 	density = TRUE
 	hand_count = 2
-	health = 15
 	health_brute = 10
 	health_brute_vuln = 0.5
 	health_burn = 10
