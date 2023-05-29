@@ -7,6 +7,7 @@
 	- Town guards
 	- Blob men
 */
+/////////////// Transposed scientist ////////////////
 /mob/living/critter/crunched
 	name = "transposed scientist"
 	real_name = "transposed scientist"
