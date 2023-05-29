@@ -658,7 +658,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	ammo_cats = list(AMMO_AUTO_308)
 	max_ammo_capacity = 200 //its a minigun it can have some ammo
 	two_handed = TRUE
-	auto_eject = 1
+	auto_eject = 0
 	has_empty_state = 1
 	spread_angle = 15 //15 degrees is a lot
 	can_dual_wield = TRUE //if you can figure it out, you can do it
