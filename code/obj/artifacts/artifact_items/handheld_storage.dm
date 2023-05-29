@@ -12,11 +12,13 @@
 		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
 		/datum/artifact_trigger/cold)
 	type_size = ARTIFACT_SIZE_MEDIUM
-	react_xray = list(9, 70, 75, 11, "HOLLOW")
+	react_xray = list(5, 91, 97, 11, "HOLLOW")
 
 	effect_activate(obj/O)
 		if (..())
 			return TRUE
+
+		var/obj/item/artifact/bag_of_holding/boh = O
 
 		switch(src.artitype.name)
 			// large variety of storage, though there's no HUD and items are stored in LIFO, FIFO, or random order
@@ -31,26 +33,37 @@
 				else if (slots >= 9)
 					wclass = pick(prob(30); W_CLASS_TINY, prob(100); W_CLASS_SMALL, prob(10); W_CLASS_NORMAL)
 
-				O.create_storage(/datum/storage/no_hud, max_wclass = wclass, slots = slots,
+				if (slots > 4)
+					boh.c_flags |= ONBELT
+				if (slots > 6)
+					boh.c_flags |= ONBACK
+				if ((slots > 8 || wclass == W_CLASS_BULKY) && prob(90))
+					boh.w_class = W_CLASS_BULKY
+
+				boh.create_storage(/datum/storage/no_hud, max_wclass = wclass, slots = slots,
 					params = list("use_inventory_counter" = TRUE, "item_pick_type" = pick(STORAGE_NO_HUD_QUEUE, STORAGE_NO_HUD_STACK, STORAGE_NO_HUD_RANDOM)))
 
 			// storage that starts off small, but it can be upgraded by "feeding" it ores
 			if ("martian")
 				return
 
-			// infinite storage, but you can only see a random selection of items in it at a time
+			// large storage, but you can only see a random selection of items in it at a time
 			if ("wizard")
-				O.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL), slots = 999)
-				return
+				boh.w_class = W_CLASS_BULKY
+				boh.c_flags |= ONBELT | ONBACK
+				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
+					slots = rand(20, 40), params = list("visible_slots" = rand(1, 4)))
 
-			// small storage that can fit in pockets, has random, neutral effects and some benefits
+			// small storage, but it fits in pockets, extinguishes items, repairs item health, and has some neutral effects on items stored
 			if ("precursor")
-				O.create_storage(/datum/storage/artifact_bag_of_holding/precursor, max_wclass = pick(prob(40); W_CLASS_TINY, prob(100); W_CLASS_SMALL), slots = rand(2, 4),
-					opens_if_worn = TRUE)
-				var/obj/item/artifact/bag_of_holding/boh = O
 				boh.w_class = W_CLASS_SMALL
+				boh.create_storage(/datum/storage/artifact_bag_of_holding/precursor, max_wclass = pick(prob(40); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
+					slots = rand(2, 4), opens_if_worn = TRUE)
 
 	effect_deactivate(obj/O)
 		if (..())
 			return TRUE
-		O.remove_storage()
+		var/obj/item/artifact/bag_of_holding/boh = O
+		boh.w_class = initial(boh.w_class)
+		boh.c_flags = initial(boh.c_flags)
+		boh.remove_storage()
