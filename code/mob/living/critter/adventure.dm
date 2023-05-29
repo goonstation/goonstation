@@ -4,7 +4,7 @@
 	- Transposed scientist
 	- Shades
 	- Repair bots
-	- Meatmen
+	- blob men
 */
 /mob/living/critter/crunched
 	name = "transposed scientist"
