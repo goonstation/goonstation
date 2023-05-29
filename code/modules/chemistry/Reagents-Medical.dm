@@ -1092,7 +1092,7 @@ datum
 			fluid_g = 255
 			fluid_b = 140
 			depletion_rate = 0.4
-			overdose = 25
+			overdose = 100
 
 			do_overdose(var/severity, var/mob/M, var/mult = 1)
 				var/effect = ..(severity, M)
