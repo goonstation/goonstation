@@ -880,18 +880,19 @@
 /* -------------------- Material Chairs ------------------ */
 /* ======================================================= */
 
+ABSTRACT_TYPE(/obj/stool/chair/material)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
 	uses_material_appearance = TRUE
-	comfort_value = 4
+	mat_changename = TRUE
 
-	mauxite
-		name = "mauxite chair"
-		icon_state = "chair$$mauxite"
-		desc = "A sturdy chair made from mauxite. It doesn't look very comfortable..."
-		comfort_value = -2
-		default_material = "mauxite"
+/obj/stool/chair/material/mauxite
+	name = "chair"
+	icon_state = "chair$$mauxite"
+	desc = "A sturdy chair made from mauxite. It doesn't look very comfortable..."
+	comfort_value = -2
+	default_material = "mauxite"
 
 /* ======================================================= */
 /* -------------------- Folded Chairs -------------------- */
