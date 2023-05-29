@@ -1,5 +1,9 @@
 
 (t)mon may 29 23
+(u)Ikea
+(p)14019
+(e)⚖🤖|C-Balance, A-Silicons
+(*)There is now a seven minute cooldown for using cyborg recharge upgrades
 (u)Colossusqw
 (p)13946
 (e)🆕⚗|C-Feature, A-Chemistry
