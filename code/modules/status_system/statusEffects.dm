@@ -2393,3 +2393,69 @@
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
+/*
+/datum/statusEffect/martian_bag_of_holding_hungry
+	id = "martian_boh_hungry"
+	maxDuration = 90 SECONDS
+	unique = TRUE
+	visible = FALSE
+
+	preCheck(atom/A)
+		. = ..()
+		var/obj/item/artifact/bag_of_holding/boh = A
+		if (!istype(boh))
+			return FALSE
+		var/datum/artifact/artifact = boh.artifact
+		if (!artifact.activated)
+			return FALSE
+		if (!istype(boh.associated_datum, /datum/artifact_origin/martian))
+			return FALSE
+
+	proc/onAdd(list/optional)
+		..()
+		src.owner.visible_message("<span class='alert'>[src.owner] growls. WHAT THE HELL?? Somehow, you can tell this thing wants Viscerite.</span>")
+
+	/**
+		* Called when the status is removed from the object. owner is still set at this point.
+		*/
+	proc/onRemove()
+		..()
+		var/obj/item/artifact/bag_of_holding/boh = src.owner
+		var/datum/artifact/artifact = boh.artifact
+		if (!artifact.activated)
+			return
+		var/list/items = boh.storage.get_contents()
+		var/obj/item/raw_material/martian/viscerite = locate(/obj/item/raw_material/martian) in items
+		if (viscerite)
+			viscerite.change_stack_amount(-1)
+		src.owner.visible_message("<span class='alert'>[src.owner] seems satisfied... for now...</span>")
+		SPAWN(0)
+			if (!QDELETED(src.owner))
+				src.owner.setStatus("martian_boh_hungry", 45 SECONDS)//, optional)
+
+
+	onUpdate(timePassed)
+		var/obj/item/artifact/bag_of_holding/boh = src.owner
+		var/datum/artifact/artifact = boh.artifact
+		if (!artifact.activated)
+			owner.delStatus(src)
+			return
+		if (!ON_COOLDOWN(boh, "ore_check", 5 SECONDS))
+			return
+		var/obj/item/raw_material/martian/viscerite = locate(/obj/item/raw_material/martian) in boh.storage.get_contents()
+		if (!viscerite)
+			return
+		var/time_given = viscerite.amount * 5 SECONDS
+		viscerite.change_stack_amount(viscerite.amount)
+		src.owner.visible_message("<span class='alert'>[src.owner] eats the viscerite, suppressing its hunger for a little longer.</span>")
+		src.owner.changeStatus("martian_boh_hungry", time_given)
+
+
+	/**
+		* Called when the status is changed using setStatus. Called after duration is updated etc.
+		*
+		* optional {optional} - arg from setStatus (passed in)
+		*/
+	proc/onChange(optional=null)
+		return
+*/

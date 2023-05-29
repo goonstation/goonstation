@@ -34,14 +34,21 @@
 				O.create_storage(/datum/storage/no_hud, max_wclass = wclass, slots = slots,
 					params = list("use_inventory_counter" = TRUE, "item_pick_type" = pick(STORAGE_NO_HUD_QUEUE, STORAGE_NO_HUD_STACK, STORAGE_NO_HUD_RANDOM)))
 
+			// storage that starts off small, but it can be upgraded by "feeding" it ores
 			if ("martian")
 				return
 
+			// infinite storage, but you can only see a random selection of items in it at a time
 			if ("wizard")
+				O.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL), slots = 999)
 				return
 
+			// small storage that can fit in pockets, has random, neutral effects and some benefits
 			if ("precursor")
-				return
+				O.create_storage(/datum/storage/artifact_bag_of_holding/precursor, max_wclass = pick(prob(40); W_CLASS_TINY, prob(100); W_CLASS_SMALL), slots = rand(2, 4),
+					opens_if_worn = TRUE)
+				var/obj/item/artifact/bag_of_holding/boh = O
+				boh.w_class = W_CLASS_SMALL
 
 	effect_deactivate(obj/O)
 		if (..())
