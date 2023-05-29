@@ -280,6 +280,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "voicechanger"
 	item_state = "muzzle"			// @TODO new sprite ok
+	wear_state = "blank"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH	// NOT usable for internals.
 	compatible_species = list("human", "cow", "werewolf", "martian")
