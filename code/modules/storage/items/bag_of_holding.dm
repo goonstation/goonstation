@@ -75,7 +75,7 @@
 /datum/storage/artifact_bag_of_holding/precursor/add_contents_extra(obj/item/I, mob/user, visible)
 	if (!..())
 		return
-	if (I.burning || I in by_cat[TR_CAT_BURNING_ITEMS])
+	if (I.burning || (I in by_cat[TR_CAT_BURNING_ITEMS]))
 		I.combust_ended()
 		boutput(user, "<span class='notice'>[I] is enveloped in a glow and extinguished!</span>")
 	var/initial_health = get_initial_item_health(I)
