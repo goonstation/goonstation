@@ -9,10 +9,9 @@
  * A handheld item which can hold some mob instances inside with support for visually displaying its occupants with vis_contents.
  * This was created without access to the pre-existing chicken carrier code so it could be pretty bad.
  *
- * The icon for the carrier is constructed using a base where an overlay of the front of the carrier and two /obj/dummys are layered on top.
- * These dummy objects are held in the carrier's vis_contents and each of them hold the mobs and the door of the carrier. The reason why the
- * vis_contents of vis_contents_proxy hold the mobs rather than the carrier doing so directly is so that an alpha mask can prevent parts of the
- * occupants from rendering outside of the inside of the carrier.
+ * The icon for the carrier is constructed using a base where two /obj/dummys are layered on top. These dummy objects are held in the carrier's
+ * vis_contents and each of them hold the mobs and the door of the carrier. The reason why the vis_contents of vis_contents_proxy hold the mobs rather
+ * than the carrier doing so directly is so that an alpha mask can prevent parts of the occupants from rendering outside of the inside of the carrier.
  */
 /obj/item/pet_carrier
 	name = "pet carrier"
@@ -67,7 +66,7 @@
 
 	New()
 		..()
-		// Build the icon with all its overlays and funny containers.
+		// Build the icon with all its funny containers.
 		src.icon_state = src.empty_carrier_icon_state
 
 		// Instantiate the vis_contents proxy.
@@ -95,7 +94,6 @@
 	disposing()
 		for (var/occupant in src.carrier_occupants)
 			src.eject_mob(occupant)
-		src.overlays = null
 		src.vis_contents = null
 		qdel(src.grate_proxy)
 		src.grate_proxy = null
