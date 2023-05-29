@@ -123,7 +123,7 @@
 		if (user.a_intent == INTENT_HARM)
 			return ..()
 		if (istype(M))
-			if (!src.return_other_hand_empty(user))
+			if (!src.find_empty_hand(user))
 				boutput(user, "<span class='alert'>You need a free hand to scoop up [M]!</span>")
 				return ..()
 			if (!istype(M,src.allowed_mob_type))
@@ -137,7 +137,7 @@
 		..()
 
 	attack_self(mob/user)
-		if (!src.return_other_hand_empty(user))
+		if (!src.find_empty_hand(user))
 			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
 			return ..()
 		if (length(src.carrier_occupants))
@@ -216,13 +216,17 @@
 		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
 		src.UpdateIcon()
 
-	// There has to be a better way of checking that the other hand is empty. Please.
-	proc/return_other_hand_empty(mob/living/carbon/human/mob_to_check)
-		if (mob_to_check.hand && !mob_to_check.r_hand)
-			return TRUE
-		else if (!mob_to_check.l_hand)
-			return TRUE
-		else return FALSE
+	/// Checks humans and mob critters for any empty hands.
+	proc/find_empty_hand(mob/living/mob_to_check)
+		if (ishuman(mob_to_check))
+			var/mob/living/carbon/human/human_to_check = mob_to_check
+			if (human_to_check.hand && !human_to_check.r_hand) return TRUE
+			else if (!human_to_check.l_hand) return TRUE
+		if (ismobcritter(mob_to_check))
+			var/mob/living/critter/mob_critter_to_check = mob_to_check
+			for (var/datum/handHolder/current_hand in mob_critter_to_check.hands)
+				if (!current_hand.item) return TRUE
+		return FALSE
 
 	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
 	verb/release_occupant_verb(mob/user)
@@ -267,7 +271,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.mob_owner = owner
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -279,13 +283,13 @@
 
 	onUpdate()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.return_other_hand_empty(mob_owner))
+		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
