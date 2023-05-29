@@ -432,6 +432,7 @@
 	icon_state = "blobman"
 	icon_state_dead = "blobman-dead"
 	density = TRUE
+	hand_count = 2
 	health = 15
 	health_brute = 10
 	health_brute_vuln = 0.5
@@ -462,7 +463,7 @@
 		add_hh_robot(src.health_brute, src.health_brute_vuln)
 		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
-	critter_ability_attack()
+	critter_ability_attack(var/target)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck())
 			tackle.handleCast(target)
@@ -478,26 +479,26 @@
 		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
 		src.icon_state = pick("meaty_mouth", "polyp", "goop")
 
-	critter_ability_attack() // Kinda hacky
-		var/missing_arm = target_missing_limb(M)
-		if ((missing_arm == "r_arm" || missing_arm == "l_arm") && ishuman(M))
-			var/mob/living/carbon/human/H = M
-			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
-			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
+	critter_ability_attack(var/target) // Kinda hacky
+		var/missing_arm = target_missing_limb(target)
+		if ((missing_arm == "r_arm" || missing_arm == "l_arm") && ishuman(target))
+			var/mob/living/carbon/human/H = target
+			src.visible_message("<span class='alert'><b>[src] latches onto [H]'s stump!!</b></span>")
+			boutput(H, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			M.emote("scream")
-			M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, 3)
+			H.emote("scream")
+			H.changeStatus("stunned", 2 SECONDS)
+			random_brute_damage(H, 5)
 			switch (missing_arm)
 				if ("r_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (M)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (H)
 					H.limbs.vars["r_arm"] = part
-					part.holder = M
+					part.holder = H
 
 				if ("l_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (M)
+					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (H)
 					H.limbs.vars["l_arm"] = part
-					part.holder = M
+					part.holder = H
 
 			H.update_body()
 			H.update_clothing()
