@@ -1817,7 +1817,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
-	wear_state = "flockcultist
+	wear_state = "flockcultist"
 	see_face = 0
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
@@ -1975,7 +1975,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
     icon_state = "hitmanc"
     item_state = "hitmanc"
     coat_style = "hitmanc"
-	wear_state = "hitmanc"
+    wear_state = "hitmanc"
 
 /obj/item/clothing/suit/labcoat/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'

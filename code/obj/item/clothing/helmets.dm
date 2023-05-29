@@ -84,7 +84,7 @@
 
 /obj/item/clothing/head/helmet/space/engineer/april_fools
 	icon_state = "espace0-alt"
-	wear_state = "espace0-alt
+	wear_state = "espace0-alt"
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on

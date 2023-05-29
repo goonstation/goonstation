@@ -585,7 +585,7 @@ proc/filter_trait_hats(var/type)
     desc = "Your toque blanche, now at least 50% taller!"
     icon_state = "cheftall"
     item_state = "cheftall"
-	wear_state = "cheftall"
+    wear_state = "cheftall"
 
 /obj/item/clothing/head/policecap
 	name = "Police hat"
