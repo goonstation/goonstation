@@ -16,7 +16,7 @@
 
 	OnRemove()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		owner.remove_sm_light("glowy")
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
