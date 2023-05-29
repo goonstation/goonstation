@@ -497,7 +497,7 @@
 		var/count = 0
 		for (var/datum/weakref/ref as anything in babies)
 			var/mob/living/critter/spider/clown/CS = ref.deref()
-			if (CS == null)
+			if (!istype(CS))
 				babies.Remove(ref)
 			count++
 			if (count > max_defensive_babies)
