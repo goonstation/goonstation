@@ -192,8 +192,8 @@ datum
 							if(prob(4))
 								H.change_misstep_chance(20 * mult)
 							if(probmult(6))
-								H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>")
-								H.vomit()
+								var/vomit_message = "<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>"
+								H.vomit(0, null, vomit_message)
 							if(prob(15))
 								H.make_dizzy(5 * mult)
 						if (ethanol_amt >= 60)
@@ -294,9 +294,8 @@ datum
 				M.take_toxin_damage(1 * mult) // Iron overdose fucks you up bad
 				if(probmult(5))
 					if (M.nutrition > 10) // Not good for your stomach either
-						for(var/mob/O in viewers(M, null))
-							O.show_message(text("<span class='alert'>[] vomits on the floor profusely!</span>", M), 1)
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M] vomits on the floor profusely!</span>"
+						M.vomit(0, null, vomit_message)
 						M.nutrition -= rand(3,5)
 						M.take_toxin_damage(10) // im bad
 						M.setStatusMin("stunned", 3 SECONDS * mult)

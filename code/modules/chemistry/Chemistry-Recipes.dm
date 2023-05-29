@@ -2465,6 +2465,15 @@ datum
 			mix_phrase = "The mixture turns an odd lavender color."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		promethazine
+			name = "Promethazine"
+			id = "promethazine"
+			result = "promethazine"
+			required_reagents = list("oil" = 1, "ammonia" = 1, "sulfur" = 1, "cleaner" = 1)
+			result_amount = 4
+			mix_phrase = "The solution settles into a fine odorless powder."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		epinephrine
 			name = "Epinephrine"
 			id = "epinephrine"

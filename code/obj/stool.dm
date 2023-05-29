@@ -583,7 +583,7 @@
 			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
-		if (istype(get_turf(src), /turf/space))
+		if (!src.anchored && istype(get_turf(src), /turf/space))
 			if (user)
 				user.show_text("What exactly are you gunna secure [src] to?", "red")
 			return

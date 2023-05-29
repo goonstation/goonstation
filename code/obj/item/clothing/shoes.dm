@@ -318,7 +318,6 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
-
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
