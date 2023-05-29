@@ -337,6 +337,10 @@
 
 	faction = FACTION_CLOWN
 
+	New()
+		..()
+		AddComponent(/datum/component/waddling)
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -465,6 +469,7 @@
 			return ..() && !trample?.disabled
 
 	New()
+		AddComponent(/datum/component/waddling)
 		..()
 		babies = list()
 

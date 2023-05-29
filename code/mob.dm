@@ -2838,6 +2838,8 @@
 		return
 
 	if (waddle_walking)
+		if(isdead(src) || is_incapacitated(src) || src.lying)
+			return
 		makeWaddle(src)
 
 	last_move_dir = move_dir
