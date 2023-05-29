@@ -13,7 +13,8 @@
 
 	OnAdd()
 		..()
-		src.color = list(rand(25,255), rand(25,255), rand(25,255), 75 + 50 * power)
+		src.color = hsv2rgblist(randfloat(0, 360), randfloat(0, 100), 100)
+		src.color += list(50 + 75 * power)
 		owner.add_sm_light("glowy", src.color)
 
 	onPowerChange(oldval, newval)
