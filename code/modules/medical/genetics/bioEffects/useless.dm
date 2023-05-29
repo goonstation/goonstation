@@ -9,10 +9,17 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
+	var/list/color
 
 	OnAdd()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		src.color = list(rand(25,255), rand(25,255), rand(25,255), 75 + 50 * power)
+		owner.add_sm_light("glowy", src.color)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.color[4] = 75 + 50 * power
+		owner.add_sm_light("glowy", src.color)
 
 	OnRemove()
 		..()
