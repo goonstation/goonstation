@@ -101,7 +101,7 @@
 					/obj/critter/gunbot/drone/buzzdrone,
 					/mob/living/critter/aberration)
 				if (was_eaten && prob(15))
-					horror_path = /obj/critter/blobman/meaty_martha
+					horror_path = /mob/living/critter/blobman/meat
 			else
 				horror_path = pick(
 				/obj/critter/killertomato,
