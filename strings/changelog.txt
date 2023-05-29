@@ -1,5 +1,9 @@
 
 (t)mon may 29 23
+(u)Sian
+(p)14169
+(e)🪲⚖🔄🔊⏰|C-Bug, C-Balance, C-Rework, C-Sound, A-Status-Effects
+(*)Changeling Speed Regeneration now applies a status effect to you that regenerates your health over time.
 (u)Lord_Earthfire
 (p)13697
 (e)🌱|A-Hydroponics
