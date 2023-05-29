@@ -30,6 +30,7 @@ TYPEINFO(/area/diner/juicer_trader)
 	name = "garbage flip-flops"
 	desc = "These cheap sandals don't even look legal."
 	icon_state = "thong"
+	wear_state = "thong"
 	protective_temperature = 0
 	var/possible_names = list("sandals", "flip-flops", "thongs", "rubber slippers", "jandals", "slops", "chanclas")
 	var/stapled = FALSE
@@ -47,6 +48,7 @@ TYPEINFO(/area/diner/juicer_trader)
 			boutput(user, "You staple the [src] together to create a mighty thongarang.")
 			name = "thongarang"
 			icon_state = "thongarang"
+			wear_state = "thongarang"
 			throwforce = 5
 			throw_range = 10
 			throw_return = 1

@@ -10,6 +10,7 @@
 	icon_state = "cig"
 	uses_multiple_icon_states = 1
 	item_state = "cig"
+	wear_state = "cig"
 	force = 0
 	hit_type = DAMAGE_BLUNT
 	throw_speed = 0.5
@@ -110,6 +111,7 @@
 			src.force = 3
 			src.icon_state = litstate
 			src.item_state = litstate
+			src.wear_state = litstate
 			if (user && message)
 				user.visible_message(message, group = "cig_light") //user check to fix a shitton of runtime errors with the temp expose ignition method. welp. -cogwerks
 			if (ismob(src.loc))
@@ -131,6 +133,7 @@
 			src.force = 0
 			src.icon_state = buttstate
 			src.item_state = buttstate
+			src.wear_state = buttstate
 			src.name = buttname
 			src.desc = buttdesc
 			if (user && message)
@@ -399,6 +402,7 @@
 	name = "cigar"
 	icon_state = "cigar"
 	item_state = "cigar"
+	wear_state = "cigar"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	litstate = "cigarlit"
 	buttstate = "cigarbutt"
@@ -409,6 +413,7 @@
 	name = "golden cigar"
 	icon_state = "goldcigar"
 	item_state = "goldcigar"
+	wear_state = "goldcigar"
 	litstate = "goldcigarlit"
 	buttstate = "goldcigarbutt"
 	buttdesc = "golden cigar butt"
@@ -440,6 +445,7 @@
 	name = "cigarillo"
 	icon_state = "cigarillo"
 	item_state = "cigarillo"  //TODO: no inhands
+	wear_state = "cigarillo"
 	litstate = "cigarillolit"
 	buttstate = "cigarillobutt"
 	buttdesc = "Tarry, smelly."
