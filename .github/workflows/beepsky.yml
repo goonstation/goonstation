@@ -52,6 +52,8 @@ jobs:
     runs-on: ubuntu-22.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
+      - uses: actions/checkout@v3
+          
       - name: Cache BYOND
         uses: actions/cache@v3
         with:
