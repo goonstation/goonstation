@@ -25,8 +25,11 @@
 	var/mob/allowed_mob_type = /mob/living/critter/small_animal
 	/// If FALSE, an occupant cannot escape the carrier on their own.
 	var/can_break_out = TRUE
-	/// Probability that a mob can break out of the carrier with *flip, from 0 to 100.
-	var/break_out_prob = 10
+	/// Causes the door to open and release its occupants when it reaches 0, subsequently resetting itself to the maximum.
+	var/door_health
+	var/door_health_max = 30
+	/// The damage dealt to the door's health upon resisting.
+	var/damage_per_resist = 6
 	/// How many mobs can fit inside the crate. Usually not overridden by anything, this is to let the system be permissive for var-editing.
 	var/carrier_max_capacity = 1
 	/// Number of mobs named explicitly on examine() before switching to "there's a lot of mobs in here wow".
@@ -66,6 +69,8 @@
 
 	New()
 		..()
+		src.door_health = src.door_health_max
+
 		// Build the icon with all its funny containers.
 		src.icon_state = src.empty_carrier_icon_state
 
@@ -158,25 +163,26 @@
 
 	mob_flip_inside(mob/user)
 		..(user)
+		src.mob_resist_inside(user)
 
+	mob_resist_inside(mob/user)
+		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
+			return
+		animate_storage_thump(src)
 		if (!src.can_break_out)
-			boutput(src, "<span class='alert'>It's no use! You can't leave [src]!</span>")
+			boutput(user, "<span class='alert'>It's no use! You can't leave [src]!</span>")
 			return
-		if (prob(src.break_out_prob))
-			if (length(src.carrier_occupants) > 1)
-				for (var/occupant in src.carrier_occupants)
-					src.eject_mob(occupant)
-				src.visible_message("<span class='alert'>[user] kicks the door of [src] open and OH GOD THEY'RE ALL ESCAPING!</span>")
-				return
-			src.eject_mob(user)
-			src.visible_message("<span class='alert'>[user] kicks the door of [src] open and crawls right out!</span>")
-			return
-		boutput(user, "<span class='alert'>Maybe this door could give out if you put up some more effort!</span>")
+		ON_COOLDOWN(src, "move_damage", 1 SECOND)
+		boutput(user, "<span class='alert'>You try to bust open the door of [src]!</span>")
+		src.take_door_damage(src.damage_per_resist)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		..()
+		if (src.carrier_occupants)
+			animate_storage_thump(src)
 		for (var/mob/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)
+			src.take_door_damage(src.damage_per_resist)
 
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
@@ -228,6 +234,17 @@
 				if (!current_hand.item) return TRUE
 		return FALSE
 
+	/// Deals damage to the door. If the remaining health <= 0, release everyone and reset the carrier.
+	proc/take_door_damage(damage)
+		src.door_health -= damage
+		if (src.door_health <= 0)
+			for (var/occupant in src.carrier_occupants)
+				src.eject_mob(occupant)
+			src.visible_message("<span class='alert'>The door on [src] busts wide open, releasing its occupants!</span>")
+			src.door_health = src.door_health_max
+		else
+			src.visible_message("<span class='alert'>The door on [src] rattles!</span>")
+
 	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
 	verb/release_occupant_verb(mob/user)
 		set name = "Release occupant"
@@ -245,6 +262,7 @@
 	allowed_mob_type = /mob
 	can_break_out = FALSE
 	carrier_max_capacity = INFINITY
+	door_health_max = INFINITY
 
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
