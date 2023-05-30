@@ -219,6 +219,8 @@
 		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
 			src.donor_original = H
 
+		if (src.robotic)
+			H.robotic_organs++
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
 		if (src.donor)
@@ -243,6 +245,9 @@
 		if (src.donor)
 			if (failure_disease)
 				src.donor.cure_disease(failure_disease)
+
+			if (src.robotic)
+				src.donor.robotic_organs--
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
