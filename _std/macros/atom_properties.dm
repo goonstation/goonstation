@@ -187,10 +187,10 @@ To remove:
 		} if(ishuman(target)) { \
 			var/mob/living/carbon/human/H = target; \
 			H.arrestIcon?.alpha = icon_alpha; \
-			if (H.implant_icons) { \
+			if (H.prodoc_icons) { \
 				var/image/I; \
-				for (var/implant in H.implant_icons) { \
-					I = H.implant_icons[implant]; \
+				for (var/implant in H.prodoc_icons) { \
+					I = H.prodoc_icons[implant]; \
 					I.alpha = icon_alpha; \
 				} \
 			} \

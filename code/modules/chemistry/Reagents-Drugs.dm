@@ -526,7 +526,7 @@ datum
 					M.emote(pick("shiver","shudder","drool"))
 
 				if(counter > 15) //turn everyone into nothing
-					if(M.ear_damage < 15)
+					if(M.ear_damage < 15 && M.ear_deaf < 5)
 						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
 
 					var/list/candidates = null

@@ -1,4 +1,10 @@
 
+(t)tue may 30 23
+(u)FlameArrow57
+(p)14264
+(e)🎨⚖💅💊|C-Sprites, C-Balance, C-QoL, A-Medical
+(*)ProDoc goggles now show a purple indicator next to health icons for those with cyber organs of any form.
+(+)Health analyzers without an organ scan upgrade now show if patients have a cyber organ, but not which ones.
 (t)mon may 29 23
 (u)Sian
 (p)14169
