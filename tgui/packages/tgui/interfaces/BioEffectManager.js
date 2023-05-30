@@ -27,7 +27,6 @@ const CooldownCell = ({ cooldown, onChange, id }) => (
       <NumberInput
         minValue={0}
         unit="ds"
-        ml="0.5em"
         width="5em"
         value={cooldown}
         onChange={(e, value) => onChange(id, value)} />
