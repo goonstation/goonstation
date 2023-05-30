@@ -16500,16 +16500,15 @@
 	},
 /area/station/hallway/primary/east)
 "bdV" = (
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname  - SS13";
 	pixel_x = -10;
 	pixel_y = 15
+	},
+/obj/machinery/light_switch/west{
+	pixel_x = -30
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -21963,11 +21962,12 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bGN" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -10
+/obj/cable{
+	icon_state = "1-2"
 	},
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bGW" = (
@@ -23481,10 +23481,6 @@
 /obj/item/reagent_containers/emergency_injector/spaceacillin,
 /obj/item/clothing/mask/gas,
 /obj/item/tank/air,
-/obj/noticeboard/persistent{
-	name = "Medbay persistent notice board";
-	persistent_id = "medbay"
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -26411,6 +26407,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/storage/eva)
+"eOp" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/firedoor_spawn,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "eOQ" = (
 /obj/airbridge_controller{
 	id = "escape2";
@@ -26738,6 +26740,13 @@
 /obj/access_spawn/security,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
+"fju" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	dir = null
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "fjM" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -28112,7 +28121,6 @@
 	},
 /area/station/science/chemistry)
 "gwr" = (
-/obj/item_dispenser/medical_mask,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -30301,11 +30309,15 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ixl" = (
-/obj/decal/mule/dropoff,
-/obj/machinery/recharge_station,
-/obj/machinery/light,
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "iyl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33360,6 +33372,16 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
+"lsA" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/medbay/pharmacy)
 "lsG" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -33805,6 +33827,7 @@
 /area/station/security/main)
 "lQC" = (
 /obj/machinery/manufacturer/robotics,
+/obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "lRb" = (
@@ -34282,6 +34305,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "mlY" = (
@@ -36979,10 +37003,6 @@
 	icon_state = "0-2"
 	},
 /obj/storage/secure/closet/medical/anesthetic,
-/obj/item/storage/wall/fire{
-	dir = 1;
-	pixel_y = 32
-	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -37576,6 +37596,12 @@
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/cable{
+	dir = null
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
@@ -39215,7 +39241,13 @@
 /turf/simulated/floor/damaged4,
 /area/station/quartermaster/storage)
 "rbp" = (
-/obj/machinery/vending/snack,
+/obj/table/auto,
+/obj/item_dispenser/latex_gloves,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/gloves/latex{
+	pixel_x = -4;
+	pixel_y = -7
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "rbs" = (
@@ -40278,7 +40310,6 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "rZW" = (
-/obj/item_dispenser/latex_gloves,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
@@ -40288,6 +40319,10 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/data_terminal,
+/obj/noticeboard/persistent{
+	name = "Medbay persistent notice board";
+	persistent_id = "medbay"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -40588,7 +40623,6 @@
 "snn" = (
 /obj/decal/stripe_caution,
 /obj/machinery/navbeacon/mule/medbay_north/east,
-/obj/machinery/light_switch/north,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -67281,7 +67315,7 @@ aFx
 aBK
 aBK
 ayZ
-bGN
+ayZ
 aHX
 hMC
 aGS
@@ -67291,7 +67325,7 @@ aGS
 aGS
 aGS
 fdU
-aGS
+eOp
 aQx
 aGS
 bnk
@@ -67548,7 +67582,7 @@ aDY
 aDY
 aDY
 sqF
-aDY
+bGN
 tgY
 aDY
 iBd
@@ -70118,7 +70152,7 @@ jgj
 bmg
 kXh
 kiD
-aLA
+dVW
 bSw
 cFO
 jnG
@@ -70369,13 +70403,13 @@ bkJ
 oOZ
 hnd
 yaj
-ixl
+cSR
 bkJ
 nQz
 uoF
 kXh
 hQq
-aLA
+dVW
 crF
 srk
 cFO
@@ -70632,7 +70666,7 @@ xIe
 vkp
 kXh
 hgt
-aLA
+dVW
 snn
 goC
 cFO
@@ -70889,7 +70923,7 @@ ybi
 ejQ
 kXh
 sQD
-aLA
+dVW
 gwr
 wbM
 mkJ
@@ -73204,13 +73238,13 @@ cOl
 bzI
 aGe
 aGe
+lsA
+ixl
 pBb
-aPb
-pBb
-aPb
-aPb
-aPb
-aPb
+ixl
+ixl
+ixl
+fju
 aGe
 nbY
 nbY
