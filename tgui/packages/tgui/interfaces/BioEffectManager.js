@@ -21,14 +21,14 @@ const CheckboxCell = ({ checked, onClick, id }) => (
   </Table.Cell>
 );
 
-const CooldownCell = ({ cooldown, onChange, id }) => (
+const NumberInputCell = ({ number, unit, onChange, id }) => (
   <Table.Cell py="0.5em">
     <Box align="center">
       <NumberInput
         minValue={0}
-        unit="ds"
+        unit={unit}
         width="5em"
-        value={cooldown}
+        value={number}
         onChange={(e, value) => onChange(id, value)} />
     </Box>
   </Table.Cell>
@@ -109,7 +109,7 @@ export const BioEffectManager = (props, context) => {
                   <CheckboxCell checked={effect.reinforced} onClick={toggleReinforced} id={effect.id} />
                   <CheckboxCell checked={effect.boosted} onClick={toggleBoosted} id={effect.id} />
                   <CheckboxCell checked={effect.synced} onClick={toggleSynced} id={effect.id} />
-                  <CooldownCell cooldown={effect.cooldown} onChange={updateCooldown} id={effect.id} />
+                  <NumberInputCell number={effect.cooldown} unit="ds" onChange={updateCooldown} id={effect.id} />
                   {/* Buttons for managing and deleting the bioeffect */}
                   <Table.Cell py="0.5em">
                     <Box direction="row" align="center" nowrap>
