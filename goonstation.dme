@@ -576,6 +576,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\atom_verbs.dm"
 #include "code\modules\admin\bans.dm"
 #include "code\modules\admin\banshark.dm"
+#include "code\modules\admin\bioEffectManager.dm"
 #include "code\modules\admin\bomb_monitor.dm"
 #include "code\modules\admin\centcomviewer.dm"
 #include "code\modules\admin\create.dm"
