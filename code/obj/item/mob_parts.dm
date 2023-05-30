@@ -286,7 +286,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 		var/can_secure = 0
 		if(attacher)
-			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/datum/manufacture/stapler))
+			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
 
 			if(!can_act(attacher))
 				return
