@@ -30995,6 +30995,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
+"jeG" = (
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=medbay_lobby";
+	location = "medbay";
+	name = "bot navigation beacon"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "jeP" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -70088,7 +70096,7 @@ bSw
 cFO
 jnG
 nbU
-cFO
+jeG
 cFO
 gVh
 jnG
