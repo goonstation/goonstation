@@ -13931,7 +13931,7 @@
 	},
 /area/shuttle/arrival/station)
 "aIR" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall";
 	opacity = 0
@@ -14454,7 +14454,7 @@
 	},
 /area/shuttle/arrival/station)
 "aKs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/effects/160x160.dmi';
 	icon_state = "shuttlecock";
 	layer = 30;

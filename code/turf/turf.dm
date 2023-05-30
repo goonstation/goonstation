@@ -987,6 +987,8 @@ proc/generate_space_color()
 	plane = PLANE_FLOOR
 #endif
 
+/turf/unsimulated/wall/generic
+
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
 	desc = "A solid... nothing? Is that even a thing?"
