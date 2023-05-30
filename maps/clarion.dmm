@@ -25177,6 +25177,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
+"dGd" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "dGC" = (
 /obj/machinery/disposal_pipedispenser/mobile{
 	dir = 8
@@ -44209,6 +44216,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"vDr" = (
+/obj/machinery/navbeacon{
+	codes_txt = "tour;next_tour=tour14;desc=Safety first! Accidents do happen though, and if you find yourself injured in the line of work, please hurry along to see your Medbay staff. NOTICE: It has been zero (0) days since the last workplace injury.";
+	freq = 1443;
+	location = "tour13";
+	name = "tour beacon - medbay"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "vEy" = (
 /obj/machinery/disposal/small,
 /obj/landmark/start{
@@ -45348,6 +45364,17 @@
 	dir = 9
 	},
 /area/station/hangar/sec)
+"wIm" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/obj/machinery/navbeacon{
+	codes_txt = "patrol;next_patrol=crew_lounge";
+	location = "medbay_lobby";
+	name = "bot navigation beacon"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "wIE" = (
 /obj/machinery/vending/monkey/genetics,
 /obj/machinery/light{
@@ -72142,7 +72169,7 @@ rAe
 xfd
 sMS
 cSo
-nvo
+dGd
 hyE
 xDs
 cLC
@@ -72399,8 +72426,8 @@ dUs
 ewo
 ivf
 gkB
-ewo
-oEQ
+vDr
+wIm
 cdV
 nyD
 ewo
