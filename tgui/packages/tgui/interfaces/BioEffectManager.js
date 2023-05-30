@@ -11,7 +11,7 @@ import { Window } from '../layouts';
 
 // Pass the id to the callbacks
 const CheckboxCell = ({ checked, onClick, id }) => (
-  <Table.Cell py="0.5em">
+  <Table.Cell py="0.5em" collapsing>
     <Box align="center">
       <Button.Checkbox
         checked={checked}
@@ -22,7 +22,7 @@ const CheckboxCell = ({ checked, onClick, id }) => (
 );
 
 const NumberInputCell = ({ number, unit, onChange, id }) => (
-  <Table.Cell py="0.5em">
+  <Table.Cell py="0.5em" collapsing>
     <Box align="center">
       <NumberInput
         minValue={0}
@@ -103,15 +103,15 @@ export const BioEffectManager = (props, context) => {
             {
               bioEffects?.length > 0 ? bioEffects.map((effect) => (
                 <Table.Row key={effect.id}>
-                  <Table.Cell py="0.5em">{effect.name}</Table.Cell>
-                  <Table.Cell py="0.5em">{effect.id}</Table.Cell>
+                  <Table.Cell py="0.5em" >{effect.name}</Table.Cell>
+                  <Table.Cell py="0.5em" collapsing>{effect.id}</Table.Cell>
                   <CheckboxCell checked={effect.stabilized} onClick={toggleStabilized} id={effect.id} />
                   <CheckboxCell checked={effect.reinforced} onClick={toggleReinforced} id={effect.id} />
                   <CheckboxCell checked={effect.boosted} onClick={toggleBoosted} id={effect.id} />
                   <CheckboxCell checked={effect.synced} onClick={toggleSynced} id={effect.id} />
                   <NumberInputCell number={effect.cooldown} unit="ds" onChange={updateCooldown} id={effect.id} />
                   {/* Buttons for managing and deleting the bioeffect */}
-                  <Table.Cell py="0.5em">
+                  <Table.Cell py="0.5em" collapsing>
                     <Box direction="row" align="center" nowrap>
                       <Button tooltip="View Variables" tooltipPosition="top" align="left" icon="gear" onClick={() => manageBioEffect(effect.id)} />
                       <Button.Confirm tooltip="Remove" tooltipPosition="top" align="left" icon="trash" color="bad" onClick={() => deleteBioEffect(effect.id)} />
