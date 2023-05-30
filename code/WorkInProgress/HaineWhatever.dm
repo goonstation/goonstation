@@ -146,6 +146,7 @@
 	name = "bubblegum"
 	desc = "Some chewable gum. You can blow bubbles with it!"
 	icon_state = "anime"	// todo: decent sprites
+	wear_state = "anime"
 	c_flags = null
 	var/mob/chewer = null
 	var/chew_size = 0.2		// unit amount transferred when gum is chewed
@@ -1086,16 +1087,19 @@ TYPEINFO(/obj/submachine/blackjack)
 	desc = "I don't think they'd allow this kind of outfit in most navies."
 	icon_state = "sailormoon"
 	item_state = "sailormoon"
+	wear_state = "sailormoon"
 
 /obj/item/clothing/head/sailormoon
 	name = "red hairclips"
 	desc = "Shiny red hairclips to keep your hair in a very specific style and are about useless for anything else."
 	icon_state = "sailormoon"
+	wear_state = "sailormoon"
 
 /obj/item/clothing/glasses/sailormoon
 	name = "tiara"
 	desc = "A golden tiara with a pretty red gem on it."
 	icon_state = "sailormoon"
+	wear_state = "sailormoon"
 	throwforce = 15
 	throw_range = 10
 	throw_speed = 1
@@ -1105,6 +1109,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
+		wear_state = "sailormoon1"
 		playsound(src.loc, "swoosh", 50, 1)
 		if (usr)
 			usr.say("MOON TIARA ACTION!")
@@ -1112,6 +1117,7 @@ TYPEINFO(/obj/submachine/blackjack)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "sailormoon"
+		wear_state = "sailormoon"
 		if (hit_atom == usr)
 			if (ishuman(usr))
 				var/mob/living/carbon/human/usagi = usr
@@ -1126,11 +1132,13 @@ TYPEINFO(/obj/submachine/blackjack)
 	name = "gloves"
 	desc = "Long white gloves with red bands on them."
 	icon_state = "sailormoon"
+	wear_state = "sailormoon"
 
 /obj/item/clothing/shoes/sailormoon
 	name = "boots"
 	desc = "Nice red high-heeled boots."
 	icon_state = "sailormoon"
+	wear_state = "sailormoon"
 
 /obj/item/sailormoon_brooch
 	name = "transformation brooch"

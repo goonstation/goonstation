@@ -420,6 +420,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	desc = "Official pants of the Space Wrestling Federation."
 	icon_state = "machopants"
 	item_state = "machopants"
+	wear_state = "machopants"
 
 /obj/item/clothing/suit/armor/vest/macho
 	name = "tiger stripe vest"
@@ -437,12 +438,14 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	desc = "A snazzy pair of shades."
 	icon_state = "machoglasses"
 	item_state = "glasses"
+	wear_state = "machoglasses"
 	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/head/helmet/macho
 	name = "Macho Man Doo-Rag"
 	desc = "'To my perfect friend' - signed, Mr. Perfect"
 	icon_state = "machohat"
+	wear_state = "machohat"
 
 /obj/item/storage/belt/macho_belt
 	name = "Championship Belt"
@@ -457,6 +460,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	name = "Wrestling boots"
 	desc = "Cool pair of boots."
 	icon_state = "machoboots"
+	wear_state = "machoboots"
 
 /obj/item/macho_coke
 	name = "unmarked white bag"

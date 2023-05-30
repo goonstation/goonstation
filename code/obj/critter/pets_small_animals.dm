@@ -1550,6 +1550,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	desc = "You'll feel ready to take on anything the wild frontier of space can throw at you with this cap on your head!"
 	icon_state = "raccoon"
 	item_state = "raccoon"
+	wear_state = "raccoon"
 
 	setupProperties()
 		..()

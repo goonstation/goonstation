@@ -3,6 +3,7 @@
 	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
 	icon_state = "tinfoil"
 	item_state = "tinfoil"
+	wear_state = "tinfoil"
 
 /obj/critter/martian
 	name = "martian"

@@ -60,6 +60,7 @@
 	desc = "You can't tell the difference, Honest!"
 	icon_state = "baldcap"
 	item_state = "baldcap"
+	wear_state = "baldcap"
 	seal_hair = 1
 
 /obj/item/scissors

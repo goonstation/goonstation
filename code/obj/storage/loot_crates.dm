@@ -485,6 +485,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	desc = "Some pretty jewellery."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "bracelet"
+	wear_state = "ring"
 	material_prints = "patterned scratches"
 	w_class = W_CLASS_TINY
 	var/primary = TRUE

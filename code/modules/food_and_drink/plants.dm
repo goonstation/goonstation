@@ -981,6 +981,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = 0
 	item_state = "pumpkin"
+	wear_state = "pumpkin"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))
@@ -1022,6 +1023,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = 0
 	item_state = "pumpkinlatte"
+	wear_state = "pumpkinlatte"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))

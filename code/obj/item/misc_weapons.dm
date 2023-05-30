@@ -1803,6 +1803,7 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "halberdhoriz"
 	icon_state = "halberdnormal"
+	wear_state = "blank" // apparently this is missing a back sprite????
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1

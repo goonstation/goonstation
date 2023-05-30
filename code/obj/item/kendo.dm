@@ -37,6 +37,7 @@
 	desc = "小手 : Big poofy gloves to cover the hands in kendo sparring."
 	icon_state = "kote"
 	item_state = "kote"
+	wear_state = "kote"
 	material_prints = "navy blue, synthetic leather fibers"
 	crit_override = 1
 	bonus_crit_chance = 0

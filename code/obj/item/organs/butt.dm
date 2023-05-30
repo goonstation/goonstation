@@ -10,6 +10,7 @@
 	var/organ_holder_required_op_stage = 4
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "butt-nc"
+	wear_state = "butt-nc"
 	force = 1
 	w_class = W_CLASS_TINY
 	throwforce = 1
@@ -178,6 +179,7 @@
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."
 	icon_state = "butt-cyber"
+	wear_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
 	made_from = "pharosium"
@@ -204,3 +206,4 @@
 	name = "synthetic butt"
 	desc = "Why would you even grow this. What the fuck is wrong with you?"
 	icon_state = "butt-plant"
+	wear_state = "butt-plant"

@@ -319,6 +319,7 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "seaman"
 	item_state = "seaman"
+	wear_state = "seaman"
 
 /obj/item/clothing/under/gimmick/cadet
 	name = "cadet's uniform"
@@ -327,6 +328,7 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "cadet"
 	item_state = "cadet"
+	wear_state = "cadet"
 
 /obj/item/clothing/under/gimmick/lieutenant
 	name = "lieutenant's uniform"
@@ -335,6 +337,7 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "lieutenant"
 	item_state = "lieutenant"
+	wear_state = "lieutenant"
 
 /obj/item/clothing/under/gimmick/officer
 	name = "officer's uniform"
@@ -343,6 +346,7 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "officer"
 	item_state = "officer"
+	wear_state = "officer"
 
 /obj/item/clothing/under/gimmick/chiefofficer
 	name = "chief officer's uniform"
@@ -351,23 +355,27 @@
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_reward.dmi'
 	icon_state = "chiefofficer"
 	item_state = "chiefofficer"
+	wear_state = "chiefofficer"
 
 /obj/item/clothing/head/seaman
 	name = "seaman's peaked cap"
 	desc = "A service cap, to go with the seaman's uniform of Nanotrasen's naval branch. Snazzy!"
 	icon_state = "nt1"
 	item_state = "nt1"
+	wear_state = "nt1"
 
 /obj/item/clothing/head/officer
 	name = "officer's peaked cap"
 	desc = "A service cap, to go with the officer's uniform of Nanotrasen's naval branch. Looking sharp, chief!"
 	icon_state = "nt2"
 	item_state = "nt2"
+	wear_state = "nt2"
 
 /obj/item/clothing/suit/armor/nanotrasen
 	name = "Nanotrasen Bodyguard Armor"
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
+	wear_state = "nt2armor"
 	desc = "Heavy armor used by certain Nanotrasen bodyguards."
 
 

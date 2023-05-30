@@ -1583,6 +1583,7 @@ obj/item/clothing/gloves/concussive
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 	icon_state = "cgaunts"
 	item_state = "bgloves"
+	wear_state = "bgloves"
 	material_prints = "industrial-grade mineral fibers"
 	var/obj/item/mining_tool/tool = null
 

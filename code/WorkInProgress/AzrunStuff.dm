@@ -903,6 +903,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 	desc = "A portable battery that can be worn on the back, or hooked up to a compatible receptacle."
 	icon = 'icons/obj/items/tank.dmi'
 	icon_state = "plasma"
+	wear_state = "plasma" // gross
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT

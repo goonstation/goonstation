@@ -280,6 +280,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	icon_state = "phaser-xl"
 	uses_multiple_icon_states = 1
 	item_state = "phaser_xl"
+	wear_state = "phaser_xl"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."

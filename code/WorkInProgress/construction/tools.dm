@@ -282,6 +282,7 @@ TYPEINFO(/obj/item/clothing/glasses/construction)
 	name = "\improper Construction Visualizer"
 	icon_state = "construction"
 	item_state = "construction"
+	wear_state = "construction"
 	desc = "The latest technology in viewing live blueprints."
 
 /obj/item/lamp_manufacturer/organic

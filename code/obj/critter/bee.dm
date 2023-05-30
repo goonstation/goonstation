@@ -2053,6 +2053,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	name = "bee beard"
 	desc = "A beard. From a bee."
 	icon_state = "beard"
+	wear_state = "beard"
 	c_flags = null
 
 /obj/item/reagent_containers/food/snacks/beefood

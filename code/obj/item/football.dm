@@ -4,6 +4,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "fb_blue"
+	wear_state = "fb_blue"
 	//same values as captain armor
 	var/in_rush = 0
 	item_function_flags = IMMUNE_TO_ACID
@@ -15,11 +16,13 @@
 	red
 		desc = "A protective suit designed for players of the ancient sport of space-american football. This armor bears colors of the Spacissippi Timberdoodles, who were defeated by the Wobbegongs in the 2048 finals. Many consider this victory to be a fluke."
 		icon_state = "fb_red"
+		wear_state = "fb_red"
 
 /obj/item/clothing/head/helmet/football
 	name = "space-american football helmet"
 	desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacecow Wobbegongs logo printed on it!"
 	icon_state = "fb_blue"
+	wear_state = "fb_blue"
 	c_flags = COVERSEYES | COVERSMOUTH
 	item_function_flags = IMMUNE_TO_ACID
 	setupProperties()
@@ -29,6 +32,7 @@
 	red
 		desc = "Gotta protect your head! This helmet will certainly do the job. It has a Spacissippi Timberdoodles logo printed on it!"
 		icon_state = "fb_red"
+		wear_state = "fb_red"
 
 /obj/item/clothing/under/football
 	name = "athletic pants"
@@ -36,17 +40,20 @@
 	icon = 'icons/obj/clothing/uniforms/item_js_athletic.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_athletic.dmi'
 	icon_state = "fb_blue"
+	wear_state = "fb_blue"
 	item_function_flags = IMMUNE_TO_ACID
 
 	red
 		desc = "These are athletic pants bearing the colors of the Spacissippi Timberdoodles. The fabric smells like rivalry."
 		icon_state = "fb_red"
+		wear_state = "fb_red"
 
 /obj/item/clothing/shoes/cleats
 	name = "cleats"
 	desc = "Sharp cleats made for playing football at a professional level. The cleats provide excellent grip. They must be expensive!"
 	icon_state = "cleats"
 	item_state = "bl_shoes"
+	wear_state = "cleats"
 	c_flags = NOSLIP
 	kick_bonus = 6
 	step_sound = "step_plating"

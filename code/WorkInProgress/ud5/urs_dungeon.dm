@@ -168,6 +168,7 @@
 	name = "\improper VR goggles"
 	desc = "On the side it says \"A game for 2-4 Players\". Guess you'll need some friends to play with you."
 	icon_state = "vr"
+	wear_state = "vr"
 	item_state = "sunglasses"
 	color = "#550000"
 	var/target = null
@@ -236,6 +237,7 @@
 	name = "\improper VR goggles"
 	desc = "About goddamn time."
 	icon_state = "vr"
+	wear_state = "vr"
 	item_state = "sunglasses"
 	color = "#00CCCC"
 	var/turf/origin = null

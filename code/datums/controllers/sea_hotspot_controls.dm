@@ -1021,6 +1021,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
 	icon_state = "stompboots"
+	wear_state = "stompboots"
 	kick_bonus = 3
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
