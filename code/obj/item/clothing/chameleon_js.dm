@@ -1850,6 +1850,7 @@
 	icon = 'icons/obj/porters.dmi'
 	icon_state = "remote"
 	item_state = "electronic"
+	wear_state = "electronic"
 	w_class = W_CLASS_SMALL
 
 	var/obj/item/storage/backpack/chameleon/connected_backpack = null

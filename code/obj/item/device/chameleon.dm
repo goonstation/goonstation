@@ -74,6 +74,7 @@ TYPEINFO(/obj/item/device/chameleon)
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY | SUPPRESSATTACK
 	c_flags = ONBELT
 	item_state = "electronic"
+	wear_state = "electronic"
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5

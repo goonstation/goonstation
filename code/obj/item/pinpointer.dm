@@ -9,6 +9,7 @@ TYPEINFO(/obj/item/pinpointer)
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
+	wear_state = "electronic"
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 500

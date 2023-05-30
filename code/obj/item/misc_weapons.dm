@@ -1318,6 +1318,7 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		var/obj/item/swords/K = new sword_path()
 		sword_inside = K
+		src.wear_state = ih_sheathed_state
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -1340,6 +1341,7 @@ TYPEINFO(/obj/item/swords/captain)
 		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
 			item_state = ih_sheathed_state
+			wear_state = ih_sheathed_state
 			user.u_equip(W)
 			W.set_loc(src)
 			user.update_clothing()
@@ -1360,6 +1362,7 @@ TYPEINFO(/obj/item/swords/captain)
 			playsound(user, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
+			wear_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()

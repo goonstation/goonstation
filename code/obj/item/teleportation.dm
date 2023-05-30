@@ -127,6 +127,7 @@ TYPEINFO(/obj/item/hand_tele)
 	throw_range = 5
 	m_amt = 10000
 	c_flags = ONBELT
+	wear_state = "electronic"
 	var/unscrewed = 0
 	desc = "An experimental portable teleportation device that can create portals that link to the same destination as a teleport computer."
 	var/obj/item/our_target = null

@@ -2,6 +2,7 @@
 	name = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
+	wear_state = "handcuff"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	throwforce = 5

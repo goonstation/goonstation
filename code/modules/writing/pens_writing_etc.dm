@@ -21,6 +21,7 @@
 	icon_state = "pen"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
+	wear_state = "pen"
 	throwforce = 0
 	w_class = W_CLASS_TINY
 	throw_speed = 7
@@ -214,6 +215,7 @@
 	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
 	icon_state = "pen_fancy"
 	item_state = "pen_fancy"
+	wear_state = "pen_fancy"
 	font_color = "blue"
 	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"

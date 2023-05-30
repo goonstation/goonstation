@@ -10,6 +10,7 @@ TYPEINFO(/obj/item/cloaking_device)
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSHIELD
 	item_state = "electronic"
+	wear_state = "electronic"
 	throwforce = 5
 	throw_speed = 2
 	throw_range = 10

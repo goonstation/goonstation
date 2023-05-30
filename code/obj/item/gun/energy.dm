@@ -1728,6 +1728,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	muzzle_flash = "muzzle_flash_bluezap"
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
+	wear_state = "cornicen_close"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
@@ -1753,11 +1754,13 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		if(!src.extended)
 			src.icon_state = "cornicen_close"
 			src.item_state = "cornicen"
+			src.wear_state = "cornicen_close"
 			src.w_class = W_CLASS_NORMAL
 			src.spread_angle = initial(src.spread_angle)
 		else
 			src.icon_state = "cornicen_ext"
 			src.item_state = "cornicen_ext"
+			src.wear_state = "cornicen_ext"
 			src.w_class = W_CLASS_BULKY
 			src.spread_angle = 0
 

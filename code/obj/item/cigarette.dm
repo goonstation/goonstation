@@ -1124,6 +1124,7 @@
 	throwforce = 4
 	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
 	c_flags = ONBELT
+	wear_state = "blank"
 	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS
 	stamina_damage = 5

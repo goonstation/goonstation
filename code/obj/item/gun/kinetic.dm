@@ -3,6 +3,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "kinetic weapon"
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
+	wear_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
 	/// How much ammo can this gun hold? Don't make this null (Convair880).
@@ -744,6 +745,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
+	wear_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
@@ -2084,6 +2086,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
+	wear_state = "lmg"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	ammo_cats = list(AMMO_AUTO_308)
@@ -2120,6 +2123,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
+	wear_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_CANNON_20MM)
@@ -2160,6 +2164,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	icon_state = "recoilless"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	wear_state = "cannon"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1

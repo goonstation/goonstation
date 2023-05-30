@@ -17,6 +17,7 @@ TYPEINFO(/obj/item/baton)
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
+	wear_state = "baton"
 	force = 10
 	throwforce = 7
 	health = 7
@@ -375,6 +376,7 @@ TYPEINFO(/obj/item/baton/classic)
 	contraband = 6
 	icon_on = "baton"
 	icon_off = "baton"
+	wear_state = "classic_baton"
 	stamina_damage = 105
 	stamina_cost = 25
 	cost_normal = 0

@@ -54,6 +54,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	wear_state = "electronic"
 	m_amt = 50
 	g_amt = 20
 	var/emagged = 0
@@ -139,6 +140,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	w_class = W_CLASS_SMALL
 	flags =  TABLEPASS
 	c_flags = ONBELT
+	wear_state = "blank"
 	var/heated = 0
 	col_r = 0
 	col_g = 0.9

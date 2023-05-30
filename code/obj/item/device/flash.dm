@@ -16,6 +16,7 @@ TYPEINFO(/obj/item/device/flash)
 	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
+	wear_state = "electronic"
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?

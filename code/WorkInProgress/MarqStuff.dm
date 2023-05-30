@@ -478,6 +478,7 @@
 	icon_state = "quiver-0"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	item_state = "quiver"
+	wear_state = "quiver-0"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK | ONBELT
 	move_triggered = 1
@@ -494,11 +495,13 @@
 				I.change_stack_amount(-1)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
+			wear_state = "quiver-[min(contents.len, 4)]"
 		else
 			user.u_equip(I)
 			I.set_loc(src)
 			maptext = "[contents.len]"
 			icon_state = "quiver-[min(contents.len, 4)]"
+			wear_state = "quiver-[min(contents.len, 4)]"
 
 	proc/getArrow(var/mob/user)
 		if (src in user)
@@ -513,6 +516,7 @@
 		else
 			maptext = null
 		icon_state = "quiver-[min(contents.len, 4)]"
+		wear_state = "quiver-[min(contents.len, 4)]"
 		return
 
 	attack_hand(var/mob/user)

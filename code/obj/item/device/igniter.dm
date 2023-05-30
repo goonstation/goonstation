@@ -9,6 +9,7 @@ TYPEINFO(/obj/item/device/igniter)
 	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
 	c_flags = ONBELT
 	item_state = "electronic"
+	wear_state = "electronic"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY

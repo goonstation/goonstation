@@ -23,6 +23,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
+	wear_state = "electronic"
 	m_amt = 50
 	g_amt = 20
 	var/scan_range = 3
@@ -153,6 +154,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
+	wear_state = "electronic"
 	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
@@ -296,6 +298,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	wear_state = "healthanalyzer"
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -451,6 +454,7 @@ TYPEINFO(/obj/item/device/reagentscanner)
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
+	wear_state = "electronic"
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
@@ -914,6 +918,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	desc = "A device used to issue tickets from the security department."
 	icon_state = "ticketwriter"
 	item_state = "electronic"
+	wear_state = "electronic"
 	w_class = W_CLASS_SMALL
 
 	flags = FPRINT | TABLEPASS | CONDUCT
@@ -989,6 +994,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	m_amt = 150
 	icon_state = "CargoA"
 	item_state = "electronic"
+	wear_state = "electronic"
 
 	attack(mob/M, mob/user)
 		return
