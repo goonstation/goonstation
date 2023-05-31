@@ -1,3 +1,9 @@
+
+(t)wed may 31 23
+(u)LeahTheTech
+(p)14299
+(e)🗺|A-Mapping
+(*)Added a printing press in or near the chapel on all rotation maps.
 (u)LeahTheTech
 (t)wed may 31 23
 (+)Ore scoops can now be used in hand to toggle picking up rocks and ice chunks.
