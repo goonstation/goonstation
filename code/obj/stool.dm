@@ -889,7 +889,7 @@
 /obj/stool/chair/material/mauxite
 	name = "chair"
 	icon_state = "chair$$mauxite"
-	desc = "A sturdy chair made from mauxite. It doesn't look very comfortable..."
+	desc = "A sturdy chair. It doesn't look very comfortable..."
 	comfort_value = -2
 	default_material = "mauxite"
 

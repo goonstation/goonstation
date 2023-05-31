@@ -543,7 +543,6 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	desc = "A table made of dense mauxite"
 	uses_material_appearance = FALSE
 	mat_changename = TRUE
 	default_material = "mauxite"
