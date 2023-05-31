@@ -145,6 +145,10 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
 
+#ifdef CI_RUNTIME_CHECKING
+#define CHECK_MORE_RUNTIMES 1
+#endif
+
 //------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
 
 //#define RP_MODE 1

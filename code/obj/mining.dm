@@ -2479,6 +2479,8 @@ TYPEINFO(/obj/item/ore_scoop)
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
 	var/obj/item/satchel/mining/satchel = null
+	///Does this scoop pick up rock, ice etc.
+	var/collect_junk = FALSE
 
 	prepared
 		New()
@@ -2514,16 +2516,21 @@ TYPEINFO(/obj/item/ore_scoop)
 			return
 
 	attack_self(var/mob/user as mob)
-		if(!issilicon(user))
-			if (satchel)
-				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				user.put_in_hand_or_drop(satchel)
-				satchel = null
-				icon_state = "scoop"
-			else
-				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
-		else
+		if(issilicon(user))
 			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+			return
+		if (!satchel)
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, "<span class='info'>Now collecting junk.</span>")
+			else
+				boutput(user, "<span class='info'>No longer collecting junk.</span>")
+		else
+			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
+			user.put_in_hand_or_drop(satchel)
+			satchel = null
+			icon_state = "scoop"
+
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))

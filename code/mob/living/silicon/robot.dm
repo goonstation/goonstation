@@ -265,10 +265,6 @@
 		if (src.syndicate)
 			src.remove_syndicate("death")
 
-		if (src.mind)
-			for (var/datum/antagonist/antag_role in src.mind.antagonists)
-				antag_role.on_death()
-
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
 			src.clothes[slot].set_loc(src.loc)
@@ -1285,6 +1281,8 @@
 					B.owner.transfer_to(src)
 					if (src.syndicate)
 						src.make_syndicate("brain added by [user]")
+					else if (src.emagged)
+						src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 
 				if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 					boutput(src, "<B>You are playing a Cyborg. You can interact with most electronic objects in your view.</B>")
@@ -1649,6 +1647,8 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
+				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
+					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
