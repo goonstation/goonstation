@@ -1,5 +1,9 @@
 
 (t)wed may 31 23
+(u)Glamurio (Ryou)
+(p)14181
+(e)💅💊|C-QoL, A-Medical
+(+)Attaching a limb while off-handing a suture/stapler automatically secures the limb.
 (u)LeahTheTech
 (p)14299
 (e)🗺|A-Mapping
