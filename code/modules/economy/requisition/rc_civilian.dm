@@ -521,7 +521,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/plank
 	name = "wooden plank"
-	typepath = /obj/item/plank
+	typepath = /obj/item/sheet/wood
 	exactpath = TRUE
 	feemod = 1220
 

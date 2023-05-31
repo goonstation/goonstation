@@ -8,7 +8,7 @@ TYPEINFO(/datum/component/cell_holder)
 	. = ..()
 	if(!ismob(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOB_DEATH, .proc/death_effect)
+	RegisterSignal(parent, COMSIG_MOB_DEATH, PROC_REF(death_effect))
 
 /datum/component/battleroyale_death/proc/death_effect()
 	if (ishuman(parent))

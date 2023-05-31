@@ -15,6 +15,19 @@
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
 
+	/// how many times the bread has been teleported
+	var/teleport_count = 0
+	/// the number of teleports to start rolling to turn into a mimic
+	var/teleport_requirement = 100
+
+	New()
+		..()
+		src.RegisterSignal(src,COMSIG_MOVABLE_TELEPORTED,PROC_REF(mutate))
+
+	disposing()
+		src.UnregisterSignal(src,COMSIG_MOVABLE_TELEPORTED)
+		..()
+
 	attack(mob/M, mob/user, def_zone)
 		if (user == M)
 			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
@@ -23,6 +36,13 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
+
+	/// rolls to turn the bread loaf into a mimic once the requirement is reached
+	proc/mutate()
+		src.teleport_count += 1
+		if (src.teleport_count > src.teleport_requirement)
+			if (prob(0.01))
+				src.become_mimic()
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))

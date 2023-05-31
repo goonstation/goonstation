@@ -158,22 +158,35 @@
 	desc = "A very distinctive outfit."
 	icon_state = "waldo"
 	item_state = "waldo"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/gimmick/odlaw
 	name = "yellow-striped shirt and jeans"
 	desc = "A rather sinister outfit."
 	icon_state = "odlaw"
 	item_state = "odlaw"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/gimmick/fake_waldo
 	name = "striped shirt and jeans"
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
+	material_piece = /obj/item/material_piece/cloth/jean
+
 	New()
 		..()
 		icon_state = "waldont[rand(1,6)]"
 		item_state = "waldont[rand(1,6)]"
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/head/waldohat
 	name = "Bobble Hat and Glasses"
@@ -505,6 +518,19 @@
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
 
+	waddle
+		desc = "Pink clown shoes, they look a bit funny..."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			user.AddComponent(/datum/component/waddling)
+
+		unequipped(mob/user)
+			..()
+			var/datum/component/waddling/component = user.GetComponent(/datum/component/waddling)
+			component.RemoveComponent()
+
+
 /obj/item/clothing/mask/clown_hat/yellow
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
@@ -720,7 +746,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 
 	setupProperties()
 		..()
@@ -786,6 +812,12 @@
 	item_state = "dawson"
 	cant_self_remove = 1
 	cant_other_remove = 1
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if(slot == SLOT_W_UNIFORM && ishuman(user))
@@ -928,7 +960,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 	see_face = 0
@@ -1080,7 +1112,10 @@
 	desc = "A stylish red scarf, to add some colour to the monochrome mime get-up."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarf"
+	c_flags = ONBACK
+
 
 	setupProperties()
 		..()
@@ -1150,7 +1185,7 @@
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
 						return
-					if (user == H) // is this some form of masturbation?? giving yourself a wedding ring???? or are you too lazy to just equip it like a normal person????????
+					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
 						"You slip [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
 					else
@@ -1407,7 +1442,7 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
@@ -1467,6 +1502,11 @@
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
 	item_state = "white"
+	material_piece = /obj/item/material_piece/cloth/jean
+
+	New()
+		. = ..()
+		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"
@@ -1564,7 +1604,7 @@
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
@@ -1579,6 +1619,7 @@
 	desc = "Dracula who?"
 	body_parts_covered = TORSO
 	icon_state = "vampcape"
+	c_flags = ONBACK
 
 /obj/item/clothing/under/gimmick/superhero
 	name = "crimefighting costume"
@@ -1837,6 +1878,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_purple"
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/witchcape_mint
 	name = "Mint Witch Cape"
@@ -1844,6 +1886,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+	c_flags = ONBACK
 
 // marching band stuff
 /obj/item/clothing/under/gimmick/marchingband

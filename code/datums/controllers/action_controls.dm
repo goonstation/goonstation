@@ -676,6 +676,7 @@ var/datum/action_controller/actions
 #if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
 			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
+			resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif
@@ -1028,7 +1029,7 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-
+		SEND_SIGNAL(source, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
@@ -1119,6 +1120,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		if(owner && target && BOUNDS_DIST(owner, target) == 0)
+			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			if(remove_internals)
 				target.internal.add_fingerprint(owner)
 				for (var/obj/ability_button/tank_valve_toggle/T in target.internal.ability_buttons)
@@ -1259,6 +1261,7 @@ var/datum/action_controller/actions
 	onEnd()
 		..()
 		if(owner && target?.hasStatus("handcuffed"))
+			SEND_SIGNAL(owner, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 			var/mob/living/carbon/human/H = target
 			H.handcuffs.drop_handcuffs(H)
 			H.update_inv()
@@ -1433,7 +1436,7 @@ var/datum/action_controller/actions
 
 /obj/actions //These objects are mostly used for the attached_objs var on mobs to attach progressbars to mobs.
 	icon = 'icons/ui/actions.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = 5
@@ -2185,7 +2188,7 @@ var/datum/action_controller/actions
 		if(iswrenchingtool(tool))
 			playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 		else if(isweldingtool(tool))
-			playsound(target, 'sound/items/Welder.ogg', 50, 1)
+			tool:try_weld(owner,0,-1)
 		else if(isscrewingtool(tool))
 			playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
@@ -2194,6 +2197,6 @@ var/datum/action_controller/actions
 		..()
 		owner.visible_message("<span class='notice'>[owner]  [unanchor ? "un" : ""]anchors [target].</span>")
 		if(unanchor)
-			target.anchored = FALSE
+			target.anchored = UNANCHORED
 		else
-			target.anchored = TRUE
+			target.anchored = ANCHORED

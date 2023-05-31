@@ -16,7 +16,7 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 /*

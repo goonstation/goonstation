@@ -118,7 +118,7 @@
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
 			if(SA)
-				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
+				var/SA_pp = (SA.moles/breath_moles)*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -130,8 +130,8 @@
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				donor.visible_message("<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-				donor.vomit()
+				var/vomit_message = "<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>"
+				donor.vomit(0, null, vomit_message)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))

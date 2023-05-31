@@ -11,7 +11,7 @@ TYPEINFO_NEW(/obj/table)
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -27,7 +27,7 @@ TYPEINFO_NEW(/obj/table)
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
 	var/hulk_immune = FALSE
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
 	New(loc, obj/a_drawer)
 		..()
@@ -347,10 +347,7 @@ TYPEINFO_NEW(/obj/table)
 		var/obj/item/I = O
 		if(I.equipped_in_slot && I.cant_self_remove)
 			return
-		if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			I.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
 			if (S.contents.len < 1)
@@ -359,7 +356,7 @@ TYPEINFO_NEW(/obj/table)
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
-				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
+				S.tooltip_rebuild = 1
 				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
@@ -416,7 +413,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 		if(!(ownerMob.flags & TABLEPASS))
 			ownerMob.flags |= TABLEPASS
-			thr.end_throw_callback = .proc/unset_tablepass_callback
+			thr.end_throw_callback = PROC_REF(unset_tablepass_callback)
 		for(var/O in AIviewers(ownerMob))
 			var/mob/M = O //inherently typed list
 			var/the_text = "[ownerMob] jumps over [the_railing]."
@@ -681,8 +678,17 @@ TYPEINFO_NEW(/obj/table/reinforced)
 	auto
 		auto = 1
 
+	get_help_message(dist, mob/user)
+		if (src.status == 2)
+			return {"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to weaken it for disassembly."}
+		else if (src.status == 1)
+			return{"
+				You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it,
+				or a <b>welding tool</b> on <span class='harm'>harm</span> intent to strengthen it.
+			"}
+
 	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W) && W:try_weld(user,1) && user.a_intent == "harm")
+		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
@@ -1220,10 +1226,10 @@ TYPEINFO_NEW(/obj/table/glass)
 				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_STRENGTHEN)
 				verbing = "strengthening"
-				playsound(the_table, 'sound/items/Welder.ogg', 50, 1)
+				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
 				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)

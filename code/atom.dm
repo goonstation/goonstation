@@ -16,6 +16,13 @@ TYPEINFO(/atom)
 	var/shrunk = 0
 	var/list/cooldowns
 
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	/// DO NOT override this directly, use HELP_MESSAGE_OVERRIDE instead.
+	/// Example: HELP_MESSAGE_OVERRIDE("Use a <b>screwdriver</b> to unscrew the cover.")
+	var/help_message = null
+
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
 
@@ -43,6 +50,9 @@ TYPEINFO(/atom)
 
 	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/passability_cache]
 	var/tmp/pass_unstable = TRUE
+
+	/// Storage for items
+	var/datum/storage/storage = null
 
 /* -------------------- name stuff -------------------- */
 	/*
@@ -173,6 +183,8 @@ TYPEINFO(/atom)
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
+
+		src.remove_storage()
 		..()
 
 	proc/Turn(var/rot)
@@ -261,7 +273,7 @@ TYPEINFO(/atom)
 	return 0
 
 /atom/proc/emp_act()
-	return
+	src.storage?.storage_emp_act()
 
 /atom/proc/emag_act(var/mob/user, var/obj/item/card/emag/E) //This is gonna be fun!
 	return 0
@@ -314,6 +326,13 @@ TYPEINFO(/atom)
 	..()
 	#endif
 	SEND_SIGNAL(src, COMSIG_ATOM_ENTERED, AM, OldLoc)
+
+/atom/Uncrossed(atom/movable/AM)
+	SHOULD_CALL_PARENT(TRUE)
+	#ifdef SPACEMAN_DMM //im also cargo culter
+	..()
+	#endif
+	SEND_SIGNAL(src, COMSIG_ATOM_UNCROSSED, AM)
 
 /atom/proc/ProximityLeave(atom/movable/AM as mob|obj)
 	return
@@ -393,7 +412,7 @@ TYPEINFO(/atom)
 
 /atom/movable/overlay
 	var/atom/master = null
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 
 /atom/movable/overlay/gibs
@@ -414,7 +433,7 @@ TYPEINFO(/atom)
 	layer = OBJ_LAYER
 	var/tmp/turf/last_turf = 0
 	var/tmp/last_move = null
-	var/anchored = 0
+	var/anchored = UNANCHORED
 	var/move_speed = 10
 	var/tmp/l_move_time = 1
 	var/throwing = 0
@@ -452,9 +471,10 @@ TYPEINFO(/atom)
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -572,18 +592,20 @@ TYPEINFO(/atom)
 		return
 
 	if (isturf(last_turf))
-		for(var/turf/covered_turf as anything in old_locs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -650,6 +672,12 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
+/// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
+/// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -736,9 +764,9 @@ TYPEINFO(/atom)
 
 /atom/proc/attack_hand(mob/user)
 	PROTECTED_PROC(TRUE)
+	src.storage?.storage_item_attack_hand(user)
 	if (flags & TGUI_INTERACTIVE)
 		return ui_interact(user)
-	return
 
 /atom/proc/attack_ai(mob/user as mob)
 	return
@@ -756,6 +784,8 @@ TYPEINFO(/atom)
 ///internal proc for when an atom is attacked by an item. Override this, but do not call it,
 /atom/proc/attackby(obj/item/W, mob/user, params, is_special = 0)
 	PROTECTED_PROC(TRUE)
+	if (src.storage?.storage_item_attack_by(W, user))
+		return
 	src.material?.triggerOnHit(src, W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
@@ -764,8 +794,6 @@ TYPEINFO(/atom)
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
 	var/image/I = isnull(texture) ? null : getTexturedImage(src, texture, blendMode)//, key)
-	if (!I)
-		return
 	src.UpdateOverlays(I, key)
 
 	if(isitem(src) && key == "material")
@@ -890,7 +918,7 @@ TYPEINFO(/atom)
 
 /atom/proc/mouse_drop(atom/over_object, src_location, over_location, src_control, over_control, params)
 	PROTECTED_PROC(TRUE)
-	return
+	src.storage?.storage_item_mouse_drop(usr, over_object, src_location, over_location)
 
 /atom/proc/relaymove(mob/user, direction, delay, running)
 	.= 0
@@ -981,9 +1009,10 @@ TYPEINFO(/atom)
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
-		for(var/turf/covered_turf as anything in oldlocs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -995,9 +1024,10 @@ TYPEINFO(/atom)
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)
@@ -1031,6 +1061,15 @@ TYPEINFO(/atom)
 
 	return src
 
+/atom/movable/proc/move_trigger(mob/M, kindof)
+	var/atom/movable/AM = src.loc
+	while (AM && !isarea(AM) && AM != M)
+		AM = AM.loc
+	if (!AM || isarea(AM))
+		return FALSE
+	src.storage?.storage_item_move_triggered(M, kindof)
+	return TRUE
+
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
 	var/old_density = src.density
@@ -1038,6 +1077,7 @@ TYPEINFO(/atom)
 	if(old_density != src.density && isturf(src.loc))
 		var/turf/loc = src.loc // invalidate JPS cache on density changes
 		loc.passability_cache = null
+		SEND_SIGNAL(loc, COMSIG_TURF_CONTENTS_SET_DENSITY, old_density, src)
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

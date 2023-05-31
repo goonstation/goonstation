@@ -11,7 +11,7 @@
 	when_stunned = 0
 	not_when_handcuffed = 1
 	hunter_only = 1
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(mob/target)
 		if (!holder)

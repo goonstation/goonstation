@@ -16,7 +16,7 @@ TYPEINFO(/obj/machinery/partyalarm)
 	var/party = 0
 	var/duration = 60//admemes
 	var/list/lights = list()
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/machinery/partyalarm/process()
 	if (timing > 0)

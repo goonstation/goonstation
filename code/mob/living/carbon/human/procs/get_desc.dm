@@ -13,6 +13,7 @@
 		return // heh
 
 	. = list()
+	. += ..()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
 		sleep(GET_DIST(usr.client.eye, src) + 1)
@@ -114,16 +115,21 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].</span>"
-		else if (istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card)
-			if (src.wear_id:ID_card:registered != src.real_name && in_interact_range(src, usr) && prob(10))
-				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
+		else if ((istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card) || istype(src.wear_id, /obj/item/clothing/lanyard))
+			var/obj/item/card/id/desc_id_card
+			if (istype(src.wear_id, /obj/item/clothing/lanyard))
+				var/obj/item/clothing/lanyard/lanyard = src.wear_id
+				desc_id_card = lanyard.get_stored_id()
 			else
-				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
+				desc_id_card = src.wear_id:ID_card
+			if (desc_id_card)
+				if (desc_id_card.registered != src.real_name && in_interact_range(src, usr) && prob(10))
+					. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it yet doesn't seem to be that person!!!</span>"
+				else
+					. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.</span>"
 
-	if (src.arrestIcon?.icon_state && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-
-		if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+	if (src.arrestIcon?.icon_state)
+		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
 			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
 			if(sec_record)
 				var/sechud_flag = sec_record["sec_flag"]
@@ -398,7 +404,7 @@
 	. += "<br><span class='notice'>*---------*</span>"
 
 	if (GET_DIST(usr, src) < 4)
-		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH) || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))
+		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH))
 			. += "<br><span class='alert'>You analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)

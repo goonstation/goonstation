@@ -9,14 +9,22 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
+	var/list/color
 
 	OnAdd()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		src.color = hsv2rgblist(randfloat(0, 360), randfloat(0, 100), 100)
+		src.color += list(50 + 75 * power)
+		owner.add_sm_light("glowy", src.color)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.color[4] = 75 + 50 * power
+		owner.add_sm_light("glowy", src.color)
 
 	OnRemove()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		owner.remove_sm_light("glowy")
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
@@ -274,7 +282,12 @@
 		. = ..()
 		if(variable == "size" && src.filter)
 			animate(src.filter, size=0, time=0)
-			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+			animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"

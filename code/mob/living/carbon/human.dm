@@ -9,7 +9,6 @@
 #else
 	icon_state = "blank"
 #endif
-	static_type_override = /mob/living/carbon/human
 	throw_range = 4
 	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
@@ -19,7 +18,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/list/implant_icons = null
+	var/list/prodoc_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -73,6 +72,7 @@
 	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
+	var/robotic_organs = 0
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
@@ -131,7 +131,6 @@
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/blood_image = image('icons/effects/blood.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/handcuff_img = image('icons/mob/mob.dmi')
-	var/static/image/shield_image = image('icons/mob/mob.dmi', "icon_state" = "shield")
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -170,7 +169,6 @@
 	var/datum/humanInventory/inventory = null
 
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
-	default_static_icon = human_static_base_idiocy_bullshit_crap // FUCK
 	. = ..()
 
 	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
@@ -199,12 +197,13 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	implant_icons = list()
-	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	for (var/implant in implant_icons)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
+	prodoc_icons = list()
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in prodoc_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(prodoc_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -511,12 +510,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(implant_icons)
-		for (var/implant in implant_icons)
-			var/image/I = implant_icons[implant]
+	if(prodoc_icons)
+		for (var/implant in prodoc_icons)
+			var/image/I = prodoc_icons[implant]
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
 			I.dispose()
-		implant_icons = null
+		prodoc_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -658,7 +657,7 @@
 				src.visible_message("<span class='alert'><B>[src]</B> head starts to shift around!</span>")
 				src.show_text("<b>We begin to grow a headspider...</b>", "blue")
 				var/mob/living/critter/changeling/headspider/HS = new /mob/living/critter/changeling/headspider(src) //we spawn the headspider inside this dude immediately.
-				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, .proc/remove) //if this dude gets grindered or cremated or whatever, we go with it
+				HS.RegisterSignal(src, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(remove)) //if this dude gets grindered or cremated or whatever, we go with it
 				src.mind?.transfer_to(HS) //ok we're a headspider now
 				C.points = max(0, C.points - 10) // This stuff isn't free, you know.
 				HS.changeling = C
@@ -725,7 +724,7 @@
 
 	if (istype(src.wear_suit, /obj/item/clothing/suit/armor/suicide_bomb))
 		var/obj/item/clothing/suit/armor/suicide_bomb/A = src.wear_suit
-		INVOKE_ASYNC(A, /obj/item/clothing/suit/armor/suicide_bomb.proc/trigger, src)
+		INVOKE_ASYNC(A, TYPE_PROC_REF(/obj/item/clothing/suit/armor/suicide_bomb, trigger), src)
 
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
@@ -736,12 +735,6 @@
 			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
 #endif
 		src.mind.register_death()
-		if (src.mind.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(src, "mindhack", "death")
-		else if (src.mind.special_role == ROLE_VAMPTHRALL)
-			remove_mindhack_status(src, "vthrall", "death")
-		else if (src.mind.master)
-			remove_mindhack_status(src, "otherhack", "death")
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
@@ -812,7 +805,7 @@
 	if (!antag_removal && src.spell_soulguard)
 		boutput(src, "<span class='notice'>Your Soulguard enchantment activates and saves you...</span>")
 		//soulguard ring puts you in the same spot
-		if(src.spell_soulguard == 2)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
+		if(src.spell_soulguard == SOULGUARD_RING)	//istype(src.gloves, /obj/item/clothing/gloves/ring/wizard/teleport)
 			reappear_turf = get_turf(src)
 		else
 			reappear_turf = pick(job_start_locations["wizard"])
@@ -875,14 +868,17 @@
 		animation.master = src
 		animation.icon_state = "ungibbed"
 		src.unkillable = 0 //Don't want this lying around to repeatedly die or whatever.
-		src.spell_soulguard = 0 // clear this as well
+		if (src.spell_soulguard)
+			newbody.RegisterSignal(newbody, COMSIG_MOB_PICKUP, /mob/proc/emp_touchy)
+			newbody.RegisterSignal(newbody, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
+		src.spell_soulguard = SOULGUARD_INACTIVE // clear this as well
 		src = null //Detach this, what if we get deleted before the animation ends??
 		SPAWN(0.7 SECONDS) //Length of animation.
 			newbody.set_loc(animation.loc)
 			qdel(animation)
 	else
 		src.unkillable = 0
-		src.spell_soulguard = 0
+		src.spell_soulguard = SOULGUARD_INACTIVE
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 		SPAWN(2.2 SECONDS) // Has to at least match the organ/limb replacement stuff (Convair880).
 			if (src) qdel(src)
@@ -1170,6 +1166,10 @@
 		. = FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
 		. = FALSE
+	else if (istype(src.back, /obj/item/clothing))
+		var/obj/item/clothing/hider = src.back
+		if (!hider.see_face)
+			. = FALSE
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
@@ -1227,9 +1227,6 @@
 	return null
 
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
-	if (!(I in src.contents))
-		return null
-
 	//wanted the following to be a switch case but those expect constant expressions
 
 	if (src.w_uniform == I)
@@ -1379,8 +1376,7 @@
 		return
 
 	if (src.bioHolder.HasEffect("food_bad_breath"))
-		for (var/mob/living/L in view(2,src))
-			if (L == src) continue //You were able to vomit from your own breath. Maybe a good idea?
+		for (var/mob/living/L in oview(2,src))
 			if (prob(20))
 				boutput(L, "<span class='alert'>Good lord, [src]'s breath smells bad!</span>")
 				L.vomit()
@@ -1595,6 +1591,7 @@
 	message = messages[1]
 	if(src.client)
 		phrase_log.log_phrase(forced ? "say" : "whisper", message)
+	last_words = message
 	for (var/mob/M in eavesdropping)
 		if (M.say_understands(src, lang_id))
 			var/message_c = stars(message)
@@ -1931,7 +1928,7 @@
 		if (slot_r_store)
 			return src.r_store
 
-/mob/living/carbon/human/proc/force_equip(obj/item/I, slot)
+/mob/living/carbon/human/proc/force_equip(obj/item/I, slot, role_equipped = FALSE)
 	//warning: icky code
 	var/equipped = 0
 	switch(slot)
@@ -2024,19 +2021,32 @@
 			if (!src.l_store)
 				src.l_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage1"])
+				if (I.storage && !I.storage.opens_if_worn) // from item/proc/equipped()
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_r_store)
 			if (!src.r_store)
 				src.r_store = I
 				hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["storage2"])
+				if (I.storage && !I.storage.opens_if_worn)
+					I.storage.hide_hud(src)
 				equipped = 1
 		if (slot_in_backpack)
-			if (src.back && istype(src.back, /obj/item/storage))
-				I.set_loc(src.back)
-				equipped = 1
+			if (src.back?.storage)
+				if (role_equipped)
+					src.back.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.back.storage.add_contents_safe(I, src)
+					equipped = (I in src.back.storage.get_contents())
 		if (slot_in_belt)
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				I.set_loc(src.belt)
+			if (src.belt?.storage)
+				if (role_equipped)
+					src.belt.storage.add_contents(I, src, FALSE)
+					equipped = TRUE
+				else
+					src.belt.storage.add_contents_safe(I, src)
+					equipped = (I in src.belt.storage.get_contents())
 				equipped = 1
 
 	if (equipped)
@@ -2122,6 +2132,8 @@
 				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
 				return TRUE
+			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
+				return TRUE
 		if (slot_back)
 			if (I.c_flags & ONBACK)
 				return TRUE
@@ -2187,15 +2199,11 @@
 				else
 					return TRUE
 		if (slot_in_backpack) // this slot is stupid
-			if (src.back && istype(src.back, /obj/item/storage))
-				var/obj/item/storage/S = src.back
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.back?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 		if (slot_in_belt) // this slot is also stupid
-			if (src.belt && istype(src.belt, /obj/item/storage))
-				var/obj/item/storage/S = src.belt
-				if (S.contents.len < 7 && I.w_class <= W_CLASS_NORMAL)
-					return TRUE
+			if (src.belt?.storage?.check_can_hold(I) == STORAGE_CAN_HOLD)
+				return TRUE
 	return FALSE
 
 /mob/living/carbon/human/proc/equip_new_if_possible(path, slot)
@@ -2206,9 +2214,9 @@
 		return FALSE
 	return TRUE
 
-/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot)
+/mob/living/carbon/human/proc/equip_if_possible(obj/item/I, slot, role_equipped = TRUE)
 	if (can_equip(I, slot))
-		return force_equip(I, slot)
+		return force_equip(I, slot, role_equipped)
 	else
 		return 0
 
@@ -2541,8 +2549,7 @@
 
 /mob/living/carbon/human/proc/spidergib()
 	if (isobserver(src))
-		var/list/virus = src.ailments
-		gibs(src.loc, virus)
+		gibs(src.loc)
 		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
@@ -2953,7 +2960,6 @@
 	if(.)
 		src.set_face_icon_dirty()
 		src.set_body_icon_dirty()
-		src.get_static_image()
 	else // updates are called by the mutantrace datum. lets not call it a million times
 		src.update_body()
 		src.update_clothing()
@@ -3236,11 +3242,9 @@
 	. = ..()
 	if(. || not_worn)
 		return
-	if(istype(src.wear_id, /obj/item/card/id))
-		return src.wear_id
-	if(istype(src.wear_id, /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.wear_id
-		return pda.ID_card
+	var/obj/item/card/id/id_card = get_id_card(src.wear_id)
+	if (istype(id_card))
+		return id_card
 
 /mob/living/carbon/human/is_hulk()
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
@@ -3386,12 +3390,7 @@
 		return get_singleton(/datum/pronouns/abomination)
 	if(src.wear_id)
 		// not using get_id() because we don't want held IDs
-		var/obj/item/card/id/id = null
-		if(istype(src.wear_id, /obj/item/card/id))
-			id = src.wear_id
-		else if(istype(src.wear_id, /obj/item/device/pda2))
-			var/obj/item/device/pda2/pda = src.wear_id
-			id = pda.ID_card
+		var/obj/item/card/id/id = get_id_card(src.wear_id)
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()
@@ -3406,3 +3405,12 @@
 		src.l_hand?.hear_talk(M, text, real_name, lang_id)
 	. = ..()
 
+///Returns the number of clown items someone is wearing
+/mob/living/carbon/human/proc/clown_tally()
+	. = 0
+	if(istype(src.w_uniform, /obj/item/clothing/under/misc/clown))
+		. += 1
+	if(istype(src.shoes, /obj/item/clothing/shoes/clown_shoes))
+		. += 1
+	if(istype(src.wear_mask, /obj/item/clothing/mask/clown_hat))
+		. += 1

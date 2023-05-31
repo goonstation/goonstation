@@ -24,7 +24,7 @@
 
 /datum/aiTask/prioritizer/critter/on_reset()
 	..()
-	holder.stop_move()
+	//holder.stop_move()
 
 // TASK DEFINITIONS GO BELOW
 // This is where the actual behaviour is defined.
@@ -90,7 +90,6 @@
 
 /datum/aiTask/succeedable/critter/attack/on_tick()
 	if(!has_started)
-		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
@@ -143,7 +142,6 @@
 
 /datum/aiTask/succeedable/critter/scavenge/on_tick()
 	if(!has_started)
-		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
@@ -196,7 +194,6 @@
 
 /datum/aiTask/succeedable/critter/eat/on_tick()
 	if(!has_started)
-		holder.stop_move()
 		var/mob/living/critter/C = holder.owner
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)

@@ -5,7 +5,7 @@
 	icon_state = "reactor_stats"
 	desc = "A powerful supercomputer used to model the generator and provide corresponding statistical analysis"
 	density = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	flags = TGUI_INTERACTIVE
 
 	var/list/chamber_turfs[] = list()

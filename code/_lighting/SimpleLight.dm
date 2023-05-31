@@ -2,7 +2,7 @@
 
 /obj/overlay/simple_light
 	event_handler_flags = IMMUNE_SINGULARITY
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 0
 	layer = LIGHTING_LAYER_BASE
 	plane = PLANE_LIGHTING
@@ -395,6 +395,10 @@
 		if(rgba[4] > 140)
 			rgba[4] -= 70
 			medium = 1
+		if(medium == 0)
+			src.remove_medium_light(id)
+		else
+			src.remove_simple_light(id)
 
 	if (directional)
 		src.add_mdir_light(id, rgba)

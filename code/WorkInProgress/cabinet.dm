@@ -1,7 +1,7 @@
 /obj/cabinet
 	name = "Cabinet"
 	desc = "Cabinet for storing various things."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/furniture/cabinet.dmi'
 	icon_state = "cabinet"

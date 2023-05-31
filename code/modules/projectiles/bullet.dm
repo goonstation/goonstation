@@ -136,16 +136,16 @@ toxic - poisons
 /datum/projectile/bullet/minigun
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
-	damage = 8
-	cost = 10
-	shot_number = 10
-	shot_delay = 0.07 SECONDS
+	damage = 10
+	cost = 1
+	shot_number = 1 //dont question it
 	dissipation_delay = 7
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+	fullauto_valid = 1
 
 /datum/projectile/bullet/minigun/turret
 	damage = 15
@@ -371,7 +371,7 @@ toxic - poisons
 	hit_ground_chance = 50
 	projectile_speed = 60
 	impact_image_state = "bhole-small"
-	implanted = /obj/item/implant/projectile/bullet_flechette
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 
 /datum/projectile/bullet/veritate/burst
@@ -685,7 +685,7 @@ toxic - poisons
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	implanted = null
-	damage = 6
+	damage = 8
 
 /datum/projectile/bullet/improvglass
 	name = "glass"
@@ -694,7 +694,7 @@ toxic - poisons
 	dissipation_delay = 2
 	dissipation_rate = 2
 	implanted = null
-	damage = 4
+	damage = 6
 
 /datum/projectile/bullet/improvscrap
 	name = "fragments"
@@ -703,7 +703,7 @@ toxic - poisons
 	dissipation_delay = 4
 	dissipation_rate = 1
 	implanted = /obj/item/implant/projectile/shrapnel
-	damage = 8
+	damage = 10
 
 /datum/projectile/bullet/aex
 	name = "explosive slug"
@@ -806,7 +806,7 @@ toxic - poisons
 	name = "rock salt"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	icon_state = "trace"
-	damage = 3
+	damage = 4
 	dissipation_rate = 1
 	dissipation_delay = 2
 	implanted = null
@@ -835,7 +835,7 @@ toxic - poisons
 	speed_max = 36
 	dissipation_variance = 64
 	spread_angle_variance = 7.5
-	pellets_to_fire = 4
+	pellets_to_fire = 7
 
 /datum/projectile/bullet/flare
 	name = "flare"
@@ -1203,6 +1203,32 @@ datum/projectile/bullet/autocannon
 			shot_volume = 100
 			if(P)
 				P.travelled = max(proj.travelled, (max_range-2) * 32)
+
+/datum/projectile/bullet/stunbaton //direct less-lethal 40mm option
+	name = "stun baton round"
+	icon_state = "stunbaton"
+	shot_sound = 'sound/weapons/launcher.ogg'
+	damage = 0
+	stun = 50
+	dissipation_rate = 0
+	dissipation_delay = 4
+	max_range = 12
+	implanted = null
+	damage_type = D_SPECIAL
+	hit_type = DAMAGE_BLUNT
+	hit_mob_sound = 'sound/impact_sounds/Energy_Hit_3.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	ie_type = null
+
+	on_hit(atom/hit, dirflag, obj/projectile/proj)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(130, weakened = 15 SECONDS, disorient = 6 SECONDS)
+
+			L.Virus_ShockCure(33)
+			L.shock_cyberheart(33)
+
 
 /datum/projectile/bullet/grenade_shell
 	name = "40mm grenade conversion shell"

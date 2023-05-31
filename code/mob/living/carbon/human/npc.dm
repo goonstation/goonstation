@@ -5,6 +5,12 @@
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
 	)
+
+//Put any items that NPCs physically cannot pickup here
+#define IS_NPC_ILLEGAL_ITEM(x) ( \
+		istype(x, /obj/item/body_bag) && x.w_class >= W_CLASS_BULKY \
+	)
+
 #define IS_NPC_CLOTHING(x) ( \
 		( \
 			istype(x, /obj/item/clothing) || \
@@ -569,17 +575,17 @@
 		throw_equipped |= prob(80)
 
 	// pull things out of other things!
-	if(istype(src.equipped(), /obj/item/storage))
-		var/obj/item/storage/storage = src.equipped()
-		if(!length(storage.contents) && src.hand) // keep toolboxes in the right hand
+	var/obj/item/I = src.equipped()
+	if(I.storage)
+		if(!length(I.storage.get_contents()) && src.hand) // keep toolboxes in the right hand
 			throw_equipped |= prob(80)
-		else if(length(storage.contents))
-			var/obj/item/taken = pick(storage.contents)
-			src.u_equip(storage)
-			storage.set_loc(src.loc)
-			storage.dropped(src)
-			storage.layer = initial(storage.layer)
-			taken.set_loc(storage.loc)
+		else if(length(I.storage.get_contents()))
+			var/obj/item/taken = pick(I.storage.get_contents())
+			src.u_equip(I)
+			I.set_loc(src.loc)
+			I.dropped(src)
+			I.layer = initial(I.layer)
+			I.storage.transfer_stored_item(taken, get_turf(taken), user = src)
 			src.put_in_hand_or_drop(taken)
 
 	// wear clothes
@@ -722,7 +728,7 @@
 	var/pickup_score = 0
 
 	for (var/obj/item/G in view(1,src))
-		if(G.anchored || G.throwing) continue
+		if(G.anchored || G.throwing || G.w_class >= W_CLASS_GIGANTIC || IS_NPC_ILLEGAL_ITEM(G)) continue
 		var/score = 0
 		if(G.loc == src && !G.equipped_in_slot) // probably organs
 			continue
@@ -742,7 +748,7 @@
 			score += 5
 		if(istype(G, /obj/item/pen/crayon))
 			score += 4
-		if(istype(G, /obj/item/storage) && length(G.contents))
+		if(istype(G, /obj/item/storage) && length(G.storage.get_contents())) // just /obj/item/storage
 			score += 9
 		if(G.loc == src)
 			score += 1
@@ -797,10 +803,8 @@
 			GN:set_loc(src)
 			src.belt = GN
 			GN:layer = HUD_LAYER
-		else if(src.back && istype(src.back,/obj/item/storage/backpack))
-			var/obj/item/storage/backpack/B = src.back
-			if(B.contents.len < 7)
-				B.Attackby(GN,src)
+		else if(src.back?.storage && !src.back.storage.is_full())
+			src.back.Attackby(GN,src)
 
 	var/obj/item/pickup
 
@@ -1009,3 +1013,4 @@
 
 #undef IS_NPC_HATED_ITEM
 #undef IS_NPC_CLOTHING
+#undef IS_NPC_ILLEGAL_ITEM

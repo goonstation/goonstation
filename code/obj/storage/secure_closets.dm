@@ -21,7 +21,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
-			anchored = 1
+			anchored = ANCHORED
 		src.attack_particle = new /obj/particle/attack
 		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
@@ -197,7 +197,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	req_access = list(access_captain)
-	spawn_contents = list(/obj/item/gun/energy/egun,
+	spawn_contents = list(/obj/item/gun/energy/egun/captain,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
 	/obj/item/clothing/suit/armor/capcoat,
@@ -206,7 +206,14 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain,
+	/obj/item/megaphone)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(5))
+				new /obj/item/clothing/head/bigcaphat(src)
+			return 1
 
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
@@ -231,7 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
@@ -268,6 +275,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
+	/obj/item/clothing/suit/labcoat,
 	/obj/item/device/radio/headset/command/rd)
 
 	make_my_stuff()
@@ -329,8 +337,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/engineer,
-		/obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
 
 	)
@@ -412,7 +420,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	name = "\improper Automatic Locker"
 	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
-	anchored = 1
+	anchored = ANCHORED
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
@@ -760,6 +768,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
+	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
@@ -852,7 +861,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/rabbihat,\
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
-	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/shoes/sandal/magic,\
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\

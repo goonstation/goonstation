@@ -950,7 +950,7 @@
 				qdel(target_mob.r_hand)
 				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
 				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, target_mob.slot_shoes)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1134,13 +1134,15 @@
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
 		mob.see_invisible = INVIS_ADVENTURE
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
 			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
@@ -1748,7 +1750,7 @@
 	former_role = text("[M.mind.special_role]")
 
 	message_admins("[key_name(M)]'s antagonist status ([former_role]) was removed. Source: [admin ? "[key_name(admin)]" : "*automated*"].")
-	if (admin) // Log entries for automated antag status removal is handled in helpers.dm, remove_mindhack_status().
+	if (admin)
 		logTheThing(LOG_ADMIN, admin, "removed the antagonist status of [constructTarget(M,"admin")].")
 		logTheThing(LOG_DIARY, admin, "removed the antagonist status of [constructTarget(M,"diary")].", "admin")
 
@@ -1773,8 +1775,6 @@
 		ticker.minds.Add(newMind)
 	M.mind = newMind
 	M.mind.brain?.owner = M.mind
-
-	M.antagonist_overlay_refresh(1, 1)
 
 	if (new_mind_only)
 		return
@@ -2930,8 +2930,8 @@ var/global/force_radio_maptext = FALSE
 	var/obj/item/storage/backpack/syndie/backpack_full_of_ammo = new()
 	backpack_full_of_ammo.name = "backpack full of ammo"
 	backpack_full_of_ammo.desc = "Try not to lose it, idiot."
-	backpack_full_of_ammo.max_wclass = INFINITY
-	backpack_full_of_ammo.slots = 9
+	backpack_full_of_ammo.storage.max_wclass = INFINITY
+	backpack_full_of_ammo.storage.slots = 9
 	backpack_full_of_ammo.cant_other_remove = 1
 
 	var/obj/item/saw/syndie/button_1 = new()
@@ -2983,14 +2983,14 @@ var/global/force_radio_maptext = FALSE
 
 	var/obj/item/device/key/iridium/fancy_keys = new()
 
-	backpack_full_of_ammo.add_contents(button_1)
-	backpack_full_of_ammo.add_contents(button_2)
-	backpack_full_of_ammo.add_contents(button_3)
-	backpack_full_of_ammo.add_contents(button_4)
-	backpack_full_of_ammo.add_contents(button_5)
-	backpack_full_of_ammo.add_contents(button_6)
-	backpack_full_of_ammo.add_contents(button_7)
-	backpack_full_of_ammo.add_contents(fancy_keys)
+	backpack_full_of_ammo.storage.add_contents(button_1)
+	backpack_full_of_ammo.storage.add_contents(button_2)
+	backpack_full_of_ammo.storage.add_contents(button_3)
+	backpack_full_of_ammo.storage.add_contents(button_4)
+	backpack_full_of_ammo.storage.add_contents(button_5)
+	backpack_full_of_ammo.storage.add_contents(button_6)
+	backpack_full_of_ammo.storage.add_contents(button_7)
+	backpack_full_of_ammo.storage.add_contents(fancy_keys)
 
 	if (ishuman(src.mob))
 		// If you are using this you are going to Fuck Things Up

@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
-	anchored = 0
+	anchored = UNANCHORED
 	speaker_range = 7
 	broadcasting = 0
 	listening = 0
@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		return hear
 
 	speech_bubble()
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
 		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -460,10 +460,10 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 
 		return ..(timePassed)

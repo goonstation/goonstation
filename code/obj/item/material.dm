@@ -33,27 +33,43 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
+			UpdateName(src) // get the name in order so it has whatever it needs
+			name = "[amount] [src.name][amount > 1 ? "s":""]"
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(W.type == src.type)
+		if(check_valid_stack(W))
 			stack_item(W)
 			if(!user.is_in_hands(src))
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the ores to the stack. It now has [src.amount] ores.</span>")
 			return
 		if (istype(W, /obj/item/satchel/mining/))
-			if (W.contents.len < W:maxitems)
-				src.set_loc(W)
-				var/oreamt = length(W.contents)
-				boutput(user, "<span class='notice'>You put [src] in [W].</span>")
-				src.desc = "A leather bag. It holds [oreamt]/[W:maxitems] [W:itemstring]."
-				if (oreamt == W:maxitems) boutput(user, "<span class='notice'>[W] is now full!</span>")
-				W:UpdateIcon()
+			var/obj/item/satchel/mining/manipulated_satchel = W
+			if (!manipulated_satchel.check_valid_content(src))
+				boutput(user, "<span class='alert'>[manipulated_satchel] cannot hold that kind of item!</span>")
+				return
+			if (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)
+				var/max_stack_reached = FALSE
+				if (src.amount > 1)
+					boutput(user, "<span class='notice'>You begin to fill [manipulated_satchel] with [src].</span>")
+					var/amount_of_stack_splits = manipulated_satchel.split_stack_into_satchel(src, user)
+					if (amount_of_stack_splits == manipulated_satchel.max_stack_scoop)
+						max_stack_reached = TRUE
+				else
+					boutput(user, "<span class='notice'>You put [src] in [manipulated_satchel].</span>")
+				if (!max_stack_reached && (length(manipulated_satchel.contents) < manipulated_satchel.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+					user.u_equip(src)
+					src.set_loc(manipulated_satchel)
+					src.dropped(user)
+				if (length(manipulated_satchel.contents) == manipulated_satchel.maxitems)
+					boutput(user, "<span class='notice'>[W] is now full!</span>")
+				manipulated_satchel.tooltip_rebuild = 1
+				manipulated_satchel.UpdateIcon()
 			else
-				boutput(user, "<span class='alert'>[W] is full!</span>")
-		else ..()
+				boutput(user, "<span class='alert'>[manipulated_satchel] is full!</span>")
+			return
+		..()
 
 	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
@@ -74,20 +90,42 @@
 		else if (isliving(AM))
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
-			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable)
-				src.set_loc(S.satchel)
+			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && (src.scoopable || S.collect_junk) && S.satchel.check_valid_content(src))
+				var/max_stack_reached = FALSE
+				if (src.amount > 1)
+					var/increment = 0
+					//since we need to add additional manipulation to the item in hand, we won't touch the last item here
+					var/amount_of_stack_splits = min(S.satchel.maxitems - length(S.satchel.contents), src.amount - 1, S.satchel.max_stack_scoop)
+					if (amount_of_stack_splits == S.satchel.max_stack_scoop)
+						max_stack_reached = TRUE
+					for (increment = 0, increment < amount_of_stack_splits, increment++)
+						var/obj/item/splitted_stack = src.split_stack(1)
+						splitted_stack.set_loc(S.satchel)
+				if (!max_stack_reached && (length(S.satchel.contents) < S.satchel.maxitems))
+					src.set_loc(S.satchel)  // if we split up the item and it was more than the satchel can find we should not add the rest
 				S.satchel.UpdateIcon()
-				if (S.satchel.contents.len >= S.satchel.maxitems)
+				if (length(S.satchel.contents) >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
 					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
 				var/obj/item/shipcomponent/secondary_system/orescoop/SCOOP = V.sec_system
-				if (SCOOP.contents.len >= SCOOP.capacity || !src.scoopable)
+				if (length(SCOOP.contents) >= SCOOP.capacity || !src.scoopable)
 					return
-				src.set_loc(SCOOP)
-				if (SCOOP.contents.len >= SCOOP.capacity)
+				var/max_stack_reached = FALSE
+				if (src.amount > 1)
+					var/increment = 0
+					//since we need to add additional manipulation to the item in hand, we won't touch the last item here
+					var/amount_of_stack_splits = min(SCOOP.capacity - length(SCOOP.contents), src.amount - 1, SCOOP.max_stack_scoop)
+					if (amount_of_stack_splits == SCOOP.max_stack_scoop)
+						max_stack_reached = TRUE
+					for (increment = 0, increment < amount_of_stack_splits, increment++)
+						var/obj/item/splitted_stack = src.split_stack(1)
+						splitted_stack.set_loc(SCOOP)
+				if (!max_stack_reached && (length(SCOOP.contents) < SCOOP.capacity)) // if we split up the item and it was more than the satchel can find we should not add the rest
+					src.set_loc(SCOOP)
+				if (length(SCOOP.contents) >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
 					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
@@ -308,11 +346,11 @@
 
 		switch(severity)
 			if(1)
-				explosion(src, src.loc, 1, 2, 3, 4, 1)
+				explosion(src, src.loc, 1, 2, 3, 4)
 			if(2)
-				explosion(src, src.loc, 0, 1, 2, 3, 1)
+				explosion(src, src.loc, 0, 1, 2, 3)
 			if(3)
-				explosion(src, src.loc, 0, 0, 1, 2, 1)
+				explosion(src, src.loc, 0, 0, 1, 2)
 			else
 				return
 		// if not on mining z level
@@ -328,7 +366,7 @@
 
 	temperature_expose(null, temp, volume)
 
-		explosion(src, src.loc, 1, 2, 3, 4, 1)
+		explosion(src, src.loc, 1, 2, 3, 4)
 
 		// if not on mining z level
 		if (src.z != MINING_Z)
@@ -494,7 +532,10 @@
 	name = "scrap"
 	desc = "Some twisted and ruined metal. It could probably be smelted down into something more useful."
 	icon_state = "scrap"
+	stack_type = /obj/item/raw_material/scrap_metal
 	burn_possible = 0
+	set_name = TRUE
+	material_name = "Steel"
 
 	New()
 		..()
@@ -510,6 +551,7 @@
 	icon_state = "shard"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
+	stack_type = /obj/item/raw_material/shard
 	flags = TABLEPASS | FPRINT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
@@ -526,6 +568,7 @@
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
+	material_name = "Glass"
 	set_name = TRUE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
@@ -540,23 +583,7 @@
 
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
-			var/mob/living/carbon/human/H = AM
-			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
-				return
-			if(isabomination(H))
-				return
-			if(H.lying)
-				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
-				step_on(H)
-			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
-				if (H.mutantrace?.can_walk_on_shards)
-					return
-				if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
-					return
-				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
-					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
-					step_on(H)
+			walked_over(AM) // check if we need to hurt they feeties
 		..()
 
 	custom_suicide = 1
@@ -576,6 +603,24 @@
 		material_name = "Glass"
 	plasmacrystal
 		material_name = "Plasmaglass"
+
+/obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
+	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+		return
+	if(isabomination(H))
+		return
+	if(H.lying)
+		boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
+		step_on(H)
+	else
+		//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
+		if (H.mutantrace?.can_walk_on_shards)
+			return
+		if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
+			return
+		if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
+			boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
+			step_on(H)
 
 /obj/item/raw_material/shard/proc/step_on(mob/living/carbon/human/H as mob)
 	playsound(src.loc, src.sound_stepped, 50, 1)
@@ -685,7 +730,7 @@
 	desc = "A sophisticated piece of machinery can process raw materials, scrap, and material sheets into bars."
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "reclaimer"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	event_handler_flags = NO_MOUSEDROP_QOL
 	var/active = 0
@@ -707,7 +752,7 @@
 		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
-		anchored = 1
+		anchored = ANCHORED
 		icon_state = "reclaimer-on"
 
 		for (var/obj/item/M in src.contents)
@@ -745,7 +790,7 @@
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
-		anchored = 0
+		anchored = UNANCHORED
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
@@ -809,8 +854,11 @@
 	proc/load_reclaim(obj/item/W as obj, mob/user as mob)
 		. = FALSE
 		if (src.is_valid(W))
-			W.set_loc(src)
-			if (user) user.u_equip(W)
+			if (W.stored)
+				W.stored.transfer_stored_item(W, src, user = user)
+			else
+				W.set_loc(src)
+				if (user) user.u_equip(W)
 			W.dropped(user)
 			. = TRUE
 
@@ -819,19 +867,15 @@
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
-		if (istype(W,/obj/item/storage/) || istype(W,/obj/item/satchel/))
-			var/obj/item/storage/S = W
-			var/obj/item/satchel/B = W
+		if (W.storage || istype(W, /obj/item/satchel))
 			var/items = W
-			if(istype(S))
-				items = S.get_contents()
+			if (W.storage)
+				items = W.storage.get_contents()
 			for(var/obj/item/O in items)
 				if (load_reclaim(O))
 					. = TRUE
-					if (istype(S))
-						S.hud.remove_object(O)
-			if (istype(B) && .)
-				B.UpdateIcon()
+			if (istype(W, /obj/item/satchel) && .)
+				W.UpdateIcon()
 			//Users loading individual items would make an annoying amount of messages
 			//But loading a container is more noticable and there should be less
 			if (.)

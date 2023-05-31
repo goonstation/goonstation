@@ -61,9 +61,8 @@
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
-				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
-				O.vomit()
+				var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)].</span>"
+				O.vomit(0, null, vomit_message)
 
 		SPAWN(0.5 SECONDS)
 			if (user && skull)

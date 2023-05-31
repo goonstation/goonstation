@@ -100,6 +100,10 @@ var/sound/iomoon_alarm_sound = null
 	sound_group = "iomoon"
 	sound_loop = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
 	sound_loop_vol = 60
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/embers,
+		/atom/movable/screen/parallax_layer/foreground/embers/sparse,
+		)
 	var/list/sfx_to_pick_from = null
 
 	/// Value to set irradiated to during the mini-blowout.
@@ -142,6 +146,7 @@ var/sound/iomoon_alarm_sound = null
 	ambient_light = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
 	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
 	use_alarm = 1
+	occlude_foreground_parallax_layers = TRUE
 	New()
 		. = ..()
 		sfx_to_pick_from = iomoon_powerplant_sounds
@@ -150,6 +155,7 @@ var/sound/iomoon_alarm_sound = null
 /area/iomoon/base/underground
 	name = "Power Plant Tunnels"
 	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
+	area_parallax_layers = list()
 
 	New()
 		. = ..()
@@ -161,6 +167,7 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
+	area_parallax_layers = list()
 	radiation_level = 0.75
 
 	New()
@@ -175,6 +182,7 @@ var/sound/iomoon_alarm_sound = null
 	force_fullbright = 0
 	luminosity = 0
 	teleport_blocked = 1
+	area_parallax_layers = list()
 	radiation_level = 0.8
 	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
@@ -495,7 +503,7 @@ var/sound/iomoon_alarm_sound = null
 	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
 	icon_state = "lavacrab"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	health = 30
 	aggressive = 1
 	defensive = 1
@@ -529,117 +537,6 @@ var/sound/iomoon_alarm_sound = null
 	ai_think()
 		. = ..()
 		anchored = alive
-
-/obj/critter/ancient_repairbot
-	name = "strange robot"
-	desc = "It looks like some sort of floating repair bot or something?"
-	icon_state = "ancient_repairbot"
-	density = 0
-	aggressive = 0
-	health = 10
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 0.1
-	brutevuln = 0.6
-	angertext = "beeps at"
-	death_text = "%src% blows apart!"
-	butcherable = 0
-	attack_range = 3
-	flying = 1
-	generic = 0
-
-	grumpy
-		aggressive = 1
-		atkcarbon = 1
-		atksilicon = 1
-
-	New()
-		..()
-		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
-
-	ChaseAttack(mob/M)
-		if(prob(33))
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-		return
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		SPAWN(0)
-			elecflash(src,power = 2)
-			qdel(src)
-
-	process()
-		if(prob(7))
-			src.visible_message("<b>[src] beeps.</b>")
-			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
-		..()
-		return
-
-
-	seek_target()
-		..()
-		if (src.task == "chasing" && src.target)
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		SPAWN(3.5 SECONDS)
-			src.attacking = 0
-
-		var/atom/last = src
-		var/atom/target_r = M
-
-		var/list/dummies = new/list()
-
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
-
-		if(isturf(M))
-			target_r = new/obj/elec_trg_dummy(M)
-
-		var/turf/currTurf = get_turf(target_r)
-		currTurf.hotspot_expose(2000, 400)
-
-		for(var/count=0, count<4, count++)
-
-			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			for(var/obj/O in affected)
-				SPAWN(0.6 SECONDS) qdel(O)
-
-			if(isliving(target_r)) //Probably unsafe.
-				playsound(target_r:loc, 'sound/effects/electric_shock.ogg', 50, 1)
-				target_r:shock(src, 15000, "chest", 1, 1)
-				break
-
-			var/list/next = new/list()
-			for(var/atom/movable/AM in orange(3, target_r))
-				if(istype(AM, /obj/line_obj/elec) || istype(AM, /obj/elec_trg_dummy) || istype(AM, /obj/overlay/tile_effect) || AM.invisibility)
-					continue
-				next.Add(AM)
-
-			if(istype(target_r, /obj/elec_trg_dummy))
-				dummies.Add(target_r)
-
-			last = target_r
-			target_r = pick(next)
-			target = target_r
-
-		for(var/d in dummies)
-			qdel(d)
-
-/obj/critter/ancient_repairbot/security
-	name = "stranger robot"
-	desc = "It looks rather mean."
-	icon_state = "ancient_guardbot"
-	aggressive = 1
-	health = 15
-	atkcarbon = 1
-	atksilicon = 1
-
 
 //Decor
 
@@ -861,7 +758,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #define STATE_RECHARGING 2
 
 /obj/iomoon_boss
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	ex_act(severity)
@@ -949,9 +846,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					set_dir(2)
 					return
 				if (prob(80))
-					new /obj/critter/ancient_repairbot/grumpy (src.loc)
+					new /mob/living/critter/robotic/repairbot (src.loc)
 				else
-					new /obj/critter/ancient_repairbot/security (src.loc)
+					new /mob/living/critter/robotic/repairbot/security (src.loc)
 				max_bots--
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
@@ -1202,7 +1099,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						base.icon_state = "powercore_base_off"
 
 					var/obj/overlay/O = new/obj/overlay( src.loc )
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.name = "Explosion"
 					O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 					O.pixel_x = -92
@@ -1270,7 +1167,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	base
 		name = "huge contraption"
 		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it."
-		anchored = 1
+		anchored = ANCHORED
 		density = 0
 		icon = 'icons/effects/160x160.dmi'
 		icon_state = "powercore_base"
@@ -1303,7 +1200,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "tallsmes0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()
@@ -1318,7 +1215,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/id = null
 	var/broken = FALSE
@@ -1389,7 +1286,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancientwall2"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/opened = 0
@@ -1556,7 +1453,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "A slightly elevated floor panel.  It matches the \"creepy ancient shit\" aesthetic pretty well."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_floorpanel0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/pads_required = 1 //Number of total active pads required to open a door, not including this one.  If 0, all pads must be INACTIVE instead.
 	var/pads_active = 0
@@ -1587,6 +1484,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		 return
 
 	Uncrossed(var/atom/crosser as mob|obj)
+		..()
 		if (crosser == activator)
 			activator = null
 			if (active)
@@ -1726,7 +1624,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is clearly some sort of lock in need of a key.  Obviously."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "lock-blue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/locktype = 0 //0: blue, 1: red
 	var/active = 0
@@ -1790,7 +1688,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "Some manner of strange panel, built of a strange and foreboding metal."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_button0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/timer = 0 //Seconds to toggle back off after activation.  Zero to just act as a toggle.
 	var/active = 0

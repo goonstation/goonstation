@@ -6,14 +6,13 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
-	var/datum/computer/file/terminal_shell/os_shell
 	var/list/processing_programs = list()
 	var/obj/item/disk/data/floppy/diskette = null
 	var/list/peripherals = list()
@@ -170,7 +169,7 @@
 			manta_computer
 				icon = 'icons/obj/large/32x96.dmi'
 				icon_state = "nuclearcomputer"
-				anchored = 2
+				anchored = ANCHORED_ALWAYS
 				density = 1
 				bound_height = 96
 				bound_width = 32
@@ -728,7 +727,7 @@ function lineEnter (ev)
 	A.mainboard.integrated_floppy = src.setup_has_internal_disk
 
 
-	A.anchored = 1
+	A.anchored = ANCHORED
 	//dispose()
 	src.dispose()
 

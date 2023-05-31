@@ -11,7 +11,7 @@
 	var/item_off = "sparkler-off"
 	w_class = W_CLASS_TINY
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	col_r = 0.7
 	col_g = 0.3
@@ -126,7 +126,7 @@
 	var/open = 0
 
 	attack_hand(mob/user)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (opens_if_worn || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
 			else
