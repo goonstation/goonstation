@@ -71,7 +71,7 @@
 			owner.update_lying()
 			owner.set_density(!owner.lying)
 
-			if (owner.lying && !owner.buckled)
+			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)
 				var/sound_to_play = 'sound/misc/body_thud.ogg'
 				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)

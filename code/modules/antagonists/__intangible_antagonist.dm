@@ -1,17 +1,6 @@
-ABSTRACT_TYPE(/datum/antagonist/intangible)
-/datum/antagonist/intangible
-	var/intangible_mob_path = /mob/living/intangible
-
-	give_equipment()
-		var/mob/current_mob = src.owner.current
-		var/mob/living/intangible/intangible_mob = new intangible_mob_path(get_turf(current_mob))
-		src.owner.transfer_to(intangible_mob)
-		qdel(current_mob)
-
-	remove_equipment()
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
+ABSTRACT_TYPE(/datum/antagonist/mob/intangible)
+/datum/antagonist/mob/intangible
+	mob_path = /mob/living/intangible
 
 	relocate()
 		var/turf/T = get_turf(src.owner.current)
@@ -25,20 +14,9 @@ ABSTRACT_TYPE(/datum/antagonist/intangible)
 			src.owner.current.set_loc(T)
 
 
-ABSTRACT_TYPE(/datum/antagonist/subordinate/intangible)
-/datum/antagonist/subordinate/intangible
-	var/intangible_mob_path = /mob/living/intangible
-
-	give_equipment()
-		var/mob/current_mob = src.owner.current
-		var/mob/living/intangible/intangible_mob = new intangible_mob_path(get_turf(current_mob))
-		src.owner.transfer_to(intangible_mob)
-		qdel(current_mob)
-
-	remove_equipment()
-		var/mob/current_mob = src.owner.current
-		src.owner.current.ghostize()
-		qdel(current_mob)
+ABSTRACT_TYPE(/datum/antagonist/subordinate/mob/intangible)
+/datum/antagonist/subordinate/mob/intangible
+	mob_path = /mob/living/intangible
 
 	relocate()
 		var/turf/T = get_turf(src.master.current)

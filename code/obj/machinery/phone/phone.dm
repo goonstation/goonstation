@@ -136,10 +136,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
-			if (src.emagged)
-				src.explode()
-			else
-				src.gib(src.loc)
+			src.gib(src.loc)
 			qdel(src)
 
 	// Attempt to pick up the handset

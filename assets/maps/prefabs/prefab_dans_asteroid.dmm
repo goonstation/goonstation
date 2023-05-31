@@ -339,7 +339,7 @@
 	pixel_x = -11;
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/machinery/light/small/sticky/broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/snow,
@@ -601,7 +601,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/machinery/light/small/sticky/broken,
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "xw" = (
@@ -801,6 +801,9 @@
 /area/prefab/discount_dans_asteroid)
 "Gj" = (
 /obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "Gk" = (
@@ -896,6 +899,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
 "Kz" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "Lq" = (
@@ -972,7 +978,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Ni" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/machinery/light/small/sticky/broken{
 	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
@@ -1136,7 +1142,7 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/machinery/light/incandescent/small{
+/obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -1173,14 +1179,10 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "RP" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/neutral,
-/area/prefab/discount_dans_asteroid)
-"RY" = (
-/obj/decal/fakeobjects/lighttube_broken,
-/turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
 "Se" = (
 /obj/decal/fakeobjects{
@@ -1943,7 +1945,7 @@ Mb
 gQ
 mC
 nl
-RY
+Sf
 Gj
 oi
 Qe
@@ -2043,7 +2045,7 @@ Mb
 hP
 jU
 lT
-RY
+Sf
 Kz
 Ic
 Gk

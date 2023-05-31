@@ -95,22 +95,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 	mod = "R"
 	icon_state = "mapwall_r"
 
-	get_desc()
+	get_help_message(dist, mob/user)
 		switch (src.d_state)
 			if (0)
-				. += "<br>Looks like disassembling it starts with <b>snipping</b> some of those reinforcing rods."
+				return "You can use a pair of <b>wirecutters</b> to snip some of the reinforcing rods."
 			if (1)
-				. += "<br>Up next in this long journey is <b>unscrewing</b> the reinforced rods."
+				return "You can use a <b>screwdriver</b> to unscrew the reinforced rods."
 			if (2)
-				. += "<br>What'd really help at this point is <b>slicing</b> the metal cover with a welder."
+				. += "You can use a <b>welding tool</b> to slice the metal cover."
 			if (3)
-				. += "<br>Your prying eyes suggest <b>prying</b> open the metal cover you just sliced."
+				. += "You can use a <b>crowbar</b> to pry open the metal cover."
 			if (4)
-				. += "<br>The latest <b>wrench</b> in your plans for wall disassembly appear to be some support rods."
+				. += "You can use a <b>wrench</b> to loosen some of the support rods."
 			if (5)
-				. += "<br>You should really <b>slice</b> the support rods you just loosened."
+				. += "You can use a <b>welding tool</b> to slice the support rods."
 			if (6)
-				. += "<br>Almost! Just need to <b>pry</b> off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
+				. += "You can finally use a <b>crowbar</b> to pry off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
 
 
 	attackby(obj/item/W, mob/user)
@@ -204,14 +204,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
 		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
-		/turf/simulated/wall/auto/reinforced/jen
+		/turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
@@ -271,14 +271,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
 		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
 /turf/simulated/wall/auto/reinforced/jen
@@ -341,12 +341,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
@@ -374,12 +374,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
-		/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper
+		/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
@@ -405,11 +405,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
@@ -427,11 +429,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
@@ -457,11 +460,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
@@ -541,12 +544,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
+		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls_derelict.dmi'
@@ -566,12 +570,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
+		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
+		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
 		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
+		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
+		/obj/plasticflaps
 	))
 
 /turf/simulated/wall/auto/reinforced/old
@@ -706,8 +712,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
 		/obj/machinery/door,
 		/obj/window,
+		/obj/plasticflaps
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	icon_state = "mapwall"
@@ -729,8 +736,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 		/turf/unsimulated/wall/auto/adventure/old,
 		/turf/unsimulated/wall/setpieces/fakewindow,
 		/turf/unsimulated/wall/auto/adventure/meat,
+		/obj/plasticflaps
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	icon_state = "mapwall_r"
@@ -750,6 +758,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/machinery/door,
 		/obj/window,
 		/obj/wingrille_spawn,
+		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
@@ -758,6 +767,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/machinery/door,
 		/obj/window,
 		/obj/wingrille_spawn,
+		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
 	material = /datum/material/organic/wood
@@ -812,8 +822,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/lead)
 		/turf/unsimulated/wall/,
 		/turf/simulated/wall/false_wall/,
 		/turf/simulated/wall/false_wall/centcom,
+		/obj/plasticflaps
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/lead
 	name = "lead wall"
 	icon = 'icons/turf/walls_lead.dmi'
@@ -849,9 +860,9 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure)
 		/turf/simulated/wall/false_wall/,
 		/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 		/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
-		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner
+		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
-	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 
 ABSTRACT_TYPE(/turf/unsimulated/wall/auto/adventure) // Re abstract this it is not meant for spawning, the icons aren't even right for lead
 /turf/unsimulated/wall/auto/adventure // azone fancy walls
@@ -978,7 +989,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/hospital/interior)
 		/obj/window, /turf/unsimulated/wall/, /turf/simulated/wall/false_wall/,
 		/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 		/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
-		/turf/simulated/shuttle/wall, /turf/unsimulated/wall/setpieces/hospital/window
+		/turf/simulated/shuttle/wall, /turf/unsimulated/wall/setpieces/hospital/window,
+		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/adventure/hospital/interior
 	name = "panel wall"
@@ -1046,7 +1058,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/meat)
 		/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner,
 		/turf/unsimulated/wall/auto/adventure/old,/turf/unsimulated/wall/auto/adventure/meat,
 		/turf/unsimulated/wall/auto/adventure/meat/eyes, /turf/unsimulated/wall/auto/adventure/meat/meatier,
-		/turf/unsimulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall/reinforced
+		/turf/unsimulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/false_wall/reinforced, /obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/adventure/meat
 	name = "wall"
@@ -1073,7 +1085,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 	/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat,
-	/turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn
+	/turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/adventure/old
 	name = "wall"

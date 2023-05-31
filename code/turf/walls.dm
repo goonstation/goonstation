@@ -13,6 +13,7 @@
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
+	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 
 	/// The material name (string) that this will default to if a material is not otherwise set
 	var/default_material = "steel"
