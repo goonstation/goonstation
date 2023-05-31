@@ -40,7 +40,7 @@
 				if ((slots > 8 || wclass == W_CLASS_BULKY) && prob(90))
 					boh.w_class = W_CLASS_BULKY
 
-				boh.create_storage(/datum/storage/no_hud, max_wclass = wclass, slots = slots,
+				boh.create_storage(/datum/storage/no_hud/eldritch_bag_of_holding, max_wclass = wclass, slots = slots, opens_if_worn = boh.c_flags & ONBELT,
 					params = list("use_inventory_counter" = TRUE, "item_pick_type" = pick(STORAGE_NO_HUD_QUEUE, STORAGE_NO_HUD_STACK, STORAGE_NO_HUD_RANDOM)))
 
 			// storage that starts off small, but it can be upgraded by "feeding" it ores

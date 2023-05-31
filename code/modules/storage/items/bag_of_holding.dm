@@ -1,14 +1,14 @@
 // storage datums for bag of holding artifact. see code there for intent of these
 
-/datum/storage/no_hud/eldtritch_bag_of_holding
+/datum/storage/no_hud/eldritch_bag_of_holding
 
-/datum/storage/no_hud/eldtritch_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
+/datum/storage/no_hud/eldritch_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
 		var/obj/item/artifact/bag_of_holding/boh = I
 		var/datum/artifact/artifact = boh.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(user, boh, src)
+			combine_bags_of_holding(user, boh, src.linked_item)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
@@ -21,7 +21,7 @@
 		var/obj/item/artifact/bag_of_holding/boh = I
 		var/datum/artifact/artifact = boh.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(user, boh, src)
+			combine_bags_of_holding(user, boh, src.linked_item)
 			return FALSE
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
