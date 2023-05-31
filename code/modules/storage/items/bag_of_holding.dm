@@ -54,12 +54,14 @@
 /datum/storage/artifact_bag_of_holding/wizard
 	var/visible_slots = 3
 
-/datum/storage/artifact_bag_of_holding/wizard/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass,
-	max_wclass, slots, sneaky, opens_if_worn, list/params)
+/datum/storage/artifact_bag_of_holding/wizard/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding,
+		check_wclass, max_wclass, slots, sneaky, opens_if_worn, list/params)
 	..()
 	src.visible_slots = params["visible_slots"] || initial(src.visible_slots)
 
-/datum/storage/artifact_bag_of_holding/wizard/show_hud()
+/datum/storage/artifact_bag_of_holding/wizard/show_hud(mob/user)
+	src.hide_hud(user)
+
 	if (length(src.get_contents()) > src.visible_slots)
 		for (var/i = 1 to src.visible_slots)
 			src.stored_items.Swap(i, rand(1, length(src.get_contents())))
@@ -68,6 +70,12 @@
 	var/storage_slots = src.slots
 	src.slots = src.visible_slots
 	..()
+	src.slots = storage_slots
+
+/datum/storage/artifact_bag_of_holding/wizard/transfer_stored_item(obj/item/I, atom/location, add_to_storage, mob/user)
+	var/storage_slots = src.slots
+	src.slots = src.visible_slots
+	..() // parent
 	src.slots = storage_slots
 
 /datum/storage/artifact_bag_of_holding/precursor
@@ -115,54 +123,73 @@
 	if (!play_sound)
 		playsound(src.linked_item.loc, 'sound/machines/ArtifactPre1.ogg', 50, TRUE)
 
-// when a bag of holding artifact is put into another
-// user can be null
+// when a bag of holding artifact is put into into another
+// user can be null, boh_1 is put into boh_2
 proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifact/boh_2)
-	switch(rand(1, 4))
+	var/turf/T = get_turf(boh_2)
+	switch(rand(3, 3))
+		// explosion
 		if (1)
-			explosion_new(boh_1, get_turf(boh_1), 10)
+			explosion_new(boh_1, T, 3) // causes a one tile hull breach
+			T.visible_message("<span class='alert'><B>The artifacts explode! HOLY SHIT!!!")
+			playsound(T, "explosion", 25, TRUE)
 			user?.gib()
+		// implosion
 		if (2)
-			var/obj/machinery/the_singularity/black_hole = new /obj/machinery/the_singularity(get_turf(boh_1), rad = 1)
+			var/obj/machinery/the_singularity/black_hole = new /obj/machinery/the_singularity(T, rad = 1)
+			black_hole.radius = 1
+			black_hole.maxradius = 1
 			SPAWN(3 SECONDS)
 				qdel(black_hole)
+		// teleport items everywhere
 		if (3)
-			var/list/items = boh_1.storage.get_contents() + boh_2.storage.get_contents()
-			if (prob(50))
+			var/list/items = boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1
+			// teleport to random storages
+			if (prob(100)) // prob (50)
 				if (length(items))
 					var/list/humans = list()
 					for (var/mob/living/carbon/human/H in mobs)
-						humans += H
-					shuffle_list(humans)
-					var/mob/living/carbon/human/H
-					for (var/i = 1 to min(length(items), length(humans)))
-						H = humans[i]
-						if (H.back.storage?.check_can_hold(items[i]))
-							H.back.storage.add_contents(items[i], null, FALSE)
-						else if (H.belt.storage?.check_can_hold(items[i]))
-							H.belt.storage.add_contents(items[i], null, FALSE)
+						if (H.back?.storage || H.belt?.storage)
+							humans += H
+					if (length(humans))
+						shuffle_list(humans)
+						var/mob/living/carbon/human/H
+						for (var/obj/item/I as anything in items)
+							H = pick(humans)
+							if (H.back.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
+								H.back.storage.add_contents(I, null, FALSE)
+							else if (H.belt.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
+								H.belt.storage.add_contents(I, null, FALSE)
+							humans -= H
+							if (!length(humans))
+								break
+			// teleport to random turfs
 			else
-				var/list/turfs = block(locate(1, 1, user.z), locate(world.maxx, world.maxy, user.z))
+				var/list/turfs = block(locate(1, 1, T.z || Z_LEVEL_STATION), locate(world.maxx, world.maxy, T.z || Z_LEVEL_STATION))
 				for (var/obj/item/I as anything in boh_1.storage.get_contents())
 					boh_1.storage.transfer_stored_item(I, pick(turfs))
-				for (var/obj/item/I as anything in boh_2.storage.get_contents())
+				for (var/obj/item/I as anything in (boh_2.storage.get_contents() - boh_1))
 					boh_2.storage.transfer_stored_item(I, pick(turfs))
-			playsound(boh_1.loc, "warp", 50, TRUE)
+			playsound(T, "warp", 50, TRUE)
 			boutput(user, "<span class='alert'><B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B></span>")
+		// strand user in pocket dimension
 		if (4)
 			if (user)
-				playsound(boh_1.loc, 'sound/effects/bamf.ogg', 50, TRUE)
+				playsound(T, 'sound/effects/bamf.ogg', 50, TRUE)
 
-				for (var/mob/M in viewers(7, boh_1))
+				for (var/mob/M as anything in viewers(6, T))
 					M.flash(3 SECONDS)
 
 				var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/artifact_stranded)
 				var/datum/allocated_region/region = prefab.load()
 				user.set_loc(region.get_center())
+
+				T.visible_message("<span class='alert'>[user] vanishes!</span>")
+
 				SPAWN(5 SECONDS)
 					boutput(user, "<span class='alert'>Yeah... you're not getting out of this place alive.</span>")
 
-	for (var/obj/item/I as anything in (boh_1.storage.get_contents() + boh_2.storage.get_contents()))
+	for (var/obj/item/I as anything in (boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1))
 		qdel(I)
 	qdel(boh_1)
 	qdel(boh_2)
