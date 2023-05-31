@@ -7,7 +7,6 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	faction = MOB_AI_FACTION_WRAITH
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state_dead = "dead_spiker"
 	icon_state = "spiker"
@@ -20,6 +19,8 @@
 	var/shuffling = FALSE
 	var/mob/living/intangible/wraith/master = null
 
+	faction = FACTION_WRAITH
+
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
@@ -30,7 +31,7 @@
 			M.summons += src
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
-		abilityHolder.addAbility(/datum/targetable/critter/spiker/lash)
+		abilityHolder.addAbility(/datum/targetable/critter/frenzy/spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/shuffle)
 
 	setup_healths()

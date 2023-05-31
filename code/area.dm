@@ -573,6 +573,10 @@ TYPEINFO(/area)
 			jerk.remove()
 
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
+			#ifdef CHECK_MORE_RUNTIMES
+			if(current_state <= GAME_STATE_WORLD_NEW)
+				CRASH("[identify_object(O)] got deleted by area_that_kills_you_if_you_enter_it at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
+			#endif
 			qdel(O)
 		. = ..()
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.

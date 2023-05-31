@@ -2444,3 +2444,53 @@ proc/accent_mocking(string)
 			letter = capitalize(letter)
 		letters += letter
 	return jointext(letters, "")
+
+
+proc/accent_hacker(string, leet_chance=100)
+	var/static/list/leetspeak_suffix_translation = list(
+		"and" = "&",
+		"anned" = "&",
+		"ant" = "&",
+		"or" = "xor",
+		"er" = "xor",
+		"ed" = "d",
+	)
+
+	var/list/tokens = splittext(string, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/processed = FALSE
+		var/maybe_replacement = strings("language/hacker.txt", lowertext(token), 1)
+		if (maybe_replacement)
+			token = replacetext(token, lowertext(token), maybe_replacement)
+			processed = TRUE
+		if (!processed)
+			for (var/suffix in leetspeak_suffix_translation)
+				if (endswith(token, suffix))
+					token = copytext(token, 1, length(token) + 1 - length(suffix)) + leetspeak_suffix_translation[suffix]
+				if (endswith(token, uppertext(suffix)))
+					token = copytext(token, 1, length(token) + 1 - length(suffix)) + uppertext(leetspeak_suffix_translation[suffix])
+		token = leetspeakify(token, processed ? leet_chance / 2 : leet_chance)
+		modded_tokens += token
+
+	return jointext(modded_tokens, "")
+
+proc/leetspeakify(string, chance=100)
+	var/static/list/leetspeak_translation = list(
+		"a" = "4",
+		"b" = "8",
+		"e" = "3",
+		"g" = "6",
+		"i" = "1",
+		"o" = "0",
+		"s" = "5",
+		"t" = "7",
+		"z" = "2",
+	)
+	var/list/letters = list()
+	for(var/i = 1, i <= length(string), i++)
+		var/letter = copytext(string, i, i + 1)
+		if ((lowertext(letter) in leetspeak_translation) && prob(chance))
+			letter = leetspeak_translation[lowertext(letter)]
+		letters += letter
+	return jointext(letters, "")

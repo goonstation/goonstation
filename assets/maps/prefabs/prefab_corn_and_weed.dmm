@@ -1,45 +1,45 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"c" = (
+/obj/machinery/plantpot/bareplant{
+	opacity = 1;
+	spawn_plant = "/datum/plant/veg/corn"
+	},
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "h" = (
 /obj/item/device/light/zippo,
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "v" = (
 /obj/critter/gunbot/heavy{
 	name = "garden defender 04"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "x" = (
 /obj/item/reagent_containers/glass/water_pipe,
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "C" = (
 /obj/critter/gunbot/heavy{
 	name = "garden defender 02"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "G" = (
 /obj/machinery/plantpot/bareplant{
 	spawn_plant = "/datum/plant/herb/cannabis"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "N" = (
 /obj/critter/gunbot/heavy{
 	name = "garden defender 01"
 	},
-/turf/space,
-/area/allowGenerate)
-"R" = (
-/obj/machinery/plantpot/bareplant{
-	opacity = 1;
-	spawn_plant = "/datum/plant/veg/corn"
-	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 
 (1,1,1) = {"
@@ -62,20 +62,20 @@ a
 "}
 (2,1,1) = {"
 a
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 a
 "}
 (3,1,1) = {"
@@ -98,20 +98,20 @@ a
 "}
 (4,1,1) = {"
 a
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 a
 "}
 (5,1,1) = {"
@@ -134,20 +134,20 @@ a
 "}
 (6,1,1) = {"
 a
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 a
 "}
 (7,1,1) = {"
@@ -170,20 +170,20 @@ a
 "}
 (8,1,1) = {"
 a
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 a
 "}
 (9,1,1) = {"
@@ -192,13 +192,13 @@ a
 a
 a
 a
-R
+c
 a
 a
 a
 a
 a
-R
+c
 a
 a
 a
@@ -206,20 +206,20 @@ a
 "}
 (10,1,1) = {"
 a
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
 a
 G
 a
 G
 a
-R
-R
-R
-R
+c
+c
+c
+c
 a
 "}
 (11,1,1) = {"
@@ -228,13 +228,13 @@ a
 a
 a
 a
-R
+c
 a
 G
 v
 G
 a
-R
+c
 a
 a
 a
@@ -242,20 +242,20 @@ a
 "}
 (12,1,1) = {"
 a
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
 a
 G
 G
 G
 a
-R
-R
-R
-R
+c
+c
+c
+c
 a
 "}
 (13,1,1) = {"
@@ -264,13 +264,13 @@ a
 a
 a
 a
-R
+c
 a
 a
 x
 h
 a
-R
+c
 a
 a
 a
@@ -278,20 +278,20 @@ a
 "}
 (14,1,1) = {"
 a
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
-R
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
+c
 a
 "}
 (15,1,1) = {"

@@ -1,7 +1,7 @@
-/datum/antagonist/intangible/flockmind
+/datum/antagonist/mob/intangible/flockmind
 	id = ROLE_FLOCKMIND
 	display_name = "flockmind"
-	intangible_mob_path = /mob/living/intangible/flock/flockmind
+	mob_path = /mob/living/intangible/flock/flockmind
 	uses_pref_name = FALSE
 	var/datum/flock/flock = null
 
