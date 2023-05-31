@@ -42,7 +42,7 @@
 
 	var/bite_transfer_amt = 1
 
-	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
+	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0 //no patience for spiders
@@ -250,6 +250,8 @@
 	max_skins = 4
 	reacting = 0
 
+	faction = FACTION_ICEMOON
+
 /mob/living/critter/spider/ice/nice
 	ai_type = /datum/aiHolder/spider_peaceful
 	ai_retaliate_patience = 2 //some patience for peaceful spiders
@@ -333,6 +335,12 @@
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
 
+	faction = FACTION_CLOWN
+
+	New()
+		..()
+		AddComponent(/datum/component/waddling)
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -395,8 +403,6 @@
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
 
-
-
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"
 	desc = "You see this? This is why people hate clowns. This thing right here."
@@ -417,10 +423,13 @@
 						/datum/targetable/critter/spider_drain)
 	var/item_shoes = /obj/item/clothing/shoes/clown_shoes
 	var/item_mask = /obj/item/clothing/mask/clown_hat
-	var/list/babies = null
+	var/list/babies = null // FULL OF WEAKREFS
 	// var/egg_path = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown
 	var/max_defensive_babies = 100
 	ai_type = /datum/aiHolder/clown_spider_queen
+
+	faction = FACTION_CLOWN
+
 	cluwne
 		name = "queen cluwnespider"
 		desc = "...I got nothin'."
@@ -460,6 +469,7 @@
 			return ..() && !trample?.disabled
 
 	New()
+		AddComponent(/datum/component/waddling)
 		..()
 		babies = list()
 
@@ -495,7 +505,11 @@
 			return
 		var/defenders = 0		//this is the amount of babies that will defend you
 		var/count = 0
-		for (var/mob/living/critter/spider/clown/CS in babies)
+		for (var/datum/weakref/ref as anything in babies)
+			var/mob/living/critter/spider/clown/CS = ref.deref()
+			if (!istype(CS))
+				babies.Remove(ref)
+				continue
 			count++
 			if (count > max_defensive_babies)
 				break

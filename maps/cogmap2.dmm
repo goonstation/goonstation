@@ -5005,6 +5005,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "anc" = (
@@ -5322,11 +5323,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "aoa" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -13931,7 +13927,7 @@
 	},
 /area/shuttle/arrival/station)
 "aIR" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall";
 	opacity = 0
@@ -14454,7 +14450,7 @@
 	},
 /area/shuttle/arrival/station)
 "aKs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/effects/160x160.dmi';
 	icon_state = "shuttlecock";
 	layer = 30;
@@ -16557,16 +16553,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
-"aPy" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/turf/space,
-/area/space)
 "aPz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -24558,12 +24544,10 @@
 /area/station/hangar/sec)
 "bjd" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/r_door_control/podbay/security/new_walls/south{
-	pixel_y = 25
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/r_door_control/podbay/security/new_walls/north,
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/sec)
 "bje" = (
@@ -71601,6 +71585,10 @@
 	},
 /turf/simulated/floor/airless/caution/northsouth,
 /area/research_outpost)
+"ewI" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "exg" = (
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
@@ -71928,6 +71916,10 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"fHD" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/south,
+/turf/space,
+/area/space)
 "fJr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -73975,15 +73967,6 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
-"mcz" = (
-/obj/mail_booth,
-/turf/unsimulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
 "mde" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -122720,7 +122703,7 @@ aaa
 akr
 alD
 amX
-anZ
+ewI
 aph
 aqp
 aBA
@@ -132118,7 +132101,7 @@ cXb
 aFA
 aaF
 bfz
-aaa
+fHD
 bgK
 bhE
 bis
@@ -139652,7 +139635,7 @@ aaa
 aaa
 aaa
 aaa
-aPy
+aaa
 aaa
 aaa
 aaa
@@ -141457,7 +141440,7 @@ arJ
 aaa
 aaa
 aKm
-mcz
+aOn
 aOn
 aFz
 aIP

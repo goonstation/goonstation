@@ -2843,7 +2843,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "ahZ" = (
-/obj/table,
+/obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/bluegreen/side{
 	dir = 8
@@ -2946,7 +2946,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "aiw" = (
-/obj/table,
+/obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
 /turf/simulated/floor/bluegreen/side{
 	dir = 10
@@ -7148,26 +7148,7 @@
 	name = "Chaplain's Office"
 	})
 "atC" = (
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/matchbook,
-/obj/item/matchbook,
-/obj/storage/crate,
-/obj/item/ghostboard,
-/obj/item/card_box/tarot,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office{
-	name = "Chaplain's Office"
-	})
-"atD" = (
-/obj/item/instrument/large/piano{
-	anchored = 0;
-	name = "old piano"
-	},
-/obj/item/screwdriver,
+/obj/machinery/printing_press,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -9155,9 +9136,16 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azO" = (
-/obj/machinery/light_switch/east{
-	dir = 4
-	},
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/matchbook,
+/obj/item/matchbook,
+/obj/storage/crate,
+/obj/item/ghostboard,
+/obj/item/card_box/tarot,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "azS" = (
@@ -30488,6 +30476,11 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
+/obj/item/instrument/large/piano{
+	anchored = 0;
+	name = "old piano"
+	},
+/obj/item/screwdriver,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -31018,7 +31011,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/mail_booth,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 9
 	},
@@ -33403,17 +33395,9 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"ltT" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/west{
-	pixel_x = -24
-	},
-/turf/simulated/floor/engine,
-/area/station/hangar/sec)
-"lue" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone{
-	pixel_x = 1;
-	pixel_y = -2
+"lun" = (
+/obj/cable{
+	icon_state = "4-8"
 	},
 /obj/item/device/radio/intercom/medical{
 	dir = 8
@@ -46296,6 +46280,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"xAM" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "xAS" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/left,
@@ -72950,7 +72938,7 @@ aiW
 amy
 amy
 amy
-aiW
+xAM
 aiW
 fih
 aiW
@@ -73207,7 +73195,7 @@ aiW
 bqv
 all
 all
-ltT
+all
 oqT
 pzQ
 anh
@@ -74012,7 +74000,6 @@ xLj
 cAz
 iDH
 aOt
-aPv
 aPv
 aPv
 aPv
@@ -75531,7 +75518,7 @@ aqZ
 bZU
 arq
 asX
-atD
+auo
 aup
 auY
 avM
