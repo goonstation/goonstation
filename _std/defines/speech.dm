@@ -3,6 +3,8 @@
 // Bitflags and defines related to say()
 //channel defines
 #define SAY_CHANNEL_OUTLOUD "outloud"
+#define SAY_CHANNEL_EQUIPPED "equipped"
+
 // to use like SAY_CHANNEL_RADIO_PREFIX + "135.7"
 #define SAY_CHANNEL_RADIO_PREFIX "radio_"
 #define SAY_CHANNEL_GHOST "ghost"
@@ -14,3 +16,4 @@
 #define LOUD_SINGING 2
 #define SOFT_SINGING 4
 #define BAD_SINGING 8
+#define RADIO_SENT 16 //message has already been transmitted over radio

@@ -111,7 +111,6 @@ var/global/datum/speech_manager/SpeechManager = new()
 				src.listeners[channel] -= heard
 			else
 				heard.process(message)
-		qdel(message)
 
 	/// Register a listener for hearing messages on a channel
 	proc/RegisterInput(var/datum/listen_module/input/registree)
@@ -154,8 +153,9 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 		/// first, grab the prefix if there is one
 		var/cutpos = 1
-		if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
-			cutpos = findtext(message, " ", 1)
+
+		if ((length(message) >= 2) && ((copytext(message,1,2) == ":") || (copytext(message, 1, 2) == ";")))
+			cutpos = findtext(message, " ", 1)+1
 			src.prefix = copytext(message, 1, cutpos) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
 
 		src.content = copytext(message, cutpos, MAX_MESSAGE_LEN) //content now contains the message without the radio prefix
@@ -331,10 +331,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(message))
 			CRASH("A non say_message thing was passed to a listen_module_tree. This should never happen.")
 
-		if(message.language in src.known_languages)
-			message.content = message.language.heard_understood(message.content)
-		else
-			message.content = message.language.heard_not_understood(message.content)
+		if(length(src.known_languages)) //having an empty language list means understanding all languages, since there's basically no good reason to understand no languages
+			if(message.language in src.known_languages)
+				message.content = message.language.heard_understood(message.content)
+			else
+				message.content = message.language.heard_not_understood(message.content)
 
 		for(var/datum/listen_module/module in src.listen_modifiers)
 			message = module.process(message)

@@ -51,6 +51,14 @@ TYPEINFO(/obj/item/device/radio)
 	var/icon_override = 0
 	var/icon_tooltip = null // null = use name, "" = no tooltip
 
+
+	start_listen_modifiers = null
+	start_listen_inputs = list("equipped")
+	start_speech_accents = null
+	start_speech_modifiers = null
+	start_speech_outputs = list("radio")
+	start_listen_languages = null //null languages means the message isn't affected by language
+
 	// Moved initializaiton to world/New
 var/list/headset_channel_lookup
 
@@ -68,6 +76,60 @@ var/list/headset_channel_lookup
 
 	src.chat_text = new
 	src.vis_contents += src.chat_text
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_equip))
+	src.tune_in()
+
+/obj/item/device/radio/proc/on_equip(var/obj/item/device/radio/this, var/mob/holder, var/slot)
+	var/list/prefixes
+	if(isnull(slot))
+		slot = holder.get_slot_from_item(src)
+	switch(slot)
+		if(SLOT_L_HAND)
+			prefixes = list(":lh")
+		if(SLOT_R_HAND)
+			prefixes = list(":rh")
+		if(SLOT_EARS)
+			prefixes = list(";")
+	for(var/pre in src.secure_frequencies)
+		prefixes += ":[pre]"
+
+	for(var/datum/listen_module/input/equipped/mic_input in src.listen_tree.GetInputBy(channel=null, id="equipped"))
+		mic_input.my_prefix = prefixes
+
+/// Must be called when frequency is changed in order to update the speechmanager subscriptions so we can listen to the frequencies
+/obj/item/device/radio/proc/tune_in()
+	var/list/inputs = src.listen_tree.GetInputBy(channel=null, id="radio")
+	var/target_num_inputs = length(src.secure_frequencies)+1 //secure + default
+	while(length(inputs) > target_num_inputs)
+		src.listen_tree.RemoveInput(inputs[length(inputs)])
+		inputs.len--
+	while(length(inputs) < target_num_inputs)
+		inputs += src.listen_tree.AddInput("radio")
+
+	var/datum/listen_module/input/radio/radio_input = inputs[1]
+	radio_input.ChangeChannel(SAY_CHANNEL_RADIO_PREFIX+"[src.frequency]")
+
+	for(var/i in 2 to target_num_inputs)
+		radio_input = inputs[i]
+		radio_input.ChangeChannel(SAY_CHANNEL_RADIO_PREFIX+"[src.secure_frequencies[src.secure_frequencies[i-1]]]")
+
+/obj/item/device/radio/hear(var/datum/say_message/message)
+	//One of two things has happened - either a message has come in from the radio, or a message has been heard by the mic
+	if(message.flags & RADIO_SENT)
+		//this is from the radio, so output to mob
+		src.loc.hear(message)
+	else
+		//the mic heard this, so send it to the radio
+		if(!src.say_tree)
+			src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
+		var/datum/speech_module/output/radio/radio_out = src.say_tree.GetOutputBy(id="radio")[1]
+		if(copytext(message.prefix,2,length(message.prefix)) in src.secure_frequencies) //clip off the :
+			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.secure_frequencies[copytext(message.prefix,2,length(message.prefix))]]"
+		else
+			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.frequency]"
+		message.content += "BY RADIO"
+		src.say_tree.process(message)
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null
@@ -79,6 +141,7 @@ var/list/headset_channel_lookup
 /obj/item/device/radio/proc/set_frequency(new_frequency)
 	frequency = new_frequency
 	get_radio_connection_by_id(src, "main").update_frequency(frequency)
+	src.tune_in()
 
 /obj/item/device/radio/proc/set_secure_frequencies()
 	if(istype(src.secure_frequencies))
@@ -91,6 +154,7 @@ var/list/headset_channel_lookup
 					src.secure_connections["[sayToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[frequency_id]", frequency_id)
 			else
 				src.secure_frequencies -= "[sayToken]"
+		src.tune_in()
 
 /obj/item/device/radio/proc/set_secure_frequency(frequencyToken, newFrequency)
 	if (!frequencyToken || !newFrequency)
@@ -108,6 +172,7 @@ var/list/headset_channel_lookup
 
 	src.secure_connections["[frequencyToken]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFrequency]", newFrequency)
 	src.secure_frequencies["[frequencyToken]"] = newFrequency
+	src.tune_in()
 	return
 
 /obj/item/device/radio/ui_interact(mob/user, datum/tgui/ui)
