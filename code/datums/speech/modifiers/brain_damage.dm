@@ -9,4 +9,4 @@ TYPEINFO(/datum/speech_module/modifier/brain_damage)
 			return message
 		else if (speaker.get_brain_damage() >= 60)
 			message.content = find_replace_in_string(message.content, "language/modifiers/brain_damage.txt")
-		return message
+		. = message
