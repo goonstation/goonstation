@@ -33396,20 +33396,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "lun" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/device/radio/intercom/medical{
-	dir = 8
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	name = "autoname  - SS13";
-	pixel_y = 21;
-	tag = ""
-	},
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
+)
 "luA" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -72979,7 +72966,7 @@ tEc
 kBX
 bnA
 kFR
-lue
+lun
 yid
 ohl
 uUj
@@ -74045,6 +74032,7 @@ jxr
 jxr
 jxr
 ozL
+aaa
 aaa
 aaa
 aaa
