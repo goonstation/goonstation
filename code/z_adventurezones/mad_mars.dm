@@ -283,6 +283,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
+	wear_state = "mars_blue"
 	c_flags = SPACEWEAR
 	protective_temperature = 700
 

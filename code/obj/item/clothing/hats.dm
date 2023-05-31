@@ -1060,7 +1060,6 @@ proc/filter_trait_hats(var/type)
 	desc = "An unnaturally large piece of headwear"
 	wear_image_icon = 'icons/mob/clothing/bighat.dmi'
 	icon_state = "tophat"
-	wear_state = "tophat"
 	w_class = W_CLASS_BULKY
 	blocked_from_petasusaphilic = TRUE
 
@@ -1744,7 +1743,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		desc = "A huge bow that goes on your head. This one is red."
 		icon_state = "hbow-red"
 		item_state = "hbow-red"
-		wear_state = "hbox-red"
+		wear_state = "hbow-red"
 	gold
 		name = "gold hairbow"
 		desc = "A huge bow that goes on your head. This one is gold."

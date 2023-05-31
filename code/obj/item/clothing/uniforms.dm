@@ -1968,7 +1968,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     desc = "It's 1993 and you're dressed to start your new grunge garage band."
     icon_state = "casual_jeans_skullbshort"
     item_state = "casual_jeans_skullbshort"
-    wear_state = "casual_jeans_Skullbshort"
+    wear_state = "casual_jeans_skullbshort"
     material_piece = /obj/item/material_piece/cloth/jean
 
     New()

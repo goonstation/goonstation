@@ -1121,6 +1121,7 @@ Contents:
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "moon_tshirt"
 	item_state = "moon_tshirt"
+	wear_state = "moon_tshirt"
 	body_parts_covered = TORSO|ARMS
 
 

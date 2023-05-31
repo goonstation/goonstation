@@ -429,6 +429,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "machovest"
 	item_state = "machovest"
+	wear_state = "machovest"
 
 	attack_self(mob/user as mob)
 		return
@@ -453,6 +454,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "machobelt"
 	item_state = "machobelt"
+	wear_state = "machobelt"
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 

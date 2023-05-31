@@ -6,6 +6,7 @@
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_athletic.dmi'
 	icon_state = "bowling"
 	item_state = "bowling"
+	wear_state = "bowling"
 	item_function_flags = IMMUNE_TO_ACID
 
 /obj/item/bowling_ball

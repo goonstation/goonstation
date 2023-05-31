@@ -1697,6 +1697,7 @@
 /obj/item/clothing/suit/gimmick/h
 	name = "h"
 	desc = "h"
+	wear_state = "h"
 
 /obj/item/clothing/suit/gimmick/werewolf
 	name = "werewolf suit"
@@ -1739,7 +1740,7 @@
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM
 	icon_state = "abomcostume"
-	wear_state = "abomcustume"
+	wear_state = "abomcostume"
 
 /obj/item/clothing/head/abomination
 	name = "abomination mask"

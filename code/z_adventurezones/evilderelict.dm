@@ -244,6 +244,7 @@ var/maniac_previous_victim = "Unknown"
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "space_old"
 	item_state = "space_old"
+	wear_state = "space_old"
 	cant_self_remove = 1
 
 	equipped(var/mob/user, var/slot)
@@ -254,6 +255,7 @@ var/maniac_previous_victim = "Unknown"
 	name = "obsolete space helmet"
 	desc = "This looks VERY uncomfortable!"
 	icon_state = "space_old"
+	wear_state = "space_old"
 
 
 /obj/chaser/rpmaniac
