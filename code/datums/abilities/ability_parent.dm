@@ -827,6 +827,7 @@
 	var/desc = null
 
 	var/max_range = 10
+	var/disabled = FALSE // For actionbars or sustained actions
 	var/last_cast = 0
 	var/cooldown = 0
 	var/start_on_cooldown = FALSE
