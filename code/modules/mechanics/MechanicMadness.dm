@@ -504,12 +504,10 @@
 		var/loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
 		if(src.stored?.linked_item && !src.storage) //If the sound synth is attached inside something.
-
-
-			if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_large)) //Mech Cabinet
+			if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_large)) //Mech Cabinet check
 				loc = src.loc
 
-			else if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld)) //Device Frame
+			else if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld)) //Device Frame check
 				if(!obj_loc_chain(src)) //If not stored anywhere usually in your hands or on the ground
 					loc = src.loc
 
@@ -517,15 +515,14 @@
 					var/list/atom/movable/loc_chain = obj_loc_chain(src)
 					loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
 
-		else //Default case most components bolted to the floor fall into this.
+		else
 			loc = src.loc
 
 		maptext = make_chat_maptext(loc, "[string]", "color: #FFBF00;", alpha = 255)
-
-		for(var/mob/O in all_hearers(7, loc))
+		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1) //Places text in chat
-			O.show_message(assoc_maptext = maptext) 						//Places text over associated objects.
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
+			O.show_message(assoc_maptext = maptext)
 		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
@@ -2389,7 +2386,7 @@
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
 				logTheThing(LOG_STATION, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
-				M.set_loc(get_turf(picked.loc))
+				do_teleport(M,get_turf(picked.loc),FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				count_sent++
 			input.signal = count_sent
 			SPAWN(0)
@@ -4251,4 +4248,3 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
-#undef src_exists_inside_user_or_user_storage
