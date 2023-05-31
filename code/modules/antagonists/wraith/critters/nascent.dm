@@ -6,7 +6,6 @@
 	real_name = "???"
 	desc = "It looks unfinished"
 	density = 1
-	faction = MOB_AI_FACTION_WRAITH
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "poltergeist-corp"
 	hand_count = 0
@@ -16,6 +15,8 @@
 	health_burn_vuln = 0.8
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/voice/wraith/revleave.ogg"
+
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)

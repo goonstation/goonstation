@@ -15,6 +15,7 @@ var/global/parallax_enabled = TRUE
 	New(turf/newLoc, new_owner)
 		. = ..()
 		src.owner = new_owner
+		src.parallax_layers = list()
 		src.outermost_movable = src.owner.mob
 		src.setup_z_level_parallax_layers()
 		src.update_parallax_z()
@@ -67,19 +68,11 @@ var/global/parallax_enabled = TRUE
 		src.z_level_parallax_layers = list()
 
 		for (var/z_level in Z_LEVEL_NULL to Z_LEVEL_MINING)
-			if (z_level == Z_LEVEL_STATION)
-				var/list/atom/movable/screen/parallax_layer/station_parallax_layers = list()
-				for (var/parallax_layer_type as anything in map_settings.parallax_layers)
-					station_parallax_layers += new parallax_layer_type(null, src.owner)
+			var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
+			for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
+				z_parallax_layers += new parallax_layer_type(null, src.owner)
 
-				src.z_level_parallax_layers["[Z_LEVEL_STATION]"] = station_parallax_layers
-
-			else
-				var/list/atom/movable/screen/parallax_layer/z_parallax_layers = list()
-				for (var/parallax_layer_type as anything in z_level_parallax_settings["[z_level]"])
-					z_parallax_layers += new parallax_layer_type(null, src.owner)
-
-				src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
+			src.z_level_parallax_layers["[z_level]"] = z_parallax_layers
 
 		src.previous_turf = get_turf(src.owner.eye)
 		var/area/A = get_area(src.previous_turf)
@@ -112,7 +105,7 @@ var/global/parallax_enabled = TRUE
 			parallax_layer.alpha = 0
 			animate(parallax_layer, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
 
-		if (src.previous_turf.z == z_level)
+		if (src.previous_turf && (src.previous_turf.z == z_level))
 			src.owner.screen -= src.parallax_layers
 			src.parallax_layers = parallax_layer_list
 			src.owner.screen |= src.parallax_layers
@@ -136,7 +129,7 @@ var/global/parallax_enabled = TRUE
 					qdel(parallax_layer)
 
 		SPAWN(animation_time + 1)
-			if (src.previous_turf.z == z_level)
+			if (src.previous_turf && (src.previous_turf.z == z_level))
 				src.owner.screen -= src.parallax_layers
 				src.parallax_layers = parallax_layer_list
 				src.owner.screen |= src.parallax_layers

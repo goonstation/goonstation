@@ -587,6 +587,88 @@ datum/light
 					ADDUPDATE(T)
 
 			*/
+
+	cone
+		var/outer_angular_size = 90
+		var/inner_angular_size = 80
+		var/inner_radius = 1
+		apply_to(turf/T)
+			RL_APPLY_LIGHT(T, src.x, src.y, src.brightness, src.height**2, r, g, b)
+
+		apply_internal(generation, r, g, b)
+			. = list()
+			var/height2 = src.height**2
+			var/turf/middle = locate(src.x, src.y, src.z)
+			var/atten
+
+			#define ANGLE_CHECK(T) angle_inbetween(arctan(T.x - src.x, T.y - src.y), min_angle, max_angle)
+			#define APPLY(T) RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, \
+				src.brightness \
+				* clamp(((src.x - T.x)*(src.x - T.x) + (src.y - T.y)*(src.y - T.y)) / inner_radius, 0, 1) \
+				* clamp((outer_angular_size / 2 - angle_distance(arctan(T.x - src.x, T.y - src.y), center_angle)) / ((outer_angular_size - inner_angular_size) / 2), 0, 1) ** 2\
+				, height2, r, g, b)
+
+			// conversion from angles clock to normal angles
+			var/center_angle = 90 - dir_to_angle(src.dir)
+			var/min_angle = center_angle - outer_angular_size/2
+			var/max_angle = center_angle + outer_angular_size/2
+			for (var/turf/T in view(src.radius, middle))
+				if (T.opacity)
+					continue
+				if(T.opaque_atom_count > 0)
+					continue
+				if (!ANGLE_CHECK(T))
+					continue
+
+				APPLY(T)
+				if(atten < RL_Atten_Threshold)
+					continue
+				T.RL_ApplyGeneration = generation
+				T.RL_UpdateGeneration = generation
+				. += T
+
+			for (var/turf/T as anything in .)
+				var/E_new = 0
+				var/turf/E = get_step(T, EAST)
+				if (E && E.RL_ApplyGeneration < generation && ANGLE_CHECK(E))
+					E_new = 1
+					APPLY(E)
+					if(atten >= RL_Atten_Threshold)
+						E.RL_ApplyGeneration = generation
+						if(get_step(T, SOUTHEAST))
+							ADDUPDATE(get_step(T, SOUTHEAST))
+						ADDUPDATE(E)
+
+				var/turf/N = get_step(T, NORTH)
+				if (N && N.RL_ApplyGeneration < generation && ANGLE_CHECK(N))
+					APPLY(N)
+					if(atten >= RL_Atten_Threshold)
+						N.RL_ApplyGeneration = generation
+						if(get_step(T, NORTHWEST))
+							ADDUPDATE(get_step(T, NORTHWEST))
+						ADDUPDATE(N)
+
+					// this if is a bit more complicated because we don't want to do NE
+					// if the turf will get updated some other relevant turf's E or N
+					// because we'd lose the south or west neighbour update this way
+					// i.e. it should only get updated if both T.E and T.N are not added in the view() phase
+					var/turf/NE = get_step(T, NORTHEAST)
+					if (E_new && NE && NE.RL_ApplyGeneration < generation && ANGLE_CHECK(NE))
+						APPLY(NE)
+						if(atten >= RL_Atten_Threshold)
+							NE.RL_ApplyGeneration = generation
+							ADDUPDATE(NE)
+
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
+
+			#undef ANGLE_CHECK
+			#undef APPLY
+
 var
 	RL_Started = 0
 	RL_Suspended = 0

@@ -1,4 +1,143 @@
 
+(t)wed may 31 23
+(u)Sord
+(+)Security hangars now have remote controllers that can be accessed from space. Sec pod users rejoice.
+(u)colossusqw
+(p)14296
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Makes it so neurodepressant doesn't make you drool or puke while capu is in your system.
+(u)Glamurio (Ryou)
+(p)14181
+(e)💅💊|C-QoL, A-Medical
+(+)Attaching a limb while off-handing a suture/stapler automatically secures the limb.
+(u)LeahTheTech
+(p)14299
+(e)🗺|A-Mapping
+(*)Added a printing press in or near the chapel on all rotation maps.
+(u)LeahTheTech
+(t)wed may 31 23
+(+)Ore scoops can now be used in hand to toggle picking up rocks and ice chunks.
+(t)tue may 30 23
+(u)FlameArrow57
+(p)14264
+(e)🎨⚖💅💊|C-Sprites, C-Balance, C-QoL, A-Medical
+(*)ProDoc goggles now show a purple indicator next to health icons for those with cyber organs of any form.
+(+)Health analyzers without an organ scan upgrade now show if patients have a cyber organ, but not which ones.
+(t)mon may 29 23
+(u)Sian
+(p)14169
+(e)🪲⚖🔄🔊⏰|C-Bug, C-Balance, C-Rework, C-Sound, A-Status-Effects
+(*)Changeling Speed Regeneration now applies a status effect to you that regenerates your health over time.
+(u)Lord_Earthfire
+(p)13697
+(e)🌱|A-Hydroponics
+(+)The unstable gene strain can now malform the quality of all botany produce items instead of food only.
+(u)Ikea
+(p)14019
+(e)⚖🤖|C-Balance, A-Silicons
+(*)There is now a seven minute cooldown for using cyborg recharge upgrades
+(u)Colossusqw
+(p)13946
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added Promethazine, a anti-emetic agent that stops vomiting.
+(+)Slightly refactored many instances of vomiting messages, please do point out any weirdness that occurs.
+(u)Cheffie
+(p)14163
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Robotic critters are now immune to electric shocks
+(u)Cheffie
+(p)14216
+(e)🗺🔨|A-Mapping, A-Player-Actions
+(+)Clown shoes in deep space look funny...
+(t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a new robotics winter coat.
+(u)Skeletonman0
+(p)13957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)Skeleton heads will now also speak when attached to corpses while their skull has no brain
+(u)Glamurio (Ryou)
+(p)14190
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(+)Added showers to Cogmap Medbay bathroom.
+(u)Skeletonman0
+(p)14252
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(+)Headless skeletons can now have their contents poured into open containers with an aggressive grab
+(u)Hans
+(p)11942
+(e)🆕🔊⚗|C-Feature, C-Sound, A-Chemistry
+(*)Added Solipsizine, a drug that causes you to be unable to hear or see other people!
+(t)sat may 27 23
+(u)pali
+(p)12361
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(*)You can now Alt+Doubleclick things to see a help message on how to use them. So far this is only implemented for a few things (disposal pipes) but expect this to be more widespread in the future. (Rightclick + clicking Help also works.)
+(u)LeahTheTech
+(+)Soviet engineers figured out how to glue pod weapons in place really really well.
+(u)Soleilan & pali
+(*)L337 Hacker accent mutation added, slightly rarer than the rest.
+(t)fri may 26 23
+(u)pali
+(*)Two new accent mutations. One shuffles letter and the other one words.<br><img width="210" src="https://cdn.discordapp.com/attachments/1092955375889809418/1111708097682079784/image.png"><img width="200" src="https://cdn.discordapp.com/attachments/182254222694285312/1111712245844562021/image.png">
+(u)Flaborized
+(p)14005
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The HoS and Captain now have slightly unique looking eguns, to match their usual outfits.
+(u)FlameArrow57 and Flaborized
+(p)14093
+(e)🆕🔎📦|C-Feature, C-Code-Quality, A-Game-Objects
+(+)Added lanyards as a random lootcrate item! These are three item storages that can hold tiny items and fit in your ID slot. They accept IDs and can be used for ID checks if holding one.
+(u)glowbold
+(p)13820
+(e)🆕🗺🎨📦🎩|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Clothing
+(+)Construction cones stack up to five at a time, can be placed on the ground by clicking, and can be worn on your head.
+(u)Skeletonman0
+(p)14031
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Microwaves can now warm chemicals and skeleton skulls / other organs are now microwavable
+(u)Tyrant
+(p)14228
+(e)🗺|A-Mapping
+(+)Mail booths are now gone. No more penpals.  Should've been removed a while ago actually.
+(u)Wisemonster
+(p)13883
+(e)⚖💅📦🍝|C-Balance, C-QoL, A-Game-Objects, A-Catering
+(+)The generic space cola is no longer hidden in soda vending machines, but the off-brand colas now require hacking the vendor to access
+(t)thu may 25 23
+(u)pali
+(*)If you die / get hit as you are typing a message the message you were typing to say gets sent with an --URK etc. at the end. This is an old feature that has now been slightly fixed up.
+(u)Amylizzle
+(p)14156
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)The singularity has received a visual overhaul. Tell someone in #imcoder if it makes your framerate suck. Bendy space.
+(t)wed may 24 23
+(u)Sord
+(+)The comically large captain's hat can now be recolored using the normal medal rewards.
+(u)pali
+(*)Chaplains can now examine dead mobs to see their last words.<br><small>Possibly subject to change, idk, ping me with feedback.</small>
+(u)DisturbHerb & BatElite & pali
+(*)Floodlights!<br>Engineering lockers now start with one floodlight each (power cell included) and the engineering fabricator can create more (power cell not included but the fab can now make power cells).<br>You can deploy them with a wrench (if you have a floodlight in one hand and a wrench in the other you can just use the light in hand to do this).<br>They use APC power if available and internal power cell if not (they use the large APC power cells).<br>Clickdrag to rotate!
+(u)pali
+(*)In chat options you can now toggle mild highlighting on odd/even lines for better readability
+(u)pali
+(+)Various record programs now show pronouns of the person
+(t)tue may 23 23
+(u)Sord
+(+)You can now make pod mining phasers in the ship component fabricator.
+(u)tarmunora
+(e)⚖|C-Balance
+(+)blobs no longer require level 3 attack to break girders
+(u)Lord_Earthfire
+(p)13617
+(e)🪲⚖💅📦|C-Bug, C-Balance, C-QoL, A-Game-Objects
+(+)Satchels (e.g. mining, produce satchels) cannot hold stacks of items anymore. Stuffing a stack of items splits part of it up into singular items.
+(+)The ore scoop doesn't need two hands to be reloaded anymore. Enjoy quick reloading of your scoop without annoying dropping of mining satchels!
+(u)tue may 23 23
+(u)pali
+(*)AI status screen BSOD now means that the linked AI is dead. AIs can no longer pick BSOD status screen manually.
 (t)mon may 22 23
 (u)Cheffie
 (p)14055

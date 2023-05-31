@@ -14,8 +14,8 @@
 		pass_unstable = FALSE
 		/// If ReplaceWith() actually does a thing or not.
 		var/can_replace_with_stuff = FALSE
-#ifdef RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit
+#ifdef CI_RUNTIME_CHECKING
+		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
 #endif
 		allows_vehicles = FALSE
 
@@ -262,11 +262,13 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
+	#endif
 
 	UpdateIcon() // for starlight
 
@@ -984,6 +986,8 @@ proc/generate_space_color()
 #else
 	plane = PLANE_FLOOR
 #endif
+
+/turf/unsimulated/wall/generic
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

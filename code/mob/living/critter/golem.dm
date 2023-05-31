@@ -17,10 +17,9 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	var/reagent_id = null
-	var/wizard_spawn = FALSE
 
 	New()
 		..()
@@ -63,8 +62,6 @@
 		HH.limb_name = "right golem arm"
 
 	valid_target(mob/living/C)
-		if (istype(C, /mob/living/critter/golem)) return FALSE
-		if(iswizard(C) && src.wizard_spawn) return FALSE
 		if(ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if (H.traitHolder.hasTrait("training_chaplain")) return FALSE
@@ -79,7 +76,7 @@
 		var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
 		I.Blend(oldcolor, ICON_ADD)
 		src.icon = I
-		src.wizard_spawn = TRUE
+		src.faction = FACTION_WIZARD
 		src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
 		src.desc = "An elemental entity composed of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 		return

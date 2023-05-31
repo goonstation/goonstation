@@ -8514,16 +8514,6 @@
 	dir = 8
 	},
 /area/station/chapel/sanctuary)
-"avW" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
-/turf/simulated/floor/specialroom/chapel{
-	dir = 4
-	},
-/area/station/chapel/sanctuary)
 "avX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40770,6 +40760,13 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"coN" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 4
+	},
+/area/station/chapel/sanctuary)
 "cpq" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -44471,12 +44468,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/black,
 /area/research_outpost)
-"oHI" = (
-/obj/mail_booth,
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/station/crew_quarters/market)
 "oID" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -44694,6 +44685,16 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
+"ppL" = (
+/obj/shrub{
+	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "prv" = (
 /obj/table/auto,
 /obj/item/sheet/steel/reinforced{
@@ -45848,6 +45849,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
+"uzT" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/north,
+/turf/space/fluid,
+/area/space)
 "uAB" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
@@ -46548,6 +46553,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/staff_room)
+"xgl" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/specialroom/chapel{
+	dir = 8
+	},
+/area/station/chapel/sanctuary)
 "xgZ" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/dirt,
@@ -82928,7 +82939,7 @@ aoz
 amX
 anO
 amX
-anO
+ppL
 axh
 ayp
 azs
@@ -85042,7 +85053,7 @@ amV
 dyW
 amX
 auH
-auG
+coN
 ahY
 bjx
 azs
@@ -85344,7 +85355,7 @@ amW
 amX
 anO
 amX
-anO
+xgl
 ahY
 ayq
 azu
@@ -85646,7 +85657,7 @@ aqP
 ama
 amX
 anO
-avW
+amX
 ahY
 ayr
 azt
@@ -95404,7 +95415,7 @@ vIJ
 xmS
 bYl
 bYl
-aqn
+uzT
 aqn
 aqn
 aqn
@@ -102010,7 +102021,7 @@ buv
 btM
 bvO
 bwu
-oHI
+bxh
 byd
 ady
 bzU

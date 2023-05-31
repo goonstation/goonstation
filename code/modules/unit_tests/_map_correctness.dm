@@ -1,6 +1,6 @@
 // Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-#ifdef RUNTIME_CHECKING
+#ifdef CI_RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()

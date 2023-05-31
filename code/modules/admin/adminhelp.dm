@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|text
+	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
@@ -112,9 +112,9 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|text
+	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|message
 
-	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
+	msg = copytext(strip_html(msg, strip_newlines=FALSE), 1, MAX_MESSAGE_LEN * 4)
 	if (client.can_see_mentor_pms())
 		msg = linkify(msg)
 
@@ -245,7 +245,7 @@
 
 		var/client/user_client = user.client
 
-		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|text
+		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|message
 
 		M = ckey_to_mob(C)
 		user = user_client.mob

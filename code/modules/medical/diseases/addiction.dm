@@ -59,7 +59,7 @@
 					affected_mob.change_eye_blurry(rand(7, 10))
 					boutput(affected_mob, "<span class='alert'>Your vision blurs, you REALLY need some [D.associated_reagent].</span>")
 				else if (prob(1))
-					if (affected_mob.nutrition > 10)
+					if (affected_mob.nutrition > 10 && !affected_mob.reagents?.has_reagent("promethazine"))
 						affected_mob.visible_message("<span class='alert'>[affected_mob] vomits on the floor profusely!</span>",\
 						"<span class='alert'>You vomit all over the floor!</span>")
 						affected_mob.vomit(rand(3,5))
