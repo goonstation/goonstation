@@ -14,8 +14,8 @@
 		pass_unstable = FALSE
 		/// If ReplaceWith() actually does a thing or not.
 		var/can_replace_with_stuff = FALSE
-#ifdef RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit
+#ifdef CI_RUNTIME_CHECKING
+		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
 #endif
 		allows_vehicles = FALSE
 
@@ -262,7 +262,7 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
-	#ifndef RUNTIME_CHECKING
+	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
