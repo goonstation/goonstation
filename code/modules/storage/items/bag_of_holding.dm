@@ -75,13 +75,19 @@
 /datum/storage/artifact_bag_of_holding/precursor/add_contents_extra(obj/item/I, mob/user, visible)
 	if (!..())
 		return
+	var/play_sound = FALSE
 	if (I.burning || (I in by_cat[TR_CAT_BURNING_ITEMS]))
 		I.combust_ended()
 		boutput(user, "<span class='notice'>[I] is enveloped in a glow and extinguished!</span>")
+		play_sound = TRUE
 	var/initial_health = get_initial_item_health(I)
 	if (I.health < initial_health)
 		boutput(user, "<span class='notice'>[src.linked_item] hums for a moment, and [I] reforms to its original state!</span>")
 		I.health = initial_health
+		play_sound = TRUE
+
+	if (play_sound)
+		playsound(src.linked_item.loc, 'sound/machines/ArtifactPre1.ogg', 50, TRUE)
 
 	var/first_time_entrance = !GET_ATOM_PROPERTY(I, PROP_ATOM_PRECURSOR_BOH_ENTERED)
 	APPLY_ATOM_PROPERTY(I, PROP_ATOM_PRECURSOR_BOH_ENTERED, src.linked_item)
@@ -92,6 +98,8 @@
 		return
 	if (!first_time_entrance)
 		return
+
+	var/item_name = I.name
 	switch(rand(1, 4))
 		if (1)
 			I.color = rgb(pick(0, 255), pick(0, 255), pick(0, 255), prob(90) ? 255 : pick(127, 255))
@@ -100,11 +108,12 @@
 		if (3)
 			I.setMaterial(getMaterial(pick("rock", "slag")))
 		if (4)
-			var/datum/artifact_origin/origin = /datum/artifact_origin/precursor
-			var/new_name = pick(initial(origin.adjectives)) + pick(initial(origin.nouns_small))
+			var/new_name = "[pick("strange", "cold", "rough")]" + " [pick("utility", "device", "item")]"
 			I.name = new_name
 			I.real_name = new_name
-	boutput(user, "<span class='notice'>[src.linked_item] warps strangely and returns to normal. [I] isn't the same anymore!</span>")
+	boutput(user, "<span class='notice'>[src.linked_item] warps strangely and returns to normal. \The [item_name] isn't the same anymore!</span>")
+	if (!play_sound)
+		playsound(src.linked_item.loc, 'sound/machines/ArtifactPre1.ogg', 50, TRUE)
 
 // when a bag of holding artifact is put into another
 // user can be null
