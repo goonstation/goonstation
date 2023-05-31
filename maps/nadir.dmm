@@ -7176,6 +7176,14 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"doi" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
+	})
 "dok" = (
 /obj/machinery/turret,
 /turf/simulated/floor/circuit/white,
@@ -112374,7 +112382,7 @@ noM
 iqc
 gKn
 hXv
-hXv
+doi
 iqc
 qoL
 eIa

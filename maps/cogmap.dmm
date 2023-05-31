@@ -18717,14 +18717,12 @@
 /area/station/chapel/office)
 "aYM" = (
 /obj/machinery/light,
+/obj/machinery/printing_press,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
 "aYN" = (
-/obj/shrub{
-	dir = 4
-	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"

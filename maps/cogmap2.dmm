@@ -5005,6 +5005,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "anc" = (
@@ -5322,11 +5323,6 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
 "aoa" = (
-/obj/shrub{
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
-	},
 /obj/machinery/light,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -71591,6 +71587,10 @@
 	},
 /turf/simulated/floor/airless/caution/northsouth,
 /area/research_outpost)
+"ewI" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "exg" = (
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
@@ -122701,7 +122701,7 @@ aaa
 akr
 alD
 amX
-anZ
+ewI
 aph
 aqp
 aBA
