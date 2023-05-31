@@ -58,6 +58,9 @@ TYPEINFO(/obj/item/device/radio)
 	start_speech_modifiers = null
 	start_speech_outputs = list("spoken") //this is the speaker, the radio antenna is handled separately
 	start_listen_languages = null //null languages means the message isn't affected by language
+	/// Radios get an extra speech module tree that corresponds to their radio output. That means radios have one listen tree, which listens
+	/// to all subscribed radio frequencies and the equipment channel, and two speech trees - one for the the speaker, and one for the transmitter
+	/// As a result, you can have the speaker manipulate recieved messages separately from the antenna
 	var/datum/speech_module_tree/radio_transmitter
 
 	// Moved initializaiton to world/New
@@ -122,8 +125,7 @@ var/list/headset_channel_lookup
 		//this is from the radio, so output to mob
 		message.heard_range = 0 //only audible to src.loc
 		message.speaker = src
-		if(!src.say_tree)
-			src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
+		src.ensure_say_tree()
 		src.say_tree.process(message)
 	else
 		//the mic heard this, so send it to the radio

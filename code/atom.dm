@@ -302,7 +302,7 @@ TYPEINFO(/atom)
 
 /atom/New() //I hate this syntax
 	if(length(src.start_listen_inputs)) //only instantiate the tree if we're gonna use it
-		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
+		src.ensure_listen_tree()
 	..()
 
 /// This proc is the final call from the listen tree, and determines what happens when this atom recieves a message. It is essentially the counterpart to say()
@@ -322,10 +322,18 @@ TYPEINFO(/atom)
 ///Primary entry point for all say code
 /atom/proc/say(var/message as text)
 	var/datum/say_message/said = new(message, src, src.say_language)
-	if(!src.say_tree)
-		src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
+	src.ensure_say_tree()
 	src.say_tree.process(said)
 
+/atom/proc/ensure_say_tree()
+	if(!src.say_tree)
+		src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
+	return src.say_tree
+
+/atom/proc/ensure_listen_tree()
+	if(!src.listen_tree)
+		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
+	return src.listen_tree
 // not actually overriden because we want to avoid the overhead if possible. This provides documentation
 #ifdef SPACEMAN_DMM
 /**
