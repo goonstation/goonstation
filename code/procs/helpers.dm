@@ -2623,7 +2623,9 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		. += point - prev
 		prev = point
 
-/// Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+/**Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+ * Tokens are separated by whitespace.
+*/
 /proc/find_replace_in_string(input, text_file_path = "language/pirate.txt")
 	var/list/tokens = splittext(input, regex("\\b", "i"))
 	var/list/modded_tokens = list()
