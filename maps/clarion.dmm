@@ -22111,7 +22111,7 @@
 	name = "security mail router"
 	},
 /turf/simulated/floor/black,
-/area/station/hallway/primary/west)
+/area/station/hallway/secondary/central)
 "bIn" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
