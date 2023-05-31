@@ -1248,14 +1248,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!istype(T,/turf/simulated/wall) && !istype(T,/turf/unsimulated/wall))
 			// if there's no wall above us, hide in a way that we still show up in orange(1)
 			// so the wall can update us
-			src.alpha = 0
-			src.mouse_opacity = FALSE
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "hidden", INVIS_ALWAYS_ISH)
 		else
-			src.alpha = 255
-			src.mouse_opacity = TRUE
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY,"hidden")
 	else
-		src.alpha = 0
-		src.mouse_opacity = FALSE
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "hidden", INVIS_ALWAYS_ISH)
 
 
 /obj/ladder/embed/ex_act(severity,last_touched)
