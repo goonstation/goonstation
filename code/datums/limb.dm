@@ -624,6 +624,7 @@
 			special_attack_silicon(target, user)
 
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 
 /datum/limb/dualsaw

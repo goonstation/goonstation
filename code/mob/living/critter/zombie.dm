@@ -101,7 +101,6 @@
 				infect = src.abilityHolder.getAbility(/datum/targetable/critter/zombify)
 			if (HUMAN_INFECTION)
 				infect = src.abilityHolder.getAbility(/datum/targetable/zombie/infect)
-
 		return ..() && !infect?.disabled
 
 /mob/living/critter/zombie/scientist

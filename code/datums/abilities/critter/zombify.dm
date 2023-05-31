@@ -105,11 +105,12 @@
 					if (istype(H.wear_suit, /obj/item/clothing/suit))
 						ENSURE_IMAGE(src.suit, H.wear_suit.wear_image_icon, H.wear_suit.item_state)
 						zombie.UpdateOverlays(src.suit, "suit")
-						stealthy += 2
+						stealthy += 3
 				//Back
 				if(H.back)
 					ENSURE_IMAGE(src.back, H.back.wear_image_icon, H.back.item_state)
 					zombie.UpdateOverlays(src.back, "back")
+					stealthy++
 				//Mask
 				if (H.wear_mask)
 					if (istype(H.wear_mask, /obj/item/clothing/mask))
@@ -117,21 +118,11 @@
 						zombie.UpdateOverlays(src.mask, "mask")
 						if (H.wear_mask.c_flags & COVERSEYES)
 							stealthy += 2
-				//Shoes
-				if (H.shoes)
-					if (istype(H.shoes))
-						ENSURE_IMAGE(src.shoes, H.shoes.wear_image_icon, H.shoes.icon_state)
-						zombie.UpdateOverlays(src.shoes, "shoes")
-						stealthy++
-				//Gloves.  Zombie boxers??
-				if (H.gloves)
-					if (istype(H.gloves))
-						ENSURE_IMAGE(src.gloves, H.gloves.wear_image_icon, H.gloves.item_state)
-						zombie.UpdateOverlays(src.gloves, "gloves")
-						stealthy++
+						if (H.head.c_flags & COVERSMOUTH)
+							stealthy += 2
 				//Head
 				if (H.head)
-					ENSURE_IMAGE(src.head, H.head.wear_image_icon, H.head.item_state)
+					ENSURE_IMAGE(src.head, H.head.wear_image_icon, H.head.icon_state)
 					zombie.UpdateOverlays(src.head, "head")
 					if (H.head.c_flags & COVERSEYES)
 						stealthy += 2
