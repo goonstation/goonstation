@@ -6028,7 +6028,7 @@
 /obj/machinery/camera{
 	network = "Pathopost"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aFj" = (
@@ -6130,7 +6130,7 @@
 /turf/simulated/floor,
 /area/h7/control)
 "aFM" = (
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aFU" = (
@@ -6216,7 +6216,7 @@
 /obj/machinery/light/worn{
 	dir = 4
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aGf" = (
@@ -7244,7 +7244,7 @@
 /area/abandonedmedicalship)
 "aJB" = (
 /obj/stool/chair,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aJD" = (
@@ -7810,7 +7810,7 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/space,
 /area/abandonedmedicalship)
 "aLt" = (
@@ -7992,7 +7992,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/space,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
@@ -12574,7 +12574,7 @@
 	},
 /area/h7/lab)
 "aYz" = (
-/obj/critter/zombie/h7,
+/mob/living/critter/zombie/biosuit,
 /turf/space,
 /turf/simulated/floor,
 /area/h7/lab)
@@ -12659,7 +12659,7 @@
 /area/h7)
 "aYU" = (
 /obj/stool/bed,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
@@ -13186,7 +13186,7 @@
 	},
 /area/h7)
 "baN" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/space,
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -13197,7 +13197,7 @@
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
 "baP" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /obj/machinery/telejam/active,
 /turf/space,
 /turf/simulated/floor/white,
@@ -13346,7 +13346,7 @@
 	},
 /area/abandonedoutpostthing)
 "bbm" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/space,
 /turf/simulated/floor/purplewhite{
 	dir = 4
@@ -13546,7 +13546,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "bbN" = (
-/obj/critter/zombie/h7,
+/mob/living/critter/zombie/biosuit,
 /turf/simulated/floor,
 /area/h7/lab)
 "bbO" = (
@@ -14373,7 +14373,7 @@
 	icon_state = "1-8"
 	},
 /obj/stool,
-/obj/critter/zombie/h7,
+/mob/living/critter/zombie/biosuit,
 /turf/simulated/floor,
 /area/h7/lab)
 "bfh" = (

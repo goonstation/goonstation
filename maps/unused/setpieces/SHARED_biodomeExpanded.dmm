@@ -825,7 +825,7 @@
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
 "aWi" = (
-/obj/critter/zombie/wrestler,
+/mob/living/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -1209,7 +1209,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
 "buO" = (
@@ -3103,7 +3103,7 @@
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek/blastotek)
 "dMd" = (
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -6653,7 +6653,7 @@
 /area/crater/biodome/north)
 "hNo" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "hNO" = (
@@ -8310,7 +8310,7 @@
 /area/swampzone/interiors/quarry)
 "jPN" = (
 /obj/map/light/graveyard,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard)
 "jQf" = (
@@ -10763,7 +10763,7 @@
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
 "mKF" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "mKH" = (
@@ -13319,7 +13319,7 @@
 /area/swampzone/deeps)
 "pPX" = (
 /obj/map/light/graveyard,
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/floor/auto/dirt,
 /area/crypt/graveyard)
 "pQg" = (
@@ -14258,7 +14258,7 @@
 /area/syndicate_station)
 "qWh" = (
 /obj/stool/chair/office,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "qWp" = (
@@ -14337,7 +14337,7 @@
 "rdn" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/psych,
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/floor/sanitary/white,
 /area/swampzone/interiors/outbuildings)
 "rdw" = (
@@ -15055,7 +15055,7 @@
 /area/swampzone/ground/canyon)
 "saw" = (
 /obj/machinery/drainage,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "saL" = (
@@ -15180,7 +15180,7 @@
 	dir = 1
 	},
 /obj/map/light/graveyard,
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
@@ -15794,7 +15794,7 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "sUu" = (
@@ -16962,7 +16962,7 @@
 /turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
 "ukS" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "ulo" = (
@@ -18617,7 +18617,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
 "vZO" = (
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "vZQ" = (

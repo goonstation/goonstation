@@ -5702,7 +5702,7 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/space,
 /area/space)
 "pj" = (

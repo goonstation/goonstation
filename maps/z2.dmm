@@ -27066,7 +27066,7 @@
 	dir = 1
 	},
 /obj/map/light/graveyard,
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/unsimulated/grasstodirt{
 	dir = 1
 	},
@@ -27182,7 +27182,7 @@
 /area/crypt/graveyard)
 "bGW" = (
 /obj/map/light/graveyard,
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "bGX" = (
@@ -28101,7 +28101,7 @@
 /area/crypt/graveyard)
 "bJM" = (
 /obj/map/light/graveyard,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "bJN" = (
@@ -29799,7 +29799,7 @@
 /area/crypt/graveyard/swamp)
 "bPv" = (
 /obj/stool/chair/office,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "bPw" = (
@@ -30126,7 +30126,7 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/carpet/grime,
 /area/crypt/sigma/crew)
 "bQs" = (
@@ -32382,7 +32382,7 @@
 /area/crypt/sigma/storage)
 "bYs" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /turf/unsimulated/floor/plating/scorched,
 /area/crypt/sigma/storage)
 "bYt" = (
@@ -36769,7 +36769,7 @@
 /area/meat_derelict/soviet)
 "clh" = (
 /obj/decal/cleanable/cobweb2,
-/obj/critter/zombie/meatmonaut,
+/mob/living/critter/zombie/meatmonaut,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -37061,7 +37061,7 @@
 /obj/machinery/light/small/iomoon{
 	dir = 8
 	},
-/obj/critter/zombie/meatmonaut,
+/mob/living/critter/zombie/meatmonaut,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -41353,20 +41353,6 @@
 	},
 /area/owlery/staffhall)
 "cyN" = (
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
@@ -41486,20 +41472,6 @@
 	},
 /area/owlery/lab)
 "czf" = (
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
@@ -42610,21 +42582,6 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib1"
 	},
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	interesting = "Seems to have bled out from his injuries.";
-	layer = 2;
-	name = "Mangled Corpse"
-	},
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "cBV" = (
@@ -42862,20 +42819,6 @@
 "cCv" = (
 /obj/stool/chair/wooden{
 	dir = 4
-	},
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
 	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
@@ -43697,20 +43640,6 @@
 	},
 /area/owlery/gangzone)
 "cEz" = (
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid1"
 	},
@@ -46085,20 +46014,6 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "cKv" = (
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
@@ -50077,20 +49992,6 @@
 /area/syndicate/minerva5/command)
 "cTR" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /turf/unsimulated/floor/yellowblack{
 	dir = 4
 	},
@@ -50617,20 +50518,6 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -51116,20 +51003,6 @@
 "cVY" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
-	},
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
@@ -52417,20 +52290,6 @@
 /turf/unsimulated/floor/pool/no_animate,
 /area/owlery/Owlmait2)
 "cYr" = (
-/obj/critter/zombie/security{
-	aggressive = 0;
-	alive = 0;
-	atcritter = 0;
-	atkcarbon = 0;
-	atksilicon = 0;
-	butcherable = 0;
-	can_revive = 0;
-	density = 0;
-	health = 0;
-	icon_state = "seczombie-dead";
-	layer = 2;
-	name = "Gutted Corpse"
-	},
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
@@ -58334,7 +58193,7 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/lab)
 "dvg" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dvi" = (
@@ -61015,7 +60874,7 @@
 	})
 "dFm" = (
 /obj/machinery/drainage,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFo" = (
@@ -61069,7 +60928,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/unsimulated/floor/sanitary,
 /area/crypt/sigma/morgue)
 "dFz" = (
@@ -66194,7 +66053,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "dTN" = (
-/obj/critter/zombie/wrestler,
+/mob/living/critter/zombie/wrestler,
 /obj/machinery/optable,
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
@@ -75848,7 +75707,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
 "ttO" = (
-/obj/critter/zombie/meatmonaut{
+/mob/living/critter/zombie/meatmonaut{
 	desc = "That suit is decidedly not Juicer, but then again who knows what you can salvage in the fleshier parts of the frontier.";
 	name = "Grill Scientist"
 	},
