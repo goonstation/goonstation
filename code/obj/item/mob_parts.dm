@@ -284,7 +284,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
 			return ..()
 
-		var/can_secure = 0
+		var/can_secure = FALSE
 		if(attacher)
 			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
 
@@ -306,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 		src.layer = initial(src.layer)
 		src.screen_loc = ""
 		src.set_loc(attachee)
-		src.remove_stage = src.easy_attach || can_secure ? 0 : 2
+		src.remove_stage = (src.easy_attach || can_secure) ? 0 : 2
 
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
