@@ -65,7 +65,13 @@ export const NoContainer: ReagentContainer = {
 };
 
 interface ReagentInfoProps extends BoxProps {
+  /**
+   * The reagent container object to use. The ui_describe_reagents proc can generate an object like this.
+   */
   container: ReagentContainer | null;
+  /**
+   * Optional sort function for the reagents.
+   */
   sort?: (a: Reagent, b: Reagent) => number;
 }
 
@@ -140,7 +146,18 @@ export const ReagentGraph = (props: ReagentGraphProps) => {
 };
 
 interface ReagentListProps extends ReagentInfoProps {
+  /**
+   * Allows you to render elements (such as buttons) for each reagent in the list.
+   */
   renderButtons?(reagent: Reagent): InfernoNode;
+  /**
+   * If you are using the renderButtons property, and you want the buttons to change based on certain dependency
+   * value(s), pass the value(s) to this property (in an array if there are multiple dependency values).
+   */
+  renderButtonsDeps?: string | number | boolean | (string | number | boolean)[];
+  /**
+   * Whether or not to show the matter state of the elements in the list.
+   */
   showState?: BooleanLike;
 }
 
@@ -196,7 +213,10 @@ export const ReagentList = (props: ReagentListProps) => {
 };
 
 const reagentCheck = (a: Reagent, b: Reagent): boolean => {
-  if (a.volume !== b.volume
+  if (a === b) return false;
+  if (!a
+      || !b
+      || a.volume !== b.volume
       || a.name !== b.name
       || a.id !== b.id
       || a.colorR !== b.colorR
@@ -205,7 +225,7 @@ const reagentCheck = (a: Reagent, b: Reagent): boolean => {
   return false;
 };
 
-const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
+const containerCheck = (a: ReagentContainer | null, b: ReagentContainer| null): boolean => {
   if (a === b) return false; // same object or both null, no update
   if (a === null || b === null) return true; // only one object is null, update
   if (a.totalVolume !== b.totalVolume
@@ -213,38 +233,63 @@ const containerCheck = (a: ReagentContainer, b: ReagentContainer): boolean => {
       || a.maxVolume !== b.maxVolume) return true; // a property used by ReagentGraph/List has changed, update
   if (a.contents?.length !== b.contents?.length) return true; // different number of reagents, update
   for (const i in a) {
-    if (reagentCheck(a[i], b[i])) return true; // one of the reagents has changed, update
+    if (reagentCheck(a.contents[i], b.contents[i])) return true; // one of the reagents has changed, update
   }
   return false;
 };
 
-// modified version of the shallowDiffers function from common/react.ts
-const reagentInfoDiffers = (a: ReagentInfoProps, b:ReagentInfoProps) => {
-  let i;
-  for (i in a) {
-    if (i === "container") continue;
-    if (!(i in b)) {
-      return true;
-    }
-  }
-  for (i in b) {
-    if (i === "container") continue;
-    if (a[i] !== b[i]) {
-      return true;
-    }
-  }
-  return containerCheck(a.container, b.container);
-};
-
+// modified versions of the shallowDiffers function from common/react.ts
 ReagentGraph.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentGraphProps, b: ReagentGraphProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container") continue;
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
 };
 
 ReagentList.defaultHooks = {
-  onComponentShouldUpdate: (lastProps: ReagentInfoProps, nextProps: ReagentInfoProps) => {
-    return reagentInfoDiffers(lastProps, nextProps);
+  onComponentShouldUpdate: (a: ReagentListProps, b: ReagentListProps) => {
+    let i;
+    for (i in a) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (i in b) {
+      if (i === "container" || i === "renderButtons") continue;
+      if (i === "renderButtonsDeps" && typeof a.renderButtonsDeps === 'object' && typeof b.renderButtonsDeps === 'object') {
+        // The renderButtonsDeps is an array in the previous and next props, so perform a shallow difference check
+        const aDeps = a.renderButtonsDeps;
+        const bDeps = b.renderButtonsDeps;
+        if (aDeps.length !== bDeps.length) {
+          return true;
+        }
+        let j;
+        for (j in aDeps) {
+          if (aDeps[j] !== bDeps[j]) {
+            return true;
+          }
+        }
+        // There is no difference between the deps
+        continue;
+      }
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return containerCheck(a.container, b.container);
   },
 };
 

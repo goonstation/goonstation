@@ -407,9 +407,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
@@ -787,10 +786,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
-								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)

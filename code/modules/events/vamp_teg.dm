@@ -162,7 +162,7 @@
 							if(apc && apc.powered() && (apc.lighting || apc.equipment || apc.environ ) )
 								elecflash(apc, radius=1)
 								if(apc.cell)
-									apc.cell.charge -= 500
+									apc.cell.use(500)
 									if (apc.cell.charge < 0)
 										apc.cell.charge = 0
 								apc.lighting = 0

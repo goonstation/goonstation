@@ -335,7 +335,7 @@
 /obj/item/robot_module/medical,
 /obj/item/robot_module/construction_worker,
 /obj/item/robot_module/civilian,
-/obj/item/robot_module/chemistry,
+/obj/item/robot_module/science,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "bc" = (
@@ -1177,7 +1177,7 @@ aa
 ae
 ae
 ad
-ap
+ad
 ad
 aa
 aS
@@ -1237,7 +1237,7 @@ aa
 ag
 ad
 aq
-ap
+ad
 ad
 aJ
 aT

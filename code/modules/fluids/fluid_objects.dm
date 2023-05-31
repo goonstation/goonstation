@@ -173,6 +173,9 @@ TYPEINFO(/obj/machinery/drainage/big)
 		amount = 5000
 		delay = 10
 
+	wine
+		amount = 330
+		reagent_id = "wine"
 
 	polluted_filth
 		delay = 35

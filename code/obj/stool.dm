@@ -583,7 +583,7 @@
 			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
-		if (istype(get_turf(src), /turf/space))
+		if (!src.anchored && istype(get_turf(src), /turf/space))
 			if (user)
 				user.show_text("What exactly are you gunna secure [src] to?", "red")
 			return
@@ -1244,7 +1244,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	/obj/item/plant/herb/cannabis/spawnable,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
-	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
 	/obj/item/spacecash/random/tourist,
 	/obj/item/spacecash/buttcoin)

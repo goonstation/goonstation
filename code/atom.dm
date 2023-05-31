@@ -16,6 +16,13 @@ TYPEINFO(/atom)
 	var/shrunk = 0
 	var/list/cooldowns
 
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	/// DO NOT override this directly, use HELP_MESSAGE_OVERRIDE instead.
+	/// Example: HELP_MESSAGE_OVERRIDE("Use a <b>screwdriver</b> to unscrew the cover.")
+	var/help_message = null
+
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
 
@@ -464,9 +471,10 @@ TYPEINFO(/atom)
 				T2.neighcheckinghasproximity++
 		if(src.opacity)
 			T.opaque_atom_count++
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 	if(!isnull(src.loc))
 		src.loc.Entered(src, null)
 		if(isturf(src.loc)) // call it on the area too
@@ -584,18 +592,20 @@ TYPEINFO(/atom)
 		return
 
 	if (isturf(last_turf))
-		for(var/turf/covered_turf as anything in old_locs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in old_locs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			last_turf.checkinghasproximity = max(last_turf.checkinghasproximity-1, 0)
 			for (var/turf/T2 in range(1, last_turf))
 				T2.neighcheckinghasproximity--
 	if(isturf(src.loc))
 		var/turf/T = src.loc
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		if (src.event_handler_flags & USE_PROXIMITY)
 			T.checkinghasproximity++
 			for (var/turf/T2 in range(1, T))
@@ -662,6 +672,12 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
+/// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
+/// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -993,9 +1009,10 @@ TYPEINFO(/atom)
 	oldloc?.Exited(src, newloc)
 
 	if(isturf(oldloc))
-		for(var/turf/covered_turf as anything in oldlocs)
-			covered_turf.pass_unstable -= src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in oldlocs)
+				covered_turf.pass_unstable -= src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in oldloc)
 			if(A != src)
 				A.Uncrossed(src)
@@ -1007,9 +1024,10 @@ TYPEINFO(/atom)
 	newloc?.Entered(src, oldloc)
 
 	if(isturf(newloc))
-		for(var/turf/covered_turf as anything in src.locs)
-			covered_turf.pass_unstable += src.pass_unstable
-			covered_turf.passability_cache = null
+		if(src.pass_unstable || src.density)
+			for(var/turf/covered_turf as anything in src.locs)
+				covered_turf.pass_unstable += src.pass_unstable
+				covered_turf.passability_cache = null
 		for(var/atom/A in newloc)
 			if(A != src)
 				A.Crossed(src)

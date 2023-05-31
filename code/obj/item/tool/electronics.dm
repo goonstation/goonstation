@@ -577,7 +577,7 @@
 			newsignal.data["command"] = "DROP"
 		newsignal.data["address_tag"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
 	SPAWN(0.5 SECONDS) //This proc sends responses so there must be a delay
@@ -595,7 +595,7 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
 	SPAWN(0.5 SECONDS) //response proc
