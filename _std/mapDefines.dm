@@ -1,12 +1,9 @@
-// all commented out maps were previously missing anyway. So yeah.
+
 #if defined(MAP_OVERRIDE_CONSTRUCTION)
 
 //#elif defined(MAP_OVERRIDE_POD_WARS)
 
 //#elif defined(MAP_OVERRIDE_EVENT)
-
-#elif defined(CI_RUNTIME_CHECKING)
-#define CHECK_MORE_RUNTIMES 1
 
 #elif defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #define CI_RUNTIME_CHECKING 1
