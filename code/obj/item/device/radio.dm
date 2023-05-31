@@ -56,8 +56,9 @@ TYPEINFO(/obj/item/device/radio)
 	start_listen_inputs = list("equipped")
 	start_speech_accents = null
 	start_speech_modifiers = null
-	start_speech_outputs = list("radio")
+	start_speech_outputs = list("spoken") //this is the speaker, the radio antenna is handled separately
 	start_listen_languages = null //null languages means the message isn't affected by language
+	var/datum/speech_module_tree/radio_transmitter
 
 	// Moved initializaiton to world/New
 var/list/headset_channel_lookup
@@ -70,7 +71,7 @@ var/list/headset_channel_lookup
 		src.frequency = sanitize_frequency(src.frequency)
 
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
-
+	src.radio_transmitter = new(null, null, list("radio"))
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
@@ -78,6 +79,7 @@ var/list/headset_channel_lookup
 	src.vis_contents += src.chat_text
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_equip))
+
 	src.tune_in()
 
 /obj/item/device/radio/proc/on_equip(var/obj/item/device/radio/this, var/mob/holder, var/slot)
@@ -118,18 +120,20 @@ var/list/headset_channel_lookup
 	//One of two things has happened - either a message has come in from the radio, or a message has been heard by the mic
 	if(message.flags & RADIO_SENT)
 		//this is from the radio, so output to mob
-		src.loc.hear(message)
-	else
-		//the mic heard this, so send it to the radio
+		message.heard_range = 0 //only audible to src.loc
+		message.speaker = src
 		if(!src.say_tree)
 			src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
-		var/datum/speech_module/output/radio/radio_out = src.say_tree.GetOutputBy(id="radio")[1]
+		src.say_tree.process(message)
+	else
+		//the mic heard this, so send it to the radio
+		var/datum/speech_module/output/radio/radio_out = src.radio_transmitter.GetOutputBy(id="radio")[1]
 		if(copytext(message.prefix,2,length(message.prefix)) in src.secure_frequencies) //clip off the :
 			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.secure_frequencies[copytext(message.prefix,2,length(message.prefix))]]"
 		else
 			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.frequency]"
 		message.content += "BY RADIO"
-		src.say_tree.process(message)
+		src.radio_transmitter.process(message)
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null

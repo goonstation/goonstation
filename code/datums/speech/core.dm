@@ -156,7 +156,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 
 		if ((length(message) >= 2) && ((copytext(message,1,2) == ":") || (copytext(message, 1, 2) == ";")))
 			cutpos = findtext(message, " ", 1)+1
-			src.prefix = copytext(message, 1, cutpos) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
+			src.prefix = copytext(message, 1, cutpos-1) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
 
 		src.content = copytext(message, cutpos, MAX_MESSAGE_LEN) //content now contains the message without the radio prefix
 		src.content = make_safe_for_chat(src.content)
