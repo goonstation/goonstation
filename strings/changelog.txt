@@ -1,4 +1,6 @@
-
+(u)LeahTheTech
+(t)wed may 31 23
+(+)Ore scoops can now be used in hand to toggle picking up rocks and ice chunks.
 (t)tue may 30 23
 (u)FlameArrow57
 (p)14264

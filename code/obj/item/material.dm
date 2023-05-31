@@ -90,7 +90,7 @@
 		else if (isliving(AM))
 			var/mob/living/H = AM
 			var/obj/item/ore_scoop/S = H.get_equipped_ore_scoop()
-			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && src.scoopable && S.satchel.check_valid_content(src))
+			if (S?.satchel && length(S.satchel.contents) < S.satchel.maxitems && (src.scoopable || S.collect_junk) && S.satchel.check_valid_content(src))
 				var/max_stack_reached = FALSE
 				if (src.amount > 1)
 					var/increment = 0
