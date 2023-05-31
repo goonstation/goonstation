@@ -6,7 +6,7 @@
 // slime
 
 /// Special wrapper to add food status effects, due to special overriding and duration behavior.
-/mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten)
+/mob/living/proc/add_food_bonus(var/id, var/obj/item/reagent_containers/food/snacks/eaten, var/duration = 1 MINUTE)
 	if(id)
 
 		/*
@@ -28,16 +28,15 @@
 				if (src.hasStatus(id_no_big))
 					src.delStatus(id_no_big)
 
-		var/bite_time = (1 MINUTE)
 		if (src.reagents && src.reagents.has_reagent("THC"))
-			bite_time = (2 MINUTES)
+			duration *= 2
 		if (eaten)
 			if (eaten.quality >= 5)
-				bite_time *= 2
+				duration *= 2
 			else if (eaten.quality <= 0.5)
-				bite_time *= 0.3
+				duration *= 0.3
 
-		src.changeStatus(id, bite_time)
+		src.changeStatus(id, duration)
 
 #define DIGESTION_PER_LIFE_TICK 3 //Total amount of reagents we can digest each Life tick
 /mob/living/proc/handle_digestion(var/mult = 1)

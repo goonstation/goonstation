@@ -114,6 +114,12 @@
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
 
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		var/obj/item/reagent_containers/food/snacks/new_sandwich/sandwich = new /obj/item/reagent_containers/food/snacks/new_sandwich
+		sandwich.set_loc(src.loc)
+		sandwich.setup(user, FALSE, null, src, W)
+
 	honeywheat
 		name = "slice of honey-wheat bread"
 		desc = "A slice of bread distinguished by the use of honey in its creation.  Also wheat."

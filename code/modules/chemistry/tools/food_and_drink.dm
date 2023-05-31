@@ -284,22 +284,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				return 1
 
 	///Called when we successfully take a bite of something (or make someone else take a bite of something)
-	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
-		if (consumer == feeder)
-			consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
-			  "<span class='notice'>You take a bite of [src]!</span>")
-			logTheThing(LOG_CHEMISTRY, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
-		else
-			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
-				"<span class='alert'>You feed [consumer] [src]!</span>",\
-				"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
-			logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
-
+	proc/take_a_bite(var/mob/consumer, var/mob/feeder, suppress_messages = FALSE)
+		if (!suppress_messages)
+			if (consumer == feeder)
+				consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
+				"<span class='notice'>You take a bite of [src]!</span>")
+				logTheThing(LOG_CHEMISTRY, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
+			else
+				feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
+					"<span class='alert'>You feed [consumer] [src]!</span>",\
+					"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
+				logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 		src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
-		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-		on_bite(consumer, feeder)
+		if (!suppress_messages)
+			playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		on_bite(consumer, feeder, 1)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
@@ -394,8 +395,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
+				var/duration = 1 MINUTE
 				for (var/effect in src.food_effects)
-					L.add_food_bonus(effect, src)
+					var/effect_length = src.food_effects[effect]
+					if(!isnull(effect_length))
+						duration = effect_length
+					else
+						duration = 1 MINUTE
+					L.add_food_bonus(effect, src, duration)
 
 		if (use_bite_mask && initial(bites_left))
 			var/desired_mask = (bites_left / initial(bites_left)) * 5

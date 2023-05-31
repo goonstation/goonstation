@@ -561,3 +561,191 @@
 	icon_state = "chickenburger-spicy"
 	initial_reagents = list("capsaicin"=15)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
+
+/* Notes for Nex
+(If you're reading this, I made a booboo and forgot to remove these notes before making a PR)
+
+GOD MOST OF THIS HEADACHE WOULD BE RESOLVED IF I CAVED IN AND MADE IT IMPOSSIBLE TO DISASSEMBLE BURGERS ONCE MADE BUT I *REFUSE*.
+
+
+- Needs subtypes that will on New() give it specific ingredients and a specific name
+- REMEMBER THE SUMMARY YOU TYPED UP AND PUT IN DMS/IMCODER FOR AN OUTLINE YOU DWEEB
+
+
+
+
+*/
+
+/obj/item/reagent_containers/food/snacks/new_sandwich //todo: make better name and/or get rid of old sandwiches/burgers
+	// icon_state remains null since these sandwiches/burgers will consist entirely of overlays
+	icon = 'icons/obj/foodNdrink/food_meals.dmi' // temp
+	icon_state = "cburger" // temp
+	name = "incomplete sandwich" // needs a better name, and should change based on bread/buns and ingredients used!
+	desc = "An edible device consisting of 2 or more structural agents encasing a nutrient payload stack. It's a fucking sandwich, dingus."
+	/// Specifies what the sandwich should be made of when directly spawned in with New()
+	/// Ingredients should be listed from bottom to top of the sandwich
+	var/list/initial_ingredients = null /*(snacks/ingredients/bun_bottom, snacks/ingredients/pattycooked, snacks/ingredients/bun_top)*/
+	/// An assoc list storing each ingredient of the sandwich as atom || number
+	/// The decimal value 0-1 represents how much of an ingredient is left as a %
+	// NOTE: Possibly have it so that it's actually atom || list(%, initial buffs)?
+	// Used to keep track of what the initial food effects from a food item were before being adjusted!
+	var/list/ingredients = list()
+	/// Numerical value that provides a simulacrum of initial(bites_left)
+	var/max_bites_left = null // bites_left is dynamic here, so we can't just call initial for calculations
+	/// Breads/buns/whatever that you can only place ingredients onto
+	var/static/bottom_bread_types = list()
+	/// Breads/buns/whatever that can only be put on top of an incomplete sandwich
+	var/static/top_bread_types = list()
+	/// Breads/buns/whatever that can be used as both base and top, and can be used for dagwoods
+	var/static/vers_bread_types = list(/obj/item/reagent_containers/food/snacks/breadslice)
+	/// Has setup() been called yet?
+	var/setup_called = FALSE
+	/// Do we have a top slice/bun, and thus are we able to be eaten?
+	var/complete = FALSE
+	var/static/icon/ingredient_spritesheet = '/icons/obj/foodNdrink/burgers.dmi'
+	/// Assoc list of types || image, intended to specify what image to select for a given ingredient's overlay
+	/// Certain things, like buns, bread, and patties will use their normal icons as their overlays, and as such shouldn't be in this list
+	var/static/ingredient_sprites = list( // NOTE: list incomplete, not all ingredients added yet, be sure to add when done with feature development thanks
+		/obj/item/reagent_containers/food/snacks/ingredient/butter = image(ingredient_spritesheet, "overlay_butter"),
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon = image(ingredient_spritesheet, "overlay_bacon"),
+		/obj/item/reagent_containers/food/snacks/ingredient/meatpaste = image(ingredient_spritesheet, "overlay_meatpaste"),
+		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni = image(ingredient_spritesheet, "overlay_pepperoni"),
+		/obj/item/reagent_containers/food/snacks/ingredient/tomatoslice = image(ingredient_spritesheet, "overlay_tomato"),
+		/obj/item/reagent_containers/food/snacks/ingredient/onion_slice = image(ingredient_spritesheet, "overlay_onion"),
+		/obj/item/reagent_containers/food/snacks/plant/lettuce = image(ingredient_spritesheet, "overlay_lettuce"),
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/steak_m = image(ingredient_spritesheet, "overlay_steak"),
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/steak_h = image(ingredient_spritesheet, "overlay_steak")
+		)
+	/// The .dmi file containing all the relevant sprites. Makes it easier to move the file. I guess.
+	/// Probably gonna remove this.
+
+
+	New()
+		. = ..()
+		SPAWN(1 SECOND)
+			if(!setup_called)
+				src.setup() // We do this so spawned in sandwiches will Actually Exist
+			// But, we wanna make sure whatever called New() has a chance to call setup()
+
+	/// Sets up the sandwich. Automatically called by New() but calling it again will reset the sandwich.
+	/// Unless overridden, do_initial_ingredients spawns the sandwich with the ingredients specified in initial_ingredients
+	/// Provide an ingredient_list[] list of types and/or atoms to make a sandwich out of, in the provided order from bottom to top
+	/// base is for the piece of bread (or other valid sandwich vessel) you're slapping with something to make a sandwich
+	/// first_ingredient is the something you're slapping that piece of bread with
+	proc/setup(var/mob/user, var/do_initial_ingredients = TRUE, var/list/ingredient_list, var/obj/item/base, var/obj/item/first_ingredient) // change to TRUE when functioning pls
+		src.setup_called = TRUE
+		if (do_initial_ingredients || ingredient_list)
+			return // TEMPORARY
+		if (!base || !first_ingredient)
+			return // how did we get here?
+		src.add_ingredient(user, base, TRUE)
+		src.add_ingredient(user, first_ingredient)
+
+
+	/// Adds an ingredient to the top of the sandwich.
+	/// starting_sandwich suppresses the "You've added [x] to the [src]!" alert
+	proc/add_ingredient(var/mob/user, var/obj/item/ingredient2add, var/starting_sandwich = FALSE)
+		if(!ingredient2add)
+			return // don't wanna risk a null value being added ig
+		if(ingredient2add.type in bottom_bread_types) // what monster would put a bottom bun on top of their sandwich >:(
+			boutput(user, "<span class='alert'>Hey stop that, you can only use [ingredient2add] as a sandwich base!</span>")
+			return
+		if(src.complete)
+			var/x = src.ingredients.len // just to get the last entry in the list, which should be the top bun/slice
+			var/obj/item/top_ingredient = src.ingredients[x]
+			if((top_ingredient.type in src.top_bread_types))
+				boutput(user, "<span class='alert'>You can't put anything else on top, take off \the [top_ingredient] to add anything else!</span>")
+				return // yes i could've done && here and i tried that but when adding the first ingredient the len = 0 results in an oob exception god i wish oob just returned a null value
+		var/obj/item/reagent_containers/food/snacks/food2add
+		if(istype(ingredient2add, /obj/item/reagent_containers/food/snacks))
+			complete = FALSE // if we're doing a dagwood and adding new ingredients, it's not properly assembled yet!
+			food2add = ingredient2add
+			var/max_amount = initial(food2add.bites_left)
+			var/amount_left = food2add.bites_left / max_amount // We need to know this in order to recalculate heal_amt once bites_left is adjusted
+			var/buffs = food2add.food_effects
+			src.ingredients[food2add] = list(amount_left, buffs)
+			user.drop_item(food2add)
+			food2add.set_loc(src)
+			if((food2add.type in top_bread_types) || (food2add.type in vers_bread_types) && !starting_sandwich)
+				src.simulate_sandwich() // Simulating involves a couple loops that go through all ingredients, so we only wanna do it when we're ready to be eaten
+				src.name_sandwich()
+				src.complete = TRUE
+				src.name = src.name_sandwich()
+				boutput(user, "<span class='alert'>You finish assembling \the [src]!</span>")
+			else
+				boutput(user, "<span class='alert'>You add [food2add] to \the [src]!</span>")
+			src.render_sandwich()
+		else
+			return // temporary, add functionality for non-food items later pl0x
+
+/*
+1. Tally up the amount of bites_left across all ingredients and multiply them by the % left
+2. Divide that by 3 and round up
+3. Set bites_left for both the burger and all ingredients to the resulting integer
+4. For each ingredient:
+ a) Get initial(bites_left) * initial(heal_amt)
+ b) Multiply by % left
+ c) Divide by bites_left
+ d) Set heal_amt to that figure
+ e) Repeat process but for each of a food's buffs
+*/
+
+	/// Updates the bites_left and heal_amt vars for the sandwich and its ingredients
+	proc/simulate_sandwich()
+		var/total_bites_left = 0
+		for (var/obj/item/reagent_containers/food/snacks/ingredient in src.ingredients)
+			total_bites_left += ingredient.bites_left * src.ingredients[ingredient][1]
+		src.bites_left = ceil(total_bites_left / 3)
+		// This math is for adjusting heal_amt so that when you finish eating, each ingredient would've healed you the same as if you ate it alone
+		// Same for buffs. This is a lot of checking/processing for a loop so try not to call this too often.
+		for (var/obj/item/reagent_containers/food/snacks/ingredient in src.ingredients)
+			var/healing = initial(ingredient.bites_left) * initial(ingredient.heal_amt)
+			healing *= ingredients[ingredient][1]
+			ingredient.bites_left = src.bites_left
+			healing /= ingredient.bites_left
+			ingredient.heal_amt = healing
+			var/buff_time
+			var/buffs = src.ingredients[ingredient][2]
+			for (var/effect in buffs)
+				if(!isnull(buffs[effect]))
+					buff_time = buffs[effect]
+				else
+					buff_time = 1 MINUTE // currently the default buff time
+				buff_time *= initial(ingredient.bites_left)
+				buff_time *= ingredients[ingredient][1]
+				buff_time /= ingredient.bites_left
+				ingredient.food_effects[effect] = buff_time
+
+	/// By default only adds an overlay for the last ingredient in src.ingredients
+	/// Set reset_overlays to TRUE to clear all overlays and recreate them
+	// Note: Each overlay key is based on its corresponding ingredient's position in the ingredients list
+	// e.g the key for the 3rd item in the list would be "ingredient3" or something
+	proc/render_sandwich(var/reset_overlays = FALSE)
+		var/ingredients2render = list()
+		if(!reset_overlays)
+			var/x = src.ingredients.len
+			if(!(x > 0))
+				return // avoids runtimes from oob exceptions, as a precaution
+			ingredients2render += src.ingredients[x]
+		for (var/obj/item/ingredient in ingredients2render)
+			SafeGetOverlayImage()
+
+
+	/// Generates a name for a sandwich based on its contents
+	proc/name_sandwich()
+		return "hamburgrer" // fix
+
+	proc/remove_ingredient()
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		src.add_ingredient(user, W, FALSE)
+
+	take_a_bite(var/mob/consumer, var/mob/feeder, var/suppress_messages = FALSE)
+		if (!src.complete)
+			boutput(consumer, "<span class='alert'>You can't eat [src], it's not complete!</span>")
+			return
+		for (var/obj/item/reagent_containers/food/snacks/ingredient in src.ingredients)
+			src.ingredients[ingredient][1] -= src.ingredients[ingredient][1] / ingredient.bites_left
+			ingredient.take_a_bite(consumer, feeder, TRUE)
+		..()
