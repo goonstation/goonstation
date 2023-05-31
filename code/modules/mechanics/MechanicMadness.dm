@@ -12,7 +12,6 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -502,15 +501,31 @@
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
-		var/mob/user = usr
-		if (src_exists_inside_user_or_user_storage && !src.storage)
-			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
-		else
-			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
-		for(var/mob/O in all_hearers(7, src.loc))
+		var/loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
+
+		if(src.stored?.linked_item && !src.storage) //If the sound synth is attached inside something.
+
+
+			if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_large)) //Mech Cabinet
+				loc = src.loc
+
+			else if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld)) //Device Frame
+				if(!obj_loc_chain(src)) //If not stored anywhere usually in your hands or on the ground
+					loc = src.loc
+
+				else //Handles rest of cases where it is stored somewhere whether on person in a container or some combination
+					var/list/atom/movable/loc_chain = obj_loc_chain(src)
+					loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
+
+		else //Default case most components bolted to the floor fall into this.
+			loc = src.loc
+
+		maptext = make_chat_maptext(loc, "[string]", "color: #FFBF00;", alpha = 255)
+
+		for(var/mob/O in all_hearers(7, loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-			O.show_message(assoc_maptext = maptext)
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1) //Places text in chat
+			O.show_message(assoc_maptext = maptext) 						//Places text over associated objects.
 		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
