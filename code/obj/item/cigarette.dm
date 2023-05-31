@@ -990,13 +990,13 @@
 		processing_items.Remove(src)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
-		if (src.on > MATCH_UNLIT)
+		if (src.on == MATCH_UNLIT)
 			if (temperature > T0C+200)
 				src.visible_message("<span class='alert'>The [src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
-		if (src.on > MATCH_UNLIT)
+		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
 
@@ -1009,7 +1009,7 @@
 		else if (src.on == MATCH_INERT)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
 			return
-		else if (src.on > MATCH_UNLIT)
+		else if (src.on == MATCH_UNLIT)
 			if (istype(target, /obj/item/match) && target:on > 0)
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
@@ -1099,7 +1099,7 @@
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
-			if (src.on > 0)
+			if (src.on == MATCH_LIT)
 				user.visible_message("<b>[user]</b> [pick("licks [his_or_her(user)] finger and snuffs out [src].", "waves [src] around until it goes out.")]")
 				src.put_out(user)
 		else
