@@ -265,10 +265,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 17
 		prefabSizeY = 20
 
-	bomb_maker_hideout // Cheffie's Fermid infested hideout with grenade casings
+	mauxite_hideout // Cheffie's Fermid infested hideout with grenade casings
 		maxNum = 1
 		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_bombmaker_hideout.dmm"
+		prefabPath = "assets/maps/prefabs/prefab_mauxite_hideout.dmm"
 		prefabSizeX = 22
 		prefabSizeY = 20
 

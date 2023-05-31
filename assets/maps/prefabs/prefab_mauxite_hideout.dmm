@@ -110,6 +110,7 @@
 /obj/item/clothing/head/helmet/space,
 /obj/item/clothing/suit/space,
 /obj/item/storage/firstaid/oxygen,
+/obj/storage/closet/mauxite,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "xK" = (
