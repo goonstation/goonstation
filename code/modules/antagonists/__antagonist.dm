@@ -23,6 +23,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Does the owner of this antagonist role use their normal name set in character preferences as opposed to being assigned a random or chosen name?
+	var/uses_pref_name = TRUE
 	/// Whether the addition or removal of this antagonist role is announced to the player.
 	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
@@ -33,6 +35,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/vr = FALSE
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
+	/// The faction given to the player by this antagonist role for AI targeting purposes.
+	var/faction = 0
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -125,6 +129,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		src.add_to_image_groups()
+
+		if (src.faction)
+			src.owner.current?.faction |= src.faction
 
 		if (!src.silent)
 			src.announce()

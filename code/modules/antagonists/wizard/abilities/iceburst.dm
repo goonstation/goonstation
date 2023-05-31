@@ -98,6 +98,11 @@
 	var/steam_on_death = 1
 	var/add_underlay = 1
 
+	/// the temperature the cube will try to cool you to. changing this allows you to more aggressively cool
+	var/cooltemp = T0C
+	/// the temperature the cube will start taking damage at
+	var/melttemp = T0C
+
 	New(loc, mob/iced as mob)
 		..()
 		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
@@ -117,7 +122,8 @@
 		src.health *= (rand(10,20)/10)
 
 		for(var/mob/M in src)
-			src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(PassiveCool))
+			if (!ishuman(M)) // bodytemp loop handles it for humans
+				src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(PassiveCool))
 
 	disposing()
 		processing_items.Remove(src)
@@ -163,8 +169,9 @@
 			src.pixel_y = 0
 
 	proc/PassiveCool(var/mob/M, mult)
-		if(M.bodytemperature >= 0)
-			M.bodytemperature = max(M.bodytemperature - (20 * mult),0)
+		if(M.bodytemperature >= src.cooltemp)
+			M.bodytemperature = max(M.bodytemperature - (20 * mult),src.cooltemp)
+		if(M.bodytemperature > src.melttemp)
 			takeDamage(1 * mult)
 
 	attack_hand(mob/user)

@@ -1784,10 +1784,12 @@
 /obj/item/parts/human_parts/arm/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
+	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
 
 /obj/item/parts/human_parts/leg/mutant/monkey
 	icon = 'icons/mob/monkey.dmi'
 	partIcon = 'icons/mob/monkey.dmi'
+	partDecompIcon = 'icons/mob/monkey_decomp.dmi'
 
 
 //// LIMBS ////

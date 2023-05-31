@@ -2,6 +2,7 @@
 	id = ROLE_SALVAGER
 	display_name = ROLE_SALVAGER
 	antagonist_icon = "salvager"
+	uses_pref_name = FALSE
 
 	var/static/starting_freq = null
 

@@ -747,6 +747,7 @@
 "oH" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
+/obj/item/shipcomponent/mainweapon/bad_mining,
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -1614,7 +1615,7 @@
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "tF" = (
-/obj/item/satchel/mining/large,
+/obj/item/satchel/mining,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "tH" = (
@@ -4280,7 +4281,7 @@
 /area/mining/refinery)
 "JG" = (
 /obj/rack,
-/obj/item/mining_tool/drill,
+/obj/item/mining_tool/power_pick,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "JI" = (
@@ -5098,7 +5099,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "OL" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "OM" = (
@@ -6102,8 +6103,8 @@
 /area/tech_outpost)
 "VE" = (
 /obj/rack,
-/obj/item/satchel/mining/large,
-/obj/item/satchel/mining/large,
+/obj/item/satchel/mining,
+/obj/item/satchel/mining,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
 "VF" = (
