@@ -48,8 +48,6 @@
 	var/mob/living/target
 	var/datum/targetable/critter/zombify/zombify
 
-	var/image/gloves = null
-	var/image/shoes = null
 	var/image/mask = null
 	var/image/head = null
 	var/image/uniform = null

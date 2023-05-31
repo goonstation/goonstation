@@ -70,20 +70,16 @@
 		return ..()
 
 	critter_ability_attack(mob/target)
-		var/datum/targetable/infect
 		switch (src.infection_type)
 			if (NO_EAT)
 				return FALSE
 			if (EATS_BRAINS)
-				infect = src.abilityHolder.getAbility(/datum/targetable/critter/zombify)
+				var/datum/targetable/critter/zombify/infect = src.abilityHolder.getAbility(/datum/targetable/critter/zombify)
 			if (HUMAN_INFECTION)
-				infect = src.abilityHolder.getAbility(/datum/targetable/zombie/infect)
+				var/datum/targetable/zombie/infect/infect = src.abilityHolder.getAbility(/datum/targetable/zombie/infect)
 		if (!infect.disabled && infect.cooldowncheck())
 			infect.handleCast(target)
 			return TRUE
-
-	proc/after_attack_special(mob/living/M) //Override in subtype
-		return
 
 	death(var/gibbed)
 		if (istype(src, /mob/living/critter/zombie/biosuit)) return //special death
@@ -98,9 +94,9 @@
 			if (NO_EAT)
 				return ..()
 			if (EATS_BRAINS)
-				infect = src.abilityHolder.getAbility(/datum/targetable/critter/zombify)
+				var/datum/targetable/critter/zombify/infect = src.abilityHolder.getAbility(/datum/targetable/critter/zombify)
 			if (HUMAN_INFECTION)
-				infect = src.abilityHolder.getAbility(/datum/targetable/zombie/infect)
+				var/datum/targetable/zombie/infect/infect = src.abilityHolder.getAbility(/datum/targetable/zombie/infect)
 		return ..() && !infect?.disabled
 
 /mob/living/critter/zombie/scientist
@@ -156,6 +152,45 @@
 	New()
 		..()
 		src.bioHolder.AddEffect("hulk", magical = TRUE)
+
+	critter_attack(var/mob/target)
+		var/obj/item/grab/G = src.equipped()
+		if (istype(G))
+			if (G.affecting == null || G.assailant == null || G.disposed)
+				src.drop_item()
+				return
+			if (src.critter_ability_attack(target))
+				return
+		src.drop_item()
+		if (src.ai_attack_count >= src.ai_attacks_per_ability)
+			if (src.critter_ability_attack(target))
+				src.ai_attack_count = 0
+				return
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
+
+	critter_basic_attack(var/mob/target)
+		if (prob(40) && !issilicon(target) && !is_incapacitated(target))
+			src.set_a_intent(INTENT_GRAB)
+			src.hand_attack(target)
+			var/obj/item/grab/G = src.equipped()
+			if (istype(G))
+				if (G.affecting == null || G.assailant == null || G.disposed)
+					src.drop_item()
+				G.AttackSelf(src)
+		if (src.equipped())
+			src.drop_item()
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/wrestler/slam/slam = src.abilityHolder.getAbility(/datum/targetable/wrestler/slam)
+		if (!slam.disabled && slam.cooldowncheck())
+			slam.handleCast(target)
+			return TRUE
+		else
+			..()
 
 //For Jones City Ruins
 /mob/living/critter/zombie/radiation
