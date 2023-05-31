@@ -495,7 +495,7 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 
 	New()
-		src.name = pick("Unnerving claw", "Horrid carving", "Foreboding relic")
+		src.name = pick("unnerving claw", "horrid carving", "foreboding relic")
 		icon_state = "eldritch-[rand(1, 7)]"
 		..()
 

@@ -47,6 +47,7 @@ CONTENTS:
 	name = "unknown dimension"
 	ambient_light = null
 	area_parallax_layers = list()
+	teleport_blocked = 2
 
 /turf/unsimulated/wall/void
 	name = "dense void"
