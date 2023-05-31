@@ -29734,7 +29734,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medlab,
-/turf/space,
+/turf/simulated/floor/white,
 /area/station/medical/research)
 "icU" = (
 /obj/machinery/light{
