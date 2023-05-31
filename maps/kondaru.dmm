@@ -43776,16 +43776,6 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
-"jUg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/space,
-/area/space)
 "jUy" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -49499,6 +49489,20 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"oZt" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 24;
+	tag = ""
+	},
+/turf/space,
+/area/space)
 "oZW" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/juicer,
@@ -50250,6 +50254,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"pHx" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "pIc" = (
 /obj/lattice,
 /obj/machinery/light/runway_light/delay4,
@@ -53167,7 +53175,6 @@
 /area/station/hallway/primary/south)
 "snQ" = (
 /obj/machinery/light,
-/obj/machinery/r_door_control/podbay/security/new_walls/east,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "soO" = (
@@ -116676,8 +116683,8 @@ xKL
 sYq
 xKL
 snQ
-qGc
-jUg
+pHx
+aaa
 aaa
 aaa
 aaa
@@ -116979,7 +116986,7 @@ vEx
 qGc
 qGc
 qGc
-afw
+oZt
 aaa
 aaa
 aaa

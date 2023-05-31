@@ -24544,12 +24544,10 @@
 /area/station/hangar/sec)
 "bjd" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/r_door_control/podbay/security/new_walls/south{
-	pixel_y = 25
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/machinery/r_door_control/podbay/security/new_walls/north,
 /turf/simulated/floor/caution/westeast,
 /area/station/hangar/sec)
 "bje" = (
@@ -71918,6 +71916,10 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"fHD" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/south,
+/turf/space,
+/area/space)
 "fJr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -132099,7 +132101,7 @@ cXb
 aFA
 aaF
 bfz
-aaa
+fHD
 bgK
 bhE
 bis

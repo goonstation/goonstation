@@ -45849,6 +45849,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost)
+"uzT" = (
+/obj/machinery/r_door_control/podbay/security/new_walls/north,
+/turf/space/fluid,
+/area/space)
 "uAB" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
@@ -95411,7 +95415,7 @@ vIJ
 xmS
 bYl
 bYl
-aqn
+uzT
 aqn
 aqn
 aqn

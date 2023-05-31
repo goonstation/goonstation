@@ -35973,12 +35973,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"ltT" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/west{
-	pixel_x = -24
-	},
-/turf/simulated/floor/engine,
-/area/station/hangar/sec)
 "lun" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47912,6 +47906,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"xAM" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "xAS" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/left,
@@ -74495,7 +74493,7 @@ aiW
 amy
 amy
 amy
-aiW
+xAM
 aiW
 fih
 aiW
@@ -74752,7 +74750,7 @@ aiW
 bqv
 all
 all
-ltT
+all
 oqT
 pzQ
 anh

@@ -1,5 +1,7 @@
 
 (t)wed may 31 23
+(u)Sord
+(+)Security hangars now have remote controllers that can be accessed from space. Sec pod users rejoice.
 (u)colossusqw
 (p)14296
 (e)⚖⚗|C-Balance, A-Chemistry
