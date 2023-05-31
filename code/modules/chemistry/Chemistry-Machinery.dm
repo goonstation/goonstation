@@ -255,9 +255,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 				else if (target_temp < src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-cool"
 				else
-					src.icon_state = "heater"
+					src.icon_state = "heater-closed"
 			else
-				src.icon_state = "heater"
+				src.icon_state = "heater-closed"
 		else
 			src.icon_state = "heater"
 
