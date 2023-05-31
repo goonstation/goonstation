@@ -14,7 +14,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
-	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
+	desc = "A device used for the slow but precise heating and cooling of chemicals."
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
