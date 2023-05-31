@@ -95,22 +95,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 	mod = "R"
 	icon_state = "mapwall_r"
 
-	get_desc()
+	get_help_message(dist, mob/user)
 		switch (src.d_state)
 			if (0)
-				. += "<br>Looks like disassembling it starts with <b>snipping</b> some of those reinforcing rods."
+				return "You can use a pair of <b>wirecutters</b> to snip some of the reinforcing rods."
 			if (1)
-				. += "<br>Up next in this long journey is <b>unscrewing</b> the reinforced rods."
+				return "You can use a <b>screwdriver</b> to unscrew the reinforced rods."
 			if (2)
-				. += "<br>What'd really help at this point is <b>slicing</b> the metal cover with a welder."
+				. += "You can use a <b>welding tool</b> to slice the metal cover."
 			if (3)
-				. += "<br>Your prying eyes suggest <b>prying</b> open the metal cover you just sliced."
+				. += "You can use a <b>crowbar</b> to pry open the metal cover."
 			if (4)
-				. += "<br>The latest <b>wrench</b> in your plans for wall disassembly appear to be some support rods."
+				. += "You can use a <b>wrench</b> to loosen some of the support rods."
 			if (5)
-				. += "<br>You should really <b>slice</b> the support rods you just loosened."
+				. += "You can use a <b>welding tool</b> to slice the support rods."
 			if (6)
-				. += "<br>Almost! Just need to <b>pry</b> off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
+				. += "You can finally use a <b>crowbar</b> to pry off the outer sheath. Which you've somehow been working around this whole time. <em>Somehow</em>."
 
 
 	attackby(obj/item/W, mob/user)

@@ -17011,6 +17011,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"chL" = (
+/obj/item/paper_bin,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "clr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17496,6 +17500,10 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"gxQ" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "gBK" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -76955,7 +76963,7 @@ aaa
 aaa
 aaa
 acz
-aen
+chL
 aen
 aen
 afO
@@ -77258,7 +77266,7 @@ aaa
 aaa
 acz
 acz
-aen
+gxQ
 aen
 afO
 ahi

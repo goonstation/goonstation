@@ -7137,26 +7137,7 @@
 	name = "Chaplain's Office"
 	})
 "atC" = (
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/device/light/candle,
-/obj/item/matchbook,
-/obj/item/matchbook,
-/obj/storage/crate,
-/obj/item/ghostboard,
-/obj/item/card_box/tarot,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office{
-	name = "Chaplain's Office"
-	})
-"atD" = (
-/obj/item/instrument/large/piano{
-	anchored = 0;
-	name = "old piano"
-	},
-/obj/item/screwdriver,
+/obj/machinery/printing_press,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -9140,9 +9121,16 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "azO" = (
-/obj/machinery/light_switch/east{
-	dir = 4
-	},
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/device/light/candle,
+/obj/item/matchbook,
+/obj/item/matchbook,
+/obj/storage/crate,
+/obj/item/ghostboard,
+/obj/item/card_box/tarot,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/crematorium)
 "azS" = (
@@ -33111,6 +33099,11 @@
 	pixel_x = 24;
 	pixel_y = 0
 	},
+/obj/item/instrument/large/piano{
+	anchored = 0;
+	name = "old piano"
+	},
+/obj/item/screwdriver,
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office{
 	name = "Chaplain's Office"
@@ -35980,12 +35973,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
-"ltT" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/west{
-	pixel_x = -24
-	},
-/turf/simulated/floor/engine,
-/area/station/hangar/sec)
 "lun" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -47919,6 +47906,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
+"xAM" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "xAS" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/left,
@@ -74502,7 +74493,7 @@ aiW
 amy
 amy
 amy
-aiW
+xAM
 aiW
 fih
 aiW
@@ -74759,7 +74750,7 @@ aiW
 bqv
 all
 all
-ltT
+all
 oqT
 pzQ
 anh
@@ -77083,7 +77074,7 @@ aqZ
 bZU
 arq
 asX
-atD
+auo
 aup
 auY
 avM
