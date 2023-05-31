@@ -85,7 +85,7 @@
 				src.reagents.trans_to(target, 5)
 			qdel (src)
 			return
-		else if (istype(target, /obj/item/match) && src.on == 1)
+		else if (istype(target, /obj/item/match) && src.on == MATCH_LIT)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
 			src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
