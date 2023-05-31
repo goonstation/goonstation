@@ -31445,6 +31445,13 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
+"jCz" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/printing_press,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "jCE" = (
 /obj/machinery/r_door_control/podbay/security/new_walls/south{
 	pixel_y = -24
@@ -75694,6 +75701,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -113082,7 +113090,7 @@ rdj
 rdj
 pcq
 xfZ
-dmd
+jCz
 prO
 prO
 pjN

@@ -8996,6 +8996,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aGO" = (
@@ -31693,6 +31694,11 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"hIU" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "hJj" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -90945,7 +90951,7 @@ aAq
 aEp
 oBe
 aGb
-fwf
+hIU
 aKw
 aKw
 aKw
