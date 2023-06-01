@@ -514,8 +514,8 @@
 
 		for(var/mob/O in all_hearers(7, maptext_loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1) //Places text in the radio
-			O.show_message(assoc_maptext = maptext) //Places text in world
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1, //Places text in the radio
+				assoc_maptext = maptext) //Places text in world
 		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
