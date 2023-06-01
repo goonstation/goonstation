@@ -1783,7 +1783,7 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/rice_ball
 
 /datum/cookingrecipe/nigiri_roll
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
 	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/nigiri_roll
