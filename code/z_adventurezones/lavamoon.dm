@@ -1210,6 +1210,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		I.layer = FLY_LAYER
 		src.overlays += I
 
+ADMIN_INTERACT_PROCS(/obj/ladder, proc/toggle_extradimensional, proc/change_extradimensional_overlay)
+ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
+
 /obj/ladder
 	name = "ladder"
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
@@ -1277,6 +1280,31 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	..()
 	src.setMaterial(getMaterial("negativematter"))
 
+// admin interact procs
+/obj/ladder/proc/toggle_extradimensional()
+	set name = "Toggle Extradimensional"
+
+	var/datum/component/E = src.GetComponent(/datum/component/extradimensional_storage/ladder)
+	if (E)
+		E.RemoveComponent(/datum/component/extradimensional_storage/ladder)
+	else
+		src.AddComponent(/datum/component/extradimensional_storage/ladder)
+
+/obj/ladder/proc/change_extradimensional_overlay()
+	set name = "Change Extradimensional Overlay"
+
+	var/datum/component/extradimensional_storage/ladder/E = src.GetComponent(/datum/component/extradimensional_storage/ladder)
+	if (!E)
+		return
+	var/mob/user = usr
+	var/icon/icon = icon(input(user, "Icon to use for the overlay") as icon | null)
+	if (icon)
+		E.change_overlay(icon)
+
+/obj/ladder/embed/proc/toggle_hidden()
+	set name = "Toggle Hidden"
+	src.hidden = !src.hidden
+	src.update_icon()
 
 /obj/ladder/New()
 	..()
