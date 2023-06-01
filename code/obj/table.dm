@@ -448,16 +448,16 @@ TYPEINFO_NEW(/obj/table/round)
 	auto
 		auto = 1
 
-TYPEINFO(/obj/table/wood)
 TYPEINFO_NEW(/obj/table/wood)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/wood/auto)
+TYPEINFO(/obj/table/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/table/wood
 	name = "wooden table"
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
-	mat_appearances_to_ignore = list("wood")
 	uses_material_appearance = FALSE
 	mat_changename = FALSE
 	default_material = "wood"
@@ -794,15 +794,15 @@ TYPEINFO_NEW(/obj/table/reinforced/industrial)
 #define GLASS_BROKEN 1
 #define GLASS_REFORMING 2
 
-TYPEINFO(/obj/table/glass)
 TYPEINFO_NEW(/obj/table/glass)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/glass) // has to be the base type here or else regular glass tables won't connect to reinforced ones
+TYPEINFO(/obj/table/glass)
+	mat_appearances_to_ignore = list("glass")
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
 	icon = 'icons/obj/furniture/table_glass.dmi'
-	mat_appearances_to_ignore = list("glass")
 	default_material = "glass"
 	parts_type = /obj/item/furniture_parts/table/glass
 	var/glass_broken = GLASS_INTACT

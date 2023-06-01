@@ -1210,6 +1210,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		I.layer = FLY_LAYER
 		src.overlays += I
 
+TYPEINFO(/obj/ladder)
+	mat_appearances_to_ignore = list("negativematter")
 ADMIN_INTERACT_PROCS(/obj/ladder, proc/toggle_extradimensional, proc/change_extradimensional_overlay)
 ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
@@ -1223,7 +1225,6 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	var/id = null
 	/// if true, disables ladder climbing behavior
 	var/unclimbable = FALSE
-	mat_appearances_to_ignore = list("negative matter")
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER
 
@@ -1272,13 +1273,11 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		src.UpdateIcon()
 	. = ..(severity, last_touched)
 
-/obj/ladder/embed/extradimensional/New()
-	..()
-	src.setMaterial(getMaterial("negativematter"))
+/obj/ladder/embed/extradimensional
+	default_material = "negativematter"
 
-/obj/ladder/extradimensional/New()
-	..()
-	src.setMaterial(getMaterial("negativematter"))
+/obj/ladder/extradimensional
+	default_material = "negativematter"
 
 // admin interact procs
 /obj/ladder/proc/toggle_extradimensional()

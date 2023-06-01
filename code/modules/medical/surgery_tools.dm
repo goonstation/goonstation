@@ -1226,10 +1226,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-
-	New()
-		..()
-		src.setMaterial(getMaterial("synthrubber"))
+	default_material = "synthrubber"
 
 /* ================================================== */
 /* -------------------- Penlight -------------------- */

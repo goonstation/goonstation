@@ -234,7 +234,7 @@
 	name = "molitz crystal"
 	desc = "A crystal of Molitz, a common crystalline substance."
 	material_name = "Molitz"
-	default_material = "moltiz"
+	default_material = "molitz"
 	crystal = 1
 
 	get_desc()
