@@ -70389,9 +70389,7 @@
 	})
 "kKt" = (
 /obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/cola{
-	initial_reagents = list("cola"=10,"VHFCS"=10,"crime"=10);
-	name = "Bebop Cola";
+/obj/item/reagent_containers/food/drinks/cola/efrem{
 	pixel_x = -11;
 	pixel_y = -9
 	},
