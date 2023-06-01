@@ -1041,14 +1041,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/zombie/can_infect
 
 	add_ability(var/mob/living/carbon/human/H)
-		var/datum/abilityHolder/critter/C = H.add_ability_holder(/datum/abilityHolder/critter) //lol
-		C.transferOwnership(H)
-		C.addAbility(/datum/targetable/critter/zombify)
+		H.abilityHolder.addAbility(/datum/targetable/zombie/infect)
 
 	disposing()
 		if (ishuman(src.mob))
 			var/mob/living/carbon/human/H = src.mob
-			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
+			H.abilityHolder.removeAbility(/datum/targetable/zombie/infect)
 		..()
 
 /datum/mutantrace/vampiric_thrall
