@@ -734,7 +734,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 		/obj/window,
 		/turf/simulated/wall/false_wall/reinforced,
 		/turf/unsimulated/wall/auto/adventure/old,
-		/turf/unsimulated/wall/setpieces/fakewindow,
+		/turf/unsimulated/wall/auto/adventure/fake_window,
 		/turf/unsimulated/wall/auto/adventure/meat,
 		/obj/plasticflaps
 	))
@@ -1083,7 +1083,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	/turf/unsimulated/wall/setpieces/leadwindow, /turf/simulated/wall/false_wall/centcom,
 	/turf/unsimulated/wall/setpieces/stranger, /obj/shifting_wall/sneaky/cave,
 	/turf/simulated/shuttle/wall, /obj/indestructible/shuttle_corner, /turf/unsimulated/wall/auto/adventure/meat,
-	/turf/unsimulated/wall/setpieces/fakewindow, /turf/unsimulated/wall/auto/reinforced/supernorn, /obj/plasticflaps
+	/turf/unsimulated/wall/auto/reinforced/supernorn, /obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/adventure/old
 	name = "wall"
@@ -1113,10 +1113,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-TYPEINFO(/turf/unsimulated/wall/auto/fake_window)
+TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 	connect_diagonal = TRUE
 	connect_overlay = FALSE
-/turf/unsimulated/wall/auto/fake_window
+/turf/unsimulated/wall/auto/adventure/fake_window
 	name = "strong window"
 	desc = "Wow this looks like a tough god damn window, damn."
 	icon = 'icons/obj/window_pyro.dmi'

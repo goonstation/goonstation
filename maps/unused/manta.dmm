@@ -39445,7 +39445,7 @@
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
 "qAx" = (
-/turf/unsimulated/wall/auto/fake_window,
+/turf/unsimulated/wall/auto/adventure/fake_window,
 /area/listeningpost/syndicateassaultvessel)
 "qBh" = (
 /obj/machinery/light/incandescent/cool{

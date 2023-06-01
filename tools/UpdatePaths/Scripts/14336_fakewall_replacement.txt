@@ -1,1 +1,1 @@
-/turf/unsimulated/wall/setpieces/fakewindow : /turf/unsimulated/wall/auto/fake_window
+/turf/unsimulated/wall/setpieces/fakewindow : /turf/unsimulated/wall/auto/adventure/fake_window
