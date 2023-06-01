@@ -1668,7 +1668,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "juice_cran", "juice_orange", "juice_lemon", "juice_tomato",
 	                 "juice_strawberry", "juice_cherry", "juice_pineapple", "juice_apple",
 	                 "coconut_milk", "juice_pickle", "cocktail_citrus", "lemonade",
-	                 "halfandhalf", "swedium", "caledonium", "essenceofevlis", "pizza",
+	                 "halfandhalf", "swedium", "caledonium", "essenceofelvis", "pizza",
 									 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
 									 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach")
 
