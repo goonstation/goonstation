@@ -130,7 +130,7 @@
 			name += " - Sail The Seven Cs Flavor"
 			desc = "Time for a little Arr and Arr!"
 			R.add_reagent("cocktail_citrus", 5)
-			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate milk","cheese","cola","carpet","cornsyrup","capulettium")
+			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate_milk","cheese","cola","carpet","cornsyrup","capulettium")
 			var/temp = null
 			for(var/i=0,i<4,i++)
 				temp = pick(seas)
