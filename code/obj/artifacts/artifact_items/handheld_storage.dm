@@ -52,7 +52,7 @@
 				boh.w_class = W_CLASS_BULKY
 				boh.c_flags |= ONBELT | ONBACK
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
-					slots = rand(20, 40), params = list("visible_slots" = rand(1, 4)))
+					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
 
 			// small storage, but it fits in pockets, extinguishes items, repairs item health, and has some neutral effects on items stored
 			if ("precursor")

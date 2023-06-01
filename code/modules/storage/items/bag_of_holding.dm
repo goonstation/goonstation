@@ -59,24 +59,31 @@
 	..()
 	src.visible_slots = params["visible_slots"] || initial(src.visible_slots)
 
-/datum/storage/artifact_bag_of_holding/wizard/show_hud(mob/user)
-	src.hide_hud(user)
-
-	if (length(src.get_contents()) > src.visible_slots)
-		for (var/i = 1 to src.visible_slots)
-			src.stored_items.Swap(i, rand(1, length(src.get_contents())))
-
-	// trick hud into showing fewer slots than storage actually has
-	var/storage_slots = src.slots
-	src.slots = src.visible_slots
+/datum/storage/artifact_bag_of_holding/wizard/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
-	src.slots = storage_slots
+	if (user)
+		src.show_hud(user)
 
-/datum/storage/artifact_bag_of_holding/wizard/transfer_stored_item(obj/item/I, atom/location, add_to_storage, mob/user)
-	var/storage_slots = src.slots
-	src.slots = src.visible_slots
-	..() // parent
-	src.slots = storage_slots
+/datum/storage/artifact_bag_of_holding/wizard/transfer_stored_item_extra(obj/item/I, atom/location, add_to_storage, mob/user)
+	..()
+	if (user)
+		src.show_hud(user)
+
+/datum/storage/artifact_bag_of_holding/wizard/show_hud(mob/user, refresh_hud = TRUE)
+	shuffle_list(src.stored_items)
+	..()
+	for (var/obj/item/I in (src.hud.objects - src.get_hud_contents()))
+		src.hud.remove_object(I)
+
+/datum/storage/artifact_bag_of_holding/wizard/hud_can_add(obj/item/I)
+	return (length(src.get_contents()) < src.visible_slots) && ..()
+
+/datum/storage/artifact_bag_of_holding/wizard/get_visible_slots()
+	return src.visible_slots
+
+/datum/storage/artifact_bag_of_holding/wizard/get_hud_contents(hud_clear_check = TRUE)
+	var/list/current_contents = src.get_contents()
+	return !length(current_contents) ? current_contents : current_contents.Copy(1, min(length(current_contents), src.visible_slots) + 1)
 
 /datum/storage/artifact_bag_of_holding/precursor
 

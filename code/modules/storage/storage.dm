@@ -189,7 +189,7 @@
 		for (var/mob/M as anything in src.hud.mobs)
 			if (M != user)
 				src.hide_hud(M)
-		src.hud.update(user)
+		src.show_hud(user)
 	return TRUE
 
 /// storage item is mouse dropped onto something
@@ -270,7 +270,8 @@
 
 /// storage item is dropped
 /datum/storage/proc/storage_item_on_drop(atom/source, mob/user)
-	src.hud?.update(user)
+	if (src.hud)
+		src.show_hud(user)
 
 /// when reaching inside the storage item, check for traps
 /datum/storage/proc/mousetrap_check(mob/user)
@@ -421,3 +422,17 @@
 /datum/storage/proc/storage_emp_act()
 	for (var/atom/A as anything in src.get_contents())
 		A.emp_act()
+
+// -------- /datum/hud/storage INTERFACE PROCS --------
+
+/// if an item can be added by clicking it on the visible hud
+/datum/storage/proc/hud_can_add(obj/item/I)
+	return src.check_can_hold(I) == STORAGE_CAN_HOLD
+
+/// return number of visible slots in the hud
+/datum/storage/proc/get_visible_slots()
+	return src.slots
+
+/// return contents that can be seen in the hud
+/datum/storage/proc/get_hud_contents()
+	return src.get_contents()
