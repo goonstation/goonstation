@@ -770,7 +770,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	material = /datum/material/organic/wood
+	default_material = "wood"
 	icon_state = "mapwall$$wood"
 
 TYPEINFO(/turf/unsimulated/wall/auto/gannets)
