@@ -172,7 +172,6 @@
 		if (!src.can_break_out)
 			boutput(user, "<span class='alert'>It's no use! You can't leave [src]!</span>")
 			return
-		ON_COOLDOWN(src, "move_damage", 1 SECOND)
 		boutput(user, "<span class='alert'>You try to bust open the door of [src]!</span>")
 		src.take_door_damage(src.damage_per_resist)
 
@@ -182,7 +181,8 @@
 			animate_storage_thump(src)
 		for (var/mob/occupant in src.carrier_occupants)
 			occupant.throw_impact(hit_atom, thr)
-			src.take_door_damage(src.damage_per_resist)
+		if (length(src.carrier_occupants))
+			src.take_door_damage(src.damage_per_resist * length(src.carrier_occupants))
 
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
@@ -303,7 +303,6 @@
 		..()
 		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
 			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onEnd()
 		..()
