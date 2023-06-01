@@ -1012,6 +1012,8 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 				T.set_dir(torpedo_dir)
 				T.lockdir = torpedo_dir
 
+/obj/machinery/power/power_wheel
+
 #ifdef MACHINE_PROCESSING_DEBUG
 /datum/power_usage_viewer
 	var/mob/target
