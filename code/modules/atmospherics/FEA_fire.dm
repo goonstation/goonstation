@@ -8,7 +8,7 @@
 		src.material.triggerTemp(src, exposed_temperature)
 
 /// We react to the exposed temperature, call [/atom/proc/temperature_expose] on everything within us, and expose things within fluids to electricity if need be.
-/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = FALSE)
+/turf/proc/hotspot_expose(exposed_temperature, exposed_volume, source_of_heat, electric = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	if (src.material)
 		src.material.triggerTemp(src, exposed_temperature)
@@ -28,7 +28,7 @@
 
 /// * Checks if we should light on fire if we do not have a hotspot already. If we should and don't have one, spawns one.
 /// * Returns: TRUE if we ignited or already have a hotspot, FALSE if we didn't make one or have one.
-/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, soh, electric = FALSE)
+/turf/simulated/hotspot_expose(exposed_temperature, exposed_volume, source_of_heat, electric = FALSE)
 	..()
 	var/datum/gas_mixture/air_contents = src.return_air()
 
@@ -42,9 +42,10 @@
 			src.active_hotspot = null
 			return FALSE
 
-		if (soh)
-			// If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
-			// WHY we need this is completely unknown to me. am too dum im just a documenter.
+		if (source_of_heat)
+			/*  If we have a hotspot with sufficient gas, we set to the exposed_ args if the hotspot is lower and change our colour if needed.
+				My best guess on why we need this is so mounted igniters and such don't cool down hotspots when used, only heating them up.
+				I don't like how much effort was needed in renaming this var from "soh" and figuring out what it does - cringe */
 			if ((air_contents.toxins > 0.5 MOLES) && (air_contents.oxygen > 0.5 MOLES))
 				if (src.active_hotspot.temperature < exposed_temperature)
 					src.active_hotspot.temperature = exposed_temperature
