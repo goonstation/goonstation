@@ -76,6 +76,11 @@
 	req_access = list(access_medical)
 	color = MEDICAL
 
+/obj/access_spawn/medlocker
+	name = "medical locker access spawn"
+	req_access = list(access_medical_lockers)
+	color = MEDICAL
+
 /obj/access_spawn/morgue
 	name = "morgue access spawn"
 	req_access = list(access_morgue)
