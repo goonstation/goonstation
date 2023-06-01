@@ -1660,8 +1660,8 @@ proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,va
 	if(istype(scanned, /obj/item/reagent_containers/food/snacks/plant/))
 		var/obj/item/reagent_containers/food/snacks/plant/F = scanned
 		generation = F.generation
-	if(istype(scanned, /obj/item/tumbling_creeper))
-		var/obj/item/tumbling_creeper/F = scanned
+	if(istype(scanned, /obj/item/plant/tumbling_creeper))
+		var/obj/item/plant/tumbling_creeper/F = scanned
 		generation = F.generation
 
 	//would it not be better to put this information in the scanner itself?

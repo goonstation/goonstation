@@ -598,11 +598,10 @@
 /datum/plantmutation/creeper/tumbling
 	name = "Tumbling Creeper"
 	name_prefix = "Tumbling "
-	dont_rename_crop = TRUE
 	iconmod = "CreeperTumbling"
 	harvest_override = 1
 	harvest_cap = 3
-	crop = /obj/item/tumbling_creeper
+	crop = /obj/item/plant/tumbling_creeper
 	chance = 15
 
 

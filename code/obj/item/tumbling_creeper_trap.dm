@@ -1,5 +1,6 @@
-/obj/item/tumbling_creeper
-	name = "Tumbling Creeper"
+/obj/item/plant/tumbling_creeper
+	name = "tumbling creeper"
+	crop_prefix = "tumbling "
 	desc = "A tumbler made of creeper. A highly invasive plant known for destroying many ecological systems. If planted onto the ground with a garden trowel, it serves as a prickly trap. Can absorb chemicals poured onto it."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "Tumbling_Creeper-Unplanted"
@@ -22,7 +23,7 @@
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
 
 
-/obj/item/tumbling_creeper/New()
+/obj/item/plant/tumbling_creeper/New()
 
 	..()
 	processing_items |= src
@@ -34,9 +35,9 @@
 
 	src.plantgenes = new /datum/plantgenes(src)
 
-	src.create_reagents(src.reagent_storage)
+	src.reagents.maximum_volume = src.reagent_storage
 
-/obj/item/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+/obj/item/plant/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 
 	var/endurance_for_max = 100 // how much endurance is needed to reach max damage with the trap
 	var/potency_for_max = 200 // how much potency is needed to generate the max injection-multiplier
@@ -64,20 +65,20 @@
 	//add chemicals until reagent_generation_multiplier percentage of the storage is filled
 	if (src.planttype)
 		//we build a list out of all chems in assoc_reagents and commuts
-		var/list/putreagents = list()
-		putreagents = src.planttype.assoc_reagents
+		var/list/put_reagents = list()
+		put_reagents = src.planttype.assoc_reagents
 		//theoretically the tumbling creeper got no assoc_reagents, but for the case that will change at some point
 		if(creeper_genes.mutation)
-			putreagents = putreagents | creeper_genes.mutation.assoc_reagents
+			put_reagents = put_reagents | creeper_genes.mutation.assoc_reagents
 		if(creeper_genes.commuts)
 			for (var/datum/plant_gene_strain/reagent_adder/R in creeper_genes.commuts)
-				putreagents |= R.reagents_to_add
+				put_reagents |= R.reagents_to_add
 		// Now we add each reagent into the tumbling creeper
-		if (length(putreagents) > 0)
+		if (length(put_reagents) > 0)
 			var/volume_to_fill = src.reagent_storage * reagent_generation_multiplier
-			var/to_add = volume_to_fill / length(putreagents)
-			for (var/plantReagent in putreagents)
-				src.reagents.add_reagent(plantReagent, to_add)
+			var/to_add = volume_to_fill / length(put_reagents)
+			for (var/plant_reagent in put_reagents)
+				src.reagents.add_reagent(plant_reagent, to_add)
 
 	// raise the damage of the plant linear from 0 endurance to max endurance
 	src.crashed_force = clamp(
@@ -92,19 +93,19 @@
 
 	return src
 
-/obj/item/tumbling_creeper/disposing()
+/obj/item/plant/tumbling_creeper/disposing()
 
 	processing_items -= src
 	src.plantgenes = null
 	..()
 
-/obj/item/tumbling_creeper/examine()
+/obj/item/plant/tumbling_creeper/examine()
 
 	. = ..()
 	if (src.armed)
 		. += "<span class='alert'>It looks like it's planted into the ground.</span>"
 
-/obj/item/tumbling_creeper/process()
+/obj/item/plant/tumbling_creeper/process()
 
 	var/tumbling_cooldown = 15 SECONDS // how long the item should take at minimum before it begins tumbling again
 	var/tumbling_distance_max = 6 // how many tiles the item tries to move at most when tumbling
@@ -150,7 +151,7 @@
 					spawn(0.5 SECONDS)
 						qdel(temporary_seed)
 
-/obj/item/tumbling_creeper/HY_set_species(var/datum/plant/species)
+/obj/item/plant/tumbling_creeper/HY_set_species(var/datum/plant/species)
 
 	if (species)
 		src.planttype = species
@@ -162,7 +163,7 @@
 			return
 
 
-/obj/item/tumbling_creeper/attackby(obj/item/used_item, mob/user)
+/obj/item/plant/tumbling_creeper/attackby(obj/item/used_item, mob/user)
 
 	var/disarming_time = 3 SECONDS // how long disarming with a wirecutter should take
 	var/arming_time = 2 SECONDS // how long arming should take
@@ -171,8 +172,8 @@
 		if (ON_COOLDOWN(user, "arming_tumbling_creeper", user.combat_click_delay))
 			return
 		for(var/obj/item/iterated_item in get_turf(src))
-			if (istype(iterated_item, /obj/item/tumbling_creeper))
-				var/obj/item/tumbling_creeper/other_creeper = iterated_item
+			if (istype(iterated_item, /obj/item/plant/tumbling_creeper))
+				var/obj/item/plant/tumbling_creeper/other_creeper = iterated_item
 				if (other_creeper.armed)
 					boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 					return
@@ -181,7 +182,7 @@
 			user,
 			src,
 			arming_time,
-			/obj/item/tumbling_creeper/proc/arm,
+			/obj/item/plant/tumbling_creeper/proc/arm,
 			\list(user),
 			src.icon,
 			src.icon_state,
@@ -198,7 +199,7 @@
 				user,
 				src,
 				disarming_time,
-				/obj/item/tumbling_creeper/proc/disarm,\list(user),
+				/obj/item/plant/tumbling_creeper/proc/disarm,\list(user),
 				used_item.icon,
 				used_item.icon_state,
 				"[user] finishes cutting out [src]")
@@ -219,18 +220,18 @@
 			return
 	..()
 
-/obj/item/tumbling_creeper/ex_act(severity)
+/obj/item/plant/tumbling_creeper/ex_act(severity)
 
 	//no reuseable explosive chem traps, sorry
 	qdel(src)
 
-/obj/item/tumbling_creeper/proc/arm(mob/user)
+/obj/item/plant/tumbling_creeper/proc/arm(mob/user)
 
 	if (!src)
 		return
 	for(var/obj/item/iterated_item in get_turf(src))
-		if (istype(iterated_item, /obj/item/tumbling_creeper))
-			var/obj/item/tumbling_creeper/other_creeper = iterated_item
+		if (istype(iterated_item, /obj/item/plant/tumbling_creeper))
+			var/obj/item/plant/tumbling_creeper/other_creeper = iterated_item
 			if (other_creeper.armed)
 				boutput(user, "<span class='alert'>A creeper is already planted here!</span>")
 				return
@@ -245,7 +246,7 @@
 		src.armed = TRUE
 		src.anchored = TRUE
 
-/obj/item/tumbling_creeper/proc/disarm(mob/user)
+/obj/item/plant/tumbling_creeper/proc/disarm(mob/user)
 
 	if (!src)
 		return
@@ -256,7 +257,7 @@
 		src.anchored = FALSE
 
 
-/obj/item/tumbling_creeper/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+/obj/item/plant/tumbling_creeper/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 
 	var/self_assemly_chance = 50 // the chance in percent for the trap to auto-arm when it gets flung against a plantpot
 
@@ -269,7 +270,7 @@
 				src.arm()
 
 
-/obj/item/tumbling_creeper/hitby(atom/movable/targeted_atom, datum/thrown_thing/thr)
+/obj/item/plant/tumbling_creeper/hitby(atom/movable/targeted_atom, datum/thrown_thing/thr)
 
 	..()
 	if (src.armed && ishuman(targeted_atom) && targeted_atom.throwing)
@@ -280,7 +281,7 @@
 		crash_into(victim)
 		qdel(src) //if crashed into, destroys the creeper
 
-/obj/item/tumbling_creeper/Crossed(atom/movable/targeted_mob as mob|obj)
+/obj/item/plant/tumbling_creeper/Crossed(atom/movable/targeted_mob as mob|obj)
 
 	..()
 	if (src.armed && ishuman(targeted_mob))
@@ -294,7 +295,7 @@
 		"<span class='alert'><B>You step into the planted [src]!</B></span>")
 		step_on(victim)
 
-/obj/item/tumbling_creeper/proc/crash_into(mob/living/carbon/human/victim as mob)
+/obj/item/plant/tumbling_creeper/proc/crash_into(mob/living/carbon/human/victim as mob)
 
 	var/crash_transfer_multiplier = 0.4 //! Multiplier to damage to calculate the amount of chems tranferred when crashed into.
 	var/crashed_weakened = 3 SECONDS //! how long you are stunned if you crash into the trap
@@ -309,7 +310,7 @@
 	victim.UpdateDamageIcon()
 
 
-/obj/item/tumbling_creeper/proc/step_on(mob/living/carbon/human/victim as mob)
+/obj/item/plant/tumbling_creeper/proc/step_on(mob/living/carbon/human/victim as mob)
 
 	var/armed_weakened = 2 SECONDS // how long you are weakened after stepping into the trap
 	var/stepon_transfer_multiplier = 0.5 // Multiplier to damage to calculate the amount of chems tranferred when stepped into.
@@ -325,7 +326,7 @@
 		src.material.triggerOnAttack(src, null, victim)
 	victim.UpdateDamageIcon()
 
-/obj/item/tumbling_creeper/proc/trap_damage(mob/living/carbon/human/victim as mob, damage, transfer_multiplier)
+/obj/item/plant/tumbling_creeper/proc/trap_damage(mob/living/carbon/human/victim as mob, damage, transfer_multiplier)
 
 	if (!src || !victim)
 		return
