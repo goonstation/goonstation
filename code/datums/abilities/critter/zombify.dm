@@ -69,6 +69,7 @@
 	onStart()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || target == owner || !zombify || !zombify.cooldowncheck())
+			zombify.disabled = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='alert'><B>[owner] attempts to gnaw into [target]!</B></span>", 1)
