@@ -56,13 +56,8 @@
 			O?.UpdateIcon() //now that we are in nullspace tell them to update
 
 	steel
-#ifdef IN_MAP_EDITOR
 		icon_state = "grille1-0"
-#endif
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M, copy=FALSE)
+		default_material = "steel"
 
 	steel/broken
 		desc = "Looks like its been in this sorry state for quite some time."
@@ -89,11 +84,9 @@
 		var/catwalk_type = "C" // Short for "Catwalk"
 		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
-
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = FALSE)
+		default_material = "steel"
+		uses_material_appearance = FALSE
+		mat_changename = FALSE
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)

@@ -658,6 +658,9 @@ proc/generate_space_color()
 			else
 				new_turf = new /turf/space(src)
 
+	for (var/obj/ladder/embed/L in orange(1))
+		L.UpdateIcon()
+
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
 	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
@@ -809,7 +812,6 @@ proc/generate_space_color()
 		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
-
 	return floor
 
 /turf/proc/ReplaceWithConcreteFloor()

@@ -1,5 +1,9 @@
 
 (t)wed may 31 23
+(u)Chatauscours
+(p)14292
+(e)🗺🔄|A-Mapping, C-Rework
+(*)The Clarion medbay has been entirely remapped.
 (u)Sord
 (+)Security hangars now have remote controllers that can be accessed from space. Sec pod users rejoice.
 (u)colossusqw
