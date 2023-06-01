@@ -92,6 +92,21 @@ proc/dir_to_angle(dir)
 		if(NORTHWEST)
 			.= 315
 
+/// Checks if an angle is between two other angles
+proc/angle_inbetween(angle, low, high)
+	angle = ((angle % 360) + 360) % 360
+	low = ((low % 360) + 360) % 360
+	high = ((high % 360) + 360) % 360
+	if(low > high)
+		return (angle >= low || angle <= high)
+	return (angle >= low && angle <= high)
+
+/// Returns the distance between two angles
+proc/angle_distance(angle1, angle2)
+	angle1 = ((angle1 % 360) + 360) % 360
+	angle2 = ((angle2 % 360) + 360) % 360
+	. = min(abs(angle1 - angle2), abs(angle1 - angle2 + 360), abs(angle1 - angle2 - 360))
+
 /**
   * Transforms a given angle to vec2 in a list
   */

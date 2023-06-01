@@ -82,7 +82,8 @@
 		display_name = "\improper Pirate Captain"
 		antagonist_icon = "pirate_captain"
 
-
+TYPEINFO(/obj/gold_bee)
+	mat_appearances_to_ignore = list("gold")
 /obj/gold_bee
 	name = "\improper Gold Bee Statue"
 	desc = "The artist has painstainkly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
@@ -92,11 +93,12 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 1
 	anchored = UNANCHORED
+	default_material = "gold"
+	mat_changename = FALSE
 	var/list/gibs = list()
 
 	New()
 		..()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
 		for(var/i in 1 to 7)
 			gibs.Add(new /obj/item/stamped_bullion)
 			gibs.Add(new /obj/item/raw_material/gold)

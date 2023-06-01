@@ -387,7 +387,7 @@ datum
 						if (probmult(20))
 							boutput(M, "<span class='alert'>You feel weak and drowsy.</span>")
 							M.setStatus("slowed", 5 SECONDS)
-						if (probmult(8))
+						if (probmult(8) && !M.reagents?.get_reagent_amount("promethazine"))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
 							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
@@ -1351,8 +1351,8 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 40)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1491,6 +1491,9 @@ datum
 						M.make_dizzy(1 * mult)
 						M.change_eye_blurry(6, 6)
 						M.change_misstep_chance(20 * mult)
+						if(M.reagents?.has_reagent("capulettium") && M.hasStatus("weakened"))
+							..()                      //will not cause emotes and puking if you are already downed by capulettium
+							return					  //for preserving the death diguise
 						if(probmult(15))
 							if(!M.hasStatus("slowed"))
 								M.setStatus("slowed", 2 SECONDS)
@@ -1501,9 +1504,8 @@ datum
 											"<span class='alert'>Your vision [pick("gets all blurry", "goes fuzzy")]!</span>",\
 											"<span class='alert'>You feel very sick!</span>"))
 							if(prob(10)) //no need for probmult in here as it's already behind a probmult statement
-								M.vomit() //so dizzy you puke
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>",\
-													"<span class='alert'>You puke all over yourself!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message) //so dizzy you puke
 						else if(probmult(9))
 							M.setStatus("muted", 10 SECONDS)
 							boutput(M, pick("<span class='alert'>You feel like the words are getting caught up in your mouth!</span>",\
@@ -1673,7 +1675,7 @@ datum
 				if (prob(7))
 					boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 					M.setStatusMin("stunned", 3 SECONDS * mult)
-				if (probmult(7))
+				if (probmult(7) && !M.reagents?.get_reagent_amount("promethazine"))
 					for(var/mob/O in AIviewers(M, null))
 						O.show_message("<span class='alert'>[M] vomits up some green goo.</span>", 1)
 					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -1831,8 +1833,8 @@ datum
 						M.take_brain_damage(1 * mult)
 						M.setStatusMin("weakened", 5 SECONDS * mult)
 				if (probmult(8))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					M.vomit(0, null, vomit_message)
 				M.take_toxin_damage(1 * mult)
 				M.take_brain_damage(1 * mult)
 				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
@@ -1969,7 +1971,7 @@ datum
 					H.ai_aggressive = 1 //Fak
 					H.ai_calm_down = 0
 					logTheThing(LOG_COMBAT, H, "has their AI enabled by [src.id]")
-					H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 50, 1)
+					H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 50, 1)
 					lastSpook = world.time
 
 				if (t6 && ticks >= t6)
@@ -1982,7 +1984,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 75, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 75, 1) // LOUD
 						lastSpook = world.time
 
 
@@ -2021,7 +2023,7 @@ datum
 
 					if (probmult(20) && world.time > lastSpook + 510)
 						H.show_text("You feel your heartbeat pounding inside your head...", "red")
-						H.playsound_local(H, 'sound/effects/Heart Beat.ogg', 100, 1) // LOUD
+						H.playsound_local(H, 'sound/effects/HeartBeatLong.ogg', 100, 1) // LOUD
 						lastSpook = world.time
 
 
@@ -2181,9 +2183,9 @@ datum
 						H.emote(pick_string("chemistry_reagent_messages.txt", "strychnine_deadly_emotes"))
 
 					if(probmult(10))
-						H.visible_message("<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-						H.vomit()
-					else if (prob(5))
+						var/vomit_message = "<span class='alert'>[H] pukes all over [himself_or_herself(H)].</span>"
+						H.vomit(0, null, vomit_message)
+					else if (prob(5) && !H.reagents?.get_reagent_amount("promethazine"))
 						var/damage = rand(1,10)
 						H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
 						playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)

@@ -157,9 +157,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "gO" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
