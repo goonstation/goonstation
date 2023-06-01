@@ -469,12 +469,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
-"ajs" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hydroponics{
-	do_not_irradiate = 1;
-	name = "Hydroponics Storage"
-	})
 "ajD" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -2493,14 +2487,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
-"bgC" = (
-/obj/mail_booth,
-/turf/simulated/floor/blackwhite{
-	dir = 10
-	},
-/area/station/hallway/secondary/entry{
-	name = "Arrival Shuttle Hallway"
-	})
 "bgG" = (
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -5744,7 +5730,7 @@
 /obj/machinery/computer/transception{
 	dir = 8
 	},
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay{
 	name = "Cargo Primary Endpoint"
 	})
@@ -7189,6 +7175,14 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
+	})
+"doi" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
 	})
 "dok" = (
 /obj/machinery/turret,
@@ -32489,9 +32483,6 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
-"nTf" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/barber_shop)
 "nTn" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/oxygen,
@@ -32617,6 +32608,10 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
+"nVq" = (
+/obj/disposalpipe/segment/transport,
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/northeast)
 "nVx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46375,6 +46370,9 @@
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
+"ujY" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/maintenance/northwest)
 "ukd" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility{
@@ -48270,7 +48268,7 @@
 /area/station/security/brig)
 "veC" = (
 /obj/structure/girder/reinforced,
-/obj/item/raw_material/scrap_metal/steel,
+/obj/item/raw_material/scrap_metal,
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veU" = (
@@ -50571,9 +50569,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southwest)
-"whK" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/cargooffice)
 "whM" = (
 /turf/simulated/floor/carpet/blue/standard/edge/se,
 /area/station/medical/head)
@@ -82826,7 +82821,7 @@ rJg
 fDm
 gfS
 aiq
-bgC
+hxY
 eMn
 jQa
 aiq
@@ -89141,7 +89136,7 @@ jGr
 aAs
 kLn
 mbt
-ajs
+mbt
 wpS
 mbt
 mbt
@@ -90940,7 +90935,7 @@ nwr
 nwr
 mmU
 pKF
-nTf
+mmU
 soX
 ksL
 irn
@@ -91239,7 +91234,7 @@ gjr
 eJW
 lMz
 bNo
-jtq
+ujY
 iEw
 pHb
 vQQ
@@ -101863,7 +101858,7 @@ hSH
 dqX
 oxJ
 rxw
-whK
+oxJ
 lmF
 uSc
 wmh
@@ -104281,7 +104276,7 @@ fLy
 qSd
 qZo
 xmC
-vlO
+fLy
 nRc
 xQU
 tly
@@ -105413,7 +105408,7 @@ lRC
 lRC
 ctG
 tWO
-pov
+nVq
 fgt
 tnY
 jMV
@@ -106391,7 +106386,7 @@ mfV
 hFf
 hFf
 hFf
-fLy
+vlO
 gdj
 wqY
 oxB
@@ -112387,7 +112382,7 @@ noM
 iqc
 gKn
 hXv
-hXv
+doi
 iqc
 qoL
 eIa

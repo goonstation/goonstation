@@ -341,11 +341,7 @@
 					autoequip_slot(slot_ears, ears)
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
-
-					if (!istype(master.back, /obj/item/storage) || istype(I, /obj/item/storage))
-						autoequip_slot(slot_back, back)
-						if (master.equipped() != I)
-							return
+					autoequip_slot(slot_back, back)
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)
@@ -407,11 +403,7 @@
 					autoequip_slot(slot_ears, ears)
 					autoequip_slot(slot_wear_mask, wear_mask)
 					autoequip_slot(slot_head, head)
-
-					if (!istype(master.back, /obj/item/storage) || istype(I, /obj/item/storage))
-						autoequip_slot(slot_back, back)
-						if (master.equipped() != I)
-							return
+					autoequip_slot(slot_back, back)
 
 					if (!master.belt?.storage || I.storage) // belt BEFORE trying storages, and only swap if its not a storage swap
 						autoequip_slot(slot_belt, belt)

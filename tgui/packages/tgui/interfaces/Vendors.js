@@ -146,7 +146,7 @@ export const Vendors = (props, context) => {
                               color="green"
                               icon="images"
                               style={{ "margin-left": "5px" }}
-                              onClick={() => act('setIcon', { target: product.path })}
+                              onClick={() => act('setIcon', { target: product.ref })}
                             />}
                           </Box>
                         </Box>
@@ -160,14 +160,14 @@ export const Vendors = (props, context) => {
                           color={canVend(product) ? "green" : "grey"}
                           content={getCost(product)}
                           style={{ "width": "50px", "text-align": "center" }}
-                          onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
+                          onCommit={(e, value) => act('setPrice', { target: product.ref, cost: value })}
                         /> : <Button
                           color={canVend(product) ? "green" : "grey"}
                           content={getCost(product)}
                           disabled={canVend(product) ? false : true}
                           style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
                           onClick={() => act('vend', {
-                            target: product.path, cost: product.cost, amount: product.amount })}
+                            target: product.ref, cost: product.cost, amount: product.amount })}
                         />}
                       </Flex.Item>
                     </Flex>

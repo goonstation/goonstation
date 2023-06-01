@@ -116,8 +116,10 @@
 			reagents.add_reagent("bee", 10)
 		if(prob(15))
 			reagents.add_reagent("port", 30)
+		#ifdef SECRETS_ENABLED
 		if(prob(7))
 			reagents.add_reagent("bombini", 15)
+		#endif
 		if(prob(3))
 			reagents.add_reagent("medusa", 10)
 

@@ -10,3 +10,12 @@
 #define STORAGE_RESTRICTED_TYPE -2
 /// storage can't hold the item, due to it being too full
 #define STORAGE_IS_FULL -3
+
+// no_hud storage defines
+
+/// items are stored in queue order
+#define STORAGE_NO_HUD_QUEUE 0
+/// items are stored in stack order
+#define STORAGE_NO_HUD_STACK 1
+/// items pulled out are random picked
+#define STORAGE_NO_HUD_RANDOM 2

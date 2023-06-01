@@ -116,8 +116,6 @@
 		if (is_incapacitated(C)) return FALSE
 		return ..()
 
-	seek_target(var/range = 5)
-
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
 		if (!src.is_hiding && (TIME - src.last_disturbed > src.rehide_time))

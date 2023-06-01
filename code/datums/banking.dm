@@ -221,11 +221,10 @@
 
 	var/pin = null
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			return
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
@@ -776,13 +775,12 @@
 		if (broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			if (src.scan)
 				return
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			attack_hand(user)
 			return
 		if (istype(I, /obj/item/spacecash/))

@@ -201,9 +201,7 @@ TYPEINFO(/obj/machinery/navbeacon)
 
 			UpdateIcon()
 
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		if (istype(get_id_card(I), /obj/item/card/id))
 			if (open)
 				if (src.allowed(user))
 					src.locked = !src.locked
