@@ -452,11 +452,11 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
-ABSTRACT_TYPE(/turf/simulated/wall/auto/supernorn/material)
 /turf/simulated/wall/auto/supernorn/material
 	icon_state = "mapwall"
 	default_material = "steel"
 	uses_material_appearance = TRUE
+	mat_changename = TRUE
 
 /turf/simulated/wall/auto/supernorn/material/bamboo
 	icon_state = "mapwall$$bamboo"
