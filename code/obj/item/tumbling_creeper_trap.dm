@@ -105,6 +105,13 @@
 	if (src.armed)
 		. += "<span class='alert'>It looks like it's planted into the ground.</span>"
 
+/obj/item/plant/tumbling_creeper/get_help_message(dist, mob/user)
+
+	if (src.armed)
+		return "You can use <b>wirecutters</b> to uproot the creeper from the ground, disarming it."
+	else
+		return "You can pour chemicals onto it to it poison its victims or use a <b>garden trowel</b> to plant it into the ground, arming it."
+
 /obj/item/plant/tumbling_creeper/process()
 
 	var/tumbling_cooldown = 15 SECONDS // how long the item should take at minimum before it begins tumbling again
