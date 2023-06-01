@@ -525,7 +525,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 			reagents.add_reagent("cryostylane", 5)
 		reagents.add_reagent("water", 25)
 		reagents.add_reagent("VHFCS", 5)
-		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
+		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
 
