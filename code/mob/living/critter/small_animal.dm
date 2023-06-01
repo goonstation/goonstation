@@ -2881,7 +2881,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death(gibbed)
 		. = ..()
-		animate() // stop bumble / bounce
+		animate(src) // stop bumble / bounce
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
