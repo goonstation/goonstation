@@ -263,6 +263,31 @@
 	category = list("body")
 	points = -2
 
+/datum/trait/plasmatoid
+	name = "Plasmatoid"
+	desc = "Due to a past incident, your lungs have been permanently transformed into plasmatoid lungs. You start with a breathable plasma tank, and lack the ability to breathe O2."
+	id = "plasmatoid"
+	icon_state = "plasmatoid"
+	category = list("body")
+	points = 2
+
+	onAdd(var/mob/owner)
+		SPAWN(4 SECONDS)
+			if(ishuman(owner))
+				var/mob/living/carbon/human/H = owner
+				if(H.organHolder != null)
+					qdel(H.organHolder.left_lung)
+					var/obj/item/organ/lung/new_left = new /obj/item/organ/lung/plasmatoid/left()
+
+					qdel(H.organHolder.right_lung)
+					var/obj/item/organ/lung/new_right = new /obj/item/organ/lung/plasmatoid/right()
+
+					new_left.donor = H
+					H.organHolder.receive_organ(new_left, new_left.organ_holder_name)
+
+					new_right.donor = H
+					H.organHolder.receive_organ(new_right, new_right.organ_holder_name)
+
 /datum/trait/deaf
 	name = "Deaf"
 	desc = "Spawn with permanent deafness and an auditory headset."

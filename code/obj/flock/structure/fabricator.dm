@@ -32,7 +32,7 @@
 			src.resources_to_produce += 100
 		else if (istype(content_holder, /obj/machinery/dispenser))
 			var/obj/machinery/dispenser/tank_holder = content_holder
-			src.resources_to_produce += tank_holder.o2tanks * get_initial_item_health(/obj/item/tank/oxygen) + tank_holder.pltanks * get_initial_item_health(/obj/item/tank/plasma)
+			src.resources_to_produce += tank_holder.o2tanks * get_initial_item_health(/obj/item/tank/oxygen) + tank_holder.pltanks * get_initial_item_health(/obj/item/tank/plasma/container)
 		else if (istype(content_holder, /obj/machinery/disposal_pipedispenser))
 			src.resources_to_produce += 100
 		else if (istype(content_holder, /obj/machinery/chem_dispenser) || istype(content_holder, /obj/machinery/chemicompiler_stationary))

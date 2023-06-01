@@ -375,7 +375,7 @@
 
 /datum/commodity/fuel // buy from trader NPC
 	comname = "Fuel Tank"
-	comtype = /obj/item/tank/plasma
+	comtype = /obj/item/tank/plasma/container
 	desc = "A small tank of plasma. Use with caution."
 	onmarket = 0
 	price = 250

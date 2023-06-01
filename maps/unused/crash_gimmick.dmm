@@ -1481,7 +1481,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/storage/box/mousetraps,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -12180,8 +12180,8 @@
 "bDK" = (
 /obj/machinery/door_control/podbay/research/new_walls/east,
 /obj/table/reinforced/auto,
-/obj/item/tank/plasma,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -71601,7 +71601,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor/caution/north{
 	broken = 1;
 	desc = " It is made of steel.";

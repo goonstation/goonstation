@@ -1432,7 +1432,7 @@
 
 	src.myhud = new /datum/hud/pod(src)
 	///Engine Setup
-	src.fueltank = new /obj/item/tank/plasma( src )
+	src.fueltank = new /obj/item/tank/plasma/container( src )
 	src.engine = new /obj/item/shipcomponent/engine( src )
 	src.engine.ship = src
 	src.components += src.engine

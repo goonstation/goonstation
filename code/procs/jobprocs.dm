@@ -658,6 +658,37 @@ var/global/totally_random_jobs = FALSE
 		src.u_equip(pda)
 		qdel(pda)
 
+	if (src.traitHolder && src.traitHolder.hasTrait("plasmatoid"))
+
+		// Replace existing emergency oxygen box with plasma box
+		for(var/obj/item/storage/box/starter/box in src.back?.storage?.get_contents())
+			if (istype(box, /obj/item/storage/box/starter))
+				qdel(box)
+				src.equip_new_if_possible(/obj/item/storage/box/starter/plasma, slot_in_backpack)
+
+		var/obj/item/tank/plasma/pocket/plasma_tank = new /obj/item/tank/plasma/pocket()
+
+		// Try and equip one tank at round start in any available slot
+		var/equipped = 0
+		if (!src.l_store && src.equip_if_possible(plasma_tank, slot_l_store))
+			equipped = 1
+		else if (!src.r_store && src.equip_if_possible(plasma_tank, slot_r_store))
+			equipped = 1
+		else if (!src.l_hand && src.equip_if_possible(plasma_tank, slot_l_hand))
+			equipped = 1
+		else if (!src.r_hand && src.equip_if_possible(plasma_tank, slot_r_hand))
+			equipped = 1
+		else if (src.belt?.storage && src.equip_if_possible(plasma_tank, slot_in_belt))
+			equipped = 1
+		else if (src.back?.storage && src.equip_if_possible(plasma_tank, slot_in_backpack))
+			equipped = 1
+
+		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
+		if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
+			plasma_tank.set_loc(get_turf(src))
+		else // turn on the tank so that people don't die at roundstart of plasma deprivation
+			plasma_tank.toggle_valve()
+
 	var/T = pick(trinket_safelist)
 	var/obj/item/trinket = null
 

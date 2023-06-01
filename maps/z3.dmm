@@ -12303,7 +12303,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/space,
 /turf/simulated/floor/plating,
 /area/helldrone)

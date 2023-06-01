@@ -88,7 +88,7 @@ TYPEINFO(/obj/machinery/dispenser)
 			user.visible_message("<span class='alert'><b>[user] inserts [W] into [src]!</b></span>")
 			UpdateIcon()
 			return
-	else if (istype(W, /obj/item/tank/plasma))
+	else if (istype(W, /obj/item/tank/plasma/container))
 		if (TOTAL_PL_TANKS < initial(src.pltanks))
 			inserted_pl += W
 			user.u_equip(W)
@@ -122,13 +122,13 @@ TYPEINFO(/obj/machinery/dispenser)
 
 ///Return an inserted plasma tank if avaiable, otherwise a new one if available, null if there's neither
 /obj/machinery/dispenser/proc/pop_pl()
-	var/obj/item/tank/plasma/a_tank = null
+	var/obj/item/tank/plasma/container/a_tank = null
 	if (length(inserted_pl))
 		a_tank = inserted_pl[length(inserted_pl)] //LIFO (hopefully)
 		inserted_pl.Remove(a_tank)
 		a_tank.set_loc(src.loc)
 	else if (pltanks > 0)
-		a_tank = new /obj/item/tank/plasma( src.loc )
+		a_tank = new /obj/item/tank/plasma/container( src.loc )
 		src.pltanks--
 	return a_tank
 

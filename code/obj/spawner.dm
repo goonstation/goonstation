@@ -51,7 +51,7 @@
 		// radio
 		if (0)
 			var/obj/item/assembly/radio_bomb/R = new /obj/item/assembly/radio_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
+			var/obj/item/tank/plasma/container/p3 = new /obj/item/tank/plasma/container(R)
 			var/obj/item/device/radio/signaler/p1 = new /obj/item/device/radio/signaler(R)
 			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
 			R.part1 = p1
@@ -68,7 +68,7 @@
 		// proximity
 		if (1)
 			var/obj/item/assembly/proximity_bomb/R = new /obj/item/assembly/proximity_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
+			var/obj/item/tank/plasma/container/p3 = new /obj/item/tank/plasma/container(R)
 			var/obj/item/device/prox_sensor/p1 = new /obj/item/device/prox_sensor(R)
 			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
 			R.part1 = p1
@@ -90,7 +90,7 @@
 		// timer
 		if (2)
 			var/obj/item/assembly/time_bomb/R = new /obj/item/assembly/time_bomb(src.loc)
-			var/obj/item/tank/plasma/p3 = new /obj/item/tank/plasma(R)
+			var/obj/item/tank/plasma/container/p3 = new /obj/item/tank/plasma/container(R)
 			var/obj/item/device/timer/p1 = new /obj/item/device/timer(R)
 			var/obj/item/device/igniter/p2 = new /obj/item/device/igniter(R)
 			R.part1 = p1
@@ -114,7 +114,7 @@
 		if (0)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/tank/plasma/PT = new(V)
+			var/obj/item/tank/plasma/container/PT = new(V)
 			var/obj/item/tank/oxygen/OT = new(V)
 
 			var/obj/item/device/radio/signaler/S = new(V)
@@ -138,7 +138,7 @@
 		if (1)
 
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/tank/plasma/PT = new(V)
+			var/obj/item/tank/plasma/container/PT = new(V)
 			var/obj/item/tank/oxygen/OT = new(V)
 
 			var/obj/item/device/prox_sensor/P = new(V)
@@ -161,7 +161,7 @@
 		// timer
 		if (2)
 			var/obj/item/device/transfer_valve/V = new(src.loc)
-			var/obj/item/tank/plasma/PT = new(V)
+			var/obj/item/tank/plasma/container/PT = new(V)
 			var/obj/item/tank/oxygen/OT = new(V)
 
 			var/obj/item/device/timer/T = new(V)
@@ -186,7 +186,7 @@
 	..()
 
 	var/obj/item/device/transfer_valve/briefcase/V = new(src.loc)
-	var/obj/item/tank/plasma/PT = new(V)
+	var/obj/item/tank/plasma/container/PT = new(V)
 	var/obj/item/tank/oxygen/OT = new(V)
 
 	var/obj/item/device/timer/T = new(V)

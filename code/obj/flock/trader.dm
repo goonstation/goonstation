@@ -440,7 +440,7 @@
 	/obj/item/raw_material/telecrystal = "flocklore_telecrystal",
 	/obj/item/raw_material/plasmastone = "flocklore_plasmastone",
 	/obj/item/raw_material/eldritch = "flocklore_koshmarite",
-	/obj/item/tank/plasma = "flocklore_plasma_tank",
+	/obj/item/tank/plasma/container = "flocklore_plasma_tank",
 	/obj/item/device/flockblocker = "flocklore_flockblocker",
 	/obj/item/organ/brain/flockdrone = "flocklore_flockbrain",
 	/obj/item/organ/heart/flock = "flocklore_flockheart",

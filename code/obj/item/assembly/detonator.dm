@@ -5,7 +5,7 @@
 	uses_multiple_icon_states = 1
 	var/obj/item/device/multitool/part_mt = null
 	var/obj/item/device/igniter/part_ig = null
-	var/obj/item/tank/plasma/part_t = null
+	var/obj/item/tank/plasma/container/part_t = null
 	var/obj/item/device/timer/part_fs = null
 	var/obj/item/device/trigger = null
 
@@ -84,7 +84,7 @@
 /obj/item/assembly/detonator/attackby(obj/item/W, mob/user)
 	switch (src.det_state)
 		if (0)
-			if (istype(W, /obj/item/tank/plasma))
+			if (istype(W, /obj/item/tank/plasma/container))
 				src.setDetState(1)
 				user.u_equip(W)
 				W.set_loc(src)
@@ -348,7 +348,7 @@
 
 	New()
 		..()
-		var/obj/item/tank/plasma/ptank = new /obj/item/tank/plasma(src)
+		var/obj/item/tank/plasma/container/ptank = new /obj/item/tank/plasma/container(src)
 		ptank.air_contents.toxins = 30
 		ptank.master = src
 		src.part_t = ptank

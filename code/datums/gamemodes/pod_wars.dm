@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/obj/machinery/vehicle/pod_wars_dingy)
 //this is global so admins can run this proc to spawn the crates if they like, idk why they'd really want to but might as well be safe.
 //The list here is set up where the object path is the key, and the value is its point amount
 proc/setup_pw_crate_lists()
-	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular = 1, /obj/item/reagent_containers/mender/both = 1, 	///obj/item/tank/plasma = 2
+	pw_rewards_tier1 = list(/obj/item/storage/firstaid/regular = 1, /obj/item/reagent_containers/mender/both = 1, 	///obj/item/tank/plasma/container = 2
 		/obj/item/tank/oxygen = 1, /obj/item/storage/box/energy_frag = 4, /obj/item/storage/box/energy_concussion = 4, /obj/item/device/flash = 2, /obj/item/deployer/barricade = 4,
 		/obj/item/shipcomponent/mainweapon/taser = 3, /obj/item/shipcomponent/mainweapon/laser/short = 3,/obj/item/ammo/power_cell/high_power = 5,
 		/obj/item/material_piece/steel{amount=10} = 1, /obj/item/material_piece/copper{amount=10} = 1, /obj/item/material_piece/glass{amount=10} = 1)

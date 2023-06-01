@@ -1256,7 +1256,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	directwired = 1
 	var/magic = 0
 	var/active = 0
-	var/obj/item/tank/plasma/P = null
+	var/obj/item/tank/plasma/container/P = null
 	var/obj/machinery/power/collector_control/CU = null
 	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
 
@@ -1330,7 +1330,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = UNANCHORED
 			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
-	else if(istype(W, /obj/item/tank/plasma))
+	else if(istype(W, /obj/item/tank/plasma/container))
 		if(src.P)
 			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
 			return
@@ -1342,7 +1342,7 @@ TYPEINFO(/obj/machinery/power/collector_array)
 	else if (ispryingtool(W))
 		if(!P)
 			return
-		var/obj/item/tank/plasma/Z = src.P
+		var/obj/item/tank/plasma/container/Z = src.P
 		Z.set_loc(get_turf(src))
 		Z.layer = initial(Z.layer)
 		src.P = null
@@ -1378,10 +1378,10 @@ TYPEINFO(/obj/machinery/power/collector_control)
 	var/magic = 0
 	var/active = 0
 	var/lastpower = 0
-	var/obj/item/tank/plasma/P1 = null
-	var/obj/item/tank/plasma/P2 = null
-	var/obj/item/tank/plasma/P3 = null
-	var/obj/item/tank/plasma/P4 = null
+	var/obj/item/tank/plasma/container/P1 = null
+	var/obj/item/tank/plasma/container/P2 = null
+	var/obj/item/tank/plasma/container/P3 = null
+	var/obj/item/tank/plasma/container/P4 = null
 	var/obj/machinery/power/collector_array/CA1 = null
 	var/obj/machinery/power/collector_array/CA2 = null
 	var/obj/machinery/power/collector_array/CA3 = null

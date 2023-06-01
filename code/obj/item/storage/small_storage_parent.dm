@@ -63,11 +63,18 @@
 			src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
 #endif
 
-
 /obj/item/storage/box/starter/withO2 //use this if the box should not get additional items after the round has passed 20 min
 	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
 	make_my_stuff()
 		..(TRUE)
+
+/obj/item/storage/box/starter/plasma // plasmatoid variant
+	name = "plasmatoid supplies"
+	icon_state = "plasmabox"
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/plasma/pocket)
+	make_my_stuff()
+		if (ticker?.round_elapsed_ticks > 20 MINUTES)
+			src.storage.add_contents(new /obj/item/crowbar/red(src))
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"

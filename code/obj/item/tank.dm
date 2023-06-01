@@ -7,6 +7,7 @@ Contains:
 -Emergency Oxygen Tank
 -Air Tank
 -Plasma Tank
+-Plasma Pocket Tank
 */
 
 /obj/item/tank
@@ -486,8 +487,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			src.air_contents.oxygen = null
 			return
 
-
-
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
@@ -526,15 +525,10 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/plasma
-	name = "gas tank (BIOHAZARD)"
+	name = "plasma tank"
 	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
-
-	New()
-		..()
-		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
-		return
 
 	proc/release()
 		var/datum/gas_mixture/removed = air_contents.remove(TOTAL_MOLES(air_contents))
@@ -588,6 +582,16 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 		if(src.master) qdel(src.master)
 		qdel(src)
+
+/obj/item/tank/plasma/container
+	name = "gas tank (plasma)"
+	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
+	icon_state = "plasma"
+
+	New()
+		..()
+		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 
 	attackby(obj/item/W, mob/user)
 		..()
@@ -662,3 +666,23 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			S.part2 = null
 			//S = null
 			qdel(S)
+
+/obj/item/tank/plasma/pocket
+	name = "pocket plasma tank"
+	icon_state = "pocket_plasma"
+	item_state = "pocket_plasma"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = null
+	health = 5
+	w_class = W_CLASS_TINY
+	force = 1
+	stamina_damage = 20
+	stamina_cost = 8
+	desc = "A tiny personal tank containing toxic, volatile plasma meant to assist in plasmatoid lung cases. To use, put on a secure mask and open the tank's release valve."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.volume = 3
+		src.air_contents.toxins = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return

@@ -47,7 +47,7 @@
 	icon_state = "prox-igniter-tank0"
 	var/obj/item/device/prox_sensor/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/tank/plasma/part3 = null
+	var/obj/item/tank/plasma/container/part3 = null
 	status = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
@@ -178,7 +178,7 @@
 	icon_state = "timer-igniter-tank0"
 	var/obj/item/device/timer/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/tank/plasma/part3 = null
+	var/obj/item/tank/plasma/container/part3 = null
 	status = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 
@@ -266,7 +266,7 @@
 	icon_state = "radio-igniter-tank"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/device/igniter/part2 = null
-	var/obj/item/tank/plasma/part3 = null
+	var/obj/item/tank/plasma/container/part3 = null
 	status = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 

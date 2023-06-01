@@ -5113,8 +5113,8 @@
 	pixel_x = -12
 	},
 /obj/rack,
-/obj/item/tank/plasma,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
 "aof" = (
@@ -5505,7 +5505,7 @@
 	})
 "apv" = (
 /obj/rack,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/science/gen_storage)
 "apw" = (
@@ -7546,7 +7546,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/storage/box/mousetraps,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "auN" = (
@@ -22573,8 +22573,8 @@
 "bew" = (
 /obj/machinery/door_control/podbay/research/new_walls/east,
 /obj/table/reinforced/auto,
-/obj/item/tank/plasma,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor,
 /area/station/hangar/escape)
 "bey" = (
@@ -53475,7 +53475,7 @@
 /obj/item/clothing/suit/space/emerg,
 /obj/item/clothing/mask/breath,
 /obj/item/clothing/head/emerg,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/simulated/floor/caution/north,
 /area/station/hangar/engine)
 "cEW" = (

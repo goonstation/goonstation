@@ -1233,7 +1233,7 @@
 	pixel_x = 9;
 	pixel_y = 6
 	},
-/obj/item/tank/plasma{
+/obj/item/tank/plasma/container{
 	pixel_x = -4;
 	pixel_y = 14
 	},

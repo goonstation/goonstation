@@ -21269,7 +21269,7 @@
 /obj/storage/crate,
 /obj/item/mars_roverpart/oxy,
 /obj/item/tank/air,
-/obj/item/tank/plasma,
+/obj/item/tank/plasma/container,
 /turf/unsimulated/floor{
 	icon_state = "plating_dusty1"
 	},
