@@ -2512,6 +2512,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "A strip of salty seaweed wrapped around a ball of sticky rice. Looks pretty good."
 	icon = 'icons/obj/foodNdrink/food_sushi.dmi'
 	icon_state = "onigiri"
+	
+	New()
+		..()
+		if (prob(1))
+			src.name = "jelly donut"
+			src.desc = "Nothing beats a jelly-filled donut!"
 
 /obj/item/reagent_containers/food/snacks/sushi_roll
 	name = "sushi roll"
