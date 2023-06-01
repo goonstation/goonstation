@@ -20,6 +20,12 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
+"eI" = (
+/obj/machinery/portable_reclaimer,
+/obj/item/material_piece/mauxite,
+/obj/item/material_piece/mauxite,
+/turf/simulated/floor/airless/mauxite,
+/area/prefab/mauxite_hideout)
 "iM" = (
 /obj/random_item_spawner/junk,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
@@ -520,7 +526,7 @@ Aw
 Jy
 Jy
 ks
-HU
+eI
 Jy
 Wb
 vg
