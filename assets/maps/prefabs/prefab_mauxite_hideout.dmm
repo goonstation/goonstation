@@ -1,4 +1,11 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cx" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/noGenerate)
 "dx" = (
 /obj/grille/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -8,8 +15,8 @@
 /obj/railing/yellow{
 	dir = 4
 	},
-/obj/item/device/light/floodlight/starts_on{
-	dir = 8
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 9
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
@@ -32,9 +39,15 @@
 /mob/living/critter/rockworm/gary,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
+"nK" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/plating/airless/shuttlebay,
+/area/noGenerate)
 "os" = (
 /obj/table/mauxite/auto,
-/obj/random_item_spawner/med_kit,
+/obj/random_item_spawner/med_kit/one,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "pq" = (
@@ -60,20 +73,20 @@
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "tA" = (
-/obj/item/device/light/floodlight/starts_on{
-	dir = 10
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "tC" = (
-/obj/item/device/light/floodlight/starts_on{
-	dir = 6
-	},
 /obj/railing/yellow{
 	dir = 1
 	},
 /obj/railing/yellow{
 	dir = 8
+	},
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 6
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
@@ -98,7 +111,7 @@
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "vg" = (
-/obj/item/device/light/floodlight/starts_on{
+/obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 5
 	},
 /turf/simulated/floor/airless/mauxite,
@@ -165,11 +178,15 @@
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "El" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge"
+	},
 /turf/simulated/floor/plating/airless/shuttlebay,
 /area/noGenerate)
 "FJ" = (
 /obj/item/device/light/floodlight/starts_on{
-	dir = 6
+	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
@@ -495,7 +512,7 @@ Jy
 Aw
 qR
 Gc
-El
+nK
 qR
 qR
 "}
@@ -517,7 +534,7 @@ Jy
 Jy
 uX
 Gc
-El
+cx
 qR
 AY
 "}
@@ -720,9 +737,9 @@ AY
 AY
 "}
 (19,1,1) = {"
-vF
-vF
 qR
+vF
+vF
 qR
 qR
 qR
@@ -742,10 +759,10 @@ AY
 AY
 "}
 (20,1,1) = {"
-vF
-vF
-vF
 qR
+vF
+vF
+vF
 qR
 qR
 qR
@@ -765,9 +782,9 @@ AY
 "}
 (21,1,1) = {"
 qR
-vF
-vF
 qR
+vF
+vF
 qR
 qR
 qR
