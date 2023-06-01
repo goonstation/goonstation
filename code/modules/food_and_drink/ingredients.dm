@@ -66,13 +66,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	var/filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice
 
 	attackby(var/obj/item/W, var/mob/user)
-		if(istype(W, /obj/item/kitchen/utensil/knife))
-			if(filletslice_type)
-				for (var/x = 0, x < 3, x++)
-					new filletslice_type(src.loc)
-					boutput(user, "<span class='notice'>You cut \the [src] into slices using your knife.</span>")
-				qdel(src)
-				return
+		if(!iscuttingtool(W)) return
+		for (var/amount = 0, amount < 3, amount++)
+			new filletslice_type(get_turf(src))
+		boutput(user, "<span class='notice'>You cut \the [src] into slices using [W].</span>")
+		qdel(src)
 		..()
 
 	salmon
