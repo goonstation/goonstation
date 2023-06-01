@@ -324,8 +324,8 @@
 /area/prefab/mauxite_hideout)
 
 (1,1,1) = {"
-AY
-AY
+qR
+qR
 AY
 AY
 AY
@@ -350,8 +350,8 @@ qR
 qR
 qR
 qR
-AY
-AY
+qR
+qR
 AY
 AY
 AY
@@ -372,12 +372,12 @@ qR
 vF
 vF
 qR
-AY
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
+qR
 qR
 qR
 qR
@@ -412,8 +412,8 @@ Aw
 qR
 "}
 (5,1,1) = {"
-AY
-AY
+qR
+qR
 qR
 qR
 qR
@@ -434,7 +434,7 @@ qR
 qR
 "}
 (6,1,1) = {"
-AY
+qR
 qR
 qR
 qR
@@ -544,7 +544,7 @@ qR
 AY
 "}
 (11,1,1) = {"
-AY
+qR
 qR
 qR
 Aw
@@ -566,7 +566,7 @@ qR
 AY
 "}
 (12,1,1) = {"
-AY
+qR
 qR
 qR
 Aw
@@ -588,8 +588,8 @@ qR
 AY
 "}
 (13,1,1) = {"
-AY
-AY
+qR
+qR
 qR
 Aw
 Aw
@@ -610,9 +610,9 @@ qR
 AY
 "}
 (14,1,1) = {"
-AY
-AY
-AY
+qR
+qR
+qR
 Aw
 Aw
 AJ
@@ -632,10 +632,10 @@ AY
 AY
 "}
 (15,1,1) = {"
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
 Aw
 Aw
 Jy
@@ -654,10 +654,10 @@ AY
 AY
 "}
 (16,1,1) = {"
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
 Aw
 Aw
 Jy
@@ -676,11 +676,11 @@ AY
 AY
 "}
 (17,1,1) = {"
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
 Aw
 Jy
 HU
@@ -700,10 +700,10 @@ AY
 (18,1,1) = {"
 qR
 qR
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
 Jy
 Jy
 Jy
@@ -714,7 +714,7 @@ Aw
 Aw
 qR
 qR
-AY
+qR
 AY
 AY
 AY
@@ -723,20 +723,20 @@ AY
 vF
 vF
 qR
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
 Aw
 Aw
 Aw
 Aw
 Aw
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
 AY
 AY
 AY
@@ -746,19 +746,19 @@ vF
 vF
 vF
 qR
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
 AY
 AY
 AY
@@ -768,18 +768,18 @@ qR
 vF
 vF
 qR
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
 AY
 AY
 AY
@@ -790,18 +790,18 @@ qR
 qR
 qR
 qR
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
-AY
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
+qR
 AY
 AY
 AY
