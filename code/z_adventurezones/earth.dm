@@ -650,3 +650,10 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 	default_material = "gnesisglass"
 
 /mob/living/critter/small_animal/crab/responsive
+
+
+/obj/item/reagent_containers/food/drinks/cola/efrem
+	#ifdef SECRETS_ENABLED
+	initial_reagents = list("cola"=10, "VHFCS"=10, "crime"=10)
+	#endif
+	name = "Bebop Cola"
