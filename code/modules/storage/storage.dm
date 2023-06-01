@@ -270,7 +270,7 @@
 
 /// storage item is dropped
 /datum/storage/proc/storage_item_on_drop(atom/source, mob/user)
-	if (src.hud)
+	if (user)
 		src.show_hud(user)
 
 /// when reaching inside the storage item, check for traps
