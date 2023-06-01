@@ -103,7 +103,7 @@ TYPEINFO(/datum/component/extradimensional_storage)
 	RegisterSignal(src.parent, COMSIG_ATTACKHAND, PROC_REF(on_entered))
 	RegisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_disposing))
 
-/datum/component/extradimensional_storage/ladder/proc/change_overlay(icon/overlay_icon, overlay_state)
+/datum/component/extradimensional_storage/ladder/proc/change_overlay(icon/overlay_icon)
 	var/obj/ladder/ladder = src.parent
 
 	// cram the icon into the 32x32 space
