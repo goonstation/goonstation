@@ -793,7 +793,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				current_reagent.data = sdata
 				added_new = 1
 			else
-				return 0
+				CRASH("Invalid reagent [reagent] in [src.my_atom] [src.my_atom?.type] (add_reagent))")
 		// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 		var/new_amount = (current_reagent.volume + amount)
