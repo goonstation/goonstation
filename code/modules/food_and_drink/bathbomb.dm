@@ -187,7 +187,7 @@
 			R.add_reagent("coffee",5)
 			R.add_reagent("ipecac",5) // NOT IN 2016
 			R.add_reagent("toxic_slurry",5)
-			R.add_reagent("thc",5)
+			R.add_reagent("THC",5)
 
 		else if(flavor_value < 57)
 			name += " - Public Pool Flavor"
