@@ -5,7 +5,7 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay,
-/area/noGenerate)
+/area/prefab/mauxite_hideout)
 "dx" = (
 /obj/grille/catwalk/dubious,
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -17,13 +17,6 @@
 	},
 /obj/item/device/light/floodlight/starts_on/fixed{
 	dir = 9
-	},
-/turf/simulated/floor/plating/airless/asteroid/comet/iron,
-/area/prefab/mauxite_hideout)
-"hO" = (
-/obj/railing/yellow,
-/obj/railing/yellow{
-	dir = 4
 	},
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
@@ -44,7 +37,7 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay,
-/area/noGenerate)
+/area/prefab/mauxite_hideout)
 "os" = (
 /obj/table/mauxite/auto,
 /obj/random_item_spawner/med_kit/one,
@@ -183,7 +176,7 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay,
-/area/noGenerate)
+/area/prefab/mauxite_hideout)
 "FJ" = (
 /obj/item/device/light/floodlight/starts_on{
 	dir = 4
@@ -204,6 +197,7 @@
 /area/prefab/mauxite_hideout)
 "Hj" = (
 /obj/decal/cleanable/blood/tracks,
+/obj/item/raw_material/mauxite,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "HU" = (
@@ -536,7 +530,7 @@ uX
 Gc
 cx
 qR
-AY
+qR
 "}
 (10,1,1) = {"
 qR
@@ -545,7 +539,7 @@ qR
 Aw
 Aw
 FJ
-pq
+NQ
 VS
 ZM
 HU
@@ -558,7 +552,7 @@ iM
 Gc
 qR
 qR
-AY
+qR
 "}
 (11,1,1) = {"
 qR
@@ -580,7 +574,7 @@ Gj
 Ek
 qR
 qR
-AY
+qR
 "}
 (12,1,1) = {"
 qR
@@ -592,7 +586,7 @@ TS
 Jy
 Gz
 Ww
-HU
+Wb
 Jy
 HU
 VS
@@ -602,7 +596,7 @@ Gj
 Ek
 qR
 qR
-AY
+qR
 "}
 (13,1,1) = {"
 qR
@@ -617,14 +611,14 @@ VS
 HU
 Jy
 HU
-Wb
+HU
 pG
-iM
+VS
 Gj
-Ek
+Gj
+Aw
 qR
 qR
-AY
 "}
 (14,1,1) = {"
 qR
@@ -641,11 +635,11 @@ Jy
 JS
 HU
 Gj
+HU
 Gj
 Gj
-hO
+Aw
 qR
-AY
 AY
 "}
 (15,1,1) = {"
@@ -664,10 +658,10 @@ Mx
 xQ
 VJ
 UW
-Ek
+Gj
+Aw
+Aw
 qR
-qR
-AY
 AY
 "}
 (16,1,1) = {"
@@ -689,7 +683,7 @@ NQ
 dW
 qR
 qR
-AY
+qR
 AY
 "}
 (17,1,1) = {"
@@ -710,8 +704,8 @@ Aw
 Aw
 qR
 qR
-AY
-AY
+qR
+qR
 AY
 "}
 (18,1,1) = {"
@@ -732,7 +726,7 @@ Aw
 qR
 qR
 qR
-AY
+qR
 AY
 AY
 "}
@@ -754,7 +748,7 @@ qR
 qR
 qR
 qR
-AY
+qR
 AY
 AY
 "}
@@ -797,7 +791,7 @@ qR
 qR
 qR
 qR
-AY
+qR
 AY
 AY
 AY
@@ -819,7 +813,7 @@ qR
 qR
 qR
 qR
-AY
+qR
 AY
 AY
 AY
