@@ -1210,6 +1210,8 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		I.layer = FLY_LAYER
 		src.overlays += I
 
+TYPEINFO(/obj/ladder)
+	mat_appearances_to_ignore = list("negativematter")
 /obj/ladder
 	name = "ladder"
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
@@ -1220,7 +1222,6 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/id = null
 	/// if true, disables ladder climbing behavior
 	var/unclimbable = FALSE
-	mat_appearances_to_ignore = list("negative matter")
 	mat_changename = FALSE
 	appearance_flags = KEEP_TOGETHER
 

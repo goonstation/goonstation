@@ -1,3 +1,5 @@
+TYPEINFO(/mob/living/critter/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -13,7 +15,6 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK

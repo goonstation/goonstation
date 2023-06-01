@@ -2,6 +2,7 @@
 ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
+	mat_appearances_to_ignore = list("gnesis")
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
@@ -19,7 +20,6 @@ TYPEINFO(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	mat_appearances_to_ignore = list("gnesis")
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds

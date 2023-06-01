@@ -487,6 +487,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/unsimulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -494,7 +496,6 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
 
 	New()
 		..()
@@ -729,9 +730,10 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/unsimulated/floor/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
 
 	New()
 		..()
@@ -957,11 +959,12 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1134,13 +1137,14 @@
 			src.icon_state = "swamp[rand(1, 4)]"
 
 
+TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
+	mat_appearances_to_ignore = list("ice")
 /turf/unsimulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	mat_appearances_to_ignore = list("ice")
 
 	New()
 		..()

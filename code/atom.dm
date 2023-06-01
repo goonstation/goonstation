@@ -4,8 +4,10 @@
   * Lots of functionality resides in this type.
   */
 TYPEINFO(/atom)
-	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	/// A list of procs that should appear on the admin interact menu (must support being called without arguments)
 	var/list/admin_procs = null
+	/// A list of material IDs that should be ignored when applying appearance
+	var/list/mat_appearances_to_ignore = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT

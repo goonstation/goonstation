@@ -1182,6 +1182,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		var/mob/living/critter/flock/drone/F = mover
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
+TYPEINFO(/obj/window/feather)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/window/feather
 	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
@@ -1189,7 +1191,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass

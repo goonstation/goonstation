@@ -134,6 +134,8 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/table/auto/desk
 	furniture_name = "desk"
 
+TYPEINFO(/obj/item/furniture_parts/table/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/table/wood
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a wooden table."
@@ -141,7 +143,6 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
 	default_material = "wood"
-	mat_appearances_to_ignore = list("wood")
 	mat_changename = TRUE
 
 /obj/item/furniture_parts/table/wood/round
@@ -208,11 +209,12 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/table/nanotrasen/auto
 
 /* ---------- Glass Table Parts ---------- */
+TYPEINFO(/obj/item/furniture_parts/table/glass)
+	mat_appearances_to_ignore = list("glass")
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"
 	desc = "A collection of parts that can be used to make a glass table."
 	icon = 'icons/obj/furniture/table_glass.dmi'
-	mat_appearances_to_ignore = list("glass")
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
 	density_check = FALSE //FOR NOW

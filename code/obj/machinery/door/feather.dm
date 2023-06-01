@@ -1,11 +1,12 @@
 // flockdrone door
+TYPEINFO(/obj/machinery/door/feather)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /obj/machinery/door/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "door1"
 	name = "weird imposing wall"
 	desc = "It sounds like it's hollow."
 	var/flock_id = "Solid seal aperture"
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	autoclose = TRUE
