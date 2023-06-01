@@ -1296,8 +1296,9 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	if (!E)
 		return
 	var/mob/user = usr
-	var/icon/icon = icon(input(user, "Icon to use for the overlay") as icon | null)
-	if (icon)
+	var/icon_to_use = input(user, "Icon to use for the overlay") as icon | null
+	if (icon_to_use)
+		var/icon/icon = icon(icon_to_use)
 		E.change_overlay(icon)
 
 /obj/ladder/embed/proc/toggle_hidden()
