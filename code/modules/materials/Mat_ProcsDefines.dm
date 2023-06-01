@@ -13,6 +13,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Returns one of the base materials by id.
 /proc/getMaterial(mat)
+	#ifdef CHECK_MORE_RUNTIMES
+	if (!istext(mat))
+		CRASH("getMaterial() called with a non-text argument [mat].")
+	if (!(mat in material_cache))
+		CRASH("getMaterial() called with an invalid material id [mat].")
+	#endif
 	if(!istext(mat))
 		return null
 	return material_cache?[mat]
