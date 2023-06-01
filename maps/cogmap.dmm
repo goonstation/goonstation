@@ -31786,10 +31786,6 @@
 	pixel_x = -4;
 	pixel_y = -2
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -55077,14 +55073,6 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/device/multitool{
 	pixel_x = -2;
 	pixel_y = 6
@@ -59056,21 +59044,8 @@
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/deconstructor,
-/obj/random_item_spawner/tools_w_igloves/maybe_few,
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/device/multitool{
 	pixel_x = -2;
 	pixel_y = 6
