@@ -5,6 +5,10 @@
 #define OP_OFF 0
 #define OP_REVERSE -1
 
+TYPEINFO(/obj/machinery/conveyor) {
+	mats = list("CON-1" = 1, "MET-2" = 1, "CRY-1" = 1)
+}
+
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 #ifndef IN_MAP_EDITOR
@@ -19,6 +23,7 @@
 	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
+	mechanics_type_override = /obj/machinery/conveyor/built
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
 	var/dir_in = null
@@ -495,6 +500,79 @@
 	..()
 	update()
 
+TYPEINFO(/obj/machinery/conveyor/built) {
+	mats = list("CON-1" = 1, "MET-2" = 1, "CRY-1" = 1)
+}
+
+/obj/machinery/conveyor/built/
+	desc = "A conveyor belt. This one looks like it was built recently."
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WRENCH | DECON_WELDER
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+
+	initialize() // Look around for other conveyor belts and assume a dir_in and dir_out based on that.
+		var/list/favorable_dir_ins = list()
+		var/list/favorable_dir_outs = list()
+		for (var/direction in cardinal)
+			var/turf/T = get_step(src, direction)
+			var/obj/machinery/conveyor/neighbor_conveyor = locate() in T
+
+			if (neighbor_conveyor) // If we actually have a conveyor belt in that direction...
+				if (direction == turn(neighbor_conveyor.dir_in, 180)) // Is it contrary to a dir_in of another conveyor belt?
+					favorable_dir_outs += direction // Great! A favorable dir_out.
+				if (direction == turn(neighbor_conveyor.dir_out, 180)) // Is it contrary to the dir_out of another conveyour belt?
+					favorable_dir_ins += direction // Great! A favorable dir_in.
+
+		if (length(favorable_dir_ins) > 0) src.dir_in = favorable_dir_ins[1] // If there are any favorable dir ins, pick the first index.
+		if (length(favorable_dir_outs) > 0) src.dir_out = favorable_dir_outs[1]
+
+		if (!src.dir_in) src.dir_in = NORTH // In the case there's no favorable dir_ins, pick north.
+		if (!src.dir_out) src.dir_out = turn(src.dir_in, 180) // In the case there's no favorable dir_outs, pick the contrary of dir_in.
+
+		. = ..()
+
+	mouse_drop(over_object, src_location, over_location)
+		if (!usr) return
+		if (over_object == src || src_location == over_location) return ..()
+
+		var/obj/item/equipped_object = usr.equipped()
+		if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
+
+		var/dir_target_atom = get_dir(src_location, over_location)
+
+		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
+			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
+
+		if (iswrenchingtool(equipped_object))
+			var/what_does_user_want = tgui_input_list(usr, "What direction of the conveyor belt you will change?", "Select", list("Direction in", "Direction out"))
+			if (!what_does_user_want) return
+			if (!usr) return // Better safe than sorry.
+			if (equipped_object != usr.equipped()) return // If the user has unequipped the wrench since the start of the prompt, refuse to change the dir.
+
+			switch (what_does_user_want)
+				if ("Direction in")
+					src.dir_in = dir_target_atom
+				if ("Direction out")
+					src.dir_out = dir_target_atom
+
+			src.update()
+			return
+
+		return ..()
+
+	attackby(var/obj/item/I, mob/user)
+		if (ispulsingtool(I))
+			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
+			if (!connector) return ..()
+			if (!istype(connector.connectee, /obj/machinery/conveyor_switch))
+				user.show_text("\The [src] isn't compatible with \the [connector.connectee], and refuses to link to it.", "red")
+				return
+			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
+			src.id = connected_switch.id
+			src.linked_switches += connected_switch
+			user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
+
+		. = ..()
+
 /obj/item/debug_conveyor_layer
 	name = "conveyor layer"
 	icon = 'icons/obj/recycling.dmi'
@@ -763,6 +841,41 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 				C.operating = position
 				C.setdir()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
+/obj/machinery/conveyor_switch/built/
+	desc = "A conveyor control switch. This one looks like it was built recently."
+	var/static/list/switch_ids
+
+	New()
+		. = ..()
+		UnsubscribeProcess()
+		START_TRACKING
+		UpdateIcon()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", PROC_REF(trigger))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Refresh ID", PROC_REF(get_new_id))
+		src.get_new_id()
+
+	proc/get_new_id()
+		if (src.id) // If we already have an ID, remove it from the switch ID pool.
+			src.switch_ids -= src.id
+
+		var/new_id = TIME // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
+		var/id_disambiguation_number = 0
+		while (new_id in switch_ids) // If we somehow reach a state where there's already a conveyor switch with the same ID, we loop through 0 to BYOND's max integer value and check if it is unique.
+			src.id = new_id + "[id_disambiguation_number]"
+			id_disambiguation_number++
+
+		src.switch_ids += src.id
+
+	attackby(var/obj/item/I, mob/user)
+		if (ispulsingtool(I))
+			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
+			if (!connector) return ..()
+			if (!istype(connector.connectee, /obj/machinery/conveyor_switch)) return ..()
+
+			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
+			src.id = connected_switch.id
+			user.show_text("You connect \the [src] to \the [connector.connectee]. Both share the same ID now.", "blue")
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
