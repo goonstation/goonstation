@@ -10,6 +10,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
+	default_material = "steel"
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
@@ -17,7 +18,6 @@
 	var/burnt = 0
 	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
-	var/plate_mat = "steel" // As a string
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
@@ -27,10 +27,8 @@
 
 	New()
 		..()
-		if (has_material)
-			if (isnull(plate_mat))
-				plate_mat = "steel"
-			setMaterial(getMaterial(plate_mat), copy = FALSE)
+		if (has_material && isnull(default_material))
+			setMaterial(getMaterial("steel"), copy = FALSE)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -655,10 +653,7 @@ TYPEINFO(/turf/simulated/floor/circuit)
 	RL_LumB = 0.3
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		plate_mat = "pharosium"
-		. = ..()
+	default_material = "pharosium"
 
 /turf/simulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -707,10 +702,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = 0
-
-	New()
-		plate_mat = "cotton"
-		. = ..()
+	default_material = "cotton"
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
@@ -898,6 +890,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
+	default_material = "glass"
 
 	New()
 		var/image/I
@@ -920,7 +913,6 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
-		plate_mat = "glass"
 		..()
 
 /turf/simulated/floor/glassblock/transparent/cyan
@@ -1112,10 +1104,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 	icon_state = "wooden-2"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		plate_mat = "wood"
-		. = ..()
+	default_material = "wood"
 
 /turf/simulated/floor/wood/two
 	icon_state = "wooden"
@@ -1433,17 +1422,17 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	default_material = "synthrubber"
 
+	#ifdef XMAS
 	New()
-		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
 			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
-		#endif
-		plate_mat = "synthrubber"
 		..()
+	#endif
 
 /turf/proc/grassify()
 	.=0
@@ -1529,10 +1518,7 @@ TYPEINFO(/turf/simulated/floor/stone)
 	icon_state = "stone"
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		plate_mat = "rock"
-		..()
+	default_material = "rock"
 
 /////////////////////////////////////////
 
@@ -1635,10 +1621,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
-
-	New()
-		plate_mat = "blob"
-		..()
+	default_material = "blob"
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(copyMaterial(O.my_material))
@@ -1804,8 +1787,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(plate_mat)
-		src.setMaterial(getMaterial(plate_mat), copy = FALSE)
+	if(default_material)
+		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+		src.setMaterial(mat, copy = FALSE)
 	else
 		src.setMaterial(getMaterial("steel"), copy = FALSE)
 	levelupdate()
@@ -1986,7 +1970,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile()
-				src.plate_mat = getMaterial(src.material)
+				src.default_material = getMaterial(src.material)
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
@@ -2519,11 +2503,8 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-
-	New()
-		plate_mat = "ice"
-		..()
-		name = initial(name)
+	default_material = "ice"
+	mat_changename = FALSE
 
 /turf/simulated/floor/auto/water/ice/rough
 	name = "ice"
@@ -2629,9 +2610,9 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 DEFINE_FLOORS(mauxite,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$mauxite";\
-	plate_mat = "mauxite")
+	default_material = "mauxite")
 
 DEFINE_FLOORS(bamboo,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$bamboo";\
-	plate_mat = "bamboo")
+	default_material = "bamboo")

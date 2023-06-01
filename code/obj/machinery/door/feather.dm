@@ -9,6 +9,7 @@ TYPEINFO(/obj/machinery/door/feather)
 	var/flock_id = "Solid seal aperture"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	autoclose = TRUE
 	var/broken = FALSE
 	health = 200
@@ -17,7 +18,6 @@ TYPEINFO(/obj/machinery/door/feather)
 
 /obj/machinery/door/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
 	if (map_settings?.auto_walls)

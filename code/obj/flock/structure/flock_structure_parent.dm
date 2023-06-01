@@ -20,6 +20,7 @@ TYPEINFO(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -56,7 +57,6 @@ TYPEINFO(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)

@@ -1270,13 +1270,11 @@ TYPEINFO(/obj/ladder)
 		src.UpdateIcon()
 	. = ..(severity, last_touched)
 
-/obj/ladder/embed/extradimensional/New()
-	..()
-	src.setMaterial(getMaterial("negativematter"))
+/obj/ladder/embed/extradimensional
+	default_material = "negativematter"
 
-/obj/ladder/extradimensional/New()
-	..()
-	src.setMaterial(getMaterial("negativematter"))
+/obj/ladder/extradimensional
+	default_material = "negativematter"
 
 
 /obj/ladder/New()

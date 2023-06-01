@@ -12,6 +12,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	broken = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -29,7 +30,6 @@ TYPEINFO(/turf/simulated/floor/feather)
 
 /turf/simulated/floor/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	light = new /datum/light/point
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
@@ -194,6 +194,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	var/broken = FALSE
 	var/on = FALSE
 
@@ -210,7 +211,6 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 
 /turf/simulated/wall/auto/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.health = src.max_health
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)

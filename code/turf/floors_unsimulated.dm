@@ -10,7 +10,6 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
-	var/plate_mat = null // Stop making the macro crash
 
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
@@ -496,10 +495,7 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"), copy = FALSE)
+	default_material = "pharosium"
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -734,10 +730,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 	mat_appearances_to_ignore = list("wood")
 /turf/unsimulated/floor/wood
 	icon_state = "wooden-2"
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"), copy = FALSE)
+	default_material = "wood"
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -967,10 +960,7 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	icon_state = "grass"
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"), copy = FALSE)
+	default_material = "synthrubber"
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -1145,11 +1135,8 @@ TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-
-	New()
-		..()
-		setMaterial(getMaterial("ice"), copy = FALSE)
-		name = initial(name)
+	default_material = "ice"
+	mat_changename = FALSE
 
 /turf/unsimulated/floor/auto/water/ice/rough
 	name = "ice"

@@ -2,10 +2,7 @@
 	// do not put this anywhere anyone can get it. it is for crime.
 	name = "(de/re)-construction device"
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
-
-	New()
-		..()
-		setMaterial(getMaterial("miracle"))
+	default_material = "miracle"
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))

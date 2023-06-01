@@ -26,10 +26,10 @@ TYPEINFO(/obj/table/flock)
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -66,10 +66,7 @@ TYPEINFO(/obj/item/furniture_parts/table/flock)
 	furniture_type = /obj/table/flock/auto
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-
-/obj/item/furniture_parts/table/flock/New()
-	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	default_material = "gnesis"
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -97,10 +94,10 @@ TYPEINFO(/obj/stool/chair/comfy/flock)
 	scoot_sounds = list( 'sound/misc/chair/glass/scoot1.ogg', 'sound/misc/chair/glass/scoot2.ogg', 'sound/misc/chair/glass/scoot3.ogg', 'sound/misc/chair/glass/scoot4.ogg', 'sound/misc/chair/glass/scoot5.ogg' )
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/stool/chair/comfy/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -125,10 +122,7 @@ TYPEINFO(/obj/item/furniture_parts/flock_chair)
 	furniture_name = "thrumming alcove"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-
-/obj/item/furniture_parts/flock_chair/New()
-	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
+	default_material = "gnesis"
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -156,6 +150,7 @@ TYPEINFO(/obj/storage/closet/flock)
 	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	var/health_attack = 100
 	var/health_max = 100
 	var/repair_per_resource = 2.5
@@ -177,7 +172,6 @@ TYPEINFO(/obj/storage/closet/flock)
 
 /obj/storage/closet/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -270,10 +264,10 @@ TYPEINFO(/obj/machinery/light/flock)
 	removable_bulb = FALSE
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/machinery/light/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
 	light.set_color(0.45, 0.75, 0.675)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
@@ -315,10 +309,10 @@ TYPEINFO(/obj/lattice/flock)
 	icon_state = "fibrenet"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 
 /obj/lattice/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -364,6 +358,7 @@ TYPEINFO(/obj/grille/flock)
 	can_be_snipped = FALSE
 	can_be_unscrewed = FALSE
 	can_build_window = FALSE
+	default_material = "gnesis"
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)
@@ -386,7 +381,6 @@ TYPEINFO(/obj/grille/flock)
 
 /obj/grille/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
