@@ -20,6 +20,8 @@ TYPEINFO_NEW(/obj/table)
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
+	default_material = null
+	uses_material_appearance = FALSE
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
@@ -456,11 +458,12 @@ TYPEINFO_NEW(/obj/table/wood)
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
 	mat_appearances_to_ignore = list("wood")
+	uses_material_appearance = FALSE
+	mat_changename = FALSE
+	default_material = "wood"
 
 	auto
 		auto = 1
-	constructed //no "wood wood table"
-		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -531,6 +534,21 @@ TYPEINFO_NEW(/obj/table/scrap)
 
 	auto
 		auto = 1
+
+TYPEINFO(/obj/table/mauxite)
+TYPEINFO_NEW(/obj/table/mauxite)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/mauxite/auto)
+/obj/table/mauxite
+	name = "table"
+	icon = 'icons/obj/furniture/table.dmi'
+	icon_state = "0$$mauxite"
+	uses_material_appearance = FALSE
+	mat_changename = TRUE
+	default_material = "mauxite"
+
+	auto
+		auto = TRUE
 
 /obj/table/folding
 	name = "folding table"
@@ -785,10 +803,10 @@ TYPEINFO_NEW(/obj/table/glass)
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
 	icon = 'icons/obj/furniture/table_glass.dmi'
 	mat_appearances_to_ignore = list("glass")
+	default_material = "glass"
 	parts_type = /obj/item/furniture_parts/table/glass
 	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
-	var/default_material = "glass"
 
 	auto
 		auto = 1
@@ -809,11 +827,6 @@ TYPEINFO_NEW(/obj/table/glass)
 
 		auto
 			auto = 1
-
-	New()
-		..()
-		if (!src.material && default_material)
-			src.setMaterial(getMaterial(default_material), copy = FALSE)
 
 	UpdateName()
 		if (src.glass_broken)
