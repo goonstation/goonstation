@@ -41,6 +41,7 @@ MATERIAL
 
 /obj/item/sheet
 	name = "sheet"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-m_5"
 	//Used to determine the right icon_state: combined with suffixes for material/reinforcement in update_appearance and one for amount in change_stack_appearance
@@ -56,12 +57,16 @@ MATERIAL
 	stamina_cost = 23
 	stamina_crit_chance = 10
 	material_amt = 0.1
-	var/datum/material/reinforcement = null
+	var/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
+	default_material = "steel"
+	uses_material_appearance = TRUE
 
 	New()
 		..()
+		if (src.reinforcement)
+			src.set_reinforcement(getMaterial(src.reinforcement))
 		SPAWN(0)
 			update_appearance()
 		create_inventory_counter()
@@ -100,8 +105,8 @@ MATERIAL
 			else
 				src.icon_state_base += "-m"
 			src.name = "[material.name] " + src.name
-			if (istype(reinforcement))
-				src.name = "[reinforcement.name]-reinforced " + src.name
+			if (reinforcement)
+				src.name = "[reinforcement]-reinforced " + src.name
 				src.icon_state_base += "-r"
 			src.color = src.material.color
 			src.alpha = src.material.alpha
@@ -245,10 +250,10 @@ MATERIAL
 			//boutput(world, "check valid stack check 4 failed")
 			return 0
 		if (src.reinforcement && S.reinforcement)
-			if (src.reinforcement.type != S.reinforcement.type)
+			if (src.reinforcement != S.reinforcement)
 				//boutput(world, "check valid stack check 5 failed")
 				return 0
-			if (!isSameMaterial(S.reinforcement, src.reinforcement))
+			if (!isSameMaterial(getMaterial(S.reinforcement), getMaterial(src.reinforcement)))
 				//boutput(world, "check valid stack check 6 failed")
 				return 0
 		return 1
@@ -275,7 +280,7 @@ MATERIAL
 
 		var/list/availableRecipes = list()
 		if (src?.material?.material_flags & MATERIAL_METAL)
-			if (istype(src.reinforcement))
+			if (src.reinforcement)
 				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/reinforced_metal))
 					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
@@ -286,7 +291,7 @@ MATERIAL
 		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/glass))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
-			if (istype(src.reinforcement))
+			if (src.reinforcement)
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
 		if (src?.material?.mat_id == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
@@ -443,75 +448,60 @@ MATERIAL
 		return
 
 /obj/item/sheet/steel
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+	default_material = "steel"
+	color = "#8C8C8C"
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.set_reinforcement(M)
+		reinforcement = "steel"
 
 /obj/item/sheet/glass
-
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-glass"
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("glass")
-		src.setMaterial(M)
+	default_material = "glass"
+	color = "#A3DCFF"
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		New()
-			..()
-			var/datum/material/M = getMaterial("steel")
-			src.set_reinforcement(M)
+		reinforcement = "steel"
 
 	crystal
-
-		New()
-			..()
-			var/datum/material/M = getMaterial("plasmaglass")
-			src.setMaterial(M)
+		default_material = "plasmaglass"
+		color = "#A114FF"
 
 		reinforced
 			icon_state = "sheet-g-r_5"
-			New()
-				..()
-				var/datum/material/M = getMaterial("steel")
-				src.set_reinforcement(M)
+			reinforcement = "steel"
 
 /obj/item/sheet/wood
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$wood"
+	default_material = "wood"
 	amount = 10
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("wood")
-		src.setMaterial(M)
 
 /obj/item/sheet/bamboo
-
-	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$bamboo"
+	default_material = "bamboo"
 	amount = 10
 
-	New()
-		..()
-		var/datum/material/M = getMaterial("bamboo")
-		src.setMaterial(M)
+/obj/item/sheet/mauxite
+	item_state = "sheet-metal"
+	icon_state = "sheet-m_5$$mauxite"
+	default_material = "mauxite"
+	amount = 10
+
+/obj/item/sheet/electrum
+	default_material = "electrum"
+	color = "#44ACAC"
+
+	change_stack_amount(var/use_amount)
+		if (!isnum(use_amount))
+			return
+		if (isrobot(usr))
+			var/mob/living/silicon/robot/R = usr
+			R.cell.use(use_amount * 200)
 
 // RODS
 /obj/item/rods
@@ -864,11 +854,13 @@ MATERIAL
 
 
 /obj/item/rods/steel
+	color = "#8C8C8C"
+	default_material = "steel"
 
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+/obj/item/rods/mauxite
+	icon_state = "rods_5$$mauxite"
+	default_material = "mauxite"
+	amount = 10
 
 // TILES
 
@@ -1029,32 +1021,14 @@ MATERIAL
 #endif
 
 /obj/item/tile/steel
-
-	New()
-		..()
-		var/datum/material/M = getMaterial("steel")
-		src.setMaterial(M)
+	default_material = "steel"
+	color = "#8C8C8C"
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
 	force = 0
-	New()
-		..()
-		var/datum/material/M = getMaterial("cardboard")
-
-		src.setMaterial(M)
-
-/obj/item/sheet/electrum
-	New()
-		..()
-		setMaterial(getMaterial("electrum"))
-
-	change_stack_amount(var/use_amount)
-		if (!isnum(use_amount))
-			return
-		if (isrobot(usr))
-			var/mob/living/silicon/robot/R = usr
-			R.cell.use(use_amount * 200)
+	default_material = "cardboard"
+	color = "#d3b173"
 
 // kinda needed for some stuff I'm making - haine
 /obj/item/sheet/steel/fullstack

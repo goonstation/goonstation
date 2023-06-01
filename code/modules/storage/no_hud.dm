@@ -33,6 +33,10 @@
 		var/obj/item/I = src.linked_item
 		I.inventory_counter_enabled = TRUE
 		I.create_inventory_counter()
+		if (!src.show_count)
+			I.inventory_counter.update_percent(0, 100)
+		else
+			I.inventory_counter.update_number(0)
 
 /datum/storage/no_hud/disposing()
 	if (src.use_inventory_counter && istype(src.linked_item, /obj/item))

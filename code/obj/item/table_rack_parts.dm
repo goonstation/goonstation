@@ -135,26 +135,23 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_name = "desk"
 
 /obj/item/furniture_parts/table/wood
-	name = "wood table parts"
+	name = "table parts"
 	desc = "A collection of parts that can be used to make a wooden table."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
+	default_material = "wood"
 	mat_appearances_to_ignore = list("wood")
-
-	constructed //no "wood wood table"
-		name = "table parts"
-		furniture_name = "table"
-		furniture_type = /obj/table/wood/constructed
+	mat_changename = TRUE
 
 /obj/item/furniture_parts/table/wood/round
-	name = "round wood table parts"
+	name = "round table parts"
 	desc = "A collection of parts that can be used to make a round wooden table."
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
 
 /obj/item/furniture_parts/table/wood/desk
-	name = "wood desk parts"
+	name = "desk parts"
 	desc = "A collection of parts that can be used to make a wooden desk."
 	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	furniture_type = /obj/table/wood/auto/desk
@@ -220,14 +217,8 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_name = "glass table"
 	density_check = FALSE //FOR NOW
 	var/has_glass = 1
-	var/default_material = "glass"
+	default_material = "glass"
 
-	New()
-		..()
-		if (!src.material && default_material)
-			var/datum/material/M
-			M = getMaterial(default_material)
-			src.setMaterial(M)
 
 	UpdateName()
 		if (!src.has_glass)

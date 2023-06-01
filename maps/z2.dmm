@@ -38177,7 +38177,7 @@
 /turf/simulated/wall/false_wall/sengoku,
 /area/dojo)
 "cpB" = (
-/obj/item/clothing/under/gimmick,
+/obj/item/clothing/under/gimmick/sailor,
 /obj/item/clothing/mask/anime,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo)

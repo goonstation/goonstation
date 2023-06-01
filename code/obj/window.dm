@@ -26,12 +26,14 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/stab_resist = 0
 	var/corrode_resist = 0
 	var/temp_resist = 0
-	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	var/image/damage_image = null
+	default_material = "glass"
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -44,8 +46,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
-		if (default_material)
-			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
