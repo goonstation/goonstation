@@ -802,9 +802,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 
 /turf/unsimulated/wall/auto/coral
-	New()
-		..()
-		setMaterial(getMaterial("coral"), copy = FALSE)
+	default_material = "coral"
 
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!

@@ -60,7 +60,7 @@
 
 	New()
 		if (prob(10))
-			src.initial_reagents["grognardium"] = 5
+			src.initial_reagents["rum"] = 5
 		..()
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater

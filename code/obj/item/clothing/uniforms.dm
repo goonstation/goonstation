@@ -1386,6 +1386,8 @@
 
 // Towels
 
+TYPEINFO(/obj/item/clothing/under/towel)
+	mat_appearances_to_ignore = list("cotton")
 /obj/item/clothing/under/towel
 	name = "towel"
 	desc = "Made of nice, soft terrycloth. Very important when adventuring."
@@ -1405,14 +1407,12 @@
 	burn_output = 800
 	burn_possible = 1
 	rand_pos = 0
+	mat_changename = FALSE
+	default_material = "cotton"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 	attack_self(mob/user as mob)
 		add_fingerprint(user)
