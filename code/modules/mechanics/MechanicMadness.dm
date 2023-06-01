@@ -501,29 +501,22 @@
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
-		var/loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
+		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
 
-		if(src.stored?.linked_item && !src.storage) //If the sound synth is attached inside something.
-			if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_large)) //Mech Cabinet check
-				loc = src.loc
-
-			else if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld)) //Device Frame check
-				if(!obj_loc_chain(src)) //If not stored anywhere usually in your hands or on the ground
-					loc = src.loc
-
-				else //Handles rest of cases where it is stored somewhere whether on person in a container or some combination
-					var/list/atom/movable/loc_chain = obj_loc_chain(src)
-					loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
+		if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld) && !src.storage) //Handles all text for the Device Frame
+			var/list/atom/movable/loc_chain = obj_loc_chain(src)
+			maptext_loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
 
 		else
-			loc = src.loc
+			maptext_loc = src.loc
 
-		maptext = make_chat_maptext(loc, "[string]", "color: #FFBF00;", alpha = 255)
-		for(var/mob/O in all_hearers(7, src.loc))
+		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
+
+		for(var/mob/O in all_hearers(7, maptext_loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-			O.show_message(assoc_maptext = maptext)
-		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1) //Places text in the radio
+			O.show_message(assoc_maptext = maptext) //Places text in world
+		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
