@@ -34,6 +34,7 @@ proc/get_moving_lights_stats()
 		if(!src.RL_AddOverlay) { \
 			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add ; \
 			src.RL_AddOverlay.set_loc(src) ; \
+			src.RL_AddOverlay.icon = src.RL_OverlayIcon ; \
 			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
 		} \
 		src.RL_AddOverlay.color = list( \
@@ -707,8 +708,18 @@ proc
 	event_handler_flags = IMMUNE_SINGULARITY
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
+/*
+	How Lighting Overlays Work:
+
+	Succinctly, the RGBA channels of each pixel represent the influence that the lights on the parent tile, the east tile, the
+	north tile, and the northeast tile have on that pixel on parent tile respectively, somewhat akin to a normal map. The exact
+	effect that this will create depends on whether the overlay is additive or multiplicative (add / mul).
+
+	The initial sprite, `no name` in all lighting overlay files, was programmatically generated using Python, from this initial
+	sprite, five sprites were handcrafted and then passed into the `icon-cutter` tool to generate the remaining directional sprites.
+*/
 /obj/overlay/tile_effect/lighting
-	icon = 'icons/effects/light_overlay.dmi'
+	icon = 'icons/effects/lighting_overlays/floors.dmi'
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
 	plane = PLANE_LIGHTING
@@ -747,6 +758,7 @@ turf
 		RL_AddLumG = 0
 		RL_AddLumB = 0
 		RL_NeedsAdditive = 0
+		RL_OverlayIcon = 'icons/effects/lighting_overlays/floors.dmi'
 		RL_OverlayState = ""
 		list/datum/light/RL_Lights = null
 		opaque_atom_count = 0
@@ -802,12 +814,17 @@ turf
 #endif
 			RL_UPDATE_LIGHT(src)
 
-		RL_SetSprite(state)
-			if (src.RL_MulOverlay)
-				src.RL_MulOverlay.icon_state = state
-			if (src.RL_AddOverlay)
-				src.RL_AddOverlay.icon_state = state
+		RL_SetSprite(state, icon)
+			if (icon)
+				src.RL_OverlayIcon = icon
 			src.RL_OverlayState = state
+
+			if (src.RL_MulOverlay)
+				src.RL_MulOverlay.icon = src.RL_OverlayIcon
+				src.RL_MulOverlay.icon_state = src.RL_OverlayState
+			if (src.RL_AddOverlay)
+				src.RL_AddOverlay.icon = src.RL_OverlayIcon
+				src.RL_AddOverlay.icon_state = src.RL_OverlayState
 
 		// Approximate RGB -> Luma conversion formula.
 		RL_GetBrightness()
@@ -839,6 +856,7 @@ turf
 				if(!src.RL_MulOverlay)
 					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
 					src.RL_MulOverlay.set_loc(src)
+					src.RL_MulOverlay.icon = src.RL_OverlayIcon
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else

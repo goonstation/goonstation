@@ -26,6 +26,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 /turf/simulated/wall/auto
 	icon = 'icons/turf/walls_auto.dmi'
 	icon_state = "mapwall"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_supernorn.dmi'
 	var/mod = null
 	var/light_mod = null
 	/// The image we're using to connect to stuff with
@@ -216,7 +217,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
 	icon_state = "mapwall"
-	light_mod = "wall-jen-"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
+	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	update_neighbors()
@@ -284,7 +286,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
 	icon_state = "mapwall_r"
-	light_mod = "wall-jen-"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
+	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
