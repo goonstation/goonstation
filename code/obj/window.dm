@@ -1091,11 +1091,13 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal"
+			icon_state = "wingrille_new"
 			color = "#A114FF"
 
 			reinforced
 				name = "reinforced crystal autowindow grille spawner"
 				win_path = "/obj/window/auto/crystal/reinforced"
+				icon_state = "r-wingrille_new"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
