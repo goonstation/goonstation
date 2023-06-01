@@ -10241,9 +10241,7 @@
 /area/station/science/lab)
 "aFS" = (
 /obj/cable,
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/listeningpost)
 "aFT" = (
 /obj/machinery/launcher_loader/east{
@@ -15865,9 +15863,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/listeningpost)
 "aXa" = (
 /obj/cable{
@@ -15908,9 +15904,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/listeningpost)
 "aXe" = (
 /obj/cable{

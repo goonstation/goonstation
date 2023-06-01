@@ -1113,6 +1113,16 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
+TYPEINFO(/turf/unsimulated/wall/auto/fake_window)
+	connect_diagonal = TRUE
+	connect_overlay = FALSE
+/turf/unsimulated/wall/auto/fake_window
+	name = "strong window"
+	desc = "Wow this looks like a tough god damn window, damn."
+	icon = 'icons/obj/window_pyro.dmi'
+	icon_state = "R-0"
+	mod = "R-"
+	opacity = FALSE
 
 /datum/action/bar/icon/wall_tool_interact
 	id = "wall_tool_interact"

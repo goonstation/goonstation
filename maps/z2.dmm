@@ -12036,9 +12036,7 @@
 	},
 /area/crater/biodome/north)
 "aOe" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/staffhall)
 "aOf" = (
 /obj/spacevine{
@@ -31574,9 +31572,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/crypt/sigma/crew)
 "bVH" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/gauntlet/viewing)
 "bVJ" = (
 /obj/table/auto,
@@ -35723,9 +35719,7 @@
 /turf/unsimulated/floor/void,
 /area/crunch)
 "ciu" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/sim/racing_entry)
 "civ" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -41558,9 +41552,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "czm" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/space)
 "czn" = (
 /obj/decal/cleanable/gangtag,
@@ -42451,9 +42443,7 @@
 	},
 /area/owlery/staffhall)
 "cBB" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/Owlopen)
 "cBC" = (
 /obj/machinery/light{
@@ -44466,9 +44456,7 @@
 	icon_state = "space";
 	name = "VACUUM AREA"
 	},
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/Owlopen)
 "cGw" = (
 /obj/stool/chair{
@@ -44534,9 +44522,7 @@
 	},
 /area/owlery/owleryhall)
 "cGD" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/owleryhall)
 "cGE" = (
 /obj/cable,
@@ -44548,9 +44534,7 @@
 	dir = 4;
 	id = "owl"
 	},
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/office)
 "cGF" = (
 /obj/stool/chair/office{
@@ -45707,9 +45691,7 @@
 /turf/unsimulated/floor/wizard/carpet,
 /area/owlery/office)
 "cJv" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/gangzone)
 "cJw" = (
 /obj/item/paper_bin,
@@ -46318,9 +46300,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cLc" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/office)
 "cLd" = (
 /obj/decal/cleanable/blood/tracks{
@@ -46649,9 +46629,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/owleryhall)
 "cLW" = (
 /obj/decal/cleanable/blood/tracks{
@@ -47102,9 +47080,7 @@
 /turf/unsimulated/floor/greenwhite/corner,
 /area/owlery/owleryhall)
 "cNf" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/owllock)
 "cNg" = (
 /obj/item/suture,
@@ -51398,9 +51374,7 @@
 /turf/unsimulated/floor/grey/blackgrime,
 /area/owlery/Owlmait2)
 "cWv" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/owlery/Owlmait2)
 "cWw" = (
 /obj/disposalpipe/segment{
@@ -75618,9 +75592,7 @@
 	icon_state = "blue"
 	})
 "sUn" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
+/turf/unsimulated/wall/auto/fake_window,
 /area/shuttle/john/owlery)
 "sWb" = (
 /turf/unsimulated/wall/auto/lead/blue,
