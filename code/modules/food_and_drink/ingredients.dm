@@ -63,7 +63,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "fillet-pink"
 	food_color = "#F4B4BC"
 	real_name = "fish"
-	var/filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
+	var/filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice
 
 	attackby(var/obj/item/W, var/mob/user)
 		if(istype(W, /obj/item/kitchen/utensil/knife))
@@ -80,21 +80,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "fillet-orange"
 		food_color = "#F29866"
 		real_name = "salmon"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice/salmon
 	white
 		name = "white fish fillet"
 		icon_state = "fillet-white"
 		food_color = "#FFECB7"
 		real_name = "white fish"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/white
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice/white
 	small
 		name = "small fish fillet"
 		icon_state = "fillet-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
-		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice/small
 
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice
 	name = "slice of fish fillet"
 	desc = "A carefully cut slice of fish fillet."
 	icon_state = "filletslice-pink"
