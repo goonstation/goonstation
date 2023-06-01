@@ -1141,7 +1141,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
 		dir = 1
-		default_material = "metal"
+		default_material = "steel"
 
 // flock windows
 
