@@ -1246,17 +1246,6 @@ TYPEINFO(/obj/machinery/plantpot)
 					var/obj/critter/C = CROP
 					C.friends = C.friends | src.contributors
 
-				else if (istype(CROP,/obj/item/tumbling_creeper))
-					// tumbling creepers behave with their DNA values are like food, but cannot be eaten.... ugh
-					var/obj/item/tumbling_creeper/affected_creeper = CROP
-					var/datum/plantgenes/FDNA = affected_creeper.plantgenes
-					affected_creeper.planttype = HYPgenerateplanttypecopy(affected_creeper, growing)
-					affected_creeper.generation = src.generation
-					HYPpassplantgenes(DNA,FDNA)
-					// Copy the genes from the plant we're harvesting to the new piece of produce.
-					// Now while we have all stats together, let's make the object adjust its stats and not bloat this object more than it needs to be
-					affected_creeper.Setup_DNA()
-
 				if(((growing.isgrass || (growing.force_seed_on_harvest > 0 )) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless) && (growing.force_seed_on_harvest >= 0 ))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.

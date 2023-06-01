@@ -36,8 +36,7 @@
 
 	src.create_reagents(src.reagent_storage)
 
-
-/obj/item/tumbling_creeper/proc/Setup_DNA()
+/obj/item/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 
 	var/endurance_for_max = 100 // how much endurance is needed to reach max damage with the trap
 	var/potency_for_max = 200 // how much potency is needed to generate the max injection-multiplier
@@ -49,11 +48,14 @@
 	var/reagent_storage_max = 50 // How much the max amount of chems is the trap should be able to hold	at max potency
 	var/reagent_generation_multiplier = 0.5 //! How much percentage of the volume should be filled with assoc_reagents when harvested
 
-	var/datum/plantgenes/DNA = src.plantgenes
+	var/datum/plantgenes/creeper_genes = src.plantgenes
+	src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
+	src.generation = src.generation
+	HYPpassplantgenes(passed_genes,creeper_genes)
 
 	// raise the reagent storage limit linear from 0 potency to max potency
 	src.reagent_storage = clamp(
-		round(reagent_storage_min + (DNA?.get_effective_value("potency")/potency_for_max) * (reagent_storage_max - reagent_storage_min)),
+		round(reagent_storage_min + (creeper_genes?.get_effective_value("potency") / potency_for_max) * (reagent_storage_max - reagent_storage_min)),
 		reagent_storage_min,
 		reagent_storage_max)
 
@@ -65,10 +67,10 @@
 		var/list/putreagents = list()
 		putreagents = src.planttype.assoc_reagents
 		//theoretically the tumbling creeper got no assoc_reagents, but for the case that will change at some point
-		if(DNA.mutation)
-			putreagents = putreagents | DNA.mutation.assoc_reagents
-		if(DNA.commuts)
-			for (var/datum/plant_gene_strain/reagent_adder/R in DNA.commuts)
+		if(creeper_genes.mutation)
+			putreagents = putreagents | creeper_genes.mutation.assoc_reagents
+		if(creeper_genes.commuts)
+			for (var/datum/plant_gene_strain/reagent_adder/R in creeper_genes.commuts)
 				putreagents |= R.reagents_to_add
 		// Now we add each reagent into the tumbling creeper
 		if (length(putreagents) > 0)
@@ -79,14 +81,16 @@
 
 	// raise the damage of the plant linear from 0 endurance to max endurance
 	src.crashed_force = clamp(
-		round(crashed_force_min + (DNA?.get_effective_value("endurance")/endurance_for_max) * (crashed_force_max - crashed_force_min)),
+		round(crashed_force_min + (creeper_genes?.get_effective_value("endurance") / endurance_for_max) * (crashed_force_max - crashed_force_min)),
 		crashed_force_min,
 		crashed_force_max)
 
 	src.armed_force = clamp(
-		round(armed_force_min + (DNA?.get_effective_value("endurance")/endurance_for_max) * (armed_force_max - armed_force_min)),
+		round(armed_force_min + (creeper_genes?.get_effective_value("endurance") / endurance_for_max) * (armed_force_max - armed_force_min)),
 		armed_force_min,
 		armed_force_max)
+
+	return src
 
 /obj/item/tumbling_creeper/disposing()
 
