@@ -11545,6 +11545,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aIa" = (
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	id = "smiling";
+	layer = 2.5;
+	pixel_y = -12
+	},
 /obj/item/clothing/under/suit/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
@@ -11755,6 +11761,13 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"aIE" = (
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "aIG" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 4
@@ -15101,7 +15114,6 @@
 	},
 /area/station/hallway/primary/west)
 "aXT" = (
-/obj/landmark/gps_waypoint,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -15666,6 +15678,16 @@
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/space,
 /area/space)
+"aZT" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction{
+	dir = 1;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/west)
 "baa" = (
 /turf/simulated/floor/airless/bluewhite{
 	dir = 8
@@ -23554,6 +23576,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bXY" = (
@@ -27573,6 +27596,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
+"fWz" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "fWK" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -28727,6 +28757,14 @@
 	dir = 5
 	},
 /area/station/medical/medbay/cloner)
+"hgC" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 4
+	},
+/area/station/hallway/primary/west)
 "hgF" = (
 /obj/decal/fakeobjects/airmonitor_broken{
 	pixel_y = 28
@@ -29728,6 +29766,9 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/medlab,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "icU" = (
@@ -32295,7 +32336,7 @@
 /area/station/crew_quarters/barber_shop)
 "kvs" = (
 /obj/wingrille_spawn/auto/reinforced,
-/obj/disposalpipe/segment/mail{
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -39669,10 +39710,6 @@
 	},
 /area/station/engine/substation/east)
 "rwV" = (
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/clothing/suit/bio_suit/paramedic,
-/obj/item/storage/belt/medical,
-/obj/item/storage/belt/medical,
 /obj/rack,
 /obj/machinery/firealarm{
 	dir = 1;
@@ -40722,6 +40759,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"srC" = (
+/obj/machinery/disposal/small{
+	dir = 8
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker,
+/area/station/medical/research)
 "ssD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42721,8 +42767,8 @@
 /area/station/engine/engineering/ce/private)
 "ujN" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 10
+	dir = 10;
+	can_rupture = 0
 	},
 /turf/simulated/floor/redwhite/corner,
 /area/station/medical/medbay/surgery)
@@ -43386,6 +43432,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
+"uMf" = (
+/obj/rack,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/clothing/suit/bio_suit/paramedic,
+/obj/item/storage/belt/medical,
+/obj/item/storage/belt/medical,
+/turf/simulated/floor/wood/two,
+/area/station/medical/staff)
 "uMI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/pool)
@@ -70928,7 +70982,7 @@ hev
 cVI
 xaL
 cJF
-aSd
+uMf
 aSd
 aNy
 aSd
@@ -72723,8 +72777,8 @@ bnz
 aGe
 poq
 rJM
-rJM
-aWy
+fWz
+aIE
 rJM
 gil
 lRb
@@ -72980,8 +73034,8 @@ epR
 aGe
 imy
 qsm
-rJM
 aWy
+srC
 mbz
 nbY
 aGX
@@ -73494,8 +73548,8 @@ baj
 bhj
 baj
 baj
-baj
 aYX
+hgC
 bov
 bpV
 bqW
@@ -73751,8 +73805,8 @@ bak
 aNn
 bak
 bak
-bak
 aOs
+aZT
 bow
 bak
 bqX
@@ -74008,8 +74062,8 @@ aPq
 xpa
 aPq
 aPq
-aPq
 bkV
+aPq
 box
 bpW
 bqY
