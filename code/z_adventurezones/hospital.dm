@@ -252,8 +252,8 @@
 	New()
 		..()
 
-		new /obj/item/reagent_containers/food/drinks/bottle/hospital (src)
-		new /obj/item/device/audio_log/hospital_01 (src)
+		src.storage.add_contents(new /obj/item/reagent_containers/food/drinks/bottle/hospital(src))
+		src.storage.add_contents(new /obj/item/device/audio_log/hospital_01(src))
 
 /obj/item/device/audio_log/hospital_01
 
@@ -375,7 +375,7 @@
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
-			var/image/O = image(icon = 'icons/misc/aprilfools.dmi', loc = theKey, icon_state = "key", layer = 20)
+			var/image/O = image(icon = 'icons/obj/artifacts/keys.dmi', loc = theKey, icon_state = "key_niobium", layer = 20)
 			user << O
 
 

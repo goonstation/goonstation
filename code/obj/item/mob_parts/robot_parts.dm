@@ -1193,9 +1193,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
 					ticker.mode:revolutionaries += borg.mind
-					ticker.mode:update_rev_icons_added(borg.mind)
 				if (src.emagged)
 					borg.emagged = 1
+					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 					SPAWN(0)
 						borg.update_appearance()
 				else if (src.syndicate)
@@ -1207,10 +1207,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 			borg.job = "Cyborg"
 
-		// final check to guarantee the icon shows up for everyone
-		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((borg.mind?.get_antagonist(ROLE_REVOLUTIONARY)) || (borg.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		borg.update_appearance()
 
 		qdel(src)

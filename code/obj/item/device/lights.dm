@@ -154,6 +154,14 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
+		var/obj/item/device/light/glowstick/newstick = new type(src.loc)
+		newstick.light_c.a = clamp(passed_genes?.get_effective_value("potency")/60, 0.33, 1) * 255
+		newstick.turnon()
+		qdel(src)
+		return newstick
+
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
 		make_cleanable( /obj/decal/cleanable/generic,T)
@@ -332,8 +340,11 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
 				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			else if (istype(W, /obj/item/match) && W:on == MATCH_LIT) /// random bullshit go!
 				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+
+			else if (istype(W, /obj/item/device/light/candle) && W:on)
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Flameception!</span>")
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
@@ -500,3 +511,227 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		on = 1
 		set_icon_state(src.icon_on)
 		src.light.enable()
+
+TYPEINFO(/obj/item/device/light/floodlight)
+	mats = list("CRY-1" = 10, "CON-1" = 1, "MET-1" = 4)
+
+/obj/item/device/light/floodlight
+	name = "floodlight"
+	desc = "A floodlight that can illuminate a large area. It can be wrenched to activate it."
+	icon = 'icons/obj/lighting.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "floodlight_item"
+	w_class = W_CLASS_BULKY
+	flags = FPRINT | TABLEPASS | CONDUCT
+	rand_pos = FALSE
+	m_amt = 50
+	g_amt = 20
+	col_r = 0.85
+	col_g = 0.85
+	col_b = 1.00
+	brightness = 4.5
+	light_type = /datum/light/cone
+	var/outer_angular_size = 120
+	var/inner_angular_size = 60
+	var/inner_radius = 3
+	var/switch_on = TRUE
+	var/movable = TRUE
+	var/rotatable = TRUE
+	var/infinite_power = FALSE
+	var/power_usage = 50 WATTS
+	var/obj/item/cell/cell = null
+
+	New()
+		. = ..()
+		var/datum/light/cone/light = src.light
+		light.outer_angular_size = src.outer_angular_size
+		light.inner_angular_size = src.inner_angular_size
+		light.inner_radius = src.inner_radius
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable in list("outer_angular_size", "inner_angular_size", "inner_radius", "col_r", "col_g", "col_b", "brightness"))
+			var/enable_later = src.light.enabled
+			var/datum/light/cone/light = src.light
+			if (enable_later)
+				light.disable(TRUE)
+			light.outer_angular_size = src.outer_angular_size
+			light.inner_angular_size = src.inner_angular_size
+			light.inner_radius = src.inner_radius
+			light.set_color(col_r, col_g, col_b)
+			light.set_brightness(brightness)
+			if (enable_later)
+				light.enable(TRUE)
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		. = ..()
+		if (in_interact_range(src, usr) && can_act(usr) && rotatable)
+			var/new_dir = get_dir(src, over_object)
+			if (!new_dir || new_dir == src.dir)
+				return
+			src.set_dir(new_dir)
+
+	set_dir(new_dir)
+		if (new_dir == dir)
+			return
+		. = ..()
+		src.light.move(x, y, z, new_dir)
+
+	attack_self(mob/user)
+		user.drop_item(src)
+		src.set_dir(user.dir)
+		src.pixel_x = 0
+		src.pixel_y = 0
+		for	(var/obj/item/I in user.equipped_list())
+			if (iswrenchingtool(I))
+				src.Attackby(I, user)
+				return
+		boutput(user, "<span class='notice'>You need a wrench to activate [src].</span>")
+
+	proc/toggle()
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1, pitch=0.5)
+		src.switch_on = !src.switch_on
+		if (src.switch_on)
+			processing_items |= src
+		else
+			processing_items -= src
+		light_check()
+
+	attack_hand(mob/user)
+		if (src.anchored)
+			toggle()
+			return
+		. = ..()
+
+	attackby(obj/item/W, mob/user)
+		if (iswrenchingtool(W))
+			if (!isturf(src.loc))
+				user.drop_item(src)
+				if (isturf(src.loc))
+					src.set_dir(user.dir)
+					src.pixel_x = 0
+					src.pixel_y = 0
+			if (!isturf(src.loc))
+				boutput(user, "<span class='notice'>[src] needs to be placed on the ground to be wrenched.</span>")
+				return
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (!src.anchored)
+				src.visible_message("<span class='notice'>[user] starts unwrenching \the [src].</span>")
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(anchor), list(user), src.icon, src.icon_state,\
+					"<span class='notice'>[user] finishes wrenching \the [src].</span>", null)
+			else if(movable)
+				src.visible_message("<span class='notice'>[user] starts wrenching \the [src].</span>")
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECONDS, PROC_REF(unanchor), list(user), src.icon, src.icon_state,\
+					"<span class='notice'>[user] finishes unwrenching \the [src].</span>", null)
+		else if (ispryingtool(W))
+			if (cell)
+				boutput(user, "<span class='notice'>You pry [cell] out of [src].</span>")
+				cell.set_loc(get_turf(src))
+				cell = null
+				light_check()
+			else
+				boutput(user, "<span class='notice'>There is no cell in [src].</span>")
+		else if (istype(W, /obj/item/cell))
+			if (cell)
+				cell.set_loc(get_turf(src))
+				boutput(user, "<span class='notice'>You replace [cell] in [src] with [W].</span>")
+			else
+				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
+			user.drop_item(W)
+			cell = W
+			W.set_loc(src)
+			light_check()
+		else
+			return ..()
+
+	proc/anchor(mob/user)
+		if (!isturf(src.loc))
+			return
+		src.anchored = ANCHORED
+		src.set_icon_state("floodlight")
+		light_check()
+		if (src.switch_on)
+			processing_items |= src
+
+	proc/unanchor(mob/user)
+		if (!isturf(src.loc))
+			return
+		src.anchored = UNANCHORED
+		src.set_icon_state("floodlight_item")
+		if (src.switch_on)
+			processing_items -= src
+		light_check()
+
+	get_desc()
+		. = ..() + "\n"
+		if (isnull(cell))
+			. += " It has no APC-sized cell installed."
+		else
+			. += " [cell] is charged to [cell.charge]/[cell.maxcharge]."
+		if (src.anchored)
+			. += " It is wrenched to the ground."
+			if (src.light.enabled)
+				. += " It is currently on."
+			else if (!src.switch_on)
+				. += " It is currently off."
+			else
+				. += " It is currently out of power."
+		else
+			. += " It is not wrenched to the ground."
+
+	process()
+		..()
+		light_check()
+		if (light.enabled && power_usage > 0)
+			var/area/area = get_area(src.loc)
+			var/obj/machinery/power/apc/apc = area?.area_apc
+			if (apc?.operating && apc?.lighting)
+				area.use_power(src.power_usage, LIGHT)
+			else if (apc?.operating && apc?.environ)
+				area.use_power(src.power_usage, ENVIRON)
+			else
+				src.cell?.use(src.power_usage)
+
+	proc/light_check()
+		var/area/area = get_area(src.loc)
+		var/obj/machinery/power/apc/apc = area?.area_apc
+		var/has_power = apc?.operating && (apc?.lighting || apc?.environ)
+		has_power |= src.cell?.charge >= src.power_usage
+		has_power |= src.infinite_power
+		if (src.anchored)
+			src.UpdateOverlays(SafeGetOverlayImage("lever", src.icon, src.switch_on ? "floodlight-lever-on" : "floodlight-lever-off"), "lever")
+		else
+			src.UpdateOverlays(null, "lever")
+
+		if (!src.anchored || !area || !has_power || !src.switch_on)
+			if (src.light.enabled)
+				src.light.disable()
+				src.UpdateOverlays(null, "light")
+				src.UpdateOverlays(null, "light-lightplane")
+		else
+			if (!src.light.enabled)
+				src.light.attach_x = pixel_x / world.icon_size
+				src.light.attach_y = pixel_y / world.icon_size
+				src.light.enable()
+				src.UpdateOverlays(image(src.icon, "floodlight-light"), "light")
+				var/image/light_lightplane = image(src.icon, "floodlight-light")
+				light_lightplane.plane = PLANE_SELFILLUM
+				light_lightplane.alpha = 127
+				src.UpdateOverlays(light_lightplane, "light-lightplane")
+
+/obj/item/device/light/floodlight/with_cell
+	New()
+		..()
+		cell = new /obj/item/cell/charged(src)
+
+
+/obj/item/device/light/floodlight/starts_on
+	New()
+		..()
+		anchor(null)
+
+/obj/item/device/light/floodlight/starts_on/fixed
+	movable = FALSE
+	rotatable = FALSE
+	infinite_power = TRUE
+	power_usage = 0 WATTS

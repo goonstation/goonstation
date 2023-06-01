@@ -57,6 +57,8 @@
 
 	var/datum/movement_controller/movement_controller
 
+	faction = FACTION_WRAITH
+
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -180,9 +182,6 @@
 			animate(src)
 			animate_levitate(src)
 		#endif
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)

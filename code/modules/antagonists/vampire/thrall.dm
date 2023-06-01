@@ -1,6 +1,7 @@
 /datum/antagonist/subordinate/thrall
 	id = ROLE_VAMPTHRALL
 	display_name = "vampire thrall"
+	antagonist_icon = "vampthrall"
 	remove_on_death = TRUE
 	remove_on_clone = TRUE
 
@@ -61,6 +62,19 @@
 		src.ability_holder.removeAbility(/datum/targetable/vampiric_thrall/speak)
 		src.ability_holder.removeAbility(/datum/targetable/vampire/vampire_bite/thrall)
 		H.remove_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(src.master_ability_holder)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	announce()
 		. = ..()

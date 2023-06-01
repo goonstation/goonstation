@@ -590,8 +590,9 @@
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
-	if (istype(I, /obj/item/device/pda2) && I:ID_card)
-		I = I:ID_card
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card))
+		I = id_card
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1
@@ -765,15 +766,15 @@ Frequency:
 				src.module_states[1] = null
 				src.module_states[2] = null
 				src.module_states[3] = null
-				src.cell.charge -=1
+				src.cell.use(1)
 			else
 				if (src.module_states[1])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[2])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[3])
-					src.cell.charge -=1
-				src.cell.charge -=1
+					src.cell.use(1)
+				src.cell.use(1)
 				setalive(src)
 		else
 			if (isalive(src))

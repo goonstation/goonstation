@@ -17,7 +17,7 @@
 	var/burnt = 0
 	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
-	var/plate_mat = null
+	var/plate_mat = "steel" // As a string
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
@@ -29,8 +29,8 @@
 		..()
 		if (has_material)
 			if (isnull(plate_mat))
-				plate_mat = getMaterial("steel")
-			setMaterial(plate_mat, copy = FALSE)
+				plate_mat = "steel"
+			setMaterial(getMaterial(plate_mat), copy = FALSE)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -656,7 +656,7 @@
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		plate_mat = getMaterial("pharosium")
+		plate_mat = "pharosium"
 		. = ..()
 
 /turf/simulated/floor/circuit/green
@@ -707,7 +707,7 @@
 	mat_changename = 0
 
 	New()
-		plate_mat = getMaterial("cotton")
+		plate_mat = "cotton"
 		. = ..()
 
 /turf/simulated/floor/carpet/grime
@@ -917,7 +917,7 @@ DEFINE_FLOORS(marble/border_wb,
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
-		plate_mat = getMaterial("glass")
+		plate_mat = "glass"
 		..()
 
 /turf/simulated/floor/glassblock/transparent/cyan
@@ -1110,7 +1110,7 @@ DEFINE_FLOORS(minitiles/black,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		plate_mat = getMaterial("wood")
+		plate_mat = "wood"
 		. = ..()
 
 /turf/simulated/floor/wood/two
@@ -1436,7 +1436,7 @@ DEFINE_FLOORS(techfloor/green,
 			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		#endif
-		plate_mat = getMaterial("synthrubber")
+		plate_mat = "synthrubber"
 		..()
 
 /turf/proc/grassify()
@@ -1521,7 +1521,7 @@ DEFINE_FLOORS(techfloor/green,
 	mat_changedesc = 0
 
 	New()
-		plate_mat = getMaterial("rock")
+		plate_mat = "rock"
 		..()
 
 /////////////////////////////////////////
@@ -1621,7 +1621,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	allows_vehicles = 1
 
 	New()
-		plate_mat = getMaterial("blob")
+		plate_mat = "blob"
 		..()
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
@@ -1789,7 +1789,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	broken = 0
 	burnt = 0
 	if(plate_mat)
-		src.setMaterial(plate_mat, copy = FALSE)
+		src.setMaterial(getMaterial(plate_mat), copy = FALSE)
 	else
 		src.setMaterial(getMaterial("steel"), copy = FALSE)
 	levelupdate()
@@ -1968,15 +1968,26 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			if(T.change_stack_amount(-1))
+			if(T.amount >= 1)
 				restore_tile()
-				src.plate_mat = src.material
+				src.plate_mat = getMaterial(src.material)
+
+				// if we have a special icon state and it doesn't have a material variant
+				// and at the same time the base floor icon state does have a material variant
+				// we use the material variant from the base floor
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.mat_id]"
+				var/potential_new_base_icon_state = "floor$$[C.material.mat_id]"
+				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
+					src.icon_state = "floor"
+					src.icon = 'icons/turf/floors.dmi'
+
 				if(C.material)
 					src.setMaterial(C.material)
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 				if(!istype(src.material, /datum/material/metal/steel))
 					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+				T.change_stack_amount(-1)
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -2493,7 +2504,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	mat_appearances_to_ignore = list("ice")
 
 	New()
-		plate_mat = getMaterial("ice")
+		plate_mat = "ice"
 		..()
 		name = initial(name)
 
@@ -2595,3 +2606,15 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
+
+// Material flooring
+
+DEFINE_FLOORS(mauxite,
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "floor$$mauxite";\
+	plate_mat = "mauxite")
+
+DEFINE_FLOORS(bamboo,
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "floor$$bamboo";\
+	plate_mat = "bamboo")

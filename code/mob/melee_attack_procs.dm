@@ -680,11 +680,12 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
-	//set attack message
-	if(pre_armor_damage > 0 && damage <= 0 )
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+	if(!do_kick)
+		//set attack message
+		if(pre_armor_damage > 0 && damage <= 0 )
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()

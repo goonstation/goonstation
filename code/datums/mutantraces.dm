@@ -960,10 +960,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
 			M.show_antag_popup("zombie")
 
-	on_attach()
-		if(ishuman(src.mob))
-			src.mob.antagonist_overlay_refresh(1)
-
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
 		M.bioHolder.AddEffect("mattereater")
@@ -1167,7 +1163,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	proc/set_head(var/obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
+		if (isskeleton(head?.linked_human) && head?.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
 			if (H.eye == head)
@@ -1181,7 +1177,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
 			src.head_tracker.linked_human = null
 		head_tracker = head
-		head_tracker.linked_human = src.mob
+		if (src.head_tracker)
+			head_tracker.linked_human = src.mob
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1323,6 +1320,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
 	drains_dna_on_life = 0
+
+	say_filter(var/message)
+		return message // let admin shamblers talk, for fun
 
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0

@@ -216,7 +216,7 @@
 /area/prefab/water_treatment)
 "aU" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/martian,
+/turf/simulated/martian/floor,
 /area/prefab/water_treatment)
 "ba" = (
 /obj/machinery/chem_heater,
@@ -316,7 +316,7 @@
 /area/prefab/water_treatment)
 "bx" = (
 /obj/machinery/drainage,
-/turf/simulated/floor/martian,
+/turf/simulated/martian/floor,
 /area/prefab/water_treatment)
 "bB" = (
 /obj/submachine/chem_extractor{
@@ -717,7 +717,7 @@
 	},
 /area/prefab/water_treatment)
 "Ls" = (
-/turf/simulated/floor/martian,
+/turf/simulated/martian/floor,
 /area/prefab/water_treatment)
 "Mc" = (
 /obj/machinery/light/small/warm/very{
