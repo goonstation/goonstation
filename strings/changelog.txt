@@ -1,5 +1,67 @@
 
+(t)thu jun 01 23
+(u)Piesuu
+(p)14317
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pipe Frames now have help messages that explain their usage in construction
+(t)wed may 31 23
+(u)Chatauscours
+(p)14292
+(e)🗺🔄|A-Mapping, C-Rework
+(*)The Clarion medbay has been entirely remapped.
+(u)Sord
+(+)Security hangars now have remote controllers that can be accessed from space. Sec pod users rejoice.
+(u)colossusqw
+(p)14296
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Makes it so neurodepressant doesn't make you drool or puke while capu is in your system.
+(u)Glamurio (Ryou)
+(p)14181
+(e)💅💊|C-QoL, A-Medical
+(+)Attaching a limb while off-handing a suture/stapler automatically secures the limb.
+(u)LeahTheTech
+(p)14299
+(e)🗺|A-Mapping
+(*)Added a printing press in or near the chapel on all rotation maps.
+(u)LeahTheTech
+(+)Ore scoops can now be used in hand to toggle picking up rocks and ice chunks.
+(t)tue may 30 23
+(u)FlameArrow57
+(p)14264
+(e)🎨⚖💅💊|C-Sprites, C-Balance, C-QoL, A-Medical
+(*)ProDoc goggles now show a purple indicator next to health icons for those with cyber organs of any form.
+(+)Health analyzers without an organ scan upgrade now show if patients have a cyber organ, but not which ones.
+(t)mon may 29 23
+(u)Sian
+(p)14169
+(e)🪲⚖🔄🔊⏰|C-Bug, C-Balance, C-Rework, C-Sound, A-Status-Effects
+(*)Changeling Speed Regeneration now applies a status effect to you that regenerates your health over time.
+(u)Lord_Earthfire
+(p)13697
+(e)🌱|A-Hydroponics
+(+)The unstable gene strain can now malform the quality of all botany produce items instead of food only.
+(u)Ikea
+(p)14019
+(e)⚖🤖|C-Balance, A-Silicons
+(*)There is now a seven minute cooldown for using cyborg recharge upgrades
+(u)Colossusqw
+(p)13946
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Added Promethazine, a anti-emetic agent that stops vomiting.
+(+)Slightly refactored many instances of vomiting messages, please do point out any weirdness that occurs.
+(u)Cheffie
+(p)14163
+(e)⚖🤖|C-Balance, A-Silicons
+(+)Robotic critters are now immune to electric shocks
+(u)Cheffie
+(p)14216
+(e)🗺🔨|A-Mapping, A-Player-Actions
+(+)Clown shoes in deep space look funny...
 (t)sun may 28 23
+(u)Glamurio (Ryou)
+(p)14274
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a new robotics winter coat.
 (u)Skeletonman0
 (p)13957
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects

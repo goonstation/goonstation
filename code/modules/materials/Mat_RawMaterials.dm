@@ -6,15 +6,13 @@
 	icon_state = "bar"
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
-	var/generic_name = TRUE //Does this NOT have a unique name? Should prevent stacks being named things like "frozen fart frozen farts"
 	/// used for prefab bars
-	var/default_material = null
+	default_material = null
+	uses_material_appearance = TRUE
+	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 
 	New()
 		..()
-		if (istext(default_material))
-			var/datum/material/M = getMaterial(default_material)
-			src.setMaterial(M)
 		setup_material()
 
 	proc/setup_material()
@@ -22,7 +20,7 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [generic_name ? material.name : ""] [initial(src.name)][amount > 1 ? "s":""]"
+			name = "[amount] [mat_changename ? material.name : ""] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
 	split_stack(var/toRemove)
@@ -138,10 +136,8 @@
 
 		blob
 			name = "chunk of blob"
-
-			setup_material()
-				src.setMaterial(getMaterial("blob"), setname = 0)
-				..()
+			default_material = "blob"
+			mat_changename = FALSE
 
 	sphere
 		// energy
@@ -193,19 +189,15 @@
 	name = "frozen fart"
 	desc = "Remarkable! The cold temperatures in the freezer have frozen the fart in mid-air."
 	amount = 5
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("frozenfart"), appearance = FALSE, setname = FALSE)
-		..()
+	default_material = "frozenfart"
+	mat_changename = FALSE
+	uses_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
 	default_material = "steel"
 	icon_state = "bar"
-
-	setup_material()
-		src.setMaterial(getMaterial("steel"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "steel"
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
@@ -213,61 +205,44 @@
 	default_material = "hamburgris"
 	icon_state = "wad"
 
-	setup_material()
-		src.setMaterial(getMaterial("hamburgris"), appearance = TRUE, setname = TRUE)
-		..()
-
 /obj/item/material_piece/glass
 	desc = "A cut block of glass, a common crystalline substance."
 	default_material = "glass"
 	icon_state = "block"
-
-	setup_material()
-		src.setMaterial(getMaterial("glass"), appearance = TRUE, setname = TRUE)
-		..()
 
 /obj/item/material_piece/copper
 	desc = "A processed bar of copper, a conductive metal."
 	default_material = "copper"
 	icon_state = "bar"
 
-	setup_material()
-		src.setMaterial(getMaterial("copper"), appearance = TRUE, setname = TRUE)
-		..()
-
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
+	default_material = "iridiumalloy"
+	uses_material_appearance = FALSE
 	amount = 5
-	setup_material()
-		src.setMaterial(getMaterial("iridiumalloy"), appearance = FALSE, setname = TRUE)
-		..()
 
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
+	default_material = "spacelag"
 	amount = 1
-	setup_material()
-		src.setMaterial(getMaterial("spacelag"), appearance = TRUE, setname = TRUE)
-		..()
 
 /obj/item/material_piece/slag
 	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("slag"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "slag"
+	mat_changename = FALSE
 
 /obj/item/material_piece/rubber/latex
 	name = "sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
+	default_material = "latex"
 
 	setup_material()
-		src.setMaterial(getMaterial("latex"), appearance = FALSE, setname = TRUE)
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
@@ -276,10 +251,10 @@
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("wood"), appearance = FALSE, setname = FALSE)
-		..()
+	default_material = "wood"
+	uses_material_appearance = FALSE
+	mat_changename = FALSE
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
@@ -295,9 +270,10 @@
 	name = "stalk"
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
-	setup_material()
-		src.setMaterial(getMaterial("bamboo"), appearance = FALSE, setname = TRUE)
-		..()
+	default_material = "bamboo"
+	uses_material_appearance = FALSE
+	mat_changename = TRUE
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src], leaving behind some usable building material.")
@@ -314,158 +290,120 @@
 	name = "space spider silk"
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("spidersilk"), appearance = FALSE, setname = FALSE)
-		..()
+	default_material = "spidersilk"
+	uses_material_appearance = FALSE
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/leather
 	name = "leather"
 	desc = "leather made from the skin of some sort of space critter."
 	icon_state = "fabric"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("leather"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "leather"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/synthleather
 	name = "synthleather"
 	desc = "A type of artificial leather."
 	icon_state = "fabric"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("synthleather"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "synthleather"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/cottonfabric
 	name = "fabric"
 	desc = "A type of natural fabric."
 	icon_state = "fabric"
-	setup_material()
-		src.setMaterial(getMaterial("cotton"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "cotton"
 
 /obj/item/material_piece/cloth/jean
 	name = "jean textile"
 	desc = "A type of a sturdy textile."
 	icon_state = "fabric"
-	setup_material()
-		src.setMaterial(getMaterial("jean"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "jean"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
 	icon_state = "fabric"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("brullbarhide"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "brullbarhide"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
 	icon_state = "fabric"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = FALSE, setname = FALSE)
-		..()
+	default_material = "kingbrullbarhide"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/carbon
 	name = "fabric"
 	desc = "carbon based hi-tech material."
 	icon_state = "fabric"
-	setup_material()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "carbonfibre"
 
 /obj/item/material_piece/cloth/dyneema
 	name = "fabric"
 	desc = "carbon nanofibres and space spider silk!"
 	icon_state = "fabric"
-	setup_material()
-		src.setMaterial(getMaterial("dyneema"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "dyneema"
 
 /obj/item/material_piece/cloth/hauntium
 	name = "fabric"
 	desc = "This cloth seems almost alive."
 	icon_state = "fabric"
-
-	setup_material()
-		src.setMaterial(getMaterial("hauntium"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "hauntium"
 
 /obj/item/material_piece/cloth/beewool
 	name = "bee wool"
 	desc = "Some bee wool."
 	icon_state = "fabric"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("beewool"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "beewool"
+	mat_changename = FALSE
 
 /obj/item/material_piece/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("soulsteel"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "soulsteel"
 
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("bone"), appearance = FALSE, setname = FALSE)
-		..()
+	default_material = "bone"
+	uses_material_appearance = FALSE
+	mat_changename = FALSE
 
 /obj/item/material_piece/gnesis
 	name = "wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
 	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("gnesis"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "gnesis"
 
 /obj/item/material_piece/gnesisglass
-	name = "gnesisglass wafer"
+	name = "wafer"
 	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
-	generic_name = FALSE
-	setup_material()
-		src.setMaterial(getMaterial("gnesisglass"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "gnesisglass"
 
 /obj/item/material_piece/coral
 	name = "chunk"
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
-	setup_material()
-		src.setMaterial(getMaterial("coral"), appearance = FALSE, setname = TRUE)
-		..()
+	default_material = "coral"
+	uses_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("neutronium"), appearance = TRUE, setname = TRUE)
-		..()
+	default_material = "neutronium"
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("plutonium"), appearance = 0, setname = 0)
-		..()
+	default_material = "plutonium"
 
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"
-	generic_name = FALSE
-
-	setup_material()
-		src.setMaterial(getMaterial("gold"), appearance = TRUE, setname = FALSE)
-		..()
+	default_material = "gold"

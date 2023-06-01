@@ -7176,6 +7176,14 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"doi" = (
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood{
+	icon_state = "wooden"
+	},
+/area/station/crew_quarters/lounge/starboard{
+	name = "Book Nook"
+	})
 "dok" = (
 /obj/machinery/turret,
 /turf/simulated/floor/circuit/white,
@@ -48260,7 +48268,7 @@
 /area/station/security/brig)
 "veC" = (
 /obj/structure/girder/reinforced,
-/obj/item/raw_material/scrap_metal/steel,
+/obj/item/raw_material/scrap_metal,
 /turf/simulated/floor,
 /area/pasiphae/bridge)
 "veU" = (
@@ -112374,7 +112382,7 @@ noM
 iqc
 gKn
 hXv
-hXv
+doi
 iqc
 qoL
 eIa

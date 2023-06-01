@@ -981,6 +981,10 @@
 	dir = 4
 	},
 /area/station/turret_protected/AIsat)
+"alU" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/hangar/sec)
 "amc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9007,6 +9011,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door_control/podbay/security/new_walls/north,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -31445,12 +31450,13 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
-"jCE" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/south{
-	pixel_y = -24
+"jCz" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
+/obj/machinery/printing_press,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "jCF" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
@@ -59254,7 +59260,6 @@
 /turf/space,
 /area/space)
 "scx" = (
-/obj/machinery/door_control/podbay/security/new_walls/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/hangar/sec)
@@ -75694,6 +75699,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -100452,7 +100458,7 @@ haK
 jhw
 plN
 plN
-plN
+alU
 xNw
 cLF
 cLF
@@ -101062,7 +101068,7 @@ alB
 alB
 alB
 alB
-jCE
+alB
 plN
 kLw
 fPw
@@ -113082,7 +113088,7 @@ rdj
 rdj
 pcq
 xfZ
-dmd
+jCz
 prO
 prO
 pjN

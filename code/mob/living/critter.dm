@@ -1538,3 +1538,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	isBlindImmune()
 		return TRUE
+
+	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+		return 0
+
+	electric_expose(var/power = 1)
+		return 0

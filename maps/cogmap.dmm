@@ -6927,9 +6927,7 @@
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 13
 	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "avK" = (
 /turf/simulated/floor,
@@ -12778,9 +12776,7 @@
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -7
 	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "aKw" = (
 /obj/table/reinforced/auto,
@@ -16813,9 +16809,7 @@
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -7
 	},
-/turf/simulated/wall/auto/reinforced/supernorn{
-	icon_state = "R12"
-	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "aUB" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
@@ -18717,14 +18711,12 @@
 /area/station/chapel/office)
 "aYM" = (
 /obj/machinery/light,
+/obj/machinery/printing_press,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
 /area/station/chapel/office)
 "aYN" = (
-/obj/shrub{
-	dir = 4
-	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -31793,10 +31785,6 @@
 /obj/item/electronics/soldering{
 	pixel_x = -4;
 	pixel_y = -2
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -55085,14 +55073,6 @@
 	pixel_x = -2;
 	pixel_y = 2
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/device/multitool{
 	pixel_x = -2;
 	pixel_y = 6
@@ -57531,7 +57511,6 @@
 	},
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
-/obj/machinery/r_door_control/podbay/security/new_walls/west,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -59065,21 +59044,8 @@
 	pixel_x = -7;
 	pixel_y = 10
 	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/deconstructor,
-/obj/random_item_spawner/tools_w_igloves/maybe_few,
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
-/obj/item/clothing/gloves/yellow{
-	pixel_x = -7;
-	pixel_y = 10
-	},
 /obj/item/device/multitool{
 	pixel_x = -2;
 	pixel_y = 6
@@ -63513,6 +63479,10 @@
 	dir = 4
 	},
 /area/station/security/main)
+"vbu" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "vbI" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -93548,7 +93518,7 @@ amq
 rfl
 rfl
 rfl
-amr
+vbu
 rfl
 rfl
 rfl
