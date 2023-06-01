@@ -521,12 +521,12 @@
 
 // Misc building material
 
+/// This has no material, why does it exist???? Someone replace it
 /obj/item/raw_material/fabric
 	name = "fabric sheet"
 	desc = "Some spun cloth. Useful if you want to make clothing."
 	icon_state = "fabric"
 	material_name = "Fabric"
-	default_material = "fabric"
 	scoopable = 0
 
 /obj/item/raw_material/cotton/
