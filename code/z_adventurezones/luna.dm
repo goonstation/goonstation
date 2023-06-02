@@ -711,7 +711,7 @@ Contents:
 					return
 
 
-				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
+				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && istype(get_id_card(H.wear_id), /obj/item/card/id))
 					FOUND_NEAT(NT_DISCOUNT)
 						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
 						sleep(5.5 SECONDS)

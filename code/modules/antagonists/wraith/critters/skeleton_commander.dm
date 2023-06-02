@@ -7,7 +7,6 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
@@ -17,6 +16,8 @@
 	health_burn_vuln = 0.3
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
+
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)

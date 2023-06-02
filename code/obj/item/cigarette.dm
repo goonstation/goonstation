@@ -85,7 +85,7 @@
 				src.reagents.trans_to(target, 5)
 			qdel (src)
 			return
-		else if (istype(target, /obj/item/match) && src.on)
+		else if (istype(target, /obj/item/match) && src.on == MATCH_LIT)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
 			src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
@@ -908,8 +908,7 @@
 	burn_output = 600
 	burn_possible = 1
 
-	/// 0 = unlit, 1 = lit, -1 is burnt out/broken or otherwise unable to be lit
-	var/on = 0
+	var/on = MATCH_UNLIT
 
 	var/light_mob = 0
 	var/life_timer = 0
@@ -926,13 +925,14 @@
 		light.attach(src)
 		src.life_timer = rand(15,25)
 
+
 	pickup(mob/user)
 		..()
 		light.attach(user)
 
 	dropped(mob/user)
 		..()
-		if (isturf(src.loc) && src.on > 0)
+		if (isturf(src.loc) && src.on == MATCH_LIT)
 			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
@@ -941,7 +941,7 @@
 				light.attach(src)
 
 	process()
-		if (src.on > 0)
+		if (src.on == MATCH_LIT)
 			if (src.life_timer >= 0)
 				life_timer--
 			var/location = src.loc
@@ -962,7 +962,7 @@
 			//sleep(1 SECOND)
 
 	proc/light(var/mob/user as mob)
-		src.on = 1
+		src.on = MATCH_LIT
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
@@ -972,7 +972,7 @@
 		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
-		src.on = -1
+		src.on = MATCH_INERT
 		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
@@ -990,26 +990,26 @@
 		processing_items.Remove(src)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			if (temperature > T0C+200)
 				src.visible_message("<span class='alert'>The [src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
-		if (src.on > 0)
+		if (src.on > MATCH_UNLIT)
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
 				target.reagents.temperature_reagents(4000,10)
 				return
-		else if (src.on == -1)
+		else if (src.on == MATCH_INERT)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
 			return
-		else if (src.on == 0)
+		else if (src.on == MATCH_UNLIT)
 			if (istype(target, /obj/item/match) && target:on > 0)
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
@@ -1099,7 +1099,7 @@
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
-			if (src.on > 0)
+			if (src.on == MATCH_LIT)
 				user.visible_message("<b>[user]</b> [pick("licks [his_or_her(user)] finger and snuffs out [src].", "waves [src] around until it goes out.")]")
 				src.put_out(user)
 		else
