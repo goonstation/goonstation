@@ -695,11 +695,11 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
 
 	critter_scavenge(var/mob/target)
-		src.visible_message("<span class='combat'><B>[src]</B> gibs [M] in one bite!</span>")
-		logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+		src.visible_message("<span class='combat'><B>[src]</B> gibs [target] in one bite!</span>")
+		logTheThing(LOG_COMBAT, target, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
 		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
-		M.gib()
-		M.ghostize()
+		target.gib()
+		target.ghostize()
 
 	death(var/gibbed)
 		src.can_lie = FALSE
