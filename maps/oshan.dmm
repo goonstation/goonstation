@@ -17034,7 +17034,7 @@
 /turf/space/fluid,
 /area/space)
 "aTu" = (
-/obj/critter/shark,
+/mob/living/critter/aquatic/shark,
 /obj/decal/woodclutter,
 /turf/space/fluid,
 /area/space)
