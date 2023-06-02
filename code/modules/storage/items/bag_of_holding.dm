@@ -26,30 +26,6 @@
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
 	return TRUE
-/*
-/datum/storage/artifact_bag_of_holding/martian
-	var/initial_slots
-	var/initial_max_wclass
-
-	var/seeking_ore = FALSE
-
-/datum/storage/artifact_bag_of_holding/martian/New()
-	..()
-	src.initial_slots = src.slots
-	src.initial_max_wclass = src.max_wclass
-
-	src.linked_item.visible_message("<span class='alert'>[src.linked_item] growls. WHAT THE HELL?? Somehow, you can tell this thing wants Viscerite.</span>")
-	boutput()
-
-/datum/storage/artifact_bag_of_holding/martian/proc/upgrade_storage()
-	if (src.slots < 13)
-
-
-/datum/storage/artifact_bag_of_holding/martian/proc/reduce_storage()
-	if (src.slots > 3)
-		src.slots--
-
-*/
 
 /datum/storage/artifact_bag_of_holding/wizard
 	var/visible_slots = 3
