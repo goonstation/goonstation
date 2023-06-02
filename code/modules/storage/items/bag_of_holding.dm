@@ -143,9 +143,11 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			user?.gib()
 		// implosion
 		if (2)
-			var/obj/machinery/the_singularity/black_hole = new /obj/machinery/the_singularity(T, rad = 1)
-			black_hole.radius = 1
-			black_hole.maxradius = 1
+			var/obj/dummy/artifact_boh_singulo_dummy/black_hole = new (T)
+			T.visible_message("<span class='alert'><B>The artifacts shink to nothing! UH OH.")
+			playsound(T, 'sound/machines/singulo_start.ogg', 20, TRUE)
+			qdel(T)
+			qdel(user)
 			SPAWN(3 SECONDS)
 				qdel(black_hole)
 		// teleport items everywhere
@@ -200,3 +202,21 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 		qdel(I)
 	qdel(boh_1)
 	qdel(boh_2)
+
+/obj/dummy/artifact_boh_singulo_dummy
+	name = "gravitational singularity"
+	desc = "That's... a singularity..."
+	icon = 'icons/effects/160x160.dmi'
+	icon_state = "Sing2"
+	anchored = ANCHORED
+	density = TRUE
+	plane = PLANE_DEFAULT_NOWARP
+
+	event_handler_flags = IMMUNE_SINGULARITY
+
+	pixel_x = -64
+	pixel_y = -64
+
+	New()
+		..()
+		src.SafeScale(0.2, 0.2)
