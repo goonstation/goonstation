@@ -134,7 +134,7 @@
 // user can be null, boh_1 is put into boh_2
 proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifact/boh_2)
 	var/turf/T = get_turf(boh_2)
-	switch(rand(1, 4)) // rand(3, 3)
+	switch(rand(1, 4))
 		// explosion
 		if (1)
 			explosion_new(boh_1, T, 3) // causes a one tile hull breach
@@ -152,11 +152,11 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 		if (3)
 			var/list/items = boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1
 			// teleport to random storages
-			if (prob(100)) // prob(50)
+			if (prob(50))
 				if (length(items))
 					var/list/humans = list()
 					for (var/mob/living/carbon/human/H in mobs)
-						if (H.back?.storage || H.belt?.storage)
+						if ((H.back?.storage && !istype(H.back, /obj/item/artifact/bag_of_holding)) || (H.belt?.storage && !istype(H.belt, /obj/item/artifact/bag_of_holding)))
 							humans += H
 					if (length(humans))
 						shuffle_list(humans)
@@ -164,9 +164,9 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 						for (var/obj/item/I as anything in items)
 							H = pick(humans)
 							if (H.back.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
-								H.back.storage.add_contents(I, null, FALSE)
+								I.stored.transfer_stored_item(I, H.back, TRUE)
 							else if (H.belt.storage.check_can_hold(I) == STORAGE_CAN_HOLD)
-								H.belt.storage.add_contents(I, null, FALSE)
+								I.stored.transfer_stored_item(I, H.belt, TRUE)
 							humans -= H
 							if (!length(humans))
 								break
