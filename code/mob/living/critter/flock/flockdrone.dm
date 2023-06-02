@@ -454,6 +454,15 @@
 	else
 		return ..()
 
+/mob/living/critter/flock/click(atom/target, list/params)
+	. = ..()
+	if (istype(target, /obj/machinery/door/feather) && !in_interact_range(target, src))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
+
 /mob/living/critter/flock/drone/DblClick(location, control, params)
 	. = ..()
 	var/mob/living/intangible/flock/F = usr

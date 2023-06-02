@@ -10,9 +10,10 @@
 	mat_changedesc = FALSE
 	autoclose = TRUE
 	var/broken = FALSE
-	health = 200
-	health_max = 200
+	health = 250
+	health_max = 250
 	var/repair_per_resource = 2
+	autoclose_delay = 5 SECONDS
 
 /obj/machinery/door/feather/New()
 	..()

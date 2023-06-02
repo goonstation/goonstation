@@ -1,4 +1,6 @@
-
+(t)fri jun 02 23
+(u)LeahTheTech
+(*)Flock doors now have slightly more health, close 3x faster than normal doors and can be clicked by flockminds/traces to open or close them.
 (t)thu jun 01 23
 (u)Piesuu
 (p)14317
