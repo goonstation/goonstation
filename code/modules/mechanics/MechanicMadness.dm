@@ -278,9 +278,6 @@
 				return ..() // you can just use the trigger manually from the UI
 			if(src.find_trigger() && !src.open && src.loc==user)
 				return src.the_trigger.Attackhand(user)
-//		onMouseUp(mob/user, var/location)
-
-			//return mouse_drop(user)
 
 #undef CONTAINER_LIGHT_TIME
 #undef MAX_CONTAINER_LIGHT_TIME
