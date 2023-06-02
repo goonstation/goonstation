@@ -790,3 +790,17 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				return weight_class + 1
 			else
 				return weight_class + 2
+
+/// checks an item for an id card
+/proc/get_id_card(obj/item/I)
+	if (istype(I, /obj/item/card/id))
+		return I
+	if (istype(I, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = I
+		return pda.ID_card
+	if (istype(I, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/lanyard = I
+		return lanyard.get_stored_id()
+	if (istype(I, /obj/item/magtractor))
+		var/obj/item/magtractor/mag = I
+		return get_id_card(mag.holding)

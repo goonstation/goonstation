@@ -1060,9 +1060,9 @@ var/global/curr_day = null
 			if (!usr || !usr.client)
 				return
 			var/target = href_list["nick"]
-			var/t = input("Message:", text("Mentor Message")) as null|text
+			var/t = input("Message:", text("Mentor Message")) as null|message
 			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
-				t = strip_html(t, 1500)
+				t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -1096,11 +1096,11 @@ var/global/curr_day = null
 				if (!usr || !usr.client)
 					return
 
-				var/t = input("Message:", text("Mentor Message")) as null|text
+				var/t = input("Message:", text("Mentor Message")) as null|message
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
-					t = strip_html(t, 1500)
+					t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client

@@ -194,6 +194,14 @@
 			tealprint.cancelBuild()
 		return
 
+	else if (istype(target, /obj/machinery/door/feather))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
+		return
+
 	src.examine_verb(target) //default to examine
 
 /mob/living/intangible/flock/say_quote(var/text)

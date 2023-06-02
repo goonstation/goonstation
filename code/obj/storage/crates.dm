@@ -447,6 +447,8 @@
 	desc = "A big metal box that probably has goodies inside."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
+TYPEINFO(/obj/storage/crate/chest)
+	mat_appearances_to_ignore = list("wood")
 /obj/storage/crate/chest
 	name = "treasure chest"
 	desc = "Glittering gold, trinkets and baubles. Paid for in blood."
@@ -454,10 +456,8 @@
 	icon_state = "chest"
 	icon_opened = "chest-open"
 	icon_closed = "chest"
-
-	New()
-		..()
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+	mat_changename = FALSE
+	default_material = "wood"
 
 /obj/storage/crate/chest/coins
 	var/coins_count_min = 5

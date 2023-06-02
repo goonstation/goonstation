@@ -20,6 +20,8 @@ TYPEINFO_NEW(/obj/table)
 	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
+	default_material = null
+	uses_material_appearance = FALSE
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
@@ -27,7 +29,7 @@ TYPEINFO_NEW(/obj/table)
 	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
 	var/hulk_immune = FALSE
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
 	New(loc, obj/a_drawer)
 		..()
@@ -356,7 +358,7 @@ TYPEINFO_NEW(/obj/table)
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 				for (var/obj/item/thing in S.contents)
 					thing.set_loc(src.loc)
-				S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
+				S.tooltip_rebuild = 1
 				S.UpdateIcon()
 				return
 		if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
@@ -446,21 +448,22 @@ TYPEINFO_NEW(/obj/table/round)
 	auto
 		auto = 1
 
-TYPEINFO(/obj/table/wood)
 TYPEINFO_NEW(/obj/table/wood)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/wood/auto)
+TYPEINFO(/obj/table/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/table/wood
 	name = "wooden table"
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
-	mat_appearances_to_ignore = list("wood")
+	uses_material_appearance = FALSE
+	mat_changename = FALSE
+	default_material = "wood"
 
 	auto
 		auto = 1
-	constructed //no "wood wood table"
-		name = "table"
 
 /obj/table/wood/auto/desk
 	name = "wooden desk"
@@ -531,6 +534,21 @@ TYPEINFO_NEW(/obj/table/scrap)
 
 	auto
 		auto = 1
+
+TYPEINFO(/obj/table/mauxite)
+TYPEINFO_NEW(/obj/table/mauxite)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/mauxite/auto)
+/obj/table/mauxite
+	name = "table"
+	icon = 'icons/obj/furniture/table.dmi'
+	icon_state = "0$$mauxite"
+	uses_material_appearance = FALSE
+	mat_changename = TRUE
+	default_material = "mauxite"
+
+	auto
+		auto = TRUE
 
 /obj/table/folding
 	name = "folding table"
@@ -678,6 +696,15 @@ TYPEINFO_NEW(/obj/table/reinforced)
 	auto
 		auto = 1
 
+	get_help_message(dist, mob/user)
+		if (src.status == 2)
+			return {"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to weaken it for disassembly."}
+		else if (src.status == 1)
+			return{"
+				You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it,
+				or a <b>welding tool</b> on <span class='harm'>harm</span> intent to strengthen it.
+			"}
+
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
 			if (src.status == 2)
@@ -767,19 +794,19 @@ TYPEINFO_NEW(/obj/table/reinforced/industrial)
 #define GLASS_BROKEN 1
 #define GLASS_REFORMING 2
 
-TYPEINFO(/obj/table/glass)
 TYPEINFO_NEW(/obj/table/glass)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/glass) // has to be the base type here or else regular glass tables won't connect to reinforced ones
+TYPEINFO(/obj/table/glass)
+	mat_appearances_to_ignore = list("glass")
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
 	icon = 'icons/obj/furniture/table_glass.dmi'
-	mat_appearances_to_ignore = list("glass")
+	default_material = "glass"
 	parts_type = /obj/item/furniture_parts/table/glass
 	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0
-	var/default_material = "glass"
 
 	auto
 		auto = 1
@@ -800,11 +827,6 @@ TYPEINFO_NEW(/obj/table/glass)
 
 		auto
 			auto = 1
-
-	New()
-		..()
-		if (!src.material && default_material)
-			src.setMaterial(getMaterial(default_material), copy = FALSE)
 
 	UpdateName()
 		if (src.glass_broken)

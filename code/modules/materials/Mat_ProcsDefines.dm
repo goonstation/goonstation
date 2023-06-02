@@ -13,6 +13,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Returns one of the base materials by id.
 /proc/getMaterial(mat)
+	#ifdef CHECK_MORE_RUNTIMES
+	if (!istext(mat))
+		CRASH("getMaterial() called with a non-text argument [mat].")
+	if (!(mat in material_cache))
+		CRASH("getMaterial() called with an invalid material id [mat].")
+	#endif
 	if(!istext(mat))
 		return null
 	return material_cache?[mat]
@@ -123,9 +129,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				string = P.desc
 	return string
 
-/// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
-/atom/var/list/mat_appearances_to_ignore = null
-
 /proc/getMaterialPrefixList(datum/material/base)
 	. = list()
 
@@ -204,7 +207,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
 	var/base_icon_state = materialless_icon_state()
-	if (isnull(mat1) || length(src.mat_appearances_to_ignore) && (mat1.name in src.mat_appearances_to_ignore))
+	if (isnull(mat1) || (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore))
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
 		return
@@ -229,7 +232,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(isnull(mat))
 		mat = src.material
 	var/base_icon_state = img.materialless_icon_state()
-	if (isnull(mat) || length(src.mat_appearances_to_ignore) && (mat in src.mat_appearances_to_ignore))
+	if (isnull(mat) || (mat.mat_id in src.get_typeinfo().mat_appearances_to_ignore))
 		img.icon_state = base_icon_state
 		return
 	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
@@ -237,12 +240,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		img.icon_state = potential_new_icon_state
 		return
 
-/atom/proc/is_valid_icon_state(var/state)
-	if(isnull(global.valid_icon_states[src.icon]))
-		global.valid_icon_states[src.icon] = list()
+/atom/proc/is_valid_icon_state(var/state, icon=null)
+	if(isnull(icon))
+		icon = src.icon
+	if(isnull(global.valid_icon_states[icon]))
+		global.valid_icon_states[icon] = list()
 		for(var/icon_state in icon_states(src.icon))
-			global.valid_icon_states[src.icon][icon_state] = 1
-	return state in global.valid_icon_states[src.icon]
+			global.valid_icon_states[icon][icon_state] = 1
+	return state in global.valid_icon_states[icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
