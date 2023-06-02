@@ -674,9 +674,6 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
-	New()
-		..()
-
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
