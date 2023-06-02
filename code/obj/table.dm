@@ -323,6 +323,10 @@ TYPEINFO_NEW(/obj/table)
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
 				return
 
+		if (src.has_drawer && src.drawer_locked)
+			boutput(user, "<span class='alert'>[src]'s desk drawer is locked!</span>")
+			return
+
 		return ..()
 
 	Cross(atom/movable/mover)
