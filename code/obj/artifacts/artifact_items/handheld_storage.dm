@@ -4,11 +4,9 @@
 	w_class = W_CLASS_NORMAL
 	var/base_icon_state
 	var/belt_icon_states = list("eldritch" = "martian-belt",
-								"martian" = "martian-belt",
 								"precursor" = "martian-belt",
 								"wizard" = "martian-belt")
 	var/back_icon_states = list("eldritch" = "martian-backpack",
-								"martian" = "martian-backpack",
 								"precursor" = "martian-backpack",
 								"wizard" = "martian-backpack")
 	var/image/wizard_gem_image
@@ -64,7 +62,7 @@
 	associated_object = /obj/item/artifact/bag_of_holding
 	type_name = "Bag of Holding"
 	rarity_weight = 200
-	validtypes = list("eldritch", "martian", "precursor", "wizard")
+	validtypes = list("eldritch", "precursor", "wizard")
 	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
 		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
 		/datum/artifact_trigger/cold)
@@ -99,10 +97,6 @@
 
 				boh.create_storage(/datum/storage/no_hud/eldritch_bag_of_holding, max_wclass = wclass, slots = slots, opens_if_worn = boh.c_flags & ONBELT,
 					params = list("use_inventory_counter" = TRUE, "item_pick_type" = pick(STORAGE_NO_HUD_QUEUE, STORAGE_NO_HUD_STACK, STORAGE_NO_HUD_RANDOM)))
-
-			// storage that starts off small, but it can be upgraded by "feeding" it ores
-			if ("martian")
-				return
 
 			// large storage, but you can only see a random selection of items in it at a time
 			if ("wizard")
