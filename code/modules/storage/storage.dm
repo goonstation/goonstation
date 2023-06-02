@@ -274,8 +274,7 @@
 
 /// storage item is dropped
 /datum/storage/proc/storage_item_on_drop(atom/source, mob/user)
-	if (user)
-		src.show_hud(user)
+	src.hud?.update(user)
 
 /// when reaching inside the storage item, check for traps
 /datum/storage/proc/mousetrap_check(mob/user)
