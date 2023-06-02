@@ -651,9 +651,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /datum/limb/mouth/shark
 	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
-	dam_low = 35
-	dam_high = 45
+	dam_low = 25
+	dam_high = 35
 	miss_prob = 100
+	stam_damage_mult = 0.6
 
 /mob/living/critter/aquatic/shark
 	name = "space shark"
