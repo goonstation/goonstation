@@ -296,7 +296,7 @@
 	density = 1
 	anchored= 1
 	level=1
-	w_class = W_CLASS_BULKY ///////////////////////////////////////////
+	w_class = W_CLASS_BULKY
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
