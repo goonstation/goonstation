@@ -7,7 +7,7 @@
 /area/prefab/martian_glomp)
 "g" = (
 /obj/map/light/white,
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/prefab/martian_glomp)
 "i" = (
 /turf/variableTurf/floor,
@@ -15,12 +15,6 @@
 "j" = (
 /obj/decal/aliencomputer{
 	pixel_x = -32
-	},
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
 	},
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
@@ -32,7 +26,11 @@
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "o" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
+/area/prefab/martian_glomp)
+"q" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/wall/auto/martian,
 /area/prefab/martian_glomp)
 "r" = (
 /obj/decal/cleanable/slime,
@@ -117,7 +115,7 @@
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "J" = (
-/turf/unsimulated/wall/auto/adventure/martian,
+/turf/simulated/wall/auto/martian,
 /area/space)
 "K" = (
 /obj/indestructible/shuttle_corner{
@@ -148,9 +146,6 @@
 	pixel_y = 32
 	},
 /turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"O" = (
-/turf/unsimulated/wall/auto/adventure/martian/exterior,
 /area/prefab/martian_glomp)
 "P" = (
 /obj/indestructible/shuttle_corner{
@@ -215,15 +210,6 @@
 /obj/landmark/artifact,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"Z" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
 
 (1,1,1) = {"
 a
@@ -240,7 +226,7 @@ a
 (2,1,1) = {"
 a
 W
-O
+o
 o
 z
 o
@@ -251,7 +237,7 @@ a
 "}
 (3,1,1) = {"
 W
-O
+o
 o
 o
 c
@@ -262,7 +248,7 @@ o
 a
 "}
 (4,1,1) = {"
-O
+o
 g
 R
 c
@@ -275,7 +261,7 @@ y
 "}
 (5,1,1) = {"
 D
-O
+o
 s
 c
 c
@@ -329,7 +315,7 @@ o
 M
 L
 C
-Z
+c
 o
 o
 "}
@@ -363,7 +349,7 @@ a
 D
 o
 o
-z
+q
 o
 o
 K
