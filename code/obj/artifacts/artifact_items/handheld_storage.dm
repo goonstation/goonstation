@@ -131,4 +131,5 @@
 		boh.remove_storage()
 		if (istype(boh.loc, /mob))
 			var/mob/M = boh.loc
-			M.put_in_hand_or_drop(boh)
+			if (!(boh in M.equipped_list()))
+				M.put_in_hand_or_drop(boh)
