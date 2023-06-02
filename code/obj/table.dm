@@ -275,7 +275,7 @@ TYPEINFO_NEW(/obj/table)
 
 		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.has_drawer)
 			var/obj/item/device/key/K = W
-			if (src?.lock_id == K.id)
+			if (src.lock_id && src..lock_id == K.id)
 				src.drawer_locked = !src.drawer_locked
 				user.visible_message("[user] [!src.drawer_locked ? "un" : null]locks [src].")
 				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
