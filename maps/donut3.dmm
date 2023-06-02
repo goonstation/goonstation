@@ -1698,7 +1698,8 @@
 /area/station/science/lab)
 "awc" = (
 /obj/blind_switch/south{
-	pixel_x = 4
+	pixel_x = 4;
+	id = "chemistry"
 	},
 /obj/machinery/light_switch/south{
 	pixel_x = -4
