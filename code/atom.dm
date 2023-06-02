@@ -197,8 +197,6 @@ TYPEINFO(/atom)
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
-
-		src.remove_storage()
 		..()
 
 	proc/Turn(var/rot)
@@ -508,6 +506,8 @@ TYPEINFO(/atom)
 
 	src.attached_objs?.Cut()
 	src.attached_objs = null
+
+	src.remove_storage()
 
 	src.vis_locs = null // cleans up vis_contents of visual holders of this too
 
