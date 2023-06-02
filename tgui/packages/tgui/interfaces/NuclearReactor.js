@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Button, Knob, Box, Section, Table, RoundGauge } from '../components';
 import { Window } from '../layouts';
 import { Flex } from '../components';
@@ -7,7 +7,7 @@ import { getTemperatureColor } from './common/temperatureUtils';
 import { round } from 'common/math';
 const T0C = 273.15;
 
-const ReactorRow = (shape) => {
+const ReactorRow = (shape, context) => {
   const {
     onClick,
     components,
@@ -44,12 +44,15 @@ const ReactorRow = (shape) => {
         else
         {
           const { x, y, name, img, temp, extra, flux } = c;
+          const [showTooltip, setshowTooltip] = useLocalState(context, 'hoverOver-' + name, false);
           return (
             <Table.Cell>
               <Button
                 key={name}
                 fluid
-                tooltip={<>{capitalize(name)}<br />{round(temp-T0C, 2)} °C{extra !== "" ? <><br />{extra}</> : ""}{flux !== null ? <><br />{flux} Neutrons</> : ""}</>}
+                tooltip={showTooltip ? <>{capitalize(name)}<br />{round(temp-T0C, 2)} °C{extra !== "" ? <><br />{extra}</> : ""}{flux !== null ? <><br />{flux} Neutrons</> : ""}</> : null}
+                onMouseEnter={() => setshowTooltip(true)}
+                onMouseLeave={() => setshowTooltip(false)}
                 color="transparent"
                 m={1}
                 onClick={() => onClick('slot', { "x": x, "y": y })} >
