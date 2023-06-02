@@ -648,3 +648,69 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	msgs.flush(SUPPRESS_LOGS)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/datum/limb/mouth/shark
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	dam_low = 35
+	dam_high = 45
+	miss_prob = 100
+
+/mob/living/critter/aquatic/shark
+	name = "space shark"
+	real_name = "space shark"
+	desc = "This is the third most terrifying thing you've ever laid eyes on."
+	icon = 'icons/misc/banshark.dmi'
+	icon_state = "banshark1"
+	icon_state_dead = "banshark1-dead"
+	hand_count = 1
+	health_brute = 40
+	health_brute_vuln = 1
+	health_burn = 40
+	health_burn_vuln = 3
+	butcherable = TRUE
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+
+	New()
+		..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/shark
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "jaws"
+		HH.can_hold_items = FALSE
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	seek_target(var/range = 9)
+		. = ..()
+
+		if (length(.) && prob(10))
+			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+
+	critter_scavenge(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> gibs [M] in one bite!</span>")
+		logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+		M.gib()
+		M.ghostize()
+
+	death(var/gibbed)
+		src.can_lie = FALSE
+		if (!gibbed)
+			src.reagents.add_reagent("shark_dna", 50, null)
+		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/shark
+	name = "shark egg"
+	critter_type = /mob/living/critter/aquatic/shark
+	warm_count = 50
