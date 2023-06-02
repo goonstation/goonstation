@@ -11,9 +11,9 @@ Fish lists:
 		Crucian Carp
 		Rainbow trout
 		Goldfish
-	Unimplemented:
 		Chub
 		Eel
+	Unimplemented:
 		Dace
 		Minnow
 		Pike
@@ -28,11 +28,11 @@ Ocean saltwater fish:
 		Coelacanth
 		Mahi-mahi
 		Shrimp
+		Sardine
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
 		Ocean Sunfish
-		Sardine
 		Swordfish
 
 Aquarium saltwater fish:
@@ -42,7 +42,6 @@ Aquarium saltwater fish:
 		Green Chromis
 		Cardinalfish
 		Royal Gramma
-	Unimplemented:
 		Bicolor Angelfish
 		Blue Tang
 		Firefish
@@ -58,7 +57,6 @@ Alien/mutant/other fish:
 		Sun fish
 		Lava fish
 		Blobfish
-		Whale?
 */
 // These catagories aren't used currently.
 #define FISH_CATEGORY_FRESHWATER "freshwater"
@@ -154,6 +152,22 @@ Alien/mutant/other fish:
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_COMMON
 
+/obj/item/fish/chub
+	name = "chub"
+	desc = "chub"
+	icon_state = "chub"
+	inhand_color = "#3dc414"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
+
+/obj/item/fish/eel
+	name = "eel"
+	desc = "eel"
+	icon_state = "eel"
+	inhand_color = "#1e2030"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_UNCOMMON
+
 // Ocean saltwater fish
 
 /obj/item/fish/herring
@@ -176,7 +190,7 @@ Alien/mutant/other fish:
 /obj/item/fish/tuna
 	name = "bluefin tuna"
 	desc = "Formerly known as the tunny. Delicious but sadly overfished."
-	icon_state = "bass_old"
+	icon_state = "bass_old" //TODO
 	inhand_color = "#3123f8"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_UNCOMMON
@@ -184,7 +198,7 @@ Alien/mutant/other fish:
 /obj/item/fish/cod
 	name = "atlantic cod"
 	desc = "The keystone of fish & chips. Enjoyed since 800 AD."
-	icon_state = "bass_old"
+	icon_state = "cod"
 	inhand_color = "#87d1db"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_COMMON
@@ -192,7 +206,7 @@ Alien/mutant/other fish:
 /obj/item/fish/flounder
 	name = "flounder"
 	desc = "A flatfish found at the bottom of oceans around the world. It's got it's eyes on you!"
-	icon_state = "bass_old"
+	icon_state = "flounder"
 	inhand_color = "#5c471b"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_COMMON
@@ -200,7 +214,7 @@ Alien/mutant/other fish:
 /obj/item/fish/coelacanth
 	name = "coelacanth"
 	desc = "Lazarus had nothing on you. We thought you went to the celestial zoo. The lungfish calls you brother and I guess that we should too."
-	icon_state = "bass_old"
+	icon_state = "bass_old" //TODO
 	inhand_color = "#81878a"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_RARE
@@ -208,7 +222,7 @@ Alien/mutant/other fish:
 /obj/item/fish/mahimahi
 	name = "Mahi-mahi"
 	desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
-	icon_state = "mahimahi"
+	icon_state = "mahimahi" //TODO
 	inhand_color = "#A6B967"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 	category = FISH_CATEGORY_OCEAN
@@ -217,17 +231,25 @@ Alien/mutant/other fish:
 /obj/item/fish/shrimp
 	name = "shrimp"
 	desc = "Shrimple as that."
-	icon_state = "bass_old"
+	icon_state = "shrimp"
 	inhand_color = "#db82db"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/sardine
+	name = "sardine"
+	desc = "sardine"
+	icon_state = "sardine"
+	inhand_color = "#618fe4"
+	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_COMMON
 
 // Aquarium saltwater fish
 
 /obj/item/fish/clownfish
 	name = "clownfish"
 	desc = "A pop-culturarly significant orange fish that lives in a symbiotic relationship with an enemone."
-	icon_state = "bass_old"
+	icon_state = "clownfish"
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_COMMON
@@ -235,7 +257,7 @@ Alien/mutant/other fish:
 /obj/item/fish/damselfish
 	name = "damselfish"
 	desc = "A small pretty fish native to tropical coral reefs and your local aquarium."
-	icon_state = "bass_old"
+	icon_state = "damselfish"
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_COMMON
@@ -243,7 +265,7 @@ Alien/mutant/other fish:
 /obj/item/fish/green_chromis
 	name = "green chromis"
 	desc = "Beautiful iridescent apple-green. Wait a second, isn't this a damselfish?"
-	icon_state = "bass_old"
+	icon_state = "green_chromis"
 	inhand_color = "#3af121"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_COMMON
@@ -251,7 +273,7 @@ Alien/mutant/other fish:
 /obj/item/fish/cardinalfish
 	name = "cardinalfish"
 	desc = "A nocturnal ray-finned fish enjoyed for being small, peaceful and colourful."
-	icon_state = "bass_old"
+	icon_state = "cardinalfish"
 	inhand_color = "#b2b427"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_UNCOMMON
@@ -259,10 +281,50 @@ Alien/mutant/other fish:
 /obj/item/fish/royal_gramma
 	name = "royal gramma"
 	desc = "todo"
-	icon_state = "bass_old"
+	icon_state = "royal_gramma"
 	inhand_color = "#9a05f0"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/bc_angelfish
+	name = "bicolor angelfish"
+	desc = "todo"
+	icon_state = "bc_angelfish"
+	inhand_color = "#3005f0"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/blue_tang
+	name = "blue tang"
+	desc = "todo"
+	icon_state = "blue_tang"
+	inhand_color = "#3005f0"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/firefish
+	name = "firefish"
+	desc = "todo"
+	icon_state = "firefish"
+	inhand_color = "#f06305"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/yellow_tang
+	name = "yellow tang"
+	desc = "todo"
+	icon_state = "yellow_tang"
+	inhand_color = "#d8f005"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/mandarin_fish
+	name = "mandarin fish"
+	desc = "todo"
+	icon_state = "mandarin_fish"
+	inhand_color = "#3005f0"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_RARE
 
 // adventure zone special fish
 
@@ -284,7 +346,7 @@ Alien/mutant/other fish:
 /obj/item/fish/eye_mutant
 	name = "eye mutant"
 	desc = "Was this a fish once? It's got too many eyes on you."
-	icon_state = "bass_old"
+	icon_state = "eyefish"
 	inhand_color = "#f0f0f0"
 	value  = FISH_RARITY_RARE
 
