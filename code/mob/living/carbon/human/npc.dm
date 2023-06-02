@@ -581,6 +581,8 @@
 			throw_equipped |= prob(80)
 		else if(length(I.storage.get_contents()))
 			var/obj/item/taken = pick(I.storage.get_contents())
+			if(taken.anchored) //Niche case where item is anchored into storage. AI shouldnt be able to take it out. "MechComp"
+				return
 			src.u_equip(I)
 			I.set_loc(src.loc)
 			I.dropped(src)
