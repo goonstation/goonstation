@@ -7,6 +7,7 @@ var/datum/explosion_controller/explosions
 	var/list/queued_turfs_blame = list()
 	var/distant_sound = 'sound/effects/explosionfar.ogg'
 	var/exploding = 0
+	var/kaboom_ready = FALSE
 	var/next_turf_safe = FALSE
 
 	proc/explode_at(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
@@ -45,6 +46,7 @@ var/datum/explosion_controller/explosions
 			queued_turfs_blame[T] = new_blame[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
+		kaboom_ready = TRUE
 
 	proc/highest_explosion_power(obj/object)
 		for (var/turf/T in object.locs)
@@ -122,6 +124,7 @@ var/datum/explosion_controller/explosions
 #endif
 		LAGCHECK(LAG_HIGH)
 
+		kaboom_ready = FALSE
 		queued_turfs.len = 0
 		queued_turfs_blame.len = 0
 		defer_powernet_rebuild = 0
@@ -139,7 +142,7 @@ var/datum/explosion_controller/explosions
 	proc/process()
 		if (exploding)
 			return
-		else if (length(queued_turfs))
+		else if (kaboon_ready)
 			kaboom()
 
 		if (length(queued_explosions))
