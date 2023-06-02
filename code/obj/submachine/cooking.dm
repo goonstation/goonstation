@@ -672,6 +672,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
 			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+			src.recipes += new /datum/cookingrecipe/patty(src)
 
 
 	Topic(href, href_list)
@@ -1102,6 +1103,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (/obj/item/reagent_containers/food/snacks/plant/mustard)
 					new/obj/item/reagent_containers/food/snacks/condiment/mustard(src.loc)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/breadloaf)
+					new/obj/item/reagent_containers/food/snacks/bun_both(src.loc)
+					qdel( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)
 			S.set_loc(get_turf(src))
@@ -1232,6 +1236,7 @@ TYPEINFO(/obj/submachine/mixer)
 			src.recipes += new /datum/cookingrecipe/meatpaste(src)
 			src.recipes += new /datum/cookingrecipe/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/butters(src)
+			src.recipes += new /datum/cookingrecipe/raw_patty(src)
 
 		src.UpdateIcon()
 		return

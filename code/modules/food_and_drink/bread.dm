@@ -137,7 +137,12 @@
 	attackby(obj/item/W, mob/user)
 		. = ..()
 		var/obj/item/reagent_containers/food/snacks/new_sandwich/sandwich = new /obj/item/reagent_containers/food/snacks/new_sandwich
-		sandwich.set_loc(src.loc)
+		if(user.is_in_hands(src))
+			user.put_in_hand_or_drop(sandwich)
+		else
+			sandwich.set_loc(src.loc)
+			sandwich.pixel_x = src.pixel_x
+			sandwich.pixel_y = src.pixel_y
 		sandwich.setup(user, FALSE, null, src, W)
 
 	honeywheat
@@ -464,3 +469,55 @@
 	initial_reagents = list("bread"=5,"sugar"=5)
 	food_effects = list("food_refreshed_big")
 	meal_time_flags = MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/bun_bottom
+	name = "hamburger bun"
+	desc = "The bottom half of a hamburger bun, ready to be assembled into a burger!"
+	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon_state = "bun_bottom"
+	bites_left = 3
+	heal_amt = 1
+	//food_color =
+	sandwich_overlay = "bun_bottom"
+
+	attackby(obj/item/W, mob/user)
+		. = ..()
+		var/obj/item/reagent_containers/food/snacks/new_sandwich/sandwich = new /obj/item/reagent_containers/food/snacks/new_sandwich
+		if(user.is_in_hands(src))
+			user.put_in_hand_or_drop(sandwich)
+		else
+			sandwich.set_loc(src.loc)
+			sandwich.pixel_x = src.pixel_x
+			sandwich.pixel_y = src.pixel_y
+		sandwich.setup(user, FALSE, null, src, W)
+
+/obj/item/reagent_containers/food/snacks/bun_top
+	name = "hamburger bun"
+	desc = "The top half of a hamburger bun, ready to top off a burger!"
+	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon_state = "bun_top"
+	bites_left = 3
+	heal_amt = 1
+	//food_color =
+	sandwich_overlay = "bun_top"
+
+/obj/item/reagent_containers/food/snacks/bun_both
+	name = "hamburger buns"
+	desc = "A pair of hamburger buns. You should probably separate them if you want to use them."
+	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon_state = "bun_both"
+	bites_left = 6
+	heal_amt = 1
+
+	attack_self(mob/user)
+		var/obj/item/reagent_containers/food/snacks/bun_top/new_top = new /obj/item/reagent_containers/food/snacks/bun_top
+		var/obj/item/reagent_containers/food/snacks/bun_bottom/new_bottom = new /obj/item/reagent_containers/food/snacks/bun_bottom
+		if (src.bites_left < 6)
+			var/new_bites = round(src.bites_left / 2)
+			new_top.bites_left = new_bites
+			new_bottom.bites_left = new_bites
+		user.drop_item(src)
+		user.put_in_hand_or_drop(new_bottom)
+		user.put_in_hand_or_drop(new_top)
+		qdel(src)
+

@@ -2020,6 +2020,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "steak"
 	desc = "Made of people."
 	icon_state = "meat-grilled"
+	sandwich_overlay = "overlay_steak"
 	bites_left = 2
 	heal_amt = 3
 	var/hname = null
@@ -2034,6 +2035,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	name = "monkey steak"
 	desc = "You'll go bananas for it."
 	icon_state = "meat-grilled"
+	sandwich_overlay = "overlay_steak"
 	bites_left = 2
 	heal_amt = 3
 	food_color = "#999966"

@@ -128,6 +128,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/list/food_effects = list()
 	var/create_time = 0
 	var/bites_left = 3
+	/// What to display for our /snack item when included in a sandwich/burger
+	/// Should be a valid icon_state in foodNdrink/burgers.dmi
+	var/sandwich_overlay = null
+	/// When in a sandwich, how many extra pixels should its overlay be moved upwards
+	/// Thicker ingredients/sprites would warrant a higher number. Set to -1 for no offset at all.
+	var/sandwich_offset = 0
 
 	var/dropped_item = null
 
@@ -159,6 +165,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 	attackby(obj/item/W, mob/user)
+		. = 1
 		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
 				var/obj/item/kitchen/utensil/S = W
@@ -175,6 +182,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				src.AttackSelf(user)
 		else
+			. = 0
 			..()
 
 	attack_self(mob/user as mob)
@@ -284,28 +292,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 1
 
 	///Called when we successfully take a bite of something (or make someone else take a bite of something)
-	proc/take_a_bite(var/mob/consumer, var/mob/feeder)
+	/// suppress_messages also suppresses logging, use sparingly
+	proc/take_a_bite(var/mob/consumer, var/mob/feeder, var/suppress_messages = FALSE)
 		var/ethereal_eater = FALSE
 		if(istype(consumer, /mob/living/critter))
 			var/mob/living/critter/C = consumer
 			if(C.ghost_spawned)
 				ethereal_eater = TRUE
 
-		if (consumer == feeder)
-			consumer.visible_message("<span class='notice'>[consumer] [ethereal_eater ? "nibbles on" : "takes a bite of"] [src]!</span>",\
-			  "<span class='notice'>You [ethereal_eater ? "nibble on" : "take a bite of"] [src]!</span>")
-			logTheThing(LOG_CHEMISTRY, consumer, "[ethereal_eater ? "nibble on" : "take a bite of"] [src] [log_reagents(src)] at [log_loc(consumer)].")
-		else
-			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
-				"<span class='alert'>You feed [consumer] [src]!</span>",\
-				"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
-			logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
+		if (!suppress_messages)
+			if (consumer == feeder)
+				consumer.visible_message("<span class='notice'>[consumer] [ethereal_eater ? "nibbles on" : "takes a bite of"] [src]!</span>",\
+				"<span class='notice'>You [ethereal_eater ? "nibble on" : "take a bite of"] [src]!</span>")
+				logTheThing(LOG_CHEMISTRY, consumer, "[ethereal_eater ? "nibble on" : "take a bite of"] [src] [log_reagents(src)] at [log_loc(consumer)].")
+			else
+				feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
+					"<span class='alert'>You feed [consumer] [src]!</span>",\
+					"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
+				logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 		if(!ethereal_eater)
 			src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
-		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
-		on_bite(consumer, feeder, ethereal_eater)
+		if (!suppress_messages)
+			playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
+		on_bite(consumer, feeder, ethereal_eater, suppress_messages)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
 		if (!src.bites_left)
@@ -387,7 +398,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 
-	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
+	proc/on_bite(mob/eater, mob/feeder, ethereal_eater, var/suppress_messages = FALSE)
 
 		if (isliving(eater))
 			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
@@ -425,7 +436,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				current_mask = desired_mask
 				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
-		eat_twitch(eater)
+		if(!suppress_messages)
+			eat_twitch(eater)
 		eater.on_eat(src, feeder)
 
 	proc/on_finish(mob/eater)

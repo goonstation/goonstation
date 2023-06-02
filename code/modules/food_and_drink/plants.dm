@@ -692,6 +692,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_suffix = " leaf"
 	desc = "The go-to staple green vegetable in every good space diet, unlike Spinach."
 	icon_state = "lettuce-leaf"
+	sandwich_overlay = "overlay_lettuce"
 	planttype = /datum/plant/veg/lettuce
 	w_class = W_CLASS_TINY
 	bites_left = 1
@@ -1217,6 +1218,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	desc = "A sliced ring of onion. When fried, makes a side dish perfectly suited to being overlooked in favor of french fries."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "onion-ring"
+	sandwich_overlay = "overlay_onion"
 	food_color = "#B923EB"
 	bites_left = 1
 	food_effects = list("food_bad_breath")

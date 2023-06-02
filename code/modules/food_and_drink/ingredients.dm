@@ -115,6 +115,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "bacon"
 	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."
 	icon_state = "bacon"
+	sandwich_overlay = "overlay_bacon"
 	initial_reagents = list("porktonium"=10)
 	blood = 0
 
@@ -134,6 +135,25 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		icon_state = "bacon-raw"
 		blood = 2
 		real_name = "bacon"
+
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/patty
+	name = "raw patty"
+	desc = "A circular lump of minced meat, ready to be cooked into a delicious burger patty."
+	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon_state = "overlay_patty_raw"
+	heal_amt = 1
+	bites_left = 4
+
+/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty
+	name = "cooked patty"
+	desc = "A round piece of cooked meat engineered to be installed on similarly round buns."
+	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon_state = "overlay_patty"
+	heal_amt = 3
+	bites_left = 4
+	//todo: add compatibility with shitty grill to have burger patties
+	//have improved stats based on how well they were cooked
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	name = "chicken nugget"
@@ -380,6 +400,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "meatpaste"
 	desc = "A meaty paste"
 	icon_state = "meatpaste"
+	sandwich_overlay = "overlay_meatpaste"
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("meat_slurry"=15)
@@ -852,6 +873,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	name = "butter"
 	desc = "Everything's better with it."
 	icon_state = "butter"
+	sandwich_overlay = "overlay_butter"
 	heal_amt = 0
 	food_color = "#FFFF00"
 	initial_volume = 25
@@ -865,6 +887,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	name = "pepperoni"
 	desc = "A slice of what you believe could possibly be meat."
 	icon_state = "pepperoni"
+	sandwich_overlay = "overlay_pepperoni"
 	food_color = "#C90E0E"
 	custom_food = 1
 	doants = 1
@@ -934,6 +957,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "tomato slice"
 	desc = "A slice of some kind of tomato, presumably."
 	icon_state = "tomatoslice"
+	sandwich_overlay = "overlay_tomato"
 	heal_amt = 1
 	food_color = "#f2500c"
 	custom_food = 1
@@ -944,6 +968,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	name = "slice of cheese"
 	desc = "A slice of hopefully fresh cheese."
 	icon_state = "cheeseslice"
+	sandwich_overlay = "overlay_cheese"
 	heal_amt = 1
 	food_color = "#FFD700"
 	custom_food = 1
