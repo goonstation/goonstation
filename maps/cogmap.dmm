@@ -45016,18 +45016,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/auto/reinforced,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/turret_protected/Zeta)
 "dsG" = (
@@ -47074,9 +47062,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "feD" = (
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -47183,26 +47168,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/core)
-"fiC" = (
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "fiV" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -64665,19 +64630,6 @@
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/supplylobby)
 "vTM" = (
-/obj/grille/steel,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable,
-/obj/merge_conflict_marker{
-	name = "---Merge Conflict Marker---";
-	
-	desc = "A best-effort merge was performed. You must resolve this conflict yourself (manually) and remove this object once complete."
-	},
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -108432,9 +108384,9 @@ ksq
 fuv
 eJK
 dsA
-fiC
+feD
 vTM
-fiC
+feD
 feD
 dsA
 jQZ
