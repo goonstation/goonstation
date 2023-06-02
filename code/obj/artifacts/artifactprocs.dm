@@ -158,8 +158,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.vis_contents += A.fx_image
-		src.vis_contents += A.fx_fallback
+		A.show_fx(src)
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -177,8 +176,7 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.vis_contents -= A.fx_image
-		src.vis_contents -= A.fx_fallback
+		A.hide_fx(src)
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()
