@@ -142,7 +142,7 @@ var/datum/explosion_controller/explosions
 	proc/process()
 		if (exploding)
 			return
-		else if (kaboon_ready)
+		else if (kaboom_ready)
 			kaboom()
 
 		if (length(queued_explosions))
