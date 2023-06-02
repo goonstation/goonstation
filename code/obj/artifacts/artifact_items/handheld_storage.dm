@@ -11,6 +11,7 @@
 								"wizard" = "martian-backpack")
 	var/image/wizard_gem_image
 
+	// bags of holding worn on belt or back transform their icon state to a worn icon, while worn
 	equipped(mob/user, slot)
 		if (slot != SLOT_BELT && slot != SLOT_BACK)
 			return ..()
