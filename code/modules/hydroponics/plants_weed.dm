@@ -110,7 +110,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 
 		var/datum/plant/current_planttype = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (current_planttype.growtime + DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
+		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
 				var/datum/plant/growing = checked_plantpot.current
 				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/weed/creeper))
