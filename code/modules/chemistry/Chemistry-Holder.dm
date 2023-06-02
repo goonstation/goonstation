@@ -500,7 +500,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 								if (FG)
 									FG.skip_next_update = 1
 								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
-						src.add_reagent(C.result, created_volume)
+						if(C.result)
+							src.add_reagent(C.result, created_volume)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 							src.update_total()
 							if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
@@ -793,7 +794,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				current_reagent.data = sdata
 				added_new = 1
 			else
-				return 0
+				CRASH("Invalid reagent [reagent] in [src.my_atom] [src.my_atom?.type] (add_reagent))")
 		// Else, if the reagent datum already exists, we'll just be adding to that and won't update with our new reagent datum data
 
 		var/new_amount = (current_reagent.volume + amount)

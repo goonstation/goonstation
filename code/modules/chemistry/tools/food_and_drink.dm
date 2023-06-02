@@ -1655,7 +1655,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "tequila", "boorbon", "beepskybeer", "bojack", "screwdriver",
 	                 "bloody_mary", "bloody_scary", "suicider", "grog", "port", "gin",
 	                 "vermouth", "bitters", "whiskey_sour", "daiquiri", "martini",
-	                 "v_martini", "murdini", "mutini", "manhatten", "libre",
+	                 "v_martini", "murdini", "mutini", "manhattan", "libre",
 	                 "ginfizz", "gimlet", "v_gimlet", "w_russian", "b_russian",
 	                 "irishcoffee", "cosmo", "beach", "gtonic", "vtonic", "sonic",
 	                 "gpink", "eraser", "dbreath", "squeeze", "hunchback", "madmen",
@@ -1668,7 +1668,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "juice_cran", "juice_orange", "juice_lemon", "juice_tomato",
 	                 "juice_strawberry", "juice_cherry", "juice_pineapple", "juice_apple",
 	                 "coconut_milk", "juice_pickle", "cocktail_citrus", "lemonade",
-	                 "halfandhalf", "swedium", "caledonium", "essenceofevlis", "pizza",
+	                 "halfandhalf", "swedium", "caledonium", "essenceofelvis", "pizza",
 									 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
 									 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach")
 

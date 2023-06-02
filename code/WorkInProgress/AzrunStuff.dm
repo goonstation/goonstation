@@ -2,10 +2,7 @@
 	// do not put this anywhere anyone can get it. it is for crime.
 	name = "(de/re)-construction device"
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
-
-	New()
-		..()
-		setMaterial(getMaterial("miracle"))
+	default_material = "miracle"
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))
@@ -1011,6 +1008,8 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
 				T.set_loc(turf_source)
 				T.set_dir(torpedo_dir)
 				T.lockdir = torpedo_dir
+
+/obj/machinery/power/power_wheel
 
 #ifdef MACHINE_PROCESSING_DEBUG
 /datum/power_usage_viewer

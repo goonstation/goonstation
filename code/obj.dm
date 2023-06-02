@@ -14,11 +14,6 @@
 	var/move_triggered = 0
 	var/object_flags = 0
 
-	/// Material id of this object as a lowercase string, set on New()
-	var/default_material = null
-	/// Does this object use appearance from the material?
-	var/uses_material_appearance = FALSE
-
 	animate_movement = 2
 //	desc = "<span class='alert'>HI THIS OBJECT DOESN'T HAVE A DESCRIPTION MAYBE IT SHOULD???</span>"
 //heh no not really
@@ -32,9 +27,6 @@
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
 		src.update_access_from_txt()
-		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			src.setMaterial(getMaterial(default_material), src.uses_material_appearance, src.mat_changename, copy = FALSE)
 
 	Move(NewLoc, direct)
 		if(usr==0) usr = null

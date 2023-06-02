@@ -335,6 +335,8 @@ obj/structure/ex_act(severity)
 	else
 		return ..()
 
+TYPEINFO(/obj/structure/woodwall)
+	mat_appearances_to_ignore = list("wood")
 /obj/structure/woodwall
 	name = "barricade"
 	desc = "This was thrown up in a hurry."
@@ -343,7 +345,6 @@ obj/structure/ex_act(severity)
 	anchored = ANCHORED
 	density = 1
 	opacity = 1
-	mat_appearances_to_ignore = list("wood")
 	var/health = 30
 	var/health_max = 30
 	var/builtby = null
