@@ -67,7 +67,7 @@ proc/check_door_turfs()
 	var/list/log_lines = list()
 	for_by_tcl(door, /obj/machinery/door)
 		var/turf/T = door.loc
-		if(istype(T, /turf/space) || T.density)
+		if(istype(T, /turf/space) && !istype(door, /obj/machinery/door/poddoor) || T.density)
 			log_lines += "[door] [door.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Doors on invalid turfs:\n" + jointext(log_lines, "\n"))
