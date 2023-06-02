@@ -2071,15 +2071,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"aiN" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/space,
-/area/bee_trader)
 "aiP" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/gibber/output_west,
@@ -75085,7 +75076,7 @@ aaa
 aaa
 uvN
 ccW
-aiN
+aia
 soT
 uvN
 aaa
