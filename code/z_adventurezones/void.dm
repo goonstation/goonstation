@@ -49,6 +49,8 @@ CONTENTS:
 	area_parallax_layers = list()
 	teleport_blocked = 2
 
+TYPEINFO(/turf/unsimulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -56,7 +58,6 @@ CONTENTS:
 	opacity = 1
 	density = 1
 	plane = PLANE_SPACE
-	mat_appearances_to_ignore = list("steel")
 #ifdef IN_MAP_EDITOR
 	icon_state = "darkvoid-map" //so we can actually the walls from the floor
 #else
@@ -66,17 +67,20 @@ CONTENTS:
 /turf/unsimulated/wall/void/crunch //putting these here for now
 	fullbright = 0
 
+TYPEINFO(/turf/unsimulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/unsimulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "void"
 	desc = "A strange shifting void ..."
 	plane = PLANE_SPACE
-	mat_appearances_to_ignore = list("steel")
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
 
+TYPEINFO(/turf/simulated/wall/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -85,7 +89,6 @@ CONTENTS:
 	opacity = 1
 	density = 1
 	plane = PLANE_SPACE
-	mat_appearances_to_ignore = list("steel")
 
 	ex_act()
 		return
@@ -103,6 +106,8 @@ CONTENTS:
 		return
 
 
+TYPEINFO(/turf/simulated/floor/void)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
@@ -111,7 +116,6 @@ CONTENTS:
 	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("steel")
 
 	ex_act()
 		return

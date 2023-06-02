@@ -157,9 +157,10 @@
 			if(istype(O))
 				O.unbreakme()
 
-		if (prob(25))
+		if (!ON_COOLDOWN(C, "cling_visible_message", 3 SECONDS))
 			if (changer)
 				C.visible_message("<span class='alert'><B>[C]'s flesh is moving and sliding around oddly!</B></span>")
+				playsound(C, 'sound/misc/cling_flesh.ogg', 30, TRUE)
 
 /datum/targetable/changeling/regeneration
 	name = "Speed Regeneration"
@@ -174,24 +175,64 @@
 	lock_holder = FALSE
 	ignore_holder_lock = 1
 
+	incapacitationCheck()
+		return FALSE
+
 	cast(atom/target)
 		if (..())
 			return 1
-		if (tgui_alert(holder.owner,"Are we sure?","Speed Regenerate?",list("Yes","No")) != "Yes")
+
+		var/datum/abilityHolder/changeling/aH = holder
+		if (!istype(aH))
+			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		if (!src.cooldowncheck())
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds.</span>")
+		var/mob/living/carbon/human/H = holder.owner
+		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
+			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 
-		var/mob/living/carbon/human/C = holder.owner
-		if (!istype(C))
-			boutput(holder.owner, "<span class='alert'>We have no idea what we are, but it's damn sure not compatible.</span>")
-			return 1
-		boutput(holder.owner, "<span class='notice'>Your skin begins reforming around your skeleton.</span>")
+		H.changeStatus("changeling_speedregen", 30 SECONDS)
+		return FALSE
 
-		while(C.health < C.max_health || !C.limbs.l_arm || !C.limbs.r_arm || !C.limbs.l_leg || !C.limbs.r_leg)
-			if(isdead(C))
-				break
-			sleep(3 SECONDS)
-			changeling_super_heal_step(C)
+/// changeling speedregen status effect
+/datum/statusEffect/c_regeneration
+
+	id = "changeling_speedregen"
+	name = "Speed regeneration"
+	desc = "You quickly heal the damage dealt to you."
+	icon_state = "heart+"
+	unique = TRUE
+	maxDuration = 30 SECONDS
+
+	onAdd(optional=null)
+		. = ..()
+		var/mob/living/carbon/human/H
+		if (ishuman(owner))
+			H = owner
+			boutput(H, "<span class='notice'>We start regenerating.</span>")
+			H.visible_message("<span class='alert'><B>[H]'s flesh starts moving and sliding around oddly, repairing their wounds!</B></span>")
+			return
+		else
+			owner.delStatus("changeling_speedregen")
+
+	onUpdate(timePassed)
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		if (!H.getStatusDuration("burning"))
+			if (!ON_COOLDOWN(H, "cling_regen", 2 SECONDS))
+				changeling_super_heal_step(H, 25, 25)
+		else // lings are vulnerable to fire so it stopping their regen makes sense
+			if (!ON_COOLDOWN(H, "cling_fire_regen_cancellation", 3 SECONDS))
+				boutput(H, "<span class='alert'>The fire stops us from regenerating! Put it out!</span>")
+				H.visible_message("<span class='alert'><B>[H]'s flesh is moving weirdly in contact with the fire!</B></span>")
+
+	onRemove()
+		. = ..()
+		var/mob/living/carbon/human/H
+		if (!ishuman(owner)) return
+		H = owner
+		boutput(H, "<span class='notice'>We stop regenerating.</span>")
+		H.visible_message("<span class='alert'><B>[H]'s flesh stops moving and sliding around!</B></span>")
+		return

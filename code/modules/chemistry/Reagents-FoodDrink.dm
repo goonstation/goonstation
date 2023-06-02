@@ -524,7 +524,7 @@ datum
 						var/mob/living/H = M
 						if (isalcoholresistant(H))
 							return
-						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10)
+						if (volume_passed + H.reagents.get_reagent_amount("bojack") > 10 && !H.reagents?.has_reagent("promethazine"))
 
 							boutput(M, "<span class='alert'>Oh god, this stuff is far too manly to keep down...!</span>")
 							SPAWN(pick(30,50,70))
@@ -1240,8 +1240,8 @@ datum
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>"
+					M.vomit(0, null, vomit_message)
 				if(probmult(10))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
@@ -3708,7 +3708,7 @@ datum
 				if(probmult(10))
 					new /obj/decal/cleanable/urine(M.loc)
 
-				if(probmult(15))
+				if(probmult(15) && !M.reagents?.has_reagent("promethazine"))
 					M.visible_message("<span class='alert'>[M] pukes violently!</span>")
 					M.vomit()
 					if(prob(33))
@@ -3759,7 +3759,7 @@ datum
 
 					if(probmult(15)) boutput("<span class='alert'><B>FRUIT IN MY EYES!!!</B></span>")
 
-					if(probmult(25))
+					if(probmult(25) && !M.reagents?.has_reagent("promethazine"))
 						M.vomit()
 						new /obj/item/reagent_containers/food/snacks/plant/lime(M.loc)
 						new /obj/item/reagent_containers/food/snacks/plant/orange(M.loc)

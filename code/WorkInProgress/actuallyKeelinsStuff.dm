@@ -1556,10 +1556,10 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
+	default_material = "slag"
 
 	New()
 		..()
-		setMaterial(getMaterial("slag"))
 		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 

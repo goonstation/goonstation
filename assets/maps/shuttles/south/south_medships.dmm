@@ -240,7 +240,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -583,7 +583,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

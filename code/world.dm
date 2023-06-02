@@ -175,7 +175,7 @@ var/global/mob/twitch_mob = 0
 #endif
 		Z_LOG_DEBUG("Preload", "Map preload running.")
 
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
 		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]\] Starting new round"
@@ -511,7 +511,7 @@ var/global/mob/twitch_mob = 0
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
@@ -602,7 +602,7 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
-	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
@@ -642,10 +642,10 @@ var/global/mob/twitch_mob = 0
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
-#ifdef RUNTIME_CHECKING
+#ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
-	SPAWN(10 SECONDS)
+	SPAWN(15 SECONDS)
 		Reboot_server()
 #endif
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
@@ -690,7 +690,7 @@ var/global/mob/twitch_mob = 0
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
+#if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 

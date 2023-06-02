@@ -826,6 +826,7 @@ var/global/list/soundCache = list(
  	"sound/misc/chefsong.ogg" = 'sound/misc/chefsong.ogg',\
  	"sound/misc/chefsong_end.ogg" = 'sound/misc/chefsong_end.ogg',\
  	"sound/misc/chefsong_start.ogg" = 'sound/misc/chefsong_start.ogg',\
+	"sound/misc/cling_flesh.ogg" = 'sound/misc/cling_flesh.ogg',\
  	"sound/misc/clownstep1.ogg" = 'sound/misc/clownstep1.ogg',\
  	"sound/misc/clownstep2.ogg" = 'sound/misc/clownstep2.ogg',\
  	"sound/misc/cluwnestep1.ogg" = 'sound/misc/cluwnestep1.ogg',\

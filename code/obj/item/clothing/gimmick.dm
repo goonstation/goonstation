@@ -153,40 +153,43 @@
 	icon_state = "smiles"
 	see_face = 0
 
+TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/waldo
 	name = "striped shirt and jeans"
 	desc = "A very distinctive outfit."
 	icon_state = "waldo"
 	item_state = "waldo"
 	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
-	New()
-		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
-
+TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/odlaw
 	name = "yellow-striped shirt and jeans"
 	desc = "A rather sinister outfit."
 	icon_state = "odlaw"
 	item_state = "odlaw"
 	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
-	New()
-		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
-
+TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/fake_waldo
 	name = "striped shirt and jeans"
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
 	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
 	New()
 		..()
 		icon_state = "waldont[rand(1,6)]"
 		item_state = "waldont[rand(1,6)]"
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/head/waldohat
 	name = "Bobble Hat and Glasses"
@@ -805,6 +808,8 @@
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
 
+TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/dawson
 	name = "Aged hipster clothes"
 	desc = "A worn-out brown coat with acid-washed jeans and a yellow-stained shirt. The previous owner must've been a real klutz."
@@ -813,10 +818,8 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_piece = /obj/item/material_piece/cloth/jean
-
-	New()
-		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+	mat_changename = FALSE
+	default_material = "jean"
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -1277,16 +1280,15 @@
 						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
+TYPEINFO(/obj/item/clothing/gloves/ring/gold)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/clothing/gloves/ring/gold
 	name = "gold ring"
 	icon_state = "gring"
 	item_state = "gring"
 	material_prints = "shallow scratches"
 	mat_changename = 0 // okay let's just be "gold ring" and not "flimsy soft good gold ring" tia
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 /obj/item/clothing/gloves/ring/titanium // fancy loot crate ring that gives you hulk, basically. real overpowered?  :T
 	name = "titanium ring"
@@ -1497,16 +1499,17 @@
 	icon_state = "pajamas"
 	item_state = "pajamas"
 
+
+TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/shirtnjeans
 	name = "shirt and jeans"
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
 	item_state = "white"
 	material_piece = /obj/item/material_piece/cloth/jean
-
-	New()
-		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+	mat_changename = FALSE
+	default_material = "jean"
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"

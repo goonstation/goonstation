@@ -15,6 +15,7 @@ var/global/parallax_enabled = TRUE
 	New(turf/newLoc, new_owner)
 		. = ..()
 		src.owner = new_owner
+		src.parallax_layers = list()
 		src.outermost_movable = src.owner.mob
 		src.setup_z_level_parallax_layers()
 		src.update_parallax_z()
@@ -104,7 +105,7 @@ var/global/parallax_enabled = TRUE
 			parallax_layer.alpha = 0
 			animate(parallax_layer, animation_time, alpha = 255, flags = ANIMATION_PARALLEL)
 
-		if (src.previous_turf.z == z_level)
+		if (src.previous_turf && (src.previous_turf.z == z_level))
 			src.owner.screen -= src.parallax_layers
 			src.parallax_layers = parallax_layer_list
 			src.owner.screen |= src.parallax_layers
@@ -128,7 +129,7 @@ var/global/parallax_enabled = TRUE
 					qdel(parallax_layer)
 
 		SPAWN(animation_time + 1)
-			if (src.previous_turf.z == z_level)
+			if (src.previous_turf && (src.previous_turf.z == z_level))
 				src.owner.screen -= src.parallax_layers
 				src.parallax_layers = parallax_layer_list
 				src.owner.screen |= src.parallax_layers
