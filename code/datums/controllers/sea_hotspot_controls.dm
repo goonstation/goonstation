@@ -61,7 +61,7 @@
 					else if (istype(T, /turf/space))
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
+						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
