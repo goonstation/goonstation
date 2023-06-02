@@ -133,6 +133,7 @@
 // when a bag of holding artifact is put into into another
 // user can be null, boh_1 is put into boh_2
 proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifact/boh_2)
+	var/effect
 	var/turf/T = get_turf(boh_2)
 	switch(rand(1, 4))
 		// explosion
@@ -141,6 +142,8 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			T.visible_message("<span class='alert'><B>The artifacts explode! HOLY SHIT!!!")
 			playsound(T, "explosion", 25, TRUE)
 			user?.gib()
+
+			effect = "explosion"
 		// implosion
 		if (2)
 			var/obj/dummy/artifact_boh_singulo_dummy/black_hole = new (T)
@@ -150,6 +153,8 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			qdel(user)
 			SPAWN(3 SECONDS)
 				qdel(black_hole)
+
+			effect = "black hole"
 		// teleport items everywhere
 		if (3)
 			var/list/items = boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1
@@ -172,6 +177,8 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 							humans -= H
 							if (!length(humans))
 								break
+
+				effect = "content teleportation to random storages"
 			// teleport to random turfs
 			else
 				var/list/turfs = block(locate(1, 1, T.z || Z_LEVEL_STATION), locate(world.maxx, world.maxy, T.z || Z_LEVEL_STATION))
@@ -179,6 +186,9 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 					boh_1.storage.transfer_stored_item(I, pick(turfs))
 				for (var/obj/item/I as anything in (boh_2.storage.get_contents() - boh_1))
 					boh_2.storage.transfer_stored_item(I, pick(turfs))
+
+				effect = "content teleportation to random turfs"
+
 			playsound(T, "warp", 50, TRUE)
 			boutput(user, "<span class='alert'><B>The artifacts disappear![length(items) ? "... Along with everything inside them!" : null]</B></span>")
 		// strand user in pocket dimension
@@ -197,6 +207,10 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 
 				SPAWN(5 SECONDS)
 					boutput(user, "<span class='alert'>Yeah... you're not getting out of this place alive.</span>")
+
+			effect = "user stranded in pocket dimension"
+
+	logTheThing(LOG_STATION, boh_2, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
 
 	for (var/obj/item/I as anything in (boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1))
 		qdel(I)
