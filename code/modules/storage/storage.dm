@@ -73,6 +73,7 @@
 		src.make_my_stuff(spawn_contents)
 
 /datum/storage/disposing()
+	// content removal only works for storages on /atom/movable right now
 	for (var/obj/item/I as anything in src.get_contents())
 		src.transfer_stored_item(I, get_turf(src.linked_item))
 
