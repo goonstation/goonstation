@@ -8996,6 +8996,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aGO" = (
@@ -25467,13 +25468,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"cDS" = (
-/obj/machinery/r_door_control/podbay/security{
-	name = "Security Hangar Door Control";
-	pixel_x = 24
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "cDZ" = (
 /turf/simulated/floor/white/side{
 	dir = 1
@@ -31005,6 +30999,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"hbZ" = (
+/obj/machinery/r_door_control/podbay/security{
+	name = "Security Hangar Door Control"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "hdb" = (
 /mob/living/critter/fermid,
 /obj/item/raw_material/cobryl,
@@ -31693,6 +31693,11 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"hIU" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "hJj" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -90945,7 +90950,7 @@ aAq
 aEp
 oBe
 aGb
-fwf
+hIU
 aKw
 aKw
 aKw
@@ -97953,7 +97958,7 @@ aaa
 rfa
 bvq
 bvq
-cDS
+bvq
 bvq
 bvq
 rfa
@@ -98255,7 +98260,7 @@ wdh
 buj
 byT
 byT
-buj
+hbZ
 byT
 byT
 buj

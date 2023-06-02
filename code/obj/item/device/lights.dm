@@ -340,8 +340,11 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
 				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			else if (istype(W, /obj/item/match) && W:on == MATCH_LIT) /// random bullshit go!
 				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+
+			else if (istype(W, /obj/item/device/light/candle) && W:on)
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Flameception!</span>")
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")

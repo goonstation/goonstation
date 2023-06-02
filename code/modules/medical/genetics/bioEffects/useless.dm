@@ -261,16 +261,10 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
-		owner.vis_contents += src.distort
-		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=0, time=0)
-		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+		src.applyFilter()
 
 	OnRemove()
-		owner.remove_filter("dwarfism")
-		owner.vis_contents -= src.distort
-		src.filter = null
+		src.removeFilter()
 		. = ..()
 
 	disposing()
@@ -278,16 +272,30 @@
 		src.distort = null
 		. = ..()
 
+	// We need to fully remove and remake the filter in these cases because the filter reverts to its original size when the animation is interrupted
+	// by another animation, like scan lines. Can't just animate to the correct size.
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=0, time=0)
-			animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+			src.removeFilter()
+			src.applyFilter()
 
 	onPowerChange(oldval, newval)
 		. = ..()
+		src.removeFilter()
+		src.applyFilter()
+
+	proc/applyFilter()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size * power, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
 		animate(src.filter, size=0, time=0)
 		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	proc/removeFilter()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
