@@ -20,6 +20,8 @@
 	onMaterialChanged()
 		return
 
+TYPEINFO(/obj/item/clothing/suit/armor/vest)
+	mat_appearances_to_ignore = list("carbonfibre")
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
@@ -29,10 +31,8 @@
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
-
-	New()
-		..()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = FALSE, setname = FALSE)
+	mat_changename = FALSE
+	default_material = "carbonfibre"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/assembly/anal_ignite))

@@ -298,6 +298,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_volume = 100
 	initial_reagents = list("pepper"=10)
 
+TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
+	mat_appearances_to_ignore = list("honey")
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."
@@ -308,9 +310,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
 	brew_result = "mead"
-	New()
-		..()
-		src.setMaterial(getMaterial("honey"), appearance = 0, setname = 0)
+	mat_changename = "honey"
+	default_material = "honey"
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"

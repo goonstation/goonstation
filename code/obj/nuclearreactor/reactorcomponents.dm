@@ -59,9 +59,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-				if (mat1.name in src.mat_appearances_to_ignore)
-					return
+			if (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore)
+				return
 			if (src.mat_changeappearance && mat1.applyColor)
 				var/list/setcolor = mat1.color
 				if(istext(mat1.color))

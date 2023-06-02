@@ -469,9 +469,7 @@
 
 
 /obj/storage/closet/extradimensional
-	New()
-		..()
-		src.setMaterial(getMaterial("negativematter"))
+	default_material = "negativematter"
 
 
 

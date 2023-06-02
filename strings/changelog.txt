@@ -1,5 +1,18 @@
-
+(t)fri jun 02 23
+(u)aloe
+(+)Changelings are now mostly immune to the effects of choking (knife grabs and fibre wire will still make them bleed, rag choking will make them ingest reagents).
+(u)LeahTheTech
+(*)Flock doors now have slightly more health, close 3x faster than normal doors and can be clicked by flockminds/traces to open or close them.
+(t)thu jun 01 23
+(u)Piesuu
+(p)14317
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pipe Frames now have help messages that explain their usage in construction
 (t)wed may 31 23
+(u)Chatauscours
+(p)14292
+(e)🗺🔄|A-Mapping, C-Rework
+(*)The Clarion medbay has been entirely remapped.
 (u)Sord
 (+)Security hangars now have remote controllers that can be accessed from space. Sec pod users rejoice.
 (u)colossusqw
@@ -15,7 +28,6 @@
 (e)🗺|A-Mapping
 (*)Added a printing press in or near the chapel on all rotation maps.
 (u)LeahTheTech
-(t)wed may 31 23
 (+)Ore scoops can now be used in hand to toggle picking up rocks and ice chunks.
 (t)tue may 30 23
 (u)FlameArrow57

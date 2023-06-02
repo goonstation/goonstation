@@ -82,6 +82,10 @@
 	qdel(src.hud)
 	src.hud = null
 
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
+
 	src.linked_item = null
 	src.stored_items = null
 
