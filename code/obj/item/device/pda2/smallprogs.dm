@@ -21,6 +21,7 @@
 //Revhead tracker
 //Head tracker
 //Generator Controller
+//Mining/Trench map
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -1676,3 +1677,13 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				if(product.desc)
 					. += product.desc
 					. += "<br>"
+
+/datum/computer/file/pda_program/mining_map
+	name = "Mining Map"
+	size = 4
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.active_program = null
+
+		if (usr.client && hotspot_controller)
+			hotspot_controller.show_map(usr.client)

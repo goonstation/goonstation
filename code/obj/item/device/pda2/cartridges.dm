@@ -265,6 +265,16 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
 			src.read_only = 1
 
+	miner
+		name = "Mining cart"
+		desc = "uhh idk yet"
+		//icon_state = ""
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/mining_map(src))
+			src.read_only = 1
+
 	engineer
 		name = "\improper Engine-buddy Atmospherics cartridge"
 		desc = "Great for the enterprising engineer in everyone!"

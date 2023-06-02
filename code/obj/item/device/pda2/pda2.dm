@@ -279,7 +279,9 @@
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
+		name = "Miner PDA"
 		icon_state = "pda-e"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
