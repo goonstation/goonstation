@@ -154,7 +154,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/chub
 	name = "chub"
-	desc = "chub"
+	desc = "The sea chub, also known as the rudderfish or the pilot fish. Wait which one is this?"
 	icon_state = "chub"
 	inhand_color = "#3dc414"
 	category = FISH_CATEGORY_FRESHWATER
@@ -162,7 +162,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/eel
 	name = "eel"
-	desc = "eel"
+	desc = "When the jaws open wide and there's more jaws inside, that's a Moray!"
 	icon_state = "eel"
 	inhand_color = "#1e2030"
 	category = FISH_CATEGORY_FRESHWATER
@@ -238,7 +238,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/sardine
 	name = "sardine"
-	desc = "sardine"
+	desc = "At home in a can. Good grilled, pickled or smoked. The sardine isn't a fan of this however."
 	icon_state = "sardine"
 	inhand_color = "#618fe4"
 	category = FISH_CATEGORY_OCEAN
@@ -280,7 +280,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/royal_gramma
 	name = "royal gramma"
-	desc = "todo"
+	desc = "A pretty pink and yellow common to aquariums. Peaceful and friendly."
 	icon_state = "royal_gramma"
 	inhand_color = "#9a05f0"
 	category = FISH_CATEGORY_AQUARIUM
@@ -288,7 +288,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/bc_angelfish
 	name = "bicolor angelfish"
-	desc = "todo"
+	desc = "It's like two fish in one! Apparently they don't get along with other fish though, at least they have each other."
 	icon_state = "bc_angelfish"
 	inhand_color = "#3005f0"
 	category = FISH_CATEGORY_AQUARIUM
@@ -296,7 +296,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/blue_tang
 	name = "blue tang"
-	desc = "todo"
+	desc = "One of the most common and popular marine aquarium fish in the world, for reasons now lost to time."
 	icon_state = "blue_tang"
 	inhand_color = "#3005f0"
 	category = FISH_CATEGORY_AQUARIUM
@@ -304,7 +304,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/firefish
 	name = "firefish"
-	desc = "todo"
+	desc = "Someone set this one on fire! Just kidding, we have fun here."
 	icon_state = "firefish"
 	inhand_color = "#f06305"
 	category = FISH_CATEGORY_AQUARIUM
@@ -312,7 +312,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/yellow_tang
 	name = "yellow tang"
-	desc = "todo"
+	desc = "Born around the full moon, but bright as the sun. A popular, pretty aquarium fish."
 	icon_state = "yellow_tang"
 	inhand_color = "#d8f005"
 	category = FISH_CATEGORY_AQUARIUM
@@ -320,7 +320,7 @@ Alien/mutant/other fish:
 
 /obj/item/fish/mandarin_fish
 	name = "mandarin fish"
-	desc = "todo"
+	desc = "Slow moving reef-dwellers, these extremely colorful fish find it hard to adapt to aquarium life."
 	icon_state = "mandarin_fish"
 	inhand_color = "#3005f0"
 	category = FISH_CATEGORY_AQUARIUM
