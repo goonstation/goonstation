@@ -1069,7 +1069,8 @@
 "anu" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "anF" = (
 /obj/storage/closet/dresser/random,
@@ -43791,6 +43792,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"nsX" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "nta" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -76111,7 +76117,10 @@
 /area/station/maintenance/inner/se)
 "xfs" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/space)
 "xfT" = (
 /turf/simulated/wall/auto/reinforced/jen,
@@ -77282,6 +77291,14 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/chapel/sanctuary)
+"xvH" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/grille/catwalk,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/space)
 "xvJ" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
@@ -116176,7 +116193,7 @@ xfs
 kuM
 fun
 kuM
-xfs
+xvH
 rdj
 rdj
 abH
@@ -150167,9 +150184,9 @@ rdj
 rdj
 rdj
 rdj
-xfs
-xfs
-xfs
+nsX
+nsX
+nsX
 cNV
 cNV
 yly
@@ -150469,7 +150486,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 rdj
 vVp
 rdj
@@ -150771,7 +150788,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 cNV
 avS
 ere
@@ -151073,7 +151090,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 rdj
 vVp
 rdj
@@ -151375,7 +151392,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 anu
 anu
 cNV
