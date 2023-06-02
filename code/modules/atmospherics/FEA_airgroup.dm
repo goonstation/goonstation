@@ -47,12 +47,12 @@
 
 // overrides
 /datum/air_group/disposing()
-	air = null
+	src.air = null
 	..()
 
 /datum/air_group/New()
 	..()
-	air = new /datum/gas_mixture
+	src.air = new /datum/gas_mixture
 
 // Group procs
 
@@ -82,8 +82,8 @@
 	if (sample_member:air)
 		var/datum/gas_mixture/sample_air = sample_member:air
 
-		air.copy_from(sample_air)
-		air.group_multiplier = length(members)
+		src.air.copy_from(sample_air)
+		src.air.group_multiplier = length(members)
 
 	return TRUE
 
@@ -91,7 +91,7 @@
 /datum/air_group/proc/update_tiles_from_group()
 	for(var/turf/simulated/member as anything in members)
 		if (member.air)
-			member.air.copy_from(air)
+			member.air.copy_from(src.air)
 
 #ifdef ATMOS_ARCHIVING
 /datum/air_group/proc/archive()
@@ -212,12 +212,12 @@
 					ATMOS_TILE_OPERATION_DEBUG(self_border)
 					ATMOS_TILE_OPERATION_DEBUG(enemy_border)
 
-					var/result = air.check_gas_mixture(AG.air)
+					var/result = src.air.check_gas_mixture(AG.air)
 					if(result == GROUP_CHECK_PASS)
-						connection_difference = air.share(AG.air)
+						connection_difference = src.air.share(AG.air)
 					else if(result == SHARER_CHECK_FAIL)
 						AG.suspend_group_processing()
-						connection_difference = air.share(enemy_border.air)
+						connection_difference = src.air.share(enemy_border.air)
 					else
 						abort_group = TRUE
 						break
@@ -251,14 +251,14 @@
 						enemy_tile.archive()
 #endif
 					if(enemy_tile.current_cycle < src.current_cycle)
-						if(air.check_gas_mixture(enemy_tile.air))
-							connection_difference = air.share(enemy_tile.air)
+						if(src.air.check_gas_mixture(enemy_tile.air))
+							connection_difference = src.air.share(enemy_tile.air)
 						else
 							abort_group = TRUE
 							break
 				else if(isturf(enemy_tile) && !enemy_tile.density) // optimization, if you ever need unsimmed walls to affect temperature change this
-					if(air.check_turf(enemy_tile))
-						connection_difference = air.mimic(enemy_tile)
+					if(src.air.check_turf(enemy_tile))
+						connection_difference = src.air.mimic(enemy_tile)
 					else
 						abort_group = TRUE
 						break
@@ -266,6 +266,10 @@
 				if(connection_difference)
 					if(connection_difference > 0 && !isnull(self_border))
 						self_border.consider_pressure_difference(connection_difference, get_dir(self_border,enemy_tile))
+					else
+						if(!isturf(enemy_tile))
+							air_master.groups_to_rebuild |= src
+							stack_trace("[enemy_tile], a nonturf, was in border_individual somehow. Rebuilding group after processing.")
 
 				LAGCHECK(LAG_REALTIME)
 
@@ -279,12 +283,12 @@
 					if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
 						sample = air_master.update_space_sample()
 
-					if(air && sample && air.check_turf(sample))
-						connection_difference = air.mimic(sample, length_space_border)
+					if(src.air && sample && src.air.check_turf(sample))
+						connection_difference = src.air.mimic(sample, length_space_border)
 					else
 						abort_group = TRUE
 				else // faster check for actual space (modified check_turf)
-					var/moles = TOTAL_MOLES(air)
+					var/moles = TOTAL_MOLES(src.air)
 					if(moles <= MINIMUM_AIR_TO_SUSPEND)
 						var/turf/space/sample = air_master.space_sample
 						if (!sample || !(sample.turf_flags & CAN_BE_SPACE_SAMPLE))
@@ -298,7 +302,7 @@
 						self_border.consider_pressure_difference_space(connection_difference)
 
 		if(abort_group)
-			suspend_group_processing()
+			src.suspend_group_processing()
 		else
 			if(air?.check_tile_graphic())
 				for(var/turf/simulated/member as anything in members)
@@ -330,10 +334,10 @@
 			LAGCHECK(LAG_REALTIME)
 
 		if(totalPressure / max(length(members), 1) < 5 && maxTemperature < FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
-			resume_group_processing()
+			src.resume_group_processing()
 			return
 	else
-		if(air?.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
+		if(src.air?.temperature > FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			for(var/turf/simulated/member as anything in members)
 				ATMOS_TILE_OPERATION_DEBUG(member)
 				member.hotspot_expose(air.temperature, CELL_VOLUME)
@@ -341,7 +345,7 @@
 
 				LAGCHECK(LAG_REALTIME)
 
-		air.react()
+		src.air.react()
 
 
 /** If group processing is off, and the air group is bordered by a space tile, execute a fast evacuation of the air in the group.
