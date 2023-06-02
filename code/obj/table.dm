@@ -25,22 +25,22 @@ TYPEINFO_NEW(/obj/table)
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
-	var/has_storage = 0
-	var/obj/item/storage/desk_drawer/desk_drawer = null
 	var/slaps = 0
 	var/hulk_immune = FALSE
+	/// has a drawer storage
+	var/has_drawer = FALSE
+	/// list of contents to add to storage
+	var/drawer_contents = null
+	/// whether the storage can be accessed or not
+	var/drawer_locked = FALSE
+	/// id for key checks, keys with the same id can lock it
+	var/lock_id = FALSE
 	HELP_MESSAGE_OVERRIDE({"You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it."})
 
-	New(loc, obj/a_drawer)
+	New(loc)
 		..()
-		if (src.has_storage)
-			if (a_drawer)
-				src.desk_drawer = a_drawer
-				src.desk_drawer.set_loc(src)
-			else
-				src.desk_drawer = new(src)
-		else if (a_drawer)
-			a_drawer.set_loc(get_turf(src))
+		if (src.has_drawer)
+			src.create_storage(/datum/storage/unholdable, spawn_contents = src.drawer_contents, slots = 13, max_wclass = W_CLASS_SMALL)
 
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
@@ -126,10 +126,6 @@ TYPEINFO_NEW(/obj/table)
 			P = new src.parts_type(src.loc)
 		else
 			P = new (src.loc)
-		if (src.desk_drawer) // this shouldn't happen but I wanna be careful
-			P.contained_storage = src.desk_drawer
-			src.desk_drawer.set_loc(P)
-			src.desk_drawer = null
 		if (P && src.material)
 			P.setMaterial(src.material)
 		var/oldloc = src.loc
@@ -191,13 +187,6 @@ TYPEINFO_NEW(/obj/table)
 
 	disposing()
 		var/turf/OL = get_turf(src)
-		if (src.desk_drawer && length(src.desk_drawer.contents))
-			for (var/atom/movable/A in src.desk_drawer)
-				A.set_loc(OL)
-			var/obj/O = src.desk_drawer
-			src.desk_drawer = null
-			qdel(O)
-
 		if (!OL)
 			return
 		if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -215,6 +204,9 @@ TYPEINFO_NEW(/obj/table)
 		deconstruct()
 
 	attackby(obj/item/W, mob/user, params)
+		if (src.has_drawer && src.storage.hud_shown(user))
+			return ..()
+
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (!G.affecting || G.affecting.buckled)
@@ -262,7 +254,7 @@ TYPEINFO_NEW(/obj/table)
 			return
 
 		else if (isscrewingtool(W))
-			if (istype(src.desk_drawer) && src.desk_drawer.locked)
+			if (src.has_drawer && src.drawer_locked)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_LOCKPICK), user)
 				return
 			else if (src.auto)
@@ -281,8 +273,14 @@ TYPEINFO_NEW(/obj/table)
 			B.smash_on_thing(user, src)
 			return
 
-		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.desk_drawer)
-			src.desk_drawer.Attackby(W, user)
+		else if (istype(W, /obj/item/device/key/filing_cabinet) && src.has_drawer)
+			var/obj/item/device/key/K = W
+			if (src?.lock_id == K.id)
+				src.drawer_locked = !src.drawer_locked
+				user.visible_message("[user] [!src.drawer_locked ? "un" : null]locks [src].")
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
+			else
+				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s desk drawer lock.</span>")
 			return
 
 		else if (istype(W, /obj/item/cloth/towel))
@@ -303,12 +301,9 @@ TYPEINFO_NEW(/obj/table)
 			deconstruct()
 			return
 
-		if (src.has_storage && src.desk_drawer && !istype(user, /mob/living/critter/small_animal))
-			src.mouse_drop(user, src.loc, user.loc)
-
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer))
+			if (istype(H.w_uniform, /obj/item/clothing/under/misc/lawyer) && !H.equipped())
 				slaps += 1
 				src.visible_message("<span class='alert'><b>[H] slams their palms against [src]!</b></span>")
 				if (slaps > 10 && prob(1)) //owned
@@ -323,9 +318,12 @@ TYPEINFO_NEW(/obj/table)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
+				return
 			if(ismonkey(H))
 				actions.start(new /datum/action/bar/icon/railing_jump/table_jump(user, src), user)
-		return
+				return
+
+		return ..()
 
 	Cross(atom/movable/mover)
 		if (!src.density || (mover?.flags & TABLEPASS || istype(mover, /obj/newmeteor)))
@@ -369,8 +367,9 @@ TYPEINFO_NEW(/obj/table)
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location)
-		if (usr && usr == over_object && src.desk_drawer && !istype(usr, /mob/living/critter/small_animal))
-			return src.desk_drawer.MouseDrop(over_object, src_location, over_location)
+		if (usr == over_object && src.has_drawer && src.drawer_locked)
+			boutput(usr, "<span class='alert'>[src]'s desk drawer is locked!</span>")
+			return
 		..()
 
 	Bumped(atom/AM)
@@ -435,7 +434,7 @@ TYPEINFO_NEW(/obj/table)
 	desc = "A desk with a little drawer to store things in!"
 	icon = 'icons/obj/furniture/table_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/desk
-	has_storage = 1
+	has_drawer = TRUE
 
 TYPEINFO(/obj/table/round)
 TYPEINFO_NEW(/obj/table/round)
@@ -470,7 +469,7 @@ TYPEINFO(/obj/table/wood)
 	desc = "A desk made of wood with a little drawer to store things in!"
 	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood/desk
-	has_storage = 1
+	has_drawer = TRUE
 
 TYPEINFO(/obj/table/wood/round)
 TYPEINFO_NEW(/obj/table/wood/round)
@@ -758,20 +757,14 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	desc = "A labratory countertop made from a paper composite, which is very heat resistant."
 	icon = 'icons/obj/furniture/table_chemistry.dmi'
 	parts_type = /obj/item/furniture_parts/table/reinforced/chemistry
-	has_storage = 1
-
+	has_drawer = TRUE
 	auto
 		auto = 1
 
 /obj/table/reinforced/chemistry/beakers //starts with 7 :B:eakers inside it, wow!!
-	var/list/stuff = list()
 	name = "beaker storage"
-
-	New()
-		..()
-		desc += " This one holds beakers in it! Wow!!"
-		for (var/B=0, B<=7, B++)
-			new /obj/item/reagent_containers/glass/beaker(src.desk_drawer)
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/glass/beaker = 7)
 
 TYPEINFO(/obj/table/reinforced/industrial)
 TYPEINFO_NEW(/obj/table/reinforced/industrial)
@@ -1211,17 +1204,17 @@ TYPEINFO(/obj/table/glass)
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		else if (interaction == TABLE_DISASSEMBLE && the_table.desk_drawer)
-			if (the_table.desk_drawer.locked)
+		else if (interaction == TABLE_DISASSEMBLE && the_table.has_drawer)
+			if (the_table.drawer_locked)
 				boutput(owner, "<span class='alert'>You can't disassemble [the_table] when its drawer is locked!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			else if (the_table.desk_drawer.contents.len)
+			else if (length(the_table.storage.get_contents()))
 				boutput(owner, "<span class='alert'>You can't disassemble [the_table] while its drawer has stuff in it!</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		else if (interaction == TABLE_LOCKPICK)
-			if (!the_table.desk_drawer || !the_table.desk_drawer.locked)
+			if (!the_table.has_drawer || !the_table.drawer_locked)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 			else if (prob(8))
@@ -1270,8 +1263,8 @@ TYPEINFO(/obj/table/glass)
 				the_table.set_up()
 			if (TABLE_LOCKPICK)
 				verbens = "picks the lock on"
-				if (the_table.desk_drawer)
-					the_table.desk_drawer.locked = 0
+				if (the_table.has_drawer)
+					the_table.drawer_locked = FALSE
 				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_table].</span>")
 
