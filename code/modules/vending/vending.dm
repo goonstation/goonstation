@@ -495,6 +495,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
+			P.owneraccount = FindBankAccountByName(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -1127,7 +1128,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	New(vending_machine, var/Owner)
 		src.vendor = vending_machine
 		src.owner = Owner
-		src.owneraccount = FindBankAccountByName(Owner.scan.registered)
 		..()
 
 	onUpdate()
