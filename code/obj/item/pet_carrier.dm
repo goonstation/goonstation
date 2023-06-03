@@ -199,7 +199,7 @@
 	proc/attempt_removal(mob/user)
 		if (!src.find_empty_hand(user))
 			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
-			return ..()
+			return
 		if (length(src.carrier_occupants))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
 			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
