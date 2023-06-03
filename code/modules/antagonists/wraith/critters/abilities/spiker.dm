@@ -47,7 +47,7 @@
 	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
-
+		. = ..()
 		if (!istype(holder.owner, /mob/living/critter/wraith/spiker))
 			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
 			return TRUE
@@ -76,7 +76,6 @@
 			the_spiker.shuffling = FALSE
 			if (!isdead(the_spiker))
 				the_spiker.icon_state = "spiker"
-		return FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		..()

@@ -167,21 +167,13 @@
 		return FALSE
 
 	cast(atom/target)
-		if (..())
-			return 1
-
+		. = ..()
 		var/datum/abilityHolder/changeling/aH = holder
-		if (!istype(aH))
-			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
-			return 1
+		if (tgui_alert(src.holder.owner, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
+			boutput(src.holder.owner, "<span class='notice'>We change our mind.</span>")
+			return TRUE
 
-		var/mob/living/carbon/human/H = holder.owner
-		if (tgui_alert(H, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
-			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
-			return 1
-
-		H.changeStatus("changeling_speedregen", 30 SECONDS)
-		return FALSE
+		src.holder.owner.changeStatus("changeling_speedregen", 30 SECONDS)
 
 /// changeling speedregen status effect
 /datum/statusEffect/c_regeneration
