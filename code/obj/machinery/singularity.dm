@@ -127,6 +127,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 */
 /obj/machinery/the_singularity/New(loc, var/E = 100, var/Ti = null,var/rad = 2)
 	START_TRACKING
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.energy = E
 	maxradius = rad
 	if(maxradius<2)
@@ -155,6 +156,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/disposing()
 	STOP_TRACKING
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	. = ..()
 
 /obj/machinery/the_singularity/process()

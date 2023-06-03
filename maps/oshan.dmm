@@ -39149,10 +39149,6 @@
 /obj/disposalpipe/trunk/brig,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
-"chQ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space/fluid,
-/area/station/crew_quarters/lounge/port)
 "chR" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 8;
@@ -79307,7 +79303,7 @@ aya
 bVy
 ckg
 bXO
-chQ
+clP
 bXO
 bYk
 bYk
@@ -81117,7 +81113,7 @@ bVF
 bWv
 bVF
 bXO
-chQ
+clP
 bXO
 bXb
 clS
@@ -81723,7 +81719,7 @@ bXc
 bXR
 aUp
 bXO
-chQ
+clP
 bXO
 clQ
 clQ

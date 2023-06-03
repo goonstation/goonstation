@@ -34384,7 +34384,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
-/turf/space,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "mnk" = (
 /obj/disposalpipe/segment{
