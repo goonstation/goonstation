@@ -25,6 +25,7 @@
 		if(registered)
 			UnregisterSignal(target, XSIG_OUTERMOST_MOVABLE_CHANGED)
 			registered = FALSE
+			vis_locs = null
 
 	proc/notify_nonempty()
 		if(!registered)
