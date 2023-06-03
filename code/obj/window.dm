@@ -1080,24 +1080,22 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "wingrille_new"
-		color = "#A3DCFF"
+		icon_state = "wingrille_f"
 
 		reinforced
 			name = "reinforced autowindow grille spawner"
 			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_new"
+			icon_state = "r-wingrille_f"
 
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal"
-			icon_state = "wingrille_new"
-			color = "#A114FF"
+			icon_state = "wingrille_f"
 
 			reinforced
 				name = "reinforced crystal autowindow grille spawner"
 				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "r-wingrille_new"
+				icon_state = "r-wingrille_f"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
