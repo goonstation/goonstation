@@ -76,7 +76,7 @@
 			else
 				src.UpdateIcon(/*makeshitup*/ 1)
 			if (!src.chat_text)
-				src.chat_text = new(src)
+				src.chat_text = new(null, src)
 
 	disposing()
 		if (src.linked_human)

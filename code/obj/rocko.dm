@@ -21,7 +21,7 @@ obj/item/rocko
 		if(prob(20))
 			src.bright = TRUE
 
-		src.chat_text = new(src)
+		src.chat_text = new(null, src)
 
 		src.icon_state = "rock[pick(1,3)]"
 		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3

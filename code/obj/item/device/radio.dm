@@ -66,7 +66,7 @@ var/list/headset_channel_lookup
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
-	src.chat_text = new(src)
+	src.chat_text = new(null, src)
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null
