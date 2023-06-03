@@ -1810,7 +1810,8 @@
 /area/evilreaver/atmospherics)
 "vd" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/table/auto,
 /obj/decal/cleanable/cobweb2,
@@ -2316,7 +2317,8 @@
 "xU" = (
 /obj/machinery/shower{
 	dir = 4;
-	pixel_y = 6
+	pixel_y = 6;
+	pixel_x = 10
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
@@ -3036,7 +3038,8 @@
 /area/mining/power)
 "Cg" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -3480,7 +3483,8 @@
 /area/evilreaver/bar)
 "Fu" = (
 /obj/machinery/light/emergency{
-	dir = 1
+	dir = 1;
+	pixel_y = 20
 	},
 /turf/simulated/floor/grime,
 /area/mining/dock)
@@ -5222,7 +5226,8 @@
 /area/evilreaver/bridge)
 "QX" = (
 /obj/machinery/light/emergency{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,
