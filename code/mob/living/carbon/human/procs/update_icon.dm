@@ -975,8 +975,8 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							human_image.color = "#FFFFFF"
 					src.body_standing.overlays += human_image
 
-					if (!is_valid_icon_state("chest_[gender_t]",human_image.icon))
-						CRASH("invalid iconstate chest_[gender_t] in file [human_image.icon] used for mob chest sprite on [src]. this is probably bad")
+				if (!is_valid_icon_state("chest_[gender_t]",AHOLD.body_icon))
+					CRASH("invalid iconstate chest_[gender_t] in file [AHOLD.body_icon] used for mob chest sprite on [src]. this is probably bad")
 
 				if(AHOLD.mob_appearance_flags & HAS_OVERSUIT_DETAILS)	// need more oversuits? Make more of these!
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
