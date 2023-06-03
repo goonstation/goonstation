@@ -1222,6 +1222,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		M = M.loc
 
 proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
 	if (!ismovable(target))
 		return null
 	var/atom/movable/M = target
