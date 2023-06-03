@@ -91,7 +91,7 @@
 	proc/measure(var/client/who)
 		var/measured = 8
 		// MeasureText sleeps and that fucks up a lot, removing for now
-		src.measured_height = measured * (1 + round(length(src.maptext_width) / 32)) // this is an incredibly fancy way to write * 1
+		src.measured_height = measured * (1 + round(length(src.maptext) / 80))
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
 	var/image/chat_maptext/text = new /image/chat_maptext
