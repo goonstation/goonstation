@@ -1383,6 +1383,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
+	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
 	icon = 'icons/turf/walls_asteroid.dmi'
@@ -1398,7 +1400,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -2036,19 +2037,10 @@ TYPEINFO(/obj/item/cargotele)
 
 /obj/item/cargotele/traitor
 	cost = 15
-	var/static/list/possible_targets = list()
 	///The account to credit for sales
 	var/datum/db_record/account = null
 	///The total amount earned from selling/stealing
 	var/total_earned = 0
-
-	New()
-		..()
-		if (!length(possible_targets))
-			for(var/turf/T in world) //hate to do this but it's only once vOv
-				LAGCHECK(LAG_LOW)
-				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
-					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return
@@ -2065,10 +2057,7 @@ TYPEINFO(/obj/item/cargotele)
 			store.weld(TRUE, user)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
-		if (!length(src.possible_targets))
-			src.target = locate(rand(1,world.maxx), rand(1,world.maxy), 1)
-		else
-			src.target = pick(src.possible_targets)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)

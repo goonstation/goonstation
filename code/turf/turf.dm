@@ -868,6 +868,8 @@ proc/generate_space_color()
 //	..()
 //moved step and slip functions into Carbon and Human files!
 
+TYPEINFO(/turf/simulated)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
@@ -875,7 +877,6 @@ proc/generate_space_color()
 	var/mutable_appearance/wet_overlay = null
 	var/default_melt_cap = 30
 	can_write_on = 1
-	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD

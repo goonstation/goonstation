@@ -2879,6 +2879,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	death(gibbed)
+		. = ..()
+		animate(src) // stop bumble / bounce
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1

@@ -1,4 +1,17 @@
-
+(t)sat jun 03 23
+(u)pali
+(*)Getting thrown off the shuttle no longer instantly kills you. Instead you get teleported to a random point in space.
+(u)tarmunora
+(+)Yobihodazine requires at least 1u to clear oxy damage, brain damage conversion ratio 40:1 -> 15:1
+(u)pali
+(+)Ghosts can now use the Observe Objects button to observe singularities
+(t)fri jun 02 23
+(u)Sord
+(+)Fire alarms now visually show when they are disconnected.
+(u)aloe
+(+)Changelings are now mostly immune to the effects of choking (knife grabs and fibre wire will still make them bleed, rag choking will make them ingest reagents).
+(u)LeahTheTech
+(*)Flock doors now have slightly more health, close 3x faster than normal doors and can be clicked by flockminds/traces to open or close them.
 (t)thu jun 01 23
 (u)Piesuu
 (p)14317

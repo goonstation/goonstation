@@ -154,6 +154,8 @@
 	/obj/item/clothing/shoes/black,
 	/obj/item/storage/briefcase = 2)
 
+TYPEINFO(/obj/storage/closet/coffin)
+	mat_appearances_to_ignore = list("wood")
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."
@@ -165,7 +167,6 @@
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
-	mat_appearances_to_ignore = list("wood")
 
 	wood
 		icon_closed = "woodcoffin"

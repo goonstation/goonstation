@@ -181,9 +181,7 @@ TYPEINFO(/obj/item/storage/toilet)
 				src.storage.add_contents(new something(src))
 
 /obj/item/storage/toilet/random/gold // important!!
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 /obj/item/storage/toilet/random/escapetools
 	spawn_contents = list(/obj/item/wirecutters,\
@@ -195,7 +193,4 @@ TYPEINFO(/obj/item/storage/toilet)
 	name = "golden toilet"
 	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
-
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"

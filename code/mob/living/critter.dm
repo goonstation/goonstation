@@ -1187,7 +1187,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				else
+				else if(src.is_valid_icon_state("dizzy",src.icon))
 					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
 					if (dizzyStars)
 						src.UpdateOverlays(dizzyStars, "dizzy")
