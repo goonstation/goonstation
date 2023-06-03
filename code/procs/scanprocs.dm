@@ -870,3 +870,28 @@
 	record_prog.active2 = SR
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
+
+/proc/scan_geology_targeted(var/atom/target, var/mob/user, var/visible = 0)
+	var/list/message = list()
+	if(istype(target, /turf/simulated/wall/auto/asteroid))
+		var/turf/simulated/wall/auto/asteroid/rock = target
+		message += "----------------------------------<br>"
+		message += "<B>Geological Report:</B><br><br>"
+		var/datum/ore/ore = rock.ore
+		var/datum/ore/event/event = rock.event
+		if (ore)
+			message += "This stone contains [ore.name].<br>"
+			message += "Analysis suggests [rock.amount] units of viable ore are present.<br>"
+		else
+			message += "This rock contains no known ores.<br>"
+		message += "The rock here has a hardness rating of [rock.hardness].<br>"
+		if (rock.weakened)
+			message += "The rock here has been weakened.<br>"
+		if (event)
+			if (event.analysis_string)
+				message += "<span class='alert'>[event.analysis_string]</span><br>"
+		message += "----------------------------------"
+	else
+		message += "Mineral content indeterminate."
+	message.Join()
+	boutput(user, message)

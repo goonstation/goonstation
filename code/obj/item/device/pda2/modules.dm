@@ -333,3 +333,36 @@ TYPEINFO(/obj/item/device/pda_module)
 		var/obj/item/device/pda_module/alert/J = the_item
 		if (J.host)
 			J.send_alert(src.the_mob)
+
+/obj/item/device/pda_module/miner
+	name = "Mining PDA module"
+	desc = "A PDA module with radio equipment for location pinpointing and ground penetrating radar."
+	icon_state = "pdamod_tscanner"
+	setup_use_menu_badge = 1
+	abilities = list(/obj/ability_button/miningScan)
+	var/obj/item/device/gps/pda/gps
+	var/obj/item/oreprospector/minerScanner //still need to migrate the area scan thing over to scanprocs.dm so i can remove this item
+
+	New()
+		..()
+		gps = new(src)
+		minerScanner = new(src)
+
+	return_menu_badge()
+		var/text = "<a href='byond://?src=\ref[src];open=1'>Space GPS Pro</a>"
+		return text
+
+	Topic(href, href_list)
+		if(..())
+			return
+		if(href_list["open"])
+			gps.show_HTML(usr)
+
+/obj/ability_button/miningScan
+	name = "Geological Scan"
+	icon_state = "pda0"
+
+	execute_ability()
+		var/obj/item/device/pda_module/miner/J = the_item
+		if (J.host)
+			J.minerScanner.AttackSelf(src.the_mob)

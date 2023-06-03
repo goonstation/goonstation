@@ -282,6 +282,7 @@
 		name = "Miner PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
+		setup_default_module = /obj/item/device/pda_module/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 

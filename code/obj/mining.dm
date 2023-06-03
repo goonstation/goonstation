@@ -1132,23 +1132,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
-			var/message = "----------------------------------<br>"
-			message += "<B>Geological Report:</B><br><br>"
-			var/datum/ore/O = src.ore
-			var/datum/ore/event/E = src.event
-			if (O)
-				message += "This stone contains [O.name].<br>"
-				message += "Analysis suggests [src.amount] units of viable ore are present.<br>"
-			else
-				message += "This rock contains no known ores.<br>"
-			message += "The rock here has a hardness rating of [src.hardness].<br>"
-			if (src.weakened)
-				message += "The rock here has been weakened.<br>"
-			if (E)
-				if (E.analysis_string)
-					message += "<span class='alert'>[E.analysis_string]</span><br>"
-			message += "----------------------------------"
-			boutput(user, message)
+			W.scan_geology_targeted(src, user)
 		else
 			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
 		return

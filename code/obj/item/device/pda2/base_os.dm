@@ -109,11 +109,6 @@
 					<li><a href='byond://?src=\ref[src];change_backlight_color=1'>Change Backlight Color</a></li>
 					<li><a href='byond://?src=\ref[src];mode=[MODE_ATMOS]'>Atmospheric Scan</a></li>
 					<li>Scanner: [src.master.scan_program ? "<a href='byond://?src=\ref[src];scanner=1'>[src.master.scan_program.name]</a>" : "None loaded"]</li>"}
-#ifdef UNDERWATER_MAP
-					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Trench Map</a></li>"
-#else
-					. += "<li><a href='byond://?src=\ref[src];trenchmap=1'>Mining Map</a></li>"
-#endif
 
 					if(src.master.module)
 						if(src.master.module.setup_allow_os_config)
@@ -406,10 +401,6 @@
 			else if(href_list["scanner"])
 				if(src.master.scan_program)
 					src.master.set_scan_program(null)
-
-			else if(href_list["trenchmap"])
-				if (usr.client && hotspot_controller)
-					hotspot_controller.show_map(usr.client)
 
 			else if(href_list["change_backlight_color"])
 				var/new_color = input(usr, "Choose a color", "PDA", src.master.bg_color) as color | null

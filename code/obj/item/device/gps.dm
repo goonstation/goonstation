@@ -207,6 +207,7 @@ TYPEINFO(/obj/item/device/gps)
 				if (issilicon(user) || isAIeye(user))
 					target.attack_ai(user)
 			src.add_fingerprint(usr)
+			src.show_HTML(usr) //redraw the UI since we probably did something
 		else
 			usr.Browse(null, "window=gps_[src]")
 			return
@@ -345,3 +346,6 @@ TYPEINFO(/obj/item/device/gps)
 			pingsignal.data["distress"] = "[src.distress]"
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal)
+
+/obj/item/device/gps/pda
+	allowtrack = 0 //start with the tracking device off
