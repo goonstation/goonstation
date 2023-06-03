@@ -163,12 +163,11 @@
 	pointCost = 10
 	ignore_holder_lock = TRUE
 
-	incapacitationCheck()
+	incapacitation_check()
 		return FALSE
 
 	cast(atom/target)
 		. = ..()
-		var/datum/abilityHolder/changeling/aH = holder
 		if (tgui_alert(src.holder.owner, "Are we sure?", "Speed regen?", list("Yes","No")) != "Yes")
 			boutput(src.holder.owner, "<span class='notice'>We change our mind.</span>")
 			return TRUE

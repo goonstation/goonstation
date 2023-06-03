@@ -9,6 +9,7 @@
 	ignore_holder_lock = TRUE
 
 	cast(mob/target)
+		. = ..()
 		var/mob/living/user = holder.owner
 		var/datum/abilityHolder/vampire/AH = holder
 

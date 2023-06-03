@@ -7,16 +7,16 @@
 	for(var/obj/item/I in src.equipped_list())
 		I.emp_act()
 
+/// Returns TRUE if we have enough magic power to cast a spell, FALSE if we don't.
 /mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
-	return 0
+	return FALSE
 
 /mob/living/carbon/human/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
-	if (!src) return 0 // ??
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		magcount += 10
 	if (src.bioHolder.HasEffect("robed"))
-		return 1
+		return TRUE
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical) magcount += 1
 	if(istype(spell) && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))
@@ -27,15 +27,15 @@
 		magcount += 2
 	if (istype(src.l_hand, /obj/item/staff))
 		magcount += 2
-	if (magcount >= 4) return 1
-	else return 0
+
+	return (magcount >= 4)
 
 /mob/living/critter/wizard_spellpower(var/datum/targetable/spell/spell = null)
 	var/magcount = 0
 	if (src.bioHolder.HasEffect("arcane_power") == 2)
 		magcount += 10
 	if (src.bioHolder.HasEffect("robed"))
-		return 1
+		return TRUE
 	for (var/obj/item/clothing/C in src.contents)
 		if (C.magical)
 			magcount += 1
@@ -45,8 +45,10 @@
 					magcount += 10
 	if (src.find_type_in_hand(/obj/item/staff))
 		magcount += 2
-	if (magcount >= 4) return 1
-	else return 0
+
+	return (magcount >= 4)
+
+// ALOE NOTE: todo refactor all this to not be mmob procs because holy shit
 
 /mob/proc/wizard_castcheck(var/datum/targetable/spell/spell = null)
 	return 0
@@ -150,8 +152,8 @@
 				spell.handleCast()
 
 /datum/abilityHolder/wizard
-	usesPoints = 0
-	topBarRendered = 1
+	usesPoints = FALSE
+	topBarRendered = TRUE
 	tabName = "Wizard"
 
 /////////////////////////////////////////////// Wizard spell parent ////////////////////////////
@@ -159,8 +161,8 @@
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
 	var/requires_being_on_turf = FALSE
-	var/requires_robes = 0
-	var/offensive = 0
+	var/requires_robes = FALSE
+	var/offensive = FALSE
 	var/cooldown_staff = 0
 	var/prepared_count = 0
 	var/casting_time = 0

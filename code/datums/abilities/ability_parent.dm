@@ -846,7 +846,7 @@
 
 	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE 				//! If TRUE, the next number hotkey pressed will be bound to this.
-	var/list/cooldowns							//! Cooldowns list, used for the COOLDOWN macros
+	var/list/cooldowns							//! Cooldowns list, used for the COOLDOWN macros. easily confused with `cooldown`, sorry
 	/// Typepath of the button we want to use. Generic will work 90% of the time, but sometimes we need extra handling.
 	var/button_type = /atom/movable/screen/ability/topBar
 

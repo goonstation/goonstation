@@ -43,7 +43,7 @@
 					if (user in by_cat[TR_CAT_RADIO_JAMMERS])
 						OTHER_STOP_TRACKING_CAT(user, TR_CAT_RADIO_JAMMERS)
 
-			if (isvampire(hearer) && hearer.check_vampire_power(3))
+			if (isvampire(hearer) && hearer.check_vampire_power(VAMP_POWER_MAXIMUM))
 				boutput(hearer, "<span class='notice'>You are immune to [user]'s screech!</span>")
 				continue
 			if (hearer.traitHolder.hasTrait("training_chaplain"))

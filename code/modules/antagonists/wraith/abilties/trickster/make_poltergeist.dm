@@ -58,10 +58,11 @@
 			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			src.holder.owner.playsound_local(src.holder.owner.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
+
+			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
 			boutput(P, "<span class='notice'><b>[W] is your master! Spread mischeif and do their bidding!</b></span>")
 			boutput(P, "<span class='notice'><b>Don't venture too far from your portal or your master!</b></span>")
-			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
 			P.set_loc(T)
 			P.marker = marker
 #undef RP_MAX_POLTERGEISTS

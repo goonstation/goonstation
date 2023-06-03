@@ -5,9 +5,6 @@
 
 // Just a little helper or two since vampire parameters aren't tracked by mob vars anymore.
 /mob/proc/get_vampire_blood(var/total_blood = 0)
-	if (!isvampire(src))
-		return 0
-
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
 		return AH.get_vampire_blood(total_blood)
@@ -25,50 +22,40 @@
 		var/datum/abilityHolder/vampiric_thrall/AHZ = src.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if(AHZ && istype(AHZ) && !total_blood)
 			AHZ.change_vampire_blood(change, total_blood, set_null)
-	return
 
-/mob/proc/check_vampire_power(var/which_power = 3) // 1: thermal | 2: xray | 3: full power
-	if (!isvampire(src))
-		return 0
-
-	if (!which_power)
-		return 0
-
+/mob/proc/check_vampire_power(var/which_power = VAMP_POWER_MAXIMUM)
 	var/datum/abilityHolder/vampire/AH = src.get_ability_holder(/datum/abilityHolder/vampire)
 	if (AH && istype(AH))
 		switch (which_power)
-			if (1)
-				if (AH.has_thermal == 1)
-					return 1
+			if (VAMP_POWER_THERMAL_VISION)
+				if (AH.has_thermal)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
-			if (2)
-				if (AH.has_xray == 1)
-					return 1
+			if (VAMP_POWER_XRAY_VISION)
+				if (AH.has_xray)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
-			if (3)
-				if (AH.has_fullpower == 1)
-					return 1
+			if (VAMP_POWER_MAXIMUM)
+				if (AH.has_fullpower)
+					return TRUE
 				else
-					return 0
+					return FALSE
 
 			else
-				return 0
+				return FALSE
 	else
-		return 0
+		return FALSE
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 /datum/abilityHolder/vampire
-	usesPoints = 1
-	regenRate = 0
 	tabName = "Vampire"
 	notEnoughPointsMessage = "<span class='alert'>You need more blood to use this ability.</span>"
 	var/vamp_blood = 0
-	points = 0 // Replaces the old vamp_blood_remaining var.
-	var/vamp_blood_tracking = 1
+	var/vamp_blood_tracking = TRUE
 	var/mob/vamp_isbiting = null
 #ifdef BONUS_POINTS
 	vamp_blood = 99999
@@ -78,9 +65,9 @@
 	// Note: please use mob.get_vampire_blood() & mob.change_vampire_blood() instead of changing the numbers directly.
 
 	// At the time of writing, sight (thermal, x-ray) and chapel checks can be found in human.dm.
-	var/has_thermal = 0
-	var/has_xray = 0
-	var/has_fullpower = 0
+	var/has_thermal = FALSE
+	var/has_xray = FALSE
+	var/has_fullpower = FALSE
 
 	// These are thresholds in relation to vamp_blood. Last_power exists only for unlock checks as stuff
 	// might deduct something from vamp_blood, though it shouldn't happen on a regular basis.
@@ -97,8 +84,6 @@
 
 	//contains the reference to the coffin if we're currently travelling to it, otherwise null
 	var/obj/storage/closet/coffin/vampire/the_coffin = null
-	//theres a bug where projectiles get unpooled and moved elsewhere before theyre done with their currnent firing
-	//badly affects 'travel' projectile. band aid.
 
 	onAbilityStat() // In the 'Vampire' tab.
 		..()
@@ -126,10 +111,9 @@
 
 	set_loc_callback(newloc)
 		if (istype(newloc,/obj/storage/closet/coffin))
-			//var/obj/storage/closet/coffin/C = newloc
 			the_coffin = null
 
-	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = 0)
+	proc/change_vampire_blood(var/change = 0, var/total_blood = 0, var/set_null = FALSE)
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
@@ -177,8 +161,6 @@
 
 		else
 			boutput(src.owner, "<span class='notice'>You have accumulated [src.vamp_blood] units of blood and [src.points] left to use.</span>")
-
-		return
 
 	proc/check_for_unlocks()
 		if (!src.owner || !ismob(src.owner))
@@ -230,8 +212,6 @@
 			src.has_fullpower = 1
 			//boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (x-ray)!</h3></span>")
 			boutput(src.owner, "<span class='notice'><h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3></span>")
-
-		return
 
 	remove_unlocks()
 		src.removeAbility(/datum/targetable/vampire/phaseshift_vampire)
@@ -337,40 +317,10 @@
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
-	New()
-		var/atom/movable/screen/ability/topBar/B = new /atom/movable/screen/ability/topBar(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-
 	onAttach(var/datum/abilityHolder/H)
-		..()
+		. = ..()
 		if (src.unlock_message && src.holder && src.holder.owner)
 			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar()
-			object.icon = src.icon
-			object.owner = src
-
-		var/on_cooldown = src.cooldowncheck()
-		if (on_cooldown)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round(on_cooldown)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
 
 	castcheck(atom/target)
 		if(isobj(holder.owner)) //Exception for VampTEG and Sentient Objects...
@@ -382,7 +332,7 @@
 			boutput(M, "<span class='alert'>You can't use this ability while you're inside another object.</span>")
 			return FALSE
 
-		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1 && !(M.job == "Chaplain"))
+		if (istype(get_area(M), /area/station/chapel) && !M.check_vampire_power(VAMP_POWER_MAXIMUM) && !(M.job == "Chaplain"))
 			boutput(M, "<span class='alert'>Your powers do not work in this holy place! Maybe if you were more powerful...</span>")
 			return FALSE
 

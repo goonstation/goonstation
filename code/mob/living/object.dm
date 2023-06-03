@@ -337,7 +337,7 @@
 
 /mob/living/object/ai_controlled
 	is_npc = TRUE
-	faction = MOB_AI_FACTION_WRAITH
+	faction = FACTION_WRAITH
 	New()
 		..()
 		src.ai = new /datum/aiHolder/living_object(src)

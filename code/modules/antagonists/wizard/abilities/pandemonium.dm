@@ -111,7 +111,7 @@
 						continue
 					if (targetSpellImmunity(M, FALSE, 2))
 						continue
-					if (isvampire(M) && M.check_vampire_power(3) == 1)
+					if (isvampire(M) && M.check_vampire_power(VAMP_POWER_MAXIMUM))
 						M.show_text("You are immune to [W]'s screech!", "blue")
 						continue
 					M.apply_sonic_stun(0, 3, 0, 0, 0, 8)
