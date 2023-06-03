@@ -427,6 +427,10 @@
 		user.s_active = null
 		user.detach_hud(src.hud)
 
+/// if user sees the storage hud
+/datum/storage/proc/hud_shown(mob/user)
+	return user in src.hud.mobs
+
 /// emping storage emps everything inside
 /datum/storage/proc/storage_emp_act()
 	for (var/atom/A as anything in src.get_contents())

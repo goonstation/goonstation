@@ -1,4 +1,9 @@
+(t)sat jun 03 23
+(u)pali
+(+)Ghosts can now use the Observe Objects button to observe singularities
 (t)fri jun 02 23
+(u)Sord
+(+)Fire alarms now visually show when they are disconnected.
 (u)aloe
 (+)Changelings are now mostly immune to the effects of choking (knife grabs and fibre wire will still make them bleed, rag choking will make them ingest reagents).
 (u)LeahTheTech

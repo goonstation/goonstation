@@ -20437,7 +20437,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/turf/simulated/wall/auto/supernorn,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bdt" = (
 /obj/disposalpipe/segment/mail,
@@ -30637,15 +30637,14 @@
 /turf/simulated/floor/stairs,
 /area/station/hallway/primary/south)
 "bJd" = (
-/obj/grille/steel,
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "1-2"
 	},
-/obj/cable,
-/turf/simulated/wall/auto/supernorn,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "bJi" = (
 /obj/machinery/power/smes{
@@ -47533,6 +47532,18 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"cOa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/mining/staff_room)
 "cOj" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
@@ -53474,6 +53485,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/engine/gas)
+"jBB" = (
+/obj/disposalpipe/segment/morgue{
+	name = "crematorium pipe"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/random_item_spawner/junk/few,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/Zeta)
 "jEs" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Genetics"
@@ -53823,8 +53844,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating/airless,
+/turf/simulated/wall/auto/supernorn,
 /area/station/turret_protected/Zeta)
 "jXp" = (
 /obj/stool/chair{
@@ -57391,16 +57411,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"ovz" = (
-/obj/disposalpipe/segment/morgue{
-	name = "crematorium pipe"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "owm" = (
 /obj/table/auto,
 /obj/item/clothing/suit/straight_jacket{
@@ -107782,9 +107792,9 @@ bEN
 bFw
 bGt
 bHe
-ovz
+jWX
 bJd
-bJd
+jBB
 bJd
 bJd
 jWX
@@ -125021,7 +125031,7 @@ ckg
 jYz
 kxa
 cnW
-caT
+cOa
 ceY
 caT
 csj
