@@ -1530,10 +1530,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 					if (!isnull(newEnviron))
 						environ = round(clamp(newEnviron, 0, 3))
 
-					if (newCover)
-						coverlocked = 1
-					else
-						coverlocked = 0
+					if (!isnull(newCover))
+						coverlocked = newCover ? TRUE : FALSE
 
 					UpdateIcon()
 					update()

@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/sea_sketch)
 "ab" = (
 /turf/variableTurf/clear,
@@ -136,7 +136,7 @@
 /area/prefab/sea_sketch)
 "aB" = (
 /obj/decal/cleanable/gangtag,
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/sea_sketch)
 "aC" = (
 /obj/table/wood/round/auto,
@@ -446,6 +446,9 @@
 /obj/item/medical/bruise_pack,
 /turf/simulated/floor/plating,
 /area/prefab/sea_sketch)
+"vF" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
 ab
@@ -547,7 +550,7 @@ aV
 aQ
 bv
 aa
-ab
+vF
 "}
 (7,1,1) = {"
 ab
@@ -564,7 +567,7 @@ aQ
 aZ
 bO
 ap
-ab
+vF
 "}
 (8,1,1) = {"
 ab
@@ -581,12 +584,12 @@ aQ
 ba
 aQ
 ap
-ab
+vF
 "}
 (9,1,1) = {"
 ab
 ab
-ab
+vF
 aa
 aa
 aa
@@ -598,12 +601,12 @@ bP
 aW
 ax
 ap
-ab
+vF
 "}
 (10,1,1) = {"
 ab
 ab
-ab
+vF
 ap
 au
 az
@@ -615,12 +618,12 @@ bj
 bb
 bd
 ap
-ab
+vF
 "}
 (11,1,1) = {"
 ab
 ab
-ab
+vF
 ap
 av
 bl
@@ -632,10 +635,10 @@ aY
 ax
 be
 aa
-ab
+vF
 "}
 (12,1,1) = {"
-ab
+vF
 aa
 aa
 aa
@@ -649,10 +652,10 @@ bJ
 bI
 bf
 ap
-ab
+vF
 "}
 (13,1,1) = {"
-ab
+vF
 ah
 aq
 as
@@ -666,10 +669,10 @@ bu
 bc
 bg
 ap
-ab
+vF
 "}
 (14,1,1) = {"
-ab
+vF
 ah
 ar
 at
@@ -683,10 +686,10 @@ aq
 aa
 aa
 aa
-ab
+vF
 "}
 (15,1,1) = {"
-ab
+vF
 aa
 aa
 aa
@@ -793,12 +796,12 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
+vF
+vF
+vF
+vF
+vF
+vF
 ab
 ab
 ab

@@ -4,8 +4,10 @@
   * Lots of functionality resides in this type.
   */
 TYPEINFO(/atom)
-	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	/// A list of procs that should appear on the admin interact menu (must support being called without arguments)
 	var/list/admin_procs = null
+	/// A list of material IDs that should be ignored when applying appearance
+	var/list/mat_appearances_to_ignore = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -15,6 +17,11 @@ TYPEINFO(/atom)
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
 	var/list/cooldowns
+
+	/// Material id of this object as a material id (lowercase string), set on New()
+	var/default_material = null
+	/// Does this object use appearance from the material?
+	var/uses_material_appearance = FALSE
 
 	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
 	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
@@ -76,6 +83,13 @@ TYPEINFO(/atom)
 
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
+
+	New(turf/newLoc)
+		. = ..()
+		// Lets stop having 5 implementations of this that all do it differently
+		if (!src.material && default_material)
+			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename, copy = FALSE)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

@@ -1195,6 +1195,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					ticker.mode:revolutionaries += borg.mind
 				if (src.emagged)
 					borg.emagged = 1
+					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 					SPAWN(0)
 						borg.update_appearance()
 				else if (src.syndicate)

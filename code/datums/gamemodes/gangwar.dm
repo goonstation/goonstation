@@ -510,7 +510,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"barber's uniform" = /obj/item/clothing/under/misc/barber,
 		"mechanic's uniform" = /obj/item/clothing/under/rank/mechanic,
 		"vice officer's suit" = /obj/item/clothing/under/misc/vice,
-		"sailor uniform" = /obj/item/clothing/under/gimmick,
+		"sailor uniform" = /obj/item/clothing/under/gimmick/sailor,
 		"bowling suit" = /obj/item/clothing/under/gimmick/bowling,
 		"tactical turtleneck" = /obj/item/clothing/under/misc/syndicate,
 		"black lawyer's suit" = /obj/item/clothing/under/misc/lawyer/black,
@@ -1432,7 +1432,7 @@ proc/broadcast_to_all_gangs(var/message)
 	desc = "A pouch of 4 Shuriken throwing stars."
 	class2 = "weapon"
 	price = 1200
-	item_path = /obj/item/storage/box/shuriken_pouch
+	item_path = /obj/item/storage/pouch/shuriken
 
 /datum/gang_item/ninja/throwing_knife
 	name = "Throwing Knive"

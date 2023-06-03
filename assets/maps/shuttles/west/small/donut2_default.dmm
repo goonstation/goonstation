@@ -58,7 +58,7 @@
 	},
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
@@ -261,7 +261,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "Io" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},

@@ -156,8 +156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 	var/lastvend = 0
 
 	disposing()
@@ -468,7 +467,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (R.product_amount < 1)
 			display_amount = "OUT OF STOCK"
 		.["productList"] += list(list(
-			"path" = R.product_path,
+			"ref" = ref(R),
 			"name" = R.product_name,
 			"amount" = display_amount,
 			"cost" = R.product_cost,
@@ -550,7 +549,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
 				update_static_data(usr)
 		if("rename")
@@ -563,7 +562,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							P.promoimage = R.icon
 							P.updateAppearance()
 		// return cash
@@ -606,10 +605,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 				var/list/plist = player_list || product_list
 				for (var/datum/data/vending_product/R in plist)
-					if(R.product_path == text2path(params["target"]))
+					if(ref(R) == (params["target"]))
 						product_amount = R.product_amount
 						product = R
-				if(product_amount <= 0 || isnull(text2path(params["target"])))
+				if(product_amount <= 0 || isnull(product))
 					return
 				src.vend_ready = 0
 				src.prevend_effect()
@@ -617,7 +616,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				SPAWN(src.vend_delay)
 					src.vend_ready = 1
 					for (var/datum/data/vending_product/R in plist)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
 					var/atom/movable/vended = src.vend_product(product, usr)
@@ -3099,6 +3098,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/medical, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/robotics, 3)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/genetics, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical, 2)

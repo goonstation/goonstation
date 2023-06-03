@@ -1,22 +1,24 @@
 // flockdrone door
+TYPEINFO(/obj/machinery/door/feather)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /obj/machinery/door/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "door1"
 	name = "weird imposing wall"
 	desc = "It sounds like it's hollow."
 	var/flock_id = "Solid seal aperture"
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	autoclose = TRUE
 	var/broken = FALSE
-	health = 200
-	health_max = 200
+	health = 250
+	health_max = 250
 	var/repair_per_resource = 2
+	autoclose_delay = 5 SECONDS
 
 /obj/machinery/door/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE)
 	if (map_settings?.auto_walls)

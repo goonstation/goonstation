@@ -981,6 +981,10 @@
 	dir = 4
 	},
 /area/station/turret_protected/AIsat)
+"alU" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+/area/station/hangar/sec)
 "amc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1065,7 +1069,8 @@
 "anu" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
 /area/space)
 "anF" = (
 /obj/storage/closet/dresser/random,
@@ -1693,7 +1698,8 @@
 /area/station/science/lab)
 "awc" = (
 /obj/blind_switch/south{
-	pixel_x = 4
+	pixel_x = 4;
+	id = "chemistry"
 	},
 /obj/machinery/light_switch/south{
 	pixel_x = -4
@@ -9007,6 +9013,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door_control/podbay/security/new_walls/north,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -31445,12 +31452,13 @@
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hor)
-"jCE" = (
-/obj/machinery/r_door_control/podbay/security/new_walls/south{
-	pixel_y = -24
+"jCz" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
+/obj/machinery/printing_press,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "jCF" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/storage/box/donkpocket_kit,
@@ -43785,6 +43793,11 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
+"nsX" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "nta" = (
 /obj/decal/mule/dropoff,
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -59254,7 +59267,6 @@
 /turf/space,
 /area/space)
 "scx" = (
-/obj/machinery/door_control/podbay/security/new_walls/west,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/white,
 /area/station/hangar/sec)
@@ -75694,6 +75706,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
@@ -76105,7 +76118,10 @@
 /area/station/maintenance/inner/se)
 "xfs" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
 /area/space)
 "xfT" = (
 /turf/simulated/wall/auto/reinforced/jen,
@@ -77276,6 +77292,14 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/chapel/sanctuary)
+"xvH" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/grille/catwalk,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/space)
 "xvJ" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
@@ -100452,7 +100476,7 @@ haK
 jhw
 plN
 plN
-plN
+alU
 xNw
 cLF
 cLF
@@ -101062,7 +101086,7 @@ alB
 alB
 alB
 alB
-jCE
+alB
 plN
 kLw
 fPw
@@ -113082,7 +113106,7 @@ rdj
 rdj
 pcq
 xfZ
-dmd
+jCz
 prO
 prO
 pjN
@@ -116170,7 +116194,7 @@ xfs
 kuM
 fun
 kuM
-xfs
+xvH
 rdj
 rdj
 abH
@@ -150161,9 +150185,9 @@ rdj
 rdj
 rdj
 rdj
-xfs
-xfs
-xfs
+nsX
+nsX
+nsX
 cNV
 cNV
 yly
@@ -150463,7 +150487,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 rdj
 vVp
 rdj
@@ -150765,7 +150789,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 cNV
 avS
 ere
@@ -151067,7 +151091,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 rdj
 vVp
 rdj
@@ -151369,7 +151393,7 @@ rdj
 rdj
 rdj
 rdj
-xfs
+nsX
 anu
 anu
 cNV
