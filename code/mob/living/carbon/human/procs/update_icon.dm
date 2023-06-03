@@ -1056,9 +1056,10 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 						var/handlimb_icon = mutantrace_override || limb.getAttachmentIcon(src.decomp_stage)
 
-						if (!is_valid_icon_state(hand_icon_s,handlimb_icon))
+						// the iconstate is sometimes an image apparently
+						if (!istype(hand_icon_s,/image) && !is_valid_icon_state(hand_icon_s,handlimb_icon))
 							CRASH("invalid iconstate [hand_icon_s] in file [handlimb_icon] used for mob limb hand sprite on [src]. this is probably bad")
-						if (!is_valid_icon_state(part_icon_s,handlimb_icon))
+						if (!istype(part_icon_s,/image) && !is_valid_icon_state(part_icon_s,handlimb_icon))
 							CRASH("invalid iconstate [part_icon_s] in file [handlimb_icon] used for mob limb part sprite on [src]. this is probably bad")
 
 						if (limb.decomp_affected && src.decomp_stage)
