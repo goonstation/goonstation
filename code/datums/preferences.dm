@@ -1061,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)

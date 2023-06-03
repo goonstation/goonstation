@@ -203,7 +203,6 @@
 	proc/onAdd(var/mob/owner)
 		if(mutantRace && ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.mutantrace?.origAH.CopyOther(H.bioHolder.mobAppearance)
 			H.set_mutantrace(mutantRace)
 		return
 

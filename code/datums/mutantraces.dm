@@ -14,7 +14,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	/// The mutant's own appearanceholder, modified to suit our target appearance
 	var/datum/appearanceHolder/AH
 	/// The mutant's original appearanceholder, from before they were a mutant, to restore their old appearance
-	var/datum/appearanceHolder/origAH
 	var/override_eyes = 1
 	var/override_hair = 1
 	var/override_beard = 1
@@ -321,7 +320,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						W.layer = initial(W.layer)
 			if (ishuman(src.mob))
 				var/mob/living/carbon/human/H = src.mob
-				AppearanceSetter(H, "reset")
 				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
@@ -348,109 +346,77 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if(!ishuman(H) || !(H?.bioHolder?.mobAppearance) || !src.AH)
 			return // please dont call set_mutantrace on a non-human non-appearanceholder
 
-		switch(mode)
-			if("set")	// upload everything, the appearance flags'll determine what gets used
-				src.origAH = new/datum/appearanceHolder
-				src.origAH.CopyOther(AH) // backup the old appearanceholder
+		AH.mob_appearance_flags = src.mutant_appearance_flags
+		AH.customization_first_offset_y = src.head_offset
+		AH.customization_second_offset_y = src.head_offset
+		AH.customization_third_offset_y = src.head_offset
 
-				AH.mob_appearance_flags = src.mutant_appearance_flags
-				AH.customization_first_offset_y = src.head_offset
-				AH.customization_second_offset_y = src.head_offset
-				AH.customization_third_offset_y = src.head_offset
+		var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
+		if(typeinfo.special_styles)
+			if (!AH.special_style || !typeinfo.special_styles[AH.special_style]) // missing or invalid style
+				AH.special_style = pick(typeinfo.special_styles)
+			src.special_style = AH.special_style
+			src.mutant_folder = typeinfo.special_styles[AH.special_style]
 
-				var/typeinfo/datum/mutantrace/typeinfo = src.get_typeinfo()
-				if(typeinfo.special_styles)
-					if (!AH.special_style || !typeinfo.special_styles[AH.special_style]) // missing or invalid style
-						AH.special_style = pick(typeinfo.special_styles)
-					src.special_style = AH.special_style
-					src.mutant_folder = typeinfo.special_styles[AH.special_style]
+		AH.special_hair_1_icon = src.special_hair_1_icon
+		AH.special_hair_1_state = src.special_hair_1_state
+		AH.special_hair_1_color_ref = src.special_hair_1_color
+		AH.special_hair_1_layer = src.special_hair_1_layer
+		AH.special_hair_1_offset_y = src.head_offset
 
-				AH.special_hair_1_icon = src.special_hair_1_icon
-				AH.special_hair_1_state = src.special_hair_1_state
-				AH.special_hair_1_color_ref = src.special_hair_1_color
-				AH.special_hair_1_layer = src.special_hair_1_layer
-				AH.special_hair_1_offset_y = src.head_offset
+		AH.special_hair_2_icon = src.special_hair_2_icon
+		AH.special_hair_2_state = src.special_hair_2_state
+		AH.special_hair_2_color_ref = src.special_hair_2_color
+		AH.special_hair_2_layer = src.special_hair_2_layer
+		AH.special_hair_2_offset_y = src.head_offset
 
-				AH.special_hair_2_icon = src.special_hair_2_icon
-				AH.special_hair_2_state = src.special_hair_2_state
-				AH.special_hair_2_color_ref = src.special_hair_2_color
-				AH.special_hair_2_layer = src.special_hair_2_layer
-				AH.special_hair_2_offset_y = src.head_offset
+		AH.special_hair_3_icon = src.special_hair_3_icon
+		AH.special_hair_3_state = src.special_hair_3_state
+		AH.special_hair_3_color_ref = src.special_hair_3_color
+		AH.special_hair_3_layer = src.special_hair_1_layer
+		AH.special_hair_3_offset_y = src.head_offset
 
-				AH.special_hair_3_icon = src.special_hair_3_icon
-				AH.special_hair_3_state = src.special_hair_3_state
-				AH.special_hair_3_color_ref = src.special_hair_3_color
-				AH.special_hair_3_layer = src.special_hair_1_layer
-				AH.special_hair_3_offset_y = src.head_offset
+		AH.mob_detail_1_icon = src.detail_1_icon
+		AH.mob_detail_1_state = src.detail_1_state
+		AH.mob_detail_1_color_ref = src.detail_1_color
+		AH.mob_detail_1_offset_y = src.body_offset
 
-				AH.mob_detail_1_icon = src.detail_1_icon
-				AH.mob_detail_1_state = src.detail_1_state
-				AH.mob_detail_1_color_ref = src.detail_1_color
-				AH.mob_detail_1_offset_y = src.body_offset
+		AH.mob_oversuit_1_icon = src.detail_oversuit_1_icon
+		AH.mob_oversuit_1_state = src.detail_oversuit_1_state
+		AH.mob_oversuit_1_color_ref = src.detail_oversuit_1_color
+		AH.mob_oversuit_1_offset_y = src.body_offset
 
-				AH.mob_oversuit_1_icon = src.detail_oversuit_1_icon
-				AH.mob_oversuit_1_state = src.detail_oversuit_1_state
-				AH.mob_oversuit_1_color_ref = src.detail_oversuit_1_color
-				AH.mob_oversuit_1_offset_y = src.body_offset
+		AH.mob_head_offset = src.head_offset
+		AH.mob_hand_offset = src.hand_offset
+		AH.mob_body_offset = src.body_offset
+		AH.mob_leg_offset = src.leg_offset
+		AH.mob_arm_offset = src.arm_offset
 
-				AH.mob_head_offset = src.head_offset
-				AH.mob_hand_offset = src.hand_offset
-				AH.mob_body_offset = src.body_offset
-				AH.mob_leg_offset = src.leg_offset
-				AH.mob_arm_offset = src.arm_offset
+		if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
+			AH.customization_first_color = fix_colors(AH.customization_first_color)
+			AH.customization_second_color = fix_colors(AH.customization_second_color)
+			AH.customization_third_color = fix_colors(AH.customization_third_color)
 
-				if (src.mutant_appearance_flags & FIX_COLORS)	// mods the special colors so it doesnt mess things up if we stop being special
-					AH.customization_first_color = fix_colors(AH.customization_first_color)
-					AH.customization_second_color = fix_colors(AH.customization_second_color)
-					AH.customization_third_color = fix_colors(AH.customization_third_color)
+		AH.s_tone_original = AH.s_tone
+		if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
+			AH.s_tone = AH.customization_first_color
+		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
+			AH.s_tone = AH.customization_second_color
+		else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
+			AH.s_tone = AH.customization_third_color
+		else
+			AH.s_tone = AH.s_tone_original
 
-				AH.s_tone_original = AH.s_tone
-				if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_1)
-					AH.s_tone = AH.customization_first_color
-				else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_2)
-					AH.s_tone = AH.customization_second_color
-				else if(src.mutant_appearance_flags & SKINTONE_USES_PREF_COLOR_3)
-					AH.s_tone = AH.customization_third_color
-				else
-					AH.s_tone = AH.s_tone_original
+		AH.mutant_race = src
+		if (!src.dna_mutagen_banned)
+			AH.original_mutant_race = src
+		AH.body_icon = src.mutant_folder
+		AH.body_icon_state = src.icon_state
+		AH.e_icon = src.eye_icon
+		AH.e_state = src.eye_state
+		AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
 
-				AH.mutant_race = src
-				if (!src.dna_mutagen_banned)
-					AH.original_mutant_race = src
-				AH.body_icon = src.mutant_folder
-				AH.body_icon_state = src.icon_state
-				AH.e_icon = src.eye_icon
-				AH.e_state = src.eye_state
-				AH.e_offset_y = src.eye_offset ? src.eye_offset : src.head_offset
-
-				AH.UpdateMob()
-			if("reset")
-				var/still_should_have_this_funky_skintone = null // Hulk and such still require us to be a funky color
-				if(H.bioHolder.HasOneOfTheseEffects("hulk", "albinism", "blankman", "melanism", "achromia"))
-					still_should_have_this_funky_skintone = AH.s_tone
-				AH.CopyOther(src.origAH)
-				if(still_should_have_this_funky_skintone)
-					AH.s_tone = still_should_have_this_funky_skintone
-				AH.mob_appearance_flags = HUMAN_APPEARANCE_FLAGS
-				AH.body_icon = 'icons/mob/human.dmi'
-				AH.mutant_race = null
-				AH.customization_first_offset_y = 0
-				AH.customization_second_offset_y = 0
-				AH.customization_third_offset_y = 0
-				AH.mob_head_offset = 0
-				AH.mob_hand_offset = 0
-				AH.mob_body_offset = 0
-				AH.mob_arm_offset = 0
-				AH.mob_leg_offset = 0
-				AH.e_offset_y = 0 // Fun fact, monkey eyes are right at nipple height
-				AH.mob_oversuit_1_offset_y = 0
-				AH.mob_detail_1_offset_y = 0
-				AH.special_hair_3_offset_y = 0
-				AH.special_hair_2_offset_y = 0
-				AH.special_hair_1_offset_y = 0
-				AH.UpdateMob()
-				qdel(origAH)
-
+		AH.UpdateMob()
 
 	proc/LimbSetter(var/mob/living/carbon/human/L, var/mode as text)
 		if(!ishuman(L) || !L.organHolder || !L.limbs)
