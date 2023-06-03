@@ -3,14 +3,13 @@
 	mouse_opacity = 0
 	var/list/image/chat_maptext/lines = list() // a queue sure would be nice
 	var/atom/movable/target
+	var/registered = FALSE
 
 	New(loc, atom/movable/target)
 		..()
 		if (isnull(target))
 			CRASH("chat_maptext_holder requires a target")
 		src.target = target
-		RegisterSignal(target, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
-		outermost_movable(target)?.vis_contents += src
 
 	proc/update_outermost_movable(atom/movable/_target, atom/movable/old_outermost, atom/movable/new_outermost)
 		// use turf for the chat if we are in a disposal pipe and other such underfloor things
@@ -21,6 +20,17 @@
 
 		old_outermost?.vis_contents -= src
 		new_outermost?.vis_contents += src
+
+	proc/notify_empty()
+		if(registered)
+			UnregisterSignal(target, XSIG_OUTERMOST_MOVABLE_CHANGED)
+			registered = FALSE
+
+	proc/notify_nonempty()
+		if(!registered)
+			outermost_movable(target)?.vis_contents += src
+			RegisterSignal(target, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
+			registered = TRUE
 
 	disposing()
 		for(var/image/chat_maptext/I in src.lines)
@@ -111,6 +121,8 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 
 		holder.lines.Add(text)
 
+		holder.notify_nonempty()
+
 	animate(text, alpha = alpha, maptext_y = 34, time = 4, flags = ANIMATION_END_NOW)
 	var/text_id = text.unique_id
 	SPAWN(time)
@@ -118,4 +130,6 @@ proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, tim
 			text.bump_up(invis=1)
 			sleep(0.5 SECONDS)
 			qdel(text)
+			if (holder && !length(holder.lines))
+				holder.notify_empty()
 	return text

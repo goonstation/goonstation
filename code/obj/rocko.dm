@@ -42,19 +42,6 @@ obj/item/rocko
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
 
-	set_loc(newloc as turf|mob|obj in world)
-		var/atom/oldloc = src.loc
-		src.holder = null
-		. = ..()
-		if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-			if(src.chat_text.vis_locs.len)
-				var/atom/movable/AM = src.chat_text.vis_locs[1]
-				AM.vis_contents -= src.chat_text
-			if(istype(src.loc, /turf))
-				src.vis_contents += src.chat_text
-			if(ismob(src.loc))
-				src.holder = src.loc
-
 	disposing()
 		processing_items -= src
 		qdel(chat_text)
