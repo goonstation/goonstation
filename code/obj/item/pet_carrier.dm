@@ -22,7 +22,9 @@
 	w_class = W_CLASS_BULKY
 
 	/// Please override this in child types to specify what can actually fit in.
-	var/mob/allowed_mob_type = /mob/living/critter/small_animal
+	var/allowed_mob_type = /mob/living/critter/small_animal
+	/// Time it takes for each action (eg. grabbing, releasing).
+	var/actionbar_duration = 2 SECONDS
 	/// If FALSE, an occupant cannot escape the carrier on their own.
 	var/can_break_out = TRUE
 	/// Causes the door to open and release its occupants when it reaches 0, subsequently resetting itself to the maximum.
@@ -34,8 +36,8 @@
 	var/carrier_max_capacity = 1
 	/// Number of mobs named explicitly on examine() before switching to "there's a lot of mobs in here wow".
 	var/explicit_name_limit = 3
-	/// If not null, the pet carrier will spawn with one of this mob on New().
-	var/mob/default_mob = null
+	/// Type path, If not null, the pet carrier will spawn with one of this mob on New().
+	var/default_mob_type = null
 
 	/// The icon_state for the src.TRAP_MOB() actionbar.
 	var/const/trap_mob_icon_state = "carrier-full"
@@ -89,10 +91,10 @@
 
 		src.UpdateIcon()
 
-		if (src.default_mob)
-			if (!ispath(src.default_mob, src.allowed_mob_type))
+		if (src.default_mob_type)
+			if (!ispath(src.default_mob_type, src.allowed_mob_type))
 				return
-			var/mob/spawned_mob = new src.default_mob
+			var/mob/spawned_mob = new src.default_mob_type
 			if (spawned_mob)
 				src.add_mob(spawned_mob)
 
@@ -137,19 +139,12 @@
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
 				boutput(user, "<span class='alert'>[src] is too crowded to fit one more!</span>")
 				return ..()
-			actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.trap_mob_icon_state, TRAP_MOB), user)
+			actions.start(new /datum/action/bar/icon/pet_carrier(M, src, src.icon, src.trap_mob_icon_state, TRAP_MOB, src.actionbar_duration), user)
 			return
 		..()
 
 	attack_self(mob/user)
-		if (!src.find_empty_hand(user))
-			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
-			return ..()
-		if (length(src.carrier_occupants))
-			var/mob/mob_to_remove = src.carrier_occupants[1]
-			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB), user)
-		else
-			boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
+		src.attempt_removal(user)
 		..()
 
 	// Ensure that things inside can actually breathe.
@@ -201,6 +196,16 @@
 			return
 		boutput(user, "<span class='alert'>Unable to release anyone from [src]!</span>")
 
+	proc/attempt_removal(mob/user)
+		if (!src.find_empty_hand(user))
+			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
+			return ..()
+		if (length(src.carrier_occupants))
+			var/mob/mob_to_remove = src.carrier_occupants[1]
+			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
+		else
+			boutput(user, "<span class='alert'>[src] is without any friends! Aww!</span>")
+
 	/// Directly adds a target mob to the carrier.
 	proc/add_mob(mob/mob_to_add)
 		if (!mob_to_add)
@@ -245,35 +250,35 @@
 		else
 			src.visible_message("<span class='alert'>The door on [src] rattles!</span>")
 
-	/// Calls src.AttackSelf(user) with a context action. Yeah, I know.
 	verb/release_occupant_verb(mob/user)
 		set name = "Release occupant"
 		set category = "Local"
-		set src in oview(1)
+		set src in view(1)
 
-		if (can_act(user))
+		if (!can_act(user))
 			return
 
-		src.AttackSelf(user)
+		src.attempt_removal(user)
 
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
 	allowed_mob_type = /mob
+	actionbar_duration = 1 SECOND
 	can_break_out = FALSE
 	carrier_max_capacity = INFINITY
 	door_health_max = INFINITY
 
 /// Pertains to actions executed by the pet carrier.
 /datum/action/bar/icon/pet_carrier
-	duration = 2 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	var/mob/mob_owner
 	var/mob/target
 	var/obj/item/pet_carrier/carrier
 	var/action
 
-	New(mob/target, obj/item/pet_carrier/item, icon, icon_state, carrier_action)
+	New(mob/target, obj/item/pet_carrier/item, icon, icon_state, carrier_action, desired_duration)
+		src.duration = desired_duration
 		..()
 		src.target = target
 		if (istype(item, /obj/item/pet_carrier))
@@ -289,7 +294,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.mob_owner = owner
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
+		if (src.interrupt_action())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -301,12 +306,12 @@
 
 	onUpdate()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
+		if (src.interrupt_action())
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
-		if (BOUNDS_DIST(mob_owner, target) > 0 || !target || !mob_owner || !src.carrier || (src.action == TRAP_MOB && mob_owner.equipped() != carrier) || !carrier.find_empty_hand(mob_owner))
+		if (src.interrupt_action())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		switch (src.action)
@@ -316,6 +321,11 @@
 			if (TRAP_MOB)
 				carrier.trap_mob(target, mob_owner)
 				src.mob_owner.visible_message("<span class='alert'>[src.mob_owner] coaxes [target] into [src.carrier]!</span>")
+
+	proc/interrupt_action()
+		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !src.target || !src.mob_owner || !src.carrier \
+		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier) || !src.carrier.find_empty_hand(src.mob_owner))
+			return TRUE
 
 #undef RELEASE_MOB
 #undef TRAP_MOB
