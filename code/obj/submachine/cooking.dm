@@ -1236,7 +1236,6 @@ TYPEINFO(/obj/submachine/mixer)
 			src.recipes += new /datum/cookingrecipe/meatpaste(src)
 			src.recipes += new /datum/cookingrecipe/wonton_wrapper(src)
 			src.recipes += new /datum/cookingrecipe/butters(src)
-			src.recipes += new /datum/cookingrecipe/raw_patty(src)
 
 		src.UpdateIcon()
 		return

@@ -1924,14 +1924,10 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 22
 	output = /obj/item/reagent_containers/food/snacks/beefood
 
-/datum/cookingrecipe/raw_patty
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
-	cookbonus = 3
-	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/patty
 
 /datum/cookingrecipe/patty
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/patty
-	cookbonus = 18
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/ingredient/cooked_patty
 
 /datum/cookingrecipe/b_cupcake

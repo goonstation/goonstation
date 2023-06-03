@@ -479,6 +479,7 @@
 	heal_amt = 1
 	//food_color =
 	sandwich_overlay = "bun_bottom"
+	sandwich_offset = -1
 
 	attackby(obj/item/W, mob/user)
 		. = ..()

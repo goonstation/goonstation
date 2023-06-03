@@ -621,6 +621,8 @@ This is actually lowkey simple, fuck yeah
 	name = "incomplete sandwich" // needs a better name, and should change based on bread/buns and ingredients used!
 	desc = "An edible device consisting of 2 or more structural agents encasing a nutrient payload. It's just a fucking sandwich, dingus."
 	bites_left = 0 // Prevents bite masks from being applied from on_bite(), so we can use our own special ones
+	flags = OPENCONTAINER | FPRINT | TABLEPASS | OPENCONTAINER
+	appearance_flags = KEEP_TOGETHER
 
 	/// Specifies what the sandwich should be made of when directly spawned in with New()
 	/// Ingredients should be listed from bottom to top of the sandwich
@@ -653,7 +655,6 @@ This is actually lowkey simple, fuck yeah
 				src.setup() // We do this so spawned in sandwiches will Actually Exist
 			// But, we wanna make sure whatever called New() has a chance to call setup()
 
-	/// Sets up the sandwich. Automatically called by New() but calling it again will reset the sandwich.
 	/// Unless overridden, do_initial_ingredients spawns the sandwich with the ingredients specified in initial_ingredients
 	/// Provide an ingredient_list[] list of types and/or atoms to make a sandwich out of, in the provided order from bottom to top
 	/// base is for the piece of bread (or other valid sandwich vessel) you're slapping with something to make a sandwich
@@ -662,39 +663,50 @@ This is actually lowkey simple, fuck yeah
 		src.setup_called = TRUE
 		src.original_reagents = src.reagents
 		if (do_initial_ingredients)
+			var/initial_name = src.name
 			for (var/_type in src.initial_ingredients)
 				var/obj/item/ingredient = new _type
 				src.add_ingredient(null, ingredient)
+				var/datum/sandwich_ingredient/_datum = src.ingredients[src.ingredients.len]
+				for (var/reagent in src.initial_ingredients[_type])
+					_datum.reagents.add_reagent(reagent, src.initial_ingredients[_type][reagent])
+				src.render_sandwich()
+			src.name = initial_name
 		if (!base || !first_ingredient)
 			return // how did we get here?
 		src.add_ingredient(user, base, TRUE)
 		src.add_ingredient(user, first_ingredient)
 
+	disposing()
+		for (var/datum/sandwich_ingredient/_datum in src.ingredients)
+			_datum.our_atom.dispose()
+			_datum.dispose()
+		. = ..()
 
 	/// Adds an ingredient to the top of the sandwich.
-	/// starting_sandwich suppresses the "You've added [x] to the [src]!" alert
+	/// starting_sandwich needs to be TRUE for the first ingredient (the bottom slice of bread)
 	proc/add_ingredient(mob/user, var/obj/item/ingredient2add, var/starting_sandwich = FALSE)
-		if(!ingredient2add)
-			return // don't wanna risk a null value being added ig
 		if(ingredient2add.type in bottom_bread_types && !starting_sandwich) // what monster would put a bottom bun on top of their sandwich >:(
 			boutput(user, "<span class='alert'>Hey stop that, you can only use [ingredient2add] as a sandwich base!</span>")
 			return
 		if(src.complete)
-			var/x = src.ingredients.len // just to get the last entry in the list, which should be the top bun/slice
+			var/x = src.ingredients.len
 			var/datum/sandwich_ingredient/ingredient_datum = src.ingredients[x]
 			var/obj/item/top_ingredient = ingredient_datum.our_atom
-			if((top_ingredient.type in src.top_bread_types)) // we can put stuff on slices of bread, but not top buns!
+			if(top_ingredient.type in src.top_bread_types) // we can put stuff on slices of bread, but not top buns!
 				boutput(user, "<span class='alert'>You can't put anything else on top, take off \the [top_ingredient] to add anything else!</span>")
-				return // yes i could've done && here and i tried that but when adding the first ingredient the len = 0 results in an oob exception god i wish oob just returned a null value
+				return
 
 		var/datum/sandwich_ingredient/ingredient_datum = null
 		var/datum/sandwich_ingredient/snack/food_datum = null
+		// we have food_datum to streamline checks
 		if(istype(ingredient2add, /obj/item/reagent_containers/food/snacks))
 			food_datum = new /datum/sandwich_ingredient/snack
 			ingredient_datum = food_datum
 			food_datum.our_snack = ingredient2add
 		else
 			ingredient_datum = new /datum/sandwich_ingredient
+
 		ingredient_datum.our_atom = ingredient2add
 		ingredient_datum.our_parent = src
 		ingredient_datum.initialize()
@@ -706,8 +718,9 @@ This is actually lowkey simple, fuck yeah
 		if(user)
 			user.drop_item(ingredient2add)
 		ingredient2add.set_loc(src)
+
 		if(is_valid_finisher(ingredient2add) && !starting_sandwich)
-			src.simulate_sandwich() // Simulating involves a couple loops that go through all ingredients, so we only wanna do it when we're ready to be eaten
+			src.simulate_sandwich() // involves a couple loops that go through all ingredients, so we only wanna do it when we're ready to be eaten
 			src.name_sandwich()
 			src.complete = TRUE
 			src.name = src.name_sandwich()
@@ -715,13 +728,16 @@ This is actually lowkey simple, fuck yeah
 			boutput(user, "<span class='alert'>You finish assembling \the [src]!</span>")
 		else
 			boutput(user, "<span class='alert'>You add [ingredient2add] to \the [src]!</span>")
+			src.complete = FALSE
 		src.render_sandwich()
 
 
 	/// Updates the bites_left, heal_amt, and food_effects vars for the sandwich and its ingredients
 	proc/simulate_sandwich()
 		var/total_bites_left = 0
+		src.max_bites_left = 0
 		for (var/datum/sandwich_ingredient/snack/food_datum in src.ingredients)
+			src.max_bites_left += food_datum.max_bites_left
 			total_bites_left += food_datum.max_bites_left * food_datum.amount_left
 		src.bites_left = ceil(total_bites_left / 1.5)
 		// This math is for adjusting heal_amt so that when you finish eating, each ingredient would've healed you the same as if you ate it alone
@@ -734,10 +750,10 @@ This is actually lowkey simple, fuck yeah
 			healing /= food_datum.bites_left
 			food_datum.our_snack.heal_amt = healing
 			food_datum.heal_amt = healing
-			var/buff_time
+			var/buff_time = 0
 			var/buffs = food_datum.original_effects
 			for (var/effect in buffs)
-				if(!(buffs[effect]))
+				if((buffs[effect]))
 					buff_time = buffs[effect]
 				else
 					buff_time = 1 MINUTE // currently the default buff time
@@ -748,51 +764,57 @@ This is actually lowkey simple, fuck yeah
 
 	/// By default only adds an overlay for the last ingredient in src.ingredients
 	/// Set reset_overlays to TRUE to clear all overlays and recreate them
+	/// Give start_value the index for the ingredient you want to render and everything above it
 	// Note: Each overlay key is based on its corresponding ingredient's position in the ingredients list
 	// e.g the key for the 3rd item in the list would be "ingredient3" or something
-	proc/render_sandwich(var/reset_overlays = FALSE)
+	proc/render_sandwich(var/reset_overlays = FALSE, var/start_from = 0)
 		var/ingredients2render = list()
-		if(!reset_overlays)
+		start_from += start_from ? 0 : src.ingredients.len
+		if (!reset_overlays)
 			var/x = src.ingredients.len
-			if(!(x > 0))
-				return // avoids runtimes from oob exceptions, as a precaution
-			ingredients2render += src.ingredients[x]
+			for (var/i = start_from, i <= x, i++)
+				ingredients2render += src.ingredients[i]
+			for (var/i = start_from, i <= 100, i++) // we should never have that many ingredients. hopefully.
+				var/key = "ingredient" + "[i]"
+				if(!src.ClearSpecificOverlays(key))
+					break // other for loop won't see now-missing ingredients if called from remove_ingredient() and their overlays will stay
 		else
 			src.ClearAllOverlays()
 			ingredients2render = src.ingredients.Copy()
+
 		for (var/datum/sandwich_ingredient/ingredient in ingredients2render)
 			var/index = src.ingredients.Find(ingredient)
+			var/datum/sandwich_ingredient/prev_ingredient = null
 			var/key = "ingredient" + "[index]"
 			var/image/image2overlay = null
 			var/_layer = FLOAT_LAYER + (0.0001 * index)
-			var/added_condiment_offset = 0
+			var/our_offset = 0
+			if (index > 1)
+				prev_ingredient = src.ingredients[index - 1]
+				our_offset = src.ingredients[prev_ingredient] + prev_ingredient.next_offset
+
 			if (istype(ingredient, /datum/sandwich_ingredient/snack))
 				var/datum/sandwich_ingredient/snack/food_datum = ingredient
-				var/obj/item/reagent_containers/food/snacks/food2overlay = food_datum.our_snack
-				if (!isnull(food2overlay.sandwich_overlay))
-					var/offset = food2overlay.sandwich_offset
-					image2overlay = SafeGetOverlayImage(key, 'icons/obj/foodNdrink/burgers.dmi', food2overlay.sandwich_overlay, _layer, 0, index + offset)
-					added_condiment_offset = offset
-				else if (is_valid_finisher(ingredient))
-					image2overlay = SafeGetOverlayImage(key, ingredient.our_atom.icon, ingredient.our_atom.icon_state, _layer, 0, index) // Should probably make it an actual image of the current appearance of the item but whatever
+				if (!isnull( food_datum.our_snack.sandwich_overlay ))
+					image2overlay = image('icons/obj/foodNdrink/burgers.dmi', food_datum.our_snack.sandwich_overlay, _layer, pixel_y = our_offset)
 				else
-					image2overlay = get_backup_overlay(ingredient.our_atom, key, _layer, index)
+					image2overlay = get_backup_overlay(food_datum.our_snack, key, _layer, our_offset)
 			else
-				image2overlay = get_backup_overlay(ingredient.our_atom, key, _layer, index)
+				image2overlay = get_backup_overlay(ingredient.our_atom, key, _layer, our_offset)
+			src.ingredients[ingredient] = our_offset
+
 			var/image/condiment_overlay = null
 			if (ingredient.reagents.total_volume)
-				condiment_overlay = SafeGetOverlayImage(key, 'icons/obj/foodNdrink/burgers.dmi', "overlay_chem", _layer, 0, index + added_condiment_offset)
-				condiment_overlay.color = ingredient.reagents.get_average_color()
+				condiment_overlay = image('icons/obj/foodNdrink/burgers.dmi', "overlay_chem", _layer, pixel_y = our_offset - 5)
+				condiment_overlay.color = ingredient.reagents.get_average_color().to_rgba()
+				image2overlay.overlays += condiment_overlay
 			src.UpdateOverlays(image2overlay, key)
-			if (condiment_overlay)
-				src.UpdateOverlays(condiment_overlay, key)
+
 
 	proc/get_backup_overlay(var/obj/item/ingredient, var/key, var/_layer, var/index)
-		//var/image/image2overlay = SafeGetOverlayImage(key, 'icons/obj/foodNdrink/burgers.dmi', "overlay_generic", _layer, 0, index * 2)
-		//image2overlay.color = ingredient.color
-		var/image/image2overlay = SafeGetOverlayImage(key, ingredient.icon, ingredient.icon_state, _layer, 0, index * 2)
+		var/image/image2overlay = image(ingredient.icon, ingredient.icon_state, _layer, pixel_y = index)
 		return image2overlay
-
+		// todo: get the current appearance of the ingredient and use that instead of its icon
 
 	/// Generates a name for a sandwich based on its contents
 	proc/name_sandwich()
@@ -800,39 +822,40 @@ This is actually lowkey simple, fuck yeah
 
 	proc/remove_ingredient(mob/user, datum/sandwich_ingredient/to_remove)
 
+		var/last_index = src.ingredients.len
+		var/next_last_index = last_index - 1
+
+		var/datum/sandwich_ingredient/next_top_datum = src.ingredients[next_last_index]
+		var/obj/item/next_top_ingredient = next_top_datum.our_atom // what's gonna be the next thing on top
 		src.ingredients -= to_remove
 		to_remove.remove_ingredient(user)
 
-		var/datum/sandwich_ingredient/top_datum = src.ingredients[src.ingredients.len]
-		var/obj/item/top_ingredient = top_datum.our_atom
-		if(!is_valid_finisher(top_ingredient))
+		if(!is_valid_finisher(next_top_ingredient))
 			src.complete = FALSE
-			src.reagents = top_datum.reagents
+			src.reagents = next_top_datum.reagents
 		else
 			src.complete = TRUE
 			src.reagents = src.original_reagents
 
-		if(src.ingredients.len > 1)
+		src.render_sandwich()
+		if (next_last_index > 1 && is_valid_finisher(next_top_ingredient))
 			src.simulate_sandwich()
-			src.render_sandwich(TRUE)
-		else
+		else if (next_last_index == 1)
 			var/datum/sandwich_ingredient/bottom_datum = src.ingredients[1]
-			var/obj/item/bottom_piece = bottom_datum.our_atom
-			!isnull(user) ? user.put_in_hand_or_drop(bottom_piece) : bottom_piece.set_loc(src.loc)
-			qdel(src)
+			var/obj/item/bottom_ingredient = bottom_datum.our_atom
+			!isnull(user) ? user.put_in_hand_or_drop(bottom_ingredient) : bottom_ingredient.set_loc(src.loc)
+			src.dispose()
 
 	/// Checks if ingredient is in vers or top bread lists and thus can be used to complete a sandwich
 	proc/is_valid_finisher(obj/item/ingredient)
-		. = (ingredient.type in (vers_bread_types + top_bread_types))
+		. = ((ingredient.type in vers_bread_types) || (ingredient.type in top_bread_types))
 
 	attackby(obj/item/W, mob/user)
-		if (!..() && (!istype(W, /obj/item/reagent_containers) || istype(W, /obj/item/reagent_containers/food/snacks)) && !istype(W, /obj/item/reagent_containers/food/snacks/condiment) && !istype(W, /obj/item/shaker))
+		if (istype(W, /obj/item/shaker) || istype(W, /obj/item/reagent_containers/food/snacks/condiment) || (W.reagents && !istype(W, /obj/item/reagent_containers/food/snacks))) // is this something that might've given us reagents?
+			SPAWN(0) //just to make sure the reagents transfer *before* we render
+				src.render_sandwich() // need to update condiment appearances!
+		else if (!..() && istype(W, /obj/item/reagent_containers/food/snacks) && !istype(W, /obj/item/reagent_containers/food/snacks/condiment) && !istype(W, /obj/item/shaker))
 			src.add_ingredient(user, W, FALSE)
-
-	reagent_act(reagent_id, volume)
-		. = ..()
-		SPAWN(0) // after we get reagents applied to us; updates any condiment overlay on top layer
-			src.render_sandwich()
 
 	attack_hand(mob/user)
 		if (src.loc == user) // intended to only happen if being held in the off-hand and clicked on with empty hand
@@ -865,6 +888,7 @@ This is actually lowkey simple, fuck yeah
 				var/datum/reagents/condiments = food_datum.reagents
 				condiments.trans_to(src, condiments.total_volume / src.bites_left, do_fluid_react = FALSE) // we react in the person's mouth, not the sandwich :)
 			food_datum.amount_left -= food_datum.amount_left / food_datum.bites_left
+			food_datum.bites_left--
 			ingredient.take_a_bite(consumer, feeder, TRUE)
 		..()
 
@@ -874,20 +898,23 @@ This is actually lowkey simple, fuck yeah
 	var/amount_left = 1 // mostly to do with bites_left, but leaving here since it might be useful for other things
 	var/datum/reagents/reagents = new /datum/reagents
 	var/is_food = FALSE
+	var/next_offset = 1
 
 	proc/initialize()
-		reagents.maximum_volume = 20
+		reagents.maximum_volume = 10
+		reagents.my_atom = our_atom
+		// not sure whether to do our_atom or our_parent tbh
 
 	proc/remove_ingredient(mob/user)
 		if(our_atom && reagents)
 			src.reagents.trans_to(our_atom, reagents.total_volume)
-		if(!QDELETED(our_atom) && our_atom)
+		if(our_atom && !our_atom.disposed)
 			if(!isnull(user))
 				user.put_in_hand_or_drop(our_atom)
 			else
 				our_atom.set_loc(our_parent.loc)
 		spawn()
-			qdel(src)
+			src.dispose()
 
 /datum/sandwich_ingredient/snack
 	var/obj/item/reagent_containers/food/snacks/our_snack = null
@@ -905,6 +932,7 @@ This is actually lowkey simple, fuck yeah
 		src.original_heal_amt = our_snack.heal_amt
 		src.original_effects = our_snack.food_effects.Copy()
 		src.amount_left = our_snack.bites_left / initial(our_snack.bites_left)
+		src.next_offset = our_snack.sandwich_offset
 		. = ..()
 
 	remove_ingredient(mob/user)
@@ -912,10 +940,10 @@ This is actually lowkey simple, fuck yeah
 		var/final_bites_left = round(theoretical_bites_left) // floor doesn't work and round acts as floor so if they fix that please adjust this thank you
 		if(!final_bites_left)
 			if(prob(theoretical_bites_left * 100))
-				final_bites_left = 1 // we'll check at the end if something has 0 bites and qdel it there
+				final_bites_left = 1
 		if(!final_bites_left)
 			boutput(user, "<span class='alert'>You weren't able to salvage any of \the [src.our_snack]!</span>")
-			qdel(src.our_snack)
+			src.our_snack.dispose()
 		else
 			. = TRUE
 		our_snack.bites_left = final_bites_left
@@ -932,4 +960,16 @@ This is actually lowkey simple, fuck yeah
 		/obj/item/reagent_containers/food/snacks/plant/lettuce,
 		/obj/item/reagent_containers/food/snacks/ingredient/tomatoslice,
 		/obj/item/reagent_containers/food/snacks/breadslice
+	)
+
+/obj/item/reagent_containers/food/snacks/new_sandwich/burger/deluxe
+	name = "cheeseburger"
+	initial_ingredients = list(
+		/obj/item/reagent_containers/food/snacks/bun_bottom,
+		/obj/item/reagent_containers/food/snacks/plant/lettuce,
+		/obj/item/reagent_containers/food/snacks/ingredient/tomatoslice,
+		/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty,
+		/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice = list("mustard" = 10),
+		/obj/item/reagent_containers/food/snacks/onion_slice = list("ketchup" = 10),
+		/obj/item/reagent_containers/food/snacks/bun_top
 	)

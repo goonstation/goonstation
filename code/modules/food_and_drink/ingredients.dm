@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "overlay_patty"
 	heal_amt = 3
 	bites_left = 4
+	sandwich_offset = 3
 	//todo: add compatibility with shitty grill to have burger patties
 	//have improved stats based on how well they were cooked
 
@@ -405,6 +406,15 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("meat_slurry"=15)
+
+	attack_self(mob/user)
+		user.drop_item(src)
+		boutput(user, "You flatten \the [src] into a patty.")
+		var/obj/item/reagent_containers/food/snacks/ingredient/meat/patty/patty = new /obj/item/reagent_containers/food/snacks/ingredient/meat/patty
+		src.reagents.trans_to(patty, src.reagents.total_volume)
+		patty.quality = src.quality
+		user.put_in_hand_or_drop(patty)
+		src.dispose()
 
 /obj/item/reagent_containers/food/snacks/ingredient/sticky_rice
 	name = "sticky rice"

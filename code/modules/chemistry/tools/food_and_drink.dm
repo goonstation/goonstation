@@ -124,6 +124,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/has_cigs = 0
 
 	var/use_bite_mask = TRUE
+	var/bite_mask = "eating"
 	var/current_mask = 5
 	var/list/food_effects = list()
 	var/create_time = 0
@@ -133,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/sandwich_overlay = null
 	/// When in a sandwich, how many extra pixels should its overlay be moved upwards
 	/// Thicker ingredients/sprites would warrant a higher number. Set to -1 for no offset at all.
-	var/sandwich_offset = 0
+	var/sandwich_offset = 1
 
 	var/dropped_item = null
 
@@ -426,15 +427,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						duration = 1 MINUTE
 					L.add_food_bonus(effect, src, duration)
 
-		if (use_bite_mask && initial(bites_left))
-			var/desired_mask = (bites_left / initial(bites_left)) * 5
+		var/total_bites = initial(bites_left)
+		if (istype(src, /obj/item/reagent_containers/food/snacks/new_sandwich))
+			var/obj/item/reagent_containers/food/snacks/new_sandwich/sandwich = src
+			total_bites = sandwich.max_bites_left
+		if (use_bite_mask && total_bites)
+			var/desired_mask = (bites_left / total_bites) * 5
 			desired_mask = round(desired_mask)
 			desired_mask = max(1,desired_mask)
 			desired_mask = min(desired_mask, 5)
 
 			if (desired_mask != current_mask)
 				current_mask = desired_mask
-				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+				src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "[bite_mask][desired_mask]")))
 
 		if(!suppress_messages)
 			eat_twitch(eater)
