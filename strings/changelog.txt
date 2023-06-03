@@ -1,3 +1,6 @@
+(t)sat jun 03 24
+(u)pali
+(+)Ghosts can now use the Observe Objects button to observe singularities
 (t)fri jun 02 23
 (u)Sord
 (+)Fire alarms now visually show when they are disconnected.
