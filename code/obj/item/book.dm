@@ -572,4 +572,4 @@ all for the love of you.</tt>"}
 	info = {"Alright, so get this... I get these nice tables, with these nice locks... I set them up in this place where I can do my work in peace.
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
-			now?}
+			now?"}
