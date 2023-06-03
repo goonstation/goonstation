@@ -210,7 +210,7 @@
 
 /mob/living/intangible/flock/get_heard_name(just_name_itself=FALSE)
 	if (just_name_itself)
-		return "Flockmind"
+		return src.real_name
 	return "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
 
 /mob/living/intangible/flock/say(message, involuntary = 0)
