@@ -1,4 +1,6 @@
 (t)sat jun 03 23
+(u)pali
+(*)Getting thrown off the shuttle no longer instantly kills you. Instead you get teleported to a random point in space.
 (u)tarmunora
 (+)Yobihodazine requires at least 1u to clear oxy damage, brain damage conversion ratio 40:1 -> 15:1
 (u)pali
