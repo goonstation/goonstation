@@ -659,7 +659,7 @@
 		if (ismobcritter(target))
 			target.gib()
 			target.visible_message("<span class='alert'><b>The blob tries to absorb [target.name], but something goes horribly right!</b></span>")
-			var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+			var/datum/antagonist/mob/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
 			if (antag_role)
 				antag_role.absorbed_victims += target
 			return
@@ -671,7 +671,7 @@
 
 		var/mob/living/carbon/human/H = target
 
-		var/datum/antagonist/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
+		var/datum/antagonist/mob/intangible/blob/antag_role = blob_o?.mind?.get_antagonist(ROLE_BLOB)
 		antag_role?.absorbed_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))

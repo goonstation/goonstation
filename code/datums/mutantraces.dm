@@ -1164,7 +1164,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	proc/set_head(var/obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
+		if (isskeleton(head?.linked_human) && head?.linked_human != src.mob)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
 			if (H.eye == head)
@@ -1178,7 +1178,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
 			src.head_tracker.linked_human = null
 		head_tracker = head
-		head_tracker.linked_human = src.mob
+		if (src.head_tracker)
+			head_tracker.linked_human = src.mob
 
 /obj/item/joint_wax
 	name = "joint wax"

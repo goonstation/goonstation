@@ -88,4 +88,7 @@ labelMappings:
     "[RESPAWN]": a-respawning
     "[RESPAWNING]": a-respawning
     "[ROLEPLAY]": a-rp
+    "[VEHICLE]": a-vehicles
     "[VEHICLES]": a-vehicles
+    "[TRAITS]": a-traits
+    "[TRAIT]": a-traits

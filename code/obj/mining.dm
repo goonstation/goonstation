@@ -195,7 +195,7 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L)) // we don't care about critters
 					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
@@ -846,12 +846,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
+	icon_state = "asteroid-map"
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
+	color = "#D1E6FF"
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -916,12 +918,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	ice
 		name = "comet chunk"
 		desc = "That's some cold stuff right there."
+		color = "#9cc4f5"
 		stone_color = "#9cc4f5"
 		default_ore = /obj/item/raw_material/ice
 
 	geode
 		name = "compacted stone"
 		desc = "This rock looks really hard to dig out."
+		color = "#4c535c"
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
@@ -934,6 +938,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_material = "jean"
 		default_ore = /obj/item/material_piece/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		color = "#88c2ff"
 		stone_color = "#88c2ff"
 
 
@@ -1015,6 +1020,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		color = "#6090a0"
 		stone_color = "#6090a0"
 		fullbright = 0
 		luminosity = 1
@@ -1377,6 +1383,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
+	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
 	icon = 'icons/turf/walls_asteroid.dmi'
@@ -1392,7 +1400,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -2097,6 +2104,9 @@ TYPEINFO(/obj/item/cargotele)
 		if (istype(item, /obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = item
 			owner_name = pda.registered
+		else if (istype(item, /obj/item/clothing/lanyard))
+			var/obj/item/clothing/lanyard/lanyard = item
+			owner_name = lanyard.registered
 		else if (istype(item, /obj/item/card/id))
 			var/obj/item/card/id/card = item
 			owner_name = card.registered
@@ -2262,20 +2272,20 @@ TYPEINFO(/obj/item/cargotele)
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
@@ -2469,6 +2479,8 @@ TYPEINFO(/obj/item/ore_scoop)
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
 	var/obj/item/satchel/mining/satchel = null
+	///Does this scoop pick up rock, ice etc.
+	var/collect_junk = FALSE
 
 	prepared
 		New()
@@ -2504,16 +2516,21 @@ TYPEINFO(/obj/item/ore_scoop)
 			return
 
 	attack_self(var/mob/user as mob)
-		if(!issilicon(user))
-			if (satchel)
-				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				user.put_in_hand_or_drop(satchel)
-				satchel = null
-				icon_state = "scoop"
-			else
-				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
-		else
+		if(issilicon(user))
 			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+			return
+		if (!satchel)
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, "<span class='info'>Now collecting junk.</span>")
+			else
+				boutput(user, "<span class='info'>No longer collecting junk.</span>")
+		else
+			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
+			user.put_in_hand_or_drop(satchel)
+			satchel = null
+			icon_state = "scoop"
+
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))

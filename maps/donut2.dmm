@@ -544,13 +544,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	noalerts = 1;
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west/nopoweralert,
 /obj/marker/supplymarker,
 /turf/simulated/floor/grey/side{
 	dir = 4
@@ -1518,12 +1512,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
@@ -1626,11 +1615,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "agI" = (
@@ -2122,11 +2107,7 @@
 	},
 /area/station/science/lobby)
 "ahZ" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -4475,12 +4456,7 @@
 /turf/simulated/floor/scorched,
 /area/station/maintenance/north)
 "arF" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -4920,11 +4896,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "atc" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/stool/chair{
 	dir = 1
 	},
@@ -5677,11 +5649,8 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "avL" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
+/obj/machinery/power/apc/autoname_east{
+	cell_type = 5000
 	},
 /obj/cable,
 /turf/simulated/floor/yellow/side{
@@ -6343,11 +6312,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
@@ -7684,11 +7649,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/emergency)
 "aCD" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/storage/closet/fire,
 /obj/cable,
 /obj/machinery/camera{
@@ -9035,6 +8996,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/paper_bin,
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "aGO" = (
@@ -9138,12 +9100,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/item/weldingtool,
 /obj/item/wrench,
 /obj/item/storage/firstaid/oxygen,
@@ -9734,12 +9691,7 @@
 	},
 /area/station/teleporter)
 "aJa" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/item/disk/data/fixed_disk,
 /obj/item/device/flash,
 /obj/cable{
@@ -10169,11 +10121,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aKE" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -10513,12 +10461,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aLH" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	operating = 1;
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -11011,11 +10954,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -11089,12 +11028,7 @@
 /area/station/hallway/primary/west)
 "aNn" = (
 /obj/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aNo" = (
@@ -12102,11 +12036,7 @@
 /area/station/security/detectives_office)
 "aQO" = (
 /obj/cable,
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/machinery/light_switch{
 	name = "W light switch";
 	pixel_x = -24;
@@ -12497,11 +12427,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/table/regal/auto,
 /obj/candle_light{
 	pixel_x = 2;
@@ -13200,12 +13126,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/ce)
 "aUu" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -13268,11 +13189,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -13361,12 +13278,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aUP" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -13839,12 +13751,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "aWo" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -15117,12 +15024,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "aZV" = (
@@ -15189,12 +15091,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/machinery/vending/snack,
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -15329,12 +15226,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "bat" = (
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -16243,11 +16135,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/machinery/camera{
 	c_tag = "Heads of Staff's Quarters";
 	dir = 6;
@@ -18798,11 +18686,7 @@
 	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
 	name = "Beepsky's Shoes"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -19102,12 +18986,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "boz" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -19606,12 +19485,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "brb" = (
@@ -20335,12 +20209,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/table/auto,
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
@@ -20502,12 +20371,7 @@
 /area/station/engine/storage)
 "buI" = (
 /obj/cable,
-/obj/machinery/power/apc{
-	dir = 4;
-	name = "E APC";
-	pixel_x = 24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_east,
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow/corner{
 	dir = 1
@@ -20843,12 +20707,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/machinery/camera{
 	c_tag = "Janitor's Closet";
 	dir = 4
@@ -20926,11 +20785,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/juryroom)
 "bwh" = (
@@ -22007,11 +21862,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/item/device/igniter,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
@@ -22077,11 +21928,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bAK" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Electronics APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -23258,11 +23105,7 @@
 	},
 /area/station/solar/south)
 "bFi" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "South Solar Control APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -23368,12 +23211,7 @@
 	},
 /area/station/janitor/office)
 "bFw" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/item/extinguisher{
 	pixel_y = 8
 	},
@@ -25630,13 +25468,6 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
-"cDS" = (
-/obj/machinery/r_door_control/podbay/security{
-	name = "Security Hangar Door Control";
-	pixel_x = 24
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hangar/sec)
 "cDZ" = (
 /turf/simulated/floor/white/side{
 	dir = 1
@@ -26246,11 +26077,7 @@
 /turf/simulated/floor,
 /area/station/engine/substation/east)
 "dcj" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -28739,11 +28566,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "fan" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -29704,12 +29527,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "fMJ" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -30917,12 +30735,7 @@
 /turf/space,
 /area/space)
 "gRE" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -31186,6 +30999,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
+"hbZ" = (
+/obj/machinery/r_door_control/podbay/security{
+	name = "Security Hangar Door Control"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "hdb" = (
 /mob/living/critter/fermid,
 /obj/item/raw_material/cobryl,
@@ -31863,11 +31682,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "hIR" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/shrub{
 	dir = 10;
 	icon_state = "shrub"
@@ -31878,6 +31693,11 @@
 	icon_state = "fred6"
 	},
 /area/station/crew_quarters/jazz)
+"hIU" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/printing_press,
+/turf/simulated/floor/wood/seven,
+/area/station/chapel/sanctuary)
 "hJj" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -32598,11 +32418,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
+/obj/machinery/power/apc/autoname_south,
 /obj/landmark{
 	icon_state = "blob-start";
 	name = "blobstart"
@@ -34726,12 +34542,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/machinery/vending/computer3,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -34752,11 +34563,7 @@
 	},
 /area/station/engine/inner)
 "kly" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -35762,7 +35569,6 @@
 /area/station/security/detectives_office)
 "lcr" = (
 /obj/machinery/light/incandescent,
-/obj/mail_booth,
 /turf/simulated/floor/escape{
 	dir = 1
 	},
@@ -35810,12 +35616,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "les" = (
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -44653,11 +44454,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/table/auto,
 /obj/machinery/recharger{
 	pixel_y = 3
@@ -47296,12 +47093,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/machinery/manufacturer/engineering,
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/engineering)
@@ -49922,11 +49714,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "wvN" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -50674,11 +50462,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "xgM" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "N APC";
-	pixel_y = 24
-	},
+/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -50781,12 +50565,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/power/apc{
-	dir = 8;
-	name = "W APC";
-	pixel_x = -24;
-	pixel_y = 0
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/glasses/vr{
 	desc = "A pair of VR goggles connected to a virtual bomb test chamber.  How fancy!";
@@ -91171,7 +90950,7 @@ aAq
 aEp
 oBe
 aGb
-fwf
+hIU
 aKw
 aKw
 aKw
@@ -98179,7 +97958,7 @@ aaa
 rfa
 bvq
 bvq
-cDS
+bvq
 bvq
 bvq
 rfa
@@ -98481,7 +98260,7 @@ wdh
 buj
 byT
 byT
-buj
+hbZ
 byT
 byT
 buj

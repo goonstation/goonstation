@@ -828,10 +828,15 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+
+					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.set_head(newHead)
-					H.set_eye(null)
+						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
+							S.set_head(newHead)
+							H.set_eye(null)
+					else
+						H.set_eye(null)
+
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -879,6 +884,18 @@
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
+
+				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
+				if (src.head.head_type == HEAD_SKELETON)
+					var/mob/living/carbon/human/H = src.head.linked_human
+					if (H && (!isskeleton(src.donor) && H != src.donor))
+						var/datum/mutantrace/skeleton/S = H?.mutantrace
+						S.head_tracker = null
+						H.set_eye(null)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain

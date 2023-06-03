@@ -313,8 +313,8 @@
 	target_ghosts = TRUE
 	lock_holder = FALSE
 
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+	castcheck()
+		if (usr.client && usr.client.holder)
 			return TRUE
 
 	handleCast(var/atom/selected)

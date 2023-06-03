@@ -2839,6 +2839,8 @@
 		return
 
 	if (waddle_walking)
+		if(isdead(src) || is_incapacitated(src) || src.lying)
+			return
 		makeWaddle(src)
 
 	last_move_dir = move_dir
@@ -2881,10 +2883,12 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-// no text description though, because it's all different everywhere
-/mob/proc/vomit(var/nutrition=0, var/specialType=null)
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
+	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
+		return
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	src.visible_message(flavorMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -3064,11 +3068,7 @@
 
 /mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
-	if(istype(src.equipped(), /obj/item/card/id))
-		return src.equipped()
-	if(istype(src.equipped(), /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.equipped()
-		return pda.ID_card
+	return get_id_card(src.equipped())
 
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
@@ -3108,6 +3108,55 @@
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
+/mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
+	set name = "Help"
+	set category = "Commands"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = FALSE
+
+	// This has no arguments because I want it to be clickable directly from the Commands tab (to show the general help message) and when typed into
+	// the command bar. If we gave this an argument it would always give you an ugly list of things you can see.
+	// But we still do want arguments so we can use it from the right click menu etc.
+	// It's sort of a mess, but it works. Trust me.
+	var/atom/target = length(args) >= 1 ? args[1] : null
+
+	if(target)
+		var/success = src.help_examine(target)
+		if(!success)
+			boutput(src, "Sadly \the [target] has no help message attached.")
+	else
+		boutput(src, {"<span class='helpmsg'>
+			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
+			You can also do that by alt+doubleclicking on that object.<br>
+			If you are new here consider looking at the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for help.<br>
+			You can also press <b>F3</b> to ask the mentors for help.<br>
+			For reporting rulebreaking or rules questions press <b>F1</b>.<br>
+		</span>"})
+
+/atom/verb/help_verb()
+	set name = "Help"
+	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = FALSE // overriden to TRUE on things which have a help message
+	set hidden = TRUE // ditto
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
+
+/// Same as help_verb but this one except visible, added dynamically when requested by signals
+/atom/proc/help_verb_dynamic()
+	set name = "Help"
+	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = TRUE
+	set hidden = FALSE
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"
