@@ -107,8 +107,7 @@ TYPEINFO(/obj/item/device/audio_log)
 	New()
 		..()
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(src)
 		SPAWN(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)

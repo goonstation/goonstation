@@ -1221,6 +1221,14 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		. += M.loc
 		M = M.loc
 
+proc/outermost_movable(atom/movable/target)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
+
 /proc/all_hearers(var/range,var/centre)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.

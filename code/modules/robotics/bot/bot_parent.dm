@@ -88,8 +88,7 @@
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
 		if(!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(src)
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)

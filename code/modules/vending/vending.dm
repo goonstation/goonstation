@@ -156,8 +156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(src)
 	var/lastvend = 0
 
 	disposing()

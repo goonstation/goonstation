@@ -469,8 +469,7 @@
 	New()
 		..()
 
-		src.chat_text = new
-		src.vis_contents += src.chat_text
+		src.chat_text = new(src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)

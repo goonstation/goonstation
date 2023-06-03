@@ -268,8 +268,7 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new
-	src.vis_contents += src.chat_text
+	src.chat_text = new(src)
 
 	src.name_tag = new
 	src.update_name_tag()

@@ -2,17 +2,27 @@
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	mouse_opacity = 0
 	var/list/image/chat_maptext/lines = list() // a queue sure would be nice
+	var/atom/movable/target
+
+	New(atom/movable/target)
+		..(null) // we do NOT want to be in target!!!
+		if (isnull(target))
+			CRASH("chat_maptext_holder requires a target")
+		src.target = target
+		RegisterSignal(target, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
+		outermost_movable(target)?.vis_contents += src
+
+	proc/update_outermost_movable(atom/movable/_target, atom/movable/old_outermost, atom/movable/new_outermost)
+		old_outermost?.vis_contents -= src
+		new_outermost?.vis_contents += src
 
 	disposing()
 		for(var/image/chat_maptext/I in src.lines)
 			qdel(I)
 		src.lines = null
-		for(var/A in src.vis_locs)
-			if(isliving(A))
-				var/mob/living/L = A
-				if(L.chat_text == src)
-					L.chat_text = null
-			A:vis_contents -= src
+		if(src.target.chat_text == src)
+			src.target.chat_text = null
+		src.target = null
 		..()
 
 /image/chat_maptext
