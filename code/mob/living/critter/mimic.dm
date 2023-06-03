@@ -70,6 +70,7 @@
 
 	proc/disguise_as(var/obj/target)
 		src.appearance = target
+		src.dir = target.dir
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
 
