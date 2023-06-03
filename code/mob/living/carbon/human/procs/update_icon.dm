@@ -975,6 +975,9 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 							human_image.color = "#FFFFFF"
 					src.body_standing.overlays += human_image
 
+					if (!is_valid_icon_state(human_image.icon_state,human_image.icon))
+						CRASH("invalid iconstate [human_image.icon_state] in file [human_image.icon] used for mob chest sprite on [src]. this is probably bad")
+
 				if(AHOLD.mob_appearance_flags & HAS_OVERSUIT_DETAILS)	// need more oversuits? Make more of these!
 					human_detail_image = image(AHOLD.mob_oversuit_1_icon, AHOLD.mob_oversuit_1_state, layer = MOB_OVERSUIT_LAYER1)
 					switch(AHOLD.mob_oversuit_1_color_ref)
@@ -996,6 +999,10 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					human_head_image = our_head.head_image // head data is stored in the head
 					human_head_image?.pixel_y = head_offset // head position is stored in the body
 					src.body_standing.overlays += human_head_image
+
+					if (human_head_image)
+						if (!is_valid_icon_state(human_head_image.icon_state,human_head_image.icon))
+							CRASH("invalid iconstate [human_head_image.icon_state] in file [human_head_image.icon] used for mob head sprite on [src]. this is probably bad")
 
 				if (src.organHolder?.tail)
 					update_tail_clothing()
@@ -1048,6 +1055,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 						var/part_icon_s = limb.getPartIconState(src.decomp_stage)
 
 						var/handlimb_icon = mutantrace_override || limb.getAttachmentIcon(src.decomp_stage)
+
+						var/valid_handicon_s = is_valid_icon_state(hand_icon_s,handlimb_icon)
+						var/valid_particon_s = is_valid_icon_state(part_icon_s,handlimb_icon)
+						if (!valid_particon_s || !valid_handicon_s)
+							var/state_to_report = valid_handicon_s || valid_particon_s
+							CRASH("invalid iconstate [state_to_report] in file [handlimb_icon] used for mob limb sprite on [src]. this is probably bad")
 
 						if (limb.decomp_affected && src.decomp_stage)
 							if (hand_icon_s) //isicon
