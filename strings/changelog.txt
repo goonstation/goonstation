@@ -1,4 +1,6 @@
 (t)sat jun 03 23
+(u)tarmunora
+(+)Yobihodazine requires at least 1u to clear oxy damage, brain damage conversion ratio 40:1 -> 15:1
 (u)pali
 (+)Ghosts can now use the Observe Objects button to observe singularities
 (t)fri jun 02 23
