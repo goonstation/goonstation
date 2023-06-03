@@ -1059,7 +1059,12 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 						var/valid_handicon_s = is_valid_icon_state(hand_icon_s,handlimb_icon)
 						var/valid_particon_s = is_valid_icon_state(part_icon_s,handlimb_icon)
 						if (!valid_particon_s || !valid_handicon_s)
-							var/state_to_report = valid_handicon_s || valid_particon_s
+							var/state_to_report
+							if (!valid_handicon_s)
+								state_to_report = hand_icon_s
+							else if (!valid_particon_s)
+								state_to_report = part_icon_s
+
 							CRASH("invalid iconstate [state_to_report] in file [handlimb_icon] used for mob limb sprite on [src]. this is probably bad")
 
 						if (limb.decomp_affected && src.decomp_stage)
