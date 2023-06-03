@@ -859,7 +859,10 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 
 /area/shuttle/escape/transit
 	warp_dir = NORTH
@@ -900,7 +903,12 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.throw_dir == NORTH || src.throw_dir == SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+
 /area/shuttle_transit_space/north
 	icon_state = "shuttle_transit_space_n"
 	throw_dir = NORTH
