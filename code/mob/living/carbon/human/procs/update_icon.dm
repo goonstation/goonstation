@@ -1056,11 +1056,18 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 						var/handlimb_icon = mutantrace_override || limb.getAttachmentIcon(src.decomp_stage)
 
-						// the iconstate is sometimes an image apparently
-						if (!istype(hand_icon_s,/image) && !is_valid_icon_state(hand_icon_s,handlimb_icon))
-							CRASH("invalid iconstate [hand_icon_s] in file [handlimb_icon] used for mob limb hand sprite on [src]. this is probably bad")
-						if (!istype(part_icon_s,/image) && !is_valid_icon_state(part_icon_s,handlimb_icon))
-							CRASH("invalid iconstate [part_icon_s] in file [handlimb_icon] used for mob limb part sprite on [src]. this is probably bad")
+						if (!limb.decomp_affected || !src.decomp_stage)
+							// the iconstate is sometimes an image apparently
+
+							// legs dont appear to have valid hand_icons to check
+							if (hand_icon_s)
+								if (!istype(hand_icon_s,/image) && !is_valid_icon_state(hand_icon_s,handlimb_icon))
+									CRASH("invalid iconstate \"[hand_icon_s]\" in file [handlimb_icon] used for mob limb [limb.type] hand sprite on [src]. this is probably bad")
+
+							// arms dont have valid part_icons to check
+							if (part_icon_s)
+								if (!istype(part_icon_s,/image) && !is_valid_icon_state(part_icon_s,handlimb_icon))
+									CRASH("invalid iconstate \"[part_icon_s]\" in file [handlimb_icon] used for mob limb [limb.type] part sprite on [src]. this is probably bad")
 
 						if (limb.decomp_affected && src.decomp_stage)
 							if (hand_icon_s) //isicon
