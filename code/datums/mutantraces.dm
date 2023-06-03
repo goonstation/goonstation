@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	*
 	* (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 	*
-	* NOT_DIMORPHIC tells the sprite builder not to use any female sprites or vars. If you remove this, make sure there's a torso_f and groin_f in the mutant's DMI!
+	* NOT_DIMORPHIC tells the sprite builder not to use any female sprites or vars. If you remove this, make sure there's a chest_f and groin_f in the mutant's DMI!
 	*
 	* HAS_NO_SKINTONE, HAS_NO_EYES, HAS_NO_HEAD each prevent the renderer from trying to colorize the player's body or apply hair / eyes. They tend to be baked in.
 	*
@@ -127,12 +127,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/l_limb_arm_type_mutantrace_f = null
 	var/r_limb_leg_type_mutantrace_f = null
 	var/l_limb_leg_type_mutantrace_f = null
-
-	//This stuff is for robot_parts, the stuff above is for human_parts
-	var/r_robolimb_arm_type_mutantrace = null // Should we get custom arms? Dispose() replaces them with normal human arms.
-	var/l_robolimb_arm_type_mutantrace = null
-	var/r_robolimb_leg_type_mutantrace = null
-	var/l_robolimb_leg_type_mutantrace = null
 
 	///If true, normal limbs use custom icons for this mutantrace
 	var/override_limb_icons = FALSE
@@ -675,6 +669,15 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if(src.detail_oversuit_1_color_f)
 				src.detail_oversuit_1_color = src.detail_oversuit_1_color_f
 
+/datum/mutantrace/human
+	name = "human"
+	icon = 'icons/mob/human.dmi'
+	mutant_folder = 'icons/mob/human.dmi'
+	icon_state = "blank"
+	human_compatible = TRUE
+	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
+	dna_mutagen_banned = FALSE
+	
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'

@@ -168,6 +168,8 @@
 
 	var/datum/humanInventory/inventory = null
 
+	var/default_mutantrace = /datum/mutantrace/human
+
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
@@ -233,6 +235,7 @@
 			MB.power = microbombs_4_everyone
 
 	src.text = "<font color=#[random_hex(3)]>@"
+	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
@@ -2944,6 +2947,8 @@
 
 /mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
+	if(!mutantrace_type)
+		mutantrace_type = src.default_mutantrace
 	if(src.mutantrace)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
