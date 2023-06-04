@@ -12,7 +12,6 @@
 
 /datum/component/holdertargeting/no_gravity/on_dropped(datum/source, mob/user)
 	. = ..()
-	var/obj/item/I = parent
 	user.no_gravity = 0
 	for (var/atom/movable/A as anything in user)
 		if (A.no_gravity)
