@@ -271,7 +271,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/spawner/corpse/human // Human spawner handles some randomisation / customisation
 	icon_state = "corpse-human"
+	type_to_spawn = /mob/living/carbon/human/normal/assistant
 	container_type = null
+
 	var/husked = FALSE
 	var/decomp_stage = DECOMP_STAGE_NO_ROT
 	var/no_decomp = TRUE // If true we are magically preserved and don't decay
@@ -282,16 +284,18 @@ var/global/list/job_start_locations = list()
 
 	var/empty_bag = FALSE /// If TRUE we delete the contents of the backpack after spawning
 	var/delete_id = FALSE /// If TRUE we delete the ID slot contents after spawning
-	var/break_headset = FALSE /// If TRUE we break the headset and make it unscannable
-	var/belt_override = null /// Path to override the beltslot with such as /obj/item/storage/fanny/funny/mini
-
-	var/spawnt = null
+	var/break_headset = FALSE /// If TRUE we break the headset and make it unscannable after spawning
 
 	spawn_the_thing()
 		if (isnull(src.type_to_spawn))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 
 		var/mob/living/carbon/human/H = new type_to_spawn(src.loc)
+
+		if (H.slot_l_hand)
+			qdel(H.slot_l_hand)
+		if (H.slot_r_hand)
+			qdel(H.slot_r_hand)
 
 		H.death(FALSE)
 		H.decomp_stage = src.decomp_stage
@@ -304,8 +308,7 @@ var/global/list/job_start_locations = list()
 			H.bioHolder.AddEffect("husk")
 
 		if (src.random_damage)
-			H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
-			H.take_oxygen_deprivation(rand(250, 300))
+			src.do_damage(H)
 
 		if (src.random_organ_removal)
 			for (var/i in 1 to rand(1, 4))
@@ -331,28 +334,46 @@ var/global/list/job_start_locations = list()
 				headset.bricked = TRUE
 				headset.mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED // No getting smart
 
-		if (src.belt_override)
-			H.force_equip(belt_override, SLOT_BELT)
-
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
+			container.update_icon()
 			H.set_loc(container)
 
-	clown
-		type_to_spawn = /mob/living/carbon/human/normal/clown
-		belt_override = /obj/item/storage/fanny/funny/mini
+		qdel(src)
 
-	random
-		var/list/spawns = list(
-			/mob/living/carbon/human/normal/assistant = 15,
-			/mob/living/carbon/human/normal/clown = 15,
-			/mob/living/carbon/human/normal/chef = 15,
-			/mob/living/carbon/human/normal/botanist = 15,
-			/mob/living/carbon/human/normal/janitor = 15,
-			/mob/living/carbon/human/normal/miner = 15,
-			/mob/living/carbon/human/normal = 10)
+	proc/do_damage(var/mob/living/carbon/human/H) // Override if you want specific damage numbers / types
+		H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
+		H.take_oxygen_deprivation(rand(250, 300))
+		H.update_body()
 
+/obj/landmark/spawner/corpse/human/random
+	icon_state = "corpse-human-rand"
+	var/static/list/spawns = list(
+		/mob/living/carbon/human/normal/assistant = 20,
+		/mob/living/carbon/human/normal/miner = 20,
+		/mob/living/carbon/human/normal/botanist = 20,
+		/mob/living/carbon/human/normal/chef = 10,
+		/mob/living/carbon/human/normal/janitor = 10,
+		/mob/living/carbon/human/normal/clown = 5,
+		/mob/living/carbon/human/normal = 5)
+
+	New()
 		type_to_spawn = weighted_pick(spawns)
+		..()
+
+/obj/landmark/spawner/corpse/human/random/body_bag
+	container_type = /obj/item/body_bag
+
+	New()
+		decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_DECAYED)
+		no_decomp = FALSE
+		..()
+
+/obj/landmark/spawner/corpse/human/random/webbed
+	container_type = /obj/icecube/spider
+
+	clown
+		container_type = /obj/icecube/spider/clown
 
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
