@@ -66,7 +66,7 @@
 
 		src.attached = A
 		src.active = 1
-		src.set_loc(A)
+		src.set_loc(null)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 		add_fingerprint(user)

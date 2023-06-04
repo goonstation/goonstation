@@ -113,6 +113,8 @@
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		if (frame)
+			src.freemodule = frame.freemodule
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -255,9 +257,6 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		var/is_emagged = src.emagged
-		var/is_syndicate = src.syndicate
-
 		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
@@ -280,8 +279,9 @@
 						chest.cell = src.cell
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
-			frame.emagged = is_emagged
-			frame.syndicate = is_syndicate
+			frame.emagged = src.emagged
+			frame.syndicate = src.syndicate
+			frame.freemodule = src.freemodule
 
 			src.ghostize()
 			qdel(src)

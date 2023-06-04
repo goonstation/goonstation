@@ -95,6 +95,13 @@
 /// Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
 
+//multi group checking
+/// Our group processing check failed. We will suspend group processing.
+#define SELF_CHECK_FAIL 0
+/// Sharer group processing check failed. The sharer will suspend group processing.
+#define SHARER_CHECK_FAIL -1
+/// All group processing checks passed. Group processing can be preserved.
+#define GROUP_CHECK_PASS 1
 
 #define MINIMUM_WATER_TO_SUSPEND MOLAR_DENSITY_WATER*CELL_VOLUME*MINIMUM_AIR_RATIO_TO_SUSPEND
 
