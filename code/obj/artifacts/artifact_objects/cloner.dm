@@ -109,7 +109,7 @@
 					if(H)
 						H.ai_aggressive = 1
 						H.ai_calm_down = 0
-					while (isalive(H) && isnull(H.client))
+					while (!isdead(H) && isnull(H.client))
 						sleep(randfloat(3 SECOND, 20 SECONDS))
 						H.say(phrase_log.random_phrase("say"))
 			else
@@ -119,7 +119,7 @@
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
 				SPAWN(imprison_time)
-					while (isalive(clone) && isnull(clone.client))
+					while (!isdead(clone) && isnull(clone.client))
 						clone.say(phrase_log.random_phrase("say"))
 						sleep(randfloat(3 SECOND, 20 SECONDS))
 

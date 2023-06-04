@@ -1075,28 +1075,29 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			icon_state = "b-wingrille_f"
 			full_win = 1
 
-
 	auto
 		name = "autowindow grille spawner"
 		win_path = "/obj/window/auto"
 		full_win = 1
 		no_dirs = 1
-		icon_state = "wingrille_f"
+		icon_state = "wingrille_new"
+		color = "#A3DCFF"
 
 		reinforced
 			name = "reinforced autowindow grille spawner"
 			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_f"
+			icon_state = "r-wingrille_new"
 
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal"
-			icon_state = "p-wingrille_f"
+			icon_state = "wingrille_new"
+			color = "#A114FF"
 
 			reinforced
 				name = "reinforced crystal autowindow grille spawner"
 				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "pr-wingrille_f"
+				icon_state = "r-wingrille_new"
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
@@ -1141,7 +1142,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
 		dir = 1
-		default_material = "metal"
+		default_material = "steel"
 
 // flock windows
 
@@ -1182,6 +1183,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		var/mob/living/critter/flock/drone/F = mover
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
+TYPEINFO(/obj/window/feather)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/window/feather
 	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
@@ -1189,7 +1192,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass

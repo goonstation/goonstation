@@ -12,7 +12,6 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -502,16 +501,22 @@
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
-		var/mob/user = usr
-		if (src_exists_inside_user_or_user_storage && !src.storage)
-			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
+		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
+
+		if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld) && !src.storage) //Handles all text for the Device Frame
+			var/list/atom/movable/loc_chain = obj_loc_chain(src)
+			maptext_loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
+
 		else
-			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
-		for(var/mob/O in all_hearers(7, src.loc))
+			maptext_loc = src.loc
+
+		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
+
+		for(var/mob/O in all_hearers(7, maptext_loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-			O.show_message(assoc_maptext = maptext)
-		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1, //Places text in the radio
+				assoc_maptext = maptext) //Places text in world
+		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -4236,4 +4241,3 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
-#undef src_exists_inside_user_or_user_storage

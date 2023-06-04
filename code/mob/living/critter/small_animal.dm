@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 1
 
 		//Cats meow sometimes
-		if (src.ai?.enabled && prob(5))
+		if (src.is_npc && prob(5))
 			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
@@ -2878,6 +2878,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	death(gibbed)
+		. = ..()
+		animate(src) // stop bumble / bounce
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
