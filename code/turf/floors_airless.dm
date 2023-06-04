@@ -483,6 +483,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/simulated/floor/airless/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -490,11 +492,7 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"), copy = FALSE)
+	default_material = "pharosium"
 
 /turf/simulated/floor/airless/circuit/green
 	icon_state = "circuit-green"
@@ -534,16 +532,14 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/carpet)
+	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cotton")
 	mat_changename = 0
-
-	New()
-		plate_mat = getMaterial("cotton")
-		. = ..()
+	default_material = "cotton"
 
 	break_tile()
 		..()
@@ -738,15 +734,13 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/airless/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"), copy = FALSE)
+	default_material = "wood"
 
 /turf/simulated/floor/airless/wood/two
 	icon_state = "wooden"
@@ -899,17 +893,15 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/airless/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"), copy = FALSE)
+	default_material = "synthrubber"
 
 /turf/simulated/floor/airless/grass/leafy
 	icon_state = "grass_leafy"

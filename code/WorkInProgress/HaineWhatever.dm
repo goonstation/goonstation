@@ -1304,13 +1304,14 @@ TYPEINFO(/obj/submachine/blackjack)
 				user.suiciding = 0
 		return 1
 
+TYPEINFO(/obj/item/gun/bling_blaster)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/gun/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"
 	icon_state = "bling_blaster"
 	mat_changename = 0
 	mat_changedesc = 0
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
 	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
@@ -1320,10 +1321,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	var/possible_bling_common = list(/obj/item/spacecash,/obj/item/spacecash/five,/obj/item/spacecash/ten)
 	var/possible_bling_uncommon = list(/obj/item/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (!istype(target, /turf) || !istype(start, /turf))

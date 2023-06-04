@@ -1661,6 +1661,7 @@ datum/preferences
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
+			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)

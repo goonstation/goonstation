@@ -4887,12 +4887,9 @@
 /area/station/crew_quarters/quartersB)
 "amQ" = (
 /obj/decal/cleanable/cobweb2,
-/obj/ladder{
-	desc = "Is this supposed to be here?";
-	icon_state = "ladder_wall";
-	id = "smiling";
-	layer = 2.5;
-	pixel_y = 32
+/obj/ladder/embed{
+	pixel_y = 32;
+	id = "smiling"
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/north)
@@ -10841,12 +10838,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aBx" = (
-/obj/ladder{
-	desc = "Is this supposed to be here?";
-	id = "smiling";
-	layer = 2.5;
-	pixel_y = -12
-	},
 /obj/item/clothing/under/suit/dress{
 	desc = "A black dress. Very formal.";
 	name = "black dress"
@@ -10867,7 +10858,12 @@
 /obj/item/clothing/suit/scarf,
 /obj/storage/closet/dresser{
 	anchored = 1;
-	name = "costume dresser"
+	name = "costume dresser";
+	pixel_y = 20
+	},
+/obj/ladder/embed{
+	pixel_y = 32;
+	id = "smiling"
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)

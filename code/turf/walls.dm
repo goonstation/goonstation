@@ -15,9 +15,6 @@
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 
-	/// The material name (string) that this will default to if a material is not otherwise set
-	var/default_material = "steel"
-	var/uses_material_appearance = FALSE // Uses material for appearances, Bamboo / Wood / Mauxite / etc
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
@@ -36,9 +33,6 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
-
-		if (!src.material)
-			src.setMaterial(getMaterial(src.default_material), src.uses_material_appearance, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
