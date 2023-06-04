@@ -74,6 +74,8 @@
 
 	/// If TRUE we delete the contents of the backpack after spawning
 	var/empty_bag = FALSE
+	/// If TRUE delete the pocket contents if any
+	var/empty_pockets = FALSE
 	/// If TRUE we delete the ID slot contents after spawning
 	var/delete_id = FALSE
 	/// If TRUE we break the headset and make it unscannable after spawning
@@ -128,6 +130,12 @@
 				var/obj/item/storage/fanny/fanny = H.belt
 				for (var/obj/item as anything in fanny)
 					qdel(item)
+
+		if (src.empty_pockets)
+			if (H.l_store)
+				qdel(H.l_store)
+			 (H.r_store)
+				qdel(H.r_store)
 
 		if (src.break_headset)
 			if (istype(H.ears, /obj/item/device/radio/headset))
