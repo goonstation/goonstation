@@ -75933,6 +75933,19 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"tmg" = (
+/obj/overlay{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "gooddog";
+	name = "Good Dog";
+	desc = "What a good boy!";
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/sim/area2)
 "tnB" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-24"
@@ -126370,7 +126383,7 @@ cjh
 cjh
 cjh
 cjh
-cjh
+tmg
 cjh
 cmz
 bYK
