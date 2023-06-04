@@ -83,6 +83,8 @@
 	var/yeet_chance = 0.1 //yeet
 
 	var/decomp_stage = DECOMP_STAGE_NO_ROT
+	var/no_miasma = FALSE
+	var/no_decomp = FALSE
 	var/time_until_decomposition = 0
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 

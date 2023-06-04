@@ -22,7 +22,8 @@
 					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
 					owner.reagents?.has_reagent("formaldehyde") || \
 					owner.reagents?.has_reagent("miasmosa") || \
-					istype(owner.loc, /obj/icecube)
+					istype(owner.loc, /obj/icecube) || \
+					H.no_miasma
 
 			if (istype(owner.loc, /obj/machinery/traymachine/morgue)) //Morgues require power now
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
@@ -41,7 +42,7 @@
 				var/temperature_modifier = (env_temp - T20C) / 10
 				H.time_until_decomposition -= clamp(2 SECONDS + temperature_modifier, 0, 6 SECONDS) * mult
 
-			if(H.time_until_decomposition < 0)
+			if(H.time_until_decomposition < 0 && !H.no_decomp)
 				H.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 				if (suspend_rot)
 					return ..()
