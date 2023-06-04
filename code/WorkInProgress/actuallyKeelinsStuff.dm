@@ -1556,10 +1556,10 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
+	default_material = "slag"
 
 	New()
 		..()
-		setMaterial(getMaterial("slag"))
 		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
@@ -1915,7 +1915,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -2804,6 +2804,9 @@ Returns:
 		if(target && istype(target))
 			if(ismob(AM))
 				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = AM
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")

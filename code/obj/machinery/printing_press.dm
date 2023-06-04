@@ -128,6 +128,7 @@
 				return
 
 			src.x -= 1
+		AddComponent(/datum/component/transfer_output)
 		UpdateIcon()
 
 	// this bad boy requires two tiles of space so we'll check it out
@@ -469,7 +470,7 @@
 			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			UpdateIcon()
 
-			var/obj/item/paper/book/custom/B = new(get_turf(src))
+			var/obj/item/paper/book/custom/B = new
 
 			if (book_name)
 				B.name = src.book_name
@@ -496,6 +497,8 @@
 				B.ink_color = src.ink_color
 				B.book_cover = src.book_cover
 				B.build_custom_book()
+				B.layer = src.layer + 0.1
+			TRANSFER_OR_DROP(src, B)
 /*					if (cover_color) //should always be yes
 						var/image/I = SafeGetOverlayImage("cover", B.icon, "base-colorable")
 						I.color = cover_color

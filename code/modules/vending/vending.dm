@@ -156,8 +156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 	var/lastvend = 0
 
 	disposing()
@@ -339,8 +338,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		else
 			boutput(user, "<span class='alert'>This machine does not accept cash.</span>")
 			return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
+	var/obj/item/card/id/id_card = get_id_card(W)
+	if (istype(id_card))
+		W = id_card
 	if (istype(W, /obj/item/card/id))
 		if (src.acceptcard)
 			src.scan_card(W, user)
@@ -467,7 +467,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (R.product_amount < 1)
 			display_amount = "OUT OF STOCK"
 		.["productList"] += list(list(
-			"path" = R.product_path,
+			"ref" = ref(R),
 			"name" = R.product_name,
 			"amount" = display_amount,
 			"cost" = R.product_cost,
@@ -496,6 +496,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
+			P.owneraccount = FindBankAccountByName(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -549,7 +550,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
 				update_static_data(usr)
 		if("rename")
@@ -562,7 +563,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							P.promoimage = R.icon
 							P.updateAppearance()
 		// return cash
@@ -605,10 +606,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 				var/list/plist = player_list || product_list
 				for (var/datum/data/vending_product/R in plist)
-					if(R.product_path == text2path(params["target"]))
+					if(ref(R) == (params["target"]))
 						product_amount = R.product_amount
 						product = R
-				if(product_amount <= 0 || isnull(text2path(params["target"])))
+				if(product_amount <= 0 || isnull(product))
 					return
 				src.vend_ready = 0
 				src.prevend_effect()
@@ -616,10 +617,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				SPAWN(src.vend_delay)
 					src.vend_ready = 1
 					for (var/datum/data/vending_product/R in plist)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
-					var/atom/movable/vended = src.vend_product(product)
+					var/atom/movable/vended = src.vend_product(product, usr)
 					if (!product.infinite)
 						if (plist == player_list && product_amount == 1)
 							player_list -= product
@@ -630,6 +631,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
+						if (!player_list)
+							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+						else
+							//Players get 90% of profit from player vending machines QMs get 10%
+							var/obj/machinery/vending/player/vMachine = src
+							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
+							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
@@ -638,7 +646,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 					logTheThing(LOG_STATION, usr, "vended a player product ([product.product_name]) from [src] at [log_loc(src)].")
 	. = TRUE
 
-/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product)
+/obj/machinery/vending/proc/vend_product(var/datum/data/vending_product/product, mob/user)
 	if ((!product.infinite && product.product_amount <= 0) || !product.product_path)
 		return
 	var/atom/movable/vended
@@ -1129,6 +1137,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		return 1
 	return 0
 
+/obj/machinery/vending/proc/right()
+	src.can_fall = 1
+	src.layer = initial(src.layer)
+	src.anchored = ANCHORED
+	src.status &= ~BROKEN
+	src.power_change()
+
 /datum/action/bar/icon/right_vendor //This is used when you try to remove someone elses handcuffs.
 	duration = 5 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
@@ -1164,12 +1179,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 	onEnd()
 		..()
 		if(src.owner && vendor && (src.vendor.status & BROKEN))
-			src.vendor.can_fall = 1
-			src.vendor.layer = initial(src.vendor.layer)
-			src.vendor.anchored = ANCHORED
-			src.vendor.status &= ~BROKEN
-			src.vendor.power_change()
-
+			vendor.right()
 			for(var/mob/M in AIviewers(src.owner))
 				M.show_message("<span class='notice'><B>[src.owner] manages to stand \the [src.vendor] back upright!</B></span>", 1)
 
@@ -1448,7 +1458,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 
 	create_products()
 		..()
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, rand(1, 6), cost=PAY_UNTRAINED/10, hidden = 1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola, 10, cost=PAY_UNTRAINED/10)
 		product_list += new/datum/data/vending_product(/obj/item/canned_laughter, rand(1,5), cost=PAY_UNTRAINED/5,hidden=1)
 		if(prob(25))
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/softsoft_pizza, rand(1, 3), cost=PAY_UNTRAINED/5, hidden = 1)
@@ -1473,7 +1483,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10) //does this even work??
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1, 5), cost=PAY_UNTRAINED/10, hidden = 1)
 
 	blue
 		icon_state = "grife"
@@ -1495,7 +1505,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1,5), cost=PAY_UNTRAINED/10, hidden = 1)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -1832,6 +1842,14 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		contents += product
 		product_cost = price
 
+	getBase64Img()
+		var/key = "\ref[src]"
+		. = product_base64_cache[key]
+		if(isnull(.))
+			var/icon/dummy_icon = getFlatIcon(src.contents[1], no_anim=TRUE)
+			. = icon2base64(dummy_icon)
+			product_base64_cache[key] = .
+
 TYPEINFO(/obj/item/machineboard)
 	mats = 2
 
@@ -2021,19 +2039,29 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 	//Bank account
 	var/datum/db_record/owneraccount = null
 	var/image/crtoverlay = null
+	var/does_crt = TRUE
 	var/image/promoimage = null
+	///Set this var to update all static data at the end of the machine tick, done like this to avoid updating for every item added in a stack
+	var/static_data_invalid = FALSE
 	player_list = list()
 	icon_panel = "standard-panel"
 
 	New()
 		. = ..()
+		if (!src.does_crt)
+			return
 		crtoverlay = SafeGetOverlayImage("screen", src.icon, "player-crt")
 		crtoverlay.layer = src.layer + 0.2
 		crtoverlay.plane = PLANE_DEFAULT
 		//These stop the overlay from being selected instead of the item by your mouse?
 		crtoverlay.appearance_flags = NO_CLIENT_COLOR | PIXEL_SCALE
 		crtoverlay.mouse_opacity = 0
+		src.registerDisposals()
 		updateAppearance()
+
+	disposing()
+		src.unregisterDisposals()
+		. = ..()
 
 	proc/pick_product_name()
 		var/datum/data/vending_product/player_product/R = pick(src.player_list)
@@ -2088,6 +2116,41 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		else
 			UpdateOverlays(null, "screen", 0, 1)
 
+	proc/acceptsProduct(atom/product)
+		return isitem(product)
+
+	///This is a mild hack, an expel proc to match /obj/disposaloutlet
+	proc/expel(obj/disposalholder/holder)
+		var/turf/expel_loc = get_turf(src)
+		var/turf/target = get_ranged_target_turf(src, src.dir, 10)
+		for (var/atom/movable/AM in holder)
+			if (src.acceptsProduct(AM))
+				src.addProduct(AM, null, TRUE)
+			else
+				AM.set_loc(expel_loc)
+				AM.pipe_eject(src.dir)
+				AM.throw_at(target, 10, 1)
+		qdel(holder)
+		src.static_data_invalid = TRUE
+
+	proc/registerDisposals()
+		var/obj/disposalpipe/trunk/trunk = locate() in get_turf(src)
+		if (trunk && !trunk.linked)
+			trunk.linked = src
+
+	proc/unregisterDisposals()
+		var/obj/disposalpipe/trunk/trunk = locate() in get_turf(src)
+		if (trunk && trunk.linked == src)
+			trunk.linked = null
+
+	fall(mob/living/carbon/victim)
+		src.unregisterDisposals()
+		. = ..()
+
+	right()
+		. = ..()
+		src.registerDisposals()
+
 	proc/addProduct(obj/item/target, mob/user, quiet = FALSE)
 		if (target.cant_drop)
 			if(!quiet)
@@ -2117,12 +2180,14 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 		for (var/obj/item/I as anything in targetContainer.storage.get_contents())
 			targetContainer.storage.transfer_stored_item(I, src, user = user)
 			productListUpdater(I, user)
-
+		if (istype(targetContainer, /obj/item/satchel))
+			targetContainer.UpdateIcon()
+			targetContainer.tooltip_rebuild = 1
 
 	proc/productListUpdater(obj/item/target, mob/user)
 		if (!target)
 			return
-		user.u_equip(target)
+		user?.u_equip(target)
 		target.set_loc(src)
 		target.layer = (initial(target.layer))
 		var/existed = FALSE
@@ -2159,6 +2224,10 @@ TYPEINFO(/obj/item/machineboard/vending/monkeys)
 
 	process()
 		. = ..()
+		if (src.static_data_invalid)
+			src.static_data_invalid = FALSE
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(src))
+				src.update_static_data(null, ui)
 		//Don't update if we're working, always handle that in power_change()
 		if ((status & BROKEN) || status & NOPOWER)
 			updateAppearance()
@@ -2385,7 +2454,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/witch, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/wizard/necro, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wizrobe/necro, 2, hidden=1)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/wizard, 8)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/sandal/magic/wizard, 8)
 		product_list += new/datum/data/vending_product(/obj/item/staff, 4)
 		product_list += new/datum/data/vending_product(/obj/item/staff/crystal, 4, hidden=1)
 
@@ -3041,6 +3110,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/medical, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/robotics, 3)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/genetics, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/nurse_coat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/geneticist_puffer, 2)
@@ -3120,7 +3190,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2/atmos, 2, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/engineering, 2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/engineering, 2)
-		product_list += new/datum/data/vending_product(/obj/item/constructioncone, 12)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/constructioncone, 16)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)
@@ -3206,3 +3276,69 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/scientist/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/science/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/dan, 1, hidden=1)
+
+/obj/machinery/vending/player/chemicals
+	name = "dispensary interlink"
+	desc = "An ID-selective dispenser for advanced medical supplies from chemistry."
+	icon_state = "medchem"
+	acceptcard = FALSE
+	pay = FALSE
+	does_crt = FALSE
+	slogan_chance = 0
+	req_access = list(access_chemistry, access_medical_lockers)
+	///For linking to the chemlink console thingy
+	var/id = "chemlink"
+	var/obj/machinery/disposal/chemlink/linked = null
+	///Stuff wot can be put in
+	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
+		/obj/item/reagent_containers/glass/bottle,
+		/obj/item/reagent_containers/patch,
+		/obj/item/reagent_containers/syringe,
+		/obj/item/reagent_containers/ampoule,
+		/obj/item/chem_pill_bottle,
+	)
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
+
+	vend_product(datum/data/vending_product/product, mob/user)
+		. = ..()
+		SPAWN(0)
+			src.linked.update_static_data(user)
+
+	acceptsProduct(atom/A)
+		for (var/type in src.allowed_types)
+			if (istype(A, type))
+				return TRUE
+		return FALSE
+
+	attackby(obj/item/W, mob/user)
+		if (src.acceptsProduct(W))
+			src.addProduct(W, user)
+			src.update_static_data(user)
+			return
+		if (istype(W, /obj/item/screwdriver)) //no
+			return
+		. = ..()
+
+	addProduct(obj/item/target, mob/user, quiet)
+		. = ..()
+		src.linked.static_data_invalid = TRUE
+		if (!ON_COOLDOWN(src, "announce", 2 SECONDS))
+			src.speak(pick("New product received: [target.name]!",
+				"Supplies received: [target.name]!",
+				"Now available for pickup: [target.name]!")
+			)
+
+	generate_slogans()
+		if (!length(src.player_list) <= 0)
+			src.slogan_list = list("[src.pick_product_name()] could save a life!",
+				"Fresh supplies of [src.pick_product_name()]!",
+				"Ask your doctor if [src.pick_product_name()] is right for you!",
+				"Prescribe [src.pick_product_name()] today!"
+			)

@@ -648,7 +648,7 @@
 
 /datum/achievementReward/Aerostaticjacket
 	title = "(Skin) Aerostatic Pilot Jacket"
-	desc = "Turns your detectives coat into a orange pilot jacket"
+	desc = "Turns your detective's coat into an orange pilot jacket"
 	required_medal = "Deep Freeze"
 
 	rewardActivate(var/mob/activator)
@@ -876,6 +876,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/bigcaphat))
+					var/prev = M.name
+					M.name = "commander of commander's hat"
+					M.desc = "A symbol of the commander's rank, signifying they're the greatest commander, and the source of all their power. (Base Item: [prev])"
+					M.icon_state = "captainbig-blue"
+					M.item_state = "captainbig-blue"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/swords_sheaths/captain))
@@ -904,14 +913,15 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				if(H.find_type_in_hand(/obj/item/megaphone))
-					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
-					M.icon_state = "megaphone_blue"
-					M.item_state = "megaphone_blue"
-					M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
-					M.maptext_color = "#c1ddf8"
-					M.maptext_outline_color = "#02294d"
-					succ = TRUE
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_blue"
+				M.item_state = "megaphone_blue"
+				M.desc = "The captain's megaphone, fancily decorated blue to induce a 'cool' and 'calming' sensation in those around. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#c1ddf8"
+				M.maptext_outline_color = "#02294d"
+				H.update_inhands()
+				succ = TRUE
 
 			if (!succ)
 				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
@@ -1021,6 +1031,15 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+				else if (istype(M, /obj/item/clothing/head/bigcaphat))
+					var/prev = M.name
+					M.name = "\improper CentCom Executive of Executive's hat"
+					M.desc = "A symbol of the CentCom Executive's rank, signifying they're the greatest VentCom Executive, and the source of all their power. (Base Item: [prev])"
+					M.icon_state = "captainbig-red"
+					M.item_state = "captainbig-red"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/swords_sheaths/captain))
@@ -1049,14 +1068,15 @@
 						H.set_clothing_icon_dirty()
 						succ = TRUE
 
-				if(H.find_type_in_hand(/obj/item/megaphone))
-					var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
-					M.icon_state = "megaphone_red"
-					M.item_state = "megaphone_red"
-					M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
-					M.maptext_color = "#fcd4d4"
-					M.maptext_outline_color = "#520000"
-					succ = TRUE
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				M.icon_state = "megaphone_red"
+				M.item_state = "megaphone_red"
+				M.desc = "The captain's megaphone, fancily decorated red, which helps it stand out. Useful for barking demands at staff assistants or getting your point across."
+				M.maptext_color = "#fcd4d4"
+				M.maptext_outline_color = "#520000"
+				H.update_inhands()
+				succ = TRUE
 
 
 			if (!succ)

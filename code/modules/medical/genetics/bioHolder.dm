@@ -354,6 +354,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/mob/owner = null
 	var/ownerName = null
+	var/ownerType = null //mostly meaningless for bioHolders created for mobs; only used for ownerless bioHolders in blood and such
 
 	var/bloodType = "AB+-"
 	var/bloodColor = null
@@ -381,6 +382,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		SPAWN(2 SECONDS) // fuck this shit
 			if(owner)
 				ownerName = owner.real_name
+				ownerType = owner.type
 				bioUids[Uid] = owner?.real_name ? owner.real_name : owner?.name
 
 		BuildEffectPool()

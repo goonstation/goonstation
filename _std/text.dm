@@ -1,3 +1,5 @@
+#define EXTERNAL_LINK(URL, TEXT) {"<a href=""} + URL + {"" target="_blank">"} + TEXT + {"</a>"}
+
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)

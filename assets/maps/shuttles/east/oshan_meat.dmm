@@ -343,7 +343,7 @@
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -910,7 +910,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

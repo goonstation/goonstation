@@ -254,6 +254,16 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 4)
 
+/obj/item/clothing/head/bigcaphat
+	name = "Captain of Captain's hat"
+	icon_state = "captainbig"
+	item_state = "caphat"
+	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 6)
+
+
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
@@ -473,6 +483,8 @@ proc/filter_trait_hats(var/type)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 5)
 
+TYPEINFO(/obj/item/clothing/head/that/gold)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
@@ -480,7 +492,6 @@ proc/filter_trait_hats(var/type)
 	item_state = "gthat"
 	protective_temperature = 500
 	mat_changename = 0
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
 
 	setupProperties()
 		..()

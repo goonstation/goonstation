@@ -13,9 +13,8 @@
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
+	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
 
-	/// The material name (string) that this will default to if a material is not otherwise set
-	var/default_material = "steel"
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
@@ -34,9 +33,6 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
-
-		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
@@ -128,7 +124,7 @@
 	newlight.status = 1 // LIGHT_EMPTY
 	if (istype(src,/turf/simulated/wall/auto))
 		newlight.nostick = 0
-		newlight.autoposition()
+		newlight.autoposition(light_dir)
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)

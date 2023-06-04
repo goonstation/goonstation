@@ -2988,6 +2988,15 @@ ABSTRACT_TYPE(/datum/manufacture/pod)
 
 ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
+/datum/manufacture/pod/weapon/bad_mining
+	name = "Mining Phaser System"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(10,10,20)
+	item_outputs = list(/obj/item/shipcomponent/mainweapon/bad_mining)
+	time = 20 SECONDS
+	create = 1
+	category = "Tool"
+
 /datum/manufacture/pod/weapon/mining
 	name = "Plasma Cutter System"
 	item_paths = list("POW-1","MET-3","CRY-2")
@@ -3537,3 +3546,10 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 40 SECONDS
 	create = 1
 	category = "Miscellaneous"
+
+/datum/manufacture/floodlight
+	name = "Floodlight"
+	item_outputs = list(/obj/item/device/light/floodlight)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
