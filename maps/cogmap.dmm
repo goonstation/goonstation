@@ -55518,10 +55518,8 @@
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "ntQ" = (
-/obj/machinery/atmospherics/mixer{
-	id_tag = "engine_combust";
-	frequency = 1225;
-	master_id = "engine_combust_control"
+/obj/machinery/atmospherics/mixer/flipped{
+	dir = 1
 	},
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
