@@ -519,7 +519,7 @@
 				if (use_delay)
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
+				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc))) || (ismob(target.loc) && target != src && target.loc != src)) // dont want to check for a cloaker every click if we're not invisible
 					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
@@ -1063,7 +1063,7 @@
 
 	var/heardname = src.real_name
 
-	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !(src.organHolder.head?.head_type == HEAD_SKELETON)
 
 	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
@@ -1094,6 +1094,11 @@
 					for(var/mob/M in W) // idk if someone ends up in there they probably want to be able to hear too
 						listening |= M
 	else
+		if (ismob(say_location.loc) && is_decapitated_skeleton) // if we're the head of a talking mob we arent linked to
+			var/mob/living/L = say_location.loc
+			if (L.organHolder.head == say_location)
+				say_location = L
+
 		olocs = obj_loc_chain(say_location)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
 			for (var/atom/movable/AM in olocs)
@@ -1139,11 +1144,11 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (!message_range && speechpopups && src.chat_text)
-		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
-		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
-			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
+		if(!last_heard_name || heard_name != src.last_heard_name)
+			var/num = hex2num(copytext(md5(heard_name), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			src.last_heard_name = src.get_heard_name()
+			src.last_heard_name = heard_name
 
 		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1185,7 +1190,8 @@
 			if (is_decapitated_skeleton) // for skeleton heads
 				var/mob/living/carbon/human/H = src
 				var/datum/mutantrace/skeleton/S = H.mutantrace
-				holder = S.head_tracker?.chat_text
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
 			if (holder)
 				for(var/image/chat_maptext/I in holder.lines)
 					if(I != chat_text)
@@ -1267,8 +1273,11 @@
 	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
-/mob/proc/get_heard_name()
-	. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
+/mob/proc/get_heard_name(just_name_itself=FALSE)
+	if(just_name_itself)
+		. = src.name
+	else
+		. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
 
 
 /mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)
@@ -1529,20 +1538,6 @@
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
-
-/mob/living/set_loc(var/newloc as turf|mob|obj in world)
-	var/atom/oldloc = src.loc
-	. = ..()
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
 
 /mob/living/proc/empty_hands()
 	. = 0

@@ -78,7 +78,7 @@ var/list/headset_channel_lookup
 	if(src.secure_frequencies)
 		set_secure_frequencies()
 
-	src.chat_text = new
+	src.chat_text = new(null, src)
 	src.vis_contents += src.chat_text
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_PICKUP, PROC_REF(on_equip))
@@ -136,6 +136,7 @@ var/list/headset_channel_lookup
 			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.frequency]"
 		message.content += "BY RADIO"
 		src.radio_transmitter.process(message)
+
 
 /obj/item/device/radio/disposing()
 	src.patch_link = null

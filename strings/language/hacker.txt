@@ -307,3 +307,5 @@ heal@=debug
 heals@=debugs
 channel@=datastream
 mutadone@=antivirus
+rogue@=compromised
+rogued@=compromised

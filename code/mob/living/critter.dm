@@ -450,12 +450,12 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return
 		if (!can_throw)
 			return
-		src.throw_mode_off()
 		if (usr.stat)
 			return
 
 		var/obj/item/I = src.equipped()
 		var/turf/thrown_from = get_turf(src)
+		src.throw_mode_off()
 
 		if (!I || !isitem(I) || I.cant_drop)
 			return
@@ -476,10 +476,19 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 		//actually throw it!
 		if (I)
+			attack_twitch(src)
 			I.layer = initial(I.layer)
 			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
+				src.say("YEET")
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
+				new/obj/effect/supplyexplosion(I.loc)
+
+				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+
+				for(var/mob/M in view(7, I.loc))
+					shake_camera(M, 20, 8)
+
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
@@ -490,15 +499,20 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
-			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = throw_dir
+			if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
+				src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 				step(src, inertia_dir)
-			if (istype(I.loc, /turf/space) && ismob(I))
+			if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
 				var/mob/M = I
 				M.inertia_dir = throw_dir
-			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
+
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+
+			if (mob_flags & AT_GUNPOINT)
+				for(var/obj/item/grab/gunpoint/G in grabbed_by)
+					G.shoot()
 
 	proc/can_pull(atom/A)
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
@@ -1187,7 +1201,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				else
+				else if(src.is_valid_icon_state("dizzy",src.icon))
 					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
 					if (dizzyStars)
 						src.UpdateOverlays(dizzyStars, "dizzy")
@@ -1542,3 +1556,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	isBlindImmune()
 		return TRUE
+
+	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+		return 0
+
+	electric_expose(var/power = 1)
+		return 0

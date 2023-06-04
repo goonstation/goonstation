@@ -14,8 +14,8 @@
 		pass_unstable = FALSE
 		/// If ReplaceWith() actually does a thing or not.
 		var/can_replace_with_stuff = FALSE
-#ifdef RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit
+#ifdef CI_RUNTIME_CHECKING
+		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
 #endif
 		allows_vehicles = FALSE
 
@@ -262,7 +262,7 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
-	#ifndef RUNTIME_CHECKING
+	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
@@ -658,6 +658,9 @@ proc/generate_space_color()
 			else
 				new_turf = new /turf/space(src)
 
+	for (var/obj/ladder/embed/L in orange(1))
+		L.UpdateIcon()
+
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
 	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
@@ -809,7 +812,6 @@ proc/generate_space_color()
 		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
-
 	return floor
 
 /turf/proc/ReplaceWithConcreteFloor()
@@ -866,6 +868,8 @@ proc/generate_space_color()
 //	..()
 //moved step and slip functions into Carbon and Human files!
 
+TYPEINFO(/turf/simulated)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
@@ -873,7 +877,6 @@ proc/generate_space_color()
 	var/mutable_appearance/wet_overlay = null
 	var/default_melt_cap = 30
 	can_write_on = 1
-	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
@@ -986,6 +989,8 @@ proc/generate_space_color()
 #else
 	plane = PLANE_FLOOR
 #endif
+
+/turf/unsimulated/wall/generic
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

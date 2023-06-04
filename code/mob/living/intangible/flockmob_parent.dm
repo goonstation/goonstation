@@ -194,13 +194,23 @@
 			tealprint.cancelBuild()
 		return
 
+	else if (istype(target, /obj/machinery/door/feather))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
+		return
+
 	src.examine_verb(target) //default to examine
 
 /mob/living/intangible/flock/say_quote(var/text)
 	var/speechverb = pick("sings", "clicks", "whistles", "intones", "transmits", "submits", "uploads")
 	return "[speechverb], \"[text]\""
 
-/mob/living/intangible/flock/get_heard_name()
+/mob/living/intangible/flock/get_heard_name(just_name_itself=FALSE)
+	if (just_name_itself)
+		return src.real_name
 	return "<span class='name' data-ctx='\ref[src.mind]'>[src.real_name]</span>"
 
 /mob/living/intangible/flock/say(message, involuntary = 0)
