@@ -134,7 +134,7 @@
 		if (src.empty_pockets)
 			if (H.l_store)
 				qdel(H.l_store)
-			 (H.r_store)
+			if (H.r_store)
 				qdel(H.r_store)
 
 		if (src.break_headset)
