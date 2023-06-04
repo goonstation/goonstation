@@ -428,10 +428,11 @@ proc/build_html_gps_form(var/atom/A, var/show_Z=0, var/atom/target)
 	centerlight_color = "#9bdb9b"
 	power_used = 35
 	icon_state = "sensor-y"
+	var/aoeRange = 6
 
 	scan(mob/user as mob)
 		..()
-		mining_scan(get_turf(user), user, 6)
+		scan_geology_aoe(get_turf(user), user, src.aoeRange)
 
 /obj/item/shipcomponent/sensor/combat
 	name = "Long-Range Sensor 2143"

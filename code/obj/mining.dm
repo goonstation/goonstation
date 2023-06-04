@@ -693,7 +693,7 @@
 				if (!MC)
 					boutput(usr, "Error. Magnet is not magnetized.")
 					return
-				mining_scan(MC, usr, src.get_scan_range())
+				scan_geology_aoe(MC, usr, src.get_scan_range())
 			if ("activateselectable")
 				if (magnetNotReady)
 					return
@@ -2112,63 +2112,10 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "minanal"
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
+	var/aoeRange = 6
 
 	attack_self(var/mob/user as mob)
-		mining_scan(get_turf(user), user, 6)
-
-/proc/mining_scan(var/turf/T, var/mob/living/L, var/range)
-	if (!istype(T) || !istype(L))
-		return
-	if (!isnum(range) || range < 1)
-		range = 6
-	var/stone = 0
-	var/anomaly = 0
-	var/list/ores_found = list()
-	var/datum/ore/O
-	var/datum/ore/event/E
-	for (var/turf/simulated/wall/auto/asteroid/AST in range(T,range))
-		//clear out any scanning images if there are any
-		var/datum/client_image_group/cig = get_image_group(T)
-		for(var/image/i in cig.images)
-			cig.remove_image(i)
-		stone++
-		O = AST.ore
-		E = AST.event
-		if (O && !(O.name in ores_found))
-			ores_found += O.name
-		if (E)
-			anomaly++
-			if (E.scan_decal)
-				mining_scandecal(L, AST, E.scan_decal)
-	var/found_string = ""
-	if (ores_found.len > 0)
-		var/list_counter = 1
-		for (var/X in ores_found)
-			found_string += X
-			if (list_counter != ores_found.len)
-				found_string += " * "
-			list_counter++
-	else
-		found_string = "None"
-
-	var/rendered = "----------------------------------<br>"
-	rendered += "<B><U>Geological Report:</U></B><br>"
-	rendered += "<b>Scan Range:</b> [range] meters<br>"
-	rendered += "<b>M^2 of Mineral in Range:</b> [stone]<br>"
-	rendered += "<b>Ores Found:</b> [found_string]<br>"
-	rendered += "<b>Anomalous Readings:</b> [anomaly]<br>"
-	rendered += "----------------------------------"
-	boutput(L, rendered)
-
-/proc/mining_scandecal(var/mob/living/user, var/turf/T, var/decalicon)
-	if(!user || !T || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',T,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	var/datum/client_image_group/cig = get_image_group(T)
-	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
-	cig.add_image(O)
-
-	SPAWN(2 MINUTES)
-		cig.remove_mob(user)
+		scan_geology_aoe(get_turf(user), user, src.aoeRange)
 
 ///// MINER TRAITOR ITEM /////
 

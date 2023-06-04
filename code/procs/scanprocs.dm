@@ -895,3 +895,58 @@
 		message += "Mineral content indeterminate."
 	message.Join()
 	boutput(user, message)
+
+//TODO clean up stinky old code
+/proc/scan_geology_aoe(var/turf/center, var/mob/living/L, var/range)
+	if (!istype(center) || !istype(L))
+		return
+	if (!isnum(range) || range < 1)
+		range = 6
+	var/stone = 0
+	var/anomaly = 0
+	var/list/ores_found = list()
+	var/datum/ore/O
+	var/datum/ore/event/E
+	for (var/turf/simulated/wall/auto/asteroid/AST in range(center,range))
+		//clear out any scanning images if there are any
+		var/datum/client_image_group/cig = get_image_group(center)
+		for(var/image/i in cig.images)
+			cig.remove_image(i)
+		stone++
+		O = AST.ore
+		E = AST.event
+		if (O && !(O.name in ores_found))
+			ores_found += O.name
+		if (E)
+			anomaly++
+			if (E.scan_decal)
+				scan_geology_renderdecals(L, AST, E.scan_decal)
+	var/found_string = ""
+	if (ores_found.len > 0)
+		var/list_counter = 1
+		for (var/X in ores_found)
+			found_string += X
+			if (list_counter != ores_found.len)
+				found_string += " * "
+			list_counter++
+	else
+		found_string = "None"
+
+	var/rendered = "----------------------------------<br>"
+	rendered += "<B><U>Geological Report:</U></B><br>"
+	rendered += "<b>Scan Range:</b> [range] meters<br>"
+	rendered += "<b>M^2 of Mineral in Range:</b> [stone]<br>"
+	rendered += "<b>Ores Found:</b> [found_string]<br>"
+	rendered += "<b>Anomalous Readings:</b> [anomaly]<br>"
+	rendered += "----------------------------------"
+	boutput(L, rendered)
+
+/proc/scan_geology_renderdecals(var/mob/living/user, var/turf/center, var/decalicon) //gets called by scan_geology_aoe()
+	if(!user || !center || !decalicon) return
+	var/image/O = image('icons/obj/items/mining.dmi',center,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
+	var/datum/client_image_group/cig = get_image_group(center)
+	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
+	cig.add_image(O)
+
+	SPAWN(2 MINUTES)
+		cig.remove_mob(user)

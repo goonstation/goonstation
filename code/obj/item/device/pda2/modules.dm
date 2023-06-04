@@ -341,7 +341,7 @@ TYPEINFO(/obj/item/device/pda_module)
 	setup_use_menu_badge = 1
 	abilities = list(/obj/ability_button/miningScan)
 	var/obj/item/device/gps/pda/gps
-	var/obj/item/oreprospector/minerScanner //still need to migrate the area scan thing over to scanprocs.dm so i can remove this item
+	var/obj/item/oreprospector/minerScanner //TODO still need to migrate the area scan thing over to scanprocs.dm so i can remove this item
 
 	New()
 		..()
