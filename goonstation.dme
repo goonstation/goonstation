@@ -1504,6 +1504,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\martian.dm"
 #include "code\obj\mining.dm"
 #include "code\obj\mining_cloud_storage.dm"
+#include "code\obj\mob_spawn.dm"
 #include "code\obj\mopbucket.dm"
 #include "code\obj\neon_lining.dm"
 #include "code\obj\noticeboard.dm"
