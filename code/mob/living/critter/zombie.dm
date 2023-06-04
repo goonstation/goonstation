@@ -198,7 +198,7 @@
 			else
 				for(var/turf/T in view(3, src))
 					if(!is_blocked_turf(T))
-						G.throw_at(T)
+						src.throw_iten(T)
 
 //For Jones City Ruins
 /mob/living/critter/zombie/radiation
@@ -224,7 +224,7 @@
 	death()
 		..()
 		src.remove_simple_light("rad")
-		make_cleanable( /obj/decal/cleanable/greenglow,src.loc)
+		make_cleanable(/obj/decal/cleanable/greenglow, src.loc)
 
 /mob/living/critter/zombie/meatmonaut
 	name = "Lost Cosmonaut"
