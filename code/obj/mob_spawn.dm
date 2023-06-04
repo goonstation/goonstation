@@ -36,7 +36,7 @@
 
 /obj/mob_spawn/corpse/critter
 	name = "Critter Corpse Spawn"
-	icon_state = "corpse-human"
+	icon_state = "corpse-critter"
 	spawn_type = /mob/living/critter/small_animal/bee // Type path to spawn
 	container_type = null
 
