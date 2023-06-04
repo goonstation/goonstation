@@ -1,24 +1,26 @@
+// Mob spawners, for spawning mobs mainly for corpses right now
+// Concrete spawners are at the bottom of the file
+
 /obj/mob_spawn
 	name = "Mob Spawn"
-	icon = 'icons/map-editing/landmarks.dmi'
+	icon = 'icons/map-editing/mob_spawner.dmi'
 	icon_state = "corpse-human"
 	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
-	spawn_type = null
-	container_type = null
-
-/obj/mob_spawn/corpse // For critters
-	name = "Corpse Spawn"
-	icon_state = "corpse-human"
-	spawn_type = /mob/living/critter/small_animal/bee // Type path to spawn
-	vcontainer_type = null // Container path such as a locker or crate, spawned with the corpse. It should obviously be openable by some means.
+	/// Path to spawn, should be a mob/living and not gib itself on death unless you want a mess
+	var/spawn_type = null
+	/// Container path such as a locker or crate, spawned with the corpse. It should obviously be openable by some means.
+	var/container_type = null
 
 	New()
 		if(current_state >= GAME_STATE_WORLD_INIT)
 			SPAWN(0) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
 				if(!src.disposed)
-					src.spawn_the_thing()
+					src.initialize()
 		..()
+
+	initialize()
+		src.spawn_the_thing()
 
 	proc/spawn_the_thing()
 		if(isnull(src.spawn_type))
@@ -27,26 +29,52 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
-		M.death()
+		qdel(src)
+
+/obj/mob_spawn/corpse/critter
+	name = "Critter Corpse Spawn"
+	icon_state = "corpse-human"
+	spawn_type = /mob/living/critter/small_animal/bee // Type path to spawn
+	container_type = null
+
+	spawn_the_thing()
+		if(isnull(src.spawn_type))
+			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+		var/mob/living/M = new spawn_type(src.loc)
+		if (src.container_type)
+			var/obj/container = new container_type(src.loc)
+			M.set_loc(container)
+		M.death(FALSE)
 		qdel(src)
 
 /obj/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
+	name = "Human Corpse Spawn"
 	icon_state = "corpse-human"
 	spawn_type = /mob/living/carbon/human/normal/assistant
 	container_type = null
 
-	var/husked = FALSE /// If TRUE we husk the corpse on spawn and disfigure face
-	var/randomise_decomp_stage = FALSE /// If TRUE randomise the decomp stage of the body after spawning
-	var/decomp_stage = DECOMP_STAGE_NO_ROT /// Override this if you want a specific decomp stage
-	var/no_decomp = TRUE /// If TRUE we are magically preserved and don't decay
-	var/no_miasma = TRUE /// If TRUE we make no miasma, since filling prefabs or maint etc with that would suck
+	/// If TRUE we husk the corpse on spawn and disfigure face
+	var/husked = FALSE
+	/// If TRUE randomise the decomp stage of the body after spawning
+	var/randomise_decomp_stage = FALSE
+	/// Override this if you want a specific decomp stage
+	var/decomp_stage = DECOMP_STAGE_NO_ROT
+	/// If TRUE we are magically preserved and don't decay
+	var/no_decomp = TRUE
+	/// If TRUE we make no miasma, since filling prefabs or maint etc with that would suck
+	var/no_miasma = TRUE
 
-	var/random_damage = TRUE /// If TRUE we call do_damage() by default this is random damage of every type
-	var/max_organs_removed = 4 /// If this has a value, remove a random number of organs between 0 and this max
+	/// If TRUE we call do_damage() by default this is random damage of every type
+	var/random_damage = TRUE
+	/// If this has a value, remove a random number of organs between 0 and this max
+	var/max_organs_removed = 4
 
-	var/empty_bag = FALSE /// If TRUE we delete the contents of the backpack after spawning
-	var/delete_id = FALSE /// If TRUE we delete the ID slot contents after spawning
-	var/break_headset = FALSE /// If TRUE we break the headset and make it unscannable after spawning
+	/// If TRUE we delete the contents of the backpack after spawning
+	var/empty_bag = FALSE
+	/// If TRUE we delete the ID slot contents after spawning
+	var/delete_id = FALSE
+	/// If TRUE we break the headset and make it unscannable after spawning
+	var/break_headset = FALSE
 
 	spawn_the_thing()
 		if (isnull(src.spawn_type))
@@ -116,6 +144,7 @@
 		H.take_oxygen_deprivation(rand(250, 300))
 
 /obj/mob_spawn/corpse/human/random
+	name = "Random Human Corpse Spawn"
 	icon_state = "corpse-human-rand"
 	var/static/list/spawns = list(
 		/mob/living/carbon/human/normal/assistant = 30,
@@ -132,7 +161,7 @@
 		/mob/living/carbon/human/normal/medicaldoctor = 15,
 		/mob/living/carbon/human/normal/bartender = 5)
 
-	New()
+	initialize()
 		if (prob(5))
 			src.spawn_type = weighted_pick(rare_spawns)
 			src.delete_id = TRUE
@@ -141,18 +170,30 @@
 		..()
 
 /obj/mob_spawn/corpse/human/random/body_bag
-	icon_state = "corpse-bodybag-rand"
+	icon_state = "bodybag-random"
 	container_type = /obj/item/body_bag
 
-	New()
-		randomise_decomp_stage = TRUE
-		no_decomp = FALSE
+	initialize()
+		src.randomise_decomp_stage = TRUE
+		src.no_decomp = FALSE
 		..()
 
 /obj/mob_spawn/corpse/human/random/webbed
-	icon_state = "corpse-webbed-rand"
+	icon_state = "webbed-random"
 	container_type = /obj/icecube/spider
 	husked = TRUE
 
 	clown
+		icon_state = "webbed-random_c"
 		container_type = /obj/icecube/spider/clown
+
+
+// Put the real spawns non random spawns here
+
+//////////////////////// Human corpses ////////////////////////
+
+/obj/mob_spawn/corpse/human/skeleton // not the alive kind
+	spawn_type = /mob/living/carbon/human/normal
+	decomp_stage = DECOMP_STAGE_SKELETONIZED
+
+//////////////////////// Critter corpses ////////////////////////
