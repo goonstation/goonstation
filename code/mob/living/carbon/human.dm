@@ -86,6 +86,7 @@
 	var/no_miasma = FALSE
 	var/no_decomp = FALSE
 	var/time_until_decomposition = 0
+	var/silent_death = FALSE // Stops deathgasping and clown confetti
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
@@ -575,8 +576,9 @@
 	..()
 
 /mob/living/carbon/human/death(gibbed)
-	if (ticker.mode)
-		ticker.mode.on_human_death(src)
+	if (ticker?.mode)
+		ticker.mode?.on_human_death(src)
+		ticker.mode?.check_win()
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
 		src.hell_respawn()
 		return
@@ -707,7 +709,8 @@
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	emote("deathgasp") //let the world KNOW WE ARE DEAD
+	if (!src.silent_death)
+		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
 	if (!src.mutantrace || inafterlife(src)) // wow fucking racist
 		modify_christmas_cheer(-7)
@@ -761,8 +764,6 @@
 			for(var/turf/T in view(2, src.loc))
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
-
-	ticker.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel

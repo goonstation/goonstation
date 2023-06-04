@@ -144,9 +144,7 @@
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)
-
 		..()
-
 
 	relaymove(mob/user as mob)
 		if (user.stat)

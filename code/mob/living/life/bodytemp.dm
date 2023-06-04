@@ -30,6 +30,8 @@
 			loc_temp = C.air_contents.temperature
 		else if (istype(owner.loc,/obj/icecube))
 			var/obj/icecube/ice = owner.loc
+			if (!ice.does_cooling)
+				return
 			loc_temp = ice.cooltemp// ice go brrrrrrrrr
 			if (owner.bodytemperature > ice.melttemp)
 				ice.takeDamage(1 * mult)
