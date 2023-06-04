@@ -1,5 +1,9 @@
 
 (t)sun jun 04 23
+(u)monkeymilesmoo
+(p)14372
+(e)🪲|C-Bug
+(+)Fixed vending machines not paying the owner.
 (u)Cheffie
 (p)13541
 (e)🗺💅|A-Mapping, C-QoL
