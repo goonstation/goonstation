@@ -496,6 +496,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
+			P.owneraccount = FindBankAccountByName(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -630,6 +631,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
+						if (!player_list)
+							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+						else
+							//Players get 90% of profit from player vending machines QMs get 10%
+							var/obj/machinery/vending/player/vMachine = src
+							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
+							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
