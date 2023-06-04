@@ -1,3 +1,9 @@
+
+(t)sun jun 04 23
+(u)Cheffie
+(p)13541
+(e)🗺💅|A-Mapping, C-QoL
+(*)The engine room on Cogmap 1 has been remodeled and overhauled.
 (t)sat jun 03 23
 (u)pali
 (*)Getting thrown off the shuttle no longer instantly kills you. Instead you get teleported to a random point in space.
