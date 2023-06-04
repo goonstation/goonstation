@@ -22,7 +22,7 @@ datum
 			description = "This appears to be beer mixed with milk."
 			reagent_state = LIQUID
 			value = 2
-			overdose = 30
+			overdose = 69
 			thirst_value = 0.4
 			bladder_value = -0.2
 			viscosity = 0.2
