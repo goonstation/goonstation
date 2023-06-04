@@ -42,6 +42,7 @@
 			input = get_one_match(input, "/datum/bioEffect")
 			var/datum/bioEffect/type_to_add = text2path("[input]")
 			target_mob.bioHolder.AddEffect(initial(type_to_add.id))
+			logTheThing(LOG_ADMIN, usr, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updateStability")
 			var/new_stability = text2num(params["value"])
@@ -73,4 +74,5 @@
 			. = TRUE
 		if ("deleteBioEffect")
 			target_mob.bioHolder.RemoveEffect(params["id"])
+			logTheThing(LOG_ADMIN, usr, "Removed bioeffect [params["id"]] from [constructName(target_mob)]")
 			. = TRUE
