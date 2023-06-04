@@ -155,7 +155,7 @@
 		src.bioHolder.AddEffect("hulk", magical = TRUE)
 
 	critter_attack(var/mob/target)
-		if (prob(20) && !issilicon(target) && !is_incapacitated(target))
+		if (prob(100) && !issilicon(target) && !is_incapacitated(target))
 			src.do_grab_slam_or_throw(target)
 			return
 		if (src.ai_attack_count >= src.ai_attacks_per_ability)
@@ -198,7 +198,7 @@
 			else
 				for(var/turf/T in view(3, src))
 					if(!is_blocked_turf(T))
-						src.throw_iten(T)
+						src.throw_item(T)
 
 //For Jones City Ruins
 /mob/living/critter/zombie/radiation
