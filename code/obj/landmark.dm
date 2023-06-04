@@ -250,6 +250,110 @@ var/global/list/job_start_locations = list()
 	type_to_spawn = /obj/storage/crate/loot
 	spawnchance = 10
 
+/obj/landmark/spawner/corpse // For critters
+	name = "Corpse Spawn"
+	type_to_spawn = null // Type path to spawn
+	spawnchance = 100
+	var/container_type = null // Container path such as a locker or crate is spawned with the corpse
+
+	spawn_the_thing()
+		if(isnull(src.type_to_spawn))
+			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+		var/mob/living/M = new type_to_spawn(src.loc)
+		if (src.container_type)
+			var/obj/container = new container_type(src.loc)
+			M.set_loc(container)
+		M.death()
+		qdel(src)
+
+	jones
+		type_to_spawn = /mob/living/critter/small_animal/cat/jones
+
+/obj/landmark/spawner/corpse/human // Human spawner handles some randomisation / customisation
+	icon_state = "corpse-human"
+	container_type = null
+	var/husked = FALSE
+	var/decomp_stage = DECOMP_STAGE_NO_ROT
+	var/no_decomp = TRUE // If true we are magically preserved and don't decay
+	var/no_miasma = TRUE // If true we emit no miasma since that would kinda suck
+
+	var/random_damage = TRUE // Fuck up the body with lots of damage
+	var/random_organ_removal = TRUE
+
+	var/empty_bag = FALSE /// If TRUE we delete the contents of the backpack after spawning
+	var/delete_id = FALSE /// If TRUE we delete the ID slot contents after spawning
+	var/break_headset = FALSE /// If TRUE we break the headset and make it unscannable
+	var/belt_override = null /// Path to override the beltslot with such as /obj/item/storage/fanny/funny/mini
+
+	var/spawnt = null
+
+	spawn_the_thing()
+		if (isnull(src.type_to_spawn))
+			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+
+		var/mob/living/carbon/human/H = new type_to_spawn(src.loc)
+
+		H.death(FALSE)
+		H.decomp_stage = src.decomp_stage
+		H.no_decomp = src.no_decomp
+		H.no_miasma = src.no_miasma
+
+		if (src.husked)
+			H.disfigured = TRUE
+			H.UpdateName()
+			H.bioHolder.AddEffect("husk")
+
+		if (src.random_damage)
+			H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
+			H.take_oxygen_deprivation(rand(250, 300))
+
+		if (src.random_organ_removal)
+			for (var/i in 1 to rand(1, 4))
+				var/obj/item/organ/organ = H.drop_organ(pick("left_eye","right_eye","left_lung","right_lung","butt","left_kidney","right_kidney","liver","stomach","intestines","spleen","pancreas","appendix"))
+				qdel(organ)
+
+		if (src.delete_id)
+			qdel(H.wear_id)
+
+		if (src.empty_bag)
+			if (istype(H.back, /obj/item/storage/backpack))
+				var/obj/item/storage/backpack/backpack = H.back
+				for (var/obj/item as anything in backpack)
+					qdel(item)
+			else if (istype(H.belt, /obj/item/storage/fanny))
+				var/obj/item/storage/fanny/fanny = H.belt
+				for (var/obj/item as anything in fanny)
+					qdel(item)
+
+		if (src.break_headset)
+			if (istype(H.ears, /obj/item/device/radio/headset))
+				var/obj/item/device/radio/headset/headset = H.ears
+				headset.bricked = TRUE
+				headset.mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED // No getting smart
+
+		if (src.belt_override)
+			H.force_equip(belt_override, SLOT_BELT)
+
+		if (src.container_type)
+			var/obj/container = new container_type(src.loc)
+			H.set_loc(container)
+
+	clown
+		type_to_spawn = /mob/living/carbon/human/normal/clown
+		belt_override = /obj/item/storage/fanny/funny/mini
+
+	random
+		var/list/spawns = list(
+			/mob/living/carbon/human/normal/assistant = 15,
+			/mob/living/carbon/human/normal/clown = 15,
+			/mob/living/carbon/human/normal/chef = 15,
+			/mob/living/carbon/human/normal/botanist = 15,
+			/mob/living/carbon/human/normal/janitor = 15,
+			/mob/living/carbon/human/normal/miner = 15,
+			/mob/living/carbon/human/normal = 10)
+
+		type_to_spawn = weighted_pick(spawns)
+
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
 
