@@ -191,7 +191,7 @@
 		container_type = /obj/icecube/spider/clown
 
 
-// Put the real spawns non random spawns here
+// Real spawns go here:
 
 //////////////////////// Human corpses ////////////////////////
 
