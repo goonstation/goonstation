@@ -64485,7 +64485,6 @@
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
 	pixel_x = 4;
 	pixel_y = 8;
-	quality = ss
 	},
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_x = -7;
