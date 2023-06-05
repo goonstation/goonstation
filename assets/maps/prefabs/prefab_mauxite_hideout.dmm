@@ -27,7 +27,7 @@
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "iM" = (
-/obj/random_item_spawner/junk,
+/obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "ks" = (
@@ -100,6 +100,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
+/obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/airless/asteroid/comet/iron,
 /area/prefab/mauxite_hideout)
 "uX" = (
@@ -302,7 +303,7 @@
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "VS" = (
-/obj/random_item_spawner/junk,
+/obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/airless/mauxite,
 /area/prefab/mauxite_hideout)
 "Wb" = (
@@ -546,15 +547,15 @@ Aw
 Aw
 FJ
 NQ
-VS
-ZM
 HU
+ZM
 VS
+HU
 HU
 HU
 De
 Jy
-iM
+Gj
 Gc
 qR
 qR
@@ -576,7 +577,7 @@ HU
 WQ
 xD
 Jy
-Gj
+iM
 Ek
 qR
 qR
@@ -619,7 +620,7 @@ Jy
 HU
 HU
 pG
-VS
+HU
 Gj
 Gj
 Aw
@@ -643,7 +644,7 @@ HU
 Gj
 HU
 Gj
-Gj
+iM
 Aw
 qR
 AY
@@ -656,7 +657,7 @@ qR
 Aw
 Aw
 Jy
-HU
+VS
 HU
 HU
 Jy
@@ -678,7 +679,7 @@ qR
 Aw
 Aw
 Jy
-VS
+HU
 lY
 HU
 Jy
