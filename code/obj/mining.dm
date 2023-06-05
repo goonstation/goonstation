@@ -1188,6 +1188,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
 			src.UpdateOverlays(light, "ambient")
+		if(src.fullbright)
+			src.UpdateOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
 
@@ -1214,6 +1216,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1480,6 +1487,11 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
 
 
 /turf/simulated/floor/plating/airless/asteroid/jean

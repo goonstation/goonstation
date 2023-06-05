@@ -361,6 +361,9 @@ TYPEINFO(/obj/machinery/processor)
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
 
 		for(var/obj/item/I in src)
+			if(isnull(I.material))
+				stack_trace("Null material item [I] [I.type] in nano-crucible")
+				continue
 			if(!I.amount) continue
 			if(first_part == I) continue
 			if(second_part == I) continue

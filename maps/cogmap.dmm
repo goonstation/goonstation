@@ -47062,10 +47062,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
 "feD" = (
+/obj/grille/steel,
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
-/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "feL" = (
@@ -64630,13 +64631,6 @@
 	},
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/supplylobby)
-"vTM" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/random_item_spawner/junk/few,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/Zeta)
 "vUo" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -108386,7 +108380,7 @@ fuv
 eJK
 dsA
 feD
-vTM
+feD
 feD
 feD
 dsA
