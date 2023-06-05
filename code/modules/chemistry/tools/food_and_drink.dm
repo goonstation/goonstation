@@ -575,6 +575,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.splash_all_contents = 1
 		return
 
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/reagent_containers/food/snacks/candy/sugar_cube))
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[src] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You put [I] into [src].</span>")
+
+			I.reagents.trans_to(src, I.reagents.total_volume)
+			user.u_equip(I)
+			qdel(I)
+
 	attack(mob/M, mob/user, def_zone)
 		// in this case m is the consumer and user is the one holding it
 		if (istype(src, /obj/item/reagent_containers/food/drinks/bottle/soda))

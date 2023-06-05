@@ -4349,6 +4349,20 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
+"bke" = (
+/obj/table/glass/auto,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "bkj" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/firedoor_spawn,
@@ -12513,6 +12527,10 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/creamer,
 /turf/simulated/floor/wood,
 /area/station/quartermaster/office)
 "dNb" = (
@@ -18187,6 +18205,14 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
@@ -26193,9 +26219,13 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/obj/decorative_pot,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
+	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
+/obj/drink_rack/mug{
+	pixel_x = -26
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -29880,6 +29910,13 @@
 	},
 /turf/simulated/floor/circuit/off,
 /area/station/turret_protected/AIsat)
+"jgj" = (
+/obj/table/glass/auto,
+/obj/machinery/coffeemaker/medbay{
+	pixel_y = 2
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "jgl" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -37870,7 +37907,14 @@
 /turf/simulated/floor/red,
 /area/station/security/hos)
 "lDZ" = (
-/obj/storage/closet/biohazard,
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -42506,6 +42550,13 @@
 	name = "North Restroom #2"
 	})
 "nbm" = (
+/obj/table/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
 /turf/simulated/floor/redwhite{
 	dir = 5
 	},
@@ -47780,9 +47831,6 @@
 /turf/simulated/shuttle/wall,
 /area/space)
 "oGJ" = (
-/obj/machinery/coffeemaker/medbay{
-	pixel_y = 2
-	},
 /obj/table/wood/auto,
 /obj/drink_rack/mug{
 	pixel_x = -26;
@@ -47791,6 +47839,9 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/decoration/decorativeplant{
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/medical/medbay)
@@ -48064,15 +48115,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "oLn" = (
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
 /obj/decal/tile_edge/line/green{
 	dir = 5;
 	icon_state = "line2"
 	},
+/obj/decorative_pot,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "oLv" = (
@@ -52002,6 +52049,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
@@ -66756,6 +66804,14 @@
 	dir = 8;
 	pixel_x = -23
 	},
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "uui" = (
@@ -77596,6 +77652,7 @@
 /obj/machinery/coffeemaker/engineering{
 	pixel_y = 6
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "xAB" = (
@@ -124675,7 +124732,7 @@ gxZ
 awX
 aup
 yam
-aTA
+jgj
 sjV
 ydl
 noB
@@ -124977,7 +125034,7 @@ kGL
 txi
 wue
 yay
-aTA
+bke
 lXv
 lXv
 pjK

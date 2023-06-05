@@ -333,6 +333,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				for (var/i=5, i>0, i--)
 					src.reagents.add_reagent(pick(src.flavors), 1)
 
+/obj/item/reagent_containers/food/snacks/candy/sugar_cube
+	name = "sugar cube"
+	desc = "Cubed sugar."
+	icon_state = "sugar-cube"
+	sugar_content = 10
+	food_color = "#FFFFFF"
+	w_class = W_CLASS_TINY
+
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"
 	desc = "A chewy gummy bright red fish. Those crazy Swedes and their fish obesssion."
