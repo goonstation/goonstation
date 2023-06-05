@@ -75938,7 +75938,7 @@
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "gooddog";
 	name = "Good Dog";
-	desc = "What a good boy!";
+	desc = "Good doggies are good doggies.";
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/misc/beach.dmi';
