@@ -1200,6 +1200,17 @@ var/global/curr_day = null
 /client/proc/cloud_available()
 	return src.player.cloud_available()
 
+/client/proc/desuss_zap(source, var/datum/say_message/message)
+	if (forced_desussification)
+		if (phrase_log.is_sussy(message.orig_message))
+			arcFlash(message.speaker, message.speaker, forced_desussification)
+			if (issilicon(message.speaker))
+				var/mob/M = message.speaker
+				M.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
+			if (forced_desussification_worse)
+				forced_desussification *= 1.1
+
+
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return

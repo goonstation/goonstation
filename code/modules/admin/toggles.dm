@@ -1073,6 +1073,7 @@ client/proc/toggle_ghost_respawns()
 		forced_desussification_worse = (getsWorse == "Nah") ? 0 : 1
 
 		message += ", with shock level [shockLevel][forced_desussification_worse ? " (and rising)" : ""]"
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_ATOM_SAY, PROC_REF(desuss_zap))
 
 	logTheThing(LOG_ADMIN, usr, message)
 	logTheThing(LOG_DIARY, usr, message, "admin")

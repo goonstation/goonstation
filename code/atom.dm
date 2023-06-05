@@ -337,8 +337,11 @@ TYPEINFO(/atom)
 /atom/var/say_language = "english"
 ///Primary entry point for all say code
 /atom/proc/say(var/message as text)
+	SHOULD_CALL_PARENT(TRUE)
 	var/datum/say_message/said = new(message, src, src.say_language)
 	src.ensure_say_tree()
+	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
+	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
 	src.say_tree.process(said)
 
 /atom/proc/ensure_say_tree()
