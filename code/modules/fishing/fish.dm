@@ -190,7 +190,7 @@ Alien/mutant/other fish:
 /obj/item/fish/tuna
 	name = "bluefin tuna"
 	desc = "Formerly known as the tunny. Delicious but sadly overfished."
-	icon_state = "bass_old" //TODO
+	icon_state = "tuna"
 	inhand_color = "#3123f8"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_UNCOMMON
@@ -209,12 +209,12 @@ Alien/mutant/other fish:
 	icon_state = "flounder"
 	inhand_color = "#5c471b"
 	category = FISH_CATEGORY_OCEAN
-	value  = FISH_RARITY_COMMON
+	value  = FISH_RARITY_UNCOMMON
 
 /obj/item/fish/coelacanth
 	name = "coelacanth"
 	desc = "Lazarus had nothing on you. We thought you went to the celestial zoo. The lungfish calls you brother and I guess that we should too."
-	icon_state = "bass_old" //TODO
+	icon_state = "coelacanth"
 	inhand_color = "#81878a"
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_RARE
@@ -222,11 +222,11 @@ Alien/mutant/other fish:
 /obj/item/fish/mahimahi
 	name = "Mahi-mahi"
 	desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
-	icon_state = "mahimahi" //TODO
+	icon_state = "mahimahi"
 	inhand_color = "#A6B967"
 	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
 	category = FISH_CATEGORY_OCEAN
-	value  = FISH_RARITY_COMMON
+	value  = FISH_RARITY_UNCOMMON
 
 /obj/item/fish/shrimp
 	name = "shrimp"
@@ -300,7 +300,7 @@ Alien/mutant/other fish:
 	icon_state = "blue_tang"
 	inhand_color = "#3005f0"
 	category = FISH_CATEGORY_AQUARIUM
-	value  = FISH_RARITY_UNCOMMON
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/firefish
 	name = "firefish"
@@ -316,7 +316,7 @@ Alien/mutant/other fish:
 	icon_state = "yellow_tang"
 	inhand_color = "#d8f005"
 	category = FISH_CATEGORY_AQUARIUM
-	value  = FISH_RARITY_UNCOMMON
+	value  = FISH_RARITY_COMMON
 
 /obj/item/fish/mandarin_fish
 	name = "mandarin fish"
@@ -373,6 +373,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#eb2d2d"
 	value  = FISH_RARITY_RARE
+/*
 //blob
 /obj/item/fish/blobfish
 	name = "Blobfish"
@@ -380,4 +381,4 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
-
+/*
