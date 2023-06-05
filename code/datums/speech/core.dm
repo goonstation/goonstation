@@ -166,7 +166,18 @@ var/global/datum/speech_manager/SpeechManager = new()
 		src.content = make_safe_for_chat(src.content)
 
 	proc/make_safe_for_chat(var/message as text)
-		return message //TODO
+		// shittery that breaks text or worse
+		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+		message = replacetext(message, shittery_regex, "")
+		//strip out newline and tab chars
+		message = sanitize(message)
+		//limit length of message
+		message = copytext(message, 1, MAX_MESSAGE_LEN)
+		//strip bad ascii chars and whitespace from start and finish
+		message = trim(message)
+		//strip out HTML tags
+		message = strip_html(message)
+		return message
 
 	disposing()
 		. = ..()
