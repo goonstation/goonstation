@@ -126,7 +126,7 @@
 	var/const/singing_prefix = "%"
 
 	//new speech vars
-	start_listen_modifiers = null
+	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears")
 	start_speech_accents = null
 	start_speech_modifiers = list("brain_damage")

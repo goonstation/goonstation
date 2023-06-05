@@ -232,6 +232,13 @@
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
 
+	start_listen_modifiers = list("maptext")
+	start_listen_inputs = list("ears")
+	start_speech_accents = null
+	start_speech_modifiers = null
+	start_speech_outputs = list("spoken")
+	start_listen_languages = list("english")
+
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
 	return 0 //0=couldnt do it(other hand full etc), 1=worked just fine.
@@ -3257,3 +3264,20 @@
 	src.move_dir = get_dir(src, trg)
 	src.process_move()
 	src.move_dir = move_dir_old
+
+/mob/hear(var/datum/say_message/message)
+	.=..()
+	if(message.maptext && src.client && !src.client.preferences?.flying_chat_hidden)
+		// make sure maptext doesn't overlay other maptext
+		var/turf/T = get_turf(message.speaker.loc)
+		for(var/i = 0; i < 2; i++)
+			T = get_step(T, WEST)
+
+		for(var/i = 0; i < 5; i++)
+			for(var/mob/living/L in T)
+				if(L != src)
+					for(var/image/chat_maptext/I in L.chat_text?.lines)
+						I.bump_up()
+			T = get_step(T, EAST)
+
+			message.maptext.show_to(src.client)

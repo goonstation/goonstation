@@ -320,8 +320,10 @@ TYPEINFO(/atom)
 	..()
 
 /// This proc is the final call from the listen tree, and determines what happens when this atom recieves a message. It is essentially the counterpart to say()
+/// Note that maptext is handled in /mob/hear() because /atom doesn't have .client
 /atom/proc/hear(var/datum/say_message/message)
 	boutput(src, "[message.speaker] [message.say_verb], \"[message.content]\"")
+
 
 /// Speech module tree. Lazy loaded on first say() call.
 /atom/var/datum/speech_module_tree/say_tree = null

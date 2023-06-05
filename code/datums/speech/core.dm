@@ -143,6 +143,10 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/flags = 0
 	/// Range of the heard message
 	var/heard_range = 5
+	/// CSS values for the maptext stored as an assoc list, ie "font-weight" = "bold"
+	var/maptext_css_values = list()
+	/// The maptext associated with this message (if there is one)
+	var/image/chat_maptext/maptext = null
 
 	/// Create a new message datum with associated metadata, parsing and sanitization.
 	New(var/message as text, var/atom/speaker, var/language_id = "english")
