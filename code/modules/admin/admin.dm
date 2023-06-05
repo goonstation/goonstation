@@ -4328,7 +4328,7 @@ var/global/noir = 0
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE, cmp_proc=null)
 	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!length(matches))
@@ -4349,6 +4349,8 @@ var/global/noir = 0
 	var/msg = "Select \a [base] type."
 	if(prefix)
 		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	if(cmp_proc)
+		sortList(safe_matches, cmp_proc)
 	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
 	if(!.)
 		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'

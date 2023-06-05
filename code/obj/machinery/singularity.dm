@@ -277,14 +277,16 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
 
-	var/icon/spaget = getFlatIcon(A)
 	var/obj/dummy/spaget_overlay = new()
-	spaget_overlay.icon = spaget
+	spaget_overlay.appearance = A.appearance
 	spaget_overlay.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	spaget_overlay.pixel_x = A.pixel_x+(A.x - src.x)*32
 	spaget_overlay.pixel_y = A.pixel_y+(A.y - src.y)*32
 	spaget_overlay.mouse_opacity = 0
 	spaget_overlay.transform = A.transform
+	if(prob(0.1)) // easteregg
+		spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+		spaget_overlay.icon_state = "spag-dish"
 	var/angle = get_angle(A, src)
 	var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, 16-spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, 16-spaget_overlay.pixel_y)
 	animate(spaget_overlay, 3 SECONDS, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
