@@ -338,6 +338,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	desc = "Cubed sugar."
 	icon_state = "sugar-cube"
 	sugar_content = 10
+	bites_left = 1
 	food_color = "#FFFFFF"
 	w_class = W_CLASS_TINY
 
