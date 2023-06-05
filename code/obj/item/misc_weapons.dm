@@ -1298,7 +1298,7 @@ TYPEINFO(/obj/item/swords/captain)
 	desc = "A sharp sab- is that a bike horn that's been cut in half duct taped to a sword? What the hell? How does that even work???"
 	force = 4
 	delimb_prob = 1 // yes
-	contraband = 7
+	contraband = 1
 	hit_type = DAMAGE_BLUNT
 	attack_verbs = "bonks"
 	hitsound = null // do this in attack
@@ -1311,6 +1311,19 @@ TYPEINFO(/obj/item/swords/captain)
 		if(ismob(M))
 			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
 		..()
+
+/obj/item/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		user.visible_message("<span class='alert'><b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b></span>")
+		SPAWN(1 SECOND)
+			if(prob(5))
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.gib()
+			else
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.death()
 
 
 /obj/item/swords_sheaths //blegh, keeping naming consistent
