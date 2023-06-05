@@ -86,15 +86,11 @@
 
 			mind.transfer_to(new_mob)
 
-			if (src.antag_role == "antagonist") //no datum, but we still want them to be a generic antag
-				antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
-			else if (src.antag_role)
-				mind.add_antagonist(src.antag_role, do_relocate = FALSE, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, do_equip = src.equip_antag, respect_mutual_exclusives = FALSE)
-				if (!mind.get_antagonist(src.antag_role)) //incompatible antag type, fall back to generic antag
-					antagify(new_mob, agimmick = TRUE, do_objectives = FALSE)
+			if (src.antag_role && !(mind.add_antagonist(src.antag_role, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)))
+				mind.add_generic_antagonist("generic_antagonist", new_mob.real_name, do_equip = src.equip_antag, do_objectives = FALSE, do_relocate = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
+
 			else
-				remove_antag(new_mob, usr, TRUE, TRUE)
-				mind = new_mob.mind
+				mind.wipe_antagonists()
 
 			if (length(src.objective_text))
 				if (src.antag_role)
