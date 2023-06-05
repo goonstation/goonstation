@@ -239,7 +239,7 @@
 
 	set_loc(newloc)
 		. = ..()
-		if(src.attached && src.loc != src.attached)
+		if(src.attached && src.loc != src.attached && src.loc != null)
 			remove_from_attached(do_loc = FALSE)
 
 	Move(NewLoc, direct)

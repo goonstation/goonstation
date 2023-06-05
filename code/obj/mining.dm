@@ -1188,7 +1188,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
 			src.UpdateOverlays(light, "ambient")
-		else
+		if(src.fullbright)
 			src.UpdateOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()

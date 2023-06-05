@@ -2145,6 +2145,11 @@
 	verb/cmd_state_standard_laws()
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
+
+		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+			boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+			return
+
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 		src.say("1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
@@ -2155,6 +2160,11 @@
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State Laws"
+
+		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+			boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+			return
+
 		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
 
