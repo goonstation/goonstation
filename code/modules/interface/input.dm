@@ -154,6 +154,10 @@ var/list/dirty_keystates = list()
 			var/result = src.mob.double_click(target, location, control, paramslist)
 			if(result)
 				src.skip_next_left_click = TRUE
+			else
+				..()
+		else
+			..()
 
 	Click(atom/object, location, control, params)
 		var/list/parameters = params2list(params)

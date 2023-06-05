@@ -1323,7 +1323,7 @@
 	if (!ai_active && is_npc)
 		ai_set_active(1)
 
-/mob/living/carbon/human/get_heard_name()
+/mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
 	var/alt_name = ""
 	if (src.name != src.real_name)
 		if (src.wear_id && src.wear_id:registered && src.wear_id:registered != src.real_name)
@@ -1338,12 +1338,20 @@
 		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
+			if (just_name_itself)
+				return src.wear_id:registered
 			rendered += "[src.wear_id:registered]</span>"
 		else
+			if (just_name_itself)
+				return "Unknown"
 			rendered += "Unknown</span>"
 	else if (src.vdisfigured)
+		if (just_name_itself)
+			return "Unknown"
 		rendered += "Unknown</span>"
 	else
+		if (just_name_itself)
+			return src.real_name
 		rendered += "[src.real_name]</span>[alt_name]"
 
 	return rendered

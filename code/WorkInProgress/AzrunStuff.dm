@@ -28,21 +28,13 @@
 	item_state = "sheet";
 	name = "Strange Blueprint"
 	interesting = "There is additional detail regarding the creation of flora and fauna."
-
-/obj/item/storage/desk_drawer/azrun/
-	spawn_contents = list(	/obj/item/raw_material/molitz_beta,\
-	/obj/item/raw_material/molitz_beta,\
-	/obj/item/raw_material/plasmastone,\
-	/obj/item/organ/lung/plasmatoid/left,\
-	/obj/item/pen/crayon/red,\
-
-)
 /obj/table/wood/auto/desk/azrun
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/azrun/L = new(src)
-		src.desk_drawer = L
-
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/raw_material/molitz_beta,
+							/obj/item/raw_material/molitz_beta,
+							/obj/item/raw_material/plasmastone,
+							/obj/item/organ/lung/plasmatoid/left,
+							/obj/item/pen/crayon/red)
 
 /obj/item/storage/toilet/goldentoilet/azrun
 	name = "thinking throne"
