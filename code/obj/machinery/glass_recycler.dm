@@ -135,6 +135,8 @@ TYPEINFO(/obj/machinery/glass_recycler)
 			user.u_equip(W)
 			qdel(W)
 			ui_interact(user)
+			var/sound = pick('sound/impact_sounds/Glass_Shatter_1.ogg', 'sound/impact_sounds/Glass_Shatter_2.ogg', 'sound/impact_sounds/Glass_Shatter_3.ogg')
+			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE
 		else
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
@@ -175,12 +177,15 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 		if (src.glass_amt < target_product.product_cost)
 			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 40, 0, 0.1)
 			return
 
 		var/obj/item/G = new target_product.product_path(get_turf(src))
 		src.glass_amt -= target_product.product_cost
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		usr.put_in_hand_or_eject(G)
 		use_power(20 WATTS)
 
 	ui_interact(mob/user, datum/tgui/ui)
