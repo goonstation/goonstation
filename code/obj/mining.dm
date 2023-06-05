@@ -2105,18 +2105,6 @@ TYPEINFO(/obj/item/cargotele)
 		if (src.total_earned)
 			. += "<br>There is a little counter on the side, it says: Total amount earned: [src.total_earned] credits.<br>"
 
-/obj/item/oreprospector
-	name = "geological scanner"
-	desc = "A device capable of detecting nearby mineral deposits."
-	icon = 'icons/obj/items/mining.dmi'
-	icon_state = "minanal"
-	c_flags = ONBELT
-	w_class = W_CLASS_TINY
-	var/aoeRange = 6
-
-	attack_self(var/mob/user as mob)
-		scan_geology_aoe(get_turf(user), user, src.aoeRange)
-
 ///// MINER TRAITOR ITEM /////
 
 /obj/item/device/chargehacker

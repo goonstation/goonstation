@@ -1084,3 +1084,24 @@ TYPEINFO(/obj/item/device/appraisal)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)
 
+/obj/item/oreprospector //mining scanner
+	name = "geological scanner"
+	desc = "A device capable of detecting nearby mineral deposits."
+	icon = 'icons/obj/items/mining.dmi'
+	icon_state = "minanal"
+	c_flags = ONBELT
+	w_class = W_CLASS_TINY
+	var/aoeRange = 6
+
+	attack_self(var/mob/user as mob)
+		scan_geology_aoe(get_turf(user), user, src.aoeRange)
+
+	afterattack(atom/target, mob/user as mob)
+		if (BOUNDS_DIST(target, user) > 0 || istype(target, /obj/ability_button))
+			return
+
+		if (istype(target, /obj) || istype(target, /turf))
+			user.visible_message("<span class='notice'><b>[user]</b> takes a geological scan of [target].</span>")
+			scan_geology_targeted(src, user, TRUE) //make the scan visible
+		src.add_fingerprint(user)
+		return

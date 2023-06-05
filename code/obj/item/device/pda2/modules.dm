@@ -341,7 +341,7 @@ TYPEINFO(/obj/item/device/pda_module)
 	setup_use_menu_badge = 1
 	abilities = list(/obj/ability_button/miningScan)
 	var/obj/item/device/gps/pda/gps
-	var/obj/item/oreprospector/minerScanner //TODO still need to migrate the area scan thing over to scanprocs.dm so i can remove this item
+	var/miningScanRadius = 6 //used for activating the aoe geological scan with the pda ability button
 
 	New()
 		..()
@@ -365,4 +365,4 @@ TYPEINFO(/obj/item/device/pda_module)
 	execute_ability()
 		var/obj/item/device/pda_module/miner/J = the_item
 		if (J.host)
-			J.minerScanner.AttackSelf(src.the_mob)
+			scan_geology_aoe(get_turf(src.the_mob), src.the_mob, J.miningScanRadius)

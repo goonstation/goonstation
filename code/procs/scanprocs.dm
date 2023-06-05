@@ -871,24 +871,23 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_geology_targeted(var/atom/target, var/mob/user, var/visible = 0)
+/proc/scan_geology_targeted(var/atom/target, var/mob/user, var/visible = FALSE)
 	var/list/message = list()
+
+	if(visible)
+		animate_scanning(target, "#ff9900")
+
 	if(istype(target, /turf/simulated/wall/auto/asteroid))
 		var/turf/simulated/wall/auto/asteroid/rock = target
 		var/datum/ore/ore = rock.ore
 		var/datum/ore/event/event = rock.event
 		message += "----------------------------------<br>"
 		message += "<B>Geological Report:</B><br><br>"
-		message += "Ore Detected: [ore ? ore.name : "None"].<br>" //TODO pick back up where i left off here
-		message += "Quantity Detected: [rock.amount] units of viable ore are present.<br>"
-		else
-			message += "This rock contains no known ores.<br>"
-		message += "The rock here has a hardness rating of [rock.hardness].<br>"
-		if (rock.weakened)
-			message += "The rock here has been weakened.<br>"
-		if (event)
-			if (event.analysis_string)
-				message += "<span class='alert'>[event.analysis_string]</span><br>"
+		message += "Notable Ore Detected: [ore ? ore.name : "None"].<br>"
+		message += "Mineral Quantity Detected: [rock.amount].<br>"
+		message += "Rock Hardness: [rock.hardness].<br>"
+		if (event && event.analysis_string) //this is safe because && short-circuits if event is falsy
+			message += "<span class='alert'>[event.analysis_string]</span><br>"
 		message += "----------------------------------"
 	else
 		message += "Mineral content indeterminate."
@@ -929,9 +928,9 @@
 	message += "----------------------------------"
 	boutput(user, message.Join())
 
-/proc/scan_geology_applydecal(var/mob/living/user, var/turf/target, var/decalicon) //gets called by scan_geology_aoe(), adds the scan icons to a scanned rock
-	if(!user || !target || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',target,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
+/proc/scan_geology_applydecal(var/mob/living/user, var/turf/target, var/icon) //gets called by scan_geology_aoe(), adds the scan icons to a scanned rock
+	if(!user || !target || !icon) return
+	var/image/O = image('icons/obj/items/mining.dmi',target,icon,ASTEROID_MINING_SCAN_DECAL_LAYER)
 	var/datum/client_image_group/cig = get_image_group(target)
 	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
 	cig.add_image(O)
