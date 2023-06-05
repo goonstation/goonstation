@@ -1132,7 +1132,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		else if (istype(W, /obj/item/mining_tools))
 			return // matsci `mining_tools` handle their own digging
 		else if (istype(W, /obj/item/oreprospector))
-			W.scan_geology_targeted(src, user)
+			scan_geology_targeted(src, user)
 		else
 			boutput(user, "<span class='alert'>You hit the [src.name] with [W], but nothing happens!</span>")
 		return

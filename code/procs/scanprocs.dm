@@ -875,13 +875,12 @@
 	var/list/message = list()
 	if(istype(target, /turf/simulated/wall/auto/asteroid))
 		var/turf/simulated/wall/auto/asteroid/rock = target
-		message += "----------------------------------<br>"
-		message += "<B>Geological Report:</B><br><br>"
 		var/datum/ore/ore = rock.ore
 		var/datum/ore/event/event = rock.event
-		if (ore)
-			message += "This stone contains [ore.name].<br>"
-			message += "Analysis suggests [rock.amount] units of viable ore are present.<br>"
+		message += "----------------------------------<br>"
+		message += "<B>Geological Report:</B><br><br>"
+		message += "Ore Detected: [ore ? ore.name : "None"].<br>" //TODO pick back up where i left off here
+		message += "Quantity Detected: [rock.amount] units of viable ore are present.<br>"
 		else
 			message += "This rock contains no known ores.<br>"
 		message += "The rock here has a hardness rating of [rock.hardness].<br>"
@@ -893,58 +892,47 @@
 		message += "----------------------------------"
 	else
 		message += "Mineral content indeterminate."
-	message.Join()
-	boutput(user, message)
+	boutput(user, message.Join())
 
 //TODO clean up stinky old code
-/proc/scan_geology_aoe(var/turf/center, var/mob/living/L, var/range)
-	if (!istype(center) || !istype(L))
+/proc/scan_geology_aoe(var/turf/center, var/mob/living/user, var/range)
+	if (!istype(center) || !istype(user))
 		return
 	if (!isnum(range) || range < 1)
 		range = 6
-	var/stone = 0
-	var/anomaly = 0
-	var/list/ores_found = list()
-	var/datum/ore/O
-	var/datum/ore/event/E
-	for (var/turf/simulated/wall/auto/asteroid/AST in range(center,range))
+	var/numRocksScanned = 0
+	var/numEventsFound = 0
+	var/list/oreTypesFound = list() //the names (strings) of each unique ore type detected in the scan area
+	var/datum/ore/ore
+	var/datum/ore/event/event
+	for (var/turf/simulated/wall/auto/asteroid/rock in range(center,range))
 		//clear out any scanning images if there are any
 		var/datum/client_image_group/cig = get_image_group(center)
 		for(var/image/i in cig.images)
 			cig.remove_image(i)
-		stone++
-		O = AST.ore
-		E = AST.event
-		if (O && !(O.name in ores_found))
-			ores_found += O.name
-		if (E)
-			anomaly++
-			if (E.scan_decal)
-				scan_geology_renderdecals(L, AST, E.scan_decal)
-	var/found_string = ""
-	if (ores_found.len > 0)
-		var/list_counter = 1
-		for (var/X in ores_found)
-			found_string += X
-			if (list_counter != ores_found.len)
-				found_string += " * "
-			list_counter++
-	else
-		found_string = "None"
+		numRocksScanned++
+		ore = rock.ore
+		event = rock.event
+		if (ore && !(ore.name in oreTypesFound))
+			oreTypesFound += ore.name
+		if (event)
+			numEventsFound++
+			if (event.scan_decal)
+				scan_geology_applydecal(user, rock, event.scan_decal)
+	var/list/message = list()
+	message += "----------------------------------<br>"
+	message += "<B><U>Geological Report:</U></B><br>"
+	message += "<b>Scan Range:</b> [range] meters<br>"
+	message += "<b>Asteroids Scanned:</b> [numRocksScanned]<br>"
+	message += "<b>Ores Detected:</b> [oreTypesFound.Join(", ")]<br>"
+	message += "<b>Anomalous Readings:</b> [numEventsFound]<br>"
+	message += "----------------------------------"
+	boutput(user, message.Join())
 
-	var/rendered = "----------------------------------<br>"
-	rendered += "<B><U>Geological Report:</U></B><br>"
-	rendered += "<b>Scan Range:</b> [range] meters<br>"
-	rendered += "<b>M^2 of Mineral in Range:</b> [stone]<br>"
-	rendered += "<b>Ores Found:</b> [found_string]<br>"
-	rendered += "<b>Anomalous Readings:</b> [anomaly]<br>"
-	rendered += "----------------------------------"
-	boutput(L, rendered)
-
-/proc/scan_geology_renderdecals(var/mob/living/user, var/turf/center, var/decalicon) //gets called by scan_geology_aoe()
-	if(!user || !center || !decalicon) return
-	var/image/O = image('icons/obj/items/mining.dmi',center,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
-	var/datum/client_image_group/cig = get_image_group(center)
+/proc/scan_geology_applydecal(var/mob/living/user, var/turf/target, var/decalicon) //gets called by scan_geology_aoe(), adds the scan icons to a scanned rock
+	if(!user || !target || !decalicon) return
+	var/image/O = image('icons/obj/items/mining.dmi',target,decalicon,ASTEROID_MINING_SCAN_DECAL_LAYER)
+	var/datum/client_image_group/cig = get_image_group(target)
 	cig.add_mob(user) //we can add this multiple times so if the user refreshes the scan, it times properly and uses the sub count to handle remove
 	cig.add_image(O)
 
