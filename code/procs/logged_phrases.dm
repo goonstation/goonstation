@@ -148,9 +148,11 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=FALSE)
 		if (!user)
 			user = usr
+		if(strip_html)
+			phrase = strip_html_tags(phrase)
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
 			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(user)] [category]: \"[phrase]\"</span>")

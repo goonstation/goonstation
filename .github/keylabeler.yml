@@ -60,6 +60,9 @@ labelMappings:
     "[CHEM]": a-chemistry
     "[CHEMISTRY]": a-chemistry
     "[CLOTHING]": a-clothing
+    "[CRITTER]": a-critters
+    "[CRITTERS]": a-critters
+    "[MOBS]": a-critters
     "[GAME OBJECTS]": a-game-objects
     "[OBJECTS]": a-game-objects
     "[GAMEMODES]": a-gamemodes
@@ -88,4 +91,7 @@ labelMappings:
     "[RESPAWN]": a-respawning
     "[RESPAWNING]": a-respawning
     "[ROLEPLAY]": a-rp
+    "[VEHICLE]": a-vehicles
     "[VEHICLES]": a-vehicles
+    "[TRAITS]": a-traits
+    "[TRAIT]": a-traits
