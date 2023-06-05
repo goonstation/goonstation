@@ -618,7 +618,8 @@ This is actually lowkey simple, fuck yeah
 
 /obj/item/reagent_containers/food/snacks/new_sandwich //todo: make better name and/or get rid of old sandwiches/burgers
 	// icon_state remains null since these sandwiches/burgers will consist entirely of overlays
-	name = "incomplete sandwich" // needs a better name, and should change based on bread/buns and ingredients used!
+	name = "incomplete sandwich"
+	var/set_name = ""
 	desc = "An edible device consisting of 2 or more structural agents encasing a nutrient payload. It's just a fucking sandwich, dingus."
 	bites_left = 0 // Prevents bite masks from being applied from on_bite(), so we can use our own special ones
 	flags = OPENCONTAINER | FPRINT | TABLEPASS | OPENCONTAINER
@@ -721,9 +722,8 @@ This is actually lowkey simple, fuck yeah
 
 		if(is_valid_finisher(ingredient2add) && !starting_sandwich)
 			src.simulate_sandwich() // involves a couple loops that go through all ingredients, so we only wanna do it when we're ready to be eaten
-			src.name_sandwich()
+			src.name_sandwich(user)
 			src.complete = TRUE
-			src.name = src.name_sandwich()
 			src.reagents = src.original_reagents
 			boutput(user, "<span class='alert'>You finish assembling \the [src]!</span>")
 		else
@@ -739,7 +739,7 @@ This is actually lowkey simple, fuck yeah
 		for (var/datum/sandwich_ingredient/snack/food_datum in src.ingredients)
 			src.max_bites_left += food_datum.max_bites_left
 			total_bites_left += food_datum.max_bites_left * food_datum.amount_left
-		src.bites_left = ceil(total_bites_left / 1.5)
+		src.bites_left = ceil(total_bites_left / 2)
 		// This math is for adjusting heal_amt so that when you finish eating, each ingredient would've healed you the same as if you ate it alone
 		// Same for buffs. This is a lot of checking/processing for a loop so try not to call this too often.
 		for (var/datum/sandwich_ingredient/snack/food_datum in src.ingredients)
@@ -816,9 +816,132 @@ This is actually lowkey simple, fuck yeah
 		return image2overlay
 		// todo: get the current appearance of the ingredient and use that instead of its icon
 
-	/// Generates a name for a sandwich based on its contents
-	proc/name_sandwich()
-		return "hamburgrer" // fix
+
+	proc/name_sandwich(mob/user, obj/item/pen/pen)
+		// There's probably a better way to go about doing this but we'll be able to
+		// rename sandwiches using pens so this isn't a big deal honestly
+
+		if (pen)
+			var/t = input(user, "Enter a name for your sandwich.", src.name, null) as null|text
+			if (!t)
+				return
+			t = strip_html(replacetext(t, "'","")) // todo: allow rendering apostrophes
+			t = copytext(t, 1, 65)
+			if (!t)
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+			src.set_name = t
+			src.name = t
+			return
+
+		if (src.ingredients.len < 3)
+			src.set_name = "sadwich"
+			src.name = "sadwich"
+			return // literally just a bottom and top bread, nothing else
+
+		var/datum/sandwich_ingredient/top_ingredient = src.ingredients[src.ingredients.len]
+		if (src.set_name && !istype(top_ingredient.our_atom, /obj/item/reagent_containers/food/snacks/breadslice))
+			return
+
+		var/sandwich_type = "" // the suffix - are we a burger, sandwich, dagwich, etc.
+		var/final_name = user ? "[user]'s creation" : "indescribable sandwich" //failsafe name
+		var/prefix = ""
+		var/list/food_atoms = list()
+		var/list/food_types = list()
+
+		for (var/datum/sandwich_ingredient/ingredient in src.ingredients)
+			food_atoms += ingredient.our_atom
+			food_types += ingredient.our_atom.type
+
+		if (/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty in food_types)
+			if (/obj/item/reagent_containers/food/snacks/bun_bottom in food_types)
+				if (/obj/item/reagent_containers/food/snacks/bun_top in food_types)
+					sandwich_type = "burger"
+					if (/obj/item/reagent_containers/food/snacks/ingredient/cheeseslice in food_types)
+						sandwich_type = "cheeseburger"
+
+					var/patties = 0
+					for (var/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty in food_atoms)
+						patties++
+						if (patties > 5)
+							break
+					switch(patties)
+						if(1)
+							prefix = ""
+						if(2)
+							prefix = "double"
+						if(3)
+							prefix = "triple"
+						if(4)
+							prefix = "quadruple"
+						if(5)
+							prefix = "quintuple"
+						else
+							prefix = "mega"
+
+					if (patties < (food_types.len * 0.4))
+						final_name = "[prefix] deluxe [sandwich_type]"
+					else
+						final_name = "[prefix] [sandwich_type]"
+					src.set_name = final_name
+					src.name = final_name
+					return
+
+		var/layers = 0
+		for (var/obj/item/reagent_containers/food/snacks/breadslice/bread in food_atoms)
+			var/index = food_atoms.Find(bread)
+			var/obj/item/prev_atom = (index > 1) ? food_atoms[index - 1] : null
+			if(isnull(prev_atom))
+				continue
+			var/obj/item/next_atom = (index < food_atoms.len) ? food_atoms[index + 1] : null
+			if(isnull(next_atom))
+				continue
+			if(istype(prev_atom, /obj/item/reagent_containers/food/snacks/breadslice))
+				continue
+			if(istype(next_atom, /obj/item/reagent_containers/food/snacks/breadslice))
+				continue
+			layers++
+		switch(layers) //todo: make a num2prefix proc
+			if(0)
+				sandwich_type = "sandwich"
+			if(1)
+				sandwich_type = "double decker sandwich"
+			if(2)
+				sandwich_type = "triple decker sandwich"
+			if(3)
+				sandwich_type = "quadruple decker sandwich"
+			if(4)
+				sandwich_type = "quintuple decker sandwich"
+			else
+				sandwich_type = "dagwood"
+
+		// Honestly we could get rid of this to keep the time honored
+		// tradition of allowing comically long sandwich names
+		for (var/obj/item/reagent_containers/food/snacks/ingredient in food_atoms)
+			food_atoms[ingredient] = ingredient.heal_amt
+			sortList(food_atoms, /proc/cmp_numeric_dsc, TRUE)
+		var/ingredient_names = ""
+		for (var/i = 1, i < 3, i++)
+			ingredient_names += "\improper[food_atoms[i]], "
+		ingredient_names += "and [food_atoms[3]]"
+
+		final_name = "[prefix] [ingredient_names] [sandwich_type]"
+		src.set_name = final_name
+		src.name = final_name
+
+
+
+
+
+
+
+
+
+
+
+	proc/update_description()
+
 
 	proc/remove_ingredient(mob/user, datum/sandwich_ingredient/to_remove)
 
