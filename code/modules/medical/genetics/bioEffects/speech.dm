@@ -38,11 +38,15 @@
 	lockedTries = 3
 	icon_state = "speech_smile"
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = smilify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/elvis
 	name = "Frontal Gyrus Alteration Type-E"
@@ -59,11 +63,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = elvisfy(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/chav
 	name = "Frontal Gyrus Alteration Type-C"
@@ -80,11 +88,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = chavify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/scots
 	name = "Frontal Gyrus Alteration Type-F"
@@ -102,11 +114,15 @@
 	lockedTries = 3
 	var/danny_index = 0
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scotify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/swedish
 	name = "Frontal Gyrus Alteration Type-B"
@@ -123,11 +139,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = borkborkbork(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/finnish
 	name = "Frontal Gyrus Alteration Type-FI"
@@ -144,11 +164,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = finnishify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/tommy // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "Frontal Gyrus Alteration Type-T"
@@ -164,11 +188,15 @@
 	can_make_injector = FALSE
 	can_copy = FALSE
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = tommify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /*
 /datum/bioEffect/speech/wonk // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
@@ -210,20 +238,20 @@
 	icon_state = "speech_clown"
 
 	OnAdd()
-		var/mob/living/L = owner
-		if (istype(L))
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent("accent_smile")
+		if (isliving(src.owner))
+			var/mob/living/L = src.owner
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 
 	OnRemove()
-		var/mob/living/L = owner
-		if (istype(L))
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy("accent_smile")
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
+		if (isliving(src.owner))
+			var/mob/living/L = src.owner
 			L.speechpopupstyle = ""
-
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		return message
-		// just let this one handle itself for now
 
 /datum/bioEffect/speech/badmin
 	name = "Frontal Gyrus Alteration Type-Badmin"
@@ -508,12 +536,15 @@
 		src.msgGain = zalgoify(src.msgGain, rand(0,8), rand(0, 2), rand(0, 8))
 		..()
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = zalgoify(message, rand(0,2), rand(0, 1), rand(0, 2))
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
 
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/void
 	name = "Void"
@@ -538,14 +569,14 @@
 		..()
 
 	OnAdd()
-		var/mob/living/L = owner
-		L.speech_void = TRUE
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
 
 	OnRemove()
-		var/mob/living/L = owner
-		L.speech_void = FALSE
-
-
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/yee // DO NOT MAKE THIS APPEAR IN GENEPOOLS OR INTO A TRAIT OR ANY OF THAT, PLEASE, THANK YOU IN ADVANCE - with love, haine
 	name = "yee"
@@ -668,11 +699,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = uwutalk(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/literalowotalk
 	name = "Frontal Gyrus Alteration Type-OWO"
@@ -732,11 +767,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = tabarnak(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/tyke
 	name = "Frontal Gyrus Alteration Type-Y"
@@ -753,11 +792,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = yorkify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/scoob
 	name = "Frontal Gyrus Alteration Type-SD"
@@ -774,11 +817,15 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scoobify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/scoob/less_dog
 	name = "Frontal Gyrus Alteration Type-BD" // bad dog 3=
@@ -799,11 +846,15 @@
 	curable_by_mutadone = FALSE
 	acceptable_in_mutini = FALSE
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = scoobify(message, 1)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent("accent_scooby_nerfed")
+
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy("accent_scooby_nerfed")
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/thrall
 	name = "Frontal Gyrus Alteration Type-V"
@@ -917,12 +968,15 @@
 	msgGain = "Ye feel like a swashbucklin' pirate!"
 	msgLose = "You stop feeling like sailing the Seven Seas."
 
-	OnSpeak(var/message)
-		if (!istext(message))
-			return ""
-		message = pirateify(message)
-		return message
+	OnAdd()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		owner_say_tree.AddAccent(src.id)
 
+	OnRemove()
+		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
+		if(length(instance))
+			owner_say_tree.RemoveAccent(instance[1])
 
 /datum/bioEffect/speech/scrambled
 	name = "Fonratl Guyrs Alrtateion Tpye-SC"
@@ -939,7 +993,6 @@
 		message = accent_scramble(message)
 		return message
 
-
 /datum/bioEffect/speech/word_scrambled
 	name = "Alteration Type Frontal Gyrus-WSC"
 	desc = "The to subject's emit the sentences brain language center curious of makes."
@@ -954,7 +1007,6 @@
 			return ""
 		message = accent_shuffle_words(message)
 		return message
-
 
 /datum/bioEffect/speech/mocking
 	name = "FrOnTaL gYrUs AlTeRaTiOn TyPe-Mc"
@@ -972,7 +1024,6 @@
 			return ""
 		message = accent_mocking(message)
 		return message
-
 
 /datum/bioEffect/speech/leetspeak
 	name = "Fr0nT4l Gyrus 4lt3r4t10n TYP3-1337"
