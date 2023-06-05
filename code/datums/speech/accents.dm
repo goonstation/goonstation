@@ -88,10 +88,10 @@ TYPEINFO(/datum/speech_module/accent/scots)
 		message.content = scotify(message.content)
 		. = message
 
-TYPEINFO(/datum/speech_module/accent/smiling)
-	id = "accent_smiling"
-/datum/speech_module/accent/smiling
-	id = "accent_smiling"
+TYPEINFO(/datum/speech_module/accent/comic)
+	id = "accent_comic"
+/datum/speech_module/accent/comic
+	id = "accent_comic"
 
 	process(datum/say_message/message)
 		message.content = smilify(message.content)

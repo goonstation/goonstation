@@ -239,14 +239,14 @@
 
 	OnAdd()
 		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
-		owner_say_tree.AddAccent("accent_smile")
+		owner_say_tree.AddAccent(src.id)
 		if (isliving(src.owner))
 			var/mob/living/L = src.owner
 			L.speechpopupstyle = "font-family: 'Comic Sans MS'; font-size: 8px;"
 
 	OnRemove()
 		var/datum/speech_module_tree/owner_say_tree = src.owner.ensure_say_tree()
-		var/list/instance = owner_say_tree.GetAccentBy("accent_smile")
+		var/list/instance = owner_say_tree.GetAccentBy(src.id)
 		if(length(instance))
 			owner_say_tree.RemoveAccent(instance[1])
 		if (isliving(src.owner))
