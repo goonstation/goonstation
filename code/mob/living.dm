@@ -895,11 +895,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src)
+			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src)
+			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src)
+			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
 
 	last_words = message
 
