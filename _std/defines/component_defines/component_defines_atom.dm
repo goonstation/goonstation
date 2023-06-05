@@ -51,6 +51,7 @@
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 	/// when an atom say()s anything
+	/// I swear if you use this to modify a message when you should be using a speech_module, I will hurt you - Amylizzle
 	#define COMSIG_ATOM_SAY "atom_say"
 // ---- minimap ----
 
