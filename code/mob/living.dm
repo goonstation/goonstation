@@ -45,7 +45,6 @@
 	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 10
 
-	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
@@ -129,7 +128,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears")
 	start_speech_accents = null
-	start_speech_modifiers = list("brain_damage")
+	start_speech_modifiers = list("mob_checks", "brain_damage")
 	start_speech_outputs = list("spoken","equipped")
 	start_listen_languages = list("english")
 

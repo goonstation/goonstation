@@ -177,6 +177,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 		message = trim(message)
 		//strip out HTML tags
 		message = strip_html(message)
+		//no urls
+		if (url_regex.Find(message))
+			boutput(src.speaker, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
+			return null
+
 		return message
 
 	disposing()

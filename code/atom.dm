@@ -339,6 +339,8 @@ TYPEINFO(/atom)
 /atom/proc/say(var/message as text)
 	SHOULD_CALL_PARENT(TRUE)
 	var/datum/say_message/said = new(message, src, src.say_language)
+	if(!length(said.content))
+		return
 	src.ensure_say_tree()
 	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)

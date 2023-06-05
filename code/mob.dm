@@ -113,6 +113,7 @@
 	var/Vnetwork = null
 	var/lastDamageIconUpdate
 	var/literate = 1 // im liturit i kin reed an riet
+	var/canspeak = TRUE
 
 	var/list/movement_modifiers = list()
 
@@ -235,7 +236,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears")
 	start_speech_accents = null
-	start_speech_modifiers = null
+	start_speech_modifiers = list("mob_checks")
 	start_speech_outputs = list("spoken")
 	start_listen_languages = list("english")
 
