@@ -4905,6 +4905,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "btB" = (
@@ -5893,6 +5896,9 @@
 	icon_state = "check1"
 	},
 /obj/machinery/light_switch/east,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "bHz" = (
@@ -7608,6 +7614,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "ciC" = (
@@ -7733,6 +7742,7 @@
 	tag = "icon-plant (NORTH)"
 	},
 /obj/machinery/light_switch/east,
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
 "cjZ" = (
@@ -10173,6 +10183,13 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay/treatment)
+"cYF" = (
+/obj/disposalpipe/segment,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/crew_quarters/arcade)
 "cYH" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/maintenance/inner/west)
@@ -10751,9 +10768,6 @@
 /area/station/quartermaster/refinery)
 "dib" = (
 /obj/window_blinds/cog2/left,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
@@ -10866,6 +10880,9 @@
 /area/station/security/main)
 "djB" = (
 /obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "djE" = (
@@ -12750,9 +12767,6 @@
 	name = "Barkley Ballin' Gym";
 	pixel_y = -2
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "dQj" = (
@@ -14412,9 +14426,6 @@
 "ero" = (
 /obj/window_blinds/cog2/right,
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
@@ -15230,6 +15241,9 @@
 /area/station/crew_quarters/captain)
 "eFg" = (
 /obj/stool/chair,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "eFy" = (
@@ -15346,6 +15360,13 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/nw)
+"eHt" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "eHz" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -16000,6 +16021,9 @@
 /area/station/crew_quarters/clown)
 "eSb" = (
 /obj/machinery/light/small/floor/netural,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "eSe" = (
@@ -18689,6 +18713,9 @@
 	pixel_x = 3;
 	pixel_y = 1
 	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "fIA" = (
@@ -19716,6 +19743,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
+"gaM" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/market)
 "gaS" = (
 /turf/simulated/wall/auto/jen/purple{
 	icon_state = "5"
@@ -21617,6 +21650,13 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"gDz" = (
+/obj/table/wood/round/auto,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "gDT" = (
 /obj/machinery/light/incandescent/cool,
 /obj/shrub{
@@ -22111,6 +22151,10 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
+"gMw" = (
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "gMC" = (
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay)
@@ -22484,6 +22528,9 @@
 /obj/item/audio_tape,
 /obj/item/hand_labeler,
 /obj/item/device/detective_scanner,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/security/detectives_office)
 "gRu" = (
@@ -24497,7 +24544,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/morgue{
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/wall/false_wall{
 	color = "";
@@ -24547,6 +24595,7 @@
 	pixel_x = 9;
 	pixel_y = -6
 	},
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "hvI" = (
@@ -25346,6 +25395,9 @@
 /area/station/crew_quarters/stockex)
 "hKP" = (
 /obj/machinery/light_switch/east,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "hKS" = (
@@ -26347,10 +26399,11 @@
 	pixel_y = 3
 	},
 /obj/random_item_spawner/desk_stuff/three,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/item/device/camera_viewer,
+/obj/disposalpipe/segment/morgue{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet,
 /area/station/security/detectives_office)
 "icu" = (
@@ -28381,9 +28434,6 @@
 /obj/landmark/start{
 	name = "Detective"
 	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "red2"
@@ -28648,6 +28698,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"iLd" = (
+/obj/disposalpipe/segment/morgue,
+/turf/simulated/wall/auto/reinforced/jen/blue,
+/area/station/medical/medbooth)
 "iLk" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 4
@@ -29634,6 +29688,9 @@
 /obj/machinery/power/apc/autoname_west/noaicontrol,
 /obj/cable{
 	icon_state = "0-4"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
@@ -33237,6 +33294,10 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "keh" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 4
 	},
@@ -33862,6 +33923,12 @@
 "koB" = (
 /turf/simulated/floor/white,
 /area/station/crewquarters/fuq3)
+"koM" = (
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
+/turf/simulated/wall/auto/jen,
+/area/station/crew_quarters/arcade)
 "koQ" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -34166,6 +34233,10 @@
 "kvl" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet{
 	dir = 1;
@@ -35380,12 +35451,15 @@
 	name = "Funeral Parlor"
 	})
 "kPy" = (
-/obj/wingrille_spawn/auto,
+/obj/stool/chair/green{
+	dir = 4
+	},
+/obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/fitness)
+/turf/simulated/floor/carpet/arcade/half,
+/area/station/crew_quarters/arcade/dungeon)
 "kPz" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -35816,6 +35890,9 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kWU" = (
@@ -35874,9 +35951,6 @@
 	},
 /obj/disposalpipe/segment/transport,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},
@@ -36671,7 +36745,7 @@
 /area/station/crew_quarters/market)
 "llv" = (
 /obj/wingrille_spawn/auto,
-/obj/disposalpipe/junction/right/south,
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "lly" = (
@@ -37528,7 +37602,7 @@
 "lzh" = (
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue{
-	dir = 8
+	dir = 1
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -41937,6 +42011,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
+/obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -41981,9 +42056,6 @@
 /area/station/maintenance/outer/ne)
 "mTj" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "mTt" = (
@@ -44663,7 +44735,7 @@
 	},
 /area/station/engine/engineering)
 "nHu" = (
-/obj/disposalpipe/segment/morgue,
+/obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "nHD" = (
@@ -47533,6 +47605,9 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "red2"
@@ -48819,6 +48894,9 @@
 /area/space)
 "oXw" = (
 /obj/stool/bar,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "oXA" = (
@@ -49875,6 +49953,9 @@
 	tag = ""
 	},
 /obj/machinery/sleeper/compact,
+/obj/disposalpipe/segment/morgue{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -52279,6 +52360,9 @@
 /obj/item/storage/box/nerd_kit{
 	pixel_x = 4;
 	pixel_y = 4
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -57505,9 +57589,6 @@
 /area/space)
 "rAX" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "rBc" = (
@@ -60061,6 +60142,9 @@
 "spD" = (
 /obj/stool/chair/red{
 	dir = 8
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
@@ -70327,9 +70411,6 @@
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "vyr" = (
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade)
 "vyw" = (
@@ -73185,6 +73266,9 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
@@ -76916,9 +77000,6 @@
 /area/space)
 "xqG" = (
 /obj/window_blinds/cog2/middle,
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
@@ -77486,6 +77567,9 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant";
 	tag = "icon-plant (NORTH)"
+	},
+/obj/disposalpipe/segment/morgue{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade/dungeon)
@@ -121893,7 +121977,7 @@ veJ
 jKb
 xFf
 bBQ
-kPy
+gnt
 gwZ
 lJa
 eFg
@@ -122497,7 +122581,7 @@ lfx
 hrm
 xFf
 bBQ
-kPy
+gnt
 weI
 lJa
 eFg
@@ -122799,7 +122883,7 @@ uEm
 xMe
 jKb
 bBQ
-kPy
+gnt
 pvF
 cUV
 kWT
@@ -123101,10 +123185,10 @@ aHJ
 hQG
 xSV
 bBQ
+ltD
+ltD
+ltD
 hTi
-ltD
-ltD
-ltD
 ltD
 ltD
 ltD
@@ -124312,7 +124396,7 @@ dbI
 kXC
 ebR
 waE
-lTn
+kPy
 lTn
 waE
 waE
@@ -124611,10 +124695,10 @@ tQe
 xTR
 aeV
 nNm
-hTi
+ltD
 jGW
 gmE
-fgQ
+gDz
 uxc
 gmE
 fGQ
@@ -124913,7 +124997,7 @@ rIr
 kpv
 nNm
 nNm
-hTi
+ltD
 mdq
 qND
 qaQ
@@ -125215,7 +125299,7 @@ nNm
 nNm
 nNm
 rWl
-hTi
+ltD
 xJF
 gmE
 fIr
@@ -125517,7 +125601,7 @@ ltD
 sfw
 hsQ
 ayo
-hTi
+ltD
 wmB
 gmE
 spD
@@ -125821,8 +125905,8 @@ gza
 qBA
 huI
 cjX
-gmE
-gmE
+gMw
+eHt
 gmE
 gmE
 olq
@@ -128537,7 +128621,7 @@ vPe
 eyZ
 gRd
 qWE
-tqN
+vPe
 buZ
 wkc
 vPe
@@ -128837,9 +128921,9 @@ nRh
 fwe
 vPe
 vPe
-vPe
-vPe
 tqN
+vPe
+vPe
 rdj
 rdj
 rdj
@@ -130951,7 +131035,7 @@ foO
 jQX
 vfp
 pVQ
-pVQ
+cYF
 pir
 vyr
 rdj
@@ -131555,7 +131639,7 @@ wBD
 rwh
 gfv
 gfv
-gfv
+koM
 gfv
 vyr
 rdj
@@ -132461,7 +132545,7 @@ oVM
 gbD
 bFL
 gFY
-qyi
+gaM
 raj
 mTj
 cNV
@@ -133065,10 +133149,10 @@ kwD
 xTw
 wst
 wst
-wst
-wst
 opR
+iLd
 fsp
+wst
 rdj
 rdj
 rdj
@@ -133370,8 +133454,8 @@ qvc
 qIT
 cFr
 pou
-opR
-fsp
+wst
+wst
 wst
 rdj
 rdj
