@@ -2,7 +2,7 @@
 #define T0C 273.15
 /// 20 degrees celsius. Room temperature.
 #define T20C 293.15
-/// -270.3 degrees cel`sius. Temperature of cosmic background radiation.
+/// -270.3 degrees celsius. Temperature of cosmic background radiation.
 #define TCMB 2.7 KELVIN
 /// 100 degrees celsius. Boiling point of liquid water.
 #define T100C 373.15 KELVIN
