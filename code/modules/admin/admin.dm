@@ -3419,7 +3419,7 @@ var/global/noir = 0
 					if("jobcaps")
 						job_controls.job_config()
 					if("respawn_panel")
-						src.cmd_custom_spawn_event()
+						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
