@@ -12,6 +12,7 @@
 
 	unsimulated
 		pass_unstable = FALSE
+		event_handler_flags = IMMUNE_SINGULARITY
 		/// If ReplaceWith() actually does a thing or not.
 		var/can_replace_with_stuff = FALSE
 #ifdef CI_RUNTIME_CHECKING
