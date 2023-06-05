@@ -17,7 +17,7 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 		for(var/key in message.maptext_css_values)
 			maptext_css += "[key]: [message.maptext_css_values[key]]; "
 
-		chat_text = make_chat_maptext(message.speaker.loc, message.content, maptext_css)
+		chat_text = make_chat_maptext(message.speaker, message.content, maptext_css)
 
 		//if(maptext_animation_colors)
 		//	oscillate_colors(chat_text, maptext_animation_colors)
