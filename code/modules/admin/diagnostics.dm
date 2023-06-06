@@ -1405,13 +1405,13 @@ proc/debug_map_apc_count(delim,zlim)
 					var/datum/fishing_spot/spot = global.fishing_spots[AM.type]
 					for(var/fish_type in spot.fish_available)
 						var/atom/fish_type_dummy = fish_type
-						fish += "[initial(fish_type_dummy.name) x [spot.fish_available[fish_type]]]"
+						fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
 			if(theTurf.type in global.fishing_spots)
 				spots += theTurf.name
 				var/datum/fishing_spot/spot = global.fishing_spots[theTurf.type]
 				for(var/fish_type in spot.fish_available)
 					var/atom/fish_type_dummy = fish_type
-					fish += "[initial(fish_type_dummy.name) x [spot.fish_available[fish_type]]]"
+					fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
 			if(!length(spots))
 				img.app.alpha = 0
 				return
