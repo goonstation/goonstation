@@ -25,6 +25,9 @@
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
 			if (fishing_spot)
+				if (fishing_spot.rod_tier_required > src.tier)
+					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 
 	update_icon()
@@ -61,7 +64,7 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			user.visible_message("You need a higher tier rod to fish here!")
+			user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
