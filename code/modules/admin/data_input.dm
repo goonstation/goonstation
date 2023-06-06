@@ -309,16 +309,20 @@
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = 3000
-	can_target_ghosts = TRUE
-	dont_lock_holder = TRUE
+	check_range = FALSE
+	target_ghosts = TRUE
+	lock_holder = FALSE
 
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+	castcheck()
+		if (usr.client && usr.client.holder)
 			return TRUE
 
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
+
+/datum/targetable/refpicker/nonadmin
+	castcheck(var/mob/M)
+		return TRUE
 
 ///Gives the target mob a reference picker ability and returns the atom picked. Synchronous.
 /proc/pick_ref(mob/M)

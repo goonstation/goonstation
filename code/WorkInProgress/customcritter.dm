@@ -536,9 +536,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		if (gibtype)
-			gibs(C.loc, list())
+			gibs(C.loc)
 		else
-			robogibs(C.loc, list())
+			robogibs(C.loc)
 		qdel(C)
 
 /datum/critterDeath/explode

@@ -1,4 +1,5 @@
 ABSTRACT_TYPE(/mob/living/critter)
+ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -28,7 +29,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/area/registered_area = null
 	///time when mob last awoke from hibernation
 	var/last_hibernation_wake_tick = 0
-	var/is_hibernating = TRUE
+	var/is_hibernating = FALSE
 
 	var/can_burn = 1
 	var/can_throw = 0
@@ -101,6 +102,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	///If the mob has an ai, and is currently retaliating against being attacked, how long should we do that for? (deciseconds)
 	///Special values: RETALIATE_ONCE = Attack once, RETALIATE_UNTIL_INCAP = Attack until the target is incapacitated, RETALIATE_UNTIL_DEAD = Attck until the target is dead
 	var/ai_retaliate_persistence = RETALIATE_ONCE
+	///Counts the number of attacks this critter has performed without using an ability
+	var/ai_attack_count = 0
+	///The number of basic attacks this critter will perform in between using abilities
+	var/ai_attacks_per_ability = 2
 
 	blood_id = "blood"
 
@@ -115,10 +120,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
-		SPAWN(0)
-			if(!src.disposed)
-				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
@@ -137,6 +138,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		hud = new custom_hud_type(src)
 		src.attach_hud(hud)
 		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+		src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
 
 		if (src.stamina_bar)
 			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -247,6 +249,28 @@ ABSTRACT_TYPE(/mob/living/critter)
 				max_health += HH.maximum_value
 				health += HH.maximum_value
 
+	///admin varediting proc
+	proc/modify_health()
+		set name = "Modify critter health"
+		var/chosen = input(usr, "Pick health type") in (src.healthlist + "All")
+		if (!chosen)
+			return
+		var/value = input(usr, "Input new value") as num
+		if (!value)
+			return
+		var/to_update = list()
+		if (chosen == "All")
+			to_update = src.healthlist
+		else
+			to_update = list("chosen" = src.healthlist[chosen])
+		for (var/holder_id in to_update)
+			var/datum/healthHolder/holder = to_update[holder_id]
+			holder.maximum_value = value
+			holder.value = value
+			holder.last_value = value
+
+		src.count_healths()
+
 	// begin convenience procs
 	proc/add_hh_flesh(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/flesh)
@@ -291,7 +315,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				else
 					src.wake_from_hibernation()
 			// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate())
+			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src)
 				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 				task_instance.targetted_mob = M
 				task_instance.start_time = TIME
@@ -426,12 +450,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 			return
 		if (!can_throw)
 			return
-		src.throw_mode_off()
 		if (usr.stat)
 			return
 
 		var/obj/item/I = src.equipped()
 		var/turf/thrown_from = get_turf(src)
+		src.throw_mode_off()
 
 		if (!I || !isitem(I) || I.cant_drop)
 			return
@@ -452,10 +476,19 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 		//actually throw it!
 		if (I)
+			attack_twitch(src)
 			I.layer = initial(I.layer)
 			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
+				src.say("YEET")
 				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
+				new/obj/effect/supplyexplosion(I.loc)
+
+				playsound(I.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+
+				for(var/mob/M in view(7, I.loc))
+					shake_camera(M, 20, 8)
+
 			else
 				src.visible_message("<span class='alert'>[src] throws [I].</span>")
 			if (iscarbon(I))
@@ -466,15 +499,20 @@ ABSTRACT_TYPE(/mob/living/critter)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
 				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
-			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = throw_dir
+			if (istype(src.loc, /turf/space) || src.no_gravity) //they're in space, move em one space in the opposite direction
+				src.inertia_dir = get_dir(target, src) // Float opposite direction from throw
 				step(src, inertia_dir)
-			if (istype(I.loc, /turf/space) && ismob(I))
+			if ((istype(I.loc, /turf/space) || I.no_gravity) && ismob(I))
 				var/mob/M = I
 				M.inertia_dir = throw_dir
-			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
+
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
+
+			if (mob_flags & AT_GUNPOINT)
+				for(var/obj/item/grab/gunpoint/G in grabbed_by)
+					G.shoot()
 
 	proc/can_pull(atom/A)
 		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
@@ -790,7 +828,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
 					return 0
 			HH.item = I
-			I.set_loc(src)
+			if (I.stored)
+				I.stored.transfer_stored_item(I, src, user = src)
+			else
+				I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -1091,28 +1132,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 					message = "<b>[src]</b> [param]"
 					m_type = 1
 				if ("flip")
-					if (src.emote_check(voluntary, 50) && !src.shrunk)
-						if (istype(src.loc,/obj/))
+					if (src.emote_check(voluntary, 50))
+						if (isobj(src.loc))
 							var/obj/container = src.loc
-							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 3 SECONDS)
-							src.changeStatus("weakened", 4 SECONDS)
-							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
-							var/wiggle = 6
-							while(wiggle > 0)
-								wiggle--
-								container.pixel_x = rand(-3,3)
-								container.pixel_y = rand(-3,3)
-								sleep(0.1 SECONDS)
-							container.pixel_x = 0
-							container.pixel_y = 0
-							if (prob(33))
-								if (istype(container, /obj/storage))
-									var/obj/storage/C = container
-									if (C.can_flip_bust == 1)
-										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
-										C.bust_out()
+							container.mob_flip_inside(src)
 						else
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
@@ -1178,7 +1201,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 				if (canmove || isdead(src))
 					src.UpdateOverlays(null, "dizzy")
 					return
-				else
+				else if(src.is_valid_icon_state("dizzy",src.icon))
 					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
 					if (dizzyStars)
 						src.UpdateOverlays(dizzyStars, "dizzy")
@@ -1216,6 +1239,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 		..()
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
+		src.can_lie = initial(src.can_lie)
 		src.can_implant = initial(src.can_implant)
 		blood_volume = initial(blood_volume)
 
@@ -1290,12 +1314,16 @@ ABSTRACT_TYPE(/mob/living/critter)
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_target(var/range = 5)
 		. = list()
-		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		//default behaviour, return all alive, tangible, not-our-type, not-our-faction mobs in range
 		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, src.type)) continue
-			. += C
+			if (src.valid_target(C))
+				. += C
+
+	proc/valid_target(var/mob/living/C)
+		if (isintangible(C)) return FALSE
+		if (isdead(C)) return FALSE
+		if (istype(C, src.type)) return FALSE
+		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
@@ -1312,9 +1340,23 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_attack(var/mob/target)
+		if (src.ai_attack_count >= src.ai_attacks_per_ability)
+			if (src.critter_ability_attack(target))
+				src.ai_attack_count = 0 //ability used successfully, reset the count
+				return
+		//default to a basic attack
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
+
+	/// How the critter should attack normally
+	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
 		return TRUE
+
+	///How the critter should use abilities, return TRUE to indicate ability usage success
+	proc/critter_ability_attack(var/mob/target)
+		return FALSE
 
 	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
 	proc/critter_scavenge(var/mob/target)
@@ -1428,9 +1470,6 @@ ABSTRACT_TYPE(/mob/living/critter)
 		return
 
 	var/shielded = 0
-	for (var/obj/item/device/shield/S in src)
-		if (S.active)
-			shielded = 1
 	if (src.spellshield)
 		shielded = 1
 
@@ -1467,7 +1506,8 @@ ABSTRACT_TYPE(/mob/living/critter)
 
 /mob/living/critter/Logout()
 	..()
-	if (src.ai && !src.ai.enabled && src.is_npc)
+	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.key)
 		ai.enable()
 
 /mob/living/critter/Login()
@@ -1501,8 +1541,20 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 		src.emag_act() // heh
 		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
 
+	can_eat()
+		return FALSE
+
+	can_drink()
+		return FALSE
+
 	vomit()
 		return
 
 	isBlindImmune()
 		return TRUE
+
+	shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
+		return 0
+
+	electric_expose(var/power = 1)
+		return 0

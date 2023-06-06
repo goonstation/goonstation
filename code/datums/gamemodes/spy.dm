@@ -84,7 +84,7 @@
 		return
 
 	var/the_slot = null
-	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
+	if (leader.back?.storage && !leader.back.storage.is_full())
 		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
 		the_slot = "backpack"
 	else
@@ -299,7 +299,7 @@
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
 		if (leader_mind?.current && M.client)
-			var/I = image(antag_spyleader, loc = leader_mind.current)
+			var/I = image('icons/mob/antag_overlays.dmi', icon_state = "spy", loc = leader_mind.current)
 			M.client.images += I
 
 		spymode.add_spy(M, Implanter)

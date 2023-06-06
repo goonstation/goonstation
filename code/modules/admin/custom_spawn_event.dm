@@ -7,6 +7,8 @@
 	var/turf/spawn_loc = LANDMARK_LATEJOIN
 	///How long does the popup stay up for?
 	var/ghost_confirmation_delay = 30 SECONDS
+	///Do we give them a popup or just spawn them directly?
+	var/ask_permission = TRUE
 	///How many copies of thing_to_spawn do we want?
 	var/amount_to_spawn = 1
 	///Antag role ID to assign to the players on spawn
@@ -28,9 +30,7 @@
 		if (ispath(src.thing_to_spawn, /mob))
 			var/mob/mob = src.thing_to_spawn
 			return initial(mob.name)
-		if (ispath(src.thing_to_spawn, /datum/job))
-			var/datum/job/job = src.thing_to_spawn
-			return initial(job.name)
+		return src.thing_to_spawn //job name etc.
 
 	proc/get_mob_instance(gender)
 		if (ismob(src.thing_to_spawn))
@@ -41,12 +41,11 @@
 
 		if (ispath(src.thing_to_spawn, /mob))
 			return new src.thing_to_spawn(src.get_spawn_loc())
-		if (ispath(src.thing_to_spawn, /datum/job))
-			var/datum/job/job = src.thing_to_spawn
+		if (istext(src.thing_to_spawn)) //if it's a string then it's (hopefully) a job name
 			var/mob/living/carbon/human/normal/M = new/mob/living/carbon/human/normal(src.get_spawn_loc())
 			M.initializeBioholder(gender) //try to preserve gender if we can
 			SPAWN(0)
-				M.JobEquipSpawned(initial(job.name))
+				M.JobEquipSpawned(src.thing_to_spawn)
 			return M
 
 	proc/do_spawn()
@@ -65,9 +64,10 @@
 		text_messages.Add("You are eligible to be respawned as a [antag_name] [mob_name]. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
 		text_messages.Add("You have been added to the list of respawns. Please wait...")
 
+		if (src.ask_permission)
+			message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		// The proc takes care of all the necessary work (job-banned etc checks, confirmation delay).
-		message_admins("Sending offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
-		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE)
+		var/list/datum/mind/candidates = dead_player_list(TRUE, src.ghost_confirmation_delay, text_messages, allow_dead_antags = TRUE, require_client = TRUE, do_popup = src.ask_permission)
 
 		for (var/i in 1 to src.amount_to_spawn)
 			if (!length(candidates))
@@ -122,8 +122,8 @@
 			spawn_type = "mob_ref"
 		else if (ispath(src.spawn_event.thing_to_spawn, /mob))
 			spawn_type = "mob_type"
-		else if (ispath(src.spawn_event.thing_to_spawn, /datum/job))
-			spawn_type = "job_type"
+		else if (istext(src.spawn_event.thing_to_spawn))
+			spawn_type = "job"
 
 		var/loc_type = ""
 		if (isturf(src.spawn_event.spawn_loc))
@@ -137,7 +137,7 @@
 		var/potentially_incompatible = is_a_mob && !is_a_human && src.spawn_event.antag_role
 
 		return list(
-			"thing_to_spawn" = ispath(src.spawn_event.thing_to_spawn) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
+			"thing_to_spawn" = (ispath(src.spawn_event.thing_to_spawn) || istext(src.spawn_event.thing_to_spawn)) ? src.spawn_event.thing_to_spawn : "\ref[src.spawn_event.thing_to_spawn]",
 			"thing_name" = src.spawn_event.get_mob_name(),
 			"spawn_directly" = src.spawn_event.spawn_directly,
 			"spawn_loc" = src.spawn_event.spawn_loc,
@@ -149,6 +149,7 @@
 			"loc_type" = loc_type,
 			"incompatible_antag" = potentially_incompatible,
 			"equip_antag" = src.spawn_event.equip_antag,
+			"ask_permission" = src.spawn_event.ask_permission,
 		)
 
 	ui_static_data(mob/user)
@@ -169,8 +170,11 @@
 					boutput(ui.user, "That's not a mob, dingus.")
 			if ("select_mob_type")
 				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select mob type", "Select type", concrete_typesof(/mob/living)) || src.spawn_event.thing_to_spawn
-			if ("select_job_type")
-				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", concrete_typesof(/datum/job)) || src.spawn_event.thing_to_spawn
+			if ("select_job")
+				var/list/job_names = list()
+				for (var/datum/job/job in (job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs))
+					job_names |= job.name
+				src.spawn_event.thing_to_spawn = tgui_input_list(ui.user, "Select job type", "Select type", job_names) || src.spawn_event.thing_to_spawn
 			if ("select_turf")
 				src.spawn_event.spawn_loc = get_turf(pick_ref(ui.user))
 			if ("select_landmark")
@@ -179,6 +183,8 @@
 				src.spawn_event.ghost_confirmation_delay = params["spawn_delay"] //no validation, admins may href exploit if they wish
 			if ("set_amount")
 				src.spawn_event.amount_to_spawn = params["amount"]
+				if (src.spawn_event.amount_to_spawn > 1)
+					src.spawn_event.spawn_directly = FALSE
 			if ("select_antag")
 				var/antag_ids = list("antagonist")
 				for (var/datum/antagonist/antag as anything in concrete_typesof(/datum/antagonist))
@@ -192,8 +198,12 @@
 				src.spawn_event.spawn_directly = params["spawn_directly"]
 			if ("set_objective_text")
 				src.spawn_event.objective_text = params["objective_text"]
+			if ("set_ask_permission")
+				src.spawn_event.ask_permission = params["ask_permission"]
 			if ("spawn") //no accidental double clicks
 				if (!ON_COOLDOWN(ui.user, "custom_spawn_event", 1 SECOND))
+					message_admins("[key_name(ui.user)] initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
+					logTheThing(LOG_ADMIN, ui.user, "initiated a custom spawn event of [src.spawn_event.amount_to_spawn] [src.spawn_event.get_mob_name()]")
 					src.spawn_event.do_spawn()
 		return TRUE
 

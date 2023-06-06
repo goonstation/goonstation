@@ -384,6 +384,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					10;"wiz_amethyst",
 					10;"wiz_emerald",
 					10;"wiz_sapphire",
+					5;"jean",
 					10;"starstone")
 			if("eldritch") // fuck you
 				material = pick(
@@ -407,6 +408,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
+					5;"jean",
 					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(

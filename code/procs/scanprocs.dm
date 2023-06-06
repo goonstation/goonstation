@@ -201,6 +201,8 @@
 				//Joke in case there is no organHolder
 				if (!H.organHolder)
 					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+			else if (H.robotic_organs > 0)
+				organ_data = "<span style='color:purple'><b>Unknown augmented organs detected.</b></span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
@@ -269,7 +271,7 @@
 				return null
 
 	else
-		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
+		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)

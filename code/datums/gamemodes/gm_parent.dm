@@ -123,29 +123,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-				if (traitor.special_role == ROLE_FLOCKMIND)
-					for (var/flockname in flocks)
-						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
-							if(length(flock.trace_minds))
-								stuff_to_output += "Flocktraces:"
-								for (var/trace_name in flock.trace_minds)
-									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
-
-							if (flock.relay_finished)
-								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
-								var/time = TIME
-								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
-									if (time - flocktrace.creation_time >= 5 MINUTES)
-										if (!istype(flocktrace.loc, /mob/living/critter/flock/drone))
-											flocktrace.unlock_medal("To the stars", TRUE)
-										else
-											var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
-											flockdrone.unlock_medal("To the stars", TRUE)
-
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
@@ -261,12 +238,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return candidates
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
+/// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
-	var/objective_set_path = null
-	// This is temporary for the new antagonist system, to prevent creating objectives for roles that have an associated datum.
-	// It should be removed when all antagonists are on the new system.
-	var/do_objectives = TRUE
-
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
 		if (prob(50))
@@ -274,71 +247,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	switch (antag.special_role)
-		if (ROLE_TRAITOR)
-			antag.add_antagonist(ROLE_TRAITOR)
-			do_objectives = FALSE
+	antag.add_antagonist(antag.special_role)
 
-		if (ROLE_CHANGELING)
-			antag.add_antagonist(ROLE_CHANGELING)
-			do_objectives = FALSE
-
-		if (ROLE_WIZARD)
-			antag.add_antagonist(ROLE_WIZARD)
-			do_objectives = FALSE
-
-		if (ROLE_WRAITH)
-			antag.add_antagonist(ROLE_WRAITH)
-			do_objectives = FALSE
-
-		if (ROLE_VAMPIRE)
-			antag.add_antagonist(ROLE_VAMPIRE)
-			do_objectives = FALSE
-
-		if (ROLE_HUNTER)
-			antag.add_antagonist(ROLE_HUNTER)
-			do_objectives = FALSE
-
-		if (ROLE_GRINCH)
-			antag.add_antagonist(ROLE_GRINCH)
-			do_objectives = FALSE
-
-		if (ROLE_BLOB)
-			antag.add_antagonist(ROLE_BLOB)
-			do_objectives = FALSE
-
-		if (ROLE_FLOCKMIND)
-			bestow_objective(antag, /datum/objective/specialist/flock)
-			antag.current.make_flockmind()
-		if (ROLE_SPY_THIEF)
-			antag.add_antagonist(ROLE_SPY_THIEF)
-			do_objectives = FALSE
-
-			if (!src.spy_market)
-				src.spy_market = new /datum/game_mode/spy_theft
-				sleep(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
-				src.spy_market.build_bounty_list()
-				src.spy_market.update_bounty_readouts()
-
-		if (ROLE_WEREWOLF)
-			antag.add_antagonist(ROLE_WEREWOLF)
-			do_objectives = FALSE
-
-		if (ROLE_ARCFIEND)
-			antag.add_antagonist(ROLE_ARCFIEND)
-			do_objectives = FALSE
-
-		if (ROLE_SALVAGER)
-			antag.add_antagonist(ROLE_SALVAGER)
-			do_objectives = FALSE
-
-	if (do_objectives)
-		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
-			new objective_set_path(antag)
-		var/obj_count = 1
-		for (var/datum/objective/objective in antag.objectives)
-			boutput(antag.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-			obj_count++
+	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
+	if (!antag_datum.uses_pref_name)
+		var/datum/player/player = antag.get_player()
+		player.joined_names = list()
 
 /datum/game_mode/proc/check_win()
 

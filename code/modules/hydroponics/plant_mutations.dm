@@ -490,7 +490,8 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/random
+	crop = /obj/item/fish/botany
+	dont_rename_crop = TRUE
 	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -613,7 +614,7 @@
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
-			B.anchored = 1
+			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
 			SPAWN(2 SECONDS)

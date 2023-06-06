@@ -80,7 +80,7 @@
 
 	New()
 		..()
-		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, .proc/hitbyproj)
+		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
 			src.cam.c_tag = src.name
@@ -88,8 +88,7 @@
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
 		if(!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)

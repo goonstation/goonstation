@@ -13,10 +13,15 @@
 	#define COMSIG_ATOM_HITBY_THROWN "atom_hitby_thrown"
 	/// when an atom is examined (/mob/examiner, /list/lines), append to lines for more description
 	#define COMSIG_ATOM_EXAMINE "atom_examine"
+	/// When an atom is examined for its help message (/mob/examiner, /list/lines), append to lines for more description
+	/// Use [RegisterHelpMessageHandler] instead as it adds the help verb on registration
+	#define COMSIG_ATOM_HELP_MESSAGE "atom_help_message"
 	/// when something happens that should trigger an icon update. Or something.
 	#define COMSIG_UPDATE_ICON "atom_update_icon"
 	/// when something triggers Crossed by entering this atom's turf (/atom/movable)
 	#define COMSIG_ATOM_CROSSED "atom_crossed"
+	/// when something triggers Uncrossed by exiting this atom's turf (/atom/movable)
+	#define COMSIG_ATOM_UNCROSSED "atom_uncrossed"
 	/// When something calls UpdateIcon, before the icon is updated
 	#define COMSIG_ATOM_PRE_UPDATE_ICON "atom_before_update_icon"
 	/// When something calls UpdateIcon, after the icon is updated
@@ -69,11 +74,15 @@
 	#define COMSIG_MOVABLE_POST_RADIO_PACKET "mov_post_radio_packet"
 	/// when an atom hits something when being thrown (thrown_atom, hit_target, /datum/thrown_thing)
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
+	/// when an AM is teleported by do_teleport
+	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
 
 	// ---- complex ----
 
 	/// when the outermost movable in the .loc chain changes (thing, old_outermost_movable, new_outermost_movable)
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
+	/// When the outermost movable in the .loc chain moves to a new turf. (thing, old_turf, new_turf)
+	#define XSIG_MOVABLE_TURF_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_turf_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
 
@@ -84,6 +93,8 @@
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
 	/// when a turf is replaced by another turf (what)
 	#define COMSIG_TURF_REPLACED "turf_replaced"
+	/// when an atom inside the turfs contents changes density (turf, previous_density, thing)
+	#define COMSIG_TURF_CONTENTS_SET_DENSITY "turf_contents_set_density"
 
 // ---- obj signals ----
 

@@ -1,13 +1,13 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/allowGenerate)
 "ab" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ac" = (
 /obj/structure/woodwall,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ad" = (
 /obj/grille/catwalk,
@@ -33,7 +33,7 @@
 /area/noGenerate)
 "ag" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ah" = (
 /obj/grille/catwalk,
@@ -90,25 +90,25 @@
 	dir = 2;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "al" = (
 /obj/item/raw_material/shard/glass,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "am" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "an" = (
 /obj/lattice,
 /obj/cable{
 	icon_state = "4-9"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ao" = (
 /obj/lattice{
@@ -118,14 +118,14 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ap" = (
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/wall,
 /area/noGenerate)
 "aq" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "ar" = (
 /obj/machinery/communications_dish,
@@ -134,23 +134,23 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "as" = (
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "at" = (
 /obj/decal/floatingtiles{
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "au" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles3"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "av" = (
 /obj/lattice{
@@ -162,11 +162,11 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aw" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "ax" = (
 /obj/lattice{
@@ -181,7 +181,7 @@
 	icon_state = "neutinj";
 	name = "motor"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "ay" = (
 /obj/lattice{
@@ -194,7 +194,7 @@
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "az" = (
 /obj/grille/catwalk,
@@ -206,10 +206,10 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aB" = (
-/turf/simulated/wall/r_wall,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/noGenerate)
 "aC" = (
 /obj/structure/girder/reinforced,
@@ -220,27 +220,21 @@
 /obj/item/casing/rifle,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
-"aE" = (
-/obj/grille/steel,
-/obj/window/reinforced/east,
-/obj/window/reinforced/south,
-/turf/simulated/floor/airless/plating,
-/area/noGenerate)
 "aF" = (
 /obj/lattice,
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "aG" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aH" = (
 /obj/item/raw_material/scrap_metal,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aI" = (
 /obj/decal/cleanable/blood/tracks{
@@ -252,17 +246,18 @@
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "aJ" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/oil/streak,
 /obj/decal/cleanable/blood/tracks{
 	dir = 8;
 	icon_state = "tracks"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_open";
+	name = "broken airlock";
+	dir = 4
 	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
@@ -314,13 +309,10 @@
 /turf/simulated/floor/airless/damaged5,
 /area/noGenerate)
 "aP" = (
-/turf/simulated/wall,
+/turf/simulated/wall/auto/supernorn,
 /area/noGenerate)
 "aQ" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 1
-	},
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibarm"
 	},
@@ -329,6 +321,9 @@
 	},
 /obj/item/casing/rifle,
 /obj/decal/cleanable/paper,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "aR" = (
@@ -342,11 +337,7 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/turf/simulated/wall/auto/asteroid,
-/area/noGenerate)
-"aT" = (
-/obj/lattice,
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "aU" = (
 /obj/lattice{
@@ -358,19 +349,7 @@
 	name = "grimy pipe";
 	pixel_y = -6
 	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/noGenerate)
-"aV" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4;
-	name = "grimy pipe";
-	pixel_y = -6
-	},
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "aW" = (
 /obj/decal/cleanable/dirt,
@@ -442,16 +421,17 @@
 	},
 /area/noGenerate)
 "bd" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "rusted airlock"
-	},
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood/tracks{
 	dir = 4;
 	icon_state = "tracks"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "door_open";
+	name = "broken airlock";
+	dir = 4
 	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
@@ -556,8 +536,8 @@
 	},
 /area/noGenerate)
 "bp" = (
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/item/extinguisher,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged3,
 /area/noGenerate)
 "bq" = (
@@ -583,7 +563,9 @@
 	},
 /area/noGenerate)
 "bs" = (
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bt" = (
@@ -599,11 +581,8 @@
 /turf/simulated/floor/airless/damaged1,
 /area/noGenerate)
 "bu" = (
-/obj/machinery/door/airlock/external{
-	icon_state = "door_locked";
-	locked = 1;
-	name = "Damaged Hatch";
-	secondsElectrified = -1
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
 /turf/simulated/floor/airless,
 /area/noGenerate)
@@ -630,7 +609,9 @@
 /area/noGenerate)
 "bz" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/airless,
 /area/noGenerate)
 "bA" = (
@@ -657,7 +638,9 @@
 /area/noGenerate)
 "bC" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/door/airlock/external,
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "bD" = (
@@ -692,15 +675,15 @@
 /obj/decal/cleanable/blood{
 	icon_state = "gib3"
 	},
-/turf/simulated/wall,
+/turf/simulated/wall/auto/supernorn,
 /area/noGenerate)
 "bH" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 1
-	},
 /obj/item/cable_coil,
 /obj/item/disk/data/floppy/computer3boot,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bI" = (
@@ -716,23 +699,13 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bJ" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 4
-	},
 /obj/decal/fakeobjects/tapedeck,
 /turf/simulated/floor/airless/scorched,
-/area/noGenerate)
-"bK" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bL" = (
 /obj/lattice,
 /obj/item/raw_material/shard/glass,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bM" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -743,20 +716,13 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/critter/boogiebot,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged3,
 /area/noGenerate)
 "bN" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/r_wall,
-/area/noGenerate)
-"bO" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 8;
-	icon_state = "tube-broken"
-	},
-/turf/simulated/floor/airless/engine,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/noGenerate)
 "bP" = (
 /obj/decal/cleanable/dirt,
@@ -767,9 +733,6 @@
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
 "bR" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 4
-	},
 /obj/item/raw_material/scrap_metal,
 /turf/simulated/floor/airless/engine,
 /area/noGenerate)
@@ -788,8 +751,8 @@
 	dir = 4;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/item/caution,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged1,
 /area/noGenerate)
 "bU" = (
@@ -828,10 +791,7 @@
 	},
 /area/noGenerate)
 "bX" = (
-/obj/grille/steel,
-/obj/window/reinforced/west,
-/obj/window/reinforced/east,
-/obj/window/reinforced/north,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bY" = (
@@ -846,19 +806,19 @@
 	icon_state = "4-8";
 	name = "power cable"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ca" = (
 /obj/lattice,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 1
-	},
 /obj/decal/fakeobjects{
 	icon = 'icons/obj/power_cond.dmi';
 	icon_state = "4-8";
 	name = "power cable"
 	},
-/turf/space,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
+/turf/variableTurf/clear,
 /area/noGenerate)
 "cb" = (
 /obj/lattice{
@@ -871,7 +831,7 @@
 	icon_state = "4-8";
 	name = "power cable"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "cc" = (
 /obj/decal/cleanable/blood{
@@ -888,13 +848,6 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/vacuumtape,
 /turf/simulated/floor/airless/wood,
-/area/noGenerate)
-"cf" = (
-/obj/grille/steel,
-/obj/window/reinforced/south,
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cg" = (
 /turf/simulated/floor/airless/engine,
@@ -921,10 +874,8 @@
 	},
 /area/noGenerate)
 "cj" = (
-/obj/grille/steel,
-/obj/window/reinforced/west,
-/obj/window/reinforced/east,
 /obj/decal/garland,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "ck" = (
@@ -939,14 +890,14 @@
 	icon_state = "lattice-dir"
 	},
 /obj/item/tile/steel,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "cm" = (
 /obj/lattice,
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "cn" = (
 /obj/table/wood/auto,
@@ -976,7 +927,10 @@
 /obj/item/record/clown_collection/honk,
 /obj/item/record/clown_collection/poo,
 /obj/item/record/clown_collection/uguu,
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/machinery/light/incandescent/broken{
+	dir = 4
+	},
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cr" = (
 /obj/lattice{
@@ -984,14 +938,14 @@
 	icon_state = "lattice-dir-b";
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cs" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "ct" = (
 /obj/machinery/portable_atmospherics/scrubber,
@@ -1004,11 +958,11 @@
 	},
 /obj/item/raw_material/shard/glass,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cv" = (
 /obj/lattice,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cw" = (
 /obj/lattice{
@@ -1016,7 +970,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/item/old_grenade/graviton,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cx" = (
 /obj/decal/fakeobjects{
@@ -1041,7 +995,6 @@
 /area/noGenerate)
 "cz" = (
 /obj/grille/steel,
-/obj/window/reinforced/west,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cA" = (
@@ -1060,7 +1013,6 @@
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cC" = (
-/obj/table/wood/auto,
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -1099,7 +1051,7 @@
 "cG" = (
 /obj/lattice,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cH" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -1135,7 +1087,7 @@
 /area/noGenerate)
 "cK" = (
 /obj/item/tile/steel,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cL" = (
 /obj/decal/cleanable/dirt,
@@ -1143,6 +1095,7 @@
 	icon_state = "u_guilty"
 	},
 /obj/item/crowbar,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "cM" = (
@@ -1181,7 +1134,6 @@
 "cP" = (
 /obj/decal/cleanable/dirt,
 /obj/table/wood/auto,
-/obj/decal/fakeobjects/lighttube_broken,
 /obj/item/cigpacket,
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
@@ -1211,53 +1163,32 @@
 /area/noGenerate)
 "cT" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cU" = (
 /obj/structure/girder/displaced,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cV" = (
 /obj/lattice,
 /obj/landmark{
 	name = "replacewith_records"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "cW" = (
-/obj/grille/steel,
-/obj/window/reinforced/west,
-/obj/window/reinforced/north,
-/obj/window/reinforced/south,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cX" = (
 /obj/grille/steel,
-/obj/window/reinforced/south,
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating,
-/area/noGenerate)
-"cY" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/obj/window/reinforced/south,
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating,
-/area/noGenerate)
-"cZ" = (
-/obj/grille/steel,
-/obj/window/reinforced/north,
-/turf/simulated/floor/airless/plating,
-/area/noGenerate)
-"da" = (
-/obj/structure/girder/reinforced,
-/obj/window/reinforced/south,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "db" = (
 /obj/lattice,
 /obj/decal/woodclutter,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "dc" = (
 /obj/lattice,
@@ -1267,19 +1198,35 @@
 	desc = "It looks pretty fancy.";
 	name = "NT-S.O. Helmet"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "dd" = (
 /obj/item/tile/steel,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "de" = (
 /obj/decal/floatingtiles{
 	dir = 1;
 	icon_state = "floattiles4"
 	},
-/turf/space,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"dz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"QJ" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 4
+	},
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"Vc" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 8
+	},
+/turf/simulated/floor/airless/engine,
 /area/noGenerate)
 
 (1,1,1) = {"
@@ -1326,9 +1273,9 @@ aa
 aa
 ap
 aa
-ap
-ap
-ap
+as
+as
+as
 aa
 aa
 aa
@@ -1354,13 +1301,13 @@ aa
 aa
 aa
 ap
+as
+as
+as
+as
 ap
-ap
-ap
-ap
-ap
-aa
-aa
+as
+as
 aa
 aa
 aa
@@ -1382,14 +1329,14 @@ aa
 aa
 aa
 ap
+as
+as
+as
+as
 ap
 ap
 ap
-ap
-ap
-ap
-ap
-ag
+cv
 ap
 aa
 aa
@@ -1409,16 +1356,16 @@ aa
 aa
 aa
 aa
-ap
-ap
+as
+as
 aS
 aC
 bs
 aB
 aC
 cr
-ap
-ap
+as
+as
 ap
 aa
 aa
@@ -1439,8 +1386,8 @@ aa
 aa
 aa
 aa
-ap
-aT
+as
+cv
 aB
 bt
 bM
@@ -1501,13 +1448,13 @@ ap
 aB
 bh
 bv
-bO
 cg
+Vc
 cg
 cH
-ap
-ap
-ap
+as
+as
+as
 as
 aa
 aa
@@ -1534,10 +1481,10 @@ bP
 cg
 cg
 cI
-ap
-ap
-ap
-ap
+as
+as
+as
+as
 aa
 aa
 aa
@@ -1565,8 +1512,8 @@ cg
 cI
 aw
 aq
-ap
-ap
+as
+as
 aa
 aa
 aa
@@ -1589,12 +1536,12 @@ aB
 bk
 by
 bR
-cg
+QJ
 ct
 cJ
 cT
 cU
-ap
+as
 ap
 ap
 aa
@@ -1701,7 +1648,7 @@ ab
 ap
 as
 aq
-aV
+aU
 aB
 bC
 aB
@@ -1770,7 +1717,7 @@ aB
 ap
 ap
 ap
-ab
+aa
 aa
 aa
 aa
@@ -1799,7 +1746,7 @@ aB
 ap
 ap
 ap
-ab
+aa
 aa
 aa
 aa
@@ -1827,8 +1774,8 @@ cL
 aB
 ap
 ap
-ab
-ab
+aa
+aa
 aa
 aa
 aa
@@ -1857,7 +1804,7 @@ cW
 ap
 ap
 as
-ab
+aa
 ap
 aa
 aa
@@ -1911,7 +1858,7 @@ ca
 cl
 cB
 cO
-cY
+cX
 ap
 ap
 as
@@ -1931,7 +1878,7 @@ ae
 ae
 aq
 as
-aE
+dz
 aN
 bb
 bq
@@ -1940,7 +1887,7 @@ cb
 cm
 cC
 cP
-cZ
+cW
 dc
 ap
 ap
@@ -1969,7 +1916,7 @@ cc
 bq
 cD
 cQ
-da
+aC
 aF
 ap
 ap
@@ -2109,8 +2056,8 @@ ap
 aB
 aB
 aB
-bK
-cf
+cW
+cW
 aB
 ap
 ap
@@ -2121,7 +2068,7 @@ ap
 ab
 ab
 ab
-ab
+aa
 "}
 (30,1,1) = {"
 ab
@@ -2150,7 +2097,7 @@ ap
 ab
 ab
 ab
-ab
+aa
 "}
 (31,1,1) = {"
 ab
@@ -2236,7 +2183,7 @@ ab
 ab
 ab
 aa
-ab
+aa
 aa
 "}
 (34,1,1) = {"

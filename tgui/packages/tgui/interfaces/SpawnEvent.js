@@ -18,6 +18,7 @@ export const SpawnEvent = (props, context) => {
     loc_type,
     incompatible_antag,
     equip_antag,
+    ask_permission,
   } = data;
   return (
     <Window
@@ -43,19 +44,30 @@ export const SpawnEvent = (props, context) => {
                 {(spawn_type === "mob_type") ? thing_name : "Mob type"}
               </Button>
               <Button
-                selected={thing_name && (spawn_type === "job_type")}
-                onClick={() => act("select_job_type")}
-                tooltip={(spawn_type === "job_type") && thing_name ? thing_to_spawn : ""}
+                selected={thing_name && (spawn_type === "job")}
+                onClick={() => act("select_job")}
+                tooltip={(spawn_type === "job") && thing_name ? thing_to_spawn : ""}
               >
-                {(spawn_type === "job_type") ? thing_name : "Job type"}
+                {(spawn_type === "job") ? thing_name : "Job"}
               </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Accept delay">
-              <NumberInput
-                value={ghost_confirmation_delay / 10}
-                minValue={0}
-                maxValue={120}
-                onDrag={(e, spawn_delay) => act('set_spawn_delay', { spawn_delay: (spawn_delay * 10) })} />
+              {!!ask_permission && (
+                <NumberInput
+                  value={ghost_confirmation_delay / 10}
+                  minValue={0}
+                  maxValue={120}
+                  onDrag={(e, spawn_delay) => act('set_spawn_delay', { spawn_delay: (spawn_delay * 10) })}
+                  disabled={!ask_permission}
+                />
+              )}
+              <Button.Checkbox
+                checked={ask_permission}
+                onClick={() => act('set_ask_permission', { ask_permission: !ask_permission })}
+                tooltip="Do we ask permission or just spawn them directly?"
+              >
+                Ask permission.
+              </Button.Checkbox>
             </LabeledList.Item>
             <LabeledList.Item label="Amount to spawn">
               <NumberInput

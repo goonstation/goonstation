@@ -1,12 +1,13 @@
 /datum/antagonist/arcfiend
 	id = ROLE_ARCFIEND
 	display_name = "arcfiend"
+	antagonist_icon = "arcfiend"
 
 	/// The ability holder of this arcfiend, containing their respective abilities. We also use this for tracking power, at the moment.
 	var/datum/abilityHolder/arcfiend/ability_holder
 
 	is_compatible_with(datum/mind/mind)
-		return ishuman(mind.current) || ismobcritter(mind.current)
+		return isliving(mind.current)
 
 	give_equipment()
 		var/datum/abilityHolder/arcfiend/A = src.owner.current.get_ability_holder(/datum/abilityHolder/arcfiend)

@@ -57,7 +57,7 @@
 			src.death()
 		return
 
-	say(var/message) //Handle Virtual Spectres
+	say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 		if(!isghost)
 			return ..()
 
@@ -115,7 +115,7 @@
 	targeted = 0
 	target_anything = 0
 	interrupt_action_bars = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 
 	//castcheck()
 		//if (!holder)

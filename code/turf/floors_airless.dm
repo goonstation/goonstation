@@ -30,6 +30,59 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
+
+	attackby(obj/item/C, mob/user, params)
+		if(istype(C, /obj/item/rods))
+			var/actionbar_duration = 2 SECONDS
+			if (ishuman(user)) // Engineers can bypass the actionbar and instantly put down catwalks.
+				if (user.traitHolder.hasTrait("training_engineer"))
+					src.MakeCatwalk(C)
+					return
+
+				else if(user.traitHolder.hasTrait("carpenter"))
+					actionbar_duration /= 2
+
+			user.show_text("You start putting the rods on the frame...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, PROC_REF(MakeCatwalk), list(C), C.icon, C.icon_state, null, null)
+			return
+
+		if(issnippingtool(C))
+			user.show_text("You cut away the support beams.")
+			var/obj/item/rods/steel/rod = new
+			rod.set_loc(src)
+			src.ReplaceWithSpace()
+			return
+
+		. = ..()
+/turf/simulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
+
 /turf/unsimulated/floor/airless/plating/catwalk
 	name = "catwalk support"
 	icon_state = "catwalk"
@@ -430,6 +483,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/simulated/floor/airless/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -437,11 +492,7 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"), copy = FALSE)
+	default_material = "pharosium"
 
 /turf/simulated/floor/airless/circuit/green
 	icon_state = "circuit-green"
@@ -481,16 +532,14 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/carpet)
+	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cotton")
 	mat_changename = 0
-
-	New()
-		plate_mat = getMaterial("cotton")
-		. = ..()
+	default_material = "cotton"
 
 	break_tile()
 		..()
@@ -685,15 +734,13 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/airless/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"), copy = FALSE)
+	default_material = "wood"
 
 /turf/simulated/floor/airless/wood/two
 	icon_state = "wooden"
@@ -846,17 +893,15 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/airless/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"), copy = FALSE)
+	default_material = "synthrubber"
 
 /turf/simulated/floor/airless/grass/leafy
 	icon_state = "grass_leafy"

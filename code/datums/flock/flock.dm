@@ -61,7 +61,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/New()
 	..()
 	src.center_marker = new(locate(0,0,1))
-	src.center_marker.anchored = TRUE
+	src.center_marker.anchored = ANCHORED
 	src.center_marker.mouse_opacity = 0
 	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
 	src.center_marker.icon_state = "structure-relay"
@@ -849,6 +849,8 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer3 = /obj/flock_structure/compute,
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
+	/obj/submachine/chem_extractor = /obj/flock_structure/compute,
+	/obj/submachine/seed_manipulator = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
 	/obj/machinery/vending = /obj/flock_structure/fabricator,
 	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,

@@ -164,6 +164,26 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate
 	containername = "Glass Sheets Crate - 50 pack"
 
+/datum/supply_packs/wood10
+	name = "10 Wooden Sheets"
+	desc = "x10 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 10
+	cost = 500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 10 pack"
+
+/datum/supply_packs/wood50
+	name = "50 Wooden Sheets"
+	desc = "x50 Wooden Sheets"
+	category = "Basic Materials"
+	contains = list(/obj/item/sheet/wood)
+	amount = 50
+	cost = 2500
+	containertype = /obj/storage/crate/wooden
+	containername = "Wooden Sheets Crate - 50 pack"
+
 /datum/supply_packs/dryfoods
 	name = "Catering: Dry Goods Crate"
 	desc = "x25 Assorted Cooking Ingredients"
@@ -246,7 +266,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Engineering Crate"
 	desc = "x2 Mechanical Toolbox, x2 Welding Mask, x2 Insulated Coat"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/mechanical = 2,
+	contains = list(/obj/item/storage/toolbox/mechanical/orange_tools = 2,
 					/obj/item/clothing/head/helmet/welding = 2,
 					/obj/item/clothing/suit/wintercoat/engineering = 2)
 	cost = 1000
@@ -257,8 +277,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Electrical Maintenance Crate"
 	desc = "x2 Electrical Toolbox, x2 Multi-Tool, x2 Insulated Gloves"
 	category = "Engineering Department"
-	contains = list(/obj/item/storage/toolbox/electrical = 2,
-					/obj/item/device/multitool = 2,
+	contains = list(/obj/item/storage/toolbox/electrical/orange_tools = 2,
+					/obj/item/device/multitool/orange = 2,
 					/obj/item/clothing/gloves/yellow = 2)
 	cost = 2500
 	containertype = /obj/storage/crate
@@ -918,7 +938,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/body_bag = 10,
 					/obj/item/reagent_containers/glass/bottle/formaldehyde,
 					/obj/item/reagent_containers/syringe,
-					/obj/item/storage/bible)
+					/obj/item/bible)
 	cost = 10000
 	containertype = /obj/storage/closet/coffin
 	containername = "Morgue Supplies"
@@ -1195,6 +1215,27 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 5000
 	containertype = /obj/storage/crate/wooden
 	containername = "Kendo Crate"
+
+/datum/supply_packs/obon
+	name = "Obon Festival Crate"
+	desc = {"Contains traditional Space Japanese robes and fireworks for the observance of Obon; a syncretic summer festival fusing indigenous Japanese spiritual beliefs
+			with the Buddhist tradition of reverence for the dead."}
+	contains = list(/obj/item/clothing/under/gimmick/yukata/plain/gray,
+					/obj/item/clothing/under/gimmick/yukata/plain/black,
+					/obj/item/clothing/under/gimmick/yukata/plain/cream,
+					/obj/item/clothing/under/gimmick/yukata/plain/navy,
+					/obj/item/clothing/under/gimmick/yukata/plain/teal,
+					/obj/item/clothing/under/gimmick/yukata/floral/blue,
+					/obj/item/clothing/under/gimmick/yukata/floral/orange,
+					/obj/item/clothing/under/gimmick/yukata/floral/yellow,
+					/obj/item/clothing/under/gimmick/yukata/floral/red,
+					/obj/item/clothing/under/gimmick/yukata/floral/black,
+					/obj/item/clothing/shoes/sandal = 10,
+					/obj/fireworksbox = 2,
+					/obj/item/firework = 5)
+	cost = 3000
+	containertype = /obj/storage/crate/wooden
+	containername = "Obon Festival Crate"
 
 /datum/supply_packs/sponge
 	name = "Sponge Capsule Crate"

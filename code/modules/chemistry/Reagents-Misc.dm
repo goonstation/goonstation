@@ -238,7 +238,7 @@ datum
 				if (prob(90))
 					M.take_toxin_damage(1 * mult)
 				if (probmult(5)) M.emote(pick("twitch", "shake", "tremble","quiver", "twitch_v"))
-				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "food_energized", "invigorated", "full of energy")]!</span>")
+				if (probmult(8)) boutput(M, "<span class='notice'>You feel [pick("really buff", "on top of the world","like you're made of steel", "energized", "invigorated", "full of energy")]!</span>")
 				if (prob(5))
 					boutput(M, "<span class='alert'>You cannot breathe!</span>")
 					M.setStatusMin("stunned", 2 SECONDS * mult)
@@ -508,7 +508,7 @@ datum
 			on_add()
 				..()
 				if(ismob(src.holder?.my_atom))
-					RegisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB, .proc/revive)
+					RegisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB, PROC_REF(revive))
 
 			on_remove()
 				..()
@@ -552,10 +552,12 @@ datum
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
+								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
 								H.gib()
 							return
 					else // else just get whoever's the mind
 						G = find_ghost_by_key(M.mind?.key)
+					logTheThing(LOG_COMBAT, M, "is resuscitated with strange reagent at [log_loc(M)].")
 					if (G)
 						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
 							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
@@ -816,10 +818,15 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
+					var/obj/grille/catwalk/catwalk = null
+					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
+						catwalk = locate() in T
+						catwalk.UpdateOverlays(wet, "wet_overlay")
 					SPAWN(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
+							catwalk?.UpdateOverlays(null, "wet_overlay")
 				return
 
 		superlube
@@ -1587,8 +1594,8 @@ datum
 					random_brute_damage(M, 1 * mult)
 				else if (our_amt < 10)
 					if (probmult(8))
-						M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+						M.vomit(0, null, vomit_message)
 					M.take_toxin_damage(2 * mult)
 					random_brute_damage(M, 2 * mult)
 
@@ -1715,8 +1722,8 @@ datum
 					boutput(M, "<span class='alert'>Aaaagh! It tastes fucking horrendous!</span>")
 					SPAWN(1 SECOND)
 						if(!isdead(M) && volume >= 1)
-							M.visible_message("<span class='alert'>[M] pukes violently!</span>")
-							M.vomit()
+							var/vomit_message = "<span class='alert'>[M] pukes violently!</span>"
+							M.vomit(0, null, vomit_message)
 				else
 					boutput(M, "<span class='alert'>Oh god! It smells horrific! What the fuck IS this?!</span>")
 					if (prob(50))
@@ -1832,7 +1839,7 @@ datum
 					M.setStatusMin("weakened", 2 SECONDS * mult)
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\
 					"<span class='alert'><b>OH [pick("SHIT", "FUCK", "GOD")] GET THEM OUT![pick("", "!", "!!", "!!!", "!!!!")]</span>")
-				else if (prob(10))
+				else if (prob(10) && !M.reagents?.has_reagent("promethazine"))
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						M.vomit(0, /obj/decal/cleanable/vomit/spiders)
 						random_brute_damage(M, rand(4))
@@ -1881,7 +1888,7 @@ datum
 				boutput(M, "<span class='notice'>You feel loved!</span>")
 
 			initial_metabolize(mob/M)
-				RegisterSignal(M, COMSIG_MOB_SET_A_INTENT, .proc/no_harm)
+				RegisterSignal(M, COMSIG_MOB_SET_A_INTENT, PROC_REF(no_harm))
 
 			on_mob_life_complete(mob/M)
 				UnregisterSignal(M, COMSIG_MOB_SET_A_INTENT)
@@ -2905,8 +2912,8 @@ datum
 			on_add()
 				..()
 				if(ismob(src.holder?.my_atom))
-					RegisterSignal(holder.my_atom, COMSIG_ATTACKBY, .proc/zap_dude)
-					RegisterSignal(holder.my_atom, COMSIG_ATTACKHAND, .proc/zap_dude_punching)
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKBY, PROC_REF(zap_dude))
+					RegisterSignal(holder.my_atom, COMSIG_ATTACKHAND, PROC_REF(zap_dude_punching))
 
 			on_remove()
 				..()
@@ -3063,7 +3070,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				M.take_toxin_damage(2 * mult)
-				flush(M, 2 * mult, flushed_reagents)
+				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
 
@@ -4198,7 +4205,7 @@ datum
 			fluid_b = 188
 
 			on_add()
-				src.RegisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED, .proc/analyzed)
+				src.RegisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED, PROC_REF(analyzed))
 
 			on_remove()
 				src.UnregisterSignal(src.holder, COMSIG_REAGENTS_ANALYZED)
@@ -4214,7 +4221,7 @@ datum
 	icon_state = "badman"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/deathtarget = null
 	var/deathspeed = 3
 

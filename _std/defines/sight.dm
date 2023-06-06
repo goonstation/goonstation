@@ -12,3 +12,7 @@
 #define CLIENT_IMAGE_GROUP_ILLUSSION "illusion_icons"
 #define CLIENT_IMAGE_GROUP_CURSES "curses_icons"
 #define CLIENT_IMAGE_GROUP_GHOSTDRONE "ghostdrone_static_icons"
+#define CLIENT_IMAGE_GROUP_MOB_OVERLAY "mob_overlay"
+#define CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS "all_antagonist_icons"
+#define CLIENT_IMAGE_GROUP_HEADS_OF_STAFF "heads_of_staff"
+#define CLIENT_IMAGE_GROUP_POD_WARS "pod_wars_team_icons"

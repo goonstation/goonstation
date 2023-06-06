@@ -1,7 +1,9 @@
-/datum/antagonist/intangible/blob
+/datum/antagonist/mob/intangible/blob
 	id = ROLE_BLOB
 	display_name = "blob"
-	intangible_mob_path = /mob/living/intangible/blob_overmind
+	antagonist_icon = "blob"
+	mob_path = /mob/living/intangible/blob_overmind
+	uses_pref_name = FALSE
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()
@@ -36,8 +38,8 @@
 
 	announce()
 		. = ..()
-		boutput(owner.current, "<span class='alert'><b>Your hivemind will cease to exist if your body is entirely destroyed.</b></span>")
-		boutput(owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
+		boutput(src.owner.current, "<span class='alert'><b>Your hivemind will cease to exist if your body is entirely destroyed.</b></span>")
+		boutput(src.owner.current, "<span class='alert'><b>Use the question mark button in the lower right corner to get help on your abilities.</b></span>")
 
 	handle_round_end(log_data)
 		var/list/dat = ..()

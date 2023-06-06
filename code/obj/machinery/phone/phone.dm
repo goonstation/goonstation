@@ -6,7 +6,7 @@ TYPEINFO(/obj/machinery/phone)
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "phone"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = 0
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	_health = 25
@@ -136,10 +136,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
-			if (src.emagged)
-				src.explode()
-			else
-				src.gib(src.loc)
+			src.gib(src.loc)
 			qdel(src)
 
 	// Attempt to pick up the handset
@@ -396,7 +393,7 @@ TYPEINFO(/obj/machinery/phone/wall)
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "A landline phone. In space. Where there is no land. Hmm."
 	icon_state = "wallphone"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = 0
 	_health = 50
 	phone_icon = "wallphone"

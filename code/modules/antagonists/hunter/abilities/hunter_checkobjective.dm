@@ -10,7 +10,7 @@
 	when_stunned = 3
 	not_when_handcuffed = 0
 	hunter_only = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 
 	cast(mob/target)

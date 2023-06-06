@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/datum/bioEffect)
 	var/add_delay = 0
 	var/wildcard = 0
 	var/power = 1
+	var/safety = 0
 	var/degrade_to = null // what this mutation turns into if stability is too low
 	///if this mutation should degrade after timing out
 	var/degrade_after = FALSE
@@ -298,6 +299,9 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (!linked_power)
 			return FALSE
 		if (can_act_check && !can_act(owner, needs_hands))
+			return FALSE
+		if (targeted && GET_DIST(src.holder?.owner, target) > src.max_range)
+			boutput(src.holder?.owner, "<span class='alert'>[target] is too far away.</span>")
 			return FALSE
 		return ..()
 

@@ -110,6 +110,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/security,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor4"
@@ -162,6 +163,7 @@
 	hardened = 1
 	},
 /obj/access_spawn/medical,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor3"
@@ -243,7 +245,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -473,6 +475,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	hardened = 1
 	},
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -729,7 +732,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -846,6 +849,7 @@
 	opacity = 0
 	},
 /obj/access_spawn/heads,
+/obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"

@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/wasp
+	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			gen.set_active(1)
 			gen.state = 3
 			gen.power = 250
-			gen.anchored = 1
+			gen.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
@@ -417,7 +417,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -479,7 +479,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			explosion_new(src, T, 5.0, 2)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -532,6 +532,36 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		qdel(src)
 		return
 
+/obj/item/old_grenade/foam_dart
+	name = "foam dart grenade"
+	desc = "You can make great fights with these and foam dart guns."
+	icon_state = "foam-dart"
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
+	item_state = "fragnade"
+	sound_armed = 'sound/weapons/pindrop.ogg'
+	icon_state_armed = "foam-dart1"
+	var/custom_projectile_type = /datum/projectile/bullet/foamdart/biodegradable
+	var/pellets_to_fire = 18
+
+	detonate()
+		var/turf/T = ..()
+		if (!T)
+			qdel(src)
+			return
+		var/datum/projectile/special/spreader/uniform_burst/circle/burst_circle = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+		if(src.custom_projectile_type)
+			burst_circle.spread_projectile_type = src.custom_projectile_type
+			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
+		burst_circle.pellets_to_fire = src.pellets_to_fire
+		var/targetx = src.y - rand(-5,5)
+		var/targety = src.y - rand(-5,5)
+		var/turf/newtarget = locate(targetx, targety, src.z)
+		shoot_projectile_ST(src, burst_circle, newtarget)
+		SPAWN(0.5 SECONDS)
+			qdel(src)
+
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
@@ -557,7 +587,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
@@ -714,7 +744,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
-		if (istype(target, /obj/item/storage)) return ..()
+		if (target.storage)
+			return ..()
 		if (!src.armed && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -957,7 +988,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/butt/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -966,7 +997,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/owlgib/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -975,7 +1006,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 /obj/item/gimmickbomb/owlclothes/prearmed
 	armed = TRUE
-	anchored = 1
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -994,7 +1025,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	force = 1
 	throwforce = 1
 	throw_speed = 1
@@ -1189,7 +1220,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.armed)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+				if (!src.check_placeable_target(target))
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
@@ -1206,7 +1237,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.armed = TRUE
 
 					// Yes, please (Convair880).
@@ -1273,6 +1304,13 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		qdel(src)
 		return
 
+	proc/check_placeable_target(atom/A)
+		if (!istype(A, /obj/item))
+			return TRUE
+		if (A.storage) // no blowing yourself up if you have full storage
+			return FALSE
+		return A.density
+
 /obj/item/breaching_charge/NT
 	name = "NanoTrasen Experimental EDF-7 Breaching Charge"
 	expl_devas = 0
@@ -1312,7 +1350,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.armed = TRUE
 
 					// Yes, please (Convair880).
@@ -1351,7 +1389,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				O.name = "Thermite"
 				O.desc = "A searing wall of flames."
 				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = 1
+				O.anchored = ANCHORED
 				O.layer = TURF_EFFECTS_LAYER
 				O.color = "#ff9a3a"
 				var/datum/light/point/light = new
@@ -1447,6 +1485,19 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	 							"/obj/item/item_box/medical_patches", "/obj/item/item_box/gold_star", "/obj/item/item_box/assorted/stickers", "/obj/item/material_piece/cloth",\
 	 							"/obj/item/raw_material/shard", "/obj/item/raw_material/telecrystal", "/obj/item/instrument", "/obj/item/reagent_containers/food/snacks/ingredient/butter",\
 	 							"/obj/item/rcd_ammo")
+
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if (1) // Default state
+				return "You can use a <b>welding tool</b> to hollow out the frame."
+			if (2) // Hollowed out
+				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
+			if (3) // Hollowed out with chem inside
+				return "You can add a cable coil to continue making a pipebomb."
+			if (4) // Hollowed out with chem and wiring
+				return "You can add an igniter assembly and secure it with a <b>screwdriver</b> to finish making the pipebomb."
+			if (5) // Hollowed out Pipeshot
+				return "You can add fuel and glass shards or scrap to make pipeshot."
 
 	attack_self(mob/user as mob)
 		if (state == 3)

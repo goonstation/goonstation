@@ -3,28 +3,41 @@ obj/structure
 
 	girder
 		icon_state = "girder"
-		anchored = 1
+		anchored = ANCHORED
 		density = 1
 		material_amt = 0.2
 		var/state = 0
-		desc = "A metal support for an incomplete wall. Metal could be added to finish the wall, reinforced metal could make the girders stronger, or it could be pried to displace it."
+		desc = "A metal support for an incomplete wall."
+		HELP_MESSAGE_OVERRIDE({"
+			You can use a <b>crowbar</b> to displace it,
+			add metal to finish the wall,
+			or add reinforced metal to make the girder stronger.
+		"})
 
 		displaced
 			name = "displaced girder"
 			icon_state = "displaced"
-			anchored = 0
-			desc = "An unsecured support for an incomplete wall. A screwdriver would seperate the metal into sheets, or adding metal or reinforced metal could turn it into fake wall that could opened by hand."
+			anchored = UNANCHORED
+			desc = "An unsecured support for an incomplete wall."
+			HELP_MESSAGE_OVERRIDE({"
+				You can use a <b>screwdriver</b> to seperate the metal into sheets,
+				or add metal or reinforced metal to turn it into fake wall that can opened by hand.
+			"})
 
 		reinforced
 			name = "reinforced girder"
 			icon_state = "reinforced"
 			state = 2
-			desc = "A reinforced metal support for an incomplete wall. Reinforced metal could turn it into a reinforced wall, or it could be disassembled with various tools."
+			desc = "A reinforced metal support for an incomplete wall."
+			get_help_message(dist, mob/user)
+				if (src.state == 2)
+					. = {"You can use a <b>screwdriver</b> to unscrew the support struts,"}
+				else if (src.state == 1)
+					. = {"You can use a pair of <b>wirecutters</b> to cut the support struts,"}
+				. += "\nor add reinforced metal to finish the reinforced wall."
 
 	blob_act(var/power)
-		if (power < 30)
-			return
-		if (prob(power - 29))
+		if (prob(power))
 			qdel(src)
 
 	meteorhit(obj/O as obj)
@@ -135,10 +148,15 @@ obj/structure/ex_act(severity)
 			interaction = interact
 		if (duration_i)
 			duration = duration_i
-		if (ishuman(owner))
+		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
+
+			if (H.traitHolder.hasTrait("training_engineer"))
+				duration = duration / 2
+
+			else if (H.traitHolder.hasTrait("carpenter")) // It's so one nullifies the other. Carpenter and engineer training shouldn't stack up.
+				duration = duration / 1.5
+
 		var/mob/living/critter/robotic/bot/engibot/E = user
 		if(istype(E))
 			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
@@ -317,15 +335,16 @@ obj/structure/ex_act(severity)
 	else
 		return ..()
 
+TYPEINFO(/obj/structure/woodwall)
+	mat_appearances_to_ignore = list("wood")
 /obj/structure/woodwall
 	name = "barricade"
 	desc = "This was thrown up in a hurry."
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "woodwall"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
-	mat_appearances_to_ignore = list("wood")
 	var/health = 30
 	var/health_max = 30
 	var/builtby = null
