@@ -470,6 +470,18 @@ ABSTRACT_TYPE(/datum/supply_packs)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
 
+/datum/supply_packs/fishing
+	name = "Angling Starter Kit"
+	desc = "A full complement of fishing tools for the amateur angler."
+	category = "Civilian Department"
+	contains = list(/obj/item/fishing_rod/basic,
+					/obj/submachine/fishing_upload_terminal/portable,
+					/obj/submachine/weapon_vendor/fishing/portable,
+					/obj/fishing_pool/portable)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Angling Starter Kit"
+
 /datum/supply_packs/chemical
 	name = "Chemistry Resupply Crate"
 	desc = "x6 Reagent Bottles, x1 Beaker Box, x1 Mechanical Dropper, x1 Spectroscopic Goggles, x1 Reagent Scanner"
@@ -1600,6 +1612,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 20000
 	containertype = /obj/storage/crate
 	containername = "Power Kit"
+
+/datum/supply_packs/complex/basic_power_kit
+	name = "Emergency Power Equipment"
+	desc = "Frames: 2x Circular Power Treadmills"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/power/power_wheel/hamster = 2)
+	cost = 15000
+	containertype = /obj/storage/crate
+	containername = "Crew Power Generation Kit"
 
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"

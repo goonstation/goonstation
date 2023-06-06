@@ -1900,6 +1900,10 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	icon_state = "carafe-eng"
 	item_state = "carafe-eng"
 
+/obj/item/reagent_containers/food/drinks/carafe/command
+	icon_state = "carafe-com"
+	item_state = "carafe-com"
+
 /obj/item/reagent_containers/food/drinks/coconut
 	name = "Coconut"
 	desc = "Must be migrational."

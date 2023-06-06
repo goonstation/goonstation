@@ -17034,7 +17034,7 @@
 /turf/space/fluid,
 /area/space)
 "aTu" = (
-/obj/critter/shark,
+/mob/living/critter/aquatic/shark,
 /obj/decal/woodclutter,
 /turf/space/fluid,
 /area/space)
@@ -25462,7 +25462,11 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/storage/crate/radio,
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -25704,13 +25708,15 @@
 /area/station/bridge)
 "bvK" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/gloves/yellow/unsulated,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -42025,10 +42031,13 @@
 /area/station/science/lobby)
 "gxB" = (
 /obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow/unsulated,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -42385,6 +42394,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"hVo" = (
+/obj/storage/crate/radio,
+/turf/simulated/floor/carpet{
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -94678,7 +94693,7 @@ bvE
 bvI
 bvI
 bvI
-bzE
+hVo
 btK
 bCr
 bDG

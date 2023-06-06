@@ -629,3 +629,11 @@ TYPEINFO(/obj/storage/closet/coffin)
 	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
 	spawn_contents = list(/obj/item/clothing/shoes/brown,
 	/obj/item/paper/iou)
+
+/obj/storage/closet/mauxite
+	desc = "This thing looks pretty robust!"
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "closed$$mauxite"
+	default_material = "mauxite"
+	uses_material_appearance = TRUE
+	mat_changename = TRUE

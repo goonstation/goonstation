@@ -314,6 +314,8 @@
 	tag = ""
 	},
 /obj/machinery/light/emergency,
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer,
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "abG" = (
@@ -20801,7 +20803,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/machinery/light_switch/east{
 	dir = 4;
@@ -29278,7 +29280,11 @@
 	},
 /area/station/solar/east)
 "iWe" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/auto,
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_x = -26
+	},
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "iWm" = (
@@ -68528,6 +68534,7 @@
 	pixel_x = -1;
 	pixel_y = 26
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue6"

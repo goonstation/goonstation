@@ -263,7 +263,6 @@ var/list/admin_verbs = list(
 		/client/proc/count_all_of,
 		/client/proc/admin_set_ai_vox,
 		/client/proc/cmd_makeshittyweapon,
-		/client/proc/rspawn_panel,
 		/client/proc/cmd_admin_manageabils,
 		/client/proc/create_all_wizard_rings,
 		/client/proc/toggle_vpn_blacklist,
@@ -292,6 +291,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_cluwnegib,
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
+		/client/proc/cmd_admin_smitegib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -738,13 +738,6 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
-
-/client/proc/rspawn_panel()
-	set name = "Respawn Panel"
-	SET_ADMIN_CAT(ADMIN_CAT_FUN)
-	if (src.holder)
-		src.holder.s_respawn()
-	return
 
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"

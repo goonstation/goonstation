@@ -226,6 +226,8 @@
 		light_color = list(0, 179, 255, 255)
 
 		attack_hand(mob/user)
+			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
+				return
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -233,6 +235,8 @@
 			return mouse_drop(user)
 
 		attack_self(mob/user as mob)
+			if (istype(user,/mob/living/object) && user == src.loc)
+				return
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return
