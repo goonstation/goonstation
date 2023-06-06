@@ -335,7 +335,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -966,7 +966,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

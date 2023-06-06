@@ -398,7 +398,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 1
 
 		//Cats meow sometimes
-		if (src.ai?.enabled && prob(5))
+		if (src.is_npc && prob(5))
 			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
@@ -652,14 +652,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	New(loc)
 		. = ..()
 		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
-
-	OnMove()
-		if(client?.player?.shamecubed)
-			loc = client.player.shamecubed
-			return
-
-		makeWaddle(src)
-		.=..()
+		AddComponent(/datum/component/waddling)
 
 	setup_hands()
 		..()
@@ -2886,6 +2879,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	death(gibbed)
+		. = ..()
+		animate(src) // stop bumble / bounce
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -3872,7 +3869,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
-	add_abilities = list(/datum/targetable/critter/crabmaul)
+	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
 
 	faction = FACTION_AQUATIC
 

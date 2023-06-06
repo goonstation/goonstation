@@ -63,6 +63,10 @@
 	src.sneaky = sneaky
 	src.opens_if_worn = opens_if_worn
 
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
+
 	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, PROC_REF(storage_item_on_drop))
 
 	if (length(spawn_contents))
@@ -77,6 +81,10 @@
 
 	qdel(src.hud)
 	src.hud = null
+
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
 
 	src.linked_item = null
 	src.stored_items = null
@@ -416,6 +424,10 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+
+/// if user sees the storage hud
+/datum/storage/proc/hud_shown(mob/user)
+	return user in src.hud.mobs
 
 /// emping storage emps everything inside
 /datum/storage/proc/storage_emp_act()

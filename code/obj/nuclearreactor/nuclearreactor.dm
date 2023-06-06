@@ -363,9 +363,9 @@
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
-		var/sound/alarm = sound('sound/misc/airraid_loop.ogg')
+		var/sound/alarm = sound('sound/machines/meltdown_siren.ogg')
 		alarm.repeat = TRUE
-		alarm.volume = 50
+		alarm.volume = 40
 		alarm.channel = 5
 		world << alarm //ew
 		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")

@@ -268,8 +268,7 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new
-	src.vis_contents += src.chat_text
+	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -794,8 +793,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	var/atom/oldloc = src.loc
-
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -813,17 +810,6 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
-
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -2838,6 +2824,8 @@
 		return
 
 	if (waddle_walking)
+		if(isdead(src) || is_incapacitated(src) || src.lying)
+			return
 		makeWaddle(src)
 
 	last_move_dir = move_dir
@@ -2880,10 +2868,12 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-// no text description though, because it's all different everywhere
-/mob/proc/vomit(var/nutrition=0, var/specialType=null)
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
+	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
+		return
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	src.visible_message(flavorMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
