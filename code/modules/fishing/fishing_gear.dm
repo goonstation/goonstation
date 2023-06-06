@@ -261,7 +261,7 @@ TYPEINFO(/obj/item/fish_portal)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
-			src.visible_message("The [src] ejects synthetical fish it was unable to do any research on!")
+			src.visible_message("<span class='alert'>\The [src] ejects synthetical fish it was unable to do any research on!</span>")
 
 		// Wind down
 		for(var/obj/item/S in src.contents)
