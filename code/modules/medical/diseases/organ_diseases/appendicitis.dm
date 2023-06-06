@@ -46,9 +46,9 @@
 				H.ailments -= src
 				return
 			if (probmult(10))
-				H.vomit()
-				H.visible_message("<span class='alert'>[H] suddenly and violently vomits!</span>")
-			else if (probmult(2))
+				var/vomit_message = "<span class='alert'>[H] suddenly and violently vomits!</span>"
+				H.vomit(0, null, vomit_message)
+			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
 				H.visible_message("<span class='alert'>[H] vomits blood!</span>")
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))

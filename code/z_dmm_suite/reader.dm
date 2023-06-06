@@ -36,7 +36,7 @@ dmm_suite
 		var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
 		var startData = findtext(dmm_text, "\"")
 		var linesText = copytext(dmm_text, startData + 1, startGridPos)
-		var /list/modelLines = splittext(linesText, regex(@{"\n\""}))
+		var /list/modelLines = splittext(linesText, regex("\n\""))
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
 			var endQuote = findtext(modelLine, quote, 2, 0)
 			if(endQuote <= 1)
@@ -205,7 +205,7 @@ dmm_suite
 				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
-				#ifdef RUNTIME_CHECKING
+				#ifdef CI_RUNTIME_CHECKING
 				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
 					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
 				#endif

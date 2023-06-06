@@ -140,15 +140,6 @@
 	temperature = 100
 	fullbright = 0
 
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")
-
 
 /turf/unsimulated/floor/arctic/snow/autocliff
 	New()

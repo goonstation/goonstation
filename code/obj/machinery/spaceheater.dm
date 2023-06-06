@@ -2,7 +2,7 @@ TYPEINFO(/obj/machinery/space_heater)
 	mats = 8
 
 /obj/machinery/space_heater
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "sheater0"
@@ -262,7 +262,7 @@ TYPEINFO(/obj/machinery/sauna_stove)
 	mats = 8
 
 /obj/machinery/sauna_stove
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	icon = 'icons/obj/atmospherics/atmos.dmi'
 	icon_state = "sauna0"

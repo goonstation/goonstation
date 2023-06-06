@@ -17,8 +17,8 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"cT" = (
-/obj/item/paper/book/torpedo,
+"bv" = (
+/obj/item/paper/book/from_file/the_trial,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "cZ" = (
@@ -47,9 +47,6 @@
 "gm" = (
 /obj/table/wood/auto/desk{
 	pixel_y = 2
-	},
-/obj/item/paper/book/deep_blue_sea{
-	pixel_y = 4
 	},
 /turf/simulated/floor/wood/two{
 	name = "wooden floor"
@@ -141,12 +138,10 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/item/paper/book/the_trial{
-	pixel_y = 3
-	},
 /obj/item/storage/secure/ssafe/loot{
 	pixel_y = 32
 	},
+/obj/item/paper/book/from_file/deep_blue_sea,
 /turf/simulated/floor/wood/two{
 	name = "wooden floor"
 	},
@@ -170,6 +165,10 @@
 	icon_state = "gib5"
 	},
 /turf/simulated/floor/damaged5,
+/area/prefab/torpedo_deposit)
+"pN" = (
+/obj/item/paper/book/from_file/torpedo,
+/turf/simulated/floor/plating/random,
 /area/prefab/torpedo_deposit)
 "pX" = (
 /obj/decal/cleanable/dirt,
@@ -695,7 +694,7 @@ RK
 bk
 aj
 il
-cT
+aj
 aj
 jj
 aj
@@ -717,7 +716,7 @@ RK
 (4,1,1) = {"
 aj
 Ao
-aj
+bv
 dj
 aj
 aj
@@ -857,7 +856,7 @@ RK
 cZ
 FJ
 qn
-jS
+pN
 yI
 jS
 Bx

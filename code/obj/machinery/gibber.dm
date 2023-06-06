@@ -7,7 +7,7 @@ TYPEINFO(/obj/machinery/gibber)
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/mob/occupant // Mob who has been put inside

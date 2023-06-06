@@ -109,6 +109,7 @@
 		network = "Zeta"
 		icon_state = "security_tv"
 		circuit_type = /obj/item/circuitboard/small_tv
+		density = 0
 
 		power_change()
 			return

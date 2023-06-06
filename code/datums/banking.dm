@@ -4,6 +4,9 @@
 // THE REASON I SAY THIS IS BECAUSE WE CAN ADD A DATACORE OR SOMETHING THAT CAN BE BLOWN UP
 // AND ALL THE MONEY WILL BE GONE
 
+#define STATE_LOGGEDOFF 1
+#define STATE_LOGGEDIN 2
+
 /datum/wage_system
 
 	// Stations budget
@@ -214,18 +217,14 @@
 	var/obj/item/card/id/scan = null
 
 	var/state = STATE_LOGGEDOFF
-	var/const
-		STATE_LOGGEDOFF = 1
-		STATE_LOGGEDIN = 2
 
 
 	var/pin = null
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if(istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			return
 		if(istype(I, /obj/item/spacecash/))
 			if (src.accessed_record)
@@ -492,6 +491,7 @@
 		if (src.temp)
 			dat += text("<TT>[src.temp]</TT><BR><BR><A href='?src=\ref[src];temp=1'>Clear Screen</A>")
 		else
+			var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			dat += {"
 				<style type="text/css">
 				.l { text-align: left; }
@@ -511,25 +511,31 @@
 				<br><a href='?src=\ref[src];[src.authenticated ? "logout=1'>Log Out" : "login=1'>Log In"]</a><hr>
 				"}
 
-			if (src.authenticated)
+			dat += {"
+				<table>
+					<thead>
+						<tr><th colspan="2">Budget Status</th></tr>
+					</thead>
+					<tbody>
+						<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
+						<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
+					</tbody>
+				</table>
+				"}
 
-				var/total_funds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
+			if (src.authenticated)
 				var/payroll = 0
 				for(var/datum/db_record/R as anything in data_core.bank.records)
 					payroll += R["wage"]
 				var/surplus = round(wagesystem.payroll_stipend - payroll)
 
 				dat += {"
-			<table>
-				<thead>
-					<tr><th colspan="2">Budget Status</th></tr>
-				</thead>
-				<tbody>
-					<tr><th>Payroll Budget</th><td class='r'>[num2text(round(wagesystem.station_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Shipping Budget</th><td class='r'>[num2text(round(wagesystem.shipping_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Research Budget</th><td class='r'>[num2text(round(wagesystem.research_budget),50)][CREDIT_SIGN]</td></tr>
-					<tr><th>Total Funds</th><th class='r'>[num2text(round(total_funds),50)][CREDIT_SIGN]</th></tr>
-					<tr><th colspan="2" class='second'>Payroll Details</th></tr>
+				<table>
+					<thead>
+					<tr><th colspan="2" class='second'>Payroll Details</th></tr></thead>
+					<tbody>
 					<tr><th>Payroll Stipend</th><td class='r'>[num2text(round(wagesystem.payroll_stipend),50)][CREDIT_SIGN]</td></tr>
 					<tr><th>Payroll Cost</th><td class='r'>[num2text(round(payroll),50)][CREDIT_SIGN]</td></tr>
 					[surplus >= 0 ? {"
@@ -744,7 +750,7 @@
 	icon_state = "atm"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_ABOVE
 	flags = TGUI_INTERACTIVE
 
@@ -764,21 +770,17 @@
 	var/sound_insert_cash = 'sound/machines/scan.ogg'
 
 	var/state = STATE_LOGGEDOFF
-	var/const
-		STATE_LOGGEDOFF = 1
-		STATE_LOGGEDIN = 2
 
 	attackby(var/obj/item/I, mob/user)
 		if (broken)
 			boutput(user, "<span class='alert'>With its money removed and circuitry destroyed, it's unlikely this ATM will be able to do anything of use.</span>")
 			return
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if(istype(id_card))
 			if (src.scan)
 				return
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
-			src.scan = I
+			src.scan = id_card
 			attack_hand(user)
 			return
 		if (istype(I, /obj/item/spacecash/))
@@ -1091,3 +1093,6 @@ proc/FindBankAccountByName(var/nametosearch)
 	RETURN_TYPE(/datum/db_record)
 	if (!nametosearch) return
 	return data_core.bank.find_record("name", nametosearch)
+
+#undef STATE_LOGGEDOFF
+#undef STATE_LOGGEDIN

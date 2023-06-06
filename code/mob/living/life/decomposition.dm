@@ -21,7 +21,8 @@
 					istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell) || \
 					istype(owner.loc, /obj/item/reagent_containers/food/snacks/shell) || \
 					owner.reagents?.has_reagent("formaldehyde") || \
-					owner.reagents?.has_reagent("miasmosa")
+					owner.reagents?.has_reagent("miasmosa") || \
+					istype(owner.loc, /obj/icecube)
 
 			if (istype(owner.loc, /obj/machinery/traymachine/morgue)) //Morgues require power now
 				var/obj/machinery/traymachine/morgue/stinkbox = owner.loc
@@ -62,7 +63,7 @@
 			// Devera-class interdictor: prohibit miasma formation
 			var/miasma_blocked = FALSE
 			for_by_tcl(IX, /obj/machinery/interdictor)
-				if (IX.expend_interdict(30,src,TRUE,ITDR_DEVERA))
+				if (IX.expend_interdict(15,src,TRUE,ITDR_DEVERA))
 					miasma_blocked = TRUE
 					break
 

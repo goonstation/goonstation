@@ -547,6 +547,8 @@
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
@@ -852,9 +854,9 @@
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"

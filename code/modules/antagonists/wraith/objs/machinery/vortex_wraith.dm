@@ -3,7 +3,7 @@
 	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	_health = 25
 	var/list/obj/critter/critter_list = list()
@@ -18,11 +18,11 @@
 	var/mob/living/intangible/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light
-	var/list/obj/critter/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
+	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
-								/obj/critter/ancient_repairbot/security,
+								/mob/living/critter/robotic/repairbot/security,
 								/obj/critter/mechmonstrositycrawler,
-								/obj/critter/shade,
+								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
 								/mob/living/critter/bear,
 								/mob/living/critter/lion,
@@ -113,6 +113,9 @@
 					minion_value = getMobValue(src.mob_type)
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
 						var/obj/minion = new src.mob_type(chosen_turf)
+						if (ismobcritter(minion))
+							var/mob/living/critter/C = minion
+							C.faction |= FACTION_WRAITH
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
@@ -150,9 +153,9 @@
 				return 10
 			if (/mob/living/critter/skeleton/wraith)
 				return 4
-			if (/obj/critter/shade)
+			if (/mob/living/critter/shade)
 				return 4
-			if (/obj/critter/crunched)
+			if (/mob/living/critter/crunched)
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3

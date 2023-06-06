@@ -1,7 +1,10 @@
-/datum/antagonist/intangible/wraith
+/datum/antagonist/mob/intangible/wraith
 	id = ROLE_WRAITH
 	display_name = "wraith"
-	intangible_mob_path = /mob/living/intangible/wraith
+	antagonist_icon = "wraith"
+	faction = FACTION_WRAITH
+	mob_path = /mob/living/intangible/wraith
+	uses_pref_name = FALSE
 
 	assign_objectives()
 		switch (rand(1, 3))

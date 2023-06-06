@@ -35,7 +35,7 @@ TYPEINFO(/obj/item/rcd)
 	item_state = "rcd" //oops
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -534,7 +534,7 @@ TYPEINFO(/obj/item/rcd)
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
 			if (S.cell)
-				S.cell.charge -= checkamt * silicon_cost_multiplier
+				S.cell.use(checkamt * silicon_cost_multiplier)
 		else
 			src.matter -= checkamt
 			boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter units.")
@@ -960,7 +960,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 	item_state = "rcdammo"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	m_amt = 30000
 	g_amt = 15000
 	health = 6
@@ -998,7 +998,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 	icon_state = "rcd"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | TABLEPASS| CONDUCT
 	c_flags = ONBELT
 	force = 10
@@ -1104,7 +1104,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 /obj/effects/void_break
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	var/lifespan = 4
 	var/rangeout = 0
 

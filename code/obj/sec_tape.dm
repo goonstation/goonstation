@@ -1,5 +1,5 @@
 /obj/sec_tape
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/sec_tape.dmi'
 	icon_state = "sec_tape_s"
 	name = "security cordon"

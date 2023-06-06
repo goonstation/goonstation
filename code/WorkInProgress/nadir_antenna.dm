@@ -634,7 +634,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 	icon_state = "neopad"
 	name = "\proper transception pad"
 	desc = "A sophisticated cargo pad capable of utilizing the station's transception antenna when connected by cable. Keep clear during operation."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
 	processing_tier = PROCESSING_32TH //processes infrequently to check for stuck mobs
@@ -746,7 +746,7 @@ TYPEINFO(/obj/machinery/transception_pad)
 			var/atom/movable/inbound_target
 			if(manual_receive)
 				inbound_target = manual_receive
-			else if(shippingmarket.pending_crates[cargo_index])
+			else if(length(shippingmarket.pending_crates) >= cargo_index)
 				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return

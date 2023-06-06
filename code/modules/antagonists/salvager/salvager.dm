@@ -1,6 +1,8 @@
 /datum/antagonist/salvager
 	id = ROLE_SALVAGER
 	display_name = ROLE_SALVAGER
+	antagonist_icon = "salvager"
+	uses_pref_name = FALSE
 
 	var/static/starting_freq = null
 
@@ -54,6 +56,19 @@
 		H.equip_new_if_possible(/obj/item/weldingtool, H.slot_in_backpack)
 
 		H.traitHolder.addTrait("training_engineer")
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	assign_objectives()
 		new /datum/objective_set/salvager(src.owner, src)
