@@ -14,6 +14,8 @@ proc/initialise_fishing_spots()
 			qdel(fishing_spot)
 			continue
 		var/fishing_atom_type = fishing_spot.fishing_atom_type
+		if(!isnull(global.fishing_spots[fishing_atom_type]))
+			stack_trace("Duplicte fishing spot for [fishing_atom_type]")
 		global.fishing_spots[fishing_atom_type] = fishing_spot
 
 // dont auto-instantiate the parent please :3
