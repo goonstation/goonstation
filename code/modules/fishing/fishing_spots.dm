@@ -202,12 +202,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5,\
-	/obj/item/fish/tuna = 10,\
-	/obj/item/fish/cod = 15,\
-	/obj/item/fish/flounder = 10,\
-	/obj/item/fish/mahimahi = 10,\
-	/obj/item/fish/shrimp = 15,\
 	/obj/item/fish/sardine = 20)
 
 	// test pools
@@ -222,6 +216,21 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	master
 		fishing_atom_type = /obj/fishing_pool/master
 		rod_tier_required = 3
+
+/datum/fishing_spot/fishing_pool_portable
+	fishing_atom_type = /obj/fishing_pool/portable
+	rod_tier_required = 1
+	fish_available = list(/obj/item/fish/goldfish = 30,\
+	/obj/item/fish/bass = 20,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10,\
+	/obj/item/fish/chub = 10,\
+	/obj/item/fish/carp = 40,\
+	/obj/item/fish/bass = 30,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/herring = 15,\
+	/obj/item/fish/sardine = 20)
 
 /datum/fishing_spot/fluid // covers pool, aquariums and uh all other standing pools of fluid.
 	fishing_atom_type = /obj/fluid

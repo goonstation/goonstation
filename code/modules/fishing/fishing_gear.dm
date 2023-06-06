@@ -198,6 +198,15 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/fishing_pool/portable
 	anchored = 0
 
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !(src.anchored)
+			return
+		else
+			return ..()
+
 // Gannets new fishing gear
 
 /obj/submachine/fishing_upload_terminal
@@ -274,6 +283,15 @@ TYPEINFO(/obj/item/fish_portal)
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !(src.anchored)
+			return
+		else
+			return ..()
 
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
