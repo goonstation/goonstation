@@ -11,7 +11,6 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = null
 

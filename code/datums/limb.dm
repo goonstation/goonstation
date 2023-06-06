@@ -370,7 +370,7 @@
 		reload_time = 40
 
 /datum/limb/mouth
-	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
+	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null

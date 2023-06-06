@@ -211,7 +211,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
-			if (prob(5))
+			if (prob(20))
 				new /obj/item/clothing/head/bigcaphat(src)
 			return 1
 

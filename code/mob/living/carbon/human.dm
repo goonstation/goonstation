@@ -18,7 +18,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/list/implant_icons = null
+	var/list/prodoc_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -72,6 +72,7 @@
 	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
+	var/robotic_organs = 0
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
@@ -196,12 +197,13 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	implant_icons = list()
-	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	for (var/implant in implant_icons)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
+	prodoc_icons = list()
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in prodoc_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(prodoc_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -508,12 +510,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(implant_icons)
-		for (var/implant in implant_icons)
-			var/image/I = implant_icons[implant]
+	if(prodoc_icons)
+		for (var/implant in prodoc_icons)
+			var/image/I = prodoc_icons[implant]
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
 			I.dispose()
-		implant_icons = null
+		prodoc_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -1225,9 +1227,6 @@
 	return null
 
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
-	if (!(I in src.contents))
-		return null
-
 	//wanted the following to be a switch case but those expect constant expressions
 
 	if (src.w_uniform == I)
@@ -1324,7 +1323,7 @@
 	if (!ai_active && is_npc)
 		ai_set_active(1)
 
-/mob/living/carbon/human/get_heard_name()
+/mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
 	var/alt_name = ""
 	if (src.name != src.real_name)
 		if (src.wear_id && src.wear_id:registered && src.wear_id:registered != src.real_name)
@@ -1339,12 +1338,20 @@
 		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
+			if (just_name_itself)
+				return src.wear_id:registered
 			rendered += "[src.wear_id:registered]</span>"
 		else
+			if (just_name_itself)
+				return "Unknown"
 			rendered += "Unknown</span>"
 	else if (src.vdisfigured)
+		if (just_name_itself)
+			return "Unknown"
 		rendered += "Unknown</span>"
 	else
+		if (just_name_itself)
+			return src.real_name
 		rendered += "[src.real_name]</span>[alt_name]"
 
 	return rendered

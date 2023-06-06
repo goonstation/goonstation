@@ -579,6 +579,30 @@ TYPEINFO(/area)
 			#endif
 			qdel(O)
 		. = ..()
+
+/area/area_that_teleports_you_to_space_if_you_enter_it
+	name = "Invisible energy field that will teleport you to space if you step into it"
+	skip_sims = 1
+	sims_score = 0
+	icon_state = "go_to_space"
+	requires_power = 0
+	teleport_blocked = 1
+
+	Entered(atom/movable/O)
+		if (isobserver(O))
+			return
+		if (ismob(O))
+			var/mob/jerk = O
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
+				return
+			var/turf/target = random_space_turf() || random_nonrestrictedz_turf()
+			jerk.set_loc(target)
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was teleported to [log_loc(target)] by the area that teleports you to space if you enter it at [log_loc(jerk)]")
+		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
+			var/turf/target = random_space_turf() || random_nonrestrictedz_turf()
+			O.set_loc(target)
+		. = ..()
+
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
 	name = "Battle Royale warp zone"
 	skip_sims = 1
@@ -859,7 +883,10 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 
 /area/shuttle/escape/transit
 	warp_dir = NORTH
@@ -900,7 +927,12 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.throw_dir == NORTH || src.throw_dir == SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+
 /area/shuttle_transit_space/north
 	icon_state = "shuttle_transit_space_n"
 	throw_dir = NORTH
