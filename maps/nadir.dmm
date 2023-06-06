@@ -18044,12 +18044,10 @@
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
 	},
-/obj/machinery/coffeemaker{
-	pixel_y = 1
-	},
 /obj/drink_rack/mug{
 	pixel_y = 32
 	},
+/obj/machinery/coffeemaker/command,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
