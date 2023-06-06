@@ -18,6 +18,7 @@
 #define WEAPON_VENDOR_CATEGORY_AMMO "ammo"
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
+#define WEAPON_VENDOR_CATEGORY_FISHING "fishing"
 
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
@@ -235,6 +236,44 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		..()
 
+/obj/submachine/weapon_vendor/fishing
+	name = "Fishing Supplies Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "fishing"
+	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
+	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
+	token_accepted = /obj/item/requisition_token/fishing
+	log_purchase = FALSE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/fishing_gear/rod
+		materiel_stock += new/datum/materiel/fishing_gear/upgraded_rod
+		materiel_stock += new/datum/materiel/fishing_gear/master_rod
+		materiel_stock += new/datum/materiel/fishing_gear/uniform
+		materiel_stock += new/datum/materiel/fishing_gear/hat
+		materiel_stock += new/datum/materiel/fishing_gear/fish_box
+		..()
+
+	accepted_token(var/token)
+		if (istype(token, /obj/item/requisition_token/fishing/legendary))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=5
+		else if (istype(token, /obj/item/requisition_token/fishing/epic))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=4
+		else if (istype(token, /obj/item/requisition_token/fishing/rare))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=3
+		else if (istype(token, /obj/item/requisition_token/fishing/uncommon))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=2
+		else
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]++
+		..()
+
+/obj/submachine/weapon_vendor/fishing/portable
+	anchored = 0
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -259,6 +298,9 @@
 
 /datum/materiel/ammo
 	category = WEAPON_VENDOR_CATEGORY_AMMO
+
+/datum/materiel/fishing_gear
+	category = WEAPON_VENDOR_CATEGORY_FISHING
 
 //SECURITY
 
@@ -525,6 +567,42 @@
 	path = /obj/item/storage/backpack/satchel/flintlock_pistol_satchel
 	description = "A set of two flintlock pistols and 15 rounds of ammunition."
 
+//FISHING
+/datum/materiel/fishing_gear/rod
+	name = "Basic Fishing Rod"
+	path = /obj/item/fishing_rod/basic
+	description = "A basic fishing rod."
+	cost = 5
+
+/datum/materiel/fishing_gear/upgraded_rod
+	name = "Upgraded Fishing Rod"
+	path = /obj/item/fishing_rod/upgraded
+	description = "An upgraded fishing rod."
+	cost = 25
+
+/datum/materiel/fishing_gear/master_rod
+	name = "Master Fishing Rod"
+	path = /obj/item/fishing_rod/master
+	description = "The ultimate fishing rod."
+	cost = 50
+
+/datum/materiel/fishing_gear/fish_box
+	name = "Portable aquarium"
+	path = /obj/item/storage/fish_box
+	description = "A temporary solution for bulk-fish transportation."
+	cost = 10
+
+/datum/materiel/fishing_gear/uniform
+	name = "angler's overalls"
+	path = /obj/item/clothing/under/rank/angler
+	description = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
+	cost = 5
+
+/datum/materiel/fishing_gear/hat
+	name = "Fish fear me cap"
+	path = /obj/item/clothing/head/fish_fear_me
+	description = "The ultimate angling headwear."
+	cost = 15
 
 // Requisition tokens
 /obj/item/requisition_token
@@ -560,7 +638,36 @@
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
 
+/obj/item/requisition_token/fishing
+	icon_state = "fish_common"
+
+	common
+		name = "common research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 1 credit."
+		icon_state = "fish_common"
+
+	uncommon
+		name = "uncommon research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 2 credits."
+		icon_state = "fish_uncommon"
+
+	rare
+		name = "rare research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 3 credits."
+		icon_state = "fish_rare"
+
+	epic
+		name = "epic research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 4 credits."
+		icon_state = "fish_epic"
+
+	legendary
+		name = "legendary research ticket"
+		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 5 credits."
+		icon_state = "fish_legendary"
+
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
 #undef WEAPON_VENDOR_CATEGORY_ASSISTANT
+#undef WEAPON_VENDOR_CATEGORY_FISHING
