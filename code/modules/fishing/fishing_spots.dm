@@ -14,6 +14,8 @@ proc/initialise_fishing_spots()
 			qdel(fishing_spot)
 			continue
 		var/fishing_atom_type = fishing_spot.fishing_atom_type
+		if(!isnull(global.fishing_spots[fishing_atom_type]))
+			stack_trace("Duplicte fishing spot for [fishing_atom_type]")
 		global.fishing_spots[fishing_atom_type] = fishing_spot
 
 // dont auto-instantiate the parent please :3
@@ -516,21 +518,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/black_hole
 	fishing_atom_type = /obj/bhole
-	rod_tier_required = 3
-	fish_available = list(/obj/item/space_thing = 5,\
-	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
-	/obj/item/clothing/shoes/clown_shoes = 5,\
-	/mob/living/carbon/human/future = 1,\
-	/mob/living/critter/aberration = 1,\
-	/mob/living/critter/small_animal/cat = 2,\
-	/obj/item/clothing/head/void_crown = 1,\
-	/obj/critter/domestic_bee/trauma = 20,\
-	/obj/item/fish/void_fish = 20)
-
-/datum/fishing_spot/white_hole
-	fishing_atom_type = /obj/whitehole
 	rod_tier_required = 3
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\

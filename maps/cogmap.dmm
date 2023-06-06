@@ -19327,9 +19327,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "baO" = (
-/obj/shrub{
-	dir = 1
-	},
+/obj/table/wood/round/auto,
+/obj/machinery/coffeemaker/command,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "baP" = (
@@ -19340,13 +19339,22 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/paper_bin,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "baQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/table/wood/round/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
 /obj/machinery/networked/printer{
 	print_id = "Bridge"
 	},
