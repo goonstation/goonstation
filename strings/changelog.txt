@@ -1,5 +1,9 @@
 
 (t)tue jun 06 23
+(u)Kubius
+(p)14413
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Small update batch for Nadir, primarily focused on new and improved signage.
 (u)Sian
 (p)14321
 (e)🆕🗺🎨📦🍝|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Catering
