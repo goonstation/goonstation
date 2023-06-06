@@ -62,7 +62,7 @@ TYPEINFO(/obj/machinery/telejam)
 			if(!PCEL)
 				turn_off()
 				return
-			PCEL.charge -= 5 * src.range
+			PCEL.use(5 * src.range)
 
 			var/charge_percentage = 0
 			var/current_battery_level = 0

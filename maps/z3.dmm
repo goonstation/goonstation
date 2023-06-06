@@ -17,7 +17,7 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -118,7 +118,7 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -221,7 +221,7 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -1003,7 +1003,7 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -1905,7 +1905,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -2071,15 +2071,6 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"aiN" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/space,
-/area/bee_trader)
 "aiP" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/gibber/output_west,
@@ -2219,7 +2210,7 @@
 	icon_state = "wall_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -4764,7 +4755,7 @@
 	dir = 8;
 	icon_state = "diagonalWall3"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5221,7 +5212,7 @@
 	dir = 8;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5247,7 +5238,7 @@
 	dir = 10;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5258,7 +5249,7 @@
 	dir = 6;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5289,7 +5280,7 @@
 	dir = 9;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5304,7 +5295,7 @@
 	dir = 6;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5315,7 +5306,7 @@
 	dir = 1;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5612,7 +5603,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -5623,7 +5614,7 @@
 	dir = 4;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -6470,7 +6461,7 @@
 	dir = 8;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -6493,7 +6484,7 @@
 	dir = 1;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -6661,7 +6652,7 @@
 	dir = 10;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -6823,7 +6814,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -7699,7 +7690,7 @@
 	dir = 4;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -10828,7 +10819,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -10842,7 +10833,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11293,7 +11284,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11311,7 +11302,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11470,7 +11461,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11485,7 +11476,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11721,7 +11712,7 @@
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "wall3_space_end"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11934,7 +11925,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11945,7 +11936,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -11956,7 +11947,7 @@
 	dir = 9;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -12745,7 +12736,7 @@
 	dir = 10;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -14601,7 +14592,7 @@
 	dir = 6;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -16994,7 +16985,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -17700,7 +17691,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -18254,7 +18245,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -18507,7 +18498,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -18813,7 +18804,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -19165,7 +19156,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -19945,7 +19936,7 @@
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "kqJ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
 	name = "broken door"
@@ -20070,7 +20061,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -20098,7 +20089,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -20467,7 +20458,7 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -21063,7 +21054,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -21224,7 +21215,7 @@
 	dir = 8;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -21406,7 +21397,7 @@
 	dir = 1;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -21691,7 +21682,7 @@
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -22342,7 +22333,7 @@
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -22353,7 +22344,7 @@
 	dir = 5;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -22518,7 +22509,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -23133,7 +23124,7 @@
 	dir = 5;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -24358,7 +24349,7 @@
 	dir = 4;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -24550,7 +24541,7 @@
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -24600,7 +24591,7 @@
 	dir = 5;
 	icon_state = "wall_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -24855,7 +24846,7 @@
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -24869,7 +24860,7 @@
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/turf/space.dmi';
 	icon_state = "1";
 	name = "space"
@@ -75085,7 +75076,7 @@ aaa
 aaa
 uvN
 ccW
-aiN
+aia
 soT
 uvN
 aaa

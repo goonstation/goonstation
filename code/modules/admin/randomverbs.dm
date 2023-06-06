@@ -950,7 +950,7 @@
 				qdel(target_mob.r_hand)
 				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
 				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, target_mob.slot_shoes)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -2930,8 +2930,8 @@ var/global/force_radio_maptext = FALSE
 	var/obj/item/storage/backpack/syndie/backpack_full_of_ammo = new()
 	backpack_full_of_ammo.name = "backpack full of ammo"
 	backpack_full_of_ammo.desc = "Try not to lose it, idiot."
-	backpack_full_of_ammo.max_wclass = INFINITY
-	backpack_full_of_ammo.slots = 9
+	backpack_full_of_ammo.storage.max_wclass = INFINITY
+	backpack_full_of_ammo.storage.slots = 9
 	backpack_full_of_ammo.cant_other_remove = 1
 
 	var/obj/item/saw/syndie/button_1 = new()

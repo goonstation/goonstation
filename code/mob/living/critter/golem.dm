@@ -17,10 +17,9 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	var/reagent_id = null
-	var/wizard_spawn = FALSE
 
 	New()
 		..()
@@ -62,17 +61,11 @@
 		HH.icon_state = "handr"				// the icon state of the hand UI background
 		HH.limb_name = "right golem arm"
 
-	seek_target(var/range = 6)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/golem)) continue
-			if (iswizard(C) && src.wizard_spawn) continue
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if (H.traitHolder.hasTrait("training_chaplain")) continue
-			. += C
+	valid_target(mob/living/C)
+		if(ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if (H.traitHolder.hasTrait("training_chaplain")) return FALSE
+		return ..()
 
 	proc/CustomizeGolem(var/datum/reagents/CR) //customise it with the reagents in a container
 		for(var/current_id in CR.reagent_list)
@@ -83,7 +76,7 @@
 		var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
 		I.Blend(oldcolor, ICON_ADD)
 		src.icon = I
-		src.wizard_spawn = TRUE
+		src.faction = FACTION_WIZARD
 		src.name = "[capitalize(src.reagents.get_master_reagent_name())]-Golem"
 		src.desc = "An elemental entity composed of [src.reagents.get_master_reagent_name()], conjured by a wizard."
 		return

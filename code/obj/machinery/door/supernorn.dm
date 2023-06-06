@@ -4,7 +4,6 @@
 	var/welded = 0
 	var/panel = 0
 	var/vertical = 0
-	var/autoclose_delay = 150 // ugh, lets not use the autoclose built into the door type due to autoclose, for now, give doors proper functionality for this later
 	density = 1
 	opacity = 1
 

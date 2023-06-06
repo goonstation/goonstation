@@ -188,7 +188,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	* Returns the angle between two given atoms
 	*/
 proc/get_angle(atom/a, atom/b)
-    .= arctan(b.y - a.y, b.x - a.x)
+	var/turf/a_turf = get_turf(a)
+	var/turf/b_turf = get_turf(b)
+	if (isnull(a_turf) || isnull(b_turf))
+		return null
+	. = arctan(b_turf.y - a_turf.y, b_turf.x - a_turf.x)
 
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
@@ -330,26 +334,16 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
-/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0)
+/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0, strip_newlines=TRUE)
 	t = html_decode(copytext(t,1,limit))
 	if (no_fucking_autoparse == 1)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
 		for(var/c in bad_characters)
 			t = replacetext(t, c, "")
 
-	// html_encode(t) will convert < and > to &lt; and &gt;
-	// which will allow them to be used (safely) in messages
-	t = html_encode(t)
-
-	// var/index = findtext(t, "<")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
-	// 	index = findtext(t, "<")
-	// index = findtext(t, ">")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
-	// 	index = findtext(t, ">")
-	. = sanitize(t)
+	. = html_encode(t)
+	if (strip_newlines)
+		. = sanitize(.)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
 	. = html_decode(copytext(t,1,limit))
@@ -1227,6 +1221,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		. += M.loc
 		M = M.loc
 
+proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
+
 /proc/all_hearers(var/range,var/centre)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
@@ -1612,6 +1615,16 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 	var/the_time = "[final_minutes][get_english_num(final_hour)] o'clock"
 	return the_time
 
+/// Returns time input as mm:ss
+proc/formatTimeText(var/timeValue as num)
+	var/seconds = round((timeValue / 10) % 60)
+	var/minutes = round(((timeValue / 10) - seconds) / 60)
+	if (minutes < 10)
+		minutes = "0[minutes]"
+	if (seconds < 10)
+		seconds = "0[seconds]"
+	return "[minutes]:[seconds]"
+
 /// Returns shift time as a string in hh:mm format. Call with TRUE to get time in hh:mm:ss format.
 /proc/formattedShiftTime(var/doSeconds)
 	var/elapsedSeconds = round(ticker.round_elapsed_ticks/10, 1)
@@ -1796,7 +1809,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1830,7 +1843,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1853,7 +1868,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
