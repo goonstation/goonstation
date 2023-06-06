@@ -1387,11 +1387,73 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!length(arts))
 				img.app.alpha = 0
 				return
-			img.app.alpha = 180
+			img.app.alpha = 120
 			img.app.desc = "[jointext(arts, ", ")]"
 			var/art_text = "<span style='font-size:6pt'>[jointext(arts, "<br>")]</span>"
 			img.app.overlays = list(src.makeText(art_text, align_left=TRUE))
 			img.app.color = debug_color_of(art_text)
+
+	fishing_spots
+		name = "fishing spots"
+		help = "Displays fishing spots on the map.<br>Hover over a spot to see what fish are available there."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/spots = list()
+			var/list/fish = list()
+			for(var/atom/movable/AM in theTurf)
+				if(global.fishing_spots[AM.type])
+					spots += AM.name
+					var/datum/fishing_spot/spot = global.fishing_spots[AM.type]
+					for(var/fish_type in spot.fish_available)
+						var/atom/fish_type_dummy = fish_type
+						fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
+			if(theTurf.type in global.fishing_spots)
+				spots += theTurf.name
+				var/datum/fishing_spot/spot = global.fishing_spots[theTurf.type]
+				for(var/fish_type in spot.fish_available)
+					var/atom/fish_type_dummy = fish_type
+					fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
+			if(!length(spots))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.desc = jointext(fish, "<br>")
+			var/spot_text = "<span style='font-size:6pt'>[jointext(spots, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(spot_text, align_left=TRUE))
+			img.app.color = debug_color_of(spot_text)
+
+	materials
+		name = "materials"
+		help = "Displays material of things.<br>Hover over a tile to see what is made out of them."
+		var/include_turfs = TRUE
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/materials = list()
+			var/list/detailed_materials = list()
+			for(var/atom/movable/AM in theTurf)
+				if(AM.material)
+					materials |= AM.material.name
+					detailed_materials += "[AM.name] - [AM.material.name]"
+			if(include_turfs && theTurf.material)
+				materials |= theTurf.material.name
+				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+			if(!length(materials))
+				img.app.alpha = 0
+				return
+			materials = sortList(materials, /proc/cmp_text_dsc)
+			img.app.alpha = 120
+			img.app.desc = jointext(detailed_materials, "<br>")
+			var/material_text = "<span style='font-size:6pt'>[jointext(materials, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(material_text, align_left=TRUE))
+			img.app.color = debug_color_of(material_text)
+
+	materials/no_turf
+		name = "materials (no turf)"
+		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
+		include_turfs = FALSE
+
+	reagents
+		name = "reagents"
+		help = "TODO"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
