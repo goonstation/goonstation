@@ -567,7 +567,7 @@
 //FISHING
 /datum/materiel/fishing_gear/rod
 	name = "Basic Fishing Rod"
-	path = /obj/item/fishing_rod
+	path = /obj/item/fishing_rod/basic
 	description = "A basic fishing rod."
 	cost = 5
 
