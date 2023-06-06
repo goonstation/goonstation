@@ -454,10 +454,10 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Angling Starter Kit"
 	desc = "A full complement of fishing tools for the amateur angler."
 	category = "Civilian Department"
-	contains = list(/obj/item/fishing_rod,
+	contains = list(/obj/item/fishing_rod/basic,
 					/obj/submachine/fishing_upload_terminal/portable,
 					/obj/submachine/weapon_vendor/fishing/portable,
-					/obj/fishing_pool)
+					/obj/fishing_pool/portable)
 	cost = 500
 	containertype = /obj/storage/crate
 	containername = "Angling Starter Kit"

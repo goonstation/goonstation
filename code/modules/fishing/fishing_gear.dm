@@ -195,6 +195,9 @@ TYPEINFO(/obj/item/fish_portal)
 	master
 		name = "master pool"
 
+/obj/fishing_pool/portable
+	anchored = 0
+
 // Gannets new fishing gear
 
 /obj/submachine/fishing_upload_terminal
