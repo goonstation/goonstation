@@ -18,7 +18,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 50
 	health_burn_vuln = 2
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -90,15 +90,13 @@
 		A = pick(valid_objs)
 		A.setMaterial(getMaterial(transmute_mat))
 
+	valid_target(mob/living/C)
+		if (C.material?.mat_id == transmute_mat) return FALSE //don't attack other jeans-like things
+		if (C.ckey == null && prob(80)) return FALSE //usually do not attack non-threats ie. NPC monkeys and AFK players
+		return ..()
+
 	seek_target(var/range)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (istype(C, src.type)) continue //don't attack other jeans
-			if (C.material?.mat_id == transmute_mat) continue //don't attack other jeans-like things
-			if (C.ckey == null && prob(80)) continue //usually do not attack non-threats ie. NPC monkeys and AFK players
-			. += C
+		. = ..()
 
 		if(length(.) && prob(30) && isalive(src))
 			make_the_noise()

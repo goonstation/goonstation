@@ -511,7 +511,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
-				INVOKE_ASYNC(owner.client, /client.proc/respawn_target, owner, 1)
+				INVOKE_ASYNC(owner.client, TYPE_PROC_REF(/client, respawn_target), owner, 1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
 				owner = null
@@ -615,10 +615,10 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
+	default_material = "slag"
 
 	New()
 		. = ..()
-		src.setMaterial(getMaterial("slag"), FALSE, FALSE, TRUE)
 		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea

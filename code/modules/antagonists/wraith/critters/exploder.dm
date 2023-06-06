@@ -19,6 +19,8 @@
 	health_burn_vuln = 1.5
 	is_npc = 1
 
+	faction = FACTION_WRAITH
+
 	use_stamina = 0
 
 	can_lie = 0

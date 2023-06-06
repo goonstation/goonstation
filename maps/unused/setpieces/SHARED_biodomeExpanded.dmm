@@ -547,7 +547,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-
+	
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -3924,7 +3924,7 @@
 	},
 /area/crater/biodome/north)
 "eJe" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -6932,7 +6932,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -8197,7 +8197,7 @@
 	icon_state = "4-8"
 	},
 /obj/spacevine,
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side,
 /area/crater/biodome/north)
 "jKz" = (
@@ -8466,7 +8466,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/crater/biodome/research)
 "kbr" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light2"
 	},
@@ -11365,7 +11365,7 @@
 	density = 1;
 	icon_state = "vine-med2"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -15393,7 +15393,7 @@
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/unsimulated/floor/green/side{
 	dir = 1
 	},
@@ -15737,7 +15737,7 @@
 	},
 /area/swampzone/interiors/bonktek/electek)
 "sMX" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/spacevine{
 	icon_state = "vine-light3"
 	},

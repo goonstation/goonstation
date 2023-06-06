@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -614,12 +614,6 @@ TYPEINFO(/obj/item/sword)
 				for (var/mob/M in viewers(5, owner))
 					if (isrevolutionary(M))
 						M.changeStatus("revspirit", 20 SECONDS)
-
-/obj/item/storage/box/shuriken_pouch
-	name = "Shuriken Pouch"
-	desc = "Contains four throwing stars!"
-	icon_state = "ammopouch"
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
@@ -1298,6 +1292,40 @@ TYPEINFO(/obj/item/swords/captain)
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
+/obj/item/swords/clown // this is the worst thing I've ever created
+	icon_state = "clown_sword"
+	name = "Clowns's Sabre"
+	desc = "A sharp sab- is that a bike horn that's been cut in half duct taped to a sword? What the hell? How does that even work???"
+	force = 4
+	delimb_prob = 1 // yes
+	contraband = 1
+	hit_type = DAMAGE_BLUNT
+	attack_verbs = "bonks"
+	hitsound = null // do this in attack
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
+
+/obj/item/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		user.visible_message("<span class='alert'><b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b></span>")
+		SPAWN(1 SECOND)
+			if(prob(5))
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.gib()
+			else
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.death()
+
+
 /obj/item/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1460,6 +1488,17 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheath_state = "scabbard-pirate0"
 	sword_path = /obj/item/swords/pirate
 
+/obj/item/swords_sheaths/clown
+	name = "Clown's Scabbard"
+	desc = "A nifty container for a... is that just a magnet to hold a sword to it? Oh god."
+	icon_state = "clown_sword_scabbard"
+	item_state = "scabbard-clown1"
+
+	sheathed_state = "clown_sword_scabbard"
+	sheath_state = "clown_scabbard"
+	ih_sheathed_state = "scabbard-clown1"
+	ih_sheath_state = "scabbard-clown0"
+	sword_path = /obj/item/swords/clown
 
 /*
  *							--- Non-electronic Swords ---
@@ -1612,7 +1651,7 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()

@@ -61,7 +61,6 @@ ABSTRACT_TYPE(/obj/item/parts)
 
 	/// set to TRUE if this limb has decomposition icons
 	var/decomp_affected = TRUE
-	var/current_decomp_stage_l = -1
 	var/current_decomp_stage_s = -1
 
 	var/mob/living/holder = null
@@ -250,7 +249,7 @@ ABSTRACT_TYPE(/obj/item/parts)
 			object.streak_object(direction, src.streak_decal)
 
 		if(prob(60))
-			INVOKE_ASYNC(holder, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(holder, TYPE_PROC_REF(/mob, emote), "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -284,7 +283,11 @@ ABSTRACT_TYPE(/obj/item/parts)
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
 			return ..()
+
+		var/can_secure = FALSE
 		if(attacher)
+			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
+
 			if(!can_act(attacher))
 				return
 			if(!src.easy_attach)
@@ -296,14 +299,14 @@ ABSTRACT_TYPE(/obj/item/parts)
 			attacher.remove_item(src)
 
 			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
-			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : "doesn't look very secure"]!</span>")
+			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
 
 		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee
 		src.layer = initial(src.layer)
 		src.screen_loc = ""
 		src.set_loc(attachee)
-		src.remove_stage = src.easy_attach ? 0 : 2
+		src.remove_stage = (src.easy_attach || can_secure) ? 0 : 2
 
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
@@ -322,18 +325,25 @@ ABSTRACT_TYPE(/obj/item/parts)
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
-		if(no_icon) return 0
-		var/decomp = ""
-		if (src.decomp_affected && decomp_stage)
-			decomp = "_decomp[decomp_stage]"
-		var/used_icon = getAttachmentIcon(decomp_stage)
+	proc/getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
+		if(no_icon)
+			return 0
+		if (force)
+			qdel(src.bodyImage)
+			src.bodyImage = null
+		var/used_icon = mutantrace_override || getAttachmentIcon(decomp_stage)
 		if (src.bodyImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.bodyImage
 		current_decomp_stage_s = decomp_stage
-		var/icon_state = "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
+		var/icon_state = src.getMobIconState(decomp_stage)
 		src.bodyImage = image(used_icon, icon_state)
 		return bodyImage
+
+	proc/getMobIconState(var/decomp_stage = DECOMP_STAGE_NO_ROT)
+		var/decomp = ""
+		if (src.decomp_affected && decomp_stage)
+			decomp = "_decomp[decomp_stage]"
+		return "[src.slot][src.partIconModifier ? "_[src.partIconModifier]" : ""][decomp]"
 
 	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)

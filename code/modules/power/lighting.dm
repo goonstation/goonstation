@@ -239,6 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	broken //Made at first to replace a decal in cog1's wreckage area
 		name = "shattered light bulb"
+		icon_state = "bulb-broken"
 
 		New()
 			..()
@@ -252,6 +253,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			..()
 			autoposition()
 
+		netural
+			name = "incandescent light bulb"
+			light_type = /obj/item/light/bulb/neutral
 		greenish
 			name = "greenish incandescent light bulb"
 			light_type = /obj/item/light/bulb/greenish
@@ -285,6 +289,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+		broken //Made at first to replace a decal in cog1's wreckage area
+			name = "shattered light bulb"
+			icon_state = "bulb-broken"
+
+			New()
+				..()
+				current_lamp.light_status = LIGHT_BROKEN
 
 
 
@@ -336,6 +348,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		very
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/bulb/harsh/very
+
+	broken
+		name = "shattered floor light"
+		icon_state = "floor-broken"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
 
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
@@ -421,7 +441,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	New()
 		..()
 		if(src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
@@ -639,6 +659,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			light_type = /obj/item/light/tube/harsh/very
 
 	broken
+		name = "shattered light fixture"
+		icon_state = "tube-broken"
 
 		New()
 			..()

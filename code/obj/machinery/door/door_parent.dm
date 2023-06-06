@@ -33,6 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/sound_deny = 0
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
+	var/autoclose_delay = 15 SECONDS
 
 	var/health = 400
 	var/health_max = 400
@@ -167,7 +168,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -599,7 +600,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/opened()
 	if(autoclose)
-		sleep(15 SECONDS)
+		sleep(src.autoclose_delay)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else
@@ -612,6 +613,23 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (!density && !operating && !locked)
 		close()
 	else return
+
+/// toggles the lock state of the door
+/obj/machinery/door/proc/toggle_locked()
+	if (locked)
+		set_unlocked()
+	else
+		set_locked()
+
+/// locks the door, aka bolt / key lock
+/obj/machinery/door/proc/set_locked()
+	src.locked = TRUE
+	src.UpdateIcon()
+
+/// unlocks the door, aka unbolt / un-key lock
+/obj/machinery/door/proc/set_unlocked()
+	src.locked = FALSE
+	src.UpdateIcon()
 
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
@@ -694,6 +712,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	. = ..()
 
 // APRIL FOOLS
+TYPEINFO(/obj/machinery/door/unpowered/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/machinery/door/unpowered/wood
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
@@ -709,7 +729,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
-	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
@@ -760,7 +779,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			if (!(checkdir & src.lock_dir))
 				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
 				return
-		src.locked = !src.locked
+		src.toggle_locked()
 		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 		return
 	else if (isscrewingtool(I) && src.locked)
@@ -770,7 +789,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
 		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 		src.operating = -1
-		src.locked = 0
+		src.set_unlocked()
 		open()
 		return 1
 	if (!src.locked)
@@ -808,7 +827,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if (!(checkdir & src.lock_dir))
 			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
-	src.locked = !src.locked
+	src.toggle_locked()
 	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
@@ -855,7 +874,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	onEnd()
 		..()
-		src.the_door.locked = 0
+		src.the_door.set_unlocked()
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 

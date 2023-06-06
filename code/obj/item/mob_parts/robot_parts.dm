@@ -55,11 +55,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(60 to INFINITY)
 				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
-	getMobIcon()
+	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
+		if (force)
+			qdel(src.bodyImage)
+			src.bodyImage = null
 		if (src.bodyImage)
 			return src.bodyImage
 
-		src.bodyImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
+		src.bodyImage = image(mutantrace_override || src.partIcon, icon_state = "[src.icon_state_base]-[appearanceString]")
 		return bodyImage
 
 	attackby(obj/item/W, mob/user)
@@ -581,8 +584,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -609,8 +612,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
@@ -655,8 +658,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -683,8 +686,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
@@ -891,6 +894,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	/// This will make the borg a syndie one
 	var/syndicate = FALSE
 	var/emagged = 0
+	var/freemodule = TRUE
 	var/obj/item/parts/robot_parts/head/head = null
 	var/obj/item/parts/robot_parts/chest/chest = null
 	var/obj/item/parts/robot_parts/l_arm = null
@@ -1190,9 +1194,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
 					ticker.mode:revolutionaries += borg.mind
-					ticker.mode:update_rev_icons_added(borg.mind)
 				if (src.emagged)
 					borg.emagged = 1
+					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 					SPAWN(0)
 						borg.update_appearance()
 				else if (src.syndicate)
@@ -1204,10 +1208,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 			borg.job = "Cyborg"
 
-		// final check to guarantee the icon shows up for everyone
-		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((borg.mind?.get_antagonist(ROLE_REVOLUTIONARY)) || (borg.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		borg.update_appearance()
 
 		qdel(src)

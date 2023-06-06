@@ -56,12 +56,12 @@
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
+					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
-					else if (T.name == "trench floor" || T.name == "\proper space")
+					else if (istype(T, /turf/space))
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
+						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -993,7 +993,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 			if (isliving(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
-				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))

@@ -24,6 +24,8 @@
 	can_bleed = FALSE
 	var/name_prefix = "living "
 
+	faction = FACTION_WRAITH
+
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
 
@@ -252,6 +254,7 @@
 				src.possessed_thing.set_loc(get_turf(src))
 			if (src.possessed_item)
 				possessed_item.cant_drop = initial(possessed_item.cant_drop)
+			qdel(src.dummy)
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))

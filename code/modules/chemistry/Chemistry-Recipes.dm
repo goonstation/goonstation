@@ -2465,6 +2465,15 @@ datum
 			mix_phrase = "The mixture turns an odd lavender color."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		promethazine
+			name = "Promethazine"
+			id = "promethazine"
+			result = "promethazine"
+			required_reagents = list("oil" = 1, "ammonia" = 1, "sulfur" = 1, "cleaner" = 1)
+			result_amount = 4
+			mix_phrase = "The solution settles into a fine odorless powder."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		epinephrine
 			name = "Epinephrine"
 			id = "epinephrine"
@@ -2578,6 +2587,13 @@ datum
 			required_temperature = T0C + 450
 			mix_phrase = "The neurotoxin breaks down, bubbling violently."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		solipsizine
+			name = "Solipsizine"
+			id = "solipsizine"
+			result = "solipsizine"
+			required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
+			result_amount = 3
 
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
 			name = "Mutadone"
@@ -3430,7 +3446,7 @@ datum
 			name = "Filgrastim"
 			id = "filgrastim"
 			result = "filgrastim"
-			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "e.coli" = 1, "spaceacillin" = 1)
+			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
 		ecoli // needed for filgrastim vOv
@@ -3763,7 +3779,7 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach,/obj/critter/pig,/mob/living/critter/small_animal/cat,/mob/living/critter/small_animal/mouse,/obj/critter/wasp,/obj/critter/owl,/obj/critter/goose,/obj/critter/goose/swan,/obj/critter/domestic_bee,/obj/critter/walrus,/obj/critter/sealpup)
+						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)

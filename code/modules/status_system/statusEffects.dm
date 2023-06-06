@@ -1560,7 +1560,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5))
+		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
@@ -1716,8 +1716,8 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -1756,7 +1756,7 @@
 		. = ..()
 		owner.add_filter("paint_color", 1, color_matrix_filter(normalize_color_to_matrix("#ff8820")))
 		if(istype(owner, /mob/living))
-			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, .proc/track_paint)
+			RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(track_paint))
 
 	onRemove()
 		. = ..()
@@ -2067,7 +2067,7 @@
 
 	onAdd()
 		..()
-		RegisterSignal(owner, COMSIG_MOB_VOMIT, .proc/reduce_duration_on_vomit)
+		RegisterSignal(owner, COMSIG_MOB_VOMIT, PROC_REF(reduce_duration_on_vomit))
 
 	onRemove()
 		..()
@@ -2093,8 +2093,8 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -2264,15 +2264,7 @@
 		. = ..()
 		desc = "You've been mindhacked by [hacker.real_name] and feel an unwavering loyalty towards [him_or_her(hacker)]."
 		var/mob/M = owner
-		if (M.mind && ticker.mode)
-			if (!M.mind.special_role)
-				M.mind.special_role = ROLE_MINDHACK
-			if (!(M.mind in ticker.mode.Agimmicks))
-				ticker.mode.Agimmicks += M.mind
-			M.mind.master = hacker.ckey
-
-		boutput(M, "<h2><span class='alert'>You feel an unwavering loyalty to [hacker.real_name]! You feel you must obey [his_or_her(hacker)] every order! Do not tell anyone about this unless [hacker.real_name] tells you to!</span></h2>")
-		M.show_antag_popup("mindhack")
+		M.mind?.add_subordinate_antagonist(ROLE_MINDHACK, master = hacker.mind)
 
 		if (custom_orders)
 			boutput(M, "<h2><span class='alert'>[hacker.real_name]'s will consumes your mind! <b>\"[custom_orders]\"</b> It <b>must</b> be done!</span></h2>")
@@ -2280,10 +2272,7 @@
 	onRemove()
 		..()
 		var/mob/M = owner
-		if (M.mind?.special_role == ROLE_MINDHACK)
-			remove_mindhack_status(M, "mindhack", "expired")
-		else if (M.mind?.master)
-			remove_mindhack_status(M, "otherhack", "expired")
+		M.mind?.remove_antagonist(ROLE_MINDHACK, ANTAGONIST_REMOVAL_SOURCE_EXPIRED)
 
 /datum/statusEffect/defib_charged
 	id = "defib_charged"
@@ -2345,6 +2334,16 @@
 
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
+
+/datum/statusEffect/quickcharged
+	id = "quick_charged"
+	name = "Quick charged"
+	icon_state = "stam-"
+	maxDuration = 7 MINUTES
+
+	getTooltip()
+		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
+
 
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"

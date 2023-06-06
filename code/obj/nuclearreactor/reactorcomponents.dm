@@ -59,9 +59,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-				if (mat1.name in src.mat_appearances_to_ignore)
-					return
+			if (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore)
+				return
 			if (src.mat_changeappearance && mat1.applyColor)
 				var/list/setcolor = mat1.color
 				if(istext(mat1.color))
@@ -217,7 +216,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	pickup(mob/user)
 		. = ..()
 		if(src.mob_holding_temp_react(user, 1))
-			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, .proc/mob_holding_temp_react)
+			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, PROC_REF(mob_holding_temp_react))
 
 	dropped(mob/user)
 		. = ..()

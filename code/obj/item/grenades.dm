@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/wasp
+	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
@@ -744,7 +744,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
-		if (istype(target, /obj/item/storage)) return ..()
+		if (target.storage)
+			return ..()
 		if (!src.armed && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1306,7 +1307,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/check_placeable_target(atom/A)
 		if (!istype(A, /obj/item))
 			return TRUE
-		if (istype(A, /obj/item/storage)) // no blowing yourself up if you have full backpack
+		if (A.storage) // no blowing yourself up if you have full storage
 			return FALSE
 		return A.density
 
@@ -1332,7 +1333,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
 			if (!src.armed)
-				if (!src.check_placeable_target(target))
+				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
@@ -1484,6 +1485,19 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	 							"/obj/item/item_box/medical_patches", "/obj/item/item_box/gold_star", "/obj/item/item_box/assorted/stickers", "/obj/item/material_piece/cloth",\
 	 							"/obj/item/raw_material/shard", "/obj/item/raw_material/telecrystal", "/obj/item/instrument", "/obj/item/reagent_containers/food/snacks/ingredient/butter",\
 	 							"/obj/item/rcd_ammo")
+
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if (1) // Default state
+				return "You can use a <b>welding tool</b> to hollow out the frame."
+			if (2) // Hollowed out
+				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
+			if (3) // Hollowed out with chem inside
+				return "You can add a cable coil to continue making a pipebomb."
+			if (4) // Hollowed out with chem and wiring
+				return "You can add an igniter assembly and secure it with a <b>screwdriver</b> to finish making the pipebomb."
+			if (5) // Hollowed out Pipeshot
+				return "You can add fuel and glass shards or scrap to make pipeshot."
 
 	attack_self(mob/user as mob)
 		if (state == 3)

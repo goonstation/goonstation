@@ -15,19 +15,12 @@ TYPEINFO(/obj/item/storage/wall)
 	density = 0
 	deconstruct_flags = DECON_SIMPLE
 	burn_possible = FALSE
-	max_wclass = W_CLASS_BULKY
-	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
-	attack_hand(mob/user)
-		if (istype(user, /mob/living/critter/small_animal))
-			return
-		return mouse_drop(user)
-
-	mouse_drop(atom/over_object, src_location, over_location)
-		if (istype(usr, /mob/living/critter/small_animal))
-			return
+	New()
 		..()
+		// these can't move so I guess we may as well let them store more stuff?
+		src.create_storage(/datum/storage/unholdable, slots = 13, max_wclass = W_CLASS_BULKY)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -37,23 +30,23 @@ TYPEINFO(/obj/item/storage/wall)
 	make_my_stuff()
 		..()
 		if (prob(40))
-			new /obj/item/storage/toolbox/emergency(src)
+			src.storage.add_contents(new /obj/item/storage/toolbox/emergency(src))
 		if (prob(33))
-			new /obj/item/clothing/suit/space/emerg(src)
-			new /obj/item/clothing/head/emerg(src)
+			src.storage.add_contents(new /obj/item/clothing/suit/space/emerg(src))
+			src.storage.add_contents(new /obj/item/clothing/head/emerg(src))
 		if (prob(10))
-			new /obj/item/storage/firstaid/oxygen(src)
+			src.storage.add_contents(new /obj/item/storage/firstaid/oxygen(src))
 		if (prob(10))
-			new /obj/item/tank/air(src)
+			src.storage.add_contents(new /obj/item/tank/air(src))
 		if (prob(2))
-			new /obj/item/tank/oxygen(src)
+			src.storage.add_contents(new /obj/item/tank/oxygen(src))
 		if (prob(2))
-			new /obj/item/clothing/mask/gas/emergency(src)
+			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
 			if (prob(40))
-				new /obj/item/tank/mini_oxygen(src)
+				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
 			if (prob(40))
-				new /obj/item/clothing/mask/breath(src)
+				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
 
 /obj/item/storage/wall/fire
 	name = "firefighting supplies"
@@ -63,16 +56,16 @@ TYPEINFO(/obj/item/storage/wall)
 	make_my_stuff()
 		..()
 		if (prob(80))
-			new /obj/item/extinguisher(src)
+			src.storage.add_contents(new /obj/item/extinguisher(src))
 		if (prob(50))
-			new /obj/item/clothing/head/helmet/firefighter(src)
+			src.storage.add_contents(new /obj/item/clothing/head/helmet/firefighter(src))
 		if (prob(30))
-			new /obj/item/clothing/suit/fire(src)
-			new /obj/item/clothing/mask/gas/emergency(src)
+			src.storage.add_contents(new /obj/item/clothing/suit/fire(src))
+			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		if (prob(10))
-			new /obj/item/storage/firstaid/fire(src)
+			src.storage.add_contents(new /obj/item/storage/firstaid/fire(src))
 		if (prob(5))
-			new /obj/item/storage/toolbox/emergency(src)
+			src.storage.add_contents(new /obj/item/storage/toolbox/emergency(src))
 
 /obj/item/storage/wall/random
 	pixel_y = 32
@@ -80,13 +73,13 @@ TYPEINFO(/obj/item/storage/wall)
 		..()
 		var/thing1 = pick(10;/obj/item/screwdriver, 10;/obj/item/wrench, 5;/obj/item/crowbar, 3;/obj/item/wirecutters)
 		if (ispath(thing1))
-			new thing1(src)
+			src.storage.add_contents(new thing1(src))
 		var/thing2 = pick(10;/obj/item/device/radio, 4;/obj/item/device/radio/signaler, 30;/obj/item/device/light/glowstick, 15;/obj/item/device/light/flashlight, 1;/obj/item/device/multitool)
 		if (ispath(thing2))
-			new thing2(src)
+			src.storage.add_contents(new thing2(src))
 		var/thing3 = pick(10;/obj/item/cigpacket/propuffs, 15;/obj/item/reagent_containers/food/snacks/chips, 5;/obj/item/reagent_containers/food/drinks/bottle/hobo_wine, 2;/obj/item/reagent_containers/pill/cyberpunk)
 		if (ispath(thing3))
-			new thing3(src)
+			src.storage.add_contents(new thing3(src))
 		return
 
 /obj/item/storage/wall/office // basically the same as the office supply closet but in wall cabinet form!!
@@ -105,10 +98,10 @@ TYPEINFO(/obj/item/storage/wall)
 		..()
 		var/markers = pick(66;/obj/item/storage/box/marker/basic, 34;/obj/item/storage/box/marker)
 		if (ispath(markers))
-			new markers(src)
+			src.storage.add_contents(new markers(src))
 		var/crayons = pick(66;/obj/item/storage/box/crayon/basic, 34;/obj/item/storage/box/crayon)
 		if (ispath(crayons))
-			new crayons(src)
+			src.storage.add_contents(new crayons(src))
 		return
 
 /obj/item/storage/wall/medical_wear
@@ -207,16 +200,8 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "clothingrack" //They start full so might as well
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (!length(src.storage?.get_contents()))
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
@@ -292,18 +277,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	density = 0
 	can_hold = list(/obj/item/clothing/head)
 
-
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
-
 	update_icon()
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (!length(src.storage?.get_contents()))
 			src.icon_state = "hatrack-empty"
 		else
 			src.icon_state = "hatrack"
@@ -344,15 +319,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	icon_state = "toolshelf"
 	can_hold = list(/obj/item/clothing/under,/obj/item/clothing/suit)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (!length(src.storage?.get_contents()))
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "toolshelf"
@@ -368,15 +336,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	can_hold = list(/obj/item/raw_material,/obj/item/material_piece)
 	spawn_contents = list(/obj/item/raw_material/mauxite = 4)
 
-	New()
-		hud = new(src)
-		..()
-		SPAWN(1 DECI SECOND)
-			UpdateIcon()
-
 	update_icon()
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len <= 0)
+		if (!length(src.storage?.get_contents()))
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
@@ -396,3 +357,6 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/suture = 1,
 		/obj/item/device/analyzer/healthanalyzer = 1,
 	)
+
+/obj/item/storage/wall/ak_fake
+	spawn_contents = list(/obj/item/bang_gun/ak47)

@@ -634,7 +634,7 @@
 	},
 /area/space)
 "bQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},
@@ -1172,7 +1172,7 @@
 	},
 /area/space)
 "dv" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
@@ -10216,7 +10216,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10607,7 +10607,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-
+	
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;

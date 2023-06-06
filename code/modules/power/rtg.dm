@@ -105,11 +105,7 @@
 	w_class = W_CLASS_TINY
 
 	cerenkite
-		New()
-			..()
-			src.setMaterial(getMaterial("cerenkite"))
+		default_material = "cerenkite"
 
 	erebite
-		New()
-			..()
-			src.setMaterial(getMaterial("erebite"))
+		default_material = "erebite"

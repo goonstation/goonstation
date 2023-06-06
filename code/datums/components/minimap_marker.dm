@@ -26,7 +26,7 @@ TYPEINFO(/datum/component/minimap_marker)
 	src.list_on_ui = list_on_ui
 	src.create_minimap_markers()
 
-	RegisterSignal(parent, COMSIG_NEW_MINIMAP_MARKER, .proc/new_minimap_marker)
+	RegisterSignal(parent, COMSIG_NEW_MINIMAP_MARKER, PROC_REF(new_minimap_marker))
 
 /datum/component/minimap_marker/proc/create_minimap_markers()
 	if (!minimaps_to_display_on || !marker_icon_state || !marker_icon)

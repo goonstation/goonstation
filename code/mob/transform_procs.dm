@@ -249,10 +249,6 @@
 		boutput(cyborg, "<B>You must follow all laws that the AI has.</B>")
 	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
 
-	if(cyborg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-		if ((cyborg.mind.get_antagonist(ROLE_REVOLUTIONARY)) || (cyborg.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY)))
-			ticker.mode:update_all_rev_icons() //So the icon actually appears
-
 	if(gory)
 		var/mob/living/silicon/robot/R = cyborg
 		if (R.cosmetic_mods)
@@ -654,7 +650,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
-	to_del = locate(/obj/item/storage/bible) in newbody
+	to_del = locate(/obj/item/bible) in newbody
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)

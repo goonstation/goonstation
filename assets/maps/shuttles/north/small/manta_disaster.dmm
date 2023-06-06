@@ -57,7 +57,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "fu" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -143,7 +143,7 @@
 	},
 /area/shuttle/escape/centcom)
 "qC" = (
-/obj/critter/crunched,
+/mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
 /area/shuttle/escape/centcom)
 "qW" = (
@@ -431,7 +431,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "RD" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwall"
 	},

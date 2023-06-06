@@ -694,7 +694,9 @@
 	UpdateOverlays(null, "hair_special_two", 1, 1)
 	UpdateOverlays(null, "hair_special_three", 1, 1)
 
-	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) || (src.wear_suit && src.wear_suit.body_parts_covered & HEAD))
+	var/obj/item/clothing/suit/back_clothing = src.back // typed version of back to check hair sealage; might not be clothing, we check type below
+	var/seal_hair = ((src.wear_suit && src.wear_suit.over_hair) || (src.head && src.head.seal_hair) \
+						|| (src.wear_suit && src.wear_suit.body_parts_covered & HEAD) || (istype(back_clothing) && back_clothing.over_hair))
 	var/obj/item/organ/head/my_head
 	if (src?.organHolder?.head)
 		var/datum/appearanceHolder/AHH = src.bioHolder?.mobAppearance
@@ -804,6 +806,7 @@
 	UpdateOverlays(src.fire_standing, "fire", 0, 1)
 
 /mob/living/carbon/human/update_inhands()
+	..()
 
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
@@ -883,7 +886,7 @@
 
 var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
-/mob/living/carbon/human/update_body()
+/mob/living/carbon/human/update_body(force = FALSE)
 	..()
 
 	var/datum/appearanceHolder/AHOLD = null
@@ -901,7 +904,14 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 		if (!src.decomp_stage)
 			file = AHOLD.body_icon
 		else
-			file = 'icons/mob/human_decomp.dmi'
+			if (ismonkey(src))
+				file = 'icons/mob/monkey_decomp.dmi'
+				human_decomp_image.icon = file
+				human_untoned_decomp_image.icon = file
+			else
+				file = 'icons/mob/human_decomp.dmi'
+				human_decomp_image.icon = file
+				human_untoned_decomp_image.icon = file
 
 
 		src.body_standing = SafeGetOverlayImage("body", file, "blank", MOB_LIMB_LAYER) // image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
@@ -994,6 +1004,17 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					UpdateOverlays(null, "tail_oversuit")
 
 			else
+				if (src.organHolder?.head && !(AHOLD.mob_appearance_flags & HAS_NO_HEAD))
+					// we dont care about the head image for rotting
+					human_head_image = image(file,src,"head_decomp[src.decomp_stage]", MOB_LIMB_LAYER)
+					human_head_image?.pixel_y = head_offset
+					src.body_standing.overlays += human_head_image
+
+				if (ismonkey(src))
+					// monkey needs diaper
+					human_image.icon_state = "groin_[gender_t]"
+					src.body_standing.overlays += human_image
+
 				human_decomp_image.icon_state = "body_decomp[src.decomp_stage]"
 				src.body_standing.overlays += human_decomp_image
 
@@ -1010,8 +1031,10 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 					var/obj/item/parts/human_parts/limb = src.limbs.vars[name]
 					var/armleg_offset = (name == "r_arm" || name == "l_arm") ? arm_offset : leg_offset
 					if (limb)
-
-						var/image/limb_pic = limb.getMobIcon(src.decomp_stage)	// The limb, not the hand/foot
+						var/mutantrace_override = null
+						if (!limb.decomp_affected && src.mutantrace?.override_limb_icons && (limb.getMobIconState() in src.mutantrace.icon_states))
+							mutantrace_override = src.mutantrace.icon
+						var/image/limb_pic = limb.getMobIcon(src.decomp_stage, mutantrace_override, force)	// The limb, not the hand/foot
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
 							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
@@ -1024,7 +1047,7 @@ var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_
 
 						var/part_icon_s = limb.getPartIconState(src.decomp_stage)
 
-						var/handlimb_icon = limb.getAttachmentIcon(src.decomp_stage)
+						var/handlimb_icon = mutantrace_override || limb.getAttachmentIcon(src.decomp_stage)
 
 						if (limb.decomp_affected && src.decomp_stage)
 							if (hand_icon_s) //isicon

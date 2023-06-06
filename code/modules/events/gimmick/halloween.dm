@@ -32,7 +32,7 @@
 		var/list/spooky_minor = list(/obj/item/storage/goodybag,
 		/obj/critter/zombie/security,
 		/obj/critter/spirit,
-		/obj/critter/blobman,
+		/mob/living/critter/blobman,
 		/mob/living/critter/spider/spacerachnid,
 		/mob/living/critter/lion, //Okay, this one isn't very "spooky"
 		/obj/item/clothing/glasses/regular/ecto,

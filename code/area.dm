@@ -144,6 +144,11 @@ TYPEINFO(/area)
 	/// default environment for sounds - see sound datum vars documentation for the presets.
 	var/sound_environment = 1
 
+	/// A list of parallax layer types to be added to a client's screen on entering this area.
+	var/list/area_parallax_layers = list()
+	/// Whether foreground parallax layers should be occluded from rendering over the contents of this area.
+	var/occlude_foreground_parallax_layers = FALSE
+
 	/// set to TRUE to inhibit attacks in this area.
 	var/sanctuary = 0
 
@@ -194,6 +199,8 @@ TYPEINFO(/area)
 
 				if (sound_loop)
 					M.client.playAmbience(src, AMBIENCE_LOOPING, sound_loop_vol)
+
+				M.client.parallax_controller?.update_area_parallax_layers(src, lastarea)
 
 				if (!played_fx_1 && prob(AMBIENCE_ENTER_PROB))
 					src.pickAmbience()
@@ -566,8 +573,36 @@ TYPEINFO(/area)
 			jerk.remove()
 
 		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
+			#ifdef CHECK_MORE_RUNTIMES
+			if(current_state <= GAME_STATE_WORLD_NEW)
+				CRASH("[identify_object(O)] got deleted by area_that_kills_you_if_you_enter_it at [O.x],[O.y],[O.z] ([O.loc.loc] [O.loc.type]) during world initialization")
+			#endif
 			qdel(O)
 		. = ..()
+
+/area/area_that_teleports_you_to_space_if_you_enter_it
+	name = "Invisible energy field that will teleport you to space if you step into it"
+	skip_sims = 1
+	sims_score = 0
+	icon_state = "go_to_space"
+	requires_power = 0
+	teleport_blocked = 1
+
+	Entered(atom/movable/O)
+		if (isobserver(O))
+			return
+		if (ismob(O))
+			var/mob/jerk = O
+			if ((jerk.client && jerk.client.flying) || (ismob(jerk) && HAS_ATOM_PROPERTY(jerk, PROP_MOB_NOCLIP)))
+				return
+			var/turf/target = random_space_turf() || random_nonrestrictedz_turf()
+			jerk.set_loc(target)
+			logTheThing(LOG_COMBAT, jerk, "(of type [jerk.type]) was teleported to [log_loc(target)] by the area that teleports you to space if you enter it at [log_loc(jerk)]")
+		else if (isobj(O) && !(istype(O, /obj/overlay/tile_effect) || O.anchored == 2 || istype(O, /obj/landmark)))
+			var/turf/target = random_space_turf() || random_nonrestrictedz_turf()
+			O.set_loc(target)
+		. = ..()
+
 /area/battle_royale_spawn //People entering VR or exiting VR with stupid exploits are jerks.
 	name = "Battle Royale warp zone"
 	skip_sims = 1
@@ -733,6 +768,13 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/owlery
 	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/typhon/donut3,
+		/atom/movable/screen/parallax_layer/asteroids_far,
+		/atom/movable/screen/parallax_layer/asteroids_near,
+		)
 
 /area/shuttle/john/mining
 	name = "John's Bus Outpost Dock"
@@ -741,6 +783,12 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/grillnasium
 	name = "John's Bus Factory Dock"
 	icon_state = "shuttle"
+	// Settings should match /area/grillnasium
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/shuttle/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
@@ -748,6 +796,11 @@ ABSTRACT_TYPE(/area/shuttle)
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
 	force_fullbright = 0
 	sound_group = "ice_moon"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/snow,
+		/atom/movable/screen/parallax_layer/foreground/snow/sparse,
+		)
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/icebase_elevator/lower
 	name = "Chasm Lift Lower Section"
@@ -830,7 +883,10 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.warp_dir & NORTH || src.warp_dir & SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
 
 /area/shuttle/escape/transit
 	warp_dir = NORTH
@@ -871,7 +927,12 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
-			M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			if (src.throw_dir == NORTH || src.throw_dir == SOUTH)
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp)
+			else
+				M.removeOverlayComposition(/datum/overlayComposition/shuttle_warp/ew)
+
+
 /area/shuttle_transit_space/north
 	icon_state = "shuttle_transit_space_n"
 	throw_dir = NORTH
@@ -1300,6 +1361,11 @@ TYPEINFO(/area/diner)
 	name = "Void Diner"
 	icon_state = "purple"
 	requires_power = FALSE
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/void,
+		/atom/movable/screen/parallax_layer/void/clouds_1,
+		/atom/movable/screen/parallax_layer/void/clouds_2,
+		)
 
 /area/tech_outpost
 	name = "Tech Outpost"
@@ -1344,6 +1410,7 @@ ABSTRACT_TYPE(/area/prefab)
 
 /area/prefab/vault
 	name = "Secure Vault"
+
 /area/prefab/discount_dans_asteroid
 	name = "Discount Dan's Delivery Asteroid"
 	icon_state = "orange"
@@ -1441,6 +1508,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/adrift_cargorouter
 	name = "Adrift Cargo Router"
 	icon_state = "yellow"
+
+/area/prefab/larrys_laundry
+	name = "Larry's Laundry"
+	icon_state = "green"
 
 // Sealab trench areas //
 
@@ -3496,6 +3567,23 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "red"
 	sanctuary = 1
 	teleport_blocked = 1
+	area_parallax_layers = list(
+	/atom/movable/screen/parallax_layer/space_1,
+	/atom/movable/screen/parallax_layer/space_2,
+	/atom/movable/screen/parallax_layer/asteroids_far
+	)
+
+/// Used to allow the exterior of the Magpie to render parallax layers.
+/area/salvager_space
+	name = "Salvager Vessel Magpie Space"
+	sanctuary = 1
+	teleport_blocked = 1
+	// Must match /area/salvager
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_far
+		)
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
@@ -3517,23 +3605,43 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 2
 	teleport_blocked = 1
 	sound_group = "syndicate_station"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
+
+/// Used to allow the exterior of the Cairngorm to render parallax layers.
+/area/syndicate_station_space
+	name = "Syndicate Station Space"
+	teleport_blocked = 1
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 /area/syndicate_station/battlecruiser
-		name = "Syndicate Battlecruiser Cairngorm"
-		icon_state = "red"
-		sanctuary = 1
+	name = "Syndicate Battlecruiser Cairngorm"
+	icon_state = "red"
+	sanctuary = 1
 
 /area/syndicate_station/firing_range
-		name = "firing range"
-		icon_state = "blue"
+	name = "firing range"
+	icon_state = "blue"
 
 /area/syndicate_station/assault_pod
-		name = "forward assault pod"
-		icon_state = "red"
+	name = "forward assault pod"
+	icon_state = "red"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1/south,
+		/atom/movable/screen/parallax_layer/space_2/south,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse/south,
+		)
 
 /area/syndicate_station/medbay
-		name = "medical bay"
-		icon_state = "purple"
+	name = "medical bay"
+	icon_state = "purple"
 
 // end syndie //
 
@@ -3544,6 +3652,11 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	sound_environment = 4
 	teleport_blocked = 1
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
@@ -3553,6 +3666,14 @@ ABSTRACT_TYPE(/area/station/catwalk)
 			boutput(M, "<span class='alert'>A magical barrier prevents you from entering!</span>") //or something
 			return FALSE
 		return TRUE
+
+/area/wizard_station_space
+	name = "Wizard's Den Space"
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/space_1,
+		/atom/movable/screen/parallax_layer/space_2,
+		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+		)
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored
@@ -3619,8 +3740,8 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, .proc/authorize)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, .proc/unauthorize)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
 		SPAWN(5 SECONDS)
 			var/area/A = locate(/area/station/ai_monitored/armory)
 			for(var/obj/item/O in A)
@@ -3762,6 +3883,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
+	do_not_irradiate = 1
 	requires_power = FALSE
 	minimaps_to_render_on = null
 

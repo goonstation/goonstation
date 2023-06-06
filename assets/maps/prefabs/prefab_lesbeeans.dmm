@@ -130,13 +130,6 @@
 /obj/map/light/brighterwhite,
 /turf/variableTurf/clear,
 /area/noGenerate)
-"pm" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/unsimulated/floor/airless/plating/catwalk,
-/area/prefab/lesbeeans/exterior)
 "pr" = (
 /obj/machinery/plantpot/bareplant/crop,
 /turf/unsimulated/grass,
@@ -200,12 +193,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"vx" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/unsimulated/floor/airless/plating/catwalk,
-/area/prefab/lesbeeans/exterior)
 "wc" = (
 /obj/cable/white{
 	icon_state = "5-8"
@@ -264,13 +251,6 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"Du" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/unsimulated/floor/airless/plating/catwalk,
-/area/prefab/lesbeeans/exterior)
 "DV" = (
 /obj/lattice{
 	dir = 10;
@@ -303,13 +283,6 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/auto/dirt,
-/area/prefab/lesbeeans/exterior)
-"Id" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/unsimulated/floor/airless/plating/catwalk,
 /area/prefab/lesbeeans/exterior)
 "Ig" = (
 /obj/cable{
@@ -847,7 +820,7 @@ Tb
 Jp
 Jp
 in
-Du
+sm
 sm
 Ec
 Sz
@@ -872,9 +845,9 @@ Tb
 Tb
 Jp
 in
-Du
-pm
-Du
+sm
+sm
+sm
 sm
 cs
 dq
@@ -898,9 +871,9 @@ Tb
 Tb
 Jp
 in
-vx
-Du
-pm
+sm
+sm
+sm
 WN
 Ye
 VK
@@ -924,10 +897,10 @@ Tb
 Tb
 Jp
 in
-Id
-pm
+sm
+sm
 in
-Du
+sm
 sm
 pr
 cs
@@ -952,8 +925,8 @@ Jp
 Jp
 in
 in
-Du
-pm
+sm
+sm
 in
 Ec
 Ec
@@ -978,10 +951,10 @@ Jp
 Jp
 Jp
 in
-vx
+sm
 in
-Du
-pm
+sm
+sm
 Ec
 Ec
 Ec
@@ -1004,9 +977,9 @@ Jp
 Jp
 Jp
 in
-Id
 sm
-pm
+sm
+sm
 in
 Jp
 Jp

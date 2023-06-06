@@ -5866,18 +5866,6 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
-"bhL" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/obj/machinery/computer/mining_shuttle,
-/turf/space,
-/area/russian/radiation)
 "bhO" = (
 /obj/cable{
 	d1 = 4;
@@ -11716,8 +11704,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/space,
 /area/russian/radiation)
@@ -11978,8 +11965,7 @@
 /area/russian/radiation)
 "bDh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/storage/closet/emergency,
 /obj/item/clothing/suit/space/emerg,
@@ -13213,8 +13199,7 @@
 /area/russian/radiation)
 "bKc" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -14819,7 +14804,7 @@
 	icon_state = "2-4"
 	},
 /obj/table/wood/auto,
-/obj/item/storage/bible,
+/obj/item/bible,
 /obj/item/reagent_containers/glass/bottle/holywater,
 /turf/space,
 /area/russian/radiation)
@@ -18628,7 +18613,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "Altar"
 	},
-/obj/item/storage/bible,
+/obj/item/bible,
 /turf/simulated/floor/carpet/blue/fancy/edge/ne{
 	desc = " It is made of temp.";
 	opaque_atom_count = 1
@@ -19135,8 +19120,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 1;
@@ -21390,7 +21374,7 @@
 "csY" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south{
 	desc = " It is made of temp."
@@ -41883,8 +41867,7 @@
 /area/russian/radiation)
 "frr" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/cargo{
@@ -45508,8 +45491,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -45818,8 +45800,7 @@
 /area/russian/radiation)
 "gZd" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/cable{
 	d1 = 2;
@@ -47613,8 +47594,7 @@
 /area/russian/radiation)
 "icu" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/machinery/firealarm{
 	dir = 4;
@@ -48617,8 +48597,7 @@
 /area/russian/radiation)
 "iBS" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/cable{
 	d1 = 2;
@@ -51509,8 +51488,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -53059,8 +53037,7 @@
 "kyK" = (
 /obj/storage/secure/crate/weapon/armory/pod_weapons,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -54857,8 +54834,7 @@
 /area/russian/radiation)
 "lrx" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/black{
@@ -55806,8 +55782,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
@@ -56361,8 +56336,7 @@
 /area/russian/radiation)
 "lZv" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8;
@@ -58677,8 +58651,7 @@
 /obj/item/kitchen/food_box/egg_box,
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor/white/checker{
 	desc = " It is made of steel.";
@@ -63899,7 +63872,7 @@
 	},
 /area/russian/radiation)
 "pFl" = (
-/obj/item/storage/toolbox,
+/obj/item/storage/toolbox/mechanical/empty,
 /turf/space,
 /area/space)
 "pFp" = (
@@ -64425,8 +64398,7 @@
 /area/russian/radiation)
 "pRX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/yellow{
@@ -65141,8 +65113,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/decal/tile_edge/line/yellow{
 	icon_state = "line1"
@@ -65302,8 +65273,7 @@
 /area/russian/radiation)
 "qpW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /obj/cable{
 	d1 = 4;
@@ -65954,8 +65924,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor{
 	desc = " It is made of steel.";
@@ -66960,8 +66929,7 @@
 /area/russian/radiation)
 "qXX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-15"
@@ -67960,8 +67928,7 @@
 /area/russian/radiation)
 "rwD" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10;
-
+	dir = 10
 	},
 /turf/simulated/floor/black{
 	broken = 1;
@@ -70744,18 +70711,14 @@
 	dir = 8;
 	name = "trash sorting chair"
 	},
-/obj/grille/catwalk/jen/side{
-	dir = 9
-	},
+/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "sSi" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -70763,9 +70726,7 @@
 	},
 /area/russian/radiation)
 "sSx" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/disposal_pipedispenser,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -70773,9 +70734,7 @@
 	},
 /area/russian/radiation)
 "sSD" = (
-/obj/grille/catwalk/jen/side{
-	dir = 1
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/vending/janitor,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating{
@@ -70795,9 +70754,7 @@
 /turf/space,
 /area/russian/radiation)
 "sST" = (
-/obj/grille/catwalk/jen/side{
-	dir = 5
-	},
+/obj/grille/catwalk/jen,
 /obj/machinery/drainage,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -71174,11 +71131,9 @@
 /turf/space,
 /area/russian/radiation)
 "ted" = (
-/obj/grille/catwalk/jen/side{
-	dir = 10
-	},
+/obj/grille/catwalk/jen,
 /obj/item/reagent_containers/food/snacks/hotdog{
-	initial_reagents = list("yuck" = 10, "nicotine" = 10);
+	initial_reagents = list("yuck"=10,"nicotine"=10);
 	name = "free hotdog"
 	},
 /obj/disposalpipe/segment/mineral{
@@ -71190,7 +71145,7 @@
 	},
 /area/russian/radiation)
 "tev" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -71198,25 +71153,16 @@
 	},
 /area/russian/radiation)
 "tew" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "teO" = (
-/obj/grille/catwalk/jen/side,
+/obj/grille/catwalk/jen,
 /obj/item/clothing/head/merchant_hat,
 /obj/disposalpipe/segment/ejection,
-/turf/simulated/floor/plating{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/russian/radiation)
-"tfV" = (
-/obj/grille/catwalk/jen/side{
-	dir = 6
-	},
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -91980,7 +91926,7 @@ bAC
 beR
 bfw
 xHU
-bhL
+bew
 bit
 bjg
 bku
@@ -144412,7 +144358,7 @@ shj
 svL
 sIL
 sST
-tfV
+tew
 tpw
 tzO
 tEu
