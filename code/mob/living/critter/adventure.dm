@@ -448,6 +448,7 @@
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
+	var/halt_cooldown = 3 SECONDS
 
 	passive
 		desc = "A strange man dressed in medieval armor."
@@ -524,7 +525,7 @@
 		..()
 
 	proc/HALT()
-		if(!ON_COOLDOWN(src, "say_HALT!", 3 SECONDS))
+		if(!ON_COOLDOWN(src, "say_HALT!", src.halt_cooldown))
 			src.say("HALT!")
 			playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 
