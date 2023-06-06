@@ -274,6 +274,15 @@
 /obj/submachine/weapon_vendor/fishing/portable
 	anchored = 0
 
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !(src.anchored)
+			return
+		else
+			return ..()
+
 // Materiel avaliable for purchase:
 
 /datum/materiel

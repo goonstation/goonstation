@@ -300,7 +300,7 @@ Alien/mutant/other fish:
 /obj/item/fish/bc_angelfish
 	name = "bicolor angelfish"
 	desc = "It's like two fish in one! Apparently they don't get along with other fish though, at least they have each other."
-	icon_state = "bc_angelfish"
+	icon_state = "bc_angel"
 	inhand_color = "#3005f0"
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_UNCOMMON
