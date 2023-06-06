@@ -1613,6 +1613,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Power Kit"
 
+/datum/supply_packs/complex/basic_power_kit
+	name = "Emergency Power Equipment"
+	desc = "Frames: 2x Circular Power Treadmills"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/power/power_wheel/hamster = 2)
+	cost = 15000
+	containertype = /obj/storage/crate
+	containername = "Crew Power Generation Kit"
+
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"
 	category = "Research Department"
