@@ -40601,7 +40601,7 @@
 	desc = "Gross.";
 	name = "old kidney"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cxx" = (
