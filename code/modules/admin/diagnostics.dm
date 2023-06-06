@@ -1424,7 +1424,7 @@ proc/debug_map_apc_count(delim,zlim)
 	materials
 		name = "materials"
 		help = "Displays material of things.<br>Hover over a tile to see what is made out of them."
-		include_turfs = TRUE
+		var/include_turfs = TRUE
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/list/materials = list()
 			var/list/detailed_materials = list()
@@ -1450,6 +1450,10 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
 		include_turfs = FALSE
 
+	reagents
+		name = "reagents"
+		help = "TODO"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
