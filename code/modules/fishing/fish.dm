@@ -85,6 +85,8 @@ Alien/mutant/other fish:
 	var/category = null
 	// How many points is this fish worth in the upload terminal?
 	var/value = FISH_RARITY_COMMON
+	// If this is set to true, the fish cannot be turned in for points
+	var/fishing_upload_blacklisted = FALSE
 
 	New()
 		..()
@@ -127,6 +129,8 @@ Alien/mutant/other fish:
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		var/type = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
 		var/obj/item/fish/newfish = new type(src.loc)
+		newfish.fishing_upload_blacklisted = TRUE
+		newfish.desc += " The quality of this organical grown fish sadly doesn't compare to one catched in the wild."
 		qdel(src)
 		return newfish
 
