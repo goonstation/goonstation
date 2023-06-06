@@ -51,10 +51,11 @@ Aquarium saltwater fish:
 Alien/mutant/other fish:
 	Implemented:
 		Meat mutant
-		Blood fish
 		Eye fish
 		Void fish
 		Sun fish
+	Unimplemented:
+		Blood fish
 		Lava fish
 		Blobfish
 */
@@ -335,14 +336,14 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#af2323"
 	value  = FISH_RARITY_RARE
-
+/*
 /obj/item/fish/blood_fish
 	name = "blood fish"
 	desc = "A viscous, gory mass of congealed blood. You're really stretching the definition of fish here."
 	icon_state = "bass_old"
 	inhand_color = "#af2323"
 	value  = FISH_RARITY_RARE
-
+*/
 /obj/item/fish/eye_mutant
 	name = "eye mutant"
 	desc = "Was this a fish once? It's got too many eyes on you."
@@ -354,7 +355,7 @@ Alien/mutant/other fish:
 /obj/item/fish/void_fish
 	name = "void fish"
 	desc = "This fish has swum through the timestream to witness the death of the universe. Probably doesn't fry too well."
-	icon_state = "bass_old"
+	icon_state = "void_fish"
 	inhand_color = "#8f3ed1"
 	value  = FISH_RARITY_RARE
 
@@ -362,10 +363,10 @@ Alien/mutant/other fish:
 /obj/item/fish/sun_fish
 	name = "literal sun fish"
 	desc = "Nobody will ever believe you."
-	icon_state = "bass_old"
+	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
-
+/*
 //lava moon
 /obj/item/fish/lava_fish
 	name = "lava fish"
@@ -373,7 +374,7 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#eb2d2d"
 	value  = FISH_RARITY_RARE
-/*
+
 //blob
 /obj/item/fish/blobfish
 	name = "Blobfish"
@@ -381,4 +382,4 @@ Alien/mutant/other fish:
 	icon_state = "bass_old"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
-/*
+*/
