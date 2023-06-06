@@ -108,7 +108,7 @@
 	name = "false wall triggerable endpoint"
 	var/turf/unsimulated/wall/adaptive/wizard_fake/attached
 	invisibility = INVIS_ADVENTURE
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -286,7 +286,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	flags = ON_BORDER
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS_ISH
 	icon = null
 	icon_state = null
@@ -295,7 +295,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	name = "cover"
 	desc = "A cover. Usually covers showcased objects. Hopefully."
 	layer = EFFECTS_LAYER_BASE
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/list/dummies = list()
@@ -395,7 +395,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	desc = "A magical stand. Looks like it's missing a part."
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "pedestal_empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/obj/item/orb/O = null
@@ -652,7 +652,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 /obj/wizard_light
 	name = "empty crystal socket"
 	desc = "A holder for light crystals."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/turf/adventure.dmi'
@@ -810,7 +810,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	desc = "A wooden furniture used for the storage of books."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/id = null
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "bookcase_empty_alone"

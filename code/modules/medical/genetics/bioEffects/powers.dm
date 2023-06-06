@@ -11,7 +11,6 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = null
 
@@ -1022,7 +1021,7 @@
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
 			// Superfarted on the bible? Off to hell.
-			for (var/obj/item/storage/bible/B in owner.loc)
+			for (var/obj/item/bible/B in owner.loc)
 				if(gib_user)
 					owner.mind.damned = TRUE
 				else
@@ -1558,7 +1557,7 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	icon = null
 	icon_state = null
@@ -1714,7 +1713,7 @@
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
 				if(count++ > (4 + src.linked_power.power * 3)) break
-				if(locate(/obj/item/storage/bible) in get_turf(L))
+				if(locate(/obj/item/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
 				else

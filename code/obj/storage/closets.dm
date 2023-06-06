@@ -154,6 +154,8 @@
 	/obj/item/clothing/shoes/black,
 	/obj/item/storage/briefcase = 2)
 
+TYPEINFO(/obj/storage/closet/coffin)
+	mat_appearances_to_ignore = list("wood")
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."
@@ -165,7 +167,6 @@
 	open_sound = 'sound/misc/coffin_open.ogg'
 	close_sound = 'sound/misc/coffin_close.ogg'
 	volume = 70
-	mat_appearances_to_ignore = list("wood")
 
 	wood
 		icon_closed = "woodcoffin"
@@ -243,7 +244,7 @@
 /obj/storage/closet/thunderdome
 	name = "\improper Thunderdome closet"
 	desc = "Everything you need!"
-	anchored = 1
+	anchored = ANCHORED
 
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
@@ -403,7 +404,7 @@
 	icon_welded = "mantacontainerleft-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	open(var/entangleLogic, mob/user)
 		if (src.open)
@@ -507,6 +508,7 @@
 						I.set_loc(src)
 					amtload++
 				W:UpdateIcon()
+				W.tooltip_rebuild = 1
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -584,7 +586,7 @@
 	icon_welded = "mantacontainerright-welded"
 	bound_height = 96
 	bound_width = 32
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/storage/closet/radiation
 	name = "radiation supplies closet"

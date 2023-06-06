@@ -1,6 +1,3 @@
-TYPEINFO(/obj)
-	var/list/mats = 0 // either a number or a list of the form list("MET-1"=5, "erebite"=3)
-
 /obj
 	var/real_name = null
 	var/real_desc = null
@@ -10,14 +7,10 @@ TYPEINFO(/obj)
 	var/quality = 1
 	var/adaptable = 0
 
-	var/is_syndicate = 0
 	var/deconstruct_flags = DECON_NONE
 
-	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
-	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
-	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
-	var/mechanics_type_override = null
-	var/artifact = null
+	var/datum/artifact/artifact = null
+	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
 
@@ -33,9 +26,6 @@ TYPEINFO(/obj)
 		if (HAS_FLAG(object_flags, HAS_DIRECTIONAL_BLOCKING))
 			var/turf/T = get_turf(src)
 			T?.UpdateDirBlocks()
-		var/typeinfo/obj/typeinfo = src.get_typeinfo()
-		if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
-			src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 		src.update_access_from_txt()
 
 	Move(NewLoc, direct)
@@ -82,14 +72,6 @@ TYPEINFO(/obj)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
-
-	proc/move_trigger(var/mob/M, var/kindof)
-		var/atom/movable/x = loc
-		while (x && !isarea(x) && x != M)
-			x = x.loc
-		if (!x || isarea(x))
-			return 0
-		return 1
 
 	proc/move_callback(var/mob/M, var/turf/source, var/turf/target)
 		return
@@ -281,7 +263,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/suit/bedsheet))
@@ -309,7 +291,7 @@ TYPEINFO(/obj)
 	icon_state = "bedbin"
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 	var/amount = 23
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/under/towel))
@@ -338,7 +320,7 @@ TYPEINFO(/obj)
 	icon_state = "lattice"
 	density = 0
 	stops_space_move = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
 	//	flags = CONDUCT
@@ -362,7 +344,26 @@ TYPEINFO(/obj)
 				return
 			else
 
+	proc/replace_with_catwalk(var/obj/item/rods/rods)
+		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
+		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
+		T.MakeCatwalk(rods)
+		qdel(src)
+
 	attackby(obj/item/C, mob/user)
+		if (istype(C, /obj/item/rods))
+			var/actionbar_duration = 2 SECOND
+
+			if (ishuman(user))
+				if (user.traitHolder.hasTrait("training_engineer"))
+					src.replace_with_catwalk(C)
+					return // Engineers can bypass the actionbar and instantly put down catwalks.
+
+				if (user.traitHolder.hasTrait("carpenter"))
+					actionbar_duration /= 2
+
+			user.show_text("You start putting the rods together and making a catwalk...", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
 
 		if (istype(C, /obj/item/tile))
 			var/obj/item/tile/T = C
@@ -376,12 +377,6 @@ TYPEINFO(/obj)
 			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
 			new /obj/item/rods/steel(src.loc)
 			qdel(src)
-		if (istype(C, /obj/item/rods))
-			var/obj/item/rods/R = C
-			if (R.change_stack_amount(-2))
-				boutput(user, "<span class='notice'>You assemble a barricade from the lattice and rods.</span>")
-				new /obj/lattice/barricade(src.loc)
-				qdel(src)
 		return
 
 /obj/lattice/barricade
@@ -451,7 +446,7 @@ TYPEINFO(/obj)
 
 /obj/overlay
 	name = "overlay"
-	anchored = TRUE
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
@@ -486,7 +481,7 @@ TYPEINFO(/obj)
 
 /obj/projection
 	name = "Projection"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/item/mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 
@@ -560,3 +555,8 @@ TYPEINFO(/obj)
 			src.throw_at(get_edge_target_turf(src,get_dir(AM, src)), 10, 1)
 		else if(AM.throwforce >= 80 && !isrestrictedz(src.z))
 			src.meteorhit(AM)
+
+/obj/proc/become_mimic()
+	var/mob/living/critter/mimic/replacer = new(get_turf(src.loc))
+	replacer.disguise_as(src)
+	qdel(src)

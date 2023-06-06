@@ -61,7 +61,7 @@
 
 	New()
 		..()
-		anchored = 1
+		anchored = ANCHORED
 		firevuln = 0
 		brutevuln = 0
 		miscvuln = 0
@@ -122,7 +122,7 @@
 				qdel(src)
 
 	process()
-		anchored = 1
+		anchored = ANCHORED
 		if (!src.alive) return 0
 
 		if(sleeping > 0)
@@ -311,7 +311,7 @@
 								linear_purge()
 							else
 								gyrating_edge()
-			anchored = 1
+			anchored = ANCHORED
 
 
 //-TRANSFORMATIONS-//
@@ -845,7 +845,7 @@
 					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("weakened", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)

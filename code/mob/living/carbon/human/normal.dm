@@ -204,3 +204,28 @@
 			C.access = ntso_access
 
 		update_clothing()
+
+/mob/living/carbon/human/normal/random_clothes
+	var/static/valid_back_item_types
+	New()
+		. = ..()
+		if (!valid_back_item_types)
+			valid_back_item_types = list()
+			for (var/type in concrete_typesof(/obj/item/clothing/suit))
+				if (initial(type:c_flags) & ONBACK)
+					valid_back_item_types += type
+		var/newback = pick(valid_back_item_types)
+		var/newhat = pick(concrete_typesof(/obj/item/clothing/head))
+		var/newsuit = pick(concrete_typesof(/obj/item/clothing/suit))
+		var/newgloves = pick(concrete_typesof(/obj/item/clothing/gloves))
+		var/newunder = pick(concrete_typesof(/obj/item/clothing/under))
+		var/newbelt = pick(concrete_typesof(/obj/item/storage/belt) + concrete_typesof(/obj/item/storage/fanny))
+		var/newshoes = pick(concrete_typesof(/obj/item/clothing/shoes))
+
+		src.equip_new_if_possible(newback, SLOT_BACK)
+		src.equip_new_if_possible(newhat, SLOT_HEAD)
+		src.equip_new_if_possible(newsuit, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(newgloves, SLOT_GLOVES)
+		src.equip_new_if_possible(newunder, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(newbelt, SLOT_BELT)
+		src.equip_new_if_possible(newshoes, SLOT_SHOES)

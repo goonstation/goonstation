@@ -73,7 +73,7 @@
 	desc = "Would dispense paint, if it were not broken."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/repair_stage = 0
 	var/paint_needed = 20

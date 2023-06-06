@@ -19,7 +19,7 @@ var/static/list/obj/machinery/disposal_pipedispenser/availdisposalpipes = list(
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "pipe-fab"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/dispenser_ready = TRUE
@@ -97,7 +97,7 @@ TYPEINFO(/obj/machinery/disposal_pipedispenser/mobile)
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
 	desc = "A tool for removing some of the tedium from pipe-laying."
-	anchored = FALSE
+	anchored = UNANCHORED
 	icon_state = "fab-mobile"
 	mobile = TRUE
 

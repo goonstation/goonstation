@@ -11,7 +11,7 @@
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
 	icon_state = "wall-monitor"
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 30
 	layer = OBJ_LAYER+1
 	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE

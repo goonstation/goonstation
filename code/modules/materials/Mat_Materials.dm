@@ -501,12 +501,13 @@ ABSTRACT_TYPE(/datum/material/metal)
 	mat_id = "spacelag"
 	name = "spacelag"
 	desc = "*BUFFERING*"
-	color = "#0F0A08"
+	color = "#3F3A38"
 
 	New()
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
+		addTrigger(triggersOnAdd, new /datum/materialProc/spacelag_add())
 
 
 /datum/material/metal/iridiumalloy
@@ -591,7 +592,6 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 3)
 		setProperty("hard", 4)
 		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
 	beta
@@ -1381,7 +1381,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 	proc/replace_first_consonant_cluster(text, replacement)
 		var/original_text = text
 		var/static/regex/regex = regex(@"\b(?:[bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ][bcdfghjklmnpqrstvwxyz]?)", "g")
-		. = regex.Replace(text, .proc/jeplacement)
+		. = regex.Replace(text, PROC_REF(jeplacement))
 		. = replacetext(., "'j ", "'s ") // fix Jaff assistant'j jumpsuit
 		if(. == original_text)
 			. = "jean [.]"

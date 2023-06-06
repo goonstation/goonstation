@@ -359,6 +359,12 @@
 		icon_state = "chief-dress"
 		item_state = "chief-dress"
 
+	scarf
+		name = "chief engineer's outfit"
+		desc = "A brand new fancy outfit, with a scarf! Still somehow covered with faded oil stains."
+		icon_state = "chief-engineer-scarf"
+		item_state = "chief-engineer-scarf"
+
 /obj/item/clothing/under/rank/research_director
 	name = "research director's uniform"
 	desc = "This suit is ludicrously cheap. They must be embezzling the research budget again."
@@ -1197,6 +1203,8 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 
 // Towels
 
+TYPEINFO(/obj/item/clothing/under/towel)
+	mat_appearances_to_ignore = list("cotton")
 /obj/item/clothing/under/towel
 	name = "towel"
 	desc = "Made of nice, soft terrycloth. Very important when adventuring."
@@ -1215,14 +1223,12 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	burn_output = 800
 	burn_possible = 1
 	rand_pos = 0
+	mat_changename = FALSE
+	default_material = "cotton"
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 10)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
 
 	attack_self(mob/user as mob)
 		add_fingerprint(user)
@@ -1296,7 +1302,17 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 
 // Gimmick Jumpsuits
 
+ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 /obj/item/clothing/under/gimmick
+	name = "Coder Jumpsuit"
+	desc = "This is weird! Report this to a coder!"
+	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
+	icon_state = "sailor"
+	item_state = "sailor"
+
+/obj/item/clothing/under/gimmick/sailor
 	name = "sailor uniform"
 	desc = "What's with these guys?! It's like one of my Japanese animes!"
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
