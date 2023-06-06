@@ -1367,10 +1367,11 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		animate(proxy.get_filter("ladder_climbmask"), y = 32, time = 1 SECOND, flags = ANIMATION_PARALLEL)
 
 	SPAWN(1 SECOND) // after the animation is done, teleport and clean up
-		if (get_turf(otherLadder))
-			user.set_loc(get_turf(otherLadder))
-		else
-			user.set_loc(get_turf(src))
+		if (user.loc == src)
+			if (get_turf(otherLadder))
+				user.set_loc(get_turf(otherLadder))
+			else
+				user.set_loc(get_turf(src))
 
 		src.vis_contents -= proxy
 		qdel(proxy)
