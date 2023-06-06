@@ -578,7 +578,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/aggressive
+	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 
 	setup_hands()
