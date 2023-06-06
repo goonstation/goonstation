@@ -2736,7 +2736,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
 		reagents.add_reagent("anti_rad",7)
-		reagents.add_reagent("omnizine",7)
+		reagents.add_reagent("omnnizine",7)
 
 
 /obj/item/reagent_containers/food/snacks/greengoo
