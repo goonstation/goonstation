@@ -150,9 +150,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	desc = "A round piece of cooked meat engineered to be installed on similarly round buns."
 	icon = 'icons/obj/foodNdrink/burgers.dmi'
 	icon_state = "overlay_patty"
+	sandwich_overlay = "overlay_patty_cooked"
 	heal_amt = 3
 	bites_left = 4
-	sandwich_offset = 3
+	sandwich_offset = 1
 	//todo: add compatibility with shitty grill to have burger patties
 	//have improved stats based on how well they were cooked
 

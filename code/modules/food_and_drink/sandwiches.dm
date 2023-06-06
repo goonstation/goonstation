@@ -601,22 +601,23 @@
 	initial_reagents = list("capsaicin"=15)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_DINNER
 
-/* Notes for Nex
-(If you're reading this, I made a booboo and forgot to remove these notes before making a PR)
+/* Todo for improvements to new sandwiches after initial PR
+- New bite mask (should probably be 32x64px for tall sandwiches, need to rework bite mask)
+- fall_apart() and stability mechanic for if you go above max_ingredients
+ - Maybe also have a chance to fall apart when thrown??
+- Toppings like olives, umbrellas, and sesame seeds
+- Better naming system
+- Grilling mechanics for patties and melts (mmm grilled cheese!)
+- Reagent scanners should scan the ingredient atom too, not just the condiment
 
-GOD MOST OF THIS HEADACHE WOULD BE RESOLVED IF I CAVED IN AND MADE IT IMPOSSIBLE TO DISASSEMBLE BURGERS ONCE MADE BUT I *REFUSE*.
-
-
-==HOW TO HANDLE REAGENTS/CONDIMENTS????==
-Idea: Have assoc list of ingredient || reagent, maybe in the ingredients list
-When rendering an ingredient with a reagent value, put another overlay with the overlay_chem icon_state for that reagent on top of the ingredient
-If the ingredient is removed, dump the reagents into the ingredient
-
-This is actually lowkey simple, fuck yeah
+Eventually replacing the existing sandwiches/burgers with this new system
+- Since we can't just change our type to a child type after initialization we can't redefine ourselves
+ to something like /new_sandwich/burger/cheese for the purposes of selling to vendors
+ - Hopefully nothing relies on that?????
 
 */
 
-/obj/item/reagent_containers/food/snacks/new_sandwich //todo: make better name and/or get rid of old sandwiches/burgers
+/obj/item/reagent_containers/food/snacks/new_sandwich
 	// icon_state remains null since these sandwiches/burgers will consist entirely of overlays
 	name = "incomplete sandwich"
 	var/set_name = ""
@@ -647,6 +648,7 @@ This is actually lowkey simple, fuck yeah
 	/// Assoc list of types || image, intended to specify what image to select for a given ingredient's overlay
 	/// reagent_container/food/snack has its own sandwich_overlay var that we use. This is for other things that don't have that var.
 	var/static/ingredient_sprites = list()
+	var/max_ingredients = 20
 
 
 	New()
@@ -676,6 +678,8 @@ This is actually lowkey simple, fuck yeah
 		if (!base || !first_ingredient)
 			return // how did we get here?
 		src.add_ingredient(user, base, TRUE)
+		if(!isnull(user))
+			user.put_in_hand_or_drop(src)
 		src.add_ingredient(user, first_ingredient)
 
 	disposing()
@@ -687,6 +691,9 @@ This is actually lowkey simple, fuck yeah
 	/// Adds an ingredient to the top of the sandwich.
 	/// starting_sandwich needs to be TRUE for the first ingredient (the bottom slice of bread)
 	proc/add_ingredient(mob/user, var/obj/item/ingredient2add, var/starting_sandwich = FALSE)
+		if (src.ingredients.len > src.max_ingredients)
+			boutput(user, "<span class='alert'>You can't possibly add anymore items to [src]!</span>")
+			return
 		if(ingredient2add.type in bottom_bread_types && !starting_sandwich) // what monster would put a bottom bun on top of their sandwich >:(
 			boutput(user, "<span class='alert'>Hey stop that, you can only use [ingredient2add] as a sandwich base!</span>")
 			return
@@ -796,7 +803,8 @@ This is actually lowkey simple, fuck yeah
 			if (istype(ingredient, /datum/sandwich_ingredient/snack))
 				var/datum/sandwich_ingredient/snack/food_datum = ingredient
 				if (!isnull( food_datum.our_snack.sandwich_overlay ))
-					image2overlay = image('icons/obj/foodNdrink/burgers.dmi', food_datum.our_snack.sandwich_overlay, _layer, pixel_y = our_offset)
+					var/_icon = is_valid_icon_state(food_datum.our_snack.sandwich_overlay, 'icons/obj/foodNdrink/burgers2.dmi') ? 'icons/obj/foodNdrink/burgers2.dmi' : 'icons/obj/foodNdrink/burgers.dmi'
+					image2overlay = image(_icon, food_datum.our_snack.sandwich_overlay, _layer, pixel_y = our_offset)
 				else
 					image2overlay = get_backup_overlay(food_datum.our_snack, key, _layer, our_offset)
 			else
@@ -805,7 +813,7 @@ This is actually lowkey simple, fuck yeah
 
 			var/image/condiment_overlay = null
 			if (ingredient.reagents.total_volume)
-				condiment_overlay = image('icons/obj/foodNdrink/burgers.dmi', "overlay_chem", _layer, pixel_y = our_offset - 5)
+				condiment_overlay = image('icons/obj/foodNdrink/burgers2.dmi', "overlay_reagent", _layer, pixel_y = our_offset - 5)
 				condiment_overlay.color = ingredient.reagents.get_average_color().to_rgba()
 				image2overlay.overlays += condiment_overlay
 			src.UpdateOverlays(image2overlay, key)
@@ -862,7 +870,7 @@ This is actually lowkey simple, fuck yeah
 						sandwich_type = "cheeseburger"
 
 					var/patties = 0
-					for (var/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty in food_atoms)
+					for (var/obj/item/reagent_containers/food/snacks/ingredient/cooked_patty/patty in food_atoms)
 						patties++
 						if (patties > 5)
 							break
@@ -916,58 +924,60 @@ This is actually lowkey simple, fuck yeah
 			else
 				sandwich_type = "dagwood"
 
-		// Honestly we could get rid of this to keep the time honored
-		// tradition of allowing comically long sandwich names
-		for (var/obj/item/reagent_containers/food/snacks/ingredient in food_atoms)
-			food_atoms[ingredient] = ingredient.heal_amt
-			sortList(food_atoms, /proc/cmp_numeric_dsc, TRUE)
+		// Unused, orders based on nutritional value for if we wanna scale back to only a few ingredients in the name
+		/*for (var/obj/item/reagent_containers/food/snacks/ingredient in food_atoms)
+			food_atoms[ingredient] = (ingredient.heal_amt * initial(ingredient.bites_left))
+			sortList(food_atoms, /proc/cmp_numeric_dsc, TRUE)*/
 		var/ingredient_names = ""
-		for (var/i = 1, i < 3, i++)
-			ingredient_names += "\improper[food_atoms[i]], "
-		ingredient_names += "and [food_atoms[3]]"
+		var/prev_ingredient = ""
+		for (var/obj/item/ingredient in food_atoms)
+			if (istype(ingredient, /obj/item/reagent_containers/food/snacks/breadslice))
+				continue
+			if (!prev_ingredient)
+				prev_ingredient = ingredient.name
+				continue
+			ingredient_names += "[prev_ingredient], "
+			prev_ingredient = ingredient.name
+		ingredient_names += "and \the [prev_ingredient]"
 
 		final_name = "[prefix] [ingredient_names] [sandwich_type]"
 		src.set_name = final_name
 		src.name = final_name
 
 
-
-
-
-
-
-
-
-
-
-	proc/update_description()
-
-
 	proc/remove_ingredient(mob/user, datum/sandwich_ingredient/to_remove)
 
 		var/last_index = src.ingredients.len
-		var/next_last_index = last_index - 1
+		var/next_top_index = last_index - 1
+		var/datum/sandwich_ingredient/next_top_datum
 
-		var/datum/sandwich_ingredient/next_top_datum = src.ingredients[next_last_index]
-		var/obj/item/next_top_ingredient = next_top_datum.our_atom // what's gonna be the next thing on top
+		if (next_top_index >= 1)
+			next_top_datum = src.ingredients[next_top_index]
+			next_top_datum.our_atom = next_top_datum.our_atom
+		else
+			if (!isnull(user)) user.drop_item(src)
+			src.ingredients -= to_remove
+			to_remove.remove_ingredient(user)
+			src.dispose()
+			return
+
 		src.ingredients -= to_remove
 		to_remove.remove_ingredient(user)
 
-		if(!is_valid_finisher(next_top_ingredient))
+		if (next_top_datum && !is_valid_finisher(next_top_datum.our_atom))
 			src.complete = FALSE
 			src.reagents = next_top_datum.reagents
-		else
+		else if (next_top_datum)
 			src.complete = TRUE
 			src.reagents = src.original_reagents
 
+
 		src.render_sandwich()
-		if (next_last_index > 1 && is_valid_finisher(next_top_ingredient))
+		if (next_top_index > 1 && is_valid_finisher(next_top_datum.our_atom))
 			src.simulate_sandwich()
-		else if (next_last_index == 1)
-			var/datum/sandwich_ingredient/bottom_datum = src.ingredients[1]
-			var/obj/item/bottom_ingredient = bottom_datum.our_atom
-			!isnull(user) ? user.put_in_hand_or_drop(bottom_ingredient) : bottom_ingredient.set_loc(src.loc)
-			src.dispose()
+		else if (next_top_index == 1)
+			src.remove_ingredient(user, next_top_datum)
+
 
 	/// Checks if ingredient is in vers or top bread lists and thus can be used to complete a sandwich
 	proc/is_valid_finisher(obj/item/ingredient)
@@ -1058,6 +1068,8 @@ This is actually lowkey simple, fuck yeah
 		if (istype(W, /obj/item/shaker) || istype(W, /obj/item/reagent_containers/food/snacks/condiment) || (W.reagents && !istype(W, /obj/item/reagent_containers/food/snacks))) // is this something that might've given us reagents?
 			SPAWN(0) //just to make sure the reagents transfer *before* we render
 				src.render_sandwich() // need to update condiment appearances!
+		else if (istype(W, /obj/item/pen))
+			src.name_sandwich(user, W)
 		else if (!..() && istype(W, /obj/item/reagent_containers/food/snacks) && !istype(W, /obj/item/reagent_containers/food/snacks/condiment) && !istype(W, /obj/item/shaker))
 			src.add_ingredient(user, W, FALSE)
 
@@ -1099,11 +1111,8 @@ This is actually lowkey simple, fuck yeah
 		if(our_atom && reagents)
 			src.reagents.trans_to(our_atom, reagents.total_volume)
 		if(our_atom && !our_atom.disposed)
-			if(!isnull(user))
-				user.put_in_hand_or_drop(our_atom)
-			else
-				our_atom.set_loc(our_parent.loc)
-		spawn()
+			!isnull(user) ? user.put_in_hand_or_drop(our_atom) : our_atom.set_loc(our_parent.loc)
+		SPAWN(0)
 			src.dispose()
 
 /datum/sandwich_ingredient/snack

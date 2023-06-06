@@ -271,7 +271,7 @@
 		heal_amt = 5
 		real_name = "elvis toast"
 		initial_volume = 30
-		initial_reagents = list("bread"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"essenceofelvis"=25)
 		food_effects = list("food_warm", "food_energized")
 		meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
@@ -319,7 +319,7 @@
 		heal_amt = 6
 		real_name = "elvis cheese toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"cheese"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"cheese"=5,"essenceofelvis"=25)
 
 	New()
 		..()
@@ -348,7 +348,7 @@
 		heal_amt = 4
 		real_name ="bacon elvis toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"porktonium"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"porktonium"=5,"essenceofelvis"=25)
 
 	New()
 		..()
@@ -473,13 +473,12 @@
 /obj/item/reagent_containers/food/snacks/bun_bottom
 	name = "hamburger bun"
 	desc = "The bottom half of a hamburger bun, ready to be assembled into a burger!"
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_bottom"
 	bites_left = 3
 	heal_amt = 1
+	sandwich_offset = 0
 	//food_color =
-	sandwich_overlay = "bun_bottom"
-	sandwich_offset = -1
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
@@ -495,17 +494,16 @@
 /obj/item/reagent_containers/food/snacks/bun_top
 	name = "hamburger bun"
 	desc = "The top half of a hamburger bun, ready to top off a burger!"
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_top"
 	bites_left = 3
 	heal_amt = 1
 	//food_color =
-	sandwich_overlay = "bun_top"
 
 /obj/item/reagent_containers/food/snacks/bun_both
 	name = "hamburger buns"
 	desc = "A pair of hamburger buns. You should probably separate them if you want to use them."
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_both"
 	bites_left = 6
 	heal_amt = 1

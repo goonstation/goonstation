@@ -895,11 +895,11 @@
 
 	if(src.client)
 		if(singing)
-			phrase_log.log_phrase("sing", message, user = src)
+			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
 		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src)
+			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
 		else
-			phrase_log.log_phrase("say", message, user = src)
+			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
 
 	last_words = message
 
@@ -1129,11 +1129,11 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (!message_range && speechpopups && src.chat_text)
-		//new /obj/maptext_junk/speech(src, msg = messages[1], style = src.speechpopupstyle) // sorry, Zamu
-		if(!last_heard_name || src.get_heard_name() != src.last_heard_name)
-			var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
+		if(!last_heard_name || heard_name != src.last_heard_name)
+			var/num = hex2num(copytext(md5(heard_name), 1, 7))
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			src.last_heard_name = src.get_heard_name()
+			src.last_heard_name = heard_name
 
 		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
@@ -1258,8 +1258,11 @@
 	for (var/atom/A as anything in all_view(message_range, src))
 		A.hear_talk(src,messages,heardname,lang_id)
 
-/mob/proc/get_heard_name()
-	. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
+/mob/proc/get_heard_name(just_name_itself=FALSE)
+	if(just_name_itself)
+		. = src.name
+	else
+		. = "<span class='name' data-ctx='\ref[src.mind]'>[src.name]</span>"
 
 
 /mob/proc/move_callback_trigger(var/obj/move_laying, var/turf/NewLoc, var/oldloc, direct)

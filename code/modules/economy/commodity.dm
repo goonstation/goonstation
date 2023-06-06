@@ -65,6 +65,15 @@
 	upperfluc = 25
 	lowerfluc = -25
 
+/datum/commodity/fish
+	comname = "Fish"
+	comtype = /obj/item/fish
+	onmarket = 1
+	price = 50
+	baseprice = 50
+	upperfluc = 25
+	lowerfluc = -25
+
 /datum/commodity/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
@@ -2262,6 +2271,16 @@
 	baseprice = 200
 	upperfluc = 20
 	lowerfluc = -20
+
+/datum/commodity/clownsabre
+	comname = "C-Sabre"
+	comtype = /obj/item/swords_sheaths/clown
+	desc = "A high quality sabre."
+	onmarket = 0
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
 
 /*
 /datum/commodity/screamshoes

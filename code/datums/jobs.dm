@@ -1659,6 +1659,23 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 		M.bioHolder.AddEffect("bee", magical=1) //They're one with the bees!
 
+
+/datum/job/special/random/angler
+	name = "Angler"
+	wages = PAY_TRADESMAN
+	slot_jump = list(/obj/item/clothing/under/rank/angler)
+	slot_head = list(/obj/item/clothing/head/black)
+	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_poc2 = list(/obj/item/device/pda2/botanist)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+	items_in_backpack = list(/obj/item/fishing_rod/basic)
+
+	New()
+		..()
+		src.access = get_access("Rancher")
+		return
+
 /datum/job/special/random/souschef
 	name = "Sous-Chef"
 	wages = PAY_UNTRAINED

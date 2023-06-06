@@ -296,11 +296,19 @@
 		O.set_loc(T)
 		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
+
+		// if we have a material, give it to the object if the object doesn't have one
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
 		if(istype(O))
 			O.was_built_from_frame(user, 1)
+
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
+
 	if(istype(O))
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
