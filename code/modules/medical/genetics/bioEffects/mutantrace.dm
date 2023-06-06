@@ -92,7 +92,7 @@
 	research_level = EFFECT_RESEARCH_ACTIVATED
 	msgGain = "You become human."
 	msgLose = "ook."
-	icon_state  = "monkey"
+	icon_state  = "blank"
 	probability = 0
 	occur_in_genepools = FALSE
 
