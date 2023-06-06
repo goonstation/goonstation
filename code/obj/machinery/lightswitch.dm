@@ -119,7 +119,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 		toggle_group(user)
 
-/obj/machinery/light_switch/proc/toggle_group(mob/user=null) //update the area, then prompt the group to refresh accordingly
+/obj/machinery/light_switch/proc/toggle_group(mob/user=null) //flip *this* switch, update target area, then prompt the group to refresh accordingly
 	on = !on
 	area.lightswitch = on
 	area.power_change()
@@ -135,7 +135,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
 
-	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual updates for the group, via the toggle proc below
+	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual and switch state updates for the group, via the toggle proc below
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
