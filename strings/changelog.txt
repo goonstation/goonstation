@@ -1,5 +1,10 @@
 
 (t)tue jun 06 23
+(u)Sian
+(p)14321
+(e)🆕🗺🎨📦🍝|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Catering
+(+)You can now slice fish fillet with a cutting tool to get fish fillet slices.
+(+)Nigiri rolls recipe now require fish fillet slices instead of fillet itself. Nigiri rolls can also be made out of small fish fillet slices.
 (u)Colossusqw
 (p)14277
 (e)🆕🔬|C-Feature, A-Science
