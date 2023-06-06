@@ -39030,8 +39030,13 @@
 	},
 /area/station/bridge)
 "bOC" = (
-/obj/machinery/status_display{
-	pixel_y = -30
+/obj/table/reinforced/bar/auto,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -39039,7 +39044,6 @@
 	},
 /area/station/bridge)
 "bOD" = (
-/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -39047,6 +39051,8 @@
 	tag = ""
 	},
 /obj/machinery/light/emergency,
+/obj/table/reinforced/bar/auto,
+/obj/machinery/coffeemaker/command,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -39662,6 +39668,9 @@
 "bPZ" = (
 /obj/machinery/disposal/mail/autoname/bridge,
 /obj/disposalpipe/trunk/mail/north,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -72862,6 +72871,12 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/chamber)
+"iSO" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge)
 "iYX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -145409,7 +145424,7 @@ bLl
 bMf
 bOz
 bPZ
-bAc
+iSO
 aaa
 bTg
 bWt
@@ -145711,7 +145726,7 @@ bLm
 bMX
 bOA
 bQa
-bAf
+cBj
 aaa
 bTg
 bWu

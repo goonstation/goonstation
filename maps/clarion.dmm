@@ -16277,8 +16277,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/shrub{
-	dir = 1
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_y = -24
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -32351,7 +32355,13 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ktK" = (
@@ -36512,6 +36522,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "otP" = (
