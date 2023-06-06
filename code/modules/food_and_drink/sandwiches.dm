@@ -973,6 +973,32 @@ This is actually lowkey simple, fuck yeah
 	proc/is_valid_finisher(obj/item/ingredient)
 		. = ((ingredient.type in vers_bread_types) || (ingredient.type in top_bread_types))
 
+	// Takes mouse drag input should look if recipient is player
+	// Note - Player WONT grab the sandwitch when this happens (for some reason this was an issue early on)
+	// If player has a free hand object removed goes into it, else it drops on floor!
+	mouse_drop(mob/user as mob)
+		if(istype(user,/mob/living/carbon/human)) // If not a human then I don't want *it* to get a menu
+
+			// Bad - This should probably be made into a function to avoid spagett
+			var/list/selections = list()
+			selections += "*CANCEL*"
+			var/list/valid_ingredients = src.ingredients.Copy()
+			valid_ingredients.Remove(src.ingredients[1]) // not allowed to remove the bottom bread/bun
+			for (var/datum/sandwich_ingredient/ingredient in valid_ingredients)
+				var/ingredient_name = ingredient.our_atom.name
+				var/n = 1
+				while((ingredient_name) in selections)
+					ingredient_name = "[ingredient.our_atom.name]" + " ([n])"
+					n++ // this is all to add "(number)" next to duplicate entries
+				selections[ingredient_name] = ingredient
+			var/selected = input(user, "Select an ingredient to remove:", "\The [src]") in selections
+			if(selected == "*CANCEL*")
+				return
+			var/to_remove = selections[selected]
+			src.remove_ingredient(user, to_remove)
+		else
+			..()
+
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shaker) || istype(W, /obj/item/reagent_containers/food/snacks/condiment) || (W.reagents && !istype(W, /obj/item/reagent_containers/food/snacks))) // is this something that might've given us reagents?
 			SPAWN(0) //just to make sure the reagents transfer *before* we render
