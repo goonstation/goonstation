@@ -529,21 +529,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/critter/domestic_bee/trauma = 20,\
 	/obj/item/fish/void_fish = 20)
 
-/datum/fishing_spot/white_hole
-	fishing_atom_type = /obj/whitehole
-	rod_tier_required = 3
-	fish_available = list(/obj/item/space_thing = 5,\
-	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
-	/obj/item/clothing/shoes/clown_shoes = 5,\
-	/mob/living/carbon/human/future = 1,\
-	/mob/living/critter/aberration = 1,\
-	/mob/living/critter/small_animal/cat = 2,\
-	/obj/item/clothing/head/void_crown = 1,\
-	/obj/critter/domestic_bee/trauma = 20,\
-	/obj/item/fish/void_fish = 20)
-
 //biodome flooded area
 /datum/fishing_spot/biodome_lake
 	fishing_atom_type = /turf/space/fluid/cenote
