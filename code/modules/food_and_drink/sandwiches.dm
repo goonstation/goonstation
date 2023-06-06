@@ -622,7 +622,7 @@ This is actually lowkey simple, fuck yeah
 	var/set_name = ""
 	desc = "An edible device consisting of 2 or more structural agents encasing a nutrient payload. It's just a fucking sandwich, dingus."
 	bites_left = 0 // Prevents bite masks from being applied from on_bite(), so we can use our own special ones
-	flags = OPENCONTAINER | FPRINT | TABLEPASS | OPENCONTAINER
+	flags = OPENCONTAINER | FPRINT | TABLEPASS | OPENCONTAINER | TGUI_INTERACTIVE
 	appearance_flags = KEEP_TOGETHER
 
 	/// Specifies what the sandwich should be made of when directly spawned in with New()
@@ -973,29 +973,84 @@ This is actually lowkey simple, fuck yeah
 	proc/is_valid_finisher(obj/item/ingredient)
 		. = ((ingredient.type in vers_bread_types) || (ingredient.type in top_bread_types))
 
+	// Legacy Deconstruction Method
+	proc/ingredient_handler(mob/user)
+		var/list/selections = list()
+		selections += "*CANCEL*"
+		var/list/valid_ingredients = src.ingredients.Copy()
+		valid_ingredients.Remove(src.ingredients[1]) // not allowed to remove the bottom bread/bun
+		for (var/datum/sandwich_ingredient/ingredient in valid_ingredients)
+			var/ingredient_name = ingredient.our_atom.name
+			var/n = 1
+			while((ingredient_name) in selections)
+				ingredient_name = "[ingredient.our_atom.name]" + " ([n])"
+				n++ // this is all to add "(number)" next to duplicate entries
+			selections[ingredient_name] = ingredient
+		var/selected = input(user, "Select an ingredient to remove:", "\The [src]") in selections
+		if(selected == "*CANCEL*")
+			return
+		var/to_remove = selections[selected]
+		src.remove_ingredient(user, to_remove)
+
+	// TGUI stuff here
+	// For now aiming to make a nice looking list, I'll see what else I can get it to do...
+	// I've defined it into drop down boxes in case we want to add more features like rearranging the sandwich
+	//	or more nefarious things like spiking specific parts of the sandwich.. Maybe scanning certain parts??
+
+	// Defines interface
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if (!ui)
+			ui = new(user, src, "CustomSandwich")
+			ui.open()
+
+	ui_data(mob/user)
+		var/list/init_vals = src.ingredients.Copy()
+		init_vals.Remove(src.ingredients[1]) // not allowed to remove the bottom bread/bun
+		var/list/data[init_vals.len]
+
+		// Iterate to get list of names for displaying
+		// I am dumb this took me an embarrasing amount of time to notice lol
+		var/i = 1
+		for (var/datum/sandwich_ingredient/ingredient in init_vals)
+			var/ingredient_name = ingredient.our_atom.name
+			var/n = 1
+			while((ingredient_name) in data)
+				ingredient_name = "[ingredient.our_atom.name]" + " ([n])"
+				n++ // this is all to add "(number)" next to duplicate entries
+			data[i] = ingredient_name
+			i++
+		. = list(
+			"ingredients" = data,
+			"name" = src.name
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if (.)
+			return
+
+		if(isintangible(ui.user) || isdead(ui.user) || isunconscious(ui.user) || ui.user.hasStatus("resting"))
+			return
+
+		var/s_index = text2num(src.ingredients.len - params["sandwich_index"]) // need to add 1 more to the index because we can't remove the first slice!
+		boutput(ui.user,"Button click! index:[s_index]  -  action:[action]   -  obj:[src.ingredients[s_index]]") // DEBUG - Please ignore!
+		switch(action)
+			if("remove")
+				if(!in_interact_range(src, ui.user)) // Checks player is in range
+					return
+				src.remove_ingredient(ui.user, src.ingredients[s_index])
+				. = TRUE // Tells UI that is can refresh now we've finished with it!
+				return
+
 	// Takes mouse drag input should look if recipient is player
-	// Note - Player WONT grab the sandwitch when this happens (for some reason this was an issue early on)
+	// Note - Player WONT grab the sandwich when this happens (for some reason this was an issue early on)
 	// If player has a free hand object removed goes into it, else it drops on floor!
 	mouse_drop(mob/user as mob)
 		if(istype(user,/mob/living/carbon/human)) // If not a human then I don't want *it* to get a menu
-
-			// Bad - This should probably be made into a function to avoid spagett
-			var/list/selections = list()
-			selections += "*CANCEL*"
-			var/list/valid_ingredients = src.ingredients.Copy()
-			valid_ingredients.Remove(src.ingredients[1]) // not allowed to remove the bottom bread/bun
-			for (var/datum/sandwich_ingredient/ingredient in valid_ingredients)
-				var/ingredient_name = ingredient.our_atom.name
-				var/n = 1
-				while((ingredient_name) in selections)
-					ingredient_name = "[ingredient.our_atom.name]" + " ([n])"
-					n++ // this is all to add "(number)" next to duplicate entries
-				selections[ingredient_name] = ingredient
-			var/selected = input(user, "Select an ingredient to remove:", "\The [src]") in selections
-			if(selected == "*CANCEL*")
-				return
-			var/to_remove = selections[selected]
-			src.remove_ingredient(user, to_remove)
+			// Legacy deconstruction
+			//ingredient_handler(user)
+			ui_interact(user)
 		else
 			..()
 
@@ -1008,22 +1063,8 @@ This is actually lowkey simple, fuck yeah
 
 	attack_hand(mob/user)
 		if (src.loc == user) // intended to only happen if being held in the off-hand and clicked on with empty hand
-			var/list/selections = list()
-			selections += "*CANCEL*"
-			var/list/valid_ingredients = src.ingredients.Copy()
-			valid_ingredients.Remove(src.ingredients[1]) // not allowed to remove the bottom bread/bun
-			for (var/datum/sandwich_ingredient/ingredient in valid_ingredients)
-				var/ingredient_name = ingredient.our_atom.name
-				var/n = 1
-				while((ingredient_name) in selections)
-					ingredient_name = "[ingredient.our_atom.name]" + " ([n])"
-					n++ // this is all to add "(number)" next to duplicate entries
-				selections[ingredient_name] = ingredient
-			var/selected = input(user, "Select an ingredient to remove:", "\The [src]") in selections
-			if(selected == "*CANCEL*")
-				return
-			var/to_remove = selections[selected]
-			src.remove_ingredient(user, to_remove)
+			//ingredient_handler(user)
+			ui_interact(user)
 		else
 			..()
 
