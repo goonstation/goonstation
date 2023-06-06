@@ -19,10 +19,9 @@ proc/get_moving_lights_stats()
 // TODO readd counters for debugging
 #define RL_UPDATE_LIGHT(src) do { \
 	if (src.fullbright || src.loc?:force_fullbright) { break } \
-	var/turf/_N = get_step(src, NORTH); \
-	var/turf/_E = get_step(src, EAST); \
-	var/turf/_NE = get_step(src, NORTHEAST); \
-	if(!_N || !_E || !_NE) { break }; \
+	var/turf/_N = get_step(src, NORTH) || src; \
+	var/turf/_E = get_step(src, EAST) || src; \
+	var/turf/_NE = get_step(src, NORTHEAST) || src; \
 	src.RL_MulOverlay?.color = list( \
 		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
 		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \

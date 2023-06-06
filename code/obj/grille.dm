@@ -5,6 +5,7 @@
 	icon_state = "grille0-0"
 	density = 1
 	stops_space_move = 1
+	uses_material_appearance = TRUE
 	var/health = 30
 	var/health_max = 30
 	var/ruined = 0

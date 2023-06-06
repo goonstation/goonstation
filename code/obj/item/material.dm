@@ -234,7 +234,7 @@
 	name = "molitz crystal"
 	desc = "A crystal of Molitz, a common crystalline substance."
 	material_name = "Molitz"
-	default_material = "moltiz"
+	default_material = "molitz"
 	crystal = 1
 
 	get_desc()
@@ -414,6 +414,7 @@
 	icon_state = "gem1"
 	material_name = "Gem"
 	default_material = null
+	mat_changename = TRUE
 	force = 1
 	throwforce = 3
 	crystal = 1
@@ -521,12 +522,12 @@
 
 // Misc building material
 
+/// This has no material, why does it exist???? Someone replace it
 /obj/item/raw_material/fabric
 	name = "fabric sheet"
 	desc = "Some spun cloth. Useful if you want to make clothing."
 	icon_state = "fabric"
 	material_name = "Fabric"
-	default_material = "fabric"
 	scoopable = 0
 
 /obj/item/raw_material/cotton/

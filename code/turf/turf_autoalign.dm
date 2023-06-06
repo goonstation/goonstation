@@ -560,7 +560,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-		/obj/plasticflaps
+		/turf/simulated/wall/auto/martian, /turf/unsimulated/wall/auto/adventure/martian,
+		/obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
@@ -580,13 +581,12 @@ TYPEINFO(/turf/simulated/wall/auto/reinforced/old)
 TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 	. = ..()
 	connects_to = typecacheof(list(
-		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
-		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
-		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-		/obj/plasticflaps
+		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/old,
+		/turf/simulated/wall/auto/reinforced/old, /turf/simulated/wall/auto/martian,
+		/obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
@@ -765,27 +765,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn/wood)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 	. = ..()
-	connect_diagonal = 0
+	connect_overlay = FALSE
+	connect_diagonal = TRUE
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
 		/turf/unsimulated/wall/auto/supernorn/wood,
 		/obj/machinery/door,
 		/obj/window,
-		/obj/wingrille_spawn,
-		/obj/plasticflaps
-	))
-	connects_with_overlay = typecacheof(list(
-		/turf/unsimulated/wall/auto/supernorn,
-		/turf/unsimulated/wall/auto/reinforced/supernorn,
-		/turf/unsimulated/wall/auto/supernorn/wood,
-		/obj/machinery/door,
-		/obj/window,
-		/obj/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	material = /datum/material/organic/wood
+	uses_material_appearance = TRUE
+	default_material = "wood"
 	icon_state = "mapwall$$wood"
 
 TYPEINFO(/turf/unsimulated/wall/auto/gannets)
@@ -817,9 +809,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 
 /turf/unsimulated/wall/auto/coral
-	New()
-		..()
-		setMaterial(getMaterial("coral"), copy = FALSE)
+	default_material = "coral"
 
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
@@ -959,7 +949,10 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/martian)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 	. = ..()
 	connect_overlay = 0
-	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian, /turf/unsimulated/wall/auto/adventure/martian/exterior,/obj/indestructible/shuttle_corner))
+	connects_to = typecacheof(list(
+		/turf/unsimulated/wall/auto/adventure/martian, /obj/machinery/door/unpowered/martian,
+		/obj/indestructible/shuttle_corner, /turf/simulated/wall/auto/martian))
+
 /turf/unsimulated/wall/auto/adventure/martian
 	name = "organic wall"
 	icon = 'icons/turf/walls_martian.dmi'
@@ -969,7 +962,6 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/martian)
 	exterior
 		icon_state = "martout-map"
 		mod = "martout-"
-
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/iomoon)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/iomoon)

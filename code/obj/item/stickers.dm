@@ -66,7 +66,7 @@
 
 		src.attached = A
 		src.active = 1
-		src.set_loc(A)
+		src.set_loc(null)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
 		add_fingerprint(user)
@@ -239,7 +239,7 @@
 
 	set_loc(newloc)
 		. = ..()
-		if(src.attached && src.loc != src.attached)
+		if(src.attached && src.loc != src.attached && src.loc != null)
 			remove_from_attached(do_loc = FALSE)
 
 	Move(NewLoc, direct)

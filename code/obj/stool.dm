@@ -184,12 +184,13 @@
 	desc = "Like a bar stool, but in electric blue."
 	parts_type = /obj/item/furniture_parts/stool/neon
 
+TYPEINFO(/obj/stool/wooden)
+	mat_appearances_to_ignore = list("wood")
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
-	mat_appearances_to_ignore = list("wood")
 
 	constructed //no "wood wood stool"
 		name = "stool"
@@ -1075,6 +1076,8 @@
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mats = 15
 
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
@@ -1087,7 +1090,6 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
-	mat_appearances_to_ignore = list("steel")
 
 	New()
 		..()
@@ -1156,6 +1158,8 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 /* -------------------- Wooden Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/stool/chair/wooden)
+	mat_appearances_to_ignore = list("wood")
 /obj/stool/chair/wooden
 	name = "wooden chair"
 	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
@@ -1164,7 +1168,6 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	anchored = UNANCHORED
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
-	mat_appearances_to_ignore = list("wood")
 
 	constructed //no "wood wood chair"
 		name = "chair"

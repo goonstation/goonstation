@@ -1376,6 +1376,23 @@ proc/debug_map_apc_count(delim,zlim)
 					I.appearance_flags |= RESET_ALPHA
 					img.app.overlays += I
 
+	artifacts
+		name = "artifacts"
+		help = "Displays artifact types on the map"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/arts = list()
+			for(var/obj/O in theTurf)
+				if(O.artifact)
+					arts += O.artifact.type_name
+			if(!length(arts))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 180
+			img.app.desc = "[jointext(arts, ", ")]"
+			var/art_text = "<span style='font-size:6pt'>[jointext(arts, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(art_text, align_left=TRUE))
+			img.app.color = debug_color_of(art_text)
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
