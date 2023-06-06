@@ -546,7 +546,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	uses_material_appearance = FALSE
+	uses_material_appearance = TRUE
 	mat_changename = TRUE
 	default_material = "mauxite"
 

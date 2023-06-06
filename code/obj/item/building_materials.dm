@@ -525,6 +525,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
+	uses_material_appearance = TRUE
 
 	New()
 		..()
@@ -854,7 +855,6 @@ MATERIAL
 
 
 /obj/item/rods/steel
-	color = "#8C8C8C"
 	default_material = "steel"
 
 /obj/item/rods/mauxite

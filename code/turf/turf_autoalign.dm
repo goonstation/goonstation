@@ -449,11 +449,26 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
-
 /turf/simulated/wall/auto/supernorn/wood
 	icon_state = "mapwall$$wood"
 	default_material = "wood"
+
+TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
+	connect_overlay = 0
+/turf/simulated/wall/auto/supernorn/material
+	icon_state = "mapwall"
+	default_material = "steel"
 	uses_material_appearance = TRUE
+	mat_changename = TRUE
+
+/turf/simulated/wall/auto/supernorn/material/bamboo
+	icon_state = "mapwall$$bamboo"
+	default_material = "bamboo"
+
+/turf/simulated/wall/auto/supernorn/material/mauxite
+	icon_state = "mapwall$$mauxite"
+	default_material = "mauxite"
+
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	connect_overlay = 1
