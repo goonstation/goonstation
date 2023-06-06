@@ -235,15 +235,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/fluid // covers pool, aquariums and uh all other standing pools of fluid.
 	fishing_atom_type = /obj/fluid
 	rod_tier_required = 1
-	fish_available = list(/obj/item/fish/clownfish = 40,\
-	/obj/item/fish/damselfish = 30,\
-	/obj/item/fish/green_chromis = 20,\
-	/obj/item/fish/cardinalfish = 15,\
+	fish_available = list(/obj/item/fish/clownfish = 15,\
+	/obj/item/fish/damselfish = 10,\
+	/obj/item/fish/green_chromis = 10,\
+	/obj/item/fish/cardinalfish = 5,\
 	/obj/item/fish/royal_gramma = 10,\
-	/obj/item/fish/bc_angelfish = 10,\
+	/obj/item/fish/bc_angelfish = 5,\
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
-	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/yellow_tang = 10,\
 	/obj/item/fish/mandarin_fish = 5)
 
 /datum/fishing_spot/water_cooler
