@@ -2469,7 +2469,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
 			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
 			qdel(src)
-		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fillet_slice))
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice))
 			var/spawnloc = get_turf(src)
 			var/handspawn
 			if(istype(src.loc,/mob))

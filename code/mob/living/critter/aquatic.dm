@@ -181,7 +181,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	speechverb_say = "blubs"
 	speechverb_exclaim = "glubs"
 	death_text = "%src% flops belly up!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small
 	// todo: skinresult of scales, custom_brain_type of fish egg item (caviar?)
 
 	throws_can_hit_me = 0
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	speechverb_say = "demands"
 	speechverb_exclaim = "bellows"
 	death_text = "%src% collapses in on itself!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	// todo: meat_type of something cool, skinresult of especially hard crustacean plates?
 
 	ai = null

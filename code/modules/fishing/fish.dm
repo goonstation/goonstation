@@ -10,7 +10,7 @@
 	c_flags = ONBELT
 	attack_verbs = "slaps"
 	/// what type of item do we get when butchering the fish
-	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 
 	New()
 		..()
@@ -40,7 +40,7 @@
 	desc = "A commercial saltwater fish prized for its flavor."
 	icon_state = "salmon"
 	inhand_color = "#E3747E"
-	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon
 
 /obj/item/fish/carp
 		name = "carp"
@@ -53,7 +53,7 @@
 		desc = "A freshwater fish native to North America."
 		icon_state = "bass"
 		inhand_color = "#64B19C"
-		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
 
 /obj/item/fish/herring
 		name = "herring"
@@ -72,4 +72,4 @@
 		desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
 		icon_state = "mahimahi"
 		inhand_color = "#A6B967"
-		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+		fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
