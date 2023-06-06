@@ -750,27 +750,19 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 TYPEINFO(/turf/unsimulated/wall/auto/supernorn/wood)
 TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 	. = ..()
-	connect_diagonal = 0
+	connect_overlay = FALSE
+	connect_diagonal = TRUE
 	connects_to = typecacheof(list(
 		/turf/unsimulated/wall/auto/supernorn,
 		/turf/unsimulated/wall/auto/reinforced/supernorn,
 		/turf/unsimulated/wall/auto/supernorn/wood,
 		/obj/machinery/door,
 		/obj/window,
-		/obj/wingrille_spawn,
-		/obj/plasticflaps
-	))
-	connects_with_overlay = typecacheof(list(
-		/turf/unsimulated/wall/auto/supernorn,
-		/turf/unsimulated/wall/auto/reinforced/supernorn,
-		/turf/unsimulated/wall/auto/supernorn/wood,
-		/obj/machinery/door,
-		/obj/window,
-		/obj/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	material = /datum/material/organic/wood
+	uses_material_appearance = TRUE
+	default_material = "wood"
 	icon_state = "mapwall$$wood"
 
 TYPEINFO(/turf/unsimulated/wall/auto/gannets)

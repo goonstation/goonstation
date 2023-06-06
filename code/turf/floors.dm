@@ -1622,6 +1622,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	default_melt_cap = 80
 	allows_vehicles = 1
 	default_material = "blob"
+	mat_changename = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(copyMaterial(O.my_material))

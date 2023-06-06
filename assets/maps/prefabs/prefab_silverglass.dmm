@@ -1549,7 +1549,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/damaged1,
 /area/prefab/silverglass/eats)
 "ZF" = (
 /obj/cable{
