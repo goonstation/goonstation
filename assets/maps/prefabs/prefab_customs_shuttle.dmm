@@ -21,11 +21,9 @@
 	name = "Ancient Blue Label Scotch";
 	pixel_x = 9
 	},
-/obj/machinery/light{
-	layer = 3
-	},
 /obj/item/paper/cruiser_bought,
 /obj/table/regal/auto,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/purple/standard/edge/sw,
 /area/prefab/crashed_hop_shuttle)
 "aX" = (
@@ -41,9 +39,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "bY" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "cu" = (
 /obj/stool/chair/comfy{
@@ -110,7 +106,7 @@
 /obj/stool/chair/comfy{
 	dir = 1
 	},
-/obj/machinery/light{
+/obj/machinery/light/incandescent{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/regalcarpet/border{
@@ -176,8 +172,10 @@
 	opacity = 1
 	})
 "iR" = (
-/obj/machinery/door/airlock/gannets/command/alt,
 /obj/access_spawn/head_of_personnel,
+/obj/machinery/door/airlock/pyro/command/syndicate{
+	dir = 4
+	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "jd" = (
@@ -208,11 +206,11 @@
 /turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "lh" = (
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/stool/chair/comfy{
 	dir = 8
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/regalcarpet/border{
 	dir = 6
@@ -241,7 +239,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "nE" = (
-/obj/machinery/light{
+/obj/machinery/light/incandescent{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -258,7 +256,7 @@
 	dir = 8;
 	pixel_x = 5
 	},
-/obj/machinery/light{
+/obj/machinery/light/incandescent{
 	dir = 8
 	},
 /turf/simulated/floor,
@@ -326,9 +324,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/prefab/crashed_hop_shuttle)
 "tD" = (
-/obj/machinery/light{
-	dir = 1
-	},
 /obj/stool/bee_bed{
 	desc = "A soft little bed the general size and shape of a corgi.";
 	name = "dog bed"
@@ -338,11 +333,14 @@
 	dir = 4;
 	name = "Liam"
 	},
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/purple/standard/edge/ne,
 /area/prefab/crashed_hop_shuttle)
 "tO" = (
 /obj/stool/bar,
-/obj/machinery/light{
+/obj/machinery/light/incandescent{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
@@ -431,6 +429,11 @@
 "yI" = (
 /obj/machinery/vending/cigarette,
 /turf/simulated/floor/damaged5,
+/area/prefab/crashed_hop_shuttle)
+"zh" = (
+/obj/access_spawn/head_of_personnel,
+/obj/machinery/door/airlock/pyro/command/syndicate,
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "zB" = (
 /obj/machinery/computer/card/portable,
@@ -522,6 +525,7 @@
 "Ge" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "GG" = (
@@ -595,9 +599,7 @@
 /turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "Kl" = (
-/turf/simulated/floor/airless{
-	icon_state = "damaged4"
-	},
+/turf/simulated/floor/airless/plating/scorched,
 /area/noGenerate)
 "Lh" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -623,15 +625,15 @@
 /area/prefab/crashed_hop_shuttle)
 "MU" = (
 /obj/rack,
-/obj/machinery/light{
-	dir = 4
-	},
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
 	},
 /obj/item/spacecash/bag,
 /obj/item/stamped_bullion,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"
@@ -662,9 +664,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "OQ" = (
-/turf/simulated/floor/plating/airless{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/airless/plating/damaged1,
 /area/prefab/crashed_hop_shuttle)
 "Pa" = (
 /obj/table/reinforced/bar/auto,
@@ -688,7 +688,6 @@
 /area/prefab/crashed_hop_shuttle)
 "PP" = (
 /obj/machinery/vending/alcohol,
-/obj/machinery/light,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "PZ" = (
@@ -1115,7 +1114,7 @@ OE
 sH
 Zs
 Bt
-iR
+zh
 hG
 dg
 Op

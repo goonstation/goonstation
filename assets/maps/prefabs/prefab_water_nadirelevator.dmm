@@ -27,21 +27,11 @@
 	name = "siphon shaft wall"
 	},
 /area/noGenerate)
-"aV" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 9
-	},
-/area/shuttle/sea_elevator)
 "bd" = (
 /obj/machinery/light/small/floor/netural,
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
-"bn" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
 "bt" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	name = "siphon shaft wall"
@@ -138,11 +128,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"et" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 8
-	},
-/area/shuttle/sea_elevator)
 "ey" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/black,
@@ -221,7 +206,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/variableTurf/clear,
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "gL" = (
 /obj/forcefield/energyshield/perma/doorlink,
@@ -264,6 +249,9 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/shuttle/sea_elevator)
+"iJ" = (
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "ji" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -283,9 +271,7 @@
 /turf/simulated/floor/engine,
 /area/shuttle/sea_elevator)
 "kv" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 10
-	},
+/turf/unsimulated/wall/auto/lead/blue,
 /area/shuttle/sea_elevator)
 "kx" = (
 /obj/lattice,
@@ -293,7 +279,7 @@
 /obj/warp_beacon{
 	name = "Subsurface Bay"
 	},
-/turf/variableTurf/clear,
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "kD" = (
 /obj/item/crowbar,
@@ -317,17 +303,12 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/variableTurf/clear,
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "lZ" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
-"ma" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 6
-	},
-/area/shuttle/sea_elevator)
 "mb" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -473,9 +454,6 @@
 /obj/decal/cleanable/dirt/dirt5,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
-"qX" = (
-/turf/unsimulated/wall/setpieces/leadwall,
-/area/shuttle/sea_elevator)
 "rp" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -612,11 +590,6 @@
 "uP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/dining)
-"va" = (
-/turf/unsimulated/wall/setpieces/leadwall{
-	dir = 5
-	},
-/area/shuttle/sea_elevator)
 "vg" = (
 /obj/decal/cleanable/dirt,
 /obj/item/device/light/glowstick,
@@ -634,7 +607,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/variableTurf/clear,
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "wk" = (
 /obj/item/cell/charged{
@@ -770,9 +743,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
-"Af" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction,
-/area/shuttle/sea_elevator)
 "An" = (
 /obj/table/wood/auto,
 /obj/item/instrument/saxophone,
@@ -1039,11 +1009,6 @@
 "JT" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/bathroom)
-"Kf" = (
-/turf/unsimulated/wall/setpieces/leadwall/cap{
-	dir = 4
-	},
-/area/shuttle/sea_elevator)
 "Kj" = (
 /obj/decal/poster/wallsign/biohazard{
 	desc = "A warning sign which reads 'ACID HAZARD'.";
@@ -1378,11 +1343,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"TC" = (
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 1
-	},
-/area/shuttle/sea_elevator)
 "TP" = (
 /obj/npc/trader/bee{
 	name = "Bambini"
@@ -1464,9 +1424,7 @@
 /obj/machinery/r_door_control{
 	id = "nadir_minebot"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/junction{
-	dir = 1
-	},
+/turf/unsimulated/wall/auto/lead/blue,
 /area/shuttle/sea_elevator)
 "VR" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -1645,7 +1603,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/variableTurf/clear,
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "Zp" = (
 /obj/table/auto,
@@ -2537,10 +2495,10 @@ nw
 nw
 nw
 nw
-aV
-qX
-qX
-qX
+kv
+kv
+kv
+kv
 kv
 nw
 nw
@@ -2585,12 +2543,12 @@ nw
 nw
 nw
 nw
-aV
-ma
+kv
+kv
 bx
 bx
 bx
-va
+kv
 kv
 XP
 XP
@@ -2650,9 +2608,9 @@ XP
 XP
 XP
 Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 XP
 XP
 XP
@@ -2678,31 +2636,31 @@ XP
 XP
 "}
 (21,1,1) = {"
-aV
-qX
-qX
-qX
-qX
-TC
+kv
+kv
+kv
+kv
+kv
+kv
 Ap
 Ap
 Ap
 Ap
 Ap
-bn
+kv
 XP
 Nl
 Nl
 Nl
 XP
 XP
+iJ
 Nl
+iJ
+iJ
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
 XP
 XP
 nw
@@ -2732,28 +2690,28 @@ mH
 xh
 xK
 jy
-Kf
+kv
 fy
 gh
-aV
+kv
 dt
 dt
-TC
+kv
+Nl
+iJ
 Nl
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 nw
 nw
 nw
@@ -2776,7 +2734,7 @@ XP
 XP
 "}
 (23,1,1) = {"
-bn
+kv
 ji
 tC
 ob
@@ -2788,26 +2746,26 @@ xI
 Ap
 Ap
 vs
+iJ
+iJ
 Nl
+iJ
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
 nw
 nw
 nw
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 Ol
 bd
 Sp
@@ -2837,26 +2795,26 @@ xI
 Vo
 Ap
 vs
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 nw
 nw
 nw
 nw
 nw
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 yh
 Iw
 LT
@@ -2874,26 +2832,26 @@ XP
 XP
 "}
 (25,1,1) = {"
-Af
-qX
+kv
+kv
 ii
 ii
-qX
+kv
 kv
 ob
 ob
-bn
+kv
 qu
 qu
-bn
+kv
 Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 nw
 nw
 nw
@@ -2923,25 +2881,25 @@ XP
 XP
 "}
 (26,1,1) = {"
-bn
+kv
 ru
 ob
 ob
 mG
-Af
+kv
 se
 se
-et
-qX
-qX
+kv
+kv
+kv
 VJ
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 XP
 nw
 nw
@@ -2972,25 +2930,25 @@ XP
 XP
 "}
 (27,1,1) = {"
-bn
+kv
 pk
 ob
 tC
 lB
-bn
+kv
 oG
 fE
 sF
 OT
 oQ
 fG
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 XP
 XP
 nw
@@ -3021,25 +2979,25 @@ XP
 XP
 "}
 (28,1,1) = {"
-va
+kv
 kv
 dd
 dd
-aV
-ma
+kv
+kv
 AG
 kD
 Be
 qu
 dC
 gL
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 gv
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 XP
 XP
 XP
@@ -3071,10 +3029,10 @@ XP
 "}
 (29,1,1) = {"
 XP
-bn
+kv
 dd
 dd
-bn
+kv
 wr
 Ou
 nJ
@@ -3087,8 +3045,8 @@ Zf
 Zf
 kx
 vX
-Nl
-Nl
+iJ
+iJ
 XP
 XP
 XP
@@ -3120,10 +3078,10 @@ XP
 "}
 (30,1,1) = {"
 XP
-va
-qX
-qX
-TC
+kv
+kv
+kv
+kv
 Lv
 fv
 ZZ
@@ -3131,13 +3089,13 @@ Fp
 Fp
 eT
 gL
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 lW
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 XP
 XP
 nw
@@ -3172,7 +3130,7 @@ XP
 XP
 XP
 XP
-bn
+kv
 Fi
 fv
 zv
@@ -3180,13 +3138,13 @@ sF
 oQ
 ON
 gL
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 XP
 XP
 nw
@@ -3221,7 +3179,7 @@ XP
 XP
 XP
 XP
-bn
+kv
 ey
 xX
 Xr
@@ -3229,12 +3187,12 @@ Be
 qu
 qu
 tA
-Nl
-Nl
-Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
+iJ
+iJ
+iJ
 XP
 XP
 nw
@@ -3270,18 +3228,18 @@ XP
 XP
 XP
 XP
-va
+kv
 wX
-qX
+kv
 wX
-qX
-qX
-qX
-ma
+kv
+kv
+kv
+kv
 Nl
-Nl
-Nl
-Nl
+iJ
+iJ
+iJ
 Nl
 XP
 XP
@@ -3327,10 +3285,10 @@ XP
 XP
 XP
 XP
+iJ
+iJ
 Nl
-Nl
-Nl
-Nl
+iJ
 Nl
 XP
 XP
@@ -3379,8 +3337,8 @@ XP
 XP
 Nl
 Nl
-Nl
-Nl
+iJ
+iJ
 XP
 XP
 XP
@@ -3428,7 +3386,7 @@ XP
 XP
 XP
 Nl
-Nl
+iJ
 XP
 XP
 XP
@@ -3699,8 +3657,8 @@ Ug
 EL
 Ck
 dw
-Nl
-Nl
+iJ
+iJ
 Wr
 Wr
 Wr
@@ -3935,7 +3893,7 @@ nw
 nw
 nw
 nw
-Nl
+iJ
 nw
 Wr
 UM
@@ -3984,7 +3942,7 @@ XP
 XP
 nw
 nw
-Nl
+iJ
 nw
 Wr
 Wr
