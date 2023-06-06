@@ -405,7 +405,9 @@ var/global
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
-		message = replacetext(message, "\u2028", "") // this character crashes the js side and I don't know how to fix it there
+		// shittery that breaks text or worse
+		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+		message = replacetext(message, shittery_regex, "")
 
 		//Grab us a client if possible
 		var/client/C

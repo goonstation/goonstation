@@ -634,21 +634,15 @@
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
-/obj/item/storage/desk_drawer/lily/
-	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-)
-
 /obj/table/wood/auto/desk/lily
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/lily/L = new(src)
-		src.desk_drawer = L
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+						/obj/item/reagent_containers/food/snacks/cake)
 
 /obj/machinery/door/unpowered/wood/lily
 

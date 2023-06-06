@@ -120,6 +120,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					if (src.fits_in(O))
 						O.set_loc(src)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				src.update()
 				return
@@ -692,6 +693,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		src.flush_dummy = new()
 		src.flush_dummy.icon = src.icon
 		src.flush_dummy.layer = src.layer + 1
+		src.flush_dummy.mouse_opacity = FALSE
 		src.vis_contents += src.flush_dummy
 
 		SPAWN(1)

@@ -41,6 +41,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	pet_text = "cuddles"
 	hand_count = 1 //stabby hands
 
+	faction = FACTION_SYNDICATE
+
 	New()
 		..()
 		remove_lifeprocess(/datum/lifeprocess/blindness)
@@ -247,5 +249,5 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.is_npc = TRUE
-		src.ai = new/datum/aiHolder/wanderer_aggressive(src)
+		src.ai = new /datum/aiHolder/aggressive(src)
 

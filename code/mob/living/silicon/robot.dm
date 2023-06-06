@@ -113,6 +113,8 @@
 		src.internal_pda.name = "[src]'s Internal PDA Unit"
 		src.internal_pda.owner = "[src]"
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+		if (frame)
+			src.freemodule = frame.freemodule
 		if (starter && !(src.dependent || src.shell))
 			var/obj/item/parts/robot_parts/chest/light/PC = new /obj/item/parts/robot_parts/chest/light(src)
 			var/obj/item/cell/supercell/charged/CELL = new /obj/item/cell/supercell/charged(PC)
@@ -255,19 +257,12 @@
 		hud.update_pulling()
 
 	death(gibbed)
-		var/is_emagged = src.emagged
-		var/is_syndicate = src.syndicate
-
 		src.stat = 2
 		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
-
-		if (src.mind)
-			for (var/datum/antagonist/antag_role in src.mind.antagonists)
-				antag_role.on_death()
 
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
@@ -284,8 +279,9 @@
 						chest.cell = src.cell
 
 			var/obj/item/parts/robot_parts/robot_frame/frame =  new(T)
-			frame.emagged = is_emagged
-			frame.syndicate = is_syndicate
+			frame.emagged = src.emagged
+			frame.syndicate = src.syndicate
+			frame.freemodule = src.freemodule
 
 			src.ghostize()
 			qdel(src)
@@ -1237,7 +1233,7 @@
 				boutput(user, "The head compartment has been [brainexposed ? "opened" : "closed"].")
 			src.update_appearance()
 
-		else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))	// trying to unlock the interface with an ID card
+		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
 			if (opened)
 				boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 			else if (wiresexposed)
@@ -1285,6 +1281,8 @@
 					B.owner.transfer_to(src)
 					if (src.syndicate)
 						src.make_syndicate("brain added by [user]")
+					else if (src.emagged)
+						src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
 
 				if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 					boutput(src, "<B>You are playing a Cyborg. You can interact with most electronic objects in your view.</B>")
@@ -1649,6 +1647,8 @@
 				newmob.corpse = null // Otherwise they could return to a brainless body.And that is weird.
 				newmob.mind.brain = src.part_head.brain
 				src.part_head.brain.owner = newmob.mind
+				for (var/datum/antagonist/antag in newmob.mind.antagonists) //we do this after they die to avoid un-emagging the frame
+					antag.on_death()
 
 		// Brain box is forced open if it wasn't already (suicides, killswitch)
 		src.locked = 0
@@ -1921,23 +1921,11 @@
 				src.show_text("You do not have a power cell!", "red")
 				return
 			if (src.cell.charge >= upgrade.drainrate)
-				src.cell.charge -= upgrade.drainrate
+				src.cell.use(upgrade.drainrate)
 			else
 				src.show_text("You do not have enough power to activate \the [upgrade]; you need [upgrade.drainrate]!", "red")
 				return
 			upgrade.upgrade_activate(src)
-
-			if (upgrade.charges > 0)
-				upgrade.charges--
-			if (upgrade.charges == 0)
-				boutput(src, "[upgrade] has been activated. It has been used up.")
-				src.upgrades.Remove(upgrade)
-				qdel(upgrade)
-			else
-				if (upgrade.charges < 0)
-					boutput(src, "[upgrade] has been activated.")
-				else
-					boutput(src, "[upgrade] has been activated. [upgrade.charges] uses left.")
 		else
 			if (upgrade.activated)
 				upgrade.upgrade_deactivate(src)
@@ -2157,6 +2145,11 @@
 	verb/cmd_state_standard_laws()
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
+
+		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+			boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+			return
+
 		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 		src.say("1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
@@ -2167,6 +2160,11 @@
 	verb/cmd_state_laws()
 		set category = "Robot Commands"
 		set name = "State Laws"
+
+		if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+			boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+			return
+
 		if (tgui_alert(src, "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.","State Laws",list("State Laws","Cancel")) != "State Laws")
 			return
 

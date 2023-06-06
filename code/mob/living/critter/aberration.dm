@@ -9,7 +9,7 @@
 
 	hand_count = 1
 
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 
 	speechverb_say = "materializes"

@@ -2263,6 +2263,16 @@
 	upperfluc = 20
 	lowerfluc = -20
 
+/datum/commodity/clownsabre
+	comname = "C-Sabre"
+	comtype = /obj/item/swords_sheaths/clown
+	desc = "A high quality sabre."
+	onmarket = 0
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
+
 /*
 /datum/commodity/screamshoes
 	comname = "scream shoes"

@@ -315,9 +315,7 @@ obj/machinery/atmospherics/retrofilter
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			src.add_fingerprint(user)
 			if (src.hacked)
 				boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")

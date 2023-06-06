@@ -456,14 +456,14 @@ TRAYS
 
 	lollipop
 		name = "lollipop bowl"
-		desc = "A little bowl of sugar-free lollipops, totally healthy in every way! They're medicinal, after all!"
+		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
 		icon_state = "lpop8"
 		count = 8
 		max_count = 8
 		box_type = "lpop"
 		has_closed_state = 0
-		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
-		allowed_food = /obj/item/reagent_containers/food/snacks/lollipop
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/lollipop
 		contained_food_name = "lollipop"
 		w_class = W_CLASS_SMALL
 

@@ -68,6 +68,7 @@
 	message["toxloss"] = M.get_toxin_damage()
 	message["oxyloss"] = M.get_oxygen_deprivation()
 	message["gibbed"] = gibbed ? 1 : 0
+	message["last_words"] = M.last_words
 
 	hublog << list2params(message)
 
