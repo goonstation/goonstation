@@ -337,7 +337,7 @@
 		heal_amt = 4
 		real_name ="bacon elvis toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"porktonium"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"porktonium"=5,"essenceofelvis"=25)
 
 	New()
 		..()

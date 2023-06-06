@@ -2837,7 +2837,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "water_holy"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry
