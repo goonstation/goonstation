@@ -71,7 +71,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 			new filletslice_type(get_turf(src))
 		boutput(user, "<span class='notice'>You cut \the [src] into slices using [W].</span>")
 		qdel(src)
-		..()
 
 	salmon
 		name = "salmon fillet"
