@@ -50,7 +50,7 @@
 	/// the fishing spot that the rod is fishing from
 	var/datum/fishing_spot/fishing_spot = null
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
-	duration = 0
+	duration = 1 MINUTE
 	/// id for fishing action
 	id = "fishing_for_fishies"
 
