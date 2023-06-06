@@ -50,13 +50,10 @@
 
 // ALOE NOTE: todo refactor all this to not be mmob procs because holy shit
 
-/mob/proc/wizard_castcheck(var/datum/targetable/spell/spell = null)
+/mob/proc/wizard_castcheck(var/datum/targetable/spell/spell)
 	return 0
 
-/mob/living/carbon/human/wizard_castcheck(var/datum/targetable/spell/spell = null)
-	if(src.stat)
-		boutput(src, "You can't cast spells while incapacitated.")
-		return 0
+/mob/living/carbon/human/wizard_castcheck(var/datum/targetable/spell/spell)
 	if(src.bioHolder.HasEffect("arcane_power") == 2)
 		return 1
 	if(spell && istype(src.gloves, /obj/item/clothing/gloves/ring/wizard))

@@ -828,6 +828,7 @@
 	/// If this ability can be used while stunned/unconcious. Defaults to strict no for any stuns
 	var/incapacitation_restriction = ABILITY_NO_INCAPACITATED_USE
 	var/can_cast_while_cuffed = FALSE		//! If this ability can be used while cuffed or otherwise restrained.
+	var/can_cast_from_container = FALSE		//! If this ability can be used while inside a non-turf
 
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
 	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
