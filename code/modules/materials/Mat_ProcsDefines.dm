@@ -245,7 +245,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		icon = src.icon
 	if(isnull(global.valid_icon_states[icon]))
 		global.valid_icon_states[icon] = list()
-		for(var/icon_state in icon_states(src.icon))
+		for(var/icon_state in icon_states(icon))
 			global.valid_icon_states[icon][icon_state] = 1
 	return state in global.valid_icon_states[icon]
 

@@ -473,13 +473,12 @@
 /obj/item/reagent_containers/food/snacks/bun_bottom
 	name = "hamburger bun"
 	desc = "The bottom half of a hamburger bun, ready to be assembled into a burger!"
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_bottom"
 	bites_left = 3
 	heal_amt = 1
+	sandwich_offset = 0
 	//food_color =
-	sandwich_overlay = "bun_bottom"
-	sandwich_offset = -1
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
@@ -495,17 +494,16 @@
 /obj/item/reagent_containers/food/snacks/bun_top
 	name = "hamburger bun"
 	desc = "The top half of a hamburger bun, ready to top off a burger!"
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_top"
 	bites_left = 3
 	heal_amt = 1
 	//food_color =
-	sandwich_overlay = "bun_top"
 
 /obj/item/reagent_containers/food/snacks/bun_both
 	name = "hamburger buns"
 	desc = "A pair of hamburger buns. You should probably separate them if you want to use them."
-	icon = 'icons/obj/foodNdrink/burgers.dmi'
+	icon = 'icons/obj/foodNdrink/burgers2.dmi'
 	icon_state = "bun_both"
 	bites_left = 6
 	heal_amt = 1
