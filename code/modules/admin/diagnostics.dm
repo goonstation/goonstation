@@ -1405,18 +1405,18 @@ proc/debug_map_apc_count(delim,zlim)
 					var/datum/fishing_spot/spot = global.fishing_spots[AM.type]
 					for(var/fish_type in spot.fish_available)
 						var/atom/fish_type_dummy = fish_type
-						fish += initial(fish_type_dummy.name)
+						fish += "[initial(fish_type_dummy.name) x [spot.fish_available[fish_type]]]"
 			if(theTurf.type in global.fishing_spots)
 				spots += theTurf.name
 				var/datum/fishing_spot/spot = global.fishing_spots[theTurf.type]
 				for(var/fish_type in spot.fish_available)
 					var/atom/fish_type_dummy = fish_type
-					fish += initial(fish_type_dummy.name)
+					fish += "[initial(fish_type_dummy.name) x [spot.fish_available[fish_type]]]"
 			if(!length(spots))
 				img.app.alpha = 0
 				return
 			img.app.alpha = 120
-			img.app.desc = "[jointext(fish, ", ")]"
+			img.app.desc = jointext(fish, "<br>")
 			var/spot_text = "<span style='font-size:6pt'>[jointext(spots, "<br>")]</span>"
 			img.app.overlays = list(src.makeText(spot_text, align_left=TRUE))
 			img.app.color = debug_color_of(spot_text)
