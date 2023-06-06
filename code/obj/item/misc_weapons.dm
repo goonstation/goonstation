@@ -412,7 +412,7 @@ TYPEINFO(/obj/item/sword)
 
 TYPEINFO(/obj/item/sword/pink/angel)
 	mats = null
-/obj/item/sword/pinkangel
+/obj/item/sword/pink/angel
 	name = "The Nyasaber"
 	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
 	active = TRUE
