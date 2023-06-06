@@ -1342,8 +1342,38 @@ TYPEINFO(/obj/ladder)
 	if (!istype(otherLadder))
 		boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
 		return
+
 	boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-	user.set_loc(get_turf(otherLadder))
+
+	// do the fancy thing i stole from kitchen grinders
+	var/atom/movable/proxy = new(src)
+	proxy.mouse_opacity = FALSE
+	proxy.appearance = user.appearance
+	proxy.transform = null
+	proxy.dir = NORTH
+
+	if (src.icon_state == "ladder") // only filter if we're the top
+		proxy.add_filter("ladder_climbmask", 1, alpha_mask_filter(x=0, y=0, icon=icon('icons/obj/kitchen_grinder_mask.dmi', "ladder-mask")))
+
+	user.set_loc(src)
+	src.vis_contents += proxy
+
+	// if we're not the top ladder, animate up instead of down
+	var/climbdir = src.icon_state == "ladder" ? 1 : -1
+
+	animate(proxy, pixel_y = -32*climbdir, time = 1 SECOND)
+	if (src.icon_state == "ladder")
+		animate(proxy.get_filter("ladder_climbmask"), y = 32, time = 1 SECOND, flags = ANIMATION_PARALLEL)
+
+	SPAWN(1 SECOND) // after the animation is done, teleport and clean up
+		if (user.loc == src)
+			if (get_turf(otherLadder))
+				user.set_loc(get_turf(otherLadder))
+			else
+				user.set_loc(get_turf(src))
+
+		src.vis_contents -= proxy
+		qdel(proxy)
 
 //Puzzle elements
 
