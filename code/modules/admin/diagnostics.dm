@@ -1421,6 +1421,35 @@ proc/debug_map_apc_count(delim,zlim)
 			img.app.overlays = list(src.makeText(spot_text, align_left=TRUE))
 			img.app.color = debug_color_of(spot_text)
 
+	materials
+		name = "materials"
+		help = "Displays material of things.<br>Hover over a tile to see what is made out of them."
+		include_turfs = TRUE
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/materials = list()
+			var/list/detailed_materials = list()
+			for(var/atom/movable/AM in theTurf)
+				if(AM.material)
+					materials |= AM.material.name
+					detailed_materials += "[AM.name] - [AM.material.name]"
+			if(include_turfs && theTurf.material)
+				materials |= theTurf.material.name
+				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+			if(!length(materials))
+				img.app.alpha = 0
+				return
+			materials = sortList(materials, /proc/cmp_text_dsc)
+			img.app.alpha = 120
+			img.app.desc = jointext(detailed_materials, "<br>")
+			var/material_text = "<span style='font-size:6pt'>[jointext(materials, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(material_text, align_left=TRUE))
+			img.app.color = debug_color_of(material_text)
+
+	materials/no_turf
+		name = "materials (no turf)"
+		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
+		include_turfs = FALSE
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
