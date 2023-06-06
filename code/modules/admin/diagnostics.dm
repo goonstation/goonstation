@@ -1387,11 +1387,40 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!length(arts))
 				img.app.alpha = 0
 				return
-			img.app.alpha = 180
+			img.app.alpha = 120
 			img.app.desc = "[jointext(arts, ", ")]"
 			var/art_text = "<span style='font-size:6pt'>[jointext(arts, "<br>")]</span>"
 			img.app.overlays = list(src.makeText(art_text, align_left=TRUE))
 			img.app.color = debug_color_of(art_text)
+
+	fishing_spots
+		name = "fishing spots"
+		help = "Displays fishing spots on the map.<br>Hover over a spot to see what fish are available there."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/spots = list()
+			var/list/fish = list()
+			for(var/atom/movable/AM in theTurf)
+				if(global.fishing_spots[AM.type])
+					spots += AM.name
+					var/datum/fishing_spot/spot = global.fishing_spots[AM.type]
+					for(var/fish_type in spot.fish_available)
+						var/atom/fish_type_dummy = fish_type
+						fish += initial(fish_type_dummy.name)
+			if(theTurf.type in global.fishing_spots)
+				spots += theTurf.name
+				var/datum/fishing_spot/spot = global.fishing_spots[theTurf.type]
+				for(var/fish_type in spot.fish_available)
+					var/atom/fish_type_dummy = fish_type
+					fish += initial(fish_type_dummy.name)
+			if(!length(spots))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.desc = "[jointext(fish, ", ")]"
+			var/spot_text = "<span style='font-size:6pt'>[jointext(spots, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(spot_text, align_left=TRUE))
+			img.app.color = debug_color_of(spot_text)
+
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
