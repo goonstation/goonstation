@@ -471,8 +471,8 @@ TRAYS
 		name = "sugar cubes"
 		desc = "A box containing sugar cubes, for sweetening both your day AND your coffee."
 		icon_state = "sugarbox"
-		count = 12
-		max_count = 12
+		count = 6
+		max_count = 6
 		box_type = "sugarbox"
 		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
