@@ -37359,6 +37359,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"era" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/coffeemaker/command,
+/turf/simulated/floor/grey,
+/area/station/bridge)
 "esb" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/grime,
@@ -52496,6 +52501,26 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"rIb" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/creamer,
+/turf/simulated/floor/grey,
+/area/station/bridge)
 "rJA" = (
 /obj/plasticflaps,
 /obj/cable{
@@ -123602,8 +123627,8 @@ cZL
 wDf
 cNv
 dfl
-suM
-suM
+rIb
+era
 dfl
 cGB
 usi
