@@ -1,5 +1,5 @@
 import { useBackend } from "../backend";
-import { Box, Button, Section, Collapsible, LabeledList } from '../components';
+import { Box, Button, Section, LabeledList } from '../components';
 import { Window } from "../layouts";
 
 export const CustomSandwich = (props, context) => {
@@ -20,7 +20,8 @@ export const CustomSandwich = (props, context) => {
           <Box>
             {ingredients.reverse().map((item, index) => (
 
-              <LabeledList>
+              <LabeledList
+                key={index}>
                 <LabeledList.Item
                   label={(ingredients.length - index)}
                   buttons={<Button
@@ -31,7 +32,7 @@ export const CustomSandwich = (props, context) => {
                   {item}
                 </LabeledList.Item>
                 <LabeledList.Divider
-                  size={1}/>
+                  size={1} />
               </LabeledList>
 
               /*
