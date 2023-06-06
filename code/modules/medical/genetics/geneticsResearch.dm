@@ -321,9 +321,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
 
 	onFinish()
-		var/obj/machinery/genetics_booth/_type = /obj/machinery/genetics_booth
-		_type.process_speedup += 0.25
-		_type = "byond shut the hell up" // we get warned about _type being defined but unused otherwise
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		. = type // we get warned about type being defined but unused and idk how else to make byond shut up
 		..()
 
 // TIER TWO
@@ -374,9 +374,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
 
 	onFinish()
-		var/obj/machinery/genetics_booth/_type = /obj/machinery/genetics_booth
-		_type.process_speedup += 0.25
-		_type = "byond shut the hell up"
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		. = type
 		..()
 
 // TIER THREE
@@ -437,9 +437,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/genebooth, /datum/geneticsResearchEntry/gene_booth_speedup)
 
 	onFinish()
-		var/obj/machinery/genetics_booth/_type = /obj/machinery/genetics_booth
-		_type.process_speedup += 0.25
-		_type = "byond shut the hell up"
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		. = type
 		..()
 
 // TIER FOUR
