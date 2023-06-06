@@ -4342,15 +4342,15 @@ var/global/noir = 0
  * @param use_concrete_types determines whether the function should respect concrete types for matching.
  *
  * @param only_admin_spawnable This boolean value determines whether the function should only consider objects that
- *					are spawnable by an admin.
+ *		are spawnable by an admin.
  *
  * @param cmp_proc This is the comparison proc used for sorting matches. This should be a proc that takes two arguments
- *					and returns a boolean. The default value is `null`, indicating no comparison procedure is used.
- *					If `cmp_proc` is provided and the number of matches is within the `sort_limit`, the matches will be sorted using `cmp_proc`.
+ *		and returns a boolean. The default value is `null`, indicating no comparison procedure is used.
+ *		If `cmp_proc` is provided and the number of matches is within the `sort_limit`, the matches will be sorted using `cmp_proc`.
  *
  * @param sort_limit This parameter defines the upper limit for the number of items to consider during the matching process.
- *					If the number of matches exceeds `sort_limit`, they will not be sorted even if `cmp_proc` is provided.
- *					If `sort_limit` is `0` or `null`, there will be no limit and matches will be sorted if `cmp_proc` is provided.
+ *		If the number of matches exceeds `sort_limit`, they will not be sorted even if `cmp_proc` is provided.
+ *		If `sort_limit` is `0` or `null`, there will be no limit and matches will be sorted if `cmp_proc` is provided.
  *
  * @return Returns the path of the selected match if one is chosen. If no matches are found, `null` is returned. If the operation is cancelled, `FALSE` is returned.
  */
