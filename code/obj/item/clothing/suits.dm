@@ -1925,8 +1925,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	body_parts_covered = TORSO|ARMS
 
 /obj/item/clothing/suit/wintercoat/rancher_puffer
-	name = "rancher puffer"
-	desc = "A big comfy puffer jacket, perfect for chicken care!"
+	name = "rancher jacket"
+	desc = "A warm sturdy coat, with TASTEFUL flannel."
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	icon_state = "rancher-puffer"
