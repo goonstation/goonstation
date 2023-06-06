@@ -1955,3 +1955,14 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 
+// fishing hats
+
+/obj/item/clothing/head/fish_fear_me
+	name = "fish fear me hat"
+	desc = "an extremely witty piece of headwear for the discerning angler."
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
+
+	New()
+		..()
+		name = "\improper [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love")] [pick("fish", "me", "god", "women", "men", "enbies", "people")]. [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love")] [pick("fish", "me", "god", "women", "men", "enbies", "people")] hat"

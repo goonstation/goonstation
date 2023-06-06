@@ -1597,6 +1597,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
@@ -1653,6 +1658,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "State Fake Laws"
 
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	for(var/a_law in src.fake_laws)
 		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
@@ -1662,6 +1671,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 

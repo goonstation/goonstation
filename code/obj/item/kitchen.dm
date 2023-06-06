@@ -456,7 +456,7 @@ TRAYS
 
 	lollipop
 		name = "lollipop bowl"
-		desc = "A little bowl of sugar-free lollipops, totally healthy in every way! They're medicinal, after all!"
+		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
 		icon_state = "lpop8"
 		count = 8
 		max_count = 8

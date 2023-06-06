@@ -1,4 +1,32 @@
+
+(t)tue jun 06 23
+(u)Gannets & Mora & Adhara & Wolfolotl
+(p)13460
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Fishing has been expanded with new fish, fishing spots, equipment and a progression system. More details in minor changes below:
+(+)~30 new fish & ~30 fishing spots on-station, out in the debris field and away in adventure zones. Some fishing spots require upgraded or specific rods before you can fish in them.
+(+)A machine that will convert caught fish in to a new currency and a new vendor which accepts this currency in exchange for fishing equipment. A rarity system to support different fish being more valuable than others.
+(+)Added Angler as a random gimmick job.
+(+)Fish added to the shipping market.
+(+)Full suite of Angler's tools avaliable to purchase from QM.
+(+)Angler Job XP, I think.
+(t)mon jun 05 23
+(u)Sord
+(+)Geoff Honkington has a fancy new sabre for sale
+(t)sun jun 04 23
+(u)monkeymilesmoo
+(p)14372
+(e)🪲|C-Bug
+(+)Fixed vending machines not paying the owner.
+(u)Cheffie
+(p)13541
+(e)🗺💅|A-Mapping, C-QoL
+(*)The engine room on Cogmap 1 has been remodeled and overhauled.
 (t)sat jun 03 23
+(u)pali
+(*)Getting thrown off the shuttle no longer instantly kills you. Instead you get teleported to a random point in space.
+(u)tarmunora
+(+)Yobihodazine requires at least 1u to clear oxy damage, brain damage conversion ratio 40:1 -> 15:1
 (u)pali
 (+)Ghosts can now use the Observe Objects button to observe singularities
 (t)fri jun 02 23

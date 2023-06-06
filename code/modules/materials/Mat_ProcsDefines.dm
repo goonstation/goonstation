@@ -73,7 +73,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
-	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
+
+	if(M1.value != M2.value || M1.name != M2.name  || M1.color ~! M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
 		return 0
 
 	for(var/datum/material_property/P1 in M1.properties)
