@@ -44,8 +44,6 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
 	name = "base arcfiend ability (you should never see me)"
 	icon = 'icons/mob/arcfiend.dmi'
-	cooldown = 0
-	pointCost = 0
 	preferred_holder_type = /datum/abilityHolder/arcfiend
 
 	/// Whether or not this ability can be cast from inside of things (locker, voltron, etc.)
