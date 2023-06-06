@@ -1,5 +1,9 @@
 
 (t)tue jun 06 23
+(u)Skeletonman0
+(p)14349
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Ladders now have a brief climbing animation
 (u)Gannets & Mora & Adhara & Wolfolotl
 (p)13460
 (e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
