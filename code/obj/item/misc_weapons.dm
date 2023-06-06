@@ -425,11 +425,11 @@ TYPEINFO(/obj/item/sword/pink/angel)
 				src.active_force = 60
 				if(src.active)
 					src.force = 60
+				. = ..()
 			else
 				user.unequip_all()
 				user.make_critter(/mob/living/critter/small_animal/cat)
 				playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-			. = ..()
 		pull(mob/user)
 			if(isadmin(user))
 				return ..()
@@ -437,7 +437,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 				user.unequip_all()
 				user.make_critter(/mob/living/critter/small_animal/cat)
 				playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-			. = ..()
 		mouse_drop(atom/over_object, src_location, over_location, over_control, params)
 			if(isadmin(usr))
 				return ..()
@@ -445,7 +444,6 @@ TYPEINFO(/obj/item/sword/pink/angel)
 				usr.unequip_all()
 				usr.make_critter(/mob/living/critter/small_animal/cat)
 				playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-			. = ..()
 
 /obj/item/sword/white
 	bladecolor = "W"
