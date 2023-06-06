@@ -15,10 +15,8 @@ TYPEINFO(/datum/component/death_confetti)
 /datum/component/death_confetti/proc/the_confetti()
 	var/atom/movable/AM = parent
 	var/turf/T = get_turf(AM)
-	if (ishuman(AM))
-		var/mob/living/carbon/human/H = AM
-		if (H.silent_death)
-			return
+	if (HAS_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_DEATH_SOUND))
+		return
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(T))
 	SPAWN(1 SECOND)
 		playsound(T, 'sound/voice/yayyy.ogg', 50, 1)

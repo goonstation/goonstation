@@ -95,10 +95,13 @@
 		if (H.r_hand)
 			qdel(H.r_hand)
 
-		H.silent_death = TRUE // NO MORE DEATHGASP PLEASE
+		APPLY_ATOM_PROPERTY(H, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
 		H.death(FALSE)
-		H.no_decomp = src.no_decomp
-		H.no_miasma = src.no_miasma
+
+		if (src.no_decomp)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")
+		if (src.no_miasma)
+			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_MIASMA, "corpse_spawn")
 
 		if (src.randomise_decomp_stage)
 			H.decomp_stage = rand(DECOMP_STAGE_NO_ROT, DECOMP_STAGE_HIGHLY_DECAYED)
