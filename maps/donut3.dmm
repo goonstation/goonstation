@@ -20801,7 +20801,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/machinery/light_switch/east{
 	dir = 4;
