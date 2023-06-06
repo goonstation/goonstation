@@ -21,14 +21,14 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 
 		//if(maptext_animation_colors)
 		//	oscillate_colors(chat_text, maptext_animation_colors)
+		if(chat_text)
+			if(!message.speaker.chat_text)
+				message.speaker.chat_text = new(null, message.speaker) //lazy init maptext holder for atoms
+			var/obj/chat_maptext_holder/holder = message.speaker.chat_text
 
-		if(!message.speaker.chat_text)
-			message.speaker.chat_text = new(null, message.speaker) //lazy init maptext holder for atoms
-		var/obj/chat_maptext_holder/holder = message.speaker.chat_text
+			for(var/image/chat_maptext/I in holder.lines)
+				if(I != chat_text)
+					I.bump_up(chat_text.measured_height)
 
-		for(var/image/chat_maptext/I in holder.lines)
-			if(I != chat_text)
-				I.bump_up(chat_text.measured_height)
-
-		message.maptext = chat_text
+			message.maptext = chat_text
 		return message
