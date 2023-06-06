@@ -231,10 +231,12 @@ TYPEINFO(/obj/item/fish_portal)
 		src.working = 1
 		src.visible_message("The [src] begins uploading research data.")
 		sleep(rand(30,70))
+		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
 		for(var/obj/item/fish/P in src.contents)
 			//No botany fish. Be a real angler and use that damn fishing rod
 			if (P.fishing_upload_blacklisted)
+				found_blacklisted_fish = TRUE
 				P.set_loc(get_turf(src))
 			else
 				switch( P.value )
@@ -258,6 +260,8 @@ TYPEINFO(/obj/item/fish_portal)
 						new/obj/item/requisition_token/fishing/legendary(src.loc, src.layer + 0.1)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
+		if (found_blacklisted_fish)
+			src.visible_message("The [src] ejects synthetical fish it was unable to do any research on!")
 
 		// Wind down
 		for(var/obj/item/S in src.contents)
