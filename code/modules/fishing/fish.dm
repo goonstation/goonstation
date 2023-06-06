@@ -333,7 +333,7 @@ Alien/mutant/other fish:
 /obj/item/fish/meat_mutant
 	name = "meat mutant"
 	desc = "A fish? Whatver it is, it's grown accustomed to swimming in a pool of digestive acids."
-	icon_state = "bass_old"
+	icon_state = "meat"
 	inhand_color = "#af2323"
 	value  = FISH_RARITY_RARE
 /*
