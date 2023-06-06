@@ -477,7 +477,7 @@ TRAYS
 		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 		contained_food_name = "sugar_cube"
-		w_class = W_CLASS_TINY
+		w_class = W_CLASS_SMALL
 
 	New()
 		..()
