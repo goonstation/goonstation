@@ -3307,6 +3307,14 @@
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/staffhall)
+"akF" = (
+/obj/decal/cleanable/sakura,
+/obj/item/storage/pill_bottle/catdrugs{
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/bedsheet/pink,
+/turf/unsimulated/floor/tatami/east,
+/area/centcom/offices/angel)
 "akM" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
@@ -65947,6 +65955,11 @@
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
+"eoz" = (
+/obj/decal/cleanable/sakura,
+/obj/decal/fakeobjects/birdhouse/light,
+/turf/unsimulated/floor/tatami/west,
+/area/centcom/offices/angel)
 "eoV" = (
 /obj/decal/poster/wallsign/bookcase{
 	pixel_y = 28
@@ -66078,6 +66091,10 @@
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
+"exV" = (
+/obj/decal/cleanable/sakura,
+/turf/unsimulated/floor/tatami/north,
+/area/centcom/offices/angel)
 "eyo" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/giftshop)
@@ -67622,6 +67639,24 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"gXt" = (
+/obj/table/neon/auto,
+/obj/item/clothing/head/headband/nyan/black{
+	pixel_x = 9
+	},
+/obj/item/clothing/head/headband/nyan/red{
+	pixel_x = -9
+	},
+/obj/item/clothing/head/headband/nyan/purple{
+	pixel_y = 9
+	},
+/obj/item/clothing/head/headband/nyan/blue{
+	pixel_y = -9
+	},
+/obj/item/clothing/head/headband/nyan/white,
+/obj/decal/cleanable/sakura,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/angel)
 "gYs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-48"
@@ -69044,6 +69079,14 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
+"jfx" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/tatami/north,
+/area/centcom/offices/angel)
 "jfG" = (
 /obj/table/auto,
 /obj/item/instrument/harmonica,
@@ -69949,6 +69992,15 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"kPz" = (
+/obj/decal/cleanable/sakura,
+/obj/item/reagent_containers/food/snacks/ramen_bowl{
+	pixel_y = 6
+	},
+/obj/item/kitchen/chopsticks_package,
+/obj/table/wood/auto/desk,
+/turf/unsimulated/floor/tatami/west,
+/area/centcom/offices/angel)
 "kPC" = (
 /obj/decal/poster/wallsign/eiffelposter{
 	pixel_y = -3
@@ -70157,6 +70209,18 @@
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"lfQ" = (
+/obj/decal/cleanable/sakura,
+/obj/stool/chair/office/syndie{
+	dir = 4;
+	l_move_time = 300876;
+	last_move = 4;
+	move_speed = 13;
+	name = "cosy chair";
+	p_class = 2
+	},
+/turf/unsimulated/floor/tatami/north,
+/area/centcom/offices/angel)
 "lfV" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/stone/snow/random,
@@ -70309,6 +70373,19 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"lsE" = (
+/obj/stool/bee_bed/double,
+/obj/decal/cleanable/sakura,
+/mob/living/critter/small_animal/cat{
+	real_name = "Momo-San";
+	icon_state = "cat2";
+	desc = "It's Momo-san. So cute!";
+	name = "Momo-San";
+	randomize_name = 0;
+	randomize_look = 0
+	},
+/turf/unsimulated/floor/tatami/west,
+/area/centcom/offices/angel)
 "ltz" = (
 /obj/magicmirror,
 /turf/unsimulated/wall/auto/supernorn/wood,
@@ -70506,6 +70583,20 @@
 	icon_state = "logo_xg14"
 	},
 /area/iomoon/base)
+"lHb" = (
+/obj/decal/cleanable/sakura,
+/obj/storage/closet/dresser,
+/obj/item/clothing/under/gimmick/yukata/plain,
+/obj/item/clothing/under/gimmick/yukata/plain/black,
+/obj/item/clothing/suit/hoodie/black,
+/obj/item/clothing/suit/hoodie/white,
+/obj/item/clothing/suit/armor/hoscape,
+/obj/item/clothing/shoes/swat/heavy,
+/obj/item/clothing/under/misc/mimedress,
+/obj/item/clothing/shoes/mjblack,
+/obj/item/clothing/shoes/sandal,
+/turf/unsimulated/floor/tatami/east,
+/area/centcom/offices/angel)
 "lHA" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -73181,6 +73272,18 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/sim/gunsim/lobby)
+"pwh" = (
+/obj/decal/poster/wallsign/lesb_flag,
+/turf/unsimulated/wall/generic{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_2";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "pwu" = (
 /obj/lattice{
 	dir = 1;
@@ -74071,11 +74174,33 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"qQK" = (
+/obj/table/neon/auto,
+/obj/decal/cleanable/sakura,
+/obj/item/sword/pink/angel,
+/obj/item/paper{
+	info = "1:Guh 2: Bwuh 3: Nya! 4: Take a nap.";
+	name = "Angel's to-do-list";
+	icon_state = "paper";
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 11;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/angel)
 "qRA" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-14"
 	},
 /area/titlescreen)
+"qRC" = (
+/obj/decal/cleanable/sakura,
+/obj/decal/fakeobjects/birdhouse/light,
+/turf/unsimulated/floor/tatami/east,
+/area/centcom/offices/angel)
 "qRJ" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/south,
 /area/centcom/offices{
@@ -74683,6 +74808,14 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"rGF" = (
+/obj/admin_plaque{
+	name = "Angel's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rHo" = (
 /obj/storage/crate/wooden{
 	icon_state = "woodencrate6";
@@ -78853,6 +78986,15 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"ygA" = (
+/obj/table/neon/auto,
+/obj/machinery/computer3/generic/personal/personel_alt{
+	desc = "There's a cat peaking at you from the desktop...";
+	name = "Angel's Gaming PC"
+	},
+/obj/decal/cleanable/sakura,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/offices/angel)
 "yhB" = (
 /mob/living/critter/bear,
 /turf/unsimulated/floor/cave,
@@ -156610,11 +156752,11 @@ aES
 aES
 aES
 wel
-dvW
-dvW
-dvW
-xXm
-wel
+qQK
+eoz
+kPz
+lsE
+rGF
 sJH
 vij
 wel
@@ -156911,12 +157053,12 @@ dQb
 aES
 aES
 aES
-kUW
-dvW
-dvW
-dvW
-dvW
-rUz
+pwh
+ygA
+lfQ
+exV
+exV
+jfx
 sJH
 vij
 wel
@@ -157214,10 +157356,10 @@ dQb
 aES
 aES
 wel
-dvW
-dvW
-dvW
-dvW
+gXt
+qRC
+akF
+lHb
 wel
 sJH
 vij

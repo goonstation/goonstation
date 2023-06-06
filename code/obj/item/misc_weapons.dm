@@ -18,6 +18,8 @@
 /// Cyalume saber/esword, famed traitor item
 TYPEINFO(/obj/item/sword)
 	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+TYPEINFO(/obj/item/sword/pink/angel)
+	mats = null
 
 /obj/item/sword
 	name = "cyalume saber"
@@ -409,6 +411,41 @@ TYPEINFO(/obj/item/sword)
 
 /obj/item/sword/pink
 	bladecolor = "Pi"
+
+	angel
+		active = 1
+		active_force = 5
+		name = "The Nyasaber"
+		desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
+		icon_state = "sword1-Pi";
+		item_state = "sword1-Pi";
+
+		pickup(mob/user)
+			if(isadmin(user))
+				src.active_force = 60
+				if(src.active)
+					src.force = 60
+			else
+				user.unequip_all()
+				user.make_critter(/mob/living/critter/small_animal/cat)
+				playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+			. = ..()
+		pull(mob/user)
+			if(isadmin(user))
+				return ..()
+			else
+				user.unequip_all()
+				user.make_critter(/mob/living/critter/small_animal/cat)
+				playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+			. = ..()
+		mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+			if(isadmin(usr))
+				return ..()
+			else
+				usr.unequip_all()
+				usr.make_critter(/mob/living/critter/small_animal/cat)
+				playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+			. = ..()
 
 /obj/item/sword/white
 	bladecolor = "W"

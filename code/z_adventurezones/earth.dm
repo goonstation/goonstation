@@ -67,6 +67,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	aibm
 		ckey = "angriestibm"
 		name = "Office of AngriestIBM"
+	angel
+		ckey = "Hauntmachine"
+		name = "Office of Angel"
 	aphtonites
 		ckey = ""
 		name = "Office of Aphtonites"
