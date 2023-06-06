@@ -1,5 +1,9 @@
 
 (t)tue jun 06 23
+(u)Colossusqw
+(p)14277
+(e)🆕🔬|C-Feature, A-Science
+(+)Added solipsizine to ??? pills, as well as a few extra chems to artifact injectors and bombs.
 (u)Azrun
 (p)14326
 (e)🆕🎨🔒⚖📦💡|C-Feature, C-Sprites, A-Secret, C-Balance, A-Game-Objects, A-Station-Systems
