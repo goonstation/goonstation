@@ -83,6 +83,19 @@
 	msgLose = "You shed your roachy skin!"
 	icon_state  = "roach"
 
+/datum/bioEffect/mutantrace/human
+	name = "Less Primal Genetics"
+	desc = "Makes one into a boring-old human being. YOU SHOULD NOT SEE THIS"
+	id = "human"
+	mutantrace_option = "Human"
+	mutantrace_path = /datum/mutantrace/human
+	research_level = EFFECT_RESEARCH_ACTIVATED
+	msgGain = "You become human."
+	msgLose = "ook."
+	icon_state  = "monkey"
+	probability = 0
+	occur_in_genepools = FALSE
+
 /datum/bioEffect/mutantrace/monkey
 	name = "Primal Genetics"
 	desc = "Enables and exaggerates vestigal ape traits."

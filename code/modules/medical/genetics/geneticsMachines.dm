@@ -1079,7 +1079,7 @@
 					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 					"materialMax" = genResearch.max_material,
 					"mutantRaces" = list(list(
-						"name" = "Human",
+						"name" = "Clear Mutantrace",
 						"icon" = "template",
 						"ref" = "\ref[null]",
 						)),
