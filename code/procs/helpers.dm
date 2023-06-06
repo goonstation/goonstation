@@ -1809,7 +1809,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1843,7 +1843,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1866,7 +1868,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)

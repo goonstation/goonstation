@@ -3419,7 +3419,7 @@ var/global/noir = 0
 					if("jobcaps")
 						job_controls.job_config()
 					if("respawn_panel")
-						src.s_respawn()
+						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3505,110 +3505,6 @@ var/global/noir = 0
 				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
-		if ("s_rez")
-			if (src.level >= LEVEL_PA)
-				switch(href_list["type"])
-					if("spawn_syndies")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Syndicates",3) as num
-						if(!amount) return
-						SR.spawn_syndies(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] syndicate operatives.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] syndicate operatives.", "admin")
-
-					if("spawn_normal")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] normal players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] normal players.", "admin")
-
-					if("spawn_player") //includes antag players
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount, INCLUDE_ANTAGS)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players.", "admin")
-
-					if("spawn_player_strip_antag") //includes antag players but strips status
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount, INCLUDE_ANTAGS, STRIP_ANTAG)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players.", "admin")
-
-					if("spawn_job")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount,job)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] normal players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] normal players.", "admin")
-
-					if("spawn_player_job") //includes antag players
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players, and kept any antag statuses.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players, and kept any antag statuses.", "admin")
-
-					if("spawn_player_job_strip_antag") //includes antag players but strips antag status
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS, STRIP_ANTAG)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players, and stripped any antag statuses.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players, and stripped any antag statuses.", "admin")
-
-	/*				if("spawn_commandos")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						SR.spawn_commandos(3)
-
-					if("spawn_turds")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn TURDS",3) as num
-						if(!amount) return
-						SR.spawn_TURDS(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] TURDS.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] TURDS.", "admin")
-
-					if("spawn_smilingman")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						SR.spawn_smilingman(1)
-						logTheThing(LOG_ADMIN, src, "has spawned a Smiling Man.")
-						logTheThing(LOG_DIARY, src, "has spawned a Smiling Man.", "admin")
-	*/
-
-					if("spawn_custom")
-						var/datum/special_respawn/SR = new /datum/special_respawn
-						var/blType = input(usr, "Select a mob type", "Spawn Custom") as null|anything in typesof(/mob/living)
-						if(!blType) return
-						var/amount = input(usr, "Amount to respawn:", "Spawn Custom",3) as num
-						if(!amount) return
-						SR.spawn_custom(blType, amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] mobs of type [blType].")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] mobs of type [blType].", "admin")
-
-					if("spawn_wizards")
-
-					if("spawn_aliens")
-
-					else
-			else
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -3859,57 +3755,6 @@ var/global/noir = 0
 
 //-------------------------------------------- Panels
 
-
-/datum/admins/proc/s_respawn()
-	var/dat = {"
-		<html><head><title>Respawn Panel</title>
-			<style>
-				table {
-					border:1px solid #FF6961;
-					border-collapse: collapse;
-					width: 100%;
-					empty-cells: show;
-				}
-
-				th {
-					background-color: #FF6961;
-					color: white;
-					padding: 8px;
-					text-align: center;
-				}
-
-				td {
-					padding: 8px;
-					text-align: left;
-				}
-
-				tr:nth-child(odd) {background-color: #f2f2f2;}
-			</style>
-		</head>
-		<body>
-			<table>
-				<th>Respawn Panel</th>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player'>Spawn players - keep antag status</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job'>Spawn players as a job - keep antag status</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_strip_antag'>Spawn players - strip antag status</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job_strip_antag'>Spawn players as a job - strip antag status</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A></td></tr>
-			</table>
-		</body></html>
-		"}
-	usr.Browse(dat, "window=SRespawn")
-
-	// Someone else removed these but left the (non-functional) buttons. Move back inside the dat section and uncomment to re-add. - IM
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_commandos'>Spawn a force of commandos</A><BR>
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_turds'>Spawn a T.U.R.D.S. attack force</A><BR>
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_smilingman'>Spawn a Smiling Man</A><BR>
-
 /datum/admins/proc/Game()
 	if (!usr) // somehoooow
 		return
@@ -3986,7 +3831,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
@@ -4483,7 +4328,7 @@ var/global/noir = 0
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE, cmp_proc=null)
 	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!length(matches))
@@ -4504,6 +4349,8 @@ var/global/noir = 0
 	var/msg = "Select \a [base] type."
 	if(prefix)
 		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	if(cmp_proc)
+		sortList(safe_matches, cmp_proc)
 	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
 	if(!.)
 		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
