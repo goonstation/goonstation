@@ -535,7 +535,7 @@ var/global/totally_random_jobs = FALSE
 							qdel(snappedDrone)
 						V.finish_board_pod(src)
 
-					#undef MAX_ALLOWED_ITERATIONS
+				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
