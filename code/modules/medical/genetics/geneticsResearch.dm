@@ -323,7 +323,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onFinish()
 		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
 		type.process_speedup += 0.25
-		. = type // we get warned about type being defined but unused and idk how else to make byond shut up
+		type = type // we get warned about type being defined but unused and idk how else to make byond shut up
 		..()
 
 // TIER TWO
