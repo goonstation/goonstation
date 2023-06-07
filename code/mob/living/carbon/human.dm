@@ -481,7 +481,7 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/is_open_container()
-	return !src.organHolder.head
+	return !(src.organHolder?.head)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
