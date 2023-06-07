@@ -1,4 +1,7 @@
 
+(t)wed jun 07 23
+(u)Sord
+(+)CE and MDir now have command teleporter access
 (t)tue jun 06 23
 (u)Nelamil
 (p)14401
