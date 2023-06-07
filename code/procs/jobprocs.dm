@@ -507,24 +507,35 @@ var/global/totally_random_jobs = FALSE
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			SPAWN(0) //pod creation sleeps for... reasons
+				#define MAX_ALLOWED_ITERATIONS 300
 				var/turf/pilotSpawnLocation = null
 
-				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-				#else														//This part of the code executes only if the map is a space one.
-				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				var/valid_z_levels
+				#ifdef UNDERWATER_MAP
+				valid_z_levels = list(Z_LEVEL_MINING)
+				#else
+				valid_z_levels = list(Z_LEVEL_MINING, Z_LEVEL_DEBRIS)
 				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-					qdel(snappedDrone)
-				V.finish_board_pod(src)
+
+				// Counter to prevent infinite looping, in case space has been fully replaced
+				var/safety = 0
+				while(!istype(pilotSpawnLocation, /turf/space) && safety < MAX_ALLOWED_ITERATIONS)		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(valid_z_levels))
+					safety++
+				// If it isn't a space turf just skip this all, we didn't find one
+				if (istype(pilotSpawnLocation, /turf/space))								//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+					var/obj/machinery/vehicle/V
+					if (istype(pilotSpawnLocation, /turf/space/fluid))
+						V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+					else											//This part of the code executes only if the map is a space one.
+						V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+					if (V)
+						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+							qdel(snappedDrone)
+						V.finish_board_pod(src)
+
+					#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
