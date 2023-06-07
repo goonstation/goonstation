@@ -300,5 +300,5 @@ TYPEINFO(/obj/item/fish_portal)
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."
 	icon_state = "hard_case"
-	slots = 5
+	slots = 6
 	can_hold = 	list(/obj/item/fish)
