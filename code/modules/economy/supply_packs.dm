@@ -475,7 +475,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "A full complement of fishing tools for the amateur angler."
 	category = "Civilian Department"
 	contains = list(/obj/item/fishing_rod/basic,
-					/obj/item/wrench
+					/obj/item/wrench,
 					/obj/submachine/fishing_upload_terminal/portable,
 					/obj/submachine/weapon_vendor/fishing/portable,
 					/obj/fishing_pool/portable)
