@@ -1,5 +1,10 @@
 
 (t)wed jun 07 23
+(u)Gannets
+(p)14464
+(e)|
+(+)Added 10 additional fishing spots.
+(+)Balanced some existing fishing spots.
 (u)Flappybat
 (p)13192
 (e)🆕🗺🎨⚖🌠|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Events
