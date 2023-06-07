@@ -2763,7 +2763,7 @@ datum
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"
 			id = "chlorine_azide"
-			result = "chlorine_azide"
+			result = null
 			required_reagents = list("sodium" = 1, "ammonia" = 1, "nitrogen" = 1, "oxygen" = 1, "silver" = 1, "chlorine" = 1)
 			instant = 1
 			mix_phrase = "The substance violently detonates!"
@@ -2787,7 +2787,7 @@ datum
 		clf3_firefoam
 			name = "CLF3 + FF Explosion"
 			id = "clf3_firefoam"
-			result = "clf3_firefoam"
+			result = null
 			required_reagents = list("infernite" = 1, "ff-foam" = 1)
 			instant = 1
 			mix_phrase = "The substance violently detonates!"
