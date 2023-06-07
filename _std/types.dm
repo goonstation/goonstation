@@ -233,6 +233,7 @@ var/list/list/by_cat = list()
 
 /typeinfo/atom
 	parent_type = /typeinfo/datum
+	/// Used to provide a list of subtypes that will be returned by get_random_subtype
 	var/random_subtypes = null
 
 /typeinfo/turf
@@ -468,7 +469,8 @@ proc/istypes(datum/dat, list/types)
 			return TRUE
 	return FALSE
 
-/proc/get_random_atom(atom_type, return_instance = FALSE, return_instance_newargs = null)
+/// Returns a random subtype when an atom has TYPEINFO with a random_subtypes list
+/proc/get_random_subtype(atom_type, return_instance = FALSE, return_instance_newargs = null)
 	var/typeinfo/atom/info = get_type_typeinfo(atom_type)
 	var/atom/chosen_type = pick(info.random_subtypes)
 	if (!return_instance)

@@ -883,7 +883,7 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "literaltrash"
 	item_state = "literaltrash"
 
-/obj/item/clothing/under/shorts/random
+/obj/item/clothing/under/shorts/random_color
 	New()
 		..()
 		src.color = random_saturated_hex_color(1)

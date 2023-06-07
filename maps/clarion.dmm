@@ -28459,10 +28459,10 @@
 /obj/item/clothing/under/swimsuit/black,
 /obj/item/clothing/under/swimsuit/red,
 /obj/item/clothing/under/swimsuit/blue,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
 /obj/item/clothing/under/shorts/black{

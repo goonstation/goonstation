@@ -26,13 +26,13 @@
 			H.equip_new_if_possible(/obj/item/device/radio/headset/civilian, H.slot_ears)
 			H.equip_new_if_possible(/obj/item/tank/emergency_oxygen/extended, H.slot_l_store)
 			if (prob(50)) // Are they a luchador or not?
-				var/obj/item/clothing/mask/rand_mask = get_random_atom(/obj/item/clothing/mask/wrestling)
+				var/obj/item/clothing/mask/rand_mask = get_random_subtype (/obj/item/clothing/mask/wrestling)
 				H.equip_new_if_possible(rand_mask, H.slot_wear_mask)
-				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_atom(/obj/item/clothing/under/shorts/luchador)
+				var/obj/item/clothing/under/shorts/luchador/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts/luchador)
 				H.equip_new_if_possible(rand_shorts, H.slot_w_uniform)
 			else
 				if (prob(50))
-					var/obj/item/clothing/under/shorts/rand_shorts = get_random_atom(/obj/item/clothing/under/shorts)
+					var/obj/item/clothing/under/shorts/rand_shorts = get_random_subtype (/obj/item/clothing/under/shorts)
 					H.equip_new_if_possible(rand_shorts, H.slot_w_uniform)
 				else
 					H.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho/random_color, H.slot_w_uniform)

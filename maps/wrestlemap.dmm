@@ -24619,7 +24619,7 @@
 "kpR" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -37370,7 +37370,7 @@
 "pUP" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/line/black{
 	dir = 8;
@@ -45151,7 +45151,7 @@
 "sZc" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
 /obj/machinery/light/emergency{
 	dir = 4
 	},
@@ -46485,7 +46485,7 @@
 "tDm" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
