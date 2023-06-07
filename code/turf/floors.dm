@@ -162,6 +162,13 @@
 				src.set_dir(pdir)
 			qdel(P)
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=FUCK I AM TIRED OF MAPING WITH NON-PATHED FLOORS-=-=-=-*/
