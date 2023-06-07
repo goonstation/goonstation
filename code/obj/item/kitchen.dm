@@ -1069,9 +1069,9 @@ TRAYS
 					skip = "ALL"
 				var/ingredienttype
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
-					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet))
 						if(!fishflag)
-							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small))
+							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small))
 								fishflag = "fillet-white"
 							else
 								fishflag = FOOD.icon_state

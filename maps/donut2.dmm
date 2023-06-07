@@ -15914,6 +15914,9 @@
 /obj/machinery/camera{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bcE" = (
@@ -33793,7 +33796,7 @@
 	},
 /obj/item/paper/ranch_guide,
 /obj/item/storage/box/clothing/rancher,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/item/clothing/mask/chicken,
 /obj/cable{
@@ -44005,6 +44008,15 @@
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
+"rTU" = (
+/obj/machinery/light/incandescent,
+/obj/table/auto,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/machinery/coffeemaker/command,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "rTZ" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -48105,7 +48117,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/item/device/camera_viewer/ranch,
 /obj/item/storage/box/syringes,
@@ -96417,7 +96429,7 @@ aWK
 aWI
 bbd
 aVb
-aVN
+rTU
 bcW
 beA
 vef
