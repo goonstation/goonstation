@@ -1,5 +1,9 @@
 
 (t)tue jun 06 23
+(u)Nexusuxen
+(p)14415
+(e)💅💊|C-QoL, A-Medical
+(*)Gene Booths can now be upgraded with GeneTek research to work faster by up to 75% (~5 seconds per gene).
 (u)Kubius
 (p)14413
 (e)🆕🗺|C-Feature, A-Mapping
