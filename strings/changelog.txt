@@ -1,5 +1,9 @@
 
 (t)tue jun 06 23
+(u)Nelamil
+(p)14401
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Glass Recyclers play sounds when used and put created glassware in user's hands if possible.
 (u)Nexusuxen
 (p)14415
 (e)💅💊|C-QoL, A-Medical
