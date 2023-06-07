@@ -1016,12 +1016,6 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		var/g = "m"
-		if (src.tf_holder.mobAppearance.gender == MALE)
-			g = "m"
-		else
-			g = "f"
-
 		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)

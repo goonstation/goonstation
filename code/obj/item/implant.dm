@@ -1386,11 +1386,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
 										 		/datum/mutantrace/pug)
 
-	implanted(mob/M, mob/I)
-		..()
-		if (ishuman(src.owner))
-			var/mob/living/carbon/human/H = owner
-
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
 			active = TRUE
