@@ -376,7 +376,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onFinish()
 		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
 		type.process_speedup += 0.25
-		. = type
+		type = type
 		..()
 
 // TIER THREE
