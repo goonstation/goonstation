@@ -253,7 +253,7 @@
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
 	allowed_mob_type = /mob
-	actionbar_duration = 1 SECOND
+	actionbar_duration = 0
 	can_break_out = FALSE
 	carrier_max_capacity = INFINITY
 	door_health_max = INFINITY
@@ -313,7 +313,7 @@
 
 	proc/interrupt_action()
 		if (BOUNDS_DIST(src.mob_owner, src.target) > 0 || !src.target || !src.mob_owner || !src.carrier \
-		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier) || !src.carrier.find_empty_hand(src.mob_owner))
+		|| (src.action == TRAP_MOB && src.mob_owner.equipped() != src.carrier))
 			return TRUE
 
 #undef RELEASE_MOB
