@@ -342,6 +342,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	food_color = "#FFFFFF"
 	w_class = W_CLASS_TINY
 
+	afterattack(obj/target, mob/user, flag)
+		..()
+		if (target.is_open_container() && target.reagents)
+			if (target.reagents.total_volume >= target.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[target] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You put [src] into [target].</span>")
+
+			src.reagents.trans_to(target, src.reagents.total_volume)
+			user.u_equip(src)
+			qdel(src)
+
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"
 	desc = "A chewy gummy bright red fish. Those crazy Swedes and their fish obesssion."
