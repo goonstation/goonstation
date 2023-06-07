@@ -126,8 +126,8 @@
 		if(G?.ARCHIVED(toxins)) .["Plasma|mols"] = G.ARCHIVED(toxins)
 		if(G?.ARCHIVED(carbon_dioxide)) .["Carbon Dioxide|mols"] = G.ARCHIVED(carbon_dioxide)
 		if(G?.ARCHIVED(nitrogen)) .["Nitrogen|mols"] = G.ARCHIVED(nitrogen)
-		if(G.nitrous_oxide) .["Nitrous Oxide|mols"] = G.ARCHIVED(nitrous_oxide)
-		if(G.oxygen_agent_b) .["Oxygen Agent B|mols"] = G.ARCHIVED(oxygen_agent_b)
+		if(G?.ARCHIVED(nitrous_oxide)) .["Nitrous Oxide|mols"] = G.ARCHIVED(nitrous_oxide)
+		if(G?.ARCHIVED(oxygen_agent_b)) .["Oxygen Agent B|mols"] = G.ARCHIVED(oxygen_agent_b)
 
 		if (G) //sorry, this was still somehow causing runtimes????
 			.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
