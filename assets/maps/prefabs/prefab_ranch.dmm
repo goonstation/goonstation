@@ -109,11 +109,11 @@
 /area/prefab/ranch)
 "G" = (
 /obj/rack,
-/obj/item/fishing_rod,
 /obj/item/fish_portal{
 	pixel_x = 5;
 	pixel_y = -1
 	},
+/obj/item/fishing_rod/upgraded,
 /turf/simulated/floor/green,
 /area/prefab/ranch)
 "H" = (
