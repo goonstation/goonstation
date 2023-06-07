@@ -1,3 +1,6 @@
+/* If anyone wants to make the martian gamemode again add subtypes for player martians which are beefier
+	could also possibly use the martian mutantrace */
+
 /mob/living/critter/martian
 	name = "martian"
 	real_name = "martian"
@@ -11,22 +14,32 @@
 	say_language = "martian"
 	voice_name = "martian"
 	blood_id = "iron" // alchemy - mars = iron
-	hand_count = 1
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
-	can_help = 1
+	hand_count = 2
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	can_help = TRUE
+	health_brute = 16
+	health_brute_vuln = 1
+	health_burn = 16
+	health_burn_vuln = 1.5
 	speechverb_say = "screeches"
 	speechverb_exclaim = "screeches"
 	speechverb_ask = "screeches"
 	speechverb_gasp = "screeches"
 	speechverb_stammer = "screeches"
-	var/leader = 0
+
+	ai_type = /datum/aiHolder/aggressive
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_ONCE
+	ai_retaliates = TRUE
+	is_npc = TRUE
+	var/leader = FALSE
 
 	understands_language(var/langname)
 		if (langname == say_language || langname == "martian")
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
@@ -35,11 +48,19 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.name = "tentacles"
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+		HH.limb_name = "left tentacles"
+
+		HH = hands[2]
+		HH.name = "right tentacles"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right tentacles"
 
 	setup_healths()
-		add_hh_flesh(35, 0.5)
-		add_hh_flesh_burn(35, 1)
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 		add_health_holder(/datum/healthHolder/toxin)
 		//add_health_holder(/datum/healthHolder/suffocation) // this is broken as hell
 		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
@@ -55,17 +76,22 @@
 		abilityHolder.addAbility(/datum/targetable/critter/teleport)
 
 		// back once again to ruin the day, it's CIRR fucking up things
-		SPAWN(0)
-			var/randomname = pick(strings("martian_names.txt", "martianname"))
-			var/newname = adminscrub(input(src,"You are a Martian. Would you like to change your name to something else?", "Name change", randomname) as text)
+		/*SPAWN(0) // Commenting this out until martian gamemode is real again
+			if (src.mind && src.ckey)
+				var/randomname = pick(strings("martian_names.txt", "martianname"))
+				var/newname = adminscrub(input(src,"You are a Martian. Would you like to change your name to something else?", "Name change", randomname) as text)
 
-			if (length(ckey(newname)) == 0)
-				newname = randomname
+				if (length(ckey(newname)) == 0)
+					newname = randomname
 
-			if (newname)
-				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
-				src.real_name = strip_html(newname)
-				src.UpdateName()
+				if (newname)
+					if (length(newname) >= 26) newname = copytext(newname, 1, 26)
+					src.real_name = strip_html(newname)
+					src.UpdateName() */
+
+	valid_target(mob/living/C)
+		if(ismartian(C)) return FALSE
+		return ..()
 
 	say(message, involuntary = 0)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
@@ -105,95 +131,99 @@
 				return 2
 		return ..()
 
-	warrior
-		name = "martian warrior"
-		real_name = "martian warrior"
-		martian_type = "warrior"
-		icon_state = "martianW"
-		icon_state_dead = "martianW-dead"
-		hand_count = 2
+/mob/living/critter/warrior
+	name = "martian warrior"
+	real_name = "martian warrior"
+	martian_type = "warrior"
+	icon_state = "martianW"
+	icon_state_dead = "martianW-dead"
+	health_brute = 18
+	health_brute_vuln = 0.7
+	health_burn = 18
+	health_burn_vuln = 1.2
 
-		setup_hands()
-			..()
-			var/datum/handHolder/HH = hands[1]
-			HH.icon = 'icons/mob/hud_human.dmi'
-			HH.icon_state = "handl"
-			HH.limb_name = "left tentacles"
+/mob/living/critter/soldier
+	name = "martian soldier"
+	real_name = "martian soldier"
+	martian_type = "soldier"
+	icon_state = "martianS"
+	icon_state_dead = "martianS-dead"
 
-			HH = hands[2]
-			HH.name = "right tentacles"
-			HH.suffix = "-R"
-			HH.icon_state = "handr"
-			HH.limb_name = "right tentacles"
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[2]
+		HH.limb = new /datum/limb/hitscan
+		HH.name = "Martian Psychokinetic Blaster"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand_martian"
+		HH.limb_name = "Martian Psychokinetic Blaster"
+		HH.can_hold_items = FALSE
+		HH.can_attack = FALSE
+		HH.can_range_attack = TRUE
 
-	soldier
-		name = "martian soldier"
-		real_name = "martian soldier"
-		martian_type = "soldier"
-		icon_state = "martianS"
-		icon_state_dead = "martianS-dead"
-		hand_count = 2
+		HH = hands[1]
+		HH.name = "right tentacles"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right tentacles"
 
-		setup_hands()
-			..()
+/mob/living/critter/mutant
+	name = "martian mutant"
+	real_name = "martian mutant"
+	martian_type = "mutant"
+	icon_state = "martianP"
+	icon_state_dead = "martianP-dead"
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 1
 
-			var/datum/handHolder/HH = hands[2]
-			HH.limb = new /datum/limb/hitscan
-			HH.name = "Martian Psychokinetic Blaster"
-			HH.icon = 'icons/mob/critter_ui.dmi'
-			HH.icon_state = "hand_martian"
-			HH.limb_name = "Martian Psychokinetic Blaster"
-			HH.can_hold_items = 0
-			HH.can_attack = 0
-			HH.can_range_attack = 1
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
+		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
-			HH = hands[1]
-			HH.name = "right tentacles"
-			HH.suffix = "-R"
-			HH.icon_state = "handr"
-			HH.limb_name = "right tentacles"
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
+		if (!gib.disabled && gib.cooldowncheck())
+			gib.handleCast(target)
+			return TRUE
 
-	mutant
-		name = "martian mutant"
-		real_name = "martian mutant"
-		martian_type = "mutant"
-		icon_state = "martianP"
-		icon_state_dead = "martianP-dead"
+/mob/living/critter/mutant/weak
+	name = "martian initiate"
+	real_name = "martian initiate"
+	martian_type = "initiate"
 
-		New()
-			..()
-			abilityHolder.addAbility(/datum/targetable/critter/gibstare)
-			abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+	New()
+		..()
+		abilityHolder.removeAbility(/datum/targetable/critter/gibstare) // enough is enough
 
-	mutant/weak
+	// These were for a martian gamemode so im leaving them as non-npcs for now
+/mob/living/critter/sapper
+	name = "martian sapper"
+	real_name = "martian sapper"
+	martian_type = "sapper"
+	icon_state = "martianSP"
+	icon_state_dead = "martianSP-dead"
+	is_npc = FALSE
 
-		name = "martian initiate"
-		real_name = "martian initiate"
-		martian_type = "initiate"
+/mob/living/critter/overseer
+	name = "martian overseer"
+	real_name = "martian overseer"
+	martian_type = "overseer"
+	icon_state = "martianL"
+	icon_state_dead = "martianL-dead"
+	health_brute = 25
+	health_brute_vuln = 0.8
+	health_burn = 25
+	health_burn_vuln = 1
+	leader = TRUE
+	is_npc = FALSE
 
-		New()
-			..()
-			abilityHolder.removeAbility(/datum/targetable/critter/gibstare) // enough is enough
-
-	sapper
-		name = "martian sapper"
-		real_name = "martian sapper"
-		martian_type = "sapper"
-		icon_state = "martianSP"
-		icon_state_dead = "martianSP-dead"
-
-	overseer
-		name = "martian overseer"
-		real_name = "martian overseer"
-		martian_type = "overseer"
-		icon_state = "martianL"
-		icon_state_dead = "martianL-dead"
-		leader = 1
-
-		New()
-			..()
-			abilityHolder.addAbility(/datum/targetable/critter/summon)
-			abilityHolder.addAbility(/datum/targetable/critter/telepathy)
+	New()
+		..()
+		abilityHolder.addAbility(/datum/targetable/critter/summon)
+		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
 // this is being copied and pasted more than once, this ends now
 // merging in the admin verb stuff so we can display the appropriate stuff to admins when players speak, because knowing real names of martian babblers would be nice
@@ -244,25 +274,12 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	martian_type = "infiltrator"
 	icon_state = "martianI"
 	icon_state_dead = "martianI-dead"
-	hand_count = 2
+	is_npc = FALSE
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
 		equipment += new /datum/equipmentHolder/head(src)
 		//equipment += new /datum/equipmentHolder/
-
-	setup_hands()
-		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.icon_state = "handl"
-		HH.limb_name = "left tentacles"
-
-		HH = hands[2]
-		HH.name = "right tentacles"
-		HH.suffix = "-R"
-		HH.icon_state = "handr"
-		HH.limb_name = "right tentacles"
 
 	setup_healths()
 		add_hh_flesh(50, 0.5)
@@ -297,7 +314,8 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	martian_type = "specialist"
 	icon_state = "martianST"
 	icon_state_dead = "martianST-dead"
-	leader = 1
+	leader = TRUE
+	is_npc = FALSE
 
 	New()
 		..()
