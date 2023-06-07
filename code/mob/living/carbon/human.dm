@@ -627,7 +627,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
+	if (src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -710,7 +710,7 @@
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!src.mutantrace || inafterlife(src)) // wow fucking racist
+	if (!inafterlife(src))
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
@@ -1425,16 +1425,10 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
-	var/sayverb = null
-	if (src.mutantrace)
-		if (src.mutantrace.voice_message)
-			src.voice_name = src.mutantrace.voice_name
-			src.voice_message = src.mutantrace.voice_message
-		sayverb = src.mutantrace.say_verb()
-	else
-		src.voice_name = initial(src.voice_name)
-		src.voice_message = initial(src.voice_message)
-
+	if (src.mutantrace.voice_message)
+		src.voice_name = src.mutantrace.voice_name
+		src.voice_message = src.mutantrace.voice_message
+	var/sayverb = src.mutantrace.say_verb()
 	var/special = 0
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
 		special = "gasp_whisper"
@@ -3110,9 +3104,7 @@
 		.= 4 * (src.hand ? 1 : -1) * (src.dir & WEST ? 1 : -1)
 
 /mob/living/carbon/human/get_hand_pixel_y()
-	.= -5
-	if (src.mutantrace)
-		.+= src.mutantrace.hand_offset
+	.= -5 + src.mutantrace.hand_offset
 
 /mob/living/carbon/human/verb/show_inventory()
 	set name = "Show Inventory"

@@ -74,7 +74,7 @@
 		if (!has_fluid_move_gear)
 			if (ishuman(A))
 				var/mob/living/carbon/human/H = A
-				if (H.mutantrace && H.mutantrace.aquatic)
+				if (H.mutantrace.aquatic)
 					has_fluid_move_gear = 1
 
 		if (!has_fluid_move_gear)

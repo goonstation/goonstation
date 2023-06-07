@@ -639,7 +639,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	name = "human"
 	icon = 'icons/mob/human.dmi'
 	mutant_folder = 'icons/mob/human.dmi'
-	icon_state = "blank"
+	icon_state = "body_m"
 	human_compatible = TRUE
 	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
 	dna_mutagen_banned = FALSE

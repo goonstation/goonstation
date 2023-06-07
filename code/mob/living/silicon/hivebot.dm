@@ -820,7 +820,7 @@ Frequency:
 		return TRUE
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace || !H.mutantrace.exclusive_language)
+		if (!H.mutantrace.exclusive_language)
 			return TRUE
 		else
 			return ..()

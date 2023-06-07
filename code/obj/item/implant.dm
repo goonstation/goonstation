@@ -1382,7 +1382,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_gimmick
-	var/datum/mutantrace/original_mutantrace = null
 	var/static/list/possible_mutantraces = list(null, /datum/mutantrace/lizard, /datum/mutantrace/skeleton, /datum/mutantrace/ithillid,
 												/datum/mutantrace/monkey, /datum/mutantrace/roach, /datum/mutantrace/cow,
 										 		/datum/mutantrace/pug)
@@ -1391,7 +1390,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		..()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			original_mutantrace = H.mutantrace
 
 	do_process(var/mult = 1)
 		if (ishuman(src.owner) && !active)
@@ -1411,9 +1409,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	on_remove()
 		if (ishuman(src.owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.mutantrace != original_mutantrace)
+			if (H.mutantrace != H.default_mutantrace)
 				gibs(get_turf(H), null, H.bioHolder.Uid, H.bioHolder.bloodType, 0)
-			H.set_mutantrace(original_mutantrace)
+			H.set_mutantrace(null)
 		..()
 
 /obj/item/implant/artifact/wizard/wizard_bad
