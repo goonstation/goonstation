@@ -1,5 +1,9 @@
 
 (t)wed jun 07 23
+(u)Amylizzle
+(p)14435
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Nuclear reactor meltdowns now leave a molten core behind.
 (u)Sord
 (+)CE and MDir now have command teleporter access
 (+)The ghost area teleport now includes space diner areas.
