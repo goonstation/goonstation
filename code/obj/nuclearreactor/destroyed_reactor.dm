@@ -44,3 +44,21 @@
 	disposing()
 		. = ..()
 		src._light_turf?.remove_medium_light("reactor_destroyed_light")
+
+/obj/decal/fakeobjects/turbine_destroyed
+	name = "Destroyed Gas Turbine"
+	desc = "A large turbine used for generating power using hot gas. It seems to be utterly destroyed."
+	icon = 'icons/obj/large/96x160.dmi'
+	icon_state = "ruined"
+	anchored = ANCHORED
+	density = TRUE
+	bound_width = 96
+	bound_height = 160
+	pixel_x = -32
+	pixel_y = -32
+	bound_x = -32
+	bound_y = -32
+	dir = EAST
+
+	ex_act(severity)
+		return
