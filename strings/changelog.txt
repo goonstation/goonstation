@@ -2,6 +2,7 @@
 (t)wed jun 07 23
 (u)Sord
 (+)CE and MDir now have command teleporter access
+(+)The ghost area teleport now includes space diner areas.
 (t)tue jun 06 23
 (u)Nelamil
 (p)14401
