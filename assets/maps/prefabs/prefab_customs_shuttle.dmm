@@ -173,7 +173,7 @@
 	})
 "iR" = (
 /obj/access_spawn/head_of_personnel,
-/obj/machinery/door/airlock/pyro/command/syndicate{
+/obj/machinery/door/airlock/pyro/command{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
@@ -432,7 +432,7 @@
 /area/prefab/crashed_hop_shuttle)
 "zh" = (
 /obj/access_spawn/head_of_personnel,
-/obj/machinery/door/airlock/pyro/command/syndicate,
+/obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "zB" = (
