@@ -2174,17 +2174,6 @@ datum
 					smoke_reaction(smokeContents, 2, location)
 					return
 
-
-
-		phenol
-			name = "Phenol"
-			id = "phenol"
-			result = "phenol"
-			required_reagents = list("oil" = 1, "chlorine" = 1, "water" = 1) // hydrolysis of chlorobenzene
-			result_amount = 3
-			mix_phrase = "The mixture bubbles and gives off an unpleasant medicinal odor."
-			mix_sound = 'sound/misc/drinkfizz.ogg'
-
 		salicylic_acid
 			name = "Salicylic Acid"
 			id = "salicylic_acid"
@@ -3364,6 +3353,23 @@ datum
 			required_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "A horrible smell pours forth from the mixture."
+			instant = FALSE
+			reaction_speed = 1
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
+
+		diethylamine_ignite
+			name = "Diethylamine ignition"
+			hidden = TRUE
+			id = "diethylamine ignition"
+			required_reagents = list("diethylamine" = 1)
+			mix_phrase = "The mixture combusts!"
+			required_temperature = T0C + 250
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				for (var/turf/T in holder.covered_turf())
+					fireflash_sm(T, 1, 600, 50)
 
 		LSD
 			name = "Lysergic acid diethylamide"
@@ -3624,13 +3630,22 @@ datum
 			mix_phrase = "The beff and the synthflesh combine to form a smoky red log."
 			mix_sound = 'sound/impact_sounds/Slimy_Hit_4.ogg'
 
-		acetone
-			name = "Acetone"
-			id = "acetone"
+		acetone_phenol //my stupid interpretation of the cumene process
+			name = "Acetone-phenol production"
+			id = "acetone-phenol"
 			result = "acetone"
-			required_reagents = list("oil" = 1, "fuel" = 1, "oxygen" = 1)
-			result_amount = 3
+			required_reagents = list("oil" = 1, "fuel" = 1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
+			result_amount = 1
 			mix_phrase = "The smell of paint thinner assaults you as the solution bubbles."
+			instant = FALSE
+			reaction_speed = 1
+
+			does_react(datum/reagents/holder)
+				return holder.has_reagent("chlorine")
+
+			on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
+				holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature)
+				holder.remove_reagent("chlorine", created_volume / 10)
 
 		hairgrownium
 			name = "Hairgrownium"
