@@ -45,7 +45,7 @@
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
-			var/actionbar_duration = 2 SECOND
+			var/actionbar_duration = 2 SECONDS
 
 			if (ishuman(user))
 				if (user.traitHolder.hasTrait("training_engineer"))
