@@ -130,9 +130,6 @@
 		if (user.a_intent == INTENT_HARM)
 			return ..()
 		if (istype(M))
-			if (!src.find_empty_hand(user))
-				boutput(user, "<span class='alert'>You need a free hand to scoop up [M]!</span>")
-				return ..()
 			if (!istype(M,src.allowed_mob_type))
 				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
 				return ..()
@@ -179,6 +176,13 @@
 		if (length(src.carrier_occupants))
 			src.take_door_damage(src.damage_per_resist * length(src.carrier_occupants))
 
+	Exited(Obj, newloc)
+		if (Obj in src.carrier_occupants)
+			src.eject_mob(Obj)
+			src.visible_message("<span class='alert'>[Obj] bursts out of [src]!</span>")
+			return
+		..()
+
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
 		if (!mob_to_trap)
@@ -197,9 +201,6 @@
 		boutput(user, "<span class='alert'>Unable to release anyone from [src]!</span>")
 
 	proc/attempt_removal(mob/user)
-		if (!src.find_empty_hand(user))
-			boutput(user, "<span class='alert'>You need a free hand to do anything with [src]!</span>")
-			return
 		if (length(src.carrier_occupants))
 			var/mob/mob_to_remove = src.carrier_occupants[1]
 			actions.start(new /datum/action/bar/icon/pet_carrier(mob_to_remove, src, src.icon, src.release_mob_icon_state, RELEASE_MOB, src.actionbar_duration), user)
@@ -226,18 +227,6 @@
 		src.carrier_occupants.Remove(mob_to_eject)
 		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
 		src.UpdateIcon()
-
-	/// Checks humans and mob critters for any empty hands.
-	proc/find_empty_hand(mob/living/mob_to_check)
-		if (ishuman(mob_to_check))
-			var/mob/living/carbon/human/human_to_check = mob_to_check
-			if (human_to_check.hand && !human_to_check.r_hand) return TRUE
-			else if (!human_to_check.l_hand) return TRUE
-		if (ismobcritter(mob_to_check))
-			var/mob/living/critter/mob_critter_to_check = mob_to_check
-			for (var/datum/handHolder/current_hand in mob_critter_to_check.hands)
-				if (!current_hand.item) return TRUE
-		return FALSE
 
 	/// Deals damage to the door. If the remaining health <= 0, release everyone and reset the carrier.
 	proc/take_door_damage(damage)
