@@ -1,4 +1,9 @@
 
+(t)thu jun 08 23
+(u)DisturbHerb + Sunkiisu
+(p)14245
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds pet carriers to the game. These bulky carriers can hold a single small animal.
 (t)wed jun 07 23
 (u)Glamurio (Ryou)
 (p)14397
