@@ -1768,7 +1768,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
