@@ -1984,3 +1984,16 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
 		real_name = name
 		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
+
+
+/obj/item/clothing/head/fish_fear_me/admin
+	name = "admin fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning admin."
+	favourite_word = "admins"
+
+	who()
+		. = pick("admins", "coders", "mentors", "players", "bugs", "feedback", "bans", "ahelps")
+
+	New()
+		. = ..()
+		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))
