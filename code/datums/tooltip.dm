@@ -285,7 +285,7 @@ var/global/list/atomTooltips = new()
 
 			//Create the window, and set options on the browser control (while at the same time forcing focus back to the map)
 			src.owner << browse(fileText, "window=[src.window];titlebar=0;can_close=0;can_resize=0;can-minimize=0;border=0;size=1,1;")
-			winset(src.owner, null, "mapwindow.map.focus=true;[src.window].alpha=0;[src.window].pos=0,0;[src.window].background-color=[transparentColor];")
+			winset(src.owner, null, "mapwindow.map.focus=true;[src.window].alpha=0;[src.window].pos=0,0;[src.window].background-color=[transparentColor];[src.window].transparent-color=[transparentColor];")
 			return 1
 		return 0
 
