@@ -99,8 +99,10 @@
 				src.add_mob(spawned_mob)
 
 	disposing()
-		for (var/occupant in src.carrier_occupants)
+		for (var/mob/occupant in src.carrier_occupants)
 			src.eject_mob(occupant)
+		for (var/obj/item/stuff in src.contents)
+			MOVE_OUT_TO_TURF_SAFE(stuff, src)
 		src.vis_contents = null
 		qdel(src.grate_proxy)
 		src.grate_proxy = null
@@ -225,13 +227,18 @@
 		mob_to_eject.vis_flags &= ~src.mob_vis_flags
 		src.carrier_occupants.Remove(mob_to_eject)
 		src.vis_contents_proxy.vis_contents.Remove(mob_to_eject)
+
+		// Get rid of all /obj/items inside as well.
+		for (var/obj/item/stuff in src.contents)
+			MOVE_OUT_TO_TURF_SAFE(stuff, src)
+
 		src.UpdateIcon()
 
 	/// Deals damage to the door. If the remaining health <= 0, release everyone and reset the carrier.
 	proc/take_door_damage(damage)
 		src.door_health -= damage
 		if (src.door_health <= 0)
-			for (var/occupant in src.carrier_occupants)
+			for (var/mob/occupant in src.carrier_occupants)
 				src.eject_mob(occupant)
 			src.visible_message("<span class='alert'>The door on [src] busts wide open, releasing its occupants!</span>")
 			src.door_health = src.door_health_max
