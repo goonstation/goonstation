@@ -4,7 +4,6 @@
 	max_stages = 3
 	spread = "The patient's pancreas is dangerously enlarged"
 	cure = "Removal of organ"
-	reagentcure = list("organ_drug3")
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1

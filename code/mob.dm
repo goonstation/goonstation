@@ -269,8 +269,7 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new
-	src.vis_contents += src.chat_text
+	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -795,8 +794,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	var/atom/oldloc = src.loc
-
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -814,17 +811,6 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
-
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -2203,6 +2189,14 @@
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
 	src.gib()
 
+/mob/proc/smite_gib()
+	var/turf/T = get_turf(src)
+	showlightning_bolt(T)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	src.unequip_all()
+	src.emote("scream")
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2372,6 +2366,7 @@
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
+	. = ..()
 	update_clothing()
 
 /mob/proc/throw_item(atom/target, list/params)

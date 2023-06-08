@@ -1221,6 +1221,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		. += M.loc
 		M = M.loc
 
+proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
+
 /proc/all_hearers(var/range,var/centre)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
@@ -1800,7 +1809,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = FALSE, var/confirmation_spawn = FALSE, var/list/text_messages = list(), var/allow_dead_antags = FALSE,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1834,7 +1843,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1857,7 +1868,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)

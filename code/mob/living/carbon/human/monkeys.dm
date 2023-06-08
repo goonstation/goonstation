@@ -12,12 +12,12 @@
 #ifdef IN_MAP_EDITOR
 	icon_state = "monkey"
 #endif
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("monkey")
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
@@ -197,13 +197,13 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		START_TRACKING
 		if (!src.disposed)
 			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name
@@ -630,12 +630,12 @@
 	name = "sea monkey"
 	max_health = 150
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
+	default_mutantrace = /datum/mutantrace/monkey/seamonkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("seamonkey")
 				if (src.name == "sea monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name

@@ -3199,7 +3199,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (!has_contraband_permit)
 							. += perp.back.get_contraband() * 0.5
 
-				if(perp.mutantrace && perp.mutantrace.jerk)
+				if(perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!
 

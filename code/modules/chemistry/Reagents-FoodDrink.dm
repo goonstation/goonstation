@@ -22,7 +22,7 @@ datum
 			description = "This appears to be beer mixed with milk."
 			reagent_state = LIQUID
 			value = 2
-			overdose = 30
+			overdose = 69
 			thirst_value = 0.4
 			bladder_value = -0.2
 			viscosity = 0.2
@@ -900,7 +900,7 @@ datum
 				if(!ishuman(holder?.my_atom))
 					return
 				var/mob/living/carbon/human/M = holder.my_atom
-				if(M.mutantrace && !src.orig_mutantrace)
+				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
@@ -1620,10 +1620,8 @@ datum
 				..()
 
 			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && istype(M))
-					if (!M.mutantrace)
-						if(M.bioHolder)
-							M.bioHolder.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
+				if(istype(M))
+					M.bioHolder?.AddEffect("roach",0,bioeffect_length) //length of bioeffect proportionate to length grasshopper was in human
 
 		fooddrink/alcoholic/freeze
 			name = "Freeze"
