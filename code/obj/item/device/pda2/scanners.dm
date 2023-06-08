@@ -186,6 +186,16 @@
 		pda.active_program = null
 		scan_geology_aoe(get_turf(pda), usr, miningScanRadius)
 
+/datum/computer/file/pda_program/scan/appraisal_scan
+	name = "Cargo Appraisal Scan"
+	size = 4
+	var/visibleScan = TRUE
+
+	scan_atom(var/atom/target)
+		if(..())
+			return
+		scan_appraisal(target, usr, visibleScan)
+
 /datum/computer/file/electronics_scan
 	name = "scanfile"
 	extension = "OSCN"

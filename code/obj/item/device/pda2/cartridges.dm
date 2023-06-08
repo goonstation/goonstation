@@ -263,6 +263,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/appraisal_scan(src))
 			src.read_only = 1
 
 	miner
@@ -275,6 +276,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/mining_map(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/geology_scan_targeted(src))
 			src.root.add_file( new /datum/computer/file/pda_program/geology_scan_aoe(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/appraisal_scan(src))
 			src.read_only = 1
 
 	engineer

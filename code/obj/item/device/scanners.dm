@@ -989,20 +989,15 @@ TYPEINFO(/obj/item/device/appraisal)
 	m_amt = 150
 	icon_state = "CargoA"
 	item_state = "electronic"
+	var/visibleScan = TRUE
 
 	attack(mob/M, mob/user)
 		return
 
-	// attack_self
-	// would be neat to maybe add an option to print a receipt or invoice?
-	// like if you wanna buy botany's stuff, this can print out what's inside
-	// and the cargo value, and then
-	// i dunno, who knows. at least you'd be able to take stock easier.
-
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
 			return
-		scan_appraisal(A, user)
+		scan_appraisal(A, user, visibleScan)
 
 
 /obj/item/oreprospector //mining scanner
@@ -1013,6 +1008,7 @@ TYPEINFO(/obj/item/device/appraisal)
 	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 	var/aoeRange = 6
+	var/visibleScan = TRUE
 
 	attack_self(var/mob/user as mob)
 		scan_geology_aoe(get_turf(user), user, src.aoeRange)
@@ -1023,6 +1019,6 @@ TYPEINFO(/obj/item/device/appraisal)
 
 		if (istype(target, /obj) || istype(target, /turf))
 			user.visible_message("<span class='notice'><b>[user]</b> takes a geological scan of [target].</span>")
-			scan_geology_targeted(src, user, TRUE) //make the scan visible
+			scan_geology_targeted(src, user, visibleScan)
 		src.add_fingerprint(user)
 		return

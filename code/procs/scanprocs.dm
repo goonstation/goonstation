@@ -938,7 +938,12 @@
 	SPAWN(2 MINUTES)
 		cig.remove_mob(user)
 
-/proc/scan_appraisal(atom/target, mob/user as mob)
+/proc/scan_appraisal(atom/target, mob/user as mob, var/visible = FALSE)
+	if(istype(target, /obj/ability_button))
+		return
+	if(visible)
+		animate_scanning(target, "#388238")
+
 	var/datum/artifact/art = null
 	var/obj/O = target
 	if (isobj(target))
@@ -980,18 +985,15 @@
 						sell_value = RC.payout
 					out_text = "<strong>[evaluated]</strong><br>"
 
-		if (sell_value == -1)
-			// no trader on the crate
+		if (sell_value == -1) // no trader on the crate
 			sell_value = shippingmarket.appraise_value(target.contents, sell = 0)
 
 	else if (istype(target, /obj/storage))
 		var/obj/storage/S = target
 		if (S.welded)
-			// you cant do this
 			boutput(user, "<span class='alert'>\The [target] is welded shut and can't be scanned.</span>")
 			return
 		if (S.locked)
-			// you cant do this either
 			boutput(user, "<span class='alert'>\The [target] is locked closed and can't be scanned.</span>")
 			return
 
@@ -1005,10 +1007,9 @@
 	else if (istype(target, /obj/item))
 		sell_value = shippingmarket.appraise_value(list( target ), sell = 0)
 
-	// replace with boutput
 	boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
 	if (sell_value > 0)
-		playsound(src, 'sound/machines/chime.ogg', 10, 1)
+		playsound(user, 'sound/machines/chime.ogg', 10, 1)
 
 	if (user.client && !user.client.preferences?.flying_chat_hidden)
 		var/image/chat_maptext/chat_text = null
