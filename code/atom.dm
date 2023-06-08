@@ -1339,3 +1339,6 @@ TYPEINFO(/atom)
 		if("density")
 			src.density = oldval
 			src.set_density(newval)
+		if("dir")
+			src.dir = oldval
+			src.set_dir(newval)
