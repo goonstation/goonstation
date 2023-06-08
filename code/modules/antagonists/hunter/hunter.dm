@@ -351,8 +351,6 @@
 		src.handcuffs.destroy_handcuffs(src)
 	src.buckled = null
 
-	if (src.mutantrace)
-		qdel(src.mutantrace)
 	src.set_mutantrace(/datum/mutantrace/hunter)
 
 	var/datum/abilityHolder/hunter/A = src.get_ability_holder(/datum/abilityHolder/hunter)

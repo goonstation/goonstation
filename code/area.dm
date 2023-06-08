@@ -1513,6 +1513,10 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Larry's Laundry"
 	icon_state = "green"
 
+/area/prefab/mauxite_hideout
+	name = "hideout"
+	icon_state = "orange"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

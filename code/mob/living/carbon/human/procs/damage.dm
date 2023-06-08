@@ -328,20 +328,19 @@
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 
-	if (src.mutantrace)
-		var/typemult
-		if(islist(src.mutantrace.typevulns))
-			typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
-		if(!typemult)
-			typemult = 1
-		if(damage_type == DAMAGE_BURN)
-			burn *= typemult
-		else
-			brute *= typemult
+	var/typemult
+	if(islist(src.mutantrace.typevulns))
+		typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
+	if(!typemult)
+		typemult = 1
+	if(damage_type == DAMAGE_BURN)
+		burn *= typemult
+	else
+		brute *= typemult
 
-		brute *= src.mutantrace.brutevuln
-		burn *= src.mutantrace.firevuln
-		tox *= src.mutantrace.toxvuln
+	brute *= src.mutantrace.brutevuln
+	burn *= src.mutantrace.firevuln
+	tox *= src.mutantrace.toxvuln
 
 
 	//if (src.bioHolder && src.bioHolder.HasEffect("resist_toxic"))

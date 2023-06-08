@@ -121,6 +121,11 @@
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
+	#ifdef CHECK_MORE_RUNTIMES
+	// manually varedited cables
+	if(current_state <= GAME_STATE_MAP_LOAD && (d1 != 0 || d2 != 1))
+		CRASH("Cable \ref[src] ([src.x], [src.y], [src.z]) has d1 or d2 set to a non-zero value during map load.")
+	#endif
 	// ensure d1 & d2 reflect the icon_state for entering and exiting cable
 	d1 = text2num( icon_state )
 

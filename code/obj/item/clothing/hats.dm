@@ -1955,3 +1955,29 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 
+// fishing hats
+
+/obj/item/clothing/head/fish_fear_me
+	name = "fish fear me hat"
+	desc = "an extremely witty piece of headwear for the discerning angler."
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
+
+	proc/who()
+		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
+
+	proc/do_what()
+		. = pick("fear", "want", "love")
+
+	New()
+		..()
+		var/list/who = list(who(), who(), who(), who())
+		if (prob(66))
+			var/have_fish = FALSE
+			for (var/who_word in who)
+				if (who_word == "fish")
+					have_fish = TRUE
+			if (!have_fish)
+				who[rand(1,4)] = "fish"
+		who[1] = capitalize(who[1])
+		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
