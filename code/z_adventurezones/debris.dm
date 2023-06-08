@@ -1,14 +1,11 @@
 ////Martian Turf stuff//////////////
-ABSTRACT_TYPE(/turf/simulated/martian)
-/turf/simulated/martian
+/turf/simulated/floor/martian
+	name = "organic floor"
+	icon_state = "floor1"
 	name = "martian"
 	icon = 'icons/turf/martian.dmi'
 	thermal_conductivity = 0.05
 	heat_capacity = 0
-
-/turf/simulated/martian/floor
-	name = "organic floor"
-	icon_state = "floor1"
 
 /turf/unsimulated/martian/floor
 	icon = 'icons/turf/martian.dmi'
