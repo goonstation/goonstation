@@ -1682,7 +1682,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	name = "Mining Map"
 	size = 4
 
-	on_activated(obj/item/device/pda2/pda) //intentionally does not call parent because this program doesnt occupy the screen and thus shouldnt be active
+	on_activated(obj/item/device/pda2/pda)
 		pda.active_program = null
 
 		if (usr.client && hotspot_controller)

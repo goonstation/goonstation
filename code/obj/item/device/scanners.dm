@@ -1002,87 +1002,8 @@ TYPEINFO(/obj/item/device/appraisal)
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
 			return
+		scan_appraisal(A, user)
 
-		var/datum/artifact/art = null
-		var/obj/O = A
-		if (isobj(A))
-			art = O.artifact
-		else
-			// objs only
-			return
-
-		var/sell_value = 0
-		var/out_text = ""
-		if (art)
-			var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in O.vis_contents
-			if (pap?.artifactType)
-				out_text = "<strong>The following values depend on correct analysis of the artifact<br>Average price for [pap.artifactType] type artifacts</strong><br>"
-				// the unrandomized sell value for an artifact of the type detailed on the form, with perfect analysis
-				sell_value = shippingmarket.calculate_artifact_price(artifact_controls.artifact_types_from_name[pap.artifactType].get_rarity_modifier(), 3)
-				sell_value = round(sell_value, 5)
-			else if (pap)
-				boutput(user, "<span class='alert'>Attached Analysis Form&trade; needs to be filled out!</span>")
-				return
-			else
-				boutput(user, "<span class='alert'>Artifact appraisal is only possible via an attached Analysis Form&trade;!</span>")
-				return
-
-		else if (istype(A, /obj/storage/crate))
-			sell_value = -1
-			var/obj/storage/crate/C = A
-			if (C.delivery_destination)
-				for (var/datum/trader/T in shippingmarket.active_traders)
-					if (T.crate_tag == C.delivery_destination)
-						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
-						out_text = "<strong>Prices from [T.name]</strong><br>"
-				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
-					if(C.delivery_destination == "REQ_THIRDPARTY")
-						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
-					else if (RC.req_code == C.delivery_destination)
-						var/evaluated = RC.requisify(C,TRUE)
-						if(evaluated == "Contents sufficient for marked requisition.")
-							sell_value = RC.payout
-						out_text = "<strong>[evaluated]</strong><br>"
-
-			if (sell_value == -1)
-				// no trader on the crate
-				sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
-
-		else if (istype(A, /obj/storage))
-			var/obj/storage/S = A
-			if (S.welded)
-				// you cant do this
-				boutput(user, "<span class='alert'>\The [A] is welded shut and can't be scanned.</span>")
-				return
-			if (S.locked)
-				// you cant do this either
-				boutput(user, "<span class='alert'>\The [A] is locked closed and can't be scanned.</span>")
-				return
-
-			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
-			sell_value = shippingmarket.appraise_value(S.contents, sell = 0)
-
-		else if (istype(A, /obj/item/satchel))
-			out_text = "<span class='alert'>Contents must be placed in a crate to be sold!</span><br>"
-			sell_value = shippingmarket.appraise_value(A.contents, sell = 0)
-
-		else if (istype(A, /obj/item))
-			sell_value = shippingmarket.appraise_value(list( A ), sell = 0)
-
-		// replace with boutput
-		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
-		if (sell_value > 0)
-			playsound(src, 'sound/machines/chime.ogg', 10, 1)
-
-		if (user.client && !user.client.preferences?.flying_chat_hidden)
-			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
-			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
-			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-			if (chat_text)
-				// don't bother bumping up other things
-				chat_text.show_to(user.client)
 
 /obj/item/oreprospector //mining scanner
 	name = "geological scanner"

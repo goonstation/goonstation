@@ -346,7 +346,6 @@ TYPEINFO(/obj/item/device/pda_module)
 	New()
 		..()
 		gps = new(src)
-		minerScanner = new(src)
 
 	return_menu_badge()
 		var/text = "<a href='byond://?src=\ref[src];open=1'>Space GPS Pro</a>"

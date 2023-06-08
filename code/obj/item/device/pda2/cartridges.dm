@@ -266,13 +266,15 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.read_only = 1
 
 	miner
-		name = "Mining cart"
-		desc = "uhh idk yet"
-		//icon_state = ""
+		name = "\improper Shovelware Systems Pro cartridge"
+		desc = "A state of the art software suite consisting of mostly stolen and rebranded tech."
+		icon_state = "cart-qm" //TODO bespoke sprite, for the one person who messes with PDA carts. Maybe a pickaxe on orange background?
 
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/mining_map(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/geology_scan_targeted(src))
+			src.root.add_file( new /datum/computer/file/pda_program/geology_scan_aoe(src))
 			src.read_only = 1
 
 	engineer

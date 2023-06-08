@@ -167,6 +167,25 @@
 
 			. = scan_secrecord(src.master, C, visible = 1)
 
+/datum/computer/file/pda_program/scan/geology_scan_targeted
+	name = "Geology Target Scan"
+	size = 8
+	var/visibleScan = TRUE
+
+	scan_atom(var/atom/target)
+		if(..())
+			return
+		scan_geology_targeted(target, usr, visibleScan)
+
+/datum/computer/file/pda_program/geology_scan_aoe //this one isnt technically a scanner because it scans an aoe and not a thing you whack with your pda
+	name = "Geology Area Scan"
+	size = 8
+	var/miningScanRadius = 6
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.active_program = null
+		scan_geology_aoe(get_turf(pda), usr, miningScanRadius)
+
 /datum/computer/file/electronics_scan
 	name = "scanfile"
 	extension = "OSCN"
