@@ -813,7 +813,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 /turf/unsimulated/wall/auto/coral
 	default_material = "coral"
-
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree
