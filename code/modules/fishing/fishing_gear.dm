@@ -9,6 +9,7 @@
 	icon_state = "fishing_rod-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "fishing_rod-inactive"
+	c_flags = ONBELT
 	/// average time to fish up something, in seconds - will vary on the upper and lower bounds by a maximum of 4 seconds, with a minimum time of 0.5 seconds.
 	var/fishing_speed = 8 SECONDS
 	/// how long to wait between casts in seconds - mainly so sounds dont overlap
