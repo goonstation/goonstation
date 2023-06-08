@@ -131,7 +131,7 @@
 				return 2
 		return ..()
 
-/mob/living/critter/warrior
+/mob/living/critter/martian/warrior
 	name = "martian warrior"
 	real_name = "martian warrior"
 	martian_type = "warrior"
@@ -142,7 +142,7 @@
 	health_burn = 18
 	health_burn_vuln = 1.2
 
-/mob/living/critter/soldier
+/mob/living/critter/martian/soldier
 	name = "martian soldier"
 	real_name = "martian soldier"
 	martian_type = "soldier"
@@ -167,7 +167,7 @@
 		HH.icon_state = "handr"
 		HH.limb_name = "right tentacles"
 
-/mob/living/critter/mutant
+/mob/living/critter/martian/mutant
 	name = "martian mutant"
 	real_name = "martian mutant"
 	martian_type = "mutant"
@@ -199,7 +199,7 @@
 		abilityHolder.removeAbility(/datum/targetable/critter/gibstare) // enough is enough
 
 	// These were for a martian gamemode so im leaving them as non-npcs for now
-/mob/living/critter/sapper
+/mob/living/critter/martian/sapper
 	name = "martian sapper"
 	real_name = "martian sapper"
 	martian_type = "sapper"
@@ -207,7 +207,7 @@
 	icon_state_dead = "martianSP-dead"
 	is_npc = FALSE
 
-/mob/living/critter/overseer
+/mob/living/critter/martian/overseer
 	name = "martian overseer"
 	real_name = "martian overseer"
 	martian_type = "overseer"
