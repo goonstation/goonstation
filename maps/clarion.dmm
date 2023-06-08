@@ -35743,7 +35743,7 @@
 	},
 /area/station/security/main)
 "nIL" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -39364,7 +39364,7 @@
 	},
 /area/station/hallway/primary/west)
 "rcG" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "rcS" = (

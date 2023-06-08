@@ -1292,7 +1292,7 @@
 	},
 /area/station/crew_quarters/md)
 "aeX" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -14061,7 +14061,7 @@
 	},
 /area/station/bridge)
 "bqD" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "bqN" = (

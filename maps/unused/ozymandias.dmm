@@ -12546,7 +12546,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "dsJ" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /obj/shrub{
 	dir = 1;
 	icon = 'icons/obj/stationobjs.dmi';
@@ -12860,7 +12860,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "dxg" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -86067,7 +86067,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{

@@ -7464,7 +7464,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "dbb" = (
@@ -35263,7 +35263,7 @@
 	dir = 9;
 	icon_state = "line2"
 	},
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "oTz" = (

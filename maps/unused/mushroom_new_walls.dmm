@@ -15808,7 +15808,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "bhM" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /obj/cable{
 	icon_state = "1-4"
 	},

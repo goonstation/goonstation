@@ -19555,7 +19555,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "bds" = (
-/obj/critter/opossum/morty,
+/mob/living/critter/small_animal/opossum/morty,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -24268,7 +24268,7 @@
 	},
 /area/station/medical/head/private)
 "boJ" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/wood/eight{
 	dir = 4
 	},

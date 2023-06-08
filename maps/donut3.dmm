@@ -56418,7 +56418,7 @@
 /turf/simulated/floor/black,
 /area/station/quartermaster/refinery)
 "riE" = (
-/obj/critter/bat/doctor,
+/mob/living/critter/small_animal/bat/doctor,
 /turf/simulated/floor/carpet{
 	icon_state = "fblue1"
 	},
@@ -65778,7 +65778,7 @@
 /turf/simulated/floor/arrival,
 /area/station/hangar/arrivals)
 "tZn" = (
-/obj/critter/opossum/morty{
+/mob/living/critter/small_animal/opossum/morty{
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail{
