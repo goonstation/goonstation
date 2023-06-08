@@ -7,6 +7,12 @@
 	var/generation = 0 //! For genetics tracking.
 	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
 
+	valid_target(var/mob/living/potential_target)
+		. = ..()
+		if (potential_target in src.growers) return FALSE
+		if (iskudzuman(potential_target)) return FALSE
+
+
 	disposing()
 		src.plantgenes = null
 		..()

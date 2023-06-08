@@ -158,6 +158,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\abilities\critter\gibstare.dm"
 #include "code\datums\abilities\critter\grow.dm"
 #include "code\datums\abilities\critter\invisibility.dm"
+#include "code\datums\abilities\critter\maneater_devour.dm"
 #include "code\datums\abilities\critter\mark.dm"
 #include "code\datums\abilities\critter\ocean.dm"
 #include "code\datums\abilities\critter\powerkick.dm"
