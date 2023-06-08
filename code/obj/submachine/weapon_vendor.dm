@@ -649,6 +649,7 @@
 
 /obj/item/requisition_token/fishing
 	icon_state = "fish_common"
+	layer = 4.5
 
 	common
 		name = "common research ticket"
