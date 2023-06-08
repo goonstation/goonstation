@@ -2691,8 +2691,15 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "akj" = (
-/obj/machinery/vending/pizza,
 /obj/machinery/light/incandescent,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 5
+	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "akk" = (
@@ -15914,6 +15921,9 @@
 /obj/machinery/camera{
 	dir = 8
 	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "bcE" = (
@@ -18382,6 +18392,9 @@
 "bmu" = (
 /obj/table/auto,
 /obj/random_item_spawner/med_kit/one,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -25214,6 +25227,9 @@
 	},
 /obj/machinery/light/incandescent,
 /obj/machinery/light_switch/north,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "cpb" = (
@@ -31029,6 +31045,9 @@
 	},
 /obj/item/storage/firstaid/toxin{
 	pixel_x = 6
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
@@ -39084,15 +39103,15 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -44005,6 +44024,15 @@
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
+"rTU" = (
+/obj/machinery/light/incandescent,
+/obj/table/auto,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/machinery/coffeemaker/command,
+/turf/simulated/floor/black,
+/area/station/bridge)
 "rTZ" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -49129,11 +49157,13 @@
 /obj/item/hand_labeler{
 	pixel_y = 10
 	},
-/obj/item/decoration/flower_vase{
-	pixel_y = 10
-	},
 /obj/drink_rack/mug{
 	pixel_y = -20
+	},
+/obj/item/kitchen/food_box/sugar_box,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -50541,10 +50571,15 @@
 /area/station/chapel/sanctuary)
 "xjR" = (
 /obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /obj/item/reagent_containers/food/snacks/burger/heartburger{
 	pixel_y = 4;
 	rand_pos = 0
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 1
 	},
@@ -50681,9 +50716,13 @@
 /area/station/science/chemistry)
 "xpg" = (
 /obj/table/folding,
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 3;
-	pixel_y = 6
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/machinery/coffeemaker/botany,
+/obj/drink_rack/mug{
+	pixel_x = -26
 	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
@@ -50902,6 +50941,13 @@
 /obj/storage/closet/biohazard,
 /turf/simulated/floor,
 /area/station/science/lobby)
+"xxA" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/vending/pizza,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/observatory)
 "xxZ" = (
 /obj/machinery/drainage/big,
 /obj/cable{
@@ -96417,7 +96463,7 @@ aWK
 aWI
 bbd
 aVb
-aVN
+rTU
 bcW
 beA
 vef
@@ -121102,7 +121148,7 @@ euD
 wSY
 euD
 ajA
-uJo
+xxA
 ajD
 ajD
 akY

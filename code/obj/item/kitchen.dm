@@ -467,6 +467,18 @@ TRAYS
 		contained_food_name = "lollipop"
 		w_class = W_CLASS_SMALL
 
+	sugar_box
+		name = "sugar cubes"
+		desc = "A box containing sugar cubes, for sweetening both your day AND your coffee."
+		icon_state = "sugarbox"
+		count = 6
+		max_count = 6
+		box_type = "sugarbox"
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
+		contained_food_name = "sugar_cube"
+		w_class = W_CLASS_SMALL
+
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -1069,9 +1081,9 @@ TRAYS
 					skip = "ALL"
 				var/ingredienttype
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
-					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet))
 						if(!fishflag)
-							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small))
+							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small))
 								fishflag = "fillet-white"
 							else
 								fishflag = FOOD.icon_state

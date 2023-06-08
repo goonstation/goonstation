@@ -291,6 +291,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_cluwnegib,
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
+		/client/proc/cmd_admin_smitegib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -1298,7 +1299,7 @@ var/list/fun_images = list()
 		del(bgObj)
 
 	var/start_x = (viewport_width / 2) + 1
-	var/start_y = (viewport_height / 2) + 1
+	var/start_y = world.maxy - (viewport_height / 2) + 1
 
 	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
 
@@ -1307,7 +1308,7 @@ var/list/fun_images = list()
 		for (var/curZ = 1; curZ <= world.maxz; curZ++)
 			if (safeAllZ && (curZ == 2 || curZ == 4))
 				continue //Skips centcom
-			for (var/y = start_y; y <= world.maxy; y += viewport_height)
+			for (var/y = start_y; y >= 0; y -= viewport_height)
 				for (var/x = start_x; x <= world.maxx; x += viewport_width)
 					src.mob.x = x
 					src.mob.y = y
@@ -1322,7 +1323,7 @@ var/list/fun_images = list()
 					return
 	//Or just one level I GUESS
 	else
-		for (var/y = start_y; y <= world.maxy; y += viewport_height)
+		for (var/y = start_y; y >= 0; y -= viewport_height)
 			for (var/x = start_x; x <= world.maxx; x += viewport_width)
 				src.mob.x = x
 				src.mob.y = y
@@ -1637,7 +1638,7 @@ var/list/fun_images = list()
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
-	var/pet_path = get_one_match(pet_input, /obj)
+	var/pet_path = get_one_match(pet_input, /atom/movable)
 	if (!pet_path)
 		return
 

@@ -578,31 +578,31 @@
 
 //FISHING
 /datum/materiel/fishing_gear/rod
-	name = "Basic Fishing Rod"
+	name = "Basic fishing rod"
 	path = /obj/item/fishing_rod/basic
 	description = "A basic fishing rod."
 	cost = 5
 
 /datum/materiel/fishing_gear/upgraded_rod
-	name = "Upgraded Fishing Rod"
+	name = "Upgraded fishing rod"
 	path = /obj/item/fishing_rod/upgraded
-	description = "An upgraded fishing rod."
+	description = "An upgraded fishing rod, able to fish in a variety of more difficult locations."
 	cost = 25
 
 /datum/materiel/fishing_gear/master_rod
-	name = "Master Fishing Rod"
+	name = "Master fishing rod"
 	path = /obj/item/fishing_rod/master
-	description = "The ultimate fishing rod."
+	description = "The ultimate fishing rod, capable of fishing in the most extreme circumstances."
 	cost = 50
 
 /datum/materiel/fishing_gear/fish_box
 	name = "Portable aquarium"
 	path = /obj/item/storage/fish_box
-	description = "A temporary solution for bulk-fish transportation."
+	description = "A temporary solution for bulk-fish transportation. Holds 6 fish in relative comfort."
 	cost = 10
 
 /datum/materiel/fishing_gear/uniform
-	name = "angler's overalls"
+	name = "Angler's overalls"
 	path = /obj/item/clothing/under/rank/angler
 	description = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
 	cost = 5
@@ -610,7 +610,7 @@
 /datum/materiel/fishing_gear/hat
 	name = "Fish fear me cap"
 	path = /obj/item/clothing/head/fish_fear_me
-	description = "The ultimate angling headwear."
+	description = "The ultimate angling headwear. Comes with a new, personalised message every time."
 	cost = 15
 
 // Requisition tokens

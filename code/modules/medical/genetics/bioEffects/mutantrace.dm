@@ -4,7 +4,6 @@
 	id = "lizard"
 	mutantrace_option = "Lizard"
 	effectType = EFFECT_TYPE_MUTANTRACE
-	effect_group = "mutantrace"
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
@@ -22,18 +21,18 @@
 		..() // caaaaaaall yooooooour paaaareeeeents
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
+			if (!istype(H.mutantrace, src.mutantrace_path))
+				H.set_mutantrace(src.mutantrace_path)
 			for (var/ID in H.bioHolder.effects)
 				// clear away any existing mutantraces first
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/mutantrace) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
-			if (!istype(H.mutantrace, src.mutantrace_path))
-				H.set_mutantrace(src.mutantrace_path)
 
 	OnRemove()
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace,src.mutantrace_path))
+			if (istype(H.mutantrace,src.mutantrace_path) && !istype(H.default_mutantrace, src.mutantrace_path))
 				H.set_mutantrace(null)
 
 	OnLife()
@@ -83,6 +82,19 @@
 	msgGain = "You feel like crawling into somewhere nice and dark."
 	msgLose = "You shed your roachy skin!"
 	icon_state  = "roach"
+
+/datum/bioEffect/mutantrace/human
+	name = "Less Primal Genetics"
+	desc = "Makes one into a boring-old human being. YOU SHOULD NOT SEE THIS"
+	id = "human"
+	mutantrace_option = "Human"
+	mutantrace_path = /datum/mutantrace/human
+	research_level = EFFECT_RESEARCH_ACTIVATED
+	msgGain = "You become human."
+	msgLose = "ook."
+	icon_state  = "blank"
+	probability = 0
+	occur_in_genepools = FALSE
 
 /datum/bioEffect/mutantrace/monkey
 	name = "Primal Genetics"

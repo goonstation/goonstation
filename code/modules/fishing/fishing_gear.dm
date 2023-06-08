@@ -25,6 +25,9 @@
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
 			if (fishing_spot)
+				if (fishing_spot.rod_tier_required > src.tier)
+					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
 
 	update_icon()
@@ -47,7 +50,7 @@
 	/// the fishing spot that the rod is fishing from
 	var/datum/fishing_spot/fishing_spot = null
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
-	duration = 0
+	duration = 1 MINUTE
 	/// id for fishing action
 	id = "fishing_for_fishies"
 
@@ -61,7 +64,7 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			user.visible_message("You need a higher tier rod to fish here!")
+			user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -214,63 +217,70 @@ TYPEINFO(/obj/item/fish_portal)
 	desc = "Insert fish to recieve points to spend in the fishing vendor."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "uploadterminal_open"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = 3
-	var/working = 0
+	var/working = FALSE
 	var/allowed = list(/obj/item/fish)
 
 	attack_hand(var/mob/user)
-		if (src.contents.len < 1)
+		if (!length(src.contents))
 			boutput(user, "<span class='alert'>There is nothing in the upload terminal!</span>")
 			return
-		if (src.working == 1)
+		if (src.working)
 			boutput(user, "<span class='alert'>The terminal is busy!</span>")
 			return
 		src.icon_state = "uploadterminal_working"
-		src.working = 1
+		src.working = TRUE
 		src.visible_message("The [src] begins uploading research data.")
-		sleep(rand(30,70))
+		sleep(rand(3 SECONDS, 7 SECONDS))
+		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
-		for(var/obj/item/fish/P in src.contents)
-			switch( P.value )
-				if (FISH_RARITY_COMMON)
-					new/obj/item/requisition_token/fishing/common(src.loc, src.layer + 0.1)
-					JOB_XP(user, "Angler", 1)
-					qdel( P )
-				if (FISH_RARITY_UNCOMMON)
-					new/obj/item/requisition_token/fishing/uncommon(src.loc, src.layer + 0.1)
-					JOB_XP(user, "Angler", 2)
-					qdel( P )
-				if (FISH_RARITY_RARE)
-					new/obj/item/requisition_token/fishing/rare(src.loc, src.layer + 0.1)
-					JOB_XP(user, "Angler", 3)
-					qdel( P )
-				if (FISH_RARITY_EPIC)
-					new/obj/item/requisition_token/fishing/epic(src.loc, src.layer + 0.1)
-					JOB_XP(user, "Angler", 4)
-					qdel( P )
-				if (FISH_RARITY_LEGENDARY)
-					new/obj/item/requisition_token/fishing/legendary(src.loc, src.layer + 0.1)
-					JOB_XP(user, "Angler", 5)
-					qdel( P )
+		for(var/obj/item/fish/P in src)
+			//No botany fish. Be a real angler and use that damn fishing rod
+			if (P.fishing_upload_blacklisted)
+				found_blacklisted_fish = TRUE
+				P.set_loc(get_turf(src))
+			else
+				switch( P.value )
+					if (FISH_RARITY_COMMON)
+						new/obj/item/requisition_token/fishing/common(src.loc, src.layer + 0.1)
+						JOB_XP(user, "Angler", 1)
+						qdel( P )
+					if (FISH_RARITY_UNCOMMON)
+						new/obj/item/requisition_token/fishing/uncommon(src.loc, src.layer + 0.1)
+						JOB_XP(user, "Angler", 2)
+						qdel( P )
+					if (FISH_RARITY_RARE)
+						new/obj/item/requisition_token/fishing/rare(src.loc, src.layer + 0.1)
+						JOB_XP(user, "Angler", 3)
+						qdel( P )
+					if (FISH_RARITY_EPIC)
+						new/obj/item/requisition_token/fishing/epic(src.loc, src.layer + 0.1)
+						JOB_XP(user, "Angler", 4)
+						qdel( P )
+					if (FISH_RARITY_LEGENDARY)
+						new/obj/item/requisition_token/fishing/legendary(src.loc, src.layer + 0.1)
+						JOB_XP(user, "Angler", 5)
+						qdel( P )
+		if (found_blacklisted_fish)
+			src.visible_message("<span class='alert'>\The [src] ejects synthetical fish it was unable to do any research on!</span>")
 
 		// Wind down
-		for(var/obj/item/S in src.contents)
+		for(var/obj/item/S in src)
 			S.set_loc(get_turf(src))
-		src.working = 0
+		src.working = FALSE
 		src.icon_state = "upload_terminal_0"
 		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
-		return
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		var/proceed = 0
+		var/proceed = FALSE
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path))
-				proceed = 1
+				proceed = TRUE
 				break
 		if (!proceed)
 			boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
@@ -279,7 +289,6 @@ TYPEINFO(/obj/item/fish_portal)
 		user.u_equip(W)
 		W.set_loc(src)
 		W.dropped(user)
-		return
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
@@ -300,5 +309,5 @@ TYPEINFO(/obj/item/fish_portal)
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	icon_state = "aquarium"
 	item_state = "aquarium"
-	slots = 5
+	slots = 6
 	can_hold = 	list(/obj/item/fish)

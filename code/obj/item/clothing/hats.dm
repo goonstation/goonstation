@@ -1963,6 +1963,22 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "fishfearme"
 	icon_state = "fishfearme"
 
+	proc/who()
+		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
+
+	proc/do_what()
+		. = pick("fear", "want", "love")
+
 	New()
 		..()
-		name = "\improper [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love")] [pick("fish", "me", "god", "women", "men", "enbies", "people")]. [pick("Fish", "Me", "God", "Women", "Men", "Enbies", "People")] [pick("fear", "want", "love")] [pick("fish", "me", "god", "women", "men", "enbies", "people")] hat"
+		var/list/who = list(who(), who(), who(), who())
+		if (prob(66))
+			var/have_fish = FALSE
+			for (var/who_word in who)
+				if (who_word == "fish")
+					have_fish = TRUE
+			if (!have_fish)
+				who[rand(1,4)] = "fish"
+		who[1] = capitalize(who[1])
+		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
+		real_name = name
