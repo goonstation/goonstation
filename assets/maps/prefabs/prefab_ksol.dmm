@@ -1177,7 +1177,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cW" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cX" = (
@@ -1211,6 +1211,10 @@
 	icon_state = "floattiles4"
 	},
 /turf/variableTurf/clear,
+/area/noGenerate)
+"dz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/variableTurf/floor,
 /area/noGenerate)
 "QJ" = (
 /obj/machinery/light/incandescent/broken{
@@ -1874,7 +1878,7 @@ ae
 ae
 aq
 as
-as
+dz
 aN
 bb
 bq

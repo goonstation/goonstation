@@ -634,7 +634,7 @@
 	},
 /area/space)
 "bQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},
@@ -1172,7 +1172,7 @@
 	},
 /area/space)
 "dv" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"

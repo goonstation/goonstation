@@ -2801,7 +2801,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/photocopier,
+/obj/machinery/printing_press,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aiN" = (
@@ -2859,7 +2859,7 @@
 /area/station/chapel/sanctuary)
 "ajb" = (
 /obj/table/wood/auto,
-/obj/item/bible,
+/obj/machinery/light/lamp/green,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajc" = (
@@ -3137,16 +3137,12 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quartersA)
 "ajK" = (
-/obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_x = -7;
-	pixel_y = 6
-	},
-/obj/item/pen/fancy,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/table/wood/auto,
+/obj/item/bible,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "ajL" = (
@@ -3189,8 +3185,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ajT" = (
-/obj/table/wood/auto,
-/obj/machinery/light/lamp/green,
 /obj/blind_switch/area/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -3252,18 +3246,17 @@
 	},
 /area/station/chapel/sanctuary)
 "ake" = (
-/obj/shrub{
-	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
-	dir = 1;
-	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant";
-	tag = "icon-plant (NORTH)"
-	},
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/east,
+/obj/table/wood/auto,
+/obj/item/pen/fancy,
+/obj/item/paper_bin{
+	pixel_x = -7;
+	pixel_y = 6
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akf" = (
@@ -3778,24 +3771,18 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
 /area/station/chapel/sanctuary)
-"alz" = (
-/obj/stool/chair/comfy{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Chaplain"
-	},
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/office)
 "alA" = (
 /obj/cable{
 	icon_state = "1-4"
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
+	},
+/obj/landmark/start{
+	name = "Chaplain"
+	},
+/obj/stool/chair/comfy{
+	dir = 1
 	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
@@ -23487,6 +23474,9 @@
 	},
 /obj/item/disk/data/tape,
 /obj/item/hand_labeler,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bFe" = (
@@ -25823,6 +25813,9 @@
 	name = "Robust Donuts"
 	},
 /obj/machinery/light,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/main)
 "bMn" = (
@@ -35997,9 +35990,6 @@
 /area/station/crew_quarters/quarters_north)
 "doL" = (
 /obj/table/reinforced/auto,
-/obj/machinery/recharger{
-	pixel_x = -6
-	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -36021,6 +36011,13 @@
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 7;
 	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/machinery/recharger{
+	pixel_x = -6
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -37113,7 +37110,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/item/device/camera_viewer/ranch,
 /obj/item/storage/box/syringes,
@@ -37372,6 +37369,11 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/security/hos)
+"era" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/coffeemaker/command,
+/turf/simulated/floor/grey,
+/area/station/bridge)
 "esb" = (
 /obj/machinery/recharge_station,
 /turf/simulated/floor/grime,
@@ -38470,15 +38472,15 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -39806,11 +39808,11 @@
 /area/station/security/brig/solitary)
 "gnk" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker/botany,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
 	pixel_y = 12
 	},
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "gnJ" = (
@@ -41500,6 +41502,9 @@
 /obj/item/robodefibrillator{
 	pixel_x = 5;
 	pixel_y = 15
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -43693,6 +43698,9 @@
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -43728,6 +43736,9 @@
 /obj/table/auto,
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -43788,16 +43799,6 @@
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
-/area/space)
-"jUg" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/space,
 /area/space)
 "jUy" = (
 /obj/decal/stripe_delivery,
@@ -49512,6 +49513,20 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
+"oZt" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 24;
+	tag = ""
+	},
+/turf/space,
+/area/space)
 "oZW" = (
 /obj/rack,
 /obj/item/reagent_containers/food/drinks/juicer,
@@ -50263,6 +50278,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"pHx" = (
+/obj/machinery/r_door_control/podbay/security,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/sec)
 "pIc" = (
 /obj/lattice,
 /obj/machinery/light/runway_light/delay4,
@@ -52501,6 +52520,26 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
+"rIb" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -8;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/food/drinks/creamer,
+/turf/simulated/floor/grey,
+/area/station/bridge)
 "rJA" = (
 /obj/plasticflaps,
 /obj/cable{
@@ -53180,7 +53219,6 @@
 /area/station/hallway/primary/south)
 "snQ" = (
 /obj/machinery/light,
-/obj/machinery/r_door_control/podbay/security/new_walls/east,
 /turf/simulated/floor/engine,
 /area/station/hangar/sec)
 "soO" = (
@@ -56267,16 +56305,12 @@
 /area/station/crew_quarters/showers)
 "uRm" = (
 /obj/table/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 12;
-	pixel_y = 4
-	},
+/obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_x = -5
+	pixel_y = 2
 	},
-/obj/item/paper/book/from_file/hydroponicsguide{
-	pixel_x = -5;
-	pixel_y = 4
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
 	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
@@ -57836,6 +57870,10 @@
 	},
 /obj/cable,
 /obj/machinery/power/data_terminal,
+/obj/item/storage/box/beakerbox{
+	pixel_x = 12;
+	pixel_y = 4
+	},
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/bay)
 "wtf" = (
@@ -58815,10 +58853,6 @@
 /obj/machinery/coffeemaker/security,
 /obj/disposalpipe/segment/brig{
 	dir = 8
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8;
-	pixel_y = 12
 	},
 /turf/simulated/floor/red/side{
 	dir = 8
@@ -116689,8 +116723,8 @@ xKL
 sYq
 xKL
 snQ
-qGc
-jUg
+pHx
+aaa
 aaa
 aaa
 aaa
@@ -116992,7 +117026,7 @@ vEx
 qGc
 qGc
 qGc
-afw
+oZt
 aaa
 aaa
 aaa
@@ -120220,7 +120254,7 @@ auA
 agI
 ajO
 ajb
-alz
+akK
 eCr
 akg
 age
@@ -123608,8 +123642,8 @@ cZL
 wDf
 cNv
 dfl
-suM
-suM
+rIb
+era
 dfl
 cGB
 usi

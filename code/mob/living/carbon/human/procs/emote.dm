@@ -33,15 +33,16 @@
 
 	var/maptext_out = 0
 	var/message = null
-	if (src.mutantrace)
-		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
-		if(!islist(mutantrace_emote_stuff))
-			message = mutantrace_emote_stuff
-		else
-			if(length(mutantrace_emote_stuff) >= 1)
-				message = mutantrace_emote_stuff[1]
-			if(length(mutantrace_emote_stuff) >= 2)
-				maptext_out = mutantrace_emote_stuff[2]
+
+	var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+	if(!islist(mutantrace_emote_stuff))
+		message = mutantrace_emote_stuff
+	else
+		if(length(mutantrace_emote_stuff) >= 1)
+			message = mutantrace_emote_stuff[1]
+		if(length(mutantrace_emote_stuff) >= 2)
+			maptext_out = mutantrace_emote_stuff[2]
+
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -1968,7 +1969,7 @@
 							else
 								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled))
+					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)

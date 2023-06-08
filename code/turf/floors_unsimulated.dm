@@ -179,7 +179,7 @@
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
-			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal/steel,\
+			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
 			/obj/item/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
@@ -486,6 +486,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/unsimulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -493,11 +495,7 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"), copy = FALSE)
+	default_material = "pharosium"
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -728,13 +726,11 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/unsimulated/floor/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"), copy = FALSE)
+	default_material = "wood"
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -956,17 +952,15 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"), copy = FALSE)
+	default_material = "synthrubber"
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -1133,18 +1127,16 @@
 			src.icon_state = "swamp[rand(1, 4)]"
 
 
+TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
+	mat_appearances_to_ignore = list("ice")
 /turf/unsimulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	mat_appearances_to_ignore = list("ice")
-
-	New()
-		..()
-		setMaterial(getMaterial("ice"), copy = FALSE)
-		name = initial(name)
+	default_material = "ice"
+	mat_changename = FALSE
 
 /turf/unsimulated/floor/auto/water/ice/rough
 	name = "ice"
