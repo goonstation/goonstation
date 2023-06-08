@@ -1981,3 +1981,4 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 				who[rand(1,4)] = "fish"
 		who[1] = capitalize(who[1])
 		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
+		real_name = name
