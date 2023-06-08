@@ -296,7 +296,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	disposing()
 		if (src.mob)
-			src.mob.mutantrace = null
 			src.mob.set_face_icon_dirty()
 			src.mob.set_body_icon_dirty()
 
