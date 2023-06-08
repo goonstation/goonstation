@@ -1,3 +1,6 @@
+(t)mon jun 05 23
+(u)LeahTheTech
+(*)Removed the old broken admin respawn-panel verb in favour of the new custom-ghost-spawn verb.
 (t)fri jun 02 23
 (u)LeahTheTech
 (*)Added a flock conversion build mode.

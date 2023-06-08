@@ -13999,20 +13999,22 @@
 	pixel_x = -26;
 	pixel_y = -1
 	},
+/obj/table/auto,
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
 "aJe" = (
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/item/reagent_containers/food/drinks/bottle/soda,
-/obj/storage/crate,
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/drink_rack/mug{
+	pixel_y = -24
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/caution/north,
 /area/station/hydroponics/lobby)
 "aJf" = (
@@ -29527,7 +29529,14 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bve" = (
-/obj/machinery/recharge_station,
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "bvg" = (
@@ -30378,6 +30387,7 @@
 	dir = 4
 	},
 /obj/decal/stripe_caution,
+/obj/machinery/recharge_station,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "bxf" = (
@@ -39030,8 +39040,13 @@
 	},
 /area/station/bridge)
 "bOC" = (
-/obj/machinery/status_display{
-	pixel_y = -30
+/obj/table/reinforced/bar/auto,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
 	},
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -39039,7 +39054,6 @@
 	},
 /area/station/bridge)
 "bOD" = (
-/obj/reagent_dispensers/watertank/fountain,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -39047,6 +39061,8 @@
 	tag = ""
 	},
 /obj/machinery/light/emergency,
+/obj/table/reinforced/bar/auto,
+/obj/machinery/coffeemaker/command,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -39662,6 +39678,9 @@
 "bPZ" = (
 /obj/machinery/disposal/mail/autoname/bridge,
 /obj/disposalpipe/trunk/mail/north,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -52208,7 +52227,8 @@
 	},
 /area/station/science/lobby)
 "cvP" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/research,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "cvQ" = (
@@ -61659,11 +61679,11 @@
 /obj/machinery/light,
 /obj/item/reagent_containers/hypospray,
 /obj/item/reagent_containers/hypospray,
+/obj/random_item_spawner/medicine,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cSq" = (
-/obj/table/auto,
-/obj/random_item_spawner/medicine,
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -62902,11 +62922,13 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "cVk" = (
-/obj/stool/chair/couch{
-	dir = 8
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -62914,7 +62936,7 @@
 /area/station/medical/medbay)
 "cVl" = (
 /obj/stool/chair/couch{
-	dir = 4
+	dir = 8
 	},
 /obj/landmark/start{
 	name = "Medical Doctor"
@@ -65905,7 +65927,12 @@
 	},
 /area/station/medical/robotics)
 "dcf" = (
-/obj/reagent_dispensers/watertank/fountain,
+/obj/stool/chair/couch{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -71931,6 +71958,9 @@
 	pixel_y = 4
 	},
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /obj/machinery/coffeemaker/security,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
@@ -72360,6 +72390,20 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"hzY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
+/turf/simulated/floor/purple/side,
+/area/station/science/lobby)
 "hAd" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -72862,6 +72906,12 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/chamber)
+"iSO" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/bridge)
 "iYX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -72951,14 +73001,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jof" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8
-	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -74181,9 +74224,6 @@
 /obj/drink_rack/mug{
 	pixel_x = -26
 	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8
-	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "mDn" = (
@@ -74318,15 +74358,17 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/obj/table/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = -26
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
+/obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -75893,10 +75935,6 @@
 	pixel_y = -24
 	},
 /obj/machinery/coffeemaker/engineering,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8;
-	pixel_y = 12
-	},
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "sOV" = (
@@ -104064,7 +104102,7 @@ cpY
 crL
 ctc
 cuz
-cAn
+hzY
 cta
 cta
 cAk
@@ -145409,7 +145447,7 @@ bLl
 bMf
 bOz
 bPZ
-bAc
+iSO
 aaa
 bTg
 bWt
@@ -145711,7 +145749,7 @@ bLm
 bMX
 bOA
 bQa
-bAf
+cBj
 aaa
 bTg
 bWu

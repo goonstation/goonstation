@@ -3919,15 +3919,18 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "ajV" = (
-/obj/machinery/coffeemaker/medbay,
 /obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
+/obj/table/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/obj/machinery/coffeemaker/medbay,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
 	},
-/obj/table/auto,
 /turf/simulated/floor/blue/corner{
 	dir = 1
 	},
@@ -8552,6 +8555,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -14398,6 +14402,7 @@
 /area/station/hydroponics/bay)
 "aLI" = (
 /obj/machinery/light_switch/auto,
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -17034,7 +17039,7 @@
 /turf/space/fluid,
 /area/space)
 "aTu" = (
-/obj/critter/shark,
+/mob/living/critter/aquatic/shark,
 /obj/decal/woodclutter,
 /turf/space/fluid,
 /area/space)
@@ -25462,7 +25467,11 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/storage/crate/radio,
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "blue2"
@@ -25704,13 +25713,15 @@
 /area/station/bridge)
 "bvK" = (
 /obj/table/wood/round/auto,
-/obj/item/clothing/gloves/yellow/unsulated,
-/obj/item/clothing/gloves/yellow,
-/obj/item/device/multitool,
 /obj/machinery/light/incandescent/warm,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_x = 26;
+	pixel_y = 4
 	},
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -33627,11 +33638,11 @@
 /area/station/quartermaster/refinery)
 "bRp" = (
 /obj/storage/crate/freezer,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
 /turf/simulated/floor/grime,
 /area/space)
 "bRq" = (
@@ -35987,6 +35998,9 @@
 	dir = 1;
 	name = "autoname - SS13";
 	tag = ""
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
@@ -39473,15 +39487,19 @@
 	},
 /area/station/crew_quarters/bar)
 "ciV" = (
-/obj/stool/chair/green{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/item/device/light/zippo{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/seed/cannabis{
+	pixel_x = 3
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/hydroponics/bay)
@@ -39531,9 +39549,6 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "cjf" = (
-/obj/stool/chair/green{
-	dir = 8
-	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/bay)
@@ -39687,7 +39702,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "cjJ" = (
-/obj/machinery/hydro_growlamp,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -40937,8 +40953,14 @@
 /area/station/maintenance/south)
 "dHz" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
 /obj/item/device/radio/intercom/cargo,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "dIw" = (
@@ -42025,10 +42047,13 @@
 /area/station/science/lobby)
 "gxB" = (
 /obj/table/wood/round/auto,
-/obj/item/disk/data/floppy/read_only/communications,
 /obj/machinery/status_display{
 	pixel_x = 32
 	},
+/obj/item/clothing/gloves/yellow,
+/obj/item/device/multitool,
+/obj/item/clothing/gloves/yellow/unsulated,
+/obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "blue2"
@@ -42385,6 +42410,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"hVo" = (
+/obj/storage/crate/radio,
+/turf/simulated/floor/carpet{
+	icon_state = "blue2"
+	},
+/area/station/bridge)
 "hXh" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/cable{
@@ -42714,15 +42745,8 @@
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "iXw" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8
-	},
-/turf/simulated/floor/greenblack,
+/obj/stool/chair/green,
+/turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "iYt" = (
 /obj/table/reinforced/auto,
@@ -43515,11 +43539,11 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
-/obj/machinery/coffeemaker/engineering,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8;
 	pixel_y = 12
 	},
+/obj/machinery/coffeemaker/engineering,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lxw" = (
@@ -43681,12 +43705,15 @@
 	},
 /area/research_outpost/hangar)
 "mip" = (
-/obj/item/device/light/zippo{
-	pixel_x = 8;
-	pixel_y = -5
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
-/obj/item/seed/cannabis{
-	pixel_x = 3
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
 	},
 /turf/simulated/floor/greenblack{
 	dir = 1
@@ -46634,16 +46661,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
 "wOv" = (
-/obj/table/round,
 /obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
+/obj/table/glass/reinforced/auto,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "wPA" = (
@@ -46914,6 +46933,20 @@
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"xOk" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "xOo" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -75617,7 +75650,7 @@ nFR
 aKB
 agY
 aLL
-iXw
+ldw
 bfh
 bfB
 aPZ
@@ -75920,7 +75953,7 @@ agY
 agY
 aLL
 cjf
-bfh
+iXw
 cjJ
 aPZ
 lOG
@@ -76222,7 +76255,7 @@ agY
 agY
 aQI
 ldw
-bfh
+iXw
 mip
 aPZ
 bhA
@@ -94678,7 +94711,7 @@ bvE
 bvI
 bvI
 bvI
-bzE
+hVo
 btK
 bCr
 bDG
@@ -104605,8 +104638,8 @@ ayO
 aJg
 aJG
 aJG
-aJG
 aKP
+xOk
 ayO
 aet
 aeu

@@ -183,15 +183,15 @@ TYPEINFO(/obj/machinery/secscanner)
 
 		var/mob/living/carbon/human/perp = target
 
-		if (perp.mutantrace)
-			if (istype(perp.mutantrace, /datum/mutantrace/abomination))
-				threatcount += 8
-			else if (istype(perp.mutantrace, /datum/mutantrace/zombie))
-				threatcount += 6
-			else if (istype(perp.mutantrace, /datum/mutantrace/werewolf) || istype(perp.mutantrace, /datum/mutantrace/hunter))
-				threatcount += 4
-			else if (istype(perp.mutantrace, /datum/mutantrace/cat))
-				threatcount += 3
+		//yass TODO: move this to a var on mutantrace
+		if (istype(perp.mutantrace, /datum/mutantrace/abomination))
+			threatcount += 8
+		else if (istype(perp.mutantrace, /datum/mutantrace/zombie))
+			threatcount += 6
+		else if (istype(perp.mutantrace, /datum/mutantrace/werewolf) || istype(perp.mutantrace, /datum/mutantrace/hunter))
+			threatcount += 4
+		else if (istype(perp.mutantrace, /datum/mutantrace/cat))
+			threatcount += 3
 
 		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perp.name)))
