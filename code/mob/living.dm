@@ -1582,7 +1582,7 @@
 			L.help(src, M)
 
 		if (INTENT_DISARM)
-			if (M.is_mentally_dominated_by(src))
+			if (src.mind && (M.mind?.get_master() == src.mind))
 				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
@@ -1604,7 +1604,7 @@
 			message_admin_on_attack(M, "grabs")
 
 		if (INTENT_HARM)
-			if (M.is_mentally_dominated_by(src))
+			if (src.mind && (M.mind?.get_master() == src.mind))
 				boutput(M, "<span class='alert'>You cannot harm your master!</span>")
 				return
 
