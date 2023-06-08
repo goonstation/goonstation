@@ -244,7 +244,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			icon_state = the_state
 
 			if (light_mod)
-				src.RL_SetSprite("[light_mod][connectdir]")
+				src.RL_SetSprite("[light_mod][connectdir]", initial(wall_path.RL_OverlayIcon))
 
 			if (s_connect_overlay)
 				var/overlaydir = get_connected_directions_bitflag(s_connects_with_overlay, s_connects_with_overlay_exceptions, TRUE)
