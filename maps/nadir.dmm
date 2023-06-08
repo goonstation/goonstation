@@ -6826,6 +6826,7 @@
 	dir = 1;
 	pixel_y = 26
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -21170,6 +21171,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = -6
+	},
 /turf/simulated/floor/greenblack{
 	dir = 8
 	},
@@ -24300,9 +24304,6 @@
 /area/station/crew_quarters/baroffice)
 "ksw" = (
 /obj/table/reinforced/auto,
-/obj/item/device/nanoloom{
-	pixel_x = -8
-	},
 /obj/item/nanoloom_cartridge{
 	pixel_x = -6;
 	pixel_y = 8
@@ -24314,6 +24315,7 @@
 /obj/drink_rack/mug{
 	pixel_y = 32
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "ksL" = (
@@ -28038,6 +28040,10 @@
 /obj/item/robodefibrillator{
 	pixel_y = -1
 	},
+/obj/item/device/nanoloom{
+	pixel_x = -12;
+	pixel_y = 9
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "lUT" = (
@@ -31716,6 +31722,9 @@
 /area/station/quartermaster/refinery)
 "nAt" = (
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /obj/machinery/computer/security/wooden_tv/small{
 	pixel_y = 8
 	},
@@ -54047,6 +54056,7 @@
 	pixel_x = -5;
 	pixel_y = 7
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/black,
 /area/station/science/lobby{
 	name = "Science Lounge"
@@ -54347,10 +54357,6 @@
 /area/pasiphae/hangar)
 "xQe" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/beakerbox{
-	pixel_x = 6;
-	pixel_y = 4
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -54361,6 +54367,9 @@
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8;

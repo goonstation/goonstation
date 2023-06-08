@@ -3919,15 +3919,18 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "ajV" = (
-/obj/machinery/coffeemaker/medbay,
 /obj/drink_rack/mug{
 	pixel_x = 26;
 	pixel_y = 4
 	},
+/obj/table/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
+/obj/machinery/coffeemaker/medbay,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
 	},
-/obj/table/auto,
 /turf/simulated/floor/blue/corner{
 	dir = 1
 	},
@@ -8552,6 +8555,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/yellow/checker{
 	dir = 8
 	},
@@ -14398,6 +14402,7 @@
 /area/station/hydroponics/bay)
 "aLI" = (
 /obj/machinery/light_switch/auto,
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -35994,6 +35999,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bXH" = (
@@ -39479,15 +39487,19 @@
 	},
 /area/station/crew_quarters/bar)
 "ciV" = (
-/obj/stool/chair/green{
-	dir = 4
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
 	name = "autoname - SS13";
 	pixel_y = 20;
 	tag = ""
+	},
+/obj/item/device/light/zippo{
+	pixel_x = 8;
+	pixel_y = -5
+	},
+/obj/item/seed/cannabis{
+	pixel_x = 3
 	},
 /turf/simulated/floor/greenblack/corner,
 /area/station/hydroponics/bay)
@@ -39537,9 +39549,6 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/T_north,
 /area/station/crew_quarters/captain)
 "cjf" = (
-/obj/stool/chair/green{
-	dir = 8
-	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/greenblack,
 /area/station/hydroponics/bay)
@@ -39693,7 +39702,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/ranch)
 "cjJ" = (
-/obj/machinery/hydro_growlamp,
+/obj/table/reinforced/auto,
+/obj/machinery/coffeemaker/botany,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -40943,8 +40953,14 @@
 /area/station/maintenance/south)
 "dHz" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/mechanical,
 /obj/item/device/radio/intercom/cargo,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "dIw" = (
@@ -42729,15 +42745,8 @@
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "iXw" = (
-/obj/table/reinforced/auto,
-/obj/machinery/coffeemaker/botany,
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8
-	},
-/turf/simulated/floor/greenblack,
+/obj/stool/chair/green,
+/turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "iYt" = (
 /obj/table/reinforced/auto,
@@ -43530,11 +43539,11 @@
 /obj/drink_rack/mug{
 	pixel_y = 28
 	},
-/obj/machinery/coffeemaker/engineering,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8;
 	pixel_y = 12
 	},
+/obj/machinery/coffeemaker/engineering,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "lxw" = (
@@ -43696,12 +43705,15 @@
 	},
 /area/research_outpost/hangar)
 "mip" = (
-/obj/item/device/light/zippo{
-	pixel_x = 8;
-	pixel_y = -5
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
-/obj/item/seed/cannabis{
-	pixel_x = 3
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
 	},
 /turf/simulated/floor/greenblack{
 	dir = 1
@@ -46649,16 +46661,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade)
 "wOv" = (
-/obj/table/round,
 /obj/machinery/coffeemaker/research,
-/obj/drink_rack/mug{
-	pixel_x = 26;
-	pixel_y = 4
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
+/obj/table/glass/reinforced/auto,
 /turf/simulated/floor/wood,
 /area/station/science/lobby)
 "wPA" = (
@@ -46929,6 +46933,20 @@
 "xNc" = (
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
+"xOk" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/turf/simulated/floor/wood,
+/area/station/science/lobby)
 "xOo" = (
 /obj/table/wood/auto/desk{
 	pixel_y = -2
@@ -75632,7 +75650,7 @@ nFR
 aKB
 agY
 aLL
-iXw
+ldw
 bfh
 bfB
 aPZ
@@ -75935,7 +75953,7 @@ agY
 agY
 aLL
 cjf
-bfh
+iXw
 cjJ
 aPZ
 lOG
@@ -76237,7 +76255,7 @@ agY
 agY
 aQI
 ldw
-bfh
+iXw
 mip
 aPZ
 bhA
@@ -104620,8 +104638,8 @@ ayO
 aJg
 aJG
 aJG
-aJG
 aKP
+xOk
 ayO
 aet
 aeu
