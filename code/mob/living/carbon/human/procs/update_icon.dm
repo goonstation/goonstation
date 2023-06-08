@@ -806,7 +806,7 @@
 	var/image/i_r_hand = null
 	var/image/i_l_hand = null
 
-	var/hand_offset = src.mutantrace.hand_offset
+	var/hand_offset = src.mutantrace?.hand_offset
 
 	if (src.limbs)
 		if(src.l_hand && src.r_hand && src.l_hand == src.r_hand && src.l_hand.two_handed)
