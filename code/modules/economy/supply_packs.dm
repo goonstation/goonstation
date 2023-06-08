@@ -785,6 +785,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Animal Import Kit"
 
+/datum/supply_packs/pet_carrier
+	name = "Pet Carrier"
+	desc = "A hand-held crate used in the convenient storage and transportation of small animals. Warranty voided if used to transport pet rocks or \
+			tortoises."
+	category = "Civilian Department"
+	contains = list(/obj/item/pet_carrier)
+	cost = 1000
+	containertype = /obj/storage/crate/packing
+	containername = "Pet Carrier"
+
 /datum/supply_packs/takeout_chinese
 	name = "Golden Gannet Delivery"
 	desc = "A Space Chinese meal for two, delivered galaxy-wide."

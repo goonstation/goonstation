@@ -180,7 +180,6 @@
 		if (Obj in src.carrier_occupants)
 			src.eject_mob(Obj)
 			src.visible_message("<span class='alert'>[Obj] bursts out of [src]!</span>")
-			return
 		..()
 
 	/// Called when a given mob/user steals a mob after an actionbar.
