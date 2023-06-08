@@ -1,5 +1,9 @@
 
 (t)wed jun 07 23
+(u)Glamurio (Ryou)
+(p)14397
+(e)🆕🗺🎨💅📦|C-Feature, A-Mapping, C-Sprites, C-QoL, A-Game-Objects
+(+)Added sugar cubes next to most coffee machines.
 (u)Gannets
 (p)14464
 (e)|
