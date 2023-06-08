@@ -78,23 +78,24 @@
 		holdinghands.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
 		holdinghands.can_hold_items = 0
 
-	HYPsetup_dna(var/datum/plantgenes/DNA, var/percent_health_on_spawn = 100)
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
 		var/baseline_stamina = 300 // how much stamina the maneater should have baseline
 		var/stamina_per_potency = 5 // how much stamina each point of potency should add
 		var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
 		var/maximum_stamreg = 60 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 
-		var/scaled_health = src.baseline_health + (DNA?.get_effective_value("endurance") * health_per_endurance)
+		var/scaled_health = src.baseline_health + (passed_genes?.get_effective_value("endurance") * health_per_endurance)
 		for (var/T in healthlist)
 			var/datum/healthHolder/lifepool = healthlist[T]
 			lifepool.maximum_value = scaled_health
 			lifepool.value = scaled_health
 			lifepool.last_value = scaled_health
-		src.stamina = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
-		src.stamina_max = baseline_stamina + (DNA?.get_effective_value("potency") * stamina_per_potency)
-		src.stamina_regen = min(STAMINA_REGEN + round(DNA?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg)
+		src.stamina = baseline_stamina + (passed_genes?.get_effective_value("potency") * stamina_per_potency)
+		src.stamina_max = baseline_stamina + (passed_genes?.get_effective_value("potency") * stamina_per_potency)
+		src.stamina_regen = min(STAMINA_REGEN + round(passed_genes?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg)
 		..()
+		return src
 
 	New()
 		//Maneaters are scary and big, they should not be pinned for helplessly thrown around

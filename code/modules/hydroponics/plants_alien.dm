@@ -278,33 +278,30 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
+		var/datum/plant/current_plant = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(4))
+		if (POT.growth > (current_plant.growtime - DNA?.get_effective_value("growtime")) && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (P.harvtime - DNA?.get_effective_value("harvtime")))
-			var/mob/living/critter/plant/maneater/ME = new(get_turf(POT))
-			var/percent_health_on_spawn = round(POT.health / 10 * 100)
-			if (P.starthealth != 0) //this passes the same formular examining a plant used to determinate its % health
-				percent_health_on_spawn = round(POT.health / P.starthealth * 100)
-			ME.growers = ME.growers | POT.contributors
-			var/datum/plantgenes/FDNA = ME.plantgenes
-			HYPpassplantgenes(DNA,FDNA)
-			ME.generation = POT.generation
-			// Copy the genes from the plant we're harvesting to the new critter.
-			if(P.hybrid)
-				// We need to do special shit with the genes if the plant is a spliced
-				// hybrid since they run off instanced datums rather than referencing
-				// a specific already-existing one.
-				var/plantType = P.type
-				var/datum/plant/hybrid = new plantType(ME)
-				for(var/V in P.vars)
-					if(issaved(P.vars[V]) && V != "holder")
-						hybrid.vars[V] = P.vars[V]
-				ME.planttype = hybrid
-			// Now while we have all stats together, let's make the critter adjust its stats itself
-			ME.HYPsetup_dna(DNA, percent_health_on_spawn)
+		if (POT.growth > (current_plant.harvtime - DNA?.get_effective_value("harvtime")))
+			var/mob/living/critter/plant/maneater/new_maneater = new(get_turf(POT))
+			//Quality with the maneater is simulated a bit differently. It's calulated out of the endurance and potency-stat only
+			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 6)
+			var/simulated_quality_status = null
+			if (HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
+				simulated_quality_status = "malformed"
+				simulated_quality = rand(10,-10)
+			else
+				switch(simulated_quality)
+					if(20 to INFINITY)
+						if(prob(min(100, simulated_quality - 15)))
+							simulated_quality_status = "jumbo"
+							simulated_quality *= 2
+					if(-9999 to -11)
+						simulated_quality_status = "rotten"
+						simulated_quality += -20
+			new_maneater.name = HYPgenerate_produce_name(new_maneater, POT, current_plant, simulated_quality, simulated_quality_status, FALSE)
+			new_maneater.HYPsetup_DNA(DNA, POT, current_plant, simulated_quality_status)
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return

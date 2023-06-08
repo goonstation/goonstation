@@ -1133,6 +1133,11 @@ TYPEINFO(/obj/machinery/plantpot)
 			var/seedcount = 0
 
 			for (var/_ in 1 to getamount)
+				// Start up the loop of grabbing all our produce. Remember, each iteration of
+				// this loop is for one item each.
+
+				//Now we define some variables for quality calculation.
+				var/quality_status = null
 				var/quality_score = base_quality_score
 				quality_score += rand(-2,2)
 				// Just a bit of natural variance to make it interesting
@@ -1142,8 +1147,34 @@ TYPEINFO(/obj/machinery/plantpot)
 					quality_score += round(DNA?.get_effective_value("endurance") / 6)
 				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable))
 					quality_score += rand(-7,7)
-				var/quality_status = null
 
+				//This calculates produce quality and quality status. We need this for changing the name of the produce
+				//since quality status can override each other, they apply to quality status modifier first
+				var/quality_status_modifer = 0
+
+				switch(quality_score)
+					if(25 to INFINITY)
+						// as quality approaches 115, rate of getting jumbo increases
+						if(prob(min(100, quality_score - 15)))
+							quality_status = "jumbo"
+							quality_status_modifer = quality_score
+					if(20 to 24)
+						if(prob(4))
+							quality_status = "jumbo"
+							quality_status_modifer = quality_score
+					if(-9999 to -11)
+						quality_status = "rotten"
+						quality_status_modifer = - 20
+				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
+					// The unstable gene can do weird shit to your produce and happily stomp on your jumbo produce.
+					quality_status = "malformed"
+					quality_status_modifer = rand(10,-10)
+
+				//Now, if we got the quality status modifier, we add it to the score for our final score
+				quality_score += quality_status_modifer
+
+
+				//Now we can create an item or mob
 				// Marquesas: I thought of everything and couldn't find another way, but we need this for synthlimbs.
 				// Okay, I meanwhile realized there might be another way but this looks cleaner. IMHO.
 				var/itemtype = null
@@ -1152,125 +1183,52 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					itemtype = getitem
 
-				// Start up the loop of grabbing all our produce. Remember, each iteration of
-				// this loop is for one item each.
-				var/obj/CROP = new itemtype
-				CROP.set_loc(src)
+				if(istype(itemtype, /obj))
+					var/obj/CROP = new itemtype
+					CROP.set_loc(src)
 
-				//This calculates produce quality and quality status. We need this for changing the name of the produce
-				switch(quality_score)
-					if(25 to INFINITY)
-						// as quality approaches 115, rate of getting jumbo increases
-						if(prob(min(100, quality_score - 15)))
-							quality_status = "jumbo"
-					if(20 to 24)
-						if(prob(4))
-							quality_status = "jumbo"
-					if(-9999 to -11)
-						quality_status = "rotten"
-				if(HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
-					// The unstable gene can do weird shit to your produce and happily stomp on your jumbo produce.
-					quality_status = "malformed"
+					//We call HYPsetup_DNA on each item created before we manipulate it further
+					//This proc handles all crop-related scaling and quirks of produce
+					//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
+					//This proc calls HYPadd_harvest_reagents on it's respectable items
+					if(istype(CROP, /obj/item))
+						var/obj/item/manipulated_item = CROP
+						CROP = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
 
-				//We call HYPsetup_DNA on each item created before we manipulate it further
-				//This proc handles all crop-related scaling and quirks of produce
-				//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
-				//This proc calls HYPadd_harvest_reagents on it's respectable items
-				if(istype(CROP, /obj/item))
-					var/obj/item/manipulated_item = CROP
-					CROP = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
+					//last but not least, we give the mob a proper name
+					CROP.name = HYPgenerate_produce_name(CROP, src, growing, quality_score, quality_status, dont_rename_crop)
 
-				// I bet this will go real well.
-				if(!dont_rename_crop)
-					CROP.name = growing.name
-				/*
-				if(istype(MUT,/datum/plantmutation/))
-					if(!MUT.name_prefix && !MUT.name_prefix && MUT.name)
-						CROP.name = "[MUT.name]"
-					else if(MUT.name_prefix || MUT.name_suffix)
-						CROP.name = "[MUT.name_prefix][growing.name][MUT.name_suffix]"
-				*/
-				if(istype(CROP, /obj/item/plant/))
-					var/obj/item/plant/PLANT = CROP
-					CROP.name = "[PLANT.crop_prefix][CROP.name][PLANT.crop_suffix]"
+					CROP.quality = quality_score
 
-				else if(istype(CROP, /obj/item/reagent_containers/food/snacks/plant))
-					var/obj/item/reagent_containers/food/snacks/plant/SNACK = CROP
-					CROP.name = "[SNACK.crop_prefix][CROP.name][SNACK.crop_suffix]"
+					if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
+						CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
 
-				CROP.name = lowertext(CROP.name)
-
-				switch(quality_status)
-					if("jumbo")
-						CROP.name = "jumbo [CROP.name]"
-						CROP.quality = quality_score * 2
-					if("rotten")
-						switch(quality_score)
-							if(-14 to -11)
-								CROP.name = "[pick("bad","sickly","terrible","awful")] [CROP.name]"
-							if(-99 to -15)
-								CROP.name = "[pick("putrid","moldy","rotten","spoiled")] [CROP.name]"
-							if(-9999 to -100)
-								// this will never happen. but why not!
-								CROP.name = "[pick("horrific","hideous","disgusting","abominable")] [CROP.name]"
-						CROP.quality = quality_score - 20
-					if("malformed")
-						CROP.quality = quality_score + rand(10,-10)
-						CROP.name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [CROP.name]"
-					else
-						switch(quality_score)
-							if(25 to INFINITY)
-								CROP.name = "[pick("perfect","amazing","incredible","supreme")] [CROP.name]"
-							if(20 to 24)
-								CROP.name = "[pick("superior","excellent","exceptional","wonderful")] [CROP.name]"
-							if(15 to 19)
-								CROP.name = "[pick("quality","prime","grand","great")] [CROP.name]"
-							if(10 to 14)
-								CROP.name = "[pick("fine","large","good","nice")] [CROP.name]"
-							if(-10 to -5)
-								CROP.name = "[pick("feeble","poor","small","shrivelled")] [CROP.name]"
-						CROP.quality = quality_score
-
-				if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
-					CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
+					if(istype(CROP,/obj/critter/))
+						// If it's a critter we don't need to do reagents or shit like that but
+						// we do need to make sure they don't attack the botanist that grew it.
+						var/obj/critter/C = CROP
+						C.friends = C.friends | src.contributors
 
 
-				if(istype(CROP,/obj/critter/))
-					// If it's a critter we don't need to do reagents or shit like that but
-					// we do need to make sure they don't attack the botanist that grew it.
-					var/obj/critter/C = CROP
-					C.friends = C.friends | src.contributors
+				if(istype(itemtype, /mob))
+					// Start up the loop of grabbing all our produce. Remember, each iteration of
+					// this loop is for one item each.
+					var/obj/CROP_MOB = new itemtype
+					CROP_MOB.set_loc(src)
 
-				if (istype(CROP,/mob/living/critter/plant))
-					// with the plant mob, we transfer the plants genome on top of the critter
-					var/mob/living/critter/plant/F = CROP
-					//Adding the contributors to the list of friends :)
-					F.growers = F.growers | src.contributors
-					//this passes the same formular examining a plant used to determinate its % health
-					//a damaged plant will created damaged critters
-					var/percent_health_on_spawn = round(src.health / 10 * 100)
-					if (growing.starthealth != 0)
-						percent_health_on_spawn = round(src.health / growing.starthealth * 100)
-					//Now we pass plant genes
-					var/datum/plantgenes/FDNA = F.plantgenes
-					HYPpassplantgenes(DNA,FDNA)
-					F.generation = src.generation
-					// Copy the genes from the plant we're harvesting to the new critter.
+					//We call HYPsetup_DNA on each mob created before we manipulate it further
+					//This proc handles all crop-related scaling and quirks of produce
+					//This proc also on some mobs remove the respectable produce and returns a new one, which we will handle further as CROP_MOB
+					if (istype(CROP_MOB, /mob/living/critter/plant))
+						var/mob/living/critter/plant/manipulated_critter = CROP_MOB
+						CROP_MOB = manipulated_critter.HYPsetup_DNA(DNA, src, growing, quality_status)
 
-					if(growing.hybrid)
-						// We need to do special shit with the genes if the plant is a spliced
-						// hybrid since they run off instanced datums rather than referencing
-						// a specific already-existing one.
-						var/plantType = growing.type
-						var/datum/plant/hybrid = new plantType(F)
-						for(var/V in growing.vars)
-							if(issaved(growing.vars[V]) && V != "holder")
-								hybrid.vars[V] = growing.vars[V]
-						F.planttype = hybrid
-					// Now while we have all stats together, let's make the critter adjust its stats itself and not bloat this object more than it needs to be
-					F.HYPsetup_dna(DNA, percent_health_on_spawn)
+					//last but not least, we give the mob a proper name
+					CROP_MOB.name = HYPgenerate_produce_name(CROP_MOB, src, growing, quality_score, quality_status, dont_rename_crop)
 
-				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
+
+
+				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(getitem,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
 					var/obj/item/seed/S
@@ -1364,6 +1322,12 @@ TYPEINFO(/obj/machinery/plantpot)
 			for(var/obj/I in src.contents)
 				I.set_loc(user.loc)
 				I.add_fingerprint(user)
+
+			// we got to do the same for mobs
+			for(var/mob/I in src.contents)
+				I.set_loc(user.loc)
+				I.add_fingerprint(user)
+
 
 		// Now we determine the harvests remaining or grant extra ones.
 		if(!HYPCheckCommut(DNA,/datum/plant_gene_strain/immortal))
@@ -1603,6 +1567,66 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 			I?.reagents?.add_reagent(X,putamount,,, 1) // ?. runtime fix
 	// And finally put them in there. We figure out the max volume and add an even amount of
 	// all reagents into the item.
+
+
+proc/HYPgenerate_produce_name(var/atom/manipulated_atom, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_score, var/quality_status, var/dont_rename_crop)
+	///This proc generates the name of a produce item
+	//First we need to single out the name we are working with
+	var/completed_name = manipulated_atom.name
+
+	// I bet this will go real well.
+	if(!dont_rename_crop)
+		completed_name = origin_plant.name
+	/*
+	if(istype(MUT,/datum/plantmutation/))
+		if(!MUT.name_prefix && !MUT.name_prefix && MUT.name)
+			CROP.name = "[MUT.name]"
+		else if(MUT.name_prefix || MUT.name_suffix)
+			CROP.name = "[MUT.name_prefix][growing.name][MUT.name_suffix]"
+	*/
+
+	if(istype(manipulated_atom, /obj/item/plant/))
+		var/obj/item/plant/manipulated_plant = manipulated_atom
+		completed_name = "[manipulated_plant.crop_prefix][completed_name][manipulated_plant.crop_suffix]"
+
+	else if(istype(manipulated_atom, /obj/item/reagent_containers/food/snacks/plant))
+		var/obj/item/reagent_containers/food/snacks/plant/manipulated_snack = manipulated_atom
+		completed_name = "[manipulated_snack.crop_prefix][completed_name][manipulated_snack.crop_suffix]"
+
+	completed_name = lowertext(completed_name)
+
+	switch(quality_status)
+		if("jumbo")
+			completed_name = "jumbo [completed_name]"
+		if("rotten")
+			switch(quality_score)
+				if(-14 to -11)
+					completed_name = "[pick("bad","sickly","terrible","awful")] [completed_name]"
+				if(-99 to -15)
+					completed_name = "[pick("putrid","moldy","rotten","spoiled")] [completed_name]"
+				if(-9999 to -100)
+					// this will never happen. but why not!
+					completed_name = "[pick("horrific","hideous","disgusting","abominable")] [completed_name]"
+		if("malformed")
+			completed_name = "[pick("awkward","irregular","crooked","lumpy","misshapen","abnormal","malformed")] [completed_name]"
+		else
+			switch(quality_score)
+				if(25 to INFINITY)
+					completed_name = "[pick("perfect","amazing","incredible","supreme")] [completed_name]"
+				if(20 to 24)
+					completed_name = "[pick("superior","excellent","exceptional","wonderful")] [completed_name]"
+				if(15 to 19)
+					completed_name = "[pick("quality","prime","grand","great")] [completed_name]"
+				if(10 to 14)
+					completed_name = "[pick("fine","large","good","nice")] [completed_name]"
+				if(-10 to -5)
+					completed_name = "[pick("feeble","poor","small","shrivelled")] [completed_name]"
+
+	return completed_name
+
+
+
+
 
 proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	// This is a proc used to copy genes from PARENT to CHILD. It's used in a whole bunch
