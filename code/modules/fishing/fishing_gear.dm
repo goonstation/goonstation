@@ -296,6 +296,9 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."
-	icon_state = "hard_case"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
 	slots = 5
 	can_hold = 	list(/obj/item/fish)
