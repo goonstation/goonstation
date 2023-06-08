@@ -106,9 +106,9 @@
 			throwforce = max(throwforce, initial(throwforce))
 			quality = src.material.quality
 			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
-				RL_SetOpacity(0)
+				set_opacity(0)
 			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
-				RL_SetOpacity(1)
+				set_opacity(1)
 
 	disposing()
 		for(var/mob/M in src.contents)
@@ -241,7 +241,7 @@
 		F["[path].color"] >> color
 		F["[path].density"] >> density
 		F["[path].opacity"] >> opacity
-		RL_SetOpacity(opacity)
+		set_opacity(opacity)
 		F["[path].anchored"] >> anchored
 		F["[path].pixel_x"] >> pixel_x
 		F["[path].pixel_y"] >> pixel_y

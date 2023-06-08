@@ -1099,21 +1099,57 @@ TYPEINFO(/atom)
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	var/on_turf = isturf(src.loc)
+
 	var/oldopacity = src.opacity
-	src.opacity = newopacity
+
+	if(!on_turf)
+		src.opacity = newopacity
+		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+		return
+
+	// the following happens only if we are on a turf
+	var/turf/our_turf = get_turf(src)
+
+	var/old_turf_total_opacity = our_turf.opacity + our_turf.opaque_atom_count
+	var/total_opacity_changed = (old_turf_total_opacity == 0) || (old_turf_total_opacity == 1 && newopacity == 0)
+
+	if(RL_Started && total_opacity_changed)
+		var/list/datum/light/lights = list()
+		for (var/turf/T in view(RL_MaxRadius, src))
+			if (T.RL_Lights)
+				lights |= T.RL_Lights
+
+		var/list/affected = list()
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.strip(++RL_Generation)
+
+		if (src != our_turf)
+			our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
+
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.apply()
+		if (RL_Started)
+			for (var/turf/T as anything in affected)
+				RL_UPDATE_LIGHT(T)
+	else
+		our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
-	if (isturf(src.loc))
-		// Not a turf, so we must send a signal to the turf
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+	// Not a turf, so we must send a signal to the turf
+	SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
 	// Below is a "smart" signal on a turf that only get called when the opacity
 	// actually changes in a meaningfull way. If atom is on a turf and we are
 	// obscuring vision in a turf that was originally not obscured. Or we are on a
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
-	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+	if (total_opacity_changed)
 		var/turf/T = src.loc
 		T.contents_set_opacity_smart(oldopacity, src)
 
@@ -1293,3 +1329,13 @@ TYPEINFO(/atom)
 	G.gift = src
 
 	return G
+
+/atom/onVarChanged(variable, oldval, newval)
+	. = ..()
+	switch(variable)
+		if("opacity")
+			src.opacity = oldval
+			src.set_opacity(newval)
+		if("density")
+			src.density = oldval
+			src.set_density(newval)
