@@ -1342,3 +1342,6 @@ TYPEINFO(/atom)
 		if("dir")
 			src.dir = oldval
 			src.set_dir(newval)
+		if("icon_state")
+			src.icon_state = oldval
+			src.set_icon_state(newval)
