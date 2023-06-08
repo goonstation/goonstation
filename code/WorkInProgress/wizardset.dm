@@ -699,6 +699,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 			apply_crystal()
@@ -833,6 +834,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 

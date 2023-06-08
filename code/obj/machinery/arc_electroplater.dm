@@ -118,6 +118,7 @@ TYPEINFO(/obj/machinery/arc_electroplater)
 			return
 
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "target_item")
 			if (!oldval && newval)
 				SubscribeToProcess()
