@@ -7,7 +7,7 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 
-/turf/unsimulated/martian/floor
+/turf/unsimulated/floor/martian
 	icon = 'icons/turf/martian.dmi'
 	name = "organic floor"
 	icon_state = "floor1"
