@@ -1959,9 +1959,10 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 
 /obj/item/clothing/head/fish_fear_me
 	name = "fish fear me hat"
-	desc = "an extremely witty piece of headwear for the discerning angler."
+	desc = "An extremely witty piece of headwear for the discerning angler."
 	item_state = "fishfearme"
 	icon_state = "fishfearme"
+	var/favourite_word = "fish"
 
 	proc/who()
 		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
@@ -1975,10 +1976,11 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 		if (prob(66))
 			var/have_fish = FALSE
 			for (var/who_word in who)
-				if (who_word == "fish")
+				if (who_word == favourite_word)
 					have_fish = TRUE
 			if (!have_fish)
-				who[rand(1,4)] = "fish"
+				who[rand(1,4)] = favourite_word
 		who[1] = capitalize(who[1])
 		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
 		real_name = name
+		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
