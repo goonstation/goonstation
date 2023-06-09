@@ -207,11 +207,12 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
 	/obj/item/device/radio/headset/command/captain,
-	/obj/item/megaphone)
+	/obj/item/megaphone,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
-			if (prob(5))
+			if (prob(20))
 				new /obj/item/clothing/head/bigcaphat(src)
 			return 1
 
@@ -258,7 +259,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
 	/obj/item/clipboard,
-	/obj/item/clothing/suit/hopjacket)
+	/obj/item/clothing/suit/hopjacket,
+	/obj/item/pet_carrier)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -276,7 +278,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
 	/obj/item/clothing/suit/labcoat,
-	/obj/item/device/radio/headset/command/rd)
+	/obj/item/device/radio/headset/command/rd,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -301,7 +304,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
 	/obj/item/stamp/md,
-	/obj/item/device/radio/headset/command/md)
+	/obj/item/device/radio/headset/command/md,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -861,7 +865,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/clothing/head/rabbihat,\
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
-	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/shoes/sandal/magic,\
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\

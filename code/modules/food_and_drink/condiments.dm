@@ -64,7 +64,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "The subject of many a tiresome innuendo."
 	icon_state = "mayonnaise" //why the fuck was this icon state called cookie
 	initial_volume = 5
+	#ifdef SECRETS_ENABLED
 	initial_reagents = "mayo"
+	#endif
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"

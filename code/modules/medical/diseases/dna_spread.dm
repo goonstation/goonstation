@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread = "Airborne"
 	cure = "Antibiotics"
-	associated_reagent = "liquid dna"
+	// associated_reagent = "liquid dna"
 	affected_species = list("Human")
 	//Also important for rhinovirus is strain_data on ailment_data/disease, which is where the bioholders transformed from/to are stored
 

@@ -11,7 +11,6 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = null
 
@@ -51,6 +50,7 @@
 
 	//varedit support for cooldowns
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()

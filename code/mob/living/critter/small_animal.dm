@@ -236,7 +236,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
-	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
 	valid_target(mob/living/C)
@@ -399,7 +398,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 1
 
 		//Cats meow sometimes
-		if (src.ai?.enabled && prob(5))
+		if (src.is_npc && prob(5))
 			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
@@ -653,14 +652,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	New(loc)
 		. = ..()
 		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
-
-	OnMove()
-		if(client?.player?.shamecubed)
-			loc = client.player.shamecubed
-			return
-
-		makeWaddle(src)
-		.=..()
+		AddComponent(/datum/component/waddling)
 
 	setup_hands()
 		..()
@@ -2872,6 +2864,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 	ai_attacks_per_ability = 0
 
+	faction = FACTION_BOTANY
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
@@ -2885,6 +2879,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	death(gibbed)
+		. = ..()
+		animate(src) // stop bumble / bounce
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -2894,10 +2892,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("scream")
 			else if (prob(1))
 				src.emote("dance")
-
-	valid_target(mob/living/C)
-		if (C.job == "Botanist") return FALSE
-		return ..()
 
 	death(var/gibbed)
 		src.can_lie = FALSE
@@ -3830,6 +3824,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
 
+	faction = FACTION_AQUATIC
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -3873,7 +3869,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
-	add_abilities = list(/datum/targetable/critter/crabmaul)
+	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+
+	faction = FACTION_AQUATIC
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -3927,6 +3925,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
+	faction = FACTION_AQUATIC
 
 	New()
 		..()
@@ -4020,6 +4019,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 13
 	base_walk_delay = 15
 
+	faction = FACTION_AQUATIC
+
 //	var/mob/living/target = null
 
 	New()
@@ -4093,6 +4094,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
+	faction = FACTION_AQUATIC
 
 	New()
 		..()

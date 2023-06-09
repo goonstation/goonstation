@@ -20,6 +20,11 @@ ABSTRACT_TYPE(/obj/item/plant)
 		if (!src.reagents)
 			src.create_reagents(100)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
+
 ABSTRACT_TYPE(/obj/item/plant/herb)
 /obj/item/plant/herb
 	name = "herb base"
