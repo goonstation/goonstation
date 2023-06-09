@@ -20,6 +20,7 @@
 /datum/aiTask/sequence/goalbased/critter/manhunter_hunting
 	name = "attacking"
 	weight = 10 // this behaviour gets a high priority
+	ai_turbo = TRUE
 	max_dist = 7
 
 	get_targets()

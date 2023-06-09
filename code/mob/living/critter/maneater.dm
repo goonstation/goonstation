@@ -49,8 +49,8 @@
 
 	faction = FACTION_BOTANY
 	planttype = /datum/plant/maneater
-	stamina = 300
-	stamina_max = 300
+	stamina = 200
+	stamina_max = 200
 	var/baseline_health = 100 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 
@@ -87,10 +87,9 @@
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
-		var/baseline_stamina = 300 // how much stamina the maneater should have baseline
-		var/stamina_per_potency = 5 // how much stamina each point of potency should add
+		var/stamina_per_potency = 3 // how much stamina each point of potency should add. With the inate stun resist, its equal to 3,75 stamina per potency
 		var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
-		var/maximum_stamreg = 60 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
+		var/maximum_stamreg = 30 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
 		var/baseline_injection = 3 // how much chems the maneater should inject upon attacking
 		var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
 
@@ -100,11 +99,12 @@
 			lifepool.maximum_value = scaled_health
 			lifepool.value = scaled_health
 			lifepool.last_value = scaled_health
-		src.stamina = baseline_stamina + (passed_genes?.get_effective_value("potency") * stamina_per_potency)
-		src.stamina_max = baseline_stamina + (passed_genes?.get_effective_value("potency") * stamina_per_potency)
-		src.stamina_regen = min(STAMINA_REGEN + round(passed_genes?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg)
 
-		//now, we set the arm injection up
+		// Stamina modifiert scale of potency
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "maneater_dna", min(round( passed_genes?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg))
+		src.add_stam_mod_max("maneater_dna", (passed_genes?.get_effective_value("potency") * stamina_per_potency))
+
+		// now, we set the arm injection up
 		if (length(origin_plant.assoc_reagents) > 0)
 			var/datum/limb/maneater_mouth/manipulated_limb = src.scaleable_limb
 			manipulated_limb.amount_to_inject = max(1, round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")))
@@ -117,12 +117,16 @@
 		//Maneaters are scary and big, they should not be pinned for helplessly thrown around
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "Maneater")
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "Maneater", 25)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "Maneater", 25)
 		src.ai = new /datum/aiHolder/maneater(src)
 		..()
 
 	disposing()
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
 		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "Maneater")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "Maneater")
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "Maneater")
 		..()
 
 	setup_healths()
@@ -142,53 +146,58 @@
 		if (iskudzuman(potential_target)) return FALSE
 		var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
 		//if we got a human corpse but our ability is on cooldown/not avaible, we don't want to target them
-		if ((checked_ability.disabled || checked_ability.cooldowncheck()) && isdead(potential_target) && ishuman(potential_target)) return FALSE
+		if ((checked_ability.disabled || !checked_ability.cooldowncheck()) && isdead(potential_target) && ishuman(potential_target)) return FALSE
 		//if we don't have a faction we hate everyone
 		//But we love corpses, also the one of botanists that didn't grew us
 		return isdead(potential_target) && ishuman(potential_target) || !src.faction || !(potential_target.faction & src.faction)
 
 	critter_attack(mob/target)
+		// first we check if our maneater is munching on something
 		var/datum/targetable/critter/selected_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
-		//we check here for valid target because we could retaliate against an ally and dont want to devour them
-		//if the target is unconscious and we are unable to eat them, we gotta wack them a bit
-		if(isunconscious(target) && ishuman(target) && valid_target(target)&& !selected_ability.disabled && selected_ability.cooldowncheck())
-			//we want to grab with our left tentacle hand
-			src.set_a_intent(INTENT_GRAB)
-			src.set_dir(get_dir(src, target))
-			src.active_hand = 1
+		if (!(src in actions.running))
+			//we check here for valid target because we could retaliate against an ally and dont want to devour them
+			//if the target is unconscious and we are unable to eat them, we gotta wack them a bit
+			if(isunconscious(target) || isdead(target) && ishuman(target) && !selected_ability.disabled && selected_ability.cooldowncheck())
+				//we want to grab with our left tentacle hand
+				src.set_a_intent(INTENT_GRAB)
+				src.set_dir(get_dir(src, target))
+				src.active_hand = 1
 
-			var/list/params = list()
-			params["left"] = TRUE
-			params["ai"] = TRUE
+				var/list/params = list()
+				params["left"] = TRUE
+				params["ai"] = TRUE
 
-			var/obj/item/grab/G = src.equipped()
-			if (!istype(G)) //if it hasn't grabbed something, try to
-				if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
-					src.drop_item()
-				src.hand_attack(target, params)
-				return
-			else
-				if (G.affecting == null || G.assailant == null || G.disposed || !ishuman(G.affecting))
-					src.drop_item()
-					return
-
-				if (G.state <= GRAB_PASSIVE)
-					G.AttackSelf(src)
+				var/obj/item/grab/G = src.equipped()
+				if (!istype(G)) //if it hasn't grabbed something, try to
+					if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
+						src.drop_item()
+					src.hand_attack(target, params)
 					return
 				else
-					selected_ability.handleCast(target)
-					return
+					if (G.affecting == null || G.assailant == null || G.disposed || !ishuman(G.affecting) || G.affecting != target)
+						src.drop_item()
+						return
+
+					if (G.state <= GRAB_PASSIVE)
+						G.AttackSelf(src)
+						return
+					else
+						selected_ability.handleCast(target)
+						return
+			else
+				//we want to nibble on them with out right hand
+				src.set_a_intent(INTENT_HARM)
+				src.set_dir(get_dir(src, target))
+				src.active_hand = 2
+
+				var/list/params = list()
+				params["right"] = TRUE
+				params["ai"] = TRUE
+
+				src.hand_attack(target, params)
+				return
 		else
-			//we want to nibble on them with out right hand
-			src.set_a_intent(INTENT_HARM)
-			src.set_dir(get_dir(src, target))
-			src.active_hand = 2
-
-			var/list/params = list()
-			params["right"] = TRUE
-			params["ai"] = TRUE
-
-			src.hand_attack(target, params)
+			//let's wait until we finished eating our target :)
 			return
 
 /mob/living/critter/plant/maneater_polymorph
