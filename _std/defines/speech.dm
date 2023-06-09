@@ -4,9 +4,8 @@
 //channel defines
 #define SAY_CHANNEL_OUTLOUD "outloud"
 #define SAY_CHANNEL_EQUIPPED "equipped"
-
-// to use like SAY_CHANNEL_RADIO_PREFIX + "135.7"
-#define SAY_CHANNEL_RADIO_PREFIX "radio_"
+#define SAY_CHANNEL_DEAD "deadchat"
+#define SAY_CHANNEL_RADIO_PREFIX "radio_" // to use like SAY_CHANNEL_RADIO_PREFIX + "135.7"
 #define SAY_CHANNEL_GHOST "ghost"
 #define SAY_CHANNEL_BLOB "blob"
 

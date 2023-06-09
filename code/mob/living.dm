@@ -126,7 +126,7 @@
 
 	//new speech vars
 	start_listen_modifiers = list("maptext")
-	start_listen_inputs = list("ears")
+	start_listen_inputs = list("ears", "spooky")
 	start_speech_accents = null
 	start_speech_modifiers = list("mob_checks", "brain_damage")
 	start_speech_outputs = list("spoken","equipped")
