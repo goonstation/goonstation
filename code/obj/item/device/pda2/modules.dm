@@ -357,6 +357,14 @@ TYPEINFO(/obj/item/device/pda_module)
 		if(href_list["open"])
 			gps.show_HTML(usr)
 
+	relay_pickup(mob/user)
+		if(gps.active)
+			gps.addTrackerHUD(user, gps.tracking_target)
+
+	relay_drop(mob/user)
+		if(gps.currentTrackingUser)
+			gps.removeTrackerHUD(user)
+
 /obj/ability_button/miningScan
 	name = "Geological Scan"
 	icon_state = "pda0"

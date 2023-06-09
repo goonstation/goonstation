@@ -18,6 +18,7 @@ TYPEINFO(/obj/item/device/gps)
 	g_amt = 100
 	var/frequency = FREQ_GPS
 	var/net_id
+	var/mob/currentTrackingUser = null //references the mob that we have a tracking hud component on, so we can remove it when appropriate.
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -258,6 +259,8 @@ TYPEINFO(/obj/item/device/gps)
 				return
 			active = 1
 			process()
+			addTrackerHUD(usr, tracking_target)
+			currentTrackingUser = usr
 			boutput(usr, "<span class='notice'>You activate the gps.</span>")
 
 	proc/send_distress_signal(distress)
@@ -276,6 +279,8 @@ TYPEINFO(/obj/item/device/gps)
 		if(!active || !tracking_target)
 			active = 0
 			icon_state = "gps-off"
+			removeTrackerHUD(currentTrackingUser)
+			currentTrackingUser = null
 			return
 
 		src.set_dir(get_dir(src,tracking_target))
@@ -285,6 +290,24 @@ TYPEINFO(/obj/item/device/gps)
 			icon_state = "gps"
 
 		SPAWN(0.5 SECONDS) .()
+
+	pickup(mob/user)
+		. = ..()
+		if (src.active)
+			addTrackerHUD(user, tracking_target)
+
+	dropped(mob/user)
+		. = ..()
+		removeTrackerHUD(user)
+		currentTrackingUser = null
+
+	proc/addTrackerHUD(var/mob/user, var/atom/target)
+		user.AddComponent(/datum/component/tracker_hud, src.tracking_target)
+		currentTrackingUser = user
+
+	proc/removeTrackerHUD(var/mob/user)
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
 
 	disposing()
 		STOP_TRACKING
