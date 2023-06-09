@@ -178,16 +178,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		catch(var/exception/e)
 			logTheThing(LOG_DEBUG, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
-	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
-	for (var/V in concrete_typesof(/datum/antagonist))
-		var/datum/antagonist/dummy = V
-		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(initial(dummy.id)))
-			#ifdef DATA_LOGGER
-			game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
-			#endif
-			var/antag_dat = antagonist_role.handle_round_end(TRUE)
-			if (antagonist_role.display_at_round_end && length(antag_dat))
-				stuff_to_output.Add(antag_dat)
+	// Display all antagonist datums.
+	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+		#ifdef DATA_LOGGER
+		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
+		#endif
+		var/antag_dat = antagonist_role.handle_round_end(TRUE)
+		if (antagonist_role.display_at_round_end && length(antag_dat))
+			stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
