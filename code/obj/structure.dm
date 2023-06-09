@@ -121,7 +121,9 @@ obj/structure/ex_act(severity)
 			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE, null, user), user)
 
 		else
-			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
+			if (S.material.material_flags & MATERIAL_METAL)
+				actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
+			else(boutput(user, "You cannot plate [src] with [S]!"))
 	else
 		..()
 
@@ -257,7 +259,7 @@ obj/structure/ex_act(severity)
 				else
 					WALL = Tsrc.ReplaceWithWall()
 				WALL.setMaterial(S.material ? S.material : M)
-				A.girdermaterial = src.material ? src.material : M
+				WALL.girdermaterial = the_girder.material ? the_girder.material : M
 
 				WALL.inherit_area()
 				S?.change_stack_amount(-2)
