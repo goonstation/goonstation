@@ -138,7 +138,7 @@
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 
 			var/datum/material/M = getMaterial("steel")
-			A.setMaterial(src.girdermaterialc ? src.girdermaterial : M, copy = FALSE)
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
 			B.setMaterial(src.material ? src.material : M, copy = FALSE)
 			B.set_reinforcement(src.material)
 		else
@@ -169,44 +169,32 @@
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				C.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				C.setMaterial(M, copy = FALSE)
+
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+			B.setMaterial(src.material ? src.material : M, copy = FALSE)
+			C.setMaterial(src.material ? src.material : M, copy = FALSE)
+
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
 
-				if (src.material)
-					B.setMaterial(src.material)
-				else
-					B.setMaterial(getMaterial("steel"), copy = FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
-					if (src.material)
-						C.setMaterial(src.material)
-					else
-						C.setMaterial(getMaterial("steel"), copy = FALSE)
+					C.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+
 
 	var/atom/D = ReplaceWithFloor()
-	if (src.material && keep_material)
-		D.setMaterial(src.material)
-	else
-		D.setMaterial(getMaterial("steel"), copy = FALSE)
+	D.setMaterial(src.girdermaterial && keep_material ? src.girdermaterial : M, copy = FALSE)
+
 
 /turf/simulated/wall/burn_down()
 	src.ReplaceWithFloor()
