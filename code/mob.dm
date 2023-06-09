@@ -2365,6 +2365,7 @@
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
+	. = ..()
 	update_clothing()
 
 /mob/proc/throw_item(atom/target, list/params)

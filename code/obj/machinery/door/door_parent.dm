@@ -181,6 +181,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
+		if(ignore_light_or_cam_opacity)
+				ignore_light_or_cam_opacity = FALSE
+				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -505,10 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
@@ -580,10 +580,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time)
 
 		if(src.visible)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(1)
-			else
-				src.RL_SetOpacity(1)
+			src.set_opacity(1)
 
 		src.closed()
 
@@ -643,6 +640,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
+
+/obj/machinery/door/set_opacity(newopacity)
+	if(ignore_light_or_cam_opacity)
+		src.opacity = newopacity
+	else
+		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)
