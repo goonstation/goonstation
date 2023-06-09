@@ -552,7 +552,7 @@
 
 //no, voluntary is not a boolean. screm
 /mob/emote(act, voluntary = 0, atom/target)
-	set waitfor = FALSE
+	set waitfor = FALSE //this shouldn't be necessary, but I think set SpacemanDMM_should_not_sleep isn't respecting /mob/parent_type = /atom/movable
 	.=..()
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 

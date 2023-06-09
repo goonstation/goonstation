@@ -83,9 +83,16 @@ TYPEINFO(/datum/speech_module/accent/scots)
 	id = "accent_scots"
 /datum/speech_module/accent/scots
 	id = "accent_scots"
+	var/danny_index = 1
 
 	process(datum/say_message/message)
-		message.content = scotify(message.content)
+		if(message.flags & SAYFLAG_SINGING)
+			// Scots can only sing Danny Boy
+			src.danny_index = (src.danny_index % 16) + 1
+			var/lyrics = dd_file2list("strings/danny.txt")
+			message.content = lyrics[src.danny_index]
+		else
+			message.content = scotify(message.content)
 		. = message
 
 TYPEINFO(/datum/speech_module/accent/comic)

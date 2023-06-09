@@ -721,8 +721,7 @@
 
 	message = trim(message)
 
-	// check for singing prefix before radio prefix
-	message = check_singing_prefix(message)
+
 
 	message = say_decorate(message)
 
@@ -779,18 +778,7 @@
 
 	message = trim(message)
 
-	// check for singing prefix after radio prefix
-	if (!singing)
-		message = check_singing_prefix(message)
-	if (singing)
-		// Scots can only sing Danny Boy
-		if (src.bioHolder?.HasEffect("accent_scots"))
-			var/scots = src.bioHolder.GetEffect("accent_scots")
-			if (istype(scots, /datum/bioEffect/speech/scots))
-				var/datum/bioEffect/speech/scots/S = scots
-				S.danny_index = (S.danny_index % 16) + 1
-				var/lyrics = dd_file2list("strings/danny.txt")
-				message = lyrics[S.danny_index]
+
 
 	if (!message)
 		return
@@ -855,47 +843,6 @@
 
 	if (src.stuttering)
 		message = stutter(message)
-
-	if (src.get_brain_damage() >= 60)
-		message = replacetext(message, "is ", "am ")
-		message = replacetext(message, "are ", "am ")
-		message = replacetext(message, "i ", "me ")
-		message = replacetext(message, "have ", "am ")
-		message = replacetext(message, "youre ", "your ")
-		message = replacetext(message, "you're ", "your ")
-		message = replacetext(message, "attack ", "kill ")
-		message = replacetext(message, "hurt", " kill")
-		message = replacetext(message, "acquire ", "get ")
-		message = replacetext(message, "attempt ", "try ")
-		message = replacetext(message, "attention ", "help ")
-		message = replacetext(message, "attempt ", "try ")
-		message = replacetext(message, "grief", "grife")
-		message = replacetext(message, "her ", "she ")
-		message = replacetext(message, "him ", "he ")
-		message = replacetext(message, "heal", "fix")
-		message = replacetext(message, "repair ", "fix")
-		message = replacetext(message, "heal ", "fix")
-		message = replacetext(message, "space", "spess")
-		message = replacetext(message, "clown", "honky man")
-		message = replacetext(message, "cluwne", "bad honky man")
-		message = replacetext(message, "traitor", "bad guy")
-		message = replacetext(message, "spy", "bad guy")
-		message = replacetext(message, "operative", "bad guy")
-		message = replacetext(message, "nukie", "bad guy")
-		message = replacetext(message, "vampire", "bad guy")
-		message = replacetext(message, "wrestler", "bad guy")
-		message = replacetext(message, "alien", "allen")
-		message = replacetext(message, "changeling", "alien")
-		message = replacetext(message, "pain", "hurt")
-		message = replacetext(message, "damage", "hurt")
-		message = replacetext(message, "they", "them")
-
-		if (prob(20))
-			if(prob(25))
-				message = uppertext(message)
-				message = "[message][stutter(pick("!", "!!", "!!!"))]"
-			if(!src.stuttering && prob(8))
-				message = stutter(message)
 
 	show_speech_bubble(speech_bubble)
 
@@ -2107,13 +2054,7 @@
 				src.was_harmed(thr.user, AM)
 	..()
 
-/mob/living/proc/check_singing_prefix(var/message)
-	if (isalive(src))
-		if (dd_hasprefix(message, singing_prefix)) // check for "%"
-			src.singing = NORMAL_SINGING
-			return copytext(message, 2)
-	src.singing = 0
-	. =  message
+
 
 // can stumble or flip while drunk
 /mob/living/proc/can_drunk_act()

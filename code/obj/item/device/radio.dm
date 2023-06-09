@@ -121,7 +121,7 @@ var/list/headset_channel_lookup
 
 /obj/item/device/radio/hear(var/datum/say_message/message)
 	//One of two things has happened - either a message has come in from the radio, or a message has been heard by the mic
-	if(message.flags & RADIO_SENT)
+	if(message.flags & SAYFLAG_RADIO_SENT)
 		//this is from the radio, so output to mob
 		message.heard_range = 0 //only audible to src.loc
 		message.speaker = src

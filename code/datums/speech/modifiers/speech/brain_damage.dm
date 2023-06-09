@@ -11,4 +11,12 @@ TYPEINFO(/datum/speech_module/modifier/brain_damage)
 			message.content = find_replace_in_string(message.content, "language/modifiers/brain_damage.txt")
 			if (prob(50))
 				message.prefix = ";" //if you have a headset on, this will cause you to randomly speak into it if you have enough brain damage
+
+			if (prob(20))
+				if(prob(25))
+					message.content = uppertext(message.content)
+					message.content = "[message.content][stutter(pick("!", "!!", "!!!"))]"
+				if(!speaker.stuttering && prob(8))
+					message.content = stutter(message.content)
+
 		. = message
