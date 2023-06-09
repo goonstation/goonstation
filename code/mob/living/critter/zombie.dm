@@ -62,7 +62,6 @@
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
 
 	valid_target(mob/living/C)
-		if (istype(C, /mob/living/critter/zombie)) return FALSE
 		if (iszombie(C)) return FALSE
 		if (ishuman(C))
 			var/mob/living/carbon/human/H = C
