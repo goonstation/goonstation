@@ -31,7 +31,6 @@
 		..(loc)
 		src.UpdateStackAppearance()
 
-
 	proc/set_amt(var/amt = 1 as num)
 		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount)
@@ -74,9 +73,7 @@
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
-				change_stack_amount( 0 - amt )
-				var/obj/item/currency/young_money = new src.type
-				young_money.setup(user.loc, amt)
+ d				var/young_money = split_stack(amt)
 				user.put_in_hand_or_drop(young_money)
 		else
 			..(user)
@@ -409,11 +406,15 @@ TYPEINFO(/obj/item/stamped_bullion)
 		default_min_amount = 1000000
 		default_max_amount = 1000000
 
+
 /obj/item/currency/fishing
-	name = "1 ticket"
-	real_name = "tickets"
+	name = "1 research ticket"
+	real_name = "research ticket"
 	icon_state = "fish_common"
+	desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor."
 	stack_type = /obj/item/currency/fishing // so all fishing tokens stack
+	default_min_amount = 1
+	default_max_amount = 1
 
 	_update_stack_appearance()
 		src.UpdateName()
@@ -438,37 +439,26 @@ TYPEINFO(/obj/item/stamped_bullion)
 		else
 			..(I, user)
 
-	common
-		name = "research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 1 credit."
-		icon_state = "fish_common"
-		default_min_amount = 1
-		default_max_amount = 1
-
 	uncommon
 		name = "uncommon research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 2 credits."
 		icon_state = "fish_uncommon"
 		default_min_amount = 2
 		default_max_amount = 2
 
 	rare
 		name = "rare research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 3 credits."
 		icon_state = "fish_rare"
 		default_min_amount = 3
 		default_max_amount = 3
 
 	epic
 		name = "epic research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 4 credits."
 		icon_state = "fish_epic"
 		default_min_amount = 4
 		default_max_amount = 4
 
 	legendary
 		name = "legendary research ticket"
-		desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor. Worth 5 credits."
 		icon_state = "fish_legendary"
 		default_min_amount = 5
 		default_max_amount = 5

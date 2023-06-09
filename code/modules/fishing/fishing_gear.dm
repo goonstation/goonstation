@@ -245,7 +245,7 @@ TYPEINFO(/obj/item/fish_portal)
 			else
 				switch( P.value )
 					if (FISH_RARITY_COMMON)
-						new/obj/item/currency/fishing/common(src.loc)
+						new/obj/item/currency/fishing(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
 					if (FISH_RARITY_UNCOMMON)
