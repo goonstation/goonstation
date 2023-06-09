@@ -189,7 +189,7 @@
 			gib.handleCast(target)
 			return TRUE
 
-/mob/living/critter/mutant/weak
+/mob/living/critter/martian/mutant/weak
 	name = "martian initiate"
 	real_name = "martian initiate"
 	martian_type = "initiate"
