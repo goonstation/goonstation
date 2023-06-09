@@ -301,7 +301,6 @@ obj/structure/ex_act(severity)
 		var/FloorIntact = T.intact
 		var/FloorBurnt = T.burnt
 		var/FloorName = T.name
-		var/girdermaterial
 
 		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
 
