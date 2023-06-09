@@ -35,6 +35,9 @@
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
+	butcherable = TRUE
+	meat_type = /obj/item/reagent_containers/food/snacks/plant/soylent
+	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
 	can_throw = 1
@@ -55,19 +58,43 @@
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
 
+
+	gib(give_medal, include_ejectables)
+		//We violently eject each item the maneater devoured in all directions
+		. = list()
+		if(length(src.devoured_items) > 0)
+			for (var/obj/item/handled_item in src.devoured_items)
+				handled_item.set_loc(get_turf(src))
+				handled_item.streak_object(alldirs)
+				src.devoured_items -= handled_item
+				. += handled_item
+		. += ..()
+
+	butcher(var/mob/M, drop_brain = TRUE)
+		//We drop all items we devoured prior
+		if(length(src.devoured_items) > 0)
+			for (var/obj/item/handled_item in src.devoured_items)
+				handled_item.set_loc(get_turf(src))
+				src.devoured_items -= handled_item
+		..()
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
-				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] roars!</span></b>"
-		return null
-
-	specific_emote_type(var/act)
-		switch (act)
-			if ("scream")
-				return 2
+				if (src.emote_check(voluntary, 5 SECONDS))
+					playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] snarls!</span></b>"
 		return ..()
+
+	vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
+		if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
+			return
+		//We vomit out an item, if we have eaten some.
+		if(length(src.devoured_items) > 0)
+			var/obj/item/handled_item = pick(src.devoured_items)
+			handled_item.set_loc(get_turf(src))
+			src.devoured_items -= handled_item
+		..()
 
 	setup_equipment_slots()
 		src.equipment += new /datum/equipmentHolder/ears(src)
@@ -142,19 +169,14 @@
 
 	seek_target(var/range = 9)
 		. = ..()
-
-		if (length(.) && prob(10))
-			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
-			src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
-
-
-	specific_emotes(var/act, var/param = null, var/voluntary = 0)
-		switch (act)
-			if ("scream")
-				if (src.emote_check(voluntary, 5 SECONDS))
-					playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] snarls!</span></b>"
-		return null
+		//if we got too much items in our stomach we try to vomit some out
+		if (length(src.devoured_items) > 6 && !(length(.) > 0))
+			if(!ON_COOLDOWN(src, "item_vomiting", 1 MINUTES))
+				src.vomit()
+		if ((length(.) > 0) && prob(20))
+			if(!ON_COOLDOWN(src, "maneater_snarling", 15 SECONDS))
+				playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
 
 
 	valid_target(var/mob/living/potential_target)
@@ -240,6 +262,9 @@
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
+	butcherable = TRUE
+	meat_type = /obj/item/reagent_containers/food/snacks/plant/soylent
+	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
 	can_throw = 1
@@ -270,15 +295,15 @@
 
 	setup_hands()
 		..()
-		var/datum/handHolder/HH = hands[1]
-		HH.name = "tendrils"
-		HH = hands[2]
-		HH.name = "mouth"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "mouth"				// the icon state of the hand UI background
-		HH.limb_name = "teeth"					// name for the dummy holder
-		HH.limb = new /datum/limb/mouth		// if not null, the special limb to use when attack_handing
-		HH.can_hold_items = 1
+		var/datum/handHolder/holdinghands = src.hands[1]
+		holdinghands.name = "tendrils"
+		holdinghands = src.hands[2]
+		holdinghands.name = "mouth"								// designation of the hand - purely for show
+		holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
+		holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
+		holdinghands.limb_name = "teeth"						// name for the dummy holder
+		holdinghands.limb = new /datum/limb/maneater_mouth		// if not null, the special limb to use when attack_handing
+		holdinghands.can_hold_items = 0
 
 	New()
 		..()
