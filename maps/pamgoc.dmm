@@ -43602,15 +43602,15 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -52254,7 +52254,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/item/device/camera_viewer/ranch,
 /obj/item/storage/box/syringes,
