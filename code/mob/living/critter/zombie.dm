@@ -91,7 +91,6 @@
 			return TRUE
 
 	death(var/gibbed)
-		if (istype(src, /mob/living/critter/zombie/biosuit)) return //special death
 		if (!gibbed)
 			src.unequip_all()
 			src.gib()
@@ -136,8 +135,7 @@
 	health_burn_vuln = 1
 	infection_type = NO_EAT
 
-	death(var/gibbed)
-		..()
+	gib()
 		src.visible_message("<span class='alert'>Black mist flows from the broken suit!</span>")
 		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		harmless_smoke_puff(src.loc)
