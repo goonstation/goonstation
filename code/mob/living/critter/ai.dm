@@ -420,8 +420,13 @@ var/list/ai_move_scheduled = list()
 		..()
 
 	proc/add_task(var/datum/aiTask/succeedable/T)
-		if(T)
-			subtasks += T // add to end of the sequence
+		if (T)
+			subtasks.Add(T)// add to end of the sequence'
+
+	proc/remove_task(var/datum/aiTask/succeedable/T)
+		if (T)
+			subtasks.Remove(T)
+
 
 	next_task()
 		if(terminated)
