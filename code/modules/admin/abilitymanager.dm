@@ -40,7 +40,6 @@
 	. = ..()
 	if (.)
 		return
-	USR_ADMIN_ONLY
 	var/datum/targetable/T = locate(params["abilityRef"])
 	if (T && !istype(T)) return
 	switch(action)
