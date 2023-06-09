@@ -687,33 +687,7 @@
 		return ..(message)
 #endif
 
-	// shittery that breaks text or worse
-	var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
-	message = replacetext(message, shittery_regex, "")
 
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
-
-	if (!message)
-		return
-
-	// Zam note: this is horrible
-	if (forced_desussification)
-		// "Surely this goes somewhere else, right, Zam?"
-		// maybe? i guess?
-		// i mean, i don't care. i'm stoned and i have commit rights
-		// and this is 100% a joke. it'll probably get refactored into
-		// something reasonable later if people like it.
-		//
-		// when you think about it, github is like amogus
-		// if it finds dead code, it calls an emergeny meeting!
-		if (phrase_log.is_sussy(message))
-			// var/turf/T = get_turf(src)
-			// var/turf/M = locate(T.x, max(world.maxy, T.y + 8), T.z)
-			arcFlash(src, src, forced_desussification)
-			if (issilicon(src))
-				src.apply_flash(20, weak = 2, stamina_damage = 20, disorient_time = 3)
-			if (forced_desussification_worse)
-				forced_desussification *= 1.1
 
 
 	if (reverse_mode) message = reverse_text(message)
@@ -726,13 +700,6 @@
 		game_stats.ScanText(message)
 #endif
 
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-
-	if(!src.canspeak)
-		boutput(src, "<span class='alert'>You can not speak!</span>")
-		return
 
 	if (isdead(src))
 		if (dd_hasprefix(message, "*")) // no dead emote spam
@@ -744,22 +711,6 @@
 			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
-	// wtf?
-	if (src.stat)
-		return
-
-	// emotes
-	if (dd_hasprefix(message, "*") && !src.stat)
-		return src.emote(copytext(message, 2),1)
-
-	// Mute disability
-	if (src.bioHolder && src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
-		return
-
-	if (src.wear_mask && src.wear_mask.is_muzzle)
-		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
-		return
 
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
@@ -782,28 +733,13 @@
 	var/secure_headset_mode = null
 	var/skip_open_mics_in_range = 0 // For any radios or intercoms that happen to be in range.
 
-	if (prob(50) && src.get_brain_damage() >= 60)
-		if (ishuman(src))
-			message_mode = "headset"
-	// Special message handling
-	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
-		message = copytext(message, 2)
 
-	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
-		switch (lowertext( copytext(message,2,4) ))
-			if ("rh")
-				message_mode = "right hand"
-				message = copytext(message, 4)
-
-			if ("lh")
-				message_mode = "left hand"
-				message = copytext(message, 4)
 
 		/*else if (copytext(message, 1, 3) == ":w")
 			message_mode = "whisper"
 			message = copytext(message, 3)*/
-
+	if(message_mode)
+		switch(message_mode)
 			if ("in")
 				message_mode = "intercom"
 				message = copytext(message, 4)

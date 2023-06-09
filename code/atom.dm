@@ -338,6 +338,9 @@ TYPEINFO(/atom)
 ///Primary entry point for all say code
 /atom/proc/say(var/message as text)
 	SHOULD_CALL_PARENT(TRUE)
+	if (dd_hasprefix(message, "*")) // no dead emote spam
+		return src.emote(copytext(message, 2),1)
+
 	var/datum/say_message/said = new(message, src, src.say_language)
 	if(!length(said.content))
 		return
@@ -355,6 +358,13 @@ TYPEINFO(/atom)
 	if(!src.listen_tree)
 		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
 	return src.listen_tree
+
+/// Stub proc. If you want atoms to emote, you can code it yourself.
+/atom/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	return FALSE
+
 // not actually overriden because we want to avoid the overhead if possible. This provides documentation
 #ifdef SPACEMAN_DMM
 /**

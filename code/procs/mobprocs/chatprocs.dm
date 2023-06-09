@@ -551,9 +551,9 @@
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 //no, voluntary is not a boolean. screm
-/mob/proc/emote(act, voluntary = 0, atom/target)
+/mob/emote(act, voluntary = 0, atom/target)
 	set waitfor = FALSE
-	SHOULD_CALL_PARENT(TRUE)
+	.=..()
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)

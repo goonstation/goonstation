@@ -39,6 +39,18 @@
 	lockedTries = 10
 	icon_state  = "speech_mime"
 
+	OnAdd()
+		..()
+		var/datum/speech_module_tree/say_tree = owner.ensure_say_tree()
+		say_tree.AddModifier("mute")
+
+	OnRemove()
+		..()
+		var/datum/speech_module_tree/say_tree = owner.ensure_say_tree()
+		var/list/mutes = say_tree.GetModifierBy(id="mute")
+		for(var/mute in mutes)
+			say_tree.RemoveModifier(mute)
+
 /datum/bioEffect/deaf
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
