@@ -73,7 +73,7 @@
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
- d				var/young_money = split_stack(amt)
+				var/young_money = split_stack(amt)
 				user.put_in_hand_or_drop(young_money)
 		else
 			..(user)
