@@ -163,15 +163,15 @@ var/global/datum/speech_manager/SpeechManager = new()
 				cutpos = 2
 			else
 				cutpos = findtext(message, " ", 1)+1
-			src.prefix = copytext(message, 1, cutpos-1) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
+			src.prefix = trim(copytext(message, 1, cutpos)) //get the prefix as :<prefix><first_space> - note prefix will be empty if the message only contains a radio prefix
 
 		src.content = copytext(message, cutpos, MAX_MESSAGE_LEN) //content now contains the message without the radio prefix
 		src.content = make_safe_for_chat(src.content)
 
 		//singing prefix
-		if(copytext(message, 1, 2) == "%")
+		if(copytext(src.content, 1, 2) == "%")
 			src.flags |= SAYFLAG_SINGING
-			src.content = trim(copytext(message, 2)) //strip out the singing prefix and any trailing spaces that may leave
+			src.content = trim(copytext(src.content, 2, MAX_MESSAGE_LEN)) //strip out the singing prefix and any trailing spaces that may leave
 			src.say_verb = "sings"
 
 	proc/make_safe_for_chat(var/message as text)
