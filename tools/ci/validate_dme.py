@@ -10,7 +10,7 @@ reading = False
 # Things we want to block from being included
 FORBID_INCLUDE = [
     # Sekrits
-	r'+secret**/*.dm',
+    r'+secret**/*.dm',
     r'code/_placeholder.dm',
     r'code/_publicVersion.dm',
 
@@ -23,8 +23,8 @@ FORBID_INCLUDE = [
     # Included by tgs/includes.dm
     r'code/modules/tgs/**/*.dm',
 
-	# Included by map.dm (which we have to whitelist)
-	r'maps**/*.dm'
+    # Included by map.dm (which we have to whitelist)
+    r'maps**/*.dm'
 ]
 
 # Things we want to explicitly allow, even if they're in blocked dirs
