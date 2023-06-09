@@ -135,7 +135,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(F)
 				var/atom/B = new /obj/structure/girder/displaced(F)
-
 				var/datum/material/M = getMaterial("steel")
 				A.setMaterial(src.material ? src.material : M)
 				B.setMaterial(src.girdermaterial ? src.girdermaterial : M)

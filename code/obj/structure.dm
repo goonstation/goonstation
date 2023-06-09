@@ -250,18 +250,15 @@ obj/structure/ex_act(severity)
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
+				var/datum/material/M = getMaterial("steel")
+
 				if (S.reinforcement)
 					WALL = Tsrc.ReplaceWithRWall()
 				else
 					WALL = Tsrc.ReplaceWithWall()
-				if (S.material)
-					WALL.setMaterial(S.material)
-				else
-					WALL.setMaterial(getMaterial("steel"))
-				if (the_girder.material)
-					WALL.girdermaterial = the_girder.material
-				else
-					WALL.girdermaterial = getMaterial("steel")
+				WALL.setMaterial(S.material ? S.material : M)
+				A.girdermaterial = src.material ? src.material : M
+
 				WALL.inherit_area()
 				S?.change_stack_amount(-2)
 
@@ -302,17 +299,15 @@ obj/structure/ex_act(severity)
 		var/FloorIntact = T.intact
 		var/FloorBurnt = T.burnt
 		var/FloorName = T.name
-		var/oldmat = src.material
 
 		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
 
 		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
-		if(oldmat)
-			A.setMaterial(oldmat)
-		else
-			var/datum/material/M = getMaterial("steel")
-			A.setMaterial(M)
+		var/datum/material/M = getMaterial("steel")
+
+		A.setMaterial(src.material ? src.material : M, copy = FALSE)
+		A.girdermaterial = src.material ? src.material : M
 
 		var/turf/simulated/wall/false_wall/FW = A
 		FW.inherit_area()
