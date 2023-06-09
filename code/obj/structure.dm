@@ -309,9 +309,9 @@ obj/structure/ex_act(severity)
 		var/datum/material/M = getMaterial("steel")
 
 		A.setMaterial(src.material ? src.material : M, copy = FALSE)
-		A.girdermaterial = src.material ? src.material : M
 
 		var/turf/simulated/wall/false_wall/FW = A
+		FW.girdermaterial = src.material ? src.material : M
 		FW.inherit_area()
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
