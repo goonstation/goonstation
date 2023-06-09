@@ -420,9 +420,9 @@
 /datum/limb/maneater_mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
 	var/dam_low = 8
-	var/dam_high = 14
+	var/dam_high = 12
 	var/custom_msg = null
-	var/miss_prob = 80
+	var/miss_prob = 75
 	var/stam_damage_mult = 1
 	var/human_stam_damage = 50
 	var/human_desorient_duration = 2 SECONDS
