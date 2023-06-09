@@ -65,6 +65,15 @@
 	upperfluc = 25
 	lowerfluc = -25
 
+/datum/commodity/fish
+	comname = "Fish"
+	comtype = /obj/item/fish
+	onmarket = 1
+	price = 50
+	baseprice = 50
+	upperfluc = 25
+	lowerfluc = -25
+
 /datum/commodity/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb

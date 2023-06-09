@@ -50,6 +50,7 @@
 
 	//varedit support for cooldowns
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()

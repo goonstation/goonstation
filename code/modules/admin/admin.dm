@@ -1270,7 +1270,14 @@ var/global/noir = 0
 				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 					heavenly_spawn(M, reverse = TRUE)
 			else
-				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to rapture a dude.")
+		if("smite")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_smitegib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to smite a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1875,7 +1882,7 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) + concrete_typesof(/datum/antagonist/generic))
 			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
@@ -2163,11 +2170,11 @@ var/global/noir = 0
 								break
 							LAGCHECK(LAG_LOW)
 					else
-						logTheThing(LOG_ADMIN, usr, "created [number]ea [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created [number]ea [english_list(paths)]", "admin")
+						logTheThing(LOG_ADMIN, usr, "created [number] [english_list(paths)]")
+						logTheThing(LOG_DIARY, usr, "created [number] [english_list(paths)]", "admin")
 						for(var/path in paths)
 							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created [number]ea [english_list(paths, 1)]")
+								message_admins("[key_name(usr)] created [number] [english_list(paths, 1)]")
 								break
 							LAGCHECK(LAG_LOW)
 					return
@@ -4328,7 +4335,33 @@ var/global/noir = 0
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE, cmp_proc=null)
+/**
+ * `get_one_match` attempts to find a type match for a given object.
+ * The function allows customization of the base type, whether to use concrete types,
+ * whether to use only admin spawnable, the comparison procedure, and the sort limit.
+ * The function sorts the matches if a comparison procedure is provided and if the sort limit condition allows it,
+ * then it presents a list of matches for the user to choose from.
+ *
+ * @param object This is the object for which the function is attempting to find a match.
+ *
+ * @param base This is the base type used for matching. All results will be of this type tree.
+ *
+ * @param use_concrete_types determines whether the function should respect concrete types for matching.
+ *
+ * @param only_admin_spawnable This boolean value determines whether the function should only consider objects that
+ *		are spawnable by an admin.
+ *
+ * @param cmp_proc This is the comparison proc used for sorting matches. This should be a proc that takes two arguments
+ *		and returns a boolean. The default value is `null`, indicating no comparison procedure is used.
+ *		If `cmp_proc` is provided and the number of matches is within the `sort_limit`, the matches will be sorted using `cmp_proc`.
+ *
+ * @param sort_limit This parameter defines the upper limit for the number of items to consider during the matching process.
+ *		If the number of matches exceeds `sort_limit`, they will not be sorted even if `cmp_proc` is provided.
+ *		If `sort_limit` is `0` or `null`, there will be no limit and matches will be sorted if `cmp_proc` is provided.
+ *
+ * @return Returns the path of the selected match if one is chosen. If no matches are found, `null` is returned. If the operation is cancelled, `FALSE` is returned.
+ */
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE, cmp_proc=null, sort_limit=300)
 	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!length(matches))
@@ -4349,7 +4382,7 @@ var/global/noir = 0
 	var/msg = "Select \a [base] type."
 	if(prefix)
 		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
-	if(cmp_proc)
+	if(cmp_proc && (!sort_limit || (length(safe_matches) <= sort_limit)))
 		sortList(safe_matches, cmp_proc)
 	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
 	if(!.)

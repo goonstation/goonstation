@@ -518,8 +518,6 @@ var/global/debug_messages = 0
 	if (!race)
 		return
 
-	if(H.mutantrace)
-		qdel(H.mutantrace)
 	H.set_mutantrace(race)
 	H.set_face_icon_dirty()
 	H.set_body_icon_dirty()

@@ -1218,19 +1218,19 @@
 /mob/living/proc/create_mob_silhouette()
 	src.silhouette = new(src, src)
 	src.silhouette.plane = PLANE_MOB_OVERLAY
-	src.update_mob_silhouette()
 
 	get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY).add_image(src.silhouette)
 
 	src.new_static_image()
+	src.update_mob_silhouette()
 
 /mob/living/proc/update_mob_silhouette()
 	if (!src.silhouette)
 		return
 
-	src.silhouette.icon = src
+	src.silhouette.icon = src.icon
+	src.silhouette.icon_state = src.icon_state
 	src.silhouette.overlays = src.overlays
-	src.silhouette.vis_contents = src.vis_contents
 
 	src.update_static_image()
 
@@ -1254,8 +1254,8 @@
 		return
 
 	src.static_image.icon = src.silhouette.icon
+	src.static_image.icon_state = src.silhouette.icon_state
 	src.static_image.overlays = src.silhouette.overlays
-	src.static_image.vis_contents = src.silhouette.vis_contents
 
 	var/image/static_overlay = image('icons/effects/atom_textures_64.dmi', "static")
 	static_overlay.blend_mode = BLEND_INSET_OVERLAY

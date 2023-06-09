@@ -319,7 +319,8 @@ mob/new_player
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
-				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				if (istype(character.loc, /obj/machinery/vehicle))
+					boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
 			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
