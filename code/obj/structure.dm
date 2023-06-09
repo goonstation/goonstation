@@ -301,16 +301,16 @@ obj/structure/ex_act(severity)
 		var/FloorIntact = T.intact
 		var/FloorBurnt = T.burnt
 		var/FloorName = T.name
+		var/girdermaterial
 
 		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
 
 		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
 		var/datum/material/M = getMaterial("steel")
-
-		A.setMaterial(src.material ? src.material : M, copy = FALSE)
-
 		var/turf/simulated/wall/false_wall/FW = A
+
+		FW.setMaterial(S.material ? S.material : M, copy = FALSE)
 		FW.girdermaterial = src.material ? src.material : M
 		FW.inherit_area()
 
