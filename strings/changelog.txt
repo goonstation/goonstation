@@ -1,5 +1,9 @@
 
 (t)fri jun 09 23
+(u)Glamurio (Ryou)
+(p)14438
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Winter coats now have an unbuttoned variant.
 (u)pali
 (+)Player built lattices now autoconnect. (If you don't want that remember that you can use a welding tool to deconstruct lattices which keeps their facing.)
 (u)Wisemonster
