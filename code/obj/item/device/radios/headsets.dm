@@ -497,6 +497,202 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+/obj/item/device/radio/headset/agent
+	name = "agent headset"
+	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	secure_frequencies = list("z" = R_FREQ_SYNDICATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	icon_override = "syndie"
+	icon_tooltip = "Syndicate Operative"
+	block_hearing_when_worn = HEARING_ANTIDEAF
+
+/obj/item/device/radio/headset/agent/attack_self(mob/user as mob)
+	if (src.name == "agent headset")
+		var/appearance = input(user, "What radio should this disguise as?") as anything in list("standard", "command", "NT", "captain", "radio show host", "head of security", "head of personnel", "research director", "medical director", "chief engineer", "security", "detective", "engineering", "medical", "research", "civilian", "shipping", "mining", "mailman", "clown", "ghost buster", "auditory", "multi-frequency")
+		var/icon = input(user, "What icon should this radio have?\nClick cancel to abort the forging process.") as null|anything in list("command", "AI", "cyborg", "consultant", "captain", "radio show host", "head of security", "head of personnel", "research director", "medical director", "chief engineer", "security", "detective", "engineering", "medical", "research", "civilian", "shipping", "mining", "mailman", "clown", "ghost buster", "syndicate")
+		switch (icon)
+			if ("command")
+				src.icon_override = "head"
+				src.icon_tooltip = "Head of Staff"
+			if ("AI")
+				src.icon_override = "ai"
+				src.icon_tooltip = "Artificial Intelligence"
+			if ("cyborg")
+				src.icon_override = "robo"
+				src.icon_tooltip = "station bounced radio" //same as no module. This is already long enough as it is, better to not add all modules
+			if ("consultant")
+				src.icon_override = "nt"
+				src.icon_tooltip = "NanoTrasen Security Consultant"
+			if ("captain")
+				src.icon_override = "cap"
+				src.icon_tooltip = "Captain"
+			if ("radio show host")
+				src.icon_override = "rh"
+				src.icon_tooltip = "Radio Show Host"
+			if ("head of security")
+				src.icon_override = "hos"
+				src.icon_tooltip = "Head of Security"
+			if ("head of personnel")
+				src.icon_override = "hop"
+				src.icon_tooltip = "Head of Personnel"
+			if ("research director")
+				src.icon_override = "rd"
+				src.icon_tooltip = "Research Director"
+			if ("medical director")
+				src.icon_override = "md"
+				src.icon_tooltip = "Medical Director"
+			if ("chief engineer")
+				src.icon_override = "ce"
+				src.icon_tooltip = "Chief Engineer"
+			if ("security")
+				src.icon_override = "sec"
+				src.icon_tooltip = "Security"
+			if ("detective")
+				src.icon_override = "det"
+				src.icon_tooltip = "Detective"
+			if ("engineering")
+				src.icon_override = "eng"
+				src.icon_tooltip = "Engineer"
+			if ("medical")
+				src.icon_override = "med"
+				src.icon_tooltip = "Medical"
+			if ("research")
+				src.icon_override = "sci"
+				src.icon_tooltip = "Scientist"
+			if ("civilian")
+				src.icon_override = "civ"
+				src.icon_tooltip = "Civilian"
+			if ("shipping")
+				src.icon_override = "qm"
+				src.icon_tooltip = "Quartermaster"
+			if ("mining")
+				src.icon_override = "Min"
+				src.icon_tooltip = "Miner"
+			if ("mailman")
+				src.icon_override = "mail"
+				src.icon_tooltip = "Mailman"
+			if ("clown")
+				src.icon_override = "clown"
+				src.icon_tooltip = "Clown"
+			if ("ghost buster")
+				src.icon_override = "ghost_buster"
+				src.icon_tooltip = "Ghost Buster"
+			if ("syndicate")
+				src.chat_class = RADIOCL_SYNDICATE
+				src.icon_override = "syndie"
+				src.icon_tooltip = "Syndicate Operative"
+			else
+				return // Abort process.
+		switch (appearance)
+			if ("standard")
+				src.name = "radio headset"
+				src.desc = "A standard-issue device that can be worn on a crewmember's ear to allow hands-free communication with the rest of the crew."
+				src.icon_state = "headset"
+			if ("command")
+				src.name = "command headset"
+				src.desc = "A radio headset capable of communicating over the Command frequency, for use by support staff."
+				src.icon_state = "command headset"
+			if ("NT")
+				src.name = "\improper NT headset"
+				src.desc = "Issued to NanoTrasen ancillaries, this radio headset can access several secure radio channels."
+				src.icon_state = "command headset"
+			if ("captain")
+				src.name = "captain's headset"
+				src.desc = "So the captain can know exactly what's going on around the station while doing nothing about any of it."
+				src.icon_state = "captain headset"
+			if ("radio show host")
+				src.name = "radio show host's headphones"
+				src.desc = "This is a pair of wireless studio headphones with a pastel retro look and a flip-down mic. Either someone's really passionate about their work, or they want to look old-school. Maybe both!"
+				src.icon_state = "radio"
+			if ("head of security")
+				src.name = "head of security's headset"
+				src.desc = "This headset has been worn by selfless heroes, cold-blooded killers, and everything in between. Where do you fall on that spectrum?"
+				src.icon_state = "command headset"
+			if ("head of personnel")
+				src.name = "head of personnel's headset"
+				src.desc = "The HoP cannot listen or speak on the security frequency anymore, not since the incident."
+				src.icon_state = "command headset"
+			if ("research director")
+				src.name = "research director's headset"
+				src.desc = "This headset can receive on the Medical channel in addition to other secure frequencies. The 'sci' part of 'medsci'."
+				src.icon_state = "command headset"
+			if ("medical director")
+				src.name = "medical director's headset"
+				src.desc = "This headset can receive on the Research channel in addition to other secure frequencies. The 'med' part of 'medsci'."
+				src.icon_state = "command headset"
+			if ("security")
+				src.name = "security headset"
+				src.desc = "Worn by security officers, this thing could cause real problems in the wrong ears. Keep it safe!"
+				src.icon_state = "sec headset"
+			if ("detective")
+				src.name = "detective's headset"
+				src.desc = "In addition to having access to the Security radio channel, this headset also features private frequency that's suited for only the sneakiest sleuthing."
+				src.icon_state = "sec headset"
+			if ("chief engineer")
+				src.icon_override = "ce"
+				src.icon_tooltip = "Chief Engineer"
+				src.icon_state = "command headset"
+			if ("engineering")
+				src.name = "engineering headset"
+				src.desc = "They stopped spending extra money trying to make these heat-resistant a while ago."
+				src.icon_state = "engine headset"
+			if ("medical")
+				src.name = "medical headset"
+				src.desc = "Nominally worn by the trained staff of the medbay, this headset can be counted on to either be utterly silent or to be squawking constantly at any given moment."
+				src.icon_state = "med headset"
+			if ("research")
+				src.name = "research headset"
+				src.desc = "A science headset, for science. Whether directly or by proxy, these are frequently burned, exploded, corroded, dissolved, shot, and teleported, to name a few."
+				src.icon_state = "research headset"
+			if ("civilian")
+				src.name = "civilian headset"
+				src.desc = "These headsets are used by the civilian staff, who are employed to keep the station clean, fed, and productive. As if."
+				src.icon_state = "civ headset"
+			if ("shipping")
+				src.name = "shipping headset"
+				src.desc = "Used by the station's quartermasters, who move freight and master the art of watching numbers go up and down."
+				src.icon_state = "shipping headset"
+			if ("mining")
+				src.name = "mining headset"
+				src.desc = "Rumor has it that these grow naturally in space, typically alongside discarded breath masks or space suits drenched in human blood. Nature is beautiful."
+				src.icon_state = "shipping headset"
+			if ("mailman")
+				src.name = "mailman's headset"
+				src.desc = "In a land of belt hells, the pit fiend is king."
+				src.icon_state = "command headset"
+			if ("clown")
+				src.name = "clown's headset"
+				src.desc = "Anybody using this headset is unlikely to be taken seriously."
+				src.icon_state = "headset"
+			if ("ghost buster")
+				src.name = "\improper Ghost Buster's headset"
+				src.desc = "So you can hear those who are calling you when there's something strange in their department."
+				src.icon_state = "multi headset"
+			if ("auditory")
+				src.name = "auditory headset"
+				src.desc = "A radio headset that also interfaces with the ear canal, allowing the deaf to hear normally while wearing it."
+				src.icon_state = "deaf headset"
+			if ("multi-frequency")
+				src.name = "multi-frequency headset"
+				src.desc = "A radio headset that can communicate over multiple customizable channels."
+				src.icon_state = "multi headset"
+	else
+		..()
+
+/obj/item/device/radio/headset/agent/attackby(obj/item/W, mob/user)
+	var/obj/item/device/radio/headset/sourceRadio = W
+	if (istype(sourceRadio))
+		boutput(user, "You copy [sourceRadio]'s frequencies to [src].")
+		for (var/frequency in sourceRadio.secure_frequencies)
+			if (!(frequency in src.secure_frequencies))
+				src.set_secure_frequency(frequency, sourceRadio.secure_frequencies[frequency])
+		for (var/class in sourceRadio.secure_classes)
+			if (!(class in src.secure_classes))
+				src.secure_classes[class] = sourceRadio.secure_classes[class]
+	else
+		return ..()
+
 /obj/item/device/radio/headset/pirate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"

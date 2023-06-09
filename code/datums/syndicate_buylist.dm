@@ -283,6 +283,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY
 
+/datum/syndicate_buylist/generic/agentradio
+	name = "Agent Radio"
+	item = /obj/item/device/radio/headset/agent
+	cost = 1
+	desc = "A syndicate radio desinged to imitate nanotrasen radios. Comes with the syndicate frequency and more can be scanned in."
+	not_in_crates = TRUE
+
+
 //////////////////////////////////////////////////// Standard items (traitor uplink) ///////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
