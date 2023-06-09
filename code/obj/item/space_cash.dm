@@ -75,9 +75,9 @@
 					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				change_stack_amount( 0 - amt )
-				var/obj/item/currency/young_money = new /obj/item/currency
+				var/obj/item/currency/young_money = new src.type
 				young_money.setup(user.loc, amt)
-				young_money.Attackhand(user)
+				user.put_in_hand_or_drop(young_money)
 		else
 			..(user)
 
@@ -312,20 +312,6 @@
 			if (src.spent || SB.spent)
 				return 0
 		return ..()
-
-	attack_hand(mob/user)
-		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
-			if (isnum_safe(amt) && src.loc == user && !user.equipped())
-				if (amt > src.amount || amt < 1)
-					boutput(user, "<span class='alert'>You wish!</span>")
-					return
-				change_stack_amount( 0 - amt )
-				var /obj/item/currency/spacebux/new_token = new
-				new_token.setup(user.loc, amt)
-				user.put_in_hand_or_drop(new_token)
-		else
-			..(user)
 
 	ten
 		amount = 10
