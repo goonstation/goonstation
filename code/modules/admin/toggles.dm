@@ -880,11 +880,11 @@ client/proc/toggle_ghost_respawns()
 	antagonists_see_each_other = !antagonists_see_each_other
 
 	var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
-	for (var/datum/mind/mind as anything in get_all_antagonists())
+	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
 		if (antagonists_see_each_other)
-			antagonist_image_group.add_mind(mind)
+			antagonist_image_group.add_mind(antagonist_role.owner)
 		else
-			antagonist_image_group.remove_mind(mind)
+			antagonist_image_group.remove_mind(antagonist_role.owner)
 
 	if (antagonists_see_each_other)
 		boutput(world, "<B>Antagonists can now see each other.</B>")

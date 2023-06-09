@@ -1,7 +1,9 @@
+/// An associative list of all antagonist IDs, associated with a list of all antagonist datums of that ID.
 var/list/antagonists = list()
+
 /**
- * Gets a list of all antagonists of ID role_id, or of all IDs if no ID is specified.
- * Returns a list of all antagonist minds. If no antagonist minds can be found, returns a empty list.
+ * Gets a list of all antagonist datums of ID role_id, or of all IDs if no ID is specified.
+ * Returns a list of all antagonist datums. If no antagonist datums could be found, returns an empty list.
  */
 /proc/get_all_antagonists(antagonist_role_id)
 	. = list()
@@ -11,16 +13,15 @@ var/list/antagonists = list()
 
 	for (var/antagonist_type in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/A = antagonist_type
-		var/list/datum/mind/antagonist_minds = antagonists["[initial(A.id)]"]
-		if (length(antagonist_minds))
-			. += antagonist_minds
+		var/list/datum/antagonist/antagonist_roles = antagonists["[initial(A.id)]"]
+		if (length(antagonist_roles))
+			. += antagonist_roles
 
 /// Returns a list of all gang datums.
 proc/get_all_gangs()
 	. = list()
 
-	for (var/datum/mind/gang_leader as anything in get_all_antagonists(ROLE_GANG_LEADER))
-		var/datum/antagonist/gang_leader/antagonist_role = gang_leader.get_antagonist(ROLE_GANG_LEADER)
+	for (var/datum/antagonist/gang_leader/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
 		if (antagonist_role?.gang)
 			. += antagonist_role.gang
 
