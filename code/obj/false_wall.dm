@@ -18,7 +18,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
-	var/girdermaterial = null
 
 	temp
 		var/was_rwall = 0
@@ -117,6 +116,14 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 					boutput(user, "<span class='notice'>It was a false wall!</span>")
 				//disassemble it
 				boutput(user, "<span class='notice'>Now dismantling false wall.</span>")
+
+				//a false wall turns into a sheet of metal and displaced girders
+				var/atom/A = new /obj/item/sheet(src)
+				var/atom/B = new /obj/structure/girder/displaced(src)
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(src.material ? src.material : M, copy = FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+				
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
 				var/floorburnt1	= src.floorburnt
@@ -133,12 +140,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				F.icon_state = flooricon_state1
 				F.setIntact(floorintact1)
 				F.burnt = floorburnt1
-				//a false wall turns into a sheet of metal and displaced girders
-				var/atom/A = new /obj/item/sheet(F)
-				var/atom/B = new /obj/structure/girder/displaced(F)
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(src.material ? src.material : M)
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : M)
 
 				F.levelupdate()
 				logTheThing(LOG_STATION, user, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
@@ -158,7 +159,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "false wall"
+		src.name = "false [src.material.matname] wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -180,7 +181,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "wall"
+		src.name = "[src.material.matname] wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
 		src.gas_impermeable = 1
