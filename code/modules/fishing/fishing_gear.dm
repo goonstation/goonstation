@@ -25,11 +25,13 @@
 	afterattack(atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
-			if (fishing_spot)
+			if (fishing_spot && src.is_fishing)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
+//				AddComponent(/datum/component/holdertargeting/fishing_game, user)
+
 
 	update_icon()
 		//state for fishing
@@ -51,9 +53,15 @@
 	/// the fishing spot that the rod is fishing from
 	var/datum/fishing_spot/fishing_spot = null
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
-	duration = 1 MINUTE
+	duration = -1
 	/// id for fishing action
 	id = "fishing_for_fishies"
+	var/obj/actions/border/border
+	var/obj/actions/border/block
+	var/acceleration = 0
+	var/stopping = FALSE
+	var/is_mouse_down = FALSE
+	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -61,6 +69,13 @@
 		src.rod = rod
 		src.fishing_spot = fishing_spot
 		src.target = target
+		for(var/x in 1 to WIDE_TILE_WIDTH)
+			for(var/y in 1 to 15)
+				var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
+				hudSquare.screen_loc = "[x],[y]"
+				hudSquare.xOffset = x
+				hudSquare.yOffset = y
+				src.hudSquares["[x],[y]"] = hudSquare
 
 	onStart()
 		..()
@@ -72,9 +87,23 @@
 		if (!(BOUNDS_DIST(src.user, src.rod) == 0) || !(BOUNDS_DIST(src.user, src.target) == 0) || !src.user || !src.target || !src.rod || !src.fishing_spot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/client/C = src.user.client
+		for (var/x in 1 to istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH)
+			for (var/y in 1 to 15)
+				C.screen += src.hudSquares["[x],[y]"]
 
-
-		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
+		RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/mouse_down)
+		RegisterSignal(user, COMSIG_MOB_MOUSEUP, .proc/mouse_up)
+		border = new /obj/actions/border
+		border.set_icon_state("border-fish")
+		block = new /obj/actions/border
+		block.set_icon_state("fish-block")
+		block.color = "#00CC00"
+		border.pixel_x = -5
+		block.pixel_x = -5
+		user.vis_contents += border
+		user.vis_contents += block
+		src.move_loop()
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = TRUE
@@ -89,6 +118,8 @@
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
+			src.stopping = TRUE
+			src.remove_hud_squares()
 			return
 
 	onEnd()
@@ -98,6 +129,8 @@
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
+			src.stopping = TRUE
+			src.remove_hud_squares()
 			return
 
 		if (src.fishing_spot.try_fish(src.user, src.rod, target)) //if it returns one we successfully fished, otherwise lets restart the loop
@@ -105,10 +138,69 @@
 			src.rod.is_fishing = FALSE
 			src.rod.UpdateIcon()
 			src.user.update_inhands()
+			src.stopping = TRUE
+			src.remove_hud_squares()
 			return
 
 		else //lets restart the action
 			src.onRestart()
+
+	onDelete()
+		..()
+		//from my experience none of the onUpdate or onEnd blocks get triggered when you just walk away, so just putting this here too
+		src.stopping = TRUE
+		src.rod.is_fishing = FALSE
+		src.rod.UpdateIcon()
+		src.user.update_inhands()
+		src.rod = null
+		if (src.user)
+			src.user.vis_contents -= src.border
+			src.border.set_loc(null)
+			qdel(src.border)
+			src.border = null
+			src.user.vis_contents -= src.block
+			src.block.set_loc(null)
+			qdel(src.block)
+			src.block = null
+		src.remove_hud_squares() //in case it somehow didnt get removed beforehand
+		src.user = null
+		for(var/hudSquare in src.hudSquares)
+			qdel(src.hudSquares[hudSquare])
+
+
+/datum/action/fishing/proc/move_loop()
+	set waitfor = 0
+
+	while (!src.stopping)
+
+		if (src.is_mouse_down)
+			src.acceleration += 1
+		else
+			src.acceleration -= 1
+
+		var/endpoint = src.block.pixel_y + src.acceleration
+
+		if (endpoint < -32)
+			src.acceleration = ((endpoint + 32)*-1)/2
+			endpoint = -32
+		else if (endpoint > 32)
+			src.acceleration = ((endpoint - 32)*-1)/2
+			endpoint = 32
+
+		animate(src.block, pixel_y=endpoint, time=1 DECI SECOND)
+
+		sleep(1 DECI SECOND)
+
+/datum/action/fishing/proc/mouse_down()
+	src.is_mouse_down = TRUE
+
+/datum/action/fishing/proc/mouse_up()
+	src.is_mouse_down = FALSE
+
+/datum/action/fishing/proc/remove_hud_squares()
+	var/client/C = src.user.client
+	for (var/hudSquare in src.hudSquares)
+		C.screen -= src.hudSquares[hudSquare]
 
 /obj/item/fishing_rod/basic
 	name = "basic fishing rod"
