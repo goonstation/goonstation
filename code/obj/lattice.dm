@@ -37,10 +37,10 @@
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
 		var/turf/simulated/floor/T = get_turf(src.loc)
 		var/replacement = /turf/simulated/floor/airless/plating/catwalk/auto
-		if (istype(T))
-			if (istype(T, /turf/space/fluid) || !istype(T, /turf/space))
+		if (!istype(T, /turf/unsimulated/floor))
+			if (istype(T, /turf/space/fluid) || istype(T, /turf/simulated/floor))
 				replacement = /turf/simulated/floor/airless/plating
-			T.ReplaceWith(replacement, keep_old_material = 0, handle_dir = 1)
+			T.ReplaceWith(replacement, FALSE, TRUE, FALSE, FALSE)
 			T.MakeCatwalk(rods)
 			qdel(src)
 
