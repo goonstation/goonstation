@@ -30,11 +30,13 @@
 	speechverb_stammer = "screeches"
 
 	ai_type = /datum/aiHolder/aggressive
-	ai_retaliate_patience = 1
+	ai_retaliate_patience = 3
 	ai_retaliate_persistence = RETALIATE_ONCE
 	ai_retaliates = TRUE
 	is_npc = TRUE
+
 	var/leader = FALSE
+	var/telerange = 5
 
 	understands_language(var/langname)
 		if (langname == say_language || langname == "martian")
@@ -93,6 +95,19 @@
 		if(ismartian(C)) return FALSE
 		return ..()
 
+	critter_retaliate(var/mob/target)
+		var/datum/targetable/critter/psyblast/martian/blast = src.abilityHolder.getAbility(/datum/targetable/critter/psyblast/martian)
+		var/datum/targetable/critter/teleport/teleport = src.abilityHolder.getAbility(/datum/targetable/critter/teleport)
+		if (!blast.disabled && blast.cooldowncheck() && prob(50))
+			blast.handleCast(target)
+			. = TRUE
+			if(!teleport.disabled && teleport.cooldowncheck())
+				var/list/randomturfs = new/list()
+				for(var/turf/T in orange(src, telerange))
+					if(istype(T, /turf/space) || T.density) continue
+						randomturfs.Add(T)
+				teleport.handleCast(pick(randomturfs))
+
 	say(message, involuntary = 0)
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 
@@ -111,7 +126,6 @@
 		// cirr edit: i have moved this to a proc at the bottom of this file
 		// cirr TODO: move this to chatprocs.dm dammit
 		martian_speak(src, message)
-
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -148,10 +162,11 @@
 	martian_type = "soldier"
 	icon_state = "martianS"
 	icon_state_dead = "martianS-dead"
+	ai_type = /datum/aiHolder/ranged
 
 	setup_hands()
 		..()
-		var/datum/handHolder/HH = hands[2]
+		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/hitscan
 		HH.name = "Martian Psychokinetic Blaster"
 		HH.icon = 'icons/mob/critter_ui.dmi'
@@ -160,12 +175,6 @@
 		HH.can_hold_items = FALSE
 		HH.can_attack = FALSE
 		HH.can_range_attack = TRUE
-
-		HH = hands[1]
-		HH.name = "right tentacles"
-		HH.suffix = "-R"
-		HH.icon_state = "handr"
-		HH.limb_name = "right tentacles"
 
 /mob/living/critter/martian/mutant
 	name = "martian mutant"
@@ -184,10 +193,16 @@
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
 	critter_ability_attack(mob/target)
+		if (istype(src, /mob/living/critter/martian/mutant/weak)) return ..()
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
 		if (!gib.disabled && gib.cooldowncheck())
 			gib.handleCast(target)
 			return TRUE
+
+	can_critter_attack()
+		if (istype(src, /mob/living/critter/martian/mutant/weak)) return ..()
+		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
+		return ..() && !gib.disabled
 
 /mob/living/critter/martian/mutant/weak
 	name = "martian initiate"
@@ -249,8 +264,6 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 				class = "martianimperial"
 		rendered = "<span class='game [class]'><span class='name'>[speaker.real_name]</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
 		adminrendered = "<span class='game [class]'><span class='name' data-ctx='\ref[speaker.mind]'>[speaker.real_name]</span> telepathically messages, <span class='message'>\"[message]\"</span></span>"
-
-
 
 	for (var/client/CC)
 		if (!CC.mob) continue
