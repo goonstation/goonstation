@@ -185,7 +185,10 @@
 
 
 	var/atom/D = ReplaceWithFloor()
-	D.setMaterial(src.girdermaterial && keep_material ? src.girdermaterial : M, copy = FALSE)
+	if (src.material && keep_material)
+		D.setMaterial(src.material)
+	else
+		D.setMaterial(getMaterial("steel"), copy = FALSE)
 
 
 /turf/simulated/wall/burn_down()
