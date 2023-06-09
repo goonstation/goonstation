@@ -18,6 +18,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
+	var/girdermaterial = null
 
 	temp
 		var/was_rwall = 0
