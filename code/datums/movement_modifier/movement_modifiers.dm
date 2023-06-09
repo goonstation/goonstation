@@ -169,7 +169,7 @@
 	additive_slowdown = 1.2
 
 /datum/movement_modifier/maneater
-	additive_slowdown = 4.5
+	additive_slowdown = 5
 
 /datum/movement_modifier/kudzu
 	additive_slowdown = 4
