@@ -163,7 +163,7 @@
 	if (src.frustration >= 8)
 		src.KillPathAndGiveUp(1)
 
-	if(src.last_shot + src.shot_cooldown <= TIME)
+	if(src.last_shot && src.last_shot + src.shot_cooldown <= TIME)
 		return
 
 	// Let's find us something to photograph.

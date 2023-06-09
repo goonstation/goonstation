@@ -217,7 +217,7 @@
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
-		w_class = W_CLASS_BULKY //all the weight
+		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
@@ -226,6 +226,8 @@
 		light_color = list(0, 179, 255, 255)
 
 		attack_hand(mob/user)
+			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
+				return
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -233,6 +235,8 @@
 			return mouse_drop(user)
 
 		attack_self(mob/user as mob)
+			if (istype(user,/mob/living/object) && user == src.loc)
+				return
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return

@@ -3,7 +3,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "c" = (
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "g" = (
 /obj/map/light/white,
@@ -16,14 +16,14 @@
 /obj/decal/aliencomputer{
 	pixel_x = -32
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "n" = (
 /obj/item/reagent_containers/food/snacks/yuck{
 	desc = "It's a bad day if you have to eat this for dinner.";
 	doants = 0
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "o" = (
 /turf/simulated/wall/auto/martian,
@@ -34,13 +34,13 @@
 /area/prefab/martian_glomp)
 "r" = (
 /obj/decal/cleanable/slime,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "s" = (
 /obj/crevice{
 	pixel_y = 30
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "t" = (
 /obj/indestructible/shuttle_corner{
@@ -55,7 +55,7 @@
 "w" = (
 /obj/decal/cleanable/slime,
 /obj/machinery/door/unpowered/martian,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "x" = (
 /obj/indestructible/shuttle_corner{
@@ -79,12 +79,12 @@
 /area/noGenerate)
 "z" = (
 /obj/machinery/door/unpowered/martian,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "C" = (
 /obj/critter/martian/warrior/dead,
 /obj/decal/cleanable/slime,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "D" = (
 /obj/indestructible/shuttle_corner{
@@ -105,14 +105,14 @@
 	icon_state = "martian-3";
 	name = "martian machine"
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "G" = (
 /obj/crevice{
 	pixel_y = 30
 	},
 /obj/item/material_piece/bone,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "J" = (
 /turf/simulated/wall/auto/martian,
@@ -132,20 +132,20 @@
 	desc = "Tiny bits of bone strewn about.";
 	name = "bone fragments"
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "M" = (
 /obj/item/material_piece/bone{
 	pixel_x = -9;
 	pixel_y = 6
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "N" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "P" = (
 /obj/indestructible/shuttle_corner{
@@ -162,7 +162,7 @@
 	pixel_y = 32
 	},
 /obj/landmark/artifact,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "S" = (
 /obj/decal/fakeobjects{
@@ -173,7 +173,7 @@
 	icon_state = "martian-4";
 	name = "martian machine"
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "T" = (
 /obj/indestructible/shuttle_corner{
@@ -190,7 +190,7 @@
 	pixel_x = -30
 	},
 /obj/critter/martian/soldier/dead,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "W" = (
 /obj/indestructible/shuttle_corner{
@@ -204,11 +204,11 @@
 /area/noGenerate)
 "X" = (
 /obj/critter/martian/soldier/dead,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 "Y" = (
 /obj/landmark/artifact,
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
 
 (1,1,1) = {"
