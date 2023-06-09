@@ -14,7 +14,7 @@
 	ui.open()
 
 /datum/abilitymanager/ui_data(mob/user)
-	var/list/ability_props
+	var/list/ability_props = list()
 	if (target_mob?.abilityHolder)
 		var/list/abilities = list()
 		if (istype(target_mob.abilityHolder, /datum/abilityHolder/composite))
@@ -40,6 +40,7 @@
 	. = ..()
 	if (.)
 		return
+	USR_ADMIN_ONLY
 	var/datum/targetable/T = locate(params["abilityRef"])
 	if (T && !istype(T)) return
 	switch(action)
