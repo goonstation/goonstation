@@ -25,6 +25,7 @@
 	ai_attacks_per_ability = 5
 
 	var/infection_type = EATS_BRAINS
+	var/moan_sounds = list("sound/voice/Zgroan1.ogg", "ound/voice/Zgroan2.ogg", "sound/voice/Zgroan3.ogg", "sound/voice/Zgroan4.ogg")
 
 	New()
 		..()
@@ -60,6 +61,14 @@
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_brute_vuln)
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+
+		if (src.ai?.enabled)
+			if (prob(3))
+				playsound(src, pick(moan_sounds), 25, 5)
 
 	valid_target(mob/living/C)
 		if (iszombie(C)) return FALSE
@@ -234,8 +243,7 @@
 	health_brute_vuln = 0.6
 	health_burn = 15
 	health_burn_vuln = 1
-
-	//playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
+	moan_sounds = 'sound/misc/meatmonaut1.ogg'
 
 #undef NO_EAT
 #undef EATS_BRAINS
