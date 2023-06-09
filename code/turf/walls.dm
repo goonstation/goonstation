@@ -18,6 +18,7 @@
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
+	var/girdermaterial = null
 
 	New()
 		..()
@@ -135,15 +136,11 @@
 		if (!devastated)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				B.set_reinforcement(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				B.set_reinforcement(M)
+
+			var/datum/material/M = getMaterial("steel")
+			A.setMaterial(src.girdermaterialc ? src.girdermaterial : M, copy = FALSE)
+			B.setMaterial(src.material ? src.material : M, copy = FALSE)
+			B.set_reinforcement(src.material)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
 				var/atom/A = new /obj/structure/girder/reinforced(src)

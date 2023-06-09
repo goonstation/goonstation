@@ -254,11 +254,14 @@ obj/structure/ex_act(severity)
 					WALL = Tsrc.ReplaceWithRWall()
 				else
 					WALL = Tsrc.ReplaceWithWall()
-				if (the_girder.material)
-					WALL.setMaterial(the_girder.material)
+				if (S.material)
+					WALL.setMaterial(S.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					WALL.setMaterial(M)
+					WALL.setMaterial(getMaterial("steel"))
+				if (the_girder.material)
+					WALL.girdermaterial = the_girder.material
+				else
+					WALL.girdermaterial = getMaterial("steel")
 				WALL.inherit_area()
 				S?.change_stack_amount(-2)
 

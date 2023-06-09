@@ -135,13 +135,11 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				//a false wall turns into a sheet of metal and displaced girders
 				var/atom/A = new /obj/item/sheet(F)
 				var/atom/B = new /obj/structure/girder/displaced(F)
-				if(src.material)
-					A.setMaterial(src.material)
-					B.setMaterial(src.material)
-				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
-					B.setMaterial(M)
+
+				var/datum/material/M = getMaterial("steel")
+				A.setMaterial(src.material ? src.material : M)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : M)
+
 				F.levelupdate()
 				logTheThing(LOG_STATION, user, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
