@@ -140,15 +140,41 @@
 		tox.last_value = src.baseline_health
 		tox.damage_multiplier = 1
 
+	seek_target(var/range = 9)
+		. = ..()
+
+		if (length(.) && prob(10))
+			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+			src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
+
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 5 SECONDS))
+					playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] snarls!</span></b>"
+		return null
+
+
 	valid_target(var/mob/living/potential_target)
 		if (isintangible(potential_target)) return FALSE
 		if (isdead(potential_target) && !ishuman(potential_target)) return FALSE
 		if (potential_target in src.growers) return FALSE
 		if (istype(potential_target, src.type)) return FALSE
 		if (iskudzuman(potential_target)) return FALSE
-		var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
-		//if we got a human corpse but our ability is on cooldown/not avaible, we don't want to target them
-		if ((checked_ability.disabled || !checked_ability.cooldowncheck()) && isdead(potential_target) && ishuman(potential_target)) return FALSE
+		var/is_dead_and_invalid = FALSE
+		if (isdead(potential_target) && ishuman(potential_target))
+			//if the target is dead, we got to have some additional checks
+			var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
+			//if we got a human corpse but our ability is on cooldown/not avaible, we don't want to target them
+			if (checked_ability.disabled || !checked_ability.cooldowncheck())
+				is_dead_and_invalid = TRUE
+			//now we check if another maneater is on that persons tile. If it is, it can have it's snack
+			for(var/mob/living/critter/plant/maneater/checked_maneater in get_turf(potential_target))
+				if (checked_maneater != src)
+					is_dead_and_invalid = TRUE
+		if(is_dead_and_invalid) return FALSE
 		//if we don't have a faction we hate everyone
 		//But we love corpses, also the one of botanists that didn't grew us
 		return isdead(potential_target) && ishuman(potential_target) || !src.faction || !(potential_target.faction & src.faction)
@@ -157,9 +183,13 @@
 		// first we check if our maneater is munching on something
 		var/datum/targetable/critter/selected_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
 		if (!(src in actions.running))
-			//we check here for valid target because we could retaliate against an ally and dont want to devour them
-			//if the target is unconscious and we are unable to eat them, we gotta wack them a bit
-			if(isunconscious(target) || isdead(target) && ishuman(target) && !selected_ability.disabled && selected_ability.cooldowncheck())
+			//first, we check if another maneater is on that persons tile. This way, we don't have food fights between maneaters
+			var/target_being_devoured = FALSE
+			for(var/mob/living/critter/plant/maneater/checked_maneater in get_turf(target))
+				if (checked_maneater != src)
+					target_being_devoured = TRUE
+			//if the target is unconscious, being eaten by another maneater and we are unable to eat them, we gotta wack them a bit
+			if(!target_being_devoured && (isunconscious(target) || isdead(target)) && ishuman(target) && !selected_ability.disabled && selected_ability.cooldowncheck())
 				//we want to grab with our left tentacle hand
 				src.set_a_intent(INTENT_GRAB)
 				src.set_dir(get_dir(src, target))
