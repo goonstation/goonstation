@@ -33435,7 +33435,7 @@
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
 /obj/item/card_group/plain,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "cmh" = (

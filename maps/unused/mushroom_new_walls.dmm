@@ -32483,7 +32483,7 @@
 	},
 /area/station/science/artifact)
 "rHr" = (
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /obj/item/coin,
 /obj/item/coin,
 /obj/table/wood/auto,

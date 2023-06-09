@@ -3164,7 +3164,7 @@
 	icon_state = "robust-broken";
 	name = "broken vending machine"
 	},
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "aov" = (
@@ -10179,7 +10179,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/fifty,
 /obj/item/storage/backpack,
 /turf/simulated/floor/plating,
 /area/h7)

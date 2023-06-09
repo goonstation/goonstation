@@ -15921,8 +15921,8 @@
 /area/station/ranch)
 "aXn" = (
 /obj/rack,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/five,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -16349,8 +16349,8 @@
 /area/station/security/detectives_office)
 "aYQ" = (
 /obj/rack,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/hundred,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -19075,8 +19075,8 @@
 /area/station/security/main)
 "qtw" = (
 /obj/rack,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/fifty,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11

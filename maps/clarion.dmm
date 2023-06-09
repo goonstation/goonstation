@@ -15787,7 +15787,7 @@
 /obj/item/reagent_containers/food/drinks/rum_spaced{
 	pixel_y = 8
 	},
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -41359,7 +41359,7 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /obj/machinery/light,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /obj/item/aiModule/hologram_expansion/syndicate{
 	pixel_x = -2;
 	pixel_y = 10

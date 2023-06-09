@@ -64362,7 +64362,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "cYy" = (
-/obj/item/spacecash/ten,
+/obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
 "cYz" = (
@@ -72837,7 +72837,7 @@
 /obj/item/disk/data/cartridge/captain,
 /obj/item/disk/data/cartridge/captain,
 /obj/machinery/light,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /obj/item/aiModule/hologram_expansion/syndicate{
 	pixel_x = -2;
 	pixel_y = 10

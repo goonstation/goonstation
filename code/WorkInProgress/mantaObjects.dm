@@ -1569,8 +1569,8 @@ var/obj/manta_speed_lever/mantaLever = null
 	configure_mode = 0
 	random_code = 1
 	spawn_contents = list(/obj/item/card/id/polaris,
-	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/spacecash/thousand,
-	/obj/item/spacecash/thousand,/obj/item/spacecash/thousand)
+	/obj/item/paper/manta_polarisnote,/obj/item/reagent_containers/emergency_injector/random,/obj/item/currency/spacecash/thousand,
+	/obj/item/currency/spacecash/thousand,/obj/item/currency/spacecash/thousand)
 
 /obj/item/card/id/polaris
 	name = "Sergeant's spare ID"

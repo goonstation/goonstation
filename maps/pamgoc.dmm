@@ -62446,7 +62446,7 @@
 /area/station/chapel/office)
 "cnR" = (
 /obj/table/wood/auto,
-/obj/item/spacecash{
+/obj/item/currency/spacecash{
 	pixel_x = 7;
 	pixel_y = 3
 	},

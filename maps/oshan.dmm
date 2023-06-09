@@ -3187,7 +3187,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "ahX" = (
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
 /obj/item/reagent_containers/food/drinks/bottle/rum,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/simulated/floor,
@@ -3364,9 +3364,9 @@
 /area/station/maintenance/north)
 "aiw" = (
 /obj/table/auto,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aiy" = (
@@ -6354,7 +6354,7 @@
 /area/station/security/main)
 "aqj" = (
 /obj/storage/closet/fire,
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aqk" = (
@@ -21701,26 +21701,26 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "bkJ" = (
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /obj/item/clothing/suit/cardboard_box/captain,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
@@ -26638,7 +26638,7 @@
 /obj/item/reagent_containers/food/drinks/rum_spaced{
 	pixel_y = 8
 	},
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -31101,7 +31101,7 @@
 /area/station/quartermaster/office)
 "bKp" = (
 /obj/item/skull,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grass,
 /area/space)
 "bKq" = (
@@ -31274,7 +31274,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bKN" = (
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /obj/item/tank/oxygen,
 /turf/simulated/floor/grass,
 /area/space)
@@ -33448,11 +33448,11 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bQO" = (
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/space/fluid,
 /area/space)
 "bQP" = (
@@ -34317,7 +34317,7 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "bSZ" = (
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grass,
 /area/space)
 "bTa" = (
@@ -38303,7 +38303,7 @@
 /turf/simulated/floor,
 /area/station/turret_protected/Zeta)
 "cfd" = (
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "cff" = (
@@ -39259,7 +39259,7 @@
 /area/station/maintenance/southwest)
 "cil" = (
 /obj/table/reinforced/auto,
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/fifty,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -44451,7 +44451,7 @@
 /area/research_outpost/maint)
 "osc" = (
 /obj/storage/crate,
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "osH" = (

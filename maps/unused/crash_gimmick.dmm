@@ -11013,7 +11013,7 @@
 /area/russian/radiation)
 "byV" = (
 /obj/table/wood/round,
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -71730,7 +71730,7 @@
 	},
 /area/russian/radiation)
 "txL" = (
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -74425,7 +74425,7 @@
 	},
 /area/russian/radiation)
 "uYW" = (
-/obj/item/spacecash/random/really_small,
+/obj/item/currency/spacecash/really_small,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -74661,7 +74661,7 @@
 "vhD" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
-/obj/item/spacecash/buttcoin,
+/obj/item/currency/spacecash/buttcoin,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -76289,7 +76289,7 @@
 	},
 /area/russian/radiation)
 "wgJ" = (
-/obj/item/spacecash/ten,
+/obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";

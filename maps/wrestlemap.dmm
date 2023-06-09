@@ -7970,7 +7970,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "dmA" = (
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "dmI" = (
@@ -16860,7 +16860,7 @@
 /area/station/medical/medbay)
 "hag" = (
 /obj/table/reinforced/auto,
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
@@ -18432,7 +18432,7 @@
 /area/station/chapel/sanctuary)
 "hHd" = (
 /obj/table/wood/auto,
-/obj/item/spacecash{
+/obj/item/currency/spacecash{
 	pixel_y = 10
 	},
 /obj/machinery/recharger,
@@ -19635,7 +19635,7 @@
 	name = "Research Computer Lab"
 	})
 "ink" = (
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/fifty,
 /obj/machinery/light/small{
 	dir = 1;
 	layer = 9.1;
@@ -31004,7 +31004,7 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /turf/simulated/floor/shuttlebay,
 /area/station/storage/warehouse)
 "ney" = (

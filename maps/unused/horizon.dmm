@@ -2499,7 +2499,7 @@
 "agi" = (
 /obj/machinery/light_switch/north,
 /obj/table/wood/auto,
-/obj/item/spacecash/buttcoin,
+/obj/item/currency/spacecash/buttcoin,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -3115,7 +3115,7 @@
 /turf/simulated/floor/black,
 /area/station/science/spectral)
 "ahW" = (
-/obj/item/spacecash/ten,
+/obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/random,
 /area/station/science/spectral)
 "ahX" = (
@@ -6341,7 +6341,7 @@
 /area/station/storage/tools)
 "arp" = (
 /obj/table/wood/round,
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "arq" = (
@@ -47589,7 +47589,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "cnv" = (
-/obj/item/spacecash/random/really_small,
+/obj/item/currency/spacecash/really_small,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -50309,7 +50309,7 @@
 	pixel_x = 7;
 	pixel_y = 8
 	},
-/obj/item/spacecash/hundred{
+/obj/item/currency/spacecash/hundred{
 	pixel_y = -4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
@@ -62088,7 +62088,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/southeast)
 "uVS" = (
-/obj/item/spacecash/five,
+/obj/item/currency/spacecash/five,
 /turf/simulated/floor/plating/random,
 /area/station/storage/auxillary)
 "uXi" = (

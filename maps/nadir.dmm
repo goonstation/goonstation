@@ -44300,7 +44300,7 @@
 /area/abandonedmedicalship/robot_trader)
 "tjx" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/spacecash/fifty{
+/obj/item/currency/spacecash/fifty{
 	pixel_x = -4;
 	pixel_y = -9
 	},

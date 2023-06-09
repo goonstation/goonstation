@@ -16498,7 +16498,7 @@
 /obj/machinery/recharger{
 	pixel_y = 3
 	},
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /obj/item/coin,
 /obj/item/coin,
 /turf/simulated/floor/carpet{

@@ -622,7 +622,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/vending
 	rod_tier_required = 1
 	fish_available = list(/obj/item/coin = 25,\
-	/obj/item/spacecash/random/really_small = 20)
+	/obj/item/currency/spacecash/really_small = 20)
 
 //Arc electroplater
 /datum/fishing_spot/arc_electroplater

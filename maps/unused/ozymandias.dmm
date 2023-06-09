@@ -86067,7 +86067,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -93762,7 +93762,7 @@
 /area/station/hallway/secondary/north)
 "xxT" = (
 /obj/table/wood/auto,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /obj/item/decoration/ashtray{
 	pixel_y = 9
 	},
