@@ -2170,11 +2170,11 @@ var/global/noir = 0
 								break
 							LAGCHECK(LAG_LOW)
 					else
-						logTheThing(LOG_ADMIN, usr, "created [number]ea [english_list(paths)]")
-						logTheThing(LOG_DIARY, usr, "created [number]ea [english_list(paths)]", "admin")
+						logTheThing(LOG_ADMIN, usr, "created [number] [english_list(paths)]")
+						logTheThing(LOG_DIARY, usr, "created [number] [english_list(paths)]", "admin")
 						for(var/path in paths)
 							if(ispath(path, /mob))
-								message_admins("[key_name(usr)] created [number]ea [english_list(paths, 1)]")
+								message_admins("[key_name(usr)] created [number] [english_list(paths, 1)]")
 								break
 							LAGCHECK(LAG_LOW)
 					return

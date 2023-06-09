@@ -1372,7 +1372,7 @@
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)
-	. = 0
+	. = ..()
 	switch(variable)
 		if ("color")
 			if (src.wear_image) src.wear_image.color = newval

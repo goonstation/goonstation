@@ -312,7 +312,7 @@
 	return
 
 /mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
-	if (src.nodamage) return
+	if (src.nodamage || QDELETED(src)) return
 
 	hit_twitch(src)
 

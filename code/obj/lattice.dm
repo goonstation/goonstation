@@ -37,8 +37,9 @@
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
 		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
 		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
-		T.MakeCatwalk(rods)
-		qdel(src)
+		if(istype(T)) // ReplaceWith can fail if unsim turf etc
+			T.MakeCatwalk(rods)
+			qdel(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))

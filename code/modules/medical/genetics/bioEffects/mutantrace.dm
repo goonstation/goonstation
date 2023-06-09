@@ -32,7 +32,7 @@
 		..()
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (istype(H.mutantrace,src.mutantrace_path) && !istype(H.default_mutantrace, src.mutantrace_path))
+			if (istype(H.mutantrace,src.mutantrace_path) && !ispath(H.default_mutantrace, src.mutantrace_path))
 				H.set_mutantrace(null)
 
 	OnLife()
@@ -85,16 +85,14 @@
 
 /datum/bioEffect/mutantrace/human
 	name = "Less Primal Genetics"
-	desc = "Makes one into a boring-old human being. YOU SHOULD NOT SEE THIS"
+	desc = "Makes one into a boring-old human being."
 	id = "human"
 	mutantrace_option = "Human"
 	mutantrace_path = /datum/mutantrace/human
 	research_level = EFFECT_RESEARCH_ACTIVATED
-	msgGain = "You become human."
-	msgLose = "ook."
+	msgGain = "" //BOOOOORING
+	msgLose = ""
 	icon_state  = "blank"
-	probability = 0
-	occur_in_genepools = FALSE
 
 /datum/bioEffect/mutantrace/monkey
 	name = "Primal Genetics"

@@ -640,6 +640,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	human_compatible = TRUE
 	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
 	dna_mutagen_banned = FALSE
+	race_mutation = /datum/bioEffect/mutantrace/human
 	
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
