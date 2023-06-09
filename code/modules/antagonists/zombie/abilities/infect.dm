@@ -4,7 +4,7 @@
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "critter_bite"
 	cooldown = 0
-	var/actual_cooldown = 200
+	var/actual_cooldown = 20 SECONDS
 	disabled = FALSE
 	targeted = TRUE
 	target_anything = TRUE
@@ -40,7 +40,7 @@
 		return 0
 
 /datum/action/bar/icon/infect_ability
-	duration = 40
+	duration = 4 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	id = "zombie_infection"
 	icon = 'icons/mob/critter_ui.dmi'

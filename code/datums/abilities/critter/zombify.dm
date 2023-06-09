@@ -6,7 +6,6 @@
 	var/actual_cooldown = 200
 	disabled = FALSE
 	targeted = TRUE
-	target_anything = TRUE
 
 	proc/actionFinishCooldown()
 		cooldown = actual_cooldown
