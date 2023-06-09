@@ -9,6 +9,7 @@
 	icon_state = "fishing_rod-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "fishing_rod-inactive"
+	c_flags = ONBELT
 	/// average time to fish up something, in seconds - will vary on the upper and lower bounds by a maximum of 4 seconds, with a minimum time of 0.5 seconds.
 	var/fishing_speed = 8 SECONDS
 	/// how long to wait between casts in seconds - mainly so sounds dont overlap
@@ -219,7 +220,7 @@ TYPEINFO(/obj/item/fish_portal)
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED
 	density = 1
-	layer = 3
+	layer = MOB_LAYER + 0.1
 	var/working = FALSE
 	var/allowed = list(/obj/item/fish)
 
@@ -244,23 +245,23 @@ TYPEINFO(/obj/item/fish_portal)
 			else
 				switch( P.value )
 					if (FISH_RARITY_COMMON)
-						new/obj/item/currency/fishing/common(src.loc, src.layer + 0.1)
+						new/obj/item/currency/fishing/common(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
 					if (FISH_RARITY_UNCOMMON)
-						new/obj/item/currency/fishing/uncommon(src.loc, src.layer + 0.1)
+						new/obj/item/currency/fishing/uncommon(src.loc)
 						JOB_XP(user, "Angler", 2)
 						qdel( P )
 					if (FISH_RARITY_RARE)
-						new/obj/item/currency/fishing/rare(src.loc, src.layer + 0.1)
+						new/obj/item/currency/fishing/rare(src.loc)
 						JOB_XP(user, "Angler", 3)
 						qdel( P )
 					if (FISH_RARITY_EPIC)
-						new/obj/item/currency/fishing/epic(src.loc, src.layer + 0.1)
+						new/obj/item/currency/fishing/epic(src.loc)
 						JOB_XP(user, "Angler", 4)
 						qdel( P )
 					if (FISH_RARITY_LEGENDARY)
-						new/obj/item/currency/fishing/legendary(src.loc, src.layer + 0.1)
+						new/obj/item/currency/fishing/legendary(src.loc)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
@@ -270,7 +271,7 @@ TYPEINFO(/obj/item/fish_portal)
 		for(var/obj/item/S in src)
 			S.set_loc(get_turf(src))
 		src.working = FALSE
-		src.icon_state = "upload_terminal_0"
+		src.icon_state = "uploadterminal_open"
 		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 
 	attack_ai(var/mob/user as mob)
@@ -305,6 +306,9 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."
-	icon_state = "hard_case"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
 	slots = 6
 	can_hold = 	list(/obj/item/fish)

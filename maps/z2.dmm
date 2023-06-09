@@ -2814,7 +2814,7 @@
 /obj/decal/aliencomputer/off{
 	pixel_y = 30
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "ais" = (
 /obj/machinery/bathtub{
@@ -8648,7 +8648,7 @@
 	icon_state = "martian-3";
 	name = "martian machine"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "aCw" = (
 /obj/item/basketball/lunar,
@@ -68209,7 +68209,7 @@
 	icon_state = "martian-2";
 	name = "martian machine"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "hQP" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -68677,7 +68677,7 @@
 	icon_state = "martian-1";
 	name = "martian machine"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "iBN" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
@@ -69827,7 +69827,7 @@
 	icon_state = "martian-4";
 	name = "martian machine"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "kuv" = (
 /turf/unsimulated/wall/generic{
@@ -71697,7 +71697,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "noS" = (
 /turf/unsimulated/floor/dream/beach{
@@ -72591,7 +72591,7 @@
 /area/hospital/samostrel)
 "owK" = (
 /obj/decal/cleanable/ash,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "oxe" = (
 /obj/lattice,
@@ -72742,7 +72742,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "oNa" = (
 /obj/machinery/conveyor/EW{
@@ -73962,7 +73962,7 @@
 /obj/decal/aliencomputer/broken{
 	pixel_y = 30
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
@@ -74471,7 +74471,7 @@
 /area/centcom/offices/marknstein)
 "riK" = (
 /obj/map/light/dimred,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "riN" = (
 /obj/decal/cleanable/dirt,
@@ -74578,7 +74578,7 @@
 	},
 /area/centcom)
 "rtI" = (
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "rtM" = (
 /obj/crevice/meatland,
@@ -75445,7 +75445,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "sHZ" = (
 /obj/item/paper{
@@ -75524,7 +75524,7 @@
 /obj/decal/aliencomputer/off{
 	pixel_x = 30
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "sMO" = (
 /obj/stool/bed,
@@ -75674,7 +75674,7 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "tdU" = (
 /obj/machinery/vending/alcohol,
@@ -76237,7 +76237,7 @@
 	icon_state = "marscorpse";
 	name = "dessicated alien"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "tZH" = (
 /obj/table/wood/round/auto,
@@ -76596,7 +76596,7 @@
 "uEu" = (
 /obj/machinery/door/unpowered/martian,
 /obj/trigger/critter,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "uEA" = (
 /obj/machinery/light{
@@ -76697,7 +76697,7 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "uKz" = (
 /obj/stool/chair/comfy,
@@ -77840,7 +77840,7 @@
 /obj/crevice{
 	pixel_x = -28
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "wxF" = (
 /turf/unsimulated/floor/plating/scorched,
@@ -78003,7 +78003,7 @@
 /area/hospital/samostrel)
 "wJM" = (
 /obj/machinery/door/unpowered/martian,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "wLj" = (
 /obj/npc/trader/random{
@@ -78884,7 +78884,7 @@
 	pixel_y = -28
 	},
 /obj/map/light/dimred,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/crunch)
 "xXL" = (
 /obj/lattice{

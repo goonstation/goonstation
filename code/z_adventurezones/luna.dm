@@ -864,7 +864,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			update_nearby_tiles()
 
 			if(operating == 1) //emag again
@@ -893,7 +893,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		update_nearby_tiles()
 
 		sleep(1 SECOND)

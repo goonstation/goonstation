@@ -898,6 +898,8 @@ TYPEINFO(/obj/stool/wooden)
 /* -------------------- Folded Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/item/chair/folded)
+	mat_appearances_to_ignore = list("steel")
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
