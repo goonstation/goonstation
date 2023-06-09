@@ -53,6 +53,7 @@
 	stamina_max = 200
 	var/baseline_health = 100 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
+	var/list/devoured_items = null
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -113,6 +114,7 @@
 		return src
 
 	New()
+		src.devoured_items = list()
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/maneater, src) // They are approaching you, slowly and menacing...
 		//Maneaters are scary and big, they should not be pinned for helplessly thrown around
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANT_BE_PINNED, "Maneater")

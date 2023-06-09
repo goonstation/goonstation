@@ -1215,7 +1215,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Man Eater"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/maneater)
+		types = list(/mob/living/critter/plant/maneater)
 
 	fallback
 		name = "Floating Eyes"
