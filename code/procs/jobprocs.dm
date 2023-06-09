@@ -841,29 +841,6 @@ var/global/totally_random_jobs = FALSE
 
 	return
 
-// Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
-	if (!(H.mind))
-		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
-		return
-	if (!agimmick)
-		if (do_objectives)
-			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-			var/num_objectives = rand(1,3)
-			for(var/i = 0, i < num_objectives, i++)
-				var/select_objective = pick(eligible_objectives)
-				new select_objective(null, H.mind)
-				H.show_antag_popup("traitorhard")
-				ticker.mode.traitors |= H.mind
-	else
-		ticker.mode.Agimmicks |= H.mind
-		H.show_antag_popup("traitorgeneric")
-	if (traitor_role)
-		H.mind.special_role = traitor_role
-	else
-		H.mind.special_role = H.name
-
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //
 /////////////////////////////////////////////

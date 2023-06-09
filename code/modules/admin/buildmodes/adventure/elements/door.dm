@@ -23,7 +23,7 @@
 			door.set_dir(holder.dir)
 			door.door_type = door_type
 			if (door_type == "glass" || door_type == "runes")
-				door.RL_SetOpacity(0)
+				door.set_opacity(0)
 			SPAWN(1 SECOND)
 				door.color = color_rgb
 	else if ("right" in pa)
@@ -89,7 +89,7 @@
 		return
 	src.opening = -1
 	if (src.opacity != orig_opacity)
-		src.RL_SetOpacity(orig_opacity)
+		src.set_opacity(orig_opacity)
 	src.set_density(1)
 	flick("door_[door_type]_closing", src)
 	src.icon_state = "door_[door_type]_closed"
@@ -109,7 +109,7 @@
 		src.set_density(0)
 		if (src.opacity != 0)
 			orig_opacity = opacity
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.icon_state = "door_[door_type]_open"
 		src.opening = 0
 

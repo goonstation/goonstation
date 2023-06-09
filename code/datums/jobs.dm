@@ -1667,7 +1667,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/black)
 	slot_foot = list(/obj/item/clothing/shoes/galoshes/waders)
 	slot_glov = list(/obj/item/clothing/gloves/black)
-	slot_poc2 = list(/obj/item/device/pda2/botanist)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/fishing_rod/basic)
 
@@ -2339,7 +2338,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		antagify(M, "Syndicate Agent", 0)
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Junior Syndicate Operative")
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2391,7 +2390,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		antagify(M, "Syndicate Agent", 0)
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Syndicate Special Operative")
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/pirate

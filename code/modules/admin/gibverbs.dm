@@ -274,9 +274,10 @@
 
 		M.un_damn()
 
-/client/proc/cmd_admin_smitegib(mob/M as mob in mobs)
+/client/proc/cmd_admin_smitegib(mob/M as mob)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Smite"
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")

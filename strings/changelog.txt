@@ -1,4 +1,34 @@
 
+(t)thu jun 08 23
+(u)Tarmunora
+(p)14354
+(e)🪲🔒🧫👽|C-Bug, A-Secret, C-Experimental, A-Mutantraces
+(*)"Human" is now a mutantrace. This will probably cause some bugs. Please report any mutantrace-related weirdness
+(u)DisturbHerb + Sunkiisu
+(p)14245
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds pet carriers to the game. These bulky carriers can hold a single small animal.
+(t)wed jun 07 23
+(u)Glamurio (Ryou)
+(p)14397
+(e)🆕🗺🎨💅📦|C-Feature, A-Mapping, C-Sprites, C-QoL, A-Game-Objects
+(+)Added sugar cubes next to most coffee machines.
+(u)Gannets
+(p)14464
+(e)|
+(+)Added 10 additional fishing spots.
+(+)Balanced some existing fishing spots.
+(u)Flappybat
+(p)13192
+(e)🆕🗺🎨⚖🌠|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Events
+(*)Wrestler antagonists now start with an appropriate outfit.
+(u)Amylizzle
+(p)14435
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Nuclear reactor meltdowns now leave a molten core behind.
+(u)Sord
+(+)CE and MDir now have command teleporter access
+(+)The ghost area teleport now includes space diner areas.
 (t)tue jun 06 23
 (u)Nelamil
 (p)14401

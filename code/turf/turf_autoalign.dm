@@ -167,7 +167,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
 			fakewall.set_opacity(0)
-			fakewall.RL_SetOpacity(1) //Lighting rebuild.
+			fakewall.set_opacity(1) //Lighting rebuild.
 			return
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
@@ -813,7 +813,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 /turf/unsimulated/wall/auto/coral
 	default_material = "coral"
-
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree

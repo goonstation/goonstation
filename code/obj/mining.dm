@@ -1340,7 +1340,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			icon_old = icon_state
 
 		var/new_color = src.stone_color
-		src.RL_SetOpacity(0)
+		src.set_opacity(0)
 		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
@@ -2638,7 +2638,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	ex_act(severity)
 		if (severity == 1.0)
 			if (prob(8))
-				src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.set_density(0)
 				src.icon_state = "ancient-b"
 				return
