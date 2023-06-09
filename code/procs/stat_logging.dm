@@ -97,9 +97,7 @@
 
 //Called in gameticker.dm in proc/declare_completion
 /proc/statlog_traitors()
-	var/list/datum/mind/traitors = get_all_enemies()
-
-	for (var/datum/mind/M in traitors)
+	for (var/datum/mind/M as anything in get_all_antagonists())
 		var/message[] = new()
 		message["data_type"] = "traitors"
 		message["data_status"] = "insert"

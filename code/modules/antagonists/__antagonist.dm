@@ -51,6 +51,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		src.vr = do_vr
 		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
+			if (!islist(antagonists["[src.id]"]))
+				antagonists["[src.id]"] = list()
+			antagonists["[src.id]"] += src.owner
+
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
@@ -72,6 +76,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	Del()
 		if (owner && !src.pseudo)
+			antagonists["[src.id]"] -= src.owner
+
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)

@@ -181,7 +181,8 @@ ABSTRACT_TYPE(/datum/game_mode)
 	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
 	for (var/V in concrete_typesof(/datum/antagonist))
 		var/datum/antagonist/dummy = V
-		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
+		for (var/datum/mind/mind as anything in get_all_antagonists(initial(dummy.id)))
+			var/datum/antagonist/A = mind.get_antagonist(initial(dummy.id))
 			#ifdef DATA_LOGGER
 			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
 			#endif

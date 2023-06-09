@@ -1344,60 +1344,6 @@ proc/outermost_movable(atom/movable/target)
 	var/stringtarget = copytext(stringtype, 1, parentend ? parentend : 0)
 	. = text2path(stringtarget)
 
-//Returns a list of minds that are some type of antagonist role
-//This may be a stop gap until a better solution can be figured out
-/proc/get_all_enemies()
-	if(ticker?.mode && current_state >= GAME_STATE_PLAYING)
-		var/datum/mind/enemies[] = new()
-		var/datum/mind/someEnemies[] = new()
-
-		//We gotta loop through the modes because someone thought it was a good idea to create new lists for all of them
-		if (istype(ticker.mode, /datum/game_mode/revolution))
-			someEnemies = ticker.mode:head_revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:get_all_heads()
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/nuclear))
-			someEnemies = ticker.mode:syndicates
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/spy))
-			someEnemies = ticker.mode:spies
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-
-		//Lists we grab regardless of game type
-		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
-		someEnemies = ticker.mode.traitors
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		//Sometimes admins assign traitors, this contains those dudes
-		someEnemies = ticker.mode.Agimmicks
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		return enemies
-
-	else
-		return 0
-
 /proc/GetRedPart(hex)
     hex = uppertext(hex)
     var/hi = text2ascii(hex, 2)
