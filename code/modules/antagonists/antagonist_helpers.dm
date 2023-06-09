@@ -1,7 +1,7 @@
 var/list/antagonists = list()
 /**
  * Gets a list of all antagonists of ID role_id, or of all IDs if no ID is specified.
- * Returns a list of minds if any datums are present, or null if none are.
+ * Returns a list of all antagonist minds. If no antagonist minds can be found, returns a empty list.
  */
 /proc/get_all_antagonists(antagonist_role_id)
 	. = list()
