@@ -715,11 +715,11 @@
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
 				var/N = pick(1,2)
-				var/obj/critter/martian/P = null
+				var/mob/living/critter/martian/P = null
 				if (N == 1)
-					P = new /obj/critter/martian/soldier
+					P = new /mob/living/critter/martian/soldier
 				else
-					P = new /obj/critter/martian/warrior
+					P = new /mob/living/critter/martian/warrior
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
@@ -786,7 +786,7 @@
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
-				var/obj/critter/martian/soldier/P = new /obj/critter/martian/soldier
+				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 

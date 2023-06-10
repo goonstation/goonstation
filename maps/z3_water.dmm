@@ -3169,7 +3169,7 @@
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "Go" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "Hn" = (
@@ -3191,11 +3191,11 @@
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
 "Iz" = (
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "JZ" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "KR" = (

@@ -18227,7 +18227,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYk" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aYl" = (
@@ -18245,7 +18245,7 @@
 /turf/space/fluid,
 /area/space)
 "aYo" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYr" = (
@@ -18343,7 +18343,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "aYP" = (
@@ -18485,7 +18485,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZp" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZq" = (
@@ -18502,7 +18502,7 @@
 /area/evilreaver/chapel)
 "aZv" = (
 /obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "aZx" = (
@@ -18531,7 +18531,7 @@
 /area/evilreaver/chapel)
 "aZF" = (
 /obj/lattice,
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "aZG" = (
@@ -18595,7 +18595,7 @@
 /area/evilreaver/security)
 "bac" = (
 /obj/lattice,
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bad" = (
@@ -18607,7 +18607,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/chapel)
 "bag" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
 "bah" = (
@@ -18636,14 +18636,14 @@
 "bal" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "ban" = (
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bao" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bap" = (
@@ -18695,7 +18695,7 @@
 /turf/simulated/floor,
 /area/station/engine/gas)
 "baA" = (
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "baB" = (
@@ -20629,7 +20629,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
 "bhq" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bhr" = (
@@ -21297,11 +21297,11 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "bjB" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "bjC" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "bjD" = (
@@ -21469,7 +21469,7 @@
 "bkc" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "bke" = (

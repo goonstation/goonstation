@@ -423,7 +423,7 @@
 	},
 /area/evilreaver/security)
 "kW" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "lp" = (
@@ -1475,7 +1475,7 @@
 	},
 /area/mining/refinery)
 "sT" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "sU" = (
@@ -1526,7 +1526,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "tk" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "tp" = (
@@ -2072,7 +2072,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "wJ" = (
@@ -2607,7 +2607,7 @@
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "zR" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "zS" = (
@@ -2682,7 +2682,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
 "An" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "Ao" = (
@@ -2715,7 +2715,7 @@
 /area/evilreaver/chapel)
 "Ax" = (
 /obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
 "Az" = (
@@ -2991,7 +2991,7 @@
 /area/mining/quarters)
 "BV" = (
 /obj/lattice,
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "Cd" = (
@@ -3083,7 +3083,7 @@
 	},
 /area/tech_outpost)
 "CB" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "CC" = (
@@ -3626,7 +3626,7 @@
 /area/mining/miningoutpost)
 "Gm" = (
 /obj/lattice,
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "Gq" = (
@@ -3715,7 +3715,7 @@
 	},
 /area/tech_outpost)
 "GO" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
 "GP" = (
@@ -3820,7 +3820,7 @@
 "HC" = (
 /obj/lattice,
 /obj/decal/cleanable/machine_debris,
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "HE" = (
@@ -3841,7 +3841,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "HL" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "HM" = (
@@ -4195,7 +4195,7 @@
 /turf/simulated/floor/plating,
 /area/mining/magnet_control)
 "JV" = (
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "JX" = (
@@ -5203,7 +5203,7 @@
 "QW" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
+/mob/living/critter/martian/mutant,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "QX" = (

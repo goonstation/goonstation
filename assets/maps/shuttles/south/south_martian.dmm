@@ -208,7 +208,7 @@
 /area/centcom)
 "lJ" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -253,7 +253,7 @@
 /area/shuttle/escape/centcom)
 "mr" = (
 /obj/stool/chair/comfy/shuttle/pilot,
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -870,7 +870,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Mq" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -889,7 +889,7 @@
 /area/centcom)
 "Nt" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -1171,7 +1171,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ZL" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"

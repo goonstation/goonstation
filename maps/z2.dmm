@@ -33179,12 +33179,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cbG" = (
-/obj/critter/martian/warrior{
-	defensive = 0;
-	desc = "A wounded genocidal monster. Probably from Mars.";
-	health = 5;
-	name = "wounded alien warrior"
-	},
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor,
 /area/crunch)
 "cbH" = (

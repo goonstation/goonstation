@@ -188,7 +188,7 @@
 /obj/stool/chair/comfy/shuttle/green{
 	dir = 1
 	},
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -224,7 +224,7 @@
 	},
 /area/centcom)
 "jx" = (
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -525,7 +525,7 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
 	},
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -551,7 +551,7 @@
 	},
 /area/shuttle/escape/centcom)
 "xw" = (
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -680,7 +680,7 @@
 /area/centcom/outside)
 "DY" = (
 /obj/machinery/light/small/floor,
-/obj/critter/martian/soldier,
+/mob/living/critter/martian/soldier,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
@@ -864,7 +864,7 @@
 /obj/stool/chair/comfy/shuttle/pilot{
 	dir = 4
 	},
-/obj/critter/martian/warrior,
+/mob/living/critter/martian/warrior,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
