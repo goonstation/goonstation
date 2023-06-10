@@ -298,55 +298,19 @@
 	name = "man-eating plant"
 	real_name = "Wizard-eating plant"
 	desc = "It looks upset about something..."
-	density = 1
-	icon_state = "maneater"
-	icon_state_dead = "maneater-dead"
-	custom_gib_handler = /proc/vegetablegibs
-	butcherable = TRUE
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
-	custom_vomit_type = /obj/decal/cleanable/blood
-	blood_id = "poo"
-	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
+	is_npc = FALSE
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
-	planttype = /datum/plant/maneater
 
-/mob/living/critter/plant/maneater_polymorph/specific_emotes(var/act, var/param = null, var/voluntary = 0)
-	switch (act)
-		if ("scream")
-			if (src.emote_check(voluntary, 50))
-				playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				return "<b><span class='alert'>[src] snarls!</span></b>"
-	return null
-
-/mob/living/critter/plant/maneater_polymorph/specific_emote_type(var/act)
+/mob/living/critter/plant/maneater/polymorph/specific_emote_type(var/act)
 	switch (act)
 		if ("scream")
 			return 2
 	return ..()
 
-/mob/living/critter/plant/maneater_polymorph/setup_equipment_slots()
-	equipment += new /datum/equipmentHolder/ears(src)
-	equipment += new /datum/equipmentHolder/head(src)
-
-/mob/living/critter/plant/maneater_polymorph/setup_hands()
-	..()
-	var/datum/handHolder/holdinghands = src.hands[1]
-	holdinghands.name = "tendrils"
-	holdinghands = src.hands[2]
-	holdinghands.name = "mouth"								// designation of the hand - purely for show
-	holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
-	holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
-	holdinghands.limb_name = "teeth"						// name for the dummy holder
-	holdinghands.limb = new /datum/limb/mouth/maneater		// if not null, the special limb to use when attack_handing
-	holdinghands.can_hold_items = 0
-
-/mob/living/critter/plant/maneater_polymorph/New()
+/mob/living/critter/plant/maneater/polymorph/New()
 	..()
 
-/mob/living/critter/plant/maneater_polymorph/setup_healths()
+/mob/living/critter/plant/maneater/polymorph/setup_healths()
 	add_hh_flesh(40, 1)
 	add_hh_flesh_burn(40, 1.25)
 	var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
