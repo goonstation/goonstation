@@ -163,7 +163,7 @@
 	martian_type = "soldier"
 	icon_state = "martianS"
 	icon_state_dead = "martianS-dead"
-	ai_type = /datum/aiHolder/aggressive/ranged
+	ai_type = /datum/aiHolder/ranged
 
 	setup_hands()
 		..()
@@ -177,11 +177,6 @@
 		HH.can_attack = FALSE
 		HH.can_range_attack = TRUE
 
-	critter_basic_attack(var/mob/target)
-		if (src.get_active_hand() != 1)
-			src.swap_hand()
-		..()
-
 /mob/living/critter/martian/mutant
 	name = "martian mutant"
 	real_name = "martian mutant"
@@ -192,7 +187,7 @@
 	health_brute_vuln = 1
 	health_burn = 10
 	health_burn_vuln = 1
-	ai_type = /datum/aiHolder/aggressive/ranged
+	ai_type = /datum/aiHolder/ranged
 
 	New()
 		..()
@@ -219,7 +214,6 @@
 	health_brute_vuln = 1
 	health_burn = 10
 	health_burn_vuln = 1
-	ai_type = /datum/aiHolder/wanderer
 
 	New()
 		..()
@@ -299,23 +293,16 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 	martian_type = "infiltrator"
 	icon_state = "martianI"
 	icon_state_dead = "martianI-dead"
+	health_brute = 50
+	health_brute_vuln = 0.5
+	health_burn = 50
+	health_burn_vuln = 1
 	is_npc = FALSE
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears(src)
 		equipment += new /datum/equipmentHolder/head(src)
 		//equipment += new /datum/equipmentHolder/
-
-	setup_healths()
-		add_hh_flesh(50, 0.5)
-		add_hh_flesh_burn(50, 1)
-		add_health_holder(/datum/healthHolder/toxin)
-		var/datum/healthHolder/Brain = add_health_holder(/datum/healthHolder/brain)
-		Brain.maximum_value = 0
-		Brain.value = 0
-		Brain.minimum_value = -250
-		Brain.depletion_threshold = -100
-		Brain.last_value = 0
 
 	New()
 		..()
