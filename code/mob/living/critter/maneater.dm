@@ -302,6 +302,14 @@
 	is_npc = FALSE
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 
+/mob/living/critter/plant/maneater/polymorph/setup_hands()
+	..()
+	//the mouth weapon is very strong on a non-sluggish (read: non-ai) person, so we need to tone it down
+	var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
+	manipulated_limb.harm_intent_delay = 2 SECONDS
+
+
+
 /mob/living/critter/plant/maneater/polymorph/specific_emote_type(var/act)
 	switch (act)
 		if ("scream")
