@@ -1188,7 +1188,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
 			src.UpdateOverlays(light, "ambient")
-		else
+		if(src.fullbright)
 			src.UpdateOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
@@ -1340,7 +1340,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			icon_old = icon_state
 
 		var/new_color = src.stone_color
-		src.RL_SetOpacity(0)
+		src.set_opacity(0)
 		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
@@ -1498,6 +1498,57 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	name = "jasteroid"
 	desc = "A free-floating jineral jeposit from space."
 	stone_color = "#88c2ff"
+
+/turf/simulated/floor/plating/airless/asteroid/comet
+	name = "regolith"
+	desc = "It's dusty and cold."
+	stone_color = "#7d93ad"
+	color = "#7d93ad"
+
+	ice
+		name = "comet ice"
+		stone_color = "#a8cdfa"
+		color = "#a8cdfa"
+
+	ice_dense
+		name = "dense ice"
+		desc = "A compressed layer of comet ice."
+		stone_color = "#2070CC"
+		color = "#2070CC"
+
+	ice_char
+		name = "dark regolith"
+		desc = "An inky-black assortment of carbon-rich dust and ice."
+		stone_color = "#111111"
+		color = "#111111"
+
+	glassy
+		name = "blasted regolith"
+		desc = "This stuff has been blasted and fused by stellar radiation and impacts."
+		stone_color = "#111111"
+		color = "#111111"
+
+	copper
+		name = "metallic rock"
+		desc = "Rich in soft metals."
+		stone_color = "#553333"
+		color = "#553333"
+
+	iron
+		name = "ferrous rock"
+		desc = "Dense metallic rock."
+		stone_color = "#333333"
+		color = "#333333"
+
+	plasma
+		name = "plasma ice"
+		desc = "Concentrated plasma trapped in dense ice."
+
+	radioactive
+		name = "radioactive metal"
+		desc = "There's a hazardous amount of radioactive material in this metallic layer."
+		stone_color = "#114444"
+		color = "#114444"
 
 
 // Tool Defines
@@ -2587,7 +2638,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	ex_act(severity)
 		if (severity == 1.0)
 			if (prob(8))
-				src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.set_density(0)
 				src.icon_state = "ancient-b"
 				return

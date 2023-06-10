@@ -1175,7 +1175,7 @@
 		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
-	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
+	if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 
@@ -1372,7 +1372,7 @@
 	return
 
 /obj/item/onVarChanged(variable, oldval, newval)
-	. = 0
+	. = ..()
 	switch(variable)
 		if ("color")
 			if (src.wear_image) src.wear_image.color = newval

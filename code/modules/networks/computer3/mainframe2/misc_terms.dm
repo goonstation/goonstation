@@ -1300,7 +1300,12 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
-						boutput(world, "<span class='alert'><B>Alert: Self-Destruct Sequence has been disengaged!</B></span>")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+						else
+							command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
 						post_display_status(-1)
 						return
 

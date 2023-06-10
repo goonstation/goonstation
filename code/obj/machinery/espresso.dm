@@ -323,6 +323,10 @@ TYPEINFO(/obj/machinery/coffeemaker)
 	icon_state = "coffeemaker-eng"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
+/obj/machinery/coffeemaker/command
+	icon_state = "coffeemaker-com"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/command
+
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */
 /* ===================================================== */

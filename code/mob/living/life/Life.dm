@@ -316,6 +316,8 @@
 		return 1
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
+	
+	src.mutantrace.onLife(mult)
 
 	if (farty_party)
 		src.emote("fart")
@@ -338,9 +340,6 @@
 			var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
 			if(D.original_holder && src != D.original_holder)
 				D.foreign_limb_effect()
-
-	if (src.mutantrace)
-		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
 

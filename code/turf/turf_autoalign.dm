@@ -26,6 +26,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto)
 /turf/simulated/wall/auto
 	icon = 'icons/turf/walls_auto.dmi'
 	icon_state = "mapwall"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_supernorn.dmi'
 	var/mod = null
 	var/light_mod = null
 	/// The image we're using to connect to stuff with
@@ -166,7 +167,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			var/turf/simulated/wall/false_wall/temp/fakewall = src.ReplaceWith(/turf/simulated/wall/false_wall/temp, FALSE, TRUE, FALSE, TRUE)
 			fakewall.was_rwall = 1
 			fakewall.set_opacity(0)
-			fakewall.RL_SetOpacity(1) //Lighting rebuild.
+			fakewall.set_opacity(1) //Lighting rebuild.
 			return
 
 		else if (istype(W, /obj/item/sheet) && src.d_state)
@@ -216,7 +217,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
 	icon_state = "mapwall"
-	light_mod = "wall-jen-"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
+	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	update_neighbors()
@@ -284,7 +286,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
 	icon_state = "mapwall_r"
-	light_mod = "wall-jen-"
+	RL_OverlayIcon = 'icons/effects/lighting_overlays/walls_jen.dmi'
+	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -446,11 +449,26 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
-
 /turf/simulated/wall/auto/supernorn/wood
 	icon_state = "mapwall$$wood"
 	default_material = "wood"
+
+TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
+	connect_overlay = 0
+/turf/simulated/wall/auto/supernorn/material
+	icon_state = "mapwall"
+	default_material = "steel"
 	uses_material_appearance = TRUE
+	mat_changename = TRUE
+
+/turf/simulated/wall/auto/supernorn/material/bamboo
+	icon_state = "mapwall$$bamboo"
+	default_material = "bamboo"
+
+/turf/simulated/wall/auto/supernorn/material/mauxite
+	icon_state = "mapwall$$mauxite"
+	default_material = "mauxite"
+
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	connect_overlay = 1
@@ -795,7 +813,8 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 /turf/unsimulated/wall/auto/coral
 	default_material = "coral"
-
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree

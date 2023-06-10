@@ -1,4 +1,109 @@
 
+(t)sat jun 10 23
+(u)Wisemonster
+(p)14522
+(e)🆕|C-Feature
+(+)Civilian cyborgs can now go fishin'.
+(u)monkeymilesmoo
+(p)14501
+(e)🪲🧱|C-Bug, A-Materials
+(*)Plating on a wall can now be of a different material from the girder it was built on without being absorbed by the girder on placement.
+(u)Garash
+(p)14511
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Neutrons emitted by the nuclear reactor are now visible for people with infrared vision, (which is granted by mesons amongst other means.)
+(t)fri jun 09 23
+(u)Glamurio (Ryou)
+(p)14438
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Winter coats now have an unbuttoned variant.
+(u)pali
+(+)Player built lattices now autoconnect. (If you don't want that remember that you can use a welding tool to deconstruct lattices which keeps their facing.)
+(u)Wisemonster
+(p)14467
+(e)💅💡|C-QoL, A-Station-Systems
+(+)De-activating a nukeman nuclear charge now makes a more noticeable announcement
+(t)thu jun 08 23
+(u)Tarmunora
+(p)14354
+(e)🪲🔒🧫👽|C-Bug, A-Secret, C-Experimental, A-Mutantraces
+(*)"Human" is now a mutantrace. This will probably cause some bugs. Please report any mutantrace-related weirdness
+(u)DisturbHerb + Sunkiisu
+(p)14245
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds pet carriers to the game. These bulky carriers can hold a single small animal.
+(t)wed jun 07 23
+(u)Glamurio (Ryou)
+(p)14397
+(e)🆕🗺🎨💅📦|C-Feature, A-Mapping, C-Sprites, C-QoL, A-Game-Objects
+(+)Added sugar cubes next to most coffee machines.
+(u)Gannets
+(p)14464
+(e)|
+(+)Added 10 additional fishing spots.
+(+)Balanced some existing fishing spots.
+(u)Flappybat
+(p)13192
+(e)🆕🗺🎨⚖🌠|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Events
+(*)Wrestler antagonists now start with an appropriate outfit.
+(u)Amylizzle
+(p)14435
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Nuclear reactor meltdowns now leave a molten core behind.
+(u)Sord
+(+)CE and MDir now have command teleporter access
+(+)The ghost area teleport now includes space diner areas.
+(t)tue jun 06 23
+(u)Nelamil
+(p)14401
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Glass Recyclers play sounds when used and put created glassware in user's hands if possible.
+(u)Nexusuxen
+(p)14415
+(e)💅💊|C-QoL, A-Medical
+(*)Gene Booths can now be upgraded with GeneTek research to work faster by up to 75% (~5 seconds per gene).
+(u)Kubius
+(p)14413
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Small update batch for Nadir, primarily focused on new and improved signage.
+(u)Sian
+(p)14321
+(e)🆕🗺🎨📦🍝|C-Feature, A-Mapping, C-Sprites, A-Game-Objects, A-Catering
+(+)You can now slice fish fillet with a cutting tool to get fish fillet slices.
+(+)Nigiri rolls recipe now require fish fillet slices instead of fillet itself. Nigiri rolls can also be made out of small fish fillet slices.
+(u)Colossusqw
+(p)14277
+(e)🆕🔬|C-Feature, A-Science
+(+)Added solipsizine to ??? pills, as well as a few extra chems to artifact injectors and bombs.
+(u)Azrun
+(p)14326
+(e)🆕🎨🔒⚖📦💡|C-Feature, C-Sprites, A-Secret, C-Balance, A-Game-Objects, A-Station-Systems
+(*)Emergency power kit added to Cargo for when the station really needs more power.  Put staff assistants to good use today.
+(u)Cheffie
+(p)14313
+(e)🆕🗺|C-Feature, A-Mapping
+(+)A new structure has been detected in the asteroid belt.
+(u)Glamurio (Ryou)
+(p)14410
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)NanoTrasen has supplied command with fancy new coffee machines.
+(u)Skeletonman0
+(p)14349
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Ladders now have a brief climbing animation
+(u)Gannets & Mora & Adhara & Wolfolotl
+(p)13460
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(*)Fishing has been expanded with new fish, fishing spots, equipment and a progression system. More details in minor changes below:
+(+)~30 new fish & ~30 fishing spots on-station, out in the debris field and away in adventure zones. Some fishing spots require upgraded or specific rods before you can fish in them.
+(+)A machine that will convert caught fish in to a new currency and a new vendor which accepts this currency in exchange for fishing equipment. A rarity system to support different fish being more valuable than others.
+(+)Added Angler as a random gimmick job.
+(+)Fish added to the shipping market.
+(+)Full suite of Angler's tools avaliable to purchase from QM.
+(+)Angler Job XP, I think.
+(t)mon jun 05 23
+(u)Sord
+(+)Geoff Honkington has a fancy new sabre for sale
 (t)sun jun 04 23
 (u)monkeymilesmoo
 (p)14372
