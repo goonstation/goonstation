@@ -43,7 +43,7 @@
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	is_npc = 1
+	is_npc = TRUE
 	//if someone is really annoying and an ally, give them a smack to put them in their place
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
