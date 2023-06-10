@@ -68,45 +68,6 @@
 /mob/dead/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
 
-/mob/dead/say(var/message)
-#ifdef NEWSPEECH
-	if(message) //suppress unreachable code error
-		return ..(message)
-#endif
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if (!message)
-		return
-
-	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2),1)
-
-	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-
-	if(src?.client?.preferences.auto_capitalization)
-		message = capitalize(message)
-
-	phrase_log.log_phrase("deadsay", message)
-	. = src.say_dead(message)
-
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
-			if (M.job == "Chaplain")
-				if (prob (80))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-			else
-				if (prob(90))
-					return
-				else if (prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)

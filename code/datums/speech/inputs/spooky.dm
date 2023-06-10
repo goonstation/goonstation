@@ -19,7 +19,11 @@ TYPEINFO(/datum/listen_module/input/spooky)
 		if(prob(hear_nothing_chance))
 			return null
 		else if(prob(hear_message_chance))
-			message.content = "<span class='game'><i>[stutter(message)]</i></span>"
+			message.content = stutter(message.content)
 		else
-			message.content = "muffled speech"
+			message.content = "You hear muffled speech... but nothing is there..."
 		. = ..()
+
+	format(datum/say_message/message)
+		//spooky messages don't show who sent them, just the content
+		return "<span class='game'><i>[message.content]</i></span>"

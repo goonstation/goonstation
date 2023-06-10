@@ -10,10 +10,6 @@ TYPEINFO(/datum/speech_module/modifier/mob_checks)
 		if(!istype(M))
 			CRASH("Someone put a mob_checks speech mod on a not mob thing. You can't do that!")
 
-		if (M.client && M.client.ismuted())
-			boutput(M, "You are currently muted and may not speak.")
-			return null
-
 		if(!M.canspeak)
 			boutput(M, "<span class='alert'>You can not speak!</span>")
 			return null
