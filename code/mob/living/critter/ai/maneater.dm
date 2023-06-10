@@ -34,15 +34,14 @@
 
 /datum/aiTask/sequence/goalbased/critter/manhunter_hunting/score_target(atom/target)
 	. = 0
-	if(target)
-		if (istype(target, /mob))
-			var/mob/evaluate_target = target
-			var/weighting = 50
-			if (ishuman(evaluate_target))
-				weighting = 100 //We want to eat people that are alive
-			if (isdead(evaluate_target))
-				weighting = 25 //We still want to eat dead people, just less likely
-			return weighting*(src.max_dist - GET_MANHATTAN_DIST(get_turf(src.holder.owner), get_turf(target)))/src.max_dist
+	if (istype(target, /mob))
+		var/mob/evaluate_target = target
+		var/weighting = 50
+		if (ishuman(evaluate_target))
+			weighting = 100 //We want to eat people that are alive
+		if (isdead(evaluate_target))
+			weighting = 25 //We still want to eat dead people, just less likely
+		return weighting*(src.max_dist - GET_MANHATTAN_DIST(get_turf(src.holder.owner), get_turf(target)))/src.max_dist
 
 /datum/aiTask/sequence/goalbased/critter/manhunter_hunting/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
