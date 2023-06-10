@@ -47,8 +47,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
-	user.put_in_hand_or_drop(fish)
-	//fish.set_loc(get_turf(user))
+	fish.set_loc(get_turf(user))
 	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
@@ -700,3 +699,20 @@ datum/fishing_spot/golden_toilet
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
 	/obj/item/fish/mandarin_fish = 5)
+
+//ice cream machine
+/datum/fishing_spot/ice_cream_machine
+	fishing_atom_type = /obj/submachine/ice_cream_dispenser
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_container/food/snacks/condiment/chocchips = 40,\
+	/obj/item/reagent_container/food/snacks/condiment/custard = 30,\
+	/obj/item/reagent_container/food/snacks/condiment/cream = 20,\
+	/obj/item/reagent_container/food/snacks/condiment/syrup = 15,\
+	/obj/item/reagent_contain/food/snacks/ice_cream/goodrandom)
+
+
+//databank
+/datum/fishing_spot/databank
+	fishing_atom_type = /obj/machinery/networked/storage/tape_drive
+	rod_tier_required = 3
+	fish_available = list(/obj/item/fish/code_worm = 50)
