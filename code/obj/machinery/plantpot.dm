@@ -1183,37 +1183,39 @@ TYPEINFO(/obj/machinery/plantpot)
 				else
 					itemtype = getitem
 
-				if(istype(itemtype, /obj))
-					var/obj/CROP = new itemtype
-					CROP.set_loc(src)
+				var/atom/CROP = new itemtype
+
+				if(istype(CROP, /obj))
+					var/obj/CROP_ITEM = CROP
+					CROP_ITEM.set_loc(src)
 
 					//We call HYPsetup_DNA on each item created before we manipulate it further
 					//This proc handles all crop-related scaling and quirks of produce
 					//This proc also on some items remove the respectable produce and returns a new one, which we will handle further as CROP
 					//This proc calls HYPadd_harvest_reagents on it's respectable items
-					if(istype(CROP, /obj/item))
-						var/obj/item/manipulated_item = CROP
-						CROP = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
+					if(istype(CROP_ITEM, /obj/item))
+						var/obj/item/manipulated_item = CROP_ITEM
+						CROP_ITEM = manipulated_item.HYPsetup_DNA(DNA, src, growing, quality_status)
 
 					//last but not least, we give the mob a proper name
-					CROP.name = HYPgenerate_produce_name(CROP, src, growing, quality_score, quality_status, dont_rename_crop)
+					CROP_ITEM.name = HYPgenerate_produce_name(CROP_ITEM, src, growing, quality_score, quality_status, dont_rename_crop)
 
-					CROP.quality = quality_score
+					CROP_ITEM.quality = quality_score
 
 					if(!growing.stop_size_scaling) //Keeps plant sprite from scaling if variable is enabled.
-						CROP.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
+						CROP_ITEM.transform = matrix() * clamp((quality_score + 100) / 100, 0.35, 2)
 
-					if(istype(CROP,/obj/critter/))
+					if(istype(CROP_ITEM,/obj/critter/))
 						// If it's a critter we don't need to do reagents or shit like that but
 						// we do need to make sure they don't attack the botanist that grew it.
-						var/obj/critter/C = CROP
+						var/obj/critter/C = CROP_ITEM
 						C.friends = C.friends | src.contributors
 
 
-				if(istype(itemtype, /mob))
+				if(istype(CROP, /mob))
 					// Start up the loop of grabbing all our produce. Remember, each iteration of
 					// this loop is for one item each.
-					var/obj/CROP_MOB = new itemtype
+					var/obj/CROP_MOB = CROP
 					CROP_MOB.set_loc(src)
 
 					//We call HYPsetup_DNA on each mob created before we manipulate it further
