@@ -157,6 +157,23 @@
 	health_burn = 18
 	health_burn_vuln = 1.2
 
+	critter_attack(var/mob/target)
+		var/obj/item/grab/G = src.equipped()
+		if (istype(G))
+			if (G.state < GRAB_CHOKE)
+				G.AttackSelf(src)
+			else if (prob(10))
+				src.drop_item()
+				ON_COOLDOWN(src, "warrior_grab", 10 SECONDS)
+		else if (is_incapacitated(target) && !target.grabbed_by && !GET_COOLDOWN(src, "warrior_grab"))
+			src.set_a_intent(INTENT_GRAB)
+			src.hand_attack(target)
+			G.AttackSelf(src)
+		else
+			src.drop_item()
+			src.set_a_intent(INTENT_HARM)
+			src.hand_attack(target)
+
 /mob/living/critter/martian/soldier
 	name = "martian soldier"
 	real_name = "martian soldier"
