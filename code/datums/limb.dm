@@ -430,60 +430,60 @@
 	var/list/chems_to_inject = null
 	var/amount_to_inject = 3
 
-	New(var/obj/item/parts/holder)
+/datum/limb/maneater_mouth/New(var/obj/item/parts/holder)
+	..()
+	src.chems_to_inject = list()
+
+/datum/limb/maneater_mouth/attack_hand(atom/target, var/mob/user, var/reach)
+	if (ismob(target))
 		..()
-		src.chems_to_inject = list()
 
-	attack_hand(atom/target, var/mob/user, var/reach)
-		if (ismob(target))
-			..()
+	if (isitem(target))
+		var/obj/item/potentially_food = target
+		if (potentially_food.edible)
+			potentially_food.attack(user, user)
 
-		if (isitem(target))
-			var/obj/item/potentially_food = target
-			if (potentially_food.edible)
-				potentially_food.attack(user, user)
+/datum/limb/maneater_mouth/help(mob/target, var/mob/user)
+	return
 
-	help(mob/target, var/mob/user)
+/datum/limb/maneater_mouth/disarm(mob/target, var/mob/user)
+	return
+
+/datum/limb/maneater_mouth/grab(mob/target, var/mob/user)
+	return
+
+/datum/limb/maneater_mouth/harm(mob/target, var/mob/user)
+	if (!user || !target)
+		return 0
+
+	if (!target.melee_attack_test(user))
 		return
 
-	disarm(mob/target, var/mob/user)
-		return
+	if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 
-	grab(mob/target, var/mob/user)
-		return
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		if (isliving(target) && !issilicon(target))
+			var/mob/living/victim = target
+			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
+			victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE)
+			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
+			if (length(src.chems_to_inject) > 0)
+				var/chem_protection = 0
+				if (ishuman(victim))
+					chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
+				if (injected_per_reagent > 0.1)
+					for (var/plantReagent in src.chems_to_inject)
+						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
 
-	harm(mob/target, var/mob/user)
-		if (!user || !target)
-			return 0
-
-		if (!target.melee_attack_test(user))
-			return
-
-		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
-
-			var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
-			user.attack_effects(target, user.zone_sel?.selecting)
-			if (isliving(target) && !issilicon(target))
-				var/mob/living/victim = target
-				//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-				victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE)
-				//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
-				if (length(src.chems_to_inject) > 0)
-					var/chem_protection = 0
-					if (ishuman(victim))
-						chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
-					var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
-					if (injected_per_reagent > 0.1)
-						for (var/plantReagent in src.chems_to_inject)
-							victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
-
-			msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
-			msgs.played_sound = src.sound_attack
-			msgs.flush(0)
-		else
-			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
-		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
+		msgs.played_sound = src.sound_attack
+		msgs.flush(0)
+	else
+		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+	user.lastattacked = target
+	ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 /// for cats/mice/etc
 /datum/limb/mouth/small

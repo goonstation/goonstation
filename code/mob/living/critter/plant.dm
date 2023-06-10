@@ -7,36 +7,36 @@
 	var/generation = 0 //! For genetics tracking.
 	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
 
-	valid_target(var/mob/living/potential_target)
-		. = ..()
-		if (potential_target in src.growers) return FALSE
-		if (iskudzuman(potential_target)) return FALSE
+/mob/living/critter/plant/valid_target(var/mob/living/potential_target)
+	. = ..()
+	if (potential_target in src.growers) return FALSE
+	if (iskudzuman(potential_target)) return FALSE
 
 
-	disposing()
-		src.plantgenes = null
-		..()
+/mob/living/critter/plant/disposing()
+	src.plantgenes = null
+	..()
 
-	New()
+/mob/living/critter/plant/New()
 
-		src.growers = list()
+	src.growers = list()
 
-		if(ispath(src.planttype))
-			var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
-			if (species)
-				src.planttype = species
-		src.plantgenes = new /datum/plantgenes(src)
-		..()
-
-	proc/HY_set_species(var/datum/plant/species)
+	if(ispath(src.planttype))
+		var/datum/plant/species = HY_get_species_from_path(src.planttype, src)
 		if (species)
 			src.planttype = species
+	src.plantgenes = new /datum/plantgenes(src)
+	..()
+
+/mob/living/critter/plant/proc/HY_set_species(var/datum/plant/species)
+	if (species)
+		src.planttype = species
+	else
+		if (ispath(src.planttype))
+			src.planttype = new src.planttype(src)
 		else
-			if (ispath(src.planttype))
-				src.planttype = new src.planttype(src)
-			else
-				qdel(src)
-				return
+			qdel(src)
+			return
 
 /mob/living/critter/plant/proc/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 	/// This proc gets called after the critter is created on-harvest. Use this one to apply any baseline-scaling, like health, to the critter with plant stats

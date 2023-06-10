@@ -13,79 +13,79 @@
 	var/mob/living/target
 	var/datum/targetable/critter/maneater_devour/originating_ability
 
-	New(victim, devour_ability)
-		src.target = victim
-		src.originating_ability = devour_ability
-		..()
+/datum/action/bar/icon/maneater_devour/New(victim, devour_ability)
+	src.target = victim
+	src.originating_ability = devour_ability
+	..()
 
-	onUpdate()
-		..()
+/datum/action/bar/icon/maneater_devour/onUpdate()
+	..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !originating_ability)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+	if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !originating_ability)
+		interrupt(INTERRUPT_ALWAYS)
+		return
 
-		var/mob/ownerMob = owner
-		var/obj/item/grab/G = ownerMob.equipped()
+	var/mob/ownerMob = owner
+	var/obj/item/grab/G = ownerMob.equipped()
 
-		if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+	if (!istype(G) || G.affecting != target || G.state == GRAB_PASSIVE)
+		interrupt(INTERRUPT_ALWAYS)
+		return
 
-	onStart()
-		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !originating_ability)
-			interrupt(INTERRUPT_ALWAYS)
-			return
+/datum/action/bar/icon/maneater_devour/onStart()
+	..()
+	if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !originating_ability)
+		interrupt(INTERRUPT_ALWAYS)
+		return
 
-		var/mob/ownerMob = owner
-		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+	var/mob/ownerMob = owner
+	ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
 
-	onEnd()
-		..()
+/datum/action/bar/icon/maneater_devour/onEnd()
+	..()
 
-		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && originating_ability)
-			boutput(ownerMob, "<span class='notice'>You devour [target]!</span>")
-			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
-			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
-			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] whole at [log_loc(owner)].")
-			//if we got a maneater as a user, we store it because of its unique behaviour
-			var/mob/living/critter/plant/maneater/eating_maneater = null
-			if (istype(ownerMob, /mob/living/critter/plant/maneater))
-				eating_maneater = ownerMob
-				//we suppress item vomiting for a bit so it does not start directly
-				ON_COOLDOWN(eating_maneater, "item_vomiting", 20 SECONDS)
+	var/mob/ownerMob = owner
+	if(owner && ownerMob && target && BOUNDS_DIST(owner, target) == 0 && originating_ability)
+		boutput(ownerMob, "<span class='notice'>You devour [target]!</span>")
+		ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
+		playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
+		logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] whole at [log_loc(owner)].")
+		//if we got a maneater as a user, we store it because of its unique behaviour
+		var/mob/living/critter/plant/maneater/eating_maneater = null
+		if (istype(ownerMob, /mob/living/critter/plant/maneater))
+			eating_maneater = ownerMob
+			//we suppress item vomiting for a bit so it does not start directly
+			ON_COOLDOWN(eating_maneater, "item_vomiting", 20 SECONDS)
 
-			//handcuffs have special handling for zipties and such, remove them properly first.
-			//kinda creepy to have all that's left of the target be handcuffs, huh
-			if(target.hasStatus("handcuffed"))
-				target.handcuffs.drop_handcuffs(target)
+		//handcuffs have special handling for zipties and such, remove them properly first.
+		//kinda creepy to have all that's left of the target be handcuffs, huh
+		if(target.hasStatus("handcuffed"))
+			target.handcuffs.drop_handcuffs(target)
 
-			//now we take all the other items of the target and move them onto the ground or into the maneater, if it is one
+		//now we take all the other items of the target and move them onto the ground or into the maneater, if it is one
 
-			var/list/obj/item/to_unequip = target.get_unequippable()
-			if(length(to_unequip) > 0)
-				for (var/obj/item/handled_item in to_unequip)
-					target.remove_item(handled_item)
-					if (handled_item)
-						if (eating_maneater)
-							//let's add the devoured item into the maneater to have it spit them out later
-							eating_maneater.devoured_items += handled_item
-							handled_item.set_loc(eating_maneater)
-						else
-							handled_item.set_loc(get_turf(ownerMob))
-						handled_item.dropped(target)
-						handled_item.layer = initial(handled_item.layer)
+		var/list/obj/item/to_unequip = target.get_unequippable()
+		if(length(to_unequip) > 0)
+			for (var/obj/item/handled_item in to_unequip)
+				target.remove_item(handled_item)
+				if (handled_item)
+					if (eating_maneater)
+						//let's add the devoured item into the maneater to have it spit them out later
+						eating_maneater.devoured_items += handled_item
+						handled_item.set_loc(eating_maneater)
+					else
+						handled_item.set_loc(get_turf(ownerMob))
+					handled_item.dropped(target)
+					handled_item.layer = initial(handled_item.layer)
 
-			//Now, once we have all that together, kill the target
+		//Now, once we have all that together, kill the target
 
-			target.ghostize()
-			qdel(target)
+		target.ghostize()
+		qdel(target)
 
-	onInterrupt()
-		..()
-		boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
+/datum/action/bar/icon/maneater_devour/onInterrupt()
+	..()
+	boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
 
 /datum/targetable/critter/maneater_devour
 	name = "Devour"
@@ -95,19 +95,19 @@
 	targeted = 1
 	target_anything = 1
 
-	cast(atom/target)
-		if (..())
-			return 1
-		var/mob/living/caster = holder.owner
+/datum/targetable/critter/maneater_devour/cast(atom/target)
+	if (..())
+		return 1
+	var/mob/living/caster = holder.owner
 
-		var/obj/item/grab/G = src.grab_check(null, 1, 1)
-		if (!G || !istype(G))
-			return 1
-		var/mob/living/carbon/human/victim = G.affecting
+	var/obj/item/grab/G = src.grab_check(null, 1, 1)
+	if (!G || !istype(G))
+		return 1
+	var/mob/living/carbon/human/victim = G.affecting
 
-		if (!istype(victim))
-			boutput(caster, "<span class='alert'>This creature isn't suitable for your stomach.</span>")
-			return 1
+	if (!istype(victim))
+		boutput(caster, "<span class='alert'>This creature isn't suitable for your stomach.</span>")
+		return 1
 
-		actions.start(new/datum/action/bar/icon/maneater_devour(victim, src), caster)
-		return 0
+	actions.start(new/datum/action/bar/icon/maneater_devour(victim, src), caster)
+	return 0
