@@ -73,8 +73,8 @@ obj/structure/ex_act(severity)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(src)
 			else
 				if (prob(30))
@@ -82,8 +82,8 @@ obj/structure/ex_act(severity)
 					if (src.material)
 						A.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						A.setMaterial(M)
+						var/datum/material/defaultMaterial = getMaterial("steel")
+						A.setMaterial(defaultMaterial)
 				else
 					qdel(src)
 
@@ -214,8 +214,8 @@ obj/structure/ex_act(severity)
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_UNSECURESUPPORT)
 				verbens = "unsecured the support struts of"
@@ -236,8 +236,8 @@ obj/structure/ex_act(severity)
 				if (the_tool.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
 				if (!istype(the_girder.loc, /turf/simulated/floor/))
@@ -253,14 +253,14 @@ obj/structure/ex_act(severity)
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/defaultMaterial = getMaterial("steel")
 
 				if (S.reinforcement)
 					WALL = Tsrc.ReplaceWithRWall()
 				else
 					WALL = Tsrc.ReplaceWithWall()
-				WALL.setMaterial(S.material ? S.material : M)
-				WALL.girdermaterial = the_girder.material ? the_girder.material : M
+				WALL.setMaterial(S.material ? S.material : defaultMaterial)
+				WALL.girdermaterial = the_girder.material ? the_girder.material : defaultMaterial
 
 				WALL.inherit_area()
 				S?.change_stack_amount(-2)
@@ -307,11 +307,11 @@ obj/structure/ex_act(severity)
 
 		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
-		var/datum/material/M = getMaterial("steel")
+		var/datum/material/defaultMaterial = getMaterial("steel")
 		var/turf/simulated/wall/false_wall/FW = A
 
-		FW.setMaterial(S.material ? S.material : M, copy = FALSE)
-		FW.girdermaterial = src.material ? src.material : M
+		FW.setMaterial(S.material ? S.material : defaultMaterial, copy = FALSE)
+		FW.girdermaterial = src.material ? src.material : defaultMaterial
 		FW.inherit_area()
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
@@ -327,8 +327,8 @@ obj/structure/ex_act(severity)
 		if(src.material)
 			S.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("steel")
-			S.setMaterial(M)
+			var/datum/material/defaultMaterial = getMaterial("steel")
+			S.setMaterial(defaultMaterial)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 		qdel(src)
 		return

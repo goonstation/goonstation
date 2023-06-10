@@ -132,29 +132,29 @@
 	qdel(parts)
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
-	var/datum/material/M = getMaterial("steel")
+	var/datum/material/defaultMaterial = getMaterial("steel")
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 
-			A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
-			B.setMaterial(src.material ? src.material : M, copy = FALSE)
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
+			B.setMaterial(src.material ? src.material : defaultMaterial, copy = FALSE)
 			B.set_reinforcement(src.material)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
 				var/atom/A = new /obj/structure/girder/reinforced(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
 
 
 				if (prob(50))
 					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
-					B.setMaterial(src.material ? src.material : M, copy = FALSE)
+					B.setMaterial(src.material ? src.material : defaultMaterial, copy = FALSE)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
 
 	else
 		if (!devastated)
@@ -162,26 +162,26 @@
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
 
-			A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
-			B.setMaterial(src.material ? src.material : M, copy = FALSE)
-			C.setMaterial(src.material ? src.material : M, copy = FALSE)
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
+			B.setMaterial(src.material ? src.material : defaultMaterial, copy = FALSE)
+			C.setMaterial(src.material ? src.material : defaultMaterial, copy = FALSE)
 
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
-				A.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
 
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
 
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
 
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
-					C.setMaterial(src.girdermaterial ? src.girdermaterial : M, copy = FALSE)
+					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
 
 
 	var/atom/D = ReplaceWithFloor()
