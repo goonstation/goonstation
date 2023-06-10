@@ -417,24 +417,24 @@
 
 
 
-/datum/limb/mouth/maneater_mouth
-	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
-	var/dam_low = 8
-	var/dam_high = 12
-	var/custom_msg = null
-	var/miss_prob = 75
-	var/stam_damage_mult = 0
+/datum/limb/mouth/maneater
+	sound_attack = 'sound/voice/animal/short_hiss.ogg'
+	dam_low = 8
+	dam_high = 12
+	custom_msg = null
+	miss_prob = 75
+	stam_damage_mult = 0
 	var/human_stam_damage = 50
 	var/human_desorient_duration = 2 SECONDS
 	var/human_stun_duration = 5 SECONDS
 	var/list/chems_to_inject = null
 	var/amount_to_inject = 3
 
-/datum/limb/mouth/maneater_mouth/New(var/obj/item/parts/holder)
+/datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
 	..()
 	src.chems_to_inject = list()
 
-/datum/limb/mouth/maneater_mouth/harm(mob/target, var/mob/user)
+/datum/limb/mouth/maneater/harm(mob/target, var/mob/user)
 	if (!user || !target)
 		return 0
 

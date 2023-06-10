@@ -50,7 +50,7 @@
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
 
-	faction = FACTION_BOTANY
+
 	planttype = /datum/plant/maneater
 	stamina = 200
 	stamina_max = 200
@@ -99,7 +99,7 @@
 	holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
 	holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
 	holdinghands.limb_name = "teeth"						// name for the dummy holder
-	holdinghands.limb = new /datum/limb/mouth/maneater_mouth	// if not null, the special limb to use when attack_handing
+	holdinghands.limb = new /datum/limb/mouth/maneater	// if not null, the special limb to use when attack_handing
 	src.scaleable_limb = holdinghands.limb //we need this later for applying botany chems with it
 	holdinghands.can_hold_items = 0
 
@@ -125,7 +125,7 @@
 
 	// now, we set the arm injection up
 	if (length(origin_plant.assoc_reagents) > 0)
-		var/datum/limb/maneater_mouth/manipulated_limb = src.scaleable_limb
+		var/datum/limb/mouth/maneater/manipulated_limb = src.scaleable_limb
 		manipulated_limb.amount_to_inject = max(1, round(baseline_injection + injection_amount_per_yield * passed_genes?.get_effective_value("cropsize")))
 		manipulated_limb.chems_to_inject |= origin_plant.assoc_reagents
 	..()
@@ -307,7 +307,7 @@
 		src.devoured_items -= handled_item
 	..()
 
-/mob/living/critter/plant/maneater_polymorph
+/mob/living/critter/plant/maneater/polymorph
 	name = "man-eating plant"
 	real_name = "Wizard-eating plant"
 	desc = "It looks upset about something..."
@@ -355,7 +355,7 @@
 	holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
 	holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
 	holdinghands.limb_name = "teeth"						// name for the dummy holder
-	holdinghands.limb = new /datum/limb/mouth/maneater_mouth		// if not null, the special limb to use when attack_handing
+	holdinghands.limb = new /datum/limb/mouth/maneater		// if not null, the special limb to use when attack_handing
 	holdinghands.can_hold_items = 0
 
 /mob/living/critter/plant/maneater_polymorph/New()
