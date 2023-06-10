@@ -3032,17 +3032,17 @@
 /area/mantavault)
 "jF" = (
 /obj/item/reagent_containers/glass/bottle/holywater,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "kw" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib1"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "lr" = (
 /obj/item/clothing/suit/cardboard_box/captain,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "ne" = (
 /obj/decal/fakeobjects{
@@ -3053,7 +3053,7 @@
 	icon_state = "martian-2";
 	name = "martian machine"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "nE" = (
 /obj/storage/crate,
@@ -3061,17 +3061,17 @@
 /obj/item/storage/rockit,
 /obj/item/raw_material/miracle,
 /obj/item/clothing/suit/space/suv,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "pX" = (
 /obj/storage/crate/loot,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "rt" = (
 /obj/decal/aliencomputer{
 	pixel_x = 32
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "rU" = (
 /obj/portrait_sneaky,
@@ -3079,7 +3079,7 @@
 /area/evilreaver/security)
 "sM" = (
 /obj/item/paper/sop,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "tO" = (
 /obj/crevice{
@@ -3088,7 +3088,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid2"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "uV" = (
 /obj/indestructible/shuttle_corner{
@@ -3096,13 +3096,13 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "xd" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "AE" = (
 /turf/space,
@@ -3143,18 +3143,18 @@
 /area/space)
 "Dz" = (
 /obj/item/device/infra_sensor,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Em" = (
 /obj/map/light/dimred,
 /obj/portalmartian,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "FF" = (
 /obj/crevice{
 	pixel_x = -28
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "FT" = (
 /obj/indestructible/shuttle_corner{
@@ -3162,15 +3162,15 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Gj" = (
 /obj/critter/martian/soldier/dead,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Go" = (
 /obj/critter/martian/warrior,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Hn" = (
 /turf/unsimulated/wall/auto/adventure/martian,
@@ -3179,43 +3179,43 @@
 /obj/storage/crate,
 /obj/item/aiboss_tape/martian,
 /obj/item/clothing/head/XComHair,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "In" = (
 /obj/crevice{
 	pixel_y = 30
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Ip" = (
 /turf/unsimulated/wall/trench,
 /area/dank_trench)
 "Iz" = (
 /obj/critter/martian/psychic,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "JZ" = (
 /obj/critter/martian/soldier,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "KR" = (
 /obj/landmark/artifact,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (
 /obj/marker/supplymarker,
 /obj/decal/fakeobjects/teleport_pad,
 /obj/map/light/dimred,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Na" = (
 /obj/item/paper/courtroom{
 	name = "paper- 'A Crash Course in Legal SOP"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Ns" = (
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Pt" = (
 /obj/indestructible/shuttle_corner{
@@ -3223,38 +3223,38 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Qm" = (
 /obj/machinery/martianbomb,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Qw" = (
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Rb" = (
 /obj/decal/aliencomputer{
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "RH" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib3"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Sk" = (
 /obj/npc/trader/martian,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Td" = (
 /obj/machinery/door/unpowered/martian,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "TR" = (
 /obj/indestructible/shuttle_corner{
@@ -3262,13 +3262,13 @@
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "UF" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibdown1"
 	},
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "XC" = (
 /obj/map/light/white,
@@ -3276,7 +3276,7 @@
 /area/evilreaver/security)
 "Yb" = (
 /obj/decal/cleanable/blood,
-/turf/unsimulated/martian/floor,
+/turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 
 (1,1,1) = {"

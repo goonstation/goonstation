@@ -6843,7 +6843,7 @@
 	name = "rancher supply closet"
 	},
 /obj/item/paper/ranch_guide,
-/obj/item/fishing_rod,
+/obj/item/fishing_rod/basic,
 /obj/item/chicken_carrier,
 /obj/item/device/camera_viewer/ranch,
 /obj/item/storage/box/syringes,
@@ -15616,15 +15616,15 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -19327,9 +19327,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "baO" = (
-/obj/shrub{
-	dir = 1
-	},
+/obj/table/wood/round/auto,
+/obj/machinery/coffeemaker/command,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "baP" = (
@@ -19340,13 +19339,22 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/item/paper_bin,
+/obj/drink_rack/mug{
+	pixel_y = -26
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 3;
+	pixel_y = 11
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "baQ" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/table/wood/round/auto,
+/obj/item/paper_bin{
+	pixel_y = 6
+	},
 /obj/machinery/networked/printer{
 	print_id = "Bridge"
 	},
@@ -31665,6 +31673,10 @@
 /area/station/crew_quarters/hor)
 "bQZ" = (
 /obj/disposalpipe/segment/mail,
+/obj/table/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 10
+	},
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -48312,17 +48324,18 @@
 	dir = 8
 	},
 /obj/table/auto,
+/obj/drink_rack/mug{
+	pixel_y = 28
+	},
+/obj/decal/stripe_delivery,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
 /obj/machinery/coffeemaker/research{
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/drink_rack/mug{
-	pixel_y = 28
-	},
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = 8
-	},
-/obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "gcD" = (
@@ -49821,7 +49834,14 @@
 /obj/item/device/radio/intercom/engineering{
 	dir = 1
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = 8;
+	pixel_y = 12
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 10
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "hCv" = (
@@ -56341,15 +56361,16 @@
 /area/station/engine/gas)
 "ohW" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker/security{
-	pixel_x = 3;
-	pixel_y = 3
-	},
+/obj/decal/stripe_caution,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8;
 	pixel_y = 12
 	},
-/obj/decal/stripe_caution,
+/obj/machinery/coffeemaker/security{
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor,
 /area/station/security/main)
 "oiu" = (
@@ -57144,10 +57165,6 @@
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 12
 	},
-/obj/item/decoration/flower_vase/vase7{
-	pixel_x = -9;
-	pixel_y = 11
-	},
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 12;
 	pixel_y = 9
@@ -57159,15 +57176,12 @@
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 19
 	},
-/obj/item/reagent_containers/food/snacks/candy/butterscotch{
-	pixel_x = 4;
-	pixel_y = -4
-	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 3;
 	pixel_y = 11
 	},
 /obj/machinery/light,
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "pcs" = (
@@ -60872,9 +60886,6 @@
 /area/station/maintenance/central)
 "snW" = (
 /obj/table/auto,
-/obj/machinery/coffeemaker/botany{
-	pixel_y = 3
-	},
 /obj/drink_rack/mug{
 	pixel_y = -26
 	},
@@ -60882,6 +60893,10 @@
 	pixel_x = -8;
 	pixel_y = 12
 	},
+/obj/machinery/coffeemaker/botany{
+	pixel_y = 3
+	},
+/obj/item/kitchen/food_box/sugar_box,
 /turf/simulated/floor/green/side,
 /area/station/hydroponics/lobby)
 "son" = (
@@ -61721,7 +61736,6 @@
 /area/station/security/secwing)
 "tco" = (
 /obj/item/device/radio/intercom/engineering,
-/obj/stool/chair/yellow,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "tcT" = (
@@ -62979,6 +62993,10 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"uks" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor,
+/area/station/engine/engineering)
 "ukJ" = (
 /obj/grille/catwalk{
 	dir = 8
@@ -63392,10 +63410,6 @@
 	},
 /obj/table/wood/auto,
 /obj/machinery/coffeemaker/engineering,
-/obj/item/reagent_containers/food/drinks/creamer{
-	pixel_x = -8;
-	pixel_y = 12
-	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "uHs" = (
@@ -64475,11 +64489,15 @@
 	pixel_y = -5
 	},
 /obj/item/decoration/ashtray,
+/obj/machinery/light,
+/obj/item/reagent_containers/food/snacks/candy/butterscotch{
+	pixel_x = 4;
+	pixel_y = 8;
+	},
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_x = -7;
 	pixel_y = 18
 	},
-/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "vNU" = (
@@ -115325,10 +115343,10 @@ pAL
 ekO
 wHk
 nqD
-bHq
+gEa
 uHm
 bMc
-gEa
+uks
 bHq
 bHq
 jGZ

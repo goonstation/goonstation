@@ -1,3 +1,6 @@
+TYPEINFO(/turf/simulated/wall)
+	mat_appearances_to_ignore = list("steel")
+
 /turf/simulated/wall
 	name = "wall"
 	desc = "Looks like a regular wall."
@@ -14,6 +17,7 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
+	default_material = "steel"
 
 	var/health = 100
 	var/list/forensic_impacts = null
