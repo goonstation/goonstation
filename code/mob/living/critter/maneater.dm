@@ -31,7 +31,7 @@
 	name = "man-eating plant"
 	real_name = "man-eating plant"
 	desc = "It looks hungry..."
-	density = 1
+	density = TRUE
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
