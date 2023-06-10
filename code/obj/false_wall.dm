@@ -159,7 +159,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "false [src.material.name] wall"
+		src.name = src.material ? "false [src.material.name] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -181,7 +181,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "[src.material.name] wall"
+		src.name = src.material ? "[src.material.name] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
 		src.gas_impermeable = 1
