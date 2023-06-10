@@ -261,7 +261,7 @@
 	if (length(src.devoured_items) > 6)
 		if(!ON_COOLDOWN(src, "item_vomiting", 1 MINUTES))
 			src.vomit()
-	else if (isturf(src.loc) && prob(4))
+	else if (src.is_npc && isturf(src.loc) && prob(6))
 		var/list/potential_caretakers = list()
 		for(var/mob/living/carbon/human/checked_human in hearers(5, src))
 			//botanists or people who contributed to the plant can be caretakers and be talked to
