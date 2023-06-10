@@ -40,9 +40,9 @@
 	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
 	is_npc = 1
 	//if someone is really annoying and an ally, give them a smack to put them in their place
 	ai_retaliates = TRUE
