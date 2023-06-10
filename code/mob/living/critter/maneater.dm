@@ -44,16 +44,13 @@
 	can_grab = TRUE
 	can_disarm = TRUE
 	is_npc = TRUE
+	ai_type = /datum/aiHolder/maneater
 	//if someone is really annoying and an ally, give them a smack to put them in their place
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_ONCE
 	add_abilities = list(/datum/targetable/critter/maneater_devour)
-
-
 	planttype = /datum/plant/maneater
-	stamina = 200
-	stamina_max = 200
 	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
@@ -66,7 +63,6 @@
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW, "Maneater")
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "Maneater", 25)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX, "Maneater", 25)
-	src.ai = new /datum/aiHolder/maneater(src)
 	..()
 
 /mob/living/critter/plant/maneater/disposing()
@@ -187,18 +183,10 @@
 	return can_act(src,TRUE)
 
 
-/mob/living/critter/plant/maneater/valid_target(var/mob/living/potential_target)
-	if (isintangible(potential_target)) return FALSE
-	if (isdead(potential_target)) return FALSE
-	if (potential_target in src.growers) return FALSE
-	if (istype(potential_target, src.type)) return FALSE
-	if (iskudzuman(potential_target)) return FALSE
-	//if we don't have a faction we hate everyone
-	return !src.faction || !(potential_target.faction & src.faction)
 
 /mob/living/critter/plant/maneater/critter_attack(mob/target)
 	// first we check if our maneater is munching on something
-	var/datum/targetable/critter/selected_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
+	var/datum/targetable/critter/devour_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
 	if (!(src in actions.running))
 		//first, we check if another maneater is on that persons tile. This way, we don't have food fights between maneaters
 		var/target_being_devoured = FALSE
@@ -206,9 +194,9 @@
 			if (checked_maneater != src)
 				target_being_devoured = TRUE
 		//if the target is unconscious, being eaten by another maneater and we are unable to eat them, we gotta wack them a bit
-		if(!target_being_devoured && (isunconscious(target) || isdead(target)) && ishuman(target) && !selected_ability.disabled && selected_ability.cooldowncheck())
+		if(!target_being_devoured && (isunconscious(target) || isdead(target)) && ishuman(target) && !devour_ability.disabled && devour_ability.cooldowncheck())
 			//we we grab and devour our target :)
-			return src.grab_and_devour(target)
+			return src.grab_and_devour(target, devour_ability)
 
 		else
 			//we want to nibble on them with out right hand
@@ -230,10 +218,10 @@
 /mob/living/critter/plant/maneater/critter_scavenge(var/mob/target)
 	// first we check if our maneater is munching on something
 	if (!(src in actions.running))
-		return src.grab_and_devour(target)
+		return src.grab_and_devour(target, src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour))
 	return TRUE
 
-/mob/living/critter/plant/maneater/proc/grab_and_devour(var/mob/target)
+/mob/living/critter/plant/maneater/proc/grab_and_devour(var/mob/target, var/datum/targetable/critter/devour_ability)
 	//we want to grab with our left tentacle hand
 	src.set_a_intent(INTENT_GRAB)
 	src.set_dir(get_dir(src, target))
@@ -258,8 +246,7 @@
 			checked_grab.AttackSelf(src)
 			return
 		else
-			var/datum/targetable/critter/selected_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
-			selected_ability.handleCast(target)
+			devour_ability.handleCast(target)
 			return
 
 
@@ -323,8 +310,6 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	stamina = 200
-	stamina_max = 200
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 	planttype = /datum/plant/maneater
 
