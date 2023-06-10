@@ -36,7 +36,7 @@
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
 	butcherable = TRUE
-	meat_type = /obj/item/reagent_containers/food/snacks/plant/soylent
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
@@ -54,7 +54,7 @@
 	planttype = /datum/plant/maneater
 	stamina = 200
 	stamina_max = 200
-	var/baseline_health = 100 //! how much health the maneater should get normally and at 0 endurance
+	var/baseline_health = 120 //! how much health the maneater should get normally and at 0 endurance
 	var/scaleable_limb = null //! used for scaling the values on one of the critters limbs
 	var/list/devoured_items = null
 
@@ -121,7 +121,8 @@
 		var/baseline_injection = 3 // how much chems the maneater should inject upon attacking
 		var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
 
-		var/scaled_health = src.baseline_health + (passed_genes?.get_effective_value("endurance") * health_per_endurance)
+		//We are dividing this by 3 since we copy this value over 3 different healthholders
+		var/scaled_health = round((src.baseline_health + (passed_genes?.get_effective_value("endurance") * health_per_endurance)) / 3)
 		for (var/T in healthlist)
 			var/datum/healthHolder/lifepool = healthlist[T]
 			lifepool.maximum_value = scaled_health
@@ -159,22 +160,46 @@
 		..()
 
 	setup_healths()
-		add_hh_flesh(src.baseline_health, 1)
-		add_hh_flesh_burn(src.baseline_health, 1.25)
+		var/health_per_healthholder = round(src.baseline_health / 3)
+		add_hh_flesh(health_per_healthholder, 1)
+		add_hh_flesh_burn(health_per_healthholder, 1.25)
 		var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
-		tox.maximum_value = src.baseline_health
-		tox.value = src.baseline_health
-		tox.last_value = src.baseline_health
+		tox.maximum_value = health_per_healthholder
+		tox.value = health_per_healthholder
+		tox.last_value = health_per_healthholder
 		tox.damage_multiplier = 1
+
+	Life(datum/controller/process/mobs/parent)
+		if (..(parent))
+			return 1
+		// we don't want this behaviour when the maneater is dead
+		if (isdead(src)) return
+		// if we got too much items in our stomach we try to vomit some out
+		if (length(src.devoured_items) > 6)
+			if(!ON_COOLDOWN(src, "item_vomiting", 1 MINUTES))
+				src.vomit()
+		else if (isturf(src.loc) && prob(4))
+			var/list/potential_caretakers = list()
+			potential_caretakers = hearers(5, src)
+			for(var/mob/living/carbon/human/checked_human in potential_caretakers)
+				//botanists or people who contributed to the plant can be caretakers and be talked to
+				if ((checked_human.faction & src.faction) || (checked_human in src.growers))
+					potential_caretakers += checked_human
+			//we only talk to people we actually want to talk to
+			if (length(potential_caretakers) > 0)
+				//don't wanmt our plant to be too talkative
+				if (!ON_COOLDOWN(src, "maneater_talking", 25 SECONDS))
+					//now, we pick one caretaker if there is one. Maybe we talk directly to them!
+					var/mob/living/carbon/human/caretaker = pick(potential_caretakers)
+					//yes, maneater know your real name and will happiely call you out.
+					var/maneater_voice_line = pick("Feed me, [caretaker.real_name]!", "I'm hungryyyy...", "Ooooh, cut the crap! Bring on the meat!", "I'm starving!", "Must be fresh!")
+					src.say(maneater_voice_line)
+
 
 	seek_target(var/range = 9)
 		. = ..()
-		//if we got too much items in our stomach we try to vomit some out
-		if (length(src.devoured_items) > 6 && !(length(.) > 0))
-			if(!ON_COOLDOWN(src, "item_vomiting", 1 MINUTES))
-				src.vomit()
-		if ((length(.) > 0) && prob(20))
-			if(!ON_COOLDOWN(src, "maneater_snarling", 15 SECONDS))
+		if ((length(.) > 0) && prob(10))
+			if (!ON_COOLDOWN(src, "maneater_snarling", 15 SECONDS))
 				playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
 
@@ -263,7 +288,7 @@
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
 	butcherable = TRUE
-	meat_type = /obj/item/reagent_containers/food/snacks/plant/soylent
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
 	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
@@ -272,15 +297,15 @@
 	can_disarm = 1
 	stamina = 300
 	stamina_max = 300
-	add_abilities = list(/datum/targetable/critter/slam/polymorph, /datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
+	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 	planttype = /datum/plant/maneater
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					return "<b><span class='alert'>[src] roars!</span></b>"
+					playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] snarls!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -309,10 +334,10 @@
 		..()
 
 	setup_healths()
-		add_hh_flesh(120, 1)
-		add_hh_flesh_burn(120, 1.25)
+		add_hh_flesh(40, 1)
+		add_hh_flesh_burn(40, 1.25)
 		var/datum/healthHolder/toxin/tox = add_health_holder(/datum/healthHolder/toxin)
-		tox.maximum_value = 100
-		tox.value = 100
-		tox.last_value = 100
+		tox.maximum_value = 40
+		tox.value = 40
+		tox.last_value = 40
 		tox.damage_multiplier = 1
