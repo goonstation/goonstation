@@ -121,8 +121,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				var/atom/A = new /obj/item/sheet(src)
 				var/atom/B = new /obj/structure/girder/displaced(src)
 				var/datum/material/defaultMaterial = getMaterial("steel")
-				A.setMaterial(src.material ? src.material : defaultMaterial, copy = FALSE)
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = FALSE)
+				A.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
 
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
