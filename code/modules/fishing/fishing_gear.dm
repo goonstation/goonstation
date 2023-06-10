@@ -25,7 +25,7 @@
 	afterattack(atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
-			if (fishing_spot && src.is_fishing)
+			if (fishing_spot && !src.is_fishing)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 					return
@@ -163,6 +163,8 @@
 			qdel(src.block)
 			src.block = null
 		src.remove_hud_squares() //in case it somehow didnt get removed beforehand
+		UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
+		UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
 		src.user = null
 		for(var/hudSquare in src.hudSquares)
 			qdel(src.hudSquares[hudSquare])
