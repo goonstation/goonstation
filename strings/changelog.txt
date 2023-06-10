@@ -1,5 +1,9 @@
 
 (t)sat jun 10 23
+(u)Wisemonster
+(p)14522
+(e)🆕|C-Feature
+(+)Civilian cyborgs can now go fishin'.
 (u)monkeymilesmoo
 (p)14501
 (e)🪲🧱|C-Bug, A-Materials
