@@ -1,5 +1,9 @@
 
 (t)sat jun 10 23
+(u)monkeymilesmoo
+(p)14501
+(e)🪲🧱|C-Bug, A-Materials
+(*)Plating on a wall can now be of a different material from the girder it was built on without being absorbed by the girder on placement.
 (u)Garash
 (p)14511
 (e)🆕📦|C-Feature, A-Game-Objects
