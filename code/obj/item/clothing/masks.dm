@@ -379,6 +379,15 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/clothing/mask/breath) && !(src.c_flags & MASKINTERNALS))
+			src.c_flags |= MASKINTERNALS
+			boutput(user, "You shove [W] under the [src]")
+			src.desc += " There seems to be a breathing mask stuck under the nose."
+			qdel(W)
+			return
+		..()
+
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."
