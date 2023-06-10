@@ -376,6 +376,7 @@
 	var/custom_msg = null
 	var/miss_prob = 80
 	var/stam_damage_mult = 1
+	var/harm_intent_delay = COMBAT_CLICK_DELAY
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -413,7 +414,7 @@
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 
 
@@ -422,8 +423,9 @@
 	dam_low = 8
 	dam_high = 12
 	custom_msg = null
-	miss_prob = 75
+	miss_prob = 90
 	stam_damage_mult = 0
+	harm_intent_delay = 1.5 SECONDS
 	var/human_stam_damage = 50
 	var/human_desorient_duration = 2 SECONDS
 	var/human_stun_duration = 5 SECONDS
@@ -465,7 +467,7 @@
 	else
 		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 	user.lastattacked = target
-	ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /// for cats/mice/etc
 /datum/limb/mouth/small

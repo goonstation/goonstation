@@ -37,6 +37,7 @@
 	custom_gib_handler = /proc/vegetablegibs
 	butcherable = TRUE
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat
+	skinresult = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
