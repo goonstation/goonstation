@@ -156,7 +156,7 @@
 			C.critter_attack(T)
 			has_started = TRUE
 		else
-			C.move_away()
+			C.ai.move_away(T, 3)
 
 /datum/aiTask/succeedable/critter/range_attack/on_reset()
 	has_started = FALSE
