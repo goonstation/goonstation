@@ -8,9 +8,9 @@
 	var/list/growers = null //! This contains people who contributed to the plant. For AI purposes
 
 /mob/living/critter/plant/valid_target(var/mob/living/potential_target)
-	. = ..()
 	if (potential_target in src.growers) return FALSE
 	if (iskudzuman(potential_target)) return FALSE
+	return ..()
 
 
 /mob/living/critter/plant/disposing()

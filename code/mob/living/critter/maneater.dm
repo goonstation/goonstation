@@ -31,7 +31,7 @@
 	name = "man-eating plant"
 	real_name = "man-eating plant"
 	desc = "It looks hungry..."
-	density = 1
+	density = TRUE
 	icon_state = "maneater"
 	icon_state_dead = "maneater-dead"
 	custom_gib_handler = /proc/vegetablegibs
@@ -40,10 +40,10 @@
 	custom_vomit_type = /obj/decal/cleanable/blood
 	blood_id = "poo"
 	hand_count = 2
-	can_throw = 1
-	can_grab = 1
-	can_disarm = 1
-	is_npc = 1
+	can_throw = TRUE
+	can_grab = TRUE
+	can_disarm = TRUE
+	is_npc = TRUE
 	//if someone is really annoying and an ally, give them a smack to put them in their place
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
