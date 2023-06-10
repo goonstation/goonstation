@@ -147,6 +147,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/maptext_css_values = list()
 	/// The maptext associated with this message (if there is one)
 	var/image/chat_maptext/maptext = null
+	/// Input module that recieved this message last - used for format() calls
+	var/datum/listen_module/input/recieved_module = null
 
 	/// Create a new message datum with associated metadata, parsing and sanitization.
 	New(var/message as text, var/atom/speaker, var/language_id = "english")
@@ -192,6 +194,15 @@ var/global/datum/speech_manager/SpeechManager = new()
 			return null
 
 		return message
+
+	/// This proc formats the message for direct feeding into boutput() using the input module it was recieved by to handle the actual formatting, or
+	/// default formatting of '[speaker] [verbs], "[message]"' if null (somehow)
+	/// returns a string
+	proc/format_for_output()
+		if(istype(src.recieved_module))
+			return src.recieved_module.format(src)
+		else
+			return "[src.speaker] [src.say_verb], \"[src.content]\""
 
 	disposing()
 		. = ..()
@@ -530,6 +541,7 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 
 	/// Return early to prevent the message being processed, or call ..() to pass it down the listen tree
 	process(var/datum/say_message/message)
+		message.recieved_module = src
 		src.parent_tree.process(message)
 
 	disposing()
@@ -542,6 +554,11 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 		global.SpeechManager.UnregisterInput(src)
 		src.channel = new_channel
 		global.SpeechManager.RegisterInput(src)
+
+	/// Use this input to format the message appropriately for the channel
+	/// This is where all formatting logic should go unless you're doing something *really* weird
+	proc/format(var/datum/say_message/message)
+		return "[message.speaker] [message.say_verb], \"[message.content]\"" //default behaviour
 
 TYPEINFO(/datum/listen_module/modifier)
 	id = "modifier_base"
