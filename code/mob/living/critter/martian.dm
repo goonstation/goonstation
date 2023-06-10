@@ -104,8 +104,9 @@
 			if(!teleport.disabled && teleport.cooldowncheck())
 				var/list/randomturfs = new/list()
 				for(var/turf/T in orange(src, telerange))
-					if(istype(T, /turf/space) || T.density) continue
-						randomturfs.Add(T)
+					if(istype(T, /turf/space) || T.density)
+						continue
+					randomturfs.Add(T)
 				teleport.handleCast(pick(randomturfs))
 
 	say(message, involuntary = 0)
@@ -186,32 +187,38 @@
 	health_brute_vuln = 1
 	health_burn = 10
 	health_burn_vuln = 1
+	ai_type = /datum/aiHolder/ranged
 
 	New()
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
-	critter_ability_attack(mob/target)
-		if (istype(src, /mob/living/critter/martian/mutant/weak)) return ..()
+	critter_attack(var/mob/target)
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
 		if (!gib.disabled && gib.cooldowncheck())
 			gib.handleCast(target)
 			return TRUE
 
 	can_critter_attack()
-		if (istype(src, /mob/living/critter/martian/mutant/weak)) return ..()
 		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
 		return ..() && !gib.disabled
 
-/mob/living/critter/martian/mutant/weak
+/mob/living/critter/martian/initiate
 	name = "martian initiate"
 	real_name = "martian initiate"
 	martian_type = "initiate"
+	icon_state = "martianP"
+	icon_state_dead = "martianP-dead"
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 1
+	ai_type = /datum/aiHolder/wanderer
 
 	New()
 		..()
-		abilityHolder.removeAbility(/datum/targetable/critter/gibstare) // enough is enough
+		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
 	// These were for a martian gamemode so im leaving them as non-npcs for now
 /mob/living/critter/martian/sapper

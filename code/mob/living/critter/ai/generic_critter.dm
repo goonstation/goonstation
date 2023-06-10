@@ -107,12 +107,12 @@
 	name = "attacking at range"
 	weight = 10 // attack behaviour gets a high priority
 	ai_turbo = TRUE //attack behaviour gets a speed boost for robustness
+	distance_from_target = 4
 	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/critter/range_attack/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
 	add_task(holder.get_instance(/datum/aiTask/succeedable/critter/range_attack, list(holder)))
-	remove_task(holder.get_instance(/datum/aiTask/succeedable/move))
 
 /datum/aiTask/sequence/goalbased/critter/range_attack/precondition()
 	var/mob/living/critter/C = holder.owner
