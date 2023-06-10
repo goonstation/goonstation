@@ -163,7 +163,7 @@
 	martian_type = "soldier"
 	icon_state = "martianS"
 	icon_state_dead = "martianS-dead"
-	ai_type = /datum/aiHolder/ranged
+	ai_type = /datum/aiHolder/aggressive/ranged
 
 	setup_hands()
 		..()
@@ -177,6 +177,11 @@
 		HH.can_attack = FALSE
 		HH.can_range_attack = TRUE
 
+	critter_basic_attack(var/mob/target)
+		if (src.get_active_hand() != 1)
+			src.swap_hand()
+		..()
+
 /mob/living/critter/martian/mutant
 	name = "martian mutant"
 	real_name = "martian mutant"
@@ -187,7 +192,7 @@
 	health_brute_vuln = 1
 	health_burn = 10
 	health_burn_vuln = 1
-	ai_type = /datum/aiHolder/ranged
+	ai_type = /datum/aiHolder/aggressive/ranged
 
 	New()
 		..()
@@ -220,7 +225,7 @@
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
-	// These were for a martian gamemode so im leaving them as non-npcs for now
+// These were for a martian gamemode so im leaving them as non-npcs for now
 /mob/living/critter/martian/sapper
 	name = "martian sapper"
 	real_name = "martian sapper"
