@@ -169,28 +169,32 @@
 			playsound(src.loc, 'sound/voice/maneatersnarl.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			src.visible_message("<span class='alert'><B>[src]</B> snarls!</span>")
 
+/mob/living/critter/plant/maneater/seek_scavenge_target(var/range = 5)
+	. = list()
+	var/target_being_devoured = FALSE
+	for (var/mob/living/carbon/human/checked_human in view(range, get_turf(src)))
+		target_being_devoured = FALSE
+		for(var/mob/living/critter/plant/maneater/checked_maneater in get_turf(checked_human))
+			if (checked_maneater != src)
+				target_being_devoured = TRUE
+		if (!(target_being_devoured) && isdead(checked_human) && checked_human.decomp_stage <= 3 && !checked_human.bioHolder?.HasEffect("husk"))
+			//is dead, isn't a skeleton, isn't a grody husk, isn't occupied by another maneater
+			. += checked_human
+
+/mob/living/critter/plant/maneater/can_critter_scavenge()
+	var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
+	if (checked_ability.disabled || !checked_ability.cooldowncheck()) return FALSE
+	return can_act(src,TRUE)
+
 
 /mob/living/critter/plant/maneater/valid_target(var/mob/living/potential_target)
 	if (isintangible(potential_target)) return FALSE
-	if (isdead(potential_target) && !ishuman(potential_target)) return FALSE
+	if (isdead(potential_target)) return FALSE
 	if (potential_target in src.growers) return FALSE
 	if (istype(potential_target, src.type)) return FALSE
 	if (iskudzuman(potential_target)) return FALSE
-	var/is_dead_and_invalid = FALSE
-	if (isdead(potential_target) && ishuman(potential_target))
-		//if the target is dead, we got to have some additional checks
-		var/datum/targetable/critter/checked_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
-		//if we got a human corpse but our ability is on cooldown/not avaible, we don't want to target them
-		if (checked_ability.disabled || !checked_ability.cooldowncheck())
-			is_dead_and_invalid = TRUE
-		//now we check if another maneater is on that persons tile. If it is, it can have it's snack
-		for(var/mob/living/critter/plant/maneater/checked_maneater in get_turf(potential_target))
-			if (checked_maneater != src)
-				is_dead_and_invalid = TRUE
-	if(is_dead_and_invalid) return FALSE
 	//if we don't have a faction we hate everyone
-	//But we love corpses, also the one of botanists that didn't grew us
-	return isdead(potential_target) && ishuman(potential_target) || !src.faction || !(potential_target.faction & src.faction)
+	return !src.faction || !(potential_target.faction & src.faction)
 
 /mob/living/critter/plant/maneater/critter_attack(mob/target)
 	// first we check if our maneater is munching on something
@@ -203,32 +207,9 @@
 				target_being_devoured = TRUE
 		//if the target is unconscious, being eaten by another maneater and we are unable to eat them, we gotta wack them a bit
 		if(!target_being_devoured && (isunconscious(target) || isdead(target)) && ishuman(target) && !selected_ability.disabled && selected_ability.cooldowncheck())
-			//we want to grab with our left tentacle hand
-			src.set_a_intent(INTENT_GRAB)
-			src.set_dir(get_dir(src, target))
-			src.active_hand = 1
+			//we we grab and devour our target :)
+			return src.grab_and_devour(target)
 
-			var/list/params = list()
-			params["left"] = TRUE
-			params["ai"] = TRUE
-
-			var/obj/item/grab/G = src.equipped()
-			if (!istype(G)) //if it hasn't grabbed something, try to
-				if(!isnull(G)) //if we somehow have something that isn't a grab in our hand
-					src.drop_item()
-				src.hand_attack(target, params)
-				return
-			else
-				if (G.affecting == null || G.assailant == null || G.disposed || !ishuman(G.affecting) || G.affecting != target)
-					src.drop_item()
-					return
-
-				if (G.state <= GRAB_PASSIVE)
-					G.AttackSelf(src)
-					return
-				else
-					selected_ability.handleCast(target)
-					return
 		else
 			//we want to nibble on them with out right hand
 			src.set_a_intent(INTENT_HARM)
@@ -244,6 +225,44 @@
 	else
 		//let's wait until we finished eating our target :)
 		return
+
+
+/mob/living/critter/plant/maneater/critter_scavenge(var/mob/target)
+	// first we check if our maneater is munching on something
+	if (!(src in actions.running))
+		return src.grab_and_devour(target)
+	return TRUE
+
+/mob/living/critter/plant/maneater/proc/grab_and_devour(var/mob/target)
+	//we want to grab with our left tentacle hand
+	src.set_a_intent(INTENT_GRAB)
+	src.set_dir(get_dir(src, target))
+	src.active_hand = 1
+
+	var/list/params = list()
+	params["left"] = TRUE
+	params["ai"] = TRUE
+
+	var/obj/item/grab/checked_grab = src.equipped()
+	if (!istype(checked_grab)) //if it hasn't grabbed something, try to
+		if(!isnull(checked_grab)) //if we somehow have something that isn't a grab in our hand
+			src.drop_item()
+		src.hand_attack(target, params)
+		return
+	else
+		if (checked_grab.affecting == null || checked_grab.assailant == null || checked_grab.disposed || !ishuman(checked_grab.affecting) || checked_grab.affecting != target)
+			src.drop_item()
+			return
+
+		if (checked_grab.state <= GRAB_PASSIVE)
+			checked_grab.AttackSelf(src)
+			return
+		else
+			var/datum/targetable/critter/selected_ability = src.abilityHolder.getAbility(/datum/targetable/critter/maneater_devour)
+			selected_ability.handleCast(target)
+			return
+
+
 
 /mob/living/critter/plant/maneater/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
@@ -304,8 +323,8 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	stamina = 300
-	stamina_max = 300
+	stamina = 200
+	stamina_max = 200
 	add_abilities = list(/datum/targetable/critter/bite/maneater_bite)   //Devour way too abusable, but plant with teeth needs bite =)
 	planttype = /datum/plant/maneater
 
