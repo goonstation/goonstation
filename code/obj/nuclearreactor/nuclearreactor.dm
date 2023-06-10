@@ -711,8 +711,11 @@
 #undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
-	icon_state = ""
-	icon = null
+	icon_state = "trace"
+	icon = 'icons/obj/projectiles.dmi'
+	invisibility = INVIS_INFRA
+	override_color = TRUE
+	color_icon = "#00FF00"
 	power = 100
 	cost = 20
 //Kill/Stun ratio
