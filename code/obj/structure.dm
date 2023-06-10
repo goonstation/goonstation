@@ -123,7 +123,8 @@ obj/structure/ex_act(severity)
 		else
 			if (S.material.material_flags & MATERIAL_METAL)
 				actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
-			else(boutput(user, "You cannot plate [src] with [S]!"))
+			else
+				boutput(user, "You cannot plate [src] with [S]!")
 	else
 		..()
 
