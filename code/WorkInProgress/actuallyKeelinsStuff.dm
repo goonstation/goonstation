@@ -542,7 +542,7 @@ Returns:
 		return
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -601,7 +601,7 @@ Returns:
 	var/targetZ = 2
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()

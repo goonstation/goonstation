@@ -1085,17 +1085,32 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		reinforced
 			name = "reinforced autowindow grille spawner"
 			win_path = "/obj/window/auto/reinforced"
+#ifdef PERSPECTIVE_EDITOR_WALL
+			icon_state = "r-wingrille_new"
+			color = "#72c8fd"
+#else
 			icon_state = "r-wingrille_f"
+#endif
 
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal"
+#ifdef PERSPECTIVE_EDITOR_WALL
+			icon_state = "wingrille_new"
+			color = "#A114FF"
+#else
 			icon_state = "wingrille_f"
+#endif
 
 			reinforced
 				name = "reinforced crystal autowindow grille spawner"
 				win_path = "/obj/window/auto/crystal/reinforced"
+#ifdef PERSPECTIVE_EDITOR_WALL
+				icon_state = "r-wingrille_new"
+				color = "#8713d4"
+#else
 				icon_state = "r-wingrille_f"
+#endif
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"

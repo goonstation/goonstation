@@ -894,6 +894,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	/// This will make the borg a syndie one
 	var/syndicate = FALSE
 	var/emagged = 0
+	var/freemodule = TRUE
 	var/obj/item/parts/robot_parts/head/head = null
 	var/obj/item/parts/robot_parts/chest/chest = null
 	var/obj/item/parts/robot_parts/l_arm = null
