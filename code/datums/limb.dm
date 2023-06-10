@@ -417,7 +417,7 @@
 
 
 
-/datum/limb/maneater_mouth
+/datum/limb/mouth/maneater_mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
 	var/dam_low = 8
 	var/dam_high = 12
@@ -430,29 +430,11 @@
 	var/list/chems_to_inject = null
 	var/amount_to_inject = 3
 
-/datum/limb/maneater_mouth/New(var/obj/item/parts/holder)
+/datum/limb/mouth/maneater_mouth/New(var/obj/item/parts/holder)
 	..()
 	src.chems_to_inject = list()
 
-/datum/limb/maneater_mouth/attack_hand(atom/target, var/mob/user, var/reach)
-	if (ismob(target))
-		..()
-
-	if (isitem(target))
-		var/obj/item/potentially_food = target
-		if (potentially_food.edible)
-			potentially_food.attack(user, user)
-
-/datum/limb/maneater_mouth/help(mob/target, var/mob/user)
-	return
-
-/datum/limb/maneater_mouth/disarm(mob/target, var/mob/user)
-	return
-
-/datum/limb/maneater_mouth/grab(mob/target, var/mob/user)
-	return
-
-/datum/limb/maneater_mouth/harm(mob/target, var/mob/user)
+/datum/limb/mouth/maneater_mouth/harm(mob/target, var/mob/user)
 	if (!user || !target)
 		return 0
 

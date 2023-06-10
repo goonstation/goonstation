@@ -99,7 +99,7 @@
 	holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
 	holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
 	holdinghands.limb_name = "teeth"						// name for the dummy holder
-	holdinghands.limb = new /datum/limb/maneater_mouth		// if not null, the special limb to use when attack_handing
+	holdinghands.limb = new /datum/limb/mouth/maneater_mouth	// if not null, the special limb to use when attack_handing
 	src.scaleable_limb = holdinghands.limb //we need this later for applying botany chems with it
 	holdinghands.can_hold_items = 0
 
@@ -355,7 +355,7 @@
 	holdinghands.icon = 'icons/mob/critter_ui.dmi'			// the icon of the hand UI background
 	holdinghands.icon_state = "mouth"						// the icon state of the hand UI background
 	holdinghands.limb_name = "teeth"						// name for the dummy holder
-	holdinghands.limb = new /datum/limb/maneater_mouth		// if not null, the special limb to use when attack_handing
+	holdinghands.limb = new /datum/limb/mouth/maneater_mouth		// if not null, the special limb to use when attack_handing
 	holdinghands.can_hold_items = 0
 
 /mob/living/critter/plant/maneater_polymorph/New()
