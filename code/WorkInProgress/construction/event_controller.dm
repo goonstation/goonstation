@@ -351,7 +351,7 @@
 	name = "Martian Siege"
 	warning_text = "We are under attack by a martian siege force!"
 	attacker_types = list(/mob/living/critter/martian/warrior, /mob/living/critter/martian/soldier)
-	bosses = list(/mob/living/critter/martian/psychic/weak, /mob/living/critter/martian/sapper)
+	bosses = list(/mob/living/critter/martian/initiate, /mob/living/critter/martian/sapper)
 	original_size = 20
 	original_bosses = 2
 	is_abstract = 0

@@ -44,7 +44,7 @@
 		"Ice Spider (baby)" = /mob/living/critter/spider/ice/baby,
 		"Ice Spider (queen)" = /mob/living/critter/spider/ice/queen,
 		"Killer Tomato" = /obj/critter/killertomato,
-		"Martian Psychic" = /mob/living/critter/martian/psychic,
+		"Martian Psychic" = /mob/living/critter/martian/mutant,
 		"Martian Sapper" = /mob/living/critter/martian/sapper,
 		"Martian Soldier" = /mob/living/critter/martian/soldier,
 		"Martian Warrior" = /mob/living/critter/martian/warrior,

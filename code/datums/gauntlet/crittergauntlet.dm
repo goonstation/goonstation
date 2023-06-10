@@ -1071,7 +1071,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Martian Mutant"
 		point_cost = 5
 		count = 0.05
-		types = list(/mob/living/critter/martian/psychic)
+		types = list(/mob/living/critter/martian/mutant)
 
 	martian_assorted
 		name = "Martian Assortment"
