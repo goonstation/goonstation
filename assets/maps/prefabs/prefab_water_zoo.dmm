@@ -65,7 +65,7 @@
 /turf/simulated/floor/black/grime,
 /area/prefab/zoo)
 "n" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating,
 /area/prefab/zoo)
 "o" = (

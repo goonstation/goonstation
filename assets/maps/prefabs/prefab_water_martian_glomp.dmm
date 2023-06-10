@@ -11,7 +11,7 @@
 /area/prefab/martian_glomp)
 "i" = (
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "j" = (
 /obj/decal/aliencomputer{
 	pixel_x = -32
@@ -51,7 +51,7 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "w" = (
 /obj/decal/cleanable/slime,
 /obj/machinery/door/unpowered/martian,
@@ -66,7 +66,7 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "y" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
@@ -76,14 +76,14 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "z" = (
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "C" = (
-/obj/critter/martian/warrior/dead,
 /obj/decal/cleanable/slime,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "D" = (
@@ -95,7 +95,7 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "E" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -114,9 +114,6 @@
 /obj/item/material_piece/bone,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"J" = (
-/turf/simulated/wall/auto/martian,
-/area/space)
 "K" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
@@ -126,7 +123,7 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "L" = (
 /obj/decal/cleanable/generic{
 	desc = "Tiny bits of bone strewn about.";
@@ -156,7 +153,7 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "R" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
@@ -184,12 +181,12 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/floor,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "V" = (
 /obj/crevice{
 	pixel_x = -30
 	},
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "W" = (
@@ -201,9 +198,9 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/noGenerate)
+/area/prefab/martian_glomp)
 "X" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
 "Y" = (
@@ -218,7 +215,7 @@ W
 T
 i
 P
-J
+o
 y
 a
 a

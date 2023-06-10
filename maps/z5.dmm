@@ -376,13 +376,8 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "iW" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
-	},
 /obj/item/cigbutt,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "je" = (
@@ -721,7 +716,7 @@
 /area/mining/hangar)
 "oI" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "oL" = (
@@ -1251,7 +1246,7 @@
 	},
 /area/tech_outpost)
 "rG" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "rH" = (
@@ -1372,7 +1367,7 @@
 /area/mining/hangar)
 "sq" = (
 /obj/decal/cleanable/machine_debris,
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "su" = (
@@ -1558,7 +1553,7 @@
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
 /obj/item/raw_material/shard/glass,
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "tv" = (
@@ -1578,7 +1573,7 @@
 /area/mining/miningoutpost)
 "tA" = (
 /obj/lattice,
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "tD" = (
@@ -1687,7 +1682,7 @@
 /area/mining/power)
 "uk" = (
 /obj/lattice,
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "um" = (
@@ -1730,10 +1725,6 @@
 /obj/effects/background_objects/regis,
 /turf/space,
 /area/noGenerate)
-"uD" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/atmospherics)
 "uE" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
@@ -1789,7 +1780,7 @@
 "uX" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "uY" = (
@@ -1804,10 +1795,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
-"vb" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/floor/plating/damaged1,
-/area/evilreaver/atmospherics)
 "vd" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -2007,7 +1994,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "wo" = (
@@ -2174,7 +2161,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
 	},
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "xv" = (
@@ -2415,7 +2402,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibleg"
 	},
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "yw" = (
@@ -2429,7 +2416,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
 "yy" = (
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
 "yA" = (
@@ -2444,7 +2431,7 @@
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
 "yC" = (
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/atmospherics)
 "yH" = (
@@ -2790,11 +2777,11 @@
 /area/evilreaver/chapel)
 "AO" = (
 /obj/lattice,
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "AP" = (
-/obj/critter/martian/psychic/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/chapel)
 "AQ" = (
@@ -3493,7 +3480,7 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
 "Fw" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "Fx" = (
@@ -3602,11 +3589,6 @@
 	icon_state = "floor2";
 	name = "organic floor"
 	},
-/area/evilreaver/bridge)
-"FY" = (
-/obj/lattice,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "Ga" = (
 /obj/lattice,
@@ -3945,7 +3927,7 @@
 /area/tech_outpost)
 "Ig" = (
 /obj/lattice,
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "Ij" = (
@@ -5012,7 +4994,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
 "OZ" = (
-/obj/critter/martian/psychic/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "Pb" = (
@@ -5413,7 +5395,7 @@
 /turf/simulated/floor,
 /area/tech_outpost)
 "Sh" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "Si" = (
@@ -6110,7 +6092,7 @@
 /turf/space,
 /area/noGenerate)
 "WT" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
 "WW" = (
@@ -6264,10 +6246,6 @@
 	dir = 8
 	},
 /area/mining/hangar)
-"XV" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/martian/floor,
-/area/evilreaver/bridge)
 "XW" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
@@ -6369,12 +6347,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "Yz" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
-	},
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "YB" = (
@@ -6514,7 +6487,7 @@
 /area/mining/refinery)
 "Zu" = (
 /obj/lattice,
-/obj/critter/martian/warrior/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/evilreaver/security)
 "Zv" = (
@@ -20308,7 +20281,7 @@ qj
 SX
 rS
 ts
-uD
+yC
 xc
 yo
 rQ
@@ -20616,7 +20589,7 @@ ys
 Ab
 Ac
 Ey
-FY
+Ig
 HL
 WT
 ZG
@@ -21516,7 +21489,7 @@ WJ
 Tj
 su
 tP
-vb
+yy
 xy
 yC
 Ac
@@ -21826,7 +21799,7 @@ Ac
 Eu
 Eu
 Is
-XV
+WT
 HL
 Eu
 Bo

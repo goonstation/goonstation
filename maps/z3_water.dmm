@@ -3165,7 +3165,7 @@
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "Gj" = (
-/obj/critter/martian/soldier/dead,
+/obj/mob_spawn/corpse/critter/random/martian,
 /turf/unsimulated/martian/floor,
 /area/evilreaver/security)
 "Go" = (
