@@ -180,8 +180,7 @@
 				src.vomit()
 		else if (isturf(src.loc) && prob(4))
 			var/list/potential_caretakers = list()
-			potential_caretakers = hearers(5, src)
-			for(var/mob/living/carbon/human/checked_human in potential_caretakers)
+			for(var/mob/living/carbon/human/checked_human in hearers(5, src))
 				//botanists or people who contributed to the plant can be caretakers and be talked to
 				if ((checked_human.faction & src.faction) || (checked_human in src.growers))
 					potential_caretakers += checked_human
@@ -194,6 +193,14 @@
 					//yes, maneater know your real name and will happiely call you out.
 					var/maneater_voice_line = pick("Feed me, [caretaker.real_name]!", "I'm hungryyyy...", "Ooooh, cut the crap! Bring on the meat!", "I'm starving!", "Must be fresh!")
 					src.say(maneater_voice_line)
+
+	seek_food_target(var/range = 7)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/ingredient/meat/potential_meat in view(range, get_turf(src)))
+			//no fish meat, no synthmeat. chickens nuggets are ok, though.
+			if (istype(potential_meat, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish)) continue
+			if (istype(potential_meat, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat)) continue
+			. += potential_meat
 
 
 	seek_target(var/range = 9)
