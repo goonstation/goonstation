@@ -262,9 +262,8 @@ var/datum/explosion_controller/explosions
 				nodes[target] = new_value
 				next_open[target] = 1
 
-		radius += 1 // avoid a division by zero
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
-			var/p = power / ((radius-nodes[T])**2)
+			var/p = power / (((radius-nodes[T]) / brisance + 1)**2)
 			nodes[T] = p**RSS_SCALE
 			blame[T] = src
 			p = min(p, 10)
