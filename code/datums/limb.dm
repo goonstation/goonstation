@@ -425,8 +425,8 @@
 	custom_msg = null
 	miss_prob = 90
 	stam_damage_mult = 0
-	harm_intent_delay = 1.5 SECONDS
-	var/human_stam_damage = 60
+	harm_intent_delay = COMBAT_CLICK_DELAY
+	var/human_stam_damage = 50
 	var/human_desorient_duration = 2 SECONDS
 	var/human_stun_duration = 5 SECONDS
 	var/list/chems_to_inject = null
