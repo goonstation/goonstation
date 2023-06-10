@@ -55,6 +55,7 @@
 		HH.limb_name = "left tentacles"
 
 		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
 		HH.name = "right tentacles"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"
