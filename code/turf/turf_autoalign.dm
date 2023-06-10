@@ -215,7 +215,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 	))
 /turf/simulated/wall/auto/jen
 	icon = 'icons/turf/walls_jen.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -283,7 +287,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
 /turf/simulated/wall/auto/reinforced/jen
 	icon = 'icons/turf/walls_jen.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	light_mod = "wall-jen-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
@@ -352,7 +360,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
 	mod = "norn-"
 	light_mod = "wall-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	the_tuff_stuff
@@ -383,7 +395,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	mod = "norn-R-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -415,7 +431,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-Y"
+#else
 	icon_state = "mapwall_r-Y"
+#endif
 	mod = "norn-Y-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -438,7 +458,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/orange
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-O"
+#else
 	icon_state = "mapwall_r-O"
+#endif
 	mod = "norn-O-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -448,7 +472,11 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
 
 /turf/simulated/wall/auto/supernorn/wood
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall$$wood"
+#else
 	icon_state = "mapwall$$wood"
+#endif
 	default_material = "wood"
 	uses_material_appearance = TRUE
 
@@ -468,7 +496,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r-BR"
+#else
 	icon_state = "mapwall_r-BR"
+#endif
 	mod = "norn-BR-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -518,7 +550,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/marsoutpost)
 	))
 /turf/simulated/wall/auto/marsoutpost
 	icon = 'icons/turf/walls_marsoutpost.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "interior-0"
+#else
 	icon_state = "interior-map"
+#endif
 	light_mod = "wall-"
 
 	update_neighbors()
@@ -555,7 +591,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	))
 /turf/simulated/wall/auto/old
 	icon = 'icons/turf/walls_derelict.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "old-perspective-map"
+#else
 	icon_state = "old-map"
+#endif
 	mod = "old-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -582,7 +622,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 
 /turf/simulated/wall/auto/reinforced/old
 	icon = 'icons/turf/walls_derelict.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "oldr-perspective-map"
+#else
 	icon_state = "oldr-map"
+#endif
 	mod = "oldr-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -717,7 +761,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn)
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	light_mod = "wall-"
 	mod = "norn-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -741,7 +789,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/reinforced/supernorn)
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window, /obj/plasticflaps))
 /turf/unsimulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall_r"
+#else
 	icon_state = "mapwall_r"
+#endif
 	light_mod = "wall-"
 	mod = "norn-R-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -901,7 +953,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle)
 /turf/unsimulated/wall/auto/adventure/shuttle // fancy walls part 2: enough for debris field
 	name = "shuttle wall"
 	icon = 'icons/turf/walls_shuttle-debris.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "shuttle-0"
+#else
 	icon_state = "shuttle-map"
+#endif
 	mod = "shuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
@@ -909,7 +965,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/shuttle/dark)
 	. = ..()
 	connect_overlay = 0
 /turf/unsimulated/wall/auto/adventure/shuttle/dark
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "dshuttle-0"
+#else
 	icon_state = "dshuttle-map"
+#endif
 	mod = "dshuttle-"
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/bee)
@@ -921,7 +981,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	name = "hive wall"
 	desc = "Honeycomb's big, yeah yeah yeah."
 	icon = 'icons/turf/walls_beehive.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "bee-perspective-map"
+#else
 	icon_state = "bee-map"
+#endif
 	mod = "bee-"
 	plane = PLANE_WALL-1 //We don't want depth shadows
 
@@ -1035,7 +1099,11 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/mars/interior)
 	name = "wall"
 	mod = "interior-"
 	icon = 'icons/turf/walls_marsoutpost.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "interior-0"
+#else
+	icon_state = "interior-map"
+#endif
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/adventure/meat)
@@ -1083,12 +1151,20 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/old)
 	name = "wall"
 	icon = 'icons/turf/walls_derelict.dmi'
 	mod = "old-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "old-perspective-map"
+#else
 	icon_state = "old-map"
+#endif
 
 	reinforced
 		name = "reinforced wall"
 		mod = "oldr-"
+#ifdef PERSPECTIVE_EDITOR_WALL
+		icon_state = "oldr-perspective-map"
+#else
 		icon_state = "oldr-map"
+#endif
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/hedge)
