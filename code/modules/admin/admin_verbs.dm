@@ -1697,7 +1697,7 @@ var/list/fun_images = list()
 	set desc = "Show or hide the admin changelog"
 	ADMIN_ONLY
 
-	if (winget(src, "adminchanges", "is-visible") == "true")
+	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
 		var/changelogHtml = grabResource("html/changelog.html")

@@ -31548,7 +31548,7 @@
 "bAI" = (
 /obj/machinery/light_switch/west,
 /obj/machinery/space_heater,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -36029,8 +36029,8 @@
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/shorts/random_color,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -39682,7 +39682,7 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -39690,11 +39690,11 @@
 /area/station/crew_quarters/quarters_south)
 "bVm" = (
 /obj/storage/closet/janitor,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},

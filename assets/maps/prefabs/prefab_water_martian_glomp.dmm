@@ -1,63 +1,63 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
+"aa" = (
 /turf/variableTurf/clear,
 /area/space)
-"c" = (
+"ab" = (
+/obj/decal/aliencomputer{
+	pixel_x = -32
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"ac" = (
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"g" = (
+"ad" = (
+/obj/decal/cleanable/slime,
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"ae" = (
+/obj/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"af" = (
+/obj/item/material_piece/bone{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"ag" = (
 /obj/map/light/white,
 /turf/simulated/wall/auto/martian,
 /area/prefab/martian_glomp)
-"i" = (
-/turf/variableTurf/floor,
+"ah" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/clear,
 /area/prefab/martian_glomp)
-"j" = (
+"ai" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aj" = (
 /obj/decal/aliencomputer{
 	pixel_x = -32
 	},
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"n" = (
+"ak" = (
 /obj/item/reagent_containers/food/snacks/yuck{
 	desc = "It's a bad day if you have to eat this for dinner.";
 	doants = 0
 	},
-/turf/simulated/martian/floor,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
-"o" = (
-/turf/simulated/wall/auto/martian,
-/area/prefab/martian_glomp)
-"q" = (
-/obj/machinery/door/unpowered/martian,
-/turf/simulated/wall/auto/martian,
-/area/prefab/martian_glomp)
-"r" = (
-/obj/decal/cleanable/slime,
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"s" = (
-/obj/crevice{
-	pixel_y = 30
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"t" = (
-/obj/indestructible/shuttle_corner{
-	desc = "Grody. How long has this been here?";
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal";
-	name = "withered wall"
-	},
-/turf/variableTurf/floor,
-/area/prefab/martian_glomp)
-"w" = (
-/obj/decal/cleanable/slime,
-/obj/machinery/door/unpowered/martian,
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"x" = (
+"al" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 9;
@@ -67,7 +67,74 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/martian_glomp)
-"y" = (
+"am" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"an" = (
+/obj/item/reagent_containers/food/snacks/yuck{
+	desc = "It's a bad day if you have to eat this for dinner.";
+	doants = 0
+	},
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"ao" = (
+/turf/simulated/wall/auto/martian,
+/area/prefab/martian_glomp)
+"ap" = (
+/obj/decal/cleanable/generic{
+	desc = "Tiny bits of bone strewn about.";
+	name = "bone fragments"
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aq" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/wall/auto/martian,
+/area/prefab/martian_glomp)
+"ar" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"as" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"at" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"au" = (
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"av" = (
+/obj/landmark/artifact,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aw" = (
+/obj/decal/cleanable/slime,
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"ax" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ay" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 5;
@@ -76,17 +143,34 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/prefab/martian_glomp)
-"z" = (
+/area/noGenerate)
+"az" = (
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"C" = (
+"aA" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-3";
+	name = "martian machine"
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aB" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aC" = (
+/obj/critter/martian/warrior/dead,
 /obj/decal/cleanable/slime,
-/obj/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"D" = (
+"aD" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 10;
@@ -95,8 +179,8 @@
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
-/area/prefab/martian_glomp)
-"E" = (
+/area/noGenerate)
+"aE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -107,44 +191,24 @@
 	},
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"G" = (
-/obj/crevice{
-	pixel_y = 30
-	},
-/obj/item/material_piece/bone,
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"K" = (
+"aF" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
-	dir = 9;
+	dir = 5;
 	icon = 'icons/turf/walls_martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
 /turf/variableTurf/clear,
 /area/prefab/martian_glomp)
-"L" = (
-/obj/decal/cleanable/generic{
-	desc = "Tiny bits of bone strewn about.";
-	name = "bone fragments"
+"aG" = (
+/obj/crevice{
+	pixel_y = 30
 	},
+/obj/item/material_piece/bone,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"M" = (
-/obj/item/material_piece/bone{
-	pixel_x = -9;
-	pixel_y = 6
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"N" = (
-/obj/decal/aliencomputer{
-	pixel_y = 32
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"P" = (
+"aH" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 6;
@@ -154,14 +218,79 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/martian_glomp)
-"R" = (
+"aI" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/floor,
+/area/prefab/martian_glomp)
+"aJ" = (
+/turf/simulated/wall/auto/martian,
+/area/space)
+"aK" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aL" = (
+/obj/decal/cleanable/generic{
+	desc = "Tiny bits of bone strewn about.";
+	name = "bone fragments"
+	},
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aM" = (
+/obj/item/material_piece/bone{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aN" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aO" = (
+/obj/decal/cleanable/slime,
+/obj/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aP" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aQ" = (
+/obj/crevice{
+	pixel_x = -30
+	},
+/obj/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aR" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
 /obj/landmark/artifact,
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"S" = (
+"aS" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
 	density = 1;
@@ -172,7 +301,60 @@
 	},
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"T" = (
+"aT" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aU" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"aV" = (
+/obj/crevice{
+	pixel_x = -30
+	},
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aW" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aX" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aY" = (
+/obj/landmark/artifact,
+/turf/simulated/martian/floor,
+/area/prefab/martian_glomp)
+"aZ" = (
+/turf/variableTurf/floor,
+/area/prefab/martian_glomp)
+"mQ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-4";
+	name = "martian machine"
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"Fk" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 5;
@@ -182,14 +364,27 @@
 	},
 /turf/variableTurf/floor,
 /area/prefab/martian_glomp)
-"V" = (
+"Fn" = (
 /obj/crevice{
-	pixel_x = -30
+	pixel_y = 30
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/martian/floor,
+/obj/item/material_piece/bone,
+/turf/simulated/floor/martian,
 /area/prefab/martian_glomp)
-"W" = (
+"Ox" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/obj/landmark/artifact,
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"OO" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/simulated/floor/martian,
+/area/prefab/martian_glomp)
+"PH" = (
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 6;
@@ -199,168 +394,170 @@
 	},
 /turf/variableTurf/clear,
 /area/prefab/martian_glomp)
-"X" = (
-/obj/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"Y" = (
-/obj/landmark/artifact,
-/turf/simulated/martian/floor,
+"ZW" = (
+/obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal";
+	name = "withered wall"
+	},
+/turf/variableTurf/clear,
 /area/prefab/martian_glomp)
 
 (1,1,1) = {"
-a
-a
-W
-T
-i
-P
-o
-y
-a
-a
+aa
+aa
+PH
+Fk
+aZ
+aH
+ao
+aF
+aa
+aa
 "}
 (2,1,1) = {"
-a
-W
-o
-o
-z
-o
-o
-o
-y
-a
+aa
+PH
+ao
+ao
+am
+ao
+ao
+ao
+aF
+aa
 "}
 (3,1,1) = {"
-W
-o
-o
-o
-c
-Y
-o
-o
-o
-a
+PH
+ao
+ao
+ao
+au
+av
+ao
+ao
+ao
+aa
 "}
 (4,1,1) = {"
-o
-g
-R
-c
-c
-c
-n
-o
-o
-y
+ao
+ag
+Ox
+au
+au
+au
+ak
+ao
+ao
+aF
 "}
 (5,1,1) = {"
-D
-o
-s
-c
-c
-c
-r
-E
-o
-o
+ZW
+ao
+OO
+au
+au
+au
+aU
+aA
+ao
+ao
 "}
 (6,1,1) = {"
-a
-o
-o
-S
-o
-o
-w
-o
-g
-o
+aa
+ao
+ao
+mQ
+ao
+ao
+ad
+ao
+ag
+ao
 "}
 (7,1,1) = {"
-a
-o
-o
-o
-o
-o
-r
-V
-j
-o
+aa
+ao
+ao
+ao
+ao
+ao
+aU
+aQ
+ab
+ao
 "}
 (8,1,1) = {"
-a
-D
-o
-G
-L
-c
-r
-n
-X
-o
+aa
+ZW
+ao
+Fn
+ap
+au
+aU
+ak
+ae
+ao
 "}
 (9,1,1) = {"
-a
-a
-o
-o
-M
-L
-C
-c
-o
-o
+aa
+aa
+ao
+ao
+af
+ap
+aO
+au
+ao
+ao
 "}
 (10,1,1) = {"
-a
-a
-o
-g
-N
-c
-c
-o
-o
-o
+aa
+aa
+ao
+ag
+aB
+au
+au
+ao
+ao
+ao
 "}
 (11,1,1) = {"
-a
-a
-o
-o
-o
-c
-o
-o
-o
-K
+aa
+aa
+ao
+ao
+ao
+au
+ao
+ao
+ao
+ah
 "}
 (12,1,1) = {"
-a
-a
-D
-o
-o
-q
-o
-o
-K
-a
+aa
+aa
+ZW
+ao
+ao
+aq
+ao
+ao
+ah
+aa
 "}
 (13,1,1) = {"
-a
-a
-a
-D
-x
-i
-t
-K
-a
-a
+aa
+aa
+aa
+ZW
+al
+aZ
+aI
+ah
+aa
+aa
 "}

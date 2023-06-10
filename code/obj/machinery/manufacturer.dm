@@ -2655,7 +2655,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
-		/datum/manufacture/beaconkit
+		/datum/manufacture/beaconkit,
+		/datum/manufacture/podgps
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks

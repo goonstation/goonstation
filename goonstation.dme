@@ -30,7 +30,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-#include "_std\macros\factions.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -1684,6 +1683,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\noisemaker.dm"
 #include "code\obj\item\organ_holder.dm"
 #include "code\obj\item\paint.dm"
+#include "code\obj\item\pet_carrier.dm"
 #include "code\obj\item\pinpointer.dm"
 #include "code\obj\item\plank.dm"
 #include "code\obj\item\plants.dm"
