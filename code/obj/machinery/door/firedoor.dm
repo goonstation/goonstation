@@ -149,10 +149,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				sleep(1.5 SECONDS)
 				src.set_density(0)
 				src.update_nearby_tiles()
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(0)
-				else
-					src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.operating = 0
 				return
 		else //close it up again
@@ -165,10 +162,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				src.update_nearby_tiles()
 				sleep(1.5 SECONDS)
 
-				if (ignore_light_or_cam_opacity)
-					src.set_opacity(1)
-				else
-					src.RL_SetOpacity(1)
+				src.set_opacity(1)
 				src.operating = 0
 				return
 		playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)

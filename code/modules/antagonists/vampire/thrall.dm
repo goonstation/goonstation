@@ -14,9 +14,8 @@
 		if (istype(master, /datum/abilityHolder/vampire))
 			src.master_ability_holder = master
 
-			if (istype(src.master_ability_holder.owner, /mob))
-				src.owner = new_owner
-				src.owner.master = src.master_ability_holder.owner.ckey
+			if (istype(src.master_ability_holder.owner, /mob) && src.master_ability_holder.owner.mind)
+				src.master = src.master_ability_holder.owner.mind
 
 		. = ..()
 

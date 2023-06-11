@@ -525,6 +525,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
+	uses_material_appearance = TRUE
 
 	New()
 		..()
@@ -854,7 +855,6 @@ MATERIAL
 
 
 /obj/item/rods/steel
-	color = "#8C8C8C"
 	default_material = "steel"
 
 /obj/item/rods/mauxite
@@ -1254,7 +1254,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 
 	wood
 		fl_tiles
-			recipe_id = "fl_tiles_wood"
+			recipe_id = "fl_tiles"
 			craftedType = /obj/item/tile
 			name = "Floor Tile"
 			yield = 4

@@ -88,6 +88,7 @@
 		UpdateIcon()
 
 	disposing()
+		new /obj/decal/fakeobjects/nuclear_reactor_destroyed(src.loc)
 		src._light_turf?.remove_medium_light("reactor_light")
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
@@ -638,7 +639,6 @@
 
 
 
-
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1
@@ -711,8 +711,11 @@
 #undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
-	icon_state = ""
-	icon = null
+	icon_state = "trace"
+	icon = 'icons/obj/projectiles.dmi'
+	invisibility = INVIS_INFRA
+	override_color = TRUE
+	color_icon = "#00FF00"
 	power = 100
 	cost = 20
 //Kill/Stun ratio

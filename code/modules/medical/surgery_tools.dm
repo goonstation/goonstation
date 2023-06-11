@@ -974,7 +974,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1

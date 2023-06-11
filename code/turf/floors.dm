@@ -1622,6 +1622,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	default_melt_cap = 80
 	allows_vehicles = 1
 	default_material = "blob"
+	mat_changename = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(copyMaterial(O.my_material))
@@ -1970,7 +1971,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile()
-				src.default_material = getMaterial(src.material)
+				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
