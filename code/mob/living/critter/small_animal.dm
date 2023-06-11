@@ -2226,6 +2226,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	butcherable = 0
 	health_brute = 15
 	health_burn = 15
+	health_brute_vuln = 0
+	health_burn_vuln = 0
+	can_bleed = FALSE
+	ai_retaliates = TRUE
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
+
 	pet_text = list("gently baps", "pets", "cuddles")
 	var/playing_dead = 0
 
@@ -2236,6 +2244,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	// Opossums should not take TOX or OXY.
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 	setup_hands()
 		..() // both of these do no damage (in return, possums are basically immortal)
