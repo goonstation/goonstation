@@ -19,8 +19,12 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 
 		chat_text = make_chat_maptext(message.speaker, message.content, maptext_css)
 
-		//if(maptext_animation_colors)
-		//	oscillate_colors(chat_text, maptext_animation_colors)
+		if(length(message.maptext_animation_colors))
+			for(var/i in 1 to length(message.maptext_animation_colors))
+				if(message.maptext_animation_colors[i] == "start_color")
+					message.maptext_animation_colors[i] = message.maptext_css_values["color"]
+			oscillate_colors(chat_text, message.maptext_animation_colors)
+
 		if(chat_text)
 			if(!message.speaker.chat_text)
 				message.speaker.chat_text = new(null, message.speaker) //lazy init maptext holder for atoms

@@ -14,7 +14,8 @@ TYPEINFO(/datum/speech_module/output/deadchat)
 #ifdef DATALOGGER
 		game_stats.ScanText(message.content)
 #endif
-
-		//oscillate_colors(chat_text, list(maptext_color, "#c482d1"))
-		//TODO implement oscillating maptext colour
+		message.say_verb = pick("moans","wails","laments")
+		if (prob(5))
+			message.say_verb = "grumps"
+		message.maptext_animation_colors = list("start_color", "#c482d1")
 		. = ..()

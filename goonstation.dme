@@ -408,6 +408,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\speech\modifiers\speech\brain_damage.dm"
 #include "code\datums\speech\modifiers\speech\client_prefs.dm"
 #include "code\datums\speech\modifiers\speech\mob_checks.dm"
+#include "code\datums\speech\modifiers\speech\singing.dm"
 #include "code\datums\speech\outputs\deadchat.dm"
 #include "code\datums\speech\outputs\equipped.dm"
 #include "code\datums\speech\outputs\radio.dm"

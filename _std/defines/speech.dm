@@ -11,11 +11,12 @@
 
 // say_message flags
 // bitflags for different singing modifiers, used so that effects can be combined if desired
-#define SAYFLAG_SINGING 1
-#define SAYFLAG_LOUD_SINGING 2
-#define SAYFLAG_SOFT_SINGING 4
-#define SAYFLAG_BAD_SINGING 8
-#define SAYFLAG_RADIO_SENT 16 //message has already been transmitted over radio
+#define SAYFLAG_SINGING 1 << 0
+#define SAYFLAG_LOUD_SINGING 1 << 1
+#define SAYFLAG_SOFT_SINGING 1 << 2
+#define SAYFLAG_BAD_SINGING 1 << 3
+#define SAYFLAG_RADIO_SENT 1 << 4 //message has already been transmitted over radio
+#define SAYFLAG_NO_MAPTEXT 1 << 5
 
 //REMOVE THESE
 #define LOUD_SINGING SAYFLAG_LOUD_SINGING

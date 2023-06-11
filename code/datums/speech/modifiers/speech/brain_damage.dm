@@ -19,4 +19,5 @@ TYPEINFO(/datum/speech_module/modifier/brain_damage)
 				if(!speaker.stuttering && prob(8))
 					message.content = stutter(message.content)
 
+			message.say_verb = pick("says","stutters","mumbles","slurs")
 		. = message

@@ -147,6 +147,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/maptext_css_values = list()
 	/// The maptext associated with this message (if there is one)
 	var/image/chat_maptext/maptext = null
+	/// List of colours for the maptext to oscillate through. Use special value "start_color" to be replaced by whatever is in maptext_css_values["color"]
+	var/list/maptext_animation_colors = null
 	/// Input module that recieved this message last - used for format() calls
 	var/datum/listen_module/input/recieved_module = null
 
@@ -228,7 +230,11 @@ var/global/datum/speech_manager/SpeechManager = new()
 			src.speech_modifiers += global.SpeechManager.GetModifierInstance(mod_id)
 		for(var/out_id in outputs)
 			src.output_modules += global.SpeechManager.GetOutputInstance(out_id)
-		//TODO Sort modules
+
+		sortList(src.accents, PROC_REF(cmp_say_modules))
+		sortList(src.speech_modifiers, PROC_REF(cmp_say_modules))
+		sortList(src.output_modules, PROC_REF(cmp_say_modules))
+
 
 	/// No return value is expected here
 	proc/process(var/datum/say_message/message)
@@ -255,6 +261,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(new_accent))
 			return null
 		src.accents += new_accent
+		sortList(src.accents, PROC_REF(cmp_say_modules))
 		return new_accent
 
 	/// Remove an accent from the tree. Returns true on success, false on failure. Get the accent to remove using the GetAccentBy() call
@@ -282,7 +289,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(new_mod))
 			return null
 		src.speech_modifiers += new_mod
-		//TODO module sort
+		sortList(src.speech_modifiers, PROC_REF(cmp_say_modules))
 		return new_mod
 
 	/// Remove a modifier from the tree. Returns true on success, false on failure. Get the modifier to remove using the GetModifierBy() call
@@ -310,7 +317,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(new_out))
 			return null
 		src.output_modules += new_out
-		//TODO module sort
+		sortList(src.output_modules, PROC_REF(cmp_say_modules))
 		return new_out
 
 	/// Remove an output from the tree. Returns true on success, false on failure. Get the output to remove using the GetOutputBy() call
@@ -364,7 +371,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 		for(var/in_id in inputs)
 			src.input_modules += global.SpeechManager.GetInputInstance(in_id, src)
 
-		//TODO module sort
+		sortList(src.listen_modifiers, PROC_REF(cmp_say_modules))
+		sortList(src.input_modules, PROC_REF(cmp_say_modules))
 
 	/// No return value is expected here
 	proc/process(var/datum/say_message/message)
@@ -393,6 +401,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(new_input))
 			return null
 		src.input_modules += new_input
+		sortList(src.input_modules, PROC_REF(cmp_say_modules))
 		return new_input
 
 	/// Remove an input from the tree. Returns true on success, false on failure. Get the input to remove using the GetInputBy() call
@@ -420,7 +429,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 		if(!istype(new_mod))
 			return null
 		src.listen_modifiers += new_mod
-		//TODO module sort
+		sortList(src.listen_modifiers, PROC_REF(cmp_say_modules))
 		return new_mod
 
 	/// Remove a modifier from the tree. Returns true on success, false on failure. Get the modifier to remove using the GetModifierBy() call
@@ -566,3 +575,8 @@ ABSTRACT_TYPE(/datum/listen_module/modifier)
 /datum/listen_module/modifier
 	id = "modifier_base"
 
+
+/proc/cmp_say_modules(var/datum/speech_module/a, var/datum/speech_module/b)
+	. = a.priority - b.priority
+	if(. == 0)
+		return cmp_text_asc(a.id, b.id)

@@ -236,7 +236,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears")
 	start_speech_accents = null
-	start_speech_modifiers = list("client_checks", "mob_checks")
+	start_speech_modifiers = list("client_checks", "mob_checks", "singing")
 	start_speech_outputs = list("spoken")
 	start_listen_languages = list("english")
 

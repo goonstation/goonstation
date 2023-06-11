@@ -7,7 +7,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears","deadchat")
 	start_speech_accents = null
-	start_speech_modifiers = null
+	start_speech_modifiers = list("singing")
 	start_speech_outputs = list("deadchat")
 	start_listen_languages = null
 // dead
