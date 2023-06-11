@@ -295,7 +295,7 @@ What are the archived variables for?
 /// * Checks if the turf is valid for air group processing.
 /// * Returns: FALSE if self-check failed or TRUE if check passes
 /datum/gas_mixture/proc/check_turf(turf/model)
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) + model.GAS) / 2 - model.GAS
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) + model.GAS) / 2 - model.GAS;
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
