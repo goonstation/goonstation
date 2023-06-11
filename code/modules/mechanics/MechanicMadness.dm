@@ -4129,6 +4129,196 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
 
+/obj/item/mechanics/grabber
+	// picks up items, can spin, and can smack something with it
+	name = "\improper Grabber Component"
+	desc = "Usable to grab items and create a mini assembly line"
+	icon_state = "grabber"
+	cabinet_banned = TRUE
+	plane = PLANE_DEFAULT
+	density = TRUE
+
+	var/holdpath = /obj/item // varedit for funny mob pickup
+	var/atom/movable/heldItem
+
+	/// mob hidden inside the component so it can use items
+	var/mob/dummy_mob
+
+	/// does it bypass the mob attack safety check
+	var/emagged = FALSE
+
+	New()
+		. = ..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Pickup/Drop held item", PROC_REF(do_pickup))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Use held item", PROC_REF(do_use))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Change Direction", PROC_REF(do_rotate))
+		src.UpdateIcon()
+
+		dummy_mob = new(src)
+		dummy_mob.name = src.name
+
+	disposing()
+		holding = null
+		. = ..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if (Obj == heldItem && newloc != src)
+			heldItem.pixel_x = 0
+			heldItem.pixel_y = 0
+			heldItem = null
+			src.UpdateIcon()
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		if (!src.emagged)
+			if (user)
+				user.show_text("You short out the safety sensors on [src].", "red")
+			src.audible_message("<span class='combat'><B>[src] buzzes oddly!</B></span>")
+			src.emagged = TRUE
+
+	demag(mob/user)
+		. = ..()
+		if (src.emagged)
+			src.emagged = FALSE
+			user.show_text("You repair the safety sensors on [src].", "blue")
+
+	update_icon(...)
+		. = ..()
+		src.vis_contents = null
+		if (heldItem)
+			if (heldItem in src)
+				src.vis_contents += heldItem
+			else
+				heldItem = null
+				heldItem.pixel_x = 0
+				heldItem.pixel_y = 0
+
+		var/image/I = image(src.icon,icon_state = (heldItem ? "grabber_arm-grab" : "grabber_arm"))
+
+		switch (src.dir)
+			if (NORTH)
+				if (heldItem)
+					heldItem.pixel_y = 25
+					heldItem.pixel_x = 0
+				I.pixel_y = 10
+			if (SOUTH)
+				if (heldItem)
+					heldItem.pixel_x = 0
+					heldItem.pixel_y = 0
+			if (EAST)
+				if (heldItem)
+					heldItem.pixel_x = 15
+					heldItem.pixel_y = 10
+				I.pixel_x = 5
+				I.pixel_y = 10
+			if (WEST)
+				if (heldItem)
+					heldItem.pixel_x = -15
+					heldItem.pixel_y = 10
+				I.pixel_x = -5
+				I.pixel_y = 10
+		if (heldItem)
+			I.layer = (heldItem.layer + 1)
+			I.plane = heldItem.plane
+
+		src.UpdateOverlays(I,"grabber_arm")
+
+		// overlay that goes between the grabber and the arm
+		I = image(src.icon,icon_state="[I.icon_state]under",pixel_x=I.pixel_x,pixel_y=I.pixel_y)
+		if (heldItem)
+			I.layer = (heldItem.layer - 1)
+			I.plane = heldItem.plane
+		src.UpdateOverlays(I,"grabber_armunder")
+
+	proc/check_holdable(atom/movable/A)
+		if (istype(A,/obj/overlay/tile_effect))
+			return FALSE
+		if (isitem(A))
+			var/obj/item/W = A
+			if (W.cant_drop) // preparing for inevitable nerd shit
+				return FALSE
+		// if its something we're allowed to pick up, return true
+		if (istype(A,holdpath) && !A.anchored && !A.density)
+			return TRUE
+
+		return FALSE
+
+	set_dir()
+		. = ..()
+		src.UpdateIcon()
+	Move()
+		. = ..()
+		src.UpdateIcon()
+
+	proc/do_pickup()
+		var/turf/T = get_step(src,src.dir)
+		if (heldItem && (heldItem in src))
+			if (T)
+				heldItem.set_loc(T)
+		else
+			for (var/atom/movable/AM in T)
+				if (check_holdable(AM))
+					heldItem = AM
+					AM.set_loc(src)
+					break
+
+		src.UpdateIcon()
+
+	proc/do_rotate(var/datum/mechanicsMessage/input)
+		var/direction = text2num_safe(input.signal)
+		if (direction == null)
+			direction = dirname_to_dir(input.signal)
+		if (direction == null)
+			return
+
+		if (is_cardinal(direction))
+			src.set_dir(direction)
+
+	proc/do_use()
+		if (ON_COOLDOWN(src, "grabber_use", src.cooldown_time))
+		if (!heldItem || !(heldItem in src))
+			return
+
+		var/obj/item/W
+		if (isitem(heldItem)) // admins can varedit to mobs for the funny
+			W = heldItem
+		if (!W)
+			return
+
+		var/turf/T = get_step(src,src.dir)
+
+		// find something we can whack with the item
+		// filter through the turf's contents for stuff we can interact with, pick the last one
+		var/list/stuff = list()
+		var/atom/movable/AM
+		for (var/atom/movable/thing in T.contents)
+			// check to see if we're allowed to smack the thing
+			if (istype(thing,/obj/overlay) || thing.invisibility)
+				continue
+			// respect window code
+			if (thing.flags & ON_BORDER)
+				AM = thing
+			stuff += thing
+
+		if (!AM && length(stuff))
+			AM = stuff[length(stuff)]
+		if (!AM)
+			return
+
+		// if the item does more than around what it takes to damage a door, refuse to harm them
+		if (!src.emagged)
+			if (ismob(AM) && W.force > 5)
+				return
+
+		AM.Attackby(W,dummy_mob)
+		if (ismob(AM) && src.emagged)
+			var/mob/M = AM
+			W.attack(M,dummy_mob)
+		W.AfterAttack(AM,dummy_mob)
+
+		src.UpdateIcon()
+
 
 
 /obj/item/mechanics/bomb
