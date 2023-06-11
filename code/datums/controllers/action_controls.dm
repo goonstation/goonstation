@@ -55,7 +55,9 @@ var/datum/action_controller/actions
 					if(OA.interrupt_start != -1)
 						OA.interrupt_time += TIME - OA.interrupt_start
 						OA.interrupt_start = -1
-					OA.onResume(A)
+					OA.canRunCheck()
+					if(OA.state == ACTIONSTATE_DELETE || OA.state == ACTIONSTATE_RUNNING || OA.state == ACTIONSTATE_INFINITE)
+						OA.onResume(A)
 					if(OA.state == ACTIONSTATE_RUNNING || OA.state == ACTIONSTATE_INFINITE)
 						OA.onUpdate()
 					qdel(A)
@@ -63,7 +65,9 @@ var/datum/action_controller/actions
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
-		A.onStart()
+		A.canRunCheck(in_start = TRUE)
+		if(A.state == ACTIONSTATE_STOPPED || A.state == ACTIONSTATE_RUNNING || A.state == ACTIONSTATE_INFINITE)
+			A.onStart()
 		if(A.state == ACTIONSTATE_RUNNING || A.state == ACTIONSTATE_INFINITE)
 			A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
@@ -91,7 +95,9 @@ var/datum/action_controller/actions
 						A?.promise.fulfill(null)
 					continue
 
-				A.onUpdate()
+				A.canRunCheck()
+				if(A.state != ACTIONSTATE_INTERRUPTED)
+					A.onUpdate()
 
 			if(length(running[X]) == 0)
 				running.Remove(X)
@@ -143,8 +149,9 @@ var/datum/action_controller/actions
 		sleep(1)
 		started = TIME
 		state = ACTIONSTATE_RUNNING
-		loopStart()
-		return
+		canRunCheck()
+		if(state == ACTIONSTATE_RUNNING)
+			loopStart()
 
 	proc/loopStart()				//! Called after restarting. Meant to cotain code from -and be called from- onStart()
 		SHOULD_CALL_PARENT(TRUE)
@@ -162,6 +169,10 @@ var/datum/action_controller/actions
 
 	proc/onDelete()				   //! Called when the action is complete and about to be deleted. Usable for cleanup and such.
 		SHOULD_CALL_PARENT(TRUE)
+		return
+
+	/// Ran before onStart, onUpdate, onResume and in onRestart. Call interrupt here to stop the action from starting.
+	proc/canRunCheck(in_start = FALSE)
 		return
 
 	proc/updateBar()				//! Updates the animations
