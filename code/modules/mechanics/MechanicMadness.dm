@@ -4159,6 +4159,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	disposing()
 		holding = null
+		qdel(dummy_mob)
+		dummy_mob = null
 		. = ..()
 
 	Exited(Obj, newloc)
