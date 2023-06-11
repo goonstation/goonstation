@@ -115,10 +115,12 @@ var/datum/action_controller/actions
 		else
 			return interrupt_start - started - interrupt_time
 
-	proc/interrupt(var/flag) //! This is called by the default interrupt actions
+	proc/interrupt(flag, can_resume=TRUE) //! This is called by the default interrupt actions
 		if(interrupt_flags & flag || flag == INTERRUPT_ALWAYS)
 			if(state != ACTIONSTATE_INTERRUPTED)
 				interrupt_start = TIME
+			if(!can_resume)
+				resumable = FALSE
 			state = ACTIONSTATE_INTERRUPTED
 			onInterrupt(flag)
 		return
