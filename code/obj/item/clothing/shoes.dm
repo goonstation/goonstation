@@ -19,6 +19,8 @@
 	burn_possible = 1
 	health = 5
 	tooltip_flags = REBUILD_DIST
+	var/stowable_items = null
+	var/stowed_item = null
 	var/step_sound = "step_default"
 	var/step_priority = STEP_PRIORITY_NONE
 	var/step_lots = 0 //classic steps (used for clown shoos)
@@ -41,6 +43,16 @@
 					. += "The laces are tied."
 				if (LACES_CUT)
 					. += "The laces are cut."
+			if (src.stowed_item)
+				. += " They seem unusually heavy."
+
+	attack_hand(mob/living/carbon/human/user)
+		if(src.stowed_item && (user.r_hand == src || user.l_hand == src || user.shoes == src))
+			boutput(user, "<span class='notice'>You draw [src.stowed_item] from [src].</span>")
+			user.put_in_hand_or_drop(src.stowed_item)
+			src.stowed_item = null
+		else
+			return ..()
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
@@ -62,6 +74,18 @@
 			boutput(user, "You neatly cut the knot and most of the laces away. Problem solved forever!")
 			src.laces = LACES_CUT
 			tooltip_rebuild = 1
+
+		if (src.stowable_items)
+			if (src.stowed_item)
+				boutput(user, "<span class='notice'>There's already something stowed in [src].</span>")
+			else
+				for (var/obj/item/stowable as anything in src.stowable_items)
+					if (istype(W, stowable))
+						user.u_equip(W)
+						W.set_loc(src)
+						src.stowed_item = W
+						boutput(user, "<span class='notice'>You stow [W] in [src].</span>")
+						break
 
 /obj/item/clothing/shoes/rocket
 	name = "rocket shoes"
@@ -440,6 +464,7 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	step_priority = STEP_PRIORITY_LOW
 	step_lots = 1
 	kick_bonus = 2
+	stowable_items = list(/obj/item/utility_knife)
 
 	setupProperties()
 		..()

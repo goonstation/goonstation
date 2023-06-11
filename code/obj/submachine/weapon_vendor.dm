@@ -128,6 +128,7 @@
 		materiel_stock += new/datum/materiel/utility/nightvisionsechudgoggles
 		materiel_stock += new/datum/materiel/utility/markerrounds
 		materiel_stock += new/datum/materiel/utility/prisonerscanner
+		materiel_stock += new/datum/materiel/utility/utilityknife
 		materiel_stock += new/datum/materiel/ammo/medium
 		materiel_stock += new/datum/materiel/ammo/self_charging
 		materiel_stock += new/datum/materiel/assistant/basic
@@ -397,6 +398,11 @@
 	name = "RecordTrak Scannner"
 	path = /obj/item/device/prisoner_scanner
 	description = "A device used to scan in prisoners and update their security records."
+
+/datum/materiel/utility/utilityknife
+	name = "Utility Knife"
+	path = /obj/item/utility_knife
+	description = "A non-combat knife used for prying doors and firelocks, as well as destroying kudzu. Can be stowed inside military boots."
 
 /datum/materiel/ammo/medium
 	name = "Spare Power Cell"
