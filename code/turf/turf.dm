@@ -166,6 +166,14 @@
 		if (length(src.camera_coverage_emitters))
 			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED

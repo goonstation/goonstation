@@ -35,14 +35,11 @@
 			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		var/turf/simulated/floor/T = get_turf(src.loc)
-		var/replacement = /turf/simulated/floor/airless/plating/catwalk/auto
-		if (!istype(T, /turf/unsimulated/floor))
-			if (istype(T, /turf/space/fluid) || istype(T, /turf/simulated/floor))
-				replacement = /turf/simulated/floor/airless/plating
-			T.ReplaceWith(replacement, FALSE, TRUE, FALSE, FALSE)
-			T.MakeCatwalk(rods)
-			qdel(src)
+		var/turf/T = get_turf(src.loc)
+		if (istype_exact(T, /turf/space))
+			T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, FALSE, TRUE, FALSE, FALSE)
+		T.MakeCatwalk(rods)
+		del(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
