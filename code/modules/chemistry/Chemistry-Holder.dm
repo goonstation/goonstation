@@ -584,7 +584,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			current_reagent.check_threshold()
 			if (current_reagent.disposed) //Caused some sort of infinite loop? gotta be safe.
 				reagent_list.Remove(reagent)
-				return 0
 			else
 				current_reagent.on_remove()
 				remove_possible_reactions(current_reagent.id) //Experimental structure
@@ -596,7 +595,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 				qdel(current_reagent)
 
-				return 0
+				handle_reactions() //we might have removed an inhibitor, check if we should react
+
+			return 0
 
 		return 1
 
