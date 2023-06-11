@@ -287,7 +287,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Agent Radio"
 	item = /obj/item/device/radio/headset/agent
 	cost = 1
-	desc = "A syndicate radio desinged to imitate nanotrasen radios. Comes with the syndicate frequency and more can be scanned in."
+	desc = "A syndicate radio desinged to imitate nanotrasen radios. Comes with the syndicate secure frequency and more can be scanned in."
 	not_in_crates = TRUE
 
 
@@ -1320,4 +1320,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	item = /obj/item/device/flash
 	cost = 1
 	desc = "Just a standard-issue flash. Won't remove implants like the Revolutionary Flash."
+
+/datum/syndicate_buylist/generic/head_rev/agentradio
+	name = "Agent Radio"
+	item = /obj/item/device/radio/headset/agent
+	cost = 1
+	desc = "A revolutionary radio desinged to imitate nanotrasen radios. Comes with the revolutionary secure frequency and more can be scanned in."
 
