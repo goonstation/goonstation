@@ -965,10 +965,15 @@
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if this ability is disabled for some reason
 		else if (src.disabled)
-			boutput(holder.owner, "<span class='alert'>[src.name].</span>")
+			boutput(holder.owner, "<span class='alert'>[src.name] is disabled.</span>")
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this while cuffed/restrained, if we're restrained
 		else if (!src.can_cast_while_cuffed && src.holder.owner.restrained())
 			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while you're restrained.</span>")
+			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
+		// Check if we're allowed to cast this from inside a container.
+		else if (!src.can_cast_from_container && !isturf(src.holder.loc))
+			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while inside something else.</span>")
 		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())
 			boutput(src.holder.owner, "<span class='alert'>[src.name] is on cooldown for [src.cooldowncheck() / (1 SECOND)] seconds.</span>")
