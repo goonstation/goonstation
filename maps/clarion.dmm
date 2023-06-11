@@ -11819,6 +11819,9 @@
 	pixel_y = 28
 	},
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -16281,6 +16284,7 @@
 /obj/table/reinforced/bar/auto{
 	name = "table"
 	},
+/obj/machinery/coffeemaker/command,
 /obj/drink_rack/mug{
 	pixel_y = -24
 	},
@@ -17063,6 +17067,7 @@
 	layer = 3.5;
 	pixel_y = 28
 	},
+/obj/machinery/disposal/chemlink,
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
@@ -23625,6 +23630,7 @@
 	dir = 4;
 	name = "Medbay Storage"
 	},
+/obj/access_spawn/medlocker,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-8"
@@ -28457,6 +28463,12 @@
 /obj/item/clothing/under/swimsuit/black,
 /obj/item/clothing/under/swimsuit/red,
 /obj/item/clothing/under/swimsuit/blue,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks"
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks"
+	},
 /obj/item/clothing/under/shorts/black{
 	name = "swimming trunks"
 	},
@@ -30489,6 +30501,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -33509,6 +33524,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 4
 	},
+/obj/machinery/vending/player/chemicals,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "luA" = (
@@ -35414,6 +35430,9 @@
 /obj/machinery/coffeemaker/medbay,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "npu" = (
@@ -41329,8 +41348,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
-"sSI" = (
-)
 "sUd" = (
 /obj/disposalpipe/segment/mail,
 /turf/unsimulated/floor{
@@ -41746,6 +41763,9 @@
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/green/side{
 	dir = 5
@@ -42557,6 +42577,9 @@
 /obj/machinery/coffeemaker/engineering,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
@@ -74143,6 +74166,7 @@ aPv
 aPv
 aPv
 aPv
+aPv
 bIm
 btY
 pEX
@@ -74253,7 +74277,6 @@ aaa
 aaa
 aaa
 aaa
-sSI
 "}
 (106,1,1) = {"
 aaa
