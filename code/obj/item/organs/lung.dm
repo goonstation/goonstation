@@ -120,7 +120,7 @@
 			donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
 				donor.sleeping = max(donor.sleeping, 2)
-		else if (N2O_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if (probmult(20))
 				update.emotes |= pick("giggle", "laugh")
 
