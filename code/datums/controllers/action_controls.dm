@@ -56,14 +56,16 @@ var/datum/action_controller/actions
 						OA.interrupt_time += TIME - OA.interrupt_start
 						OA.interrupt_start = -1
 					OA.onResume(A)
-					OA.onUpdate()
+					if(OA.state == ACTIONSTATE_RUNNING || OA.state == ACTIONSTATE_INFINITE)
+						OA.onUpdate()
 					qdel(A)
 					return OA
 			running[owner] += A
 		A.owner = owner
 		A.started = TIME
 		A.onStart()
-		A.onUpdate()
+		if(A.state == ACTIONSTATE_RUNNING || A.state == ACTIONSTATE_INFINITE)
+			A.onUpdate()
 		return A // cirr here, I added action ref to the return because I need it for AI stuff, thank you
 
 	proc/interrupt(var/atom/owner, var/flag) //! Is called by all kinds of things to check for action interrupts.
@@ -125,14 +127,17 @@ var/datum/action_controller/actions
 		return
 
 	proc/onInterrupt(var/flag = 0) //! Called when the action fails / is interrupted.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_DELETE
 		return
 
 	proc/onStart()				   //! Called when the action begins
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_RUNNING
 		return
 
 	proc/onRestart()			   //! Called when the action restarts (for example: automenders)
+		SHOULD_CALL_PARENT(TRUE)
 		sleep(1)
 		started = TIME
 		state = ACTIONSTATE_RUNNING
@@ -140,17 +145,21 @@ var/datum/action_controller/actions
 		return
 
 	proc/loopStart()				//! Called after restarting. Meant to cotain code from -and be called from- onStart()
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/onResume(datum/action/attempted)	 //! Called when the action resumes - likely from almost ending. Arg is the action which would have cancelled this.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_RUNNING
 		return
 
 	proc/onEnd()				   //! Called when the action succesfully ends.
+		SHOULD_CALL_PARENT(TRUE)
 		state = ACTIONSTATE_DELETE
 		return
 
 	proc/onDelete()				   //! Called when the action is complete and about to be deleted. Usable for cleanup and such.
+		SHOULD_CALL_PARENT(TRUE)
 		return
 
 	proc/updateBar()				//! Updates the animations
