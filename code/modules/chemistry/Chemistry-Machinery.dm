@@ -17,7 +17,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 	desc = "A device used for the slow but precise heating and cooling of chemicals."
 	density = 1
 	anchored = ANCHORED
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/heater.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
@@ -27,7 +27,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
-	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	var/static/image/icon_beaker = image('icons/obj/heater.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -287,6 +287,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 			src.beaker = null
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
+
+	chemistry
+		icon = 'icons/obj/heater_chem.dmi'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
