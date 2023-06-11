@@ -105,11 +105,8 @@
 				return 0
 
 		if (3)
-			/*if (!iswizard(src))
-				boutput(src, "<span class='alert'>You seem to have lost all magical abilities.</span>")
-				return 0*/
-			if (src.wizard_castcheck(spell) == 0)
-				return 0 // Has own user feedback.
+			if (!spell.castcheck())
+				return FALSE
 
 	if (src.getStatusDuration("paralysis") || !isalive(src))
 		boutput(src, "<span class='alert'>Not when you're incapacitated.</span>")

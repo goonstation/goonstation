@@ -6,7 +6,7 @@
 	target_anything = TRUE
 	cooldown = 25 SECONDS //10 seconds shorter than the cooldown for fireball in modern code
 	requires_robes = TRUE
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = TRUE
 	sticky = TRUE
 	/*

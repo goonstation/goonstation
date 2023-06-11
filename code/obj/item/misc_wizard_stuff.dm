@@ -216,6 +216,7 @@
 			src.do_brainmelt(user, 2)
 			return
 
+// TODO refactor this to use a hidden ability
 /obj/item/staff/thunder
 	name = "staff of thunder"
 	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"

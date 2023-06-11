@@ -8,7 +8,7 @@
 	requires_robes = 1
 	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
 	voice_fem = 'sound/voice/wizard/StaffFem.ogg'
-	//voice_other = 'sound/voice/wizard/notdoneyet.ogg'
+	// missing voice_other
 	maptext_colors = list("#b320c3", "#5a1d8a")
 
 
@@ -81,8 +81,6 @@
 				if (!isliving(M) || !M.mind || !iswizard(M))
 					boutput(M, "<span class='alert'>You seem to have lost all magical abilities.</span>")
 					return 0
-				if (M.wizard_castcheck(src) == 0)
-					return 0 // Has own user feedback.
 				if (M.getStatusDuration("stunned") > 0 || M.getStatusDuration("weakened") || M.getStatusDuration("paralysis") > 0 || !isalive(M) || M.restrained())
 					boutput(M, "<span class='alert'>Not when you're incapacitated or restrained.</span>")
 					return 0

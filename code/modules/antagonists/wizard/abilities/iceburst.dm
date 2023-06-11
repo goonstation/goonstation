@@ -5,7 +5,7 @@
 	targeted = FALSE
 	cooldown = 200
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/IceBurstGrim.ogg'
 	voice_fem = 'sound/voice/wizard/IceBurstFem.ogg'

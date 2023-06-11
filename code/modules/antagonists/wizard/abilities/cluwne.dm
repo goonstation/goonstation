@@ -6,33 +6,25 @@
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	sticky = 1
 	voice_grim = 'sound/voice/wizard/CluwneGrim.ogg'
 	voice_fem = 'sound/voice/wizard/CluwneFem.ogg'
 	voice_other = 'sound/voice/wizard/CluwneLoud.ogg'
 	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
+	granted_chaplain_xp = 2
 
-	cast(mob/target)
-		if(!holder)
-			return 1
+	cast(mob/living/carbon/human/target)
+		. = ..()
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [target]!</b></span>")
+		actions.start(new/datum/action/bar/icon/cluwne_spell(src.holder.owner, target, src), src.holder.owner)
 
+	castcheck(atom/target)
+		. = ..()
 		if (!ishuman(target))
 			boutput(holder.owner, "Your target must be human!")
-			return 1
-
-		if(!can_act(holder.owner))
-			boutput(holder.owner, "You can't cast this whilst incapacitated!")
-			return 1
-
-		var/mob/living/carbon/human/H = target
-
-		if (targetSpellImmunity(H, TRUE, 2))
-			return 1
-
-		holder.owner.visible_message("<span class='alert'><b>[holder.owner] begins to cast a spell on [H]!</b></span>")
-		actions.start(new/datum/action/bar/icon/cluwne_spell(usr, target, src), holder.owner)
+			return FALSE
 
 /datum/action/bar/icon/cluwne_spell
 	duration = 1.5 SECONDS
@@ -56,13 +48,13 @@
 	onStart()
 		..()
 
-		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !spell.castcheck(target))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !spell.castcheck(target))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()

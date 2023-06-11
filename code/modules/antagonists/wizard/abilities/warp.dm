@@ -5,7 +5,7 @@
 	targeted = TRUE
 	cooldown = 100
 	requires_robes = 1
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	sticky = 1

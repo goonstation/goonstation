@@ -821,14 +821,14 @@
 	var/cd_text_color = "#FFFFFF"			   //! Color of the maptext placed on the button when the ability is on cooldown. so far unused
 	var/copiable = TRUE							//! If this ability should be excluded when deep copying an abilityHolder
 
-	var/disabled = FALSE							//! Ability is disabled and unusable
-	var/toggled = FALSE								//! If this ability is a toggle (activating it switches between an on and an off state)
-	var/is_on = FALSE								//! If this is a toggled ability, is it turned on?
+	var/disabled = FALSE						//! Ability is disabled and unusable
+	var/toggled = FALSE							//! If this ability is a toggle (activating it switches between an on and an off state)
+	var/is_on = FALSE							//! If this is a toggled ability, is it turned on?
 
 	/// If this ability can be used while stunned/unconcious. Defaults to strict no for any stuns
 	var/incapacitation_restriction = ABILITY_NO_INCAPACITATED_USE
-	var/can_cast_while_cuffed = FALSE		//! If this ability can be used while cuffed or otherwise restrained.
-	var/can_cast_from_container = FALSE		//! If this ability can be used while inside a non-turf
+	var/can_cast_while_cuffed = FALSE			//! If this ability can be used while cuffed or otherwise restrained.
+	var/can_cast_from_container = TRUE			//! If this ability can be used while inside a non-turf
 
 	var/targeted = FALSE						//! Does this need a target? If FALSE, ability is performed instantly
 	var/shortcut_target_if_available = FALSE 	//! If this ability is targeted, should we cast it immediately if only one person is in range?
@@ -972,7 +972,7 @@
 			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while you're restrained.</span>")
 			. = CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		// Check if we're allowed to cast this from inside a container.
-		else if (!src.can_cast_from_container && !isturf(src.holder.loc))
+		else if (!src.can_cast_from_container && !isturf(src.holder.owner.loc))
 			boutput(src.holder.owner, "<span class='alert'>You cannot cast [src.name] while inside something else.</span>")
 		// Check if the ability is on cooldown
 		else if (src.cooldowncheck())

@@ -6,7 +6,7 @@
 	max_range = 1
 	cooldown = 850
 	requires_robes = TRUE
-	requires_being_on_turf = TRUE
+	can_cast_from_container = FALSE
 	offensive = TRUE
 	cooldown_staff = TRUE
 	sticky = TRUE
