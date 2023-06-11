@@ -708,6 +708,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/reagent_container/food/snacks/condiment/custard = 30,\
 	/obj/item/reagent_container/food/snacks/condiment/cream = 20,\
 	/obj/item/reagent_container/food/snacks/condiment/syrup = 15,\
+	/obj/item/raw_material/ice = 35,\
 	/obj/item/reagent_contain/food/snacks/ice_cream/goodrandom)
 
 
