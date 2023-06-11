@@ -62,7 +62,7 @@
 /area/prefab/adrift_cargorouter)
 "fB" = (
 /obj/decal/floatingtiles/random,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "fJ" = (
 /obj/machinery/conveyor/SN{
@@ -88,7 +88,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "hA" = (
 /obj/storage/closet/emergency,
@@ -122,7 +122,7 @@
 /area/prefab/adrift_cargorouter)
 "ig" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "iq" = (
 /obj/machinery/conveyor/WN{
@@ -139,7 +139,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "iZ" = (
 /obj/disposalpipe/segment/transport{
@@ -184,7 +184,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "nV" = (
 /obj/forcefield/energyshield/perma,
@@ -216,7 +216,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "oG" = (
 /obj/storage/crate/biohazard{
@@ -241,7 +241,7 @@
 /area/prefab/adrift_cargorouter)
 "rh" = (
 /obj/item/raw_material/scrap_metal,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "rP" = (
 /turf/simulated/floor/orangeblack/side{
@@ -262,7 +262,7 @@
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "tJ" = (
 /turf/simulated/floor/orangeblack/corner{
@@ -290,7 +290,7 @@
 /area/prefab/adrift_cargorouter)
 "vq" = (
 /obj/item/scrap,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "vz" = (
 /obj/decal/stripe_caution,
@@ -348,7 +348,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "zk" = (
 /obj/disposalpipe/segment/transport{
@@ -404,13 +404,6 @@
 	dir = 9
 	},
 /area/prefab/adrift_cargorouter)
-"Dn" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/space,
-/area/noGenerate)
 "DY" = (
 /obj/railing/yellow{
 	dir = 8
@@ -441,13 +434,6 @@
 	},
 /turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
-"GY" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/space,
-/area/noGenerate)
 "Ip" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -518,7 +504,7 @@
 /turf/simulated/floor,
 /area/prefab/adrift_cargorouter)
 "Ng" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "NB" = (
 /obj/decal/poster/wallsign/poster_beach,
@@ -545,7 +531,7 @@
 	dir = 2;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "QF" = (
 /obj/storage/crate/wooden{
@@ -583,10 +569,10 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Ub" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "UG" = (
 /obj/forcefield/energyshield/perma,
@@ -603,10 +589,8 @@
 /turf/simulated/floor/engine,
 /area/prefab/adrift_cargorouter)
 "Wm" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "XO" = (
 /obj/disposalpipe/segment/transport{
@@ -628,7 +612,7 @@
 /area/prefab/adrift_cargorouter)
 "YJ" = (
 /obj/structure/girder/displaced,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ZB" = (
 /obj/grille/steel/broken/melted,
@@ -639,7 +623,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 
 (1,1,1) = {"
@@ -788,8 +772,8 @@ Ng
 "}
 (9,1,1) = {"
 Ub
-Dn
-GY
+Wm
+Wm
 wn
 wn
 iZ

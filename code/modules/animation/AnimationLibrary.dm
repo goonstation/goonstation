@@ -799,6 +799,27 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 			animate(pixel_y = initial_y, transform = null, time = floatspeed, loop = loopnum, easing = SINE_EASING)
 	return
 
+/proc/animate_lag(atom/A, steps=15, loopnum=-1, magnitude=10, step_time_low=0.2 SECONDS, step_time_high = 0.25 SECONDS)
+	if (!istype(A))
+		return
+	for (var/i in 1 to steps)
+		if (i == 1)
+			animate(A,
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+		else
+			animate(
+				pixel_x = rand(-magnitude, magnitude),
+				pixel_y = rand(-magnitude, magnitude),
+				time = randfloat(step_time_low, step_time_high),
+				loop = loopnum,
+				easing = JUMP_EASING
+			)
+
 /proc/animate_revenant_shockwave(var/atom/A, var/loopnum = -1, floatspeed = 20, random_side = 1)
 	if (!istype(A))
 		return

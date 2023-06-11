@@ -1078,7 +1078,7 @@
 			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
 				var/mob/living/critter/spider/clownqueen/queen = src.parent
 				if (islist(queen.babies))
-					queen.babies += newCritter
+					queen.babies += get_weakref(newCritter)
 
 			sleep(0.1 SECONDS)
 			qdel(src)

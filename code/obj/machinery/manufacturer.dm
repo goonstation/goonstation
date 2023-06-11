@@ -310,7 +310,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 			#info {
 				position: absolute;
 				right: 0.5em;
-				top: 0;
+				top: 50px;
 				width: 25%;
 				padding: 0.5em;
 				}
@@ -1161,12 +1161,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.updateUsrDialog()
 
 	proc/scan_card(obj/item/I)
-		if (istype(I, /obj/item/device/pda2))
-			var/obj/item/device/pda2/P = I
-			if(P.ID_card)
-				I = P.ID_card
-		if (istype(I, /obj/item/card/id))
-			var/obj/item/card/id/ID = I
+		var/obj/item/card/id/ID = get_id_card(I)
+		if (istype(ID))
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
@@ -2652,13 +2648,15 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/orescoop,
 		/datum/manufacture/conclave,
 		/datum/manufacture/communications/mining,
+		/datum/manufacture/pod/weapon/bad_mining,
 		/datum/manufacture/pod/weapon/mining,
 		/datum/manufacture/pod/weapon/mining/drill,
 		/datum/manufacture/pod/weapon/ltlaser,
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
-		/datum/manufacture/beaconkit
+		/datum/manufacture/beaconkit,
+		/datum/manufacture/podgps
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
@@ -2917,6 +2915,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
 		/datum/manufacture/lightengspacesuit,
+		/datum/manufacture/floodlight,
+		/datum/manufacture/powercell,
+		/datum/manufacture/powercellE,
+		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,

@@ -615,10 +615,10 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
+	default_material = "slag"
 
 	New()
 		. = ..()
-		src.setMaterial(getMaterial("slag"), FALSE, FALSE, TRUE)
 		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea

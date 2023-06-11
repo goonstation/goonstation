@@ -711,7 +711,7 @@ Contents:
 					return
 
 
-				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
+				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && istype(get_id_card(H.wear_id), /obj/item/card/id))
 					FOUND_NEAT(NT_DISCOUNT)
 						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
 						sleep(5.5 SECONDS)
@@ -864,7 +864,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			update_nearby_tiles()
 
 			if(operating == 1) //emag again
@@ -893,7 +893,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		update_nearby_tiles()
 
 		sleep(1 SECOND)

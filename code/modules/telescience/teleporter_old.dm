@@ -207,6 +207,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			return 1
 
 	M.set_loc(tmploc)
+	SEND_SIGNAL(M,COMSIG_MOVABLE_TELEPORTED)
+
 	if (sparks)
 		elecflash(M, power=3)
 	return 0

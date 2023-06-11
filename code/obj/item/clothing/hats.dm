@@ -254,6 +254,16 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 4)
 
+/obj/item/clothing/head/bigcaphat
+	name = "Captain of Captain's hat"
+	icon_state = "captainbig"
+	item_state = "caphat"
+	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 6)
+
+
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
@@ -473,6 +483,8 @@ proc/filter_trait_hats(var/type)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 5)
 
+TYPEINFO(/obj/item/clothing/head/that/gold)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
@@ -480,7 +492,6 @@ proc/filter_trait_hats(var/type)
 	item_state = "gthat"
 	protective_temperature = 500
 	mat_changename = 0
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
 
 	setupProperties()
 		..()
@@ -1944,3 +1955,45 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 
+// fishing hats
+
+/obj/item/clothing/head/fish_fear_me
+	name = "fish fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning angler."
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
+	var/favourite_word = "fish"
+
+	proc/who()
+		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
+
+	proc/do_what()
+		. = pick("fear", "want", "love")
+
+	New()
+		..()
+		var/list/who = list(who(), who(), who(), who())
+		if (prob(66))
+			var/have_fish = FALSE
+			for (var/who_word in who)
+				if (who_word == favourite_word)
+					have_fish = TRUE
+			if (!have_fish)
+				who[rand(1,4)] = favourite_word
+		who[1] = capitalize(who[1])
+		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
+		real_name = name
+		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
+
+
+/obj/item/clothing/head/fish_fear_me/admin
+	name = "admin fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning admin."
+	favourite_word = "admins"
+
+	who()
+		. = pick("admins", "coders", "mentors", "players", "bugs", "feedback", "bans", "ahelps")
+
+	New()
+		. = ..()
+		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))

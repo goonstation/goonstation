@@ -443,8 +443,8 @@
 					M.take_toxin_damage(2)
 				if(3)
 					boutput(M, "<span class='alert'>There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK</span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit(20)
+					var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+					M.vomit(20, null, vomit_message)
 				if(4)
 					boutput(M, "<span class='alert'>You bite down on a chunk of bone, hurting your teeth.</span>")
 					random_brute_damage(M, 2)

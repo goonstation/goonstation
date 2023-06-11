@@ -57,7 +57,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	var/list/raretier = list( // rare tier, 2% chance
 		/obj/item/clothing/gloves/yellow,
 		/obj/item/clothing/glasses/sunglasses,
-		/obj/item/clothing/shoes/sandal,
+		/obj/item/clothing/shoes/sandal/magic,
 		/obj/item/hand_tele,
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/gimmickbomb/hotdog,
