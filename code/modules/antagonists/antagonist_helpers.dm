@@ -11,11 +11,8 @@ var/list/antagonists = list()
 	if (antagonist_role_id)
 		return antagonists["[antagonist_role_id]"]
 
-	for (var/antagonist_type in concrete_typesof(/datum/antagonist))
-		var/datum/antagonist/A = antagonist_type
-		var/list/datum/antagonist/antagonist_roles = antagonists["[initial(A.id)]"]
-		if (length(antagonist_roles))
-			. += antagonist_roles
+	for (var/antagonist_type in antagonists)
+		. += antagonists[antagonist_type]
 
 /// Returns a list of all gang datums.
 proc/get_all_gangs()
