@@ -181,7 +181,7 @@
 		else if (W.hit_type == DAMAGE_BLUNT && istype(W, /obj/item/kudzu/kudzumen_vine))
 			return
 		else if (istype(W, /obj/item/utility_knife))
-			dmg = 20 //Highly impactful, but won't instakill thicker kudzu
+			dmg = 10 //Highly impactful, but won't instakill thicker kudzu
 
 		dmg *= isnum(W.force) ? min((W.force / 2), 5) : 1
 		DEBUG_MESSAGE("[user] damaging [src] with [W] [log_loc(src)]: dmg is [dmg]")
