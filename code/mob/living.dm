@@ -844,29 +844,6 @@
 
 	show_speech_bubble(speech_bubble)
 
-	//Blobchat handling
-	if (src.mob_flags & SPEECH_BLOB)
-		message = html_encode(src.say_quote(message))
-		var/rendered = "<span class='game blobsay'>"
-		rendered += "<span class='prefix'>BLOB:</span> "
-		rendered += "<span class='name text-normal' data-ctx='\ref[src.mind]'>[src.get_heard_name()]</span> "
-		rendered += "<span class='message'>[message]</span>"
-		rendered += "</span>"
-
-
-		for (var/client/C)
-			if (!C.mob) continue
-			if (istype(C.mob, /mob/new_player))
-				continue
-
-			if ((isblob(C.mob) || (C.holder && C.deadchat && !C.player_mode)))
-				var/thisR = rendered
-				if ((C.mob.mob_flags & MOB_HEARS_ALL || C.holder) && src.mind)
-					thisR = "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>"
-				C.mob.show_message(thisR, 2)
-
-		return
-
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
 
