@@ -51,9 +51,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		src.vr = do_vr
 		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
-			if (!islist(antagonists["[src.id]"]))
-				antagonists["[src.id]"] = list()
-			antagonists["[src.id]"] += src
+			LAZYLISTADD(antagonists["[src.id]"], src)
 
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
