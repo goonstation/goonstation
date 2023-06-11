@@ -4133,12 +4133,38 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 /mob/living/grabber_goblin
 	name = "\improper Grabber Component"
 	desc = "you shouldn't see this!"
+	canmove = FALSE
+	invisibility = INVIS_ALWAYS
+	use_stamina = FALSE
+	canbegrabbed = FALSE
+	anchored = ANCHORED_ALWAYS
+	nodamage = TRUE
 
-	New(loc)
+	var/obj/item/mechanics/grabber/home_grabber
+
+	New(atom/loc)
 		. = ..()
 		if (loc)
 			name = loc.name
 			real_name = loc.name
+			if (istype(loc,/obj/item/mechanics/grabber))
+				home_grabber = loc
+
+	// the goblin in the grabber arm dying is probably bad
+	death()
+		if (home_grabber == src.loc)
+			return
+		. = ..()
+
+	ex_act()
+		return
+
+	disposing()
+		if(istype(home_grabber))
+			home_grabber.grabber_goblin = null
+			home_grabber = null
+		. = ..()
+
 
 /obj/item/mechanics/grabber
 	// picks up items, can spin, and can smack something with it
@@ -4180,6 +4206,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			heldItem.pixel_y = 0
 			heldItem = null
 			src.UpdateIcon()
+		if (Obj == grabber_goblin && !QDELETED(grabber_goblin))
+			grabber_goblin.set_loc(src) // get back here
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()
@@ -4323,6 +4351,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!src.emagged)
 			if (ismob(AM) && W.force > 5)
 				return
+
+		if (!grabber_goblin) // just incase
+			grabber_goblin = new(src)
 
 		AM.Attackby(W,grabber_goblin)
 		if (ismob(AM) && src.emagged)
