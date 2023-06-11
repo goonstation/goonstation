@@ -45561,10 +45561,12 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "nUB" = (
+/obj/machinery/chem_heater/chemistry{
+	dir = 8
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

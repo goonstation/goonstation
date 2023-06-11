@@ -59151,7 +59151,9 @@
 	dir = 4
 	},
 /obj/machinery/disposal/small,
-/obj/machinery/chem_heater/chemistry,
+/obj/machinery/chem_heater/chemistry{
+	pixel_y = 5
+	},
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cMB" = (

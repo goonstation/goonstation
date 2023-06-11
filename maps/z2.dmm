@@ -40571,7 +40571,9 @@
 /area/owlery/staffhall)
 "cxs" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater/chemistry,
+/obj/machinery/chem_heater{
+	pixel_y = 8
+	},
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cxt" = (
