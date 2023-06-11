@@ -624,7 +624,6 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
 		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.vacuum()
 		leak_gas.radgas += 100
 		current_loc.assume_air(leak_gas)
 		qdel(src)
