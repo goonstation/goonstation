@@ -984,7 +984,6 @@ var/datum/action_controller/actions
 		..()
 
 	onStart()
-
 		target.add_fingerprint(source) // Added for forensics (Convair880).
 
 		if (source.mob_flags & AT_GUNPOINT)
@@ -1006,18 +1005,6 @@ var/datum/action_controller/actions
 				actions.start(new /datum/action/bar/icon/callback(source, target, item.duration_remove > 0 ? item.duration_remove : 2.5 SECONDS, /mob/proc/click, list(existing_item, list()),  item.icon, item.icon_state, null, null, source), source) //this is messier
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			if(!target.can_equip(item, slot))
-				boutput(source, "<span class='alert'>[item] can not be put there.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(!isturf(target.loc))
-				boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
-				source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
-				interrupt(INTERRUPT_ALWAYS)
-				return
 			logTheThing(LOG_COMBAT, source, "tries to put \an [item] on [constructTarget(target,"combat")] at at [log_loc(target)].")
 			icon = item.icon
 			icon_state = item.icon_state
@@ -1025,14 +1012,6 @@ var/datum/action_controller/actions
 				O.show_message("<span class='alert'><B>[source] tries to put [item] on [target]!</B></span>", 1)
 		else
 			var/obj/item/I = target.get_slot(slot)
-			if(!I)
-				boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
-			if(!isturf(target.loc))
-				boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
-				interrupt(INTERRUPT_ALWAYS)
-				return
 			logTheThing(LOG_COMBAT, source, "tries to remove \an [I] from [constructTarget(target,"combat")] at [log_loc(target)].")
 			var/name = "something"
 			if (!hidden)
@@ -1093,18 +1072,45 @@ var/datum/action_controller/actions
 				target.update_inv()
 			else
 				boutput(source, "<span class='alert'>You fail to remove [I] from [target].</span>")
-	onUpdate()
+
+	canRunCheck(in_start)
 		..()
 		if(BOUNDS_DIST(source, target) > 0 || target == null || source == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		var/obj/item/I = target.get_slot(slot)
 
 		if(item)
 			if(item != source.equipped() || target.get_slot(slot))
 				interrupt(INTERRUPT_ALWAYS)
+			if(!target.can_equip(item, slot))
+				if(in_start)
+					boutput(source, "<span class='alert'>[item] can not be put there.</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!isturf(target.loc))
+				if(in_start)
+					boutput(source, "<span class='alert'>You can't put [item] on [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(item.cant_drop) //Fix for putting item arm objects into others' inventory
+				if(in_start)
+					source.show_text("You can't put \the [item] on [target] when it's attached to you!", "red")
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		else
 			if(!target.get_slot(slot=slot))
 				interrupt(INTERRUPT_ALWAYS)
+			if(!I)
+				if(in_start)
+					boutput(source, "<span class='alert'>There's nothing in that slot.</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			if(!isturf(target.loc))
+				if(in_start)
+					boutput(source, "<span class='alert'>You can't remove [I] from [target] when [(he_or_she(target))] is in [target.loc]!</span>")
+				interrupt(INTERRUPT_ALWAYS)
+				return
 #undef STAM_COST
 
 /datum/action/bar/icon/internalsOther //This is used when you try to set someones internals
