@@ -3640,12 +3640,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 35
 	is_npc = FALSE
 	use_custom_color = FALSE
+	var/allow_pickup_requests = TRUE
 
 	New()
 		..()
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
+		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -3666,7 +3668,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.UpdateOverlays(null, "hair")
 
 	attack_hand(mob/living/M)
-		src.into_pocket(M)
+		if (allow_pickup_requests)
+			src.into_pocket(M)
+		else
+			. = ..()
 
 	proc/into_pocket(mob/M, var/voluntary = 1)
 		if(M == src || isdead(src))
@@ -3766,8 +3771,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.ghostize()
 			qdel(M)
 
+/datum/targetable/critter/mentortoggle
+	name = "Toggle Pick Up Requests"
+	desc = "Enable or disable player pick up requests."
+	icon_state = "mentordisappear"
+	icon_state = "mentortoggle"
 
-
+	cast(mob/target)
+		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
+		M.allow_pickup_requests = !M.allow_pickup_requests
+		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
+		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

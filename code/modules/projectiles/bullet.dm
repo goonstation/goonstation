@@ -1390,7 +1390,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 36, 0.45)
+			explosion_new(null, T, 36, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/homing
@@ -1486,7 +1486,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 15, 0.45)
+			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/antisingularity

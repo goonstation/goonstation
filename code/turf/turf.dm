@@ -90,7 +90,7 @@
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.set_opacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -113,7 +113,7 @@
 		F["[path].color"] >> color
 		F["[path].density"] >> density
 		F["[path].opacity"] >> opacity
-		RL_SetOpacity(opacity)
+		set_opacity(opacity)
 		F["[path].pixel_x"] >> pixel_x
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
@@ -713,7 +713,7 @@ proc/generate_space_color()
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
 	if (new_turf.opacity != old_opacity)
 		new_turf.set_opacity(old_opacity)
-		new_turf.RL_SetOpacity(!new_turf.opacity)
+		new_turf.set_opacity(!new_turf.opacity)
 
 
 	if (handle_air)
@@ -1094,7 +1094,8 @@ TYPEINFO(/turf/simulated)
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		R.change_stack_amount(-1)
-		ReplaceWithLattice()
+		var/obj/lattice/lattice = new(src)
+		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
 		if (R.material)
 			src.setMaterial(C.material)
 		return

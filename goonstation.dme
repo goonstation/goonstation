@@ -30,7 +30,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-#include "_std\macros\factions.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"
@@ -566,6 +565,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\silicon\hivebot\mainframe.dm"
 #include "code\mob\wraith\poltergeist.dm"
 #include "code\modules\spatial_hashing.dm"
+#include "code\modules\admin\abilitymanager.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_holder.dm"
 #include "code\modules\admin\admin_verbs.dm"
