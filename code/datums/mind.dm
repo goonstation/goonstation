@@ -37,12 +37,6 @@ datum/mind
 
 	var/list/intrinsic_verbs = list()
 
-	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
-	// Mob references are not very reliable and did cause trouble with automated mindhack status removal
-	// The relevant code snippets call a ckey -> mob reference lookup proc where necessary,
-	// namely ckey_to_mob(mob.mind.master) (Convair880).
-	var/master = null
-
 	var/handwriting = null
 	var/color = null
 
@@ -195,10 +189,9 @@ datum/mind
 				obj_count++
 
 		// Added (Convair880).
-		if (recipient.mind.master)
-			var/mob/mymaster = ckey_to_mob(recipient.mind.master)
-			if (mymaster)
-				output+= "<br><b>Your master:</b> [mymaster.real_name]"
+		var/datum/mind/master = recipient.mind.get_master()
+		if (master?.current)
+			output += "<br><b>Your master:</b> [master.current.real_name]"
 
 		recipient.Browse(output,"window=memory;title=Memory")
 

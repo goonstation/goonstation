@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
 					src.reagents.reaction(eater, INGEST, 3)
 					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-						src.reagents.copy_to(eater, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
 				else
 					var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 					B.set_loc(eater)
