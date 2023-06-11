@@ -61,7 +61,7 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/critter/rockworm(AST)
+		new /mob/living/critter/rockworm(AST)
 
 /datum/ore/event/loot_crate
 	analysis_string = "Caution! Large object embedded in rock!"

@@ -47,6 +47,8 @@
 		// now everything inside the disposal gets put into the holder
 		// note AM since can contain mobs or objs
 		for(var/atom/movable/AM in D)
+			if (istype(AM, /obj/dummy))
+				continue
 			AM.set_loc(src)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
@@ -179,6 +181,8 @@
 	density = FALSE
 	pass_unstable = FALSE
 	text = ""
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to detach the pipe to move it around."})
+
 	var/spawner_type = /obj/disposalpipespawner
 	level = 1			//! underfloor only
 	var/dpdir = 0		//! bitmask of pipe directions
@@ -480,6 +484,10 @@
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
+		C.color = src.color
+		C.name = src.name
+		if (src.material)
+			C.setMaterial(src.material, copy=FALSE)
 		C.update()
 
 		qdel(src)
@@ -1010,6 +1018,8 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
+TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
+	mat_appearances_to_ignore = list("negativematter")
 /obj/item/reagent_containers/food/snacks/einstein_loaf
 	name = "einstein-rosen loaf"
 	desc = "A hypothetical feature of loaf-spacetime. Maybe this could be used as a material?"
@@ -1019,11 +1029,13 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	force = 0
 	throwforce = 0
 	initial_volume = 400
+	mat_changename = FALSE
+	default_material = "negativematter"
+
 
 	New()
 		..()
 		src.reagents.add_reagent("liquid spacetime",11)
-		src.setMaterial(getMaterial("negativematter"), appearance = 0, setname = 0)
 
 /obj/item/reagent_containers/food/snacks/prison_loaf
 	name = "prison loaf"
@@ -1634,6 +1646,9 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 	proc/getlinked()
 		linked = null
+		var/obj/machinery/vending/player/vendor = locate() in src.loc
+		if (vendor)
+			src.linked = vendor
 		var/obj/machinery/disposal/D = locate() in src.loc
 		if(D)
 			linked = D

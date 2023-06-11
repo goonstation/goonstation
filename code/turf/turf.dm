@@ -2,57 +2,58 @@
 	icon = 'icons/turf/floors.dmi'
 	plane = PLANE_FLOOR //See _plane.dm, required for shadow effect
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
-	var/intact = 1
-	var/allows_vehicles = 1
+	var/intact = TRUE
+	var/allows_vehicles = TRUE
 
-	var/tagged = 0 // Gang wars thing
+	/// Gang wars thing
+	var/tagged = 0
 
 	level = 1
 
 	unsimulated
 		pass_unstable = FALSE
-		var/can_replace_with_stuff = 0	//If ReplaceWith() actually does a thing or not.
-#ifdef RUNTIME_CHECKING
-		can_replace_with_stuff = 1  //Shitty dumb hack bullshit
+		event_handler_flags = IMMUNE_SINGULARITY
+		/// If ReplaceWith() actually does a thing or not.
+		var/can_replace_with_stuff = FALSE
+#ifdef CI_RUNTIME_CHECKING
+		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
 #endif
-		allows_vehicles = 0
+		allows_vehicles = FALSE
 
 	proc/burn_down()
 		return
 
-		//Properties for open tiles (/floor)
+	// Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
-
-	//Properties for airtight tiles (/wall)
-	var/thermal_conductivity = 0.05
-	var/heat_capacity = 1
-
 	#undef _UNSIM_TURF_GAS_DEF
 
+	// Properties for airtight tiles (/wall)
+	var/thermal_conductivity = 0.05
+	var/heat_capacity = 1
 	/// Sum of all unstable atoms on the turf.
 	pass_unstable = TRUE
 	/// Whether this turf is passable. Used in the pathfinding system.
 	var/tmp/passability_cache
 
-	//Properties for both
+	// Properties for both simmed and unsimmed
 	var/temperature = T20C
-
 	var/icon_old = null
 	var/name_old = null
 	var/tmp/pathweight = 1
-	var/tmp/pathable = 1
-	var/can_write_on = 0
-	var/tmp/messy = 0 //value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/pathable = TRUE
+	var/can_write_on = FALSE
+	///value corresponds to how many cleanables exist on this turf. Exists for the purpose of making fluid spreads do less checks.
+	var/tmp/messy = 0
 	var/tmp/checkinghasproximity = 0
 	var/tmp/neighcheckinghasproximity = 0
 	/// directions of this turf being blocked by directional blocking objects. So we don't need to loop through the entire contents
 	var/tmp/blocked_dirs = 0
 	/// this turf is allowing unrestricted hotbox reactions
-	var/tmp/allow_unrestricted_hotbox = 0
+	var/tmp/allow_unrestricted_hotbox = FALSE
 	var/wet = 0
 	var/sticky = FALSE
-	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
+	throw_unlimited = FALSE //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
@@ -155,6 +156,9 @@
 	proc/UpdateDirBlocks()
 		src.blocked_dirs = 0
 		for (var/obj/O in src.contents)
+			if (istype(O, /obj/window) && !is_cardinal(O.dir)) // full window
+				src.blocked_dirs = NORTH | SOUTH | EAST | WEST
+				return
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
 
@@ -259,11 +263,13 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
+	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
 		src.desc = "There appears to be a spatial disturbance in this area of space."
 		new/obj/item/device/key/random(src)
+	#endif
 
 	UpdateIcon() // for starlight
 
@@ -653,6 +659,9 @@ proc/generate_space_color()
 			else
 				new_turf = new /turf/space(src)
 
+	for (var/obj/ladder/embed/L in orange(1))
+		L.UpdateIcon()
+
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
 	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
@@ -804,7 +813,6 @@ proc/generate_space_color()
 		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
-
 	return floor
 
 /turf/proc/ReplaceWithConcreteFloor()
@@ -861,6 +869,8 @@ proc/generate_space_color()
 //	..()
 //moved step and slip functions into Carbon and Human files!
 
+TYPEINFO(/turf/simulated)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
@@ -868,7 +878,6 @@ proc/generate_space_color()
 	var/mutable_appearance/wet_overlay = null
 	var/default_melt_cap = 30
 	can_write_on = 1
-	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
@@ -981,6 +990,8 @@ proc/generate_space_color()
 #else
 	plane = PLANE_FLOOR
 #endif
+
+/turf/unsimulated/wall/generic
 
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"

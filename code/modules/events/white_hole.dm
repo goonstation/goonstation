@@ -221,7 +221,7 @@
 			/obj/item/seashell = 2,
 			"trenchloot" = 5,
 			"ore" = 5,
-			/obj/critter/shark = 1,
+			/mob/living/critter/aquatic/shark = 1,
 			/obj/critter/gunbot/drone/gunshark = 0.5,
 			/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
 			/obj/naval_mine/standard = 0.2,
@@ -269,7 +269,7 @@
 		),
 		"asteroid" = list(
 			"ore" = 200,
-			/obj/critter/rockworm = 3,
+			/mob/living/critter/rockworm = 3,
 			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
@@ -1295,6 +1295,7 @@
 
 
 /datum/fishing_spot/whitehole
+	rod_tier_required = 2
 	fishing_atom_type = /obj/whitehole
 
 	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)

@@ -936,6 +936,22 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to force players to say things.")
 
+		if ("halt")
+			var/mob/M = locate(href_list["target"])
+			if (src.level >= LEVEL_SA)
+				if (ismob(M))
+					var/id = rand(1, 1000000)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+					boutput(usr, "<span class='alert'><b>[M] has been stopped for five seconds.</b></span>")
+					logTheThing(LOG_ADMIN, usr, "stopped [constructTarget(M,"admin")]")
+					logTheThing(LOG_DIARY, usr, "stopped [constructTarget(M,"diary")]", "admin")
+					usr.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					M.playsound_local(M, 'sound/voice/guard_halt.ogg', 25, 0)
+					SPAWN(5 SECONDS)
+						REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "adminstop\ref[src][id]")
+			else
+				tgui_alert(usr,"You need to be at least a Secondary Administrator to stop players.")
+
 		if ("prison")
 			if (src.level >= LEVEL_MOD)
 				var/mob/M = locate(href_list["target"])
@@ -1254,7 +1270,14 @@ var/global/noir = 0
 				if (tgui_alert(usr, "Are you sure you want to rapture [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 					heavenly_spawn(M, reverse = TRUE)
 			else
-				tgui_alert(usr,"You need to be at least a Primary Admin to damn a dude.")
+				tgui_alert(usr,"You need to be at least a Primary Admin to rapture a dude.")
+		if("smite")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_smitegib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to smite a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1355,209 +1378,9 @@ var/global/noir = 0
 		if ("managebioeffect")
 			if(src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
-
-				usr.client.cmd_admin_managebioeffect(M)
-
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
-
-		if ("managebioeffect_debug_vars")
-			if (src.level >= LEVEL_PA)
-				var/datum/bioEffect/B = locate(href_list["bioeffect"])
-				usr.client.debug_variables(B)
-			else
-				tgui_alert(usr,"You must be at least a Primary Administrator to view variables!")
-
-		if ("managebioeffect_remove")
-			if(src.level >= LEVEL_SA)
-				var/mob/M = locate(href_list["target"])
-				M.bioHolder.RemoveEffect(href_list["bioeffect"])
-				usr.client.cmd_admin_managebioeffect(M)
-
-				message_admins("[key_name(usr)] removed the [href_list["bioeffect"]] bio-effect from [key_name(M)].")
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to remove the bioeffects of a player.")
-				return
-
-		if("managebioeffect_alter_stable")
-			if(src.level >= LEVEL_SA)
-				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
-				BE.altered = 1
-				if (BE.stability_loss == 0)
-					BE.stability_loss = BE.global_instance.stability_loss
-					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss) //update mob stability
-				else
-					BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
-					BE.stability_loss = 0
-
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-			else
-				return
-
-		if("managebioeffect_alter_reinforce")
-			if(src.level >= LEVEL_SA)
-				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
-				BE.altered = 1
-				if (BE.curable_by_mutadone)
-					BE.curable_by_mutadone = 0
-				else
-					BE.curable_by_mutadone = 1
-
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-			else
-				return
-
-		if("managebioeffect_alter_power_boost")
-			if(src.level >= LEVEL_SA)
-				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
-				BE.altered = 1
-				var/oldpower = BE.power
-				if (BE.power > 1)
-					BE.power = 1
-				else
-					BE.power = 2
-				BE.onPowerChange(oldpower, BE.power)
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-			else
-				return
-
-		if("managebioeffect_alter_sync")
-			if(src.level >= LEVEL_SA)
-				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
-				BE.altered = 1
-				if(istype(BE, /datum/bioEffect/power)) //powers only
-					if (BE.safety)
-						BE.safety = 0
-					else
-						BE.safety = 1
-				else
-					return
-
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-			else
-				return
-		if("managebioeffect_alter_cooldown")
-			if(src.level >= LEVEL_SA)
-				var/datum/bioEffect/power/BE = locate(href_list["bioeffect"])
-				BE.altered = 1
-				if(istype(BE, /datum/bioEffect/power)) //powers only
-					var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", BE.cooldown) as num|null
-					if(isnull(input))
-						return
-					else if(input < 0)
-						BE.cooldown = 0
-					else
-						BE.cooldown = round(input)
-				else
-					return
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-			else
-				return
-
-		if ("managebioeffect_chromosome")
-			if(src.level >= LEVEL_SA)
-				var/list/applicable_chromosomes = null
-				var/datum/bioEffect/BE = locate(href_list["bioeffect"])
-				var/datum/bioEffect/power/P = null
-				if (istype(BE, /datum/bioEffect/power)) //powers
-					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Power Booster", "Energy Booster", "Synchronizer", "Custom", "REMOVE CHROMOSOME")
-					P = BE
-				else if (istype(BE, /datum/bioEffect)) //nonpowers
-					applicable_chromosomes = list("Stabilizer", "Reinforcer", "Weakener", "Camouflager", "Custom", "REMOVE CHROMOSOME")
-				else
-					return
-
-				//ask the user what they want to add
-				switch (input(usr, "Select a chromosome", "Manage Bioeffects Splice") as null|anything in applicable_chromosomes)
-					if ("Stabilizer")
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-						BE.holder.genetic_stability = max(0, BE.holder.genetic_stability += BE.stability_loss) //update mob stability
-						BE.stability_loss = 0
-						BE.name = "Stabilized " + BE.name
-						BE.altered = 1
-					if ("Reinforcer")
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-						BE.curable_by_mutadone = 0
-						BE.name = "Reinforced " + BE.name
-						BE.altered = 1
-					if ("Weakener")
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-						BE.reclaim_fail = 0
-						BE.reclaim_mats *= 2
-						BE.name = "Weakened " + BE.name
-						BE.altered = 1
-					if ("Camouflager")
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-						BE.msgGain = ""
-						BE.msgLose = ""
-						BE.name = "Camouflaged " + BE.name
-						BE.altered = 1
-					if ("Power Booster")
-						if (P.altered) managebioeffect_chromosome_clean(P)
-						P.power = 2
-						P.name = "Empowered " + P.name
-						P.altered = 1
-					if ("Energy Booster")
-						if (P.altered) managebioeffect_chromosome_clean(P)
-						if(P.cooldown != 0)
-							P.cooldown /= 2
-						P.name = "Energized " + P.name
-						P.altered = 1
-					if ("Synchronizer")
-						if (P.altered) managebioeffect_chromosome_clean(P)
-						P.safety = 1
-						P.name = "Synchronized " + P.name
-						P.altered = 1
-					if ("Custom") //build your own chromosome!
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-						BE.altered = 1
-						var/prefix = input(usr, "Enter a custom name for your chromosome", "Manage Bioeffects Splice")
-						if (prefix)
-							BE.name = "[prefix] " + BE.name
-					if ("REMOVE CHROMOSOME")
-						if (BE.altered) managebioeffect_chromosome_clean(BE)
-					else //user cancelled do nothing
-						return
-				usr.client.cmd_admin_managebioeffect(BE.holder.owner)
-				return
-
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify the bioeffects of a player.")
-
-		if ("managebioeffect_add")
-			if(src.level >= LEVEL_SA)
-				var/mob/M = locate(href_list["target"])
-				var/input = input(usr, "Enter a /datum/bioEffect path or partial name.", "Add a Bioeffect", null) as null|text
-				input = get_one_match(input, "/datum/bioEffect")
-				var/datum/bioEffect/BE = text2path("[input]")
-				if (BE)
-					M.bioHolder.AddEffect(initial(BE.id))
-					usr.client.cmd_admin_managebioeffect(M)
-					message_admins("[key_name(usr)] added the [initial(BE.id)] bio-effect to [key_name(M)].")
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to add bioeffects to a player.")
-
-		if ("managebioeffect_refresh")
-			if(src.level >= LEVEL_SA)
-				var/mob/M = locate(href_list["target"])
 				usr.client.cmd_admin_managebioeffect(M)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to manage the bioeffects of a player.")
-
-		if ("managebioeffect_alter_genetic_stability")
-			if(src.level >= LEVEL_SA)
-				var/mob/M = locate(href_list["target"])
-				var/input = input(usr, "Enter a new genetic stability for the target", "Alter Genetic Stability", M.bioHolder.genetic_stability) as null|num
-				if (isnull(input))
-					return
-				if (input < 0)
-					M.bioHolder.genetic_stability = 0
-				else
-					M.bioHolder.genetic_stability = round(input)
-				usr.client.cmd_admin_managebioeffect(M)
-			else
-				tgui_alert(usr,"You need to be at least a Secondary Administrator to modify the genetic stability of a player.")
-
 		if ("addbioeffect")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1566,17 +1389,24 @@ var/global/noir = 0
 					return
 
 				var/list/picklist = params2list(pick)
+				var/successes = 0
 				if (length(picklist))
 					var/string_version
 					for(pick in picklist)
-						M.bioHolder.AddEffect(pick, magical = 1)
+						if(M.bioHolder.AddEffect(pick, magical = 1))
+							successes++
 
 						if (string_version)
 							string_version = "[string_version], \"[pick]\""
 						else
 							string_version = "\"[pick]\""
 
-					message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					if(successes == length(picklist))
+						message_admins("[key_name(usr)] added the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].")
+					else if(successes > 0)
+						message_admins("[key_name(usr)] tried to dd the [string_version] bio-effect[picklist.len > 1 ? "s" : ""] but only [successes] succeeded to [key_name(M)].")
+					else
+						boutput(usr, "<b><span class='alert'>Failed to add [string_version] bio-effect[picklist.len > 1 ? "s" : ""] to [key_name(M)].</span></b>")
 			else
 				tgui_alert(usr,"If you are below the rank of Primary Admin, you need to be observing and at least a Secondary Administrator to bioeffect a player.")
 
@@ -2052,7 +1882,7 @@ var/global/noir = 0
 			if (!M?.mind)
 				return
 			var/list/antag_options = list()
-			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - concrete_typesof(/datum/antagonist/subordinate)
+			var/list/eligible_antagonist_types = concrete_typesof(/datum/antagonist) - (concrete_typesof(/datum/antagonist/subordinate) + concrete_typesof(/datum/antagonist/generic))
 			for (var/V as anything in eligible_antagonist_types)
 				var/datum/antagonist/A = V
 				if (!M.mind.get_antagonist(initial(A.id)))
@@ -2142,7 +1972,7 @@ var/global/noir = 0
 			if (tgui_alert(usr, "Remove the [antag.display_name] antagonist from [M.real_name] (ckey [M.ckey])?", "antagonist", list("Yes", "Cancel")) != "Yes")
 				return
 			boutput(usr, "<span class='notice'>Removing antagonist of type \"[antag.id]\" from mob [M.real_name] (ckey [M.ckey])...</span>")
-			var/success = M.mind.remove_antagonist(antag.id)
+			var/success = M.mind.remove_antagonist(antag)
 			if (success)
 				boutput(usr, "<span class='notice'>Removal successful.[length(M.mind.antagonists) ? "" : " As this was [M.real_name] (ckey [M.ckey])'s only antagonist role, their antagonist status is now fully removed."]</span>")
 			else
@@ -3588,14 +3418,15 @@ var/global/noir = 0
 						dat += "<table cellspacing=5><tr><th>Name</th><th>Original Position</th><th>Position</th></tr>"
 						for(var/mob/living/carbon/human/H in mobs)
 							if(H.ckey)
-								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(H.wear_id, /obj/item/card/id) || istype(H.wear_id, /obj/item/device/pda2)) ? "[H.wear_id:assignment]" : "Unknown Position"]</td></tr>"
+								var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+								dat += "<tr><td>[H.name]</td><td>[(H.mind ? H.mind.assigned_role : "Unknown Position")]</td><td>[(istype(id_card)) ? "[id_card.assignment]" : "Unknown Position"]</td></tr>"
 							LAGCHECK(LAG_LOW)
 						dat += "</table>"
 						usr.Browse(dat, "window=manifest;size=440x410")
 					if("jobcaps")
 						job_controls.job_config()
 					if("respawn_panel")
-						src.s_respawn()
+						usr.client.cmd_custom_spawn_event()
 					if("randomevents")
 						random_events.event_config()
 					if("pathology")
@@ -3681,110 +3512,6 @@ var/global/noir = 0
 				var/adminLogHtml = get_log_data_html(LOG_PATHOLOGY, gettxt, src)
 				usr.Browse(adminLogHtml, "window=pathology_log;size=750x500")
 
-		if ("s_rez")
-			if (src.level >= LEVEL_PA)
-				switch(href_list["type"])
-					if("spawn_syndies")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Syndicates",3) as num
-						if(!amount) return
-						SR.spawn_syndies(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] syndicate operatives.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] syndicate operatives.", "admin")
-
-					if("spawn_normal")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] normal players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] normal players.", "admin")
-
-					if("spawn_player") //includes antag players
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount, INCLUDE_ANTAGS)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players.", "admin")
-
-					if("spawn_player_strip_antag") //includes antag players but strips status
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_normal(amount, INCLUDE_ANTAGS, STRIP_ANTAG)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players.", "admin")
-
-					if("spawn_job")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Normal Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount,job)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] normal players.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] normal players.", "admin")
-
-					if("spawn_player_job") //includes antag players
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players, and kept any antag statuses.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players, and kept any antag statuses.", "admin")
-
-					if("spawn_player_job_strip_antag") //includes antag players but strips antag status
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-						var/datum/job/job = input(usr,"Select job to spawn players as:","Respawn Panel",null) as null|anything in jobs
-						if(!job) return
-						var/amount = input(usr,"Amount to respawn:","Spawn Players",3) as num
-						if(!amount) return
-						SR.spawn_as_job(amount, job, INCLUDE_ANTAGS, STRIP_ANTAG)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] players, and stripped any antag statuses.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] players, and stripped any antag statuses.", "admin")
-
-	/*				if("spawn_commandos")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						SR.spawn_commandos(3)
-
-					if("spawn_turds")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						var/amount = input(usr,"Amount to respawn:","Spawn TURDS",3) as num
-						if(!amount) return
-						SR.spawn_TURDS(amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] TURDS.")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] TURDS.", "admin")
-
-					if("spawn_smilingman")
-						var/datum/special_respawn/SR = new /datum/special_respawn/
-						SR.spawn_smilingman(1)
-						logTheThing(LOG_ADMIN, src, "has spawned a Smiling Man.")
-						logTheThing(LOG_DIARY, src, "has spawned a Smiling Man.", "admin")
-	*/
-
-					if("spawn_custom")
-						var/datum/special_respawn/SR = new /datum/special_respawn
-						var/blType = input(usr, "Select a mob type", "Spawn Custom") as null|anything in typesof(/mob/living)
-						if(!blType) return
-						var/amount = input(usr, "Amount to respawn:", "Spawn Custom",3) as num
-						if(!amount) return
-						SR.spawn_custom(blType, amount)
-						logTheThing(LOG_ADMIN, src, "has spawned [amount] mobs of type [blType].")
-						logTheThing(LOG_DIARY, src, "has spawned [amount] mobs of type [blType].", "admin")
-
-					if("spawn_wizards")
-
-					if("spawn_aliens")
-
-					else
-			else
-				tgui_alert(usr,"You cannot perform this action. You must be of a higher administrative rank!")
 		if ("respawntarget")
 			if (src.level >= LEVEL_SA)
 				var/mob/M = locate(href_list["target"])
@@ -4035,57 +3762,6 @@ var/global/noir = 0
 
 //-------------------------------------------- Panels
 
-
-/datum/admins/proc/s_respawn()
-	var/dat = {"
-		<html><head><title>Respawn Panel</title>
-			<style>
-				table {
-					border:1px solid #FF6961;
-					border-collapse: collapse;
-					width: 100%;
-					empty-cells: show;
-				}
-
-				th {
-					background-color: #FF6961;
-					color: white;
-					padding: 8px;
-					text-align: center;
-				}
-
-				td {
-					padding: 8px;
-					text-align: left;
-				}
-
-				tr:nth-child(odd) {background-color: #f2f2f2;}
-			</style>
-		</head>
-		<body>
-			<table>
-				<th>Respawn Panel</th>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_normal'>Spawn normal players</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_job'>Spawn normal players as a job</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player'>Spawn players - keep antag status</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job'>Spawn players as a job - keep antag status</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_strip_antag'>Spawn players - strip antag status</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_player_job_strip_antag'>Spawn players as a job - strip antag status</A></td></tr>
-				<tr><td></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_syndies'>Spawn a Syndicate attack force</A></td></tr>
-				<tr><td><A href='?src=\ref[src];action=s_rez;type=spawn_custom'>Spawn a custom mob type</A></td></tr>
-			</table>
-		</body></html>
-		"}
-	usr.Browse(dat, "window=SRespawn")
-
-	// Someone else removed these but left the (non-functional) buttons. Move back inside the dat section and uncomment to re-add. - IM
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_commandos'>Spawn a force of commandos</A><BR>
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_turds'>Spawn a T.U.R.D.S. attack force</A><BR>
-	// <A href='?src=\ref[src];action=s_rez;type=spawn_smilingman'>Spawn a Smiling Man</A><BR>
-
 /datum/admins/proc/Game()
 	if (!usr) // somehoooow
 		return
@@ -4162,7 +3838,7 @@ var/global/noir = 0
 	dat += {"<hr><div class='optionGroup' style='border-color:#FF6961'><b class='title' style='background:#FF6961'>Admin Tools</b>
 				<A href='?src=\ref[src];action=secretsadmin;type=check_antagonist'>Antagonists</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=jobcaps'>Job Controls</A><BR>
-				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Respawn Panel</A><BR>
+				<A href='?src=\ref[src];action=secretsadmin;type=respawn_panel'>Ghost Spawn Panel</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=randomevents'>Random Event Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=artifacts'>Artifact Controls</A><BR>
 				<A href='?src=\ref[src];action=secretsadmin;type=pathology'>CDC</A><BR>
@@ -4659,7 +4335,33 @@ var/global/noir = 0
 
 	. = matches
 
-/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE)
+/**
+ * `get_one_match` attempts to find a type match for a given object.
+ * The function allows customization of the base type, whether to use concrete types,
+ * whether to use only admin spawnable, the comparison procedure, and the sort limit.
+ * The function sorts the matches if a comparison procedure is provided and if the sort limit condition allows it,
+ * then it presents a list of matches for the user to choose from.
+ *
+ * @param object This is the object for which the function is attempting to find a match.
+ *
+ * @param base This is the base type used for matching. All results will be of this type tree.
+ *
+ * @param use_concrete_types determines whether the function should respect concrete types for matching.
+ *
+ * @param only_admin_spawnable This boolean value determines whether the function should only consider objects that
+ *		are spawnable by an admin.
+ *
+ * @param cmp_proc This is the comparison proc used for sorting matches. This should be a proc that takes two arguments
+ *		and returns a boolean. The default value is `null`, indicating no comparison procedure is used.
+ *		If `cmp_proc` is provided and the number of matches is within the `sort_limit`, the matches will be sorted using `cmp_proc`.
+ *
+ * @param sort_limit This parameter defines the upper limit for the number of items to consider during the matching process.
+ *		If the number of matches exceeds `sort_limit`, they will not be sorted even if `cmp_proc` is provided.
+ *		If `sort_limit` is `0` or `null`, there will be no limit and matches will be sorted if `cmp_proc` is provided.
+ *
+ * @return Returns the path of the selected match if one is chosen. If no matches are found, `null` is returned. If the operation is cancelled, `FALSE` is returned.
+ */
+/proc/get_one_match(var/object, var/base = /atom, use_concrete_types=TRUE, only_admin_spawnable=TRUE, cmp_proc=null, sort_limit=300)
 	var/list/matches = get_matches(object, base, use_concrete_types, only_admin_spawnable)
 
 	if(!length(matches))
@@ -4680,6 +4382,8 @@ var/global/noir = 0
 	var/msg = "Select \a [base] type."
 	if(prefix)
 		msg += " Prefix: [replacetext(prefix, "/", "/\u2060")]" // zero width space for breaking this nicely in tgui
+	if(cmp_proc && (!sort_limit || (length(safe_matches) <= sort_limit)))
+		sortList(safe_matches, cmp_proc)
 	. = tgui_input_list(usr, msg, "Matches for pattern", safe_matches, capitalize=FALSE)
 	if(!.)
 		return FALSE // need to return something other than null to distinguish between "didn't find anything" and hitting 'cancel'
@@ -4834,27 +4538,6 @@ var/global/noir = 0
 
 	usr.Browse(built, "window=chatban;size=500x100")
 
-/datum/admins/proc/managebioeffect_chromosome_clean(var/datum/bioEffect/BE)
-//cleanse a bioeffect
-	var/datum/bioEffect/power/P = null
-	BE.altered = 0
-	BE.name = BE.global_instance.name
-	if (!BE.stability_loss) //reapply stability changes
-		BE.stability_loss = BE.global_instance.stability_loss
-		BE.holder.genetic_stability = max(0, BE.holder.genetic_stability -= BE.stability_loss)
-	BE.curable_by_mutadone = BE.global_instance.curable_by_mutadone
-	BE.reclaim_fail = BE.global_instance.reclaim_fail
-	BE.reclaim_mats = BE.global_instance.reclaim_mats
-	BE.msgGain = BE.global_instance.msgGain
-	BE.msgLose = BE.global_instance.msgLose
-	var/oldpower = P.power
-	P.power = P.global_instance_power.power
-	P.onPowerChange(oldpower, P.power)
-	if (istype(BE, /datum/bioEffect/power)) //powers
-		P = BE
-		P.cooldown = P.global_instance_power.cooldown
-		P.safety = P.global_instance_power.safety
-
 /client/proc/cmd_admin_managebioeffect(var/mob/M in mobs)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Manage Bioeffects"
@@ -4862,108 +4545,10 @@ var/global/noir = 0
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/dat = list()
-	dat += {"
-		<html>
-		<head>
-		<title>Manage Bioeffects</title>
-		<style>
-		table {
-			border:1px solid #4CAF50;
-			border-collapse: collapse;
-			width: 100%;
-		}
-
-		td {
-			padding: 8px;
-			text-align: center;
-		}
-
-		th:nth-child(n+2):nth-child(-n+3), td:nth-child(n+2):nth-child(-n+3) {text-align: left;}
-
-		th {
-			background-color: #4CAF50;
-			color: white;
-			padding: 8px;
-			text-align: center;
-		}
-
-		tr:nth-child(odd) {background-color: #f2f2f2;}
-		tr:hover {background-color: #e2e2e2;}
-
-		.button {
-			padding: 6px 12px;
-			text-align: center;
-			float: right;
-			display: inline-block;
-			font-size: 12px;
-			margin: 0px 2px;
-			cursor: pointer;
-			color: white;
-			border: 2px solid #008CBA;
-			background-color: #008CBA;
-			text-decoration: none;
-		}
-		</style>
-		</head>
-		<body>
-		<h3>Bioeffects of [M.name]
-		<a href='?src=\ref[src.holder];action=managebioeffect_refresh;target=\ref[M];origin=bioeffect_manage' class="button">&#x1F504;</a></h3>
-		<h4>(Stability: <a href='?src=\ref[src.holder];action=managebioeffect_alter_genetic_stability;target=\ref[M];origin=bioeffect_manage'>[M.bioHolder.genetic_stability]</a>)
-		<a href='?src=\ref[src.holder];action=managebioeffect_add;target=\ref[M];origin=bioeffect_manage' class="button">&#x2795;</a></h4>
-		<table>
-			<tr>
-				<th>Remove</th>
-				<th>ID</th>
-				<th>Name</th>
-				<th>Stable</th>
-				<th>Reinforced</th>
-				<th>Power Boosted</th>
-				<th>Synced</th>
-				<th>Cooldown</th>
-				<th>Splice</th>
-			</tr>
-		"}
-
-	for(var/ID in M.bioHolder.effects)
-		var/datum/bioEffect/B = M.bioHolder.effects[ID]
-		var/datum/bioEffect/power/P = null
-		var/is_stable = 0
-		var/is_reinforced = 0
-		var/is_power_boosted = null //powers only
-		var/is_synced = null //powers only
-		var/cooldown = null //0 cooldown is a thing, also powers only
-
-		if (!B.stability_loss)
-			is_stable = 1
-		if (!B.curable_by_mutadone)
-			is_reinforced = 1
-		if (B.power > 1)
-			is_power_boosted = 1
-		else
-			is_power_boosted = 0
-		if (istype(B, /datum/bioEffect/power))//powers only
-			P = B
-			if (P.safety)
-				is_synced = 1
-			else
-				is_synced = 0
-			cooldown = P.cooldown
-
-		dat += {"
-			<tr>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_remove;target=\ref[M];bioeffect=[B.id];origin=bioeffect_manage'>remove</a></td>
-				<td>[B.id]</td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_debug_vars;bioeffect=\ref[B];origin=bioeffect_manage'>[B.name]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_stable;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[is_stable ? "&#x2714;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_reinforce;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[is_reinforced ? "&#x2714;" : "&#x274C;"]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_power_boost;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(is_power_boosted) ? "&#x26D4;" : (is_power_boosted ? "&#x2714;" : "&#x274C;")]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_sync;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(is_synced) ? "&#x26D4;" : (is_synced ? "&#x2714;" : "&#x274C;")]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_alter_cooldown;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>[isnull(cooldown) ? "&#x26D4;" : cooldown]</a></td>
-				<td><a href='?src=\ref[src.holder];action=managebioeffect_chromosome;target=\ref[M];bioeffect=\ref[B];origin=bioeffect_manage'>Splice</a></td>
-			</tr>"}
-	dat += "</table></body></html>"
-	usr.Browse(dat.Join(),"window=bioeffect_manage;size=900x400")
+	if (isnull(holder.bioeffectmanager))
+		holder.bioeffectmanager = new
+	holder.bioeffectmanager.target_mob = M
+	holder.bioeffectmanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_manageabils(var/mob/M in mobs)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

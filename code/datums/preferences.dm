@@ -664,8 +664,7 @@ datum/preferences
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
-				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
-				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
 					AH.special_style = new_style
 					update_preview_icon()
@@ -1062,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
@@ -1662,6 +1661,7 @@ datum/preferences
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
+			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)
@@ -1769,7 +1769,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)

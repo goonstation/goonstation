@@ -107,38 +107,47 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define DISPOSE_IS_QDEL
 
 //------------- MAP OVERRIDES -------------//
+//-------Special Events:
+//#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
+//#define MAP_OVERRIDE_POD_WARS   	// 500x500 Pod Wars map
+//#define MAP_OVERRIDE_EVENT      	// Misc. event maps
+//#define MAP_OVERRIDE_PAMGOC				// Pamgoc, cogmaP
+//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 
-//#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
-//#define MAP_OVERRIDE_DESTINY			// Destiny/RP
-//#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
-//#define MAP_OVERRIDE_COGMAP
-//#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
-//#define MAP_OVERRIDE_DONUT2			// Updated Donut2
-//#define MAP_OVERRIDE_DONUT3			// Donut3 by Ryumi
+//-------Rotation maps:
+//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
+//#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
+//#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
+//#define MAP_OVERRIDE_KONDARU			// Kondaru by Kubius
+//#define MAP_OVERRIDE_ATLAS				// Atlas by Gannets (and Kubius)
+//#define MAP_OVERRIDE_CLARION			// Used to be Destiny's Alt. By Dionsu and a69andahalf.
+//#define MAP_OVERRIDE_OSHAN				// Oshan by committee
+//#define MAP_OVERRIDE_NADIR				// Nadir Extraction Site by Kubius
+
+//-------Discontinued or gimmick maps:
+//#define MAP_OVERRIDE_MANTA				// manta map
+//#define MAP_OVERRIDE_DESTINY			// Destiny (RP)
+//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
+//#define MAP_OVERRIDE_CRASH				// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
-//#define MAP_OVERRIDE_CHIRON			// Chiron by Kusibu
-//#define MAP_OVERRIDE_OSHAN			// Oshan
-//#define MAP_OVERRIDE_HORIZON			// Horizon by Warcrimes
-//#define MAP_OVERRIDE_CRASH			// Stupid Crash Gimmick Map
-//#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
-//#define MAP_OVERRIDE_MANTA			// manta map
-//#define MAP_OVERRIDE_DENSITY
-//#define MAP_OVERRIDE_KONDARU
-//#define MAP_OVERRIDE_OZYMANDIAS
-//#define MAP_OVERRIDE_NADIR
-//#define MAP_OVERRIDE_FLEET
+//#define MAP_OVERRIDE_CHIRON				// Chiron by Kubius
+//#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
+//#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
+//#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
-//#define MAP_OVERRIDE_PAMGOC			// Pamgoc
-//#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
-//#define MAP_OVERRIDE_POD_WARS   // 500x500 Pod Wars map
-//#define MAP_OVERRIDE_EVENT      // Misc. event maps
+
 
 //------------ Unit Test Framework ------------//
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+
+#ifdef CI_RUNTIME_CHECKING
+#define CHECK_MORE_RUNTIMES 1
+#endif
 
 //------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
 

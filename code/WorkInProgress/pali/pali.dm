@@ -469,9 +469,7 @@
 
 
 /obj/storage/closet/extradimensional
-	New()
-		..()
-		src.setMaterial(getMaterial("negativematter"))
+	default_material = "negativematter"
 
 
 
@@ -520,3 +518,14 @@ proc/get_upscaled_icon(icon, icon_state, dx, dy)
 	..()
 	fix_upscale()
 #endif
+
+
+
+/// catball
+/obj/item/basketball/catball
+	name = "catball"
+	icon_state = "catball"
+	base_icon_state = "catball"
+	spinning_icon_state = "catball"
+	item_state = "catball"
+	desc = "<img src='https://pali.link/catball.gif'><br>"

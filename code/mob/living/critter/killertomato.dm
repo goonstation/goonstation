@@ -32,8 +32,9 @@
 	hand_count = 1
 	can_throw = 0
 	blood_id = "juice_tomato"
-	add_abilities = list(/datum/targetable/critter/bite/tomato_bite,
-						/datum/targetable/critter/slam/polymorph)
+	add_abilities = list(/datum/targetable/critter/bite/tomato_bite, /datum/targetable/critter/slam/polymorph)
+
+	faction = FACTION_BOTANY
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)

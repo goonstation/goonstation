@@ -236,17 +236,11 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 /mob/living/critter/small_animal/mouse/mad
 	ai_type = /datum/aiHolder/mouse/mad
-	faction = MOB_AI_FACTION_WRAITH
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
-	seek_target(range)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, /mob/living/critter/small_animal/mouse)) continue
-			if (src.faction != null && (C.faction & src.faction != 0)) continue //Checks if they are in the same faction
-			. += C
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/small_animal/mouse)) return FALSE
+		return ..()
 
 	critter_basic_attack(var/mob/target)
 		. = ..()
@@ -380,12 +374,31 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		src.catnip = 45
 		src.visible_message("[src]'s eyes dilate.")
 
+	Move(turf/NewLoc, direct)
+		. = ..()
+		if ((locate(/obj/table) in src.loc) && prob(20) && !ON_COOLDOWN(src, "knock_stuff_off_table", 10 SECONDS))
+			knock_stuff_off_table()
+
+	proc/knock_stuff_off_table()
+		var/list/obj/item/items_here = list()
+		for (var/obj/item/item_here in src.loc)
+			if (!item_here.anchored)
+				items_here += item_here
+		var/list/target_turfs = list()
+		for (var/turf/T in range(1, src))
+			if (!(locate(/obj/table) in T) && !(locate(/obj/window) in T) && !T.density)
+				target_turfs += T
+		if (length(items_here) && length(target_turfs))
+			var/obj/item/item = pick(items_here)
+			src.visible_message("<span class='alert'>[src] [pick("knocks","pushes","shoves")] [item] off the table!</span>")
+			item.throw_at(pick(target_turfs), 2, 1)
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
 
 		//Cats meow sometimes
-		if (src.ai?.enabled && prob(5))
+		if (src.is_npc && prob(5))
 			src.emote("scream", 1)
 
 		if (getStatusDuration("burning"))
@@ -577,6 +590,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	is_syndicate = 1
 	var/swiped = 0
 
+	New()
+		START_TRACKING
+		..()
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (isdead(src) || cattype == "-emagged")
 			return 0
@@ -631,14 +652,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	New(loc)
 		. = ..()
 		RegisterSignal(src, COMSIG_MOB_THROW_ITEM_NEARBY, PROC_REF(throw_response))
-
-	OnMove()
-		if(client?.player?.shamecubed)
-			loc = client.player.shamecubed
-			return
-
-		makeWaddle(src)
-		.=..()
+		AddComponent(/datum/component/waddling)
 
 	setup_hands()
 		..()
@@ -960,6 +974,8 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	hand_count = 2
 	pet_text = list("pets","cuddles","snuggles","scritches")
 	add_abilities = list(/datum/targetable/critter/peck)
+	ai_type = /datum/aiHolder/wanderer
+	is_npc = TRUE
 	var/species = "parrot"
 	var/hops = 0
 	var/hat_offset_y = -5
@@ -1237,8 +1253,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	good_grip = 0
 	flags = null
 	fits_under_table = 0
+	health_brute = 30
+	health_burn = 30
 	species = "penguin"
-
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0 //retaliate when hit immediately
+	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
 /* -------------------- Owl -------------------- */
 
 /mob/living/critter/small_animal/bird/owl
@@ -1763,7 +1783,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = 1
 	can_lie = 0
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
@@ -1848,17 +1868,15 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			pincer_grab.handleCast(target)
 			return TRUE
 
+	valid_target(mob/living/C)
+		if (C in src.friends) return FALSE //don't attack frens :)
+		if (istype(C, /mob/living/critter/small_animal/rattlesnake)) return FALSE //don't attack space rattlesnakes(the snake would lose)
+		return ..()
+
 	seek_target(var/range = 8)
-		. = list()
 		if(!src.aggressive)
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (istype(C, src.type)) continue //don't attack other scorpions
-			if (istype(C, /mob/living/critter/small_animal/rattlesnake)) continue //don't attack space rattlesnakes(the snake would lose)
-			if (C in src.friends) continue //don't attack frens :)
-			. += C
+		. = ..()
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
@@ -1890,7 +1908,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS
 	fits_under_table = TRUE
 	can_lie = FALSE
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 2
@@ -1975,29 +1993,26 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			sting.handleCast(target)
 			return TRUE
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
+		if (C in src.friends) return FALSE //don't attack frens :) TODO replace with faction system
+		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
+			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
+				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
+					icon_state = "rattlesnake_rattle"
+					playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					SPAWN(1 SECONDS)
+						icon_state = "rattlesnake"
+					src.visible_message("<span class='combat'><B>[src]</B> rattles, better not get much closer!</span>")
+				return FALSE
+			else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
+				return FALSE
+		return ..()
+
 	seek_target(var/range = 8)
-		. = list()
 		if(!src.aggressive)
 			return .
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (istype(C, src.type)) continue //don't attack other snakes
-			if (istype(C, /mob/living/critter/small_animal/scorpion)) continue //don't attack scorpions(they can spawn together)
-			if (C in src.friends) continue //don't attack frens :)
-			if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
-				if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
-					if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
-						icon_state = "rattlesnake_rattle"
-						playsound(src, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
-						SPAWN(1 SECONDS)
-							icon_state = "rattlesnake"
-						src.visible_message("<span class='combat'><B>[src]</B> rattles, better not get much closer!</span>")
-					continue
-				else if(GET_DIST(src, C) > 3) //humans and silicons that are farther than 3 tiles do not interest the snake
-					continue
-
-			. += C
+		. = ..()
 
 		if(length(.) && prob(25))
 			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
@@ -2844,10 +2859,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	add_abilities = list(/datum/targetable/critter/wasp_sting)
 	ai_attacks_per_ability = 0
+
+	faction = FACTION_BOTANY
 
 	setup_hands()
 		..()
@@ -2862,6 +2879,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	death(gibbed)
+		. = ..()
+		animate(src) // stop bumble / bounce
+
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
@@ -2871,15 +2892,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 				src.emote("scream")
 			else if (prob(1))
 				src.emote("dance")
-
-	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (isdead(C)) continue
-			if (istype(C, src.type)) continue
-			if (C.job == "Botanist") continue
-			. += C
 
 	death(var/gibbed)
 		src.can_lie = FALSE
@@ -3812,6 +3824,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 15
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
 
+	faction = FACTION_AQUATIC
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -3855,7 +3869,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 45
 	health_burn = 20
 	pet_text = list("gently pets", "rubs", "cuddles, coddles")
-	add_abilities = list(/datum/targetable/critter/crabmaul)
+	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
+
+	faction = FACTION_AQUATIC
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -3909,6 +3925,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 
+	faction = FACTION_AQUATIC
 
 	New()
 		..()
@@ -4002,6 +4019,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	base_move_delay = 13
 	base_walk_delay = 15
 
+	faction = FACTION_AQUATIC
+
 //	var/mob/living/target = null
 
 	New()
@@ -4075,6 +4094,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+
+	faction = FACTION_AQUATIC
 
 	New()
 		..()

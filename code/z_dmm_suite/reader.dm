@@ -205,7 +205,7 @@ dmm_suite
 				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
-				#ifdef RUNTIME_CHECKING
+				#ifdef CI_RUNTIME_CHECKING
 				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
 					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
 				#endif
