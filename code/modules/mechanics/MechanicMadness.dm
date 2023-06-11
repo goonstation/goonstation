@@ -4277,6 +4277,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 	proc/do_use()
 		if (ON_COOLDOWN(src, "grabber_use", src.cooldown_time))
+			return
 		if (!heldItem || !(heldItem in src))
 			return
 
