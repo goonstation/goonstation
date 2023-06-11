@@ -51,6 +51,7 @@
 			boutput(user, "<span class='notice'>You draw [src.stowed_item] from [src].</span>")
 			user.put_in_hand_or_drop(src.stowed_item)
 			src.stowed_item = null
+			return
 		else
 			return ..()
 
@@ -309,6 +310,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	step_priority = 999
 	var/list/crayons = list() // stonepillar's crayon project
 	var/max_crayons = 5
+	stowable_items = list(/obj/item/instrument/bikehorn)
 
 	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/pen/crayon))
