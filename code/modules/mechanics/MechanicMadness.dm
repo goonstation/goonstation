@@ -4129,6 +4129,15 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
 
+// exists just to allow the grabber to attack
+/mob/living/grabber_goblin
+	desc = "you shouldn't see this!"
+
+	New()
+		. = ..()
+		if (src.loc)
+			src.name = src.loc.name
+
 /obj/item/mechanics/grabber
 	// picks up items, can spin, and can smack something with it
 	name = "\improper Grabber Component"
@@ -4142,7 +4151,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	var/atom/movable/heldItem
 
 	/// mob hidden inside the component so it can use items
-	var/mob/dummy_mob
+	var/mob/living/grabber_goblin/grabber_goblin
 
 	/// does it bypass the mob attack safety check
 	var/emagged = FALSE
@@ -4154,13 +4163,12 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Change Direction", PROC_REF(do_rotate))
 		src.UpdateIcon()
 
-		dummy_mob = new(src)
-		dummy_mob.name = src.name
+		grabber_goblin = new(src)
 
 	disposing()
 		holding = null
-		qdel(dummy_mob)
-		dummy_mob = null
+		qdel(grabber_goblin)
+		grabber_goblin = null
 		. = ..()
 
 	Exited(Obj, newloc)
@@ -4314,11 +4322,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if (ismob(AM) && W.force > 5)
 				return
 
-		AM.Attackby(W,dummy_mob)
+		AM.Attackby(W,grabber_goblin)
 		if (ismob(AM) && src.emagged)
 			var/mob/M = AM
-			W.attack(M,dummy_mob)
-		W.AfterAttack(AM,dummy_mob)
+			W.attack(M,grabber_goblin)
+		W.AfterAttack(AM,grabber_goblin)
 
 		src.UpdateIcon()
 
