@@ -271,7 +271,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/check_gas_mixture(datum/gas_mixture/sharer)
 	if (!sharer)
 		return SELF_CHECK_FAIL
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (GAS - sharer.GAS)/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (GAS + sharer.GAS) / 2 - sharer.GAS;
 	APPLY_TO_ARCHIVED_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -295,7 +295,7 @@ What are the archived variables for?
 /// * Checks if the turf is valid for air group processing.
 /// * Returns: FALSE if self-check failed or TRUE if check passes
 /datum/gas_mixture/proc/check_turf(turf/model)
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) - model.GAS)/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = (ARCHIVED(GAS) + model.GAS) / 2 - model.GAS
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -315,7 +315,7 @@ What are the archived variables for?
 /datum/gas_mixture/proc/share(datum/gas_mixture/sharer)
 	if(!sharer)
 		return
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(src.ARCHIVED(GAS) - sharer.ARCHIVED(GAS))/5;
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE((src.ARCHIVED(GAS) + sharer.ARCHIVED(GAS)) / 2 - sharer.ARCHIVED(GAS));
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
@@ -370,7 +370,7 @@ What are the archived variables for?
 /// * Similar to [/datum/gas_mixture/proc/share], except the model is not modified.
 /// * Return: Moles of gas exchanged.
 /datum/gas_mixture/proc/mimic(turf/model, border_multiplier = 1)
-	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((src.ARCHIVED(GAS) - model.GAS)/5)*border_multiplier/src.group_multiplier);
+	#define _DELTA_GAS(GAS, ...) var/delta_##GAS = QUANTIZE(((src.ARCHIVED(GAS) + model.GAS) / 2 - model.GAS)*border_multiplier/src.group_multiplier);
 	APPLY_TO_GASES(_DELTA_GAS)
 	#undef _DELTA_GAS
 
