@@ -29129,7 +29129,7 @@
 	pixel_x = 32;
 	pixel_y = 0
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/blackwhite/corner{
 	dir = 1
 	},
@@ -40429,7 +40429,7 @@
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "sXW" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line3"

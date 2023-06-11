@@ -36161,7 +36161,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "brT" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -36173,7 +36173,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "brU" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
@@ -36194,7 +36194,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "brW" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/science/chemistry)
@@ -67257,7 +67257,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	frequency = 1445;

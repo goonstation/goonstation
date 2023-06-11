@@ -59147,10 +59147,8 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/chem_heater{
-	pixel_y = 5
-	},
 /obj/machinery/disposal/small,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cMB" = (
@@ -61560,7 +61558,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "cSf" = (
-/obj/machinery/chem_heater,
 /obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -61569,6 +61566,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -61606,8 +61604,8 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSk" = (
-/obj/machinery/chem_heater,
 /obj/machinery/light,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSl" = (

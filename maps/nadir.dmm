@@ -10755,7 +10755,7 @@
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/lounge)
 "eOY" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/pharmacy)
 "eOZ" = (
@@ -17243,7 +17243,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -47769,7 +47769,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "vkt" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "vkv" = (

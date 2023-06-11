@@ -37074,7 +37074,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -40856,7 +40856,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "roI" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "roJ" = (

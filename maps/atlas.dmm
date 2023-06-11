@@ -9200,7 +9200,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "aDf" = (
-/obj/machinery/chem_heater,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
@@ -9212,6 +9211,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},

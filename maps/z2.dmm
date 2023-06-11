@@ -15803,7 +15803,7 @@
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYz" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crater/biodome/research)
@@ -16720,7 +16720,7 @@
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bbb" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bbc" = (
@@ -41351,9 +41351,7 @@
 /area/owlery/staffhall)
 "cxs" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater{
-	pixel_y = 8
-	},
+/obj/machinery/chem_heater/chemistry,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cxt" = (

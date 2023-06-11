@@ -1323,13 +1323,13 @@
 	},
 /area/station/science/lobby)
 "afA" = (
-/obj/machinery/chem_heater,
 /obj/machinery/light_switch/west{
 	pixel_y = 6
 	},
 /obj/blind_switch/area/west{
 	pixel_y = -6
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
@@ -29460,7 +29460,7 @@
 /area/station/hydroponics/bay)
 "fFY" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 4
 	},
@@ -41515,7 +41515,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "pMa" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "pMs" = (

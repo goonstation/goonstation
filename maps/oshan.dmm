@@ -12633,7 +12633,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aFP" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -12772,7 +12772,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aGk" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aGl" = (
@@ -13656,7 +13656,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aIA" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)

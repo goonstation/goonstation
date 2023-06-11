@@ -11246,7 +11246,7 @@
 /turf/simulated/floor/black,
 /area/station/janitor/office)
 "dnk" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -27253,7 +27253,7 @@
 /obj/machinery/light/small/sticky/harsh{
 	dir = 8
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -45309,12 +45309,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "nUB" = (
-/obj/machinery/chem_heater{
-	dir = 8
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -71033,12 +71031,12 @@
 /turf/space,
 /area/space)
 "vMx" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

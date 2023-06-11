@@ -12149,7 +12149,7 @@
 /obj/item/reagent_containers/dropper/mechanical,
 /obj/item/reagent_containers/dropper,
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -19843,7 +19843,6 @@
 	dir = 8
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater,
 /obj/machinery/disposal/mail/small{
 	dir = 4;
 	mail_tag = "chemistry";
@@ -19851,6 +19850,7 @@
 	message = "1";
 	name = "mail chute-'Chemistry'"
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -19887,10 +19887,10 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater,
 /obj/blind_switch/area/east{
 	dir = 4
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
