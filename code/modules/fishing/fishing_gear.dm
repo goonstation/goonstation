@@ -278,6 +278,9 @@ TYPEINFO(/obj/item/fish_portal)
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
+		if (src.working)
+			boutput(user, "<span class='alert'>The terminal is busy!</span>")
+			return
 		var/proceed = FALSE
 		for(var/check_path in src.allowed)
 			if(istype(W, check_path))
