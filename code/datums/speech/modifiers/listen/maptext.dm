@@ -4,7 +4,7 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 	id = "maptext"
 
 	process(datum/say_message/message)
-		if(!message.heard_range)
+		if(!message.heard_range || message.flags & SAYFLAG_NO_MAPTEXT)
 			return message
 
 		var/image/chat_maptext/chat_text = null

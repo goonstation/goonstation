@@ -21,6 +21,7 @@ TYPEINFO(/datum/listen_module/input/spooky)
 		else if(prob(hear_message_chance))
 			message.content = stutter(message.content)
 		else
+			message.flags &= SAYFLAG_NO_MAPTEXT
 			message.content = "You hear muffled speech... but nothing is there..."
 		. = ..()
 
