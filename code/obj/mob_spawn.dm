@@ -222,6 +222,8 @@
 		M.TakeDamage("all", brute = rand(100, 150))
 		M.take_oxygen_deprivation(rand(250, 300))
 		M.blood_volume -= rand(200, 350)
+		if (prob(80))
+			qdel(M.glasses)
 
 	assistant
 		spawn_type = /mob/living/carbon/human/normal/securityassistant
