@@ -1,5 +1,7 @@
 
 (t)mon jun 12 23
+(u)pali
+(+)Glue duration increased by a factor of 4. (Now 20 seconds per unit of glue.)
 (u)DimWhat
 (p)14547
 (e)🎨💊|C-Sprites, A-Medical
