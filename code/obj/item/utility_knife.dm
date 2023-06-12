@@ -35,7 +35,9 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] slits [his_or_her(user)] own throat with a utility knife!</b></span>")
-		take_bleeding_damage(user, null, 90, src.hit_type)
-		user.TakeDamage("head", 70, 0)
+		user.visible_message("<span class='alert'><b>[user] slits [his_or_her(user)] own throat with [src]!</b></span>")
+		take_bleeding_damage(user, null, 150, src.hit_type, TRUE)
+		user.take_oxygen_deprivation(100)
+		user.TakeDamage("head", 90, 0)
+		user.spread_blood_clothes(user)
 		return 1
