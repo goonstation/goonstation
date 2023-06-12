@@ -39,6 +39,7 @@
 	/*Combat*/
 	/*‾‾‾‾‾‾*/
 	var/force = 0
+	var/kudzu_force = null //Custom damage when dealing with kudzu
 	var/hit_type = DAMAGE_BLUNT // for bleeding system things, options: DAMAGE_BLUNT, DAMAGE_CUT, DAMAGE_STAB in order of how much it affects the chances to increase bleeding
 	throwforce = 1
 	var/r_speed = 1

@@ -1914,7 +1914,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!C || !user)
 		return 0
 
-	if (ispryingtool(C))
+	if (ispryingtool(C) && !locate(/obj/spacevine) in src.contents) // There's probably a better way to check for kudzu (Arahimine).
 		src.pry_tile(C,user,params)
 		return
 

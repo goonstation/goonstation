@@ -14,6 +14,7 @@
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	w_class = W_CLASS_SMALL
 
+	kudzu_force = 15
 	force = 7
 	throwforce = 12
 	stamina_damage = 10
