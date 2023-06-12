@@ -1,5 +1,7 @@
 
 (t)mon jun 12 23
+(u)pali
+(+)You can now emag the fishing hats for even wackier hat text.
 (u)Blackrep
 (p)14538
 (e)🆕📦|C-Feature, A-Game-Objects
