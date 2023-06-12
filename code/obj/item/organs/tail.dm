@@ -10,7 +10,7 @@
 	organ_holder_required_op_stage = 11
 	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
-	icon = 'icons/obj/organs/tail.dmi'
+	icon = 'icons/obj/items/organs/tail.dmi'
 	icon_state = "tail-wolf"
 	made_from = "flesh"
 	var/tail_num = TAIL_NONE

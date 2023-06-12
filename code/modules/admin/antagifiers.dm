@@ -80,7 +80,7 @@
 	name = "Ferocious Alien Skull"
 	desc = "Fancy a game?"
 	attachedObjective = "Blood, blood, blood!"
-	icon = 'icons/obj/organs/skull.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skullP"
 	color = "#FF0000"
 
