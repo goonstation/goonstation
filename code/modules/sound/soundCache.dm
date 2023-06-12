@@ -764,6 +764,7 @@ var/global/list/soundCache = list(
  	"sound/machines/vending_dispense.ogg" = 'sound/machines/vending_dispense.ogg',\
  	"sound/machines/vending_dispense_small.ogg" = 'sound/machines/vending_dispense_small.ogg',\
  	"sound/machines/warning-buzzer.ogg" = 'sound/machines/warning-buzzer.ogg',\
+ 	"sound/machines/washing_start.ogg" = 'sound/machines/washing_start.ogg',\
  	"sound/machines/weaponoverload.ogg" = 'sound/machines/weaponoverload.ogg',\
  	"sound/machines/weapons-deploy.ogg" = 'sound/machines/weapons-deploy.ogg',\
  	"sound/machines/weapons-reloading.ogg" = 'sound/machines/weapons-reloading.ogg',\
