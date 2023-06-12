@@ -642,3 +642,25 @@ TYPEINFO(/obj/item/reagent_containers/vape)
     The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
 	<br>
 	...spooky!"}
+
+/obj/item/boarvessel
+	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+	icon_state = "boarvessel"
+
+	attack_hand(mob/user)
+		if (user.a_intent == "help")
+			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
+		else
+			..()
+
+/obj/item/boarvessel/forgery
+	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+
+
