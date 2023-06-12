@@ -1,5 +1,9 @@
 
 (t)mon jun 12 23
+(u)Gannets
+(p)14550
+(e)🆕💅|C-Feature, C-QoL
+(+)You can now empty out portable aquariums in to the fishing research terminal. This saves you 6 whole clicks!
 (u)Erinexx
 (p)14545
 (e)🎨|C-Sprites
