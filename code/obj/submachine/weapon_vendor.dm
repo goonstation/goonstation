@@ -401,7 +401,7 @@
 
 /datum/materiel/utility/utilityknife
 	name = "Utility Knife"
-	path = /obj/item/utility_knife
+	path = /obj/item/utility_knife/security
 	description = "A non-combat knife used for prying doors and firelocks, as well as destroying kudzu. Can be stowed inside military boots."
 
 /datum/materiel/ammo/medium

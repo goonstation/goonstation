@@ -1,8 +1,8 @@
 /obj/item/utility_knife
 	name = "utility knife"
-	desc = "A Security-issue utility knife that functions as a crowbar. Very effective at clearing space flora."
+	desc = "A utility knife that functions as a crowbar. Very effective at clearing space flora."
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "combat_knife"
+	icon_state = "utility_knife"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
 
@@ -41,3 +41,18 @@
 		user.TakeDamage("head", 90, 0)
 		user.spread_blood_clothes(user)
 		return 1
+
+	security
+		name = "Security utility knife"
+		desc = "A Security-issue utility knife that functions as a crowbar. Very effective at clearing space flora."
+		icon_state = "utility_knife_security"
+
+	nt
+		name = "NT utility knife"
+		desc = "A corporate utility knife issued to elite Nanotrasen operatives. How you got it is a mystery."
+		icon_state = "utility_knife_nt"
+
+	syndicate
+		name = "Security utility knife"
+		desc = "A small knife with a sinister red grip. Luckily, this one is better at prying open doors than ribs."
+		icon_state = "utility_knife_syndicate"
