@@ -110,6 +110,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 			if(QDELETED(heard)) //clear out deld listeners
 				src.listeners[channel] -= heard
 			else
+				if(heard.parent_tree.parent.name == "Z-1")
+					world.log << "breakpoint"
 				heard.process(message)
 
 	/// Register a listener for hearing messages on a channel

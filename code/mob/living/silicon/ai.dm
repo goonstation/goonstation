@@ -229,6 +229,9 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	src.radio1 = new /obj/item/device/radio(src)
 	src.radio2 = new /obj/item/device/radio(src)
 	src.radio3 = new /obj/item/device/radio/headset/command/ai(src)
+	src.radio1.on_equip(src.radio1, src, ":1")
+	src.radio2.on_equip(src.radio2, src, ":2")
+	src.radio3.on_equip(src.radio3, src, ":3")
 	src.internal_pda = new /obj/item/device/pda2/ai(src)
 
 	src.tracker = new /datum/ai_camera_tracker(src)
@@ -304,6 +307,13 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	if (deployed_to_eyecam)
 		return src.eyecam
 	return src
+
+/mob/living/silicon/ai/hear(var/datum/say_message/message)
+	if (deployed_to_eyecam && src.eyecam)
+		src.eyecam.hear(message)
+	else
+		..()
+
 
 /mob/living/silicon/ai/show_message(msg, type, alt, alt_type, group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
 	..()

@@ -254,14 +254,10 @@
 		return ..()
 
 	say(var/message)
-#ifdef NEWSPEECH
-		if(message) //suppress unreachable code error
-			return ..(message)
-#endif
-		if (src.mainframe)
+		if (src.mainframe) //NEWSPEECH - this works
 			src.mainframe.say(message)
 		else
-			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
+			..(message)
 
 	say_radio()
 		src.mainframe.say_radio()

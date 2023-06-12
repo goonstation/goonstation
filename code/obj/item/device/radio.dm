@@ -96,6 +96,8 @@ var/list/headset_channel_lookup
 			prefixes = list(":rh")
 		if(SLOT_EARS)
 			prefixes = list(";")
+		else
+			prefixes = list(slot)
 	for(var/pre in src.secure_frequencies)
 		prefixes += ":[pre]"
 
@@ -134,7 +136,6 @@ var/list/headset_channel_lookup
 			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.secure_frequencies[copytext(message.prefix,2,length(message.prefix))]]"
 		else
 			radio_out.channel = SAY_CHANNEL_RADIO_PREFIX+"[src.frequency]"
-		message.content += "BY RADIO"
 		src.radio_transmitter.process(message)
 
 
