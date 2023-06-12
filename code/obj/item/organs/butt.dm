@@ -10,7 +10,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 4
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/organs/butt.dmi'
 	icon_state = "butt-nc"
 	force = 1
 	w_class = W_CLASS_TINY

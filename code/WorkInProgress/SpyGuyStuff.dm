@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
