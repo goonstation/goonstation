@@ -230,25 +230,12 @@ var/global/datum/speech_manager/SpeechManager = new()
 		else
 			return "[src.speaker] [src.say_verb], \"[src.content]\""
 
+	/// This is a shallow copy of the message datum
 	proc/Copy()
 		var/datum/say_message/copy = new(src.content, src.speaker, src.language?.id)
-		copy.prefix = src.prefix
-		copy.orig_message = src.orig_message
-		copy.speaker = src.speaker
-		copy.language = src.language
-		copy.content = src.content
-		copy.say_verb = src.say_verb
-		copy.flags = src.flags
-		copy.heard_range = src.heard_range
-		copy.maptext_css_values = src.maptext_css_values
-		copy.maptext = src.maptext
-		copy.maptext_animation_colors = src.maptext_animation_colors
-		copy.recieved_module = src.recieved_module
-		copy.voice_ident = src.voice_ident
-		copy.face_ident = src.face_ident
-		copy.card_ident = src.card_ident
-		copy.real_ident = src.real_ident
-		copy.ident_speaker = src.ident_speaker
+		for(var/V in src.vars)
+			if(issaved(src.vars[V]))
+				copy.vars[V] = src.vars[V]
 		return copy
 
 	disposing()

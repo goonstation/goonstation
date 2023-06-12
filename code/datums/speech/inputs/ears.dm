@@ -25,17 +25,22 @@ TYPEINFO(/datum/listen_module/input/ears)
 				CRASH("A radio message seems to have been spoken by a thing that wasn't a radio. Fuck.")
 
 			// Gets the various decorators for the message, like icons, colours, special formatting
-			var/secure =  length(message.prefix) > 1 ? radio_speaker.secure_frequencies[radio_speaker.secure_frequencies[copytext(message.prefix, 2, length(message.prefix))]] : null
+			var/secure = null
+			var/display_freq = radio_speaker.frequency
+			var/prefix = copytext(message.prefix, 2, length(message.prefix)+1) //strip : from the prefix
+			if(radio_speaker.secure_frequencies && length(message.prefix) > 1)
+				secure = radio_speaker.secure_frequencies[prefix]
 			var/textColor = secure ? null : radio_speaker.device_color
 			var/classes = ""
 			if(radio_speaker.chat_class)
 				classes = " [radio_speaker.chat_class]"
 			if (secure)
-				if(secure in radio_speaker.secure_classes)
-					classes = " [radio_speaker.secure_classes["[secure]"]]"
+				display_freq = radio_speaker.secure_frequencies[prefix]
+				if(prefix in radio_speaker.secure_classes)
+					classes = " [radio_speaker.secure_classes[prefix]]"
 				else
 					classes = " [radio_speaker.secure_classes[1]]"
-				textColor = radio_speaker.secure_colors["[secure]"]
+				textColor = radio_speaker.secure_colors[prefix]
 				if (!textColor)
 					if (radio_speaker.secure_colors.len)
 						textColor = radio_speaker.secure_colors[1]
@@ -47,7 +52,7 @@ TYPEINFO(/datum/listen_module/input/ears)
 				part_a = "<span class='radio[classes]'[css_style]>[radio_speaker.radio_icon(message.ident_speaker)]<span class='name' data-ctx='\ref[message.ident_speaker:mind]'>"
 			else
 				part_a = "<span class='radio[classes]'[css_style]>[radio_speaker.radio_icon(message.ident_speaker)]<span class='name'>"
-			var/part_b = "</span><b> \[[format_frequency(radio_speaker.frequency)]\]</b> <span class='message'>"
+			var/part_b = "</span><b> \[[format_frequency(display_freq)]\]</b> <span class='message'>"
 			var/part_c = "</span></span>"
 
 			// grab the job ID from the message's ident_speaker
