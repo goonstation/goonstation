@@ -158,7 +158,7 @@
 
 
 	proc/process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(H)
+		if(H && !ischangeling(H))
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
 			H.stamina_stun(mult)
@@ -290,7 +290,8 @@
 		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
-			H.set_stamina(min(0, H.stamina))
+			if (!ischangeling(H))
+				H.set_stamina(min(0, H.stamina))
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)

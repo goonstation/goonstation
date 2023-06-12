@@ -818,10 +818,15 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
+					var/obj/grille/catwalk/catwalk = null
+					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
+						catwalk = locate() in T
+						catwalk.UpdateOverlays(wet, "wet_overlay")
 					SPAWN(800 * volume_mult)
 						if (istype(T))
 							T.wet = 0
 							T.UpdateOverlays(null, "wet_overlay")
+							catwalk?.UpdateOverlays(null, "wet_overlay")
 				return
 
 		superlube
@@ -938,7 +943,7 @@ datum
 					volume = min(volume, src.volume / (2 + 3 / length(covered)))
 				if(volume < 5)
 					return
-				O.AddComponent(/datum/component/glue_ready, volume * 5 SECONDS, 5 SECONDS)
+				O.AddComponent(/datum/component/glue_ready, volume * 20 SECONDS, 5 SECONDS)
 				var/turf/T = get_turf(O)
 				if(!silent)
 					T.visible_message("<span class='notice'>\The [O] is coated in a layer of glue!</span>")

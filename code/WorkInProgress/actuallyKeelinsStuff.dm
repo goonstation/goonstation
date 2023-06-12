@@ -542,7 +542,7 @@ Returns:
 		return
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -601,7 +601,7 @@ Returns:
 	var/targetZ = 2
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -1556,10 +1556,10 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
+	default_material = "slag"
 
 	New()
 		..()
-		setMaterial(getMaterial("slag"))
 		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 

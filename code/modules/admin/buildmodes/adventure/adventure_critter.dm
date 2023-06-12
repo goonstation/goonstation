@@ -57,7 +57,7 @@
 		"Space Wasp" = /mob/living/critter/small_animal/wasp,
 		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,
-		"Town Guard" = /obj/critter/townguard,
+		"Town Guard" = /mob/living/critter/townguard,
 		"Transposed Particle Field" = /mob/living/critter/aberration,
 		"Transposed Scientist" = /mob/living/critter/crunched,
 		"Weird Thing" = /obj/critter/ancient_thing,

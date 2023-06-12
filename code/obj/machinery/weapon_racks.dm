@@ -68,13 +68,21 @@
 		req_access = list(access_security)
 
 		recharger
-			name = "taser recharger rack"
-			desc = "A taser rack that can charge up to 3 taser guns. Handy!"
+			name = "security weapon recharger rack"
+			desc = "A taser rack that can charge up to 3 security weapons. Handy!"
 			icon_state = "taser_charge_rack"
 			amount = 3
 			max_amount = 3
 			stand_type = "taser_charge_rack"
+			contained_weapon_name = "security weapon"
 			recharges_contents = 1
+
+			valid_item(obj/item/I)
+				return(istype(I, /obj/item/gun/energy/taser_gun) ||\
+				istype(I, /obj/item/gun/energy/tasershotgun) ||\
+				istype(I, /obj/item/gun/energy/tasersmg) ||\
+				istype(I, /obj/item/gun/energy/wavegun)
+				)
 
 			empty
 				icon_state = "taser_rack0"
@@ -163,7 +171,7 @@
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
-			if (istype(W, src.contained_weapon))
+			if (valid_item(W))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -314,6 +322,9 @@
 			if (WIRE_POWER)
 				if (src.working) src.working = 0
 				else src.working = 1
+
+	proc/valid_item(obj/item/I)
+		return istype(I, contained_weapon)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)

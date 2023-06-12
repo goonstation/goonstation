@@ -21,8 +21,7 @@ obj/item/rocko
 		if(prob(20))
 			src.bright = TRUE
 
-		src.chat_text = new
-		src.vis_contents += src.chat_text
+		src.chat_text = new(null, src)
 
 		src.icon_state = "rock[pick(1,3)]"
 		src.transform = matrix(1.3,0,0,0,1.3,-3) // Scale 1.3 and Shift Down 3
@@ -42,19 +41,6 @@ obj/item/rocko
 
 		START_TRACKING_CAT(TR_CAT_PETS)
 		processing_items |= src
-
-	set_loc(newloc as turf|mob|obj in world)
-		var/atom/oldloc = src.loc
-		src.holder = null
-		. = ..()
-		if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-			if(src.chat_text.vis_locs.len)
-				var/atom/movable/AM = src.chat_text.vis_locs[1]
-				AM.vis_contents -= src.chat_text
-			if(istype(src.loc, /turf))
-				src.vis_contents += src.chat_text
-			if(ismob(src.loc))
-				src.holder = src.loc
 
 	disposing()
 		processing_items -= src
