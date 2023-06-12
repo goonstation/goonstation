@@ -3070,7 +3070,7 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
 				if (istype(M, /mob/living/critter/plant))
-					M.take_toxin_damage(4 * mult)
+					M.take_toxin_damage(3 * mult)
 				else
 					M.take_toxin_damage(2 * mult)
 				flush(holder, 2 * mult, flushed_reagents)
