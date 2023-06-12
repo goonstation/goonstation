@@ -1978,6 +1978,8 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 					A_value = -1
 				else if(istype(A, /area) || istype(A, /turf))
 					A_value = 0
+				else if(istype(A, /atom/movable/overlay) || istype(A, /atom/movable/screen) || istype(A, /obj/effect) || istype(A, /obj/effects) || istype(A, /obj/overlay))
+					continue
 				else
 					if (isobj(A) && !isitem(A))
 						A_value = 1
