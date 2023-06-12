@@ -3069,10 +3069,22 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(2 * mult)
+				if (istype(M, /mob/living/critter/plant))
+					M.take_toxin_damage(4 * mult)
+				else
+					M.take_toxin_damage(2 * mult)
 				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
+				. = ..()
+				var/plant_touch_modifier = 0.3 //lets get some weedkiller on our plants
+				if(method == TOUCH && istype(M, /mob/living/critter/plant))
+					if(M.reagents)
+						M.reagents.add_reagent(self.id,volume*plant_touch_modifier,self.data)
+						. = 0
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				var/datum/plant/growing = P.current
