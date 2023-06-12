@@ -648,11 +648,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 	icon_state = "boarvessel"
 
-	attack_hand(mob/user)
-		if (user.a_intent == "help")
-			user.visible_message("<span class='alert'>[user] pets [src]!</span>")
-		else
-			..()
+	attack_self(mob/user as mob)
+		user.visible_message("<span class='alert'>[user] pets [src]!</span>", ,"<span class='notice'>You pet [src]!</span>")
 
 /obj/item/boarvessel/forgery
 	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
@@ -661,6 +658,3 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
-
-
-
