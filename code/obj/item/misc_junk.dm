@@ -644,7 +644,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	...spooky!"}
 
 /obj/item/boarvessel
-	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
 	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 	icon_state = "boarvessel"
 
@@ -652,7 +652,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 		user.visible_message("<span class='alert'>[user] pets [src]!</span>", ,"<span class='notice'>You pet [src]!</span>")
 
 /obj/item/boarvessel/forgery
-	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
 	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 
 	New()
