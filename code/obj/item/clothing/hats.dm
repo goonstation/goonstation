@@ -1991,7 +1991,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 				var/atom_name = trim(stripTextMacros(A.name))
 				if (length(atom_name) <= 2)
 					continue
-				if (" " in atom_name)
+				if (findtext(atom_name, " "))
 					A_value -= 0.5
 				if (A_value > atom_value)
 					. = atom_name
