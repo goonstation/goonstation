@@ -250,8 +250,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if(istype(I,  /obj/item/currency/spacebux))
-			var /obj/item/currency/spacebux/SB = I
+		if(istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -446,7 +446,7 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var /obj/item/currency/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
@@ -819,8 +819,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if (istype(I,  /obj/item/currency/spacebux))
-			var /obj/item/currency/spacebux/SB = I
+		if (istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -995,7 +995,7 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var /obj/item/currency/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 				. = TRUE
 		src.add_fingerprint(usr)

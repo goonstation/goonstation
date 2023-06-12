@@ -22,6 +22,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	inventory_counter_enabled = 1
+	var/display_name = "currency"
 	var/default_min_amount = 0
 	var/default_max_amount = 0
 
@@ -31,8 +32,8 @@
 		..(loc)
 		src.UpdateStackAppearance()
 
-	proc/set_amt(var/amt = 1 as num)
-		var/default_amount = default_min_amount == default_max_amount ? default_min_amount : rand(default_min_amount, default_max_amount)
+	proc/set_amt(amt = 1)
+		var/default_amount = rand(default_min_amount, default_max_amount)
 		src.amount = max(amt,default_amount)
 		src.UpdateStackAppearance()
 
@@ -50,10 +51,10 @@
 		src.name = "[src.amount == src.max_stack ? "1000000" : src.amount] [name_prefix(null, 1)][src.real_name][s_es(src.amount)][name_suffix(null, 1)]"
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span class='notice'>[user] is stacking currency!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking [display_name]!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span class='notice'>You finish stacking currency.</span>")
+		boutput(user, "<span class='notice'>You finish stacking [display_name].</span>")
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
@@ -61,14 +62,14 @@
 	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/currency) && src.amount < src.max_stack)
 
-			user.visible_message("<span class='notice'>[user] stacks some currency.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some [display_name].</span>")
 			stack_item(I)
 		else
 			..(I, user)
 
 	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
-			var/amt = round(input("How much currency do you want to take from the stack?") as null|num)
+			var/amt = round(input("How much [display_name] do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
 					boutput(user, "<span class='alert'>You wish!</span>")
@@ -91,7 +92,8 @@
 	real_name = "credit"
 	desc = "You gotta have money."
 	icon_state = "cashgreen"
-	stack_type = /obj/item/currency/spacecash // so all cash types can stack with each othe
+	stack_type = /obj/item/currency/spacecash // so all cash types can stack with each other
+	display_name = "cash"
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		src.amount = max(1, passed_genes?.get_effective_value("potency") * rand(2,4))
@@ -233,7 +235,7 @@
 	desc = "A Spacebux token, neat! You can insert this into an ATM to add it to your account."
 	amount = 0
 	var/spent = 0
-	stack_type =  /obj/item/currency/spacebux
+	stack_type = /obj/item/currency/spacebux
 
 	New(var/atom/loc, var/amt = null)
 		..(loc)
@@ -245,11 +247,11 @@
 	get_desc()
 		. += "This one is worth [amount >= 1000000 ? "ONE FUCKING GOD DAMN MILLION" : amount] spacebux."
 
-	setup(var/atom/L, var/amt = 1 as num)
+	setup(atom/L, amt = 1)
 		set_loc(L)
 		set_amt(amt)
 
-	set_amt(var/amt = 1 as num)
+	set_amt(amt = 1)
 		tooltip_rebuild = 1
 		src.amount = amt
 		src.UpdateStackAppearance()
@@ -296,16 +298,16 @@
 			src.desc = initial(src.desc)
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I,  /obj/item/currency/spacebux) && src.spent == 0)
+		if (istype(I, /obj/item/currency/spacebux) && src.spent == 0)
 			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
 		else
 			..(I, user)
 
 	check_valid_stack(atom/movable/O as obj)
-		if (istype(O,  /obj/item/currency/spacebux))
+		if (istype(O, /obj/item/currency/spacebux))
 			// Immediately fail if it's been spent already
-			var /obj/item/currency/spacebux/SB = O
+			var/obj/item/currency/spacebux/SB = O
 			if (src.spent || SB.spent)
 				return 0
 		return ..()
