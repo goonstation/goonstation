@@ -4173,7 +4173,6 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	icon_state = "grabber"
 	cabinet_banned = TRUE
 	plane = PLANE_DEFAULT
-	density = TRUE
 
 	var/holdpath = /obj/item // varedit for funny mob pickup
 	var/atom/movable/heldItem
@@ -4235,17 +4234,17 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 				heldItem.pixel_y = 0
 
 		var/image/I = image(src.icon,icon_state = (heldItem ? "grabber_arm-grab" : "grabber_arm"))
-
+		I.layer = src.layer+1
 		switch (src.dir)
 			if (NORTH)
 				if (heldItem)
-					heldItem.pixel_y = 25
+					heldItem.pixel_y = 20
 					heldItem.pixel_x = 0
 				I.pixel_y = 10
 			if (SOUTH)
 				if (heldItem)
 					heldItem.pixel_x = 0
-					heldItem.pixel_y = 0
+					heldItem.pixel_y = -5
 			if (EAST)
 				if (heldItem)
 					heldItem.pixel_x = 15
@@ -4269,6 +4268,8 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (heldItem)
 			I.layer = (heldItem.layer - 1)
 			I.plane = heldItem.plane
+		else
+			I.layer = src.layer
 		src.UpdateOverlays(I,"grabber_armunder")
 
 	proc/check_holdable(atom/movable/A)
@@ -4276,13 +4277,21 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			return FALSE
 		if (isitem(A))
 			var/obj/item/W = A
-			if (W.cant_drop) // preparing for inevitable nerd shit
+			// no picking up insane things
+			if (W.cant_drop || W.w_class >= W_CLASS_GIGANTIC || (istype(W, /obj/item/body_bag) && W.w_class >= W_CLASS_BULKY))
 				return FALSE
 		// if its something we're allowed to pick up, return true
-		if (istype(A,holdpath) && !A.anchored)
+		if (istype(A,holdpath) && !A.anchored && !A.throwing)
 			return TRUE
 
 		return FALSE
+
+	secure()
+		. = ..()
+		src.density = TRUE
+	loosen()
+		. = ..()
+		src.density = FALSE
 
 	set_dir()
 		. = ..()
@@ -4294,7 +4303,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	proc/do_pickup()
 		var/turf/T = get_step(src,src.dir)
 		if (heldItem && (heldItem in src))
-			if (T)
+			// check if we can reach that tile
+			if (T.Cross(heldItem))
+				for (var/atom/movable/AM in T)
+					if (!AM.Cross(heldItem))
+						return
 				heldItem.set_loc(T)
 		else
 			for (var/atom/movable/AM in T)
