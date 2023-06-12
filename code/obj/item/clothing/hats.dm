@@ -1997,11 +1997,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 					. = atom_name
 					atom_value = A_value
 			while (atom_value < 3 && tries-- > 0)
-			if(endswith(., "s"))
-				. += "es"
-			else
-				. += "s"
-			return
+			return pluralize(.)
 		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
 
 	proc/do_what()
