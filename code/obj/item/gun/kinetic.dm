@@ -2459,5 +2459,5 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
-		update_icon()
+		UpdateIcon()
 
