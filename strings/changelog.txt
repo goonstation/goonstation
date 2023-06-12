@@ -1,4 +1,9 @@
 
+(t)mon jun 12 23
+(u)Blackrep
+(p)14538
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The bartender's sawn off can now be spun closed using twirl emote
 (t)sat jun 10 23
 (u)Wisemonster
 (p)14522
