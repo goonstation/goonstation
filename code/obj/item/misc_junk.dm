@@ -644,7 +644,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	...spooky!"}
 
 /obj/item/boarvessel
-	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
 	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 	icon_state = "boarvessel"
 
