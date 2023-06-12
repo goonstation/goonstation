@@ -1927,7 +1927,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.reagents.add_reagent("VHFCS", 1 * mult)
 				if (prob(10))
-					M.reagents.add_reagent("green_goop", 1 * mult)
+					M.reagents.add_reagent("green_goop", 0.5 * mult)
 				..()
 				return
 

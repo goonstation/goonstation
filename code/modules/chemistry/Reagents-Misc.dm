@@ -2879,7 +2879,7 @@ datum
 			fluid_b = 1
 			description = "A foul substance that seems to quiver oddly near certain spots."
 			reagent_state = LIQUID
-			depletion_rate = 0.8
+			depletion_rate = 0.4
 			value = 3
 			viscosity = 0.4
 			threshold = THRESHOLD_INIT
