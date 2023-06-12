@@ -68,7 +68,7 @@
 	var/no_miasma = TRUE
 
 	/// If TRUE we call do_damage() by default this is random damage of every type
-	var/random_damage = TRUE
+	var/do_damage = TRUE
 	/// If this has a value, remove a random number of organs between 0 and this max
 	var/max_organs_removed = 4
 
@@ -113,7 +113,7 @@
 			H.UpdateName()
 			H.bioHolder?.AddEffect("husk")
 
-		if (src.random_damage)
+		if (src.do_damage)
 			src.do_damage(H)
 
 		if (src.max_organs_removed)
@@ -209,5 +209,21 @@
 /obj/mob_spawn/corpse/human/skeleton
 	spawn_type = /mob/living/carbon/human/normal
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
+
+/obj/mob_spawn/corpse/human/owlery_security
+	spawn_type = /mob/living/carbon/human/normal/securityofficer
+	decomp_stage = DECOMP_STAGE_BLOATED
+	delete_id = TRUE
+	empty_pockets = TRUE
+	break_headset = TRUE
+	max_organs_removed = 5
+
+	do_damage(var/mob/living/M)
+		M.TakeDamage("all", brute = rand(100, 150))
+		M.take_oxygen_deprivation(rand(250, 300))
+		M.blood_volume -= rand(200, 350)
+
+	assistant
+		spawn_type = /mob/living/carbon/human/normal/securityassistant
 
 //////////////////////// Critter corpses ////////////////////////
