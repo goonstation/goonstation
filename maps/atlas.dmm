@@ -2585,7 +2585,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "ain" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 8
 	},
