@@ -1984,7 +1984,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 					if (isobj(A) && !isitem(A))
 						A_value = 1
 					else
-						A_value = 2
+						A_value = 3
 					var/turf/T = get_turf(A)
 					if (isnull(T))
 						A_value -= 2
@@ -1998,7 +1998,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 				if (A_value > atom_value)
 					. = atom_name
 					atom_value = A_value
-			while (atom_value < 3 && tries-- > 0)
+			while (atom_value < 4 && tries-- > 0)
 			return pluralize(.)
 		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
 
