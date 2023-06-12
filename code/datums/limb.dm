@@ -467,6 +467,8 @@
 	else
 		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 	user.lastattacked = target
+	if (user != target)
+		attack_twitch(user)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /// for cats/mice/etc
