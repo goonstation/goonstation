@@ -2,15 +2,10 @@
 	name = "Zombify"
 	desc = "After a short delay, instantly convert a human into a zombie."
 	icon_state = "critter_bite"
-	cooldown = 0
-	var/actual_cooldown = 200
+	cooldown = 200
+	cooldown_after_action = TRUE
 	disabled = FALSE
 	targeted = TRUE
-
-	proc/actionFinishCooldown()
-		cooldown = actual_cooldown
-		doCooldown()
-		cooldown = initial(cooldown)
 
 	cast(atom/target)
 		if (..())
@@ -134,4 +129,4 @@
 
 			qdel(target)
 			zombify.disabled = FALSE
-			zombify.actionFinishCooldown()
+			zombify.afterAction()

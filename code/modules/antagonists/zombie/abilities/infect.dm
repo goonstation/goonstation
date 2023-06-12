@@ -3,16 +3,11 @@
 	desc = "After a short delay, infect a human. If they are damaged enough or dead this will convert them instantly."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "critter_bite"
-	cooldown = 0
-	var/actual_cooldown = 20 SECONDS
+	cooldown = 200
+	cooldown_after_action = TRUE
 	disabled = FALSE
 	targeted = TRUE
 	target_anything = TRUE
-
-	proc/actionFinishCooldown()
-		cooldown = actual_cooldown
-		doCooldown()
-		cooldown = initial(cooldown)
 
 	cast(atom/target)
 		if (..())
@@ -86,4 +81,4 @@
 		target.changeStatus("stunned", 4 SECONDS)
 		target.contract_disease(/datum/ailment/disease/necrotic_degeneration/can_infect_more, null, null, 1) // path, name, strain, bypass resist
 		zombify.disabled = FALSE
-		zombify.actionFinishCooldown()
+		zombify.afterAction()

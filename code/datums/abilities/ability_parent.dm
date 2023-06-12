@@ -852,6 +852,7 @@
 	var/sticky = FALSE 						//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
@@ -890,17 +891,16 @@
 
 	proc
 		handleCast(atom/target, params)
-			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
 #endif
+			if (src.cooldown_after_action)
+				return // We call afterAction() when ending our action
 			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
 			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
 				doCooldown()
 			afterCast()
-			if(!QDELETED(localholder))
-				localholder.updateButtons()
 
 		cast(atom/target)
 			if(interrupt_action_bars)
@@ -972,7 +972,10 @@
 			return
 
 		doCooldown()
+			var/datum/abilityHolder/localholder = src.holder
 			src.last_cast = world.time + src.cooldown
+			if(!QDELETED(localholder))
+				localholder.updateButtons()
 
 		castcheck(atom/target)
 			return 1
@@ -984,6 +987,11 @@
 
 		afterCast()
 			return
+
+		/// Used for abilities with action bars which don't want to do cooldowns until after
+		afterAction()
+			doCooldown()
+			afterCast()
 
 		Stat()
 			updateObject(holder.owner)
