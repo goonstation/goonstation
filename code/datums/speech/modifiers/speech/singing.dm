@@ -56,4 +56,8 @@ TYPEINFO(/datum/speech_module/modifier/singing)
 			message.say_verb =  "[adverb] [message.say_verb]"
 		// add style for singing
 		message.content = "[first_quote]<i>[message.content]</i>[second_quote]"
+
+		message.maptext_css_values["font-style"] = "italic"
+		message.maptext_css_values["color"] = (isAI(src) || isrobot(src)) ? "#84d6d6" : "#D8BFD8"
+
 		return message

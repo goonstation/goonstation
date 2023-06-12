@@ -125,7 +125,7 @@ var/list/headset_channel_lookup
 	//One of two things has happened - either a message has come in from the radio, or a message has been heard by the mic
 	if(message.flags & SAYFLAG_RADIO_SENT)
 		//this is from the radio, so output to mob
-		message.heard_range = 0 //only audible to src.loc
+		message.heard_range = src.speaker_range
 		message.speaker = src
 		src.ensure_say_tree()
 		src.say_tree.process(message)

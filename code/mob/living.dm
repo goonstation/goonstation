@@ -678,8 +678,7 @@
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
-/mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
-
+/mob/living/say(var/message)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
 		return ..(message)
@@ -699,11 +698,6 @@
 #endif
 
 
-	if (isdead(src))
-		if (dd_hasprefix(message, "*")) // no dead emote spam
-			return
-		return src.say_dead(message)
-
 	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
 		if (dd_hasprefix(message, ":d"))
 			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
@@ -717,10 +711,6 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	message = trim(message)
-
-
-
 	message = say_decorate(message)
 
 	var/italics = 0
@@ -730,59 +720,7 @@
 	var/secure_headset_mode = null
 	var/skip_open_mics_in_range = 0 // For any radios or intercoms that happen to be in range.
 
-
-
-		/*else if (copytext(message, 1, 3) == ":w")
-			message_mode = "whisper"
-			message = copytext(message, 3)*/
-	if(message_mode)
-		switch(message_mode)
-			if ("in")
-				message_mode = "intercom"
-				message = copytext(message, 4)
-
-			else
-				// AI radios. See further down in this proc (Convair880).
-				if (isAI(src))
-					switch (lowertext(copytext(message, 2, 3))) // One vs. two letter prefix.
-						if ("1")
-							message_mode = "internal 1"
-							message = copytext(message, 3)
-
-						if ("2")
-							message_mode = "internal 2"
-							message = copytext(message, 3)
-
-						if ("3")
-							message_mode = "monitor"
-							var/end = 3
-							if (!lowertext(copytext(message,3,4) == " "))
-								end = 4
-								secure_headset_mode = lowertext(copytext(message,3,end)) //why did i do this to the players
-							message = copytext(message, end)
-						else // Chances are they're using a regular radio prefix instead of a 2 letter one
-							if (!lowertext(copytext(message,2,3) == " ")) // (This makes the :3 prefixes obsolete but fuck em they mess players up)
-								message_mode = "monitor"
-								secure_headset_mode = lowertext(copytext(message,2,3))
-							message = copytext(message, 3)
-
-				else
-					if (ishuman(src) || ismobcritter(src) || isrobot(src) || isshell(src)) // this is shit
-						message_mode = "secure headset"
-						secure_headset_mode = lowertext(copytext(message,2,3))
-					message = copytext(message, 3)
-
 	forced_language = get_special_language(secure_headset_mode)
-
-	message = trim(message)
-
-
-
-	if (!message)
-		return
-
-	if(src.capitalize_speech())
-		message = capitalize(message)
 
 	if (src.voice_type && world.time > last_voice_sound + 8)
 		var/VT = voice_type
@@ -829,14 +767,6 @@
 		if ((n >= 0 && n <= 20) || n == 420)
 			speech_bubble.icon_state = "[n]"
 
-	if(src.client)
-		if(singing)
-			phrase_log.log_phrase("sing", message, user = src, strip_html = TRUE)
-		else if(message_mode)
-			phrase_log.log_phrase("radio", message, user = src, strip_html = TRUE)
-		else
-			phrase_log.log_phrase("say", message, user = src, strip_html = TRUE)
-
 	last_words = message
 
 	if (src.stuttering)
@@ -846,77 +776,6 @@
 
 	var/list/messages = process_language(message, forced_language)
 	var/lang_id = get_language_id(forced_language)
-
-	// Do they have a phone?
-	var/obj/item/equipped_talk_thing = src.equipped()
-	if(equipped_talk_thing && equipped_talk_thing.flags & TALK_INTO_HAND && !message_mode)
-		equipped_talk_thing.talk_into(src, messages, secure_headset_mode, src.real_name, lang_id)
-	switch (message_mode)
-		if ("headset", "secure headset", "right hand", "left hand")
-			talk_into_equipment(message_mode, messages, secure_headset_mode, lang_id)
-			message_range = 1
-			italics = 1
-
-		//Might put this back if people are used to the old system.
-		/*if ("whisper")
-			message_range = 1
-			italics = 1*/
-
-		// Added shortcuts for the AI mainframe radios. All the relevant vars are already defined here, and
-		// I didn't want to have to reinvent the wheel in silicon.dm (Convair880).
-		if ("internal 1", "internal 2", "monitor")
-			var/mob/living/silicon/ai/A
-			var/obj/item/device/radio/R1
-			var/obj/item/device/radio/R2
-			var/obj/item/device/radio/R3
-
-			if (isAI(src))
-				A = src
-			else if (issilicon(src))
-				var/mob/living/silicon/S = src
-				if (S.dependent && S.mainframe && isAI(S.mainframe)) // AI-controlled robot.
-					A = S.mainframe
-
-			if (A && isAI(A))
-				if (A.radio1 && istype(A.radio1, /obj/item/device/radio/))
-					R1 = A.radio1
-				if (A.radio2 && istype(A.radio2, /obj/item/device/radio/))
-					R2 = A.radio2
-				if (A.radio3 && istype(A.radio3, /obj/item/device/radio/))
-					R3 = A.radio3
-
-			switch (message_mode)
-				if ("internal 1")
-					if (R1 && !(A.stat || A.hasStatus(list("stunned", "weakened")))) // Mainframe may be stunned when the shell isn't.
-						R1.talk_into(src, messages, null, A.name, lang_id)
-						italics = 1
-						skip_open_mics_in_range = 1 // First AI intercom broadcasts everything by default.
-						//DEBUG_MESSAGE("AI radio #1 triggered. Message: [message]")
-					else
-						src.show_text("Mainframe radio inoperable or unavailable.", "red")
-				if ("internal 2")
-					if (R2 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
-						R2.talk_into(src, messages, null, A.name, lang_id)
-						italics = 1
-						skip_open_mics_in_range = 1
-						//DEBUG_MESSAGE("AI radio #2 triggered. Message: [message]")
-					else
-						src.show_text("Mainframe radio inoperable or unavailable.", "red")
-				if ("monitor")
-					if (R3 && !(A.stat || A.hasStatus(list("stunned", "weakened"))))
-						R3.talk_into(src, messages, secure_headset_mode, A.name, lang_id)
-						italics = 1
-						skip_open_mics_in_range = 1
-						//DEBUG_MESSAGE("AI radio #3 triggered. Message: [message]")
-					else
-						src.show_text("Mainframe radio inoperable or unavailable.", "red")
-
-		if ("intercom")
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, messages, null, src.real_name, lang_id)
-
-			message_range = 1
-			italics = 1
 
 	var/heardname = src.real_name
 
@@ -983,87 +842,13 @@
 				listening = all_hearers(message_range, olocs[olocs.len])
 
 
-	listening |= src
-
-
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
-
-	for (var/mob/M as anything in listening)
-		if(M.mob_flags & MOB_HEARS_ALL)
-			continue
-		else if (M.say_understands(src, forced_language))
-			heard_a[M] = 1
-		else
-			heard_b[M] = 1
-
-	var/list/processed = list()
-
-	var/image/chat_maptext/chat_text = null
-	if (!message_range && speechpopups && src.chat_text)
-		var/heard_name = src.get_heard_name(just_name_itself=TRUE)
-		if(!last_heard_name || heard_name != src.last_heard_name)
-			var/num = hex2num(copytext(md5(heard_name), 1, 7))
-			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
-			src.last_heard_name = heard_name
-
-		var/turf/T = get_turf(say_location)
-		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
-		for(var/i = 0; i < 5; i++)
-			for(var/mob/living/L in T)
-				if(L != src)
-					for(var/image/chat_maptext/I in L.chat_text?.lines)
-						I.bump_up()
-			T = get_step(T, EAST)
-
-		var/singing_italics = singing ? " font-style: italic;" : ""
-		var/maptext_color
-		if (singing)
-			if (isAI(src) || isrobot(src))
-				maptext_color = "#84d6d6"
-			else
-				maptext_color ="#D8BFD8"
-		else
-			maptext_color = src.last_chat_color
-
 		var/popup_style = src.speechpopupstyle
 
 		if (src.find_type_in_hand(/obj/item/megaphone))
 			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
 			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
-			maptext_color = megaphone.maptext_color
 
-		if(unique_maptext_style)
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
-		else
-			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
-
-		if(maptext_animation_colors)
-			oscillate_colors(chat_text, maptext_animation_colors)
-
-		if(chat_text)
-			chat_text.measure(src.client)
-			var/obj/chat_maptext_holder/holder = src.chat_text
-			if (is_decapitated_skeleton) // for skeleton heads
-				var/mob/living/carbon/human/H = src
-				var/datum/mutantrace/skeleton/S = H.mutantrace
-				if (S.head_tracker)
-					holder = S.head_tracker.chat_text
-			if (holder)
-				for(var/image/chat_maptext/I in holder.lines)
-					if(I != chat_text)
-						I.bump_up(chat_text.measured_height)
-
-	var/rendered = null
-	if (length(heard_a))
-		processed = saylist(messages[1], heard_a, olocs, thickness, italics, processed, assoc_maptext = chat_text)
-
-	if (length(heard_b))
-		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
-
-	message = src.say_quote(messages[1])
-
-
+/*
 	if (italics)
 		message = "<i>[message]</i>"
 
@@ -1071,27 +856,6 @@
 	if(src.mob_flags & SPEECH_REVERSE)
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
-	var/viewrange = 0
-	var/list/hearers = hearers(say_location)
-	for (var/client/C)
-		var/mob/M = C.mob
-
-		if (!M || M.z == 2 && istype(M, /mob/new_player))
-			continue
-
-		//Hello welcome to the world's most awful if
-		if (( \
-			M.mob_flags & MOB_HEARS_ALL || \
-			(iswraith(M) && !M.density) || \
-			(istype(M, /mob/zoldorf)) || \
-			(isintangible(M) && (M in hearers)) || \
-			( \
-				(!isturf(say_location.loc) && (say_location.loc == M.loc || (say_location in M))) && \
-				!(M in heard_a) && \
-				!istype(M, /mob/dead/target_observer) && \
-				M != src \
-			) \
-		))
 
 			var/thisR = rendered
 			if (src.mind && M.client.chatOutput && (M.mob_flags & MOB_HEARS_ALL || M.client.holder))
@@ -1120,6 +884,7 @@
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+*/.
 
 /mob/living/proc/say_decorate(message)
 	return message

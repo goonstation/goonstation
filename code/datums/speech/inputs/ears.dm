@@ -3,12 +3,17 @@ TYPEINFO(/datum/listen_module/input/ears)
 /datum/listen_module/input/ears
 	id = "ears"
 	channel = SAY_CHANNEL_OUTLOUD
+	var/hearing_range = 5
+	var/my_prefix = null
 
 	process(datum/say_message/message)
-		if(message.heard_range == 0)
-			if(src.parent_tree.parent == message.speaker.loc) //range 0 means it's only audible if it's from inside you (ie radios, direct messages)
-				. = ..()
-		else if(src.parent_tree.parent in hearers(message.speaker, message.heard_range)) //This isn't optimised in BYOND, hopefully it can be in OD
+		//if we have a prefix set and this message doesn't match it
+		if(src.my_prefix != null && message.prefix != src.my_prefix && !(islist(src.my_prefix) && (message.prefix in src.my_prefix)))
+			return null
+		//range 0 means it's only audible if it's from inside you (ie radios, direct messages)
+		if(message.heard_range == 0 && (src.parent_tree.parent == message.speaker.loc))
+			. = ..()
+		else if(src.parent_tree.parent in hearers(message.speaker, min(message.heard_range, src.hearing_range))) //This isn't optimised in BYOND, hopefully it can be in OD
 			. = ..()
 
 	format(datum/say_message/message)
@@ -90,3 +95,10 @@ TYPEINFO(/datum/listen_module/input/ears)
 		else
 			//normal spoken message
 			.=..() //just do default behaviour
+
+TYPEINFO(/datum/listen_module/input/ears/intercom)
+	id = "intercom_mic"
+/datum/listen_module/input/ears/intercom
+	id = "intercom_mic"
+	my_prefix = ":in"
+	hearing_range = 1
