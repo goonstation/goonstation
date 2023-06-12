@@ -655,7 +655,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			..()
 
 /obj/item/boarvessel/forgery
-	name = "Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
 	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
 
 	New()
