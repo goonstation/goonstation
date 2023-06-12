@@ -649,7 +649,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	icon_state = "boarvessel"
 
 	attack_self(mob/user as mob)
-		user.visible_message("<span class='alert'>[user] pets [src]!</span>", ,"<span class='notice'>You pet [src]!</span>")
+		user.visible_message("<span class='notice'>[user] pets [src]!</span>", "<span class='notice'>You pet [src]!</span>")
 
 /obj/item/boarvessel/forgery
 	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
