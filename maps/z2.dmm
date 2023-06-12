@@ -75937,6 +75937,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
+/obj/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "tPE" = (
