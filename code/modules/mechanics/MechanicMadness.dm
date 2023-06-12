@@ -4279,7 +4279,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 			if (W.cant_drop) // preparing for inevitable nerd shit
 				return FALSE
 		// if its something we're allowed to pick up, return true
-		if (istype(A,holdpath) && !A.anchored && !A.density)
+		if (istype(A,holdpath) && !A.anchored)
 			return TRUE
 
 		return FALSE
