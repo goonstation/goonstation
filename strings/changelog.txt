@@ -1,5 +1,9 @@
 
 (t)mon jun 12 23
+(u)DimWhat
+(p)14547
+(e)🎨💊|C-Sprites, A-Medical
+(+)Resprited Plasmatoid lungs. Ow... pointy.
 (u)tarmunora
 (+)taser recharge rack can hold waveguns, taser smg, taser shotgun as well.
 (u)pali
