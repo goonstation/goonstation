@@ -192,7 +192,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -1024,7 +1024,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "ZQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

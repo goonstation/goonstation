@@ -276,7 +276,7 @@ TYPEINFO(/obj/item/baton)
 				if (!src.is_active || (src.is_active && src.can_stun() == 0))
 					src.do_stun(user, M, "failed_stun", 1)
 				else
-					if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
+					if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
 						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
 						return
 					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))

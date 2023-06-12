@@ -136,16 +136,16 @@ toxic - poisons
 /datum/projectile/bullet/minigun
 	name = "bullet"
 	shot_sound = 'sound/weapons/minigunshot.ogg'
-	damage = 8
-	cost = 10
-	shot_number = 10
-	shot_delay = 0.07 SECONDS
+	damage = 10
+	cost = 1
+	shot_number = 1 //dont question it
 	dissipation_delay = 7
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+	fullauto_valid = 1
 
 /datum/projectile/bullet/minigun/turret
 	damage = 15
@@ -1390,7 +1390,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 36, 0.45)
+			explosion_new(null, T, 36, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/homing
@@ -1486,7 +1486,7 @@ datum/projectile/bullet/autocannon
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 
 			T.hotspot_expose(700,125)
-			explosion_new(null, T, 15, 0.45)
+			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
 
 /datum/projectile/bullet/antisingularity

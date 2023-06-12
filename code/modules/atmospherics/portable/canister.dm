@@ -736,8 +736,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
 	..()
 	if (!src.isempty)
-		var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.nitrous_oxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 

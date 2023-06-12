@@ -15,8 +15,8 @@
 	var/safe_oxygen_min = 16 // Minimum safe partial pressure of O2, in kPa
 	var/safe_co2_max = 9 // Yes it's an arbitrary value who cares?
 	var/safe_toxins_max = 0.4
-	var/SA_para_min = 1
-	var/SA_sleep_min = 5
+	var/n2o_para_min = 1
+	var/n2o_sleep_min = 5
 	var/fart_smell_min = 0.69 // don't ask ~warc
 	var/fart_vomit_min = 6.9
 	var/fart_choke_min = 16.9
@@ -115,23 +115,20 @@
 			donor.take_radiation_dose(min(0.03 * Radgas_pp, 0.2) * mult/LUNG_COUNT, internal=TRUE) //not a lethal dose in one second tho
 			breath.radgas *= 0.5 //lets say you keep half of it in your lungs.
 
-		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
-			if(SA)
-				var/SA_pp = (SA.moles/breath_moles)*breath_pressure
-				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
-					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
-					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
-						donor.sleeping = max(donor.sleeping, 2)
-				else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-					if (probmult(20))
-						update.emotes |= pick("giggle", "laugh")
+		var/N2O_pp = (breath.nitrous_oxide/breath_moles)*breath_pressure
+		if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
+			donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
+			if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
+				donor.sleeping = max(donor.sleeping, 2)
+		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+			if (probmult(20))
+				update.emotes |= pick("giggle", "laugh")
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 			if ((FARD_pp > fart_vomit_min) && prob(50))
-				donor.visible_message("<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-				donor.vomit()
+				var/vomit_message = "<span class='notice'>[donor] vomits from the [pick("stink","stench","awful odor")]!!</span>"
+				donor.vomit(0, null, vomit_message)
 		if (FARD_pp > fart_choke_min)
 			donor.take_oxygen_deprivation(6.9 * mult/LUNG_COUNT)
 			if (prob(20))

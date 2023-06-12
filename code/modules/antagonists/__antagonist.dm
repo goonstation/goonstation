@@ -23,6 +23,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// The mind of the player that that this antagonist is assigned to.
 	var/datum/mind/owner
+	/// Does the owner of this antagonist role use their normal name set in character preferences as opposed to being assigned a random or chosen name?
+	var/uses_pref_name = TRUE
 	/// Whether the addition or removal of this antagonist role is announced to the player.
 	var/silent = FALSE
 	/// How this antagonist was created. Displayed at the end of the round.
@@ -33,6 +35,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/vr = FALSE
 	/// The objectives assigned to the player by this specific antagonist role.
 	var/list/datum/objective/objectives = list()
+	/// The faction given to the player by this antagonist role for AI targeting purposes.
+	var/faction = 0
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
 		. = ..()
@@ -125,6 +129,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return
 
 		src.add_to_image_groups()
+
+		if (src.faction)
+			src.owner.current?.faction |= src.faction
 
 		if (!src.silent)
 			src.announce()
@@ -219,12 +226,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 */
 	proc/handle_round_end(log_data = FALSE)
 		. = list()
+		var/assigned_text = assigned_by != ANTAGONIST_SOURCE_OTHER ? assigned_by : ""
 		if (owner.current)
 			// we conjugate assigned_by and display_name manually here,
 			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
-			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_text + display_name]!"
 		else
-			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_text + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)

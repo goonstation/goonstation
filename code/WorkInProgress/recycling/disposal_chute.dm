@@ -100,6 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 
 	// attack by item places it in to disposal
 	attackby(var/obj/item/I, var/mob/user)
+		var/obj/item/storage/mechanics/mechitem = null
 		if(status & BROKEN)
 			return
 		if (istype(I,/obj/item/deconstructor))
@@ -120,11 +121,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 					if (src.fits_in(O))
 						O.set_loc(src)
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 				src.update()
 				return
+		if(istype(I, /obj/item/storage/mechanics))
+			mechitem = I
 		//first time they click with a storage, it gets dumped. second time container itself is added
-		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP) //if they're not on help intent it'll default to placing it in while full
+		if (length(I.storage?.get_contents()) && user.a_intent == INTENT_HELP && (!mechitem || mechitem.open)) //if they're not on help intent it'll default to placing it in while full.
 			if(istype(I, /obj/item/storage/secure))
 				var/obj/item/storage/secure/secS = I
 				if (!src.fits_in(secS))
@@ -692,6 +696,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		src.flush_dummy = new()
 		src.flush_dummy.icon = src.icon
 		src.flush_dummy.layer = src.layer + 1
+		src.flush_dummy.mouse_opacity = FALSE
 		src.vis_contents += src.flush_dummy
 
 		SPAWN(1)

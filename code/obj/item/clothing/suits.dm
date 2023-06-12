@@ -1752,47 +1752,65 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	desc = "A padded coat to protect against the cold."
 	icon_state = "wintercoat"
 	item_state = "wintercoat"
+	coat_style = "wintercoat"
 	body_parts_covered = TORSO|LEGS|ARMS
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
 
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = TRUE)
+
 /obj/item/clothing/suit/wintercoat/medical
 	name = "medical winter coat"
 	icon_state = "wintercoat-medical"
 	item_state = "wintercoat-medical"
+	coat_style = "wintercoat-medical"
+
+/obj/item/clothing/suit/wintercoat/robotics
+	name = "robotics winter coat"
+	icon_state = "wintercoat-robotics"
+	item_state = "wintercoat-robotics"
+	coat_style = "wintercoat-robotics"
 
 /obj/item/clothing/suit/wintercoat/genetics
 	name = "genetics winter coat"
 	icon_state = "wintercoat-genetics"
 	item_state = "wintercoat-genetics"
+	coat_style = "wintercoat-genetics"
 
 /obj/item/clothing/suit/wintercoat/research
 	name = "research winter coat"
 	icon_state = "wintercoat-research"
 	item_state = "wintercoat-research"
+	coat_style = "wintercoat-research"
 
 /obj/item/clothing/suit/wintercoat/engineering
 	name = "engineering winter coat"
 	icon_state = "wintercoat-engineering"
 	item_state = "wintercoat-engineering"
+	coat_style = "wintercoat-engineering"
 
 /obj/item/clothing/suit/wintercoat/security
 	name = "security winter coat"
 	icon_state = "wintercoat-security"
 	item_state = "wintercoat-security"
+	coat_style = "wintercoat-security"
 
 /obj/item/clothing/suit/wintercoat/command
 	name = "command winter coat"
 	icon_state = "wintercoat-command"
 	item_state = "wintercoat-command"
+	coat_style = "wintercoat-command"
 
 /obj/item/clothing/suit/wintercoat/detective
 	name = "detective's winter coat"
 	desc = "A comfy coat to protect against the cold. Popular with private investigators."
 	icon_state = "wintercoat-detective"
 	item_state = "wintercoat-detective"
+	coat_style = "wintercoat-detective"
 
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"

@@ -259,7 +259,7 @@
 						user.put_in_hand_or_drop(new /obj/item/instrument/bikehorn)
 				else if(input == "Immunity")
 					boutput(user,"<span class='success'>You will never slip again!</span>")
-					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal)
+					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal/magic)
 				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"

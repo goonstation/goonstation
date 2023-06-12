@@ -1,3 +1,5 @@
+#define EXTERNAL_LINK(URL, TEXT) {"<a href=""} + URL + {"" target="_blank">"} + TEXT + {"</a>"}
+
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
@@ -114,6 +116,19 @@ proc/md5_to_more_pronouncable(text)
 		. += vowels[round(num / length(consonants)) + 1]
 	. = jointext(., "")
 
+/**
+ * Removes a given prefix from a string.
+ *
+ * @return The string without the prefix if the prefix was present at the start. If not, the original string is returned.
+ *
+ * Note: Non-text inputs will be converted into a string. The procedure is case sensitive.
+ */
+proc/strip_prefix(string, prefix)
+	if (!istext(string))
+		string = "[string]"
+	if(copytext(string, 1, length(prefix) + 1) == prefix)
+		string = copytext(string, length(prefix) + 1)
+	return string
 
 proc/strip_prefix_from_list(list/L, prefix)
 	for(var/i in 1 to length(L))
@@ -140,3 +155,10 @@ proc/newline_html_encode(text)
 /// Returns a string with all HTML special characters decoded and <br> replaced with newlines
 proc/newline_html_decode(text)
 	return html_decode(replacetext(text, "<br>", "\n"))
+
+proc/pluralize(word)
+	. = word
+	if(endswith(., "s") || endswith(., "ch") || endswith(., "sh") || endswith(., "z") || endswith(., "x"))
+		. += "es"
+	else
+		. += "s"

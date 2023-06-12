@@ -46,8 +46,10 @@ var/list/miningModifiers = list()
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			if(PLANET_LOCATIONS.repair_planet(src))
-				//
+			PLANET_LOCATIONS.repair_planet(src)// Clear turf will be replaced by planet mapgen
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
+				src.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
 			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else

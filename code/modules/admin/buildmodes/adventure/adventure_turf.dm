@@ -13,8 +13,8 @@
 	"Circuit floor: Vintage" = /turf/unsimulated/floor/circuit/vintage, "Circuit floor: Green" = /turf/unsimulated/floor/circuit/green, \
 	"Dirt" = /turf/unsimulated/aprilfools/dirt, "Grass" = /turf/unsimulated/aprilfools/grass, \
 	"Hive floor" = /turf/unsimulated/floor/setpieces/hivefloor, "Hive wall" = /turf/unsimulated/wall/auto/adventure/bee, \
-	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/martian/floor, \
-	"Martian wall" = /turf/simulated/martian/wall, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \
+	"Ice" = /turf/unsimulated/floor/arctic/snow/ice, "Lava" = /turf/unsimulated/floor/lava, "Martian floor" = /turf/simulated/floor/martian, \
+	"Martian wall" = /turf/simulated/wall/auto/martian, "Normal floor" = /turf/simulated/floor, "Normal wall" = /turf/simulated/wall, \
 	"Reinforced floor" = /turf/simulated/floor/engine, "Reinforced wall" = /turf/simulated/wall/r_wall, "Shielded floor" = /turf/simulated/floor/engine, \
 	"Shielded wall" = /turf/unsimulated/wall/setpieces/leadwall, "Shielded window" = /turf/unsimulated/wall/setpieces/leadwindow, "Showcase" = /turf/unsimulated/floor/wizard/showcase, \
 	"Shuttle floor" = /turf/simulated/floor/shuttle, "Shuttle wall" = /turf/simulated/shuttle/wall, "Snow" = /turf/unsimulated/floor/arctic/snow, \

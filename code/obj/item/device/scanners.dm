@@ -374,6 +374,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
 		scan_health_overhead(M, user)
@@ -756,6 +757,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				//Update Information
 				R["name"] = M.name
 				R["sex"] = M.gender
+				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
@@ -773,6 +775,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			//Update Information
 			src.active1["name"] = M.name
 			src.active1["sex"] = M.gender
+			src.active1["pronouns"] = M.get_pronouns().name
 			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)
