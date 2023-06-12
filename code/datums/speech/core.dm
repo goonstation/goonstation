@@ -151,12 +151,36 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/list/maptext_animation_colors = null
 	/// Input module that recieved this message last - used for format() calls
 	var/datum/listen_module/input/recieved_module = null
+	// Identification vars
+	/// Voice identity
+	var/voice_ident = null
+	/// Face identity
+	var/face_ident = null
+	/// Worn ID
+	var/card_ident = null
+	/// Real name
+	var/real_ident = null
+	/// Handle to the atom used for identification - this is not ideal
+	var/atom/ident_speaker = null
 
 	/// Create a new message datum with associated metadata, parsing and sanitization.
 	New(var/message as text, var/atom/speaker, var/language_id = "english")
 		. = ..()
 		src.orig_message = message
 		src.speaker = speaker
+		src.ident_speaker = speaker
+		if(hasvar(speaker, "wear_id")) //ew
+			src.card_ident = speaker:wear_id?:registered //double ew
+		if(ismob(speaker))
+			var/mob/mob_speaker = speaker
+			src.voice_ident = mob_speaker.voice_name
+			src.face_ident = mob_speaker.name
+			src.real_ident = mob_speaker.real_name
+		else
+			src.voice_ident = speaker.name
+			src.face_ident = speaker.name
+			src.real_ident = speaker.name
+
 		src.language = global.SpeechManager.GetLanguageInstance(language_id)
 
 		/// first, grab the prefix if there is one
@@ -206,10 +230,34 @@ var/global/datum/speech_manager/SpeechManager = new()
 		else
 			return "[src.speaker] [src.say_verb], \"[src.content]\""
 
+	proc/Copy()
+		var/datum/say_message/copy = new(src.content, src.speaker, src.language?.id)
+		copy.prefix = src.prefix
+		copy.orig_message = src.orig_message
+		copy.speaker = src.speaker
+		copy.language = src.language
+		copy.content = src.content
+		copy.say_verb = src.say_verb
+		copy.flags = src.flags
+		copy.heard_range = src.heard_range
+		copy.maptext_css_values = src.maptext_css_values
+		copy.maptext = src.maptext
+		copy.maptext_animation_colors = src.maptext_animation_colors
+		copy.recieved_module = src.recieved_module
+		copy.voice_ident = src.voice_ident
+		copy.face_ident = src.face_ident
+		copy.card_ident = src.card_ident
+		copy.real_ident = src.real_ident
+		copy.ident_speaker = src.ident_speaker
+		return copy
+
 	disposing()
 		. = ..()
 		src.speaker = null
+		src.ident_speaker = null
 		src.language = null
+		src.recieved_module = null
+		src.maptext = null
 
 /// The tree containing speech modules for the parent atom. All input goes through here.
 /// Admittedly "tree" is a bit of a stretch, since only the outputs can branch, but :shrug:
@@ -251,7 +299,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 				return //the module consumed the message, so process it no further
 
 		for(var/datum/speech_module/module in src.output_modules)
-			module.process(message) //output modules always consume the message, there is no further processing required
+			module.process(message.Copy()) //output modules always consume the message, there is no further processing required - they also get their own copy, so there's no accidental transfer between channels
 
 	//ACCENTS
 

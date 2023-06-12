@@ -5,8 +5,8 @@ TYPEINFO(/datum/speech_module/output/blobchat)
 	channel = SAY_CHANNEL_BLOB
 
 	process(datum/say_message/message)
-		logTheThing(LOG_DIARY, message.speaker, "(GHOST): [message.content]", "say")
-		phrase_log.log_phrase("deadsay", message.content)
+		logTheThing(LOG_DIARY, message.speaker, "(BLOB): [message.content]", "say")
+		phrase_log.log_phrase("say", message.content)
 #ifdef DATALOGGER
 		game_stats.ScanText(message.content)
 #endif

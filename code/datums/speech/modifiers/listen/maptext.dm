@@ -6,6 +6,10 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 	process(datum/say_message/message)
 		if(!message.heard_range || message.flags & SAYFLAG_NO_MAPTEXT)
 			return message
+		if(istype(message.speaker, /mob))
+			var/mob/mob_speaker = message.speaker
+			if (mob_speaker.client?.preferences.flying_chat_hidden)
+				return message
 
 		var/image/chat_maptext/chat_text = null
 
