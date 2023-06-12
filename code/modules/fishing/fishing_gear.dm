@@ -54,14 +54,17 @@
 	var/datum/fishing_spot/fishing_spot = null
 	/// how long the fishing action loop will take in seconds, set on onStart(), varies by 4 seconds in either direction.
 	duration = -1
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_ACT | INTERRUPT_STUNNED
 	/// id for fishing action
 	id = "fishing_for_fishies"
+	var/obj/actions/border/fish
 	var/obj/actions/border/border
 	var/obj/actions/border/block
 	var/acceleration = 0
 	var/stopping = FALSE
 	var/is_mouse_down = FALSE
 	var/list/atom/movable/screen/fullautoAimHUD/hudSquares = list()
+	var/datum/action/bar/fishing/actionbar
 
 	New(var/user, var/rod, var/fishing_spot, var/target)
 		..()
@@ -69,6 +72,7 @@
 		src.rod = rod
 		src.fishing_spot = fishing_spot
 		src.target = target
+		src.actionbar = new /datum/action/bar/fishing
 		for(var/x in 1 to WIDE_TILE_WIDTH)
 			for(var/y in 1 to 15)
 				var/atom/movable/screen/fullautoAimHUD/hudSquare = new /atom/movable/screen/fullautoAimHUD
@@ -99,11 +103,17 @@
 		block = new /obj/actions/border
 		block.set_icon_state("fish-block")
 		block.color = "#00CC00"
+		fish = new /obj/actions/border
+		fish.set_icon_state("fish-block")
+		fish.color = "#2fd4da"
 		border.pixel_x = -5
 		block.pixel_x = -5
+		fish.pixel_x = -5
 		user.vis_contents += border
 		user.vis_contents += block
+		user.vis_contents += fish
 		src.move_loop()
+		actions.start(src.actionbar, src.user)
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = TRUE
@@ -162,6 +172,10 @@
 			src.block.set_loc(null)
 			qdel(src.block)
 			src.block = null
+			src.user.vis_contents -= src.fish
+			src.fish.set_loc(null)
+			qdel(fish)
+			src.fish = null
 		src.remove_hud_squares() //in case it somehow didnt get removed beforehand
 		UnregisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN)
 		UnregisterSignal(user, COMSIG_MOB_MOUSEUP)
@@ -172,8 +186,18 @@
 
 /datum/action/fishing/proc/move_loop()
 	set waitfor = 0
+	var/fish_velocity = -1
 
 	while (!src.stopping)
+
+		var/fish_endpoint = src.fish.pixel_y + fish_velocity
+		if (fish_endpoint <= -32)
+			fish_endpoint = -32
+			fish_velocity *= -1
+		if (fish_endpoint >= 32)
+			fish_endpoint = 32
+			fish_velocity *= -1
+		animate(src.fish, pixel_y=fish_endpoint, time=1 DECI SECOND)
 
 		if (src.is_mouse_down)
 			src.acceleration += 1
@@ -191,6 +215,13 @@
 
 		animate(src.block, pixel_y=endpoint, time=1 DECI SECOND)
 
+		var/difference = src.block.pixel_y-src.fish.pixel_y
+		if (difference <= 5 || difference >= -5)
+			src.actionbar.progress += 0.1
+		else
+			src.actionbar.progress -= 0.1
+
+
 		sleep(1 DECI SECOND)
 
 /datum/action/fishing/proc/mouse_down()
@@ -203,6 +234,14 @@
 	var/client/C = src.user.client
 	for (var/hudSquare in src.hudSquares)
 		C.screen -= src.hudSquares[hudSquare]
+
+/datum/action/bar/fishing
+	var/progress = 50
+
+	onUpdate()
+		var/percent = 100/src.progress
+		bar.transform = matrix(percent, 1, MATRIX_SCALE)
+		bar.pixel_x = -nround( ((30 - (30 * percent))/2) )
 
 /obj/item/fishing_rod/basic
 	name = "basic fishing rod"
