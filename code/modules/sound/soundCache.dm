@@ -593,6 +593,7 @@ var/global/list/soundCache = list(
  	"sound/machines/computerboot_pc_end.ogg" = 'sound/machines/computerboot_pc_end.ogg',\
  	"sound/machines/computerboot_pc_loop.ogg" = 'sound/machines/computerboot_pc_loop.ogg',\
  	"sound/machines/computerboot_pc_start.ogg" = 'sound/machines/computerboot_pc_start.ogg',\
+ 	"sound/machines/crematorium.ogg" = 'sound/machines/crematorium.ogg',\
  	"sound/machines/cruiser_warp.ogg" = 'sound/machines/cruiser_warp.ogg',\
  	"sound/machines/decompress.ogg" = 'sound/machines/decompress.ogg',\
  	"sound/machines/ding.ogg" = 'sound/machines/ding.ogg',\

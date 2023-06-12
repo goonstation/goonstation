@@ -350,6 +350,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	var/ashes = 0
 	power_usage = powerdraw_use //gotta chug them watts
 	icon_state = "crema_active"
+	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
 	for (var/M in contents)
 		if (M in non_tray_contents) continue
