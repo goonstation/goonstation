@@ -713,7 +713,7 @@
 
 	message = say_decorate(message)
 
-	var/italics = 0
+	//var/italics = 0
 	var/forced_language = null
 	var/message_range = null
 	var/message_mode = null
