@@ -1346,7 +1346,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				return
 		//default to a basic attack
 		var/datum/handHolder/hand = src.get_active_hand()
-			src.ai_attack_count += 1
 		if (hand.can_range_attack)
 			if (src.critter_range_attack(target))
 				src.ai_attack_count += 1
