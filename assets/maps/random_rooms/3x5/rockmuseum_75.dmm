@@ -1,0 +1,65 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/floor/marble/black,
+/area/space)
+"g" = (
+/obj/displaycase{
+	displayed = new/object/item/raw_material/rock()
+	},
+/turf/unsimulated/floor/marble/border_bw,
+/area/space)
+"n" = (
+/turf/unsimulated/floor/marble/border_bw,
+/area/space)
+"G" = (
+/turf/unsimulated/floor/marble/border_wb,
+/area/space)
+"L" = (
+/obj/displaycase{
+	displayed = new/obj/item/raw_material/gemstone()
+	},
+/turf/unsimulated/floor/marble/border_wb,
+/area/space)
+"O" = (
+/obj/displaycase{
+	displayed = new/obj/item/raw_material/ice()
+	},
+/turf/unsimulated/floor/marble,
+/area/space)
+"Q" = (
+/obj/displaycase{
+	displayed = new/object/item/raw_material/rock()
+	},
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble,
+/area/space)
+"S" = (
+/obj/machinery/light/small/floor,
+/turf/unsimulated/floor/marble,
+/area/space)
+"T" = (
+/obj/railing/velvet,
+/turf/unsimulated/floor/marble,
+/area/space)
+
+(1,1,1) = {"
+g
+Q
+T
+O
+L
+"}
+(2,1,1) = {"
+n
+S
+a
+S
+G
+"}
+(3,1,1) = {"
+g
+Q
+T
+O
+L
+"}
