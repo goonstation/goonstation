@@ -16,6 +16,7 @@
 (+)Resprited Plasmatoid lungs. Ow... pointy.
 (u)tarmunora
 (+)taser recharge rack can hold waveguns, taser smg, taser shotgun as well.
+(+)postit boxes limited to 20 sticky notes
 (u)pali
 (+)You can now emag the fishing hats for even wackier hat text.
 (u)Blackrep
