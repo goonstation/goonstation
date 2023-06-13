@@ -4,9 +4,7 @@
 /area/dmm_suite/clear_area)
 "e" = (
 /obj/machinery/light/incandescent/blueish,
-/mob/living/critter/small_animal/bird/penguin{
-	name = "Earl"
-	},
+/obj/shrub/snow/random,
 /turf/simulated/floor/snowcalm,
 /area/dmm_suite/clear_area)
 "u" = (
@@ -28,6 +26,12 @@
 /obj/stone/snow,
 /turf/simulated/floor/snowrough,
 /area/dmm_suite/clear_area)
+"U" = (
+/mob/living/critter/small_animal/bird/penguin{
+	name = "Earl"
+	},
+/turf/simulated/floor/snowcalm,
+/area/dmm_suite/clear_area)
 "W" = (
 /obj/shrub/snow,
 /turf/simulated/floor/snowrough,
@@ -48,7 +52,7 @@ W
 "}
 (2,1,1) = {"
 a
-a
+U
 G
 C
 a
