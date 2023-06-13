@@ -1345,24 +1345,13 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
 		//default to a basic attack
-		var/datum/handHolder/hand = src.get_active_hand()
-		if (hand.can_range_attack)
-			if (src.critter_basic_attack(target))
-				src.ai_attack_count += 1
-		else
-			if (src.critter_range_attack(target))
-				src.ai_attack_count += 1
+		if (src.critter_basic_attack(target))
+			src.ai_attack_count += 1
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
-		return TRUE
-
-	/// How the critter should attack from range (Only applicable for ranged limbs)
-	proc/critter_range_attack(var/mob/target)
-		src.set_a_intent(INTENT_HARM)
-		src.hand_range_attack(target)
 		return TRUE
 
 	///How the critter should use abilities, return TRUE to indicate ability usage success
@@ -1377,7 +1366,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	/// Used for generic critter mobAI - override if you need special retailation behaviour
 	proc/critter_retaliate(var/mob/target)
-		src.critter_basic_attack(target)
+		src.critter_attack(target)
 
 	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
 	proc/can_critter_attack()

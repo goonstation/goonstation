@@ -27,7 +27,7 @@
 	name = "clown spider vomit egg"
 	weight = 1
 	max_dist = 5
-	distance_from_target = 0
+	can_be_adjacent_to_target = FALSE
 	var/max_spiders = 4
 
 /datum/aiTask/sequence/goalbased/critter/vomit_egg/New(parentHolder, transTask)
