@@ -6,6 +6,8 @@
 #define ANTAGONIST_SOURCE_ADMIN "admin-created "
 #define ANTAGONIST_SOURCE_MUTANT "antag-mutantrace "
 #define ANTAGONIST_SOURCE_SUMMONED "antag-summoned "
+#define ANTAGONIST_SOURCE_CONVERTED "antag-converted "
+#define ANTAGONIST_SOURCE_OTHER "other "
 
 #define ANTAGONIST_REMOVAL_SOURCE_DEATH "death"
 #define ANTAGONIST_REMOVAL_SOURCE_OVERRIDE "override"

@@ -58,7 +58,7 @@
 	..()
 	emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 	for (var/datum/mind/blob in traitors)
-		blob.add_antagonist(ROLE_BLOB)
+		blob.add_antagonist(ROLE_BLOB, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

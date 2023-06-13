@@ -386,7 +386,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 							H.visible_message("<span class='notice'>The counter-revolutionary implant inside [H] shatters into one million pieces!</span>")
 
 						if (can_convert && !(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
-							H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
+							H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
 
 			..()
 
