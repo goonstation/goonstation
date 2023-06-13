@@ -247,7 +247,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	antag.add_antagonist(antag.special_role)
+	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
 	if (!antag_datum.uses_pref_name)

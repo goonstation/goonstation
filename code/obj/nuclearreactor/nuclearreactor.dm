@@ -98,11 +98,11 @@
 
 		//status lights
 		//gas input/output
-		if(air1?.total_moles_full() > 100) //more than trace gas
+		if(TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(air2?.total_moles_full() > 100) //more than trace gas
+		if(TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -376,7 +376,6 @@
 		src.melted = TRUE
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
-			src.current_gas.vacuum()
 		src.current_gas.radgas += 6000
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)

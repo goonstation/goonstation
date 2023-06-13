@@ -529,3 +529,28 @@ proc/get_upscaled_icon(icon, icon_state, dx, dy)
 	spinning_icon_state = "catball"
 	item_state = "catball"
 	desc = "<img src='https://pali.link/catball.gif'><br>"
+
+
+/obj/portal/to_space
+	name = "unstable wormhole"
+	desc = "It seems like this wormhole is unstable and you might land in a random place in space."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	failchance = 0
+	color = list(0.5, 0, 0,   0, 0.5, 0,   0, 0, 0.5)
+	var/tele_throw_speed = 2
+
+	proc/animate_self()
+		animate_lag(src, magnitude=5, step_time_low=0.5 SECONDS, step_time_high=1 SECOND)
+
+	New()
+		. = ..()
+		animate_self()
+
+	teleport(atom/movable/M)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
+		. = ..()
+		if (tele_throw_speed > 0)
+			M.throw_at(throw_target, INFINITY, tele_throw_speed)
+		animate_self()

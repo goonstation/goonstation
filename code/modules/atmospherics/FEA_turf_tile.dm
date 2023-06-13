@@ -49,7 +49,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 /// Return a new gas mixture with a specified amount of moles with the composition of our gas vars.
 /turf/remove_air(amount)
 	var/datum/gas_mixture/GM = new /datum/gas_mixture
-	var/sum = BASE_GASES_TOTAL_MOLES(src)
+	var/sum = TOTAL_MOLES(src)
 	if(sum)
 		#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
 		APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
