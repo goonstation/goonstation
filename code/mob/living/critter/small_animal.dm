@@ -120,6 +120,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 2
+	icon = 'icons/mob/critters/animals/mouse.dmi'
 	icon_state = "mouse_white"
 	icon_state_dead = "mouse_white-dead"
 	speechverb_say = "squeaks"
@@ -147,18 +148,18 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			if (src.client)
 				fur_color = src.client.preferences.AH.customization_first_color
 				eye_color = src.client.preferences.AH.e_color
-			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+			var/image/overlay = image('icons/mob/critters/animals/mouse.dmi', "mouse_colorkey")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 
-			var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+			var/image/overlay_eyes = image('icons/mob/critters/animals/mouse.dmi', "mouse_eyes")
 			overlay_eyes.color = eye_color
 			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
 		if (src.use_custom_color)
 			src.ClearAllOverlays()
-			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey-dead")
+			var/image/overlay = image('icons/mob/critters/animals/mouse.dmi', "mouse_colorkey-dead")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
 		..()
@@ -302,6 +303,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	name = "space cat"
 	real_name = "space cat"
 	desc = "A cat. In space."
+	icon = 'icons/mob/critters/animals/cat.dmi'
 	icon_state = "cat1"
 	icon_state_dead = "cat1-dead"
 	hand_count = 2
@@ -624,6 +626,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	name = "space dog"
 	real_name = "space dog"
 	desc = "A dog. In space."
+	icon = 'icons/mob/critters/animals/dog.dmi'
 	icon_state = "pug"
 	icon_state_dead = "pug-lying"
 	hand_count = 2
@@ -931,6 +934,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	name = "patrick"
 	real_name = "patrick"
 	desc = "patrick. In space."
+	icon = 'icons/misc/critter.dmi' //he's not a dog!
 	icon_state = "patrick"
 	icon_state_dead = "patrick-dead"
 	dogtype = "patrick"
@@ -1654,7 +1658,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	setup_overlays()
 		fur_color = src.client?.preferences.AH.customization_first_color
 		eye_color = src.client?.preferences.AH.e_color
-		var/image/overlay = image('icons/misc/critter.dmi', "robin_colorkey")
+		var/image/overlay = image('icons/mob/critter/mouse.dmi', "robin_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
@@ -1899,6 +1903,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	real_name = "rattlesnake"
 	blood_id = "blood"
 	desc = "A snake. With a rattle. A rattlesnake."
+	icon = 'icons/mob/critters/animals/snake.dmi'
 	icon_state = "rattlesnake"
 	icon_state_dead = "rattlesnake_dead"
 	speechverb_say = "hisses"
@@ -2161,6 +2166,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "frog"
 	real_name = "frog"
 	desc = "Ribbit."
+	icon = 'icons/mob/critters/animals/frog.dmi'
 	icon_state = "frog"
 	icon_state_dead = "frog-dead"
 	hand_count = 2
@@ -3658,11 +3664,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return
 		eye_color = src.client?.preferences.AH.e_color
 
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+		var/image/overlay = image('icons/mob/critters/animals/mouse.dmi', "mouse_colorkey")
 		overlay.color = fur_color
 		src.UpdateOverlays(overlay, "hair")
 
-		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+		var/image/overlay_eyes = image('icons/mob/critters/animals/mouse.dmi', "mouse_eyes")
 		overlay_eyes.color = eye_color
 		src.UpdateOverlays(overlay_eyes, "eyes")
 

@@ -3,6 +3,7 @@
 	real_name = "brullbar"
 	desc = "Oh god."
 	density = 1
+	icon = 'icons/mob/critters/humanoid/brullbar.dmi'
 	icon_state = "brullbar"
 	icon_state_dead = "brullbar"
 	custom_gib_handler = /proc/gibs

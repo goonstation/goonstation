@@ -1,7 +1,7 @@
 /mob/living/critter/small_animal/snake //done as part of a tutorial in converting /obj/critter to /mob/living/critter - https://hackmd.io/@amylizzle/mobbening_tutorial
 	name = "snake"
 	desc = "A snake. Not on a plane."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critters/animals/snake.dmi'
 	icon_state = "snake"
 	density = FALSE
 	custom_gib_handler = /proc/gibs

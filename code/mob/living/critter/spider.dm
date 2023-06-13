@@ -3,6 +3,7 @@
 	name = "space spider"
 	real_name = "space spider"
 	desc = "A big ol' spider, from space. In space. A space spider."
+	icon = 'icons/mob/critters/animals/spider.dmi'
 	icon_state = "big_spide"
 	density = 1
 	hand_count = 8 // spiders!!!
