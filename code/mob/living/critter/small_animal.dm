@@ -1832,10 +1832,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
 				src.aggressive = FALSE
+				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
 				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
 				src.aggressive = TRUE
+				src.ai_retaliates = TRUE
 				return
 		..()
 
@@ -1959,10 +1961,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
 				src.aggressive = FALSE
+				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
 				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
 				src.aggressive = TRUE
+				src.ai_retaliates = TRUE
 				return
 		..()
 

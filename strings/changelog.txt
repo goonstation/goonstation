@@ -1,4 +1,28 @@
 
+(t)mon jun 12 23
+(u)Gannets
+(p)14550
+(e)🆕💅|C-Feature, C-QoL
+(+)You can now empty out portable aquariums in to the fishing research terminal. This saves you 6 whole clicks!
+(u)Erinexx
+(p)14545
+(e)🎨|C-Sprites
+(+)Added Boar Vessel, 600-500 BC, Etruscan, ceramic
+(u)pali
+(+)Glue duration increased by a factor of 4. (Now 20 seconds per unit of glue.)
+(u)DimWhat
+(p)14547
+(e)🎨💊|C-Sprites, A-Medical
+(+)Resprited Plasmatoid lungs. Ow... pointy.
+(u)tarmunora
+(+)taser recharge rack can hold waveguns, taser smg, taser shotgun as well.
+(+)postit boxes limited to 20 sticky notes
+(u)pali
+(+)You can now emag the fishing hats for even wackier hat text.
+(u)Blackrep
+(p)14538
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The bartender's sawn off can now be spun closed using twirl emote
 (t)sat jun 10 23
 (u)Wisemonster
 (p)14522

@@ -1026,7 +1026,7 @@
 				var/mob/living/carbon/human/H = target
 				if (H.can_be_converted_to_the_revolution())
 					if (isrevolutionary(owner))
-						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
 							H.changeStatus("newcause", 5 SECONDS)
 							H.HealDamage("All", max(30 - H.health,0), 0)
 							H.HealDamage("All", 0, max(30 - H.health,0))

@@ -226,12 +226,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 */
 	proc/handle_round_end(log_data = FALSE)
 		. = list()
+		var/assigned_text = assigned_by != ANTAGONIST_SOURCE_OTHER ? assigned_by : ""
 		if (owner.current)
 			// we conjugate assigned_by and display_name manually here,
 			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
-			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_text + display_name]!"
 		else
-			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_text + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)

@@ -281,18 +281,32 @@ TYPEINFO(/obj/item/fish_portal)
 		if (src.working)
 			boutput(user, "<span class='alert'>The terminal is busy!</span>")
 			return
-		var/proceed = FALSE
-		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
-				proceed = TRUE
-				break
-		if (!proceed)
-			boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+		if (istype(W, /obj/item/storage/fish_box))
+			var/obj/item/storage/fish_box/S = W
+			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			else
+				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
+				var/amtload = 0
+				for (var/obj/item/fish/F in S.contents)
+					F.set_loc(src)
+					amtload++
+				S.UpdateIcon()
+				boutput(user, "<span class='notice'>[amtload] fish loaded from the portable aquarium!</span>")
+				S.tooltip_rebuild = 1
 			return
-		user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
-		user.u_equip(W)
-		W.set_loc(src)
-		W.dropped(user)
+		else
+			var/proceed = FALSE
+			for(var/check_path in src.allowed)
+				if(istype(W, check_path))
+					proceed = TRUE
+					break
+			if (!proceed)
+				boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+				return
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			user.u_equip(W)
+			W.set_loc(src)
+			W.dropped(user)
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
