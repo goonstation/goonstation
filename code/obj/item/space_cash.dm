@@ -236,6 +236,7 @@
 	amount = 0
 	var/spent = 0
 	stack_type = /obj/item/currency/spacebux
+	display_name = "spacebux"
 
 	New(var/atom/loc, var/amt = null)
 		..(loc)
@@ -345,6 +346,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	real_name = "discount credit"
 	desc = "You gotta have mon- Wait why does this say Discount Dan's Genuine Authentic Credit-like Currency?"
 	stack_type = /obj/item/currency/fakecash // so all FAKE cash types can stack with each other
+	display_name = "cash"
 
 	_update_stack_appearance()
 		src.UpdateName()
@@ -417,6 +419,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	stack_type = /obj/item/currency/fishing // so all fishing tokens stack
 	default_min_amount = 1
 	default_max_amount = 1
+	display_name = "research tickets"
 
 	_update_stack_appearance()
 		src.UpdateName()
