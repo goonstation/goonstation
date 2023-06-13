@@ -234,6 +234,7 @@ TYPEINFO(/obj/item/fish_portal)
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE
 		src.visible_message("The [src] begins uploading research data.")
+		playsound(src.loc, 'sound/effects/fish_processing_alt.ogg', 100, 1)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
@@ -272,7 +273,7 @@ TYPEINFO(/obj/item/fish_portal)
 			S.set_loc(get_turf(src))
 		src.working = FALSE
 		src.icon_state = "uploadterminal_open"
-		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
+		playsound(src.loc, 'sound/effects/fish_processed_alt.ogg', 100, 1)
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)

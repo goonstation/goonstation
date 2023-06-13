@@ -243,6 +243,7 @@
 	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	token_accepted = /obj/item/requisition_token/fishing
+	sound_token = 'sound/effects/insert_ticket.ogg'
 	log_purchase = FALSE
 	layer = 4
 

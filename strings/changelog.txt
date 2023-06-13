@@ -1,5 +1,9 @@
 
 (t)tue jun 13 23
+(u)Virva & Gannets
+(p)14561
+(e)🔊|C-Sound
+(+)Added Virva's sounds for catching fish, researching fish and using research tickets.
 (u)aloe
 (*)Late-join antagonist roles will no longer override antag preferences. If you would become a latejoin antag but you have that type disabled, you simply won't be an antag.
 (u)Cheekybrdy
