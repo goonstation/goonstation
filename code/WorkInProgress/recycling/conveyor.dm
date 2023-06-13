@@ -4,7 +4,6 @@
 #define OP_REGULAR 1
 #define OP_OFF 0
 #define OP_REVERSE -1
-
 TYPEINFO(/obj/machinery/conveyor) {
 	mats = list("CON-1" = 1, "MET-2" = 1, "CRY-1" = 1)
 }
@@ -22,6 +21,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	anchored = ANCHORED
 	power_usage = 0
 	layer = 2
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
@@ -29,6 +29,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/dir_in = null
 	var/dir_out = null
 	var/currentdir = SOUTH
+	var/deconstructable = FALSE
+	var/protected = FALSE
 
 	var/id = ""			// the control ID	- must match controller ID
 	// following two only used if a diverter is present
@@ -196,7 +198,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		var/leftdir = turn(dir_out, 90)
 		var/rightdir = turn(dir_out, -90)
 		// in case we crash or something we set the input dir to the opposite of the target dir as a fallback
-		dir_in = backdir
+		src.dir_in = backdir
 		var/candidates = list(backdir, leftdir, rightdir)
 		var/scores = list() // we score each candidate by how "good" it is
 		for(var/d in candidates)
@@ -231,9 +233,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 		// if left and right are tied we take backdir to compromise, we also take backdir if it's the best one
 		if(scores[2] == scores[3] || (scores[1] >= scores[2] && scores[1] >= scores[3]))
-			dir_in = backdir
+			src.dir_in = backdir
 		else if(scores[2] > scores[3]) // otherwise just pick the best one
-			dir_in = candidates[2]
+			src.dir_in = candidates[2]
 		else
 			dir_in = candidates[3]
 
@@ -407,6 +409,85 @@ TYPEINFO(/obj/machinery/conveyor) {
 			new /obj/item/cable_coil/cut(M.loc)
 		walk(AM, 0)
 
+/obj/machinery/conveyor/get_desc()
+	if (src.deconstructable)
+		. += " It's cover is opened up, you can modify it."
+
+
+// Sanitize what direction the player wants to set.
+#define PLAYER_SET_DIR_IN(dir, conveyor) if (conveyor.dir_out != dir) conveyor.dir_in = dir
+#define PLAYER_SET_DIR_OUT(dir, conveyor) if (conveyor.dir_in != dir) conveyor.dir_out = dir
+
+/obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
+	if (!usr) return
+	if (!src.deconstructable)
+		usr.show_text("The conveyor belt is welded tight. You have to un-weld it to do any changes to it.", "red")
+		return
+
+	if (over_object == src || src_location == over_location) return ..()
+	if (BOUNDS_DIST(src, usr))
+		usr.show_text("You are too far away to do that!", "red")
+		return
+
+	var/obj/item/equipped_object = usr.equipped()
+	if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
+
+	if (iswrenchingtool(equipped_object))
+		var/dir_target_atom = get_dir(src_location, over_location)
+
+		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
+			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
+
+		PLAYER_SET_DIR_OUT(dir_target_atom, src)
+		src.update()
+		return
+
+	if (ispulsingtool(equipped_object))
+		if(!istype(over_object, /obj/machinery/conveyor_switch)) return
+		var/obj/machinery/conveyor_switch/new_switch = over_object
+		src.id = new_switch.id
+		src.linked_switches += new_switch
+		new_switch.conveyors += src
+		usr.show_text("You connect \the [new_switch] to the [src].", "blue")
+
+	return ..()
+
+/obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location) // Pretty much a copy-paste. Both procs are almost identical.
+	if (!user) return
+	if (!usr) return
+	if (dropped == src || src_location == over_location) return
+	if (BOUNDS_DIST(src, user))
+		return ..()
+
+	var/obj/item/equipped_object = usr.equipped()
+	if (!equipped_object) return ..()
+
+	if (iswrenchingtool(equipped_object))
+		if (!src.deconstructable)
+			usr.show_text("The conveyor belt is welded tight. You have to un-weld it to do any changes to it.", "red")
+			return
+
+		var/dir_target_atom = get_dir(over_location, src_location)
+
+		if (dir_target_atom in ordinal)
+			dir_target_atom &= (WEST | EAST)
+
+		PLAYER_SET_DIR_IN(dir_target_atom, src)
+		src.update()
+		return
+
+	if (ispulsingtool(equipped_object))
+		if(!istype(dropped, /obj/machinery/conveyor_switch)) return ..()
+		var/obj/machinery/conveyor_switch/new_switch = dropped
+		src.id = new_switch.id
+		src.linked_switches += new_switch
+		new_switch.conveyors += src
+		usr.show_text("You connect \the [new_switch] to the [src].", "blue")
+
+	return ..()
+
+#undef PLAYER_SET_DIR_IN
+#undef PLAYER_SET_DIR_OUT
 
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
@@ -435,6 +516,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 			return
 
 			// else if no mob in loc, then allow coil to be placed
+	else if (isweldingtool(I))
+		if (src.protected)
+			user.show_text("\The [src] is too strong to have it's cover un-welded.", "red")
+			return
+
+		if (ON_COOLDOWN(user, "conveyor_belt_weld", 5 SECONDS)) return
+
+		user.show_text("You start [src.deconstructable ? "" : "un"]welding \the [src]'s cover.")
+		var/obj/item/weldingtool/tool = I
+		tool.try_weld(user, 3)
+		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
 
 	else if (issnippingtool(I))
 		var/mob/M = locate() in src.loc
@@ -448,6 +540,21 @@ TYPEINFO(/obj/machinery/conveyor) {
 			return
 
 // attack with hand, move pulled object onto conveyor
+
+/obj/machinery/conveyor/proc/toggle_deconstructability(var/mob/M)
+	if (!M) return
+
+	if (src.deconstructable)
+		src.deconstruct_flags = null
+		src.deconstructable = FALSE
+		M.show_text("You finish welding \the [src] shut.", "blue")
+		return 1
+
+	else
+		src.deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
+		src.deconstructable = TRUE
+		M.show_text("You finish undoing \the [src] welds.", "blue")
+		return 1
 
 /obj/machinery/conveyor/attack_hand(mob/user)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
@@ -506,8 +613,7 @@ TYPEINFO(/obj/machinery/conveyor/built) {
 
 /obj/machinery/conveyor/built/
 	desc = "A conveyor belt. This one looks like it was built recently."
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WRENCH | DECON_WELDER
-	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	deconstructable = TRUE
 
 	initialize() // Look around for other conveyor belts and assume a dir_in and dir_out based on that.
 		var/list/favorable_dir_ins = list()
@@ -527,49 +633,6 @@ TYPEINFO(/obj/machinery/conveyor/built) {
 
 		if (!src.dir_in) src.dir_in = NORTH // In the case there's no favorable dir_ins, pick north.
 		if (!src.dir_out) src.dir_out = turn(src.dir_in, 180) // In the case there's no favorable dir_outs, pick the contrary of dir_in.
-
-		. = ..()
-
-	mouse_drop(over_object, src_location, over_location)
-		if (!usr) return
-		if (over_object == src || src_location == over_location) return ..()
-
-		var/obj/item/equipped_object = usr.equipped()
-		if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
-
-		var/dir_target_atom = get_dir(src_location, over_location)
-
-		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
-			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
-
-		if (iswrenchingtool(equipped_object))
-			var/what_does_user_want = tgui_input_list(usr, "What direction of the conveyor belt you will change?", "Select", list("Direction in", "Direction out"))
-			if (!what_does_user_want) return
-			if (!usr) return // Better safe than sorry.
-			if (equipped_object != usr.equipped()) return // If the user has unequipped the wrench since the start of the prompt, refuse to change the dir.
-
-			switch (what_does_user_want)
-				if ("Direction in")
-					src.dir_in = dir_target_atom
-				if ("Direction out")
-					src.dir_out = dir_target_atom
-
-			src.update()
-			return
-
-		return ..()
-
-	attackby(var/obj/item/I, mob/user)
-		if (ispulsingtool(I))
-			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
-			if (!connector) return ..()
-			if (!istype(connector.connectee, /obj/machinery/conveyor_switch))
-				user.show_text("\The [src] isn't compatible with \the [connector.connectee], and refuses to link to it.", "red")
-				return
-			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
-			src.id = connected_switch.id
-			src.linked_switches += connected_switch
-			user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
 
 		. = ..()
 
@@ -754,6 +817,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// current direction setting
 	var/position = CONVEYOR_STOPPED
 	/// last direction setting
@@ -875,6 +939,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
 			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
 			src.id = connected_switch.id
+			connected_switch.conveyors = src.conveyors
 			user.show_text("You connect \the [src] to \the [connector.connectee]. Both share the same ID now.", "blue")
 
 //silly proc for corners that can be flippies
