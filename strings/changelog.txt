@@ -1,4 +1,7 @@
 
+(t)tue jun 13 23
+(u)aloe
+(*)Late-join antagonist roles will no longer override antag preferences. If you would become a latejoin antag but you have that type disabled, you simply won't be an antag.
 (t)mon jun 12 23
 (u)Gannets
 (p)14550
