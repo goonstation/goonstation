@@ -563,7 +563,7 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 				if (M == L)
 					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
 				else if (isadmin(M) && !M.client.player_mode)
-					boutput(M, "<span class='alert'>[L] ([key_name(L, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
 				else
 					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
 
