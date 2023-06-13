@@ -315,7 +315,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				else
 					src.wake_from_hibernation()
 			// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate())
+			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src)
 				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 				task_instance.targetted_mob = M
 				task_instance.start_time = TIME

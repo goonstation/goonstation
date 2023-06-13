@@ -2188,6 +2188,14 @@
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
 	src.gib()
 
+/mob/proc/smite_gib()
+	var/turf/T = get_turf(src)
+	showlightning_bolt(T)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	src.unequip_all()
+	src.emote("scream")
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2357,6 +2365,7 @@
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
+	. = ..()
 	update_clothing()
 
 /mob/proc/throw_item(atom/target, list/params)

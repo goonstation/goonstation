@@ -88,6 +88,7 @@
 		UpdateIcon()
 
 	disposing()
+		new /obj/decal/fakeobjects/nuclear_reactor_destroyed(src.loc)
 		src._light_turf?.remove_medium_light("reactor_light")
 		for(var/turf/simulated/floor/F in src.locs) //restore the explosion immune state of the original turf
 			F.explosion_immune = initial(F.explosion_immune)
@@ -97,11 +98,11 @@
 
 		//status lights
 		//gas input/output
-		if(air1?.total_moles_full() > 100) //more than trace gas
+		if(TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(air2?.total_moles_full() > 100) //more than trace gas
+		if(TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -375,7 +376,6 @@
 		src.melted = TRUE
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
-			src.current_gas.vacuum()
 		src.current_gas.radgas += 6000
 		src.current_gas.temperature = src.temperature
 		var/turf/current_loc = get_turf(src)
@@ -638,7 +638,6 @@
 
 
 
-
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH
 	var/velocity = 1
@@ -711,8 +710,11 @@
 #undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
-	icon_state = ""
-	icon = null
+	icon_state = "trace"
+	icon = 'icons/obj/projectiles.dmi'
+	invisibility = INVIS_INFRA
+	override_color = TRUE
+	color_icon = "#00FF00"
 	power = 100
 	cost = 20
 //Kill/Stun ratio

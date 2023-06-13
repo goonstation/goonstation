@@ -208,8 +208,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/drinks/milk = 4,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat = 3,
-					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon,
-					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white,
+					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon,
+					/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white,
 					/obj/item/kitchen/food_box/egg_box = 3,
 					/obj/item/storage/box/bacon_kit = 2)
 	cost = 1500
@@ -469,6 +469,19 @@ ABSTRACT_TYPE(/datum/supply_packs)
 		for(var/obj/item/bee_egg_carton/carton in beez)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
+
+/datum/supply_packs/fishing
+	name = "Angling Starter Kit"
+	desc = "A full complement of fishing tools for the amateur angler."
+	category = "Civilian Department"
+	contains = list(/obj/item/fishing_rod/basic,
+					/obj/item/wrench,
+					/obj/submachine/fishing_upload_terminal/portable,
+					/obj/submachine/weapon_vendor/fishing/portable,
+					/obj/fishing_pool/portable)
+	cost = 500
+	containertype = /obj/storage/crate
+	containername = "Angling Starter Kit"
 
 /datum/supply_packs/chemical
 	name = "Chemistry Resupply Crate"
@@ -784,6 +797,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 2000
 	containertype = /obj/storage/crate/packing
 	containername = "Animal Import Kit"
+
+/datum/supply_packs/pet_carrier
+	name = "Pet Carrier"
+	desc = "A hand-held crate used in the convenient storage and transportation of small animals. Warranty voided if used to transport pet rocks or \
+			tortoises."
+	category = "Civilian Department"
+	contains = list(/obj/item/pet_carrier)
+	cost = 1000
+	containertype = /obj/storage/crate/packing
+	containername = "Pet Carrier"
 
 /datum/supply_packs/takeout_chinese
 	name = "Golden Gannet Delivery"
@@ -1600,6 +1623,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 20000
 	containertype = /obj/storage/crate
 	containername = "Power Kit"
+
+/datum/supply_packs/complex/basic_power_kit
+	name = "Emergency Power Equipment"
+	desc = "Frames: 2x Circular Power Treadmills"
+	category = "Engineering Department"
+	frames = list(/obj/machinery/power/power_wheel/hamster = 2)
+	cost = 15000
+	containertype = /obj/storage/crate
+	containername = "Crew Power Generation Kit"
 
 /datum/supply_packs/complex/mainframe_kit
 	name = "Computer Core Kit"

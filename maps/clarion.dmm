@@ -11818,7 +11818,10 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -11836,6 +11839,7 @@
 	},
 /area/station/science/lobby)
 "aIS" = (
+/obj/machinery/vending/snack,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -15121,9 +15125,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 8
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4;
+	level = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -16277,8 +16281,12 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/shrub{
-	dir = 1
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/machinery/coffeemaker/command,
+/obj/drink_rack/mug{
+	pixel_y = -24
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
@@ -28428,7 +28436,10 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "gNH" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1;
+	pipe_direction = 1
+	},
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
 "gOV" = (
@@ -28452,10 +28463,10 @@
 /obj/item/clothing/under/swimsuit/black,
 /obj/item/clothing/under/swimsuit/red,
 /obj/item/clothing/under/swimsuit/blue,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
 /obj/item/clothing/under/shorts/black{
@@ -30491,6 +30502,9 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -32348,7 +32362,13 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/reagent_dispensers/watertank/fountain,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/reagent_containers/food/drinks/creamer{
+	pixel_x = -8;
+	pixel_y = 12
+	},
 /turf/simulated/floor/black,
 /area/station/bridge)
 "ktK" = (
@@ -35410,6 +35430,9 @@
 /obj/machinery/coffeemaker/medbay,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "npu" = (
@@ -36509,6 +36532,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "otP" = (
@@ -39988,15 +40012,15 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
-	},
 /obj/machinery/disposal/small{
 	dir = 4
 	},
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2;
+	dir = 6
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -41740,6 +41764,9 @@
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -42551,6 +42578,9 @@
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
 "tWQ" = (
@@ -42824,9 +42854,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce/private)
 "ujN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+/obj/machinery/atmospherics/pipe/simple{
 	dir = 10;
-	can_rupture = 0
+	level = 2
 	},
 /turf/simulated/floor/redwhite/corner,
 /area/station/medical/medbay/surgery)
@@ -44774,7 +44804,10 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/atmospherics/unary/cryo_cell,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1;
+	pipe_direction = 1
+	},
 /turf/simulated/floor/redwhite{
 	dir = 6
 	},

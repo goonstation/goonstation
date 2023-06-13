@@ -414,6 +414,7 @@
 	icon_state = "gem1"
 	material_name = "Gem"
 	default_material = null
+	mat_changename = TRUE
 	force = 1
 	throwforce = 3
 	crystal = 1
