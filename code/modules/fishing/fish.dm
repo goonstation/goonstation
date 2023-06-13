@@ -382,7 +382,7 @@ Alien/mutant/other fish:
 	value  = FISH_RARITY_EPIC
 	New()
 		..()
-		name = "\improper [pick("free", "gamer", "Xtreme", "funny", "ultimate", "REAL")] [pick("cat", "puppy", "gaming", "fail", "cheat", "hax")] [pick("video", "content", "game", "images", "text", "audiobook", "podcast")].worm"
+		name = "\improper [pick("free", "gamer", "Xtreme", "funny", "ultimate", "REAL")]_[pick("cat", "puppy", "gaming", "fail", "cheat", "hax")] [pick("video", "content", "game", "images", "text", "audiobook", "podcast")].worm"
 
 //solarium
 /obj/item/fish/sun_fish
