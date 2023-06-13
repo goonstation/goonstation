@@ -705,21 +705,20 @@ datum/fishing_spot/golden_toilet
 /datum/fishing_spot/ice_cream_machine
 	fishing_atom_type = /obj/submachine/ice_cream_dispenser
 	rod_tier_required = 2
-	fish_available = list(/obj/item/reagent_container/food/snacks/condiment/chocchips = 40,\
-	/obj/item/reagent_container/food/snacks/condiment/custard = 30,\
-	/obj/item/reagent_container/food/snacks/condiment/cream = 20,\
-	/obj/item/reagent_container/food/snacks/condiment/syrup = 15,\
+	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/chocchips = 40,\
+	/obj/item/reagent_containers/food/snacks/condiment/custard = 30,\
+	/obj/item/reagent_containers/food/snacks/condiment/cream = 20,\
+	/obj/item/reagent_containers/food/snacks/condiment/syrup = 15,\
 	/obj/item/raw_material/ice = 35,\
 	/obj/item/fish/yellow_tang = 10,\
-	/obj/item/reagent_contain/food/snacks/ice_cream/goodrandom = 30)
-
+	/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom = 30)
 
 //mainframe
 /datum/fishing_spot/mainframe
 	fishing_atom_type = /obj/machinery/networked/mainframe/zeta
 	rod_tier_required = 3
 	fish_available = list(/obj/item/fish/code_worm = 50,\
-	obj/item/disk/data/tape/boot2 = 30,\
-	obj/item/disk/data/floppy/demo = 25,\
-	obj/item/disk/data/clown = 15,\
-	obj/item/disk/data/cartridge/ringtone_beepy = 5)
+	/obj/item/disk/data/tape/boot2 = 30,\
+	/obj/item/disk/data/floppy/demo = 25,\
+	/obj/item/disk/data/cartridge/clown = 15,\
+	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
