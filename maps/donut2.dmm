@@ -9253,13 +9253,12 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aHM" = (
-/obj/machinery/light/small{
+/obj/disposalpipe/segment{
 	dir = 1;
-	pixel_y = 21;
-	status = 2
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/maintenance/west)
+/area/station/hallway/secondary/exit)
 "aHN" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -9882,10 +9881,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aJW" = (
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_east"
-	},
-/area/station/hallway/secondary/exit)
+/obj/storage/closet/emergency,
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "aJX" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -16480,14 +16478,13 @@
 /turf/simulated/floor/yellow/side,
 /area/station/engine/inner)
 "bfi" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/device/light/flashlight,
-/turf/simulated/floor,
-/area/station/maintenance/west)
+/obj/machinery/vehicle/escape_pod{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/station/hallway/secondary/exit)
 "bfj" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -25417,7 +25414,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/beepsky)
 "cGu" = (
-/obj/reagent_dispensers/foamtank,
+/obj/disposalpipe/segment{
+	dir = 4;
+	pixel_y = 0
+	},
+/obj/cable/black{
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "cGR" = (
@@ -26680,6 +26683,10 @@
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"dIj" = (
+/obj/random_item_spawner/mask/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "dIo" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/drainage/big,
@@ -27317,6 +27324,15 @@
 /obj/stool/bench,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
+"eki" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt{
+	dir = 4;
+	req_access = null
+	},
+/obj/access_spawn/maint,
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "ekx" = (
 /obj/stool/chair/red{
 	dir = 1
@@ -27884,6 +27900,10 @@
 	dir = 8
 	},
 /area/station/crew_quarters/quarters)
+"eDY" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "eEh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -29849,14 +29869,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"ggy" = (
-/obj/machinery/vehicle/escape_pod{
-	dir = 8
-	},
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_east"
-	},
-/area/station/maintenance/west)
 "ggJ" = (
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
 /obj/disposalpipe/trunk/mail{
@@ -31614,13 +31626,6 @@
 	dir = 1
 	},
 /area/station/medical/research)
-"hGr" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/maintenance/west)
 "hGK" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -32935,6 +32940,14 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/exit)
+"iPR" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21;
+	status = 2
+	},
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "iQt" = (
 /obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
@@ -35110,6 +35123,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
+"kHI" = (
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "kJb" = (
 /obj/machinery/conveyor_switch{
 	id = "garbage"
@@ -35139,15 +35159,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"kKL" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	dir = 4;
-	req_access = null
-	},
-/obj/access_spawn/maint,
-/obj/firedoor_spawn,
-/turf/simulated/floor,
-/area/station/maintenance/west)
 "kLB" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -35214,6 +35225,19 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"kNL" = (
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
+	dir = 4;
+	icon_state = "bdoormid1"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/west)
 "kNP" = (
 /obj/cable/black{
 	icon_state = "2-8"
@@ -36407,10 +36431,6 @@
 /obj/machinery/portable_atmospherics/canister,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
-"lHv" = (
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor,
-/area/station/maintenance/west)
 "lIf" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -38455,15 +38475,13 @@
 /turf/simulated/floor/wood/seven,
 /area/station/chapel/sanctuary)
 "nqI" = (
-/obj/disposalpipe/segment{
-	dir = 4;
-	pixel_y = 0
+/obj/machinery/light/incandescent,
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal,
+/turf/simulated/floor/escape{
+	dir = 1
 	},
-/obj/cable/black{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
+/area/station/hallway/secondary/exit)
 "nqJ" = (
 /turf/simulated/floor/white/side{
 	dir = 4
@@ -38838,13 +38856,18 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "nFD" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
+/obj/machinery/door/poddoor/blast/pyro{
+	autoclose = 1;
 	dir = 4;
-	req_access = null
+	icon_state = "bdoormid1"
 	},
-/obj/access_spawn/maint,
-/turf/space,
-/area/station/maintenance/west)
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hallway/secondary/exit)
 "nFL" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -39524,6 +39547,10 @@
 	dir = 10
 	},
 /area/station/security/main)
+"oiv" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "ojf" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "zeta_sec";
@@ -39642,10 +39669,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/science)
-"onC" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor,
-/area/station/maintenance/west)
 "onI" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/vending/jobclothing/catering,
@@ -41209,14 +41232,13 @@
 /turf/simulated/floor/black/corner,
 /area/station/crew_quarters/quarters)
 "pyf" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
+/obj/machinery/vehicle/escape_pod{
+	dir = 8
 	},
-/obj/storage/closet/welding_supply,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/station/maintenance/west)
 "pyu" = (
 /obj/machinery/conveyor/ES{
 	id = "zetadisposals";
@@ -42671,19 +42693,6 @@
 	dir = 10
 	},
 /area/station/security/processing)
-"qFQ" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/west)
 "qGB" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /obj/cable/black{
@@ -43641,6 +43650,11 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/crew_quarters/ce)
+"rtK" = (
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_east"
+	},
+/area/station/hallway/secondary/exit)
 "rtN" = (
 /obj/machinery/light/incandescent,
 /obj/landmark/spawner{
@@ -45107,14 +45121,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
-"syj" = (
-/obj/machinery/light/incandescent,
-/obj/disposalpipe/trunk,
-/obj/machinery/disposal,
-/turf/simulated/floor/escape{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit)
 "syw" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -46324,19 +46330,6 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
-"tnD" = (
-/obj/machinery/door/poddoor/blast/pyro{
-	autoclose = 1;
-	dir = 4;
-	icon_state = "bdoormid1"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/shuttlebay,
-/area/station/hallway/secondary/exit)
 "toi" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -46553,6 +46546,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
+"tyV" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "tzt" = (
 /turf/simulated/floor/dojo/sand/circle,
 /area/station/chapel/sanctuary)
@@ -46656,13 +46653,12 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "tCR" = (
-/obj/machinery/vehicle/escape_pod{
-	dir = 8
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
 	},
-/turf/simulated/floor/shuttlebay{
-	icon_state = "engine_caution_east"
-	},
-/area/station/hallway/secondary/exit)
+/obj/firedoor_spawn,
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "tDj" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -46861,13 +46857,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lobby)
-"tKv" = (
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
-/turf/simulated/floor,
-/area/station/maintenance/west)
 "tLe" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -47817,6 +47806,15 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/blueblack,
 /area/station/science/lobby)
+"uCG" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/storage/closet/welding_supply,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "uCU" = (
 /obj/securearea,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -48523,13 +48521,6 @@
 	dir = 5
 	},
 /area/station/janitor/supply)
-"vif" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "vit" = (
 /obj/stool/bed,
 /obj/machinery/light/incandescent,
@@ -48996,10 +48987,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"vAI" = (
-/obj/machinery/light/incandescent,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "vBc" = (
 /obj/machinery/computer/cloning{
 	dir = 8
@@ -51716,6 +51703,15 @@
 	},
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"xPV" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor,
+/area/station/maintenance/west)
 "xQm" = (
 /obj/machinery/camera{
 	c_tag = "Inner Maintenance South North"
@@ -51984,10 +51980,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
-"ydl" = (
-/obj/random_item_spawner/mask/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "ydv" = (
 /obj/landmark{
 	icon_state = "pest-start";
@@ -67494,15 +67486,15 @@ aaa
 aaa
 aaa
 vkK
-qFQ
+kNL
 vkK
 arN
 arN
 sDI
 avq
 dmM
-cGu
-ydl
+oiv
+dIj
 aLJ
 yjM
 aID
@@ -67793,10 +67785,10 @@ anB
 anB
 anB
 aaa
-aaa
-aaa
+onh
+onh
 awR
-ggy
+pyf
 awR
 arN
 arN
@@ -68098,7 +68090,7 @@ aaa
 aaa
 aaa
 vkK
-aHM
+iPR
 vkK
 arN
 arN
@@ -68400,10 +68392,10 @@ aaa
 aaa
 avq
 vkK
-hGr
+tCR
 avq
 avq
-nFD
+cmW
 avq
 aJZ
 gKv
@@ -68700,15 +68692,15 @@ aaa
 anB
 aaa
 acf
-lHv
-tKv
+tyV
+kHI
 aGj
 avq
 aGk
 jXF
 ehI
 ezx
-nqI
+cGu
 aKL
 aLM
 xVW
@@ -69003,8 +68995,8 @@ aaa
 aap
 aas
 avq
-aHM
-bfi
+iPR
+xPV
 avq
 aOp
 ehI
@@ -69306,7 +69298,7 @@ avq
 avq
 avq
 uYC
-onC
+aJW
 avq
 avq
 fmV
@@ -69607,7 +69599,7 @@ ajz
 avq
 aDb
 avq
-kKL
+eki
 avq
 avq
 cUI
@@ -71696,11 +71688,11 @@ aaa
 aaa
 aaa
 dRI
-tnD
+nFD
 xDG
-tnD
+nFD
 xDG
-tnD
+nFD
 dRI
 aaa
 aaa
@@ -71998,11 +71990,11 @@ aaa
 aaa
 aaa
 xDG
-tCR
-aJW
-tCR
-aJW
-tCR
+bfi
+rtK
+bfi
+rtK
+bfi
 xDG
 aaa
 aaa
@@ -72300,11 +72292,11 @@ aaa
 aaa
 aaa
 dRI
-pyf
+uCG
 fqV
 fqV
 fqV
-vAI
+eDY
 dRI
 xDG
 app
@@ -74115,8 +74107,8 @@ ghs
 xDG
 xDG
 ipa
-syj
-vif
+nqI
+aHM
 fqV
 pBG
 ipa
