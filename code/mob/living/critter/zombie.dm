@@ -25,7 +25,7 @@
 	ai_attacks_per_ability = 5
 
 	var/infection_type = EATS_BRAINS
-	var/moan_sounds = list("sound/voice/Zgroan1.ogg", "ound/voice/Zgroan2.ogg", "sound/voice/Zgroan3.ogg", "sound/voice/Zgroan4.ogg")
+	var/moan_sounds = list("sound/voice/Zgroan1.ogg", "sound/voice/Zgroan2.ogg", "sound/voice/Zgroan3.ogg", "sound/voice/Zgroan4.ogg")
 
 	New()
 		..()
@@ -67,7 +67,7 @@
 			return 1
 
 		if (src.ai?.enabled)
-			if (prob(3))
+			if (prob(5))
 				playsound(src, pick(moan_sounds), 25, 5)
 
 	valid_target(mob/living/C)

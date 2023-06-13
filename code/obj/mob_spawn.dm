@@ -153,9 +153,9 @@
 
 		qdel(src)
 
-	do_damage(var/mob/living/M) // Override if you want specific damage numbers / types
-		M.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
-		M.take_oxygen_deprivation(rand(250, 300))
+	do_damage(var/mob/living/carbon/human/H) // Override if you want specific damage numbers / types
+		H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
+		H.take_oxygen_deprivation(rand(250, 300))
 
 /obj/mob_spawn/corpse/human/random
 	name = "Random Human Corpse Spawn"
@@ -218,12 +218,12 @@
 	break_headset = TRUE
 	max_organs_removed = 5
 
-	do_damage(var/mob/living/M)
-		M.TakeDamage("all", brute = rand(100, 150))
-		M.take_oxygen_deprivation(rand(250, 300))
-		M.blood_volume -= rand(200, 350)
+	do_damage(var/mob/living/carbon/human/H)
+		H.TakeDamage("all", brute = rand(100, 150))
+		H.take_oxygen_deprivation(rand(250, 300))
+		H.blood_volume -= rand(200, 350)
 		if (prob(80))
-			qdel(M.glasses)
+			qdel(H.glasses)
 
 	assistant
 		spawn_type = /mob/living/carbon/human/normal/securityassistant
