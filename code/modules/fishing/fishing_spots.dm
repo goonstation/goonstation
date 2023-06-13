@@ -47,7 +47,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
-	fish.set_loc(get_turf(user))
+	user.put_in_hand_or_drop(fish)
+	//fish.set_loc(get_turf(user))
 	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
