@@ -2504,7 +2504,7 @@ var/list/fun_images = list()
 	var/total = 0
 	for (var/client/client in clients)
 		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
-			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START)
+			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
 				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
 				total += 1
 				client.set_antag_tokens(client.antag_tokens + 1)
