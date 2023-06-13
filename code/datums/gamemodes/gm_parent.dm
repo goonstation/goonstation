@@ -211,7 +211,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
-			total++
 			if (player.client.preferences.vars[get_preference_for_role(type)])
 				candidates += player.mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
