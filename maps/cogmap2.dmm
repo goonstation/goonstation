@@ -4888,8 +4888,8 @@
 "amQ" = (
 /obj/decal/cleanable/cobweb2,
 /obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
+	id = "smiling";
+	pixel_y = 32
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/north)
@@ -10862,8 +10862,8 @@
 	pixel_y = 20
 	},
 /obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
+	id = "smiling";
+	pixel_y = 32
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
@@ -71378,6 +71378,14 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"dDH" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/warp_beacon/catering,
+/turf/space,
+/area/space)
 "dEt" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
@@ -104001,7 +104009,7 @@ aaa
 aaa
 aaa
 aaa
-adb
+dDH
 adw
 aef
 aeP
