@@ -1345,13 +1345,25 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
 		//default to a basic attack
-		if (src.critter_basic_attack(target))
+		var/datum/handHolder/hand = src.get_active_hand()
 			src.ai_attack_count += 1
+		if (hand.can_range_attack)
+			if (src.critter_range_attack(target))
+				src.ai_attack_count += 1
+		else
+			if (src.critter_basic_attack(target))
+				src.ai_attack_count += 1
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
+		return TRUE
+
+	/// How the critter should attack from range (Only applicable for ranged limbs)
+	proc/critter_range_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_range_attack(target)
 		return TRUE
 
 	///How the critter should use abilities, return TRUE to indicate ability usage success
