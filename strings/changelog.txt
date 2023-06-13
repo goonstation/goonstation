@@ -1,5 +1,7 @@
 
 (t)tue jun 13 23
+(u)pali
+(+)pod portals no longer have 1% chance to gib, instead it is 2% chance to get teleported to a random space tile
 (u)Virva & Gannets
 (p)14561
 (e)🔊|C-Sound
