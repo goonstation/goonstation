@@ -211,10 +211,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
 
 		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
+			total++
 			if (player.client.preferences.vars[get_preference_for_role(type)])
 				candidates += player.mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
 				unpicked_candidate_minds.Add(player.mind)
+
+	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
+									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
