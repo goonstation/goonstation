@@ -245,7 +245,7 @@
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.flock.z_level_check(src))
-			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
+			flock_speak(null, "Control of drone [src.real_name] surrendered.", src.flock)
 
 		controller = null
 		src.update_health_icon()

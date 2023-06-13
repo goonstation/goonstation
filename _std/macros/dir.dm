@@ -101,12 +101,6 @@ proc/angle_inbetween(angle, low, high)
 		return (angle >= low || angle <= high)
 	return (angle >= low && angle <= high)
 
-/// Returns the distance between two angles
-proc/angle_distance(angle1, angle2)
-	angle1 = ((angle1 % 360) + 360) % 360
-	angle2 = ((angle2 % 360) + 360) % 360
-	. = min(abs(angle1 - angle2), abs(angle1 - angle2 + 360), abs(angle1 - angle2 - 360))
-
 /**
   * Transforms a given angle to vec2 in a list
   */

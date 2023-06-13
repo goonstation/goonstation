@@ -75,7 +75,7 @@
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
 			playsound(src, 'sound/machines/chime.ogg', 30, 1)
-			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 20, 1)
 			src.UpdateIcon()
 		else // drying is done!
 			processing_items.Remove(src)
@@ -126,7 +126,7 @@
 			playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			if (src.cycle_current == 2 && src.cycle == WASH)
 				src.visible_message("[src] groans horribly, some water drips out!")
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 80, 1)
 			else if (src.cycle_current == 4 && src.cycle == WASH)
 				src.visible_message("[src] is making a horrible ratchet! [H]'s face can be seen pressed against the glass.")
 				if(isliving(H))
@@ -147,14 +147,14 @@
 			else
 				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
+			playsound(src, 'sound/machines/washing_start.ogg', 80, 1)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
-			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, 1)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
-			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 20, 1)
 			src.shake()
 
 /obj/submachine/laundry_machine/proc/shake(var/amt = 5)

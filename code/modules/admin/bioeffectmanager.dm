@@ -15,7 +15,7 @@
 
 /datum/bioeffectmanager/ui_data(mob/user)
 	var/list/bioEffects = list()
-	for (var/index as anything in target_mob.bioHolder.effects)
+	for (var/index as anything in target_mob.bioHolder?.effects)
 		var/datum/bioEffect/BE = target_mob.bioHolder.effects[index]
 		bioEffects += list(list(
 			"name" = BE,
@@ -28,13 +28,15 @@
 	. = list(
 		"target_name" = target_mob,
 		"bioEffects" = bioEffects,
-		"stability" = target_mob.bioHolder.genetic_stability
+		"stability" = target_mob.bioHolder?.genetic_stability
 		)
 
 /datum/bioeffectmanager/ui_act(action, params)
 	. = ..()
 	if (.)
 		return
+	if (!target_mob?.bioHolder)
+		return // mob was qdeleted
 	var/datum/bioEffect/BE = target_mob.bioHolder.effects[params["id"]]
 	switch(action)
 		if ("addBioEffect")
@@ -45,11 +47,11 @@
 			logTheThing(LOG_ADMIN, usr, "Added bioeffect [initial(type_to_add.id)] to [constructName(target_mob)]")
 			. = TRUE
 		if ("updateStability")
-			var/new_stability = text2num(params["value"])
+			var/new_stability = round(text2num(params["value"]))
 			target_mob.bioHolder.genetic_stability = isnull(new_stability) ? 0 : max(new_stability, 0)
 			. = TRUE
 		if ("updateCooldown")
-			var/new_cooldown = text2num(params["value"])
+			var/new_cooldown = round(text2num(params["value"]))
 			BE.cooldown = isnull(new_cooldown) ? 0 : max(new_cooldown, 0)
 			. = TRUE
 		if ("toggleBoosted")

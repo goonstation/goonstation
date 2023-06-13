@@ -242,6 +242,7 @@
 	icon_state = "fishing"
 	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
 	token_accepted = /obj/item/currency/fishing
+	sound_token = 'sound/effects/insert_ticket.ogg'
 	log_purchase = FALSE
 	layer = 4
 
