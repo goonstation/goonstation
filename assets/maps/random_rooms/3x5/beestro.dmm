@@ -65,7 +65,7 @@
 /area/dmm_suite/clear_area)
 "D" = (
 /obj/stool,
-/obj/critter/domestic_bee/creepy,
+/mob/living/critter/small_animal/bee/sea,
 /turf/simulated/bar,
 /area/dmm_suite/clear_area)
 "F" = (
