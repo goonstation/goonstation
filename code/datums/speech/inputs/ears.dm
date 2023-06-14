@@ -13,7 +13,7 @@ TYPEINFO(/datum/listen_module/input/ears)
 		//range 0 means it's only audible if it's from inside you (ie radios, direct messages)
 		if(message.heard_range == 0 && (src.parent_tree.parent == message.speaker.loc))
 			. = ..()
-		else if(src.parent_tree.parent in hearers(message.speaker, min(message.heard_range, src.hearing_range))) //This isn't optimised in BYOND, hopefully it can be in OD
+		else if(src.parent_tree.parent in view(min(message.heard_range, src.hearing_range), message.speaker)) //This isn't optimised in BYOND, hopefully it can be in OD
 			. = ..()
 
 	format(datum/say_message/message)
@@ -101,4 +101,9 @@ TYPEINFO(/datum/listen_module/input/ears/intercom)
 /datum/listen_module/input/ears/intercom
 	id = "intercom_mic"
 	my_prefix = ":in"
-	hearing_range = 1
+	hearing_range = 2
+
+	process(datum/say_message/message)
+		if(message.flags & SAYFLAG_RADIO_SENT)
+			return null //don't retransmit messages you heard from radios
+		..()
