@@ -74809,9 +74809,12 @@
 /area/adventure/channel)
 "rGF" = (
 /obj/admin_plaque{
-	name = "Angel's Office"
+	name = "Angel's Office";
+	pixel_y = 32
 	},
-/turf/unsimulated/wall/auto/lead/blue,
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -156755,8 +156758,8 @@ qQK
 eoz
 kPz
 lsE
+wel
 rGF
-sJH
 vij
 wel
 dvW
