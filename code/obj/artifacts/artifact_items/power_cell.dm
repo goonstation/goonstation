@@ -1,7 +1,7 @@
 /obj/item/cell/artifact
 	name = "artifact power cell"
 	icon = 'icons/obj/artifacts/artifactsitemS.dmi'
-	maxcharge = 10000
+	maxcharge = 1
 	var/chargeCap = 10000
 	genrate = 50
 	specialicon = 1
@@ -83,7 +83,7 @@
 	type_size = ARTIFACT_SIZE_TINY
 	rarity_weight = 350
 	validtypes = list("ancient","martian","wizard","precursor")
-	automatic_activation = 1
+	automatic_activation = 0
 	react_elec = list("equal",0,10)
 	react_xray = list(10,80,95,11,"SEGMENTED")
 	examine_hint = "It kinda looks like it's supposed to be inserted into something."
@@ -95,24 +95,23 @@
 	post_setup()
 		..()
 		var/obj/item/cell/artifact/O = src.holder
-		O.maxcharge = rand(15,1000)
-		O.maxcharge *= 100
-		O.chargeCap = O.maxcharge
-		src.react_elec[2] = O.maxcharge
+		O.chargeCap = rand(15,1000)
+		O.chargeCap *= 100
+		src.react_elec[2] = O.chargeCap
 
 		// effects
 		O.effectProbModifier = 1/rand(10,50) 	// probability
 		switch(src.artitype.name)					// noise
 			if ("martian")
-				O.noise = pick("sound/voice/babynoise.ogg", "sound/voice/animal/bugchitter.ogg", "sound/voice/blob/blobdeath.ogg", "sound/voice/farts/frogfart.ogg", "sound/effects/splort.ogg")
+				O.noise = pick('sound/voice/babynoise.ogg', 'sound/voice/animal/bugchitter.ogg', 'sound/voice/blob/blobdeath.ogg', 'sound/voice/farts/frogfart.ogg', 'sound/effects/splort.ogg')
 			if ("ancient")
-				O.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
+				O.noise = pick('sound/effects/electric_shock_short.ogg', 'sound/effects/creaking_metal2.ogg','sound/machines/weapons-reloading.ogg', 'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg','sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg', 'sound/machines/scan.ogg')
 			if ("wizard")
-				O.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
+				O.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
 			if ("precursor") // what does precursor stuff even sound like???
-				O.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
+				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
 
-		if(prob(O.maxcharge/1000)) 			// the more charge the bigger the chance it does dumb stuff
+		if(prob(O.chargeCap/1000)) 			// the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage
 				if ("martian")
 					O.leakChem = pick("space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter","synthflesh","bread","poo","ants","spiders")

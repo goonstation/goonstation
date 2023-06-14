@@ -9,8 +9,6 @@
 	target_anything = 1
 	icon_state = "gnaw"
 
-	var/datum/projectile/slam/proj = new
-
 	cast(atom/target)
 		if (..())
 			return 1
@@ -26,14 +24,14 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, "sound/impact_sounds/Flesh_Tear_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1, -1)
 		var/mob/M = target
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] gnaws into [M]!</b></span>", "<span class='alert'>We sink our teeth into [M]!</span>")
 		if (istype(holder.owner, /mob/living/critter/changeling/handspider) && isliving(M))
 			var/mob/living/MT = M
 			//Only able to absorb 4 dna points from a living target (out of a total of 10)
-			if (istype (MT,/mob/living/carbon/human) && istype(MT:mutantrace, /datum/mutantrace/monkey))
+			if (istype (MT,/mob/living/carbon/human) && (istype(MT:mutantrace, /datum/mutantrace/monkey) || isnpc(MT)))
 				boutput(holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			else if (MT.dna_to_absorb > 0 && (isdead(MT) || MT.dna_to_absorb > 6))
 				var/absorbed = 1
@@ -48,7 +46,7 @@
 						MT:blood_volume -= 5
 
 				if (MT.dna_to_absorb <= 0)
-					logTheThing("combat", holder.owner, MT, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
+					logTheThing(LOG_COMBAT, holder.owner, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else

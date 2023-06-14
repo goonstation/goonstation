@@ -1,10 +1,31 @@
 /atom/movable/screen
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_HUD//wow WOW why won't you use /atom/movable/screen/hud, HUD OBJECTS???
+	animate_movement = SLIDE_STEPS
 	text = ""
+
 	New()
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
+
+	set_loc(atom/newloc)
+		. = ..()
+		if(!isnull(newloc))
+			CRASH("HUD object [identify_object(src)] was moved to [identify_object(newloc)]")
+
+/**
+ * Sets screen_loc of this screen object, in form of point coordinates,
+ * with optional pixel offset (px, py).
+ *
+ * There's finer equivalents below this for hud datums
+ *
+ * If applicable, "assigned_map" has to be assigned before this proc call.
+ *
+ * Code Snippet licensed under MIT from /tg/station (#49960)
+ * Copyright (c) 2020 Aleksej Komarov
+ */
+/atom/movable/screen/proc/set_position(x, y, px = 0, py = 0)
+	screen_loc = "[x]:[px],[y]:[py]"
 
 /atom/movable/screen/hud
 	plane = PLANE_HUD
@@ -55,9 +76,10 @@
 			master.MouseDrop_T(src, O, user)
 
 	disposing()
+		src.master = null
+		src.item = null
 		src.screen_loc = null // idk if this is necessary but im writing it anyways so there
 		..()
-
 
 /datum/hud
 	var/list/mob/living/mobs = list()
@@ -149,7 +171,8 @@
 
 	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc)
 		if (loc)
-			A.screen_loc = loc
+			//A.screen_loc = loc
+			A.screen_loc = do_hud_offset_thing(A, loc)
 		A.layer = layer
 		A.plane = PLANE_HUD
 		if (!(A in src.objects))
@@ -404,27 +427,27 @@
 /// returns true if a rectangle defined by coords is within screen dimensions, false if it isnt
 /datum/hud/proc/screen_boundary_check(var/list/coords)
 	if (!coords)
-		return false
+		return FALSE
 
 	// we only support widescreen right now
 	if (coords["x_low"] < 1 || coords["x_low"] > 21)
-		return false
+		return FALSE
 	if (coords["y_low"] < 1 || coords["y_low"] > 15)
-		return false
+		return FALSE
 	if (coords["x_high"] < 1 || coords["x_high"] > 21)
-		return false
+		return FALSE
 	if (coords["y_high"] < 1 || coords["y_high"] > 15)
-		return false
+		return FALSE
 
-	return true
+	return TRUE
 
 /// returns true if a rectangle defined by coords doesnt overlap with any existing hud zone, false if it does
 /datum/hud/proc/zone_overlap_check(var/list/coords, var/ignore_overlap = 0)
 	if (ignore_overlap)
-		return true
+		return TRUE
 
 	if (!coords)
-		return false
+		return FALSE
 
 	var/x_low_1 = coords["x_low"]
 	var/y_low_1 = coords["y_low"]
@@ -449,10 +472,10 @@
 			continue
 
 		// they overlap
-		return false
+		return FALSE
 
 	// no overlaps ever :]
-	return true
+	return TRUE
 
 /// returns /atom/movable/screen/hud with in zone_alias with alias elem_alias
 /datum/hud/proc/get_element(var/zone_alias, var/elem_alias)

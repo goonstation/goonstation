@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/decal/cleanable/blood/tracks,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "n" = (
 /obj/item/skull{
@@ -9,7 +9,7 @@
 	pixel_y = -4
 	},
 /obj/decal/cleanable/blood/gibs,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "s" = (
 /obj/decal/fakeobjects/skeleton{
@@ -17,7 +17,7 @@
 	pixel_y = -3
 	},
 /obj/decal/cleanable/blood,
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "t" = (
 /obj/item/seed/grass{
@@ -26,7 +26,7 @@
 	pixel_x = 3;
 	pixel_y = 35
 	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "u" = (
 /obj/item/seed/grass{
@@ -35,7 +35,7 @@
 	pixel_x = 3;
 	pixel_y = -32
 	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "F" = (
 /obj/decal/cleanable/tomatosplat,
@@ -54,7 +54,7 @@
 	info = ">:(";
 	name = "tomato-soaked paper"
 	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "M" = (
 /obj/item/seed/grass{
@@ -63,10 +63,10 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "W" = (
-/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

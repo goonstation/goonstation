@@ -84,7 +84,7 @@
 			return
 		else if (!closest.camera_status || closest.ai_only)
 			boutput(user, "<span class='alert'>ERROR. Cannot connect to camera.</span>")
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 10, 0)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 10, 0)
 			return
 		if (length(clint.getViewportsByType("cameras: Viewport")))
 			move_viewport_to_camera(closest, clint)
@@ -109,6 +109,7 @@
 		network = "Zeta"
 		icon_state = "security_tv"
 		circuit_type = /obj/item/circuitboard/small_tv
+		density = 0
 
 		power_change()
 			return

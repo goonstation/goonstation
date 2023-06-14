@@ -15,11 +15,14 @@
 	name = "strange glowing floor"
 	icon_state = "floor-on"
 
+
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/feather)
+	. = ..()
+	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather))
 /turf/unsimulated/wall/auto/feather
 	name = "strange glowing wall"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "0"
-	connects_to = list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather)
 
 // DECALS/FAKEOBJS
 
@@ -28,7 +31,7 @@
 	desc = "A pile of metal and glass fibre that seems to have... congealed? Weird. Also gross."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "drone-long-dead"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/permanentcage
@@ -36,7 +39,7 @@
 	desc = "A permanent cage used for keeping things in one place."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()

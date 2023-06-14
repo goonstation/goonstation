@@ -28,7 +28,7 @@
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","salbutamol","anti_rad","synaptizine","omnizine","synthflesh",
-				"cyanide","ketamine","toxin","neurotoxin","mutagen","fake_initropidril",
+				"cyanide","ketamine","toxin","neurotoxin","solipsizine","neurodepressant","mutagen","fake_initropidril",
 				"toxic_slurry","space_fungus","blood","urine","meat_slurry")
 			if ("eldritch")
 				// all the worst stuff. all of it
@@ -36,7 +36,7 @@
 				"amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","sarin")
+				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids

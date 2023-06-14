@@ -93,19 +93,6 @@ obj/machinery/atmospherics/pipe
 		level = 1
 		alpha = 128
 
-		vertical
-			dir = NORTH
-		northeast
-			dir = NORTHEAST
-		horizontal
-			dir = EAST
-		southeast
-			dir = SOUTHEAST
-		southwest
-			dir = SOUTHWEST
-		northwest
-			dir = NORTHWEST
-
 		New()
 			..()
 			switch(dir)
@@ -131,19 +118,6 @@ obj/machinery/atmospherics/pipe
 			level = 2
 			alpha = 255
 
-			vertical
-				dir = NORTH
-			northeast
-				dir = NORTHEAST
-			horizontal
-				dir = EAST
-			southeast
-				dir = SOUTHEAST
-			southwest
-				dir = SOUTHWEST
-			northwest
-				dir = NORTHWEST
-
 		color_pipe
 			icon = 'icons/obj/atmospherics/pipes/color_pipe.dmi'
 			cyan_pipe
@@ -152,35 +126,9 @@ obj/machinery/atmospherics/pipe
 				//icon = 'icons/obj/atmospherics/pipes/cyan_pipe.dmi'
 				color = "#64BCC8"
 
-				vertical
-					dir = NORTH
-				northeast
-					dir = NORTHEAST
-				horizontal
-					dir = EAST
-				southeast
-					dir = SOUTHEAST
-				southwest
-					dir = SOUTHWEST
-				northwest
-					dir = NORTHWEST
-
 				overfloor
 					level = 2
 					alpha = 255
-
-					vertical
-						dir = NORTH
-					northeast
-						dir = NORTHEAST
-					horizontal
-						dir = EAST
-					southeast
-						dir = SOUTHEAST
-					southwest
-						dir = SOUTHWEST
-					northwest
-						dir = NORTHWEST
 
 			green_pipe
 				name = "purge pipe"
@@ -188,35 +136,9 @@ obj/machinery/atmospherics/pipe
 				//icon = 'icons/obj/atmospherics/pipes/green_pipe.dmi'
 				color = "#57C45D"
 
-				vertical
-					dir = NORTH
-				northeast
-					dir = NORTHEAST
-				horizontal
-					dir = EAST
-				southeast
-					dir = SOUTHEAST
-				southwest
-					dir = SOUTHWEST
-				northwest
-					dir = NORTHWEST
-
 				overfloor
 					level = 2
 					alpha = 255
-
-					vertical
-						dir = NORTH
-					northeast
-						dir = NORTHEAST
-					horizontal
-						dir = EAST
-					southeast
-						dir = SOUTHEAST
-					southwest
-						dir = SOUTHWEST
-					northwest
-						dir = NORTHWEST
 
 			yellow_pipe
 				name = "riot control gas pipe"
@@ -224,35 +146,9 @@ obj/machinery/atmospherics/pipe
 				//icon = 'icons/obj/atmospherics/pipes/yellow_pipe.dmi'
 				color = "#D2C75B"
 
-				vertical
-					dir = NORTH
-				northeast
-					dir = NORTHEAST
-				horizontal
-					dir = EAST
-				southeast
-					dir = SOUTHEAST
-				southwest
-					dir = SOUTHWEST
-				northwest
-					dir = NORTHWEST
-
 				overfloor
 					level = 2
 					alpha = 255
-
-					vertical
-						dir = NORTH
-					northeast
-						dir = NORTHEAST
-					horizontal
-						dir = EAST
-					southeast
-						dir = SOUTHEAST
-					southwest
-						dir = SOUTHWEST
-					northwest
-						dir = NORTHWEST
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
@@ -370,17 +266,17 @@ obj/machinery/atmospherics/pipe
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
-				if(1.0)
+				if(1)
 					if(prob(5))
 						qdel(src)
 					else
 						rupture(destroy=TRUE)
-				if(2.0)
+				if(2)
 					if(prob(10))
 						rupture(destroy=TRUE)
 					else
 						rupture()
-				if(3.0)
+				if(3)
 					if (prob(50))
 						rupture()
 			return
@@ -603,35 +499,9 @@ obj/machinery/atmospherics/pipe
 		alpha = 255
 		can_rupture = 1
 
-		vertical
-			dir = NORTH
-		northeast
-			dir = NORTHEAST
-		horizontal
-			dir = EAST
-		southeast
-			dir = SOUTHEAST
-		southwest
-			dir = SOUTHWEST
-		northwest
-			dir = NORTHWEST
-
 		cold
 			//icon = 'icons/obj/atmospherics/pipes/blue_pipe.dmi'
 			color = "#017FFF"
-
-			vertical
-				dir = NORTH
-			northeast
-				dir = NORTHEAST
-			horizontal
-				dir = EAST
-			southeast
-				dir = SOUTHEAST
-			southwest
-				dir = SOUTHWEST
-			northwest
-				dir = NORTHWEST
 
 	simple/junction
 		icon = 'icons/obj/atmospherics/pipes/junction_pipe.dmi'
@@ -639,15 +509,6 @@ obj/machinery/atmospherics/pipe
 		level = 2
 		alpha = 255
 		fatigue_pressure = INFINITY
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 		update_icon()
 
@@ -680,19 +541,6 @@ obj/machinery/atmospherics/pipe
 		thermal_conductivity = WINDOW_HEAT_TRANSFER_COEFFICIENT
 		fatigue_pressure = INFINITY
 
-		vertical
-			dir = NORTH
-		horizontal
-			dir = EAST
-		northeast
-			dir = NORTHEAST
-		southeast
-			dir = SOUTHEAST
-		southwest
-			dir = SOUTHWEST
-		northwest
-			dir = NORTHWEST
-
 		update_icon()
 
 			if(node1 && node2)
@@ -715,15 +563,6 @@ obj/machinery/atmospherics/pipe
 		density = 1
 		var/obj/machinery/atmospherics/node1
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		New()
 			initialize_directions = dir
 			..()
@@ -735,15 +574,6 @@ obj/machinery/atmospherics/pipe
 
 		carbon_dioxide
 			name = "Pressure Tank (Carbon Dioxide)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 			New()
 				air_temporary = new /datum/gas_mixture
@@ -758,15 +588,6 @@ obj/machinery/atmospherics/pipe
 			icon = 'icons/obj/atmospherics/tanks/orange_pipe_tank.dmi'
 			name = "Pressure Tank (Plasma)"
 
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 			New()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
@@ -780,37 +601,18 @@ obj/machinery/atmospherics/pipe
 			icon = 'icons/obj/atmospherics/tanks/red_orange_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen + Plasma)"
 
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 			New()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T0C
 
-				var/datum/gas/oxygen_agent_b/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
+				air_temporary.oxygen_agent_b = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'
 			name = "Pressure Tank (Oxygen)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 			New()
 				air_temporary = new /datum/gas_mixture
@@ -825,15 +627,6 @@ obj/machinery/atmospherics/pipe
 			icon = 'icons/obj/atmospherics/tanks/red_pipe_tank.dmi'
 			name = "Pressure Tank (Nitrogen)"
 
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 			New()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
@@ -847,37 +640,18 @@ obj/machinery/atmospherics/pipe
 			icon = 'icons/obj/atmospherics/tanks/red_white_pipe_tank.dmi'
 			name = "Pressure Tank (N2O)"
 
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
 			New()
 				air_temporary = new /datum/gas_mixture
 				air_temporary.volume = volume
 				air_temporary.temperature = T20C
 
-				var/datum/gas/sleeping_agent/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent/)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
+				air_temporary.nitrous_oxide = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
 
 		air
 			icon = 'icons/obj/atmospherics/tanks/white_pipe_tank.dmi'
 			name = "Pressure Tank (Air)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 			New()
 				air_temporary = new /datum/gas_mixture
@@ -896,15 +670,6 @@ obj/machinery/atmospherics/pipe
 			name = "High-Pressure Tank (Air)"
 			desc = "Large vessel containing a pressurized air mixture for emergency purposes."
 			volume = 2000
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 			New()
 				air_temporary = new /datum/gas_mixture
@@ -966,15 +731,6 @@ obj/machinery/atmospherics/pipe
 		initialize_directions = SOUTH
 		var/obj/machinery/atmospherics/node1
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		New()
 			initialize_directions = dir
 			..()
@@ -993,13 +749,8 @@ obj/machinery/atmospherics/pipe
 			return list(node1)
 
 		update_icon()
-			if(node1)
-				icon_state = "intact"
-
-				dir = get_dir(src, node1)
-
-			else
-				icon_state = "exposed"
+			var/turf/T = get_turf(src)
+			src.hide(T.intact)
 
 		initialize()
 			var/connect_direction = dir
@@ -1023,12 +774,12 @@ obj/machinery/atmospherics/pipe
 
 			return null
 
-		hide(var/i) //to make the little pipe section invisible, the icon changes.
-			if(node1)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]intact"
-				dir = get_dir(src, node1)
+		hide(var/intact) //to make the little pipe section invisible, the icon changes.
+			if (intact && istype(loc, /turf/simulated) && level == 1)
+				src.icon_state = "hvent"
 			else
-				icon_state = "exposed"
+				src.icon_state = src.node1 ? "intact" : ""
+
 
 	vertical_pipe
 		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
@@ -1041,15 +792,6 @@ obj/machinery/atmospherics/pipe
 		initialize_directions = SOUTH
 		var/obj/machinery/atmospherics/node1
 		var/obj/machinery/atmospherics/node2
-
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
 
 		New()
 			initialize_directions = dir
@@ -1112,26 +854,8 @@ obj/machinery/atmospherics/pipe
 		var/obj/machinery/atmospherics/node2
 		var/obj/machinery/atmospherics/node3
 
-		north
-			dir = NORTH
-		east
-			dir = EAST
-		south
-			dir = SOUTH
-		west
-			dir = WEST
-
 		overfloor
 			level = 2
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
 
 		New()
 			switch(dir)

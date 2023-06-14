@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 /turf/simulated/wall/false_wall
 	name = "wall"
 	icon = 'icons/obj/doors/Doorf.dmi'
@@ -17,7 +18,6 @@
 	var/can_be_auto = 1
 	var/mod = null
 	var/obj/overlay/floor_underlay = null
-	var/dont_follow_map_settings_for_icon_state = 0
 
 	temp
 		var/was_rwall = 0
@@ -116,13 +116,21 @@
 					boutput(user, "<span class='notice'>It was a false wall!</span>")
 				//disassemble it
 				boutput(user, "<span class='notice'>Now dismantling false wall.</span>")
+
+				//a false wall turns into a sheet of metal and displaced girders
+				var/atom/A = new /obj/item/sheet(src)
+				var/atom/B = new /obj/structure/girder/displaced(src)
+				var/datum/material/defaultMaterial = getMaterial("steel")
+				A.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
 				var/floorburnt1	= src.floorburnt
 				var/icon/flooricon1	= src.flooricon
 				var/flooricon_state1	= src.flooricon_state
 				src.set_density(0)
-				src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.update_nearby_tiles()
 				if (src.floor_underlay)
 					qdel(src.floor_underlay)
@@ -132,18 +140,9 @@
 				F.icon_state = flooricon_state1
 				F.setIntact(floorintact1)
 				F.burnt = floorburnt1
-				//a false wall turns into a sheet of metal and displaced girders
-				var/atom/A = new /obj/item/sheet(F)
-				var/atom/B = new /obj/structure/girder/displaced(F)
-				if(src.material)
-					A.setMaterial(src.material)
-					B.setMaterial(src.material)
-				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
-					B.setMaterial(M)
+
 				F.levelupdate()
-				logTheThing("station", user, null, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
+				logTheThing(LOG_STATION, user, "dismantles a False Wall in [user.loc.loc] ([log_loc(user)])")
 				return
 			else
 				return ..()
@@ -160,7 +159,7 @@
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "false wall"
+		src.name = src.material ? "false [src.material.name] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -169,7 +168,7 @@
 			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			if(!floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
@@ -182,14 +181,14 @@
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = "wall"
+		src.name = src.material ? "[src.material.name] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
 		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
 		SPAWN(delay)
@@ -199,8 +198,6 @@
 
 	update_icon()
 		..()
-		if(dont_follow_map_settings_for_icon_state)
-			return
 		if (!map_settings)
 			return
 
@@ -208,16 +205,16 @@
 			var/turf/simulated/wall/auto/wall_path = ispath(map_settings.walls) ? map_settings.walls : /turf/simulated/wall/auto
 			src.icon = initial(wall_path.icon)
 
-			var/list/s_connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
+			var/static/list/s_connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
 			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
-			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn)
+			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn))
 
-			var/list/s_connects_with_overlay = list(/turf/simulated/wall/auto/shuttle,
-			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn)
+			var/static/list/s_connects_with_overlay = typecacheof(list(/turf/simulated/wall/auto/shuttle,
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn))
 
 			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
 				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
@@ -229,11 +226,12 @@
 			/// this was borrowed from autowalls as the code that was barely worked
 
 			/// basically this is doing what an autowall of the path wall_path would do
-			var/s_connect_overlay = initial(wall_path.connect_overlay)
-			var/list/s_connects_with_overlay_exceptions = list()
-			var/list/s_connects_to_exceptions = list(/turf/simulated/wall/auto/shuttle)
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(wall_path)
+			var/s_connect_overlay = typinfo.connect_overlay
+			var/static/list/s_connects_with_overlay_exceptions = list()
+			var/static/list/s_connects_to_exceptions = typecacheof(/turf/simulated/wall/auto/shuttle)
 
-			var/s_connect_diagonal =  initial(wall_path.connect_diagonal)
+			var/s_connect_diagonal =  typinfo.connect_diagonal
 			var/image/s_connect_image = initial(wall_path.connect_image)
 
 			var/light_mod = initial(wall_path.light_mod)
@@ -245,7 +243,7 @@
 			icon_state = the_state
 
 			if (light_mod)
-				src.RL_SetSprite("[light_mod][connectdir]")
+				src.RL_SetSprite("[light_mod][connectdir]", initial(wall_path.RL_OverlayIcon))
 
 			if (s_connect_overlay)
 				var/overlaydir = get_connected_directions_bitflag(s_connects_with_overlay, s_connects_with_overlay_exceptions, TRUE)
@@ -281,8 +279,8 @@
 		src.pathable = 0
 		src.update_air_properties()
 		if (src.visible)
-			src.opacity = 0
-			src.RL_SetOpacity(1)
+			src.set_opacity(0)
+			src.set_opacity(1)
 		src.setIntact(TRUE)
 		update_nearby_tiles()
 		if(src.was_rwall)
@@ -316,7 +314,7 @@
 	desc = ""
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "r_wall"
@@ -386,12 +384,12 @@
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(picked)
 
 		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
+			picked.set_opacity(1)
 
 		SPAWN(rand(50,80)) update()

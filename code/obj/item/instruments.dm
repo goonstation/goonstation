@@ -19,8 +19,7 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5
-	var/next_play = 0
-	var/note_time = 100
+	var/note_time = 10 SECONDS
 	var/randomized_pitch = 1
 	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
@@ -29,73 +28,84 @@
 	var/desc_sound = list("funny", "rockin'", "great", "impressive", "terrible", "awkward")
 	var/desc_music = list("riff", "jam", "bar", "tune")
 	var/volume = 50
+	var/transpose = 0
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
-	var/use_new_interface = 0
+	var/note_range = list("c2", "c7")
+	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
+	var/keyboard_toggle = 0
+
+	/// Default keybinds, ranging from c2 to c7.
+	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
+	/// String representing the keybinds used in keyboard mode
+	var/note_keys_string = ""
+	/// The directory in which the sound files for the instrument are stored; represented as a string. Used for new interface instruments.
+	var/instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 
 	New()
 		..()
-
-
-		if (!pick_random_note)
-			if(use_new_interface == 0)
-				contextLayout = new /datum/contextLayout/instrumental()
-			else
-				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
-
+		if (!pick_random_note && use_new_interface != 1)
+			contextLayout = new /datum/contextLayout/instrumental()
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
 			for(var/datum/contextAction/C as anything in src.contextActions)
 				C.dispose()
 			src.contextActions = list()
 
-			for (var/i in 1 to sounds_instrument.len)
+			for (var/i in 1 to length(sounds_instrument))
 				var/datum/contextAction/instrument/newcontext
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
-				else if (findtext(sounds_instrument[i], "-"))
-					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
+
 				newcontext.note = i
 				contextActions += newcontext
 
+		if (src.use_new_interface)
+			src.notes = src.generate_note_range(src.note_range[1], src.note_range[length(src.note_range)])
+			src.note_keys_string = src.generate_keybinds(src.notes)
+			if(!src.note_keys_string)
+				src.note_keys_string = src.default_keys_string
+			src.sounds_instrument = list()
+			for (var/i in 1 to length(src.notes))
+				src.note = src.notes[i]
+				src.sounds_instrument += (src.instrument_sound_directory + "[note].ogg")
+
 	proc/play_note(var/note, var/mob/user)
-		if (note != clamp(note,1,sounds_instrument.len))
-			return 0
-		if (next_play > TIME)
-			return 0
-		next_play = TIME + note_time
-		//if drunk, play off pitch?
-		if (special_index && note >= special_index)
-			next_play = TIME + 200
+		if (note != clamp(note, 1, length(sounds_instrument)))
+			return FALSE
+		var/atom/player = user || src
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+			return FALSE
+
+		if (special_index && note >= special_index) // Add additional time if we just played a special note
+			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
 
-
-		if (prob(5) || sounds_instrument.len == 1)
+		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(G, /obj/critter/dog/george)
-					if (IN_RANGE(G, T, 6) && prob(60))
-						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+				for_by_tcl(george, /mob/living/critter/small_animal/dog/george)
+					if (IN_RANGE(george, T, 6) && prob(60))
+						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
-						G.howl()
+						george.howl()
 
-			src.post_play_effect(user)
-
-		.= 1
+		src.post_play_effect(user)
+		. = TRUE
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1,sounds_instrument.len),user)
+			play_note(rand(1, length(sounds_instrument)),user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -105,10 +115,117 @@
 	proc/post_play_effect(mob/user as mob)
 		return
 
+	// Creates a list of notes between two notes, for example
+	// generate_note_range("c4", "e4") returns ("c4", "c-4", "d4", d-4, "e4")
+	proc/generate_note_range(var/fromNote, var/toNote)
+		var/list/notes = list()
+
+		// Removes the octave number, for example "c4" becomes "c"
+		var/strippedFromNote = copytext(fromNote, 1, length(fromNote))
+		var/list/scale = list("c","c-", "d", "d-", "e", "f", "f-", "g", "g-", "a", "a-", "b")
+
+		var/currentOctave = text2num(copytext(fromNote, length(fromNote))) // Get the octave number from the note, for example "c-4" becomes 4
+		var/currentIndex = scale.Find(strippedFromNote)
+		var/currentNote = ""
+		while(currentNote != toNote)
+			currentNote = scale[currentIndex] + num2text(currentOctave)
+			notes += currentNote
+			currentIndex++
+
+			// If we've reached the end of the scale, start over with the next octave
+			if(currentIndex > length(scale))
+				currentIndex = 1
+				currentOctave++
+		return notes
+
+	/// Creates a string that is converted into the instrument keybinds for the interface using the list of notes an instrument has.
+	proc/generate_keybinds(var/list/note_range)
+		var/list/default_range = src.generate_note_range("c2", "c7")
+		var/list/split_default_key_string
+		var/start
+		var/end
+
+		// Split the default key string into a list delimited after each character.
+		for(var/i in 1 to length(src.default_keys_string))
+			split_default_key_string += list(copytext(src.default_keys_string, i, (i + 1)))
+
+		// Find character position of first keybind.
+		for(var/i in 1 to length(default_range))
+			if(default_range[i] == note_range[1])
+				start = i
+				end = length(note_range) + (start - 1)
+				break
+
+		if(!start || !end)
+			return
+
+		// Keep the parts of default_key_string between the start and end positions calculated above, toss the rest.
+		for(var/i in start to end)
+			. += split_default_key_string[i]
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui && use_new_interface)
+			ui = new(user, src, "MusicInstrument")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"name" = src.name,
+			"notes" = src.notes,
+			"volume" = src.volume,
+			"transpose" = src.transpose,
+			"keybindToggle" = src.keyboard_toggle,
+			"noteKeysString" = src.note_keys_string,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("edit_keybinds")
+				src.note_keys_string = params["note_keys_order"]
+				. = TRUE
+			if("play_note")
+				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
+				var/volume = params["volume"]
+				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				. = TRUE
+			if("play_keyboard_on")
+				usr.client.apply_keybind("instrument_keyboard")
+				src.keyboard_toggle = 1
+				. = TRUE
+			if("play_keyboard_off")
+				usr.client.mob.reset_keymap()
+				src.keyboard_toggle = 0
+				. = TRUE
+			if("set_volume")
+				src.volume = clamp(params["value"], 0, 100)
+				. = TRUE
+			if("set_transpose")
+				src.transpose = clamp(params["value"], -12, 12)
+				. = TRUE
+
+	ui_close(mob/user)
+		user.reset_keymap()
+		. = ..()
+
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(. <= UI_CLOSE || !IN_RANGE(src, user, 1))
+			user.reset_keymap()
+			return UI_CLOSE
+
+
 	attack_self(mob/user as mob)
 		..()
 		src.add_fingerprint(user)
-		src.play(user)
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
+
 
 
 /* -------------------- Large Instruments -------------------- */
@@ -118,18 +235,21 @@
 	p_class = 2 // if they're anchored you can't move them anyway so this should default to making them easy to move
 	throwforce = 40
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc_verb = list("plays", "performs", "composes", "arranges")
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
 	volume = 100
-	note_time = 200
+	note_time = 20 SECONDS
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
-		src.play(user)
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
@@ -137,7 +257,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -153,20 +273,12 @@
 	desc = "Not very grand, is it?"
 	icon_state = "piano"
 	item_state = "piano"
+	note_range = list("c2", "c7")
+	instrument_sound_directory = "sound/musical_instruments/piano/notes/"
 	sounds_instrument = null
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
-	use_new_interface = 1
-
-	New()
-		notes = list("c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6","c-6", "d6", "d-6", "e6","f6","f-6","g6", "g-6","a6","a-6","b6","c7")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
-
-		..()
-
+	use_new_interface = TRUE
 
 /* -------------------- Grand Piano -------------------- */
 
@@ -194,7 +306,7 @@
 /obj/item/instrument/large/jukebox
 	name = "old jukebox"
 	desc = "I wonder who fixed this thing?"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
 	item_state = "jukebox"
@@ -216,19 +328,16 @@
 	icon_state = "sax"
 	item_state = "sax"
 	desc_sound = list("sensuous","spicy","flirtatious","sizzling","carnal","hedonistic")
+	note_range = list("g3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/saxophone/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at G
 	key_offset = 8
 
 	New()
-		notes = list("g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/sax/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -265,7 +374,7 @@
 	icon_state = "guitar"
 	item_state = "guitar"
 	two_handed = 1
-	force = 10.0
+	force = 10
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
@@ -283,6 +392,7 @@
 		..()
 
 
+
 /* -------------------- Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn
@@ -296,7 +406,7 @@
 	stamina_cost = 5
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
-	note_time = 8
+	note_time = 0.8 SECONDS
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
@@ -351,6 +461,9 @@
 
 /* -------------------- Dramatic Bike Horn -------------------- */
 
+TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
+	mats = 2
+
 /obj/item/instrument/bikehorn/dramatic
 	name = "dramatic bike horn"
 	desc = "SHIT FUCKING PISS IT'S SO RAW"
@@ -358,7 +471,6 @@
 	volume = 100
 	randomized_pitch = 0
 	note_time = 30
-	mats = 2
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, /obj/item/parts/robot_parts/arm))
@@ -380,7 +492,7 @@
 	item_state = "airhorn"
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
-	note_time = 10
+	note_time = 1 SECOND
 	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
@@ -395,7 +507,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
 	pick_random_note = 1
@@ -412,7 +524,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
 	volume = 75
 	randomized_pitch = 1
@@ -461,7 +573,7 @@
 			for (var/mob/M in hearers(user, null))
 				if (M.ears_protected_from_sound())
 					continue
-				var/ED = max(0, rand(0, 2) - get_dist(user, M))
+				var/ED = max(0, rand(0, 2) - GET_DIST(user, M))
 				M.take_ear_damage(ED)
 				boutput(M, "<font size=[max(0, ED)] color='red'>BZZZZZZZZZZZZZZZZZZZ!</font>")
 		return
@@ -472,7 +584,7 @@
 	detonator_act(event, var/obj/item/assembly/detonator/det)
 		switch (event)
 			if ("pulse")
-				playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("cut")
 				det.attachedTo.visible_message("<span class='bold' style='color:#B7410E'>The buzzing stops.</span>")
 				det.attachments.Remove(src)
@@ -481,11 +593,11 @@
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
 						SPAWN(4*i)
-							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+							playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
 					SPAWN(4*i)
-						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
+						playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 500, 1)
 
 /* -------------------- Trumpet -------------------- */
 
@@ -496,19 +608,16 @@
 	icon_state = "trumpet"
 	item_state = "trumpet"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive")
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/trumpet/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
 
 	New()
-		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/trumpet/notes/[note].ogg"
 		..()
 		BLOCK_SETUP(BLOCK_ROD)
 
@@ -526,41 +635,41 @@
 	pick_random_note = TRUE
 	affect_fun = 200 //because come on this shit's hilarious
 
-	play(mob/user as mob)
-		if (next_play > TIME)
+	attack_self(mob/user as mob)
+		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
-			..()
+			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, 0, 0, 0.5)
+			var/turf/T = get_turf(src)
+			if (!T)
+				return
+			for (var/mob/living/carbon/human/H in viewers(3, T))
+				if (user && H == user)
+					continue
+				else
+					SPAWN(1 SECOND)
+						src.dootize(H, user)
 
-	post_play_effect(mob/user as mob)
-		var/turf/T = get_turf(src)
-		if (!T)
-			return
-		for (var/mob/living/carbon/human/H in viewers(T, null))
-			if (user && H == user)
-				continue
-			else
-				src.dootize(H)
-
-	proc/dootize(var/mob/living/carbon/human/S as mob)
+	proc/dootize(var/mob/living/carbon/human/S as mob, var/mob/M)
 		if (!istype(S))
 			return
 		if (S.mob_flags & IS_BONEY)
 			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
-			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
+			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
+			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
-			playsound(S, S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
-			playsound(S, "sound/effects/bubbles.ogg", 50, 0)
-			playsound(S, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
+			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
+			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
+			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)
 				bdna = S.bioHolder.Uid
 				btype = S.bioHolder.bloodType
-			gibs(S.loc, null, null, bdna, btype)
+			gibs(S.loc, null, bdna, btype)
 
 			S.set_mutantrace(/datum/mutantrace/skeleton)
 			S.real_name = "[S.name]'s skeleton"
@@ -576,15 +685,12 @@
 	icon_state = "fiddle"
 	item_state = "fiddle"
 	desc_sound = list("slick", "egotistical", "snazzy", "technical", "impressive") // works just as well for fiddles as it does for trumpets I guess  :v
-	sounds_instrument = null
+	sounds_instrument = list()
+	note_range = list("a3", "g6")
+	instrument_sound_directory = "sound/musical_instruments/fiddle/notes/"
 	note_time = 0.18 SECONDS
 	randomized_pitch = 0
-
-	New()
-		sounds_instrument = list()
-		for (var/i in 1 to 12)
-			sounds_instrument += "sound/musical_instruments/violin/violin_[i].ogg"
-		..()
+	use_new_interface = TRUE
 
 /obj/item/instrument/fiddle/satanic
 	desc_sound = list("devilish", "hellish", "satanic", "enviable", "sinful", "grumpy", "lazy", "lustful", "greedy")
@@ -682,23 +788,14 @@
 	item_state = "banjo"
 	two_handed = 1
 	force = 6
+	note_range = list("e3", "c6")
+	instrument_sound_directory = "sound/musical_instruments/banjo/notes/"
 	note_time = 0.18 SECONDS
 	sounds_instrument = null
 	randomized_pitch = 0
-	use_new_interface = 1
+	use_new_interface = TRUE
 	//Start at E3
 	key_offset = 5
-
-	New()
-		notes = list("e3","f3","f-3","g3","g-3","a3","a-3","b3","c4","c-4", "d4", "d-4", "e4","f4","f-4","g4", "g-4","a4","a-4","b4","c5","c-5", "d5", "d-5", "e5","f5","f-5","g5", "g-5","a5","a-5","b5","c6")
-		sounds_instrument = list()
-		for (var/i in 1 to length(notes))
-			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/banjo/notes/[note].ogg"
-		..()
-
-
-
 
 /obj/storage/crate/wooden/instruments
 	name = "instruments box"

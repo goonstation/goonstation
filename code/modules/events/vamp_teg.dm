@@ -1,6 +1,10 @@
 /datum/random_event/major/vampire_teg
 	name = "Haunted TEG"
+#ifdef RP_MODE
 	required_elapsed_round_time = 40 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 #ifdef HALLOWEEN
 	weight = 75
@@ -37,7 +41,7 @@
 
 	event_effect(warning_delay, event_duration, grump_to_overcome)
 		..()
-		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
+		var/list/spooky_sounds = list('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg')
 		var/list/area/stationAreas = get_accessible_station_areas()
 
 		if(!generator)
@@ -158,7 +162,7 @@
 							if(apc && apc.powered() && (apc.lighting || apc.equipment || apc.environ ) )
 								elecflash(apc, radius=1)
 								if(apc.cell)
-									apc.cell.charge -= 500
+									apc.cell.use(500)
 									if (apc.cell.charge < 0)
 										apc.cell.charge = 0
 								apc.lighting = 0
@@ -212,13 +216,13 @@ datum/teg_transformation/vampire
 		abilityHolder.addAbility(/datum/targetable/vampire/enthrall/teg)
 		for(var/datum/targetable/vampire/A in abilityHolder.abilities)
 			abilities[A.name] = A
-		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
-		RegisterSignal(src.teg, COMSIG_ATTACKBY, .proc/attackby)
-		RegisterSignal(src.teg.circ1, COMSIG_ATTACKBY, .proc/attackby)
-		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, .proc/attackby)
+		RegisterSignal(src.teg, COMSIG_ATOM_HITBY_PROJ, PROC_REF(projectile_collide))
+		RegisterSignal(src.teg, COMSIG_ATTACKBY, PROC_REF(attackby))
+		RegisterSignal(src.teg.circ1, COMSIG_ATTACKBY, PROC_REF(attackby))
+		RegisterSignal(src.teg.circ2, COMSIG_ATTACKBY, PROC_REF(attackby))
 
 		var/image/mask = image('icons/obj/clothing/item_masks.dmi', "death")
-		mask.appearance_flags = RESET_COLOR | RESET_ALPHA
+		mask.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 		mask.color = "#b10000"
 		mask.alpha = 240
 		teg.UpdateOverlays(mask, "mask")
@@ -264,7 +268,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindhack_status(M)
+			M.mind?.remove_antagonist(ROLE_VAMPTHRALL)
 		. = ..()
 
 	on_grump(mult)
@@ -279,7 +283,7 @@ datum/teg_transformation/vampire
 		if(length(targets))
 			if(probmult(30))
 				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
-					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
+					playsound(src.teg, 'sound/effects/blood.ogg', rand(10,20), 0, -1)
 
 			var/mob/living/carbon/target = pick(targets)
 
@@ -335,7 +339,7 @@ datum/teg_transformation/vampire
 					src.health -= 5
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
-						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
+						playsound(C.loc, 'sound/effects/bubbles3.ogg', 80, 1, -3, pitch=0.7)
 						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)
@@ -347,7 +351,7 @@ datum/teg_transformation/vampire
 	// Implement attackby to handle objects and attacks to Generator and Circulators
 	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
-		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
+		if(istype(I,/obj/item/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60
 
 		switch (force)

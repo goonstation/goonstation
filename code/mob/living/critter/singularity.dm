@@ -9,7 +9,7 @@
   if(!S.affects_mobs && ismob(T))
     S.show_message("<span class='alert'>You can't seem to exert enough attractive force to budge it.</span>")
     return
-  if(get_dist(T, user) <= grav_range)
+  if(GET_DIST(T, user) <= grav_range)
     if(!T.anchored)
       if(!T.throwing)
         S.visible_message("<span style='color:red; font-weight:bold'>[S] [pick("sucks", "draws", "pulls", "yanks", "tugs", "flings")] [T] towards itself!</span>")
@@ -61,7 +61,7 @@
   ..(gibbed)
   if(src)
     src.glow.disable()
-    src.anchored = 1
+    src.anchored = ANCHORED
     src.set_density(0)
     src.name = "weird purple rock thing"
     src.desc = "A weird ultra-dense rock that doesn't want to budge. Huh. Is it plasma?"
@@ -113,10 +113,10 @@
 	if(src.affects_mobs && isliving(A))
 		var/mob/living/M = A
 		if(M && !istype(M, /mob/living/critter/singularity))
-			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			M.gib()
 	else if(isobj(A) && A.anchored != 2)
-		A.ex_act(1.0)
+		A.ex_act(1)
 		if(A)
 			qdel(A)
 

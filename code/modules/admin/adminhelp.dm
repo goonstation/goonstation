@@ -19,7 +19,7 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|text
+	var/msg = input("Please enter your help request to admins.\nAdminhelps are also sent to admins via Discord.\n\nFor questions on game mechanics, use Mentorhelp (F3).", "Adminhelp") as null|message
 
 	msg = copytext(html_encode(msg), 1, MAX_MESSAGE_LEN * 4)
 
@@ -39,7 +39,7 @@
 				boutput(C, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span>[key_name(client.mob,0,0)][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
-						C.mob.playsound_local(C.mob.loc, "sound/misc/newsting.ogg", 50, 1)
+						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
 					if(PM_DECTALK_ALERT)
 						var/audio = dectalk(msg)
 						var/vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
@@ -51,9 +51,9 @@
 	game_stats.ScanText(msg)
 #endif
 	boutput(client.mob, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span> You</b>: [msg]</font></span>")
-	logTheThing("admin_help", client.mob, null, "HELP: [msg]")
+	logTheThing(LOG_AHELP, client.mob, "HELP: [msg]")
 	var/logLine = global.logLength
-	logTheThing("diary", client.mob, null, "HELP: [msg]", "ahelp")
+	logTheThing(LOG_DIARY, client.mob, "HELP: [msg]", "ahelp")
 
 	if (!first_adminhelp_happened)
 		first_adminhelp_happened = 1
@@ -71,6 +71,8 @@
 	ircmsg["msg"] = html_decode(msg)
 	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
 	ircbot.export_async("help", ircmsg)
+
+	return msg
 
 /mob/verb/mentorhelp()
 	set category = "Commands"
@@ -99,7 +101,7 @@
 				else
 					var/rendered = "<span class='[class]'><b>[mmouse.is_admin ? "A" : "M"]MOUSEWHISPER: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
 					boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
-		logTheThing("diary", client.mob, null, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
+		logTheThing(LOG_DIARY, client.mob, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
 		return
 
 	if (client.cloud_available() && client.cloud_get("mentorhelp_banner"))
@@ -110,9 +112,9 @@
 		boutput(src, "You must wait [time_to_text(ON_COOLDOWN(src, "ahelp", 0))].")
 		return
 
-	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|text
+	var/msg = input("Enter your help request to mentors.\nMentorhelps are sent to mentors via Discord.\n\nPlease use Adminhelp (F1) for rules questions.", "mentorhelp") as null|message
 
-	msg = copytext(strip_html(msg), 1, MAX_MESSAGE_LEN * 4)
+	msg = copytext(strip_html(msg, strip_newlines=FALSE), 1, MAX_MESSAGE_LEN * 4)
 	if (client.can_see_mentor_pms())
 		msg = linkify(msg)
 
@@ -138,8 +140,8 @@
 				boutput(C, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
 
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
-	logTheThing("mentor_help", client.mob, null, "MENTORHELP: [msg]")
-	logTheThing("diary", client.mob, null, "MENTORHELP: [msg]", "mhelp")
+	logTheThing(LOG_MHELP, client.mob, "MENTORHELP: [msg]")
+	logTheThing(LOG_DIARY, client.mob, "MENTORHELP: [msg]", "mhelp")
 #ifdef DATALOGGER
 	game_stats.Increment("mentorhelps")
 #endif
@@ -198,12 +200,12 @@
 	if (is_atheist)
 		boutput(client.mob, "You feel ridiculous doing it, but manage to get through a silent prayer,</B> <I>\"[msg]\"</I>")
 		client.mob.take_oxygen_deprivation(10)
-		logTheThing("admin_help", client.mob, null, "PRAYER (atheist): [msg]")
-		logTheThing("diary", client.mob, null, "PRAYER (atheist): [msg]", "ahelp")
+		logTheThing(LOG_AHELP, client.mob, "PRAYER (atheist): [msg]")
+		logTheThing(LOG_DIARY, client.mob, "PRAYER (atheist): [msg]", "ahelp")
 	else
 		boutput(client.mob, "<B>You whisper a silent prayer,</B> <I>\"[msg]\"</I>")
-		logTheThing("admin_help", client.mob, null, "PRAYER: [msg]")
-		logTheThing("diary", client.mob, null, "PRAYER: [msg]", "ahelp")
+		logTheThing(LOG_AHELP, client.mob, "PRAYER: [msg]")
+		logTheThing(LOG_DIARY, client.mob, "PRAYER: [msg]", "ahelp")
 
 #ifdef DATALOGGER
 	game_stats.Increment("prayers")
@@ -218,7 +220,7 @@
 			if (!M.client.holder.hear_prayers || (M.client.player_mode == 1 && M.client.player_mode_ahelp == 0)) //XOR for admin prayer setting and player mode w/ no ahelps
 				continue
 			else
-				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST)" : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
+				boutput(M, "<span class='notice' [in_chapel? "style='font-size:1.1em'":""]><B>PRAYER: [is_atheist ? "(ATHEIST) " : ""]</B><a href='?src=\ref[M.client.holder];action=subtlemsg&targetckey=[client.ckey]'>[client.key]</a> / [client.mob.real_name ? client.mob.real_name : client.mob.name] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'>: <I>[msg]</I></span>")
 				if(M.client.holder.audible_prayers == 1)
 					M << sound("sound/misc/boing/[rand(1,6)].ogg", volume=50, wait=0)
 				else if(M.client.holder.audible_prayers == 2) // this is a terrible idea
@@ -227,6 +229,7 @@
 					var/vol = M.client.getVolume(VOLUME_CHANNEL_ADMIN)
 					if(vol)
 						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
+	return msg
 
 /proc/do_admin_pm(var/C, var/mob/user) //C is a passed ckey
 
@@ -242,12 +245,12 @@
 
 		var/client/user_client = user.client
 
-		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|text
+		var/t = input("Message:", text("Private message to [admin_key(M.client, 1)]")) as null|message
 
 		M = ckey_to_mob(C)
 		user = user_client.mob
 
-		if(!(user && user.client && user.client.holder && (user.client.holder.rank in list("Host", "Coder"))))
+		if(!(user && user.client && user.client.holder && user.client.holder.level >= LEVEL_ADMIN))
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN * 4)
 		if (!( t ))
 			return
@@ -281,8 +284,8 @@
 				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
 			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
 
-		logTheThing("admin_help", user, M, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
-		logTheThing("diary", user, M, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
+		logTheThing(LOG_AHELP, user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
+		logTheThing(LOG_DIARY, user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
 
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""

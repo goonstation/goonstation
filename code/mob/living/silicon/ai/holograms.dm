@@ -59,7 +59,7 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
+		if (!istype(T) || length(T?.camera_coverage_emitters) == 0)
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
@@ -74,7 +74,7 @@
 			if(src.holoHolder.text_expansion)
 				for(var/te in src.holoHolder.text_expansion)
 					holo_sentences += strings("hologram.txt", "sentences_[te]")
-			holo_sentences = sortList(holo_sentences)
+			holo_sentences = sortList(holo_sentences, /proc/cmp_text_asc)
 			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_sentences, allowIllegal=TRUE)
 			if(!text)
 				return
@@ -85,15 +85,15 @@
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_actions += strings("hologram.txt", "verbs_[te]")
-					holo_actions = sortList(holo_actions)
+					holo_actions = sortList(holo_actions, /proc/cmp_text_asc)
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					holo_nouns = strings("hologram.txt", "nouns")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_nouns += strings("hologram.txt", "nouns_[te]")
-					holo_nouns = sortList(holo_nouns)
+					holo_nouns = sortList(holo_nouns, /proc/cmp_text_asc)
 					var/blank_found = findtext(text,"...")
 					while(blank_found)
 						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
@@ -106,7 +106,7 @@
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
-		showContextActions(hologramContextActions, T, contextLayout)
+		src.eyecam.showContextActions(hologramContextActions, T, contextLayout)
 
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe
@@ -124,63 +124,61 @@
 
 		..()
 
-	caution
-		name = "Caution"
-		icon_state = "caution"
-		holo_type = "caution"
-	o2
-		name = "o2"
-		icon_state = "o2"
-		holo_type = "o2"
-	beepsky
-		name = "beepsky"
-		icon_state = "beepsky"
-		holo_type = "beepsky"
 	up_arrow
 		name = "up_arrow"
 		icon_state = "up_arrow"
 		holo_type = "up_arrow"
-	down_arrow
-		name = "down_arrow"
-		icon_state = "down_arrow"
-		holo_type = "down_arrow"
-	left_arrow
-		name = "left_arrow"
-		icon_state = "left_arrow"
-		holo_type = "left_arrow"
-	right_arrow
-		name = "right_arrow"
-		icon_state = "right_arrow"
-		holo_type = "right_arrow"
-	happy_face
-		name = "happy_face"
-		icon_state = "happy_face"
-		holo_type = "happy_face"
-	neutral_face
-		name = "neutral_face"
-		icon_state = "neutral_face"
-		holo_type = "neutral_face"
-	sad_face
-		name = "sad_face"
-		icon_state = "sad_face"
-		holo_type = "sad_face"
-	angry_face
-		name = "angry_face"
-		icon_state = "angry_face"
-		holo_type = "angry_face"
+	beepsky
+		name = "beepsky"
+		icon_state = "beepsky"
+		holo_type = "beepsky"
+	o2
+		name = "o2"
+		icon_state = "o2"
+		holo_type = "o2"
+	caution
+		name = "Caution"
+		icon_state = "caution"
+		holo_type = "caution"
 	write
 		name = "write"
 		icon_state = "write"
 		holo_type = "write"
-
-
+	angry_face
+		name = "angry_face"
+		icon_state = "angry_face"
+		holo_type = "angry_face"
+	sad_face
+		name = "sad_face"
+		icon_state = "sad_face"
+		holo_type = "sad_face"
+	neutral_face
+		name = "neutral_face"
+		icon_state = "neutral_face"
+		holo_type = "neutral_face"
+	happy_face
+		name = "happy_face"
+		icon_state = "happy_face"
+		holo_type = "happy_face"
+	right_arrow
+		name = "right_arrow"
+		icon_state = "right_arrow"
+		holo_type = "right_arrow"
+	left_arrow
+		name = "left_arrow"
+		icon_state = "left_arrow"
+		holo_type = "left_arrow"
+	down_arrow
+		name = "down_arrow"
+		icon_state = "down_arrow"
+		holo_type = "down_arrow"
 
 /obj/hologram
 	name = "hologram"
 	desc = "A hologram projected by an AI. Usually lasts about 30 seconds."
 	icon = 'icons/misc/holograms.dmi'
 	icon_state = "caution"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	alpha = 0		//animates to 180 in New
 	// plane = PLANE_HUD
@@ -283,3 +281,20 @@
 
 #undef MAX_TILES_PER_HOLOGRAM_HORIZONTAL
 #undef MAX_TILES_PER_HOLOGRAM_VERTICAL
+
+///Turns the atom into a transparent, blueish, flickering hologram
+///if you want to ignore lighting you also have to render above EVERYTHING ELSE so use with caution
+/atom/movable/proc/hologram_effect(over_lighting = FALSE)
+	src.color = list(
+		1.5, 0, 1, 0,
+		0, 1.5, 1, 0,
+		0, 0, 1.5, 0,
+		0, 0, 0, 0.65,
+		0, 0, 0, 0
+	)
+	if (over_lighting)
+		src.plane = PLANE_ABOVE_LIGHTING
+	var/obj/effect/distort/hologram/E = new
+	E.icon_state = "d_fast"
+	src.vis_contents += E
+	src.filters += filter(type="displace", size=E.distort_size, render_source = E.render_target)

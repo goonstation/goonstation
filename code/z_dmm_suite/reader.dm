@@ -21,6 +21,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
+		UNTIL(!air_master?.is_busy)
 		src.flags = flags
 		if(flags & DMM_BESPOKE_AREAS)
 			src.area_cache = list()
@@ -35,7 +36,7 @@ dmm_suite
 		var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
 		var startData = findtext(dmm_text, "\"")
 		var linesText = copytext(dmm_text, startData + 1, startGridPos)
-		var /list/modelLines = splittext(linesText, regex(@{"\n\""}))
+		var /list/modelLines = splittext(linesText, regex("\n\""))
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
 			var endQuote = findtext(modelLine, quote, 2, 0)
 			if(endQuote <= 1)
@@ -92,12 +93,12 @@ dmm_suite
 			var yMax = yLines.len+(coordY-1)
 			if(world.maxy < yMax)
 				world.maxy = yMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (Y) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (Y) during prefab placement")
 			var exampleLine = pick(yLines)
 			var xMax = length(exampleLine)/key_len+(coordX-1)
 			if(world.maxx < xMax)
 				world.maxx = xMax
-				logTheThing( "debug", null, null, "[tag] caused map resize (X) during prefab placement" )
+				logTheThing(LOG_DEBUG, null, "[tag] caused map resize (X) during prefab placement")
 
 			props.maxX = max(length(exampleLine)/key_len, gridLevels.len)+(coordX-1)
 			props.maxY = yMax
@@ -204,12 +205,16 @@ dmm_suite
 				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
+				#ifdef CI_RUNTIME_CHECKING
+				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
+					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
+				#endif
 
 		loadModel(atomPath, list/attributes, list/strings, xcrd, ycrd, zcrd)
 			// Cancel if atomPath is a placeholder (DMM_IGNORE flags used to write file)
 			if(ispath(atomPath, /turf/dmm_suite/clear_turf) || ispath(atomPath, /area/dmm_suite/clear_area))
 				return
-			if(ispath(atomPath, /turf/space)) return //Dont load space
+			if((flags & DMM_LOAD_SPACE) && ispath(atomPath, /turf/space)) return //Dont load space
 			// Parse all attributes and create preloader
 			var /list/attributesMirror = list()
 			var /turf/location = locate(xcrd, ycrd, zcrd)
@@ -237,7 +242,10 @@ dmm_suite
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
-					instance.set_dir(initial(instance.dir))
+					if(instance) // I hate that we made it so ReplaceWith can return null, it sucks so much
+						instance.set_dir(initial(instance.dir))
+					else
+						location.set_dir(initial(instance.dir))
 				else
 					if (atomPath)
 						instance = new atomPath(location)

@@ -1,6 +1,7 @@
 /datum/game_mode/construction
-	name = "Construction"
+	name = "Construction (For testing only. Don't select this!)"
 	config_tag = "construction"
+	regular = FALSE
 	crew_shortage_enabled = 0
 	var/list/enabled_jobs = list()
 	var/list/milestones = list()
@@ -226,7 +227,7 @@
 			minor_ores += mining_controls.get_ore_from_path(pick(common_ores))
 			minor_ores += mining_controls.get_ore_from_path(pick(rare_ores))
 	var/datum/generation_marker/initial = new
-	logTheThing("debug", null, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
+	logTheThing(LOG_DEBUG, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
 	initial.x = ax
 	initial.y = ay
 	initial.z = 1

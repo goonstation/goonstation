@@ -29,6 +29,8 @@
 	var/jetpack = 1 //fuck whoever made this
 	var/jeton = 0
 
+	var/sees_static = TRUE
+
 	//gimmicky things
 	var/obj/item/clothing/head/hat = null
 	var/obj/item/clothing/suit/bedsheet/bedsheet = null
@@ -46,7 +48,8 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
 				name = "Drone [mode.agent_radiofreq]"
-
+			else if (length(flocks))
+				name = "Flockdrone"
 			else
 				//Make them suffer with an overly cute name
 				name = "Drone [pick(list("Princess", "Lord", "King", "Queen", "Duke", "Baron"))] [pick(list("Bubblegum", "Wiffleypop", "Shnookems", "Cutesypie", "Fartbiscuits", "Rolypoly"))]"
@@ -98,9 +101,15 @@
 		for (var/obj/item/O in src.tools)
 			O.cant_drop = 1
 
+		if(sees_static)
+			get_image_group(CLIENT_IMAGE_GROUP_GHOSTDRONE).add_mob(src)
+
 		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
+
+	track_blood()
+		return
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -122,24 +131,14 @@
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
 
-	proc/updateStatic()
-		if (!src.client)
-			return
-		src.client.images.Remove(mob_static_icons)
-		for (var/image/I in mob_static_icons)
-			if (!I || !I.loc || !src)
-				continue
-			if (I.loc.invisibility && I.loc != src.loc)
-				continue
-			else
-				src.client.images.Add(I)
+	clamp_values()
+		..()
+		src.lying = 0
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
-			src.mind.dnr = 0
-
 			var/mob/dead/observer/ghost = src.ghostize()
 			ghost.icon = 'icons/mob/ghost_drone.dmi'
 			ghost.icon_state = "drone-ghost"
@@ -365,12 +364,12 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
 
-		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
+		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
 		var/obj/item/equipped = src.equipped()
@@ -432,7 +431,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.90
+		hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -508,7 +507,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -645,6 +644,7 @@
 		src.hud.update_charge()
 
 	emote(var/act, var/voluntary = 1)
+		..()
 		var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -932,7 +932,7 @@
 				return
 
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1129,16 +1129,16 @@
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
-			if (1.0)
+			if (1)
 				SPAWN(0)
 					src.gib(1)
 
-			if (2.0)
+			if (2)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
-			if (3.0)
+			if (3)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
@@ -1171,7 +1171,10 @@
 			if(A.material)
 				A.material.triggerTemp(A, temp)
 
-	get_static_image()
+	new_static_image()
+		return
+
+	update_static_image()
 		return
 
 	update_item_abilities()
@@ -1291,7 +1294,6 @@
 
 	if (ishuman(target))
 		M.unequip_all()
-		for(var/t in M.organs) qdel(M.organs[text("[t]")])
 
 	M.transforming = 1
 	M.canmove = 0
@@ -1301,16 +1303,11 @@
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
 
-	if (M.client)
-		G.lastKnownIP = M.client.address
-		M.client.mob = G
-
 	if (M?.real_name)
 		G.oldname = M.real_name
 
 	G.job = "Ghostdrone"
 	theMind.assigned_role = "Ghostdrone"
-	theMind.dnr = 1
 
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
@@ -1329,6 +1326,7 @@
 // Same laws, same crap HP, but more useful for just buildin' shit
 /mob/living/silicon/ghostdrone/deluxe
 	robot_talk_understand = 1
+	sees_static = FALSE
 
 	New()
 		..()
@@ -1360,9 +1358,6 @@
 				src.see_invisible = INVIS_CONSTRUCTION
 
 		..()
-
-	updateStatic()
-		return
 
 	say_understands(mob/other, forced_language)
 		return 1

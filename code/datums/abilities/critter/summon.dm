@@ -41,7 +41,7 @@
     boutput(holder.owner, "<span class='alert'>There are no other martians to summon. You're on your own!</span>")
     return 1
 
-  martianNames = sortList(martianNames)
+  sortList(martianNames, /proc/cmp_text_asc)
 
   var/chosenName = input("Who should be summoned?", "Summon", martianNames[1]) in martianNames
   var/mob/living/critter/martian/martian = otherMartians[chosenName]
@@ -50,6 +50,6 @@
     martian.set_loc(T)
     elecflash(T,power = 3)
 
-    playsound(T, "sound/effects/ghost2.ogg", 100, 1)
+    playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
     holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='notice'>You pull [martian.real_name] through space to you!</span>")
     holder.owner.say("SUMMON!", 1)

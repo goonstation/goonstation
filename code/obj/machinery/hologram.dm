@@ -3,7 +3,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "hologram0"
 	var/atom/projection = null
-	anchored = 1.0
+	anchored = ANCHORED
 
 /obj/machinery/hologram_ai
 	name = "Hologram Projector Platform"
@@ -11,11 +11,11 @@
 	icon_state = "hologram0"
 	var/atom/projection = null
 	var/temp = null
-	var/lumens = 0.0
-	var/h_r = 245.0
-	var/h_g = 245.0
-	var/h_b = 245.0
-	anchored = 1.0
+	var/lumens = 0
+	var/h_r = 245
+	var/h_g = 245
+	var/h_b = 245
+	anchored = ANCHORED
 
 /obj/machinery/hologram_ai/New()
 	..()

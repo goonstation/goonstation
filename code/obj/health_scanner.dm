@@ -1,7 +1,10 @@
 
+TYPEINFO(/obj/health_scanner)
+	mats = list("CON-1" = 5, "CRY-1" = 2)
+
 /obj/health_scanner
 	icon = 'icons/obj/items/device.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	var/id = 0.0 // who are we?
 	var/partner_range = 3 // how far away should we look?
 	var/find_in_range = 1
@@ -84,6 +87,7 @@
 	New()
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		AddComponent(/datum/component/mechanics_holder)
 
 	find_partners(var/in_range = 0)
 		if (in_range)
@@ -110,7 +114,18 @@
 				scan_health_overhead(H, H)
 				if (alert && H.health < 0)
 					src.crit_alert(H)
-			playsound(src.loc, "sound/machines/scan2.ogg", 30, 0)
+
+				// signal stuff
+				// this all ends up running twice because it's in scan_health too,
+				// but not broken out in a way that we need
+				var/health_percent = round(100 * H.health / (H.max_health||1))
+				var/oxy = round(H.get_oxygen_deprivation())
+				var/tox = round(H.get_toxin_damage())
+				var/burn = round(H.get_burn_damage())
+				var/brute = round(H.get_brute_damage())
+				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "health=[health_percent]&oxy=[oxy]&tox=[tox]&burn=[burn]&brute=[brute]")
+
+			playsound(src.loc, 'sound/machines/scan2.ogg', 30, 0)
 		return data
 
 	proc/crit_alert(var/mob/living/carbon/human/H)

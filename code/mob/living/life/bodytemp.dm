@@ -28,8 +28,15 @@
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/C = owner.loc
 			loc_temp = C.air_contents.temperature
-		else if (istype(owner.loc, /obj/machinery/colosseum_putt))
-			loc_temp = T20C
+		else if (istype(owner.loc,/obj/icecube))
+			var/obj/icecube/ice = owner.loc
+			if (!ice.does_cooling)
+				return
+			loc_temp = ice.cooltemp// ice go brrrrrrrrr
+			if (owner.bodytemperature > ice.melttemp)
+				ice.takeDamage(1 * mult)
+			else if (environment.temperature > ice.melttemp)
+				ice.takeDamage(0.5 * mult)
 		else
 			loc_temp = environment.temperature
 

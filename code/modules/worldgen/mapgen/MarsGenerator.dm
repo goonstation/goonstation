@@ -49,6 +49,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -119,7 +121,7 @@
 					random_brute_damage(jerk, 20, checkarmor=TRUE) // Allow armor to resist
 					jerk.do_disorient(stamina_damage = 100, weakened = 3 SECONDS, disorient = 5 SECOND)
 					if(prob(50))
-						playsound(src, "sound/impact_sounds/Flesh_Stab_2.ogg", 50, 1)
+						playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 50, 1)
 						boutput(jerk, pick("Dust gets caught in your eyes!","The wind blows you off course!","Debris pierces through your skin!"))
 
 
@@ -132,15 +134,6 @@
 	temperature = 100
 	fullbright = 0
 
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")
-
  ///for the mapgen mountains, temp until we get something better
 /turf/simulated/wall/auto/asteroid/mars
 	name = "martian rock"
@@ -148,13 +141,15 @@
 	fullbright = 0
 	color = "#c96433"
 	stone_color = "#c96433"
-	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/mars
 
-	destroy_asteroid(var/dropOre=0)
+	destroy_asteroid(var/dropOre=1)
 		var/image/ambient_light = src.GetOverlayImage("ambient")
 		var/image/weather = src.GetOverlayImage("weather")
 		..()
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/mars)
+		src.UpdateIcon()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
+			A.UpdateIcon()
 		src.UpdateOverlays(ambient_light, "ambient")
 		src.UpdateOverlays(weather, "weather")
 

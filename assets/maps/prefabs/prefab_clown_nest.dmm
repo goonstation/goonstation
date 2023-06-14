@@ -13,20 +13,20 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
+"bw" = (
+/obj/decal/cleanable/balloon,
+/obj/item/pen/crayon/orange{
+	pixel_x = -7
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "bT" = (
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
-"cc" = (
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"dg" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = -3;
-	pixel_y = 1
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+"cH" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "dl" = (
 /obj/lattice{
@@ -36,19 +36,40 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"dO" = (
+"dI" = (
 /obj/decal/cleanable/cobweb2,
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "eb" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
+"eJ" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/machinery/light/small/sticky/warm{
+	dir = 8
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"eV" = (
+/mob/living/critter/spider/clown,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "fr" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"fO" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "gl" = (
 /obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor{
@@ -58,12 +79,13 @@
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
-"hU" = (
-/obj/decal/cleanable/balloon,
-/obj/item/pen/crayon/orange{
-	pixel_x = -7
+"gG" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -7;
+	pixel_y = -2
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/decal/cleanable/cobwebFloor,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "ix" = (
 /obj/decal/cleanable/slime,
@@ -74,90 +96,60 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
-"iA" = (
-/obj/decal/cleanable/dirt/dirt4,
-/turf/simulated/floor/plating/airless/asteroid,
+"iy" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"jC" = (
-/obj/juggleplaque{
-	desc = "Welcome to the fantastical and only ... but guaranteed safe ... Clownspider farm in the funny universe! You are entering Honky Gibbersons Clown-Farm! Honk!";
-	name = "Honkys Clownspider Farm"
-	},
-/turf/simulated/wall/auto/asteroid{
-	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
-	hardness = 5;
-	name = "dense asteroid"
-	},
+"ja" = (
+/mob/living/critter/spider/clownqueen,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"kh" = (
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"ml" = (
-/obj/item/reagent_containers/food/snacks/candy/peach_ring{
-	pixel_x = 7;
-	pixel_y = 6
+"je" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"nl" = (
+/obj/item/item_box/balloon{
+	pixel_x = -6;
+	pixel_y = 1
 	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"mm" = (
-/obj/item/clothing/shoes/clown_shoes/pink{
-	pixel_x = 1;
-	pixel_y = 17
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/decal/cleanable/blood{
-	icon_state = "u_guilty"
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"mM" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = 3;
-	pixel_y = 2
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "om" = (
 /turf/simulated/floor/airless/solar,
 /area/noGenerate)
-"oz" = (
-/turf/simulated/wall/auto/asteroid{
-	name_old = "hardened"
+"ox" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
 	},
+/turf/simulated/floor/airless/plating/catwalk/auto,
+/area/noGenerate)
+"pV" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_y = -1
+	},
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"oS" = (
-/obj/decal/cleanable/vomit/spiders,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
-/obj/item/reagent_containers/food/drinks/milk/clownspider{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"pG" = (
-/obj/decal/cleanable/dirt/dirt3,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"rg" = (
-/obj/item/clothing/gloves/latex/pink{
-	pixel_x = 3;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/food/drinks/milk/clownspider{
-	layer = 2;
-	pixel_x = -2;
-	pixel_y = 5
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+"qF" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/decal/cleanable/cobwebFloor,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "rj" = (
 /obj/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
+/area/prefab/clown_nest)
+"rG" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -6;
+	pixel_y = 1
+	},
+/obj/decal/cleanable/cobwebFloor,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "rO" = (
 /obj/decal/fakeobjects{
@@ -177,25 +169,27 @@
 /area/noGenerate{
 	force_fullbright = 1
 	})
-"tA" = (
-/obj/decal/cleanable/slime,
-/obj/item/gun/reagent/syringe/love,
-/obj/item/clothing/under/misc/clown/pink{
-	pixel_x = -5;
-	pixel_y = -5
+"sq" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"sH" = (
+/obj/item/clothing/shoes/clown_shoes/pink/waddle{
+	pixel_x = 1;
+	pixel_y = 17
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"tI" = (
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"ui" = (
+"tP" = (
 /obj/item/material_piece/cloth/spidersilk{
 	pixel_x = 1
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "uY" = (
 /obj/lattice{
@@ -204,44 +198,41 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"vK" = (
-/obj/item/reagent_containers/food/snacks/candy/peach_ring{
-	pixel_x = -6;
-	pixel_y = -1
+"wc" = (
+/obj/item/clothing/gloves/latex/pink{
+	pixel_x = 3;
+	pixel_y = 3
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/item/reagent_containers/food/drinks/milk/clownspider{
+	layer = 2;
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"wI" = (
-/turf/simulated/floor/plating/airless/asteroid,
+"xI" = (
+/obj/decal/cleanable/cobweb,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"yb" = (
-/obj/critter/spider/clown,
-/turf/simulated/floor/plating/airless/asteroid,
+"xJ" = (
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "zi" = (
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
-"zB" = (
-/obj/item/kitchen/peach_rings{
-	pixel_x = 4
-	},
-/turf/simulated/floor/plating/airless/asteroid,
+"Ch" = (
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/obj/decal/cleanable/cobwebFloor,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"Bg" = (
+"Cu" = (
 /obj/item/material_piece/cloth/spidersilk{
-	pixel_x = -4;
-	pixel_y = -4
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"By" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = -7;
+	pixel_x = -1;
 	pixel_y = -2
 	},
 /obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Cw" = (
 /obj/table/round/auto,
@@ -257,16 +248,6 @@
 /area/prefab/clown_nest)
 "CZ" = (
 /turf/simulated/floor/carpet/arcade/half,
-/area/prefab/clown_nest)
-"Dg" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = 4;
-	pixel_y = 3
-	},
-/obj/machinery/light/small/sticky/warm{
-	dir = 8
-	},
-/turf/simulated/floor/plating/airless/asteroid,
 /area/prefab/clown_nest)
 "DN" = (
 /obj/decal/cleanable/vomit/spiders,
@@ -284,6 +265,13 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"EN" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "Ff" = (
 /obj/lattice{
 	dir = 4;
@@ -291,24 +279,26 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
-"Fv" = (
-/obj/decal/cleanable/dirt/dirt5,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"Fy" = (
-/turf/simulated/wall/r_wall,
-/area/prefab/clown_nest)
-"Gt" = (
-/obj/grille/catwalk,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
+"GB" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring{
+	pixel_x = -6;
+	pixel_y = -1
 	},
-/turf/variableTurf/clear,
-/area/noGenerate)
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"GS" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"Hf" = (
+/obj/decal/cleanable/slime,
+/obj/item/gun/reagent/syringe/love,
+/obj/item/clothing/under/misc/clown/pink{
+	pixel_x = -5;
+	pixel_y = -5
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "HA" = (
 /obj/candle_light{
 	pixel_x = 8;
@@ -322,29 +312,28 @@
 /obj/decal/cleanable/vomit/spiders,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
-"Ir" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"JK" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_x = -1;
-	pixel_y = -2
+"II" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs"
 	},
-/obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"JY" = (
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
-/obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"KI" = (
-/obj/item/material_piece/cloth/spidersilk{
-	pixel_y = 5
+"JG" = (
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = -3;
+	pixel_y = -6
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/mob/living/critter/spider/clownqueen/cluwne,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Lg" = (
 /obj/table/auto{
@@ -360,6 +349,10 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
+"Lj" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "LW" = (
 /obj/decal/cleanable/slime,
 /obj/item/paper/rippednote{
@@ -372,15 +365,27 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
-"NR" = (
+"Ma" = (
 /obj/item/material_piece/cloth/spidersilk{
-	pixel_x = -6;
+	pixel_x = -3;
 	pixel_y = 1
 	},
-/obj/decal/cleanable/cobwebFloor,
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"Ol" = (
+"PL" = (
+/turf/variableTurf/wall,
+/area/prefab/clown_nest)
+"SD" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
+"Ty" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/clown_nest)
+"Ur" = (
 /obj/grille/catwalk,
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -392,50 +397,37 @@
 /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled{
 	pixel_x = 7
 	},
-/turf/variableTurf/clear,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
-"Om" = (
-/turf/simulated/wall/auto/asteroid,
-/area/noGenerate)
-"Qt" = (
-/obj/item/reagent_containers/food/snacks/candy/peach_ring{
-	pixel_y = -1
+"UC" = (
+/obj/item/material_piece/cloth/spidersilk{
+	pixel_y = 5
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"Ra" = (
-/obj/critter/spider/clownqueen,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"Rb" = (
+"Vz" = (
+/obj/decal/cleanable/vomit/spiders,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
 	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
+	icon_state = "gibhead";
+	name = "grody thing"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"Sp" = (
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/prefab/clown_nest)
-"TB" = (
-/turf/simulated/wall/auto/asteroid{
-	desc = "A free-floating mineral deposit from space. It seems to be very dense.";
-	hardness = 5;
-	name = "dense asteroid"
+/obj/item/reagent_containers/food/drinks/milk/clownspider{
+	pixel_x = 4;
+	pixel_y = 4
 	},
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
-"Ut" = (
-/obj/item/item_box/balloon{
-	pixel_x = -6;
-	pixel_y = 1
+"Ww" = (
+/obj/juggleplaque{
+	desc = "Welcome to the fantastical and only ... but guaranteed safe ... Clownspider farm in the funny universe! You are entering Honky Gibbersons Clown-Farm! Honk!";
+	name = "Honkys Clownspider Farm"
 	},
-/turf/simulated/floor/plating/airless/asteroid,
+/turf/variableTurf/wall,
 /area/prefab/clown_nest)
-"UW" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating/airless/asteroid,
+"Xv" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "XN" = (
 /obj/decal/cleanable/blood{
@@ -443,23 +435,18 @@
 	},
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/clown_nest)
+"XW" = (
+/obj/item/kitchen/peach_rings{
+	pixel_x = 4
+	},
+/turf/variableTurf/floor,
+/area/prefab/clown_nest)
 "XY" = (
 /turf/variableTurf/clear,
 /area/noGenerate)
-"YY" = (
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	pixel_x = 4;
-	pixel_y = 6
-	},
-/obj/decal/cleanable/blood{
-	icon_state = "floor6"
-	},
-/obj/critter/spider/clownqueen/cluwne,
-/turf/simulated/floor/plating/airless/asteroid,
+"Zg" = (
+/obj/decal/cleanable/dirt,
+/turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "Zh" = (
 /obj/decal/fakeobjects{
@@ -553,16 +540,16 @@ XY
 XY
 XY
 XY
-Om
-Om
+je
+je
 XY
 XY
 eb
 XY
 XY
-Om
-Om
-Om
+je
+je
+je
 XY
 XY
 XY
@@ -584,18 +571,18 @@ XY
 XY
 XY
 XY
-Om
-Om
-Om
+je
+je
+je
 XY
 XY
 XY
 XY
-Om
-Om
-Om
-Om
-Om
+je
+je
+je
+je
+je
 XY
 XY
 XY
@@ -623,11 +610,11 @@ XY
 XY
 XY
 XY
-Om
-Om
-Om
-Om
-Om
+je
+je
+je
+je
+je
 XY
 XY
 XY
@@ -644,8 +631,8 @@ XY
 XY
 XY
 XY
-TB
-TB
+PL
+PL
 XY
 XY
 XY
@@ -655,12 +642,12 @@ XY
 XY
 XY
 XY
-Om
-Om
-Om
-Om
-Om
-Om
+je
+je
+je
+je
+je
+je
 XY
 XY
 eb
@@ -675,10 +662,10 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-TB
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -689,9 +676,9 @@ XY
 XY
 XY
 XY
-Om
-Om
-Om
+je
+je
+je
 XY
 XY
 XY
@@ -705,12 +692,12 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-TB
-TB
-TB
+PL
+PL
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -737,16 +724,16 @@ XY
 XY
 XY
 XY
-UW
-TB
-vK
-wI
-TB
-TB
-TB
+cH
+PL
+GB
+xJ
+PL
+PL
+PL
 XY
 XY
-oz
+PL
 XY
 XY
 XY
@@ -768,18 +755,18 @@ eb
 XY
 XY
 XY
-pG
-wI
-Ra
-wI
-ml
-TB
-TB
-TB
-TB
-TB
-TB
-TB
+iy
+xJ
+ja
+xJ
+fO
+PL
+PL
+PL
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -800,20 +787,20 @@ eb
 XY
 XY
 XY
-wI
-wI
-wI
-Sp
-TB
-TB
-YY
-TB
-TB
-TB
-tI
-TB
-TB
-TB
+xJ
+xJ
+xJ
+sq
+PL
+PL
+JG
+PL
+PL
+PL
+xI
+PL
+PL
+PL
 XY
 XY
 XY
@@ -832,21 +819,21 @@ XY
 XY
 XY
 XY
-wI
-wI
-wI
-JK
-TB
-TB
-Rb
-oS
-TB
-mM
-wI
-wI
-UW
-TB
-TB
+xJ
+xJ
+xJ
+Cu
+PL
+PL
+II
+Vz
+PL
+SD
+xJ
+xJ
+cH
+PL
+PL
 XY
 XY
 XY
@@ -865,21 +852,21 @@ XY
 XY
 XY
 XY
-zB
-TB
-TB
-TB
-tA
-mm
-TB
-TB
-Bg
-wI
-yb
-wI
-TB
-TB
-TB
+XW
+PL
+PL
+PL
+Hf
+sH
+PL
+PL
+EN
+xJ
+eV
+xJ
+PL
+PL
+PL
 XY
 XY
 eb
@@ -897,20 +884,20 @@ XY
 XY
 XY
 XY
-wI
-Fy
-Fy
-Fy
+xJ
+Ty
+Ty
+Ty
 bT
-Fy
-Fy
-TB
-UW
-wI
-ui
-TB
-TB
-TB
+Ty
+Ty
+PL
+cH
+xJ
+tP
+PL
+PL
+PL
 XY
 XY
 XY
@@ -935,13 +922,13 @@ HA
 CZ
 gl
 Lg
-Fy
-TB
-TB
-wI
-wI
-wI
-TB
+Ty
+PL
+PL
+xJ
+xJ
+xJ
+PL
 XY
 XY
 XY
@@ -966,14 +953,14 @@ rj
 Cw
 CZ
 ix
-Fy
-Fy
-Fy
-TB
-TB
-wI
-wI
-iA
+Ty
+Ty
+Ty
+PL
+PL
+xJ
+xJ
+GS
 XY
 XY
 XY
@@ -1000,13 +987,13 @@ DN
 XN
 aV
 Zh
-Fy
-TB
-TB
-Fv
-wI
-wI
-oz
+Ty
+PL
+PL
+Xv
+xJ
+xJ
+PL
 XY
 XY
 XY
@@ -1023,26 +1010,26 @@ XY
 uY
 om
 om
-Ol
-Gt
-Gt
+Ur
+ox
+ox
 bT
 bT
-Fy
-Fy
-Fy
+Ty
+Ty
+Ty
 LW
-Fy
-TB
-wI
-wI
-TB
-TB
-oz
+Ty
+PL
+xJ
+xJ
+PL
+PL
+PL
 XY
-TB
-TB
-TB
+PL
+PL
+PL
 XY
 XY
 eb
@@ -1060,22 +1047,22 @@ XY
 XY
 XY
 XY
-TB
-TB
-Fy
+PL
+PL
+Ty
 fr
 bT
-wI
-wI
-wI
-Ut
-TB
-TB
-TB
-TB
-TB
-TB
-TB
+xJ
+xJ
+xJ
+nl
+PL
+PL
+PL
+PL
+PL
+PL
+PL
 XY
 XY
 eb
@@ -1090,24 +1077,24 @@ om
 Eg
 XY
 XY
-TB
-TB
-TB
-TB
-Dg
-rg
-kh
-wI
-hU
-wI
-wI
-wI
-TB
-TB
-JY
-Ir
-TB
-TB
+PL
+PL
+PL
+PL
+eJ
+wc
+Zg
+xJ
+bw
+xJ
+xJ
+xJ
+PL
+PL
+Ch
+qF
+PL
+PL
 XY
 XY
 eb
@@ -1121,24 +1108,24 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-wI
-Ra
-wI
-wI
-wI
-wI
-oz
-jC
-wI
-wI
-TB
-tI
-Qt
-oz
-TB
+PL
+PL
+PL
+xJ
+ja
+xJ
+xJ
+xJ
+xJ
+PL
+Ww
+xJ
+xJ
+PL
+xI
+pV
+PL
+PL
 XY
 XY
 XY
@@ -1153,24 +1140,24 @@ XY
 XY
 XY
 XY
-TB
-TB
-dO
-wI
-wI
-wI
-wI
-dg
-wI
-wI
-wI
-wI
-wI
-UW
-wI
-wI
-TB
-TB
+PL
+PL
+dI
+xJ
+xJ
+xJ
+xJ
+Ma
+xJ
+xJ
+xJ
+xJ
+xJ
+cH
+xJ
+xJ
+PL
+PL
 XY
 XY
 XY
@@ -1185,25 +1172,25 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-NR
-wI
-wI
-Ra
-TB
-TB
-TB
-TB
-oz
-wI
-wI
-ml
-wI
-cc
-oz
-oz
+PL
+PL
+PL
+rG
+xJ
+xJ
+ja
+PL
+PL
+PL
+PL
+PL
+xJ
+xJ
+fO
+xJ
+Lj
+PL
+PL
 XY
 XY
 XY
@@ -1217,24 +1204,24 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-KI
-wI
-By
-TB
-TB
+PL
+PL
+PL
+UC
+xJ
+gG
+PL
+PL
 XY
 XY
-oz
-oz
-oz
-TB
-UW
-yb
-wI
-oz
+PL
+PL
+PL
+PL
+cH
+eV
+xJ
+PL
 XY
 XY
 XY
@@ -1250,22 +1237,22 @@ XY
 XY
 XY
 XY
-TB
-TB
-TB
-TB
-TB
-TB
-TB
+PL
+PL
+PL
+PL
+PL
+PL
+PL
 XY
 XY
 XY
 XY
 XY
-TB
-TB
-wI
-wI
+PL
+PL
+xJ
+xJ
 XY
 XY
 XY
@@ -1284,10 +1271,10 @@ XY
 XY
 XY
 XY
-TB
-TB
-oz
-oz
+PL
+PL
+PL
+PL
 XY
 XY
 XY
@@ -1318,7 +1305,7 @@ XY
 XY
 XY
 XY
-oz
+PL
 XY
 XY
 XY

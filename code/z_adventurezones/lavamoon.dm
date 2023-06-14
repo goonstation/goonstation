@@ -53,7 +53,7 @@
 	New()
 		..()
 		if (prob(33))
-			src.icon_state = "panelscorched"
+			src.UpdateOverlays(image(src.icon, "panelscorched"), "burn")
 
 /turf/unsimulated/iomoon/ancient_floor
 	name = "Ancient Metal Floor"
@@ -100,6 +100,10 @@ var/sound/iomoon_alarm_sound = null
 	sound_group = "iomoon"
 	sound_loop = 'sound/ambience/nature/Lavamoon_FireCrackling.ogg'
 	sound_loop_vol = 60
+	area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/embers,
+		/atom/movable/screen/parallax_layer/foreground/embers/sparse,
+		)
 	var/list/sfx_to_pick_from = null
 
 	/// Value to set irradiated to during the mini-blowout.
@@ -142,6 +146,7 @@ var/sound/iomoon_alarm_sound = null
 	ambient_light = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
 	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
 	use_alarm = 1
+	occlude_foreground_parallax_layers = TRUE
 	New()
 		. = ..()
 		sfx_to_pick_from = iomoon_powerplant_sounds
@@ -150,6 +155,7 @@ var/sound/iomoon_alarm_sound = null
 /area/iomoon/base/underground
 	name = "Power Plant Tunnels"
 	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling2.ogg'
+	area_parallax_layers = list()
 
 	New()
 		. = ..()
@@ -161,6 +167,7 @@ var/sound/iomoon_alarm_sound = null
 	requires_power = 1
 	force_fullbright = 0
 	luminosity = 0
+	area_parallax_layers = list()
 	radiation_level = 0.75
 
 	New()
@@ -175,6 +182,7 @@ var/sound/iomoon_alarm_sound = null
 	force_fullbright = 0
 	luminosity = 0
 	teleport_blocked = 1
+	area_parallax_layers = list()
 	radiation_level = 0.8
 	sound_loop = 'sound/ambience/industrial/AncientPowerPlant_Drone1.ogg'
 
@@ -495,7 +503,7 @@ var/sound/iomoon_alarm_sound = null
 	desc = "A strange beast resembling a crab boulder.  Not to be confused with a rock lobster."
 	icon_state = "lavacrab"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	health = 30
 	aggressive = 1
 	defensive = 1
@@ -529,117 +537,6 @@ var/sound/iomoon_alarm_sound = null
 	ai_think()
 		. = ..()
 		anchored = alive
-
-/obj/critter/ancient_repairbot
-	name = "strange robot"
-	desc = "It looks like some sort of floating repair bot or something?"
-	icon_state = "ancient_repairbot"
-	density = 0
-	aggressive = 0
-	health = 10
-	defensive = 1
-	wanderer = 1
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	atkcarbon = 0
-	atksilicon = 0
-	firevuln = 0.1
-	brutevuln = 0.6
-	angertext = "beeps at"
-	death_text = "%src% blows apart!"
-	butcherable = 0
-	attack_range = 3
-	flying = 1
-	generic = 0
-
-	grumpy
-		aggressive = 1
-		atkcarbon = 1
-		atksilicon = 1
-
-	New()
-		..()
-		src.name = "[pick("strange","weird","odd","bizarre","quirky","antique")] [pick("robot","automaton","machine","gizmo","thingmabob","doodad","widget")]"
-
-	ChaseAttack(mob/M)
-		if(prob(33))
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-		return
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		SPAWN(0)
-			elecflash(src,power = 2)
-			qdel(src)
-
-	process()
-		if(prob(7))
-			src.visible_message("<b>[src] beeps.</b>")
-			playsound(src.loc,pick('sound/misc/ancientbot_beep1.ogg','sound/misc/ancientbot_beep2.ogg','sound/misc/ancientbot_beep3.ogg'), 50, 1)
-		..()
-		return
-
-
-	seek_target()
-		..()
-		if (src.task == "chasing" && src.target)
-			playsound(src.loc, pick('sound/misc/ancientbot_grump.ogg','sound/misc/ancientbot_grump2.ogg'), 50, 1)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		SPAWN(3.5 SECONDS)
-			src.attacking = 0
-
-		var/atom/last = src
-		var/atom/target_r = M
-
-		var/list/dummies = new/list()
-
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
-
-		if(isturf(M))
-			target_r = new/obj/elec_trg_dummy(M)
-
-		var/turf/currTurf = get_turf(target_r)
-		currTurf.hotspot_expose(2000, 400)
-
-		for(var/count=0, count<4, count++)
-
-			var/list/affected = DrawLine(last, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			for(var/obj/O in affected)
-				SPAWN(0.6 SECONDS) qdel(O)
-
-			if(isliving(target_r)) //Probably unsafe.
-				playsound(target_r:loc, "sound/effects/electric_shock.ogg", 50, 1)
-				target_r:shock(src, 15000, "chest", 1, 1)
-				break
-
-			var/list/next = new/list()
-			for(var/atom/movable/AM in orange(3, target_r))
-				if(istype(AM, /obj/line_obj/elec) || istype(AM, /obj/elec_trg_dummy) || istype(AM, /obj/overlay/tile_effect) || AM.invisibility)
-					continue
-				next.Add(AM)
-
-			if(istype(target_r, /obj/elec_trg_dummy))
-				dummies.Add(target_r)
-
-			last = target_r
-			target_r = pick(next)
-			target = target_r
-
-		for(var/d in dummies)
-			qdel(d)
-
-/obj/critter/ancient_repairbot/security
-	name = "stranger robot"
-	desc = "It looks rather mean."
-	icon_state = "ancient_guardbot"
-	aggressive = 1
-	health = 15
-	atkcarbon = 1
-	atksilicon = 1
-
 
 //Decor
 
@@ -697,22 +594,22 @@ var/sound/iomoon_alarm_sound = null
 /obj/item/radio_tape/adventure/xg
 	name = "XIANG|GIESEL Onboarding Tape 1"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding1.ogg"
+	audio = 'sound/radio_station/xg_onboarding1.ogg'
 
 /obj/item/radio_tape/adventure/xg2
 	name = "XIANG|GIESEL Onboarding Tape 2"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding2.ogg"
+	audio = 'sound/radio_station/xg_onboarding2.ogg'
 
 /obj/item/radio_tape/adventure/xg3
 	name = "XIANG|GIESEL Onboarding Tape 3"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding3.ogg"
+	audio = 'sound/radio_station/xg_onboarding3.ogg'
 
 /obj/item/radio_tape/adventure/xg4
 	name = "XIANG|GIESEL Onboarding Tape 4"
 	desc = "A magnetic tape of recorded audio trainings. Some oaf left it outside of the storage case!"
-	audio = "sound/radio_station/xg_onboarding4.ogg"
+	audio = 'sound/radio_station/xg_onboarding4.ogg'
 
 
 
@@ -801,7 +698,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for event_iomoon_blowout.")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -840,7 +737,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	var/list/iomoon_areas = get_areas(/area/iomoon)
 	if (!iomoon_areas.len)
 		iomoon_blowout_state = -1
-		logTheThing("debug", null, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
+		logTheThing(LOG_DEBUG, null, "IOMOON: Unable to locate areas for end_iomoon_blowout. Welp!")
 		return
 
 	for (var/area/iomoon/adjustedArea in iomoon_areas)
@@ -861,7 +758,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 #define STATE_RECHARGING 2
 
 /obj/iomoon_boss
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	ex_act(severity)
@@ -888,7 +785,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			flick("boss_button_activate", src)
 			src.icon_state = "boss_button1"
 
-			playsound(src.loc,"sound/machines/lavamoon_alarm1.ogg", 70,0)
+			playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
 			sleep(5 SECONDS)
 			event_iomoon_blowout()
 
@@ -909,14 +806,14 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			user.lastattacked = src
 			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
 			if (iomoon_blowout_state == 0)
-				playsound(src.loc,"sound/machines/lavamoon_alarm1.ogg", 70,0)
+				playsound(src.loc, 'sound/machines/lavamoon_alarm1.ogg', 70,0)
 				event_iomoon_blowout()
 				return
 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 
 			if (src.health <= 0 && active != -1)
@@ -949,9 +846,9 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					set_dir(2)
 					return
 				if (prob(80))
-					new /obj/critter/ancient_repairbot/grumpy (src.loc)
+					new /mob/living/critter/robotic/repairbot (src.loc)
 				else
-					new /obj/critter/ancient_repairbot/security (src.loc)
+					new /mob/living/critter/robotic/repairbot/security (src.loc)
 				max_bots--
 
 				src.visible_message("<span class='alert'>[src] plunks out a robot! Oh dear!</span>")
@@ -1017,7 +914,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (I.hit_type == DAMAGE_BURN)
 				src.health -= I.force * 0.25
 			else
-				src.health -= I.force * 0.50
+				src.health -= I.force * 0.5
 
 			user.visible_message("<span class='alert'><b>[user] bonks [src] with [I]!</b></span>","<span class='alert'><b>You hit [src] with [I]!</b></span>")
 			if (src.health <= 0)
@@ -1100,7 +997,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					rotors.icon_state = "powercore_rotors_start"
 					SPAWN(2.4 SECONDS)
 						rotors.icon_state = "powercore_rotors"
-					playsound(src.loc, "sound/machines/lavamoon_rotors_starting.ogg",50, 0)
+					playsound(src.loc, 'sound/machines/lavamoon_rotors_starting.ogg', 50, 0)
 					last_noise_time = ticker.round_elapsed_ticks
 					last_noise_length = 80
 
@@ -1109,10 +1006,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			process()
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
 					if (health <= 10)
-						playsound(src.loc, "sound/machines/lavamoon_rotors_fast.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_fast.ogg', 50, 0)
 						last_noise_length = 90
 					else
-						playsound(src.loc, "sound/machines/lavamoon_rotors_slow.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_slow.ogg', 50, 0)
 						last_noise_length = 70
 
 					last_noise_time = ticker.round_elapsed_ticks
@@ -1192,7 +1089,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 					src.icon_state = "powercore_core_die"
 					if (rotors)
 						rotors.icon_state = "powercore_rotors_stop"
-						playsound(src.loc, "sound/machines/lavamoon_rotors_stopping.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/lavamoon_rotors_stopping.ogg', 50, 1)
 					sleep (50)
 					if (rotors)
 						rotors.icon_state = "powercore_rotors_off"
@@ -1202,7 +1099,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 						base.icon_state = "powercore_base_off"
 
 					var/obj/overlay/O = new/obj/overlay( src.loc )
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.name = "Explosion"
 					O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 					O.pixel_x = -92
@@ -1232,7 +1129,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				if (!zapMarker || zapMarker.loc == src)
 					return -1
 
-				playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+				playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 				var/list/lineObjs
 				lineObjs = DrawLine(src, zapMarker, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1270,7 +1167,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	base
 		name = "huge contraption"
 		desc = "An enormous artifact of some sort. You feel uncomfortable just being near it."
-		anchored = 1
+		anchored = ANCHORED
 		density = 0
 		icon = 'icons/effects/160x160.dmi'
 		icon_state = "powercore_base"
@@ -1303,7 +1200,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "tallsmes0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()
@@ -1313,59 +1210,199 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		I.layer = FLY_LAYER
 		src.overlays += I
 
+TYPEINFO(/obj/ladder)
+	mat_appearances_to_ignore = list("negativematter")
+ADMIN_INTERACT_PROCS(/obj/ladder, proc/toggle_extradimensional, proc/change_extradimensional_overlay)
+ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
+
 /obj/ladder
 	name = "ladder"
 	desc = "A series of parallel bars designed to allow for controlled change of elevation.  You know, by climbing it.  You climb it."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/id = null
-	var/broken = FALSE
+	/// if true, disables ladder climbing behavior
+	var/unclimbable = FALSE
+	mat_changename = FALSE
+	appearance_flags = KEEP_TOGETHER
 
-	broken
-		name = "broken ladder"
-		desc = "it's too damaged to climb."
-		icon_state = "ladder_wall_broken"
-		broken = TRUE
+/obj/ladder/broken
+	name = "broken ladder"
+	desc = "it's too damaged to climb."
+	icon_state = "ladder_wall_broken"
+	unclimbable = TRUE
 
-	New()
-		..()
-		if (!id)
-			id = "generic"
+/obj/ladder/embed
+	name = "gap in the wall"
+	icon_state = "wall_embed"
+	desc = "A section of this wall appears to be missing. Entering it might take you somewhere."
+	plane = PLANE_WALL
+	var/hidden = FALSE
 
-		src.update_id()
+/obj/ladder/embed/climb(mob/user as mob)
+	var/obj/ladder/otherLadder = src.get_other_ladder()
+	if (!istype(otherLadder))
+		boutput(user, "You try to enter the gap in the wall, but seriously fail! Perhaps there's nowhere to go?")
+		return
+	boutput(user, "You enter the gap in the wall.")
+	user.set_loc(get_turf(otherLadder))
 
-	proc/update_id(new_id)
-		if(new_id)
-			src.id = new_id
-		src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+/obj/ladder/embed/New()
+	. = ..()
+	src.UpdateIcon()
 
-	proc/get_other_ladder()
-		RETURN_TYPE(/atom)
-		. = locate("ladder_[id][src.icon_state == "ladder"]")
+/obj/ladder/embed/update_icon()
+	. = ..()
+	if (!src.hidden)
+		var/turf/T = get_step(src,NORTH)
+		if (!istype(T,/turf/simulated/wall) && !istype(T,/turf/unsimulated/wall))
+			// if there's no wall above us, hide in a way that we still show up in orange(1)
+			// so the wall can update us
+			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "hidden", INVIS_ALWAYS_ISH)
+		else
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY,"hidden")
+	else
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "hidden", INVIS_ALWAYS_ISH)
 
-	attack_hand(mob/user)
-		if (src.broken) return
-		if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+
+/obj/ladder/embed/ex_act(severity,last_touched)
+	if (src.hidden)
+		src.hidden = FALSE
+		src.UpdateIcon()
+	. = ..(severity, last_touched)
+
+/obj/ladder/embed/extradimensional
+	default_material = "negativematter"
+
+/obj/ladder/extradimensional
+	default_material = "negativematter"
+
+// admin interact procs
+/obj/ladder/proc/toggle_extradimensional()
+	set name = "Toggle Extradimensional"
+
+	var/datum/component/E = src.GetComponent(/datum/component/extradimensional_storage/ladder)
+	if (E)
+		E.RemoveComponent(/datum/component/extradimensional_storage/ladder)
+	else
+		src.AddComponent(/datum/component/extradimensional_storage/ladder)
+
+/obj/ladder/proc/change_extradimensional_overlay()
+	set name = "Change Extradimensional Overlay"
+
+	var/datum/component/extradimensional_storage/ladder/E = src.GetComponent(/datum/component/extradimensional_storage/ladder)
+	if (!E)
+		return
+	var/mob/user = usr
+	var/icon_to_use = input(user, "Icon to use for the overlay") as icon | null
+	if (icon_to_use)
+		var/icon/icon = icon(icon_to_use)
+		E.change_overlay(icon)
+
+/obj/ladder/embed/proc/toggle_hidden()
+	set name = "Toggle Hidden"
+	src.hidden = !src.hidden
+	src.update_icon()
+
+/obj/ladder/New()
+	..()
+	START_TRACKING
+	if (!id)
+		id = "generic"
+	src.update_id()
+
+/obj/ladder/disposing()
+	STOP_TRACKING
+	. = ..()
+
+/obj/ladder/onMaterialChanged()
+	. = ..()
+	if(isnull(src.material))
+		return
+	var/found_negative = (src.material.mat_id == "negativematter")
+	if(!found_negative)
+		for(var/datum/material/parent_mat in src.material.parent_materials)
+			if(parent_mat.mat_id == "negativematter")
+				found_negative = TRUE
+				break
+	if(found_negative)
+		src.AddComponent(/datum/component/extradimensional_storage/ladder)
+
+/obj/ladder/proc/update_id(new_id)
+	if(new_id)
+		src.id = new_id
+	src.tag = "ladder_[id][src.icon_state == "ladder" ? 0 : 1]"
+
+/obj/ladder/proc/get_other_ladder()
+	RETURN_TYPE(/atom)
+	. = locate("ladder_[id][src.icon_state == "ladder"]")
+
+/obj/ladder/embed/update_id(new_id)
+	if(new_id)
+		src.id = new_id
+	src.tag = "ladder_[id]embed"
+
+/obj/ladder/embed/get_other_ladder() // these literally do not care which is the top
+	RETURN_TYPE(/atom)
+	for_by_tcl(ladder,/obj/ladder)
+		if (ladder.id == src.id && ladder != src)
+			return ladder
+
+/obj/ladder/attack_hand(mob/user)
+	if (src.unclimbable) return
+	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
+		return
+	src.climb(user)
+
+/obj/ladder/attackby(obj/item/W, mob/user)
+	if (src.unclimbable) return
+	if (istype(W, /obj/item/grab))
+		var/obj/item/grab/grab = W
+		if (!grab.affecting || BOUNDS_DIST(grab.affecting, src) > 0)
 			return
-		src.climb(user)
+		user.lastattacked = src
+		src.visible_message("<span class='alert'><b>[user] is trying to shove [grab.affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
+		return climb(grab.affecting)
 
-	attackby(obj/item/W, mob/user)
-		if (src.broken) return
-		if (istype(W, /obj/item/grab))
-			if (!W:affecting) return
-			user.lastattacked = src
-			src.visible_message("<span class='alert'><b>[user] is trying to shove [W:affecting] [icon_state == "ladder"?"down":"up"] [src]!</b></span>")
-			return attack_hand(W:affecting)
+/obj/ladder/proc/climb(mob/user as mob)
+	var/obj/ladder/otherLadder = src.get_other_ladder()
+	if (!istype(otherLadder))
+		boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
+		return
 
-	proc/climb(mob/user as mob)
-		var/obj/ladder/otherLadder = src.get_other_ladder()
-		if (!istype(otherLadder))
-			boutput(user, "You try to climb [src.icon_state == "ladder" ? "down" : "up"] the ladder, but seriously fail! Perhaps there's nowhere to go?")
-			return
-		boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
-		user.set_loc(get_turf(otherLadder))
+	boutput(user, "You climb [src.icon_state == "ladder" ? "down" : "up"] the ladder.")
+
+	// do the fancy thing i stole from kitchen grinders
+	var/atom/movable/proxy = new(src)
+	proxy.mouse_opacity = FALSE
+	proxy.appearance = user.appearance
+	proxy.transform = null
+	proxy.dir = NORTH
+
+	if (src.icon_state == "ladder") // only filter if we're the top
+		proxy.add_filter("ladder_climbmask", 1, alpha_mask_filter(x=0, y=0, icon=icon('icons/obj/kitchen_grinder_mask.dmi', "ladder-mask")))
+
+	user.set_loc(src)
+	src.vis_contents += proxy
+
+	// if we're not the top ladder, animate up instead of down
+	var/climbdir = src.icon_state == "ladder" ? 1 : -1
+
+	animate(proxy, pixel_y = -32*climbdir, time = 1 SECOND)
+	if (src.icon_state == "ladder")
+		animate(proxy.get_filter("ladder_climbmask"), y = 32, time = 1 SECOND, flags = ANIMATION_PARALLEL)
+
+	SPAWN(1 SECOND) // after the animation is done, teleport and clean up
+		if (user.loc == src)
+			if (get_turf(otherLadder))
+				user.set_loc(get_turf(otherLadder))
+			else
+				user.set_loc(get_turf(src))
+
+		src.vis_contents -= proxy
+		qdel(proxy)
 
 //Puzzle elements
 
@@ -1387,7 +1424,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancientwall2"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/opened = 0
@@ -1412,7 +1449,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			flick("ancientdoor_open",src)
 			src.icon_state = "ancientdoor_opened"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			desc = "One hell of a foreboding door. It's not entirely clear how it opened, as the seams did not exist prior..."
 			src.name = "unsealed door"
 			SPAWN(1.3 SECONDS)
@@ -1429,7 +1466,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
+			set_opacity(1)
 			flick("ancientdoor_close",src)
 			src.icon_state = "ancientwall2"
 			desc = initial(src.desc)
@@ -1512,7 +1549,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		changing_state = 1
 		active = (opened != default_state)
 
-		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
+		playsound(src.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1)
 
 		set_density(0)
 		invisibility = INVIS_ALWAYS_ISH
@@ -1533,10 +1570,10 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		changing_state = -1
 		active = (opened != default_state)
 
-		playsound(src.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1)
+		playsound(src.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1)
 
 		for(var/mob/living/L in get_turf(src))
-			logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 			L.gib()
 
 		set_density(1)
@@ -1554,7 +1591,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "A slightly elevated floor panel.  It matches the \"creepy ancient shit\" aesthetic pretty well."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_floorpanel0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/pads_required = 1 //Number of total active pads required to open a door, not including this one.  If 0, all pads must be INACTIVE instead.
 	var/pads_active = 0
@@ -1585,6 +1622,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		 return
 
 	Uncrossed(var/atom/crosser as mob|obj)
+		..()
 		if (crosser == activator)
 			activator = null
 			if (active)
@@ -1598,7 +1636,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				return 1
 
 			active = 1
-			playsound(src.loc, "sound/effects/stoneshift.ogg", 25, 1)
+			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
 			flick("ancient_floorpanel_activate",src)
 			src.icon_state = "ancient_floorpanel1"
 
@@ -1646,7 +1684,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 
 			active = 0
 
-			playsound(src.loc, "sound/effects/stoneshift.ogg", 25, 1)
+			playsound(src.loc, 'sound/effects/stoneshift.ogg', 25, 1)
 			flick("ancient_floorpanel_deactivate",src)
 			src.icon_state = "ancient_floorpanel0"
 
@@ -1724,7 +1762,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "This is clearly some sort of lock in need of a key.  Obviously."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "lock-blue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/locktype = 0 //0: blue, 1: red
 	var/active = 0
@@ -1747,7 +1785,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 			if (icon_state == initial(icon_state) && I.keytype == src.locktype)
 				src.icon_state += "-active"
 				user.visible_message("<span class='alert'>[user] plugs [I] into [src]!</span>", "You pop [I] into [src].")
-				playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+				playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 				user.drop_item()
 				I.dispose()
 				src.activate()
@@ -1788,7 +1826,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 	desc = "Some manner of strange panel, built of a strange and foreboding metal."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "ancient_button0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/timer = 0 //Seconds to toggle back off after activation.  Zero to just act as a toggle.
 	var/active = 0
@@ -1824,7 +1862,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (active)
 			return 1
 
-		playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 		flick("ancient_button_activate",src)
 		src.icon_state = "ancient_button[++active]"
 
@@ -1864,7 +1902,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		if (!active || latching)
 			return 1
 
-		playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 		flick("ancient_button_deactivate", src)
 		src.icon_state = "ancient_button[--active]"
 

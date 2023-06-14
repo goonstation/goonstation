@@ -6,21 +6,21 @@
 	flora_types = list(/obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 1
 
-	fauna_types = list(/obj/critter/sealpup=15, /obj/critter/brullbar=5, /obj/critter/yeti=1)
+	fauna_types = list(/obj/critter/sealpup=15, /mob/living/critter/brullbar=5, /obj/critter/yeti=1)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/snow/trees
-	flora_types = list(/obj/tree1{dir=NORTH} = 10,/obj/tree1{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
+	flora_types = list(/obj/tree{dir=NORTH} = 10,/obj/tree{dir=EAST} = 10, /obj/stone/random = 10, /obj/decal/fakeobjects/smallrocks = 10)
 	flora_density = 3
 
 /datum/biome/icemoon/ice
 	turf_type = /turf/unsimulated/floor/arctic/snow/ice
 
-	fauna_types = list(/obj/critter/spider/ice/queen=1, /obj/critter/spider/ice/nice=5, /obj/critter/spider/ice=20, /obj/critter/brullbar=5)
+	fauna_types = list(/mob/living/critter/spider/ice/queen=1, /mob/living/critter/spider/ice/nice=5, /mob/living/critter/spider/ice=20, /mob/living/critter/brullbar=5)
 	fauna_density = 0.5
 
 /datum/biome/icemoon/icewall
-	turf_type = /turf/simulated/wall/auto/asteroid/icemoon
+	turf_type = /turf/simulated/wall/auto/asteroid/mountain/icemoon
 
 /datum/biome/icemoon/abyss
 	turf_type = /turf/unsimulated/floor/arctic/abyss
@@ -55,6 +55,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/icemoon
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/icemoon_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -111,24 +113,33 @@
 
 
 ///for the mapgen mountains, temp until we get something better
-/turf/simulated/wall/auto/asteroid/icemoon
+/turf/simulated/wall/auto/asteroid/mountain/icemoon
 	name = "ice wall"
 	desc = "You're inside a glacier. Wow."
-	icon = 'icons/turf/walls.dmi'
-	icon_state = "ice1"
+	fullbright = 0
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
+	default_material = "ice"
+	color = "#8df"
+	stone_color = "#8df"
+	carbon_dioxide = 100
+	nitrogen = 0
+	oxygen = 0
+	temperature = 100
+
+	destroy_asteroid(var/dropOre=1)
+		if(src.ore || prob(33)) // provide less rock
+			default_ore = /obj/item/raw_material/ice
+		. = ..()
+
+/turf/simulated/floor/plating/airless/asteroid/icemoon
+	name = "floor"
+	desc = "A tunnel through the glacier. This doesn't seem to be water ice..."
+	carbon_dioxide = 100
+	nitrogen = 0
+	oxygen = 0
+	temperature = 100
 	fullbright = 0
 
-	New()
-		..()
-		icon_state = "[pick("ice1","ice2","ice3","ice4","ice5","ice6")]"
-
-	destroy_asteroid(var/dropOre=0)
-		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/unsimulated/floor/arctic/snow/ice)
-		src.opacity = 0
-		src.levelupdate()
-
-		return src
 
 /turf/unsimulated/floor/arctic/snow/autocliff
 	New()
@@ -177,4 +188,3 @@
 		for(var/atom/A in src.contents)
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			qdel(A)
-

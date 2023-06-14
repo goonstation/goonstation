@@ -5,11 +5,9 @@
 	name = "Bite"
 	desc = "Bite a mob, doing a little damage and injecting them with your venom. (You do have venom, don't you?)"
 	icon_state = "clown_spider_bite"
-	cooldown = 200
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -32,11 +30,11 @@
 		MT.changeStatus("stunned", 2 SECONDS)
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites [MT]!</b></span>",\
 		"<span class='combat'><b>You bite [MT]!</b></span>")
-		logTheThing("combat", S, null, "used their [src.name] ability on [MT] at [log_loc(S)]")
+		logTheThing(LOG_COMBAT, S, "used their [src.name] ability on [MT] at [log_loc(S)]")
 		if (istype(S))
 			S.venom_bite(MT)
 		else // no venom, very sad
-			playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1, pitch = 1.6)
+			playsound(holder.owner, 'sound/weapons/handcuffs.ogg', 50, 1, pitch = 1.6)
 			if (issilicon(MT))
 				var/mob/living/silicon/robot/R = MT
 				R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -53,12 +51,10 @@
 /datum/targetable/critter/spider_flail
 	name = "Flail"
 	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
-	cooldown = 300
+	cooldown = 30 SECONDS
 	icon_state = "spider_flail"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -86,8 +82,8 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] dives on [MT]!</b></span>",\
 		"<span class='combat'><b>You dive on [MT]!</b></span>")
-		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0, pitch = 1.6)
-		logTheThing("combat", S, null, "used their [src.name] ability on [MT] at [log_loc(S)]")
+		playsound(holder.owner, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0, pitch = 1.6)
+		logTheThing(LOG_COMBAT, S, "used their [src.name] ability on [MT] at [log_loc(S)]")
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (MT.loc && holder.owner.loc != MT.loc)
 			holder.owner.set_loc(MT.loc)
@@ -107,7 +103,7 @@
 				if (istype(S))
 					S.venom_bite(MT)
 				else // no venom, very sad
-					playsound(holder.owner, "sound/weapons/handcuffs.ogg", 50, 1)
+					playsound(holder.owner, 'sound/weapons/handcuffs.ogg', 50, 1)
 					if (issilicon(MT))
 						var/mob/living/silicon/robot/R = MT
 						R.compborg_take_critter_damage("[pick("l","r")]_[pick("arm","leg")]", rand(2,4))
@@ -136,11 +132,9 @@
 	name = "Drain"
 	desc = "Drain a dead human."
 	icon_state = "clown_spider_drain"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -171,8 +165,8 @@
 		var/mob/living/critter/spider/S = holder.owner
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] starts draining the fluids out of [H]!</b></span>",\
 		"<span class='combat'><b>You start draining the fluids out of [H]!</b></span>")
-		playsound(holder.owner, "sound/misc/pourdrink.ogg", 50, 0, pitch = 0.7)
-		logTheThing("combat", S, null, "used their [src.name] ability on [H] at [log_loc(S)]")
+		playsound(holder.owner, 'sound/misc/pourdrink.ogg', 50, 0, pitch = 0.7)
+		logTheThing(LOG_COMBAT, S, "used their [src.name] ability on [H] at [log_loc(S)]")
 		disabled = 1
 		SPAWN(0)
 			var/drain = rand(65, 75)
@@ -193,13 +187,12 @@
 				H.real_name = "Unknown"
 				if (H.bioHolder)
 					H.bioHolder.AddEffect("husk")
-				playsound(holder.owner, "sound/misc/fuse.ogg", 50, 1)
+				playsound(holder.owner, 'sound/misc/fuse.ogg', 50, 1)
 				var/list/turf/neightbors = getNeighbors(get_turf(holder.owner), alldirs)
 				if(length(neightbors))
 					holder.owner.set_loc(pick(neightbors))
 				SPAWN(0)
 					var/obj/icecube/cube = new /obj/icecube(get_turf(H), H)
-					H.set_loc(cube)
 					if (istype(S))
 						switch (S.encase_in_web)
 							if (2)
@@ -207,6 +200,7 @@
 								"<span class='combat'><b>You encase [H] in cotton candy!</b></span>")
 								cube.name = "bundle of cotton candy"
 								cube.desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "candyweb2"
 								cube.steam_on_death = 0
 
@@ -215,6 +209,7 @@
 								"<span class='combat'><b>You encase [H] in web!</b></span>")
 								cube.name = "bundle of web"
 								cube.desc = "A big wad of web. Someone seems to be stuck inside it."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "web2"
 								cube.steam_on_death = 0
 
@@ -240,13 +235,11 @@
 /datum/targetable/critter/clownspider_kick // for clown/cluwnespiders
 	name = "Kick"
 	desc = "Kick a mob, doing a little damage and possibly causing a short stun."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	icon_state = "clown_spider_kick"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = 'sound/musical_instruments/Bikehorn_1.ogg'
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -284,12 +277,10 @@
 	name = "Trample"
 	desc = "Kick the SHIT out of a mob with all eight legs."
 	icon_state = "clown_spider_trample"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = "clownstep"
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -316,7 +307,7 @@
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pounces on top of [MT]!</b></span>",\
 		"<span class='combat'><b>You pounce onto [MT]!</b></span>")
-		playsound(holder.owner, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0)
+		playsound(holder.owner, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0)
 		MT.TakeDamageAccountArmor("All", rand(4,10), 0, 0, DAMAGE_STAB)
 		if (!isdead(MT))
 			MT.emote("scream")

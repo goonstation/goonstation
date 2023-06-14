@@ -9,19 +9,19 @@ var/delqueue_pos = 1
  * queues a var for deletion by the delete queue processor.
  * if used on /world, /list, /client, or /savefile, it just skips the queue.
  */
-proc/qdel(var/datum/O)
-	if(!O)
+proc/qdel(var/datum/D)
+	if(!D)
 		return
-	if(isturf(O))
-		var/turf/T = O
+	if(isturf(D))
+		var/turf/T = D
 		T.ReplaceWithSpaceForce()
 		return
 
-	if (istype(O))
-		O.dispose(qdel_instead=0)
+	if (istype(D))
+		D.dispose(qdel_instead = FALSE)
 
-		if (ismovable(O) && O:contents:len > 0)
-			for (var/C in O:contents)
+		if (ismovable(D) && length(D:contents) > 0)
+			for (var/C in D:contents)
 				qdel(C)
 
 		/**
@@ -31,33 +31,34 @@ proc/qdel(var/datum/O)
 			* increment the explicit delete counter for the type.
 			*/
 		#ifdef DELETE_QUEUE_DEBUG
-		detailed_delete_gc_count[O.type]++
+		detailed_delete_gc_count[D.type]++
 		#endif
 
 		// In the delete queue, we need to check if this is actually supposed to be deleted.
-		O.qdeled = 1
+		D.qdeled = 1
 
 		/**
 			* We will only enqueue the ref for deletion. This gives the GC time to work,
 			* and makes less work for the delete queue to do.
 			*/
-		//if (!O.qdeltime)
-		//	O.qdeltime = world.time
+		//if (!D.qdeltime)
+		//	D.qdeltime = world.time
 
 		// delete_queue.enqueue("\ref[O]")
-		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += "\ref[O]"
+		var/refD = "\ref[D]"
+		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += ADDR_TO_NUM(refD)
 	else
-		if(islist(O))
-			O:len = 0
-			del(O)
-		else if(O == world)
-			del(O)
+		if(islist(D))
+			D:len = 0
+			del(D)
+		else if(D == world)
+			del(D)
 			CRASH("Cannot qdel /world! Fuck you!")
-		else if(isclient(O))
-			del(O)
+		else if(isclient(D))
+			del(D)
 			CRASH("Cannot qdel /client! Fuck you!")
-		else if(istype(O, /savefile))
-			del(O)
+		else if(istype(D, /savefile))
+			del(D)
 			CRASH("Cannot qdel /savefile! Fuck you!")
 		else
 			CRASH("Cannot qdel this unknown type")
@@ -87,7 +88,6 @@ proc/qdel(var/datum/O)
 
 	src.tag = null // not part of components but definitely should happen
 
-	signal_enabled = FALSE
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
@@ -114,17 +114,33 @@ proc/qdel(var/datum/O)
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
 
+/*
+/datum/Del()
+	if(!disposed)
+		disposing()
+	..()
+
+/client/Del()
+	if(!disposed)
+		disposing()
+	..()
+*/
+
 // don't override this one, just call it instead of delete to get rid of something cheaply
 #ifdef DISPOSE_IS_QDEL
-/datum/proc/dispose(qdel_instead=1)
+/datum/proc/dispose(qdel_instead = TRUE)
 #else
-/datum/proc/dispose(qdel_instead=0)
+/datum/proc/dispose(qdel_instead = FALSE)
 #endif
 	SHOULD_NOT_OVERRIDE(TRUE)
 	if(qdel_instead)
 		qdel(src)
 		return
 	if (!disposed)
-		disposed = 1
+		disposed = TRUE
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
+	else if (isatom(src))
+		// Uh oh, we tried to delete something which is already deleted. Just send it to null if it's an atom so it doesn't hang around and fuck anything up.
+		src:set_loc(null)
+	// If it isn't an atom we don't care

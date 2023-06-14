@@ -5,8 +5,7 @@
 	name = "slam"
 	icon = null
 	icon_state = "slam"
-	power = 1
-	ks_ratio = 0
+	damage = 1
 	damage_type = D_SPECIAL
 	hit_ground_chance = 0
 	dissipation_delay = 3
@@ -41,8 +40,8 @@
 		dummy.mouse_opacity = 0
 		dummy.name = null
 		dummy.set_density(0)
-		dummy.anchored = 1
-		dummy.opacity = 0
+		dummy.anchored = ANCHORED
+		dummy.set_opacity(0)
 		dummy.icon = null
 		dummy.overlays += charger
 		dummy.alpha = 255
@@ -60,17 +59,17 @@
 			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 			boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 			charger.changeStatus("stunned", 3 SECONDS)
-			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		else if (isobj(hit))
 			var/obj/H = hit
 			if (H.anchored)
 				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 				boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 				charger.changeStatus("stunned", 3 SECONDS)
-				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			else
 				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
-				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 				boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 				var/kbdir = angle_to_dir(angle)
 				step(H, kbdir, 2)
@@ -79,11 +78,11 @@
 						step(H, kbdir, 2)
 		else if (ismob(hit))
 			var/mob/M = hit
-			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 			boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 			boutput(M, "<span class='alert'><b>[charger] slams into you!</b></span>")
-			logTheThing("combat", charger, M, "slams [constructTarget(M,"combat")].")
+			logTheThing(LOG_COMBAT, charger, "slams [constructTarget(M,"combat")].")
 			var/kbdir = angle_to_dir(angle)
 			step(M, kbdir, 2)
 			M.changeStatus("weakened", 4 SECONDS)
@@ -104,52 +103,28 @@
 	name = "Slam"
 	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
 	icon_state = "slam"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 10 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/datum/projectile/slam/proj
 
 	cast(atom/target)
+		proj = new /datum/projectile/slam()
 		if (..())
-			return 1
+			return TRUE
 		var/turf/T = get_turf(target)
 		if (!T)
-			return 1
+			return TRUE
 		var/mob/M = holder.owner
 		var/turf/S = get_turf(M)
 		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
 		if (!O)
-			return 1
+			return TRUE
 		if (!O.was_setup)
 			O.setup()
 		O.special_data["owner"] = src
 		O.launch()
-		return 0
+		return FALSE
 
-/datum/targetable/critter/slam_polymorph
-	name = "Slam"
-	desc = "Charge over a short distance, until you hit a mob or an object. Knocks down mobs."
-	icon_state = "slam_polymorph"
-	cooldown = 100
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
-
-	cast(atom/target)
-		if (..())
-			return 1
-		var/turf/T = get_turf(target)
-		if (!T)
-			return 1
-		var/mob/M = holder.owner
-		var/turf/S = get_turf(M)
-		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
-		if (!O)
-			return 1
-		if (!O.was_setup)
-			O.setup()
-		O.special_data["owner"] = src
-		O.launch()
-		return 0
+	polymorph
+		icon_state = "slam_polymorph"

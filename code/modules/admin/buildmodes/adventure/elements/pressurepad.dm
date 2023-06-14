@@ -70,7 +70,8 @@
 	icon_state = "pressure_ancient_unpressed"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
+	layer = 2
 	var/pad_type
 	var/pressed = 0
 	var/list/pressing = list()
@@ -86,6 +87,7 @@
 				press()
 
 	Uncrossed(atom/movable/O)
+		..()
 		if (O in pressing)
 			pressing -= O
 			for (var/atom/movable/Q in pressing)

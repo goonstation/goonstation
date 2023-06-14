@@ -149,7 +149,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "ks" = (
-/obj/machinery/power/apc/autoname_east,
+/obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/wood,
@@ -199,28 +199,20 @@
 /turf/space,
 /area/allowGenerate)
 "mE" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
 /area/noGenerate)
 "mT" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
 /area/noGenerate)
 "ng" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -271,9 +263,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
 "qh" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -445,10 +435,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "BO" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/item/spraybottle/cleaner{
 	pixel_x = -8;
 	pixel_y = -4
@@ -478,7 +465,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "EW" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/drug_den)
@@ -573,10 +560,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "Jl" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6
 	},
@@ -665,7 +649,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/nw,
 /area/prefab/drug_den/party)
 "LZ" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
@@ -707,7 +691,7 @@
 /turf/space,
 /area/noGenerate)
 "OO" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -804,7 +788,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/west,
 /area/prefab/drug_den/party)
 "Ti" = (
-/obj/critter/mouse/mad,
+/mob/living/critter/small_animal/mouse/mad,
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "Tv" = (
@@ -877,9 +861,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "UL" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
+/obj/grille/catwalk,
 /obj/item/storage/toolbox/mechanical{
 	pixel_x = -5;
 	pixel_y = 1

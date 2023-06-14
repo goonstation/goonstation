@@ -30,6 +30,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain/desert
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/desert
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/desert_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -54,13 +56,13 @@
 			var/humidity_level  //Type of humidity zone we're in LOW-MEDIUM-HIGH
 
 			switch(heat)
-				if(0 to 0.10)
+				if(0 to 0.1)
 					heat_level = BIOME_LOW_HEAT
-				if(0.10 to 0.45)
+				if(0.1 to 0.45)
 					heat_level = BIOME_LOWMEDIUM_HEAT
-				if(0.45 to 0.80)
+				if(0.45 to 0.8)
 					heat_level = BIOME_HIGHMEDIUM_HEAT
-				if(0.80 to 1)
+				if(0.8 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
 				if(0 to 0.35)
@@ -91,43 +93,18 @@
 	desc = "a sandy mountain"
 	color = "#957a59"
 	stone_color = "#957a59"
-
-	New()
-		..()
-
-	destroy_asteroid(var/dropOre=0)
-		var/new_color = src.color
-		var/image/weather = GetOverlayImage("weather")
-		var/image/ambient = GetOverlayImage("ambient")
-
-		src.RL_SetOpacity(0)
-		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.UpdateIcon()
-		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
-		src.color = new_color
-		src.opacity = 0
-		src.levelupdate()
-
-		if(weather)
-			src.UpdateOverlays(weather, "weather")
-		if(ambient)
-			src.UpdateOverlays(ambient, "ambient")
-
-		return src
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	temperature = 330
+	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
 
 /turf/simulated/floor/plating/airless/asteroid/desert
+	name = "mountain"
+	desc = "a sandy mountain"
 	color = "#957a59"
 	stone_color = "#957a59"
 	oxygen = MOLES_O2STANDARD
 	nitrogen = MOLES_N2STANDARD
 	temperature = 330
 	fullbright = 0
-
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")

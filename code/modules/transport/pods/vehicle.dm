@@ -4,7 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY
-	anchored = 1.0
+	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -28,6 +28,7 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
+	var/acid_damage_multiplier = 1 // kubius: multiplier to damage taken from acid sea turfs (1 is full, 0 is none). 0 for syndie, 0.5 for subs
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -49,9 +50,9 @@
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
 
-	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
+	var/req_smash_velocity = 7 //7 is the 'normal' cap right now
 	var/hitmob = 0
-	var/ram_self_damage_multiplier = 0.09
+	var/ram_self_damage_multiplier = 0.5
 
 	/// I got sick of having the comms type swapping code in 17 New() ship types
 	/// so this is the initial type of comms array this vehicle will have
@@ -91,9 +92,9 @@
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (breath_request>0)
-			return remove_air(breath_request)
+			return remove_air(breath_request * mult)
 		else
 			return null
 
@@ -112,6 +113,17 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
+			var/turf/T = get_turf(src)
+			if(T.active_liquid)
+				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+					boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+					return
+#ifdef MAP_OVERRIDE_NADIR
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				//prevent in-acid welding from extending excursion times indefinitely
+				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
+				return
+#endif
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -147,13 +159,13 @@
 					ammo.amount_left -= may_load
 					src.m_w_system.remaining_ammunition += may_load
 					boutput(user, "<span class='notice'>You load [may_load] ammunition from [ammo]. [ammo] now contains [ammo.amount_left] ammunition.</span>")
-					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
+					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].") // Might be useful (Convair880)
 					return
 				else
 					src.m_w_system.remaining_ammunition += ammo.amount_left
 					ammo.amount_left = 0
 					boutput(user, "<span class='notice'>You load [ammo] into [m_w_system].</span>")
-					logTheThing("combat", user, null, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
+					logTheThing(LOG_COMBAT, user, "reloads [src]'s [src.m_w_system.name] (<b>Ammo type:</b> <i>[src.m_w_system.current_projectile.type]</i>) at [log_loc(src)].")
 					qdel(ammo)
 					return
 			else
@@ -331,6 +343,9 @@
 
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
+					if (!src.m_w_system.removable)
+						boutput(usr, "<span class='alert'>[src.m_w_system] is fused to the hull and cannot be removed.</span>")
+						return
 					m_w_system.deactivate()
 					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)
@@ -367,7 +382,7 @@
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
-					logTheThing("vehicle", usr, null, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s air supply with [W] [log_atmos(W)] at [log_loc(src)].")
 					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s air supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
@@ -378,7 +393,7 @@
 
 			else if (href_list["takeatmostank"])
 				if (src.atmostank)
-					logTheThing("vehicle", usr, null, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s air supply [log_atmos(atmostank)] at [log_loc(src)].")
 					atmostank.set_loc(src.loc)
 					atmostank = null
 					src.updateDialog()
@@ -392,22 +407,24 @@
 					return
 				var/obj/item/tank/W = usr.equipped()
 				if (W && istype(W, /obj/item/tank))
-					logTheThing("vehicle", usr, null, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "replaces [src.name]'s engine fuel supply with [W] [log_atmos(W)] at [log_loc(src)].")
 					boutput(usr, "<span class='notice'>You attach the [W.name] to [src.name]'s fuel supply valve.</span>")
 					usr.drop_item()
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.engine.activate()
 				else
 					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
 					return
 
 			else if (href_list["takefueltank"])
 				if (src.fueltank)
-					logTheThing("vehicle", usr, null, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
+					logTheThing(LOG_VEHICLE, usr, "removes [src.name]'s engine fuel supply [log_atmos(fueltank)] at [log_loc(src)].")
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.engine.deactivate()
 				else
 					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
 					return
@@ -428,6 +445,23 @@
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		if (isitem(AM))
+			var/obj/item/I = AM
+			switch(I.hit_type)
+				if (DAMAGE_BLUNT, DAMAGE_CRUSH)
+					src.health -= AM.throwforce / 1.5
+				if (DAMAGE_CUT, DAMAGE_STAB)
+					src.health -= AM.throwforce / 2
+				if (DAMAGE_BURN)
+					src.health -= AM.throwforce / 3
+		else
+			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
+		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		checkhealth()
+		..()
+
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
 			return
@@ -439,10 +473,7 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		var/damage = 0
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (damage <= 0 && P.proj_data.ks_ratio <= 0) //make stun weapons do some damage
-			damage = round(P.power, 1.0)
+		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
 		switch(P.proj_data.damage_type)
@@ -491,7 +522,7 @@
 		*/
 
 	blob_act(var/power)
-		src.health -= power * 2
+		src.health -= power * 3
 		checkhealth()
 
 	get_desc()
@@ -552,15 +583,15 @@
 		severity += sevmod
 
 		switch (severity)
-			if (1.0)
+			if (1)
 				src.health -= round(src.maxhealth / 3)
 				src.health -= 65
 				checkhealth()
-			if(2.0)
+			if(2)
 				src.health -= round(src.maxhealth / 4)
 				src.health -= 40
 				checkhealth()
-			if(3.0)
+			if(3)
 				src.health -= round(src.maxhealth / 5)
 				src.health -= 25
 				checkhealth()
@@ -572,7 +603,7 @@
 		if (get_move_velocity_magnitude() > 5)
 			var/power = get_move_velocity_magnitude()
 
-			src.health -= min(power * ram_self_damage_multiplier,5)
+			src.health -= min(power * ram_self_damage_multiplier,10)
 			checkhealth()
 
 			if (istype(target, /obj/machinery/vehicle/))
@@ -582,7 +613,7 @@
 
 			for (var/mob/C in src)
 				shake_camera(C, 6, 8)
-				//M << sound("sound/impact_sounds/Generic_Hit_Heavy_1.ogg",volume=35)
+				//M << sound('sound/impact_sounds/Generic_Hit_Heavy_1.ogg',volume=35)
 
 			if (ismob(target) && target != hitmob)
 				hitmob = target
@@ -598,7 +629,7 @@
 				M.remove_stamina(power)
 				var/turf/throw_at = get_edge_target_turf(src, src.dir)
 				M.throw_at(throw_at, movement_controller:velocity_magnitude, 2)
-				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 				SPAWN(2.5 SECONDS)
 					if(M.health > 0)
 						vehicular_manslaughter = 0 //we now check if person was sent into crit after hit, if they did we get the achievement
@@ -612,7 +643,7 @@
 					var/turf/simulated/wall/T = target
 					T.dismantle_wall(1)
 
-				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 			else if (isobj(target) && power >= req_smash_velocity)
 				var/obj/O = target
 
@@ -623,15 +654,8 @@
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
-
-				if (istype(target, /obj/window))
-					var/obj/window/W = target
-					W.health = 0
-					W.smash()
-
-				if (istype(O, /obj/grille))
-					var/obj/grille/G = target
-					G.damage_slashing(15)
+				var/obj_damage = 5 * power
+				target.damage_blunt(obj_damage)
 
 				if (istype(O, /obj/table))
 					var/obj/table/table = target
@@ -640,13 +664,9 @@
 				if (istype(O,/obj/machinery/vending))
 					var/obj/machinery/vending/V = O
 					V.fall(src)
-				if (istype(O,/obj/machinery/portable_atmospherics/canister))
-					var/obj/machinery/portable_atmospherics/canister/C = O
-					C.health -= power
-					C.healthcheck()
-				logTheThing("combat", src, target, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 		if (sec_system)
 			if (sec_system.type == /obj/item/shipcomponent/secondary_system/crash)
@@ -702,10 +722,18 @@
 
 		..()
 
-	process()
+	process(mult)
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+#ifdef MAP_OVERRIDE_NADIR
+		if(src.acid_damage_multiplier > 0)
+			var/T = get_turf(src)
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				var/power = get_move_velocity_magnitude()
+				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
+				checkhealth()
+#endif
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -734,7 +762,7 @@
 						for(var/mob/living/carbon/human/M in src)
 							M.update_burning(35)
 							boutput(M, "<span class='alert'><b>The cabin bursts into flames!</b></span>")
-							playsound(M.loc, "sound/machines/engine_alert1.ogg", 35, 0)
+							playsound(M.loc, 'sound/machines/engine_alert1.ogg', 35, 0)
 				if(25 to 50)
 					if(damage_overlays < 1)
 						damage_overlays = 1
@@ -762,7 +790,7 @@
 
 /obj/machinery/vehicle/proc/shipcrit()
 	if (src.engine)
-		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
+		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		visible_message("<span class='alert'>[src]'s engine bursts into flame!</span>")
 		for(var/mob/living/carbon/human/M in src)
 			M.update_burning(35)
@@ -829,9 +857,10 @@
 	S.ship = src
 	if (usr) //This mean it's going on during the game!
 		usr.drop_item(S)
-		playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 0)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
+	myhud.update_states()
 	return
 
 /////////////////////////////////////////////////////////////////////////////
@@ -851,13 +880,13 @@
 			M.update_burning(35)
 			boutput(M, "<span class='alert'><b>Everything is on fire!</b></span>")
 			//playsound(M.loc, "explosion", 50, 1)
-			//playsound(M.loc, "sound/machines/engine_alert1.ogg", 40, 0)
+			//playsound(M.loc, 'sound/machines/engine_alert1.ogg', 40, 0)
 			M << sound('sound/machines/engine_alert1.ogg',volume=50)
 		sleep(2.5 SECONDS)
-		//playsound(src.loc, "sound/machines/engine_alert2.ogg", 40, 1)
-		playsound(src.loc, "sound/machines/pod_alarm.ogg", 40, 1)
+		//playsound(src.loc, 'sound/machines/engine_alert2.ogg', 40, 1)
+		playsound(src.loc, 'sound/machines/pod_alarm.ogg', 40, 1)
 		for(var/mob/living/carbon/human/M in src)
-			//playsound(M.loc, "sound/machines/engine_alert2.ogg", 50, 0)
+			//playsound(M.loc, 'sound/machines/engine_alert2.ogg', 50, 0)
 			M << sound('sound/machines/pod_alarm.ogg',volume=50)
 		new /obj/effects/explosion (src.loc)
 		playsound(src.loc, "explosion", 50, 1)
@@ -908,11 +937,9 @@
 	if(passengers)
 		find_pilot()
 	else
-		src.ion_trail.stop()
+		src.ion_trail?.stop()
 
-
-
-	logTheThing("vehicle", ejectee, src.name, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/leave_pod(mob/ejectee as mob)
 	// Assert facing direction for eject location offset
@@ -961,10 +988,6 @@
 		boutput(boarder, "<span class='alert'>You can't squeeze your wide cube body through the access door!</span>")
 		return
 
-	if(ismobcritter(boarder) && boarder:ghost_spawned)
-		boutput(boarder, "<span class='alert'>You have no idea how to work this.</span>")
-		return
-
 	if(isflockmob(boarder))
 		boutput(boarder, "<span class='alert'>You're unable to use this vehicle!</span>")
 		return
@@ -996,6 +1019,10 @@
 		boutput(boarder, "There is no more room!")
 		return
 
+	if(!src.pilot && (ismobcritter(boarder)))
+		boutput(boarder, "<span class='alert'>You don't know how to pilot a pod, you can only enter as a passenger!</span>")
+		return
+
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
@@ -1008,7 +1035,7 @@
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !isghostcritter(boarder))
+	if(!src.pilot && !(ismobcritter(boarder)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1024,7 +1051,7 @@
 
 	boutput(M, "<span class='hint'>You can also use the Space Bar to fire!</span>")
 
-	logTheThing("vehicle", M, src.name, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
+	logTheThing(LOG_VEHICLE, M, "enters vehicle: <b>[constructTarget(src.name,"vehicle")]</b>")
 
 /obj/machinery/vehicle/proc/eject_occupants()
 	if(isghostdrone(usr))
@@ -1146,7 +1173,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
+		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
 			src.pilot = M
 			break
 
@@ -1177,7 +1204,7 @@
 /obj/machinery/vehicle/proc/handle_occupants_shipdeath()
 	for(var/mob/M in src)
 		boutput(M, "<span class='alert'><b>You are ejected from [src]!</b></span>")
-		logTheThing("vehicle", M, src.name, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
+		logTheThing(LOG_VEHICLE, M, "is ejected from pod: <b>[constructTarget(src.name,"vehicle")]</b> when it blew up!")
 
 		M.set_loc(get_turf(src))
 		var/atom/target = get_edge_cheap(M, src.dir)
@@ -1300,7 +1327,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(atmostank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	dat += "<B>Fuel Status:</B> "
@@ -1323,7 +1350,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(fueltank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	if(src.engine)
@@ -1451,7 +1478,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user) || isintangible(usr))
+	if (!user.client || !isliving(user) || isintangible(user))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1664,6 +1691,8 @@
 		var/obj/machinery/vehicle/ship = usr.loc
 		if(ship.com_system)
 			if(ship.com_system.active)
+				if(ship.com_system.go_home())
+					return
 				ship.going_home = 1
 				boutput(usr, "[ship.ship_message("Course set for station level. Traveling off the edge of the current level will take you to the station level.")]")
 			else
@@ -1673,6 +1702,8 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
+/obj/machinery/vehicle/proc/go_home()
+	. = src.com_system?.get_home_turf()
 
 
 
@@ -1708,10 +1739,10 @@
 			var/datum/movement_controller/tank/M = movement_controller
 			if (M.squeal_sfx)
 				M.squeal_sfx = 0
-				playsound(src, "sound/machines/car_screech.ogg", 40, 1)
+				playsound(src, 'sound/machines/car_screech.ogg', 40, 1)
 			if (M.accel_sfx)
 				M.accel_sfx = 0
-				playsound(src, "sound/machines/rev_engine.ogg", 40, 1)
+				playsound(src, 'sound/machines/rev_engine.ogg', 40, 1)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
@@ -1744,6 +1775,7 @@
 /obj/machinery/vehicle/tank/minisub
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	acid_damage_multiplier = 0.5
 
 	New()
 		..()
@@ -1792,6 +1824,7 @@
 	icon_state = "syndisub_body"
 	health = 150
 	maxhealth = 150
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -1904,16 +1937,16 @@
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)
 				D.open()
 				opened_door = 1
 			if(opened_door) sleep(2 SECONDS) //make sure it's fully open
-			playsound(src.loc, "sound/effects/bamf.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/bamf.ogg', 100, 0)
 			sleep(0.5 SECONDS)
-			playsound(src.loc, "sound/effects/flameswoosh.ogg", 100, 0)
+			playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
 			while(!failing)
 				var/loc = src.loc
 				step(src,src.dir)
@@ -1945,7 +1978,7 @@
 			P.target = T
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
-			logTheThing("station", src, null, "creates an escape portal at [log_loc(src)].")
+			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
 
 	proc/fail()

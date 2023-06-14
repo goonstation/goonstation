@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/allowGenerate)
 "b" = (
 /turf/simulated/floor/redblack,
 /area/prefab/synd_lab)
@@ -120,9 +120,12 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/synd_lab)
 "p" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
+"q" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 "r" = (
 /turf/simulated/floor/redblack{
 	dir = 9
@@ -208,7 +211,7 @@
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "D" = (
-/obj/machinery/conveyor/west,
+/obj/machinery/conveyor/EW,
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
@@ -244,10 +247,10 @@
 /area/prefab/synd_lab)
 "J" = (
 /obj/critter/gunbot/drone/minigundrone,
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/noGenerate)
 "K" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	desc = "A conveyor belt. This one looks pretty battered."
 	},
 /turf/simulated/floor/redblack{
@@ -268,7 +271,7 @@
 /turf/simulated/floor/black,
 /area/prefab/synd_lab)
 "N" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	desc = "A conveyor belt. This one looks pretty battered."
 	},
 /turf/simulated/floor/black,
@@ -502,7 +505,7 @@ a
 a
 "}
 (9,1,1) = {"
-a
+q
 a
 a
 a
@@ -520,8 +523,8 @@ a
 a
 "}
 (10,1,1) = {"
-a
-a
+q
+q
 a
 a
 o
@@ -538,10 +541,10 @@ a
 a
 "}
 (11,1,1) = {"
-a
-a
-a
-a
+q
+q
+q
+q
 a
 o
 o
@@ -556,10 +559,10 @@ Z
 a
 "}
 (12,1,1) = {"
-a
-a
+q
+q
 J
-a
+q
 a
 a
 o
@@ -574,11 +577,11 @@ Z
 Z
 "}
 (13,1,1) = {"
-a
-a
-a
-a
-a
+q
+q
+q
+q
+q
 a
 o
 o
@@ -592,13 +595,13 @@ Z
 a
 "}
 (14,1,1) = {"
-a
-a
-a
-a
-a
-a
-a
+q
+q
+q
+q
+q
+q
+q
 a
 a
 a

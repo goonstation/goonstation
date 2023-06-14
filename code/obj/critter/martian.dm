@@ -39,7 +39,7 @@
 			O.show_message("<b>[src]</b> screeches, 'GBVQW UVQWIBJZ PKDDR!!!'", 1)
 		if (!ishuman(target))
 			return
-		playsound(target.loc, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(target.loc, 'sound/effects/ghost2.ogg', 100, 1)
 		var/mob/living/carbon/human/H = target
 		if (istype(H.head, /obj/item/clothing/head/tinfoil_hat) || H.bioHolder?.HasEffect("psy_resist") == 2)
 			if(istype(H.head, /obj/item/clothing/head/tinfoil_hat))
@@ -84,7 +84,7 @@
 			icon_state = initial(icon_state)
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
 			if (C.health < 0) continue
@@ -96,7 +96,7 @@
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='alert'><b>[src]</b> shoots at [C.name]!</span>")
-				playsound(src.loc, "sound/weapons/lasermed.ogg", 100, 1)
+				playsound(src.loc, 'sound/weapons/lasermed.ogg', 100, 1)
 				if (prob(66))
 					C.TakeDamage("chest", 0, rand(3,5)/C.get_ranged_protection())
 					elecflash(C)
@@ -130,7 +130,7 @@
 	seek_target()
 		if(GET_COOLDOWN(src, "gib_attack"))
 			return
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
 			if (C.health < 0) continue
@@ -143,10 +143,10 @@
 				src.oldtarget_name = C.name
 				if (do_stun)
 					C.changeStatus("stunned", 2 SECONDS)
-				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 7 SECONDS, max_gib_distance), src)
-				ON_COOLDOWN(src, "gib_attack", 7 SECONDS)
+				actions.start(new/datum/action/bar/icon/gibstareAbility(C, null, 10 SECONDS, max_gib_distance), src)
+				ON_COOLDOWN(src, "gib_attack", 10 SECONDS)
 				src.attack = 0
-				sleeping = 7
+				sleeping = 10
 				return
 			else continue
 
@@ -229,7 +229,7 @@
 	desc = "You'd best destroy this thing fast."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mbomb-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 100
 	var/active = 0

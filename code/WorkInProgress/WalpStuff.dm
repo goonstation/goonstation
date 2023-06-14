@@ -12,7 +12,7 @@
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "lamp_walp_unlit"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	deconstructable = 0
 	icon_off = "lamp_walp_unlit"
 	icon_on = "lamp_walp_lit"
@@ -29,4 +29,52 @@
 	icon = 'icons/misc/walp_decor.dmi'
 	icon_state = "eyelikefeathers"
 	density = 0
-	anchored = TRUE
+	anchored = ANCHORED
+
+/obj/critter/domestic_bee/walp_bee
+	name = "pastel bee"
+	desc = "This bee is highly A E S T H E T I C."
+	icon_state = "walpbee-wings"
+	sleeping_icon_state = "walpbee-sleep"
+	icon_body = "walpbee"
+	honey_color = "#aa33fe"
+	is_pet = 1
+	generic = FALSE
+
+/mob/living/critter/small_animal/bee/walp_bee
+	name = "pastel bee"
+	desc = "This bee is highly A E S T H E T I C."
+	icon_state = "walpbee-wings"
+	icon_body = "walpbee"
+	icon_state_dead = "walpbee-dead"
+	icon_state_sleep = "walpbee-sleep"
+	honey_color = "#aa33fe"
+	add_abilities = list(/datum/targetable/critter/bite/bee,
+						 /datum/targetable/critter/bee_sting/hugs,
+						 /datum/targetable/critter/bee_teleport)
+
+//I'm stealing this from aloe IM SORRY!!!
+
+/datum/targetable/critter/bee_sting/hugs
+
+	cast(atom/target)
+		if (..())
+			return TRUE
+		src.venom1 = "LSD"
+		src.venom2 = "hugs"
+		src.amt1 = rand(1, 10)
+		src.amt2 = rand(1, 10)
+
+//Placeholder Items
+
+/obj/item/clothing/under/misc/walpoutfit1
+/obj/item/clothing/under/misc/walpoutfit2
+/obj/item/clothing/head/walphat
+/obj/item/clothing/suit/walpcardigan
+/obj/item/nature/resin/frankincense
+/obj/item/nature/resin/dragonsblood
+/obj/item/nature/mushroom
+/obj/item/nature/flower/lavender
+/obj/item/nature/flower/rose
+/obj/item/nature/flower/daisy
+/obj/item/nature/crystal

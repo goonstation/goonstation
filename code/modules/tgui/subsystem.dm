@@ -42,6 +42,7 @@
 	if(!window_found)
 		log_tgui(user, "Error: Pool exhausted",
 			context = "tgui_process/request_pooled_window")
+		alert(user, "TGUI Message: You have too many windows open! Pool has been exhausted.", "TGUI Hard Window Limit")
 		return null
 	return window
 

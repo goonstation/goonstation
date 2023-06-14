@@ -10,7 +10,7 @@
 	item_state = "scrap-metal"
 	desc = "A piece of scrap"
 	var/classtext = ""
-	throwforce = 10.0
+	throwforce = 10
 	m_amt = 1
 	g_amt = 1
 	w_amt = 1
@@ -207,14 +207,10 @@
 
 // if other pile of scrap tries to enter the same turf, then add that pile to this one
 
-/obj/item/scrap/Cross(var/obj/item/scrap/O)
-
+/obj/item/scrap/Crossed(obj/item/scrap/O)
+	..()
 	if(istype(O))
-
 		src.add_scrap(O)
-//		if(O)
-//			return 0		// O still exists if not all could be transfered, so block it
-	return 1
 
 /obj/item/scrap/proc/to_text()
 	return "[m_amt],[g_amt],[w_amt] ([total()])"

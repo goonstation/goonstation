@@ -22,7 +22,8 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 			rebuildEventList(using)
 
 	proc/boot_if_away()
-		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using)))
+		if(using && (!using.client || using.client.inactivity >= 600 || !in_interact_range(src, using) || (!isAI(using) && !(GET_DIST(src, using) <= ((WIDE_TILE_WIDTH - 1)/ 2))))) // copied last bit from default.dm tgui code
+			src.remove_dialog(using)
 			using.Browse(null, "window=qtelescope;override_setting=1")
 			using = null
 		return
@@ -43,7 +44,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 
 		user.Browse(grabResource("html/telescope.html"), "window=qtelescope;size=974x560;title=Quantum Telescope;can_resize=0", 1)
 
-		onclose(user, "telescope", src)
+		onclose(user, "qtelescope", src)
 
 		SPAWN(1 SECOND)
 			callJsFunc(user, "setRef", list("\ref[src]")) //This is shit but without it, it calls the JS before the window is open and doesn't work. (Is this still true?!?!)
@@ -79,7 +80,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 		if(href_list["close"])
 			using = null
 
-		else if(href_list["jscall"])
+		else if(href_list["jscall"] && using)
 			switch(href_list["jscall"])
 				if("track")
 					var/id = href_list["id"]
@@ -118,7 +119,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 							var/disty = abs(vY - E.loc_y)
 							var/dist = (distx * distx + disty * disty) ** 0.5
 							if (dist <= E.size)
-								using.playsound_local(src.loc, "sound/machines/found.ogg", 50, 1)
+								using.playsound_local(src.loc, 'sound/machines/found.ogg', 50, 1)
 								E.onDiscover(src)
 								tele_man.events_active.Remove(tracking_id)
 								tele_man.events_found.Add(tracking_id)
@@ -127,7 +128,7 @@ TODO: Enforce ping rate limit here as well in case someone futzes with the javas
 								rebuildEventList(using)
 								callJsFunc(using, "byondFound", list(E.loc_x, E.loc_y, E.size, E.id))
 							else
-								using.playsound_local(src.loc, "sound/machines/sweep.ogg", 50, 1)
+								using.playsound_local(src.loc, 'sound/machines/sweep.ogg', 50, 1)
 								//callJsFunc(using, "showFooterMsg", list("dist [(distx + disty)]"))
 								rebuildEventList(using)
 

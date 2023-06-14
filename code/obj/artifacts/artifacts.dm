@@ -6,7 +6,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
@@ -55,13 +55,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -112,7 +112,7 @@
 	icon_state = "wizard-1" // it's technically pointless to set this but it makes it easier to find in the dreammaker tree
 	opacity = 0
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	artifact = 1
 	mat_changename = 0
 	mat_changedesc = 0
@@ -169,13 +169,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -277,7 +277,7 @@
 		var/turf/T = get_turf(src)
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
-			playsound(T,"sound/effects/teleport.ogg",50,1)
+			playsound(T, 'sound/effects/teleport.ogg', 50,1)
 			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
 			SPAWN(1.5 SECONDS)

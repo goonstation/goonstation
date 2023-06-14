@@ -21,7 +21,7 @@
 	bound_width = 160
 	bound_height = 160
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 
 	bullet_act(var/obj/projectile/P)
@@ -38,7 +38,7 @@
 	bound_width = 160
 	bound_height = 160
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	dir = 1
 	plane = PLANE_FLOOR
 	var/obj/cruiser_shield_visual/shield_obj
@@ -200,7 +200,7 @@
 
 		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
 		src.region = prefab.load()
-		for(var/turf/T in REGION_TILES(src.region))
+		for(var/turf/T in REGION_TURFS(src.region))
 			if(istype(T.loc, src.interior_area))
 				src.interior_area = T.loc
 				src.interior_area.ship = src
@@ -858,6 +858,8 @@
 		. = ..()
 		if(!ismob(A))
 			return
+		if(get_area(A) == src)
+			return
 		var/mob/user = A
 		src.ship.unsubscribe_interior(user)
 		user.set_eye(null)
@@ -881,23 +883,23 @@
 /obj/cruiser_camera_dummy
 	name = ""
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	New()
 		. = ..()
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 /obj/machinery/cruiser_status_panel
 	name = "Status panel"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "statpanel"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/image/barTop
 	var/image/barMid
 	var/image/barBot
@@ -960,7 +962,7 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "wpanel0"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/ignore = 0 //Wont count towards health / max health and won't break.
 	var/broken = 0
 	var/health = 50
@@ -986,7 +988,7 @@
 	attackby(obj/item/W, mob/user)
 		if (rebooting) return
 		if (istype(W, tool_type) && (broken || health < health_max))
-			playsound(src.loc, "sound/machines/repairing.ogg", 85, 1)
+			playsound(src.loc, 'sound/machines/repairing.ogg', 85, 1)
 			var/health_adj = 1 - (health / health_max) //90% = 0,1, 10% = 0,9
 			var/repair_time_adj = round(repair_time * health_adj)
 			actions.start(new/datum/action/bar/icon/cruiser_repair(src, W, repair_time_adj), user)
@@ -1233,7 +1235,7 @@
 	desc = "This airlock leads out of the ship."
 	icon = 'icons/obj/doors/blastdoor.dmi'
 	icon_state = "bdoorsingle1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	ignore = 1
 
@@ -1267,7 +1269,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "telescreen"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	attack_hand(mob/user)
 		/*
@@ -1294,7 +1296,7 @@
 	bound_height = 32
 	texture_size = 64
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	health = 85
 	health_max = 85
 

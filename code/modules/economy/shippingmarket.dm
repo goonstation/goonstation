@@ -16,8 +16,8 @@
 /datum/shipping_market
 
 	var/list/commodities = list()
-	var/time_between_shifts = 0.0
-	var/time_until_shift = 0.0
+	var/time_between_shifts = 0
+	var/time_until_shift = 0
 	var/demand_multiplier = 2
 	var/list/active_traders = list()
 	var/max_buy_items_at_once = 99
@@ -42,13 +42,17 @@
 	var/artifact_resupply_amount = 0
 	/// an artifact crate is already "on the way"
 	var/artifacts_on_the_way = FALSE
+	var/static/launch_distance = 0
+
+	///List of pending crates (used only for transception antenna, nadir cargo system)
+	var/list/pending_crates = list()
 
 	New()
 		..()
 
 		add_commodity(new /datum/commodity/goldbar(src))
 
-		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
+		for (var/commodity_path in (concrete_typesof(/datum/commodity) - /datum/commodity/goldbar))
 			var/datum/commodity/C = new commodity_path(src)
 			if(C.onmarket)
 				add_commodity(C)
@@ -75,6 +79,18 @@
 
 		time_between_shifts = 4500 // 7.5 minutes base.
 		time_until_shift = time_between_shifts + rand(-1500,1500)
+
+		var/turf/spawnpoint
+		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
+			spawnpoint = T
+			break
+
+		var/turf/target
+		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+			target = T
+			break
+
+		src.launch_distance = get_dist(spawnpoint, target)
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -260,6 +276,8 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		var/obj/item/card/id/scan = sell_art_datum.scan
+		var/datum/db_record/account = sell_art_datum.account
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
@@ -296,14 +314,21 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		wagesystem.shipping_budget += price
+		if (scan && account)
+			wagesystem.shipping_budget += price / 2
+			account["current_money"] += price / 2
+		else
+			wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
-			message += "Analysis was [(pap.lastAnalysis/3)*100]% correct."
+			if (pap.lastAnalysis == 3)
+				message += "Analysis was correct."
+			else
+				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE, MGA_SALES), "sender"="00000000", "message"=message)
@@ -419,13 +444,13 @@
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
 							if(reward) sell_crate.contents += reward
-							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							else logTheThing(LOG_DEBUG, null, "QM contract [contract.type] failed to build [giftback.type]")
 					else if(success == REQ_RETURN_FULLSALE)
 						return_handling = RET_NOSENDBACK
 
 
 		#ifdef SECRETS_ENABLED
-		send_to_brazil(sell_crate)
+		send_to_canada_post(sell_crate)
 		#endif
 
 		if(return_handling)
@@ -460,8 +485,10 @@
 
 		var/datum/signal/pdaSignal = get_free_signal()
 		if(scan && account)
-			wagesystem.shipping_budget += duckets / 2
-			account["current_money"] += duckets / 2
+			var/share_NT = round(duckets / 2,1) // NT gets half the money, decimals rounded up in case of uneven sale price
+			var/share_seller = duckets - share_NT // you get whatever remainds, sorry bud
+			wagesystem.shipping_budget += share_NT
+			account["current_money"] += share_seller
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SALES), "sender"="00000000", "message"="Notification: [duckets] credits earned from [salesource]. Splitting half of profits with [scan.registered].")
 		else
 			wagesystem.shipping_budget += duckets
@@ -469,6 +496,17 @@
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
+	//NADIR: Transception antenna cargo I/O
+#ifdef MAP_OVERRIDE_NADIR
+	proc/receive_crate(atom/movable/shipped_thing)
+
+		pending_crates.Add(shipped_thing)
+
+		var/datum/signal/pdaSignal = get_free_signal()
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+#else
 	proc/receive_crate(atom/movable/shipped_thing)
 
 		var/turf/spawnpoint
@@ -482,11 +520,11 @@
 			break
 
 		if (!spawnpoint)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
 		shipped_thing.set_loc(spawnpoint)
@@ -495,11 +533,9 @@
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Shipment arriving to Cargo Bay: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
-
-
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
-				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
+				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
 				SPAWN(SUPPLY_OPEN_TIME)
 					if (P?.density)
 						P.open()
@@ -507,7 +543,8 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, src.launch_distance, 1)
+#endif
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)
@@ -551,20 +588,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"
@@ -589,7 +626,7 @@
 	var/trans = input("Which budget?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
 	if (!trans) return
 
-	var/amount = input(usr, "How much?", "Funds", 0) as null|num
+	var/amount = input(usr, "How much to add to this budget?", "Funds", 0) as null|num
 	if (!isnum_safe(amount)) return
 
 	switch(trans)

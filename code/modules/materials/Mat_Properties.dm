@@ -17,13 +17,10 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
 
-	proc/changeValue(var/datum/material/M, var/newValue)
-		for(var/X in M.properties)
-			if(X == src)
-				M.properties[X] = clamp(newValue, min_value, max_value)
-				onValueChanged(M, M.properties[X])
-				return
-		return
+	proc/changeValue(datum/material/M, newValue)
+		if (src in M.properties)
+			M.properties[src] = clamp(newValue, min_value, max_value)
+			onValueChanged(M, M.properties[src])
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -200,6 +197,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	prefix_high_min = 1
 	prefix_low_max = 9
 	default_value = 0
+	min_value = 0
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
@@ -217,17 +215,13 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "impossibly radioactive"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/radioactive_remove)
 		return
 
 /datum/material_property/neutron_radioactivity
@@ -237,6 +231,7 @@ ABSTRACT_TYPE(/datum/material_property)
 	prefix_high_min = 1
 	prefix_low_max = 9
 	default_value = 0
+	min_value = 0
 
 
 	getAdjective(var/datum/material/M)
@@ -255,52 +250,36 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "blindingly glowing blue"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/n_radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/n_radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/n_radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/n_radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/n_radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/n_radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/n_radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/n_radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
 		return
 
-/datum/material_property/fissile
-	name = "Fissibility"
-	id = "fissile"
+/// Literally just indicating that it can be refined into good nuclear fuel in the centrifuge
+/datum/material_property/spent_fuel
+	name = "Fissile Isotopes"
+	id = "spent_fuel"
 
-	default_value = 0
-
-	prefix_high_min = 1
+	min_value = 0
+	prefix_high_min = 0.1
 	prefix_low_max = 9
+	default_value = 0
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
 			if(0 to 1)
-				return "barely fissile"
+				return "trace plutonium"
 			if(1 to 2)
-				return "somewhat fissile"
+				return "barely any plutonium"
 			if(2 to 4)
-				return "fissile"
+				return "some plutonium"
 			if(4 to 6)
-				return "very fissile"
+				return "quite a lot of plutonium"
 			if(6 to 8)
-				return "dangerously fissile"
+				return "densely packed with plutonium"
 			if(8 to INFINITY)
-				return "supercritically fissile"
-
-/datum/material_property/resonance // Just for molitz, not used for anything else and doubt it will be. Could tie instance boosts to resonance and give other mats resonance for purposes of being good to alloy with molitz.
-	name = "Resonance"
-	id = "resonance"
-	min_value = 1
-	max_value = 1
-	default_value = 0
-
-	prefix_high_min = 1
-	prefix_low_max = 1
-
-	getAdjective(var/datum/material/M)
-		return "harmonic"
+				return "mostly plutonium"

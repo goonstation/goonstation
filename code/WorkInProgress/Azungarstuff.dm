@@ -86,7 +86,7 @@
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
-				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
+				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -110,7 +110,7 @@
 
 	Entered(var/mob/M)
 		. = ..()
-		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
+		if (istype(M,/mob/dead) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
 			return
@@ -126,13 +126,13 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
 					H.set_burning(500)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 				if (isrobot(M))
 					M.canmove = 0
 					M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
 					M.emote("scream")
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
@@ -143,7 +143,7 @@
 					M.changeStatus("weakened", 10 SECONDS)
 					M.set_body_icon_dirty()
 					H.set_burning(1000)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 					if (H.limbs.l_leg && H.limbs.r_leg)
 						if (H.limbs.l_leg)
@@ -161,7 +161,7 @@
 					R.canmove = 0
 					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
 					R.emote("scream")
-					playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					R.changeStatus("stunned", 10 SECONDS)
 					R.part_leg_r.holder = null
 					qdel(R.part_leg_r)
@@ -477,7 +477,7 @@
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bedrolls"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/shrooms
@@ -485,46 +485,61 @@
 	desc = "What the hell are these..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "shrooms"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/smallrocks
 	name = "small rocks"
 	desc = "Some small rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "smallrocks"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/mining_tool/power_pick))
+		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
-			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
+			playsound(src.loc, 'sound/items/mining_pick.ogg', 70,1)
 			qdel(src)
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 /obj/decal/fakeobjects/bigrocks
 	name = "big rocks"
 	desc = "Those are some big rocks, they are probably from the ceiling..?"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bigrocks"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
-
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/mining_tool/power_pick))
+		if ((istype(W, /obj/item/mining_tool) || istype(W, /obj/item/mining_tools)) && !isrestrictedz(src.z))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
-			playsound(src.loc, 'sound/items/mining_pick.ogg', 90,1)
+			playsound(src.loc, 'sound/items/mining_pick.ogg', 80,1)
 			new /obj/decal/fakeobjects/smallrocks(src.loc)
 			qdel(src)
+
+	attack_hand(mob/user)
+		if(ishuman(user))
+			var/mob/living/carbon/human/human = user
+			if (istype(human.gloves, /obj/item/clothing/gloves/concussive))
+				var/obj/item/clothing/gloves/concussive/gauntlets = human.gloves
+				return src.Attackby(gauntlets.tool, user)
+		. = ..()
 
 /obj/decal/fakeobjects/biggerrock
 	name = "big rock"
 	desc = "Seriously big rocks."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "bigrock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/azarakrocks
@@ -532,7 +547,7 @@
 	desc = "Some lil' rocks."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "rock1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	rock2
@@ -566,7 +581,7 @@
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cultiststatue"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -575,7 +590,7 @@
 	desc = "TEMP"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "cross"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/bookcase
@@ -583,7 +598,7 @@
 	desc = "It's a bookcase. Full of books."
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "bookcase"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = DECAL_LAYER
 
@@ -592,7 +607,7 @@
 	desc = "TEMP"
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "creepytv"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/circle
@@ -600,7 +615,7 @@
 	desc = "TEMP"
 	icon = 'icons/effects/224x224.dmi'
 	icon_state = "circle"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	layer = FLOOR_EQUIP_LAYER1
@@ -611,7 +626,7 @@
 	name = "candles"
 	desc = "TEMP"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = FLOOR_EQUIP_LAYER1
 
@@ -632,7 +647,7 @@
 	name = "candle"
 	desc = "TEMP"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/point/light
@@ -652,7 +667,7 @@
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "emitter-on"
 	flags = FPRINT | TABLEPASS
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/juggleplaque/manta
 	name = "dedication plaque"
@@ -666,7 +681,7 @@
 	icon_state = "holoplanet"
 	alpha = 180
 	pixel_y = 16
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
@@ -676,7 +691,7 @@
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 
@@ -701,7 +716,7 @@
 	name = ""
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holoparticles"
-	anchored = 1
+	anchored = ANCHORED
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
@@ -737,7 +752,7 @@
 	desc = "These huge containers are used to transport goods from one place to another."
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "manta"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	bound_height = 32
 	bound_width = 96
@@ -746,7 +761,7 @@
 	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
-			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
+			playsound(src.loc, 'sound/machines/door_locked.ogg', 50, 1, -2)
 
 	yellow
 		icon_state = "mantayellow"
@@ -758,7 +773,7 @@
 		desc = "These huge containers are used to transport goods from one place to another."
 		icon = 'icons/obj/large/96x64.dmi'
 		icon_state = "manta"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 96
 		bound_width = 64
@@ -772,7 +787,7 @@
 	desc = "A table with a built-in roulette wheel and a little ball. The numbers are evenly distributed between black and red, except for the zero which is green. Unlike most of tables you'd find in America, this one only has a single zero, lowering the house edge to about 2.7% on almost every bet. Truly generous."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/running = 0
 	var/run_time = 40
@@ -807,7 +822,7 @@
 		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
-		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		sleep(1 SECOND)
 
 		src.last_result = rand(0,36)
@@ -840,7 +855,7 @@
 		desc = "TEMP"
 		icon = 'icons/obj/large/96x160.dmi'
 		icon_state = "turbine_main"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 160
 		bound_width = 96
@@ -850,7 +865,7 @@
 		desc = "TEMP"
 		icon = 'icons/obj/large/32x96.dmi'
 		icon_state = "nuclearcomputer"
-		anchored = 2
+		anchored = ANCHORED_ALWAYS
 		density = 1
 		bound_height = 96
 		bound_width = 32
@@ -865,7 +880,7 @@
 
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "lawbook"
@@ -924,7 +939,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/recharging =0
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
@@ -978,7 +993,7 @@
 	angertext = "screeches at"
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (src.target)
 				src.task = "chasing"
@@ -1017,18 +1032,20 @@
 		..()
 		qdel(src)
 
+TYPEINFO(/obj/item/rpcargotele)
+	mats = 4
+
 /obj/item/rpcargotele
 	name = "special cargo transporter"
 	desc = "A device for teleporting crated goods. There is something really, really shady about this.."
 	icon = 'icons/obj/items/mining.dmi'
 	icon_state = "syndicargotele"
 	w_class = W_CLASS_SMALL
-	flags = ONBELT
-	mats = 4
+	c_flags = ONBELT
 
 /obj/decoration/scenario/crate
 	name = "NT vital supplies crate"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	desc = "A tightly locked metal crate."
 	icon = 'icons/obj/decoration.dmi'
@@ -1070,7 +1087,7 @@
 
 	onStart()
 		..()
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1079,4 +1096,4 @@
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)

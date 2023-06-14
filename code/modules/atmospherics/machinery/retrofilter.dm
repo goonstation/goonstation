@@ -28,14 +28,13 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through
 	var/const/MODE_NITROGEN = 2 //Let nitrogen through
 	var/const/MODE_CO2 = 4 //Let CO2 through
 	var/const/MODE_PLASMA = 8 //Let plasma through.
-	var/const/MODE_TRACE = 16 //Let trace gases (Like N2O) through.
 
 	var/locked = 1
 	var/open = 0
@@ -215,7 +214,7 @@ obj/machinery/atmospherics/retrofilter
 				src.overlays += image(src.icon, "filter-n2")
 			if (filter_mode & MODE_CO2)
 				src.overlays += image(src.icon, "filter-co2")
-			if (filter_mode & (MODE_PLASMA | MODE_TRACE))
+			if (filter_mode & MODE_PLASMA)
 				src.overlays += image(src.icon, "filter-tox")
 
 		return
@@ -270,13 +269,6 @@ obj/machinery/atmospherics/retrofilter
 				if(removed.carbon_dioxide)
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
-			if (filter_mode & MODE_TRACE)
-				if(removed && length(removed.trace_gases))
-					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
-						if(trace_gas)
-							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
-							filtered_gas.moles = trace_gas.moles
-							removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
@@ -315,9 +307,7 @@ obj/machinery/atmospherics/retrofilter
 		return 1
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			src.add_fingerprint(user)
 			if (src.hacked)
 				boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
@@ -384,22 +374,17 @@ obj/machinery/atmospherics/retrofilter
 		return
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-		if(reference == node_out1)
-			if (!isnull(node_out1))
-				network_out1 = new_network
+		if(reference == node_in)
+			network_in = new_network
+
+		else if(reference == node_out1)
+			network_out1 = new_network
 
 		else if(reference == node_out2)
-			//network_out2 = new_network
-			if(!isnull(node_out2))
-				return node_out2.network_expand(new_network, src)
-
-		else if(reference == node_in)
-			//network_in = new_network
-			if (!isnull(node_in))
-				return node_in.network_expand(new_network, src)
+			network_out2 = new_network
 
 		if(new_network.normal_members.Find(src))
-			return 0
+			return FALSE
 
 		new_network.normal_members += src
 

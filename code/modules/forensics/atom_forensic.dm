@@ -197,8 +197,7 @@
 		if (isobserver(src) || isintangible(src) || iswraith(src)) // Just in case.
 			return
 
-		if (src.color) //wash off paint! might be dangerous, so possibly move this check into humans only if it causes problems with critters
-			src.color = initial(src.color)
+		src.remove_filter(list("paint_color", "paint_pattern")) //wash off any paint
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/M = src
@@ -296,6 +295,8 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 		return
 	var/turf/T = get_turf(src)
+	if(istype_exact(T, /turf/space)) //can't smear blood on space
+		return
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null
 	if (T.messy > 0)
 		B = locate(/obj/decal/cleanable/blood/dynamic) in T
@@ -306,6 +307,8 @@
 		if (T.active_liquid)
 			return
 		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
+		if(isnull(src.tracked_blood))
+			return
 		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
 	var/list/states = src.get_step_image_states()

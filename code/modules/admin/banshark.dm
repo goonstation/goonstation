@@ -19,7 +19,7 @@
 				return
 			boutput(sharktarget, "Uh oh.")
 			sharktarget << sound('sound/misc/jaws.ogg')
-			logTheThing("diary", usr, sharktarget, "has set the Banshark on [constructTarget(sharktarget,"diary")]!", "admin")
+			logTheThing(LOG_DIARY, usr, "has set the Banshark on [constructTarget(sharktarget,"diary")]!", "admin")
 			message_admins("[usr.client.ckey] has set the Banshark on [sharktarget.ckey]!")
 			sleep(20 SECONDS)
 			startx = sharktarget.x - rand(-11, 11)
@@ -39,8 +39,6 @@
 	set popup_menu = 0
 	var/startx = 1
 	var/starty = 1
-//	var/startside = pick(cardinal)
-//	var/pickstarter = null
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -48,36 +46,18 @@
 	var/speed = input(usr,"How fast is the shark? Lower is faster.","speed","5") as num
 	if(!speed)
 		return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 	boutput(sharktarget, "Uh oh.")
 	sharktarget << sound('sound/misc/jaws.ogg')
 	sleep(20 SECONDS)
 	startx = sharktarget.x - rand(-11, 11)
 	starty = sharktarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(sharktarget:range(10)))
+
 	var/turf/pickedstart = locate(startx, starty, sharktarget.z)
 	var/obj/gibshark/Q = new /obj/gibshark(pickedstart)
 	Q.sharktarget2 = sharktarget
 	Q.caller = usr
 	Q.sharkspeed = speed
-//				boutput(sharktarget, "<span class='alert'><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(sharktarget, "<span class='alert'>This is a temporary ban, it will be removed in [sharkmins] minutes.</span>")
-//				logTheThing("admin", usr, sharktarget, "has sharked [constructTarget(sharktarget,"admin")].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.")
-//				logTheThing("diary", usr, sharktarget, "has sharked [constructTarget(sharktarget,"diary")].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.", "admin")
-//				message_admins("<span class='internal'>[usr.client.ckey] has banned [sharktarget.ckey].<br>Reason: [reason]<br>This will be removed in [sharkmins] minutes.</span>")
-
 
 /obj/banshark/
 	name = "banshark"
@@ -86,7 +66,7 @@
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/data = null
 	var/caller = null
@@ -140,11 +120,11 @@
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			sharktarget2.gib()
 			boutput(sharktarget2, "<span class='alert'><BIG><B>You have been eaten by the banshark!</B></BIG></span>")
-			logTheThing("admin", caller:client, sharktarget2, "has been eaten by the banshark!")
+			logTheThing(LOG_ADMIN, caller:client, "has been eaten by the banshark!")
 			message_admins("<span class='internal'>[sharktarget2.ckey] has been eaten by the banshark!</span>")
 		else
 			boutput(sharktarget2, "<span class='alert'><BIG><B>You can escape the banshark, but not the ban!</B></BIG></span>")
-			logTheThing("admin", caller:client, data["ckey"], "has evaded the shark by ceasing to exist!  Banning them anyway.")
+			logTheThing(LOG_ADMIN, caller:client, "has evaded the shark by ceasing to exist!  Banning them anyway.")
 			message_admins("<span class='internal'>data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
 		addBan(data)
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
@@ -157,7 +137,7 @@
 	icon_state = "banshark1"
 	layer = EFFECTS_LAYER_2
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/mob/sharktarget2 = null
 	var/sharkspeed = 1
 	var/mob/caller = null
@@ -198,8 +178,8 @@
 				O.show_message("<span class='alert'><B>[src]</B> gibs [sharktarget2] in one bite!</span>", 1)
 			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			if(sharktarget2?.client)
-				logTheThing("admin", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
-				logTheThing("diary", caller:client, sharktarget2, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
+				logTheThing(LOG_ADMIN, caller:client, "sharkgibbed [constructTarget(sharktarget2,"admin")]")
+				logTheThing(LOG_DIARY, caller:client, "sharkgibbed [constructTarget(sharktarget2,"diary")]", "admin")
 				message_admins("<span class='internal'>[caller?.client?.ckey] has sharkgibbed [sharktarget2.ckey].</span>")
 				sharktarget2.gib()
 			sleep(0.5 SECONDS)

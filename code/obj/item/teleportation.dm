@@ -11,7 +11,7 @@ HAND_TELE
 	var/temp = null
 	var/frequency = FREQ_TRACKING_IMPLANT
 	var/broadcasting = null
-	var/listening = 1.0
+	var/listening = 1
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
@@ -112,6 +112,9 @@ Frequency:
 
 /// HAND TELE
 
+TYPEINFO(/obj/item/hand_tele)
+	mats = 8
+
 /obj/item/hand_tele
 	name = "hand tele"
 	icon = 'icons/obj/items/device.dmi'
@@ -123,9 +126,8 @@ Frequency:
 	throw_speed = 3
 	throw_range = 5
 	m_amt = 10000
-	flags = ONBELT
+	c_flags = ONBELT
 	var/unscrewed = 0
-	mats = 8
 	desc = "An experimental portable teleportation device that can create portals that link to the same destination as a teleport computer."
 	var/obj/item/our_target = null
 	var/turf/our_random_target = null
@@ -304,7 +306,7 @@ Frequency:
 
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		SEND_SIGNAL(src, COMSIG_CELL_USE, src.power_cost)
-		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
 		SPAWN(30 SECONDS)
 			if (P)

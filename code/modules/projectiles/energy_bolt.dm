@@ -3,7 +3,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 20
+	stun = 20
 //How much ammo this costs
 	cost = 25
 //How fast the power goes away
@@ -11,8 +11,6 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 2
 	max_range = 12 //how many ticks the projectile can go regardless of falloff
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "stun"
 //file location for the sound you want it to play
@@ -73,11 +71,10 @@ toxic - poisons
 	name = "ion bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "heavyion"
-	power = 20
+	damage = 20
 	cost = 25
 	dissipation_rate = 2
 	dissipation_delay = 8
-	ks_ratio = 1
 	shot_sound = 'sound/weapons/heavyion.ogg'
 	shot_number = 1
 	damage_type = D_ENERGY
@@ -94,12 +91,20 @@ toxic - poisons
 			L.changeStatus("slowed", 2 SECONDS)
 			L.change_misstep_chance(5)
 			L.emote("twitch_v")
+		hit.emp_act()
 		impact_image_effect(ie_type, hit)
 		return
 
 /datum/projectile/energy_bolt/robust
-	power = 45
+	stun = 45
 	dissipation_rate = 6
+
+/datum/projectile/energy_bolt/diffuse
+	sname = "diffuse energy bolt"
+	max_range = 7
+	dissipation_delay = 1
+	dissipation_rate = 2
+	stun = 25
 
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
@@ -108,7 +113,7 @@ toxic - poisons
 
 
 /datum/projectile/energy_bolt/tiny
-	power = 2.5
+	stun = 2.5
 	cost = 10
 	sname = "teeny bolt"
 
@@ -126,13 +131,22 @@ toxic - poisons
 			L.emote("twitch_v")
 		return
 
-/datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+/datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	power = 17.5
-	dissipation_delay = 1
+	stun = 15.5
+	dissipation_delay = 2
 	dissipation_rate = 2
-	max_range = 6
+	max_range = 8
 	icon_state = "spark"
+
+/datum/projectile/energy_bolt/tasershotgunslug
+	name = "heavy energy bolt"
+	sname = "energy slug"
+	cost = 33
+	stun = 30
+	dissipation_rate = 2
+	dissipation_delay = 4
+	icon_state = "taser_projectile-big"
 
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v
@@ -140,15 +154,13 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "v_sound"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 50 // 100 was way too fucking long what the HECK
+	stun = 50 // 100 was way too fucking long what the HECK
 //How much ammo this costs
 	cost = 25
 //How fast the power goes away
 	dissipation_rate = 5
 //How many tiles till it starts to lose power
 	dissipation_delay = 1
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "sonic wave"
 //file location for the sound you want it to play
@@ -194,15 +206,13 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "green_spark"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 2
+	stun = 2
 //How much ammo this costs
 	cost = 25
 //How fast the power goes away
 	dissipation_rate = 2
 //How many tiles till it starts to lose power
 	dissipation_delay = 4
-//Kill/Stun ratio
-	ks_ratio = 0.0
 //name of the projectile setting, used when you change a guns setting
 	sname = "deghostify"
 //file location for the sound you want it to play
@@ -221,12 +231,13 @@ toxic - poisons
 	color_blue = 0.2
 
 	disruption = 0
+	hits_ghosts = 1 // do it.
 
 
 //Projectile for Azungars NT gun.
 /datum/projectile/energy_bolt/ntburst // fixed overlapping path - /datum/projectile/energy_bolt/burst already exists for taser burst fire
 	shot_number = 1
-	power = 15
+	stun = 15
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "minispark"
 	cost = 5
@@ -237,7 +248,7 @@ toxic - poisons
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "detain-projectile"
 	sname = "detain"
-	power = 20
+	stun = 20
 	cost = 50
 	dissipation_rate = 5
 	dissipation_delay = 3
@@ -261,7 +272,7 @@ toxic - poisons
 			new /obj/effects/energy_bolt_aoe_burst(get_turf(O))
 
 		for (var/mob/M in range(1, O)) //direct hit power is a 'bonus for aim', so we want this to hit the target
-			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
+			if (isliving(M) && !check_target_immunity(M, FALSE, src) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
 				L.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
@@ -297,7 +308,7 @@ toxic - poisons
 	name = "pulse"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
-	power = 20
+	stun = 20
 	cost = 35
 	sname = "kinetic pulse"
 	shot_sound = 'sound/weapons/pulse.ogg'
@@ -323,12 +334,13 @@ toxic - poisons
 		// var/dir = angle2dir(angle)
 		var/dir = get_dir(O.shooter, hit)
 		var/pow = O.power
-		if (ishuman(hit))
+		if (isliving(hit))
 			O.die()
-			var/mob/living/carbon/human/H = hit
-			H.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
-			H.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = THROW_GUNIMPACT)
-			H.emote("twitch_v")
+			var/mob/living/mob = hit
+			mob.do_disorient(stamina_damage = pow*1.5, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = strong)
+			var/throw_type = mob.can_lie ? THROW_GUNIMPACT : THROW_NORMAL //fallback to just chucking them if they can't be knocked down
+			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = throw_type)
+			mob.emote("twitch_v")
 
 	impact_image_effect(var/type, atom/hit, angle, var/obj/projectile/O)
 		return
@@ -338,7 +350,7 @@ toxic - poisons
 	name = "pulse"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "pulse"
-	power = 20
+	stun = 20
 	cost = 100
 	sname = "electromagnetic pulse"
 	shot_sound = 'sound/weapons/Taser.ogg'
@@ -370,8 +382,8 @@ toxic - poisons
 	icon_state = "signifer2_tase"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	cost = 12
-	power = 12
-	ks_ratio = 0.1
+	stun = 11
+	damage = 1
 
 	sname = "non-lethal"
 	damage_type = D_ENERGY
@@ -386,14 +398,19 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/smgburst
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "taser_projectile"
-	power = 15
+	stun = 18
 	cost = 40
 	max_range = 12
-	ks_ratio = 0.0
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 5
@@ -408,10 +425,9 @@ toxic - poisons
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "signifer2_tase"
-	power = 10
+	stun = 11
 	cost = 8
 	max_range = 8
-	ks_ratio = 0.0
 	sname = "full-auto"
 	shot_sound = 'sound/weapons/SigTase.ogg'
 	shot_sound_extrarange = 5
@@ -423,14 +439,19 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/raybeam
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "green_spark"
-	power = 5
+	damage = 5
 	cost = 25
 	max_range = 6
-	ks_ratio = 1.0
 	sname = "burst"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_sound_extrarange = 3
@@ -441,3 +462,35 @@ toxic - poisons
 	disruption = 2
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+/datum/projectile/energy_bolt/dazzler
+	name = "energy bolt"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "signifer2_brute"
+	stun = 4
+	cost = 20
+	max_range = 12
+	window_pass = 1 // maybe keep
+	dissipation_rate = 0 // weak enough as is
+	sname = "dazzle"
+	shot_sound = 'sound/weapons/Taser.ogg'
+	shot_sound_extrarange = 5
+	shot_number = 1
+	damage_type = D_ENERGY
+	color_red = 0
+	color_green = 0
+	color_blue = 1
+	disruption = 8
+
+	hit_mob_sound = 'sound/effects/sparks6.ogg'
+
+	on_pointblank(var/obj/projectile/P, var/mob/living/M)
+		M.changeStatus("disorient", 4 SECOND)
+		M.changeStatus("slowed", 3 SECOND)
+
+	on_hit(atom/hit)
+		if (isliving(hit))
+			var/mob/living/L = hit
+			L.changeStatus("disorient", 2 SECOND)
+			L.changeStatus("slowed", 1.5 SECOND)
+		return

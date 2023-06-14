@@ -339,7 +339,7 @@
 	pixel_x = -11;
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/machinery/light/small/sticky/broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/snow,
@@ -538,7 +538,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "uY" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/airless/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "vk" = (
@@ -601,7 +601,7 @@
 	dir = 1;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/machinery/light/small/sticky/broken,
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "xw" = (
@@ -785,7 +785,7 @@
 "Fr" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine_caution_east"
@@ -801,6 +801,9 @@
 /area/prefab/discount_dans_asteroid)
 "Gj" = (
 /obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "Gk" = (
@@ -844,7 +847,7 @@
 	dir = 4;
 	icon_state = "gib4"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Jd" = (
@@ -875,7 +878,9 @@
 	},
 /area/prefab/discount_dans_asteroid)
 "JH" = (
-/obj/machinery/atmospherics/pipe/tank/air/north,
+/obj/machinery/atmospherics/pipe/tank/air{
+	dir = 1
+	},
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "Kl" = (
@@ -894,6 +899,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/discount_dans_asteroid)
 "Kz" = (
+/obj/machinery/light/incandescent/broken{
+	dir = 1
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
 "Lq" = (
@@ -970,7 +978,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Ni" = (
-/obj/decal/fakeobjects/lightbulb_broken{
+/obj/machinery/light/small/sticky/broken{
 	dir = 8
 	},
 /turf/simulated/floor/airless/grime,
@@ -1084,7 +1092,7 @@
 /area/prefab/discount_dans_asteroid)
 "PC" = (
 /obj/machinery/r_door_control{
-	id = natra
+	id = "natra"
 	},
 /turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
@@ -1099,7 +1107,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /obj/item/reagent_containers/food/snacks/burrito{
 	pixel_x = -5;
 	pixel_y = 4
@@ -1134,7 +1142,7 @@
 	pixel_x = 2;
 	pixel_y = 1
 	},
-/obj/machinery/light/incandescent/small{
+/obj/machinery/light/small/sticky{
 	dir = 1
 	},
 /turf/simulated/floor/wood,
@@ -1171,14 +1179,10 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "RP" = (
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
 /turf/simulated/floor/airless/neutral,
-/area/prefab/discount_dans_asteroid)
-"RY" = (
-/obj/decal/fakeobjects/lighttube_broken,
-/turf/simulated/wall/auto/jen,
 /area/prefab/discount_dans_asteroid)
 "Se" = (
 /obj/decal/fakeobjects{
@@ -1273,7 +1277,7 @@
 /area/prefab/discount_dans_asteroid)
 "Wo" = (
 /obj/decal/cleanable/blood/gibs/body,
-/obj/critter/brullbar,
+/mob/living/critter/brullbar,
 /turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Wr" = (
@@ -1941,7 +1945,7 @@ Mb
 gQ
 mC
 nl
-RY
+Sf
 Gj
 oi
 Qe
@@ -2041,7 +2045,7 @@ Mb
 hP
 jU
 lT
-RY
+Sf
 Kz
 Ic
 Gk

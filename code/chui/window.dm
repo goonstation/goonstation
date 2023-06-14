@@ -199,7 +199,7 @@ chui/window
 		if( winget( cli, "\ref[src]", "is-visible" ) == "false" )
 			CDBG2( "Validation failed for [cli] -- Not visible." )
 			return 0
-		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && get_dist( cli.mob.loc, theAtom.loc ) > 2 )
+		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && GET_DIST( cli.mob.loc, theAtom.loc ) > 2 )
 			CDBG2( "Validation failed for [cli] -- Too far." )
 			return 0
 		return 1

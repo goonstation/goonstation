@@ -9,6 +9,7 @@
 			return ..()
 
 		if (owner.health < 0 && !isdead(owner))
+			owner.changeStatus("critical_condition", 10 SECONDS) // Always receive this when in crit
 			if (probmult(5))
 				owner.emote(pick("faint", "collapse", "cry","moan","gasp","shudder","shiver"))
 			if (owner.stuttering <= 5)
@@ -48,7 +49,7 @@
 						//boutput(world, "\b LOG: ADDED HEART FAILURE TO [src].")
 					if (probmult(6))
 						boutput(owner, "<span class='alert'><b>You feel [pick("horrible pain", "awful", "like shit", "absolutely awful", "like death", "like you are dying", "nothing", "warm", "really sweaty", "tingly", "really, really bad", "horrible")]</b>!</span>")
-						owner.setStatusMin("weakened", 3 SECONDS * mult)
+						owner.setStatusMin("weakened", 3 SECONDS)
 					if (probmult(3))
 						owner.changeStatus("paralysis", 2 SECONDS)
 				if (-50 to 0)
@@ -76,7 +77,7 @@
 				owner.losebreath += 10 * mult
 				owner.changeStatus("weakened", 3 SECONDS * mult)
 		if (owner.health <= -100)
-			if (owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine"))
+			if ((owner.reagents && owner.reagents.has_reagent("synaptizine") && owner.reagents.has_reagent("atropine")) || ((owner.bodytemperature < owner.base_body_temp - 100 && owner.bodytemperature > owner.base_body_temp - 275 && !owner.hasStatus("burning")) && (owner.reagents && owner.reagents.has_reagent("cryoxadone"))))
 				var/deathchance = min(99, ((owner.get_brain_damage() * -5) + (owner.health + (owner.get_oxygen_deprivation() / 2))) * -0.001)
 				if (probmult(deathchance))
 					owner.death()

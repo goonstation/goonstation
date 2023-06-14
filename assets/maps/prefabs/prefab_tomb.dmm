@@ -58,7 +58,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "o" = (
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "p" = (
@@ -71,9 +71,6 @@
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
-"r" = (
-/turf/variableTurf/wall,
-/area/allowGenerate)
 "s" = (
 /turf/variableTurf/clear,
 /area/allowGenerate)
@@ -215,7 +212,7 @@ a
 s
 "}
 (12,1,1) = {"
-r
+a
 a
 a
 a
@@ -228,7 +225,7 @@ s
 "}
 (13,1,1) = {"
 s
-r
+a
 a
 a
 a

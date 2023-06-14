@@ -28,7 +28,7 @@
 		..()
 
 	proc/TakeDamage(var/amt, var/bypass_multiplier = 0)
-		if (!bypass_multiplier)
+		if (!bypass_multiplier && amt > 0)
 			amt *= damage_multiplier
 		if (minimum_value < maximum_value)
 			value = clamp(value - amt, minimum_value, maximum_value)

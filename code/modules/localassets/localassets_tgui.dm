@@ -8,18 +8,6 @@
 		/datum/asset/basic/fontawesome
 	)
 
-/// Common tgui assets
-/datum/asset/basic/tgui_common
-	local_assets = list(
-		"tgui-common.bundle.js",
-	)
-
-	init()
-		. = ..()
-		url_map = list(
-			"tgui/tgui-common.bundle.js" = "[resource("tgui/tgui-common.bundle.js")]",
-		)
-
 /// Normal base window tgui assets
 /datum/asset/basic/tgui
 	local_assets = list(
@@ -51,13 +39,19 @@
 /// Fontawesome assets
 /datum/asset/basic/fontawesome
 	local_assets = list(
-		"all.min.css",
+		"fa-all.min.css",
 		"fa-regular-400.eot",
-		"fa-regular-400.woff",
+		"fa-regular-400.ttf",
 		"fa-solid-900.eot",
-		"fa-solid-900.woff"
+		"fa-solid-900.ttf"
 	)
 
-	url_map = list(
-		"all.min.css" = "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-	)
+	init()
+		. = ..()
+		url_map = list(
+			"fa-regular-400.eot"	= "[resource("css/fonts/fa-regular-400.eot")]",
+			"fa-regular-400.ttf"	= "[resource("css/fonts/fa-regular-400.ttf")]",
+			"fa-solid-900.eot"		= "[resource("css/fonts/fa-solid-900.eot")]",
+			"fa-solid-900.ttf"		= "[resource("css/fonts/fa-solid-900.ttf")]",
+			"fa-all.min.css"		= "[resource("css/tgui/fa-all.min.css")]",
+		)

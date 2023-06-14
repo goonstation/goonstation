@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aI" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
 	opacity = 0;
@@ -67,7 +67,7 @@
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
@@ -177,7 +177,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/shuttle/escape/centcom)
 "tk" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
 	opacity = 0;
@@ -187,7 +187,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "tG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "reinforced internal airlock";
 	opacity = 0;
@@ -327,7 +327,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "Io" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},

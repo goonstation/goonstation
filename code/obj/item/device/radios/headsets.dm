@@ -17,40 +17,58 @@
 	wear_layer = MOB_EARS_LAYER
 	duration_remove = 1.5 SECONDS
 	duration_put = 1.5 SECONDS
-	var/haswiretap
+	var/obj/item/device/radio_upgrade/wiretap = null
 	hardened = 0
 
-	attackby(obj/item/R, mob/user)
-		if (istype(R, /obj/item/device/radio_upgrade))
-			if (haswiretap)
-				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! What good could possibly come from having two?!</span>")
+	attackby(obj/item/O, mob/user)
+		if (istype(O, /obj/item/device/radio_upgrade))
+			var/obj/item/device/radio_upgrade/R = O
+			if (wiretap)
+				boutput(user, "<span class='alert'>This [src] already has a wiretap installed! It doesn't have room for any more!</span>")
 				return
-			src.haswiretap = 1
-			src.secure_frequencies = list(
-				"h" = R_FREQ_COMMAND,
-				"g" = R_FREQ_SECURITY,
-				"e" = R_FREQ_ENGINEERING,
-				"r" = R_FREQ_RESEARCH,
-				"m" = R_FREQ_MEDICAL,
-				"c" = R_FREQ_CIVILIAN,
-				"z" = R_FREQ_SYNDICATE,
-				)
-			src.secure_classes = list(
-				"h" = RADIOCL_COMMAND,
-				"g" = RADIOCL_SECURITY,
-				"e" = RADIOCL_ENGINEERING,
-				"r" = RADIOCL_RESEARCH,
-				"m" = RADIOCL_MEDICAL,
-				"c" = RADIOCL_CIVILIAN,
-				"z" = RADIOCL_SYNDICATE,
-				)
-			boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from all station frequencies.</span>")
-			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
-			set_secure_frequencies(src)
-			qdel(R)
 
+			src.install_radio_upgrade(R)
+			boutput(user, "<span class='notice'>You install [R] into [src].</span>")
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+			user.u_equip(R)
+
+		else if (issnippingtool(O) && wiretap)
+			boutput(user, "<span class='notice'>You begin removing [src.wiretap] from [src].</span>")
+			if (!do_after(user, 2 SECONDS))
+				boutput(user, "<span class='alert'>You were interrupted!.</span>")
+				return
+			boutput(user, "<span class='notice'>You remove [src.wiretap] from [src].</span>")
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
+			user.put_in_hand_or_drop(src.wiretap)
+			src.remove_radio_upgrade()
 		..()
 
+	proc/install_radio_upgrade(var/obj/item/device/radio_upgrade/R)
+		if (wiretap)
+			return
+
+		src.wiretap = R
+		for (var/frequency in R.secure_frequencies)
+			if (!(frequency in src.secure_frequencies))
+				src.set_secure_frequency(frequency, R.secure_frequencies[frequency])
+		for (var/class in R.secure_classes)
+			if (!(class in src.secure_classes))
+				src.secure_classes[class] = R.secure_classes[class]
+
+		set_secure_frequencies(src)
+		R.set_loc(src)
+
+	proc/remove_radio_upgrade()
+		src.wiretap = null
+
+		var/obj/item/device/radio/headset/headset = new src.type
+		src.secure_frequencies = headset.secure_frequencies
+		src.secure_classes = headset.secure_classes
+		src.set_secure_frequencies()
+
+/obj/item/device/radio/headset/wizard
+	emp_act()
+		return //hax
 
 /obj/item/device/radio/headset/command
 	name = "command headset"
@@ -96,6 +114,9 @@
 		)
 	icon_override = "nt"
 	icon_tooltip = "NanoTrasen Special Operative"
+
+/obj/item/device/radio/headset/command/nt/consultant
+	icon_tooltip = "NanoTrasen Security Consultant"
 
 /obj/item/device/radio/headset/command/captain
 	name = "captain's headset"
@@ -181,7 +202,7 @@
 
 /obj/item/device/radio/headset/command/hop
 	name = "head of personnel's headset"
-	desc = "The HoP can listen to the security frequency, but they can't speak on it anymore. Not since the incident."
+	desc = "The HoP cannot listen or speak on the security frequency anymore, not since the incident."
 	secure_frequencies = list(
 		"h" = R_FREQ_COMMAND,
 		"e" = R_FREQ_ENGINEERING,
@@ -347,18 +368,6 @@
 	icon_override = "Min"
 	icon_tooltip = "Miner"
 
-/obj/item/device/radio/headset/mechanic
-	name = "mechanic headset"
-	desc = "A headset line only created due to the sheer effectiveness of packet nerd protesting."
-	icon_state = "engine headset"
-	secure_frequencies = list(
-	"e" = R_FREQ_ENGINEERING)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		)
-	icon_override = "Mec"
-	icon_tooltip = "Mechanic"
-
 /obj/item/device/radio/headset/mail
 	name = "mailman's headset"
 	desc = "In a land of belt hells, the pit fiend is king."
@@ -378,6 +387,44 @@
 	desc = "Anybody using this headset is unlikely to be taken seriously."
 	icon_override = "clown"
 	icon_tooltip = "Clown"
+
+/obj/item/device/radio/headset/ghost_buster
+	name = "\improper Ghost Buster's headset"
+	desc = "So you can hear those who are calling you when there's something strange in their department."
+	icon_state = "multi headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		)
+	icon_override = "ghost_buster"
+	icon_tooltip = "Ghost Buster"
+
+/obj/item/device/radio/headset/command/nt/commander
+	name = "\improper NT Commander's headset"
+	desc = "Issued to NanoTrasen Commanders, this radio headset can access several secure radio channels."
+	icon_state = "command headset"
+	secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY
+		)
+	secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY
+		)
+	icon_override = "ntboss"
+	icon_tooltip = "Nanotrasen Commander"
 
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"
@@ -450,6 +497,31 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+/obj/item/device/radio/headset/pirate
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	chat_class = RADIOCL_SYNDICATE
+	locked_frequency = TRUE
+	secure_frequencies = list("p" = R_FREQ_PIRATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	protected_radio = 1
+	icon_override = "pirate"
+	icon_tooltip = "Space Pirate"
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			src.frequency = R_FREQ_PIRATE
+
+	first_mate
+		icon_override = "pirate_first_mate"
+		icon_tooltip = "Space Pirate First Mate"
+
+	captain
+		icon_override = "pirate_captain"
+		icon_tooltip = "Space Pirate Captain"
+
 /obj/item/device/radio/headset/deaf
 	name = "auditory headset"
 	desc = "A radio headset that also interfaces with the ear canal, allowing the deaf to hear normally while wearing it."
@@ -514,6 +586,9 @@ Secure Frequency:
 			set_secure_frequency("h", new_frequency)
 	return ..(href, href_list)
 
+TYPEINFO(/obj/item/device/radio_upgrade)
+	mats = 12
+
 /obj/item/device/radio_upgrade //traitor radio upgrader
 	name = "wiretap radio upgrade"
 	desc = "An illegal device capable of picking up and sending all secure station radio signals, along with a secure Syndicate frequency. Can be installed in a radio headset. Does not actually work by wiretapping."
@@ -521,4 +596,49 @@ Secure Frequency:
 	icon_state = "syndie_upgr"
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
-	mats = 12
+	var/secure_frequencies = list(
+		"h" = R_FREQ_COMMAND,
+		"g" = R_FREQ_SECURITY,
+		"e" = R_FREQ_ENGINEERING,
+		"r" = R_FREQ_RESEARCH,
+		"m" = R_FREQ_MEDICAL,
+		"c" = R_FREQ_CIVILIAN,
+		"z" = R_FREQ_SYNDICATE,
+		)
+	var/secure_classes = list(
+		"h" = RADIOCL_COMMAND,
+		"g" = RADIOCL_SECURITY,
+		"e" = RADIOCL_ENGINEERING,
+		"r" = RADIOCL_RESEARCH,
+		"m" = RADIOCL_MEDICAL,
+		"c" = RADIOCL_CIVILIAN,
+		"z" = RADIOCL_SYNDICATE,
+		)
+
+	conspirator
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New()
+			..()
+			var/datum/game_mode/conspiracy/C = new /datum/game_mode/conspiracy
+			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/conspiracy))
+				C = ticker.mode
+			src.secure_frequencies = list("z" = C.agent_radiofreq)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	gang
+		name = "private radio channel upgrade"
+		desc = "A device capable of communicating over a private secure radio channel. Can be installed in a radio headset."
+		secure_frequencies = null
+		secure_classes = null
+
+		New(turf/newLoc, var/frequency)
+			..()
+			if (!frequency)
+				return
+
+			src.secure_frequencies = list("z" = frequency)
+			src.secure_classes = list("z" = RADIOCL_SYNDICATE)

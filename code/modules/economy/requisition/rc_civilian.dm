@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = 90
 
 /datum/rc_entry/item/light_tube
-	name = "light bulb"
+	name = "light tube"
 	typepath = /obj/item/light/tube
 	feemod = 80
 
@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		if(prob(30))
 			src.rc_entries += rc_buildentry(/datum/rc_entry/item/headset,crewcount)
 		if(prob(50)) //turns out they need something to eat too
-			src.rc_entries += rc_buildentry(/datum/rc_entry/item/literallyanyfood,crewcount)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/any,crewcount)
 			src.flavor_desc += " Food would also be appreciated."
 			if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/water,crewcount*10*rand(1,3))
 		//job related gearsets could also be added here sometimes
@@ -260,7 +260,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/device/radio/headset
 	feemod = 940
 
-/datum/rc_entry/item/literallyanyfood
+/datum/rc_entry/food/any
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
 	feemod = 250
@@ -307,16 +307,16 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		src.payout += rand(0,50) * 10
 
 		if (prob(70)) //pizza party
-			src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pizza,rand(2,3)*6)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/pizza,rand(2,3)*6)
 			src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cola,rand(10,20)*10)
 
 		switch (rand(1, 50)) //Special Outcomes Zone
 			if (1)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/chaps,rand(3,6))
 			if (2 to 6)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/grapes,rand(3,6))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/food/grapes,rand(3,6))
 			if (7 to 11)
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/banana,rand(4,8))
+				src.rc_entries += rc_buildentry(/datum/rc_entry/food/banana,rand(4,8))
 			if (12 to 16)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/cannabis,rand(4,8))
 			if (17 to 21)
@@ -329,9 +329,9 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
 
 		if(prob(70)) //cookies or cakes?
-			src.rc_entries += rc_buildentry(/datum/rc_entry/item/cake,1+prob(20))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/cake,1+prob(20))
 		else //yep cookies
-			src.rc_entries += rc_buildentry(/datum/rc_entry/item/cookie,rand(2,4)*6)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/food/cookie,rand(2,4)*6)
 
 		var/bonusducks
 		if(prob(50))
@@ -385,17 +385,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/gift
 	feemod = 600
 
-/datum/rc_entry/item/cake
+/datum/rc_entry/food/cake
 	name = "cake"
 	typepath = /obj/item/reagent_containers/food/snacks/cake
 	feemod = 2500
 
-/datum/rc_entry/item/cookie
+/datum/rc_entry/food/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
 	feemod = 600
 
-/datum/rc_entry/stack/pizza
+/datum/rc_entry/food/pizza
 	name = "slices' worth of pizza"
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
 	feemod = 120
@@ -410,17 +410,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	typepath = /obj/item/clothing/under/gimmick/chaps
 	feemod = 5000
 
-/datum/rc_entry/item/grapes
+/datum/rc_entry/food/grapes
 	name = "grapes"
 	typepath = /obj/item/reagent_containers/food/snacks/plant/grape
-	commodity = /datum/commodity/produce
-	feemod = 400
+	feemod = 450
 
-/datum/rc_entry/item/banana
+/datum/rc_entry/food/banana
 	name = "banana"
 	typepath = /obj/item/reagent_containers/food/snacks/plant/banana
-	commodity = /datum/commodity/produce
-	feemod = 250
+	feemod = 300
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
@@ -523,7 +521,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/plank
 	name = "wooden plank"
-	typepath = /obj/item/plank
+	typepath = /obj/item/sheet/wood
 	exactpath = TRUE
 	feemod = 1220
 

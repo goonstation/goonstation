@@ -1,7 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/turf/unsimulated/wall/auto/reinforced/gannets,
-/area/prefab/slimy_honk)
 "ab" = (
 /obj/item/reagent_containers/food/snacks/candy/negativeonebar,
 /obj/decal/cleanable/slime,
@@ -53,10 +50,6 @@
 /obj/machinery/light/small/floor/blueish,
 /turf/simulated/floor/carpet/blue,
 /area/prefab/slimy_honk)
-"am" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/carpet/blue,
-/area/prefab/slimy_honk)
 "an" = (
 /obj/machinery/light/small/floor/harsh,
 /turf/simulated/floor/carpet/purple,
@@ -67,10 +60,6 @@
 	layer = 2
 	},
 /turf/simulated/floor/black,
-/area/prefab/slimy_honk)
-"ap" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/black/grime,
 /area/prefab/slimy_honk)
 "aq" = (
 /obj/mopbucket,
@@ -206,12 +195,6 @@
 	name = "astroturf"
 	},
 /area/prefab/slimy_honk)
-"aP" = (
-/obj/machinery/door/airlock/gannets/glass/alt,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/slimy_honk)
 "aQ" = (
 /obj/item/chair/folded,
 /obj/decal/cleanable/balloon,
@@ -227,15 +210,6 @@
 /obj/item/device/igniter,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet,
-/area/prefab/slimy_honk)
-"aT" = (
-/obj/item/clothing/shoes/clown_shoes/pink,
-/obj/item/reagent_containers/food/snacks/candy/peach_ring,
-/obj/item/clothing/mask/clown_hat/pink,
-/obj/decal/cleanable/slime,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
 /area/prefab/slimy_honk)
 "aU" = (
 /obj/stool/chair{
@@ -276,11 +250,6 @@
 "aZ" = (
 /obj/item/balloon_animal/random,
 /turf/simulated/floor/carpet/purple,
-/area/prefab/slimy_honk)
-"ba" = (
-/obj/item/reagent_containers/food/snacks/candy/chocolate,
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
 "bb" = (
 /obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
@@ -391,7 +360,7 @@
 /area/prefab/slimy_honk)
 "bq" = (
 /obj/machinery/light/small/floor/warm/very,
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /obj/item/reagent_containers/food/snacks/candy/nougat,
 /turf/simulated/floor/carpet,
 /area/prefab/slimy_honk)
@@ -494,12 +463,6 @@
 /obj/item/stamp/clown,
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
-"bF" = (
-/obj/item/shaker/ketchup,
-/obj/item/shaker/ketchup,
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/carpet,
-/area/prefab/slimy_honk)
 "bG" = (
 /obj/item/chair/folded,
 /turf/simulated/floor/grass{
@@ -559,11 +522,6 @@
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /turf/simulated/floor/carpet/green,
 /area/prefab/slimy_honk)
-"bS" = (
-/obj/machinery/door/airlock/gannets/glass,
-/obj/lattice/barricade,
-/turf/simulated/floor/carpet/arcade/blank,
-/area/prefab/slimy_honk)
 "bT" = (
 /obj/item/clothing/suit/monkey,
 /obj/item/reagent_containers/food/snacks/burger/monkeyburger,
@@ -600,10 +558,6 @@
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
-"ca" = (
-/obj/machinery/door/airlock/gannets/glass,
-/turf/simulated/floor/carpet/purple,
-/area/prefab/slimy_honk)
 "cb" = (
 /obj/item/chair/folded,
 /obj/machinery/light/small/floor/harsh,
@@ -619,7 +573,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "ce" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cf" = (
@@ -697,7 +651,7 @@
 /area/prefab/slimy_honk)
 "cs" = (
 /obj/item/clothing/shoes/clown_shoes/purple,
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /turf/simulated/floor/carpet/purple,
 /area/prefab/slimy_honk)
 "ct" = (
@@ -716,7 +670,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cv" = (
-/obj/critter/spider/clownqueen,
+/mob/living/critter/spider/clownqueen,
 /turf/simulated/floor/carpet/arcade/half,
 /area/prefab/slimy_honk)
 "cw" = (
@@ -789,7 +743,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
 "cJ" = (
-/obj/critter/spider/clown/cluwne,
+/mob/living/critter/spider/clown/cluwne,
 /obj/item/material_piece/cloth/spidersilk,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade,
@@ -811,7 +765,7 @@
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
 "cO" = (
-/obj/critter/spider/clown,
+/mob/living/critter/spider/clown,
 /obj/decal/cleanable/slime,
 /turf/simulated/floor/carpet/arcade,
 /area/prefab/slimy_honk)
@@ -848,7 +802,7 @@
 /area/prefab/slimy_honk)
 "cV" = (
 /obj/machinery/light/small/floor/harsh/very,
-/obj/critter/bear,
+/mob/living/critter/bear,
 /obj/fitness/speedbag/clown,
 /turf/simulated/floor/carpet/arcade/blank,
 /area/prefab/slimy_honk)
@@ -901,6 +855,71 @@
 /obj/decal/ballpit,
 /turf/unsimulated/floor/ballpit,
 /area/prefab/slimy_honk)
+"xa" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"Ac" = (
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"Ad" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"Ed" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"HX" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/slimy_honk)
+"HZ" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"KO" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"Mr" = (
+/obj/item/shaker/ketchup,
+/obj/item/shaker/ketchup,
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"ND" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"OX" = (
+/obj/item/clothing/shoes/clown_shoes/pink/waddle,
+/obj/item/reagent_containers/food/snacks/candy/peach_ring,
+/obj/item/clothing/mask/clown_hat/pink,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"ZD" = (
+/obj/lattice/barricade,
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
 
 (1,1,1) = {"
 aw
@@ -931,20 +950,20 @@ aw
 aw
 aw
 aw
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
 aw
 aw
 aw
@@ -955,20 +974,20 @@ aw
 aw
 aw
 aw
-aa
+HX
 az
 aH
 aR
 bD
 bu
-aa
+HX
 cq
 cp
 cp
 cq
 db
 bO
-aa
+HX
 aw
 aw
 aw
@@ -979,20 +998,20 @@ aw
 aw
 aw
 aw
-aa
+HX
 aA
 aI
 aJ
 bg
 bv
-aa
+HX
 bO
 bT
 cq
 cg
 cp
 cp
-aa
+HX
 aw
 aw
 aw
@@ -1003,20 +1022,20 @@ aw
 aw
 aw
 aw
-aa
+HX
 aB
 aJ
 aS
 bh
 bw
-aa
+HX
 dd
 cp
 cp
 cp
 dc
 bN
-aa
+HX
 aw
 aw
 aw
@@ -1024,65 +1043,65 @@ aw
 "}
 (6,1,1) = {"
 aw
-aa
-aa
-aa
-aa
-aa
-aa
-aP
-aa
-aa
-aa
-aa
-aa
-ca
-aa
-aa
-aa
-aa
-aa
-aa
+HX
+HX
+HX
+HX
+HX
+HX
+HZ
+HX
+HX
+HX
+HX
+HX
+xa
+HX
+HX
+HX
+HX
+HX
+HX
 aw
 aw
 "}
 (7,1,1) = {"
 aw
-aa
+HX
 ac
 aj
 aq
-aa
+HX
 aK
-aT
+OX
 bi
 bx
 aN
-aP
+KO
 ag
 cb
 ch
-aa
+HX
 cv
 cD
 cY
-aa
+HX
 aw
 aw
 "}
 (8,1,1) = {"
 aw
-aa
+HX
 ad
 ak
 ar
-aa
+HX
 ab
 aU
 bj
 by
 aX
-aa
+HX
 aC
 aC
 ci
@@ -1090,23 +1109,23 @@ cr
 cy
 cG
 cP
-aa
+HX
 aw
 aw
 "}
 (9,1,1) = {"
 aw
-aa
+HX
 ae
 aj
 as
-aa
+HX
 aL
 aV
 bk
 bz
 bi
-aa
+HX
 an
 ag
 cj
@@ -1114,47 +1133,47 @@ cr
 cz
 cJ
 cQ
-aa
+HX
 aw
 aw
 "}
 (10,1,1) = {"
 aw
-aa
+HX
 af
 al
 at
-aa
+HX
 aM
 aW
 bl
 bA
 bG
-aa
+HX
 aZ
 ag
 an
-aa
+HX
 cv
 cK
 cR
-aa
+HX
 aw
 aw
 "}
 (11,1,1) = {"
 aw
-aa
+HX
 af
 ac
 au
-aa
+HX
 aO
 aX
 bi
 bB
 bH
-aP
+KO
 aZ
 ag
 ck
@@ -1162,37 +1181,37 @@ cr
 cE
 cO
 cv
-aa
+HX
 aw
 aw
 "}
 (12,1,1) = {"
 aw
-aa
-aa
-am
-aa
-aa
-aP
-aa
-aa
-aa
-aa
-aa
+HX
+HX
+Ad
+HX
+HX
+HZ
+HX
+HX
+HX
+HX
+HX
 aC
 aE
 cl
-aa
+HX
 cF
 cH
 cS
-aa
+HX
 aw
 aw
 "}
 (13,1,1) = {"
 aw
-aa
+HX
 bP
 ag
 av
@@ -1206,17 +1225,17 @@ bQ
 bK
 cc
 ag
-aa
+HX
 cA
 cI
 cA
-aa
+HX
 aw
 aw
 "}
 (14,1,1) = {"
 aw
-aa
+HX
 bP
 an
 ag
@@ -1230,17 +1249,17 @@ aE
 bU
 av
 cm
-aa
-aa
+HX
+HX
 cU
-aa
-aa
+HX
+HX
 aw
 aw
 "}
 (15,1,1) = {"
 aw
-aa
+HX
 bP
 ag
 ag
@@ -1255,16 +1274,16 @@ ag
 an
 ag
 cs
-aa
+HX
 cW
 cT
-aa
+HX
 aw
 aw
 "}
 (16,1,1) = {"
 aw
-aa
+HX
 bP
 ag
 ax
@@ -1279,98 +1298,98 @@ bV
 ag
 bK
 ag
-aa
+HX
 cX
 co
-aa
+HX
 aw
 aw
 "}
 (17,1,1) = {"
 aw
-aa
-aa
-aa
-aa
-aa
-aa
-ba
-aa
-aa
+HX
+HX
+HX
+HX
+HX
+HX
+Ac
+HX
+HX
 bf
-aa
-aa
-aa
-aa
+HX
+HX
+HX
+HX
 ag
-aa
-aa
+HX
+HX
 cZ
-aa
+HX
 aw
 aw
 "}
 (18,1,1) = {"
 aw
-aa
+HX
 ah
 ai
 aj
 aF
-aa
+HX
 bb
 bq
-aa
+HX
 bf
-aa
+HX
 bW
 cd
-aa
+HX
 ct
 cB
-aa
+HX
 da
-aa
+HX
 aw
 aw
 "}
 (19,1,1) = {"
 aw
-aa
+HX
 ai
 ao
 ai
 aG
-aa
+HX
 bc
 br
-aa
+HX
 bZ
-aa
+HX
 bX
 ce
-aa
-aa
-aa
-aa
+HX
+HX
+HX
+HX
 da
-aa
+HX
 aw
 aw
 "}
 (20,1,1) = {"
 aw
-aa
+HX
 ai
 ai
 ay
 aj
-aa
+HX
 bd
 bs
-aa
+HX
 cw
-aa
+HX
 bY
 cf
 cn
@@ -1378,67 +1397,67 @@ cu
 cC
 cM
 cL
-aa
+HX
 aw
 aw
 "}
 (21,1,1) = {"
-aw
-aa
+Ed
+HX
 aj
 aj
 ai
 ah
-aa
+HX
 be
 bt
-bF
+Mr
 bf
-bS
+ZD
 cx
 bY
 co
-aa
+HX
 cd
 cN
 cV
-aa
+HX
 aw
 aw
 "}
 (22,1,1) = {"
-aw
-aa
-aa
-ap
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+Ed
+HX
+HX
+ND
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
+HX
 aw
 aw
 "}
 (23,1,1) = {"
-aw
-aw
-aw
-aw
-aw
-aw
-aw
-aw
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
 aw
 aw
 aw
@@ -1455,12 +1474,12 @@ aw
 aw
 "}
 (24,1,1) = {"
-aw
-aw
-aw
-aw
-aw
-aw
+Ed
+Ed
+Ed
+Ed
+Ed
+Ed
 aw
 aw
 aw

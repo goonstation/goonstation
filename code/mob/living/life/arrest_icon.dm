@@ -9,33 +9,22 @@
 
 			//TODO : move this code somewhere else that updates from an event trigger instead of constantly
 			var/arrestState = ""
-			var/see_face = 1
-			if (istype(H.wear_mask) && !H.wear_mask.see_face)
-				see_face = 0
-			else if (istype(H.head) && !H.head.see_face)
-				see_face = 0
-			else if (istype(H.wear_suit) && !H.wear_suit.see_face)
-				see_face = 0
-			var/visibleName = see_face ? H.real_name : H.name
+			var/visibleName = H.face_visible() ? H.real_name : H.name
 
 			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 			if(record)
 				var/criminal = record["criminal"]
 				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
 					arrestState = criminal
-			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
+			else if(H.traitHolder.hasTrait("stowaway") && H.traitHolder.hasTrait("jailbird"))
 				arrestState = "*Arrest*"
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
 				if (locate(/obj/item/implant/counterrev) in H.implant)
-					if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
-						var/datum/game_mode/revolution/R = ticker.mode
-						if (H.mind && H.mind.special_role == ROLE_HEAD_REV)
-							arrestState = "RevHead"
-						else if (H.mind in R.revolutionaries)
-							arrestState = "Loyal_Progress"
-						else
-							arrestState = "Loyal"
+					if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+						arrestState = "RevHead"
+					else if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+						arrestState = "Loyal_Progress"
 					else
 						arrestState = "Loyal"
 
@@ -57,53 +46,56 @@
 						if (myID)
 							var/has_carry_permit = (access_carrypermit in myID.access)
 							var/has_contraband_permit = (access_contrabandpermit in myID.access)
+							if (!has_contraband_permit)
+								contrabandLevel += GET_ATOM_PROPERTY(H, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 							if (H.l_hand)
 								if (istype(H.l_hand, /obj/item/gun/))
 									if(!has_carry_permit)
-										contrabandLevel += H.l_hand.contraband
+										contrabandLevel += H.l_hand.get_contraband()
 								else
 									if(!has_contraband_permit)
-										contrabandLevel += H.l_hand.contraband
+										contrabandLevel += H.l_hand.get_contraband()
 
 							if (!contrabandLevel && H.r_hand)
 								if (istype(H.r_hand, /obj/item/gun/))
 									if(!has_carry_permit)
-										contrabandLevel += H.r_hand.contraband
+										contrabandLevel += H.r_hand.get_contraband()
 								else
 									if(!has_contraband_permit)
-										contrabandLevel += H.r_hand.contraband
+										contrabandLevel += H.r_hand.get_contraband()
 
 							if (!contrabandLevel && H.belt)
 								if (istype(H.belt, /obj/item/gun/))
 									if(!has_carry_permit)
-										contrabandLevel += H.belt.contraband
+										contrabandLevel += H.belt.get_contraband()
 								else
 									if(!has_contraband_permit)
-										contrabandLevel += H.belt.contraband
+										contrabandLevel += H.belt.get_contraband()
 
 							if (!contrabandLevel && H.wear_suit)
 								if(!has_contraband_permit)
-									contrabandLevel += H.wear_suit.contraband
+									contrabandLevel += H.wear_suit.get_contraband()
 
 							if (!contrabandLevel && H.back)
 								if (istype(H.back, /obj/item/gun/))
 									if (!has_carry_permit)
-										contrabandLevel += H.back.contraband
+										contrabandLevel += H.back.get_contraband()
 								else
 									if (!has_contraband_permit)
-										contrabandLevel += H.back.contraband
+										contrabandLevel += H.back.get_contraband()
 
 						else
 							if (H.l_hand)
-								contrabandLevel += H.l_hand.contraband
+								contrabandLevel += H.l_hand.get_contraband()
 							if (!contrabandLevel && H.r_hand)
-								contrabandLevel += H.r_hand.contraband
+								contrabandLevel += H.r_hand.get_contraband()
 							if (!contrabandLevel && H.belt)
-								contrabandLevel += H.belt.contraband
+								contrabandLevel += H.belt.get_contraband()
 							if (!contrabandLevel && H.wear_suit)
-								contrabandLevel += H.wear_suit.contraband
+								contrabandLevel += H.wear_suit.get_contraband()
 							if (!contrabandLevel && H.back)
-								contrabandLevel += H.back.contraband
+								contrabandLevel += H.back.get_contraband()
 
 						if (contrabandLevel > 0)
 							arrestState = "Contraband"

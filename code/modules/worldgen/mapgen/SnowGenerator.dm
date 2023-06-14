@@ -32,6 +32,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 85
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/snow_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -65,9 +67,9 @@
 				if(0.9 to 1)
 					heat_level = BIOME_HIGH_HEAT
 			switch(humidity)
-				if(0 to 0.20)
+				if(0 to 0.2)
 					humidity_level = BIOME_LOW_HUMIDITY
-				if(0.20 to 0.5)
+				if(0.2 to 0.5)
 					humidity_level = BIOME_LOWMEDIUM_HUMIDITY
 				if(0.5 to 0.75)
 					humidity_level = BIOME_HIGHMEDIUM_HUMIDITY
@@ -85,3 +87,11 @@
 			LAGCHECK(LAG_LOW)
 		else
 			LAGCHECK(LAG_HIGH)
+
+
+/turf/simulated/wall/auto/asteroid/mountain/snow
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
+
+/turf/simulated/floor/plating/airless/asteroid/mountain/snow
+	temperature = 235
+

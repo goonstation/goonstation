@@ -31,7 +31,7 @@
 					//break the seal
 					boutput(holder.owner, "<span class='alert'>You break [P]'s tamper-proof seal!</span>")
 					P.medical = 0
-			logTheThing("combat", holder.owner, target, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
+			logTheThing(LOG_COMBAT, holder.owner, "stings [target] with [name] as a changeling at [log_loc(holder.owner)].")
 			target.reagents.add_reagent(venom_id, inject_amount)
 			holder.owner.show_message("<span class='notice'>We stealthily sting [target].</span>")
 			return 0
@@ -63,7 +63,7 @@
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
-		logTheThing("combat", holder.owner, MT, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "stings [constructTarget(MT,"combat")] with [name] as a changeling [log_loc(holder.owner)].")
 
 	neurotoxin
 		name = "Neurotoxic Sting"
@@ -142,7 +142,7 @@
 	targeted = 0
 	target_anything = 0
 	copiable = 0
-	dont_lock_holder = 1
+	lock_holder = FALSE
 	ignore_holder_lock = 1
 	var/datum/bioHolder/dna_sting_target = null
 	var/datum/targetable/changeling/sting = null
@@ -162,7 +162,7 @@
 			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		var/target_name = tgui_input_list(holder.owner, "Select new DNA sting target!", "DNA Sting Target", sortList(H.absorbed_dna))
+		var/target_name = tgui_input_list(holder.owner, "Select new DNA sting target!", "DNA Sting Target", sortList(H.absorbed_dna, /proc/cmp_text_asc))
 		if (!target_name)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1

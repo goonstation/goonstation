@@ -17,7 +17,7 @@
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
-			playsound(user, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
 			if (do_after(user, 4.6 SECONDS))
@@ -233,7 +233,7 @@
 				src.desc = "A unique card allowing the user to teleport back to the location it was drawn, but only once!"
 				keep = 1
 			if("Syndicate Operative")
-				user.reagents.add_reagent("sarin", 50)
+				user.reagents.add_reagent("saxitoxin", 50)
 				qdel(src)
 			if("Robusted")
 				user.TakeDamage("head",user.max_health)
@@ -259,7 +259,7 @@
 						user.put_in_hand_or_drop(new /obj/item/instrument/bikehorn)
 				else if(input == "Immunity")
 					boutput(user,"<span class='success'>You will never slip again!</span>")
-					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal)
+					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal/magic)
 				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"
@@ -294,7 +294,7 @@
 				deck.inuse = 0
 				user.u_equip(deck)
 				deck.set_loc(get_turf(user))
-				logTheThing("combat", user, null, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "was gibbed by Zoldorf's crusher card at [log_loc(user)].")
 				user.gib(1)
 			if("Geneticist")
 				var/list/effectpool = list("xray","hulk","breathless","thermal_resist","regenerator","detox")
@@ -308,12 +308,9 @@
 						user.put_in_hand_or_drop(new /obj/item/implant/robust)
 					if("pack")
 						var/obj/item/storage/fanny/pack = new /obj/item/storage/fanny
-						new /obj/item/crowbar(pack)
-						new /obj/item/screwdriver(pack)
-						new /obj/item/wirecutters(pack)
-						new /obj/item/wrench(pack)
-						new /obj/item/weldingtool(pack)
-						new /obj/item/device/multitool(pack)
+						for (var/item in list(/obj/item/crowbar, /obj/item/screwdriver, /obj/item/wirecutters, /obj/item/wrench, /obj/item/weldingtool, \
+								/obj/item/device/multitool))
+							pack.storage.add_contents(new item(pack))
 						user.put_in_hand_or_drop(pack)
 					if("oxy")
 						user.put_in_hand_or_drop(new /obj/item/tank/emergency_oxygen)
@@ -427,7 +424,7 @@
 					return
 				if(isrestrictedz(user.z))
 					boutput(user, "<span class='alert'>You are suddenly zapped apart!</span>")
-					logTheThing("user", user, null, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "was gibbed for trying to use Zoldorf's presto scroll at [log_loc(user)].")
 					user.gib()
 
 				var/list/randomturfs = new/list()

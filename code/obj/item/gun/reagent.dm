@@ -1,10 +1,12 @@
+TYPEINFO(/obj/item/gun/reagent)
+	mats = 16
+
 /obj/item/gun/reagent
 	name = "reagent gun"
 	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
-	mats = 16
 	add_residue = 0 // Does this gun add gunshot residue when fired? Energy guns shouldn't.
 	var/capacity = 100 // reagent capacity of the gun
 	var/list/ammo_reagents = null // list of reagents accepted as ammo, leave blank if you want any to be accepted
@@ -65,7 +67,7 @@
 
 		return 0
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.reagents && src.current_projectile)
 			if(src.fractional && src.reagents.total_volume > 0)
 				return 1
@@ -74,7 +76,7 @@
 		return 0
 
 	process_ammo(var/mob/user)
-		if (!canshoot())
+		if (!canshoot(user))
 			boutput(user, "<span class='alert'>\The [src]'s internal reservoir does not contain enough reagents to fire it!</span>")
 		if(!src.projectile_reagents)
 			src.reagents.remove_any(src.current_projectile.cost)
@@ -96,7 +98,7 @@
 
 		if(src.reagents.total_volume)
 			if (src.dump_reagents_on_turf)
-				logTheThing("combat", usr, null, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
+				logTheThing(LOG_CHEMISTRY, usr, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
 				src.reagents.trans_to(get_turf(src), src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.UpdateIcon()
@@ -110,6 +112,9 @@
 
 		return ..()
 
+TYPEINFO(/obj/item/gun/reagent/syringe)
+	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
+
 /obj/item/gun/reagent/syringe
 	name = "syringe gun"
 	icon_state = "syringegun"
@@ -117,10 +122,9 @@
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 10
-	force = 4.0
+	force = 4
 	contraband = 3
 	add_residue = 1 // Does this gun add gunshot residue when fired? These syringes are probably propelled by CO2 or something, but whatever (Convair880).
-	mats = 12 // These are some of the few syndicate items that would be genuinely useful to non-antagonists when scanned.
 	is_syndicate = 0 // Gonna let mechanics scan these, even without the syndicate scanner. THIS MAY BE A BAD IDEA.
 	capacity = 90
 	projectile_reagents = 1
@@ -205,7 +209,7 @@ obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in y
 	name = "ectoblaster"
 	icon_state = "ecto0"
 	ammo_reagents = list("ectoplasm")
-	force = 7.0
+	force = 7
 	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()

@@ -198,6 +198,7 @@
 /obj/item/gun/kinetic/foamdartgun,
 /obj/item/gun/kinetic/foamdartrevolver,
 /obj/item/gun/kinetic/foamdartrevolver,
+/obj/item/gun/kinetic/foamdartshotgun,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -279,10 +280,8 @@
 /area/prefab/secbot_academy)
 "lu" = (
 /obj/machinery/light/small/floor,
-/obj/grille/catwalk/cross{
-	dir = 10
-	},
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "lA" = (
 /obj/decal/tile_edge/stripe{
@@ -385,16 +384,18 @@
 /area/prefab/secbot_academy)
 "pi" = (
 /obj/table/reinforced/bar/auto,
-/obj/machinery/networked/printer{
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Old Printer";
+	true_name = "printer";
 	pixel_y = 3
 	},
 /turf/simulated/floor/carpet/purple/fancy,
 /area/prefab/secbot_academy)
 "pY" = (
-/obj/grille/catwalk{
-	dir = 8
-	},
-/turf/space,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "ql" = (
 /obj/critter/bat/buff,
@@ -415,12 +416,10 @@
 /area/prefab/secbot_academy)
 "qN" = (
 /obj/table/auto,
-/obj/item/medical/medicaldiagnosis/stethoscope{
-	pixel_x = 5
-	},
 /obj/item/device/light/flashlight/penlight{
 	pixel_x = -6
 	},
+/obj/item/medicaldiagnosis/stethoscope,
 /turf/simulated/floor/sanitary,
 /area/prefab/secbot_academy)
 "ru" = (
@@ -434,7 +433,7 @@
 /area/prefab/secbot_academy)
 "sK" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "te" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -472,7 +471,7 @@
 	desc = "It seems to be advertising a book about a securitron who became THE LAW, huh.";
 	pixel_y = 32
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "vF" = (
 /obj/machinery/photocopier,
@@ -550,7 +549,7 @@
 /area/prefab/secbot_academy)
 "yQ" = (
 /obj/storage/closet/janitor{
-	spawn_contents = list(/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags = 2,/obj/item/clothing/under/rank/janitor = 2, /obj/item/clothing/shoes/black = 2, /obj/item/device/light/flashlight,/obj/item/clothing/shoes/galoshes/torn,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/storage/box/body_bag,/obj/item/caution = 6, /obj/item/clothing/gloves/long,/obj/item/handheld_vacuum)
+	spawn_contents = list(/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags=2,/obj/item/clothing/under/rank/janitor=2,/obj/item/clothing/shoes/black=2,/obj/item/device/light/flashlight,/obj/item/clothing/shoes/galoshes/torn,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/storage/box/body_bag,/obj/item/caution=6,/obj/item/clothing/gloves/long,/obj/item/handheld_vacuum)
 	},
 /obj/item/mop,
 /obj/item/mop,
@@ -579,7 +578,7 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "AJ" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "Bc" = (
 /turf/simulated/floor/engine,
@@ -720,7 +719,11 @@
 /area/prefab/secbot_academy)
 "Jp" = (
 /obj/machinery/light/runway_light,
-/turf/space,
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
 /area/noGenerate)
 "JG" = (
 /obj/machinery/light/incandescent{
@@ -766,6 +769,7 @@
 /area/prefab/secbot_academy)
 "JZ" = (
 /obj/storage/secure/crate,
+/obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
 /obj/item/ammo/bullets/foamdarts,
@@ -1014,7 +1018,7 @@
 /turf/simulated/floor/engine,
 /area/prefab/secbot_academy)
 "Uk" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Up" = (
 /turf/simulated/floor/blueblack{

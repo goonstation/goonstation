@@ -73,10 +73,10 @@
 	name = "beach ball"
 	item_state = "clown"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_TINY
-	force = 0.0
-	throwforce = 0.0
+	force = 0
+	throwforce = 0
 	throw_speed = 1
 	throw_range = 20
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT

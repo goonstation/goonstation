@@ -74,7 +74,7 @@
 	var/obj/item/clothing/suit/armor/football/S = src.wear_suit
 	if (S.in_rush) return
 	S.in_rush = 1
-	playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 0.4, 0 , 2)
+	playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 0.4, 0 , 2)
 
 	var/charge_dir = src.dir
 	var/turf/T = get_turf(src)
@@ -128,23 +128,23 @@
 		var/turf/throw_at = get_edge_target_turf(src, src.dir)
 		M.throw_at(throw_at, 10, 2)
 		playsound(src.loc, "swing_hit", 40, 1)
-		logTheThing("station", src, target, "tackles [target] using football gear [log_loc(src)].")
+		logTheThing(LOG_STATION, src, "tackles [target] using football gear [log_loc(src)].")
 	else if(isturf(target))
 		if(istype(target, /turf/simulated/wall/r_wall || istype(target, /turf/simulated/wall/auto/reinforced)) && prob(power / 2))
 			return
 		if(istype(target, /turf/simulated/wall) && prob(power))
 			var/turf/simulated/wall/T = target
 			T.dismantle_wall(1)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
-		logTheThing("combat", src, target, "tackles [target] using football gear [log_loc(src)].")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
 	else if (isobj(target))
 		var/obj/O = target
 		var/adjective = pick("hard", "strong", "powerful", "rough", "driven", "beefy", "big", "tough")
 		src.visible_message("<span class='alert'><B>[src] smashes into [target] with a [adjective] shoulder!</B></span>")
-		logTheThing("combat", src, target, "tackles [target] using football gear [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "tackles [target] using football gear [log_loc(src)].")
 		switch (src.smash_through(O, list("window", "grille", "table"), 0))
 			if (0)
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				if (istype(O, /obj/machinery/door) && O.density)
 					var/obj/machinery/door/D = O
 					SPAWN(0)
@@ -201,6 +201,7 @@
 		indicator.maptext_height = 64
 		setProperty("movespeed", 1)
 		add_filter("outline", 1, outline_filter(size=0.5, color=rgb(255,255,255)))
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	pickup(mob/M)
 		..()
@@ -239,24 +240,29 @@
 		SHOULD_CALL_PARENT(FALSE)
 		return // CRASH("YOU CAN'T DELETE THE FOOTBALL! YOU WILL REGRET THIS!")
 
+	// just in case someone has to hard del a ball
+	Del()
+		. = ..()
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
+
+
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom)
 			if(ismob(hit_atom) && ishuman(hit_atom))
 				var/mob/living/carbon/human/H = hit_atom
 				var/mob/living/carbon/human/user = usr
 				if (H.mind && user.mind && H.mind.special_role == user.mind.special_role)
-					playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 					src.Attackhand(H)
 					H.visible_message("<span class='combat'>[user] passes \the [src] to [H]!</span>", "<span class='combat'>You pass \the [src] to [H]!</span>")
 					return
 
 		..()
-
 	ex_act(severity)
 		return
 
 /obj/item/football/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 	src.icon_state = "football_air"
 	. = ..()
 
@@ -264,7 +270,7 @@
 	. = ..(hit_atom)
 	src.icon_state = "football"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if (ismob(hit_atom))
 			var/mob/hitMob = hit_atom
 			if (ishuman(hitMob))
@@ -291,7 +297,7 @@
 		if (user:wearing_football_gear())
 			user.visible_message("<span class='alert'><b>[user] spikes [src] into the ground! TOUCHDOWN!!!</b></span>")
 			user.TakeDamage("head", 150, 0)
-			playsound(src.loc, "sound/items/bball_bounce.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/bball_bounce.ogg', 50, 1)
 			var/turf/T = get_turf(src.loc)
 			if(T)
 				explosion_new(src, T, 32)
@@ -299,5 +305,5 @@
 
 	user.visible_message("<span class='alert'><b>[user] spikes [src]. It bounces back up and hits [him_or_her(user)] square in the forehead!</b></span>")
 	user.TakeDamage("head", 150, 0)
-	playsound(src.loc, "sound/items/bball_bounce.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/bball_bounce.ogg', 50, 1)
 	return 1

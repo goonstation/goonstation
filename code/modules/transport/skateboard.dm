@@ -33,7 +33,7 @@
 /obj/decal/skateboardpopup
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	layer = MOB_LAYER + 2
 	icon = 'icons/effects/96x32.dmi'
@@ -67,7 +67,7 @@
 	icon_state = "skateboard0"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	var/sickness = 0
 	var/speed_delay = 5
 	var/datum/action/bar/skateboard/runningAction = null
@@ -115,7 +115,7 @@
 			runningAction.bar.color = "#0000FF"
 
 /obj/vehicle/skateboard/proc/trickName()
-	var/list/adjectives = list("sicknasty", "sick", "sweet", "bitchin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
+	var/list/adjectives = list("sicknasty", "sick", "sweet", "ballin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
 	var/list/nouns = list("grind", "aerial", "cabbalerial", "eggplant", "rollo", "flip", "heel flip", "kick flip", "nollie kick flip", "aerial", "lipslide", "mctwist", "tailslide", "finger flip", "butter flip", "calf wrap", "g-turn", "coco-slide", "handstand", "heli-pop", "gazelle", "m80", "kickback", "jaywalk", "pogo", "pressure flip", "streetplant", "shove-it", "railslide")
 	return pick(adjectives) + " " + pick(nouns)
 
@@ -159,7 +159,7 @@
 	if(AM in bumped_queue)
 		give_points = 0
 	if(last_bumped_atom)
-		if(get_dist(last_bumped_atom, AM) <= 3)
+		if(GET_DIST(last_bumped_atom, AM) <= 3)
 			give_points = 0
 
 	last_bumped_atom = AM
@@ -221,7 +221,7 @@
 	in_bump = 0
 	return
 
-/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	if (!src.rider)
 		return
 
@@ -235,7 +235,7 @@
 
 	if(crashed)
 		if(crashed > 30)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 70, 1)
 
 		src.messageNearby("<span class='alert'><B>You are flung off the [src]!</B></span>", "<span class='alert'><B>[rider] is flung off the [src]!</B></span>")
 
@@ -311,13 +311,13 @@
 	switch(M.a_intent)
 		if("harm", "disarm")
 			if(prob(60))
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of the [src]!</B></span>")
 				src.log_me(src.rider, M, "shoved_off")
 				rider.weakened = 2
 				eject_rider()
 			else
-				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	*/
 	return

@@ -34,21 +34,14 @@
 			nextpopcheck = TIME + 4 MINUTES
 			var/clients_num = total_clients()
 			if (clients_num >= SLOWEST_LIFE_PLAYERCOUNT)
-				schedule_interval = 8 SECONDS
+				schedule_interval = 4 SECONDS
 				footstep_extrarange = -10
-				max_sound_range = MAX_SOUND_RANGE_OVERLOADED
 			else if (clients_num >= SLOW_LIFE_PLAYERCOUNT)  //hacky lag saving measure
-				schedule_interval = 6.5 SECONDS
-				footstep_extrarange = 0
-				max_sound_range = MAX_SOUND_RANGE_NORMAL
-			else if (clients_num <= FAST_LIFE_PLAYERCOUNT)
+				schedule_interval = 3 SECONDS
+				footstep_extrarange = -5
+			else
 				schedule_interval = 2 SECONDS
 				footstep_extrarange = 0
-				max_sound_range = MAX_SOUND_RANGE_NORMAL
-			else
-				schedule_interval = 4 SECONDS
-				footstep_extrarange = 0
-				max_sound_range = MAX_SOUND_RANGE_NORMAL
 			if(isnum_safe(schedule_override))
 				schedule_interval = schedule_override
 
@@ -60,10 +53,6 @@
 				M.Life(src)
 				if (!(c++ % 5))
 					scheck()
-			else if(istype(X, /mob/wraith))
-				var/mob/wraith/W = X
-				W.Life(src)
-				scheck()
 			else if(istype(X, /mob/dead))
 				var/mob/dead/G = X
 				#ifdef HALLOWEEN

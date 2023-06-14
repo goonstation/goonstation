@@ -31,6 +31,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/jungle_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -89,19 +91,35 @@
 	name = "mountain"
 	desc = "a rocky mountain"
 	fullbright = 0
+	default_ore = null
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
-	destroy_asteroid(var/dropOre=0)
+	destroy_asteroid(var/dropOre=1)
 		var/image/weather = GetOverlayImage("weather")
 		var/image/ambient = GetOverlayImage("ambient")
 
-		src.RL_SetOpacity(0)
-		src.ReplaceWith(/turf/unsimulated/floor/setpieces/Azarak/cavefloor/floor3)
-		src.opacity = 0
-		src.levelupdate()
+		if(src.ore || prob(8)) // provide less rock
+			default_ore = /obj/item/raw_material/rock
+		. = ..()
 
 		if(weather)
 			src.UpdateOverlays(weather, "weather")
 		if(ambient)
 			src.UpdateOverlays(ambient, "ambient")
 
+		if(air) // force reverting air to floor turf as this is post replace
+#define _TRANSFER_GAS_TO_AIR(GAS, ...) air.GAS = GAS;
+			APPLY_TO_GASES(_TRANSFER_GAS_TO_AIR)
+#undef _TRANSFER_GAS_TO_AIR
+
+			air.temperature = temperature
+
 		return src
+
+/turf/simulated/floor/plating/airless/asteroid/mountain
+	name = "mountain"
+	desc = "a rocky mountain"
+	oxygen = MOLES_O2STANDARD
+	nitrogen = MOLES_N2STANDARD
+	temperature = T20C
+	fullbright = 0

@@ -25,7 +25,7 @@
 			if (C?.in_fakedeath)
 				changeling_fakedeath = 1
 
-			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || statusList["resting"]) //Stunned etc.
+			if (statusList["paralysis"] || statusList["stunned"] || statusList["weakened"] || statusList["pinned"] || changeling_fakedeath || must_lie) //Stunned etc.
 				var/setStat = owner.stat
 				var/oldStat = owner.stat
 				if (statusList["stunned"])
@@ -71,14 +71,14 @@
 			owner.update_lying()
 			owner.set_density(!owner.lying)
 
-			if (owner.lying && !owner.buckled)
+			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)
 				var/sound_to_play = 'sound/misc/body_thud.ogg'
 				if (T?.active_liquid && T.active_liquid.my_depth_level <= 3)
 					T.active_liquid.Crossed(owner)
 					boutput(src, "<span class='notice'>You splash into [T.active_liquid].</span>")
 					sound_to_play = 'sound/misc/splash_2.ogg'
-				else if(T.active_liquid)
+				else if(T?.active_liquid)
 					sound_to_play = null
 				if(sound_to_play)
 					playsound(owner.loc, sound_to_play, human_owner ? 40 : 15, 1, 0.3)

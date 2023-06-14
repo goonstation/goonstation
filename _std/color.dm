@@ -4,9 +4,13 @@
 
 #define hex2num(X) text2num(X, 16)
 
+#define hsl2rgb(hue, sat, lum) rgb(h=hue,s=sat,l=lum)
+
 #define hsv2rgb(hue, sat, val) rgb(h=hue,s=sat,v=val)
 
 #define hsv2rgblist(hue, sat, val) rgb2num(hsv2rgb(hue, sat, val))
+
+#define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
@@ -31,7 +35,7 @@
 	return rgb(22, 210, 22)
 
 /proc/fix_hex(hex)
-	return copytext(hex + "000000", 1, 8)
+	return copytext((startswith(hex, "#") ? hex : "#") + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
@@ -78,7 +82,7 @@
 
 /// Takes two 20-length lists, turns them into 5x4 matrices, multiplies them together, and returns a 20-length list
 /proc/mult_color_matrix(var/list/Mat1, var/list/Mat2) // always 5x4 please
-	if (!Mat1.len || !Mat2.len || Mat1.len != 20 || Mat2.len != 20)
+	if (length(Mat1) != 20 || length(Mat2) != 20)
 		return COLOR_MATRIX_IDENTITY
 
 	var/list/M1[5][5] // turn the input matrix lists into more matrix-y lists
@@ -197,17 +201,38 @@ proc/color_mapping_matrix(list/list/inp, list/list/out)
 	// don't panic, this is essentially just condensed way of writing: inversion of the (i1, i2, i3) matrix multiplied by the (o1, o2, o3) matrix
 	// which essentially means: translate i1 to red, i2 to green, i3 to blue; then translate red to o1, green to o2, blue to o3
 	// see this link (but beware bad variable names): https://www.wolframalpha.com/input/?i=%28invert+%28%28a%2Cb%2Cc%29%2C%28d%2Ce%2Cf%29%2C%28g%2Ch%2Ci%29%29%29%28%28j%2Ck%2Cl%29%2C%28m%2Cn%2Co%29%2C%28p%2Cq%2Cr%29%29
-	var/D = inp[1][1]*inp[2][2]*inp[3][3] - inp[1][1]*inp[2][3]*inp[3][2] - inp[1][2]*inp[2][1]*inp[3][3] + inp[1][2]*inp[2][3]*inp[3][1] + inp[1][3]*inp[2][1]*inp[3][2] - inp[1][3]*inp[2][2]*inp[3][1]
+	// also cache accesses because BYOND doesn't natively
+	var/rr1 = inp[1][1]
+	var/rg1 = inp[1][2]
+	var/rb1 = inp[1][3]
+	var/gr1 = inp[2][1]
+	var/gg1 = inp[2][2]
+	var/gb1 = inp[2][3]
+	var/br1 = inp[3][1]
+	var/bg1 = inp[3][2]
+	var/bb1 = inp[3][3]
+
+	var/rr2 = out[1][1]
+	var/rg2 = out[1][2]
+	var/rb2 = out[1][3]
+	var/gr2 = out[2][1]
+	var/gg2 = out[2][2]
+	var/gb2 = out[2][3]
+	var/br2 = out[3][1]
+	var/bg2 = out[3][2]
+	var/bb2 = out[3][3]
+
+	var/D = rr1*gg1*bb1 - rr1*bg1*gb1 - gr1*rg1*bb1 + gr1*bg1*rb1 + br1*rg1*gb1 - br1*gg1*rb1
 	return list(
-		( inp[1][2]*inp[2][3]*out[3][1] - inp[1][2]*inp[3][3]*out[2][1] - inp[1][3]*inp[2][2]*out[3][1] + inp[1][3]*inp[3][2]*out[2][1] + inp[2][2]*inp[3][3]*out[1][1] - inp[2][3]*inp[3][2]*out[1][1]) / D,
-		( inp[1][2]*inp[2][3]*out[3][2] - inp[1][2]*inp[3][3]*out[2][2] - inp[1][3]*inp[2][2]*out[3][2] + inp[1][3]*inp[3][2]*out[2][2] + inp[2][2]*inp[3][3]*out[1][2] - inp[2][3]*inp[3][2]*out[1][2]) / D,
-		( inp[1][2]*inp[2][3]*out[3][3] - inp[1][2]*inp[3][3]*out[2][3] - inp[1][3]*inp[2][2]*out[3][3] + inp[1][3]*inp[3][2]*out[2][3] + inp[2][2]*inp[3][3]*out[1][3] - inp[2][3]*inp[3][2]*out[1][3]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][1] + inp[1][1]*inp[3][3]*out[2][1] + inp[1][3]*inp[2][1]*out[3][1] - inp[1][3]*inp[3][1]*out[2][1] - inp[2][1]*inp[3][3]*out[1][1] + inp[2][3]*inp[3][1]*out[1][1]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][2] + inp[1][1]*inp[3][3]*out[2][2] + inp[1][3]*inp[2][1]*out[3][2] - inp[1][3]*inp[3][1]*out[2][2] - inp[2][1]*inp[3][3]*out[1][2] + inp[2][3]*inp[3][1]*out[1][2]) / D,
-		(-inp[1][1]*inp[2][3]*out[3][3] + inp[1][1]*inp[3][3]*out[2][3] + inp[1][3]*inp[2][1]*out[3][3] - inp[1][3]*inp[3][1]*out[2][3] - inp[2][1]*inp[3][3]*out[1][3] + inp[2][3]*inp[3][1]*out[1][3]) / D,
-		( inp[1][1]*inp[2][2]*out[3][1] - inp[1][1]*inp[3][2]*out[2][1] - inp[1][2]*inp[2][1]*out[3][1] + inp[1][2]*inp[3][1]*out[2][1] + inp[2][1]*inp[3][2]*out[1][1] - inp[2][2]*inp[3][1]*out[1][1]) / D,
-		( inp[1][1]*inp[2][2]*out[3][2] - inp[1][1]*inp[3][2]*out[2][2] - inp[1][2]*inp[2][1]*out[3][2] + inp[1][2]*inp[3][1]*out[2][2] + inp[2][1]*inp[3][2]*out[1][2] - inp[2][2]*inp[3][1]*out[1][2]) / D,
-		( inp[1][1]*inp[2][2]*out[3][3] - inp[1][1]*inp[3][2]*out[2][3] - inp[1][2]*inp[2][1]*out[3][3] + inp[1][2]*inp[3][1]*out[2][3] + inp[2][1]*inp[3][2]*out[1][3] - inp[2][2]*inp[3][1]*out[1][3]) / D
+		( rg1*gb1*br2 - rg1*bb1*gr2 - rb1*gg1*br2 + rb1*bg1*gr2 + gg1*bb1*rr2 - gb1*bg1*rr2) / D,
+		( rg1*gb1*bg2 - rg1*bb1*gg2 - rb1*gg1*bg2 + rb1*bg1*gg2 + gg1*bb1*rg2 - gb1*bg1*rg2) / D,
+		( rg1*gb1*bb2 - rg1*bb1*gb2 - rb1*gg1*bb2 + rb1*bg1*gb2 + gg1*bb1*rb2 - gb1*bg1*rb2) / D,
+		(-rr1*gb1*br2 + rr1*bb1*gr2 + rb1*gr1*br2 - rb1*br1*gr2 - gr1*bb1*rr2 + gb1*br1*rr2) / D,
+		(-rr1*gb1*bg2 + rr1*bb1*gg2 + rb1*gr1*bg2 - rb1*br1*gg2 - gr1*bb1*rg2 + gb1*br1*rg2) / D,
+		(-rr1*gb1*bb2 + rr1*bb1*gb2 + rb1*gr1*bb2 - rb1*br1*gb2 - gr1*bb1*rb2 + gb1*br1*rb2) / D,
+		( rr1*gg1*br2 - rr1*bg1*gr2 - rg1*gr1*br2 + rg1*br1*gr2 + gr1*bg1*rr2 - gg1*br1*rr2) / D,
+		( rr1*gg1*bg2 - rr1*bg1*gg2 - rg1*gr1*bg2 + rg1*br1*gg2 + gr1*bg1*rg2 - gg1*br1*rg2) / D,
+		( rr1*gg1*bb2 - rr1*bg1*gb2 - rg1*gr1*bb2 + rg1*br1*gb2 + gr1*bg1*rb2 - gg1*br1*rb2) / D
 	)
 
 /**
@@ -257,10 +282,60 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0.299*v + 0.701*vsu + 0.168*vsw,
 		0.299*v - 0.299*vsu - 0.328*vsw,
 		0.299*v - 0.300*vsu + 1.25*vsw,
+		0,
 		0.587*v - 0.587*vsu + 0.330*vsw,
 		0.587*v + 0.413*vsu + 0.035*vsw,
 		0.587*v - 0.588*vsu - 1.05*vsw,
+		0,
 		0.114*v - 0.114*vsu - 0.497*vsw,
 		0.114*v - 0.114*vsu + 0.292*vsw,
-		0.114*v + 0.886*vsu - 0.203*vsw
+		0.114*v + 0.886*vsu - 0.203*vsw,
+		0,
+		0, 0, 0, 1,
+		0, 0, 0, 0
 	)
+
+/**
+ * Takes an icon and optionally two non-zero Pixel Intervals and returns the average color of the icon.
+ *
+ * The pixel intervals represent the distance between each pixel scanned on the X/Y axes respectively, and default to 4 for performance.
+ * For example, an X interval of 1 and a Y interval of 3 will mean every X coordinate of every 3rd Y coordinate will be scanned.
+ */
+proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
+	var/rSum  = 0
+	var/gSum  = 0
+	var/bSum  = 0
+	var/total = 0
+	var/icon_width = I.Width()
+	var/icon_height = I.Height()
+	//estimate color
+	for (var/y = 1 to icon_height step yPixelInterval)
+		for (var/x = 1 to icon_width step xPixelInterval)
+			var/pixColor = I.GetPixel(x,y)
+			if (!pixColor)
+				continue
+			var/rgba = rgb2num(pixColor)
+			var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
+			total += weight
+			rSum += rgba[1] * weight
+			gSum += rgba[2] * weight
+			bSum += rgba[3] * weight
+	if (total == 0)
+		return "#00000000"
+	return rgb(rSum/total,gSum/total,bSum/total)
+
+/client/proc/set_saturation(s=1)
+	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
+	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+
+/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY, respect_view_tint_settings = FALSE)
+	if (!respect_view_tint_settings)
+		src.color_matrix = matrix
+	else
+		src.color_matrix = src.view_tint ? matrix : null
+	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+
+/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
+	src.color_matrix = matrix
+	matrix = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	animate(src, color=matrix, time=time, easing=easing)

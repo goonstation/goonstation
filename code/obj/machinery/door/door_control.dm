@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/machinery/door_control, proc/toggle)
 /obj/machinery/door_control
 	name = "Remote Door Control"
 	icon = 'icons/obj/stationobjs.dmi'
@@ -7,7 +8,7 @@
 	var/timer = 0
 	var/cooldown = 0 SECONDS
 	var/inuse = FALSE
-	anchored = 1.0
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 
@@ -401,20 +402,23 @@
 	return src.Attackhand(user)
 
 /obj/machinery/door_control/attack_hand(mob/user)
-	if((status & (NOPOWER|BROKEN)) || inuse)
-		return
-
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat)
 		return
+	src.toggle(user)
+	src.add_fingerprint(user)
 
-	use_power(5)
+/obj/machinery/door_control/proc/toggle(mob/user)
+	if((src.status & (NOPOWER|BROKEN)) || inuse)
+		return
+
+	src.use_power(5)
 	icon_state = "doorctrl1"
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 
 	if (!src.id)
 		return
 
-	logTheThing("station", user, null, "toggled the [src.name] at [log_loc(src)].")
+	logTheThing(LOG_STATION, user || usr, "toggled the [src.name] at [log_loc(src)].")
 
 	for (var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)
@@ -456,23 +460,22 @@
 		inuse = FALSE
 
 	SPAWN(1.5 SECONDS)
-		if(!(status & NOPOWER))
+		if(!(src.status & NOPOWER))
 			icon_state = "doorctrl0"
-	src.add_fingerprint(user)
 
 /obj/machinery/door_control/power_change()
 	..()
-	if(status & NOPOWER)
+	if(src.status & NOPOWER)
 		icon_state = "doorctrl-p"
 	else
 		icon_state = "doorctrl0"
 
 /obj/machinery/door_control/oneshot/attack_hand(mob/user)
 	..()
-	if (!(status & BROKEN))
+	if (!(src.status & BROKEN))
 		src.status |= BROKEN
 		src.visible_message("<span class='alert'>[src] emits a sad thunk.  That can't be good.</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 50, 1)
 	else
 		boutput(user, "<span class='alert'>It's broken.</span>")
 
@@ -488,7 +491,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	/// compatible machines with a matching id will be activated
 	var/id = null
 	var/active = FALSE
-	anchored = 1.0
+	anchored = ANCHORED
 
 	proc/activate()
 		return
@@ -502,12 +505,12 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	return src.Attackhand(user)
 
 /obj/machinery/activation_button/attack_hand(mob/user)
-	if(status & (NOPOWER|BROKEN))
+	if(src.status & (NOPOWER|BROKEN))
 		return
 	if(active)
 		return
 
-	use_power(5)
+	src.use_power(5)
 	playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 	src.active = TRUE
 	icon_state = "launcheract"
@@ -574,7 +577,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 	var/frequency = FREQ_DOOR_CONTROL
 	var/open = 0 //open or not?
 	var/access_type = POD_ACCESS_STANDARD
-	anchored = 1.0
+	anchored = ANCHORED
 	var/datum/light/light
 
 	syndicate
@@ -981,7 +984,7 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		light.enable()
 
 	Click(var/location,var/control,var/params)
-		if(get_dist(usr, src) < 16)
+		if(GET_DIST(usr, src) < 16)
 			if(istype(usr.loc, /obj/machinery/vehicle))
 				var/obj/machinery/vehicle/V = usr.loc
 				if (!V.com_system)
@@ -1013,9 +1016,9 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 		return
 
 	proc/open_door()
-		if(status & (NOPOWER|BROKEN))
+		if(src.status & (NOPOWER|BROKEN))
 			return
-		use_power(5)
+		src.use_power(5)
 
 		for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 			if (M.id == src.id)
@@ -1042,9 +1045,9 @@ ABSTRACT_TYPE(/obj/machinery/activation_button)
 				return
 
 			if(signal.data["doorpass"] == src.pass)
-				if(status & (NOPOWER|BROKEN))
+				if(src.status & (NOPOWER|BROKEN))
 					return
-				use_power(5)
+				src.use_power(5)
 
 				for(var/obj/machinery/door/poddoor/M in by_type[/obj/machinery/door])
 					if (M.id == src.id)

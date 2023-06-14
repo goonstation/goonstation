@@ -16,14 +16,14 @@
 	name = "Booster"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "boosterstrip"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 	Crossed(atom/movable/A)
 		..()
 		if(istype(A,/obj/racing_clowncar))
-			playsound(A, "sound/mksounds/boost.ogg",30, 0)
+			playsound(A, 'sound/mksounds/boost.ogg', 30, 0)
 			step(A,src.dir)
 
 			var/obj/racing_clowncar/R = A
@@ -39,7 +39,7 @@
 /obj/racing_powerup_spawner
 	name = "PowerUpSpawner"
 	icon = 'icons/Testing/atmos_testing.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS
@@ -69,7 +69,7 @@
 	name = "butt"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "buttshell"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/source_car = null
@@ -80,7 +80,7 @@
 		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN(7.5 SECONDS)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			qdel(src)
 		move_process()
 
@@ -88,7 +88,7 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(A, "sound/mksounds/gothit.ogg",45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
 			qdel(src)
 
 	proc/move_process()
@@ -101,7 +101,7 @@
 	name = "superbutt"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "superbuttshell"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/source_car = null
@@ -112,7 +112,7 @@
 		src.set_dir(spawndir)
 		source_car = sourcecar
 		SPAWN(7.5 SECONDS)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			qdel(src)
 		move_process()
 
@@ -120,7 +120,7 @@
 		if(istype(A,/obj/racing_clowncar) && A != source_car)
 			var/obj/racing_clowncar/R = A
 			R.spin(15)
-			playsound(A, "sound/mksounds/gothit.ogg",45, 0)
+			playsound(A, 'sound/mksounds/gothit.ogg', 45, 0)
 			qdel(src)
 
 	proc/move_process()
@@ -145,7 +145,7 @@
 	name = "banana peel"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "banana-peel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/delete = 1
@@ -171,7 +171,7 @@
 		if(istype(A,/obj/racing_clowncar))
 			var/obj/racing_clowncar/R = A
 			R.spin(20)
-			playsound(src, "sound/mksounds/itemdestroy.ogg",45, 0)
+			playsound(src, 'sound/mksounds/itemdestroy.ogg', 45, 0)
 			if(delete)	qdel(src)
 
 
@@ -179,7 +179,7 @@
 	name = "POWERUP!"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "powerup"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -195,7 +195,7 @@
 	desc = "Click to use"
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER
 	screen_loc = "NORTH,WEST"
 	var/obj/racing_clowncar/owner
@@ -217,7 +217,7 @@
 /obj/powerup/bananapeel
 	name = "Bananapeel"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "banana"
 	screen_loc = "NORTH,WEST"
 
@@ -230,7 +230,7 @@
 		var/turf/T = get_turf(src.loc)
 		new/obj/racing_trap_banana/(T)
 
-		playsound(T, "sound/mksounds/itemdrop.ogg",45, 0)
+		playsound(T, 'sound/mksounds/itemdrop.ogg', 45, 0)
 
 		qdel(src)
 
@@ -239,7 +239,7 @@
 /obj/powerup/butt
 	name = "Butt"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "butt"
 	screen_loc = "NORTH,WEST"
 
@@ -260,7 +260,7 @@
 
 		new/obj/racing_butt(trg, C.dir, C)
 
-		playsound(C, "sound/mksounds/throw.ogg",33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
 
 		qdel(src)
 
@@ -269,7 +269,7 @@
 /obj/powerup/superbutt
 	name = "Superbutt"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "superbutt"
 	screen_loc = "NORTH,WEST"
 
@@ -290,7 +290,7 @@
 
 		new/obj/super_racing_butt(trg, C.dir, C)
 
-		playsound(C, "sound/mksounds/throw.ogg",33, 0)
+		playsound(C, 'sound/mksounds/throw.ogg', 33, 0)
 
 		qdel(src)
 
@@ -299,7 +299,7 @@
 /obj/powerup/mushroom
 	name = "Mushroom"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "mushroom"
 	screen_loc = "NORTH,WEST"
 
@@ -313,7 +313,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, "sound/mksounds/boost.ogg",33, 0)
+		playsound(R, 'sound/mksounds/boost.ogg', 33, 0)
 
 		R.boost()
 		qdel(source)
@@ -322,7 +322,7 @@
 /obj/powerup/superboost
 	name = "Super Boost"
 	desc = "Click to use"
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "superboost"
 	screen_loc = "NORTH,WEST"
 
@@ -336,7 +336,7 @@
 
 		var/obj/racing_clowncar/R = source.loc
 
-		playsound(R, "sound/mksounds/invin10sec.ogg",33, 0,0) // 33
+		playsound(R, 'sound/mksounds/invin10sec.ogg',33, 0,0) // 33
 
 		R.super = 1
 		R.boost()
@@ -348,7 +348,7 @@
 	desc = ""
 	icon = 'icons/misc/racing.dmi'
 	icon_state = "clowncar"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 
@@ -370,7 +370,7 @@
 		var/list/powerups = childrentypesof(/obj/powerup/)
 		if(!powerups.len) return
 
-		playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+		playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 
 		for(var/obj/powerup/OLD in src)
 			qdel(OLD)
@@ -427,7 +427,7 @@
 		var/image/out_of_control = image('icons/misc/racing.dmi',"broken")
 		src.overlays += out_of_control
 
-		playsound(src, "sound/mksounds/cpuspin.ogg",33, 0)
+		playsound(src, 'sound/mksounds/cpuspin.ogg', 33, 0)
 
 		SPAWN(magnitude+1)
 			cant_control = 0
@@ -467,7 +467,7 @@
 
 	proc/stop()
 		driving = 0
-		playsound(src, "sound/mksounds/skidd.ogg",25, 0)
+		playsound(src, 'sound/mksounds/skidd.ogg', 25, 0)
 		walk(src, 0)
 
 	relaymove(mob/user, direction)

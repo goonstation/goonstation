@@ -110,12 +110,22 @@
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
 /obj/item/toy/diploma/attack(mob/M, mob/user)
-	if (isliving(user))
-		var/mob/living/L = user
-		if (L.mind && L.mind.assigned_role == "Clown")
-			L.visible_message("<span class='alert'><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.mind && H.mind.assigned_role == "Clown")
+			if (M == user)
+				user.visible_message("[H] shows off [src]!", 1)
+				return
+			if(ON_COOLDOWN(M, "clown_diploma", 30 SECONDS))
+				user.visible_message("[H] waves the diploma at [M]!")
+				return
+			H.visible_message("<span class='alert'><B>[H] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
 			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+		else
+			..()
+	else
+		..()
 
 /obj/item/toy/gooncode
 	name = "gooncode hard disk drive"
@@ -184,12 +194,14 @@
 /obj/machinery/computer/arcade/handheld
 	desc = "You shouldn't see this, I exist for typechecks"
 
+TYPEINFO(/obj/item/toy/handheld)
+	mats = 2
+
 /obj/item/toy/handheld
 	name = "arcade toy"
 	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "arcade-generic"
-	mats = 2
 	var/arcademode = FALSE
 	//The arcade machine will typecheck if we're this type
 	var/obj/machinery/computer/arcade/handheld/arcadeholder = null
@@ -303,12 +315,12 @@
 
 	New()
 		. = ..()
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	proc/generate_words()
 		var/list/words = list()

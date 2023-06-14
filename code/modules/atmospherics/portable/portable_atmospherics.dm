@@ -53,6 +53,9 @@
 
 		..()
 
+	get_desc()
+		. = " It is labeled to have a volume of [src.volume] litres."
+
 	proc
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
@@ -63,8 +66,6 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing("combat", usr, null, "attaches [src] to [new_port] at [log_loc(new_port)].")
-
 			add_fingerprint(usr)
 
 			//Perform the connection
@@ -72,7 +73,7 @@
 			connected_port.connected_device = src
 			connected_port.on = 1
 
-			anchored = 1 //Prevent movement
+			anchored = ANCHORED //Prevent movement
 
 			//Actually enforce the air sharing
 			var/datum/pipe_network/network = connected_port.return_network(src)
@@ -88,7 +89,7 @@
 			var/datum/pipe_network/network = connected_port.return_network(src)
 			network?.gases -= air_contents
 
-			anchored = 0
+			anchored = UNANCHORED
 
 			connected_port.connected_device = null
 			connected_port = null
@@ -120,19 +121,19 @@
 				boutput(user, "<span class='alert'>The detonating mechanism blocks you from modifying the anchors on the [src.name].</span>")
 				return
 		if(connected_port)
-			logTheThing("station", user, null, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
 			disconnect()
 			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			tgui_process.update_uis(src)
 			return
 		else
 			var/obj/machinery/atmospherics/portables_connector/possible_port = locate(/obj/machinery/atmospherics/portables_connector/) in loc
 			if(possible_port)
 				if(connect(possible_port))
-					logTheThing("station", user, null, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
 					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					tgui_process.update_uis(src)
 					return
 				else

@@ -11,11 +11,27 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/atom/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, TRUE)
 		else
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/mob/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -261,7 +277,7 @@
 							pulling += G.affecting
 
 						for (var/atom/movable/A in pulling)
-							if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 								continue
 							if (A == src || A == pushing)
 								continue
@@ -280,3 +296,12 @@
 
 			next_move = world.time + delay
 			return delay
+		else
+			if (src.restrained() || !isalive(src))
+				return
+			for (var/obj/item/grab/G as anything in src.grabbed_by)
+				if (G.state == GRAB_PIN)
+					if (src.last_resist > world.time)
+						return
+					src.last_resist = world.time + 20
+					G.do_resist()

@@ -4,9 +4,10 @@ import { Box } from "./Box";
 export const Image = (props) => {
   const { pixelated, className, ...rest } = props;
 
-  return (<Box as="img" {...rest} className={classes(
-    "Image",
-    pixelated && "Image--pixelated",
-    className
-  )} />);
+  return (<Box as="img" {...rest}
+    style={pixelated && { '-ms-interpolation-mode': 'nearest-neighbor' }}
+    className={classes(
+      "Image",
+      className
+    )} />);
 };

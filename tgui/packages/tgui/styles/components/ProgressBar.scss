@@ -13,7 +13,7 @@ $border-radius: base.$border-radius  !default;
 $bg-map: colors.$bg-map  !default;
 
 .ProgressBar {
-  display: inline-block;
+  display: flex;
   position: relative;
   width: 100%;
   padding: 0 0.5em;
@@ -22,6 +22,7 @@ $bg-map: colors.$bg-map  !default;
   border-radius: $border-radius;
   background-color: $background-color;
   transition: border-color 900ms ease-out;
+  align-items: center;
 }
 
 .ProgressBar__fill {

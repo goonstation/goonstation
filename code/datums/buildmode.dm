@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = INVIS_GHOST
+		usr.see_invisible = INVIS_SPOOKY
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
@@ -268,7 +268,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/builddir
 	name = "Set direction"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = SOUTH
@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/buildhelp
 	name = "Click for help"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -328,7 +328,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/buildquit
 	name = "Click to exit build mode"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -347,7 +347,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/buildmode
 	name = "Click to select mode"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -364,7 +364,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if ("middle" in pa)
 			src.holder.add_to_hotkey_bar(src.holder.mode.copy())
 		else if ("left" in pa)
-			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache)
+			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache, /proc/cmp_text_asc)
 			if (modename == holder.mode.name && isnull(holder.mode.hotkey_number))
 				return
 			holder.select_mode(holder.modes_cache[modename])
@@ -373,7 +373,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 /atom/movable/screen/buildmode/hotkey
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH

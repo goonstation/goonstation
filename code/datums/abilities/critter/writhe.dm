@@ -32,7 +32,7 @@
 					ow.visible_message("<span class='alert'><B>[ow.name] kicks [M]!</B></span>")
 
 			if (!found_target)
-				playsound(ow.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 30, 1)
+				playsound(ow.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 30, 1)
 
 			ow.set_dir(turn(ow.dir, pick(-90,90)))
 

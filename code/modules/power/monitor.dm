@@ -5,7 +5,7 @@
 	name = "Power Monitoring Computer"
 	desc = "Shows the power usage of the station."
 	icon_state = "power2"
-	power_usage = 0
+	power_usage = 250
 	circuit_type = /obj/item/circuitboard/powermonitor
 	var/window_tag = "powcomp"
 	var/list/history
@@ -76,8 +76,7 @@
 /obj/machinery/computer/power_monitor/process()
 	if (status & (NOPOWER|BROKEN))
 		return
-
-	use_power(250)
+	..()
 	add_history()
 	if (src.history.len > src.history_max)
 		src.history.Cut(1, 2) //drop the oldest entry
@@ -105,7 +104,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
 	circuit_type = /obj/item/circuitboard/powermonitor_smes

@@ -79,7 +79,7 @@ export const BioEffect = (props, context) => {
   const dnaGood = dna.every(pair => !pair.style);
   const dnaGoodExceptLocks = dna.every(pair =>
     !pair.style || pair.marker === "locked");
-
+  let activeOrStorage = isActive || isStorage; // haha, what a dumb way to reduce arrow function complexity
   return (
     <Section
       title={name}
@@ -205,7 +205,7 @@ export const BioEffect = (props, context) => {
             Check Stability
           </Button>
         )}
-        {haveDevice(equipmentCooldown, "Reclaimer") && isPotential && !!canReclaim && (
+        {haveDevice(equipmentCooldown, "Reclaimer") && activeOrStorage && !!canReclaim && (
           <Button
             disabled={onCooldown(equipmentCooldown, "Reclaimer")}
             icon="times"
@@ -214,7 +214,7 @@ export const BioEffect = (props, context) => {
             Reclaim
           </Button>
         )}
-        {boothCost >= 0 && research >= 2 && (isActive || isStorage) && (
+        {boothCost >= 0 && research >= 2 && (activeOrStorage) && (
           <Button
             disabled={materialCur < boothCost}
             icon="person-booth"
@@ -251,7 +251,7 @@ export const BioEffect = (props, context) => {
           </Button>
         )}
         {research >= 2 && !!canInject && injectorCost >= 0
-          && (isActive || isStorage) && (
+          && (activeOrStorage) && (
           <Button
             disabled={onCooldown(equipmentCooldown, "Injectors") || materialCur < injectorCost}
             icon="syringe"
@@ -260,7 +260,7 @@ export const BioEffect = (props, context) => {
             Injector
           </Button>
         )}
-        {(isActive || isStorage) && !!toSplice && (
+        {(activeOrStorage) && !!toSplice && (
           <Button
             disabled={!!spliceError}
             icon="map-marker-alt"

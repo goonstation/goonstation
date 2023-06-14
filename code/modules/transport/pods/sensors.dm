@@ -54,12 +54,12 @@
 
 		var/dat = "<B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
-			dat += build_html_gps_form(src, false, src.tracking_target)
+			dat += build_html_gps_form(src, FALSE, src.tracking_target)
 			dat += {"<HR><BR><A href='?src=\ref[src];scan=1'>Scan Area</A>"}
 			dat += {"<HR><B>[beacons] Beacons Nearby:</B><BR>"}
 			if(beaconlist.len)
 				for(var/obj/B in beaconlist)
-					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(get_dist(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
+					dat += {"<HR><a href=\"byond://?src=\ref[src];dest_cords=1;x=[B.x];y=[B.y];z=[B.z]\">[B.name]</a>~[round(GET_DIST(src.ship, B), 25)]M [dir_name(get_dir(src.ship, B))]"}
 			dat += {"<HR><B>[ships] Ships Detected:</B><BR>"}
 			if(shiplist.len)
 				for(var/obj/V in shiplist)
@@ -149,7 +149,7 @@
 	process()
 		if (src.tracking_target && src.ship && src.ship.myhud && src.ship.myhud.tracking)
 			same_z_level = (src.ship.z == src.tracking_target.z)
-			cur_dist = get_dist(src.ship,src.tracking_target)
+			cur_dist = GET_DIST(src.ship,src.tracking_target)
 			trackable_range = adjust_seekrange(src.tracking_target)
 			//change position and icon dir based on direction to target. And make sure it's using the dots.
 			//must be within range and be on the same z-level
@@ -167,7 +167,7 @@
 					end_tracking()
 					for(var/mob/M in ship)
 						boutput(M, "<span class='alert'>Tracking signal lost.</span>")
-					playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+					playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 
 			// sleep(SENSOR_REFRESH_RATE)
 
@@ -189,7 +189,7 @@
 			return
 		var/ang = get_angle(src.ship, target)
 		//Was maybe thinking about having it get further out or something the further the target is, but no.
-		//var/dist = get_dist(src.ship, target)
+		//var/dist = GET_DIST(src.ship, target)
 		//var/number = round(ang/(45-(50-dist)))*(45-(50-dist))
 		var/matrix/M = matrix()
 		M = M.Turn(ang)
@@ -204,9 +204,9 @@
 		scanning = 1
 		src.tracking_target = O
 		boutput(usr, "<span class='notice'>Attempting to pinpoint energy source...</span>")
-		playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
+		playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 		sleep(1 SECOND)
-		if (src.tracking_target && get_dist(src,src.tracking_target) <= seekrange)
+		if (src.tracking_target && GET_DIST(src,src.tracking_target) <= seekrange)
 			scanning = 0		//remove this if we want to force the user to manually stop tracking before trying to track something else
 			boutput(usr, "<span class='notice'>Tracking target: [src.tracking_target.name]</span>")
 			SPAWN(0)		//Doing this to redraw the scanner window after the topic call that uses this fires.
@@ -247,7 +247,7 @@
 					z = src.loc.z
 
 			boutput(usr, "<span class='notice'>Attempting to pinpoint: <b>X</b>: [x], <b>Y</b>: [y], Z</b>: [z]</span>")
-			playsound(ship.loc, "sound/machines/signal.ogg", 50, 0)
+			playsound(ship.loc, 'sound/machines/signal.ogg', 50, 0)
 			sleep(1 SECOND)
 			var/turf/T = locate(x,y,z)
 
@@ -308,14 +308,14 @@
 		for (var/mob/living/M in mobs)
 			if (!isturf(M.loc))	// || ship.Find(M)
 				continue
-			if ((ship.z == M.z) && get_dist(ship.loc, M) <= src.seekrange)
+			if ((ship.z == M.z) && GET_DIST(ship.loc, M) <= src.seekrange)
 				if(!isdead(M) && !isintangible(M))
 #ifdef UNDERWATER_MAP
 					if (istype(M,/mob/living/critter/aquatic/fish)) continue
 #endif
 					lifeforms++
 					//Add direction to mob if close. Who cares about doing it for non-drone critters and npc's...
-					if (get_dist(ship.loc, M) <= src.seekrange/2)
+					if (GET_DIST(ship.loc, M) <= src.seekrange/2)
 						lifelist += "[M.name] - [dir_name(get_dir(ship, M))]"
 						continue
 					lifelist += M.name
@@ -333,12 +333,12 @@
 
 		for (var/obj/machinery/vehicle/V in by_cat[TR_CAT_PODS_AND_CRUISERS]) //ignoring cruisers, they barely exist, sue me.
 			if(V != ship)
-				if ((ship.z == V.z) && get_dist(ship.loc, V) <= src.seekrange)
+				if ((ship.z == V.z) && GET_DIST(ship.loc, V) <= src.seekrange)
 					ships++
 					shiplist[V] = "[dir_name(get_dir(ship, V))]"
 
 		for (var/obj/critter/C in range(src.seekrange,ship.loc))
-			if ((ship.z == C.z) && get_dist(ship.loc, C) <= src.seekrange)
+			if ((ship.z == C.z) && GET_DIST(ship.loc, C) <= src.seekrange)
 				if(C.alive)
 					if (istype(C,/obj/critter/gunbot))
 						ships++
@@ -347,7 +347,7 @@
 						lifeforms++
 						lifelist += C.name
 		for_by_tcl(O, /obj/storage)
-			if ((ship.z == O.z) && get_dist(ship.loc, O) <= src.seekrange/2)
+			if ((ship.z == O.z) && GET_DIST(ship.loc, O) <= src.seekrange/2)
 				for (var/mob/living/M in O.contents)
 					lifeforms++
 					lifelist += "Obscure Life Sign"

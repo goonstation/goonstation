@@ -64,6 +64,8 @@
 			reagents.add_reagent("werewolf_serum", 2)
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
+		if (prob(3))
+			reagents.add_reagent("rat_spit", 5)
 		if (prob(1))
 			reagents.add_reagent("rat_venom", 5)
 		if (prob(3))
@@ -114,8 +116,10 @@
 			reagents.add_reagent("bee", 10)
 		if(prob(15))
 			reagents.add_reagent("port", 30)
+		#ifdef SECRETS_ENABLED
 		if(prob(7))
 			reagents.add_reagent("bombini", 15)
+		#endif
 		if(prob(3))
 			reagents.add_reagent("medusa", 10)
 
@@ -153,13 +157,13 @@
 	//Annoyingly duplicated code to override pitcher's explosion behavior (smashing)
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return

@@ -7,7 +7,7 @@
 	cooldown = 300
 	targeted = 1
 	target_anything = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())
@@ -19,6 +19,6 @@
 		var/turf/T = target
 		holder.owner.set_loc(T)
 		elecflash(T)
-		playsound(T, "sound/effects/ghost2.ogg", 100, 1)
+		playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
 		holder.owner.say("TELEPORT!", 1)
 		return 0

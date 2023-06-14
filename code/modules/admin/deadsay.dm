@@ -10,8 +10,8 @@
 		return
 
 	msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "DSAY: [msg]")
-	logTheThing("diary", src, null, "DSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "DSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "DSAY: [msg]", "admin")
 
 	if (!msg)
 		return
@@ -28,10 +28,14 @@
 			continue
 		if (M.client && M.client.deadchatoff)
 			continue
-		if (istype(M,/mob/dead/target_observer/hivemind_observer))
-			continue
-		if (istype(M,/mob/dead/target_observer/slasher_ghost))
-			continue
+		if (istype(M,/mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!the_wraith.hearghosts)
+				continue
 
 		//admins can toggle deadchat on and off. This is a proc in admin.dm and is only give to Administrators and above
 		if (isdead(M) || iswraith(M) || (M.client && M.client.holder && M.client.deadchat && !M.client.player_mode) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M))
@@ -41,5 +45,5 @@
 				if (src.mob.mind)
 					thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[adminrendered]</span>"
 				boutput(M, thisR)
-			else if(isdead(M))
+			else
 				M.show_message(rendered, 2)

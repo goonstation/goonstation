@@ -13,7 +13,7 @@
 
 		if (!A) //manually called outside of BR gamemode
 			A = get_area(pick_landmark(LANDMARK_PESTSTART))
-		logTheThing("admin",null,null,"Supply drop at [A]")
+		logTheThing(LOG_ADMIN, null, "Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
 
@@ -31,7 +31,7 @@
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	pixel_x = -16
 	pixel_y = -16
 	var/gib_mobs = TRUE
@@ -54,7 +54,7 @@
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
 	var/gib_mobs = TRUE
@@ -70,7 +70,7 @@
 				shake_camera(M, 20, 8)
 				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
 					if(isliving(M))
-						logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
 			sleep(0.5 SECONDS)
 			if (obj_path && no_lootbox)
@@ -90,7 +90,7 @@
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "explo_smoky"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_FLOCKVISION
 	pixel_x = -32
 	pixel_y = -32
@@ -106,7 +106,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "attachecase"
 	var/used = 0
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 	var/obj_path
@@ -174,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1
@@ -202,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
 
 	I.name_prefix(prefix)
 
@@ -239,7 +239,6 @@
 	return I
 
 /atom/movable/screen/lootcratepreview
-	icon = null
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0

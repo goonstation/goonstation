@@ -26,11 +26,6 @@
 	if (src.spellshield)
 		shielded = 1
 		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
-	else
-		if (!src.spellshield)
-			for(var/obj/item/device/shield/S in src)
-				if (S.active)
-					shielded = 1
 
 	if (!shielded || !(W.flags & NOSHIELD))
 		SPAWN( 0 )
@@ -46,7 +41,7 @@
 					if (!W.hide_attack)
 						attack_particle(user,src)
 						attack_twitch(user, anim_mult, anim_mult)
-					else if (W.hide_attack == 2)
+					else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
 						attack_twitch(user, anim_mult, , anim_mult)
 
 

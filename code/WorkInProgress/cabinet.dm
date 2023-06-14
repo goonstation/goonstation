@@ -1,7 +1,7 @@
 /obj/cabinet
 	name = "Cabinet"
 	desc = "Cabinet for storing various things."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/furniture/cabinet.dmi'
 	icon_state = "cabinet"
@@ -9,7 +9,7 @@
 	bound_height = 32
 	bound_width = 32
 	layer = EFFECTS_LAYER_1
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
 	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
@@ -145,10 +145,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return

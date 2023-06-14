@@ -19,7 +19,7 @@
 				door.door_type = door_type
 				door.act_needed = act_needed
 				if (door_type == "glass" || door_type == "runes")
-					door.opacity = 0
+					door.set_opacity(0)
 				SPAWN(1 SECOND)
 					door.color = color_rgb
 		else if ("right" in pa)

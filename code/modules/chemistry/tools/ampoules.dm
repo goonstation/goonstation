@@ -27,19 +27,19 @@
 		boutput(user, "<span class='notice'>You crack open and inhale [src].</span>")
 	else
 		user.visible_message("<span class='alert'>[user] attempts to force [M] to inhale [src]!</span>")
-		logTheThing("combat", user, M, "tries to make [constructTarget(M,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "tries to make [constructTarget(M,"combat")] inhale [src] [log_reagents(src)] at [log_loc(user)].")
 		if(!do_mob(user, M))
 			if(user && ismob(user))
 				boutput(user, "<span class='alert'>You were interrupted!</span>")
 			return
 		user.visible_message("<span class='alert'>[user] forces [M] to inhale [src]!</span>", \
 								"<span class='alert'>You force [M] to inhale [src]!</span>")
-	logTheThing("combat", user, M, "[user == M ? "inhales" : "makes [constructTarget(M,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "[user == M ? "inhales" : "makes [constructTarget(M,"combat")] inhale"] an ampoule [log_reagents(src)] at [log_loc(user)].")
 	reagents.trans_to(M, 5)
 	reagents.reaction(M, INGEST)
 	expended = TRUE
 	icon_state = "amp-broken"
-	playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+	playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 	return
 
 /obj/item/reagent_containers/ampoule/on_reagent_change()

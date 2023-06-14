@@ -6,7 +6,9 @@
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1.0
+	power_usage = 5
+	power_channel = ENVIRON
+	anchored = ANCHORED
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
@@ -51,7 +53,7 @@
 		icon_state = "alarmp"
 		return
 
-	use_power(5, ENVIRON)
+	..()
 
 	if (!( istype(location, /turf) ))
 		return 0
@@ -64,15 +66,15 @@
 
 	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
-	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 		//Pressure sensor
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			safe = 0
 		else safe = 1
 
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10)))
+	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
 		//Oxygen Levels Sensor
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			safe = 0
 		else safe = 1
 
@@ -91,16 +93,6 @@
 	if(safe && (environment.toxins > 1))
 		//Plasma Levels Sensor
 		if(environment.toxins > 2)
-			safe = 0
-		else safe = 1
-
-	var/tgmoles = 0
-	if(length(environment.trace_gases))
-		for(var/datum/gas/trace_gas as anything in environment.trace_gases)
-			tgmoles += trace_gas.moles
-
-	if(tgmoles > 1)
-		if(tgmoles > 2)
 			safe = 0
 		else safe = 1
 
@@ -138,7 +130,7 @@
 		src.add_fingerprint(user)
 		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
 		return
-	if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (status & (BROKEN|NOPOWER))
 			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
 			return
@@ -175,9 +167,9 @@
 		var/environment_pressure = MIXTURE_PRESSURE(environment)
 		var/total_moles = TOTAL_MOLES(environment)
 
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			output += "<FONT color = 'red'>"
-		else if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+		else if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -193,9 +185,9 @@
 
 		output += "<B>Composition:</B><BR>"
 
-		if(environment.nitrogen < MOLES_N2STANDARD*0.80)
+		if(environment.nitrogen < MOLES_N2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.nitrogen < MOLES_N2STANDARD*0.90) || (environment.nitrogen > MOLES_N2STANDARD*1.10))
+		else if((environment.nitrogen < MOLES_N2STANDARD*0.9) || (environment.nitrogen > MOLES_N2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -204,9 +196,9 @@
 		else
 			output += "N2: N/A</FONT><BR>"
 
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10))
+		else if((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -243,13 +235,6 @@
 
 		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
 
-		var/tgmoles = 0
-		if(length(environment.trace_gases))
-			for(var/datum/gas/trace_gas as anything in environment.trace_gases)
-				tgmoles += trace_gas.moles
-
-		if(tgmoles > 1)
-			output += "<FONT color = 'red'>WARNING: unidentified gases present in environment!</FONT><BR>"
 
 		if(e_gas)
 			output += "<FONT color = 'red'>WARNING: Local override engaged, air supply is limited!</FONT><BR>"

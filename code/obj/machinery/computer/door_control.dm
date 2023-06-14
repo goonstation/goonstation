@@ -7,7 +7,7 @@
 	id = 1
 
 /obj/machinery/computer/door_control/proc/alarm()
-	if(status & (NOPOWER|BROKEN))
+	if(src.status & (NOPOWER|BROKEN))
 		return
 	for(var/obj/machinery/door/window/brigdoor/M in by_type[/obj/machinery/door])
 		if (M.id == src.id)

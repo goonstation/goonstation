@@ -5,19 +5,29 @@
 	icon_state = "ring"
 	item_state = "ring"
 	burn_possible = 0
-	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
 	magical = 1
+	var/ability_path = null			//The ability that this ring is linked to.	//When it's null it's either soulguard or the parent. I'm lazy.
+	var/last_cast = 0
+
+	get_desc()
+		//only works after you've removed the ring. I don't care enough to make examining it while you're wearing it work. The ability button already has that value.
+		if (src.last_cast > world.time)
+			. += "Its ability is on cooldown for [round((src.last_cast - world.time) / 10)] seconds."
 
 	equipped(var/mob/user, var/slot)
 		..()
 		if (istype(user.abilityHolder))
 			var/datum/targetable/ability = user.abilityHolder.addAbility(ability_path)
 			if (istype(ability))
-				ability.doCooldown()
+				ability.last_cast = last_cast
 
 	unequipped(var/mob/user)
 		..()
 		if (ability_path && istype(user.abilityHolder))
+
+			var/datum/targetable/ability = user.abilityHolder.getAbility(ability_path)
+			if (istype(ability))
+				src.last_cast = ability.last_cast
 			user.abilityHolder.removeAbility(ability_path)
 			if (istype(user.abilityHolder, /datum/abilityHolder/wizard))
 				user.abilityHolder = null
@@ -249,13 +259,13 @@
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = 2
+				L.spell_soulguard = SOULGUARD_RING
 
 		unequipped(var/mob/user)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = 0
+				L.spell_soulguard = SOULGUARD_INACTIVE
 
 //random rings
 /obj/wizard_ring_generator
@@ -297,7 +307,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	if (alert(usr, "Are you sure you want to spawn all wizard rings at your current location?", "Spawn rings", "Yes", "No, I misclicked") == "No, I misclicked")
+		return
 	var/turf/T_LOC = get_turf(src.mob)
 
 	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard)

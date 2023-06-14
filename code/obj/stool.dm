@@ -26,6 +26,8 @@
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
+	default_material = "steel"
+	uses_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -107,6 +109,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> buckles in!</span>", "<span class='notice'>You buckle yourself in.</span>")
 		else
@@ -122,7 +127,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -130,12 +135,13 @@
 	proc/deconstruct()
 		if (!src.deconstructable)
 			return
+		unbuckle()
 		if (ispath(src.parts_type))
 			var/obj/item/furniture_parts/P = new src.parts_type(src.loc)
 			if (P && src.material)
 				P.setMaterial(src.material)
 		else
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			var/obj/item/sheet/S = new (src.loc)
 			if (src.material)
 				S.setMaterial(src.material)
@@ -178,11 +184,16 @@
 	desc = "Like a bar stool, but in electric blue."
 	parts_type = /obj/item/furniture_parts/stool/neon
 
+TYPEINFO(/obj/stool/wooden)
+	mat_appearances_to_ignore = list("wood")
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
+
+	constructed //no "wood wood stool"
+		name = "stool"
 /* ================================================= */
 /* -------------------- Benches -------------------- */
 /* ================================================= */
@@ -192,7 +203,7 @@
 	desc = "It's a bench! You can sit on it!"
 	icon = 'icons/obj/furniture/bench.dmi'
 	icon_state = "0"
-	anchored = 1
+	anchored = ANCHORED
 	var/auto = 0
 	var/auto_path = null
 	parts_type = /obj/item/furniture_parts/bench
@@ -295,7 +306,7 @@
 	name = "bed"
 	desc = "A solid metal frame with some padding on it, useful for sleeping on."
 	icon_state = "bed"
-	anchored = 1
+	anchored = ANCHORED
 	var/security = 0
 	var/obj/item/clothing/suit/bedsheet/sheet = null
 	parts_type = /obj/item/furniture_parts/bed
@@ -310,7 +321,7 @@
 	moveable
 		name = "roller bed"
 		desc = "A solid metal frame with some padding on it, useful for sleeping on. This one has little wheels on it, neat!"
-		anchored = 0
+		anchored = UNANCHORED
 		securable = 1
 		icon_state = "rollerbed"
 		parts_type = /obj/item/furniture_parts/bed/roller
@@ -375,6 +386,10 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
+
 		if (to_buckle == user)
 			user.visible_message("<span class='notice'><b>[to_buckle]</b> lies down on [src], fastening the buckles!</span>", "<span class='notice'>You lie down and buckle yourself in.</span>")
 		else
@@ -382,13 +397,13 @@
 
 		to_buckle.lying = 1
 		if (src.anchored)
-			to_buckle.anchored = 1
+			to_buckle.anchored = ANCHORED
 		to_buckle.buckled = src
 		src.buckled_guy = to_buckle
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
 
@@ -399,7 +414,7 @@
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -534,13 +549,13 @@
 	var/obj/item/clothing/head/butt/has_butt = null // time for mature humour
 	var/image/butt_img
 	securable = 1
-	anchored = 1
+	anchored = ANCHORED
 	scoot_sounds = list( 'sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg' )
 	parts_type = null
 	material_amt = 0.1
 
 	moveable
-		anchored = 0
+		anchored = UNANCHORED
 
 	New()
 		if (src.dir == NORTH)
@@ -571,13 +586,13 @@
 			src.unbuckle()
 
 	toggle_secure(mob/user as mob)
-		if (istype(get_turf(src), /turf/space))
+		if (!src.anchored && istype(get_turf(src), /turf/space))
 			if (user)
 				user.show_text("What exactly are you gunna secure [src] to?", "red")
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -601,7 +616,7 @@
 			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
 			if (src.material)
 				E.setMaterial(src.material)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			E.set_dir(src.dir)
 			E.part1 = W
 			W.set_loc(E)
@@ -702,6 +717,9 @@
 		if (!can_buckle(to_buckle,user))
 			return FALSE
 
+		if (to_buckle.pulling == src)
+			to_buckle.remove_pulling()
+
 		if(stand && ishuman(to_buckle))
 			if(ON_COOLDOWN(to_buckle, "chair_stand", 1 SECOND))
 				return
@@ -711,7 +729,7 @@
 			to_buckle.set_loc(src.loc)
 			to_buckle.pixel_y = 10
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			H.on_chair = src
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
@@ -725,7 +743,7 @@
 				user.visible_message("<span class='notice'><b>[to_buckle]</b> is buckled in by [user].</span>", "<span class='notice'>You buckle in [to_buckle].</span>")
 
 			if (src.anchored)
-				to_buckle.anchored = 1
+				to_buckle.anchored = ANCHORED
 			to_buckle.buckled = src
 			src.buckled_guy = to_buckle
 			to_buckle.set_loc(src.loc)
@@ -734,7 +752,7 @@
 		if (has_butt)
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 		return TRUE
 
 
@@ -764,7 +782,7 @@
 
 		src.buckled_guy = null
 
-		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -772,14 +790,14 @@
 				M.buckled = null
 				src.buckled_guy = null
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
-			if (3.0)
+			if (3)
 				if (prob(5))
 					qdel(src)
 					return
@@ -860,9 +878,28 @@
 		return
 
 /* ======================================================= */
+/* -------------------- Material Chairs ------------------ */
+/* ======================================================= */
+
+/obj/stool/chair/material
+	name = "material chair"
+	desc = "A chair made from a material"
+	uses_material_appearance = TRUE
+	mat_changename = TRUE
+
+/obj/stool/chair/material/mauxite
+	name = "chair"
+	icon_state = "chair$$mauxite"
+	desc = "A sturdy chair. It doesn't look very comfortable..."
+	comfort_value = -2
+	default_material = "mauxite"
+
+/* ======================================================= */
 /* -------------------- Folded Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/item/chair/folded)
+	mat_appearances_to_ignore = list("steel")
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
@@ -877,6 +914,7 @@
 	stamina_cost = 21
 	stamina_crit_chance = 10
 	material_amt = 0.1
+	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 	var/c_color = null
 
 	New()
@@ -911,8 +949,6 @@
 	var/oldcrit = src.stamina_crit_chance
 	if(iswrestler(user))
 		src.stamina_crit_chance = 100
-	if (ishuman(target))
-		playsound(src.loc, pick(sounds_punch), 100, 1)
 	..()
 	src.stamina_crit_chance = oldcrit
 
@@ -1004,7 +1040,7 @@
 	icon_state = "thronegold"
 	arm_icon_state = "thronegold-arm"
 	comfort_value = 7
-	anchored = 0
+	anchored = UNANCHORED
 	deconstructable = 1
 	parts_type = /obj/item/furniture_parts/throne_gold
 
@@ -1039,20 +1075,23 @@
 /* -------------------- Wheelchairs -------------------- */
 /* ===================================================== */
 
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mats = 15
+
+TYPEINFO(/obj/stool/chair/comfy/wheelchair)
+	mat_appearances_to_ignore = list("steel")
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
 	icon_state = "wheelchair"
 	arm_icon_state = "arm-wheelchair"
-	anchored = 0
+	anchored = UNANCHORED
 	comfort_value = 3
 	buckle_move_delay = 1
 	p_class = 2
-	scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
+	scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
-	mat_appearances_to_ignore = list("steel")
-	mats = 15
 
 	New()
 		..()
@@ -1076,9 +1115,9 @@
 				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
-				M.throw_at(target, 5, 1)
-				M.changeStatus("stunned", 8 SECONDS)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.throw_at(target, 3, 1)
+				M.changeStatus("stunned", 5 SECONDS)
+				M.changeStatus("weakened", 3 SECONDS)
 			else
 				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
 		else
@@ -1086,7 +1125,7 @@
 		src.lying = 1
 		animate_rest(src, !src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
-		src.scoot_sounds = list("sound/misc/chair/normal/scoot1.ogg", "sound/misc/chair/normal/scoot2.ogg", "sound/misc/chair/normal/scoot3.ogg", "sound/misc/chair/normal/scoot4.ogg", "sound/misc/chair/normal/scoot5.ogg")
+		src.scoot_sounds = list('sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg')
 
 	attack_hand(mob/user)
 		if (src.lying)
@@ -1095,7 +1134,7 @@
 			src.lying = 0
 			animate_rest(src, !src.lying)
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
-			src.scoot_sounds = scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
+			src.scoot_sounds = scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 			return
 		else
 			return ..()
@@ -1121,15 +1160,19 @@
 /* -------------------- Wooden Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/stool/chair/wooden)
+	mat_appearances_to_ignore = list("wood")
 /obj/stool/chair/wooden
 	name = "wooden chair"
 	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
 	comfort_value = 3
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/wood_chair
 
+	constructed //no "wood wood chair"
+		name = "chair"
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
@@ -1152,7 +1195,7 @@
 	name = "pew"
 	desc = "It's like a bench, but more holy. No, not <i>holey</i>, <b>holy</b>. Like, godly, divine. That kinda thing.<br>Okay, it's actually kind of holey, too, now that you look at it closer."
 	icon_state = "pew"
-	anchored = 1
+	anchored = ANCHORED
 	rotatable = 0
 	foldable = 0
 	comfort_value = 2
@@ -1225,13 +1268,15 @@
 	/obj/item/plant/herb/cannabis/spawnable,
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
-	/obj/item/reagent_containers/food/snacks/lollipop/random_medical,
+	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
 	/obj/item/spacecash/random/small,
 	/obj/item/spacecash/random/tourist,
 	/obj/item/spacecash/buttcoin)
 
 	New()
 		..()
+		if (src.dir in ordinal)
+			src.layer = FLY_LAYER+1
 		max_uses = rand(0, 2) // Losing things in a couch is hard.
 		spawn_chance = rand(1, 20)
 
@@ -1315,7 +1360,7 @@
 	icon_state = "office_chair"
 	comfort_value = 4
 	foldable = 0
-	anchored = 0
+	anchored = UNANCHORED
 	buckle_move_delay = 3
 	//deconstructable = 0
 	parts_type = /obj/item/furniture_parts/office_chair
@@ -1348,7 +1393,7 @@
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		return
 
@@ -1384,7 +1429,7 @@
 			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
 			if (src.material)
 				C.setMaterial(src.material)
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			C.set_dir(src.dir)
 			if (src.part1)
 				src.part1.set_loc(get_turf(src))
@@ -1430,7 +1475,7 @@
 		else if (href_list["shock"])
 			if (src.buckled_guy)
 				// The log entry for remote signallers can be found in item/assembly/shock_kit.dm (Convair880).
-				logTheThing("combat", usr, src.buckled_guy, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, usr, "activated an electric chair (setting: [src.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(src.buckled_guy,"combat")] at [log_loc(src)].")
 			shock(lethal)
 
 		src.control_interface(usr)
@@ -1492,15 +1537,15 @@
 			return
 		if (!A.powered(EQUIP))
 			return
-		A.use_power(EQUIP, 5000)
+		A.use_power(5000, EQUIP)
 		A.UpdateIcon()
 
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
-				playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 0)
+				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 0)
 			else
-				playsound(src.loc, "sound/effects/sparks4.ogg", 50, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 0)
 
 		if (src.buckled_guy && isliving(src.buckled_guy))
 			var/mob/living/L = src.buckled_guy
@@ -1517,9 +1562,18 @@
 				L.shock(src, 2500, "chest", 1, 1)
 				L.changeStatus("stunned", 10 SECONDS)
 
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				if ((L.mind in ticker.mode:revolutionaries) && !(L.mind in ticker.mode:head_revolutionaries) && prob(66))
-					ticker.mode:remove_revolutionary(L.mind)
+			if((L.mind?.get_antagonist(ROLE_REVOLUTIONARY)) && !(L.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)) && prob(66))
+				L.mind?.remove_antagonist(ROLE_REVOLUTIONARY)
 
 		A.UpdateIcon()
 		return
+
+/* ========================================================= */
+/* ---------------------- Pool Chairs ---------------------- */
+/* ========================================================= */
+/obj/stool/chair/pool
+	name = "pool chair"
+	desc = "This chair is perfect for lounging at the side of a pool."
+	icon_state = "chair_pool"
+	rotatable = FALSE
+	foldable = FALSE

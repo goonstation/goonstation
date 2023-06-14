@@ -15,16 +15,19 @@
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/rainbow,
+		/obj/item/sponge, // To clean up drawings
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
-		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
@@ -33,8 +36,11 @@
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/chemistry
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
+		/obj/item/hand_labeler,
+		/obj/item/pen,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -46,13 +52,14 @@
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
 		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
+		/obj/item/device/gps, // Let's them assist with telesci
 	)
 
 // botanist. chef. janitor.
 /datum/robot/module_tool_creator/recursive/module/civilian
 	definitions = list(
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
@@ -74,6 +81,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -104,7 +112,7 @@
 		/obj/item/electronics/soldering,
 		/obj/item/room_planner,
 		/obj/item/room_marker,
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/rcd,
 		/obj/item/deconstructor/borg,
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,
@@ -118,7 +126,7 @@
 /datum/robot/module_tool_creator/recursive/module/engineering
 	definitions = list(
 		/obj/item/atmosporter,
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/weldingtool,
 		/obj/item/device/t_scanner,
 		/obj/item/electronics/scanner,
@@ -126,6 +134,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
@@ -170,7 +179,7 @@
 		/obj/item/oreprospector,
 		/obj/item/satchel/mining/large,
 		/obj/item/satchel/mining/large,
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps,
 		/obj/item/device/appraisal,
 		/obj/item/device/matanalyzer,

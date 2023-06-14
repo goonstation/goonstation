@@ -14,7 +14,9 @@
 	icon_state = "check1";
 	dir = 6
 	},
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -44,7 +46,9 @@
 /obj/decal/tile_edge/check/white{
 	icon_state = "check1"
 	},
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 1
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -113,16 +117,6 @@
 	name = "reinforced plating"
 	},
 /area/prefab/raceway)
-"ap" = (
-/obj/decal/tile_edge/check/white{
-	icon_state = "check1";
-	dir = 8
-	},
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/raceway)
 "aq" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/raceway)
@@ -165,6 +159,10 @@
 /area/prefab/raceway)
 "ay" = (
 /obj/reagent_dispensers/fueltank,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "az" = (
@@ -182,7 +180,9 @@
 	icon_state = "check1";
 	dir = 4
 	},
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -279,7 +279,7 @@
 /area/prefab/raceway)
 "aN" = (
 /obj/table/auto,
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "aO" = (
@@ -323,7 +323,7 @@
 	},
 /area/prefab/raceway)
 "aT" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /obj/shrub{
 	icon_state = "shrub";
 	dir = 6
@@ -333,22 +333,10 @@
 	},
 /area/prefab/raceway)
 "aU" = (
-/obj/critter/mimic,
+/mob/living/critter/mimic,
 /obj/item/sea_ladder,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
-	},
-/area/prefab/raceway)
-"aV" = (
-/obj/decal/tile_edge/check/white{
-	icon_state = "check1";
-	dir = 8
-	},
-/obj/shrub,
-/obj/machinery/light/incandescent/warm,
-/obj/item/old_grenade/spawner/banana,
-/turf/simulated/floor/grass{
-	name = "astroturf"
 	},
 /area/prefab/raceway)
 "aW" = (
@@ -379,7 +367,7 @@
 	},
 /area/prefab/raceway)
 "bb" = (
-/obj/critter/wasp,
+/mob/living/critter/small_animal/wasp,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -393,11 +381,11 @@
 "bd" = (
 /obj/decal/cleanable/dirt,
 /obj/item/mop,
+/obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "be" = (
 /obj/machinery/manufacturer/hangar,
-/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bf" = (
@@ -425,7 +413,10 @@
 /area/prefab/raceway)
 "bj" = (
 /obj/machinery/vending/coffee,
-/obj/machinery/light/incandescent/warm,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bk" = (
@@ -482,7 +473,7 @@
 /area/prefab/raceway)
 "br" = (
 /obj/table/auto,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /obj/machinery/light/incandescent/warm,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
@@ -648,6 +639,41 @@
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
+/area/prefab/raceway)
+"tp" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor,
+/area/prefab/raceway)
+"xg" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 8
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"xw" = (
+/obj/decal/tile_edge/check/white{
+	icon_state = "check1";
+	dir = 8
+	},
+/obj/shrub,
+/obj/item/old_grenade/spawner/banana,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/raceway)
+"JF" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/black,
 /area/prefab/raceway)
 
 (1,1,1) = {"
@@ -1033,22 +1059,22 @@ ab
 ac
 ac
 ah
-ap
+as
+xg
 as
 as
 as
-aV
+xw
+xg
+as
+xg
 as
 as
 as
 as
 as
-ap
+xg
 as
-as
-as
-as
-ap
 as
 bD
 ac
@@ -1115,14 +1141,14 @@ ab
 ai
 ai
 aq
-au
+JF
 aG
 ax
 aW
 ax
 au
 aq
-ax
+JF
 ax
 ax
 ax
@@ -1210,7 +1236,7 @@ ax
 ax
 ax
 ax
-bp
+tp
 aq
 aq
 aq
@@ -1237,7 +1263,7 @@ br
 bv
 by
 ax
-bA
+bp
 aq
 ab
 ab

@@ -5,7 +5,7 @@
 	icon_state = "cloakgen_off"
 	density = 0
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	health = 5
 	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
@@ -28,11 +28,11 @@
 			if(secured)
 				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 			else
 				boutput(user, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 
 	attack_hand(mob/user)
 		if(secured)
@@ -97,7 +97,7 @@
 					created.health = 16 - (range*2)
 
 		icon_state = "cloakgen_on"
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 
 		var/list/breakables = tiles.Copy()
@@ -121,7 +121,7 @@
 			qdel(A)
 		tiles = new/list()
 		icon_state = "cloakgen_off"
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.active = 0
 
 	verb/toggle()
@@ -145,7 +145,7 @@
 	icon_state = "shield1"
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer=12
 	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10
@@ -172,7 +172,7 @@
 		if(broken) return
 		health--
 		check()
-		playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		qdel(O)
 
 	proc/check()
@@ -180,7 +180,7 @@
 			broken = 1
 			icon_state = "shield0"
 			name = "weakened shield"
-			playsound(src, "sound/effects/shielddown2.ogg", 45, 1)
+			playsound(src, 'sound/effects/shielddown2.ogg', 45, 1)
 			SPAWN(45 SECONDS)
 				health = health_max
 				check()

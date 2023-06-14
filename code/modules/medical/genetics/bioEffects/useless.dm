@@ -9,14 +9,22 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
+	var/list/color
 
 	OnAdd()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		src.color = hsv2rgblist(randfloat(0, 360), randfloat(0, 100), 100)
+		src.color += list(50 + 75 * power)
+		owner.add_sm_light("glowy", src.color)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.color[4] = 75 + 50 * power
+		owner.add_sm_light("glowy", src.color)
 
 	OnRemove()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		owner.remove_sm_light("glowy")
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
@@ -253,16 +261,10 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
-		owner.vis_contents += src.distort
-		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=0, time=0)
-		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+		src.applyFilter()
 
 	OnRemove()
-		owner.remove_filter("dwarfism")
-		owner.vis_contents -= src.distort
-		src.filter = null
+		src.removeFilter()
 		. = ..()
 
 	disposing()
@@ -270,11 +272,30 @@
 		src.distort = null
 		. = ..()
 
+	// We need to fully remove and remake the filter in these cases because the filter reverts to its original size when the animation is interrupted
+	// by another animation, like scan lines. Can't just animate to the correct size.
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=0, time=0)
-			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+			src.removeFilter()
+			src.applyFilter()
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.removeFilter()
+		src.applyFilter()
+
+	proc/applyFilter()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size * power, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	proc/removeFilter()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -295,8 +316,9 @@
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
-		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
+		var/reagent_id = islist(reagent_to_add) ? pick(reagent_to_add) : reagent_to_add
+		if (L.reagents && L.reagents.get_reagent_amount(reagent_id) < reagent_threshold)
+			L.reagents.add_reagent(reagent_id,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -487,6 +509,14 @@
 			overlay_image.color = color_hex
 		..()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "color_hex")
+			overlay_image.color = color_hex
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
+
 /datum/bioEffect/fire_aura/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
 	probability = 0
@@ -498,3 +528,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	id = "hell_fire"
+
+	New()
+		..()
+		color_hex = "#680000"
