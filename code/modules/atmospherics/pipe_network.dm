@@ -12,34 +12,34 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 /datum/pipe_network/New()
 	..()
-	air_transient = new /datum/gas_mixture
+	src.air_transient = new /datum/gas_mixture
 	src.gases = list()
 	src.normal_members = list()
 	src.line_members = list()
 
 /datum/pipe_network/disposing()
-	update = 0
+	src.update = 0
 	pipe_networks -= src
 
-	gases = null
+	src.gases = null
 
-	for(var/obj/machinery/atmospherics/machine as anything in normal_members)
+	for(var/obj/machinery/atmospherics/machine as anything in src.normal_members)
 		machine.network_disposing(src)
-	normal_members = null
+	src.normal_members = null
 
-	for(var/datum/pipeline/member as anything in line_members)
+	for(var/datum/pipeline/member as anything in src.line_members)
 		member.network = null
-	line_members = null
+	src.line_members = null
 
-	if (air_transient)
-		qdel(air_transient)
-	air_transient = null
+	if (src.air_transient)
+		qdel(src.air_transient)
+	src.air_transient = null
 
 	..()
 
 /datum/pipe_network/proc/member_disposing(datum/pipeline/line_member)
-	gases -= line_member.air
-	line_members -= line_member
+	src.gases -= line_member.air
+	src.line_members -= line_member
 
 /datum/pipe_network/proc/air_disposing_hook()
 	for(var/datum/gas_mixture/a as anything in args)
@@ -47,12 +47,12 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 /datum/pipe_network/proc/process()
 	//Equalize gases amongst pipe if called for
-	if(update)
-		update = 0
-		reconcile_air() //equalize_gases(gases)
+	if(src.update)
+		src.update = 0
+		src.reconcile_air()
 
 	//Give pipelines their process call for pressure checking and what not
-	for(var/datum/pipeline/line_member as anything in line_members)
+	for(var/datum/pipeline/line_member as anything in src.line_members)
 		line_member.process()
 
 /datum/pipe_network/proc/build_network(obj/machinery/atmospherics/start_normal, obj/machinery/atmospherics/reference)
@@ -60,23 +60,24 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	//Notes: Assuming that members will add themselves to appropriate roster in network_expand()
 
 	if(!start_normal)
-		dispose()
+		src.dispose()
 
 	start_normal.network_expand(src, reference)
 
-	update_network_gases()
+	src.update_network_gases()
 
-	if(length(normal_members) || length(line_members))
+	if(length(src.normal_members) || length(src.line_members))
 		pipe_networks += src
 	else
-		dispose()
+		src.dispose()
 
 /datum/pipe_network/proc/merge(datum/pipe_network/giver)
-	if(giver==src) return 0
+	if(giver == src)
+		return 0
 
-	normal_members |= giver.normal_members
+	src.normal_members |= giver.normal_members
 
-	line_members |= giver.line_members
+	src.line_members |= giver.line_members
 
 	for(var/obj/machinery/atmospherics/normal_member as anything in giver.normal_members)
 		normal_member.reassign_network(giver, src)
@@ -86,19 +87,20 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 
 	giver.dispose()
 
-	update_network_gases()
+	src.update_network_gases()
 	return 1
 
 /datum/pipe_network/proc/update_network_gases()
 	//Go through membership roster and make sure gases is up to date
 
-	gases.len = 0
+	src.gases.len = 0
 
-	for(var/obj/machinery/atmospherics/normal_member as anything in normal_members)
+	for(var/obj/machinery/atmospherics/normal_member as anything in src.normal_members)
 		var/result = normal_member.return_network_air(src)
-		if(result) gases += result
+		if(result)
+			gases += result
 
-	for(var/datum/pipeline/line_member as anything in line_members)
+	for(var/datum/pipeline/line_member as anything in src.line_members)
 		gases += line_member.air
 
 /datum/pipe_network/proc/reconcile_air()
@@ -107,13 +109,13 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 	//Calculate totals from individual components
 	var/total_thermal_energy = 0
 	var/total_heat_capacity = 0
-	if (!air_transient)
-		air_transient = new()
-	air_transient.volume = 0
-	ZERO_GASES(air_transient)
+	if (!src.air_transient)
+		src.air_transient = new()
+	src.air_transient.volume = 0
+	ZERO_GASES(src.air_transient)
 
-	for(var/datum/gas_mixture/gas as anything in gases)
-		air_transient.volume += gas.volume
+	for(var/datum/gas_mixture/gas as anything in src.gases)
+		src.air_transient.volume += gas.volume
 		total_thermal_energy += THERMAL_ENERGY(gas)
 		total_heat_capacity += HEAT_CAPACITY(gas)
 
@@ -121,25 +123,25 @@ var/global/list/datum/pipe_network/pipe_networks = list()
 		APPLY_TO_GASES(_RECONCILE_AIR)
 		#undef _RECONCILE_AIR
 
-	if(air_transient.volume > 0)
+	if(src.air_transient.volume > 0)
 
 		if(total_heat_capacity > 0)
-			air_transient.temperature = total_thermal_energy/total_heat_capacity
+			src.air_transient.temperature = total_thermal_energy/total_heat_capacity
 
 			//Allow air mixture to react
-			if(air_transient.react())
-				update = 1
+			if(src.air_transient.react())
+				src.update = 1
 
 		else
-			air_transient.temperature = 0
+			src.air_transient.temperature = 0
 
 		//Update individual gas_mixtures by volume ratio
-		for(var/datum/gas_mixture/gas as anything in gases)
-			#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = air_transient.GAS * gas.volume / air_transient.volume ;
+		for(var/datum/gas_mixture/gas as anything in src.gases)
+			#define _RECONCILE_AIR_TRANSFER(GAS, ...) gas.GAS = src.air_transient.GAS * gas.volume / src.air_transient.volume ;
 			APPLY_TO_GASES(_RECONCILE_AIR_TRANSFER)
 			#undef _RECONCILE_AIR_TRANSFER
 
-			gas.temperature = air_transient.temperature
+			gas.temperature = src.air_transient.temperature
 	return 1
 
 proc/equalize_gases(list/datum/gas_mixture/gases)
