@@ -116,15 +116,13 @@
 	})
 "G" = (
 /obj/decal/cleanable/dirt/dirt3,
-/obj/item/circuitboard{
-	pixel_x = -17;
-	layer = 2;
-	name = "melted circuit board";
-	anchored = 1;
+/obj/item/disk/data/memcard{
 	default_material = "flesh";
-	material_applied_appearance = 1;
-	uses_material_appearance = 1;
-	desc = "It's melted straight into the drive and won't budge."
+	name = "melted circuit board";
+	desc = "It's melted straight into the drive and won't budge.";
+	pixel_x = -18;
+	pixel_y = -3;
+	layer = 2
 	},
 /turf/simulated/floor/industrial{
 	burnt = 1
