@@ -411,7 +411,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /obj/machinery/conveyor/get_desc()
 	if (src.deconstructable)
-		. += " It's cover is opened up, you can modify it."
+		. += " <span class='notice'>It's cover seems to be open.</span>"
 
 
 // Sanitize what direction the player wants to set.
@@ -421,7 +421,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr) return
 	if (!src.deconstructable)
-		usr.show_text("The conveyor belt is welded tight. You have to un-weld it to do any changes to it.", "red")
+		usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes to it.", "red")
 		return
 
 	if (over_object == src || src_location == over_location) return ..()
@@ -432,7 +432,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/obj/item/equipped_object = usr.equipped()
 	if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
 
-	if (iswrenchingtool(equipped_object))
+	if (ispryingtool(equipped_object))
 		var/dir_target_atom = get_dir(src_location, over_location)
 
 		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
@@ -443,7 +443,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 
 	if (ispulsingtool(equipped_object))
-		if(!istype(over_object, /obj/machinery/conveyor_switch)) return
+		if(!istype(over_object, /obj/machinery/conveyor_switch)) return ..()
 		var/obj/machinery/conveyor_switch/new_switch = over_object
 		src.id = new_switch.id
 		src.linked_switches += new_switch
@@ -462,9 +462,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/obj/item/equipped_object = usr.equipped()
 	if (!equipped_object) return ..()
 
-	if (iswrenchingtool(equipped_object))
+	if (ispryingtool(equipped_object))
 		if (!src.deconstructable)
-			usr.show_text("The conveyor belt is welded tight. You have to un-weld it to do any changes to it.", "red")
+			usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes.", "red")
 			return
 
 		var/dir_target_atom = get_dir(over_location, src_location)
@@ -516,16 +516,14 @@ TYPEINFO(/obj/machinery/conveyor) {
 			return
 
 			// else if no mob in loc, then allow coil to be placed
-	else if (isweldingtool(I))
+	else if (isscrewingtool(I))
 		if (src.protected)
-			user.show_text("\The [src] is too strong to have it's cover un-welded.", "red")
+			user.show_text("\The [src] is too strong to have it's cover un-screwed.", "red")
 			return
 
 		if (ON_COOLDOWN(user, "conveyor_belt_weld", 5 SECONDS)) return
 
-		user.show_text("You start [src.deconstructable ? "" : "un"]welding \the [src]'s cover.")
-		var/obj/item/weldingtool/tool = I
-		tool.try_weld(user, 3)
+		user.show_text("You start [src.deconstructable ? "" : "un-"]screwing \the [src]'s cover.")
 		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
 
 	else if (issnippingtool(I))
@@ -547,13 +545,13 @@ TYPEINFO(/obj/machinery/conveyor) {
 	if (src.deconstructable)
 		src.deconstruct_flags = null
 		src.deconstructable = FALSE
-		M.show_text("You finish welding \the [src] shut.", "blue")
+		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		return 1
 
 	else
 		src.deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
 		src.deconstructable = TRUE
-		M.show_text("You finish undoing \the [src] welds.", "blue")
+		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		return 1
 
 /obj/machinery/conveyor/attack_hand(mob/user)
