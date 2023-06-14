@@ -3,8 +3,13 @@
 /turf/unsimulated/floor/marble/black,
 /area/space)
 "g" = (
-/obj/displaycase{
-	displayed = new/object/item/raw_material/rock()
+/obj/table/glass/reinforced/auto,
+/obj/item/raw_material/rock{
+	pixel_y = -10
+	},
+/obj/item/raw_material/rock,
+/obj/item/raw_material/rock{
+	pixel_y = 10
 	},
 /turf/unsimulated/floor/marble/border_bw,
 /area/space)
@@ -15,22 +20,34 @@
 /turf/unsimulated/floor/marble/border_wb,
 /area/space)
 "L" = (
-/obj/displaycase{
-	displayed = new/obj/item/raw_material/gemstone()
+/obj/table/glass/reinforced/auto,
+/obj/item/raw_material/gemstone{
+	pixel_y = 10
+	},
+/obj/item/raw_material/gemstone,
+/obj/item/decoration/flower_vase/vase7{
+	pixel_y = 14
 	},
 /turf/unsimulated/floor/marble/border_wb,
 /area/space)
 "O" = (
-/obj/displaycase{
-	displayed = new/obj/item/raw_material/ice()
+/obj/table/glass/reinforced/auto,
+/obj/item/raw_material/ice{
+	pixel_y = -10
 	},
+/obj/item/raw_material/rock{
+	pixel_y = 10
+	},
+/obj/item/raw_material/ice,
 /turf/unsimulated/floor/marble,
 /area/space)
 "Q" = (
-/obj/displaycase{
-	displayed = new/object/item/raw_material/rock()
-	},
+/obj/table/glass/reinforced/auto,
 /obj/railing/velvet,
+/obj/item/raw_material/rock{
+	pixel_y = 10
+	},
+/obj/item/raw_material/rock,
 /turf/unsimulated/floor/marble,
 /area/space)
 "S" = (
