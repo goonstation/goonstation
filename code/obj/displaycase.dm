@@ -11,6 +11,9 @@
 	var/destroyed = 0
 
 	New()
+		if (ispath(src.displayed))
+			src.displayed = new src.displayed
+
 		if (displayed)
 			displayed.set_loc(src)
 			displayed.pixel_x = 0
