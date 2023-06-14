@@ -506,11 +506,12 @@
 	icon_override = "syndie"
 	icon_tooltip = "Syndicate Operative"
 	block_hearing_when_worn = HEARING_ANTIDEAF
+	var/forged = FALSE
 
 /obj/item/device/radio/headset/agent/attack_self(mob/user as mob)
-	if (src.name == "agent headset")
+	if (!src.forged)
 		var/appearance = input(user, "What radio should this disguise as?") as anything in list("standard", "command", "NT", "captain", "radio show host", "head of security", "head of personnel", "research director", "medical director", "chief engineer", "security", "detective", "engineering", "medical", "research", "civilian", "shipping", "mining", "mailman", "clown", "ghost buster", "auditory", "multi-frequency")
-		var/icon = input(user, "What icon should this radio have?\nClick cancel to abort the forging process.") as null|anything in list("command", "AI", "cyborg", "consultant", "captain", "radio show host", "head of security", "head of personnel", "research director", "medical director", "chief engineer", "security", "detective", "engineering", "medical", "research", "civilian", "shipping", "mining", "mailman", "clown", "ghost buster", "syndicate")
+		var/icon = input(user, "What radio identifier should this radio have?\nClick cancel to abort the forging process.") as null|anything in list("command", "AI", "cyborg", "consultant", "captain", "radio show host", "head of security", "head of personnel", "research director", "medical director", "chief engineer", "security", "detective", "engineering", "medical", "research", "civilian", "shipping", "mining", "mailman", "clown", "ghost buster", "syndicate")
 		switch (icon)
 			if ("command")
 				src.icon_override = "head"
@@ -677,6 +678,7 @@
 				src.name = "multi-frequency headset"
 				src.desc = "A radio headset that can communicate over multiple customizable channels."
 				src.icon_state = "multi headset"
+		src.forged = TRUE
 	else
 		..()
 
