@@ -18,7 +18,7 @@
 	},
 /obj/dialogueobj/engineerscorpse{
 	pixel_y = -5;
-	desc = "A dead engineer with a gnarly dent in their head and a floppy disc...imbedded in their chest. Eugh..."
+	desc = "A dead engineer with a gnarly dent in their head and a floppy disc...embedded in their chest. Eugh..."
 	},
 /obj/decal/cleanable/blood/drip/high{
 	pixel_y = -18;
