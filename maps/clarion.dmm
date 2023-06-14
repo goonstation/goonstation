@@ -27520,6 +27520,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"fTG" = (
+/obj/item/bat,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "fTS" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -68522,7 +68527,7 @@ fAz
 lLh
 nSl
 aXv
-aGS
+fTG
 dHv
 aDY
 aDY
