@@ -43,7 +43,7 @@
 	pixel_y = 6;
 	pixel_x = 7;
 	name = "certificate of purchase";
-	info = "Thank you for your purchase of [ONE] Super Support Structure, which will boost your structural integrity by upwards of 500%!"
+	info = "Thank you for your purchase of #ONE# Super Support Structure, which will boost your structural integrity by upwards of 500%!"
 	},
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
