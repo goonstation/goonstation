@@ -8,7 +8,7 @@
 	},
 /obj/item/device/light/glowstick/red,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "c" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -18,7 +18,7 @@
 	},
 /obj/item/device/light/glowstick/red,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "k" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -30,7 +30,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "m" = (
 /obj/cable{
 	icon_state = "1-5"
@@ -46,7 +46,7 @@
 	info = "Thank you for your purchase of [ONE] Super Support Structure, which will boost your structural integrity by upwards of 500%!"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "s" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -66,7 +66,7 @@
 	name = "Faint Scrawlings"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/cable{
 	icon_state = "2-10"
@@ -76,7 +76,7 @@
 	},
 /obj/item/device/light/glowstick/red,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /obj/cable{
 	icon_state = "1-6"
@@ -88,7 +88,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "K" = (
 /obj/cable{
 	icon_state = "6-8"
@@ -103,7 +103,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/creepy_sound_trigger,
 /obj/decal/cleanable/rust,
@@ -126,7 +126,7 @@
 	name = "super important structural support beam";
 	desc = "An incredibly important structural component that should definitly not be removed or damaged in any way."
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 a

@@ -7,40 +7,40 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "i" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "q" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/engine/caution/misc{
 	dir = 8
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/light/emergencyflashing,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "u" = (
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "v" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/fitness/speedbag/clown,
 /obj/item/paper/businesscard/clowntown{
@@ -50,13 +50,13 @@
 /turf/simulated/floor/engine/caution/misc{
 	dir = 4
 	},
-/area/space)
+/area/dmm_suite/clear_area)
 "F" = (
 /obj/disposalpipe/segment/horizontal{
 	dir = 2
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 "M" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -67,7 +67,7 @@
 	pixel_x = 3
 	},
 /turf/simulated/floor/engine/caution/northsouth,
-/area/space)
+/area/dmm_suite/clear_area)
 "U" = (
 /obj/disposalpipe/segment/bent/north,
 /obj/decal/fakeobjects/skeleton,
@@ -82,7 +82,7 @@
 /obj/item/clothing/under/misc/clown/yellow,
 /obj/machinery/light/emergencyflashing,
 /turf/simulated/floor/plating,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 C

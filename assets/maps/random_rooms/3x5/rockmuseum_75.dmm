@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/unsimulated/floor/marble/black,
-/area/space)
+/area/dmm_suite/clear_area)
 "g" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/raw_material/rock{
@@ -12,13 +12,13 @@
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/marble/border_bw,
-/area/space)
+/area/dmm_suite/clear_area)
 "n" = (
 /turf/unsimulated/floor/marble/border_bw,
-/area/space)
+/area/dmm_suite/clear_area)
 "G" = (
 /turf/unsimulated/floor/marble/border_wb,
-/area/space)
+/area/dmm_suite/clear_area)
 "L" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/raw_material/gemstone{
@@ -29,7 +29,7 @@
 	pixel_y = 14
 	},
 /turf/unsimulated/floor/marble/border_wb,
-/area/space)
+/area/dmm_suite/clear_area)
 "O" = (
 /obj/table/glass/reinforced/auto,
 /obj/item/raw_material/ice{
@@ -40,7 +40,7 @@
 	},
 /obj/item/raw_material/ice,
 /turf/unsimulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 "Q" = (
 /obj/table/glass/reinforced/auto,
 /obj/railing/velvet,
@@ -49,15 +49,15 @@
 	},
 /obj/item/raw_material/rock,
 /turf/unsimulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 "S" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 "T" = (
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 g
