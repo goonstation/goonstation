@@ -11,6 +11,7 @@
 	var/destroyed = 0
 
 	New()
+		..()
 		if (ispath(src.displayed))
 			src.displayed = new src.displayed
 
@@ -20,8 +21,6 @@
 			displayed.pixel_y = 0
 			displayed.transform *= 0.8
 			overlays += displayed
-		..()
-		return
 
 /obj/displaycase/ex_act(severity)
 	switch(severity)
