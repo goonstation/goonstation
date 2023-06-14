@@ -1,6 +1,7 @@
 (t)wed jun 14 23
 (u)LeahTheTech
 (+)Mops now actually clean cleanables (like bloody footprints etc.)
+(+)Plague rats now fit in pet carriers.
 (t)tue jun 13 23
 (u)pali
 (+)pod portals no longer have 1% chance to gib, instead it is 2% chance to get teleported to a random space tile
