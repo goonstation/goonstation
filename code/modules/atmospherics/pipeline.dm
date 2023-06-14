@@ -10,24 +10,21 @@
 	var/alert_pressure = 0
 
 /datum/pipeline/disposing()
-	if (network)
-		network.member_disposing(src)
-	network = null
+	src.network?.member_disposing(src)
+	src.network = null
 
-	if(air?.volume)
+	if(src.air?.volume)
 		temporarily_store_air()
-		qdel(air)
-	air = null
+		qdel(src.air)
+	src.air = null
 
-	if (members)
-		for(var/obj/machinery/atmospherics/pipe/member in members)
-			member.parent = null
-		members.len = 0
+	for(var/obj/machinery/atmospherics/pipe/member as anything in src.members)
+		member.parent = null
+	src.members = null
 
-	if (edges)
-		for(var/obj/machinery/atmospherics/pipe/edge in edges)
-			edge.parent = null
-		edges.len = 0
+	for(var/obj/machinery/atmospherics/pipe/edge as anything in src.edges)
+		edge.parent = null
+	src.edges = null
 
 	..()
 
@@ -49,7 +46,7 @@
 	//Check to see if pressure is within acceptable limits
 	var/pressure = MIXTURE_PRESSURE(air)
 	if(pressure > alert_pressure)
-		for(var/obj/machinery/atmospherics/pipe/member in members)
+		for(var/obj/machinery/atmospherics/pipe/member as anything in members)
 			if(!member.check_pressure(pressure))
 				break //Only delete 1 pipe per process
 
@@ -59,7 +56,7 @@
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
 
-	for(var/obj/machinery/atmospherics/pipe/member in members)
+	for(var/obj/machinery/atmospherics/pipe/member as anything in members)
 		if (!member.air_temporary)
 			member.air_temporary = new
 		member.air_temporary.volume = member.volume
@@ -94,13 +91,13 @@
 	else
 		air = new /datum/gas_mixture
 
-	while(possible_expansions.len>0)
-		for(var/obj/machinery/atmospherics/pipe/borderline in possible_expansions)
+	while(length(possible_expansions))
+		for(var/obj/machinery/atmospherics/pipe/borderline as anything in possible_expansions)
 
 			var/list/result = borderline.pipeline_expansion()
 			var/edge_check = length(result)
 
-			if(result.len>0)
+			if(length(result))
 				for(var/obj/machinery/atmospherics/pipe/item in result)
 					if(!(item in members))
 						members += item
@@ -115,7 +112,7 @@
 
 					edge_check--
 
-			if(edge_check>0)
+			if(edge_check)
 				edges += borderline
 
 			possible_expansions -= borderline
@@ -129,7 +126,7 @@
 	new_network.line_members += src
 	network = new_network
 
-	for(var/obj/machinery/atmospherics/pipe/edge in edges)
+	for(var/obj/machinery/atmospherics/pipe/edge as anything in edges)
 		for(var/obj/machinery/atmospherics/result in edge.pipeline_expansion())
 			if(!istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
 				result.network_expand(new_network, edge)
