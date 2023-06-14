@@ -1,12 +1,15 @@
 /datum/pipeline
+	/// The combined air mixture of all our members.
 	var/datum/gas_mixture/air
-
+	/// All the pipes that we own.
 	var/list/obj/machinery/atmospherics/pipe/members
-	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
-
+	/// List of pipes that border non-pipes. Pipeline extensions start from these.
+	var/list/obj/machinery/atmospherics/pipe/edges
+	/// The pipe network we belong in.
 	var/datum/pipe_network/network
+	/// Used for the cooldown system
 	var/list/cooldowns
-
+	/// Pressure at which to start checking for ruptures.
 	var/alert_pressure = 0
 
 /datum/pipeline/disposing()
@@ -28,6 +31,7 @@
 
 	..()
 
+/// Process pipe ruptures.
 /datum/pipeline/proc/process()
 	if (!src.air) // null air? oh god!
 		src.dispose() // kill this network, something is bad
@@ -42,6 +46,7 @@
 			if(!member.check_pressure(pressure))
 				break //Only delete 1 pipe per process
 
+/// Temporarily distributes [/datum/pipeline/var/datum/gas_mixture/air] into our members.
 /datum/pipeline/proc/temporarily_store_air()
 	//Update individual gas_mixtures by volume ratio
 
@@ -56,6 +61,7 @@
 
 		member.air_temporary.temperature = src.air.temperature
 
+/// Builds a pipeline out into other pipes.
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
 	var/list/possible_expansions = list(base)
 	if (!src.members)
@@ -108,30 +114,33 @@
 
 	src.air.volume = volume
 
+/// Expands new_network into our pipeline if we are not yet in it.
 /datum/pipeline/proc/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(src in new_network.line_members)
-		return 0
+		return FALSE
 
 	new_network.line_members += src
 	src.network = new_network
 
 	for(var/obj/machinery/atmospherics/pipe/edge as anything in src.edges)
-		for(var/obj/machinery/atmospherics/result in edge.pipeline_expansion())
-			if(!istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
+		for(var/obj/machinery/atmospherics/result as anything in edge.pipeline_expansion())
+			if(!isnull(result) && !istype(result,/obj/machinery/atmospherics/pipe) && (result!=reference))
 				result.network_expand(new_network, edge)
 
-	return 1
+	return TRUE
 
+/// Returns our network, building a new one if we do not yet have one.
 /datum/pipeline/proc/return_network(obj/machinery/atmospherics/reference)
 	if(!src.network)
 		src.network = new /datum/pipe_network()
 		src.network.build_network(src, null)
 			//technically passing these parameters should not be allowed
 			//however pipe_network.build_network(..) and pipeline.network_extend(...)
-			//		were setup to properly handle this case
+			//were setup to properly handle this case
 
 	return network
 
+/// Mixes the turf with some volume of our air.
 /datum/pipeline/proc/mingle_with_turf(turf/simulated/target, mingle_volume)
 	if (!target || !src.air.volume) return
 	var/datum/gas_mixture/air_sample = src.air.remove_ratio(mingle_volume/src.air.volume)
@@ -175,17 +184,20 @@
 				target.update_visuals(target.air)
 
 	if(!isnull(src.network))
-		src.network.update = 1
+		src.network.update = TRUE
 
+/// Exchanges the heat between the turf and some volume of our air.
+/// Thermal_conductivity is used as a factor with 0 meaning no heat transfer and 1 meaning perfect equalisation.
 /datum/pipeline/proc/temperature_interact(turf/target, share_volume, thermal_conductivity)
-	if(!thermal_conductivity) return // noop if no transfer of heat possible
+	if(!thermal_conductivity)
+		return // noop if no transfer of heat possible
 
 	var/total_heat_capacity = HEAT_CAPACITY(src.air)
 	var/partial_heat_capacity = total_heat_capacity*(share_volume/src.air.volume)
 	var/heat = 0
 	var/delta_temperature = 0
 
-	if(issimulatedturf(target))
+	if(!issimulatedturf(target))
 		var/turf/simulated/modeled_location = target
 
 		// Turf with walls or without air
@@ -220,12 +232,11 @@
 				self_temperature_delta = -heat/total_heat_capacity
 				sharer_temperature_delta = heat/sharer_heat_capacity
 			else
-				return 1
+				return TRUE
 
 			src.air.temperature += self_temperature_delta
 
 			if(modeled_location.parent && modeled_location.parent.group_processing)
-
 				// Check if change sufficient to suspend group processing to limit change to target turf
 				if((abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_DELTA_TO_SUSPEND) && (abs(sharer_temperature_delta) > MINIMUM_TEMPERATURE_RATIO_TO_SUSPEND*modeled_location.parent.air.temperature))
 					modeled_location.parent.suspend_group_processing()
@@ -247,4 +258,4 @@
 			src.air.temperature -= heat/total_heat_capacity
 
 	if(!isnull(src.network))
-		src.network.update = 1
+		src.network.update = TRUE
