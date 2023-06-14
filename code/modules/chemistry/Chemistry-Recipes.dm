@@ -3634,18 +3634,14 @@ datum
 			name = "Acetone-phenol production"
 			id = "acetone-phenol"
 			result = "acetone"
-			required_reagents = list("oil" = 1, "fuel" = 1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
+			required_reagents = list("oil" = 1, "fuel" = 1, "chlorine" = 0.1) //oil and welding fuel for benzene and propylene, then chlorine for the radical initiator
 			result_amount = 1
 			mix_phrase = "The smell of paint thinner assaults you as the solution bubbles."
 			instant = FALSE
 			reaction_speed = 1
 
-			does_react(datum/reagents/holder)
-				return holder.has_reagent("chlorine")
-
 			on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
 				holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature)
-				holder.remove_reagent("chlorine", created_volume / 10)
 
 		hairgrownium
 			name = "Hairgrownium"
