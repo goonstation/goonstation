@@ -65,6 +65,15 @@
 	upperfluc = 25
 	lowerfluc = -25
 
+/datum/commodity/fish
+	comname = "Fish"
+	comtype = /obj/item/fish
+	onmarket = 1
+	price = 50
+	baseprice = 50
+	upperfluc = 25
+	lowerfluc = -25
+
 /datum/commodity/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
@@ -869,8 +878,8 @@
 	comname = "Scary Gasmask"
 	comtype = /obj/item/clothing/mask/gas/swat
 	desc = "Pretty much exactly what it sounds like."
-	price = 1000
-	baseprice = 1000
+	price = 1500
+	baseprice = 1500
 	upperfluc = 500
 	lowerfluc = -500
 
@@ -2263,6 +2272,16 @@
 	upperfluc = 20
 	lowerfluc = -20
 
+/datum/commodity/clownsabre
+	comname = "C-Sabre"
+	comtype = /obj/item/swords_sheaths/clown
+	desc = "A high quality sabre."
+	onmarket = 0
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
+
 /*
 /datum/commodity/screamshoes
 	comname = "scream shoes"
@@ -2662,6 +2681,15 @@
 	baseprice = 2000
 	upperfluc = 500
 	lowerfluc = -500
+
+/datum/commodity/foam_dart_grenade
+	comname = "Foam Dart Grenade"
+	comtype = /obj/item/old_grenade/foam_dart
+	desc = "Goes great with foam dart guns!"
+	price = 250
+	baseprice = 250
+	upperfluc = 500
+	lowerfluc = -50
 
 /datum/commodity/cheese_grenade
 	comname = "Cheese Sandwich grenade"

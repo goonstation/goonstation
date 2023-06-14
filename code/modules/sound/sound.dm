@@ -160,6 +160,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	var/scaled_dist
 	var/storedVolume
 
+	// ugly but I can't really put this anywhere else
+	if (ishuman(source) && channel == VOLUME_CHANNEL_EMOTE)
+		var/mob/living/carbon/human/H = source
+		// yes, these are all the conditions that make your force whisper. needs an atom prop, christ
+		// if we meet any of them, halve volume of emotes
+		if (H.oxyloss > 10 || H.losebreath >= 4 || H.hasStatus("muted") \
+		    || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting")) \
+			|| H.stamina < STAMINA_WINDED_SPEAK_MIN)
+			vol /= 2
+
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
 	for (var/mob/M in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
@@ -632,6 +642,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
+		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

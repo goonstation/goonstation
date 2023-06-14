@@ -54,7 +54,7 @@
 	icon_state = "trigger"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/trigger_count = 1
 
 	Crossed(atom/movable/O)

@@ -244,6 +244,19 @@ mob/verb/checkrewards()
 	required_levels = list("Botanist"=10)
 	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/rainbow
 
+/datum/jobXpReward/botanist/jumpsuit
+	name = "Senior Botanist Jumpsuit"
+	desc = "An old jumpsuit with an earthy smell to it."
+	required_levels = list("Botanist"=15)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+
 /datum/jobXpReward/botanist/wateringcan/old
 	name = "Antique Watering Can"
 	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."

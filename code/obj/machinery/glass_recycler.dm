@@ -48,7 +48,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 	desc = "A machine that recycles glass shards into drinking glasses, beakers, or other glass things."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/glass_amt = 0
 	var/list/product_list = list()
@@ -123,21 +123,20 @@ TYPEINFO(/obj/machinery/glass_recycler)
 				return FALSE // early return for custom messageP
 			success = TRUE
 			glass_amt += PLATE_COST
-		else if (istype(W, /obj/item/storage/box))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
+		else if (W.storage)
+			for (var/obj/item/I as anything in W.storage.get_contents())
 				if (!.(I, user))
 					break
 
 		if (success)
-			if(istype(W.loc, /obj/item/storage))
-				var/obj/item/storage/storage = W.loc
-				storage.hud.remove_object(W)
+			W.stored?.transfer_stored_item(W, src, user = user)
 
 			user.visible_message("<span class='notice'>[user] inserts [W] into [src].</span>")
 			user.u_equip(W)
 			qdel(W)
 			ui_interact(user)
+			var/sound = pick('sound/impact_sounds/Glass_Shatter_1.ogg', 'sound/impact_sounds/Glass_Shatter_2.ogg', 'sound/impact_sounds/Glass_Shatter_3.ogg')
+			playsound(src.loc, sound, 40, 0, 0.1)
 			return TRUE
 		else
 			boutput(user, "<span class='alert'>You cannot put [W] into [src]!</span>")
@@ -166,7 +165,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
 		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
 
-	proc/create(var/type)
+	proc/create(var/type, mob/user)
 		var/datum/glass_product/target_product = null
 		for (var/datum/glass_product/product in product_list)
 			if(product.product_type == type)
@@ -178,12 +177,16 @@ TYPEINFO(/obj/machinery/glass_recycler)
 
 		if (src.glass_amt < target_product.product_cost)
 			src.visible_message("<span class='alert'>[src] doesn't have enough glass to make that!</span>")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 40, 0, 0.1)
 			return
 
 		var/obj/item/G = new target_product.product_path(get_turf(src))
 		src.glass_amt -= target_product.product_cost
 
 		src.visible_message("<span class='notice'>[src] manufactures \a [G]!</span>")
+		playsound(src.loc, 'sound/machines/vending_dispense_small.ogg', 40, 0, 0.1)
+		user?.put_in_hand_or_eject(G)
+		use_power(20 WATTS)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
@@ -219,7 +222,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		switch(action)
 			if("create")
 				var/product_type = params["type"]
-				create(product_type)
+				create(product_type, usr)
 				. = TRUE
 
 

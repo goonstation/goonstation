@@ -2,10 +2,11 @@
 ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
+	mat_appearances_to_ignore = list("gnesis")
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
@@ -19,7 +20,7 @@ TYPEINFO(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	mat_appearances_to_ignore = list("gnesis")
+	default_material = "gnesis"
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -39,8 +40,8 @@ TYPEINFO(/obj/flock_structure)
 	var/compute = 0
 	///resource cost for building
 	var/resourcecost = 0
-	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
-	var/passthrough = FALSE
+	/// can flockdrones pass through this akin to a grille?
+	var/passthrough = TRUE
 	/// if the building can be supported by a sapper structure
 	var/accepts_sapper_power = FALSE
 	/// TIME of last process
@@ -56,7 +57,6 @@ TYPEINFO(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)
@@ -356,4 +356,4 @@ TYPEINFO(/obj/flock_structure)
 		. = TRUE
 
 /obj/flock_structure/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	return istype(mover,/mob/living/critter/flock) && src.passthrough

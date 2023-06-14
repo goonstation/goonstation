@@ -1,3 +1,4 @@
+ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
@@ -20,7 +21,7 @@
 		..()
 		src.AddComponent(/datum/component/bullet_holes, 10, src.reinforced ? 25 : 5) // reinforced lockers need 25 power to damage; reflects that
 		if (bolted)
-			anchored = 1
+			anchored = ANCHORED
 		src.attack_particle = new /obj/particle/attack
 		src.attack_particle.icon = 'icons/mob/mob.dmi'
 
@@ -35,7 +36,7 @@
 				return
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
-			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
+			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/storage/secure/closet/proc/toggle_bolts, list(user), I.icon, I.icon_state,"", null)
 			return
 		else if (src.open || !src.locked)
 			..()
@@ -58,12 +59,12 @@
 			else
 				var/damage
 				var/damage_text
-				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
-				if (I.force <= 10)
+				if (I.force < 10)
 					damage = round(I.force * 0.6)
 					damage_text = " It's not very effective."
 				else
 					damage = I.force
+				user.visible_message("<span class='alert'><b>[user]</b> hits [src] with [I]! [damage_text]</span>")
 				attack_particle(user,src)
 				hit_twitch(src)
 				take_damage(clamp(damage, 1, 20), user, I, null)
@@ -118,10 +119,11 @@
 		SPAWN(0.2 SECONDS)
 			src.attack_particle.alpha = 0
 
-	proc/toggle_bolts(var/mob/M)
-		M.visible_message("<b>[M]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
+	proc/toggle_bolts(var/mob/user)
+		user.visible_message("<b>[user]</b> [src.bolted ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
 		src.bolted = !src.bolted
 		src.anchored = !src.anchored
+		logTheThing(LOG_STATION, user, "[src.anchored ? "unanchored" : "anchored"] [log_object(src)] at [log_loc(src)]")
 
 	proc/take_damage(var/amount, var/mob/M = null, obj/item/I = null, var/obj/projectile/P = null)
 		if (!isnum(amount) || amount <= 0)
@@ -148,7 +150,7 @@
 				else
 					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			else if (M)
-				logTheThing(LOG_COMBAT, M, "broke open [src] with [I] at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, M, "broke open [log_object(src)] with [log_object(I)] at [log_loc(src)]")
 			else
 				logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
@@ -195,7 +197,7 @@
 /obj/storage/secure/closet/command/captain
 	name = "\improper Captain's locker"
 	req_access = list(access_captain)
-	spawn_contents = list(/obj/item/gun/energy/egun,
+	spawn_contents = list(/obj/item/gun/energy/egun/captain,
 	/obj/item/storage/box/id_kit,
 	/obj/item/storage/box/clothing/captain,
 	/obj/item/clothing/suit/armor/capcoat,
@@ -204,7 +206,15 @@
 	/obj/item/clothing/head/helmet/captain,
 	/obj/item/clothing/glasses/sunglasses,
 	/obj/item/stamp/cap,
-	/obj/item/device/radio/headset/command/captain)
+	/obj/item/device/radio/headset/command/captain,
+	/obj/item/megaphone,
+	/obj/item/pet_carrier)
+
+	make_my_stuff()
+		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
+			if (prob(20))
+				new /obj/item/clothing/head/bigcaphat(src)
+			return 1
 
 /obj/storage/secure/closet/command/captain/fake
 	req_access = null
@@ -229,7 +239,7 @@
 	/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
-	/obj/item/gun/energy/egun,
+	/obj/item/gun/energy/egun/head_of_security,
 	/obj/item/device/radio/headset/security,
 	/obj/item/clothing/glasses/thermal,
 	/obj/item/stamp/hos,
@@ -249,7 +259,8 @@
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
 	/obj/item/clipboard,
-	/obj/item/clothing/suit/hopjacket)
+	/obj/item/clothing/suit/hopjacket,
+	/obj/item/pet_carrier)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -266,7 +277,9 @@
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,
-	/obj/item/device/radio/headset/command/rd)
+	/obj/item/clothing/suit/labcoat,
+	/obj/item/device/radio/headset/command/rd,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -291,7 +304,8 @@
 	/obj/item/reagent_containers/hypospray,
 	/obj/item/device/flash,
 	/obj/item/stamp/md,
-	/obj/item/device/radio/headset/command/md)
+	/obj/item/device/radio/headset/command/md,
+	/obj/item/pet_carrier)
 
 	make_my_stuff()
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
@@ -327,8 +341,8 @@
 		/obj/item/clothing/head/helmet/space/engineer/diving,
 		/obj/item/clothing/shoes/flippers
 	#else
-		/obj/item/clothing/suit/space/engineer,
-		/obj/item/clothing/head/helmet/space/engineer,
+		/obj/item/clothing/suit/space/light/engineer,
+		/obj/item/clothing/head/helmet/space/light/engineer,
 	#endif
 
 	)
@@ -410,7 +424,7 @@
 	name = "\improper Automatic Locker"
 	req_access = list(access_brig)
 	desc = "Card-locked closet linked to a brig timer. Will unlock automatically when timer reaches zero."
-	anchored = 1
+	anchored = ANCHORED
 	_max_health = LOCKER_HEALTH_STRONG
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
@@ -758,6 +772,7 @@
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
 	/obj/item/lamp_manufacturer/organic,
+	/obj/item/device/light/floodlight/with_cell,
 	/obj/item/pinpointer/category/apcs/station)
 
 /obj/storage/secure/closet/engineering/mining
@@ -850,7 +865,7 @@
 	/obj/item/clothing/head/rabbihat,\
 	/obj/item/clothing/head/formal_turban,\
 	/obj/item/clothing/head/turban,\
-	/obj/item/clothing/shoes/sandal,\
+	/obj/item/clothing/shoes/sandal/magic,\
 	/obj/item/clothing/under/misc/chaplain/nun,\
 	/obj/item/clothing/head/nunhood,\
 	/obj/item/clothing/suit/flockcultist,\

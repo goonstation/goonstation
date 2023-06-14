@@ -8,6 +8,7 @@
 
 #define RELAYMOVE_DELAY 50
 
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
@@ -364,7 +365,7 @@
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -476,10 +477,9 @@
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 
-		else if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			O.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		else if(istype(O, /obj/item))
+			var/obj/item/I = O
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -692,6 +692,8 @@
 		for(var/obj/O in T.contents)
 			if(!isitem(O) || O == src || O.anchored)
 				crate_contents--
+			if(O.cannot_be_stored)
+				crate_contents = INFINITY //too big to fit on the locker, it wont close
 		return crate_contents
 
 	proc/can_close()
@@ -719,7 +721,7 @@
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
+					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -731,7 +733,16 @@
 
 	proc/unlock()
 		if (src.locked)
-			src.locked = !src.locked
+			src.locked = FALSE
+			src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
+			src.UpdateIcon()
+
+	//why is everything defined on the parent type aa
+	proc/lock()
+		if (!src.locked)
+			src.locked = TRUE
+			src.visible_message("[src] clicks[src.open ? "" : " locked"].")
+			src.UpdateIcon()
 
 	proc/bust_out()
 		if (src.flip_health)
@@ -816,14 +827,14 @@
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
@@ -888,7 +899,11 @@
 			I.setMaterial(M)
 		qdel(the_storage)
 
-
+//this is written out manually because the linter got very angry when I tried to use .. in the macro version
+TYPEINFO(/obj/storage/secure)
+TYPEINFO_NEW(/obj/storage/secure)
+	. = ..()
+	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
@@ -964,9 +979,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.UpdateIcon()
+						src.lock()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -976,9 +989,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.UpdateIcon()
+						src.unlock()
 					if (.)
 						reply.data["command"] = "ack"
 					else

@@ -88,7 +88,7 @@
 				bdna = user.bioHolder.Uid
 				btype = user.bioHolder.bloodType
 			var/turf/T = get_turf(user)
-			gibs(T, null, null, bdna, btype)
+			gibs(T, null, bdna, btype)
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
 

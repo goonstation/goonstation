@@ -295,6 +295,8 @@
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 		return
 	var/turf/T = get_turf(src)
+	if(istype_exact(T, /turf/space)) //can't smear blood on space
+		return
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null
 	if (T.messy > 0)
 		B = locate(/obj/decal/cleanable/blood/dynamic) in T

@@ -10,7 +10,7 @@
 	icon_state = "meatcube"
 	a_intent = "disarm" // just so they don't swap with help intent users
 	health = INFINITY
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	nodamage = 1
 	opacity = 0
@@ -92,7 +92,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)
@@ -261,7 +260,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)

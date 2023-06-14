@@ -291,11 +291,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 //#endif
 
-/obj/item/reagent_containers/food/snacks/lollipop
+/obj/item/reagent_containers/food/snacks/candy/lollipop
 	name = "lollipop"
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
+	sugar_content = 5
 	var/icon_random = 0 // does it just choose from the existing random colors?
 	var/image/image_candy
 	heal_amt = 1
@@ -319,7 +320,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			src.image_candy.color = average.to_rgba()
 			src.UpdateOverlays(src.image_candy, "candy")
 
-/obj/item/reagent_containers/food/snacks/lollipop/random_medical
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_state = "lpop-"
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
@@ -331,6 +332,28 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 			if (islist(src.flavors) && length(src.flavors))
 				for (var/i=5, i>0, i--)
 					src.reagents.add_reagent(pick(src.flavors), 1)
+
+/obj/item/reagent_containers/food/snacks/candy/sugar_cube
+	name = "sugar cube"
+	desc = "Cubed sugar."
+	icon_state = "sugar-cube"
+	sugar_content = 10
+	bites_left = 1
+	food_color = "#FFFFFF"
+	w_class = W_CLASS_TINY
+
+	afterattack(obj/target, mob/user, flag)
+		..()
+		if (target.is_open_container() && target.reagents)
+			if (target.reagents.total_volume >= target.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[target] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You put [src] into [target].</span>")
+
+			src.reagents.trans_to(target, src.reagents.total_volume)
+			user.u_equip(src)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"

@@ -1,3 +1,5 @@
+TYPEINFO(/mob/living/critter/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -13,7 +15,7 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
+	default_material = "gnesis"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
@@ -60,9 +62,6 @@
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
-	qdel(abilityHolder)
-	src.abilityHolder = null
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -623,7 +622,7 @@
 			return
 
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
-		F.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
+		F.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
 		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")

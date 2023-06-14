@@ -1,7 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"aa" = (
-/turf/variableTurf/wall,
-/area/space)
 "ab" = (
 /turf/variableTurf/wall,
 /area/noGenerate)
@@ -11,17 +8,32 @@
 /area/noGenerate)
 "ad" = (
 /turf/variableTurf/clear,
-/area/space)
+/area/allowGenerate)
 "ae" = (
-/turf/simulated/wall/auto/reinforced/gannets,
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/floor,
 /area/noGenerate)
 "af" = (
 /obj/item/raw_material/rock,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ag" = (
-/obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/reinforced/gannets,
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/floor,
 /area/noGenerate)
 "ah" = (
 /obj/table/reinforced/auto,
@@ -120,15 +132,12 @@
 /area/noGenerate)
 "aw" = (
 /obj/decal/poster/wallsign/space,
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "ax" = (
 /obj/item/storage/wall/emergency,
 /obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/gannets,
-/area/noGenerate)
-"ay" = (
-/turf/simulated/wall/auto/gannets,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "az" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -136,12 +145,12 @@
 /area/noGenerate)
 "aA" = (
 /obj/item/storage/wall/emergency,
-/turf/simulated/wall/auto/gannets,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "aB" = (
 /obj/decal/poster/wallsign/space,
 /obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "aC" = (
 /obj/decal/floatingtiles{
@@ -176,17 +185,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grime,
 /area/noGenerate)
-"aJ" = (
-/obj/decal/cleanable/rust,
-/turf/simulated/wall/auto/gannets,
-/area/noGenerate)
 "aK" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/airless/damaged1,
 /area/noGenerate)
-"aL" = (
-/turf/variableTurf/floor,
-/area/space)
 "aM" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles4";
@@ -249,7 +251,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "aV" = (
@@ -257,7 +261,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /obj/item/reagent_containers/glass/beaker/cryoxadone,
 /obj/decal/cleanable/water{
 	desc = "An old puddle of cryo fluid.";
@@ -296,7 +302,7 @@
 	icon_state = "conduit";
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
@@ -316,7 +322,7 @@
 	icon_state = "conduit";
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "bc" = (
@@ -331,7 +337,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10
+	},
 /turf/simulated/floor/airless/plating/damaged1,
 /area/noGenerate)
 "be" = (
@@ -339,7 +347,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bf" = (
@@ -365,7 +375,7 @@
 	icon_state = "conduit";
 	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
@@ -378,7 +388,7 @@
 	icon_state = "conduit";
 	dir = 9
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bj" = (
@@ -419,7 +429,7 @@
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/screwdriver,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bp" = (
@@ -427,7 +437,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/item/cable_coil,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
@@ -444,7 +454,7 @@
 /area/noGenerate)
 "bs" = (
 /obj/decal/fakeobjects/apc_broken,
-/turf/simulated/wall/auto/gannets,
+/turf/simulated/wall/auto/shuttle,
 /area/noGenerate)
 "bt" = (
 /obj/item/cable_coil/cut,
@@ -457,7 +467,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/noGenerate)
@@ -466,7 +476,7 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe,
 /turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "bw" = (
@@ -479,7 +489,9 @@
 	icon_state = "conduit";
 	dir = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 6
+	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "by" = (
@@ -497,13 +509,58 @@
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
+"dh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir";
+	dir = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"pL" = (
+/obj/indestructible/shuttle_corner,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"qE" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/shuttle,
+/area/noGenerate)
+"wT" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	opacity = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Bn" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	opacity = 1
+	},
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 6
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Bt" = (
+/obj/indestructible/shuttle_corner,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"GA" = (
+/turf/simulated/wall/auto/shuttle,
+/area/noGenerate)
 
 (1,1,1) = {"
-aa
-aa
-aa
-ab
-ab
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab
@@ -511,17 +568,17 @@ ap
 ap
 ab
 ab
-ab
-aa
-aa
-aa
-aa
+ad
+ad
+ad
+ad
+ad
 ad
 ad
 "}
 (2,1,1) = {"
-aa
-aa
+ad
+ad
 ab
 ab
 ab
@@ -534,14 +591,14 @@ ap
 ab
 ab
 ab
-ab
-aa
-aa
-aa
-aa
+ad
+ad
+ad
+ad
+ad
 "}
 (3,1,1) = {"
-aa
+ad
 ab
 ab
 ab
@@ -557,12 +614,12 @@ ab
 ab
 ab
 ab
-ab
-ab
-aa
+ad
+ad
+ad
 "}
 (4,1,1) = {"
-aa
+ad
 ab
 ab
 af
@@ -573,14 +630,14 @@ ap
 aM
 ap
 ap
-ap
-ag
-ae
-ae
+pL
+qE
+GA
+GA
 br
 bA
-ab
-ab
+ad
+ad
 "}
 (5,1,1) = {"
 ab
@@ -594,45 +651,45 @@ aB
 aR
 aX
 aY
-ag
-ae
+qE
 bj
-ay
+bj
+GA
 br
 bA
 ap
-ab
+ad
 "}
 (6,1,1) = {"
 ab
-ac
-ag
+Bt
+qE
 ac
 ac
 ax
 at
-ay
+GA
 ac
 ac
 ac
-ay
-ay
-ay
-ay
+GA
+GA
+GA
+GA
 bs
-ae
+Bn
 aY
-aa
+ad
 "}
 (7,1,1) = {"
 ab
-ae
+GA
 ah
 al
 as
-ay
+GA
 aE
-aJ
+qE
 aN
 aT
 aN
@@ -641,9 +698,9 @@ bg
 bk
 bn
 bt
+GA
 ae
-ae
-aa
+ad
 "}
 (8,1,1) = {"
 ab
@@ -663,12 +720,12 @@ aU
 bo
 bu
 by
-ae
-aa
+qE
+ad
 "}
 (9,1,1) = {"
-aa
-aa
+ab
+ab
 aj
 an
 au
@@ -684,18 +741,18 @@ bx
 bp
 bv
 bz
-ae
-aa
+qE
+ad
 "}
 (10,1,1) = {"
-aa
-aa
-aa
+ad
+ab
+ab
 ao
 av
-ay
+GA
 aH
-ay
+GA
 aQ
 aW
 ba
@@ -704,36 +761,36 @@ ba
 bm
 bq
 bw
-ae
+GA
 ag
-aa
+ad
 "}
 (11,1,1) = {"
 ad
-aa
-aa
+ab
+ab
 ac
 ac
 aA
 aI
-aJ
+qE
 ac
 ac
 ac
-ay
-ay
-ay
-ay
-ay
-ag
+GA
+GA
+GA
+GA
+GA
+dh
 bl
-aa
+ad
 "}
 (12,1,1) = {"
 ad
 ad
-aa
-aa
+ab
+ab
 ap
 aB
 aD
@@ -741,56 +798,56 @@ aw
 aS
 ap
 bl
-ae
-ae
+GA
 bj
-ay
+bj
+GA
 br
 bA
 ap
-aa
+ad
 "}
 (13,1,1) = {"
 ad
 ad
 ad
-aa
-aa
-aa
-aL
+ad
+ad
+ad
+ad
 ab
 ab
 ab
 ab
-ap
-ae
-ae
-ae
+wT
+GA
+GA
+GA
 br
 bA
-ab
-aa
+ad
+ad
 "}
 (14,1,1) = {"
 ad
 ad
 ad
 ad
-aa
-aa
-aL
-aa
-aa
+ad
+ad
+ad
+ad
+ad
 ab
 ab
 ab
 ap
-ap
-ap
-ap
-ab
-ab
-aa
+ad
+ad
+ad
+ad
+ad
+ad
 "}
 (15,1,1) = {"
 ad
@@ -798,18 +855,18 @@ ad
 ad
 ad
 ad
-aa
-aL
-aL
-aa
 ad
 ad
-ab
-ab
-ab
-ab
-ab
-ab
-aa
-aa
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
 "}

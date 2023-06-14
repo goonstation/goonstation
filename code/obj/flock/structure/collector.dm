@@ -14,7 +14,7 @@
 	/// is it active?
 	var/active = FALSE
 	/// max range for the thing.
-	var/maxrange = 5
+	var/maxrange = 4
 	/// the tiles its connected to
 	var/list/turf/simulated/floor/feather/connectedto = list()
 	/// the apc it charges

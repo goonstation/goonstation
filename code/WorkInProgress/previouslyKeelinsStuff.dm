@@ -458,7 +458,7 @@ var/reverse_mode = 0
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	New()
@@ -508,7 +508,7 @@ var/reverse_mode = 0
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null

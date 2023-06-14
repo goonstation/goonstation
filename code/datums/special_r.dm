@@ -8,7 +8,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1
@@ -22,7 +22,7 @@ datum/special_respawn
 
 		if (!eligible.len)
 			return 0
-		target = pick(eligible)
+		target = eligible[1]
 
 		if(target)
 			target.respawning = 1
@@ -241,6 +241,7 @@ datum/special_respawn
 		if(istype(T, /turf/simulated/floor))
 			var/turf/simulated/floor/F = T
 			if (was_eaten)
+				F.icon = 'icons/turf/floors.dmi'
 				F.icon_state = "bloodfloor_2"
 				F.name = "fleshy floor"
 			else

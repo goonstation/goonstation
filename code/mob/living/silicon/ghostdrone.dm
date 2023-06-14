@@ -48,7 +48,8 @@
 			if (istype(ticker.mode, /datum/game_mode/nuclear))
 				var/datum/game_mode/nuclear/mode = ticker.mode
 				name = "Drone [mode.agent_radiofreq]"
-
+			else if (length(flocks))
+				name = "Flockdrone"
 			else
 				//Make them suffer with an overly cute name
 				name = "Drone [pick(list("Princess", "Lord", "King", "Queen", "Duke", "Baron"))] [pick(list("Bubblegum", "Wiffleypop", "Shnookems", "Cutesypie", "Fartbiscuits", "Rolypoly"))]"
@@ -129,6 +130,10 @@
 		else
 			src.setFace(faceType, faceColor)
 			src.UpdateOverlays(null, "dizzy")
+
+	clamp_values()
+		..()
+		src.lying = 0
 
 	death(gibbed)
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
@@ -1166,7 +1171,10 @@
 			if(A.material)
 				A.material.triggerTemp(A, temp)
 
-	get_static_image()
+	new_static_image()
+		return
+
+	update_static_image()
 		return
 
 	update_item_abilities()
@@ -1294,10 +1302,6 @@
 
 	if (isobserver(M) && M:corpse)
 		G.oldmob = M:corpse
-
-	if (M.client)
-		G.lastKnownIP = M.client.address
-		M.client.mob = G
 
 	if (M?.real_name)
 		G.oldname = M.real_name

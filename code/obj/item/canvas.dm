@@ -383,7 +383,7 @@
 	canvas_height = 7 * 32
 	bound_width = 7 * 32
 	bound_height = 7 * 32
-	anchored = TRUE
+	anchored = ANCHORED
 	display_mult = 4
 	plane = PLANE_FLOOR
 	var/id = null

@@ -9,16 +9,17 @@ type MusicInstrumentData = {
   transpose: number;
   notes: string[];
   keybindToggle: boolean;
+  noteKeysString: string;
 };
 
 export const MusicInstrument = (_props, context) => {
   const { act, data } = useBackend<MusicInstrumentData>(context);
-  const { name, notes, volume, transpose, keybindToggle } = data;
+  const { name, notes, volume, transpose, keybindToggle, noteKeysString } = data;
 
   const [noteKeysOrder, setNoteKeysOrder] = useLocalState(
     context,
     'keyboardBindingsOrder',
-    'zsxdcvgbhnjmq2w3er5t6y7ui9o0p+'.split('')
+    noteKeysString.split('')
   );
 
   const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', {}); // new Array(notes.length)

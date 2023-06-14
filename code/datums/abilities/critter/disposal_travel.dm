@@ -47,6 +47,9 @@
 			if (!P)
 				boutput(holder.owner, "<span class='alert'>There aren't any pipes here!</span>")
 				return TRUE
+			else if(!P.dpdir)
+				boutput(holder.owner, "<span class='alert'>That pipe is a mangled mess of pain!  Best to stay here for now.</span>")
+				return TRUE
 
 			activate()
 
@@ -65,8 +68,8 @@
 		else
 			holder.owner.show_message("<span class='notice'>You squeeze your way into [P].</span>")
 
-		D = new/obj/dummy/disposalmover(P, holder.owner, src, .proc/deactivate)
-		RegisterSignals(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/handle_move)
+		D = new/obj/dummy/disposalmover(P, holder.owner, src, PROC_REF(deactivate))
+		RegisterSignals(D, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), PROC_REF(handle_move))
 		pointCost = 0
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.point_overlay.maptext = null
@@ -153,7 +156,7 @@
 	icon = null
 	name = "???"
 	desc = "Something is in disposals again..."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/can_move = 1
@@ -181,7 +184,7 @@
 			img.plane = PLANE_OVERLAY_EFFECTS
 			img.color = "#111"
 			target << img
-		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, PROC_REF(handle_dropped_item))
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 	proc/handle_dropped_item(mob/user, atom/movable/AM)

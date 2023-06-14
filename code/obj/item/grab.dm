@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
@@ -40,7 +40,7 @@
 		src.assailant = assailant
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, PROC_REF(check_hostage))
 		if (assailant != affecting)
 			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
@@ -137,6 +137,15 @@
 
 		UpdateIcon()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
+				var/trans = src.affecting.reagents.trans_to(target, 10)
+				if (trans)
+					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
+
 	attack(atom/target, mob/user)
 		if (check())
 			return
@@ -149,7 +158,7 @@
 
 
 	proc/process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(H)
+		if(H && !ischangeling(H))
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
 			H.stamina_stun(mult)
@@ -256,7 +265,10 @@
 		icon_state = "disarm/kill"
 		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-
+		if (istype(src.loc, /obj/item/cloth))
+			var/obj/item/cloth/cloth = src.loc
+			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -278,7 +290,8 @@
 		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
-			H.set_stamina(min(0, H.stamina))
+			if (!ischangeling(H))
+				H.set_stamina(min(0, H.stamina))
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)

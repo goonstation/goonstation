@@ -1,3 +1,5 @@
+#define EXTERNAL_LINK(URL, TEXT) {"<a href=""} + URL + {"" target="_blank">"} + TEXT + {"</a>"}
+
 /proc/trim_left(text)
 	for (var/i = 1 to length(text))
 		if (text2ascii(text, i) > 32)
@@ -113,3 +115,50 @@ proc/md5_to_more_pronouncable(text)
 		. += consonants[num % length(consonants) + 1]
 		. += vowels[round(num / length(consonants)) + 1]
 	. = jointext(., "")
+
+/**
+ * Removes a given prefix from a string.
+ *
+ * @return The string without the prefix if the prefix was present at the start. If not, the original string is returned.
+ *
+ * Note: Non-text inputs will be converted into a string. The procedure is case sensitive.
+ */
+proc/strip_prefix(string, prefix)
+	if (!istext(string))
+		string = "[string]"
+	if(copytext(string, 1, length(prefix) + 1) == prefix)
+		string = copytext(string, length(prefix) + 1)
+	return string
+
+proc/strip_prefix_from_list(list/L, prefix)
+	for(var/i in 1 to length(L))
+		if(copytext(L[i], 1, length(prefix) + 1) == prefix)
+			L[i] = copytext(L[i], length(prefix) + 1)
+
+proc/get_longest_common_prefix(list/L)
+	if(!length(L))
+		return ""
+	. = L[1]
+	for(var/i in 2 to length(L))
+		var/cur = L[i]
+		var/len = min(length(.), length(cur))
+		for(var/j in len to 1 step -1)
+			if(copytext(., 1, j + 1) == copytext(cur, 1, j + 1))
+				if(j < length(.))
+					. = copytext(., 1, j + 1)
+				break
+
+/// Returns a string with all HTML special characters encoded and newlines replaced with <br>
+proc/newline_html_encode(text)
+	return replacetext(html_encode(text), "\n", "<br>")
+
+/// Returns a string with all HTML special characters decoded and <br> replaced with newlines
+proc/newline_html_decode(text)
+	return html_decode(replacetext(text, "<br>", "\n"))
+
+proc/pluralize(word)
+	. = word
+	if(endswith(., "s") || endswith(., "ch") || endswith(., "sh") || endswith(., "z") || endswith(., "x"))
+		. += "es"
+	else
+		. += "s"

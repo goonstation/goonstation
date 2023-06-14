@@ -7,7 +7,7 @@
 	var/health_max = 200
 	robot_talk_understand = 2
 
-	anchored = 1
+	anchored = ANCHORED
 	var/online = 1
 	var/mob/living/silicon/hivebot = null
 	var/hivebot_name = null
@@ -61,7 +61,7 @@
 /mob/living/silicon/hive_mainframe/say_understands(var/other)
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace || !H.mutantrace.exclusive_language)
+		if(!H.mutantrace.exclusive_language)
 			return 1
 	if (isrobot(other))
 		return 1

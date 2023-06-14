@@ -57,25 +57,59 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	name = "monkeymeat"
 	desc = "A slab of meat from a monkey."
 
-/obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	name = "fish fillet"
 	desc = "A slab of meat from a fish."
 	icon_state = "fillet-pink"
 	food_color = "#F4B4BC"
 	real_name = "fish"
+	var/filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
+
+	attackby(var/obj/item/W, var/mob/user)
+		if(!iscuttingtool(W)) return
+		for (var/amount = 0, amount < 3, amount++)
+			new filletslice_type(get_turf(src))
+		boutput(user, "<span class='notice'>You cut \the [src] into slices using [W].</span>")
+		qdel(src)
+
 	salmon
 		name = "salmon fillet"
 		icon_state = "fillet-orange"
 		food_color = "#F29866"
 		real_name = "salmon"
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/salmon
 	white
 		name = "white fish fillet"
 		icon_state = "fillet-white"
 		food_color = "#FFECB7"
 		real_name = "white fish"
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/white
 	small
 		name = "small fish fillet"
 		icon_state = "fillet-small"
+		food_color = "#FFECB7"
+		real_name = "small fish"
+		filletslice_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice/small
+
+/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
+	name = "slice of fish fillet"
+	desc = "A carefully cut slice of fish fillet."
+	icon_state = "filletslice-pink"
+	food_color = "#F4B4BC"
+	real_name = "fish"
+	salmon
+		name = "slice of salmon fillet"
+		icon_state = "filletslice-orange"
+		food_color = "#F29866"
+		real_name = "salmon"
+	white
+		name = "slice of white fillet"
+		icon_state = "filletslice-white"
+		food_color = "#FFECB7"
+		real_name = "white fish"
+	small
+		name = "slice of small fish fillet"
+		icon_state = "filletslice-small"
 		food_color = "#FFECB7"
 		real_name = "small fish"
 
@@ -286,6 +320,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "salt"
 	food_color = "#a7927d"
 	custom_food = 1
+	initial_volume = 100
+	initial_reagents = list("salt"=10)
 
 /obj/item/reagent_containers/food/snacks/ingredient/pepper
 	name = "pepper"
@@ -293,7 +329,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "pepper"
 	food_color = "#a7927d"
 	custom_food = 1
+	initial_volume = 100
+	initial_reagents = list("pepper"=10)
 
+TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
+	mat_appearances_to_ignore = list("honey")
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."
@@ -304,9 +344,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
 	brew_result = "mead"
-	New()
-		..()
-		src.setMaterial(getMaterial("honey"), appearance = 0, setname = 0)
+	mat_changename = "honey"
+	default_material = "honey"
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"

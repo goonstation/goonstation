@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/fishburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/fishburger
 
@@ -114,6 +114,36 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/buttburger
 
+/datum/cookingrecipe/synthbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/synth
+
+/datum/cookingrecipe/cyberbuttburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/clothing/head/butt/cyberbutt
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/buttburger/cyber
+
+/datum/cookingrecipe/synthheartburger
+	item1 = /obj/item/organ/heart/synth
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
+
+/datum/cookingrecipe/cyberheartburger
+	item1 = /obj/item/organ/heart/cyber
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
+
+/datum/cookingrecipe/flockheartburger
+	item1 = /obj/item/organ/heart/flock
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
+
 /datum/cookingrecipe/heartburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
 	item2 = /obj/item/organ/heart
@@ -131,6 +161,24 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/organ/brain
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/burger/brainburger
+
+datum/cookingrecipe/synthbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/synth
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
+
+datum/cookingrecipe/cyberbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/latejoin
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
+
+datum/cookingrecipe/flockbrainburger
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
+	item2 = /obj/item/organ/brain/flockdrone
+	cookbonus = 15
+	output = /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
 
 /datum/cookingrecipe/roburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
@@ -1128,7 +1176,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/steak_ling
 
 /datum/cookingrecipe/fish_fingers
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/fish_fingers
 
@@ -1341,7 +1389,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pie_fish
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
@@ -1605,7 +1653,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/pancake
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/pancake_batter
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pancake
 
 /datum/cookingrecipe/mashedpotatoes
@@ -1639,14 +1687,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 
 /datum/cookingrecipe/fishpaste
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste/
 
 /datum/cookingrecipe/sloppyjoe
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	cookbonus = 13
+	cookbonus = 12
 	output = /obj/item/reagent_containers/food/snacks/burger/sloppyjoe
 
 /datum/cookingrecipe/meatloaf
@@ -1735,13 +1783,13 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	output = /obj/item/reagent_containers/food/snacks/rice_ball
 
 /datum/cookingrecipe/nigiri_roll
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
 	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/nigiri_roll
 
 /datum/cookingrecipe/sushi_roll
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
 	amt2 = 2
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
@@ -1859,7 +1907,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
 	item3 = /obj/item/reagent_containers/food/drinks/milk
-	cookbonus = 11
+	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/french_toast
 
 /datum/cookingrecipe/zongzi

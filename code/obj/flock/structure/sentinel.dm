@@ -156,7 +156,7 @@
 	return TRUE
 
 /obj/flock_structure/sentinel/proc/updatefilter()
-	UNLINT(var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type
+	var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")
 	// for non-linear scaling of size, using an oscillating value from 0 to 1 * 32
 	UNLINT(animate(filter, size = ((-(cos(180 * (charge / 100)) - 1) / 2) * 32), flags = ANIMATION_PARALLEL))
 
@@ -167,8 +167,8 @@
 
 	New()
 		src.add_filter("flock_sentinel_rays", 0, rays_filter(x = -0.2, y = 6, size = 1, color = rgb(255,255,255), offset = rand(1000), density = 20, threshold = 0.2, factor = 1))
-		UNLINT(var/dm_filter/f = src.get_filter("flock_sentinel_rays")) // remove when SpacemanDMM knows about this type
-		UNLINT(animate(f, size = 0, time = 5 MINUTES, loop = -1, offset = f.offset + 100))
+		var/dm_filter/filter = src.get_filter("flock_sentinel_rays")
+		UNLINT(animate(filter, size = 0, time = 5 MINUTES, loop = -1, offset = filter.offset + 100))
 		..()
 
 #undef NOT_CHARGED

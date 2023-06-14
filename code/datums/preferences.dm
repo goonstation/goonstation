@@ -41,6 +41,7 @@ datum/preferences
 	var/be_blob = 0
 	var/be_conspirator = 0
 	var/be_flock = 0
+	var/be_salvager = 0
 	var/be_misc = 0
 
 	var/be_random_name = 0
@@ -71,7 +72,7 @@ datum/preferences
 
 	var/datum/appearanceHolder/AH = new
 
-	var/datum/character_preview/preview = null
+	var/datum/movable_preview/character/preview = null
 
 	var/mentor = 0
 	var/see_mentor_pms = 1 // do they wanna disable mentor pms?
@@ -538,49 +539,49 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.flavor_text = new_text
+					src.flavor_text = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.security_note = new_text
+					src.security_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, FLAVOR_CHAR_LIMIT+1)
-					src.medical_note = new_text
+					src.medical_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
 
 			if ("update-syndintNote")
-				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE)
+				var/new_text = tgui_input_text(usr, "Please enter new information Syndicate agents have gathered on you (visible to traitors and spies):", "Character Generation", src.synd_int_note, multiline = TRUE, allowEmpty=TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > LONG_FLAVOR_CHAR_LIMIT)
 						tgui_alert(usr, "Your flavor text is too long. It must be no more than [LONG_FLAVOR_CHAR_LIMIT] characters long. The current text will be trimmed down to meet the limit.", "Flavor text too long")
 						new_text = copytext(new_text, 1, LONG_FLAVOR_CHAR_LIMIT+1)
-					src.synd_int_note = new_text
+					src.synd_int_note = new_text || null
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -657,14 +658,13 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 			if ("update-specialStyle")
-				var/mob/living/carbon/human/H = src.preview.preview_mob
+				var/mob/living/carbon/human/H = src.preview.preview_thing
 				var/typeinfo/datum/mutantrace/typeinfo = H.mutantrace?.get_typeinfo()
 				if (!typeinfo || !typeinfo.special_styles)
 					tgui_alert(usr, "No usable special styles detected for this mutantrace.", "Error")
 					return
 				var/list/style_list = typeinfo.special_styles
-				var/current_index = style_list.Find(AH.special_style) // do they already have a special style in their prefs
-				var/new_style = style_list[current_index + 1 > length(style_list) ? 1 : current_index + 1]
+				var/new_style = tgui_input_list(usr, "Select a style pattern", "Special Style", style_list)
 				if (new_style)
 					AH.special_style = new_style
 					update_preview_icon()
@@ -1061,7 +1061,7 @@ datum/preferences
 			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
-		var/datum/mutantrace/mutantRace = null
+		var/datum/mutantrace/mutantRace = /datum/mutantrace/human
 		for (var/ID in traitPreferences.traits_selected)
 			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
@@ -1073,7 +1073,7 @@ datum/preferences
 		// bald trait preview stuff
 		if (!src.preview)
 			return
-		var/mob/living/carbon/human/H = src.preview.preview_mob
+		var/mob/living/carbon/human/H = src.preview.preview_thing
 		var/ourWig = H.head
 		if (ourWig)
 			H.u_equip(ourWig)
@@ -1416,6 +1416,7 @@ datum/preferences
 			src.be_werewolf = FALSE
 			src.be_vampire = FALSE
 			src.be_arcfiend = FALSE
+			src.be_salvager = FALSE
 			src.be_wraith = FALSE
 			src.be_blob = FALSE
 			src.be_conspirator = FALSE
@@ -1438,6 +1439,7 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_salvager=1" class="[src.be_salvager ? "yup" : "nope"]">[crap_checkbox(src.be_salvager)] Salvager</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1659,6 +1661,7 @@ datum/preferences
 		if (link_tags["b_changeling"])
 			src.be_changeling = !( src.be_changeling )
 			src.SetChoices(user)
+			return
 
 		if (link_tags["b_wizard"])
 			src.be_wizard = !( src.be_wizard)
@@ -1677,6 +1680,11 @@ datum/preferences
 
 		if (link_tags["b_arcfiend"])
 			src.be_arcfiend = !( src.be_arcfiend)
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_salvager"])
+			src.be_salvager = !( src.be_salvager)
 			src.SetChoices(user)
 			return
 
@@ -1761,7 +1769,7 @@ datum/preferences
 
 		if (ishuman(character))
 			var/mob/living/carbon/human/H = character
-			if (H.mutantrace && H.mutantrace.voice_override)
+			if (H.mutantrace?.voice_override) //yass TODO: find different way of handling this
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
@@ -2010,10 +2018,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 	var/type_first
 	if (AH.gender == MALE)
 		if (prob(5)) // small chance to have a hairstyle more geared to the other gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 		else // otherwise just use one standard to the current gender
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 
 		if (prob(33)) // since we're a guy, a chance for facial hair
@@ -2023,10 +2031,10 @@ var/global/list/female_screams = list("female", "femalescream1", "femalescream2"
 
 	else // if FEMALE
 		if (prob(8)) // same as above for guys, just reversed and with a slightly higher chance since it's ~more appropriate~ for ladies to have guy haircuts than vice versa  :I
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/ismasc))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/ismasc))
 			AH.customization_first = new type_first
 		else // ss13 is coded with gender stereotypes IN ITS VERY CORE
-			type_first = pick(filtered_concrete_typesof(/datum/customization_style,.proc/isfem))
+			type_first = pick(filtered_concrete_typesof(/datum/customization_style, /proc/isfem))
 			AH.customization_first = new type_first
 
 	if (!has_second)

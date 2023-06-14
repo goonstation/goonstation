@@ -170,6 +170,7 @@
 	syndicates |= chosen_syndicates
 	for (var/datum/mind/syndicate in syndicates)
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
@@ -180,14 +181,21 @@
 	RETURN_TYPE(/datum/mind)
 	var/list/datum/mind/possible_leaders = list()
 	for(var/datum/mind/mind in syndicates)
-		if(mind.current.client.preferences.be_syndicate_commander)
+		if(mind.current.client.preferences.be_syndicate_commander && mind.current.has_medal("Manhattan Project"))
 			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
+	else
+		for(var/datum/mind/mind in syndicates)
+			if(mind.current.client.preferences.be_syndicate_commander)
+				possible_leaders += mind
 	if(length(possible_leaders))
 		return pick(possible_leaders)
 	return pick(syndicates)
 
 /datum/game_mode/nuclear/post_setup()
 	var/datum/mind/leader_mind = src.pick_leader()
+	leader_mind.special_role = ROLE_NUKEOP_COMMANDER
 
 	//Building the plant location strings
 	var/to_store_in_mind
@@ -219,13 +227,11 @@
 		synd_mind.store_memory(to_store_in_mind, 0, 0)
 		boutput(synd_mind.current, to_output)
 
-		if(synd_mind == leader_mind)
-			synd_mind.add_antagonist(ROLE_NUKEOP_COMMANDER)
-			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
-		else
-			synd_mind.add_antagonist(ROLE_NUKEOP)
+		equip_antag(synd_mind)
 
-		synd_mind.current.antagonist_overlay_refresh(1, 0)
+		if(synd_mind == leader_mind)
+			var/mob/living/carbon/human/H = synd_mind.current
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
@@ -457,7 +463,7 @@ var/syndicate_name = null
 	name = "Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 1
 

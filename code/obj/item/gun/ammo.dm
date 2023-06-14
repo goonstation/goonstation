@@ -179,7 +179,8 @@
 			K.ammo = ammoGun
 			K.set_current_projectile(ammoGun.ammo_type)
 			if(K.silenced)
-				K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+				K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+				K.current_projectile.shot_sound_extrarange = -10
 			K.UpdateIcon()
 
 			return 1
@@ -231,7 +232,8 @@
 				K.ammo = ammoGun
 				K.set_current_projectile(A.ammo_type)
 				if(K.silenced)
-					K.current_projectile.shot_sound = 'sound/machines/click.ogg'
+					K.current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
+					K.current_projectile.shot_sound_extrarange = -10
 
 				//DEBUG_MESSAGE("Equalized [K]'s ammo type to [A.type]")
 
@@ -385,8 +387,8 @@
 	ammo_type = new/datum/projectile/bullet/minigun
 	icon_state = "lmg_ammo-old" // reusing old sprites for variety
 	icon_empty = "lmg_ammo-0-old"
-	amount_left = 100
-	max_amount = 100
+	amount_left = 200
+	max_amount = 200
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
@@ -694,14 +696,19 @@
 	icon_empty = "speedloader_empty"
 
 //0.58
-/obj/item/ammo/bullets/flintlock //Flintlock cant be reloaded so this is only for the initial bullet.
+/obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
-	name = ".58 Flintlock"
+	name = ".58 flintlock pouch"
+	desc = "A small pouch containing .58 lead balls for flintlock pistols."
 	ammo_type = new/datum/projectile/bullet/flintlock
-	icon_state = null
-	amount_left = 1
-	max_amount = 1
+	icon_state = "flintlock_ammo_pouch"
+	amount_left = 15
+	max_amount = 15
 	ammo_cat = AMMO_FLINTLOCK
+
+	single
+		amount_left = 1
+		max_amount = 1
 
 //0.72
 /obj/item/ammo/bullets/a12
@@ -824,6 +831,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_LOW
 	icon_dynamic = 0
 	icon_empty = "flare-0"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+//0.75
+/obj/item/ammo/bullets/flintlock/rifle
+	sname = ".75 Flintlock"
+	name = ".75 flintlock pouch"
+	desc = "A small pouch containing .75 lead balls for flintlock rifles."
+	ammo_type = new/datum/projectile/bullet/flintlock/rifle
+	icon_state = "flintlock_rifle_ammo_pouch"
+	ammo_cat = AMMO_FLINTLOCK_RIFLE
 
 	single
 		amount_left = 1
@@ -952,6 +972,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "40mm plastic baton rounds"
 	desc = "Some mean-looking plastic projectiles. Keep in mind non-lethal doesn't mean non-maiming."
 	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
+/obj/item/ammo/bullets/stunbaton
+	sname = "40mm Stun Baton Rounds"
+	name = "40mm plastic baton rounds"
+	desc = "A box of disposable stun batons shoved into 40mm grenade shells. What the hell?"
+	ammo_type = new/datum/projectile/bullet/stunbaton
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mm_nonlethal"
@@ -1108,6 +1142,26 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+//2.5
+/obj/item/ammo/bullets/flintlock/mortar
+	sname = "2.5 Mortar"
+	name = "2.5 mortar grenades"
+	desc = "Ancient 63.5mm grenades, meant for use in a hand mortar."
+	ammo_type = new/datum/projectile/bullet/flintlock/mortar
+	icon_state = "mortar-10"
+	icon_empty = "mortar-0"
+	icon_dynamic = TRUE
+	icon_short = "mortar"
+	ammo_cat = AMMO_FLINTLOCK_MORTAR
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	amount_left = 10
+	max_amount = 10
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //3.0
 /obj/item/ammo/bullets/gun
 	name = "Briefcase of guns"
@@ -1181,6 +1235,25 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_type = new/datum/projectile/bullet/howitzer
 	ammo_cat = AMMO_HOWITZER
 	w_class = W_CLASS_NORMAL
+
+/obj/item/ammo/bullets/staples
+	sname = "staples"
+	name = "staples"
+	desc = "A tiny case of staples. You really shouldn't be seeing this."
+	icon_state = "power_cell"
+	icon_empty = "power_cell"
+	amount_left = 2
+	max_amount = 2
+	ammo_type = new/datum/projectile/bullet/staple
+	ammo_cat = AMMO_STAPLE
+	w_class = W_CLASS_TINY
+
+	after_unload(mob/user)
+		. = ..()
+		for(var/i in 1 to src.amount_left)
+			new/obj/item/implant/projectile/staple(get_turf(src))
+		qdel(src)
+
 //////////////////////////////////// Power cells for eguns //////////////////////////
 
 /obj/item/ammo/power_cell
@@ -1480,3 +1553,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		cell.swap(gun,user)
+
+/obj/item/ammo/power_cell/redirect
+	component_type = /datum/component/power_cell/redirect
+	var/target_type = null
+	var/internal = FALSE

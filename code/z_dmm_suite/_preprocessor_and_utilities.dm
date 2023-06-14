@@ -30,6 +30,12 @@ Both:
 //-- Text / List Utilities - From Forum_account.Text ---------------------------
 
 dmm_suite
+	var/debug_id
+
+	New(debug_id=null)
+		..()
+		src.debug_id = debug_id
+
 	proc/text2list(splitString, delimiter)
 		#ifdef DEBUG
 		ASSERT(istext(splitString))

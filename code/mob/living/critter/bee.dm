@@ -41,7 +41,8 @@
 	fits_under_table = 1
 	hand_count = 3
 	add_abilities = list(/datum/targetable/critter/bite/bee,
-						 /datum/targetable/critter/bee_sting)
+						 /datum/targetable/critter/bee_sting,
+						 /datum/targetable/critter/bee_puke_honey)
 	var/limb_path = /datum/limb/small_critter/bee
 	var/mouth_path = /datum/limb/mouth/small/bee
 
@@ -448,17 +449,15 @@
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
 	icon_state = "bee_sting"
-	cooldown = 50
-	targeted = 1
-	target_anything = 1
+	cooldown = 5 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/venom1 = "histamine"
 	var/amt1 = 5
 	var/venom2 = "toxin"
 	var/amt2 = 4
 	var/list/sting_adjectives = list("nubby little","stubby little","tiny little")
 	var/brute_damage = 2
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -522,11 +521,9 @@
 	name = "Swallow"
 	desc = "Swallow a mob, trapping them in honey."
 	icon_state = "bee_swallow"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -550,6 +547,8 @@
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
@@ -569,12 +568,10 @@
 	name = "Stare"
 	desc = "Stare at a mob, teleporting them away after a short time."
 	icon_state = "bee_teleport"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-	var/do_buzz = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+	var/do_buzz = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -605,6 +602,28 @@
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
+
+
+/datum/targetable/critter/bee_puke_honey
+	name = "Puke Honey"
+	desc = "Regurgitate your reagents in the form of a blob of honey."
+	targeted = FALSE
+	cooldown = 5 SECONDS
+	icon_state = "clean_dump"
+
+	cast(atom/target)
+		if(!holder?.owner?.reagents)
+			return TRUE
+
+		if (holder.owner.reagents.total_volume < holder.owner.reagents.maximum_volume / 2)
+			boutput(holder.owner, "You aren't full enough to make honey yet! Eat more!")
+			return TRUE
+
+		var/mob/living/critter/small_animal/bee/us = holder.owner
+		if (istype(us))
+			us.puke_honey()
+
+
 
 /* ================================================== */
 /* -------------------- Subtypes -------------------- */
@@ -835,9 +854,9 @@
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"
@@ -853,7 +872,8 @@
 	icon_body = "overbee"
 	add_abilities = list(/datum/targetable/critter/bite/bee,
 						 /datum/targetable/critter/bee_sting,
-						 /datum/targetable/critter/bee_teleport)
+						 /datum/targetable/critter/bee_teleport,
+						 /datum/targetable/critter/bee_puke_honey)
 
 	puke_honey()
 		var/turf/T = locate(src.x + rand(-2,2), src.y + rand(-2,2), src.z)
@@ -988,7 +1008,8 @@
 	fits_under_table = 0
 	add_abilities = list(/datum/targetable/critter/bite/bee/queen,
 						 /datum/targetable/critter/bee_sting/queen,
-						 /datum/targetable/critter/bee_swallow)
+						 /datum/targetable/critter/bee_swallow,
+						 /datum/targetable/critter/bee_puke_honey)
 	limb_path = /datum/limb/small_critter/bee/strong
 	mouth_path = /datum/limb/mouth/small/bee/queen
 

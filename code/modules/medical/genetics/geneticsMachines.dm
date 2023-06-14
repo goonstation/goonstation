@@ -67,11 +67,7 @@
 		else
 			src.Attackhand(user)
 	else
-		var/obj/item/device/pda2/PDA = W
-		if (istype(PDA) && PDA.ID_card)
-			W = PDA.ID_card
-
-		var/obj/item/card/id/ID = W
+		var/obj/item/card/id/ID = get_id_card(W)
 		if (istype(ID))
 			registered_id = ID.registered
 			user.show_text("You swipe the ID on [src]. You will now receive a cut from gene booth sales.", "blue")
@@ -221,7 +217,7 @@
 		return null
 	if (!src.scanner.occupant_preview)
 		src.scanner.occupant_preview = new()
-		src.scanner.occupant_preview.add_background("#092426")
+		src.scanner.occupant_preview.add_background("#092426", height_mult=2)
 		src.scanner.update_occupant()
 	return src.scanner.occupant_preview
 
@@ -510,7 +506,7 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
-			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+			if (!H.mutantrace?.genetics_removable)
 				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
 				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
 				return
@@ -975,7 +971,7 @@
 	var/mob/living/subject = get_scan_subject()
 	if (subject)
 		var/mob/living/carbon/human/H = subject
-		var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+		var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 		P?.add_client(user?.client)
 		.["subject"] = list(
 			"preview" = P?.preview_id,
@@ -1083,7 +1079,7 @@
 					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 					"materialMax" = genResearch.max_material,
 					"mutantRaces" = list(list(
-						"name" = "Human",
+						"name" = "Clear Mutantrace",
 						"icon" = "template",
 						"ref" = "\ref[null]",
 						)),
@@ -1123,7 +1119,7 @@
 
 /obj/machinery/computer/genetics/ui_close(mob/user)
 	. = ..()
-	var/datum/character_preview/multiclient/P = src.get_occupant_preview()
+	var/datum/movable_preview/character/multiclient/P = src.get_occupant_preview()
 	P?.remove_client(user?.client)
 	src.modify_appearance?.ui_close(user)
 

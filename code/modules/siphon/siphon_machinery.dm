@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	icon = 'icons/obj/machines/neodrill_32x64.dmi'
 	icon_state = "drill-high"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = 4
 	power_usage = 200
 	bound_height = 64
@@ -285,7 +285,6 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.visible_message("<B>[src]</B> shuts down. Its internal storage is full.")
 
 		power_usage = total_draw
-		use_power(power_usage)
 		..()
 
 	proc/eats_spicy_goodness_dies_instantly(var/catastrophic = FALSE) //DEBUG DEBUG DEBUG
@@ -364,12 +363,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				var/staystill = usr.loc
 				var/interval = 0
 				for (var/obj/item/I in src.contents)
-					I.set_loc(satchel)
-					I.add_fingerprint(usr)
+					if (satchel.check_valid_content(I))
+						I.set_loc(satchel)
+						I.add_fingerprint(usr)
+						playsound(src, sound_unload, 30, 1)
 					if (!(interval++ % 4))
 						satchel.UpdateIcon()
 						src.update_storage_bar()
-					playsound(src, sound_unload, 30, 1)
 					sleep(0.1 SECONDS)
 					if (usr.loc != staystill) break
 					if (satchel.contents.len >= satchel.maxitems)
@@ -379,6 +379,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				if(satchel.contents.len == satchel.maxitems || !length(src.contents)) incomplete = 0
 				boutput(usr, "<span class='notice'>You [incomplete ? "stop" : "finish"] filling \the [satchel].</span>")
 				satchel.UpdateIcon()
+				satchel.tooltip_rebuild = 1
 				src.update_storage_bar()
 			else
 				boutput(usr, "<span class='notice'>\The [satchel] doesn't have any room to accept materials.</span>")
@@ -598,14 +599,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				src.wrenched = TRUE
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the auxiliary reinforcing bolts to the floor.")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.desc = src.wrenched_desc
 				return
 			else if(!maglocked && wrenched)
 				src.wrenched = FALSE
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You undo the auxiliary reinforcing bolts.")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				src.desc = src.regular_desc
 				return
 			else
@@ -738,7 +739,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.y_torque = sign(yadj) * 2 ** (4 - abs(yadj))
 
 	proc/engage_lock()
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.maglocked = 1
 		src.update_fx()
 
@@ -747,12 +748,12 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			SPAWN(delayer)
 				src.maglocked = 0
 				if(!wrenched)
-					src.anchored = 0
+					src.anchored = UNANCHORED
 				src.update_fx()
 		else
 			src.maglocked = 0
 			if(!wrenched)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			src.update_fx()
 
 	proc/update_fx()

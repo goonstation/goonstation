@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/sword)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -226,7 +226,7 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
-		user.unlock_medal("The Force is strong with this one", 1)
+		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
@@ -410,6 +410,52 @@ TYPEINFO(/obj/item/sword)
 /obj/item/sword/pink
 	bladecolor = "Pi"
 
+TYPEINFO(/obj/item/sword/pink/angel)
+	mats = null
+/obj/item/sword/pink/angel
+	name = "The Nyasaber"
+	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
+	active = TRUE
+	active_force = 5
+	icon_state = "sword1-Pi"
+	item_state = "sword1-Pi"
+
+	pickup(mob/user)
+		if(isadmin(user))
+			src.active_force = 60
+			if(src.active)
+				src.force = 60
+			. = ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			src.active_force = initial(src.active_force)
+			if(src.active)
+				src.force = initial(src.force)
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	pull(mob/user)
+		if(isadmin(user))
+			return ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(isadmin(usr))
+			return ..()
+		else if(istype(usr, /mob/living/critter/small_animal/cat))
+			boutput(usr, "<span class='alert'>You can nyot use this!</span>")
+		else
+			usr.unequip_all()
+			usr.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
 /obj/item/sword/white
 	bladecolor = "W"
 
@@ -576,11 +622,44 @@ TYPEINFO(/obj/item/sword)
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 
-/obj/item/storage/box/shuriken_pouch
-	name = "Shuriken Pouch"
-	desc = "Contains four throwing stars!"
-	icon_state = "ammopouch"
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
+// Revolutionary sign.
+/obj/item/revolutionary_sign
+	name = "revolutionary sign"
+	desc = "A sign bearing revolutionary propaganda. Good for picketing."
+
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "revsign"
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
+	item_state = "revsign"
+
+	w_class = W_CLASS_BULKY
+	throwforce = 8
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 7
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 10
+	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
+		processing_items.Add(src)
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (isrevolutionary(owner))
+				for (var/mob/M in viewers(5, owner))
+					if (isrevolutionary(M))
+						M.changeStatus("revspirit", 20 SECONDS)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
@@ -1030,6 +1109,8 @@ TYPEINFO(/obj/item/bat)
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
 	var/delimb_prob = 1
+	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
@@ -1117,6 +1198,17 @@ TYPEINFO(/obj/item/bat)
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
+/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+	. = FALSE
+	if (!istype(user))
+		return
+	if (!istype(user.belt, /obj/item/swords_sheaths))
+		return
+	var/obj/item/swords_sheaths/sheath = user.belt
+	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
+		sheath.Attackby(src, user)
+		return TRUE
+
 //PS the description can be shortened if you find it annoying and you are a jerk.
 TYPEINFO(/obj/item/swords/katana)
 	mats = list("MET-3"=20, "FAB-1"=5)
@@ -1128,6 +1220,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
+	midair_fruit_slice = TRUE
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
@@ -1180,6 +1273,7 @@ TYPEINFO(/obj/item/swords/katana)
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()
@@ -1243,6 +1337,40 @@ TYPEINFO(/obj/item/swords/captain)
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
+
+/obj/item/swords/clown // this is the worst thing I've ever created
+	icon_state = "clown_sword"
+	name = "Clowns's Sabre"
+	desc = "A sharp sab- is that a bike horn that's been cut in half duct taped to a sword? What the hell? How does that even work???"
+	force = 4
+	delimb_prob = 1 // yes
+	contraband = 1
+	hit_type = DAMAGE_BLUNT
+	attack_verbs = "bonks"
+	hitsound = null // do this in attack
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
+
+/obj/item/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		user.visible_message("<span class='alert'><b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b></span>")
+		SPAWN(1 SECOND)
+			if(prob(5))
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.gib()
+			else
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 0, 0)
+				user.death()
+
 
 /obj/item/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
@@ -1406,6 +1534,17 @@ TYPEINFO(/obj/item/swords/captain)
 	ih_sheath_state = "scabbard-pirate0"
 	sword_path = /obj/item/swords/pirate
 
+/obj/item/swords_sheaths/clown
+	name = "Clown's Scabbard"
+	desc = "A nifty container for a... is that just a magnet to hold a sword to it? Oh god."
+	icon_state = "clown_sword_scabbard"
+	item_state = "scabbard-clown1"
+
+	sheathed_state = "clown_sword_scabbard"
+	sheath_state = "clown_scabbard"
+	ih_sheathed_state = "scabbard-clown1"
+	ih_sheath_state = "scabbard-clown0"
+	sword_path = /obj/item/swords/clown
 
 /*
  *							--- Non-electronic Swords ---
@@ -1558,7 +1697,7 @@ obj/item/whetstone
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()

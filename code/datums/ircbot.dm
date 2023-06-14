@@ -77,10 +77,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
-				return "queued"
+				return null
 			else
 				if (config.env == "dev" || !config.ircbot_api) // If we have no API key, why even bother
-					return 0
+					return null
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
@@ -102,7 +102,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 				if (response.errored || !response.body)
 					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
-					return
+					return null
 
 				var/content = response.body
 
@@ -113,7 +113,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
 					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
-					return 0
+					return contentJson
 				if (contentJson["status"] == "error")
 					var/log = ""
 					if (contentJson["errormsg"])
@@ -121,7 +121,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					else
 						log = "An unknown error was returned from export: [json_encode(contentJson)]"
 					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> [log]")
-				return 1
+				return contentJson
 
 
 		//Format the response to an irc request juuuuust right
@@ -200,9 +200,12 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 
-	if (res)
+	if (res && res["status"] == "ok")
 		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
+	else if (res && res["response"])
+		tgui_alert(src, res["response"], "Error")
+		return 0
 	else
 		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0
