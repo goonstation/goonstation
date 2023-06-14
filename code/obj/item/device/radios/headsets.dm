@@ -521,7 +521,22 @@
 				src.icon_tooltip = "Artificial Intelligence"
 			if ("cyborg")
 				src.icon_override = "robo"
-				src.icon_tooltip = "station bounced radio" //same as no module. This is already long enough as it is, better to not add all modules
+				var/mod = input(user, "Select module") as anything in list("None", "Brobocop", "Science", "Civilian", "Engineering", "Medical", "Mining")
+				switch (mod)
+					if ("None")
+						src.icon_tooltip = "station bounced radio"
+					if ("Brobocop")
+						src.icon_tooltip = "Security"
+					if ("Science")
+						src.icon_tooltip = "Scientist"
+					if ("Civilian")
+						src.icon_tooltip = "Civilian"
+					if ("Engineering")
+						src.icon_tooltip = "Engineer"
+					if ("Medical")
+						src.icon_tooltip = "Medical"
+					if ("Mining")
+						src.icon_tooltip = "Miner"
 			if ("consultant")
 				src.icon_override = "nt"
 				src.icon_tooltip = "NanoTrasen Security Consultant"
