@@ -1,4 +1,6 @@
 (t)thu jun 15 23
+(u)tarmunora
+(+)Grave Fever now has an incubation period before it starts causing stuns etc.
 (u)aloe
 (+)Promethazine (anti-vomit chem) now works in hyposprays and the medical director's syringe gun.
 (t)wed jun 14 23
