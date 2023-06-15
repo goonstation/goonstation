@@ -269,12 +269,12 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
-        if (src.deconstructable) return
-	
+	if (src.deconstructable) return
+
 	currentdir = dir_in
 	if (operating == OP_REGULAR)
 		currentdir = dir_out
-	else if(operating == OP_REVERSE)
+	else if (operating == OP_REVERSE)
 		currentdir = dir_in
 
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src, currentdir)
@@ -549,9 +549,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches) > 0)
-		        src.operating = src.linked_switches[0]
+			src.operating = src.linked_switches[0]
 			src.setdir()
-	        
+
 		return 1
 
 	else
@@ -559,9 +559,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches) > 0)
-		        src.operating = OP_OFF
+			src.operating = OP_OFF
 			src.setdir()
-                
+
 		return 1
 
 /obj/machinery/conveyor/attack_hand(mob/user)
