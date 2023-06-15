@@ -111,9 +111,7 @@ datum/pipe_network
 		if (!air_transient)
 			air_transient = new()
 		air_transient.volume = 0
-		ZERO_BASE_GASES(air_transient)
-
-		air_transient.clear_trace_gases()
+		ZERO_GASES(air_transient)
 
 		for(var/datum/gas_mixture/gas in gases)
 			air_transient.volume += gas.volume
@@ -123,11 +121,6 @@ datum/pipe_network
 			#define _RECONCILE_AIR(GAS, ...) air_transient.GAS += gas.GAS;
 			APPLY_TO_GASES(_RECONCILE_AIR)
 			#undef _RECONCILE_AIR
-
-			if(length(gas.trace_gases))
-				for(var/datum/gas/trace_gas as anything in gas.trace_gases)
-					var/datum/gas/corresponding = air_transient.get_or_add_trace_gas_by_type(trace_gas.type)
-					corresponding.moles += trace_gas.moles
 
 		if(air_transient.volume > 0)
 
@@ -148,11 +141,6 @@ datum/pipe_network
 				#undef _RECONCILE_AIR_TRANSFER
 
 				gas.temperature = air_transient.temperature
-
-				if(length(air_transient.trace_gases))
-					for(var/datum/gas/trace_gas in air_transient.trace_gases)
-						var/datum/gas/corresponding = gas.get_or_add_trace_gas_by_type(trace_gas.type)
-						corresponding.moles = trace_gas.moles*gas.volume/air_transient.volume
 		return 1
 
 proc/equalize_gases(list/datum/gas_mixture/gases)
@@ -167,8 +155,6 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 	APPLY_TO_GASES(_EQUALIZE_GASES_TOTAL_DEF)
 	#undef _EQUALIZE_GASES_TOTAL_DEF
 
-	var/list/total_trace_gases
-
 	for(var/datum/gas_mixture/gas in gases)
 		total_volume += gas.volume
 		total_thermal_energy += THERMAL_ENERGY(gas)
@@ -177,19 +163,6 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 		#define _EQUALIZE_GASES_ADD_TO_TOTAL(GAS, ...) total_ ## GAS += gas.GAS;
 		APPLY_TO_GASES(_EQUALIZE_GASES_ADD_TO_TOTAL)
 		#undef _EQUALIZE_GASES_ADD_TO_TOTAL
-
-		if(length(gas.trace_gases))
-			for(var/datum/gas/trace_gas as anything in gas.trace_gases)
-				var/datum/gas/corresponding
-				if(length(total_trace_gases))
-					corresponding = locate(trace_gas.type) in total_trace_gases
-				if(!corresponding)
-					corresponding = new trace_gas.type()
-					if(!total_trace_gases)
-						total_trace_gases = list()
-					total_trace_gases += corresponding
-
-				corresponding.moles += trace_gas.moles
 
 	if(total_volume > 0)
 
@@ -206,10 +179,5 @@ proc/equalize_gases(list/datum/gas_mixture/gases)
 			#undef _EQUALIZE_GASES_UPDATE
 
 			gas.temperature = temperature
-
-			if(length(total_trace_gases))
-				for(var/datum/gas/trace_gas in total_trace_gases)
-					var/datum/gas/corresponding = gas.get_or_add_trace_gas_by_type(trace_gas.type)
-					corresponding.moles = trace_gas.moles*gas.volume/total_volume
 
 	return 1

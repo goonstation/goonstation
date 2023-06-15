@@ -1299,7 +1299,7 @@ var/list/fun_images = list()
 		del(bgObj)
 
 	var/start_x = (viewport_width / 2) + 1
-	var/start_y = (viewport_height / 2) + 1
+	var/start_y = world.maxy - (viewport_height / 2) + 1
 
 	boutput(src, "<span class='notice'><B>Begining mapping.</B></span>")
 
@@ -1308,7 +1308,7 @@ var/list/fun_images = list()
 		for (var/curZ = 1; curZ <= world.maxz; curZ++)
 			if (safeAllZ && (curZ == 2 || curZ == 4))
 				continue //Skips centcom
-			for (var/y = start_y; y <= world.maxy; y += viewport_height)
+			for (var/y = start_y; y >= 0; y -= viewport_height)
 				for (var/x = start_x; x <= world.maxx; x += viewport_width)
 					src.mob.x = x
 					src.mob.y = y
@@ -1323,7 +1323,7 @@ var/list/fun_images = list()
 					return
 	//Or just one level I GUESS
 	else
-		for (var/y = start_y; y <= world.maxy; y += viewport_height)
+		for (var/y = start_y; y >= 0; y -= viewport_height)
 			for (var/x = start_x; x <= world.maxx; x += viewport_width)
 				src.mob.x = x
 				src.mob.y = y
@@ -1638,7 +1638,7 @@ var/list/fun_images = list()
 		pet_input = input("Enter path of the thing you want to give people as pets or enter a part of the path to search", "Enter Path", pick("/obj/critter/domestic_bee", "/obj/critter/parrot/random")) as null|text
 	if (!pet_input)
 		return
-	var/pet_path = get_one_match(pet_input, /obj)
+	var/pet_path = get_one_match(pet_input, /atom/movable)
 	if (!pet_path)
 		return
 
@@ -1697,7 +1697,7 @@ var/list/fun_images = list()
 	set desc = "Show or hide the admin changelog"
 	ADMIN_ONLY
 
-	if (winget(src, "adminchanges", "is-visible") == "true")
+	if (winexists(src, "adminchanges") && winget(src, "adminchanges", "is-visible") == "true")
 		src.Browse(null, "window=adminchanges")
 	else
 		var/changelogHtml = grabResource("html/changelog.html")
@@ -2504,7 +2504,7 @@ var/list/fun_images = list()
 	var/total = 0
 	for (var/client/client in clients)
 		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
-			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START)
+			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
 				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
 				total += 1
 				client.set_antag_tokens(client.antag_tokens + 1)

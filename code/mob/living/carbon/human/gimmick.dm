@@ -248,6 +248,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 	initializeBioholder()
 		. = ..()
@@ -694,6 +695,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 // merchant
@@ -848,6 +850,7 @@ proc/empty_mouse_params()//TODO MOVE THIS!!!
 	New()
 		..()
 		src.bioHolder.AddEffect("cow")
+		src.default_mutantrace = /datum/mutantrace/cow
 
 
 /mob/living/carbon/human/tommy

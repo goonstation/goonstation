@@ -47,8 +47,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	user.visible_message("[user] [pick("reels in", "catches", "pulls in", "fishes up")] a \
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
-	fish.set_loc(get_turf(user))
+	user.put_in_hand_or_drop(fish)
 	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
+	playsound(user, 'sound/effects/fish_catch.ogg', 50, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 
@@ -66,6 +67,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/coelacanth = 5,\
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
+	/mob/living/carbon/human/npc/monkey/sea = 5,\
 	/obj/item/fish/sardine = 20)
 
 /datum/fishing_spot/swamp
@@ -100,14 +102,14 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /datum/fishing_spot/drain
 	fishing_atom_type = /obj/machinery/drainage
-	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	fish_available = list(/obj/item/reagent_containers/food/snacks/yuck = 20, \
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \
 	/obj/item/fish/bass = 9,\
 	/obj/item/fish/salmon = 7,\
 	/obj/item/fish/herring = 6,\
-	/obj/item/fish/red_herring = 7)
+	/obj/item/fish/red_herring = 1)
 
 /datum/fishing_spot/toilet/random
 	fishing_atom_type = /obj/item/storage/toilet/random
@@ -177,6 +179,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
+	/obj/item/fish/coelacanth = 5,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -266,13 +269,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/submachine/chef_sink
 	rod_tier_required = 1
 	fish_available = list(/obj/item/fish/goldfish = 30,\
-	/obj/item/fish/bass = 20,\
-	/obj/item/fish/salmon = 20,\
-	/obj/item/fish/carp = 15,\
-	/obj/item/fish/rainbow_trout = 10,\
-	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
-	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
@@ -282,6 +278,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
 	/obj/item/fish/sardine = 20,\
+	/obj/item/clothing/head/chefhat = 10,\
 	/obj/item/reagent_containers/food/snacks/swedish_fish = 10)
 
 /datum/fishing_spot/bathroom_sink
@@ -322,17 +319,16 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/watertank
 	fishing_atom_type = /obj/reagent_dispensers/watertank
 	rod_tier_required = 1
-	fish_available = list(/obj/item/fish/goldfish = 30,\
-	/obj/item/fish/bass = 20,\
-	/obj/item/fish/salmon = 20,\
-	/obj/item/fish/carp = 15,\
-	/obj/item/fish/rainbow_trout = 10,\
-	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
-	/obj/item/fish/bass = 30,\
-	/obj/item/fish/salmon = 20,\
-	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5,\
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gramma = 10,\
+	/obj/item/fish/bc_angelfish = 10,\
+	/obj/item/fish/blue_tang = 15,\
+	/obj/item/fish/firefish = 5,\
+	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/mandarin_fish = 5,\
 	/obj/item/fish/tuna = 10,\
 	/obj/item/fish/cod = 15,\
 	/obj/item/fish/flounder = 10,\
@@ -416,21 +412,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/chub = 10,\
 	/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
-	/obj/item/fish/salmon = 20,\
-	/obj/item/fish/herring = 15,\
-	/obj/item/fish/red_herring = 5,\
-	/obj/item/fish/tuna = 10,\
-	/obj/item/fish/cod = 15,\
-	/obj/item/fish/flounder = 10,\
-	/obj/item/fish/mahimahi = 10,\
-	/obj/item/fish/shrimp = 15,\
-	/obj/item/fish/sardine = 20)
+	/obj/item/fish/salmon = 20)
 
 // Alien/mutant fishing spots
 /datum/fishing_spot/meatzone_acid
 	fishing_atom_type = /turf/unsimulated/floor/setpieces/bloodfloor/stomach
 	rod_tier_required = 2
 	fish_available = list(/obj/item/fish/meat_mutant = 25,\
+	/mob/living/critter/blobman = 5,\
+	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/fish/eye_mutant = 15,\
 	/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25)
@@ -458,6 +448,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/clonepod
 	rod_tier_required = 2
 	fish_available = list(/obj/item/fish/meat_mutant = 10,\
+	/mob/living/critter/blobman = 5,\
+	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/parts/human_parts/arm/left = 10,\
 	/obj/item/parts/human_parts/arm/right = 10,\
 	/obj/item/parts/human_parts/leg/left = 10,\
@@ -469,13 +461,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 3
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/mob/living/carbon/human/future = 1,\
 	/mob/living/critter/aberration = 1,\
 	/mob/living/critter/small_animal/cat = 2,\
-	/obj/item/clothing/head/void_crown = 1,\
 	/obj/critter/domestic_bee/trauma = 20,\
 	/obj/item/fish/void_fish = 20)
 
@@ -490,13 +479,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 3
 	fish_available = list(/obj/item/space_thing = 5,\
 	/obj/item/gnomechompski = 5,\
-	/obj/item/material_piece/cerenkite = 10,\
-	/obj/item/material_piece/erebite = 10,\
 	/obj/item/clothing/shoes/clown_shoes = 5,\
 	/mob/living/carbon/human/future = 1,\
 	/mob/living/critter/aberration = 1,\
 	/mob/living/critter/small_animal/cat = 2,\
-	/obj/item/clothing/head/void_crown = 1,\
 	/obj/critter/domestic_bee/trauma = 20,\
 	/obj/item/fish/void_fish = 20)
 
@@ -611,16 +597,128 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/parts/human_parts/arm/right = 10,\
 	/obj/item/parts/human_parts/leg/left = 10,\
 	/obj/item/parts/human_parts/leg/right =10,\
-	/obj/item/organ/brain = 10)
+	/obj/item/organ/brain = 10,\
+	/mob/living/critter/martian = 15)
 
-/*
-Potential fishing spot ideas:
+//telesci void rift
+/datum/fishing_spot/void_rift
+	fishing_atom_type = /obj/dfissure_to
+	rod_tier_required = 3
+	fish_available = list(/obj/item/fish/void_fish = 50)
 
-/datum/fishing_spot/teleporter //is this the active state?
-	fishing_atom_type = /obj/machinery/teleport/portal_ring
+//engine furnace
+/datum/fishing_spot/furnace
+	fishing_atom_type = /obj/machinery/power/furnace/thermo
+	rod_tier_required = 2
+	fish_available = list(/obj/item/fish/firefish = 50)
 
-/datum/fishing_spot/telesci_portal //does this count pod portals and other stuff?
-	fishing_atom_type = /obj/perm_portal
+//#1 HOS mug
+/datum/fishing_spot/hosmug
+	fishing_atom_type = /obj/item/reagent_containers/food/drinks/mug/HoS
+	rod_tier_required = 1
+	fish_available = list(/obj/item/paper/book/from_file/space_law = 50)
 
-terra 8 hydro dam
-*/
+//vending machines
+/datum/fishing_spot/vending
+	fishing_atom_type = /obj/machinery/vending
+	rod_tier_required = 1
+	fish_available = list(/obj/item/coin = 25,\
+	/obj/item/spacecash/random/really_small = 20)
+
+//Arc electroplater
+/datum/fishing_spot/arc_electroplater
+	fishing_atom_type = /obj/machinery/arc_electroplater
+	rod_tier_required = 3
+	fish_available = list(/obj/item/fish/firefish = 50)
+
+//golden toilet
+datum/fishing_spot/golden_toilet
+	fishing_atom_type = /obj/item/storage/toilet/goldentoilet
+	rod_tier_required = 2
+	fish_available = list( /obj/item/reagent_containers/food/snacks/yuck = 20, \
+	/obj/item/reagent_containers/food/snacks/yuckburn = 20, \
+	/obj/item/reagent_containers/food/snacks/shell = 20, \
+	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
+	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/reagent_containers/food/snacks/fish_fingers = 10)
+
+	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
+		var/atom/result = ..()
+		result.setMaterial(getMaterial("gold"))
+		return result
+
+//crusher
+/datum/fishing_spot/crusher
+	fishing_atom_type = /obj/machinery/crusher
+	rod_tier_required = 2
+	fish_available = list(/obj/item/clothing/under/trash_bag = 10,\
+	/mob/living/critter/small_animal/cockroach = 10,\
+	/obj/item/c_tube = 10,\
+	/obj/item/raw_material/shard/glass = 10,\
+	/obj/item/cigbutt = 20,\
+	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
+	/obj/machinery/light/small/broken = 20)
+
+//nadir ocean
+/datum/fishing_spot/nadir_ocean
+	fishing_atom_type = /turf/space/fluid/acid
+	rod_tier_required = 2
+	fish_available = list(/obj/item/fish/clownfish = 15,\
+	/obj/item/fish/damselfish = 10,\
+	/obj/item/fish/green_chromis = 10,\
+	/obj/item/fish/cardinalfish = 5,\
+	/obj/item/fish/royal_gramma = 10,\
+	/obj/item/fish/bc_angelfish = 5,\
+	/obj/item/fish/blue_tang = 15,\
+	/obj/item/fish/firefish = 5,\
+	/obj/item/fish/yellow_tang = 10,\
+	/obj/item/fish/mandarin_fish = 5)
+
+//elevator shafts
+/datum/fishing_spot/elevator_shaft
+	fishing_atom_type = /turf/simulated/floor/specialroom/sea_elevator_shaft
+	rod_tier_required = 1
+	fish_available = list(/obj/item/fish/herring = 40,\
+	/obj/item/fish/tuna = 30,\
+	/obj/item/fish/cod = 20,\
+	/obj/item/fish/flounder = 15,\
+	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
+	/obj/critter/frog = 10)
+
+//chemical barrel
+/datum/fishing_spot/chemical_barrel
+	fishing_atom_type = /obj/reagent_dispensers/chemicalbarrel
+	rod_tier_required = 1
+	fish_available = list(/obj/item/fish/clownfish = 40,\
+	/obj/item/fish/damselfish = 30,\
+	/obj/item/fish/green_chromis = 20,\
+	/obj/item/fish/cardinalfish = 15,\
+	/obj/item/fish/royal_gramma = 10,\
+	/obj/item/fish/bc_angelfish = 10,\
+	/obj/item/fish/blue_tang = 15,\
+	/obj/item/fish/firefish = 5,\
+	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/mandarin_fish = 5)
+
+//ice cream machine
+/datum/fishing_spot/ice_cream_machine
+	fishing_atom_type = /obj/submachine/ice_cream_dispenser
+	rod_tier_required = 2
+	fish_available = list(/obj/item/reagent_containers/food/snacks/condiment/chocchips = 40,\
+	/obj/item/reagent_containers/food/snacks/condiment/custard = 30,\
+	/obj/item/reagent_containers/food/snacks/condiment/cream = 20,\
+	/obj/item/reagent_containers/food/snacks/condiment/syrup = 15,\
+	/obj/item/raw_material/ice = 35,\
+	/obj/item/fish/yellow_tang = 10,\
+	/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom = 30)
+
+//mainframe
+/datum/fishing_spot/mainframe
+	fishing_atom_type = /obj/machinery/networked/mainframe/zeta
+	rod_tier_required = 3
+	fish_available = list(/obj/item/fish/code_worm = 50,\
+	/obj/item/disk/data/tape/boot2 = 30,\
+	/obj/item/disk/data/floppy/demo = 25,\
+	/obj/item/disk/data/cartridge/clown = 15,\
+	/obj/item/disk/data/cartridge/ringtone_beepy = 5)

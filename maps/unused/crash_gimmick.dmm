@@ -7613,8 +7613,8 @@
 /obj/table/wood/auto,
 /obj/item/clothing/gloves/boxing,
 /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/under/shorts/random,
-/obj/item/clothing/under/shorts/random,
+/obj/item/clothing/under/shorts/random_color,
+/obj/item/clothing/under/shorts/random_color,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -50881,7 +50881,7 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -50896,11 +50896,11 @@
 /area/space)
 "jxF" = (
 /obj/storage/closet/janitor,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},

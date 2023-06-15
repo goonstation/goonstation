@@ -11818,7 +11818,10 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 28
 	},
-/obj/machinery/vending/snack,
+/obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -11836,6 +11839,7 @@
 	},
 /area/station/science/lobby)
 "aIS" = (
+/obj/machinery/vending/snack,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -27516,6 +27520,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"fTG" = (
+/obj/item/bat,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "fTS" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -28459,10 +28468,10 @@
 /obj/item/clothing/under/swimsuit/black,
 /obj/item/clothing/under/swimsuit/red,
 /obj/item/clothing/under/swimsuit/blue,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks"
 	},
 /obj/item/clothing/under/shorts/black{
@@ -30497,6 +30506,9 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -35423,6 +35435,9 @@
 /obj/machinery/coffeemaker/medbay,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "npu" = (
@@ -41754,6 +41769,9 @@
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = -8
 	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
+	},
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -42564,6 +42582,9 @@
 /obj/machinery/coffeemaker/engineering,
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8
+	},
+/obj/item/kitchen/food_box/sugar_box{
+	pixel_y = 16
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/storage)
@@ -68506,7 +68527,7 @@ fAz
 lLh
 nSl
 aXv
-aGS
+fTG
 dHv
 aDY
 aDY

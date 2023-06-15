@@ -312,7 +312,7 @@
 				mob_type = "Monkey"
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if (H.mutantrace && !H.mutantrace.human_compatible)
+				if (!H.mutantrace.human_compatible)
 					mob_type = capitalize(H.mutantrace.name)
 				else
 					mob_type = "Human"

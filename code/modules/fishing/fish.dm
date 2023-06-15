@@ -80,7 +80,7 @@ Alien/mutant/other fish:
 	c_flags = ONBELT
 	attack_verbs = "slaps"
 	/// what type of item do we get when butchering the fish
-	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	var/fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	/// What kind of fish is this? (See defines above)
 	var/category = null
 	// How many points is this fish worth in the upload terminal?
@@ -118,7 +118,7 @@ Alien/mutant/other fish:
 	desc = "A fighty freshwater fish, a good catch for a beginner angler."
 	icon_state = "bass"
 	inhand_color = "#398f3d"
-	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_COMMON
 
@@ -139,7 +139,7 @@ Alien/mutant/other fish:
 	desc = "A commercial saltwater fish prized for its flavor for over five thousand years."
 	icon_state = "salmon"
 	inhand_color = "#E3747E"
-	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/salmon
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/salmon
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_COMMON
 
@@ -239,7 +239,7 @@ Alien/mutant/other fish:
 	desc = "Also known as a dolphinfish, this tropical fish is prized for its quality and size. When first taken out of the water, they change colors."
 	icon_state = "mahimahi"
 	inhand_color = "#A6B967"
-	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/white
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_UNCOMMON
 
@@ -372,6 +372,17 @@ Alien/mutant/other fish:
 	icon_state = "void_fish"
 	inhand_color = "#8f3ed1"
 	value  = FISH_RARITY_RARE
+
+//code
+/obj/item/fish/code_worm
+	name = "code worm"
+	desc = "This unstable creature has been swimming around in this code for a long time, giving developers and its victims a massive headache."
+	icon_state = "code_worm"
+	inhand_color = "#32CD32"
+	value  = FISH_RARITY_EPIC
+	New()
+		..()
+		name = "\improper [pick("free", "gamer", "Xtreme", "funny", "ultimate", "REAL")]_[pick("cat", "puppy", "gaming", "fail", "cheat", "hax")] [pick("video", "content", "game", "images", "text", "audiobook", "podcast")].worm"
 
 //solarium
 /obj/item/fish/sun_fish

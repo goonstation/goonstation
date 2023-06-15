@@ -9,6 +9,7 @@
 	icon_state = "fishing_rod-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "fishing_rod-inactive"
+	c_flags = ONBELT
 	/// average time to fish up something, in seconds - will vary on the upper and lower bounds by a maximum of 4 seconds, with a minimum time of 0.5 seconds.
 	var/fishing_speed = 8 SECONDS
 	/// how long to wait between casts in seconds - mainly so sounds dont overlap
@@ -219,7 +220,7 @@ TYPEINFO(/obj/item/fish_portal)
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED
 	density = 1
-	layer = 3
+	layer = MOB_LAYER + 0.1
 	var/working = FALSE
 	var/allowed = list(/obj/item/fish)
 
@@ -233,6 +234,7 @@ TYPEINFO(/obj/item/fish_portal)
 		src.icon_state = "uploadterminal_working"
 		src.working = TRUE
 		src.visible_message("The [src] begins uploading research data.")
+		playsound(src.loc, 'sound/effects/fish_processing_alt.ogg', 100, 1)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
@@ -244,23 +246,23 @@ TYPEINFO(/obj/item/fish_portal)
 			else
 				switch( P.value )
 					if (FISH_RARITY_COMMON)
-						new/obj/item/requisition_token/fishing/common(src.loc, src.layer + 0.1)
+						new/obj/item/requisition_token/fishing/common(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
 					if (FISH_RARITY_UNCOMMON)
-						new/obj/item/requisition_token/fishing/uncommon(src.loc, src.layer + 0.1)
+						new/obj/item/requisition_token/fishing/uncommon(src.loc)
 						JOB_XP(user, "Angler", 2)
 						qdel( P )
 					if (FISH_RARITY_RARE)
-						new/obj/item/requisition_token/fishing/rare(src.loc, src.layer + 0.1)
+						new/obj/item/requisition_token/fishing/rare(src.loc)
 						JOB_XP(user, "Angler", 3)
 						qdel( P )
 					if (FISH_RARITY_EPIC)
-						new/obj/item/requisition_token/fishing/epic(src.loc, src.layer + 0.1)
+						new/obj/item/requisition_token/fishing/epic(src.loc)
 						JOB_XP(user, "Angler", 4)
 						qdel( P )
 					if (FISH_RARITY_LEGENDARY)
-						new/obj/item/requisition_token/fishing/legendary(src.loc, src.layer + 0.1)
+						new/obj/item/requisition_token/fishing/legendary(src.loc)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
 		if (found_blacklisted_fish)
@@ -270,25 +272,42 @@ TYPEINFO(/obj/item/fish_portal)
 		for(var/obj/item/S in src)
 			S.set_loc(get_turf(src))
 		src.working = FALSE
-		src.icon_state = "upload_terminal_0"
-		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
+		src.icon_state = "uploadterminal_open"
+		playsound(src.loc, 'sound/effects/fish_processed_alt.ogg', 100, 1)
 
 	attack_ai(var/mob/user as mob)
 		return attack_hand(user)
 
 	attackby(obj/item/W, mob/user)
-		var/proceed = FALSE
-		for(var/check_path in src.allowed)
-			if(istype(W, check_path))
-				proceed = TRUE
-				break
-		if (!proceed)
-			boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+		if (src.working)
+			boutput(user, "<span class='alert'>The terminal is busy!</span>")
 			return
-		user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
-		user.u_equip(W)
-		W.set_loc(src)
-		W.dropped(user)
+		if (istype(W, /obj/item/storage/fish_box))
+			var/obj/item/storage/fish_box/S = W
+			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's no fish in the portable aquarium!</span>")
+			else
+				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
+				var/amtload = 0
+				for (var/obj/item/fish/F in S.contents)
+					F.set_loc(src)
+					amtload++
+				S.UpdateIcon()
+				boutput(user, "<span class='notice'>[amtload] fish loaded from the portable aquarium!</span>")
+				S.tooltip_rebuild = 1
+			return
+		else
+			var/proceed = FALSE
+			for(var/check_path in src.allowed)
+				if(istype(W, check_path))
+					proceed = TRUE
+					break
+			if (!proceed)
+				boutput(user, "<span class='alert'>You can't put that in the upload terminal!</span>")
+				return
+			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
+			user.u_equip(W)
+			W.set_loc(src)
+			W.dropped(user)
 
 /obj/submachine/fishing_upload_terminal/portable
 	anchored = 0
@@ -305,6 +324,9 @@ TYPEINFO(/obj/item/fish_portal)
 /obj/item/storage/fish_box
 	name = 	"Portable aquarium"
 	desc = "A temporary solution for transporting fish."
-	icon_state = "hard_case"
-	slots = 5
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	icon_state = "aquarium"
+	item_state = "aquarium"
+	slots = 6
 	can_hold = 	list(/obj/item/fish)

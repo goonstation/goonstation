@@ -33,15 +33,16 @@
 
 	var/maptext_out = 0
 	var/message = null
-	if (src.mutantrace)
-		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
-		if(!islist(mutantrace_emote_stuff))
-			message = mutantrace_emote_stuff
-		else
-			if(length(mutantrace_emote_stuff) >= 1)
-				message = mutantrace_emote_stuff[1]
-			if(length(mutantrace_emote_stuff) >= 2)
-				maptext_out = mutantrace_emote_stuff[2]
+
+	var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+	if(!islist(mutantrace_emote_stuff))
+		message = mutantrace_emote_stuff
+	else
+		if(length(mutantrace_emote_stuff) >= 1)
+			message = mutantrace_emote_stuff[1]
+		if(length(mutantrace_emote_stuff) >= 2)
+			maptext_out = mutantrace_emote_stuff[2]
+
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -2373,7 +2374,6 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
-	gas.vacuum()
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)

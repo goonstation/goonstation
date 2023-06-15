@@ -111,14 +111,12 @@
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
 	spymind.special_role = "spyminion"
-	spymind.master = leader.ckey
 
 	return 1
 
 /datum/game_mode/spy/proc/remove_spy(mob/living/spy)
 	src.spies.Remove(spy)
 	spy.mind.special_role = null
-	spy.mind.master = null
 	return 1
 
 /datum/game_mode/spy/declare_completion()
