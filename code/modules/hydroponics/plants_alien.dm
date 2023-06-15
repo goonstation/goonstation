@@ -321,7 +321,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		random_brute_damage(user, 9,1)
 		return 1
 
-	proc/Feed_Maneater(var/obj/machinery/plantpot/POT, var/mob/user, var/mob/living/carbon/victim)
+	proc/feed_maneater(var/obj/machinery/plantpot/POT, var/mob/user, var/mob/living/carbon/victim)
 		var/datum/plantgenes/DNA = POT.plantgenes
 		if(POT && victim && victim.loc == user.loc && victim)
 			user.visible_message("<span class='alert'>[POT.name] grabs [victim] and devours them ravenously!</span>")

@@ -3078,12 +3078,11 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
-				var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 				. = ..()
 				var/plant_touch_modifier = 0.3 //lets get some weedkiller on our plants
 				if(method == TOUCH && istype(M, /mob/living/critter/plant))
 					if(M.reagents)
-						M.reagents.add_reagent(self.id,volume*plant_touch_modifier,self.data)
+						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
 						. = 0
 
 			on_plant_life(var/obj/machinery/plantpot/P)

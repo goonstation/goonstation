@@ -203,13 +203,8 @@
 			//we want to nibble on them with out right hand
 			src.set_a_intent(INTENT_HARM)
 			src.set_dir(get_dir(src, target))
-			src.active_hand = 2
-
-			var/list/params = list()
-			params["right"] = TRUE
-			params["ai"] = TRUE
-
-			src.hand_attack(target, params)
+			src.set_hand(2)
+			src.hand_attack(target)
 			return
 	else
 		//let's wait until we finished eating our target :)
@@ -226,17 +221,12 @@
 	//we want to grab with our left tentacle hand
 	src.set_a_intent(INTENT_GRAB)
 	src.set_dir(get_dir(src, target))
-	src.active_hand = 1
-
-	var/list/params = list()
-	params["left"] = TRUE
-	params["ai"] = TRUE
-
+	src.set_hand(1)
 	var/obj/item/grab/checked_grab = src.equipped()
 	if (!istype(checked_grab)) //if it hasn't grabbed something, try to
 		if(!isnull(checked_grab)) //if we somehow have something that isn't a grab in our hand
 			src.drop_item()
-		src.hand_attack(target, params)
+		src.hand_attack(target)
 		return
 	else
 		if (checked_grab.affecting == null || checked_grab.assailant == null || checked_grab.disposed || !ishuman(checked_grab.affecting) || checked_grab.affecting != target)

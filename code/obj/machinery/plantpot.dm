@@ -535,7 +535,7 @@ TYPEINFO(/obj/machinery/plantpot)
 					user,
 					src,
 					3 SECONDS,
-					/datum/plant/maneater/proc/Feed_Maneater,
+					/datum/plant/maneater/proc/feed_maneater,
 					\list(src, user, C),
 					'icons/mob/screen1.dmi',
 					"grabbed",
