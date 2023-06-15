@@ -23895,12 +23895,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "klL" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "kmb" = (
@@ -25845,8 +25840,9 @@
 /area/station/maintenance/disposal)
 "kZS" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "lag" = (
@@ -30693,12 +30689,11 @@
 /area/station/crew_quarters/quarters_east)
 "nab" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 6
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -35568,7 +35563,6 @@
 	location = "tour9";
 	name = "tour 9 - radio station"
 	},
-/obj/machinery/plantpot,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/southeast)
 "plu" = (
@@ -53815,6 +53809,9 @@
 "xCS" = (
 /obj/stool/chair{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
