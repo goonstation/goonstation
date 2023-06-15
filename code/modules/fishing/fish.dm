@@ -373,6 +373,17 @@ Alien/mutant/other fish:
 	inhand_color = "#8f3ed1"
 	value  = FISH_RARITY_RARE
 
+//code
+/obj/item/fish/code_worm
+	name = "code worm"
+	desc = "This unstable creature has been swimming around in this code for a long time, giving developers and its victims a massive headache."
+	icon_state = "code_worm"
+	inhand_color = "#32CD32"
+	value  = FISH_RARITY_EPIC
+	New()
+		..()
+		name = "\improper [pick("free", "gamer", "Xtreme", "funny", "ultimate", "REAL")]_[pick("cat", "puppy", "gaming", "fail", "cheat", "hax")] [pick("video", "content", "game", "images", "text", "audiobook", "podcast")].worm"
+
 //solarium
 /obj/item/fish/sun_fish
 	name = "literal sun fish"

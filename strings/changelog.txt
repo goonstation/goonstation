@@ -1,5 +1,29 @@
-
+(t)wed jun 14 23
+(u)LeahTheTech
+(+)Mops now actually clean cleanables (like bloody footprints etc.)
+(+)Plague rats now fit in pet carriers.
+(t)tue jun 13 23
+(u)pali
+(+)pod portals no longer have 1% chance to gib, instead it is 2% chance to get teleported to a random space tile
+(u)Virva & Gannets
+(p)14561
+(e)🔊|C-Sound
+(+)Added Virva's sounds for catching fish, researching fish and using research tickets.
+(u)aloe
+(*)Late-join antagonist roles will no longer override antag preferences. If you would become a latejoin antag but you have that type disabled, you simply won't be an antag.
+(u)Cheekybrdy
+(p)14527
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(+)Added 2 new fishing spots, the mainframe and the ice cream machine!
 (t)mon jun 12 23
+(u)Gannets
+(p)14550
+(e)🆕💅|C-Feature, C-QoL
+(+)You can now empty out portable aquariums in to the fishing research terminal. This saves you 6 whole clicks!
+(u)Erinexx
+(p)14545
+(e)🎨|C-Sprites
+(+)Added Boar Vessel, 600-500 BC, Etruscan, ceramic
 (u)pali
 (+)Glue duration increased by a factor of 4. (Now 20 seconds per unit of glue.)
 (u)DimWhat
@@ -8,6 +32,7 @@
 (+)Resprited Plasmatoid lungs. Ow... pointy.
 (u)tarmunora
 (+)taser recharge rack can hold waveguns, taser smg, taser shotgun as well.
+(+)postit boxes limited to 20 sticky notes
 (u)pali
 (+)You can now emag the fishing hats for even wackier hat text.
 (u)Blackrep

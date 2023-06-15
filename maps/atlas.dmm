@@ -3805,6 +3805,7 @@
 	},
 /obj/decal/cleanable/rust,
 /obj/item/toy/gooncode,
+/obj/item/bat,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aml" = (

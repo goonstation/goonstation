@@ -667,6 +667,8 @@ a.latejoin-card:hover {
 
 		mind.transfer_to(new_character)
 
+		// Latejoin antag stuff
+
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
@@ -674,15 +676,15 @@ a.latejoin-card:hover {
 			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
-				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1 && !(jobban_isbanned(new_character, "Syndicate")))
+				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
 						if(brain.current && checktraitor(brain.current)) // if a traitor
-							if (issilicon(brain.current) || brain.current.stat & 2 || brain.current.client == null) // if a silicon mob, dead or logged out, skip
+							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 
-							livingtraitor = 1
+							livingtraitor = TRUE
 							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
 							break
 
@@ -696,11 +698,15 @@ a.latejoin-card:hover {
 					else
 						bad_type = ROLE_TRAITOR
 
-					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
-						makebad(new_character, bad_type)
-						new_character.mind.late_special_role = 1
-						logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+					// Check if they have this antag type enabled. If not, too bad!
+					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
+					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
+					if (antag_enabled)
+						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
+							makebad(new_character, bad_type)
+							new_character.mind.late_special_role = TRUE
+							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 
 
 

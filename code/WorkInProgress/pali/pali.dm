@@ -529,3 +529,60 @@ proc/get_upscaled_icon(icon, icon_state, dx, dy)
 	spinning_icon_state = "catball"
 	item_state = "catball"
 	desc = "<img src='https://pali.link/catball.gif'><br>"
+
+
+ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
+/obj/portal/to_space
+	name = "unstable wormhole"
+	desc = "It seems like this wormhole is unstable and you might land in a random place in space."
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "anom"
+	failchance = 0
+	color = list(0.4, 0, 0,   0, 0.4, 0,   0, 0, 0.4)
+	var/tele_throw_speed = 2
+	var/living_mob_counter = 0
+
+	proc/animate_self()
+		animate_lag(src, magnitude=5, step_time_low=0.5 SECONDS, step_time_high=1 SECOND)
+
+	New()
+		. = ..()
+		animate_self()
+
+	teleport(atom/movable/AM)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
+		var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
+		. = ..()
+		if (tele_throw_speed > 0)
+			AM.throw_at(throw_target, INFINITY, tele_throw_speed)
+		animate_self()
+		if(isliving(AM) && AM.loc != src.loc)
+			living_mob_counter++
+			var/mob/living/L = AM
+			for (var/mob/M in AIviewers(Center=src))
+				if (M == L)
+					boutput(M, "<span class='alert'>You are sucked into \the [src]!</span>")
+				else if (isadmin(M) && !M.client.player_mode)
+					boutput(M, "<span class='alert'>[L] ([key_name(L, admins=FALSE, user=M)]) is sucked into \the [src], landing <a href='?src=\ref[M.client.holder];action=jumptocoords;target=[target.x],[target.y],[target.z]' title='Jump to Coords'>here</a></span></span>")
+				else
+					boutput(M, "<span class='alert'>[L] is sucked into \the [src]!</span>")
+
+	proc/give_counter()
+		set name = "give counter"
+		var/turf/target_turf = get_step(src, NORTH)
+		if (locate(/obj/machinery/maptext_monitor) in target_turf)
+			return
+		var/obj/machinery/maptext_monitor/counter = new(target_turf)
+		counter.monitored = src
+		counter.name = "wormhole visitors"
+		counter.desc = "Could also be number of victims I guess!"
+		counter.maptext_prefix = "<span class='c pixel sh'>Wormhole Visitors: <span class='xfont'>"
+		counter.monitored_var = "living_mob_counter"
+		counter.display_mode = "round"
+		counter.update_delay = 1 SECOND
+		counter.update_monitor()
+
+/obj/portal/to_space/with_monitor
+	New()
+		. = ..()
+		give_counter()

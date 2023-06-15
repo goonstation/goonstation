@@ -35160,6 +35160,8 @@
 "kKq" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
+/obj/item/bat,
+/obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "kKr" = (

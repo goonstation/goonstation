@@ -345,10 +345,10 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
-		//U.clean_forensic()
+		U.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
-		//A.clean_forensic()
+		A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
