@@ -9,10 +9,6 @@
 	plane = PLANE_NOSHADOW_BELOW
 	var/open = 0
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
-	var/datum/pipe_network/network1
-	var/datum/pipe_network/network2
 
 	purge
 		name = "purge valve"
