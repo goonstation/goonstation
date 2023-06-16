@@ -197,7 +197,7 @@
 	var/heat = 0
 	var/delta_temperature = 0
 
-	if(!issimulatedturf(target))
+	if(issimulatedturf(target))
 		var/turf/simulated/modeled_location = target
 
 		// Turf with walls or without air
