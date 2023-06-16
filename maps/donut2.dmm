@@ -1188,7 +1188,7 @@
 	},
 /area/station/crew_quarters/hor)
 "afa" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "purge valve"
 	},
@@ -1440,7 +1440,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -1766,7 +1766,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "ahe" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -2203,7 +2203,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aij" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -2375,7 +2375,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aiQ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -2392,7 +2392,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
 "aiX" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -2635,7 +2635,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ajU" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "ajW" = (
@@ -2748,7 +2748,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "aks" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -22543,15 +22543,15 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "bDN" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bDO" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating/scorched,
 /area/station/atmos/highcap_storage)
 "bDP" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "bDQ" = (
@@ -33437,7 +33437,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/power/apc/autoname_south,
@@ -35127,7 +35127,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "kLB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -44099,7 +44099,7 @@
 	},
 /area/station/mining/staff_room)
 "rOH" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/item/device/radio/intercom/engineering{
 	dir = 8
 	},
@@ -45483,7 +45483,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "sLS" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -48298,7 +48298,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366

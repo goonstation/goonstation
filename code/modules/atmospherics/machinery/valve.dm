@@ -1,4 +1,4 @@
-obj/machinery/atmospherics/valve
+/obj/machinery/atmospherics/binary/valve
 	icon = 'icons/obj/atmospherics/valve.dmi'
 	icon_state = "valve0"
 	name = "manual valve"

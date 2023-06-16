@@ -1223,7 +1223,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "ado" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/russian)
 "adp" = (
@@ -8369,7 +8369,7 @@
 /turf/simulated/wall,
 /area/station/crew_quarters/juryroom)
 "azN" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red/side{
@@ -8389,7 +8389,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "azP" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -9238,7 +9238,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aDl" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/escape{
@@ -11871,7 +11871,7 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aMW" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white/side,
 /area/station/atmos/highcap_storage)
 "aMX" = (
@@ -25072,7 +25072,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bzl" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bzm" = (
@@ -25714,7 +25714,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lobby)
 "bCm" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -25734,7 +25734,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bCo" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red/side{
@@ -26234,7 +26234,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "bDp" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red/side,
 /area/station/science/lobby)
 "bDq" = (
@@ -26256,7 +26256,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/science/lab)
 "bDs" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/darkblue,
@@ -26599,7 +26599,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "bEl" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -27430,7 +27430,7 @@
 /turf/simulated/floor,
 /area/station/security/prison)
 "bVo" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},
@@ -29322,7 +29322,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
 "hTh" = (
-/obj/machinery/atmospherics/valve/digital{
+/obj/machinery/atmospherics/binary/valve/digital{
 	dir = 0;
 	name = "Incinerator Gas Vent"
 	},
@@ -29508,7 +29508,7 @@
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "ixw" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
@@ -31651,7 +31651,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
 "ouv" = (
-/obj/machinery/atmospherics/valve/digital{
+/obj/machinery/atmospherics/binary/valve/digital{
 	dir = 4;
 	name = "Incinerator Gas Release"
 	},
@@ -32084,7 +32084,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "pWs" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -32924,7 +32924,7 @@
 	c_tag = "Atmospherics Southeast";
 	dir = 1
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue/side{
 	dir = 0
 	},

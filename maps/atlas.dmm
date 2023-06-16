@@ -335,7 +335,7 @@
 "abw" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable,
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -3869,7 +3869,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "amw" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop purge valve"
 	},
@@ -3880,7 +3880,7 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "amy" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
 "amA" = (
@@ -4610,7 +4610,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "apj" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "hot loop bypass valve"
 	},
 /turf/simulated/floor/engine,
@@ -4862,7 +4862,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
 "aqd" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop purge valve"
 	},
@@ -5091,7 +5091,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aqR" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop valve"
 	},
@@ -5177,7 +5177,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge/captain)
 "ari" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "combustion chamber inlet valve"
 	},
@@ -5842,7 +5842,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "atu" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/submachine/cargopad/engineering,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
@@ -8343,7 +8343,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "aAx" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "aAB" = (
@@ -11224,7 +11224,7 @@
 /turf/simulated/floor/arrival,
 /area/station/hangar/main)
 "aJo" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -11309,7 +11309,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aJF" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/purpleish{
 	dir = 8;
 	pixel_x = -10
@@ -11320,7 +11320,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/science/lab)
 "aJH" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/activation_button/ignition_switch{
 	id = "burn";
 	pixel_x = -10;
@@ -11338,11 +11338,11 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "aJL" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "aJM" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/activation_button/ignition_switch{
 	id = "burn_2";
 	pixel_x = -10;
@@ -14722,7 +14722,7 @@
 	},
 /area/station/engine/coldloop)
 "aUf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "purge valve"
 	},
@@ -14856,7 +14856,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/lounge)
 "aUw" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/disposalpipe/segment/ejection{
@@ -15164,7 +15164,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/substation/east)
 "aVq" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /obj/cable{
@@ -15986,7 +15986,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "aXA" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -16417,7 +16417,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/engine/core)
 "aZb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop valve"
 	},
@@ -18920,7 +18920,7 @@
 /area/station/hallway/primary/south)
 "pAp" = (
 /obj/machinery/power/apc/autoname_east,
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -19557,7 +19557,7 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "uhw" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
