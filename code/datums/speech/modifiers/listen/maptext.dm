@@ -21,7 +21,7 @@ TYPEINFO(/datum/listen_module/modifier/maptext)
 		for(var/key in message.maptext_css_values)
 			maptext_css += "[key]: [message.maptext_css_values[key]]; "
 
-		chat_text = make_chat_maptext(message.speaker, message.content, maptext_css)
+		chat_text = make_chat_maptext(message.speaker, "[message.maptext_prefix][message.content][message.maptext_suffix]", maptext_css)
 
 		if(length(message.maptext_animation_colors))
 			for(var/i in 1 to length(message.maptext_animation_colors))

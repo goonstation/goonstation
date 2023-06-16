@@ -145,6 +145,10 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/heard_range = 5
 	/// CSS values for the maptext stored as an assoc list, ie "font-weight" = "bold"
 	var/maptext_css_values = list()
+	/// Prefix for maptext only
+	var/maptext_prefix = null
+	/// Suffix for maptext only
+	var/maptext_suffix = null
 	/// The maptext associated with this message (if there is one)
 	var/image/chat_maptext/maptext = null
 	/// List of colours for the maptext to oscillate through. Use special value "start_color" to be replaced by whatever is in maptext_css_values["color"]
@@ -286,7 +290,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 				return //the module consumed the message, so process it no further
 
 		for(var/datum/speech_module/module in src.output_modules)
-			module.process(message.Copy()) //output modules always consume the message, there is no further processing required - they also get their own copy, so there's no accidental transfer between channels
+			if(module.process(message.Copy()))
+				break //output modules always consume the message, they also get their own copy, so there's no accidental transfer between channels. However, returning truthy values means that the message will not be processed by other output modules
 
 	//ACCENTS
 
@@ -612,6 +617,6 @@ ABSTRACT_TYPE(/datum/listen_module/modifier)
 
 
 /proc/cmp_say_modules(var/datum/speech_module/a, var/datum/speech_module/b)
-	. = a.priority - b.priority
+	. = b.priority - a.priority
 	if(. == 0)
 		return cmp_text_asc(a.id, b.id)

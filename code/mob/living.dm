@@ -124,10 +124,10 @@
 
 	//new speech vars
 	start_listen_modifiers = list("maptext")
-	start_listen_inputs = list("ears", "spooky")
+	start_listen_inputs = list("ears", "spooky","ooc","looc")
 	start_speech_accents = null
 	start_speech_modifiers = list("client_checks", "mob_checks", "brain_damage", "singing")
-	start_speech_outputs = list("spoken","equipped")
+	start_speech_outputs = list("spoken","equipped","ooc","looc")
 	start_listen_languages = list("english")
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
@@ -884,7 +884,7 @@
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
-*/.
+*/
 
 /mob/living/proc/say_decorate(message)
 	return message

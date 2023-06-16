@@ -14,10 +14,10 @@
 
 	//new speech vars
 	start_listen_modifiers = list("maptext")
-	start_listen_inputs = list("ears", "blobchat")
+	start_listen_inputs = list("ears", "blobchat","ooc","looc")
 	start_speech_accents = null
 	start_speech_modifiers = list("client_checks", "mob_checks", "singing")
-	start_speech_outputs = list("blobchat")
+	start_speech_outputs = list("blobchat","ooc","looc")
 	start_listen_languages = null //blobs understand all languages apparently
 
 	var/datum/tutorial_base/regional/blob/tutorial

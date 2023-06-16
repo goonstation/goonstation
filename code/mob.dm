@@ -234,10 +234,10 @@
 	var/list/trigger_emotes = null
 
 	start_listen_modifiers = list("maptext")
-	start_listen_inputs = list("ears")
+	start_listen_inputs = list("ears", "ooc", "looc")
 	start_speech_accents = null
 	start_speech_modifiers = list("client_checks", "mob_checks", "singing")
-	start_speech_outputs = list("spoken")
+	start_speech_outputs = list("spoken", "ooc", "looc")
 	start_listen_languages = list("english")
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand

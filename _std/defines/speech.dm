@@ -8,6 +8,8 @@
 #define SAY_CHANNEL_RADIO_PREFIX "radio_" // to use like SAY_CHANNEL_RADIO_PREFIX + "135.7"
 #define SAY_CHANNEL_GHOST "ghost"
 #define SAY_CHANNEL_BLOB "blob"
+#define SAY_CHANNEL_OOC "ooc"
+#define SAY_CHANNEL_LOOC "looc"
 
 // say_message flags
 // bitflags for different singing modifiers, used so that effects can be combined if desired

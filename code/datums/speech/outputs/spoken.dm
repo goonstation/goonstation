@@ -3,6 +3,7 @@ TYPEINFO(/datum/speech_module/output/spoken)
 /datum/speech_module/output/spoken
 	id = "spoken"
 	channel = SAY_CHANNEL_OUTLOUD
+	priority = -1 //lower than default (0)
 
 	process(datum/say_message/message)
 		var/mob/mob_speaker = message.speaker
