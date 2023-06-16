@@ -393,7 +393,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "acd" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Air Reserve (Crew Quarters)"
 	},
@@ -409,7 +409,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "acf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Air Reserve (Central Primary Hallway)"
 	},
@@ -422,7 +422,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ach" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Air Reserve (Cafeteria)"
 	},
@@ -769,7 +769,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Crew Quarters"
 	},
@@ -791,7 +791,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "adi" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Central Primary Hallway"
 	},
@@ -811,7 +811,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "adk" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Cafeteria"
 	},
@@ -10018,7 +10018,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aDr" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Brig)"
@@ -10540,7 +10540,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aEN" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "brig"
@@ -11064,7 +11064,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aFV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Courtroom)"
@@ -11242,7 +11242,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aGs" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "courtroom"
@@ -11508,7 +11508,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/west)
 "aHm" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Bridge)"
@@ -12118,7 +12118,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aIG" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "bridge"
@@ -19648,7 +19648,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Chapel"
 	},
@@ -20063,7 +20063,7 @@
 /turf/simulated/floor/stairs,
 /area/station/maintenance/east)
 "bcI" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Chapel)"
@@ -23366,7 +23366,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bmB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Market"
@@ -23620,7 +23620,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bnh" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Market)"
@@ -27328,7 +27328,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bBB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop outlet valve"
 	},
@@ -27342,7 +27342,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "bBH" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop outlet valve"
 	},
@@ -27544,7 +27544,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bCu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop auxillary west"
 	},
@@ -27556,7 +27556,7 @@
 	layer = 3.5;
 	pixel_y = -24
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop auxillary west"
 	},
@@ -30604,7 +30604,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bOf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -30650,7 +30650,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bOi" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "bOj" = (
@@ -30663,7 +30663,7 @@
 	name = "Waste Chamber Exhaust";
 	pixel_x = 24
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "bOl" = (
@@ -31591,7 +31591,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bQM" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -34321,7 +34321,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYR" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYS" = (
@@ -34350,7 +34350,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "bYY" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34711,7 +34711,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cai" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -34738,7 +34738,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "can" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -35063,14 +35063,14 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Air Reserve (Escape Hallway)"
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/east)
 "cbi" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Air Reserve (Supply Lobby)"
 	},
@@ -35204,7 +35204,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "cbF" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "purge valve"
 	},
 /turf/simulated/floor/plating,
@@ -35479,7 +35479,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ccn" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Medbay)"
@@ -36293,21 +36293,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ceQ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Medbay"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/atmos/hookups/east)
 "ceS" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Escape Hallway"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/atmos/hookups/east)
 "ceT" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "Supply Lobby"
 	},
@@ -40030,7 +40030,7 @@
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cpi" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "cpj" = (
@@ -45572,7 +45572,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop inlet valve"
 	},
@@ -46166,7 +46166,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "enR" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -46988,7 +46988,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "eXK" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "eYd" = (
@@ -47019,7 +47019,7 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "gas mix supply valve"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51116,7 +51116,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "iVn" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -51748,7 +51748,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "hot reserve tank valve";
 	dir = 4;
 	name = "hot reserve tank valve"
@@ -52102,7 +52102,7 @@
 /turf/simulated/floor/black,
 /area/station/teleporter)
 "jNx" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -53090,7 +53090,7 @@
 	},
 /area/mining/magnet)
 "kLX" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop pressure release valve"
 	},
@@ -53632,7 +53632,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "lqR" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop pressure release valve"
 	},
@@ -55403,7 +55403,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/disposalpipe/segment{
 	dir = 4;
 	name = "factory pipe"
@@ -55456,7 +55456,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "nqb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "furnace bypass valve";
 	dir = 4;
 	name = "furnace bypass valve"
@@ -56480,7 +56480,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "cold radiator inlet valve";
 	dir = 4;
 	name = "cold radiator inlet valve"
@@ -56731,7 +56731,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "oFt" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop inlet valve"
 	},
@@ -58486,7 +58486,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "qnB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /turf/simulated/floor/black,
@@ -59561,7 +59561,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "rak" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "hot radiator inlet valve";
 	name = "hot radiator inlet valve"
 	},
@@ -59620,7 +59620,7 @@
 	},
 /area/station/hallway/primary/south)
 "rdU" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -59886,7 +59886,7 @@
 /area/station/medical/research)
 "rwr" = (
 /obj/machinery/power/apc/autoname_north,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop inlet valve"
 	},
@@ -61151,7 +61151,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "cold reserve tank valve";
 	dir = 4;
 	name = "reserve tank valve"
@@ -61614,7 +61614,7 @@
 	},
 /area/station/solar/west)
 "sVF" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
 /obj/cable/brown{
@@ -61953,7 +61953,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "tpm" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "freezer bypass valve";
 	name = "freezer bypass valve"
 	},
@@ -62768,7 +62768,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "udJ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "hot radiator outlet valve";
 	name = "hot radiator outlet valve"
 	},
@@ -64493,6 +64493,7 @@
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
 	pixel_x = 4;
 	pixel_y = 8;
+	
 	},
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_x = -7;
@@ -64594,7 +64595,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "vPJ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop inlet valve"
 	},
@@ -65003,7 +65004,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
 /turf/simulated/floor/grey,
@@ -66729,7 +66730,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "cold radiator outlet valve";
 	dir = 4;
 	name = "cold radiator outlet valve"

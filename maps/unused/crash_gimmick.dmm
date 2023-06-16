@@ -11601,7 +11601,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Research Dock)"
@@ -11953,7 +11953,7 @@
 	},
 /area/russian/radiation)
 "bDc" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	high_risk = 1;
 	name = "Air Reserve (Research)"
@@ -14040,7 +14040,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Chapel Hallway)"
 	},
@@ -14057,7 +14057,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Medbay)"
 	},
@@ -14071,7 +14071,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Cafeteria)"
 	},
@@ -14144,7 +14144,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Medical Nacelle)"
 	},
@@ -40322,7 +40322,7 @@
 	},
 /area/russian/radiation)
 "eKa" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4
 	},
 /obj/cable{
@@ -42232,7 +42232,7 @@
 	},
 /area/russian/radiation)
 "fAu" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4
 	},
 /turf/simulated/floor/plating{
@@ -43949,7 +43949,7 @@
 	},
 /area/russian/radiation)
 "gkK" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Medic Checkpoint)"
 	},
@@ -47000,7 +47000,7 @@
 	},
 /area/space)
 "hMe" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Fore Hall)"
 	},
@@ -47018,7 +47018,7 @@
 	},
 /area/russian/radiation)
 "hMj" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "rusty unmarked valve"
 	},
@@ -47028,7 +47028,7 @@
 	},
 /area/russian/radiation)
 "hMn" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Escape Hallway)"
 	},
@@ -48342,7 +48342,7 @@
 	},
 /area/russian/radiation)
 "iwb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	desc = "Connects to a cooling radiator loop outside of the hull.";
 	name = "external radiator valve"
 	},
@@ -49549,7 +49549,7 @@
 	},
 /area/russian/radiation)
 "iWM" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Riot Control - Main Hall"
 	},
@@ -50263,7 +50263,7 @@
 	},
 /area/russian/radiation)
 "jlr" = (
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4
 	},
 /turf/simulated/floor/blue/side{
@@ -50301,7 +50301,7 @@
 	},
 /area/russian/radiation)
 "jlO" = (
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -51436,7 +51436,7 @@
 	},
 /area/russian/radiation)
 "jHv" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Riot Control - Security"
 	},
@@ -51958,7 +51958,7 @@
 	},
 /area/russian/radiation)
 "jXL" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -53025,7 +53025,7 @@
 	},
 /area/russian/radiation)
 "kyo" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Riot Control - Maintenance"
 	},
@@ -53650,7 +53650,7 @@
 	},
 /area/russian/radiation)
 "kTr" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -55132,7 +55132,7 @@
 	},
 /area/russian/radiation)
 "lwT" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/alarm{
@@ -56565,7 +56565,7 @@
 	},
 /area/russian/radiation)
 "mgY" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop auxillary port"
 	},
@@ -56605,7 +56605,7 @@
 	},
 /area/russian/radiation)
 "mix" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop auxillary port"
 	},
@@ -56747,7 +56747,7 @@
 	},
 /area/russian/radiation)
 "moV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "bypass valve"
 	},
 /turf/simulated/floor/red/checker{
@@ -58442,7 +58442,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "injector valve"
 	},
 /turf/simulated/floor/yellow/side{
@@ -60038,7 +60038,7 @@
 	},
 /area/russian/radiation)
 "nRq" = (
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4;
 	name = "DANGER: POOL HEATER"
 	},
@@ -61291,7 +61291,7 @@
 	},
 /area/russian/radiation)
 "opr" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red/checker{
 	broken = 1;
 	burnt = 1;
@@ -61303,7 +61303,7 @@
 	},
 /area/russian/radiation)
 "opy" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red/checker{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -61327,7 +61327,7 @@
 	},
 /area/russian/radiation)
 "oqA" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/checker{
 	broken = 1;
@@ -61340,7 +61340,7 @@
 	},
 /area/russian/radiation)
 "oqH" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red/checker{
 	broken = 1;
 	burnt = 1;
@@ -61395,7 +61395,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "injector valve"
 	},
 /turf/simulated/floor/yellow/side{
@@ -62982,7 +62982,7 @@
 	},
 /area/russian/radiation)
 "pcC" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-10"
 	},
@@ -63005,7 +63005,7 @@
 	},
 /area/russian/radiation)
 "pdA" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -63525,7 +63525,7 @@
 /turf/space,
 /area/russian/radiation)
 "pur" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/engine{
@@ -64590,7 +64590,7 @@
 	},
 /area/russian/radiation)
 "pZa" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -65395,7 +65395,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "bypass valve"
 	},
@@ -66676,7 +66676,7 @@
 	},
 /area/russian/radiation)
 "qRt" = (
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4;
 	name = "DANGER: POOL HEATER"
 	},
@@ -66747,7 +66747,7 @@
 	d2 = 4;
 	icon_state = "6-8"
 	},
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4;
 	name = "DANGER: POOL HEATER"
 	},
@@ -66936,7 +66936,7 @@
 	},
 /area/russian/radiation)
 "qYc" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-12"
 	},
@@ -66973,7 +66973,7 @@
 /area/russian/radiation)
 "raK" = (
 /obj/lattice,
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4;
 	name = "DANGER: POOL HEATER"
 	},
@@ -67317,7 +67317,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Atmospherics Valve (East Primary Hall)"
 	},
@@ -67331,7 +67331,7 @@
 	},
 /area/russian/radiation)
 "rhe" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Atmospherics Valve (Aft Hallway)"
 	},
@@ -67345,7 +67345,7 @@
 	},
 /area/russian/radiation)
 "rhl" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Atmospherics Valve (TEG)"
 	},
@@ -67358,7 +67358,7 @@
 	},
 /area/russian/radiation)
 "rhB" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Atmospherics Valve (Hot Loop)"
 	},
@@ -67939,7 +67939,7 @@
 	},
 /area/russian/radiation)
 "rwQ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
@@ -67974,7 +67974,7 @@
 	},
 /area/russian/radiation)
 "rxd" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -67984,7 +67984,7 @@
 	},
 /area/russian/radiation)
 "rxi" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blueblack{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -68123,7 +68123,7 @@
 	},
 /area/russian/radiation)
 "rAY" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /obj/machinery/firealarm{
@@ -69641,7 +69641,7 @@
 	},
 /area/russian/radiation)
 "slq" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Emergency Fire Suppressor"
 	},
@@ -69654,7 +69654,7 @@
 	},
 /area/russian/radiation)
 "slB" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -74225,7 +74225,7 @@
 	},
 /area/shuttle/arrival/station)
 "uUT" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "rusty unmarked valve"
 	},

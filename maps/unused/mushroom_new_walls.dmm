@@ -20934,7 +20934,7 @@
 	},
 /area/station/hallway/primary/south)
 "dEg" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -26770,7 +26770,7 @@
 	},
 /area/station/engine/engineering/private)
 "kRW" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating/airless,
@@ -26793,7 +26793,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "kTB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/activation_button/ignition_switch{
@@ -26993,7 +26993,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "lnh" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/door_control{
 	id = "mixingwaste";
 	name = "Waste Vent Control";
@@ -32776,7 +32776,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "rYl" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -36422,7 +36422,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vVi" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/purple,
 /area/station/science/lab)
 "vVy" = (
@@ -36692,7 +36692,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "wpa" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless,
@@ -37915,7 +37915,7 @@
 /area/station/engine/engineering/private)
 "xIv" = (
 /obj/lattice,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /obj/machinery/door_control{
@@ -38052,7 +38052,7 @@
 /area/station/bridge)
 "xUm" = (
 /obj/lattice,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/space,
@@ -38184,7 +38184,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade)
 "ydo" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/purple,

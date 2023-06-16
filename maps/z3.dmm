@@ -11220,7 +11220,7 @@
 	},
 /area/fermid_hive)
 "aUT" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/grime,
 /area/iss)
 "aUU" = (

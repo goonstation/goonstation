@@ -17187,7 +17187,7 @@
 	},
 /area/research_outpost/indigo_rye)
 "HQ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/purplewhite{
@@ -19839,7 +19839,7 @@
 	name = "Erebus Power Room"
 	})
 "Ns" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -19850,7 +19850,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Nt" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/darkpurple,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -20147,7 +20147,7 @@
 	})
 "NS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -20188,7 +20188,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
@@ -23324,7 +23324,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "TG" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -23521,7 +23521,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "5-9"
 	},
@@ -23842,7 +23842,7 @@
 	name = "Meridian Maintenance"
 	})
 "Vl" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -23903,7 +23903,7 @@
 	})
 "Vp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/purple{
@@ -24255,7 +24255,7 @@
 /turf/space,
 /area/space)
 "Wz" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24325,7 +24325,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport,
@@ -24519,7 +24519,7 @@
 	name = "Dionysus Cryocore"
 	})
 "Xp" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/decal/tile_edge/line/yellow{
 	dir = 1;
 	icon_state = "line1"
@@ -24810,7 +24810,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Yc" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/yellow{
@@ -25169,7 +25169,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Zf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/yellow{
