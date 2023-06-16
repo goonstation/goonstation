@@ -426,11 +426,12 @@
 	miss_prob = 90
 	stam_damage_mult = 0
 	harm_intent_delay = COMBAT_CLICK_DELAY
-	var/human_stam_damage = 50
-	var/human_desorient_duration = 2 SECONDS
-	var/human_stun_duration = 5 SECONDS
-	var/list/chems_to_inject = null
-	var/amount_to_inject = 3
+	var/human_stam_damage = 50 //! how much stam damage this limb should deal to living mobs
+	var/human_desorient_duration = 2 SECONDS //! how much desorient this limb should apply to living mobs
+	var/human_stun_duration = 5 SECONDS //! how much stun this limb should apply to living mobs
+	var/human_stun_cooldown = 6 SECONDS //! if this limb stunned: how long should this kind of limb not be able to stun the target; to prevent reapplication of stuns
+	var/list/chems_to_inject = null //! list of chems this limb should inject on targets
+	var/amount_to_inject = 3 //! amount of chems this limb should inject on targets
 
 /datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
 	..()
@@ -450,7 +451,9 @@
 		if (isliving(target) && !issilicon(target))
 			var/mob/living/victim = target
 			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
-			victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE)
+			if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
+				ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
 			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
 			if (length(src.chems_to_inject) > 0)
 				var/chem_protection = 0
