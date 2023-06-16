@@ -8,6 +8,7 @@
 	New()
 		..()
 		src.shift_count = min(world.load_intra_round_value("nuclear_accident_count_[map_settings.name]") || 0, 99)
+		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", src.shift_count+1)
 		src.UpdateOverlays(image(src.icon, "[round(shift_count/10)]_"), "number10s")
 		src.UpdateOverlays(image(src.icon, "_[round(shift_count%10)]"), "number1s")
 		src.desc = "It has been [shift_count] shift\s since the last nuclear meltdown."
@@ -24,9 +25,9 @@
 				src.desc += " That's so long!"
 			if(81 to 98)
 				src.desc += " Well done everybody!"
-			if(99)
+			if(99 to INFINITY)
 				src.desc += " Maybe someone should do something about that..."
 
 	attack_hand(mob/user)
 		interact_particle(user, src)
-		src.examine(user)
+		user.examine_verb(src)
