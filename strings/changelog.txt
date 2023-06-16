@@ -1,5 +1,6 @@
 (t)fri jun 16 23
 (u)LeahTheTech
+(*)Balloons can now be filled at gas canisters and inhaling from them will inhale a portion of the gas inside. Each balloon can hold 5 breaths.
 (+)Revolutionary status is now always removed on death, and head revolutionaries who are turned into cyborgs will not retain their ability to see other rev icons.
 (t)thu jun 15 23
 (u)tarmunora
