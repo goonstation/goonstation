@@ -969,7 +969,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aqp" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/red{
@@ -1830,7 +1830,7 @@
 /turf/simulated/floor/airless/caution,
 /area/ghostdrone_factory)
 "aJD" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Research)"
 	},
@@ -2663,7 +2663,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "beR" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -3815,7 +3815,7 @@
 /area/station/maintenance/northeast)
 "bDu" = (
 /obj/disposalpipe/segment/bent/south,
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Escape)"
 	},
@@ -3984,7 +3984,7 @@
 	},
 /area/station/medical/medbay)
 "bGn" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Security)"
 	},
@@ -4670,7 +4670,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "bUA" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/central)
 "bUC" = (
@@ -5460,7 +5460,7 @@
 	d2 = 4;
 	icon_state = "6-9"
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Bridge)"
 	},
@@ -7237,7 +7237,7 @@
 /area/station/maintenance/disposal)
 "cWj" = (
 /obj/machinery/light/small,
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -8442,7 +8442,7 @@
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
 "dwq" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/light,
@@ -12299,7 +12299,7 @@
 	},
 /area/station/engine/engineering/ce)
 "fcI" = (
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4
 	},
 /obj/decal/tile_edge/line/red{
@@ -14207,7 +14207,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/crew_quarters/jazz)
 "fTc" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -15390,7 +15390,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Medbay)"
 	},
@@ -18270,7 +18270,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "hEr" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/light/small{
@@ -20902,7 +20902,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "iNf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -23792,7 +23792,7 @@
 	name = "Ringside Hallway"
 	})
 "jVT" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -25008,7 +25008,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/tech)
 "kAk" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "kAs" = (
@@ -28675,7 +28675,7 @@
 	name = "Ringside Hallway"
 	})
 "mcE" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "mcG" = (
@@ -29327,7 +29327,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -30228,7 +30228,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/head)
 "mKP" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -30458,7 +30458,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "mQG" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Central Hallway)"
 	},
@@ -34578,7 +34578,7 @@
 	name = "The Cage Arena"
 	})
 "oCP" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Air Reserve (Crew Quarters)"
 	},
@@ -43408,7 +43408,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "soH" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Engineering)"
 	},
@@ -47742,7 +47742,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/checkpoint/sec_foyer)
 "uif" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
@@ -48060,7 +48060,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "uoI" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "uoN" = (
@@ -48719,7 +48719,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uET" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (The Ring)"
 	},
@@ -51707,7 +51707,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -53968,7 +53968,7 @@
 /turf/simulated/floor/red/corner,
 /area/station/hallway/primary/central)
 "wNX" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
@@ -54152,7 +54152,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/the_cage)
 "wSf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "mixing valve"
 	},
@@ -55427,7 +55427,7 @@
 	},
 /area/station/medical/medbay)
 "xsm" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Air Reserve (Cargo)"
 	},
@@ -56595,7 +56595,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/west)
 "xSw" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/door_control{

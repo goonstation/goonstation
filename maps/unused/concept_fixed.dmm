@@ -23100,7 +23100,7 @@
 	name = "Mixing Room"
 	})
 "aRN" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/door_control{
 	id = "mixingwaste";
 	name = "Waste Vent Control";
@@ -23891,7 +23891,7 @@
 	name = "Mixing Room"
 	})
 "aTh" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -23910,7 +23910,7 @@
 	name = "Mixing Room"
 	})
 "aTj" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -24896,13 +24896,13 @@
 	name = "Mixing Room"
 	})
 "aUP" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
 "aUQ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/ignition_switch{
@@ -34129,7 +34129,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "blO" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -34418,7 +34418,7 @@
 /turf/simulated/floor/white,
 /area/space)
 "bmn" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/space)
 "bmo" = (
@@ -35031,7 +35031,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
