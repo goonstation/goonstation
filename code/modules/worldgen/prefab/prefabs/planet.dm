@@ -5,8 +5,6 @@ TYPEINFO(/datum/mapPrefab/planet)
 
 ABSTRACT_TYPE(/datum/mapPrefab/planet)
 /datum/mapPrefab/planet
-	var/std_prefab_path
-	var/underwater
 	var/list/datum/biome/required_biomes // ensure area has these biomes somewhere...
 
 	applyTo(var/turf/target)
@@ -36,6 +34,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 					return
 
 		var/area_type = get_area(T)
+		prefabPath = pathStart + prefabPath
 		var/loaded = file2text(prefabPath)
 		if(T && loaded)
 			var/dmm_suite/D = new/dmm_suite("planet prefab [prefabPath]")
@@ -67,25 +66,12 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 			else if(istype(T.loc, /area/allowGenerate))
 				new prev_area.type(T)
 
-
-	tomb // small little tomb
-		maxNum = 1
-		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_tomb.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 10
-
-	vault
-		maxNum = 1
-		probability = 15
-		prefabPath = "assets/maps/prefabs/prefab_vault.dmm"
-		prefabSizeX = 7
-		prefabSizeY = 7
+	pathStart = "assets/maps/prefabs/planet/"
 
 	bear_trap
 		maxNum = 1
 		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_planet_bear_den.dmm"
+		prefabPath = "prefab_planet_bear_den.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
 		required_biomes = list(/datum/biome/jungle)
@@ -93,14 +79,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 	tomato_den
 		maxNum = 1
 		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_planet_tomato_den.dmm"
+		prefabPath = "prefab_planet_tomato_den.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
 
 	corn_n_weed
 		maxNum = 1
 		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_corn_and_weed.dmm"
+		prefabPath = "prefab_corn_and_weed.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 16
 		required_biomes = list(/datum/biome/mudlands)
@@ -108,67 +94,67 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 	organic_organs
 		maxNum = 1
 		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_organic_organs.dmm"
+		prefabPath = "prefab_organic_organs.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
 		required_biomes = list(/datum/biome/mudlands)
-
+/* These two completely fill every planet so im commenting them out
 	artifact
-		prefabPath = "assets/maps/prefabs/prefab_planet_artifact_small.dmm"
+		prefabPath = "prefab_planet_artifact_small.dmm"
 		prefabSizeX = 3
 		prefabSizeY = 3
 
 	cargo_crate
-		prefabPath = "assets/maps/prefabs/prefab_planet_lost_cargo.dmm"
+		prefabPath = "prefab_planet_lost_cargo.dmm"
 		prefabSizeX = 3
 		prefabSizeY = 3
-
+*/
 	dead_nt
 		maxNum = 1
 		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_planet_dead_nt.dmm"
+		prefabPath = "prefab_planet_dead_nt.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 3
 
 	dead_syndicate
 		maxNum = 1
 		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_planet_dead_synd.dmm"
+		prefabPath = "prefab_planet_dead_synd.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 4
 
 	rogue_syndicate
 		maxNum = 1
 		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_planet_rogue_synd.dmm"
+		prefabPath = "prefab_planet_rogue_synd.dmm"
 		prefabSizeX = 4
 		prefabSizeY = 3
 
 	monkeys
 		maxNum = 1
 		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_planet_monkeys.dmm"
+		prefabPath = "prefab_planet_monkeys.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 4
 
 	beer_cave
 		maxNum = 1
 		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_planet_beer_cave.dmm"
+		prefabPath = "prefab_planet_beer_cave.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 6
 
 	birds
 		maxNum = 2
 		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_planet_birds.dmm"
+		prefabPath = "prefab_planet_birds.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 3
 
 	angry_birds
 		maxNum = 1
 		probability = 5
-		prefabPath = "assets/maps/prefabs/prefab_planet_angry_birds.dmm"
+		prefabPath = "prefab_planet_angry_birds.dmm"
 		prefabSizeX = 8
 		prefabSizeY = 6
 
