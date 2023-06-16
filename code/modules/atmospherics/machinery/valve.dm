@@ -11,8 +11,8 @@
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
-	var/datum/pipe_network/network_node1
-	var/datum/pipe_network/network_node2
+	var/datum/pipe_network/network1
+	var/datum/pipe_network/network2
 
 	purge
 		name = "purge valve"
@@ -62,10 +62,10 @@
 						open()
 
 	network_disposing(datum/pipe_network/reference)
-		if (network_node1 == reference)
-			network_node1 = null
-		if (network_node2 == reference)
-			network_node2 = null
+		if (network1 == reference)
+			network1 = null
+		if (network2 == reference)
+			network2 = null
 
 	update_icon(animation)
 		if(animation)
@@ -86,13 +86,13 @@
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 
 		if(reference == node1)
-			network_node1 = new_network
+			network1 = new_network
 			if(open)
-				network_node2 = new_network
+				network2 = new_network
 		else if(reference == node2)
-			network_node2 = new_network
+			network2 = new_network
 			if(open)
-				network_node1 = new_network
+				network1 = new_network
 
 		if(src in new_network.normal_members)
 			return 0
@@ -112,17 +112,17 @@
 	disposing()
 		if(node1)
 			node1.disconnect(src)
-			if (network_node1)
-				network_node1.dispose()
+			if (network1)
+				network1.dispose()
 		if(node2)
 			node2.disconnect(src)
-			if (network_node2)
-				network_node2.dispose()
+			if (network2)
+				network2.dispose()
 
 		node1 = null
 		node2 = null
-		network_node1 = null
-		network_node2 = null
+		network1 = null
+		network2 = null
 
 		..()
 
@@ -134,14 +134,14 @@
 		open = 1
 		UpdateIcon()
 
-		if(network_node1&&network_node2)
-			network_node1.merge(network_node2)
-			network_node2 = network_node1
+		if(network1&&network2)
+			network1.merge(network2)
+			network2 = network1
 
-		if(network_node1)
-			network_node1.update = 1
-		else if(network_node2)
-			network_node2.update = 1
+		if(network1)
+			network1.update = 1
+		else if(network2)
+			network2.update = 1
 
 		return 1
 
@@ -154,10 +154,10 @@
 		open = 0
 		UpdateIcon()
 
-		network_node1?.dispose()
-		network_node1 = null
-		network_node2?.dispose()
-		network_node2 = null
+		network1?.dispose()
+		network1 = null
+		network2?.dispose()
+		network2 = null
 
 		build_network()
 
@@ -237,33 +237,33 @@
 				break
 
 	build_network()
-		if(!network_node1 && node1)
-			network_node1 = new /datum/pipe_network()
-			network_node1.normal_members += src
-			network_node1.build_network(node1, src)
+		if(!network1 && node1)
+			network1 = new /datum/pipe_network()
+			network1.normal_members += src
+			network1.build_network(node1, src)
 
-		if(!network_node2 && node2)
-			network_node2 = new /datum/pipe_network()
-			network_node2.normal_members += src
-			network_node2.build_network(node2, src)
+		if(!network2 && node2)
+			network2 = new /datum/pipe_network()
+			network2.normal_members += src
+			network2.build_network(node2, src)
 
 
 	return_network(obj/machinery/atmospherics/reference)
 		build_network()
 
 		if(reference==node1)
-			return network_node1
+			return network1
 
 		if(reference==node2)
-			return network_node2
+			return network2
 
 		return null
 
 	reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-		if(network_node1 == old_network)
-			network_node1 = new_network
-		if(network_node2 == old_network)
-			network_node2 = new_network
+		if(network1 == old_network)
+			network1 = new_network
+		if(network2 == old_network)
+			network2 = new_network
 
 		return 1
 
@@ -272,20 +272,20 @@
 
 	disconnect(obj/machinery/atmospherics/reference)
 		if(reference==node1)
-			if (network_node1)
-				network_node1.dispose()
-			network_node1 = null
+			if (network1)
+				network1.dispose()
+			network1 = null
 			node1 = null
 
 		else if(reference==node2)
-			if (network_node2)
-				network_node2.dispose()
-			network_node2 = null
+			if (network2)
+				network2.dispose()
+			network2 = null
 			node2 = null
 
 		return null
 
-obj/machinery/atmospherics/manifold_valve
+/obj/machinery/atmospherics/manifold_valve
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
 	icon_state = "manifold_valve0"
 
