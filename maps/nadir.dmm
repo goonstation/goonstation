@@ -34338,6 +34338,10 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"oIy" = (
+/obj/decal/poster/wallsign/accident_sign,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/southeast)
 "oIA" = (
 /obj/machinery/computer/genetics{
 	dir = 4
@@ -109002,7 +109006,7 @@ bub
 jpM
 ocD
 ocD
-sXH
+oIy
 vEo
 oWK
 vEo

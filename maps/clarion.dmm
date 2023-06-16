@@ -23561,6 +23561,13 @@
 	icon_state = "fgreen1"
 	},
 /area/station/garden/aviary)
+"bXx" = (
+/obj/decal/poster/wallsign/accident_sign,
+/turf/simulated/wall/auto/reinforced/supernorn{
+	explosion_resistance = 15;
+	name = "very reinforced wall"
+	},
+/area/station/engine/core/nuclear)
 "bXA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -75480,7 +75487,7 @@ bta
 bur
 bvy
 bwD
-uVN
+bXx
 oiQ
 kHj
 iyw

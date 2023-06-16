@@ -1957,6 +1957,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\map\light.dm"
 #include "code\obj\nuclearreactor\centrifuge.dm"
 #include "code\obj\nuclearreactor\destroyed_reactor.dm"
+#include "code\obj\nuclearreactor\misc.dm"
 #include "code\obj\nuclearreactor\nuclearreactor.dm"
 #include "code\obj\nuclearreactor\reactorcomponents.dm"
 #include "code\obj\nuclearreactor\reactorcontrol.dm"
