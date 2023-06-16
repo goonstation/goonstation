@@ -1,3 +1,6 @@
+(t)fri jun 16 23
+(u)LeahTheTech
+(+)Revolutionary status is now always removed on death, and head revolutionaries who are turned into cyborgs will not retain their ability to see other rev icons.
 (t)thu jun 15 23
 (u)tarmunora
 (+)Grave Fever now has an incubation period before it starts causing stuns etc.
