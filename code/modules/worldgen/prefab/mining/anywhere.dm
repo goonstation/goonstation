@@ -4,30 +4,25 @@ TYPEINFO(/datum/mapPrefab/mining/anywhere)
 
 ABSTRACT_TYPE(/datum/mapPrefab/mining/anywhere)
 /datum/mapPrefab/mining/anywhere
-
-	init()
-		..()
-		tags |= PREFAB_ANYWHERE
-
-	pathStart = "assets/maps/prefabs/anywhere/"
+	tags = PREFAB_ANYWHERE
 
 	vault
 		maxNum = 1
 		probability = 25
-		prefabPath = "prefab_vault.dmm"
+		prefabPath = "assets/maps/prefabs/anywhere/prefab_vault.dmm"
 		prefabSizeX = 7
 		prefabSizeY = 7
 
 	tomb // small little tomb
 		maxNum = 1
 		probability = 20
-		prefabPath = "prefab_tomb.dmm"
+		prefabPath = "assets/maps/prefabs/anywhere/prefab_tomb.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
 
 	beacon // warp beacon for easy z5 teleporting.
 		maxNum = 1
 		probability = 30
-		prefabPath = "prefab_beacon.dmm"
+		prefabPath = "assets/maps/prefabs/anywhere/prefab_beacon.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 5

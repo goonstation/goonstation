@@ -19,7 +19,6 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 	var/probability = 100
 	var/required = FALSE //! If 1 we will try to always place thing thing no matter what.
 	var/maxNum = -1 //! If -1 there's no limit.
-	var/pathStart = null
 	var/prefabPath = null
 	var/prefabSizeX = null
 	var/prefabSizeY = null
@@ -70,7 +69,6 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 		if(isnull(target) || !verify_position(target))
 			return FALSE
 
-		prefabPath = pathStart + prefabPath
 		var/loaded = file2text(prefabPath)
 		if(!loaded)
 			CRASH("mapPrefab: Prefab '[name]' with path '[prefabPath]' not found")
