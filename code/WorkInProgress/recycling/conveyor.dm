@@ -413,9 +413,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		. += " <span class='notice'>It's cover seems to be open.</span>"
 
 
-// Sanitize what direction the player wants to set.
-#define PLAYER_SET_DIR_IN(dir, conveyor) if (conveyor.dir_out != dir) conveyor.dir_in = dir
-#define PLAYER_SET_DIR_OUT(dir, conveyor) if (conveyor.dir_in != dir) conveyor.dir_out = dir
+// Swap directions if player is trying to set them to the same direction
+#define PLAYER_SET_DIR_IN(dir, conveyor) if (dir == conveyor.dir_out) { conveyor.dir_out = conveyor.dir_in}; conveyor.dir_in = dir
+#define PLAYER_SET_DIR_OUT(dir, conveyor) if (dir == conveyor.dir_in) { conveyor.dir_in = conveyor.dir_out}; conveyor.dir_out = dir
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
 	if (!usr) return
