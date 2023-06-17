@@ -444,7 +444,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
 
 		if (dir_target_atom == src.dir_out) // Swap directions if the player is trying to set the same direction to both directions.
-			conveyor.dir_in = dir_out
+			src.dir_in = dir_out
 		src.dir_out = dir_target_atom
 		src.update()
 		return
@@ -485,7 +485,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			dir_target_atom &= (WEST | EAST)
 
 		if (dir_target_atom == src.dir_out)
-			conveyor.dir_out = dir.in
+			src.dir_out = src.dir_in
 		src.dir_in = dir_target_atom
 		src.update()
 		return
@@ -500,9 +500,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 		usr.show_text("You connect \the [new_switch] to the [src].", "blue")
 
 	return ..()
-
-#undef PLAYER_SET_DIR_IN
-#undef PLAYER_SET_DIR_OUT
 
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
