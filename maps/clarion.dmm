@@ -15687,7 +15687,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "aZQ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor,
 /area/station/science/lab)
 "aZS" = (
@@ -16471,7 +16471,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bdB" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "mixing valve"
 	},
@@ -16654,7 +16654,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /obj/cable{
@@ -16963,7 +16963,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lab)
 "bgV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -17117,7 +17117,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bia" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -17545,7 +17545,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bkE" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /obj/machinery/light{
@@ -17556,7 +17556,7 @@
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "bkF" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /turf/simulated/floor/red,
@@ -21522,7 +21522,7 @@
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCZ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light{
 	dir = 8;
 	pixel_x = -10
@@ -27520,6 +27520,11 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
+"fTG" = (
+/obj/item/bat,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "fTS" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	level = 2
@@ -31271,7 +31276,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "joD" = (
@@ -32703,7 +32708,7 @@
 	},
 /area/station/bridge/captain)
 "kHj" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
@@ -36199,7 +36204,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ocT" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "Vacuum Cooling Hookup"
 	},
@@ -36316,7 +36321,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
@@ -36587,7 +36592,7 @@
 	name = "Crew Quarters P06"
 	})
 "ouA" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Waste Gas Venting"
 	},
 /turf/simulated/floor/black,
@@ -39059,7 +39064,7 @@
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
@@ -40447,7 +40452,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "sbP" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "mixing valve"
 	},
 /turf/simulated/floor/black/side{
@@ -41543,7 +41548,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tdW" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "mixing valve"
 	},
@@ -44010,7 +44015,7 @@
 	name = "autoname  - SS13";
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/yellow/side{
@@ -45632,7 +45637,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "wKV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "bleed valve"
 	},
 /turf/simulated/floor/engine,
@@ -45672,7 +45677,7 @@
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "wMu" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "mixing valve"
 	},
@@ -47001,7 +47006,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "yaD" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "dump valve"
 	},
 /turf/simulated/floor/engine,
@@ -68522,7 +68527,7 @@ fAz
 lLh
 nSl
 aXv
-aGS
+fTG
 dHv
 aDY
 aDY

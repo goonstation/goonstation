@@ -2338,7 +2338,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
-		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Junior Syndicate Operative")
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Junior Syndicate Operative", source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/syndicate_weak/no_ammo
 	name = "Poorly Equipped Junior Syndicate Operative"
@@ -2390,7 +2390,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Syndicate Special Operative")
+		M.mind?.add_generic_antagonist(ROLE_SYNDICATE_AGENT, "Syndicate Special Operative", source = ANTAGONIST_SOURCE_ADMIN)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
 /datum/job/special/pirate
@@ -2429,7 +2429,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			if (antag.id == ROLE_PIRATE || antag.id == ROLE_PIRATE_FIRST_MATE || antag.id == ROLE_PIRATE_CAPTAIN)
 				antag.give_equipment()
 				return
-		M.mind.add_antagonist(rank)
+		M.mind.add_antagonist(rank, source = ANTAGONIST_SOURCE_ADMIN)
 
 
 	first_mate
@@ -2655,7 +2655,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_MACHO_MAN)
+		M.mind?.add_antagonist(ROLE_MACHO_MAN, source = ANTAGONIST_SOURCE_ADMIN)
 
 /datum/job/special/meatcube
 	name = "Meatcube"
@@ -2872,7 +2872,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_SLASHER)
+		M.mind?.add_antagonist(ROLE_SLASHER, source = ANTAGONIST_SOURCE_ADMIN)
 
 ABSTRACT_TYPE(/datum/job/special/pod_wars)
 /datum/job/special/pod_wars

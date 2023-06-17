@@ -8217,7 +8217,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "avk" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/red,
 /area/research_outpost/toxins)
 "avl" = (
@@ -8726,7 +8726,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/oshan_arrivals)
 "awB" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "awD" = (
@@ -17519,7 +17519,7 @@
 /turf/simulated/floor/grime,
 /area/iss)
 "aVk" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/grime,
 /area/iss)
 "aVl" = (
@@ -17944,7 +17944,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/genetics)
 "aXb" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -18902,7 +18902,7 @@
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "bbf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -19164,7 +19164,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bbQ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
@@ -19253,7 +19253,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcp" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -19293,7 +19293,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcu" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "bcw" = (
@@ -42404,8 +42404,8 @@
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/medical/alt{
-	name = "Cloning Room";
 	id = "cloning_door";
+	name = "Cloning Room";
 	req_access_txt = "5"
 	},
 /turf/simulated/floor/white,
@@ -96551,7 +96551,7 @@ bLr
 bLr
 bWk
 bVo
-aqn
+bVo
 aqn
 aqn
 aqn

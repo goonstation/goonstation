@@ -4890,7 +4890,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
 "akg" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Engineering Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -5222,7 +5222,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
 "alb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -5829,7 +5829,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
 "amj" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Hallway Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -6187,7 +6187,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
 "and" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Quartermaster's Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -16046,7 +16046,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "aJo" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Brig Suppression System"
 	},
 /turf/simulated/floor/engine,
@@ -17713,7 +17713,7 @@
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "aMU" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Chapel Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -18300,7 +18300,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
 "aOn" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "Hallway Repressurization"
 	},
@@ -18875,7 +18875,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aPx" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -19277,7 +19277,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
 "aQz" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "Medbay Repressurization"
 	},
@@ -26953,7 +26953,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "bhe" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "Escape Hallway Repressurization"
 	},
@@ -26972,7 +26972,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "bhg" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -27290,7 +27290,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bhW" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	high_risk = 1;
 	name = "North Section Repressurization"
 	},
@@ -27305,7 +27305,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bhX" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Cafeteria Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -27544,7 +27544,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/escape)
 "bix" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "Hallway Repressurization"
 	},
@@ -28201,7 +28201,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "bjM" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Escape Dock Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -28633,7 +28633,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
 "bkF" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "South Section Repressurization"
 	},
@@ -28644,7 +28644,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bkG" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -37210,14 +37210,14 @@
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
 "bEB" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/landmark{
 	name = "blobstart"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
 "bEC" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -37422,7 +37422,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
 "bFb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Hallway Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -38128,13 +38128,13 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Research Hall Repressurization"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
 "bGE" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "Research Quarters Repressurization"
 	},
 /turf/simulated/floor/plating,
@@ -39956,7 +39956,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "bKH" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -40923,7 +40923,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "bMq" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -41347,7 +41347,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bNh" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -41383,7 +41383,7 @@
 	},
 /area/station/science/lab)
 "bNk" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -41644,7 +41644,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bNN" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/specialroom/cafeteria,
@@ -41839,7 +41839,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quarters_south)
 "bOk" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -42027,7 +42027,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -42046,7 +42046,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bOD" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -42591,7 +42591,7 @@
 /turf/simulated/floor,
 /area/station/science/lab)
 "bPJ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -43106,7 +43106,7 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bQJ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -44177,7 +44177,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bSV" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -44989,7 +44989,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bUC" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -46195,7 +46195,7 @@
 /turf/simulated/floor,
 /area/research_outpost)
 "bXl" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -26;

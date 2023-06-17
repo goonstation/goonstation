@@ -33,7 +33,7 @@
 
 /datum/game_mode/disaster/post_setup()
 	for(var/datum/mind/wraith in Agimmicks)
-		wraith.add_antagonist(ROLE_WRAITH) // this creates the wraith mob and such
+		wraith.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START) // this creates the wraith mob and such
 		var/mob/living/intangible/wraith/W = wraith.current
 		if (istype(W))
 			W.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))

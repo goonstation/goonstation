@@ -58,7 +58,7 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "aad" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4;
 	name = "Riot Control Gas"
 	},
@@ -6824,7 +6824,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "bXx" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/black/grime,
@@ -11321,7 +11321,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "dpf" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /turf/simulated/floor/black/grime,
@@ -11963,7 +11963,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/east)
 "dCQ" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -15140,7 +15140,7 @@
 	},
 /area/shuttle/arrival/station)
 "eCQ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/plating/jen,
 /area/station/science/storage)
 "eCT" = (
@@ -15430,7 +15430,7 @@
 /turf/simulated/floor/redwhite,
 /area/station/security/quarters)
 "eIb" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -22063,7 +22063,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/locker)
 "gKK" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "purge valve"
 	},
@@ -24447,7 +24447,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/purge{
+/obj/machinery/atmospherics/binary/valve/purge{
 	dir = 1;
 	name = "Air To Riot Gas Dispersal"
 	},
@@ -35160,6 +35160,8 @@
 "kKq" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/rust/jen,
+/obj/item/bat,
+/obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/sanitary/white,
 /area/station/maintenance/inner/sw)
 "kKr" = (
@@ -43653,7 +43655,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/arcade/dungeon)
 "nps" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -46603,7 +46605,7 @@
 	},
 /area/station/hallway/primary/west)
 "omz" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -48079,7 +48081,7 @@
 	},
 /area/shuttle/arrival/station)
 "oJf" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "oJg" = (
@@ -50990,7 +50992,7 @@
 	pixel_x = 25;
 	pixel_y = 6
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 1
 	},
 /obj/machinery/door_control{
@@ -55786,7 +55788,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "qYT" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -56727,7 +56729,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/surgery/storage)
 "rmT" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/harsh{
 	dir = 1
 	},
@@ -58158,7 +58160,7 @@
 	},
 /area/station/hallway/primary/west)
 "rIK" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -64251,7 +64253,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "tDH" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -67646,7 +67648,7 @@
 /turf/simulated/floor/red,
 /area/station/hangar/sec)
 "uFz" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/machinery/door_control{

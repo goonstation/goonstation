@@ -12819,7 +12819,7 @@
 	},
 /area/station/engine/elect)
 "fHA" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
@@ -21999,7 +21999,7 @@
 	name = "Secure Release Foyer"
 	})
 "jwy" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop gas supply valve"
 	},
@@ -30061,7 +30061,7 @@
 	},
 /area/listeningpost/power)
 "mKE" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "gas supply valve"
 	},
@@ -48479,7 +48479,7 @@
 	},
 /area/station/security/main)
 "vfd" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "bleed valve"
 	},
 /turf/simulated/floor/engine/caution/corner2{
@@ -48684,7 +48684,7 @@
 	name = "Transception Array Control"
 	})
 "vlf" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -54227,7 +54227,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "xNP" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "freezer interface valve"
 	},
 /turf/simulated/floor/engine/caution/east,
@@ -54287,7 +54287,7 @@
 /turf/simulated/floor/plating,
 /area/pasiphae/maint)
 "xOs" = (
-/obj/machinery/atmospherics/valve/notify_admins{
+/obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
 	name = "Sauna Air Supply"
 	},
@@ -54819,7 +54819,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/emergency2)
 "xYh" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	name = "purge valve"
 	},
 /turf/simulated/floor/engine/caution/misc{
