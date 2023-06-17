@@ -11,7 +11,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 #ifndef IN_MAP_EDITOR
-	icon_state = "conveyor0"
+	icon_state = "conveyor-NS-still"
 #else
 	icon_state = "conveyor0-map"
 #endif
@@ -26,8 +26,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mechanics_type_override = /obj/machinery/conveyor/built
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
-	var/dir_in = null
-	var/dir_out = null
+	var/dir_in = NORTH
+	var/dir_out = SOUTH
 	var/currentdir = SOUTH
 	var/deconstructable = FALSE
 	var/protected = FALSE
