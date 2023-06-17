@@ -336,6 +336,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/shrimp = 15,\
 	/obj/item/fish/sardine = 20)
 
+/datum/fishing_spot/watertank/big
+	fishing_atom_type = /obj/reagent_dispensers/watertank/big
+
 /datum/fishing_spot/river
 	fishing_atom_type = /obj/river
 	rod_tier_required = 1
@@ -372,6 +375,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
 	/obj/machinery/light/small/broken = 20)
+
+/datum/fishing_spot/disposal_chute/small
+	fishing_atom_type = /obj/machinery/disposal/small
 
 /datum/fishing_spot/janitor_bucket
 	fishing_atom_type = /obj/mopbucket
