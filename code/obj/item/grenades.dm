@@ -1586,13 +1586,18 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					name = "filled pipe frame"
 
 		if(istype(W, /obj/item/reagent_containers/) && src.state == 5) //pipeshot crafting cont'd
+
+			if (!W.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[W] is empty!</span>")
+				return
+
 			var/amount = 20
 			var/avg_volatility = 0
 
 			for (var/id in W.reagents.reagent_list)
 				var/datum/reagent/R = W.reagents.reagent_list[id]
 				avg_volatility += R.volatility
-			avg_volatility /= W.reagents.reagent_list.len
+			avg_volatility /= length(W.reagents.reagent_list)
 
 			if (avg_volatility < 1) // invalid ingredients/concentration
 				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
@@ -1686,8 +1691,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			qdel(W)
 			qdel(src)
 		else
-			..()
-			return
+			. = ..()
 
 ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb

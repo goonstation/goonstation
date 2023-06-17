@@ -21,8 +21,16 @@
 	/// what tier of rod is this? can be 0, 1 or 2
 	var/tier = 0
 
+	New()
+		..()
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(attackby_pre))
+
+	disposing()
+		UnregisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE)
+		. = ..()
+
 	//todo: attack particle?? some sort of indicator of where we're fishing
-	afterattack(atom/target, mob/user)
+	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
 			if (fishing_spot)
@@ -30,6 +38,7 @@
 					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
 					return
 				actions.start(new /datum/action/fishing(user, src, fishing_spot, target), user)
+				return TRUE //cancel the attack because we're fishing now
 
 	update_icon()
 		//state for fishing
