@@ -960,7 +960,8 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		src.get_new_id()
 
 	proc/get_new_id()
-		var/new_id = TIME // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
+		src.id = TIME // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
+		src.conveyors = list()
 
 	MouseDrop_T(dropped, mob/user)
 		if (ispulsingtool(dropped))
