@@ -455,16 +455,18 @@ TYPEINFO(/obj/machinery/conveyor) {
 /obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location) // Pretty much a copy-paste. Both procs are almost identical.
 	if (!user) return
 	if (dropped == src || src_location == over_location) return
-	if (BOUNDS_DIST(src, user))
-		return ..()
+
+	if (!src.deconstructable)
+		usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes to it.", "red")
+		return
 
 	var/obj/item/equipped_object = usr.equipped()
 	if (!equipped_object) return ..()
 
 	if (ispryingtool(equipped_object))
-		if (!src.deconstructable)
-			usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes.", "red")
-			return
+		if (BOUNDS_DIST(src, user))
+			usr.show_text("You are too far away to do that!", "red")
+			return ..()
 
 		var/dir_target_atom = get_dir(over_location, src_location)
 
