@@ -21,23 +21,28 @@ TYPEINFO(/obj/machinery/conveyor) {
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
-	var/operating = CONVEYOR_STOPPED	// 1 if running forward, -1 if backwards, 0 if off
-	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
+	/// The direction the conveyor is going to. 1 if running forward, -1 if backwards, 0 if off
+	var/operating = CONVEYOR_STOPPED
+	/// true if can operate (no broken segments in this belt run)
+	var/operable = TRUE
 	var/dir_in = NORTH
 	var/dir_out = SOUTH
 	var/currentdir = SOUTH
 	var/deconstructable = FALSE
 	var/protected = FALSE
-
-	var/id = ""			// the control ID	- must match controller ID
+	/// the control ID, what the conveyor switch refers to when looking for new conveyors at world init.
+	var/id = ""
 	// following two only used if a diverter is present
-	var/divert = 0 		// if non-zero, direction to divert items
-	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
-	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
+	/// if non-zero, direction to divert items
+	var/divert = 0
+	/// if diverting, will be conveyer dir needed to divert (otherwise dense)
+	var/divdir = 0
+	/// The lag at which the movement happens. Lower = faster
+	var/move_lag = 4
 	var/obj/machinery/conveyor/next_conveyor = null
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
-	var/list/linked_switches = list()
+	var/list/linked_switches
 
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
@@ -266,7 +271,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
-	if (src.deconstructable) return
+	if (src.deconstructable)
+		return
 
 	currentdir = dir_in
 	if (operating == CONVEYOR_FORWARD)
@@ -413,20 +419,19 @@ TYPEINFO(/obj/machinery/conveyor) {
 		. += " <span class='notice'>It's cover seems to be open.</span>"
 
 
-// Swap directions if player is trying to set them to the same direction
-#define PLAYER_SET_DIR_IN(dir, conveyor) if (dir == conveyor.dir_out) { conveyor.dir_out = conveyor.dir_in}; conveyor.dir_in = dir
-#define PLAYER_SET_DIR_OUT(dir, conveyor) if (dir == conveyor.dir_in) { conveyor.dir_in = conveyor.dir_out}; conveyor.dir_out = dir
-
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
-	if (!usr) return
+	if (!usr)
+		return
 	if (!src.deconstructable)
 		usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes to it.", "red")
 		return
 
-	if (over_object == src || src_location == over_location) return ..()
+	if (over_object == src || src_location == over_location)
+		return ..()
 
 	var/obj/item/equipped_object = usr.equipped()
-	if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
+	if (!equipped_object)
+		return ..() // We have nothing to do here if the user has no equipped object.
 
 	if (ispryingtool(equipped_object))
 		if (BOUNDS_DIST(src, usr))
@@ -438,12 +443,15 @@ TYPEINFO(/obj/machinery/conveyor) {
 		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
 			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
 
-		PLAYER_SET_DIR_OUT(dir_target_atom, src)
+		if (dir_target_atom == src.dir_out) // Swap directions if the player is trying to set the same direction to both directions.
+			conveyor.dir_in = dir_out
+		src.dir_out = dir_target_atom
 		src.update()
 		return
 
 	if (ispulsingtool(equipped_object))
-		if(!istype(over_object, /obj/machinery/conveyor_switch)) return ..()
+		if(!istype(over_object, /obj/machinery/conveyor_switch))
+			return ..()
 		var/obj/machinery/conveyor_switch/new_switch = over_object
 		src.id = new_switch.id
 		src.linked_switches += new_switch
@@ -453,15 +461,18 @@ TYPEINFO(/obj/machinery/conveyor) {
 	return ..()
 
 /obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location) // Pretty much a copy-paste. Both procs are almost identical.
-	if (!user) return
-	if (dropped == src || src_location == over_location) return
+	if (!user)
+		return
+	if (dropped == src || src_location == over_location)
+		return
 
 	if (!src.deconstructable)
 		usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes to it.", "red")
 		return
 
 	var/obj/item/equipped_object = usr.equipped()
-	if (!equipped_object) return ..()
+	if (!equipped_object)
+		return ..()
 
 	if (ispryingtool(equipped_object))
 		if (BOUNDS_DIST(src, user))
@@ -473,12 +484,15 @@ TYPEINFO(/obj/machinery/conveyor) {
 		if (dir_target_atom in ordinal)
 			dir_target_atom &= (WEST | EAST)
 
-		PLAYER_SET_DIR_IN(dir_target_atom, src)
+		if (dir_target_atom == src.dir_out)
+			conveyor.dir_out = dir.in
+		src.dir_in = dir_target_atom
 		src.update()
 		return
 
 	if (ispulsingtool(equipped_object))
-		if(!istype(dropped, /obj/machinery/conveyor_switch)) return ..()
+		if(!istype(dropped, /obj/machinery/conveyor_switch))
+			return ..()
 		var/obj/machinery/conveyor_switch/new_switch = dropped
 		src.id = new_switch.id
 		src.linked_switches += new_switch
@@ -522,10 +536,12 @@ TYPEINFO(/obj/machinery/conveyor) {
 			user.show_text("\The [src] is too strong to have it's cover un-screwed.", "red")
 			return
 
-		if (ON_COOLDOWN(user, "conveyor_belt_cover", 1 SECOND)) return
+		if (ON_COOLDOWN(user, "conveyor_belt_cover", 1 SECOND))
+			return
 
 		var/actionbar_duration = 5 SECONDS
-		if (user.traitHolder.getTrait("training_engineer")) actionbar_duration = 2 SECONDS
+		if (user.traitHolder.getTrait("training_engineer"))
+			actionbar_duration = 2 SECONDS
 
 		user.show_text("You start [src.deconstructable ? "" : "un-"]screwing \the [src]'s cover.")
 		SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
@@ -542,8 +558,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 			return
 	else if (ispulsingtool(I))
 		var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
-		if (!connector) return ..()
-		if (!istype(connector.connectee, /obj/machinery/conveyor_switch)) return ..()
+		if (!connector)
+			return ..()
+		if (!istype(connector.connectee, /obj/machinery/conveyor_switch))
+			return ..()
 
 		var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
 		src.id = connected_switch.id
@@ -552,13 +570,14 @@ TYPEINFO(/obj/machinery/conveyor) {
 // attack with hand, move pulled object onto conveyor
 
 /obj/machinery/conveyor/proc/toggle_deconstructability(var/mob/M)
-	if (!M) return
+	if (!M)
+		return
 
 	if (src.deconstructable)
 		src.deconstruct_flags = null
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
-		if (length(src.linked_switches) > 0)
+		if (length(src.linked_switches))
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
@@ -569,7 +588,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		src.deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WRENCH | DECON_MULTITOOL
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
-		if (length(src.linked_switches) > 0)
+		if (length(src.linked_switches))
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 
@@ -580,7 +599,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling)))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
@@ -643,11 +662,15 @@ TYPEINFO(/obj/machinery/conveyor) {
 				if (direction == turn(neighbor_conveyor.dir_out, 180)) // Is it contrary to the dir_out of another conveyour belt?
 					favorable_dir_ins += direction // Great! A favorable dir_in.
 
-		if (length(favorable_dir_ins) > 0) src.dir_in = favorable_dir_ins[1] // If there are any favorable dir ins, pick the first index.
-		if (length(favorable_dir_outs) > 0) src.dir_out = favorable_dir_outs[1]
+		if (length(favorable_dir_ins))
+			src.dir_in = favorable_dir_ins[1] // If there are any favorable dir ins, pick the first index.
+		if (length(favorable_dir_outs))
+			src.dir_out = favorable_dir_outs[1]
 
-		if (!src.dir_in) src.dir_in = NORTH // In the case there's no favorable dir_ins, pick north.
-		if (!src.dir_out) src.dir_out = turn(src.dir_in, 180) // In the case there's no favorable dir_outs, pick the contrary of dir_in.
+		if (!src.dir_in)
+			src.dir_in = NORTH // In the case there's no favorable dir_ins, pick north.
+		if (!src.dir_out)
+			src.dir_out = turn(src.dir_in, 180) // In the case there's no favorable dir_outs, pick the contrary of dir_in.
 
 		. = ..()
 
@@ -844,7 +867,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	// Checked against conveyor ID on link attempt
 	var/id = ""
 	/// the list of converyors that are controlled by this switch
-	var/list/conveyors = list()
+	var/list/conveyors
 	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
@@ -927,7 +950,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 
 /obj/machinery/conveyor_switch/built/
 	desc = "A conveyor control switch. This one looks like it was built recently."
-	var/static/list/switch_ids
+
 
 	New()
 		. = ..()
@@ -940,20 +963,12 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		src.get_new_id()
 
 	proc/get_new_id()
-		if (src.id) // If we already have an ID, remove it from the switch ID pool.
-			src.switch_ids -= src.id
-
 		var/new_id = TIME // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
-		var/id_disambiguation_number = 0
-		while (new_id in switch_ids) // If we somehow reach a state where there's already a conveyor switch with the same ID, we loop through 0 to BYOND's max integer value and check if it is unique.
-			src.id = new_id + "[id_disambiguation_number]"
-			id_disambiguation_number++
-
-		src.switch_ids += src.id
 
 	MouseDrop_T(dropped, mob/user)
 		if (ispulsingtool(dropped))
-			if (!istype(dropped, /obj/machinery/conveyor_switch)) return ..()
+			if (!istype(dropped, /obj/machinery/conveyor_switch))
+				return ..()
 			var/obj/machinery/conveyor_switch/connected_switch = dropped
 			for (var/obj/machinery/conveyor/conveyor in src.conveyors)
 				conveyor.id = connected_switch.id
@@ -968,8 +983,10 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	attackby(var/obj/item/I, mob/user)
 		if (ispulsingtool(I))
 			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
-			if (!connector) return ..()
-			if (!istype(connector.connectee, /obj/machinery/conveyor_switch)) return ..()
+			if (!connector)
+				return ..()
+			if (!istype(connector.connectee, /obj/machinery/conveyor_switch))
+				return ..()
 
 			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
 			src.id = connected_switch.id
