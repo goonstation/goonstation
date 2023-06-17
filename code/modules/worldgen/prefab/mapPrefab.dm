@@ -141,9 +141,9 @@ proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null
 	for (var/name in prefab_list)
 		var/datum/mapPrefab/prefab = prefab_list[name]
 		if (istype(prefab, /datum/mapPrefab/mining))
-			if (!(prefab.tags & wanted_tags)) // Uses bitflags
+			if (!(prefab.tags & wanted_tags)) // Uses bitflags inclusively IE if it has any wanted tag its viable
 				continue
-		else if (length(prefab.tags) != length(wanted_tags)) // Compares length
+		else if (length(prefab.tags & wanted_tags) != length(wanted_tags)) // Compares length exclusive IE needs exactly that tag
 			continue
 		if (prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum)
 			continue
