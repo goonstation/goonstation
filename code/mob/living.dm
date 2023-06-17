@@ -2205,6 +2205,8 @@
 	set waitfor = FALSE
 	if (!allow_dead && !isalive(src)) return
 	if (ON_COOLDOWN(src, "lastgasp", 0.7 SECONDS)) return
+	if (!src.client)
+		return
 	var/client/client = src.client
 	var/found_text = FALSE
 	var/enteredtext = winget(client, "mainwindow.input", "text") // grab the text from the input bar
