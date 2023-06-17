@@ -4,10 +4,6 @@
 #define OP_REGULAR 1
 #define OP_OFF 0
 #define OP_REVERSE -1
-TYPEINFO(/obj/machinery/conveyor) {
-	mats = list("CON-1" = 1, "MET-2" = 1, "CRY-1" = 1)
-}
-
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 #ifndef IN_MAP_EDITOR
@@ -913,6 +909,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 				C.operating = position
 				C.setdir()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
+
+TYPEINFO(/obj/machinery/conveyor/build) {
+	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
+}
 /obj/machinery/conveyor_switch/built/
 	desc = "A conveyor control switch. This one looks like it was built recently."
 	var/static/list/switch_ids
