@@ -421,9 +421,40 @@ TYPEINFO(/obj/machinery/conveyor) {
 #define PLAYER_SET_DIR_OUT(dir, conveyor) if (conveyor.dir_in != dir) conveyor.dir_out = dir
 
 /obj/machinery/conveyor/mouse_drop(over_object, src_location, over_location)
-	return src.MouseDrop_T(over_object, usr, src_location, over_location) // Avoid copy-pasting.
+	if (!usr) return
+	if (!src.deconstructable)
+		usr.show_text("\The [src]'s panel is closed. You have to open it to do any changes to it.", "red")
+		return
 
-/obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location)
+	if (over_object == src || src_location == over_location) return ..()
+	if (BOUNDS_DIST(src, usr))
+		usr.show_text("You are too far away to do that!", "red")
+		return
+
+	var/obj/item/equipped_object = usr.equipped()
+	if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
+
+	if (ispryingtool(equipped_object))
+		var/dir_target_atom = get_dir(src_location, over_location)
+
+		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
+			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
+
+		PLAYER_SET_DIR_OUT(dir_target_atom, src)
+		src.update()
+		return
+
+	if (ispulsingtool(equipped_object))
+		if(!istype(over_object, /obj/machinery/conveyor_switch)) return ..()
+		var/obj/machinery/conveyor_switch/new_switch = over_object
+		src.id = new_switch.id
+		src.linked_switches += new_switch
+		new_switch.conveyors += src
+		usr.show_text("You connect \the [new_switch] to the [src].", "blue")
+
+	return ..()
+
+/obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location) // Pretty much a copy-paste. Both procs are almost identical.
 	if (!user) return
 	if (!usr) return
 	if (dropped == src || src_location == over_location) return
