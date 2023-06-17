@@ -1,5 +1,7 @@
 
 (t)sat jun 17 23
+(u)tarmunora
+(*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
 (u)Gannets
 (p)14618
 (e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
