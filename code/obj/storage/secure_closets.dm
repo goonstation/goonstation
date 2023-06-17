@@ -376,7 +376,8 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	/obj/item/pinpointer/bloodtracker,
 	/obj/item/device/flash,
 	/obj/item/camera_film,
-	/obj/item/storage/box/luminol_grenade_kit)
+	/obj/item/storage/box/luminol_grenade_kit
+	/obj/item/clipboard)
 
 /obj/storage/secure/closet/security/armory
 	name = "\improper Special Equipment locker"
