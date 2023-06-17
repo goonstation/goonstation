@@ -476,6 +476,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 						//since HYPadd/removeCommut create new lists, we take the initial list and only iterate through the commuts that existed at the time of the splice
 						var/list/commuts_to_iterate = DNA.commuts
 						for (var/datum/plant_gene_strain/checked_strain in commuts_to_iterate)
+							checked_strain.on_passing(DNA)
 							checked_strain.changes_after_splicing(DNA)
 
 					boutput(usr, "<span class='notice'>Splice successful.</span>")

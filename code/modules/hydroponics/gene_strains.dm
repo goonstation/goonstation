@@ -27,9 +27,16 @@
 		if (gene_pool)
 			return TRUE
 
-	/// This proc is called when a plant or seed receives the gene strain in question e.g. through HYPaddCommut, HYPnewcommutcheck or HYPpassplantgenes.
-	/// This is not called when a seed receives this mutation through e.g. splicing
+	/// This proc is called when a plant or seed firstly receives the gene strain in question e.g. through HYPaddCommut, HYPnewcommutcheck.
+	/// Use this if you want to manipulate the plantgenes if its the first time the generation of seeds gains it
+	/// This is not called when a seed receive this plant gene through passing along the generation e.g. splicing or HYPpassplantgenes.
 	proc/on_addition(var/datum/plantgenes/gene_pool)
+		if (gene_pool)
+			return TRUE
+
+	/// This proc is called when a plant or seed firstly receives the gene strain in question e.g. throught splicing or HYPpassplantgenes.
+	/// call this if you want a certain effect to happen multiple times each generation.
+	proc/on_passing(var/datum/plantgenes/gene_pool)
 		if (gene_pool)
 			return TRUE
 
@@ -65,7 +72,7 @@
 			gene_pool.d_potency = 1
 			gene_pool.d_endurance = 1
 
-	changes_after_splicing(var/datum/plantgenes/gene_pool)
+	on_passing(var/datum/plantgenes/gene_pool)
 		. = ..()
 		if (.)
 			gene_pool.d_species = 1
@@ -92,7 +99,7 @@
 			gene_pool.d_potency = 0
 			gene_pool.d_endurance = 0
 
-	changes_after_splicing(var/datum/plantgenes/gene_pool)
+	on_passing(var/datum/plantgenes/gene_pool)
 		. = ..()
 		if (. && !HYPCheckCommut(gene_pool, /datum/plant_gene_strain/overpowering_genome))
 			gene_pool.d_species = 0

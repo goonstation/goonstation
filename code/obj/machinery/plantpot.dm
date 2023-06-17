@@ -1596,7 +1596,7 @@ proc/HYPpassplantgenes(var/datum/plantgenes/PARENT,var/datum/plantgenes/CHILD)
 	if(MUT) CHILD.mutation = new MUT.type(CHILD)
 	if (length(CHILD.commuts))
 		for (var/datum/plant_gene_strain/checked_strain in CHILD.commuts)
-			checked_strain.on_addition(CHILD)
+			checked_strain.on_passing(CHILD)
 
 proc/HYPgeneticanalysis(var/mob/user as mob,var/obj/scanned,var/datum/plant/P,var/datum/plantgenes/DNA)
 	// This is the proc plant analyzers use to pop up their readout for the player.
