@@ -444,7 +444,7 @@ TYPEINFO(/obj/item/plantanalyzer)
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(selected)
+			S.generic_seed_setup(selected, FALSE)
 
 
 
