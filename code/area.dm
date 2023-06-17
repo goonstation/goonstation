@@ -1528,12 +1528,12 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "blue"
 
 /area/shuttle/sea_elevator/lower
-	name = "Sea Elevator Shaft"
+	name = "Lower Sea Elevator Shaft"
 	icon_state = "shuttle2"
 	filler_turf = "/turf/simulated/floor/plating"
 
 /area/shuttle/sea_elevator/upper
-	name = "Sea Elevator Shaft"
+	name = "Upper Sea Elevator Shaft"
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
 
@@ -1623,7 +1623,7 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "purple"
 
 /area/prefab/sea_mining
-	name = "Mining Outpost"
+	name = "Ocean Mining Outpost"
 	icon_state = "purple"
 
 TYPEINFO(/area/station/turret_protected/sea_crashed)
