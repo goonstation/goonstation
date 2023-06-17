@@ -1,9 +1,10 @@
 // conveyor belt
 
 // moves items/mobs/movables in set direction every ptick
-#define OP_REGULAR 1
-#define OP_OFF 0
-#define OP_REVERSE -1
+TYPEINFO(/obj/machinery/conveyor) {
+	mats = list("MET-1" = 1, "CON-1" = 1, "CRY-1" = 1)
+}
+
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
 #ifndef IN_MAP_EDITOR
@@ -20,7 +21,7 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	machine_registry_idx = MACHINES_CONVEYORS
 	mechanics_type_override = /obj/machinery/conveyor/built
-	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
+	var/operating = CONVEYOR_STOPPED	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
 	var/dir_in = NORTH
 	var/dir_out = SOUTH
@@ -36,7 +37,7 @@
 	var/obj/machinery/conveyor/next_conveyor = null
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
-	var/list/linked_switches
+	var/list/linked_switches = list()
 
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
@@ -268,9 +269,9 @@
 	if (src.deconstructable) return
 
 	currentdir = dir_in
-	if (operating == OP_REGULAR)
+	if (operating == CONVEYOR_FORWARD)
 		currentdir = dir_out
-	else if (operating == OP_REVERSE)
+	else if (operating == CONVEYOR_REVERSE)
 		currentdir = dir_in
 
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src, currentdir)
@@ -281,10 +282,10 @@
 /obj/machinery/conveyor/proc/update()
 	if(status & BROKEN)
 		icon_state = "conveyor-b"
-		operating = OP_OFF
+		operating = CONVEYOR_STOPPED
 
 	if(!operable)
-		operating = OP_OFF
+		operating = CONVEYOR_STOPPED
 	if(!operating || (status & NOPOWER))
 		power_usage = 0
 		for(var/atom/movable/A in loc.contents)
@@ -319,12 +320,12 @@
 			dir_out_char = "W"
 
 
-	if (operating == OP_OFF || operating == OP_REGULAR)
+	if (operating == CONVEYOR_STOPPED || operating == CONVEYOR_FORWARD)
 		new_icon += dir_in_char + dir_out_char
-	else if (operating == OP_REVERSE)
+	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char
 
-	if (operating == OP_OFF || (status & NOPOWER))
+	if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
 		new_icon += "-still"
 	else
 		new_icon += "-run"
@@ -423,14 +424,15 @@
 		return
 
 	if (over_object == src || src_location == over_location) return ..()
-	if (BOUNDS_DIST(src, usr))
-		usr.show_text("You are too far away to do that!", "red")
-		return
 
 	var/obj/item/equipped_object = usr.equipped()
 	if (!equipped_object) return ..() // We have nothing to do here if the user has no equipped object.
 
 	if (ispryingtool(equipped_object))
+		if (BOUNDS_DIST(src, usr))
+			usr.show_text("You are too far away to do that!", "red")
+			return
+
 		var/dir_target_atom = get_dir(src_location, over_location)
 
 		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
@@ -452,7 +454,6 @@
 
 /obj/machinery/conveyor/MouseDrop_T(dropped, user, src_location, over_location) // Pretty much a copy-paste. Both procs are almost identical.
 	if (!user) return
-	if (!usr) return
 	if (dropped == src || src_location == over_location) return
 	if (BOUNDS_DIST(src, user))
 		return ..()
@@ -519,10 +520,13 @@
 			user.show_text("\The [src] is too strong to have it's cover un-screwed.", "red")
 			return
 
-		if (ON_COOLDOWN(user, "conveyor_belt_weld", 5 SECONDS)) return
+		if (ON_COOLDOWN(user, "conveyor_belt_cover", 1 SECOND)) return
+
+		var/actionbar_duration = 5 SECONDS
+		if (user.traitHolder.getTrait("training_engineer")) actionbar_duration = 2 SECONDS
 
 		user.show_text("You start [src.deconstructable ? "" : "un-"]screwing \the [src]'s cover.")
-		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
+		SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
 
 	else if (issnippingtool(I))
 		var/mob/M = locate() in src.loc
@@ -534,7 +538,15 @@
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
+	else if (ispulsingtool(I))
+		var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
+		if (!connector) return ..()
+		if (!istype(connector.connectee, /obj/machinery/conveyor_switch)) return ..()
 
+		var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
+		src.id = connected_switch.id
+		src.linked_switches += connected_switch
+		user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
 // attack with hand, move pulled object onto conveyor
 
 /obj/machinery/conveyor/proc/toggle_deconstructability(var/mob/M)
@@ -545,7 +557,8 @@
 		src.deconstructable = FALSE
 		M.show_text("You finish closing \the [src]'s panel.", "blue")
 		if (length(src.linked_switches) > 0)
-			src.operating = src.linked_switches[0]
+			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
+			src.operating = connected_switch.position
 			src.setdir()
 
 		return 1
@@ -555,7 +568,7 @@
 		src.deconstructable = TRUE
 		M.show_text("You finish opening \the [src]'s panel.", "blue")
 		if (length(src.linked_switches) > 0)
-			src.operating = OP_OFF
+			src.operating = CONVEYOR_STOPPED
 			src.setdir()
 
 		return 1
@@ -586,10 +599,10 @@
 
 	var/obj/machinery/conveyor/C
 	C = locate() in get_step(src, dir_in)
-	C?.set_operable(OP_REGULAR, id, 0)
+	C?.set_operable(CONVEYOR_FORWARD, id, 0)
 
 	C = locate() in get_step(src, dir_out)
-	C?.set_operable(OP_REVERSE, id, 0)
+	C?.set_operable(CONVEYOR_REVERSE, id, 0)
 
 
 /// set the operable var if ID matches, propagating in the given direction
@@ -600,9 +613,9 @@
 
 	update()
 	var/propdir = dir_in
-	if (stepdir == OP_REGULAR)
+	if (stepdir == CONVEYOR_FORWARD)
 		propdir = dir_in
-	else if(stepdir == OP_REVERSE)
+	else if(stepdir == CONVEYOR_REVERSE)
 		propdir = dir_out
 	var/obj/machinery/conveyor/C = locate() in get_step(src, propdir)
 	C?.set_operable(stepdir, id, op)
@@ -610,10 +623,6 @@
 /obj/machinery/conveyor/power_change()
 	..()
 	update()
-
-TYPEINFO(/obj/machinery/conveyor/built) {
-	mats = list("CON-1" = 1, "MET-2" = 1, "CRY-1" = 1)
-}
 
 /obj/machinery/conveyor/built/
 	desc = "A conveyor belt. This one looks like it was built recently."
@@ -815,6 +824,10 @@ TYPEINFO(/obj/machinery/conveyor/built) {
 
 ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 
+TYPEINFO(/obj/machinery/conveyor_switch) {
+	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
+}
+
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
 	name = "conveyor switch"
@@ -829,7 +842,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	// Checked against conveyor ID on link attempt
 	var/id = ""
 	/// the list of converyors that are controlled by this switch
-	var/list/conveyors
+	var/list/conveyors = list()
 	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
@@ -910,9 +923,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 				C.setdir()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
-TYPEINFO(/obj/machinery/conveyor/build) {
-	mats = list("MET-1" = 10, "CON-1" = 10, "CRY-1" = 10)
-}
 /obj/machinery/conveyor_switch/built/
 	desc = "A conveyor control switch. This one looks like it was built recently."
 	var/static/list/switch_ids
@@ -939,6 +949,20 @@ TYPEINFO(/obj/machinery/conveyor/build) {
 
 		src.switch_ids += src.id
 
+	MouseDrop_T(dropped, mob/user)
+		if (ispulsingtool(dropped))
+			if (!istype(dropped, /obj/machinery/conveyor_switch)) return ..()
+			var/obj/machinery/conveyor_switch/connected_switch = dropped
+			for (var/obj/machinery/conveyor/conveyor in src.conveyors)
+				conveyor.id = connected_switch.id
+				conveyor.linked_switches += connected_switch
+
+			src.id = connected_switch.id
+			connected_switch.conveyors = src.conveyors
+			user.show_text("You connect \the [src] to \the [dropped]. Both share the same ID now.", "blue")
+
+		return ..()
+
 	attackby(var/obj/item/I, mob/user)
 		if (ispulsingtool(I))
 			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
@@ -948,8 +972,12 @@ TYPEINFO(/obj/machinery/conveyor/build) {
 			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
 			src.id = connected_switch.id
 			connected_switch.conveyors = src.conveyors
+			for (var/obj/machinery/conveyor/conveyor in src.conveyors)
+				conveyor.id = connected_switch.id
+				conveyor.linked_switches += connected_switch
 			user.show_text("You connect \the [src] to \the [connector.connectee]. Both share the same ID now.", "blue")
 
+		return ..()
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
 	.= 0
