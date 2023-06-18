@@ -241,7 +241,7 @@
 				redraw = 1
 				reference = src
 			if("Quartermaster")
-				var/obj/item/spacecash/money = new /obj/item/spacecash(get_turf(src),25000)
+				var/obj/item/currency/spacecash/money = new /obj/item/currency/spacecash(get_turf(src),25000)
 				user.put_in_hand_or_drop(money)
 			if("Cluwne")
 				user.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)

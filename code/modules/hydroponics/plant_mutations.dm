@@ -680,7 +680,7 @@
 	dont_rename_crop = TRUE
 	name_prefix = "Money "
 	iconmod = "TreeCash"
-	crop = /obj/item/spacecash
+	crop = /obj/item/currency/spacecash
 	required_mutation = /datum/plantmutation/tree/paper
 	PTrange = list(30, null)
 	chance = 50
