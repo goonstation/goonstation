@@ -90,7 +90,7 @@
 #endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY)
+		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

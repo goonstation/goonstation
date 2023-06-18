@@ -55,9 +55,10 @@
 
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, 2, 9, 0, 0.7, 0) // 0.7x stamina damage. No crits.
-			msgs.damage_type = DAMAGE_BLUNT
-			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.flush(0)
+			if (msgs)
+				msgs.damage_type = DAMAGE_BLUNT
+				user.attack_effects(target, user.zone_sel?.selecting)
+				msgs.flush(0)
 
 			special_next = 0
 		else

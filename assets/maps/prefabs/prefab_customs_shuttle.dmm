@@ -31,7 +31,7 @@
 "aX" = (
 /obj/rack,
 /obj/item/clothing/head/that/gold,
-/obj/item/spacecash/bag,
+/obj/item/currency/spacecash/bag,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fgreen2"
@@ -127,7 +127,7 @@
 /area/noGenerate)
 "gv" = (
 /obj/rack,
-/obj/item/spacecash/bag,
+/obj/item/currency/spacecash/bag,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -381,8 +381,8 @@
 /area/prefab/crashed_hop_shuttle)
 "wu" = (
 /obj/rack,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/fifty,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -539,8 +539,8 @@
 /area/noGenerate)
 "Hz" = (
 /obj/rack,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/hundred,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11
@@ -630,7 +630,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/spacecash/bag,
+/obj/item/currency/spacecash/bag,
 /obj/item/stamped_bullion,
 /turf/simulated/floor/carpet{
 	dir = 6;
@@ -714,7 +714,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Rg" = (
 /obj/rack,
-/obj/item/spacecash/bag,
+/obj/item/currency/spacecash/bag,
 /obj/item/coin{
 	pixel_x = 4;
 	pixel_y = 11

@@ -264,8 +264,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	for(var/turf/T in job_start_locations["AI"])
 		if(isnull(locate(/mob/living/silicon/ai) in T))
 			new /obj/item/clothing/suit/cardboard_box/ai(T)
-
-	processScheduler.start()
+	if(!processScheduler.isRunning)
+		processScheduler.start()
 
 	if (total_clients() >= OVERLOAD_PLAYERCOUNT)
 		world.tick_lag = OVERLOADED_WORLD_TICKLAG

@@ -227,7 +227,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aJ" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aK" = (

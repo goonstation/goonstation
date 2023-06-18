@@ -238,6 +238,19 @@
 	icon_state = "ancientfloor3"
 	},
 /area/iomoon/robot_ruins)
+"aaY" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "abe" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -2810,6 +2823,12 @@
 	icon_state = "floor3"
 	},
 /area/meat_derelict/soviet)
+"aik" = (
+/obj/decal/aliencomputer/off{
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "ais" = (
 /obj/machinery/bathtub{
 	dir = 4
@@ -8633,6 +8652,17 @@
 "aCu" = (
 /turf/unsimulated/wall/auto/adventure/moon,
 /area/moon/museum/giftshop)
+"aCv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-3";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "aCw" = (
 /obj/item/basketball/lunar,
 /turf/unsimulated/floor/grey/checker,
@@ -17273,102 +17303,6 @@
 	icon_state = "plating_dusty1"
 	},
 /area/marsoutpost)
-"bdA" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/item/skull{
-	pixel_x = -12;
-	pixel_y = 4
-	},
-/obj/item/skull,
-/obj/item/skull{
-	pixel_x = -3;
-	pixel_y = 15
-	},
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
-"bdB" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/decal/lightshaft,
-/obj/item/baton/cane,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
-"bdC" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/item/skull{
-	pixel_x = 2;
-	pixel_y = -4
-	},
-/obj/item/skull{
-	pixel_x = -12;
-	pixel_y = 4
-	},
-/obj/item/skull{
-	pixel_x = -3;
-	pixel_y = 15
-	},
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bdD" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/arctic/snow/ice,
@@ -17430,80 +17364,6 @@
 /obj/item/raw_material/uqill,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"bdP" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand{
-	pixel_x = 15;
-	pixel_y = 15
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/item/device/light/zippo{
-	desc = "It's got a pretty badass skull etched into it.";
-	name = "badass lighter"
-	},
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
-"bdQ" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand{
-	pixel_x = 15;
-	pixel_y = 15
-	},
-/obj/vehicle/floorbuffer{
-	desc = "A snazzy ice buffer for skating rinks. It could probably hold other reagents too.";
-	name = "Zamboni 5000";
-	zamboni = 1
-	},
-/obj/map/light/cyan,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
-"bdR" = (
-/obj/decal/icefloor,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand{
-	pixel_x = -5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 5;
-	pixel_y = 5
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = 3;
-	pixel_y = -3
-	},
-/obj/item/spacecash/thousand{
-	pixel_x = -3;
-	pixel_y = -6
-	},
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/obj/item/plant/herb/cannabis/omega/spawnable,
-/turf/unsimulated/floor/arctic/snow/lake,
-/area/lower_arctic/lower)
 "bdS" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/icemoon,
@@ -18449,22 +18309,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
-"bgG" = (
-/obj/decal/cleanable/cobweb,
-/obj/storage/crate,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
-/obj/item/device/light/zippo,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "bgH" = (
 /turf/unsimulated/floor/yellow/side{
 	dir = 1
@@ -24995,14 +24839,6 @@
 	icon_state = "fred1"
 	},
 /area/iomoon/base)
-"bAG" = (
-/obj/table/auto,
-/obj/window/cubicle,
-/obj/item/spacecash/fivehundred,
-/turf/unsimulated/floor/carpet{
-	icon_state = "fred1"
-	},
-/area/iomoon/base)
 "bAH" = (
 /obj/table/auto,
 /obj/window/cubicle{
@@ -26848,17 +26684,6 @@
 	dir = 1
 	},
 /area/crypt/graveyard)
-"bGl" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "martian-4";
-	name = "martian machine"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "bGm" = (
 /obj/tombstone{
 	desc = "The inscription has eroded away.";
@@ -34428,6 +34253,17 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
+"cfK" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_y = 9
+	},
+/obj/item/currency/spacecash/hundred,
+/turf/unsimulated/floor/carpet{
+	dir = 8;
+	icon_state = "fred1"
+	},
+/area/sim/area2)
 "cfL" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4;
@@ -36383,17 +36219,6 @@
 	icon_state = "fred2"
 	},
 /area/sim/area2)
-"ckM" = (
-/obj/table/wood/auto,
-/obj/item/paper_bin{
-	pixel_y = 9
-	},
-/obj/item/spacecash/hundred,
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "fred1"
-	},
-/area/sim/area2)
 "ckN" = (
 /turf/unsimulated/floor/carpet{
 	dir = 4;
@@ -36757,25 +36582,6 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/floor/carpet/arcade,
-/area/sim/racing_entry)
-"clT" = (
-/obj/table/auto,
-/obj/item/spacecash/hundred,
-/turf/unsimulated/floor{
-	icon = 'icons/misc/racing.dmi';
-	icon_state = "track_1"
-	},
-/area/sim/racing_entry)
-"clU" = (
-/obj/table/auto,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/five,
-/turf/unsimulated/floor{
-	icon = 'icons/misc/racing.dmi';
-	icon_state = "track_1"
-	},
 /area/sim/racing_entry)
 "clV" = (
 /obj/stool/chair{
@@ -38423,38 +38229,6 @@
 	dir = 5
 	},
 /area/crunch/wtc)
-"crt" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/obj/item/ticket/golden,
-/turf/unsimulated/floor/black/side{
-	dir = 9
-	},
-/area/crunch/wtc)
-"cru" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/obj/item/device/light/zippo/gold,
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 1
-	},
-/area/crunch/wtc)
-"crv" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/obj/item/raw_material/gold,
-/obj/item/clothing/head/that/gold,
-/turf/unsimulated/floor/black/side{
-	dir = 5
-	},
-/area/crunch/wtc)
 "crw" = (
 /obj/storage/secure/filing_cabinet,
 /turf/unsimulated/floor/black/side{
@@ -38563,43 +38337,13 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
-"crL" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/crunch/wtc)
 "crM" = (
 /turf/unsimulated/floor/black{
 	dir = 1
 	},
 /area/crunch/wtc)
-"crN" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/turf/unsimulated/floor/black/side{
-	dir = 4
-	},
-/area/crunch/wtc)
 "crO" = (
 /turf/unsimulated/floor/grey,
-/area/crunch/wtc)
-"crP" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/sticker/gold_star,
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
 /area/crunch/wtc)
 "crQ" = (
 /obj/machinery/light{
@@ -38632,16 +38376,6 @@
 "crV" = (
 /turf/unsimulated/floor/black/side{
 	dir = 5
-	},
-/area/crunch/wtc)
-"crW" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/toy/figure,
-/obj/item/raw_material/gold,
-/turf/unsimulated/floor/black/side{
-	dir = 8
 	},
 /area/crunch/wtc)
 "crX" = (
@@ -38681,16 +38415,6 @@
 	dir = 4
 	},
 /area/crunch/wtc)
-"csd" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/skull/gold,
-/obj/item/sticker/gold_star,
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/crunch/wtc)
 "cse" = (
 /obj/decal/cleanable/oil/streak{
 	name = "ink"
@@ -38716,44 +38440,9 @@
 	dir = 4
 	},
 /area/crunch/wtc)
-"csg" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/turf/unsimulated/floor/black/side{
-	dir = 10
-	},
-/area/crunch/wtc)
-"csh" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/spacecash/bag,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 6
-	},
-/area/crunch/wtc)
 "csi" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/neutral/side,
-/area/crunch/wtc)
-"csj" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/clothing/gloves/ring/gold,
-/obj/item/clothing/head/laurels/gold,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/turf/unsimulated/floor/black/side{
-	dir = 10
-	},
 /area/crunch/wtc)
 "csk" = (
 /turf/unsimulated/floor/black/corner{
@@ -38803,16 +38492,6 @@
 	icon_state = "floor"
 	},
 /area/crunch/wtc)
-"cst" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/obj/item/spacecash/bag,
-/turf/unsimulated/floor/black/side{
-	dir = 9
-	},
-/area/crunch/wtc)
 "csu" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 1
@@ -38821,16 +38500,6 @@
 "csv" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 8
-	},
-/area/crunch/wtc)
-"csw" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/obj/item/spacecash/bag,
-/turf/unsimulated/floor/black/side{
-	dir = 5
 	},
 /area/crunch/wtc)
 "csx" = (
@@ -38842,26 +38511,8 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/diner/tug)
-"csy" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/crunch/wtc)
 "csz" = (
 /turf/unsimulated/floor/black/corner,
-/area/crunch/wtc)
-"csA" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/turf/unsimulated/floor/black/side{
-	dir = 4
-	},
 /area/crunch/wtc)
 "csB" = (
 /obj/decal/floatingtiles{
@@ -38925,16 +38576,6 @@
 "csK" = (
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
-"csL" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/obj/item/spacecash/bag,
-/turf/unsimulated/floor/black/side{
-	dir = 8
-	},
-/area/crunch/wtc)
 "csM" = (
 /obj/map/light/dimred,
 /turf/unsimulated/floor/circuit/red,
@@ -38973,15 +38614,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/void,
-/area/crunch/wtc)
-"csT" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/million,
-/obj/item/stamped_bullion,
-/obj/item/raw_material/gemstone,
-/turf/unsimulated/floor/black/side{
-	dir = 10
-	},
 /area/crunch/wtc)
 "csU" = (
 /obj/machinery/bot/cambot{
@@ -44074,16 +43706,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/lab)
-"cGl" = (
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/tourist,
-/obj/table/reinforced/bar/auto{
-	name = "table"
-	},
-/obj/item/paper/employment,
-/turf/unsimulated/floor/black,
-/area/owlery/lab)
 "cGm" = (
 /obj/item/device/radio/intercom/adventure/owlery{
 	dir = 8
@@ -45879,31 +45501,6 @@
 /obj/critter/madnessowl/gun,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
-	},
-/area/owlery/gangzone)
-"cKP" = (
-/obj/item/stamped_bullion,
-/obj/item/stamped_bullion,
-/obj/storage/crate{
-	desc = "It's all scratched up with talon marks.";
-	name = "Grungy Crate";
-	welded = 1
-	},
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/raw_material/gemstone,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/bag,
-/obj/item/spacecash/bag,
-/obj/item/coin/bombini,
-/obj/item/ticket/golden,
-/obj/item/ticket/golden,
-/obj/item/ticket/golden,
-/obj/machinery/light/emergency{
-	dir = 4
-	},
-/turf/unsimulated/floor/redblack{
-	dir = 8
 	},
 /area/owlery/gangzone)
 "cKQ" = (
@@ -62749,6 +62346,26 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
+"dLy" = (
+/obj/storage/closet/dresser,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/suit/bathrobe,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/swimsuit/random,
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/obj/item/clothing/under/shorts/random_color{
+	name = "swimming trunks";
+	rand_pos = 1
+	},
+/turf/unsimulated/floor{
+	icon_state = "0,6";
+	name = "wood floor";
+	tag = "null"
+	},
+/area/centcom/garden)
 "dLz" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -65463,18 +65080,6 @@
 "dTB" = (
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
-"dTC" = (
-/obj/decal/cleanable/vomit{
-	desc = "Someone lost their lunch.  A long time ago.";
-	name = "dried vomit"
-	},
-/obj/item/storage/toilet/random{
-	dir = 8;
-	tag = "icon-toilet (WEST)"
-	},
-/obj/item/spacecash/buttcoin,
-/turf/unsimulated/floor/plating,
-/area/afterlife/bar)
 "dTD" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor/wood/two,
@@ -65680,6 +65285,25 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/zewaka)
+"dUT" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/sticker/gold_star,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
+"dVZ" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/skull/gold,
+/obj/item/sticker/gold_star,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -66127,12 +65751,6 @@
 	dir = 1
 	},
 /area/iomoon/base/underground)
-"eGT" = (
-/obj/crevice{
-	pixel_x = -28
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "eHC" = (
 /obj/machinery/light{
 	dir = 4
@@ -66770,6 +66388,16 @@
 /obj/item/nunchucks,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
+"fGL" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/obj/item/raw_material/gold,
+/obj/item/clothing/head/that/gold,
+/turf/unsimulated/floor/black/side{
+	dir = 5
+	},
+/area/crunch/wtc)
 "fGW" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Fire Hazard'";
@@ -66881,6 +66509,22 @@
 "fQk" = (
 /turf/unsimulated/floor/black/corner,
 /area/iomoon/base)
+"fQz" = (
+/obj/decal/cleanable/cobweb,
+/obj/storage/crate,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/device/light/zippo,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "fRh" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -66986,6 +66630,17 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"fZY" = (
+/obj/table/auto,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/five,
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_entry)
 "fZZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67045,6 +66700,16 @@
 "gcn" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
+"gdi" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/obj/item/currency/spacecash/bag,
+/turf/unsimulated/floor/black/side{
+	dir = 5
+	},
+/area/crunch/wtc)
 "gef" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -67237,13 +66902,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"gow" = (
-/obj/crevice{
-	pixel_y = -28
-	},
-/obj/map/light/dimred,
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "goR" = (
 /obj/table/wood/auto/desk{
 	color = "#333333";
@@ -67427,15 +67085,6 @@
 /mob/living/critter/spider/nice,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
-"gEZ" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dessicated alien"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "gFf" = (
 /obj/death_button/VR_logout_button{
 	dir = 1;
@@ -67520,6 +67169,39 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
+"gKs" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/decal/lightshaft,
+/obj/item/baton/cane,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "gLs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-19"
@@ -67649,6 +67331,14 @@
 	icon_state = "shore-48"
 	},
 /area/titlescreen)
+"gYK" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/crunch/wtc)
 "gZi" = (
 /turf/unsimulated/wall/generic{
 	dir = 4;
@@ -67757,6 +67447,15 @@
 	},
 /turf/unsimulated/floor,
 /area/iomoon/base)
+"hgQ" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/crunch/wtc)
 "hgZ" = (
 /obj/grille/catwalk{
 	dir = 10;
@@ -67888,6 +67587,40 @@
 	dir = 6
 	},
 /area/centcom/gallery)
+"hqe" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 15;
+	pixel_y = 15
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/device/light/zippo{
+	desc = "It's got a pretty badass skull etched into it.";
+	name = "badass lighter"
+	},
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "hqg" = (
 /obj/decal/fakeobjects/dreambeach/mercury,
 /turf/unsimulated/floor/dream/beach,
@@ -68114,10 +67847,6 @@
 	dir = 5
 	},
 /area/centcom)
-"hID" = (
-/obj/map/light/dimred,
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "hJD" = (
 /obj/table/reinforced,
 /obj/item/breaching_charge{
@@ -68190,6 +67919,18 @@
 /obj/item/staff/monkey_staff,
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"hQy" = (
+/obj/item/instrument/saxophone,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian experimentation thingamajig.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-2";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "hQP" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/cigbutt{
@@ -68340,6 +68081,16 @@
 /obj/item/weldingtool,
 /turf/unsimulated/floor,
 /area/iomoon/base/underground)
+"ifk" = (
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/tourist,
+/obj/table/reinforced/bar/auto{
+	name = "table"
+	},
+/obj/item/paper/employment,
+/turf/unsimulated/floor/black,
+/area/owlery/lab)
 "iho" = (
 /obj/machinery/computer3/generic/personal/personel_alt{
 	pixel_y = 7
@@ -68620,6 +68371,16 @@
 	dir = 9
 	},
 /area/centcom)
+"ixw" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/obj/item/currency/spacecash/bag,
+/turf/unsimulated/floor/black/side{
+	dir = 9
+	},
+/area/crunch/wtc)
 "ixz" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris{
@@ -68647,6 +68408,17 @@
 "iBf" = (
 /turf/unsimulated/wall/void,
 /area/diner/cow)
+"iBp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-1";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "iBN" = (
 /obj/decal/fakeobjects/dreambeach/seashells,
 /obj/decal/fakeobjects/dreambeach/palm_leaf,
@@ -69128,17 +68900,6 @@
 	name = "cloaking field"
 	},
 /area/syndicate_station_space)
-"jka" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some manner of martian gizmo.  Or possibly a doodad.  You aren't an expert.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "martian-1";
-	name = "martian machine"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "jkG" = (
 /mob/living/critter/blobman/meat,
 /turf/unsimulated/floor{
@@ -69320,6 +69081,14 @@
 	icon_state = "shore-32"
 	},
 /area/titlescreen)
+"jBM" = (
+/obj/table/auto,
+/obj/window/cubicle,
+/obj/item/currency/spacecash/fivehundred,
+/turf/unsimulated/floor/carpet{
+	icon_state = "fred1"
+	},
+/area/iomoon/base)
 "jBP" = (
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/industrial,
@@ -69452,6 +69221,16 @@
 	icon_state = "floor"
 	},
 /area/centcom/offices/pali)
+"jNx" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/toy/figure,
+/obj/item/raw_material/gold,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "jNP" = (
 /obj/stool/chair/couch/yellow{
 	dir = 4;
@@ -69636,12 +69415,6 @@
 /obj/minimap/map_computer/nukeop,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/battlecruiser)
-"kei" = (
-/obj/decal/aliencomputer/broken{
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "kew" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/syndicate_station/assault_pod)
@@ -69673,6 +69446,32 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/guts)
+"khC" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/obj/item/plant/herb/cannabis/omega/spawnable,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "khD" = (
 /obj/item/reagent_containers/food/snacks/beefood{
 	desc = "A bowl of \"moth kibble.\" It is probably best not to think too hard about its composition.";
@@ -69688,10 +69487,6 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/offices/varshie)
-"kjy" = (
-/obj/decal/cleanable/ash,
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
@@ -69807,6 +69602,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/lobby)
+"ktR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-4";
+	name = "martian machine"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "kuv" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/singularity.dmi';
@@ -69964,10 +69770,6 @@
 /obj/item/clothing/glasses/nightvision,
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
-"kPl" = (
-/obj/machinery/door/unpowered/martian,
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "kPp" = (
 /obj/submachine/ATM{
 	pixel_x = 32
@@ -70444,12 +70246,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
-"lAv" = (
-/obj/decal/aliencomputer/off{
-	pixel_x = 30
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "lBN" = (
 /turf/unsimulated/floor/arrival/corner{
 	dir = 4
@@ -70485,6 +70281,19 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
+"lEE" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/obj/item/device/light/zippo/gold,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/crunch/wtc)
 "lEL" = (
 /obj/decal/poster/wallsign/space{
 	pixel_x = -32
@@ -71173,12 +70982,6 @@
 	dir = 10
 	},
 /area/diner/cow)
-"mDn" = (
-/obj/decal/aliencomputer/off{
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "mEy" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -71675,6 +71478,16 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nmR" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/obj/item/currency/spacecash/bag,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "nnS" = (
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -71685,6 +71498,14 @@
 	icon_state = "shore-40"
 	},
 /area/titlescreen)
+"noq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "noS" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-5"
@@ -71841,17 +71662,6 @@
 	dir = 4
 	},
 /area/centcom)
-"nvS" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "martian-3";
-	name = "martian machine"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "nwd" = (
 /obj/decal/stage_edge,
 /obj/machinery/vending/snack,
@@ -71967,6 +71777,15 @@
 	icon_state = "shore-13"
 	},
 /area/titlescreen)
+"nDX" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/turf/unsimulated/floor/black/side{
+	dir = 10
+	},
+/area/crunch/wtc)
 "nEi" = (
 /turf/unsimulated/floor/black/corner{
 	dir = 8
@@ -72370,6 +72189,14 @@
 	name = "security door"
 	},
 /area/hospital)
+"oer" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/turf/unsimulated/floor/black/side{
+	dir = 10
+	},
+/area/crunch/wtc)
 "ogV" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_syndicate"
@@ -72466,6 +72293,18 @@
 	name = "launcher doors"
 	},
 /area/drone/assembly)
+"omP" = (
+/obj/decal/cleanable/vomit{
+	desc = "Someone lost their lunch.  A long time ago.";
+	name = "dried vomit"
+	},
+/obj/item/storage/toilet/random{
+	dir = 8;
+	tag = "icon-toilet (WEST)"
+	},
+/obj/item/currency/spacecash/buttcoin,
+/turf/unsimulated/floor/plating,
+/area/afterlife/bar)
 "onI" = (
 /obj/ladder{
 	id = "iomoon"
@@ -72586,6 +72425,10 @@
 	icon_state = "diagonalWall"
 	},
 /area/hospital/samostrel)
+"owK" = (
+/obj/decal/cleanable/ash,
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "oxe" = (
 /obj/lattice,
 /obj/storage/crate{
@@ -72729,6 +72572,14 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
+"oLy" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "oNa" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -73388,6 +73239,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pEU" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/obj/item/ticket/golden,
+/turf/unsimulated/floor/black/side{
+	dir = 9
+	},
+/area/crunch/wtc)
 "pFm" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
@@ -73549,10 +73409,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/battle)
-"pPO" = (
-/mob/living/critter/martian/warrior,
-/turf/unsimulated/floor,
-/area/crunch)
 "pPX" = (
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/rodney)
@@ -73729,6 +73585,39 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qbe" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/skull{
+	pixel_x = 2;
+	pixel_y = -4
+	},
+/obj/item/skull{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/skull{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "qbv" = (
 /obj/stool/chair/couch{
 	dir = 4;
@@ -73947,6 +73836,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
+"qxX" = (
+/obj/decal/aliencomputer/broken{
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 9
@@ -74236,6 +74131,20 @@
 	icon_state = "fblue3"
 	},
 /area/centcom/lobby)
+"qXk" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 15;
+	pixel_y = 15
+	},
+/obj/vehicle/floorbuffer{
+	desc = "A snazzy ice buffer for skating rinks. It could probably hold other reagents too.";
+	name = "Zamboni 5000";
+	zamboni = 1
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "qXt" = (
 /obj/table/auto,
 /obj/machinery/light/small/floor,
@@ -74452,6 +74361,10 @@
 	icon_state = "rootfloor_2"
 	},
 /area/centcom/offices/marknstein)
+"riK" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "riN" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/gangtag{
@@ -74556,6 +74469,9 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"rtI" = (
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "rtM" = (
 /obj/crevice/meatland,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -74783,14 +74699,6 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
-"rGF" = (
-/obj/admin_plaque{
-	name = "Angel's Office"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
 "rHo" = (
 /obj/storage/crate/wooden{
 	icon_state = "woodencrate6";
@@ -74962,18 +74870,6 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
-"rSI" = (
-/obj/item/instrument/saxophone,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some manner of martian experimentation thingamajig.";
-	icon = 'icons/obj/artifacts/artifacts.dmi';
-	icon_state = "martian-2";
-	name = "martian machine"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "rUx" = (
 /obj/shrub{
 	dir = 4;
@@ -75353,6 +75249,19 @@
 	},
 /turf/space,
 /area/syndicate_station/battlecruiser)
+"szx" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/currency/spacecash/bag,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 6
+	},
+/area/crunch/wtc)
 "szA" = (
 /turf/unsimulated/floor/carpet/clowncarpet/border{
 	dir = 6
@@ -75427,6 +75336,14 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
+"sHX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -75500,6 +75417,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"sLa" = (
+/obj/decal/aliencomputer/off{
+	pixel_x = 30
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "sMO" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
@@ -75527,6 +75450,17 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/maint)
+"sPq" = (
+/obj/admin_plaque{
+	name = "Angel's Office";
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "sPM" = (
 /mob/living/critter/brullbar,
 /turf/unsimulated/floor/arctic/snow,
@@ -75642,6 +75576,14 @@
 	dir = 4
 	},
 /area/crunch/wtc)
+"tdn" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "tdU" = (
 /obj/machinery/vending/alcohol,
 /turf/unsimulated/outdoors/grass,
@@ -75744,14 +75686,6 @@
 	icon_state = "diagonalWall3"
 	},
 /area/diner/tug)
-"tpg" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "tqB" = (
 /turf/unsimulated/floor/marble,
 /area/centcom/gallery)
@@ -76167,6 +76101,14 @@
 	temperature = 313.15
 	},
 /area/iomoon/base)
+"tWu" = (
+/obj/table/auto,
+/obj/item/currency/spacecash/hundred,
+/turf/unsimulated/floor{
+	icon = 'icons/misc/racing.dmi';
+	icon_state = "track_1"
+	},
+/area/sim/racing_entry)
 "tWz" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -76204,6 +76146,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
+"tZy" = (
+/obj/overlay{
+	desc = "The corpse of a long dead space thing.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "marscorpse";
+	name = "dessicated alien"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "tZH" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/purple/fancy,
@@ -76294,32 +76245,37 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"uev" = (
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
+/obj/storage/crate{
+	desc = "It's all scratched up with talon marks.";
+	name = "Grungy Crate";
+	welded = 1
+	},
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/raw_material/gemstone,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/bag,
+/obj/item/currency/spacecash/bag,
+/obj/item/coin/bombini,
+/obj/item/ticket/golden,
+/obj/item/ticket/golden,
+/obj/item/ticket/golden,
+/obj/machinery/light/emergency{
+	dir = 4
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/owlery/gangzone)
 "uex" = (
 /obj/machinery/light{
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
-"ugM" = (
-/obj/storage/closet/dresser,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/suit/bathrobe,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/obj/item/clothing/under/shorts/random_color{
-	name = "swimming trunks";
-	rand_pos = 1
-	},
-/turf/unsimulated/floor{
-	icon_state = "0,6";
-	name = "wood floor";
-	tag = "null"
-	},
-/area/centcom/garden)
 "uhA" = (
 /obj/lattice,
 /obj/cable{
@@ -76536,11 +76492,6 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
-"uBd" = (
-/obj/machinery/door/unpowered/martian,
-/obj/trigger/critter,
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "uBv" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -76583,6 +76534,11 @@
 	icon_state = "space-1"
 	},
 /area/titlescreen)
+"uEu" = (
+/obj/machinery/door/unpowered/martian,
+/obj/trigger/critter,
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "uEA" = (
 /obj/machinery/light{
 	dir = 1
@@ -76678,6 +76634,12 @@
 "uJX" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/hall)
+"uKg" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "uKz" = (
 /obj/stool/chair/comfy,
 /obj/npc/trader/random{
@@ -76889,6 +76851,10 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/syndicate_station_space)
+"vdF" = (
+/mob/living/critter/martian/warrior,
+/turf/unsimulated/floor,
+/area/crunch)
 "veg" = (
 /obj/table/wood/auto/desk,
 /obj/machinery/computer3/generic/personal/meatland{
@@ -77770,12 +77736,6 @@
 	},
 /turf/space,
 /area/wizard_station_space)
-"wuT" = (
-/obj/crevice{
-	pixel_y = 30
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "wuZ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -77821,11 +77781,9 @@
 	},
 /turf/space,
 /area/syndicate_station/assault_pod)
-"wxn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+"wxy" = (
+/obj/crevice{
+	pixel_x = -28
 	},
 /turf/unsimulated/floor/martian,
 /area/crunch)
@@ -77988,6 +77946,10 @@
 	icon_state = "floor"
 	},
 /area/hospital/samostrel)
+"wJM" = (
+/obj/machinery/door/unpowered/martian,
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "wLj" = (
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/left_station"
@@ -78102,6 +78064,36 @@
 /mob/living/critter/robotic/repairbot/security,
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins)
+"wTj" = (
+/obj/decal/icefloor,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/currency/spacecash/thousand{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/item/skull{
+	pixel_x = -12;
+	pixel_y = 4
+	},
+/obj/item/skull,
+/obj/item/skull{
+	pixel_x = -3;
+	pixel_y = 15
+	},
+/turf/unsimulated/floor/arctic/snow/lake,
+/area/lower_arctic/lower)
 "wTN" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -78177,6 +78169,15 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"wZC" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/stamped_bullion,
+/obj/item/raw_material/gemstone,
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/crunch/wtc)
 "xaw" = (
 /obj/window_blinds/left,
 /turf/unsimulated/wall/generic{
@@ -78252,14 +78253,6 @@
 	},
 /turf/space,
 /area/syndicate_station_space)
-"xgs" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "xgE" = (
 /turf/unsimulated/floor/carpet/red/fancy/narrow/east,
 /area/titlescreen)
@@ -78654,9 +78647,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
-"xIW" = (
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "xJg" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-25"
@@ -78708,6 +78698,20 @@
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"xNt" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/million,
+/obj/item/clothing/gloves/ring/gold,
+/obj/item/clothing/head/laurels/gold,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 10
+	},
+/area/crunch/wtc)
 "xNL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-7"
@@ -78873,6 +78877,13 @@
 /mob/living/critter/skeleton,
 /turf/unsimulated/dirt,
 /area/catacombs)
+"xXy" = (
+/obj/crevice{
+	pixel_y = -28
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "xXL" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -78993,14 +79004,6 @@
 /obj/railing/velvet,
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
-"yhN" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "yiB" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
@@ -80813,7 +80816,7 @@ aDC
 aDC
 bLn
 bLn
-pPO
+vdF
 bLn
 bLn
 cdl
@@ -81998,10 +82001,10 @@ bKw
 bKw
 bKw
 bTU
-wxn
-xIW
-xIW
-xgs
+tdn
+rtI
+rtI
+noq
 bTU
 bTU
 bIY
@@ -82299,12 +82302,12 @@ bKw
 bKw
 bKw
 bKw
-kPl
-xIW
-xIW
-xIW
-xIW
-xgs
+wJM
+rtI
+rtI
+rtI
+rtI
+noq
 bTU
 bIY
 bIY
@@ -82602,19 +82605,19 @@ bKw
 bRa
 bKw
 bTU
-yhN
-xIW
-xIW
-xIW
-xIW
+oLy
+rtI
+rtI
+rtI
+rtI
 bTU
 bTU
 bTU
 bTU
 bTU
-wxn
-eGT
-xgs
+tdn
+wxy
+noq
 bTU
 bTU
 bTU
@@ -82905,26 +82908,26 @@ bKw
 bKw
 agw
 bTU
-yhN
-xIW
-xIW
-xIW
+oLy
+rtI
+rtI
+rtI
 bTU
-wxn
-xIW
-xgs
+tdn
+rtI
+noq
 bTU
-gEZ
-xIW
-xIW
+tZy
+rtI
+rtI
 bTU
-wxn
-xIW
-xIW
+tdn
+rtI
+rtI
 bTU
-wxn
-hID
-xgs
+tdn
+riK
+noq
 bTU
 bLy
 bLn
@@ -83208,26 +83211,26 @@ bKw
 bKw
 bTU
 bTU
-yhN
-xIW
-lAv
+oLy
+rtI
+sLa
 bTU
-xIW
-xIW
-nvS
+rtI
+rtI
+aCv
 bTU
-wuT
-xIW
-bGl
+uKg
+rtI
+ktR
 bTU
-xIW
-xIW
-xIW
-kPl
-xIW
-xIW
-xIW
-uBd
+rtI
+rtI
+rtI
+wJM
+rtI
+rtI
+rtI
+uEu
 bLy
 bLy
 bLn
@@ -83511,30 +83514,30 @@ bKw
 agw
 bTU
 bTU
-kPl
+wJM
 bTU
 bTU
-kei
-xIW
-hID
+qxX
+rtI
+riK
 bTU
-hID
-xIW
-xIW
+riK
+rtI
+rtI
 bTU
-wuT
-xIW
-tpg
+uKg
+rtI
+sHX
 bTU
-yhN
-lAv
-tpg
+oLy
+sLa
+sHX
 bTU
 bLy
 bLn
 bLn
 bLn
-pPO
+vdF
 bLn
 bLn
 aDC
@@ -83813,19 +83816,19 @@ bKB
 bKw
 bIY
 bTU
-xIW
-xIW
+rtI
+rtI
 bTU
-xIW
-xIW
-xIW
+rtI
+rtI
+rtI
 bTU
-rSI
-xIW
-xIW
+hQy
+rtI
+rtI
 bTU
-mDn
-xIW
+aik
+rtI
 bTU
 bTU
 bTU
@@ -84115,20 +84118,20 @@ bIY
 bIY
 bIY
 bTU
-xIW
-xIW
+rtI
+rtI
 bTU
-yhN
-xIW
-tpg
+oLy
+rtI
+sHX
 bTU
-yhN
-xIW
-tpg
+oLy
+rtI
+sHX
 bTU
-xIW
-xIW
-xgs
+rtI
+rtI
+noq
 bTU
 bTU
 aDC
@@ -84417,20 +84420,20 @@ bIY
 bIY
 bIY
 bTU
-kjy
-xIW
-xgs
+owK
+rtI
+noq
 bTU
-kPl
+wJM
 bTU
 bTU
 bTU
-kPl
+wJM
 bTU
-wxn
-xIW
-xIW
-gow
+tdn
+rtI
+rtI
+xXy
 bTU
 bTU
 aDC
@@ -84719,20 +84722,20 @@ bIY
 bIY
 bIY
 bTU
-xIW
-xIW
-xIW
-xIW
-xIW
-eGT
-xIW
-xIW
-xIW
-xIW
-xIW
-xIW
-xIW
-tpg
+rtI
+rtI
+rtI
+rtI
+rtI
+wxy
+rtI
+rtI
+rtI
+rtI
+rtI
+rtI
+rtI
+sHX
 bTU
 bTU
 aDC
@@ -85021,19 +85024,19 @@ bIY
 bIY
 bIY
 bTU
-yhN
-xIW
-xIW
-xIW
-hID
-xIW
-xIW
-lAv
-xIW
-xIW
-xIW
-xIW
-gEZ
+oLy
+rtI
+rtI
+rtI
+riK
+rtI
+rtI
+sLa
+rtI
+rtI
+rtI
+rtI
+tZy
 bTU
 bTU
 bTU
@@ -85324,18 +85327,18 @@ bIY
 bIY
 bTU
 bTU
-wuT
-xIW
-tpg
+uKg
+rtI
+sHX
 bTU
 bTU
 bTU
 bTU
 bTU
 bTU
-yhN
-xIW
-tpg
+oLy
+rtI
+sHX
 bTU
 bIY
 bTU
@@ -85626,8 +85629,8 @@ bKw
 bIY
 bIY
 bTU
-jka
-xIW
+iBp
+rtI
 bTU
 bTU
 bIY
@@ -93798,10 +93801,10 @@ aaa
 cnx
 cnK
 crA
-crL
+aaY
 crS
 csQ
-csg
+oer
 cnB
 cnB
 cnB
@@ -94402,10 +94405,10 @@ aaa
 cnB
 crs
 crC
-crN
-crN
-crN
-csh
+gYK
+gYK
+gYK
+szx
 cnB
 cnB
 cnB
@@ -94764,7 +94767,7 @@ cAB
 cBg
 cBg
 cFC
-cGl
+ifk
 cAB
 cxa
 cHq
@@ -95004,7 +95007,7 @@ ceX
 cbu
 aaa
 cnB
-crt
+pEU
 crE
 cnB
 crT
@@ -95306,7 +95309,7 @@ ccX
 cbu
 aaa
 cnB
-cru
+lEE
 crF
 crO
 crU
@@ -95608,18 +95611,18 @@ ccF
 cbu
 aaa
 cnB
-crv
+fGL
 crG
 cnB
 crV
 csc
 crG
 cnB
-cst
-csy
+ixw
+wZC
 crA
-csL
-csT
+nmR
+nDX
 cnB
 aaa
 aaa
@@ -96138,7 +96141,7 @@ gVq
 ymj
 jqz
 qYW
-bAG
+jBM
 bBw
 bAa
 bDa
@@ -96214,10 +96217,10 @@ aaa
 cnB
 crw
 crA
-crP
-crW
-csd
-csj
+dUT
+jNx
+dVZ
+xNt
 csp
 crr
 crF
@@ -97289,8 +97292,8 @@ ojw
 ojw
 aIp
 aIp
-bdA
-bdP
+wTj
+hqe
 aJE
 aJE
 aJE
@@ -97591,8 +97594,8 @@ bbP
 ojw
 aIp
 aIp
-bdB
-bdQ
+gKs
+qXk
 jqo
 aJE
 aJE
@@ -97729,8 +97732,8 @@ crY
 csf
 csm
 cnB
-csw
-csA
+gdi
+hgQ
 csH
 csP
 ctb
@@ -97893,8 +97896,8 @@ bcl
 ojw
 aIp
 aIp
-bdC
-bdR
+qbe
+khC
 aJE
 aJE
 aJE
@@ -100197,7 +100200,7 @@ cJr
 bqs
 cCR
 cDs
-cKP
+uev
 cED
 cFk
 cFO
@@ -106188,7 +106191,7 @@ dwo
 dSI
 ddz
 dTJ
-dTC
+omP
 dTH
 dge
 dTF
@@ -119951,7 +119954,7 @@ aKh
 aIr
 aIr
 aIr
-bgG
+fQz
 aIG
 aIr
 aIr
@@ -121909,7 +121912,7 @@ bPy
 ckI
 bYa
 ckH
-clT
+tWu
 cmh
 cmx
 ckH
@@ -122211,8 +122214,8 @@ bRT
 ckI
 bYb
 ckH
-clU
-clT
+fZY
+tWu
 cmx
 ckH
 cmg
@@ -125228,7 +125231,7 @@ cjh
 cjJ
 cjh
 ckz
-ckM
+cfK
 ckJ
 cjh
 cjh
@@ -156750,8 +156753,8 @@ qQK
 eoz
 kPz
 lsE
-rGF
-sJH
+wel
+sPq
 vij
 wel
 dvW
@@ -161252,7 +161255,7 @@ aES
 aES
 dpP
 lWe
-ugM
+dLy
 dLB
 lWe
 dLx
@@ -161260,7 +161263,7 @@ dLt
 dLt
 lWe
 dLB
-ugM
+dLy
 lWe
 drL
 aES
