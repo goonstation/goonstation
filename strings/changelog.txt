@@ -1,5 +1,9 @@
 
 (t)sat jun 17 23
+(u)Glamurio (Ryou)
+(p)14491
+(e)🗺🔎🔒💅⚙|A-Mapping, C-Code-Quality, A-Secret, C-QoL, A-Internal
+(+)Fishing tokens now stack.
 (u)tarmunora
 (*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
 (u)Gannets
