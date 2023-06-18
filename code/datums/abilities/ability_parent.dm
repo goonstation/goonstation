@@ -1074,6 +1074,7 @@
 	/// Override this proc with any custom casting rules you want, i.e. only casting in certain areas. Return FALSE to prevent cast.
 	/// Neat idea- add  a castcheck proc to *abilityHolders* so they can use generic abilities, move holder-wide checks for there.
 	/// Call the abilityHolder thing in here, and leave the ability-specific checks with the abilities.
+	/// TODO ABILITYHOLDER CASTCHECK
 	proc/castcheck(atom/target)
 		return TRUE
 

@@ -44,6 +44,8 @@
 		var/mob/living/carbon/human/W = holder.owner
 		var/spell_result = ""
 
+
+		var/datum/abilityHolder/wizard/wiz_holder = src.holder
 		switch(pick(available_effects))
 			if("fireburst")
 				spell_result = "fireburst"
@@ -52,7 +54,7 @@
 				for (var/mob/living/carbon/human/H in range(6, W))
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, "<span class='alert'>You suddenly burst into flames!</span>")
 					H.update_burning(30)
@@ -63,7 +65,7 @@
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					H.bioHolder.AddEffect("accent_swedish", timeleft = 15)
 					H.bioHolder.AddEffect("accent_comic", timeleft = 15)
@@ -76,7 +78,7 @@
 				for (var/mob/living/carbon/human/H in range(25, W))
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, "<span class='alert'>You feel extremely strange!</span>")
 					H.reagents.add_reagent("LSD", 20)
@@ -89,7 +91,7 @@
 				for(var/mob/M in AIviewers(W, null))
 					if(GET_DIST(M, W) <= 6)
 						if(M != W)
-							if (targetSpellImmunity(M, FALSE, 0))
+							if (wiz_holder.targetSpellImmunity(M, FALSE, 0))
 								continue
 							M.apply_flash(30, 5)
 							if(M.client)
@@ -109,7 +111,7 @@
 				for (var/mob/living/M in hearers(W, null))
 					if ((M == W) && protectuser)
 						continue
-					if (targetSpellImmunity(M, FALSE, 2))
+					if (wiz_holder.targetSpellImmunity(M, FALSE, 2))
 						continue
 					if (isvampire(M) && M.check_vampire_power(VAMP_POWER_MAXIMUM))
 						M.show_text("You are immune to [W]'s screech!", "blue")
@@ -128,7 +130,7 @@
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
-					if (targetSpellImmunity(H, FALSE, 0))
+					if (wiz_holder.targetSpellImmunity(H, FALSE, 0))
 						continue
 					boutput(H, "<span class='alert'>A horrifying noise stuns you in sheer terror!</span>")
 					H.changeStatus("stunned", 3 SECONDS)

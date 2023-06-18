@@ -221,6 +221,7 @@
 			shoot_projectile_ST(O, current_projectile, T)
 
 /// Genericized throw ability, used by wrestlers and werewolves
+/// TODO ABILITYHOLDER CASTCHECK
 /datum/targetable/throw
 	name = "Throw (grab)"
 	desc = "Spin a grabbed opponent around and throw them."

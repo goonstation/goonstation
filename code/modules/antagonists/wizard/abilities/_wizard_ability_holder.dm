@@ -29,17 +29,62 @@
 
 	return (magcount >= 4)
 
-//////////////////////////////////////////// Ability holder /////////////////////////////////////////
-
+// --------------------------------- Ability holder ---------------------------------------------------
+#define MINIMUM_SPELLPOWER 4
 /datum/abilityHolder/wizard
 	usesPoints = FALSE
 	topBarRendered = TRUE
 	tabName = "Wizard"
 
-/////////////////////////////////////////////// Wizard spell parent ////////////////////////////
+	/// Check if we have our robes and staff for casting (or some substitute)
+	/// Arg can be null for generic check
+	proc/wizard_spellpower(datum/targetable/spell/abil)
+		var/mob/living/caster = src.owner
+		if (caster.bioHolder.HasEffect("robed")) // special magic bullshit effect
+			return TRUE
+
+		for (var/obj/item/clothing/gloves/ring/wizard/ring in caster.get_equipped_items())
+			if (ring.ability_path == abil?.type)
+				return TRUE
+
+		var/magcount = 0
+		if (caster.bioHolder.HasEffect("arcane_power") == 2) // secondary magic bullshit effect
+			magcount += 10
+		for (var/obj/item/clothing/C in caster.get_equipped_items())
+			if (C.magical)
+				magcount += 1
+		if (caster.find_type_in_hand(/obj/item/staff))
+			magcount += 2
+
+		return (magcount >= MINIMUM_SPELLPOWER)
+
+	// Checks the immunity for a single target of a spell (could be an indirect target, or called by a projectile or something)
+	proc/targetSpellImmunity(atom/target, messages, chaplain_xp)
+		if (!istype(target, /mob))
+			return FALSE
+		var/mob/M = target
+		if (M.traitHolder.hasTrait("training_chaplain"))
+			if (messages)
+				boutput(src.owner, "<span class='alert'>[M] has divine protection from magic.</span>")
+				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
+			JOB_XP(M, "Chaplain", chaplain_xp)
+			return TRUE
+
+		if (iswizard(M))
+			if (messages)
+				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
+			return TRUE
+
+		if (check_target_immunity(M))
+			if (messages)
+				M.visible_message("<span class='alert'>[M] seems to be warded from the effects!</span>")
+			return TRUE
+		return FALSE
+
+#undef MINIMUM_SPELLPOWER
+//------------------------- Wizard spell parent -----------------------------
 
 /// Minimum spell power required to cast something without an additional cooldown
-#define MINIMUM_SPELLPOWER 4
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
 	var/requires_robes = FALSE					//! Does this spell require robes to cast?
@@ -72,11 +117,10 @@
 	doCooldown(customCooldown)
 		var/on_cooldown = src.calculate_cooldown()
 		. = ..(on_cooldown)
-		SPAWN(on_cooldown + 0.5 SECONDS)
-			holder.updateButtons()
 
 	cast(atom/target)
-		if (src.cooldown_staff && !src.wizard_spellpower())
+		var/datum/abilityHolder/wizard/wiz_holder = src.holder
+		if (src.cooldown_staff && !wiz_holder.wizard_spellpower())
 			boutput(holder.owner, "<span class='alert'>Your spell takes longer to recharge without a staff to focus it!</span>")
 
 		if(ishuman(holder.owner))
@@ -89,50 +133,7 @@
 				playsound(O.loc, src.voice_other, 50, 0, -1)
 		. = ..()
 
-	/// Check if we have our robes and staff for casting (or some substitute)
-	proc/wizard_spellpower(datum/targetable/spell/spell)
-		var/mob/living/caster = src.holder.owner
-		if (caster.bioHolder.HasEffect("robed")) // special magic bullshit effect
-			return TRUE
-
-		for (var/obj/item/clothing/gloves/ring/wizard/ring in caster.get_equipped_items())
-			if (ring.ability_path == spell.type)
-				return TRUE
-
-		var/magcount = 0
-		if (caster.bioHolder.HasEffect("arcane_power") == 2) // secondary magic bullshit effect
-			magcount += 10
-		for (var/obj/item/clothing/C in caster.get_equipped_items())
-			if (C.magical)
-				magcount += 1
-		if (caster.find_type_in_hand(/obj/item/staff))
-			magcount += 2
-
-		return (magcount >= MINIMUM_SPELLPOWER)
-
-	// Checks the immunity for a single target of a spell (could be an indirect target, or called by a projectile or something)
-	proc/targetSpellImmunity(atom/target, messages, chaplain_xp)
-		if (!istype(target, /mob))
-			return FALSE
-		var/mob/M = target
-		if (M.traitHolder.hasTrait("training_chaplain"))
-			if (messages)
-				boutput(holder.owner, "<span class='alert'>[M] has divine protection from magic.</span>")
-				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
-			JOB_XP(M, "Chaplain", chaplain_xp)
-			return TRUE
-
-		if (iswizard(M))
-			if (messages)
-				M.visible_message("<span class='alert'>The spell has no effect on [M]!</span>")
-			return TRUE
-
-		if (check_target_immunity(M))
-			if (messages)
-				M.visible_message("<span class='alert'>[M] seems to be warded from the effects!</span>")
-			return TRUE
-		return FALSE
-
+	// This should really be on the abilityHolder, do that when hoisting castcheck there
 	castcheck(atom/target)
 		. = ..()
 		var/mob/caster = src.holder.owner
@@ -144,7 +145,8 @@
 				break
 
 		if (src.targeted)
-			if (src.targetSpellImmunity(target, TRUE, src.granted_chaplain_xp))
+			var/datum/abilityHolder/wizard/wiz_holder = src.holder
+			if (wiz_holder.targetSpellImmunity(target, TRUE, src.granted_chaplain_xp))
 				return FALSE
 
 		var/bypass_extra_checks = (caster.bioHolder.HasEffect("arcane_power") == 2) || ring_bypass
@@ -169,5 +171,3 @@
 			if(caster.bioHolder.HasEffect("arcane_shame"))
 				boutput(caster, "<span class='alert'>You are too consumed with shame to cast that spell!</span>")
 				return FALSE
-
-#undef MINIMUM_SPELLPOWER

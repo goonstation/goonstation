@@ -7,6 +7,7 @@
 	cooldown = 30 SECONDS
 
 	// duplicated from werewolf abilityHolder. see comment on /datum/targetable/castcheck()
+	// TODO ABILITYHOLDER CASTCHECK
 	castcheck()
 		. = ..()
 		var/mob/living/carbon/human/user = src.holder.owner
