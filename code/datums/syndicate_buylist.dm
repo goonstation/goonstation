@@ -844,6 +844,7 @@ This is basically useless for anyone but miners.
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
 	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	not_in_crates = TRUE
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
