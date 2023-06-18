@@ -355,7 +355,7 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/parts/human_parts/arm/right,\
 				/obj/item/parts/human_parts/leg/left,\
 				/obj/item/parts/human_parts/leg/right,\
-				/obj/item/currency/spacecash/random,\
+				/obj/item/currency/spacecash,\
 				/obj/item/scrap,\
 				/obj/item/storage/pill_bottle/cyberpunk,\
 				/obj/item/reagent_containers/vending/vial/random,\
