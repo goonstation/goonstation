@@ -642,6 +642,20 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return 1
 		return 0
 
+	proc/get_ranged_hands(var/mob/user)
+		var/list/ranged_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_range_attack)
+				ranged_hands.Add(HH)
+		return ranged_hands
+
+	proc/get_melee_hands(var/mob/user)
+		var/list/melee_hands = null
+		for (var/datum/handHolder/HH as anything in hands)
+			if (HH.can_attack)
+				melee_hands.Add(HH)
+		return melee_hands
+
 	swap_hand()
 		if (!handcheck())
 			return
@@ -659,14 +673,14 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			if(src.equipped())
 				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
-	hand_range_attack(atom/target, params)
-		.= 0
-		var/datum/handHolder/ch = get_active_hand()
-		if (ch && (ch.can_range_attack || ch.can_special_attack()) && ch.limb)
-			ch.limb.attack_range(target, src, params)
-			ch.set_cooldown_overlay()
-			.= 1
+	hand_range_attack(atom/target, params) // Returns true for successful attack false if on cooldown or HH is incorrect
+		var/datum/handHolder/HH = get_active_hand()
+		if (HH && (HH.can_range_attack || HH.can_special_attack()) && HH.limb)
+			HH.limb.attack_range(target, src, params)
+			HH.set_cooldown_overlay()
 			src.lastattacked = src
+			return TRUE
+		return FALSE
 
 	weapon_attack(atom/target, obj/item/W, reach, params)
 		if (isobj(target))

@@ -2,15 +2,17 @@
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	density = 1
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
 	custom_gib_handler = /proc/robogibs
 	hand_count = 3
-	can_throw = 0
-	can_grab = 0
-	can_disarm = 0
-	blood_id = "oil"
+	can_throw = FALSE
+	can_grab = FALSE
+	can_disarm = FALSE
+	health_brute = 75
+	health_brute_vuln = 1
+	health_burn = 50
+	health_burn_vuln = 1
 	speechverb_say = "states"
 	speechverb_gasp = "states"
 	speechverb_stammer = "states"
@@ -20,7 +22,7 @@
 	var/eye_light_icon = "mars_sec_bot_eye"
 
 	New()
-		. = ..()
+		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
 		var/image/eye_light = image(icon, "[eye_light_icon]")
 		eye_light.plane = PLANE_SELFILLUM
@@ -62,9 +64,9 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = ".38 Anti-Personnel Arm"
-		HH.can_hold_items = 0
-		HH.can_attack = 1
-		HH.can_range_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
@@ -72,9 +74,9 @@
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handabg"
 		HH.limb_name = "ABG Riot Suppression Appendage"
-		HH.can_hold_items = 0
-		HH.can_attack = 1
-		HH.can_range_attack = 1
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
 
 		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
@@ -84,8 +86,8 @@
 		HH.limb_name = "gunbot hands"
 
 	setup_healths()
-		add_hh_robot(75, 1)
-		add_hh_robot_burn(50, 1)
+		add_hh_robot(src.health_brute, src.health_brute_vuln)
+		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
 	get_melee_protection(zone, damage_type)
 		return 6
@@ -138,6 +140,28 @@
 					else
 						return ..()
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/robotic/gunbot)) return FALSE
+		if (is_incapacitated(C)) return FALSE //Bullets will probably miss
+		return ..()
+
+	critter_range_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		if (src.hand_range_attack(target))
+			return TRUE
+
+
+/mob/living/critter/robotic/gunbot/AI
+	health_brute = 20
+	health_burn = 20
+	is_npc = TRUE
+
+	get_melee_protection(zone, damage_type)
+		return 3
+
+	get_ranged_protection()
+		return 1.5
+
 /mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
 	real_name = "Syndicate robot"
@@ -163,12 +187,19 @@
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
-	setup_healths()
-		add_hh_robot(100, 1)
-		add_hh_robot_burn(100, 1)
-
 	get_melee_protection(zone, damage_type)
 		return 7
 
 	get_ranged_protection()
 		return 2.5
+
+/mob/living/critter/robotic/gunbot/syndicate/AI
+	health_brute = 30
+	health_burn = 30
+	is_npc = TRUE
+
+	get_melee_protection(zone, damage_type)
+		return 4
+
+	get_ranged_protection()
+		return 2

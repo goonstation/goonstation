@@ -96,15 +96,15 @@
 			if(disarm_special)
 				SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
 					SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else
-			.= 0
+			return FALSE
 
 	proc/is_on_cooldown()
 		return GET_COOLDOWN(src, "limb_cooldown")
@@ -294,45 +294,45 @@
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
 		current_shots = 3
-		cooldown = 30
-		reload_time = 200
+		cooldown = 3 SECONDS
+		reload_time = 20 SECONDS
 		muzzle_flash = "muzzle_flash"
 
 	abg
 		proj = new/datum/projectile/bullet/abg
 		shots = 6
 		current_shots = 6
-		cooldown = 30
-		reload_time = 300
+		cooldown = 3 SECONDS
+		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
 
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
-		cooldown = 50
-		reload_time = 50
+		cooldown = 5 SECONDS
+		reload_time = 5 SECONDS
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	fire_elemental
 		proj = new/datum/projectile/bullet/flare
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 300
+		cooldown = 4 SECONDS
+		reload_time = 30 SECONDS
 
 	spike
 		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
@@ -353,22 +353,22 @@
 		proj = new/datum/projectile/laser/light
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
 
 	cutter
 		proj = new/datum/projectile/laser/drill/cutter
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
 
 	disruptor
 		proj = new/datum/projectile/disruptor/high
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
