@@ -2207,7 +2207,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				. = ..()
-				var/poison_amount = holder.get_reagent_amount(src.id)
+				var/poison_amount = holder?.get_reagent_amount(src.id) // need to check holder as the reagent could be fully removed in the parent call
 				if(poison_amount > 5)
 					for(var/obj/item/I in oview(M,5))
 						if(probmult(2))

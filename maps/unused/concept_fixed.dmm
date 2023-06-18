@@ -2314,7 +2314,7 @@
 "aeF" = (
 /obj/rack,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -2662,7 +2662,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -3525,7 +3525,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/janitor/office)
@@ -3569,7 +3569,7 @@
 /area/station/maintenance/northeast)
 "agU" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -4199,7 +4199,7 @@
 /obj/item/storage/box/mousetraps,
 /obj/item/storage/box/mousetraps,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/janitor/office)
@@ -5914,7 +5914,7 @@
 /area/station/quartermaster/storage)
 "alp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -8663,7 +8663,7 @@
 	dir = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -10825,7 +10825,7 @@
 	dir = 4
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
@@ -23099,18 +23099,6 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"aRN" = (
-/obj/machinery/atmospherics/valve,
-/obj/machinery/door_control{
-	id = "mixingwaste";
-	name = "Waste Vent Control";
-	pixel_x = 24;
-	pixel_y = 0
-	},
-/turf/simulated/floor/white,
-/area/station/ai_monitored/storage/secure{
-	name = "Mixing Room"
-	})
 "aRO" = (
 /obj/machinery/light{
 	tag = "icon-tube1 (WEST)";
@@ -23890,27 +23878,8 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
-"aTh" = (
-/obj/machinery/atmospherics/valve,
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor/white,
-/area/station/ai_monitored/storage/secure{
-	name = "Mixing Room"
-	})
 "aTi" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/ai_monitored/storage/secure{
-	name = "Mixing Room"
-	})
-"aTj" = (
-/obj/machinery/atmospherics/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -24891,25 +24860,6 @@
 /obj/item/device/igniter,
 /obj/item/device/igniter,
 /obj/item/device/igniter,
-/turf/simulated/floor/white,
-/area/station/ai_monitored/storage/secure{
-	name = "Mixing Room"
-	})
-"aUP" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/white,
-/area/station/ai_monitored/storage/secure{
-	name = "Mixing Room"
-	})
-"aUQ" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/ignition_switch{
-	id = "mixingroom";
-	pixel_x = 24;
-	pixel_y = 10
-	},
 /turf/simulated/floor/white,
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
@@ -31474,17 +31424,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
-"bhd" = (
-/obj/table/wood{
-	tag = "icon-woodentable (WEST)";
-	icon_state = "woodentable";
-	dir = 8
-	},
-/obj/item/currency/spacecash,
-/obj/item/coin,
-/obj/item/coin,
-/turf/simulated/floor,
-/area/station/crew_quarters/heads)
 "bhe" = (
 /obj/cable{
 	icon_state = "2-4";
@@ -34128,12 +34067,6 @@
 	},
 /turf/simulated/floor/white,
 /area/space)
-"blO" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/space)
 "blP" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -34415,10 +34348,6 @@
 	pixel_x = 2;
 	pixel_y = -8
 	},
-/turf/simulated/floor/white,
-/area/space)
-"bmn" = (
-/obj/machinery/atmospherics/valve,
 /turf/simulated/floor/white,
 /area/space)
 "bmo" = (
@@ -35022,17 +34951,6 @@
 	},
 /obj/item/extinguisher{
 	pixel_y = 8
-	},
-/turf/simulated/floor/white,
-/area/space)
-"bnu" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/space)
@@ -37096,6 +37014,12 @@
 	},
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
+"chA" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/white,
+/area/station/ai_monitored/storage/secure{
+	name = "Mixing Room"
+	})
 "chK" = (
 /obj/item/wrapping_paper,
 /turf/space,
@@ -37184,11 +37108,76 @@
 "cqb" = (
 /turf/space,
 /area/space)
+"dmQ" = (
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/space)
 "gcn" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/lawrack,
 /turf/simulated/floor/purple,
 /area/space)
+"hkr" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/ai_monitored/storage/secure{
+	name = "Mixing Room"
+	})
+"nhs" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/ignition_switch{
+	id = "mixingroom";
+	pixel_x = 24;
+	pixel_y = 10
+	},
+/turf/simulated/floor/white,
+/area/station/ai_monitored/storage/secure{
+	name = "Mixing Room"
+	})
+"ozv" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/space)
+"oRJ" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor/white,
+/area/station/ai_monitored/storage/secure{
+	name = "Mixing Room"
+	})
+"qyw" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/white,
+/area/space)
+"rRp" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/door_control{
+	id = "mixingwaste";
+	name = "Waste Vent Control";
+	pixel_x = 24;
+	pixel_y = 0
+	},
+/turf/simulated/floor/white,
+/area/station/ai_monitored/storage/secure{
+	name = "Mixing Room"
+	})
 "tBe" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/suit/chef,
@@ -37212,6 +37201,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"vNr" = (
+/obj/table/wood{
+	tag = "icon-woodentable (WEST)";
+	icon_state = "woodentable";
+	dir = 8
+	},
+/obj/item/currency/spacecash,
+/obj/item/coin,
+/obj/item/coin,
+/turf/simulated/floor,
+/area/station/crew_quarters/heads)
 
 (1,1,1) = {"
 cqb
@@ -59617,7 +59617,7 @@ cqb
 cqb
 bgH
 bgP
-bhd
+vNr
 bhs
 bhC
 bhO
@@ -72068,9 +72068,9 @@ aPS
 aQW
 aRL
 aSA
-aTh
+oRJ
 aUd
-aTh
+oRJ
 aVS
 aWR
 aXD
@@ -72297,7 +72297,7 @@ aRM
 aSB
 aQY
 aUe
-aUP
+chA
 aVT
 aWS
 aXE
@@ -72749,7 +72749,7 @@ aPV
 aQY
 aQY
 aQY
-aTj
+hkr
 aQY
 aTi
 aVV
@@ -72974,11 +72974,11 @@ aOs
 aOY
 aPW
 aQZ
-aRN
+rRp
 aSC
 aTk
 aQY
-aUQ
+nhs
 aVW
 aPX
 aXB
@@ -85815,7 +85815,7 @@ bmm
 amP
 bmK
 bmY
-bnu
+dmQ
 bZC
 ciF
 ciF
@@ -86038,7 +86038,7 @@ bbf
 blc
 blv
 blM
-bmn
+qyw
 bmB
 amP
 bmZ
@@ -86265,11 +86265,11 @@ bkK
 bld
 blw
 blN
-bmn
+qyw
 bmB
 amP
 amP
-blO
+ozv
 cae
 cqb
 cgo
@@ -86491,7 +86491,7 @@ ckz
 bkL
 ble
 blx
-blO
+ozv
 bmo
 bmC
 bmL

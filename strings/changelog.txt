@@ -1,5 +1,28 @@
 
+(t)sat jun 17 23
+(u)tarmunora
+(*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
+(u)Gannets
+(p)14618
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(+)Adds 12 additional fish to exisiting fishing spots.
+(+)Sprites by Wolfolotl, Thatdude & sian.
+(t)fri jun 16 23
+(u)LeahTheTech
+(*)Balloons can now be filled at gas canisters and inhaling from them will inhale a portion of the gas inside. Each balloon can hold 5 breaths.
+(+)Revolutionary status is now always removed on death, and head revolutionaries who are turned into cyborgs will not retain their ability to see other rev icons.
+(t)thu jun 15 23
+(u)tarmunora
+(+)Grave Fever now has an incubation period before it starts causing stuns etc.
+(u)aloe
+(+)Promethazine (anti-vomit chem) now works in hyposprays and the medical director's syringe gun.
+(t)wed jun 14 23
+(u)LeahTheTech
+(+)Mops now actually clean cleanables (like bloody footprints etc.)
+(+)Plague rats now fit in pet carriers.
 (t)tue jun 13 23
+(u)pali
+(+)pod portals no longer have 1% chance to gib, instead it is 2% chance to get teleported to a random space tile
 (u)Virva & Gannets
 (p)14561
 (e)🔊|C-Sound

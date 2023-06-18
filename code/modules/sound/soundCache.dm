@@ -357,6 +357,7 @@ var/global/list/soundCache = list(
  	"sound/effects/welderarc_ignite.ogg" = 'sound/effects/welderarc_ignite.ogg',\
  	"sound/effects/welding_arc.ogg" = 'sound/effects/welding_arc.ogg',\
  	"sound/effects/zzzt.ogg" = 'sound/effects/zzzt.ogg',\
+ 	"sound/impact_sounds/bat_wood.ogg" = 'sound/impact_sounds/bat_wood.ogg',\
  	"sound/impact_sounds/Blade_Small.ogg" = 'sound/impact_sounds/Blade_Small.ogg',\
  	"sound/impact_sounds/Blade_Small_Bloody.ogg" = 'sound/impact_sounds/Blade_Small_Bloody.ogg',\
  	"sound/impact_sounds/block_blunt.ogg" = 'sound/impact_sounds/block_blunt.ogg',\
