@@ -39,10 +39,10 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		if (!src.reagents)
 			src.make_reagents()
 
-		if (istype(W, /obj/item/spacecash) || istype(W, /obj/item/paper))
+		if (istype(W, /obj/item/currency/spacecash) || istype(W, /obj/item/paper))
 			boutput(user, "<span class='alert'>You roll up [W] into a cigarette.</span>")
 			var/obj/item/clothing/mask/cigarette/custom/P = new(user.loc)
-			if(istype(W, /obj/item/spacecash))
+			if(istype(W, /obj/item/currency/spacecash))
 				P.icon_state = "cig-[W.icon_state]"
 				P.item_state = "cig-[W.icon_state]"
 				P.litstate = "ciglit-[W.icon_state]"
@@ -100,7 +100,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		..()
 
 	proc/build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""][pick("joint","doobie","spliff","roach","blunt","roll","fatty","reefer")]"
 
 /obj/item/plant/herb/cannabis/
 	name = "cannabis leaf"
@@ -194,7 +194,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 	brew_result = list("nicotine")
 
 	build_name(obj/item/W)
-		return "[istype(W, /obj/item/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
+		return "[istype(W, /obj/item/currency/spacecash) ? "[W.amount]-credit " : ""]rolled cigarette"
 
 /obj/item/plant/herb/tobacco/twobacco
 	name = "twobacco leaf"

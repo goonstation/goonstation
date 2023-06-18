@@ -1,3 +1,29 @@
+
+(t)sat jun 17 23
+(u)Amylizzle
+(p)14603
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a sign to Clarion and Nadir to track how long it's been since the last nuclear meltdown on each map.
+(u)Glamurio (Ryou)
+(p)14491
+(e)🗺🔎🔒💅⚙|A-Mapping, C-Code-Quality, A-Secret, C-QoL, A-Internal
+(+)Fishing tokens now stack.
+(u)tarmunora
+(*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
+(u)Gannets
+(p)14618
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(+)Adds 12 additional fish to exisiting fishing spots.
+(+)Sprites by Wolfolotl, Thatdude & sian.
+(t)fri jun 16 23
+(u)LeahTheTech
+(*)Balloons can now be filled at gas canisters and inhaling from them will inhale a portion of the gas inside. Each balloon can hold 5 breaths.
+(+)Revolutionary status is now always removed on death, and head revolutionaries who are turned into cyborgs will not retain their ability to see other rev icons.
+(t)thu jun 15 23
+(u)tarmunora
+(+)Grave Fever now has an incubation period before it starts causing stuns etc.
+(u)aloe
+(+)Promethazine (anti-vomit chem) now works in hyposprays and the medical director's syringe gun.
 (t)wed jun 14 23
 (u)LeahTheTech
 (+)Mops now actually clean cleanables (like bloody footprints etc.)

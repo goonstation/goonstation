@@ -824,11 +824,6 @@
 	},
 /turf/space/fluid/cenote,
 /area/swampzone/interiors/quarry)
-"aWi" = (
-/mob/living/critter/zombie/wrestler,
-/obj/machinery/optable,
-/turf/unsimulated/floor/engine,
-/area/crypt/sigma/lab)
 "aWl" = (
 /obj/machinery/vehicle/tank/car/rusty{
 	dir = 4
@@ -1205,13 +1200,6 @@
 	},
 /turf/unsimulated/floor,
 /area/space)
-"buy" = (
-/obj/machinery/optable{
-	name = "Autopsy Table"
-	},
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/sanitary,
-/area/crypt/sigma/morgue)
 "buO" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -1480,6 +1468,16 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek/blastotek)
+"bMG" = (
+/obj/shrub{
+	dir = 1
+	},
+/obj/map/light/graveyard,
+/mob/living/critter/zombie/security,
+/turf/unsimulated/grasstodirt{
+	dir = 1
+	},
+/area/crypt/graveyard)
 "bMH" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray{
 	dir = 4;
@@ -2112,15 +2110,6 @@
 "cBm" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/syndicate_station)
-"cBo" = (
-/obj/table/reinforced/auto,
-/obj/item/spacecash/twenty{
-	pixel_x = 5;
-	pixel_y = -4
-	},
-/obj/item/spacecash/twenty,
-/turf/unsimulated/floor/carpet/grime,
-/area/swampzone/interiors/outbuildings)
 "cBV" = (
 /obj/submachine/mixer,
 /obj/table/auto,
@@ -3102,12 +3091,6 @@
 "dMb" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/swampzone/interiors/bonktek/blastotek)
-"dMd" = (
-/mob/living/critter/zombie/security,
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/swampzone/interiors/outbuildings)
 "dME" = (
 /obj/neon_lining{
 	dir = 4
@@ -5956,6 +5939,13 @@
 "gZT" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge/sw,
 /area/swampzone/interiors/bonktek/blastotek)
+"haC" = (
+/obj/machinery/optable{
+	name = "Autopsy Table"
+	},
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/sanitary,
+/area/crypt/sigma/morgue)
 "haN" = (
 /obj/window/cubicle{
 	dir = 8
@@ -5986,6 +5976,11 @@
 	},
 /turf/unsimulated/floor/green/corner,
 /area/crater/biodome/south)
+"hcq" = (
+/obj/map/light/graveyard,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/auto/dirt,
+/area/crypt/graveyard)
 "hcE" = (
 /turf/unsimulated/floor/carpet{
 	dir = 1;
@@ -6651,11 +6646,6 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
-"hNo" = (
-/obj/decal/cleanable/dirt,
-/mob/living/critter/zombie/security,
-/turf/unsimulated/floor/plating/scorched,
-/area/crypt/sigma/storage)
 "hNO" = (
 /obj/item/gun/kinetic/pistol,
 /obj/table/reinforced/industrial/auto,
@@ -7191,6 +7181,11 @@
 /obj/structure/woodwall,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
+"iBP" = (
+/obj/decal/cleanable/dirt,
+/mob/living/critter/zombie/security,
+/turf/unsimulated/floor/plating/scorched,
+/area/crypt/sigma/storage)
 "iCn" = (
 /obj/spacevine{
 	density = 1;
@@ -7312,6 +7307,15 @@
 	dir = 4
 	},
 /area/crypt/graveyard)
+"iHn" = (
+/obj/table/reinforced/auto,
+/obj/item/currency/spacecash/twenty{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/item/currency/spacecash/twenty,
+/turf/unsimulated/floor/carpet/grime,
+/area/swampzone/interiors/outbuildings)
 "iHU" = (
 /turf/unsimulated/floor/auto/grass/swamp_grass,
 /area/swampzone)
@@ -8308,11 +8312,6 @@
 	icon_state = "cave-light"
 	},
 /area/swampzone/interiors/quarry)
-"jPN" = (
-/obj/map/light/graveyard,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/auto/dirt,
-/area/crypt/graveyard)
 "jQf" = (
 /obj/shrub{
 	dir = 4
@@ -9577,6 +9576,12 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
+"lmy" = (
+/mob/living/critter/zombie/security,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/swampzone/interiors/outbuildings)
 "lnw" = (
 /obj/machinery/light/flamp,
 /turf/unsimulated/floor/auto/grass/leafy,
@@ -9599,6 +9604,11 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
+"loa" = (
+/mob/living/critter/zombie/wrestler,
+/obj/machinery/optable,
+/turf/unsimulated/floor/engine,
+/area/crypt/sigma/lab)
 "lod" = (
 /obj/machinery/conveyor/SN,
 /obj/railing/orange/reinforced,
@@ -9694,6 +9704,15 @@
 	},
 /turf/space/fluid/cenote,
 /area/crater)
+"luh" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/carpet/grime,
+/area/crypt/sigma/crew)
 "luy" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -9744,6 +9763,10 @@
 "lxy" = (
 /turf/unsimulated/wall/auto/reinforced,
 /area/swampzone/deeps)
+"lxH" = (
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "lys" = (
 /obj/fluid_pipe/sink/outlet_pump{
 	dir = 8
@@ -10762,10 +10785,6 @@
 /obj/alchemy/circle,
 /turf/unsimulated/floor/auto/dirt,
 /area/catacombs)
-"mKF" = (
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "mKH" = (
 /turf/unsimulated/floor/carpet/arcade,
 /area/swampzone/interiors/bonktek)
@@ -11615,22 +11634,6 @@
 /obj/item/ammo/bullets/rifle_3006,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/northsouth,
 /area/swampzone/interiors/bonktek/blastotek)
-"nMI" = (
-/obj/decal/cleanable/cobweb,
-/obj/storage/crate,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
-/obj/item/device/light/zippo,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/obj/item/plant/herb/cannabis,
-/turf/unsimulated/floor/cave,
-/area/crater/cave)
 "nMT" = (
 /obj/machinery/networked/storage/tape_drive,
 /turf/unsimulated/floor/circuit/purple,
@@ -13317,11 +13320,6 @@
 	name = "swamp floor"
 	},
 /area/swampzone/deeps)
-"pPX" = (
-/obj/map/light/graveyard,
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/auto/dirt,
-/area/crypt/graveyard)
 "pQg" = (
 /mob/living/critter/aquatic/fish/tang/regal,
 /turf/space/fluid,
@@ -14256,11 +14254,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/syndicate_station)
-"qWh" = (
-/obj/stool/chair/office,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "qWp" = (
 /obj/river{
 	dir = 6
@@ -14334,12 +14327,6 @@
 	dir = 8
 	},
 /area/crater/biodome/crew)
-"rdn" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/psych,
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/sanitary/white,
-/area/swampzone/interiors/outbuildings)
 "rdw" = (
 /obj/machinery/vending/electronics,
 /turf/unsimulated/floor/yellowblack{
@@ -14589,6 +14576,10 @@
 	icon_state = "leadwindow_2"
 	},
 /area/crater/biodome/research)
+"rpr" = (
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "rqq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -15053,11 +15044,6 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/auto/dirt,
 /area/swampzone/ground/canyon)
-"saw" = (
-/obj/machinery/drainage,
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "saL" = (
 /turf/unsimulated/floor/redblack{
 	dir = 9
@@ -15175,16 +15161,6 @@
 	},
 /turf/unsimulated/floor/carpet/purple/fancy/edge,
 /area/swampzone/interiors/bonktek/lounge)
-"sgf" = (
-/obj/shrub{
-	dir = 1
-	},
-/obj/map/light/graveyard,
-/mob/living/critter/zombie/security,
-/turf/unsimulated/grasstodirt{
-	dir = 1
-	},
-/area/crypt/graveyard)
 "sgr" = (
 /obj/item/reagent_containers/food/drinks/mug,
 /obj/table/glass/reinforced/auto,
@@ -15769,6 +15745,10 @@
 "sPT" = (
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/storage)
+"sQQ" = (
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/white,
+/area/swampzone/interiors/outbuildings)
 "sRB" = (
 /obj/item/storage/toilet/random{
 	dir = 8
@@ -15788,15 +15768,6 @@
 "sTs" = (
 /turf/unsimulated/floor/carpet/purple/fancy/edge,
 /area/swampzone/interiors/bonktek/lounge)
-"sTR" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/carpet/grime,
-/area/crypt/sigma/crew)
 "sUu" = (
 /obj/cable{
 	d1 = 4;
@@ -16090,6 +16061,11 @@
 	dir = 1
 	},
 /area/crater/biodome/research)
+"tgD" = (
+/obj/machinery/drainage,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "thh" = (
 /obj/shrub{
 	dir = 8
@@ -16402,6 +16378,11 @@
 /obj/item/plank,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
+"tBs" = (
+/obj/map/light/graveyard,
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/auto/dirt,
+/area/crypt/graveyard)
 "tBE" = (
 /turf/unsimulated/floor/stairs/wood2/wide{
 	dir = 8
@@ -16787,6 +16768,12 @@
 /obj/item/storage/wall/clothingrack/hatrack/hatrack_3,
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
+"tYK" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/psych,
+/mob/living/critter/zombie,
+/turf/unsimulated/floor/sanitary/white,
+/area/swampzone/interiors/outbuildings)
 "tYU" = (
 /obj/railing/cyan{
 	dir = 8
@@ -16961,10 +16948,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crypt/sigma/kitchen)
-"ukS" = (
-/mob/living/critter/zombie/scientist,
-/turf/unsimulated/floor/white/grime,
-/area/crypt/sigma/lab)
 "ulo" = (
 /obj/item/material_piece/slag{
 	pixel_x = -9
@@ -18117,6 +18100,22 @@
 /obj/tree/elm_random,
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/swampzone/ground)
+"vzB" = (
+/obj/decal/cleanable/cobweb,
+/obj/storage/crate,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
+/obj/item/device/light/zippo,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/obj/item/plant/herb/cannabis,
+/turf/unsimulated/floor/cave,
+/area/crater/cave)
 "vzW" = (
 /turf/unsimulated/floor/black/side{
 	dir = 6
@@ -18616,10 +18615,6 @@
 /obj/item/clothing/suit/bedsheet/yellow,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/quarry)
-"vZO" = (
-/mob/living/critter/zombie,
-/turf/unsimulated/floor/white,
-/area/swampzone/interiors/outbuildings)
 "vZQ" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -19833,6 +19828,11 @@
 	},
 /turf/unsimulated/floor/cave,
 /area/syndicate_station)
+"xwn" = (
+/obj/stool/chair/office,
+/mob/living/critter/zombie/scientist,
+/turf/unsimulated/floor/white/grime,
+/area/crypt/sigma/lab)
 "xwG" = (
 /obj/spacevine{
 	density = 1;
@@ -48248,7 +48248,7 @@ fja
 roE
 mDX
 pqT
-dMd
+lmy
 oDn
 usR
 iKa
@@ -48258,7 +48258,7 @@ mDX
 uFh
 cuN
 oBb
-rdn
+tYK
 mDX
 roE
 fja
@@ -49161,7 +49161,7 @@ iKa
 iKa
 iKa
 mDX
-vZO
+sQQ
 iKa
 iKa
 iKa
@@ -49767,7 +49767,7 @@ sel
 mDX
 uFh
 uFh
-mKF
+lxH
 oxW
 mDX
 roE
@@ -51276,7 +51276,7 @@ sel
 ixQ
 kUz
 uFh
-mKF
+lxH
 uFh
 rwh
 mDX
@@ -68780,7 +68780,7 @@ sHe
 nVH
 whT
 mjc
-cBo
+iHn
 kzK
 roE
 roE
@@ -85088,7 +85088,7 @@ wIQ
 tMZ
 mIt
 xPx
-sTR
+luh
 tMZ
 mIt
 xPx
@@ -87501,13 +87501,13 @@ rHp
 pnA
 ahQ
 iRq
-qWh
+xwn
 aFE
 ouY
 cHT
 fIh
 hLo
-aWi
+loa
 jDP
 qFo
 hmX
@@ -87833,7 +87833,7 @@ vsV
 lKq
 lKq
 lKq
-hNo
+iBP
 sPT
 feN
 laQ
@@ -88085,7 +88085,7 @@ hgP
 kIy
 ciN
 ciN
-sgf
+bMG
 hgP
 hgP
 kIy
@@ -89010,7 +89010,7 @@ jkm
 hMb
 pnA
 ahQ
-saw
+tgD
 erh
 aFE
 aFE
@@ -89287,7 +89287,7 @@ eDN
 dIX
 feN
 dRF
-sgf
+bMG
 hgP
 etd
 jQf
@@ -89901,7 +89901,7 @@ thh
 hgP
 hgP
 hgP
-jPN
+hcq
 bia
 wmv
 hgP
@@ -90216,7 +90216,7 @@ jtQ
 mYB
 yht
 aFE
-ukS
+rpr
 aFE
 hep
 aFE
@@ -91726,7 +91726,7 @@ sVc
 qOE
 uLO
 qRJ
-buy
+haC
 hKo
 qOE
 pVc
@@ -92913,7 +92913,7 @@ feN
 dRF
 qSk
 hgP
-pPX
+tBs
 eDC
 kGP
 gCw
@@ -190222,7 +190222,7 @@ sJa
 auI
 auI
 auI
-nMI
+vzB
 iej
 auI
 auI

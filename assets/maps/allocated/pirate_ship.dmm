@@ -802,7 +802,7 @@
 /area/pirate_ship)
 "sG" = (
 /obj/table/wood/auto,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/grey/checker{
 	dir = 8
 	},

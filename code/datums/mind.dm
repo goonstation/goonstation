@@ -90,8 +90,9 @@ datum/mind
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
 			return
-
+		var/mob/old_mob = null
 		if (current)
+			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
@@ -121,7 +122,7 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
-		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
+		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
 
 
 	proc/swap_with(mob/target)

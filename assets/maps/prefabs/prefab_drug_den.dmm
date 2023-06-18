@@ -677,7 +677,7 @@
 /obj/item/clothing/glasses/monocle{
 	pixel_x = -5
 	},
-/obj/item/spacecash/random/small{
+/obj/item/currency/spacecash/small{
 	pixel_x = 4;
 	pixel_y = -5
 	},

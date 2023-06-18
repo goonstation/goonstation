@@ -68,6 +68,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (QDELETED(src))
 			return FALSE
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
+		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
 
 	Del()
@@ -261,6 +263,22 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/on_death()
 		if (src.remove_on_death)
 			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+
+	proc/mind_attach(source, mob/new_mob, mob/old_mob)
+		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))
+			src.borged()
+
+	proc/mind_detach(source, mob/old_mob, mob/new_mob)
+		if ((issilicon(old_mob) || isAI(old_mob)) && !(issilicon(new_mob) || isAI(new_mob)))
+			src.unborged()
+
+	///Called when the player is made into a cyborg or AI
+	proc/borged()
+		return
+
+	///Called when the player is no longer a cybrorg or AI
+	proc/unborged()
+		return
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()
