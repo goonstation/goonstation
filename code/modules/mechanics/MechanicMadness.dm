@@ -615,7 +615,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
-		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+		if (istype(W, /obj/item/currency/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
 			current_buffer += W.amount
 			if (src.price <= 0)
@@ -626,7 +626,7 @@
 
 				if (current_buffer > price)
 					componentSay("Here is your change!")
-					var/obj/item/spacecash/C = new /obj/item/spacecash(user.loc, current_buffer - price)
+					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, current_buffer - price)
 					user.put_in_hand_or_drop(C)
 
 				collected += price
@@ -645,7 +645,7 @@
 
 	proc/ejectmoney()
 		if (collected)
-			var/obj/item/spacecash/S = new /obj/item/spacecash
+			var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 			S.setup(get_turf(src), collected)
 			collected = 0
 			tooltip_rebuild = 1

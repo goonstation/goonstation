@@ -3156,17 +3156,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"aou" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects{
-	desc = "The goods inside the machine probably expired before you were even born.";
-	icon = 'icons/obj/vending.dmi';
-	icon_state = "robust-broken";
-	name = "broken vending machine"
-	},
-/obj/item/spacecash/five,
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "aov" = (
 /turf/simulated/shuttle/wall/flock{
 	dir = 9
@@ -10173,16 +10162,6 @@
 	},
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
-"aSi" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/item/spacecash/fifty,
-/obj/item/storage/backpack,
-/turf/simulated/floor/plating,
-/area/h7)
 "aSj" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -11219,10 +11198,6 @@
 	dir = 6
 	},
 /area/fermid_hive)
-"aUT" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/grime,
-/area/iss)
 "aUU" = (
 /obj/decal/fakeobjects/firelock_broken{
 	dir = 4
@@ -19416,6 +19391,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
+"iUF" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	desc = "The goods inside the machine probably expired before you were even born.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "robust-broken";
+	name = "broken vending machine"
+	},
+/obj/item/currency/spacecash/five,
+/turf/simulated/floor/grime,
+/area/diner/hallway)
 "iUR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -19946,6 +19932,10 @@
 /obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
+"ksP" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/grime,
+/area/iss)
 "kvt" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -23535,6 +23525,16 @@
 	},
 /turf/space,
 /area/space)
+"unf" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/item/currency/spacecash/fifty,
+/obj/item/storage/backpack,
+/turf/simulated/floor/plating,
+/area/h7)
 "upZ" = (
 /obj/stool/chair/comfy{
 	dir = 4;
@@ -42817,7 +42817,7 @@ aPq
 aQq
 aQq
 aQq
-aSi
+unf
 aNY
 aMg
 aGf
@@ -83236,7 +83236,7 @@ qWV
 sdM
 lLL
 aod
-aou
+iUF
 gmV
 yaI
 ffb
@@ -92470,7 +92470,7 @@ aTQ
 aTQ
 aUx
 aUG
-aUT
+ksP
 aVd
 aVj
 aTQ
@@ -93074,7 +93074,7 @@ aTQ
 aTQ
 aUe
 aUH
-aUT
+ksP
 aVd
 aVk
 aTQ
