@@ -8,6 +8,7 @@
 	desc = "A human brain, gross."
 	organ_holder_name = "brain"
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null

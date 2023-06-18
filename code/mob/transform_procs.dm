@@ -309,14 +309,6 @@
 		dispose()
 		return O
 
-/mob/proc/blobize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a blob.")
-		src.mind.add_antagonist(ROLE_BLOB)
-		return
-	return 0
-
 /mob/proc/cubeize(var/life = 10, var/CT)
 	if (!CT)
 		CT = /mob/living/carbon/cube/meat
@@ -710,27 +702,3 @@ var/respawn_arena_enabled = 0
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 	return
-
-///////////////////
-// FLOCKMIND
-///////////////////
-// flockdrones are critters, just critterize someone
-
-/mob/proc/flockerize(var/datum/flock/flock) // this will not host your web apps for you
-	if (src.mind || src.client)
-		var/datum/mind/flockmind_mind = src.mind
-		if(flock == null)
-			// no flocks given, make flockmind
-			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
-			flockmind_mind.add_antagonist(ROLE_FLOCKMIND)
-		else
-			// make flocktrace of existing flock
-			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
-			flockmind_mind.add_subordinate_antagonist(ROLE_FLOCKTRACE, master = flock.flockmind_mind)
-
-		if (isflockmob(flockmind_mind.current))
-			return flockmind_mind.current
-
-	return null
