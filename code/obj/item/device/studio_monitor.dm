@@ -460,10 +460,10 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 
 		return ..(timePassed)

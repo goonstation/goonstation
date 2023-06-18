@@ -237,9 +237,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "yd" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk/auto,
 /area/prefab/larrys_laundry)
 "ye" = (
@@ -351,30 +349,30 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 2
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = -4;
 	pixel_x = 5
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 7;
 	pixel_x = 3
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 12;
 	pixel_x = 4
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 5;
 	pixel_x = 7
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 9;
 	pixel_x = -4
 	},
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "Kp" = (

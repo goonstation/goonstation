@@ -78,7 +78,7 @@
 			if("grape")
 				src.desc = "A purple popsicle, which appears to be \"Raisin' Hell Raisin\" flavor, which features a boost of \"Super Energy Raisin Juice,\" whatever that is."
 				R.add_reagent("wine", 5)
-				R.add_reagent("robustissin", 5) //?
+				R.add_reagent("cold_medicine", 5)
 				R.add_reagent("coffee", 5)
 				R.add_reagent("bread", 5)
 				R.add_reagent("milk", 5)
@@ -100,7 +100,7 @@
 				src.desc = "A green popsicle, which appears to be \"Green Apple Gastroenteritis\" flavor, which boasts a more active digestive system."
 				R.add_reagent("juice_apple", 5)
 				R.add_reagent("cider", 5)
-				R.add_reagent("space_ipecac", 5) //?
+				R.add_reagent("ipecac", 5) //?
 				R.add_reagent("gcheese", 5)
 				R.add_reagent("hunchback", 5)
 			if("blueberry")

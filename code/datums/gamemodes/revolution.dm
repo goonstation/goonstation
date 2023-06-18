@@ -90,7 +90,7 @@
 #endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY)
+		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -280,7 +280,7 @@
 
 #ifdef DATALOGGER
 	var/total = world.load_intra_round_value("rev_total")
-	world.save_intra_round_value(total + 1)
+	world.save_intra_round_value("rev_total", total + 1)
 	switch(finished)
 		if(1)
 			var/wins = world.load_intra_round_value("rev_win")

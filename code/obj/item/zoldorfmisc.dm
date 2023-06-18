@@ -241,7 +241,7 @@
 				redraw = 1
 				reference = src
 			if("Quartermaster")
-				var/obj/item/spacecash/money = new /obj/item/spacecash(get_turf(src),25000)
+				var/obj/item/currency/spacecash/money = new /obj/item/currency/spacecash(get_turf(src),25000)
 				user.put_in_hand_or_drop(money)
 			if("Cluwne")
 				user.contract_disease(/datum/ailment/disease/cluwneing_around,null,null,1)
@@ -259,7 +259,7 @@
 						user.put_in_hand_or_drop(new /obj/item/instrument/bikehorn)
 				else if(input == "Immunity")
 					boutput(user,"<span class='success'>You will never slip again!</span>")
-					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal)
+					user.put_in_hand_or_drop (new /obj/item/clothing/shoes/sandal/magic)
 				input = tgui_alert(user, "Do you wish to draw two more cards?", "Choice", list("Yes", "No"))
 				if(!input)
 					input = "No"

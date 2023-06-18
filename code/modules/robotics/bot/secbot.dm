@@ -441,9 +441,7 @@
 		return
 
 	attackby(obj/item/I, mob/M)
-		if (istype(I, /obj/item/device/pda2) && I:ID_card)
-			I = I:ID_card
-		if (istype(I, /obj/item/card/id))
+		if (istype(get_id_card(I), /obj/item/card/id))
 			if (src.allowed(M))
 				src.locked = !src.locked
 				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")

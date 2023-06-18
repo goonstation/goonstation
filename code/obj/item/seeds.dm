@@ -33,6 +33,35 @@
 		if (src.planttype)
 			src.name = "[src.planttype.name] seed"
 
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		// If the crop is just straight up seeds. Don't need reagents, but we do
+		// need to pass genes and whatnot along like we did for fruit.
+		var/obj/item/seed/new_seed = src
+		if(origin_plant.unique_seed)
+			new_seed = new origin_plant.unique_seed
+			new_seed.set_loc(harvested_plantpot)
+		else
+			new_seed = new /obj/item/seed
+			new_seed.set_loc(harvested_plantpot)
+			new_seed.removecolor()
+
+		var/datum/plantgenes/HDNA = harvested_plantpot.plantgenes
+		var/datum/plantgenes/SDNA = new_seed.plantgenes
+		if(!origin_plant.unique_seed && !origin_plant.hybrid)
+			new_seed.generic_seed_setup(origin_plant)
+		HYPpassplantgenes(HDNA,SDNA)
+		new_seed.generation = harvested_plantpot.generation
+		if(origin_plant.hybrid)
+			var/datum/plant/hybrid = new /datum/plant(new_seed)
+			for(var/V in origin_plant.vars)
+				if(issaved(origin_plant.vars[V]) && V != "holder")
+					hybrid.vars[V] = origin_plant.vars[V]
+			new_seed.planttype = hybrid
+		qdel(src)
+		return new_seed
+
+
 	//kudzumen can analyze seeds via ezamine when close.
 	get_desc(dist, mob/user)
 		if (dist >= 2)

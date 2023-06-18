@@ -2465,6 +2465,15 @@ datum
 			mix_phrase = "The mixture turns an odd lavender color."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		promethazine
+			name = "Promethazine"
+			id = "promethazine"
+			result = "promethazine"
+			required_reagents = list("oil" = 1, "ammonia" = 1, "sulfur" = 1, "cleaner" = 1)
+			result_amount = 4
+			mix_phrase = "The solution settles into a fine odorless powder."
+			mix_sound = 'sound/misc/drinkfizz.ogg'
+
 		epinephrine
 			name = "Epinephrine"
 			id = "epinephrine"
@@ -2578,6 +2587,13 @@ datum
 			required_temperature = T0C + 450
 			mix_phrase = "The neurotoxin breaks down, bubbling violently."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		solipsizine
+			name = "Solipsizine"
+			id = "solipsizine"
+			result = "solipsizine"
+			required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
+			result_amount = 3
 
 		mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
 			name = "Mutadone"
@@ -2758,7 +2774,7 @@ datum
 		chlorine_azide  // death 2 chemists
 			name = "Chlorine Azide"
 			id = "chlorine_azide"
-			result = "chlorine_azide"
+			result = null
 			required_reagents = list("sodium" = 1, "ammonia" = 1, "nitrogen" = 1, "oxygen" = 1, "silver" = 1, "chlorine" = 1)
 			instant = 1
 			mix_phrase = "The substance violently detonates!"
@@ -2782,7 +2798,7 @@ datum
 		clf3_firefoam
 			name = "CLF3 + FF Explosion"
 			id = "clf3_firefoam"
-			result = "clf3_firefoam"
+			result = null
 			required_reagents = list("infernite" = 1, "ff-foam" = 1)
 			instant = 1
 			mix_phrase = "The substance violently detonates!"

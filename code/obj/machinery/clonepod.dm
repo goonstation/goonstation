@@ -237,9 +237,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
@@ -368,7 +368,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
-				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				var/success = src.occupant.mind.remove_antagonist(antag)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else
@@ -578,8 +578,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	//Let's unlock this early I guess.
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card))
+			W = id_card
 		if (istype(W, /obj/item/card/id))
 			if (!src.check_access(W))
 				boutput(user, "<span class='alert'>Access Denied.</span>")

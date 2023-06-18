@@ -16,102 +16,6 @@ proc/get_moving_lights_stats()
 	boutput(usr, json_encode(color_changing_lights_stats_by_first_attached))
 #endif
 
-// TODO readd counters for debugging
-#define RL_UPDATE_LIGHT(src) do { \
-	if (src.fullbright || src.loc?:force_fullbright) { break } \
-	var/turf/_N = get_step(src, NORTH); \
-	var/turf/_E = get_step(src, EAST); \
-	var/turf/_NE = get_step(src, NORTHEAST); \
-	if(!_N || !_E || !_NE) { break }; \
-	src.RL_MulOverlay?.color = list( \
-		src.RL_LumR, src.RL_LumG, src.RL_LumB, 0, \
-		_E.RL_LumR, _E.RL_LumG, _E.RL_LumB, 0, \
-		_N.RL_LumR, _N.RL_LumG, _N.RL_LumB, 0, \
-		_NE.RL_LumR, _NE.RL_LumG, _NE.RL_LumB, 0, \
-		DLL, DLL, DLL, 1 \
-		) ; \
-	if (src.RL_NeedsAdditive || _E.RL_NeedsAdditive || _N.RL_NeedsAdditive || _NE.RL_NeedsAdditive) { \
-		if(!src.RL_AddOverlay) { \
-			src.RL_AddOverlay = new /obj/overlay/tile_effect/lighting/add ; \
-			src.RL_AddOverlay.set_loc(src) ; \
-			src.RL_AddOverlay.icon_state = src.RL_OverlayState ; \
-		} \
-		src.RL_AddOverlay.color = list( \
-			src.RL_AddLumR, src.RL_AddLumG, src.RL_AddLumB, 0, \
-			_E.RL_AddLumR, _E.RL_AddLumG, _E.RL_AddLumB, 0, \
-			_N.RL_AddLumR, _N.RL_AddLumG, _N.RL_AddLumB, 0, \
-			_NE.RL_AddLumR, _NE.RL_AddLumG, _NE.RL_AddLumB, 0, \
-			0, 0, 0, 1) ; \
-	} else { if(src.RL_AddOverlay) { qdel(src.RL_AddOverlay); src.RL_AddOverlay = null; } } \
-	} while(FALSE)
-
-
-// requires atten to be defined outside
-#define RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) do { \
-	if (src.loc?:force_fullbright) { break } \
-	atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
-	if (atten < RL_Atten_Threshold) { break } \
-	src.RL_LumR += r*atten ; \
-	src.RL_LumG += g*atten ; \
-	src.RL_LumB += b*atten ; \
-	src.RL_AddLumR = clamp((src.RL_LumR - 1) * 0.5, 0, 0.3) ; \
-	src.RL_AddLumG = clamp((src.RL_LumG - 1) * 0.5, 0, 0.3) ; \
-	src.RL_AddLumB = clamp((src.RL_LumB - 1) * 0.5, 0, 0.3) ; \
-	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
-	} while(FALSE)
-
-#define RL_APPLY_LIGHT(src, lx, ly, brightness, height2, r, g, b) do { \
-	var/atten ; \
-	 RL_APPLY_LIGHT_EXPOSED_ATTEN(src, lx, ly, brightness, height2, r, g, b) ; \
-	} while(FALSE)
-
-#define RL_APPLY_LIGHT_LINE(src, lx, ly, dir, radius, brightness, height2, r, g, b) do { \
-	if (src.loc?:force_fullbright) { break } \
-	var/atten = (brightness*RL_Atten_Quadratic) / ((src.x - lx)*(src.x - lx) + (src.y - ly)*(src.y - ly) + height2) + RL_Atten_Constant ; \
-	var/exponent = 3.5 ;\
-	atten *= (max( abs(ly-src.y),abs(lx-src.x),0.85 )/radius)**exponent ;\
-	if (radius <= 1) { atten *= 0.1 }\
-	else if (radius <= 2) { atten *= 0.5 }\
-	else if (radius == 3) { atten *= 0.8 }\
-	else{\
-		var/mult_atten = 1;\
-		var/line_len = (abs(src.x - lx)+abs(src.y - ly));\
-		if (line_len <= 1.1) { mult_atten = 4.6 } \
-		else if (line_len<=1.5) { mult_atten = 3 } \
-		else if (line_len<=2.5) { mult_atten = 2 } \
-		switch(dir){ \
-			if (NORTH){ if (round(ly) - src.y < 0){ atten *= mult_atten } }\
-			if (WEST){ if (ceil(lx) - src.x > 0){ atten *= mult_atten } }\
-			if (EAST){ if (round(lx) - src.x < 0){ atten *= mult_atten } }\
-			if (SOUTH){ if (ceil(ly) - src.y > 0){ atten *= mult_atten } }\
-		}\
-		if (round(line_len) >= radius) { atten *= 0.4 } \
-	}\
-	if (atten < RL_Atten_Threshold) { break } \
-	src.RL_LumR += r*atten ; \
-	src.RL_LumG += g*atten ; \
-	src.RL_LumB += b*atten ; \
-	src.RL_AddLumR = clamp((src.RL_LumR - 1) * 0.5, 0, 0.3) ; \
-	src.RL_AddLumG = clamp((src.RL_LumG - 1) * 0.5, 0, 0.3) ; \
-	src.RL_AddLumB = clamp((src.RL_LumB - 1) * 0.5, 0, 0.3) ; \
-	src.RL_NeedsAdditive = src.RL_AddLumR + src.RL_AddLumG + src.RL_AddLumB ; \
-	} while(FALSE)
-
-#define APPLY_AND_UPDATE if (RL_Started) { for (var/turf in src.apply()) { var/turf/T = turf; RL_UPDATE_LIGHT(T) } }
-
-#define RL_Atten_Quadratic 2.2 // basically just brightness scaling atm
-#define RL_Atten_Constant -0.11 // constant subtracted at every point to make sure it goes <0 after some distance
-#define RL_Atten_Threshold 2/256 // imperceptible change
-#define RL_Rad_QuadConstant 0.9 //Subtracted from the quadratic constant for light.radius
-#define RL_Rad_ConstConstant 0.03 //Added to the -linear constant for light.radius
-#define RL_MaxRadius 6 // maximum allowed light.radius value. if any light ends up needing more than this it'll cap and look screwy
-#define DLL 0 //Darkness Lower Limit, at 0 things can get absolutely pitch black.
-
-#ifdef UPSCALED_MAP
-#undef DLL
-#define DLL 0.2
-#endif
-
 #define D_BRIGHT 1
 #define D_COLOR 2
 #define D_HEIGHT 4
@@ -587,6 +491,88 @@ datum/light
 					ADDUPDATE(T)
 
 			*/
+
+	cone
+		var/outer_angular_size = 90
+		var/inner_angular_size = 80
+		var/inner_radius = 1
+		apply_to(turf/T)
+			RL_APPLY_LIGHT(T, src.x, src.y, src.brightness, src.height**2, r, g, b)
+
+		apply_internal(generation, r, g, b)
+			. = list()
+			var/height2 = src.height**2
+			var/turf/middle = locate(src.x, src.y, src.z)
+			var/atten
+
+			#define ANGLE_CHECK(T) angle_inbetween(arctan(T.x - src.x, T.y - src.y), min_angle, max_angle)
+			#define APPLY(T) RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, \
+				src.brightness \
+				* clamp(((src.x - T.x)*(src.x - T.x) + (src.y - T.y)*(src.y - T.y)) / inner_radius, 0, 1) \
+				* clamp((outer_angular_size / 2 - abs(angledifference(arctan(T.x - src.x, T.y - src.y), center_angle))) / ((outer_angular_size - inner_angular_size) / 2), 0, 1) ** 2\
+				, height2, r, g, b)
+
+			// conversion from angles clock to normal angles
+			var/center_angle = 90 - dir_to_angle(src.dir)
+			var/min_angle = center_angle - outer_angular_size/2
+			var/max_angle = center_angle + outer_angular_size/2
+			for (var/turf/T in view(src.radius, middle))
+				if (T.opacity)
+					continue
+				if(T.opaque_atom_count > 0)
+					continue
+				if (!ANGLE_CHECK(T))
+					continue
+
+				APPLY(T)
+				if(atten < RL_Atten_Threshold)
+					continue
+				T.RL_ApplyGeneration = generation
+				T.RL_UpdateGeneration = generation
+				. += T
+
+			for (var/turf/T as anything in .)
+				var/E_new = 0
+				var/turf/E = get_step(T, EAST)
+				if (E && E.RL_ApplyGeneration < generation && ANGLE_CHECK(E))
+					E_new = 1
+					APPLY(E)
+					if(atten >= RL_Atten_Threshold)
+						E.RL_ApplyGeneration = generation
+						if(get_step(T, SOUTHEAST))
+							ADDUPDATE(get_step(T, SOUTHEAST))
+						ADDUPDATE(E)
+
+				var/turf/N = get_step(T, NORTH)
+				if (N && N.RL_ApplyGeneration < generation && ANGLE_CHECK(N))
+					APPLY(N)
+					if(atten >= RL_Atten_Threshold)
+						N.RL_ApplyGeneration = generation
+						if(get_step(T, NORTHWEST))
+							ADDUPDATE(get_step(T, NORTHWEST))
+						ADDUPDATE(N)
+
+					// this if is a bit more complicated because we don't want to do NE
+					// if the turf will get updated some other relevant turf's E or N
+					// because we'd lose the south or west neighbour update this way
+					// i.e. it should only get updated if both T.E and T.N are not added in the view() phase
+					var/turf/NE = get_step(T, NORTHEAST)
+					if (E_new && NE && NE.RL_ApplyGeneration < generation && ANGLE_CHECK(NE))
+						APPLY(NE)
+						if(atten >= RL_Atten_Threshold)
+							NE.RL_ApplyGeneration = generation
+							ADDUPDATE(NE)
+
+				if(get_step(T, WEST))
+					ADDUPDATE(get_step(T, WEST))
+				if(get_step(T, SOUTH))
+					ADDUPDATE(get_step(T, SOUTH))
+				if(get_step(T, SOUTHWEST))
+					ADDUPDATE(get_step(T, SOUTHWEST))
+
+			#undef ANGLE_CHECK
+			#undef APPLY
+
 var
 	RL_Started = 0
 	RL_Suspended = 0
@@ -625,8 +611,18 @@ proc
 	event_handler_flags = IMMUNE_SINGULARITY
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
+/*
+	How Lighting Overlays Work:
+
+	Succinctly, the RGBA channels of each pixel represent the influence that the lights on the parent tile, the east tile, the
+	north tile, and the northeast tile have on that pixel on parent tile respectively, somewhat akin to a normal map. The exact
+	effect that this will create depends on whether the overlay is additive or multiplicative (add / mul).
+
+	The initial sprite, `no name` in all lighting overlay files, was programmatically generated using Python, from this initial
+	sprite, five sprites were handcrafted and then passed into the `icon-cutter` tool to generate the remaining directional sprites.
+*/
 /obj/overlay/tile_effect/lighting
-	icon = 'icons/effects/light_overlay.dmi'
+	icon = 'icons/effects/lighting_overlays/floors.dmi'
 	appearance_flags = TILE_BOUND | PIXEL_SCALE | RESET_ALPHA | RESET_COLOR
 	blend_mode = BLEND_ADD
 	plane = PLANE_LIGHTING
@@ -665,6 +661,7 @@ turf
 		RL_AddLumG = 0
 		RL_AddLumB = 0
 		RL_NeedsAdditive = 0
+		RL_OverlayIcon = 'icons/effects/lighting_overlays/floors.dmi'
 		RL_OverlayState = ""
 		list/datum/light/RL_Lights = null
 		opaque_atom_count = 0
@@ -720,12 +717,17 @@ turf
 #endif
 			RL_UPDATE_LIGHT(src)
 
-		RL_SetSprite(state)
-			if (src.RL_MulOverlay)
-				src.RL_MulOverlay.icon_state = state
-			if (src.RL_AddOverlay)
-				src.RL_AddOverlay.icon_state = state
+		RL_SetSprite(state, icon)
+			if (icon)
+				src.RL_OverlayIcon = icon
 			src.RL_OverlayState = state
+
+			if (src.RL_MulOverlay)
+				src.RL_MulOverlay.icon = src.RL_OverlayIcon
+				src.RL_MulOverlay.icon_state = src.RL_OverlayState
+			if (src.RL_AddOverlay)
+				src.RL_AddOverlay.icon = src.RL_OverlayIcon
+				src.RL_AddOverlay.icon_state = src.RL_OverlayState
 
 		// Approximate RGB -> Luma conversion formula.
 		RL_GetBrightness()
@@ -757,6 +759,7 @@ turf
 				if(!src.RL_MulOverlay)
 					src.RL_MulOverlay = new /obj/overlay/tile_effect/lighting/mul
 					src.RL_MulOverlay.set_loc(src)
+					src.RL_MulOverlay.icon = src.RL_OverlayIcon
 					src.RL_MulOverlay.icon_state = src.RL_OverlayState
 				if (RL_Started) RL_UPDATE_LIGHT(src)
 			else
@@ -823,7 +826,7 @@ atom
 		set_loc(atom/target)
 			if (opacity)
 				var/list/datum/light/lights = list()
-				for (var/turf/T in view(RL_MaxRadius, src))
+				for (var/turf/T in view(RL_MaxRadius, get_turf(src)))
 					if (T.RL_Lights)
 						lights |= T.RL_Lights
 
@@ -864,34 +867,4 @@ atom
 			src.RL_Attached:len = 0
 			src.RL_Attached = null
 		if (opacity)
-			RL_SetOpacity(0)
-
-	proc
-		RL_SetOpacity(new_opacity)
-			if(src.disposed) return
-			if (src.opacity == new_opacity)
-				return
-			if(!RL_Started)
-				src.set_opacity(new_opacity)
-				return
-
-			var/list/datum/light/lights = list()
-			for (var/turf/T in view(RL_MaxRadius, src))
-				if (T.RL_Lights)
-					lights |= T.RL_Lights
-
-			var/list/affected = list()
-			for (var/datum/light/light as anything in lights)
-				if (light.enabled)
-					affected |= light.strip(++RL_Generation)
-
-			var/turf/L = get_turf(src)
-			if(src.loc == L && L) L.opaque_atom_count += new_opacity ? 1 : -1
-
-			src.set_opacity(new_opacity)
-			for (var/datum/light/light as anything in lights)
-				if (light.enabled)
-					affected |= light.apply()
-			if (RL_Started)
-				for (var/turf/T as anything in affected)
-					RL_UPDATE_LIGHT(T)
+			set_opacity(0)

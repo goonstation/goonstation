@@ -32,7 +32,7 @@
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/table/reinforced/auto,
-/obj/item/spacecash/fifty,
+/obj/item/currency/spacecash/fifty,
 /obj/item/reagent_containers/food/snacks/cookie/oatmeal,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)

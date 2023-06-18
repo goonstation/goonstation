@@ -345,10 +345,10 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
-		//U.clean_forensic()
+		U.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
-		//A.clean_forensic()
+		A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
@@ -947,18 +947,16 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
-			for(var/obj/item/I in src.trashbag)
+			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
-			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
 			if(src.trashbag)
-				for(var/obj/item/I in src.trashbag)
+				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
-				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.tooltip_rebuild = 1
 				disposal.update()
@@ -1032,7 +1030,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
 				. = FALSE
-			else if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+			else if(src.trashbag.storage.is_full())
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
@@ -1041,12 +1039,11 @@ TYPEINFO(/obj/item/handheld_vacuum)
 						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
-					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						if(!I.anchored)
-							I.set_loc(src.trashbag)
-					src.trashbag.calc_w_class(null)
-					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
-						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+					for(var/obj/item/I as anything in items_to_suck)
+						src.trashbag.storage.add_contents_safe(I)
+						if(src.trashbag.storage.is_full())
+							boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+							break
 
 		src.tooltip_rebuild = 1
 		. |= success
