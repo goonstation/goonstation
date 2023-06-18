@@ -1,3 +1,8 @@
+(t)fri jun 16 23
+(u)Sord
+(+)ASAY now shows your current alt key if you have one set
+(u)LeahTheTech
+(*)It is now once again possible to assign a custom objective when adding an antagonist to someone.
 (t)mon jun 05 23
 (u)LeahTheTech
 (*)Removed the old broken admin respawn-panel verb in favour of the new custom-ghost-spawn verb.

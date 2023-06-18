@@ -710,8 +710,8 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		return
 
 	attackby(obj/item/W, mob/user)
-		if (src.sells_furniture && istype(W, /obj/item/spacecash)) // this is hella dumb
-			var/obj/item/spacecash/C = W
+		if (src.sells_furniture && istype(W, /obj/item/currency/spacecash)) // this is hella dumb
+			var/obj/item/currency/spacecash/C = W
 			if (C.amount < 25)
 				user.visible_message("[src] stares blankly at [user]'s [C].",\
 				"[src] stares blankly at your [C]. Maybe it's not enough?")

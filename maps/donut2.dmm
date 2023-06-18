@@ -1187,13 +1187,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/hor)
-"afa" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "purge valve"
-	},
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "afb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -1437,12 +1430,6 @@
 	dir = 4
 	},
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/black,
-/area/station/science/lab)
-"afV" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afW" = (
@@ -1764,21 +1751,6 @@
 /obj/decal/tile_edge/line/red,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
-/area/station/science/lab)
-"ahe" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/door_control{
-	id = "tox_vent2";
-	name = "Chamber 2 Exhaust";
-	pixel_x = 23;
-	pixel_y = -9
-	},
-/obj/machinery/light_switch/north,
-/turf/simulated/floor/grime{
-	dir = 8
-	},
 /area/station/science/lab)
 "ahf" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
@@ -2202,20 +2174,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"aij" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "tox_ignition2";
-	pixel_x = 24;
-	pixel_y = -10
-	},
-/turf/simulated/floor/grime,
-/area/station/science/lab)
 "aik" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor{
@@ -2374,36 +2332,9 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"aiQ" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/activation_button/ignition_switch{
-	id = "tox_ignition1";
-	pixel_x = 24;
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "aiU" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/artifact)
-"aiX" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/door_control{
-	id = "tox_vent1";
-	name = "Chamber 1 Exhaust";
-	pixel_x = 23;
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "aja" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lobby)
@@ -2634,10 +2565,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"ajU" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "ajW" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	icon_state = "alt_propulsion"
@@ -2747,15 +2674,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
-"aks" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "akt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -16227,22 +16145,6 @@
 	icon_state = "fgreen6"
 	},
 /area/station/crew_quarters/heads)
-"bey" = (
-/obj/table/wood/auto,
-/obj/machinery/recharger{
-	pixel_y = 3
-	},
-/obj/item/spacecash,
-/obj/item/coin,
-/obj/item/coin,
-/obj/item/device/radio/intercom/bridge{
-	dir = 1
-	},
-/turf/simulated/floor/carpet{
-	dir = 2;
-	icon_state = "fgreen2"
-	},
-/area/station/crew_quarters/heads)
 "bez" = (
 /obj/table/wood/auto,
 /obj/machinery/phone,
@@ -22482,18 +22384,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
-"bDN" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/plating,
-/area/station/atmos/highcap_storage)
-"bDO" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/plating/scorched,
-/area/station/atmos/highcap_storage)
-"bDP" = (
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "bDQ" = (
 /obj/table/auto,
 /obj/item/cable_coil{
@@ -25211,6 +25101,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"cAz" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "cAU" = (
 /obj/table/auto,
 /obj/random_item_spawner/hat/one_or_zero,
@@ -25496,6 +25390,12 @@
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
+"cMp" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/atmos/highcap_storage)
 "cML" = (
 /obj/decal/poster/wallsign/stencil/left/h,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -26715,6 +26615,17 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/main)
+"dKy" = (
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/power/apc/autoname_south,
+/obj/cable,
+/turf/simulated/floor,
+/area/station/science/testchamber)
 "dKB" = (
 /obj/disposalpipe/junction{
 	dir = 8
@@ -30324,6 +30235,20 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"gxD" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition2";
+	pixel_x = 24;
+	pixel_y = -10
+	},
+/turf/simulated/floor/grime,
+/area/station/science/lab)
 "gye" = (
 /obj/table/auto,
 /obj/item/device/light/glowstick{
@@ -30425,6 +30350,10 @@
 	icon_state = "fblue1"
 	},
 /area/station/crew_quarters/bar)
+"gEi" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "gEp" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 2
@@ -32443,6 +32372,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"iqU" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/plating/scorched,
+/area/station/atmos/highcap_storage)
 "iss" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33537,17 +33470,6 @@
 /obj/lattice,
 /turf/space,
 /area/station/turret_protected/armory_outside)
-"jmK" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/turf/simulated/floor,
-/area/station/science/testchamber)
 "jmM" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -35320,12 +35242,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"kLB" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/atmos/highcap_storage)
 "kMs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -36064,6 +35980,21 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
+"lms" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "tox_vent2";
+	name = "Chamber 2 Exhaust";
+	pixel_x = 23;
+	pixel_y = -9
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/grime{
+	dir = 8
+	},
+/area/station/science/lab)
 "lmC" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -36266,6 +36197,17 @@
 /obj/random_item_spawner/snacks/one,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
+"lvc" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/specialroom/freezer{
+	nitrogen = 105.86;
+	oxygen = 30.8366
+	},
+/area/station/crew_quarters/kitchen/freezer)
 "lwb" = (
 /obj/machinery/computer3/generic/personal,
 /obj/table/auto,
@@ -36931,6 +36873,15 @@
 "lTq" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
+"lUy" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "lVO" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/plating/airless,
@@ -38508,6 +38459,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
+"ngo" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/item/device/radio/intercom/engineering{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "ngz" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/atmos,
@@ -39145,6 +39103,13 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/medical/staff)
+"nGF" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "purge valve"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "nGP" = (
 /obj/machinery/computer/card/department/engineering,
 /obj/item/device/radio/intercom/bridge{
@@ -42413,6 +42378,19 @@
 	dir = 6
 	},
 /area/station/crew_quarters/bar)
+"qkY" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/door_control{
+	id = "tox_vent1";
+	name = "Chamber 1 Exhaust";
+	pixel_x = 23;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "qlC" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -44539,13 +44517,6 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
-"rOH" = (
-/obj/machinery/atmospherics/valve,
-/obj/item/device/radio/intercom/engineering{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/station/atmos/highcap_storage)
 "rPd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45467,6 +45438,20 @@
 /obj/access_spawn/engineering_atmos,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
+"svG" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/activation_button/ignition_switch{
+	id = "tox_ignition1";
+	pixel_x = 24;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "swi" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/plating,
@@ -45919,12 +45904,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"sLS" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/white,
-/area/station/science/lab)
 "sMh" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
@@ -48785,17 +48764,6 @@
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
-"vbl" = (
-/obj/machinery/light/incandescent/cool{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/atmospherics/valve,
-/turf/simulated/floor/specialroom/freezer{
-	nitrogen = 105.86;
-	oxygen = 30.8366
-	},
-/area/station/crew_quarters/kitchen/freezer)
 "vbW" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -50408,6 +50376,22 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"wqn" = (
+/obj/table/wood/auto,
+/obj/machinery/recharger{
+	pixel_y = 3
+	},
+/obj/item/currency/spacecash,
+/obj/item/coin,
+/obj/item/coin,
+/obj/item/device/radio/intercom/bridge{
+	dir = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 2;
+	icon_state = "fgreen2"
+	},
+/area/station/crew_quarters/heads)
 "wqz" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/light/small{
@@ -50460,6 +50444,12 @@
 "wty" = (
 /turf/simulated/wall/false_wall,
 /area/station/crew_quarters/quarters)
+"wtX" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "wum" = (
 /obj/decal/floatingtiles,
 /turf/space,
@@ -52369,6 +52359,12 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
+"xZP" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "yaN" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -69208,7 +69204,7 @@ arN
 xOv
 igq
 eML
-vbl
+lvc
 jjc
 xOv
 umW
@@ -81614,7 +81610,7 @@ bDL
 bDL
 bCr
 rxb
-kLB
+cMp
 lHl
 bCr
 qiV
@@ -82819,7 +82815,7 @@ bAT
 bBE
 bCr
 bDj
-bDP
+cAz
 bEt
 bEU
 bFs
@@ -83121,7 +83117,7 @@ bxH
 bwR
 bCr
 bDi
-bDN
+gEi
 bEu
 bEV
 bEQ
@@ -83423,7 +83419,7 @@ bxH
 bwR
 bCr
 moN
-bDN
+gEi
 bEv
 bEV
 bEQ
@@ -83725,7 +83721,7 @@ bxH
 bwR
 bCr
 pGy
-bDO
+iqU
 bEw
 bEW
 bEQ
@@ -84027,7 +84023,7 @@ bxH
 bBG
 bCr
 eNh
-bDP
+cAz
 bEx
 bDg
 bFt
@@ -84329,7 +84325,7 @@ bxH
 bwR
 bCr
 bDm
-bDP
+cAz
 bEu
 bEX
 umD
@@ -84631,7 +84627,7 @@ obE
 bBH
 bCr
 bDn
-rOH
+ngo
 sUi
 bDg
 bFo
@@ -96678,7 +96674,7 @@ bcC
 vTq
 bdw
 bei
-bey
+wqn
 beA
 beM
 beM
@@ -122553,7 +122549,7 @@ ibu
 nUH
 qcz
 epb
-jmK
+dKy
 qvu
 aez
 aez
@@ -131012,7 +131008,7 @@ alu
 adV
 ael
 aeI
-afa
+nGF
 afy
 afT
 alf
@@ -131023,7 +131019,7 @@ vvM
 ajT
 ajT
 ajT
-aks
+lUy
 ajT
 vmR
 aaa
@@ -131316,7 +131312,7 @@ ael
 boZ
 bEp
 afy
-afV
+wtX
 agy
 ahc
 aiP
@@ -131324,7 +131320,7 @@ ajT
 dTg
 ahc
 ajm
-ajU
+wMD
 qKG
 ahc
 drg
@@ -131627,7 +131623,7 @@ oFH
 aiw
 iYx
 xHP
-sLS
+xZP
 ahc
 qfx
 aaa
@@ -131918,17 +131914,17 @@ amB
 adU
 aaa
 alf
-afa
+nGF
 bGS
-afV
+wtX
 alf
-ahe
+lms
 ahA
-aij
+gxD
 xua
-aiQ
+svG
 ajn
-aiX
+qkY
 eZZ
 koa
 alf

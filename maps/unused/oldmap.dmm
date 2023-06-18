@@ -5987,7 +5987,7 @@
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nM" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nN" = (
@@ -15457,7 +15457,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "IE" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -15762,7 +15762,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Jd" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Je" = (
@@ -16621,7 +16621,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
