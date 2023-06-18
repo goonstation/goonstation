@@ -6769,6 +6769,10 @@
 	dir = 8
 	},
 /area/station/science/bot_storage)
+"cZK" = (
+/obj/decal/poster/wallsign/accident_sign,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hallway/primary/southeast)
 "cZS" = (
 /obj/machinery/light_switch/west,
 /obj/fitness/speedbag/captain,
@@ -6907,12 +6911,6 @@
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
-"dfq" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "freezer interface valve"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/nuclear)
 "dft" = (
 /obj/disposalpipe/segment/vertical,
 /obj/disposalpipe/segment/transport{
@@ -7318,15 +7316,6 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
-"drm" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop gas supply valve"
-	},
-/turf/simulated/floor/engine/caution/south,
-/area/station/engine/monitoring{
-	name = "Nuclear Control Room"
-	})
 "dro" = (
 /obj/stool/chair/pew/fancy/right{
 	dir = 1
@@ -10263,6 +10252,15 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"eDI" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop gas supply valve"
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "eDO" = (
 /obj/stool/bar,
 /obj/decal/tile_edge/line/black{
@@ -12498,14 +12496,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
-"fAG" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "purge valve"
-	},
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
-	},
-/area/station/engine/core/nuclear)
 "fAH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15136,13 +15126,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/courtroom)
-"gFb" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "gas supply valve"
-	},
-/turf/simulated/floor/engine/caution/east,
-/area/station/engine/core/nuclear)
 "gFk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15543,6 +15526,14 @@
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
+"gND" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/currency/spacecash/fifty{
+	pixel_x = -4;
+	pixel_y = -9
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "gNQ" = (
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
@@ -18657,6 +18648,12 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/engine/inner{
 	name = "Transception Array Control"
+	})
+"hYJ" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/industrial,
+/area/iss{
+	name = "Drop Capsule"
 	})
 "hYU" = (
 /obj/cable{
@@ -23139,6 +23136,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
+"jUF" = (
+/obj/machinery/atmospherics/binary/valve/notify_admins{
+	dir = 1;
+	name = "Sauna Air Supply"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "jUT" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -23426,6 +23430,12 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/exit)
+"kcA" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "freezer interface valve"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
 "kcQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -24669,20 +24679,6 @@
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
-	})
-"kyP" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop gas supply valve"
-	},
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/engine/caution/north,
-/area/station/engine/monitoring{
-	name = "Nuclear Control Room"
 	})
 "kyY" = (
 /obj/cable{
@@ -32176,6 +32172,14 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"nIb" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "purge valve"
+	},
+/turf/simulated/floor/engine/caution/misc{
+	dir = 6
+	},
+/area/station/engine/core/nuclear)
 "nIj" = (
 /obj/cable{
 	icon_state = "1-10"
@@ -32382,12 +32386,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"nMz" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/industrial,
-/area/iss{
-	name = "Drop Capsule"
-	})
 "nMF" = (
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
@@ -33032,6 +33030,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northeast)
+"obX" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "bleed valve"
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 5
+	},
+/area/station/engine/core/nuclear)
 "ocs" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Power Systems"
@@ -38265,14 +38271,6 @@
 /obj/machinery/door/unpowered/wood/pyro,
 /turf/simulated/floor/carpet/blue/standard/narrow/north,
 /area/station/crew_quarters/quarters_west)
-"qyS" = (
-/obj/decal/cleanable/dirt/dirt4,
-/obj/item/currency/spacecash/fifty{
-	pixel_x = -4;
-	pixel_y = -9
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "qyX" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -44834,14 +44832,6 @@
 /obj/access_spawn/medical,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"twx" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "bleed valve"
-	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 5
-	},
-/area/station/engine/core/nuclear)
 "twL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45046,6 +45036,20 @@
 	dir = 1
 	},
 /area/pasiphae)
+"tAt" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop gas supply valve"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "tAx" = (
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
@@ -45102,13 +45106,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"tCa" = (
-/obj/machinery/atmospherics/binary/valve/notify_admins{
-	dir = 1;
-	name = "Sauna Air Supply"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/north)
 "tCp" = (
 /obj/item/storage/wall/emergency{
 	dir = 4;
@@ -48342,6 +48339,13 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"uZI" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "gas supply valve"
+	},
+/turf/simulated/floor/engine/caution/east,
+/area/station/engine/core/nuclear)
 "uZN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -81878,7 +81882,7 @@ jRV
 tjr
 lmL
 iDm
-nMz
+hYJ
 lgN
 yiL
 utW
@@ -93895,7 +93899,7 @@ cUx
 cit
 gEM
 bhZ
-qyS
+gND
 par
 ajp
 jwP
@@ -95956,7 +95960,7 @@ jhj
 jhj
 jhj
 aRM
-tCa
+jUF
 ucU
 mav
 mav
@@ -109002,7 +109006,7 @@ bub
 jpM
 ocD
 ocD
-sXH
+cZK
 vEo
 oWK
 vEo
@@ -109594,7 +109598,7 @@ rkh
 ibV
 ibV
 dFE
-twx
+obX
 lDM
 gAA
 lFh
@@ -110200,9 +110204,9 @@ ibV
 jUT
 scP
 khh
-dfq
+kcA
 ikE
-gFb
+uZI
 rKn
 ocD
 ocD
@@ -110800,7 +110804,7 @@ sao
 pDQ
 pVr
 oMR
-fAG
+nIb
 olC
 ygt
 ygt
@@ -112319,8 +112323,8 @@ ijc
 ijc
 ijc
 dfm
-kyP
-drm
+tAt
+eDI
 sSm
 lwL
 jbY
