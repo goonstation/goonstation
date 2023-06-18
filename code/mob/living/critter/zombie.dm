@@ -42,6 +42,20 @@
 				src.abilityHolder.addAbility(/datum/targetable/zombie/infect)
 				return
 
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, pick(src.moan_sounds) , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> moans!"
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+		return ..()
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
