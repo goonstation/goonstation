@@ -50876,6 +50876,10 @@
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
+"wMD" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/white,
+/area/station/science/lab)
 "wNb" = (
 /obj/grille/steel{
 	layer = 2.7
