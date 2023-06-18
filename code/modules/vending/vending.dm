@@ -571,6 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if (src.credit > 0)
 				var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 				returned.setup(src.get_output_location(), src.credit)
+				usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 				src.credit = 0
 		if("vend")
 			if(params["target"])
