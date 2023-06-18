@@ -547,7 +547,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -2114,11 +2114,11 @@
 /area/syndicate_station)
 "cBo" = (
 /obj/table/reinforced/auto,
-/obj/item/spacecash/twenty{
+/obj/item/currency/spacecash/twenty{
 	pixel_x = 5;
 	pixel_y = -4
 	},
-/obj/item/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
 /turf/unsimulated/floor/carpet/grime,
 /area/swampzone/interiors/outbuildings)
 "cBV" = (
@@ -6932,7 +6932,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -11618,12 +11618,12 @@
 "nMI" = (
 /obj/decal/cleanable/cobweb,
 /obj/storage/crate,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/twenty,
-/obj/item/spacecash/twenty,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/twenty,
+/obj/item/currency/spacecash/twenty,
 /obj/item/device/light/zippo,
 /obj/item/plant/herb/cannabis,
 /obj/item/plant/herb/cannabis,

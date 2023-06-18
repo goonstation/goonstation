@@ -895,7 +895,7 @@ TYPEINFO(/obj/item/peripheral)
 
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 				P.setup(prize_location)
 				prize = P
 				prize.name = "space ticket"

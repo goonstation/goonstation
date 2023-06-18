@@ -22,7 +22,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "v" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
