@@ -519,15 +519,18 @@ TYPEINFO(/obj/machinery/plantpot)
 			if(istype(growing,/datum/plant/maneater))
 				var/datum/plant/maneater/Manipulated_Maneater = growing
 				// We want to be able to feed stuff to maneaters, such as meat, people, etc.
-				if(istype(W, /obj/item/grab) && iscarbon(W:affecting) && istype(growing,/datum/plant/maneater))
+				if(istype(W, /obj/item/grab) && ishuman(W:affecting) && W:state >= GRAB_AGGRESSIVE)
 					if(src.growth < (growing.growtime - DNA?.get_effective_value("growtime")))
 						boutput(user, "<span class='alert'>It's not big enough to eat that yet.</span>")
-						return
 						// It doesn't make much sense to feed a full man to a dinky little plant.
-					var/mob/living/carbon/C = W:affecting
-					user.visible_message("<span class='alert'>[user] starts to feed [C] to the plant!</span>")
-					logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(C,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
-					message_admins("[key_name(user)] attempts to feed [key_name(C, 1)] ([isdead(C) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
+						return
+					var/mob/living/carbon/human/checked_human = W:affecting
+					if (checked_human.decomp_stage > 3 || checked_human.bioHolder?.HasEffect("husk"))
+						boutput(user, "<span class='alert'>That corpse is not fresh enough for the plant.</span>")
+						return
+					user.visible_message("<span class='alert'>[user] starts to feed [checked_human] to the plant!</span>")
+					logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(checked_human,"combat")] to a man-eater at [log_loc(src)].") // Some logging would be nice (Convair880).
+					message_admins("[key_name(user)] attempts to feed [key_name(checked_human, 1)] ([isdead(checked_human) ? "dead" : "alive"]) to a man-eater at [log_loc(src)].")
 					src.add_fingerprint(user)
 					if(!(user in src.contributors))
 						src.contributors += user
@@ -536,27 +539,30 @@ TYPEINFO(/obj/machinery/plantpot)
 					src,
 					3 SECONDS,
 					/datum/plant/maneater/proc/feed_maneater,
-					\list(src, user, C),
+					\list(src, user, checked_human),
 					'icons/mob/screen1.dmi',
 					"grabbed",
-					"[user] offers [C] to the plant.",
+					"[user] offers [checked_human] to the plant.",
 					INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION,
 					Manipulated_Maneater)
 					actions.start(action_bar, user)
 					return
 				else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-					if(src.growth > (growing.growtime - DNA?.get_effective_value("growtime")))
-						boutput(user, "<span class='alert'>It's going to need something more substantial than that now...</span>")
-					else
-						src.reagents.add_reagent("blood", 5)
-						boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
-						qdel (W)
-						if(!(user in src.contributors))
-							src.contributors += user
+					if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat) || istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+						//we blacklist two very easy avaible types of meat in botany here
+						boutput(user, "<span class='alert'>That meat is not suitable for this plant.</span>")
+						return
+					src.reagents.add_reagent("blood", 5)
+					boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
+					qdel (W)
+					DNA.endurance += rand(2, 4)
+					if(!(user in src.contributors))
+						src.contributors += user
 				else if(istype(W, /obj/item/organ/brain) || istype(W, /obj/item/clothing/head/butt))
 					src.reagents.add_reagent("blood", 20)
 					boutput(user, "<span class='alert'>You toss the [W] to the plant.</span>")
 					qdel (W)
+					DNA.endurance += rand(4, 6)
 					if(!(user in src.contributors))
 						src.contributors += user
 

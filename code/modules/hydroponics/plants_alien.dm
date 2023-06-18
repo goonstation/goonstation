@@ -267,8 +267,8 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	unique_seed = /obj/item/seed/maneater
 	genome = 12
 	starthealth = 40
-	growtime = 30
-	harvtime = 200
+	growtime = 40
+	harvtime = 250
 	harvestable = 0
 	endurance = 10
 	special_proc = 1
@@ -286,7 +286,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if (POT.growth > (current_plant.harvtime - DNA?.get_effective_value("harvtime")))
 			var/mob/living/critter/plant/maneater/new_maneater = new(get_turf(POT))
 			//Quality with the maneater is simulated a bit differently. It's calulated out of the endurance and potency-stat only
-			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 6)
+			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 9)
 			var/simulated_quality_status = null
 			if (HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
 				simulated_quality_status = "malformed"
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 				qdel(victim)
 			playsound(POT.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			POT.reagents.add_reagent("blood", 120)
-			DNA.endurance += rand(20, 30) //since tray chemistry makes no differnce if you put a dip of blood or feed a human, we give some endurance and health as a reward (Lord_Earthfire)
+			DNA.endurance += rand(30, 40) //since tray chemistry makes no differnce if you put a dip of blood or feed a human, we give some endurance and health as a reward (Lord_Earthfire)
 			POT.health += rand(20, 30)
 			SPAWN(2.5 SECONDS)
 				if(POT)

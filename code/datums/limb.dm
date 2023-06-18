@@ -419,7 +419,7 @@
 
 
 /datum/limb/mouth/maneater
-	sound_attack = 'sound/voice/animal/short_hiss.ogg'
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
 	dam_low = 8
 	dam_high = 12
 	custom_msg = null
@@ -471,7 +471,7 @@
 		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 	user.lastattacked = target
 	if (user != target)
-		attack_twitch(user)
+		attack_twitch(user, 1.2, 1.2)
 	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /// for cats/mice/etc

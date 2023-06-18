@@ -3256,7 +3256,11 @@ datum
 */
 			on_plant_life(var/obj/machinery/plantpot/P)
 				var/datum/plant/growing = P.current
-				if (growing.growthmode == "carnivore") P.growth += 3
+				var/datum/plantgenes/DNA = P.plantgenes
+				if (growing.growthmode == "carnivore")
+					P.growth += 3
+					if (prob(80))
+						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				var/list/source_pathogens = source.aggregate_pathogens()

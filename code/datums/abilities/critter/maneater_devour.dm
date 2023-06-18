@@ -78,6 +78,11 @@
 					handled_item.dropped(target)
 					handled_item.layer = initial(handled_item.layer)
 
+		//Now, if a maneater has eaten someone, we will boost its stats the same way like it would be if it was fed a human in a tray
+		if (eating_maneater)
+			eating_maneater.plantgenes.endurance += rand(30, 40)
+			eating_maneater.update_health_by_endurance(eating_maneater.plantgenes?.get_effective_value("endurance"), FALSE)
+
 		//Now, once we have all that together, kill the target
 
 		target.ghostize()

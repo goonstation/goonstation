@@ -101,20 +101,14 @@
 	holdinghands.can_hold_items = 0
 
 /mob/living/critter/plant/maneater/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
-	var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
+	var/baseline_injection = 3 // how much chems the maneater should inject upon attacking
+	var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
 	var/stamina_per_potency = 3 // how much stamina each point of potency should add. With the inate stun resist, its equal to 3,75 stamina per potency
 	var/stamreg_per_potency = 0.1 // how much stamina regen each point of potency should add
 	var/maximum_stamreg = 30 // how much stamina regen should be the max. Don't want to have complete immunity to stun batoning
-	var/baseline_injection = 3 // how much chems the maneater should inject upon attacking
-	var/injection_amount_per_yield = 0.1 //how much their injection amount should scale with yield
 
-	var/scaled_health = round(src.baseline_health + (passed_genes?.get_effective_value("endurance") * health_per_endurance))
-	src.max_health = max(10, scaled_health)
-	for (var/T in healthlist)
-		var/datum/healthHolder/lifepool = healthlist[T]
-		lifepool.maximum_value = scaled_health / length(healthlist)
-		lifepool.value = scaled_health / length(healthlist)
-		lifepool.last_value = scaled_health / length(healthlist)
+	//first, we scale the health with on_spawn equals TRUE
+	src.update_health_by_endurance(passed_genes?.get_effective_value("endurance"), TRUE)
 
 	// Stamina modifiert scale of potency
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "maneater_dna", min(round( passed_genes?.get_effective_value("potency") * stamreg_per_potency), maximum_stamreg))
@@ -127,6 +121,26 @@
 		manipulated_limb.chems_to_inject |= origin_plant.assoc_reagents
 	..()
 	return src
+
+
+/mob/living/critter/plant/maneater/proc/update_health_by_endurance(var/endurance, var/on_spawn = FALSE)
+	//this is in a different proc since the maneater should be able to scale its health while being out of the tray
+	var/health_per_endurance = 3 // how much health the maneater should get per point of endurance
+	var/scaled_health =max(10, round(src.baseline_health + (endurance * health_per_endurance)))
+	var/health_multiplicator = min(scaled_health / src.max_health) //we use this to calculate %health on damaged maneaters
+	src.max_health = scaled_health
+	for (var/selected_damage_type in healthlist)
+		var/datum/healthHolder/lifepool = healthlist[selected_damage_type]
+		lifepool.maximum_value = scaled_health / length(healthlist)
+		if (on_spawn)
+			//if this is a new maneater, we just set the values to max
+			lifepool.value = scaled_health / length(healthlist)
+			lifepool.last_value = scaled_health / length(healthlist)
+		else
+			//if the maneater has already seen some fighting, we just raise the health according to the max health increase
+			lifepool.value = lifepool.value * health_multiplicator
+			lifepool.last_value = lifepool.value * health_multiplicator
+
 
 
 /mob/living/critter/plant/maneater/gib(give_medal, include_ejectables)
@@ -209,6 +223,13 @@
 	else
 		//let's wait until we finished eating our target :)
 		return
+
+/mob/living/critter/plant/maneater/critter_eat(var/obj/item/target)
+	target.Eat(src, src, TRUE)
+	//since the only valid food items are slabs of meat, we dont need additional checks here
+	src.plantgenes.endurance += rand(3, 4)
+	src.update_health_by_endurance(src.plantgenes?.get_effective_value("endurance"), FALSE)
+
 
 
 /mob/living/critter/plant/maneater/critter_scavenge(var/mob/target)
