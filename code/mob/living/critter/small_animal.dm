@@ -1,4 +1,4 @@
-/* -=-= What's here =-=-
+/* -=-= What's here =-=-floating
  - small_critter parent
   - mice
    - Remy
@@ -2310,6 +2310,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/opossum/morty
 	name = "Morty"
 	real_name = "Morty"
+	is_pet = TRUE
 
 /* ================================================ */
 /* ----------------- Armadillo -------------------- */
@@ -2572,6 +2573,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 15
 	health_burn = 15
 	pet_text = list("gently baps", "pets", "cuddles")
+	is_pet = TRUE
 
 	New()
 		..()
@@ -2598,11 +2600,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	on_pet(mob/user)
 		if(..())
 			return
-		src.visible_message("<b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!")
+		src.visible_message("<span class='emote'><b>[user]</b> [pick("hugs","pets","caresses","boops","squeezes")] [src]!</span>")
 		if(prob(80))
-			src.visible_message("<b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")].", 1)
+			src.visible_message("<span class='emote'><b>[src]</b> [pick("coos","purrs","mewls","chirps","arfs","arps","urps")].</span>")
 		else
-			src.visible_message("<b>[src]</b> hugs <b>[user]</b> back!")
+			src.visible_message("<span class='emote'><b>[src]</b> hugs <b>[user]</b> back!</span>")
 			if (user.reagents)
 				user.reagents.add_reagent("hugs", 10)
 			src.emote("coo")
@@ -2613,22 +2615,22 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (istype(W, /obj/item/reagent_containers/food/snacks))
 			var/obj/item/reagent_containers/food/snacks/snack = W
 			if(findtext(W.name,"seal")) // for you, spacemarine9
-				src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
-				src.visible_message("<b>[src]</b> gets frightened by [snack]!", 1)
+				src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> gets frightened by [snack]!</span>")
 				src.ai.move_away(user, 10)
 				SPAWN(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
-				src.visible_message("<b>[src]</b> gives [snack] back to <b>[user]</b> as if they wanted to share!")
-				playsound(src.loc, 'sound/voice/babynoise.ogg', 50, 10,10)
+				src.visible_message("<span class='notice'><b>[src]</b> gives [snack] back to <b>[user]</b> as if they wanted to share!</span>")
+				playsound(src, 'sound/voice/babynoise.ogg', 50, 10,10)
 				return
 
 			snack.Eat(src, src)
 			modify_christmas_cheer(1)
 			src.HealDamage("all", 10, 10)
 		else
-			src.visible_message("<b>[src]</b> [pick("groans","yelps")]!", 1)
+			src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
 			src.ai.move_away(user, 10)
 			return ..()
 
@@ -2660,11 +2662,11 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		if (gibbed)
 			return ..()
 
-		src.desc = "The lifeless corpse of [src.name], why would anyone do such a thing?"
+		src.desc = "The lifeless corpse of [src], why would anyone do such a thing?"
 
 		for (var/mob/living/critter/small_animal/seal/seal in view(7, src))
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
-				seal.visible_message("<b>[seal]</b> [pick("groans","yelps")]!", 1)
+				seal.visible_message("<span class='emote'><b>[seal]</b> [pick("groans","yelps")]!</span>")
 				seal.ai.move_away(src, 10)
 
 /* ================================================ */
@@ -2717,6 +2719,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "floateye-dead"
 	health_brute = 10
 	health_burn = 10
+	isFlying = TRUE
 
 	setup_hands()
 		..()
@@ -2814,7 +2817,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	New()
 		..()
-		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 		if (prob(1))
 			src.name = replacetext(src.name, "bat", "bart")
 			if (src.name != initial(src.name))
@@ -2880,6 +2882,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "batdoctor-dead"
 	health_brute = 30
 	health_burn = 30
+	is_pet = TRUE
 
 /* ============================================== */
 /* -------------------- Wasp -------------------- */
@@ -2901,6 +2904,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	reagent_capacity = 100
 	flags = TABLEPASS
 	fits_under_table = TRUE
+	isFlying = TRUE
+
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive
@@ -3277,7 +3282,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 2
 
 /* =============================================== */
-/* ------------------- mosquito ------------------- */
+/* ------------------- mosquito ------------------ */
 /* =============================================== */
 
 /mob/living/critter/small_animal/mosquito
@@ -3333,6 +3338,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/mosquito/weak
 	health_brute = 2
 	health_burn = 2
+
+/* =============================================== */
+/* ------------------- lobsterman ---------------- */
+/* =============================================== */
 
 /mob/living/critter/small_animal/lobsterman
 	name = "lobster"
@@ -3402,6 +3411,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "lobsterman-dead"
 	desc = "Not a rock."
 
+/* =============================================== */
+/* ------------------- boogiebot ----------------- */
+/* =============================================== */
 
 /mob/living/critter/small_animal/boogiebot
 	name = "Boogiebot"
@@ -3514,6 +3526,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 4
 	health_burn = 4
 
+/* =============================================== */
+/* ------------------- plush --------------------- */
+/* =============================================== */
+
 /mob/living/critter/small_animal/plush
 	name = "plush toy"
 	real_name = "plush toy"
@@ -3571,6 +3587,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		HH.icon_state = "handn"
 		HH.name = "tiny hand"
 		HH.limb_name = "tiny hand"
+
+/* =============================================== */
+/* ------------------- figure -------------------- */
+/* =============================================== */
 
 /mob/living/critter/small_animal/figure
 	name = "collectible figure"
@@ -3678,7 +3698,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 4
 
 
-/* mentor & admin ghost critters */
+/* =============================================== */
+/* ----------- mentor & admin mice --------------- */
+/* =============================================== */
 
 /mob/living/critter/small_animal/mouse/weak/mentor
 	name = "mentor mouse"
@@ -3878,6 +3900,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.make_critter(/mob/living/critter/small_animal/mouse/weak)
 			return
 
+/* =============================================== */
+/* --------------------- crab -------------------- */
+/* =============================================== */
+
 /mob/living/critter/small_animal/crab
 	name = "crab"
 	real_name = "crab"
@@ -3968,6 +3994,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	add_abilities = list(/datum/targetable/critter/frenzy/crabmaul)
 
+/* =============================================== */
+/* ------------------- trilobite ----------------- */
+/* =============================================== */
+
 /mob/living/critter/small_animal/trilobite
 	name = "trilobite"
 	real_name = "trilobite"
@@ -4047,6 +4077,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.set_dir(get_dir(src,target))
 			..() //punch attack
 
+/* =============================================== */
+/* ------------------ hallucigenia --------------- */
+/* =============================================== */
+
 /mob/living/critter/small_animal/hallucigenia
 	name = "hallucigenia"
 	real_name = "hallucigenia"
@@ -4104,6 +4138,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, 1, pitch = 0.6, channel=VOLUME_CHANNEL_EMOTE)
 		new /obj/item/reagent_containers/food/snacks/healgoo(get_turf(src))
 		..()
+
+/* =============================================== */
+/* ------------------- pikaia -------------------- */
+/* =============================================== */
 
 /mob/living/critter/small_animal/pikaia
 	name = "pikaia"
