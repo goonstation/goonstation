@@ -476,7 +476,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	say(var/message) // mehhh
 #ifdef NEWSPEECH
 		if(message) //suppress unreachable code error
-			return ..(message)
+			return ..()
 #endif
 		var/my_verb = pick("chatters", "chirps", "squawks", "mutters", "cackles", "mumbles")
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [my_verb], [message]</span>")

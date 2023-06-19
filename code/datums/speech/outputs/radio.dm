@@ -9,5 +9,7 @@ TYPEINFO(/datum/speech_module/output/radio)
 		if(message.flags & SAYFLAG_RADIO_SENT)
 			return null
 		message.flags |= SAYFLAG_RADIO_SENT
+		//remove whispering flag
+		message.flags &= !SAYFLAG_WHISPER
 		phrase_log.log_phrase("radio", message.content, user = message.ident_speaker, strip_html = TRUE)
 		. = ..()

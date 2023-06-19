@@ -126,7 +126,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears", "spooky","ooc","looc")
 	start_speech_accents = null
-	start_speech_modifiers = list("client_checks", "mob_checks", "brain_damage", "singing")
+	start_speech_modifiers = list("client_checks", "mob_checks", "brain_damage", "singing", "whisper")
 	start_speech_outputs = list("spoken","equipped","ooc","looc")
 	start_listen_languages = list("english")
 
@@ -629,40 +629,6 @@
 /mob/living/proc/get_equipped_ore_scoop()
 	. = null
 
-/mob/living/proc/talk_into_equipment(var/mode, var/messages, var/param, var/lang_id)
-	switch (mode)
-		if ("headset")
-			if (src.ears)
-				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
-			else if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head)
-					var/datum/mutantrace/skeleton/S = H.mutantrace
-					if(S.head_tracker != null)
-						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
-
-		if ("secure headset")
-			if (src.ears)
-				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
-			else if (ishuman(src))
-				var/mob/living/carbon/human/H = src
-				if(isskeleton(H) && !H.organHolder.head)
-					var/datum/mutantrace/skeleton/S = H.mutantrace
-					if(S.head_tracker != null)
-						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
-
-		if ("right hand")
-			if (src.r_hand && src.organHolder.head)
-				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
-			else
-				src.emote("handpuppet")
-
-		if ("left hand")
-			if (src.l_hand && src.organHolder.head)
-				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
-			else
-				src.emote("handpuppet")
-
 /// returns true if first letter of things that person says should be capitalized
 /mob/living/proc/capitalize_speech()
 	if (!client)
@@ -681,7 +647,7 @@
 /mob/living/say(var/message)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
-		return ..(message)
+		return ..()
 #endif
 
 

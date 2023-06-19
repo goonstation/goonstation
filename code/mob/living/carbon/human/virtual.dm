@@ -60,7 +60,7 @@
 	say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 #ifdef NEWSPEECH
 		if(message) //suppress unreachable code error
-			return ..(message)
+			return ..()
 #endif
 		if(!isghost)
 			return ..()

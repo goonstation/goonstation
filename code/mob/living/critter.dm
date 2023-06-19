@@ -1152,26 +1152,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				for (var/mob/O in A.contents)
 					O.show_message("<span class='emote'>[message]</span>", m_type)
 
-
-	talk_into_equipment(var/mode, var/message, var/param)
-		switch (mode)
-			if ("left hand")
-				for (var/i = 1, i <= hands.len, i++)
-					var/datum/handHolder/HH = hands[i]
-					if (HH.can_hold_items)
-						if (HH.item)
-							HH.item.talk_into(src, message, param, src.real_name)
-						return
-			if ("right hand")
-				for (var/i = hands.len, i >= 1, i--)
-					var/datum/handHolder/HH = hands[i]
-					if (HH.can_hold_items)
-						if (HH.item)
-							HH.item.talk_into(src, message, param, src.real_name)
-						return
-			else
-				..()
-
 	update_burning()
 		if (can_burn)
 			..()
@@ -1451,7 +1431,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter/say(var/message)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
-		return ..(message)
+		return ..()
 #endif
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 

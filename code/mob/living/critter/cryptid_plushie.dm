@@ -165,7 +165,7 @@
 	say(message) // gross workaround to allow emotes despite canspeak = 0
 #ifdef NEWSPEECH
 		if(message) //suppress unreachable code error
-			return ..(message)
+			return ..()
 #endif
 		if(dd_hasprefix(message, "*"))
 			canspeak = 1

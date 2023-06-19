@@ -1,7 +1,7 @@
 
 
-/mob/proc/whisper(message, forced=FALSE)
-	return
+/mob/proc/whisper(message)
+	return src.say(message, flags=SAYFLAG_WHISPER)
 
 /mob/verb/whisper_verb(message as text)
 	set name = "whisper"

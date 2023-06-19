@@ -165,7 +165,7 @@ TYPEINFO(/mob/living/critter/flock)
 /mob/living/critter/flock/say(message, involuntary = FALSE)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
-		return ..(message)
+		return ..()
 #endif
 	if(isdead(src) && src.is_npc)
 		return
