@@ -296,6 +296,44 @@ datum
 			result_amount = 3
 			mix_phrase = "The water somehow seems purified. Or maybe defiled."
 
+		steam_boiling
+			name = "Steam Boiling"
+			id = "steam_boiling"
+			required_reagents = list("water" = 0) //removed in on_reaction()
+			required_temperature = T100C
+			mix_phrase = "The solution begins to boil."
+			instant = FALSE
+			result_amount = 1
+
+			on_reaction(datum/reagents/holder)
+				var/amount_to_boil = (holder.total_temperature - T100C)/4 //for every degree above 100°C, boil .25 extra water per reaction but...
+				if(amount_to_boil > holder.get_reagent_amount("water") || (holder.total_temperature > T100C + 100)) //...if there's enough heat to boil all the water or the temp is 100 over 100°C...
+					amount_to_boil = holder.get_reagent_amount("water") //...boil away everything.
+				holder.remove_reagent("water", amount_to_boil)
+				if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+					var/steam_cloud_chance = (amount_to_boil*2) + 25 //more steam clouds the more you boil per reaction, small amounts if it's slow
+					holder.temperature_reagents(holder.total_temperature - (amount_to_boil * 2), change_min = 1) //boiling steam into air removes some heat
+					var/list/covered = holder.covered_turf()
+					if (covered.len < 5)
+						for(var/turf/t in covered)
+							if(prob(steam_cloud_chance))
+								var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+								smoke.set_up(1, 0, t)
+								smoke.start()
+				else
+					holder.add_reagent("steam", amount_to_boil, temp_new = holder.total_temperature)
+
+		steam_condensation
+			name = "Steam Condensation"
+			id = "steam_condensation"
+			result = "water"
+			required_reagents = list("steam" = 1)
+			required_temperature = -T100C
+			mix_phrase = "Clear liquid begins to condense in the solution."
+			instant = FALSE
+			result_amount = 1
+			reaction_speed = 10
+
 		calomel
 			name = "Calomel"
 			id = "calomel"
