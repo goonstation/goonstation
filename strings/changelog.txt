@@ -1,4 +1,7 @@
 
+(t)sun jun 18 23
+(u)tarmunora
+(*)Prismatic spray spell cost reduction, increased power.
 (t)sat jun 17 23
 (u)Amylizzle
 (p)14603

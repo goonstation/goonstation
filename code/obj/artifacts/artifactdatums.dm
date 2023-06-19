@@ -279,9 +279,8 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		. = ..()
 		src.dissipation_rate = 0
 		src.max_range = 13
-		src.power = max(10, src.power)
-		if(prob(90))
-			src.ks_ratio = 1
+		src.power = max(25, src.power * 1.5)
+		src.ks_ratio = 1
 		src.generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, obj/projectile/O)
