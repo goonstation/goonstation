@@ -3,6 +3,7 @@ TYPEINFO(/datum/speech_module/modifier/client_checks)
 	id = "client_checks"
 /datum/speech_module/modifier/client_checks
 	id = "client_checks"
+	priority = INFINITY
 
 	process(datum/say_message/message)
 		. = message

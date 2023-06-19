@@ -2,6 +2,7 @@ TYPEINFO(/datum/speech_module/modifier/whisper)
 	id = "whisper"
 /datum/speech_module/modifier/whisper
 	id = "whisper"
+	priority = 10
 
 	process(datum/say_message/message)
 		. = message

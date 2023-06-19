@@ -3,6 +3,7 @@ TYPEINFO(/datum/speech_module/modifier/mob_checks)
 	id = "mob_checks"
 /datum/speech_module/modifier/mob_checks
 	id = "mob_checks"
+	priority = 1000
 
 	process(datum/say_message/message)
 		. = message

@@ -110,7 +110,7 @@ var/global/datum/speech_manager/SpeechManager = new()
 			if(QDELETED(heard)) //clear out deld listeners
 				src.listeners[channel] -= heard
 			else
-				heard.process(message)
+				heard.process(message.Copy())
 
 	/// Register a listener for hearing messages on a channel
 	proc/RegisterInput(var/datum/listen_module/input/registree)
