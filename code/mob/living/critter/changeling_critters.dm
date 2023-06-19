@@ -19,6 +19,14 @@
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
 	var/obj/item/original_bodypart
 
+	//new speech vars
+	start_listen_modifiers = list("maptext")
+	start_listen_inputs = list("ears", "ooc", "looc", "hivechat")
+	start_speech_accents = null
+	start_speech_modifiers = list("client_checks", "mob_checks", "singing", "whisper")
+	start_speech_outputs = list("spoken", "ooc", "looc", "hivechat")
+	start_listen_languages = list("english")
+
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
