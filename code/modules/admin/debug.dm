@@ -403,8 +403,11 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			qdel(O)
 			numdeleted++
 			if(background == "Yes")
@@ -443,9 +446,12 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		var/numtotal = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			numtotal++
 			if(prob(50))
 				qdel(O)
