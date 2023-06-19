@@ -364,6 +364,7 @@
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
+		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", 0)
 		var/sound/alarm = sound('sound/machines/meltdown_siren.ogg')
 		alarm.repeat = TRUE
 		alarm.volume = 40

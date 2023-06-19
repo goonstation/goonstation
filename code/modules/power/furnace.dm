@@ -214,7 +214,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 				else
 					stacked = TRUE
 					handle_stacks(W, fuel_amount)
-		else if (istype(W, /obj/item/spacecash/))
+		else if (istype(W, /obj/item/currency/spacecash/))
 			if (W.amount == 1)
 				fuel_name = "a credit"
 				fuel += 0.1

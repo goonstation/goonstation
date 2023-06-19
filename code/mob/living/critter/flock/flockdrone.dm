@@ -1275,7 +1275,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/currency/spacebux))
 		return FALSE
 	return ..()
 
@@ -1285,7 +1285,7 @@
 
 	var/mob/living/critter/flock/drone/F = holder
 	src.instant_absorb = item.amount > 1 && round(F.resources_per_health * item.health) == 0
-	src.ignore_amount = istype(item, /obj/item/spacecash)
+	src.ignore_amount = istype(item, /obj/item/currency/spacecash)
 
 	item.inventory_counter?.show_count()
 

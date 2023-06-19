@@ -781,7 +781,7 @@
 /turf/space,
 /area/space)
 "bW" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	tag = "icon-valve0 (EAST)";
 	icon_state = "valve0";
 	dir = 4

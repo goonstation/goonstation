@@ -573,7 +573,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		maxhealth = 800
 		score = 500
 		dead_state = "drone3-dead"
-		droploot = /obj/item/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
+		droploot = /obj/item/currency/spacecash/buttcoin // replace with railgun if that's ever safe enough to hand out? idk
 		attack_cooldown = 50
 		smashes_shit = 1
 
