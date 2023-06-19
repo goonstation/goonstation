@@ -1,4 +1,4 @@
-/* -=-= What's here =-=-floating
+/* -=-= What's here =-=-
  - small_critter parent
   - mice
    - Remy
@@ -1292,6 +1292,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else
 			. = ..()
 
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/owl
+	name = "owl egg"
+	critter_type = /mob/living/critter/small_animal/bird/owl
 
 /* -------------------- Large Owl -------------------- */
 
@@ -1305,26 +1308,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0.5
-
-	attackby(obj/item/W, mob/M)
-		if(istype(W, /obj/item/plutonium_core/hootonium_core)) //Owls interestingly are capable of absorbing hootonium into their bodies harmlessly. This is the only safe method of removing it.
-			playsound(M.loc, 'sound/items/eatfood.ogg', 100, 1)
-			boutput(M, "<span class='alert'><B>You feed the [src] the [W]. It looks [pick("confused", "annoyed", "worried", "satisfied", "upset", "a tad miffed", "at you and winks")].</B></span>")
-			M.drop_item()
-			W.set_loc(src)
-
-			SPAWN(1 MINUTE)
-				src.visible_message("<span class='alert'><B>The [src] suddenly regurgitates something!</B></span>")
-				playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-				make_cleanable( /obj/decal/cleanable/greenpuke,src.loc)
-
-				for(var/turf/T in range(src, 2))
-					if(prob(20))
-						playsound(src, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/misc/meat_plop.ogg'), 100, 1)
-						make_cleanable( /obj/decal/cleanable/greenpuke,T)
-
-				new /obj/item/power_stones/Owl(src.loc)
-
 
 /* -------------------- Hooty -------------------- */
 

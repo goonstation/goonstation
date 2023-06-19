@@ -211,3 +211,6 @@
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
 
 //////////////////////// Critter corpses ////////////////////////
+
+/obj/mob_spawn/corpse/critter/owl
+	spawn_type = /mob/living/critter/small_animal/bird/owl
