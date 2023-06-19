@@ -355,8 +355,10 @@ TYPEINFO(/obj/item/fish_portal)
 	New()
 		..()
 
+	//procs
+
 	//attaches item to the trophy
-	proc/add_item(var/obj/item/W, var/mob/user, params)
+	proc/add_item(var/obj/item/W, var/mob/user, click_params)
 		if (W == src)
 			boutput(user, "<span class='notice'>You can't attach [W] to another [src]. Duh.</span>")
 			return
@@ -369,22 +371,26 @@ TYPEINFO(/obj/item/fish_portal)
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You can't attach [W] to the [src]! It's attached to you!</span>")
 			return
-		src.place_on(W, user, params)
+		src.place_on(W, user, click_params)
 		W.set_loc(src)
 		src.vis_contents += W
 		src.UpdateIcon()
 		item_added = TRUE
 		boutput(user, "<span class='notice'>You attach [W] to \the [src].</span>")
 
-	attackby(var/obj/item/W, var/mob/user, params)
-		add_item(W, user, click_params)
-		return
-
-	Exited(var/obj/item/W)
+	//removes item
+	proc/remove_item(var/obj/item/W)
 		var/mob/user
 		MOVE_OUT_TO_TURF_SAFE(W, src)
 		src.vis_contents -= W
 		src.UpdateIcon()
 		item_added = FALSE
 		boutput(user,"<span class='notice'>You unattach [W] from \the [src].</span>")
+
+	attackby(var/obj/item/W, var/mob/user, click_params)
+		add_item(W, user, click_params)
+		return
+
+	Exited(var/obj/item/W)
+		remove_item(W)
 		. = ..()
