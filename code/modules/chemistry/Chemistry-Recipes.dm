@@ -2912,7 +2912,7 @@ datum
 			#endif
 			hidden = TRUE
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
-			min_temperature = 0
+			max_temperature = 0
 
 
 		smokepowder
