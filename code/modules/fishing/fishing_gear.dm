@@ -347,10 +347,14 @@ TYPEINFO(/obj/item/fish_portal)
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "wall_trophy"
 	item_state = "wall_trophy"
+
+
 	//do we have something attached?
 	var/item_added = FALSE
 	//what items are allowed to be attached?
 	var/allowed_item = /obj/item/fish/
+	//can we un anchor the object?
+	var/can_unanchor = TRUE
 
 	New()
 		..()
@@ -397,6 +401,13 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(var/obj/item/W, var/mob/user, click_params)
 		add_item(W, user, click_params)
 		return
+
+
+	attack_hand(var/mob/user)
+		if (src.anchored == TRUE)
+			if (can_unanchor == FALSE) return //checks if item can be unanchored
+			src.anchored = FALSE
+		. = ..()
 
 	Exited(var/obj/item/W)
 		remove_item(W)

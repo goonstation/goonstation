@@ -129,6 +129,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.add_fingerprint(user)
 	W.set_dir(light_dir)
 	user.u_equip(W)
+	W.anchored = TRUE
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
