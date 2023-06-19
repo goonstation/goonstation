@@ -655,19 +655,10 @@
 
 	if (reverse_mode) message = reverse_text(message)
 
-	logTheThing(LOG_DIARY, src, ": [message]", "say")
-
-#ifdef DATALOGGER
-	// Jewel's attempted fix for: null.ScanText()
-	if (game_stats)
-		game_stats.ScanText(message)
-#endif
 
 
-	if(src.z == 2 && istype(get_area(src),/area/afterlife)) //check zlevel before doing istype
-		if (dd_hasprefix(message, ":d"))
-			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
-			return src.say_dead(message)
+
+
 
 
 	message = say_decorate(message)

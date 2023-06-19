@@ -6,6 +6,11 @@ TYPEINFO(/datum/speech_module/output/spoken)
 	priority = -1 //lower than default (0)
 
 	process(datum/say_message/message)
+#ifdef DATALOGGER
+		// Jewel's attempted fix for: null.ScanText()
+		if (game_stats)
+			game_stats.ScanText(message)
+#endif
 		var/mob/mob_speaker = message.speaker
 		if(istype(mob_speaker) && mob_speaker.client)
 			if(message.flags & SAYFLAG_SINGING)
