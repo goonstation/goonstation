@@ -59551,7 +59551,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "dBF" = (
-/obj/critter/frog{
+/mob/living/critter/small_animal/frog{
 	anchored = 1;
 	desc = "Wow, did it really steal that pilot's seat?";
 	name = "interdimensional crime frog";
