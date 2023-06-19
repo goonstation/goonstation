@@ -1,4 +1,10 @@
 
+(t)mon jun 19 23
+(u)Gannets
+(p)14645
+(e)💅|C-QoL
+(+)Basic fishing rods are now free in fishing vendors.
+(+)There's now less log-spam when fishing around other players.
 (t)sun jun 18 23
 (u)aloe
 (*)Wizards and werewolves have been enabled in mixed RP mode with a low probability. May revert this depending on how it goes.
