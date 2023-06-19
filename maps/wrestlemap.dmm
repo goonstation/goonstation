@@ -24490,7 +24490,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "kmA" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "kmN" = (

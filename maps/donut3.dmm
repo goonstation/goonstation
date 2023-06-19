@@ -53680,7 +53680,7 @@
 /area/station/medical/asylum/rec)
 "qsz" = (
 /obj/table/wood/round/auto,
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "This owl says gay rights AND trans rights, simultaneously..";
 	name = "gay owl"
 	},

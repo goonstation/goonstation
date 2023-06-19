@@ -17798,7 +17798,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSN" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/machinery/firealarm{
 	pixel_x = 1;
 	pixel_y = 26;
@@ -17823,7 +17823,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/landmark{
 	icon_state = "kudzu-start";
 	name = "kudzustart"
@@ -18950,16 +18950,17 @@
 /obj/stool/chair/wooden{
 	dir = 8
 	},
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
 	},
 /area/station/garden/owlery)
 "aVH" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "You've heard that this owl is a real jerk.";
-	health = 40;
+	health_brute = 20;
+	health_burn = 20;
 	name = "owl of ill-repute"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -20101,7 +20102,7 @@
 	},
 /area/station/garden/owlery)
 "aYz" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aYA" = (
@@ -21331,7 +21332,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "bbw" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "His name is Carl.";
 	name = "space owl named Carl"
 	},

@@ -21991,7 +21991,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "eXh" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -34418,9 +34418,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tHn" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "You've heard that this owl is a real jerk.";
-	health = 40;
+	health_brute = 20;
+	health_burn = 20;
 	name = "owl of ill-repute"
 	},
 /turf/simulated/floor/grass/random,
@@ -37593,7 +37594,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "xrU" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "His name is Carl.";
 	name = "space owl named Carl"
 	},

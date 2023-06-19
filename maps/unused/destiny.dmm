@@ -163,11 +163,9 @@
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "aaC" = (
-/obj/critter/owl{
-	aggressive = 0;
-	angertext = "hoots uncontrollably at";
-	atkcarbon = 1;
-	health = 10000;
+/mob/living/critter/small_animal/bird/owl{
+	health_brute = 200;
+	health_burn = 200;
 	name = "Hooty McOwlface"
 	},
 /obj/cable{

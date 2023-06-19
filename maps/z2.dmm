@@ -40225,19 +40225,13 @@
 /area/owlery/staffhall)
 "cxw" = (
 /obj/storage/crate/freezer,
-/obj/critter/owl{
-	alive = 0;
-	can_revive = 0;
-	dead_state = "smallowl-dead";
-	density = 0;
-	icon_state = "smallowl-dead"
-	},
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
 /obj/item/reagent_containers/food/snacks/ingredient/meatpaste{
 	desc = "Gross.";
 	name = "old kidney"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
+/obj/mob_spawn/corpse/critter/owl,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cxx" = (
@@ -46772,7 +46766,7 @@
 	icon_state = "body8";
 	name = "decomposed corpse"
 	},
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "This Owl seems to be staring at you with both a smug, yet angry face. Somehow.";
 	name = "smug looking space owl"
 	},
@@ -49019,7 +49013,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cTf" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cTh" = (
@@ -49644,7 +49638,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/owleryhall)
 "cUu" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/decal/fakeobjects/lighttube_broken{
 	desc = "This light might be broken.  It's probably not wired up, though.";
 	dir = 8;

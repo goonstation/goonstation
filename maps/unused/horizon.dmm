@@ -28978,7 +28978,7 @@
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
 "buV" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/grass,
 /area/station/garden/owlery)
@@ -31115,7 +31115,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/mining/magnet)
 "bzZ" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/disposalpipe/segment{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -63069,7 +63069,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/detectives_office)
 "wOd" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
