@@ -36,7 +36,7 @@
 	say(message, involuntary = 0)
 #ifdef NEWSPEECH
 		if(message) //suppress unreachable code error
-			return ..(message)
+			return ..()
 #endif
 		if (hivemind_owner)
 			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))

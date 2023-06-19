@@ -13,7 +13,7 @@
 	say(var/message)
 #ifdef NEWSPEECH
 		if(message) //suppress unreachable code error
-			return ..(message)
+			return ..()
 #endif
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 

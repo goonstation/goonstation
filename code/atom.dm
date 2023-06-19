@@ -335,8 +335,8 @@ TYPEINFO(/atom)
 /atom/var/list/start_speech_outputs = list("spoken")
 /// Default language for speaking
 /atom/var/say_language = "english"
-///Primary entry point for all say code
-/atom/proc/say(var/message as text)
+///Primary entry point for all say code. Message is the text you want to say. It will be mutated by the speech tree. Flags lets you set additional flags on the message, it defaults to 0.
+/atom/proc/say(var/message as text, var/flags = 0)
 	SHOULD_CALL_PARENT(TRUE)
 	if (dd_hasprefix(message, "*")) // no dead emote spam
 		return src.emote(copytext(message, 2),1)
@@ -344,6 +344,7 @@ TYPEINFO(/atom)
 	var/datum/say_message/said = new(message, src, src.say_language)
 	if(!length(said.content))
 		return
+	said.flags |= flags
 	src.ensure_say_tree()
 	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
 	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)

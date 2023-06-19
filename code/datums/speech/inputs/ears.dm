@@ -13,7 +13,10 @@ TYPEINFO(/datum/listen_module/input/ears)
 		//range 0 means it's only audible if it's from inside you (ie radios, direct messages)
 		if(message.heard_range == 0 && (src.parent_tree.parent == message.speaker.loc))
 			. = ..()
-		else if(src.parent_tree.parent in view(min(message.heard_range, src.hearing_range), message.speaker)) // view? viewers? hearers?
+		else if(src.parent_tree.parent in viewers(min(message.heard_range, src.hearing_range), message.speaker)) // view? viewers? hearers?
+			. = ..()
+		else if((message.flags & SAYFLAG_WHISPER) && (src.parent_tree.parent in viewers(src.hearing_range, message.speaker)))
+			message.content = stars(message.content)
 			. = ..()
 
 	format(datum/say_message/message)

@@ -1359,11 +1359,12 @@
 
 	return rendered
 
-/mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
+/mob/living/carbon/human/say(var/message as text, var/flags = 0)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
-		return ..(message)
+		return ..()
 #endif
+/*
 	var/original_language = src.say_language
 	if (mutantrace?.override_language)
 		say_language = mutantrace.override_language
@@ -1421,6 +1422,7 @@
 	..(message, unique_maptext_style = unique_maptext_style, maptext_animation_colors = maptext_animation_colors)
 
 	src.say_language = original_language
+*/
 
 /*/mob/living/carbon/human/say_understands(var/other)
 	if (src.mutantrace)
@@ -1450,198 +1452,11 @@
 	return ..(text, special, sayverb)
 
 //Lallander was here
-/mob/living/carbon/human/whisper(message as text, forced=FALSE)
+/mob/living/carbon/human/whisper(message as text)
 	if (src.bioHolder.HasEffect("revenant"))
 		return src.say(message)
-	var/message_mode = null
-	var/secure_headset_mode = null
-	if (src.get_brain_damage() >= 60 && prob(50))
-		message_mode = "headset"
-	// Special message handling
-	else if (copytext(message, 1, 2) == ";")
-		message_mode = "headset"
-		message = copytext(message, 2)
-
-	if (src.stamina < STAMINA_WINDED_SPEAK_MIN || src.oxyloss > 10)
-		message = lowertext(message)
-
-	else if ((length(message) >= 2) && (copytext(message,1,2) == ":"))
-		switch (lowertext( copytext(message,2,4) ))
-			if ("rh")
-				message_mode = "right hand"
-				message = copytext(message, 4)
-
-			if ("lh")
-				message_mode = "left hand"
-				message = copytext(message, 4)
-
-			if ("in")
-				message_mode = "intercom"
-				message = copytext(message, 4)
-
-			else
-				if (ishuman(src))
-					message_mode = "secure headset"
-					secure_headset_mode = lowertext(copytext(message,2,3))
-				message = copytext(message, 3)
-
-	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
-
-	if (!message)
-		return
-
-	logTheThing(LOG_DIARY, src, "(WHISPER): [message]", "whisper")
-	logTheThing(LOG_WHISPER, src, "SAY: [message] (WHISPER) [log_loc(src)]")
-
-	if (src.client && !src.client.holder && url_regex?.Find(message))
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
-		return
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
-		return
-
-	if (isdead(src))
-		return src.say_dead(message)
-
-	if (src.stat)
-		return
-
-	var/alt_name = ""
-	if (ishuman(src) && src.name != src.real_name)
-		if (src:wear_id && src:wear_id:registered && src:wear_id:registered != src.real_name)
-			alt_name = " (as [src:wear_id:registered])"
-		else if (!src:wear_id)
-			alt_name = " (as Unknown)"
-
-	// Mute disability
-	if (src.bioHolder.HasEffect("mute"))
-		boutput(src, "<span class='alert'>You seem to be unable to speak.</span>")
-		return
-
-	if (istype(src.wear_mask, /obj/item/clothing/mask/muzzle))
-		boutput(src, "<span class='alert'>Your muzzle prevents you from speaking.</span>")
-		return
-
-	var/italics = 1
-	var/message_range = 1
-	var/forced_language = null
-	forced_language = get_special_language(secure_headset_mode)
-
-	message = process_accents(src,message)
-
-	if (src.stuttering)
-		message = stutter(message)
-
-	var/list/messages = process_language(message, forced_language)
-	var/lang_id = get_language_id(forced_language)
-
-	switch (message_mode)
-		//MBC : now that you can whisper while dying or suffocating, let's not allow you to whisper into a radio.
-		/*
-		if ("headset", "secure headset", "right hand", "left hand")
-			talk_into_equipment(message_mode, messages, secure_headset_mode, lang_id)
-			message_range = 0
-			italics = 1
-		*/
-		if ("intercom")
-			for (var/obj/item/device/radio/intercom/I in view(1, null))
-				I.talk_into(src, messages, null, src.real_name, lang_id)
-
-			message_range = 0
-			italics = 1
-
-	var/list/eavesdropping = hearers(2, src)
-	eavesdropping -= src
-	var/list/watching  = viewers(5, src)
-	watching -= src
-	watching -= eavesdropping
-
-	var/list/heard_a = list() // understood us
-	var/list/heard_b = list() // didn't understand us
-
-	var/rendered = null
-
-	if (message_range)
-		var/heardname = src.real_name
-		src.send_hear_talks(message_range, messages, heardname, lang_id)
-
-		var/list/listening = all_hearers(message_range, src)
-		eavesdropping -= listening
-
-		for (var/mob/M in listening)
-			if (M.say_understands(src))
-				heard_a += M
-			else
-				heard_b += M
-
-	for (var/mob/M in watching)
-		if (M.say_understands(src))
-			rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers something.</span>"
-		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
-		M.show_message(rendered, 2)
-
-	var/list/olocs = list()
-	var/thickness = 0
-	if (!isturf(loc))
-		olocs = obj_loc_chain(src)
-		for (var/atom/movable/AM in olocs)
-			thickness += AM.soundproofing
-	var/list/processed = list()
-
-	if (length(heard_a))
-		processed = saylist(messages[1], heard_a, olocs, thickness, italics, processed)
-
-	if (length(heard_b))
-		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
-
-	message = messages[1]
-	if(src.client)
-		phrase_log.log_phrase(forced ? "say" : "whisper", message)
-	last_words = message
-	for (var/mob/M in eavesdropping)
-		if (M.say_understands(src, lang_id))
-			var/message_c = stars(message)
-
-			if (!ishuman(src))
-				rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
-			else
-				if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
-					if (src.wear_id)
-						rendered = "<span class='game say'><span class='name'>[src.wear_id:registered]</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
-					else
-						rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>\"[message_c]\"</span></span>"
-				else
-					rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] whispers, <span class='message'>\"[message_c]\"</span></span>"
-
-		else
-			rendered = "<span class='game say'><span class='name'>[src.voice_name]</span> whispers something.</span>"
-
-		M.show_message(rendered, 2)
-
-	if (italics)
-		message = "<i>[message]</i>"
-
-	if (!ishuman(src))
-		rendered = "<span class='game say'><span class='name'>[src.name]</span> whispers, <span class='message'>[message]</span></span>"
 	else
-		if (src.wear_mask && src.wear_mask.vchange)//(istype(src:wear_mask, /obj/item/clothing/mask/gas/voice))
-			if (src.wear_id)
-				rendered = "<span class='game say'><span class='name'>[src.wear_id:registered]</span> whispers, <span class='message'>[message]</span></span>"
-			else
-				rendered = "<span class='game say'><span class='name'>Unknown</span> whispers, <span class='message'>[message]</span></span>"
-		else
-			rendered = "<span class='game say'><span class='name'>[src.real_name]</span>[alt_name] whispers, <span class='message'>[message]</span></span>"
-
-	for (var/mob/M in mobs)
-		if (istype(M, /mob/new_player))
-			continue
-		if (M.stat > 1 && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
-			M.show_message(rendered, 2)
-
-	show_speech_bubble(speech_bubble)
+		..()
 
 /mob/living/carbon/human/var/const
 	slot_back = 1

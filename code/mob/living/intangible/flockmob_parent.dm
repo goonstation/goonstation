@@ -216,7 +216,7 @@
 /mob/living/intangible/flock/say(message, involuntary = 0)
 #ifdef NEWSPEECH
 	if(message) //suppress unreachable code error
-		return ..(message)
+		return ..()
 #endif
 	if (!message || message == "" || stat)
 		return
