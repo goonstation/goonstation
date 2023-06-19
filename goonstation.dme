@@ -409,6 +409,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\speech\inputs\spooky.dm"
 #include "code\datums\speech\modifiers\listen\maptext.dm"
 #include "code\datums\speech\modifiers\speech\brain_damage.dm"
+#include "code\datums\speech\modifiers\speech\breath.dm"
 #include "code\datums\speech\modifiers\speech\client_prefs.dm"
 #include "code\datums\speech\modifiers\speech\mob_checks.dm"
 #include "code\datums\speech\modifiers\speech\singing.dm"

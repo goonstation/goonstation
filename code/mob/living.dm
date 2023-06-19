@@ -126,7 +126,7 @@
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears", "spooky","ooc","looc")
 	start_speech_accents = null
-	start_speech_modifiers = list("client_checks", "mob_checks", "brain_damage", "singing", "whisper")
+	start_speech_modifiers = list("client_checks", "mob_checks", "brain_damage", "singing", "whisper", "breath")
 	start_speech_outputs = list("spoken","equipped","ooc","looc")
 	start_listen_languages = list("english")
 
@@ -669,13 +669,6 @@
 			message = trim(copytext(message, 3, MAX_MESSAGE_LEN))
 			return src.say_dead(message)
 
-
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		// If theres no oxygen
-		if (H.oxyloss > 10 || H.losebreath >= 4 || H.hasStatus("muted") || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting"))) // Perfluorodecalin cap - normal life() depletion - buffer.
-			H.whisper(message, forced=TRUE)
-			return
 
 	message = say_decorate(message)
 
