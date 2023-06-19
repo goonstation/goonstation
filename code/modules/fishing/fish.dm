@@ -243,7 +243,7 @@ Alien/mutant/other fish:
 /obj/item/fish/tiger_oscar
 	name = "tiger oscar"
 	desc = "Popular in both aquariums and kitchens, this fish was accidentally misclassified in 1831. Don't make that mistake again!"
-	icon_state = "tiger oscar"
+	icon_state = "tiger_oscar"
 	inhand_color = "#2e1306"
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_UNCOMMON
