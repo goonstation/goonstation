@@ -3786,8 +3786,8 @@ datum
 						/mob/living/critter/small_animal/mouse,
 						/mob/living/critter/small_animal/wasp,
 						/mob/living/critter/small_animal/bird/owl,
-						/obj/critter/goose,
-						/obj/critter/goose/swan,
+						/mob/living/critter/small_animal/bird/goose,
+						/mob/living/critter/small_animal/bird/goose/swan,
 						/obj/critter/domestic_bee,
 						/mob/living/critter/small_animal/walrus,
 						/mob/living/critter/small_animal/seal)

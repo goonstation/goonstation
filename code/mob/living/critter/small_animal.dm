@@ -1501,15 +1501,56 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	death_text = "%src% lets out a final weak honk and keels over."
 	feather_color = list("#393939","#f2ebd5","#68422a","#ffffff")
 	flags = null
-	fits_under_table = 0
+	fits_under_table = FALSE
 	good_grip = 0.5
 	bird_call_msg = "honks"
 	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	species = "goose"
 	health_brute = 30
 	health_burn = 30
-	add_abilities = list(/datum/targetable/critter/peck,
-						/datum/targetable/critter/tackle)
+	add_abilities = list(/datum/targetable/critter/peck, /datum/targetable/critter/tackle)
+	ai_type = /datum/aiHolder/aggressive
+
+	on_pet(var/mob/user)
+		if(..())
+			return
+
+		if(prob(10))
+			src.audible_message("<b>[src]</b> honks!",2)
+			playsound(src.loc, 'sound/voice/animal/goose.ogg', 50, 1)
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, 'sound/voice/animal/goose.ogg', 70, 1, channel = VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] honks!</span></b>"
+			if ("flip", "flap")
+				if (src.emote_check(voluntary, 50))
+					flick("[src.icon_state]-flap", src)
+					playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1, channel = VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] hisses!</span></b>"
+		return null
+
+	seek_target(var/range = 4)
+		. = ..()
+
+		if (length(.) && prob(10))
+			src.emote("flap")
+
+	critter_basic_attack(mob/target)
+		flick("[src.icon_state]-flap", src)
+		playsound(src.loc, "swing_hit", 30, 0)
+		..()
+
+	critter_ability_attack(mob/target)
+		var/datum/targetable/critter/peck = src.abilityHolder.getAbility(/datum/targetable/critter/peck)
+		if (!peck.disabled && peck.cooldowncheck())
+			peck.handleCast(target)
+			return TRUE
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/goose
+	name = "goose egg"
+	critter_type = /mob/living/critter/small_animal/bird/goose
 
 /* -------------------- Swan -------------------- */
 
@@ -1521,6 +1562,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "swan-dead"
 	feather_color = "#FFFFFF"
 	species = "swan"
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/swan
+	name = "swan egg"
+	critter_type = /mob/living/critter/small_animal/bird/goose/swan
 
 /* =============================================== */
 /* ------------------- Sparrow ------------------- */

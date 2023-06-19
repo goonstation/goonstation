@@ -469,7 +469,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bH" = (
-/obj/critter/goose,
+/mob/living/critter/small_animal/bird/goose,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bI" = (
