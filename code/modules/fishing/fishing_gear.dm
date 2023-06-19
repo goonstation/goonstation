@@ -372,6 +372,9 @@ TYPEINFO(/obj/item/fish_portal)
 			boutput(user, "<span class='alert'>You can't attach [W] to the [src]! It's attached to you!</span>")
 			return
 		src.place_on(W, user, click_params)
+		W.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		W.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
+		W.event_handler_flags |= NO_MOUSEDROP_QOL
 		W.set_loc(src)
 		src.vis_contents += W
 		src.UpdateIcon()
@@ -382,10 +385,14 @@ TYPEINFO(/obj/item/fish_portal)
 	proc/remove_item(var/obj/item/W)
 		var/mob/user
 		MOVE_OUT_TO_TURF_SAFE(W, src)
+		W.appearance_flags = initial(W.appearance_flags)
+		W.vis_flags = initial(W.vis_flags)
+		W.event_handler_flags = initial(W.event_handler_flags)
 		src.vis_contents -= W
 		src.UpdateIcon()
 		item_added = FALSE
 		boutput(user,"<span class='notice'>You unattach [W] from \the [src].</span>")
+
 
 	attackby(var/obj/item/W, var/mob/user, click_params)
 		add_item(W, user, click_params)
