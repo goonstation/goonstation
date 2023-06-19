@@ -1,5 +1,7 @@
 
 (t)sun jun 18 23
+(u)aloe
+(*)Wizards and werewolves have been enabled in mixed RP mode with a low probability. May revert this depending on how it goes.
 (u)tarmunora
 (*)Prismatic spray spell cost reduction, increased power.
 (t)sat jun 17 23
