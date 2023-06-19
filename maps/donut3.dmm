@@ -1731,7 +1731,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "awO" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
 "awX" = (
@@ -30617,7 +30617,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
 "joU" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/spacehabitat/pool)
 "jpq" = (
@@ -39418,7 +39418,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "lXJ" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "lYh" = (
@@ -51572,7 +51572,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "pMX" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},

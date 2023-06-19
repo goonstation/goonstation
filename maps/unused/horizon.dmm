@@ -53749,7 +53749,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "egJ" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet{
 	icon_state = "fred3"
 	},

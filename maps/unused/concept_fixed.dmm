@@ -20305,9 +20305,7 @@
 /area/station/crew_quarters/fitness)
 "aMU" = (
 /obj/poolwater,
-/obj/critter/sealpup{
-	tag = "icon-seal (EAST)";
-	icon_state = "seal";
+/mob/living/critter/small_animal/seal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -20831,9 +20829,9 @@
 /area/station/crew_quarters/fitness)
 "aNQ" = (
 /obj/poolwater,
-/obj/critter/walrus{
+/mob/living/critter/small_animal/walrus{
 	name = "Willy the Space Walrus";
-	opensdoors = 0
+	
 	},
 /turf/simulated/floor{
 	icon = 'icons/turf/floors.dmi';

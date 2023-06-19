@@ -8278,7 +8278,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge/research)
 "cmn" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/junction/se_w,
 /area/station/crew_quarters/lounge/luxury_seating{
 	name = "Last Call Lounge"
@@ -58879,7 +58879,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "pji" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/jazz)
 "pjk" = (
@@ -68333,7 +68333,7 @@
 /turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "rDb" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)

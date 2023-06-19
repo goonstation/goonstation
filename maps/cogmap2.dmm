@@ -15680,7 +15680,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aNz" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aNA" = (
@@ -17672,7 +17672,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aSv" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSw" = (

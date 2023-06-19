@@ -26162,7 +26162,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "lbi" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -43427,7 +43427,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "soR" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "spc" = (

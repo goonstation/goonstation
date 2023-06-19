@@ -12848,7 +12848,7 @@
 /turf/simulated/floor,
 /area/h7/lab)
 "aZL" = (
-/obj/critter/floateye,
+/mob/living/critter/small_animal/floateye,
 /turf/simulated/aprilfools{
 	desc = "A strange shifting void ...";
 	icon_state = "void";

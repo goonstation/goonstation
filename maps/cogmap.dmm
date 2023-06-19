@@ -13293,7 +13293,7 @@
 	},
 /area/station/crew_quarters/pool)
 "aLR" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aLS" = (
@@ -14317,7 +14317,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aOp" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aOq" = (
@@ -18387,7 +18387,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "aYz" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred4"

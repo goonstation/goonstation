@@ -15373,7 +15373,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aYq" = (
-/obj/critter/sealpup{
+/mob/living/critter/small_animal/seal{
 	dir = 4
 	},
 /turf/unsimulated/floor/arctic/snow,
@@ -16147,7 +16147,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "bau" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bav" = (
@@ -30106,7 +30106,7 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven/hydroponics)
 "bRp" = (
-/obj/critter/floateye,
+/mob/living/critter/small_animal/floateye,
 /turf/unsimulated/floor/void,
 /area/crunch)
 "bRq" = (
@@ -35064,7 +35064,7 @@
 	name = "Thunderdome Lounge"
 	})
 "chG" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /obj/reagent_dispensers/beerkeg,
 /turf/unsimulated/floor/carpet{
 	icon_state = "fred2";
@@ -56319,7 +56319,7 @@
 /turf/space/shuttle_transit/safe,
 /area/shuttle_particle_spawn/west)
 "dlX" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /obj/landmark{
 	name = "battle-royale-spawn"
 	},
@@ -58178,7 +58178,7 @@
 	})
 "dxo" = (
 /obj/decal/cleanable/rust/jen,
-/obj/critter/crab/party,
+/mob/living/critter/small_animal/crab/party,
 /turf/unsimulated/greek/cave/floor{
 	dir = 10
 	},
@@ -58233,7 +58233,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
 "dxy" = (
-/obj/critter/floateye,
+/mob/living/critter/small_animal/floateye,
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "dxz" = (
@@ -61626,7 +61626,7 @@
 	},
 /area/centcom/lounge)
 "dJx" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/unsimulated/floor{
 	icon = 'icons/misc/racing.dmi';
 	icon_state = "track_1"
@@ -64590,7 +64590,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSk" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/afterlife/bar)

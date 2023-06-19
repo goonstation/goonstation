@@ -25306,7 +25306,7 @@
 /obj/machinery/light/incandescent/cool{
 	nostick = 1
 	},
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/lounge)
 "fzw" = (

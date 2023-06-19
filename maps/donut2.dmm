@@ -15823,7 +15823,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "bdn" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fred4"
@@ -30581,7 +30581,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "gQw" = (
-/obj/critter/boogiebot{
+/mob/living/critter/small_animal/boogiebot{
 	desc = "Sealed away for our safety.";
 	name = "Illegal Boogie Bot"
 	},
@@ -31303,7 +31303,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "hvO" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -39090,7 +39090,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "nTZ" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /obj/stool/bench,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)

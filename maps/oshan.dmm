@@ -17662,7 +17662,7 @@
 /turf/simulated/floor/plating,
 /area/iss)
 "aVN" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/grass,
 /area/space)
 "aVO" = (
@@ -30747,7 +30747,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
 "bJB" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/grass,
 /area/space)
 "bJC" = (
@@ -31845,7 +31845,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
 "bMY" = (

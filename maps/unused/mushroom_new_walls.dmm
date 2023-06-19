@@ -22820,7 +22820,7 @@
 /area/station/hydroponics/bay)
 "fXO" = (
 /obj/pool/perspective,
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "fYi" = (
@@ -30949,7 +30949,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "pYc" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "pYE" = (
@@ -33967,7 +33967,7 @@
 	},
 /area/station/crew_quarters/pool)
 "tlN" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";

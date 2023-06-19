@@ -14897,7 +14897,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
 "ayc" = (
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fred4"
@@ -14987,7 +14987,7 @@
 	},
 /area/station/crew_quarters/pool)
 "ays" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayt" = (
@@ -14995,7 +14995,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
 "ayu" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayv" = (
