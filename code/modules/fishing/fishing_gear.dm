@@ -74,7 +74,8 @@
 	onStart()
 		..()
 		if (src.rod.tier < fishing_spot.rod_tier_required)
-			user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+			//user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")
+			boutput(user, "<span class='notice'>You need a higher tier rod to fish here!.</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -85,7 +86,8 @@
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
-		src.user.visible_message("[src.user] starts fishing.")
+		//src.user.visible_message("[src.user] starts fishing.")
+		boutput(user, "<span class='notice'>You start fishing.</span>")
 		src.rod.is_fishing = TRUE
 		src.rod.UpdateIcon()
 		src.user.update_inhands()
