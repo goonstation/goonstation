@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
 	dna_mutagen_banned = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/human
-	
+
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
@@ -1343,7 +1343,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.UpdateName()
 
 			src.mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			src.mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
 
 	disposing()
@@ -1360,7 +1359,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")
-			src.mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
 
 			if (!isnull(src.original_name))
