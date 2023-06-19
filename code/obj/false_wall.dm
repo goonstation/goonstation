@@ -173,8 +173,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			if(!floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
-			if(checkForMultipleDoors())
-				update_nearby_tiles()
+			update_nearby_tiles()
 			src.operating = 0
 		return 1
 
