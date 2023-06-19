@@ -339,4 +339,3 @@ TYPEINFO(/obj/item/fish_portal)
 	item_state = "aquarium"
 	slots = 6
 	can_hold = 	list(/obj/item/fish)
-
