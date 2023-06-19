@@ -1305,6 +1305,10 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
 
+	start_listen_inputs = list("ears", "equipped")
+	start_listen_modifiers = null
+	start_listen_languages = list("english") //lawbringer only understands english
+
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
@@ -1344,27 +1348,22 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 				src.name = "HoS [H.real_name]'s Lawbringer"
 				tooltip_rebuild = 1
 
-	//stolen the heartalk of microphone. the microphone can hear you from one tile away. unless you wanna
-	hear_talk(mob/M as mob, msg, real_name, lang_id)
-		var/turf/T = get_turf(src)
-		if (M in range(1, T))
-			src.talk_into(M, msg, real_name, lang_id)
-
 	//can only handle one name at a time, if it's more it doesn't do anything
-	talk_into(mob/M as mob, msg, real_name, lang_id)
-		//Do I need to check for this? I can't imagine why anyone would pass the wrong var here...
-		if (!islist(msg))
+	hear(var/datum/say_message/message)
+		//this is all set up for mobs and ceebs changing it, so lets say the lawbringer somehow knows if you're a mob
+		var/mob/M = null
+		if(!ismob(message.ident_speaker))
 			return
-		if (lang_id != "english")
-			return
+		else
+			M = message.ident_speaker
 		//only work if the voice is the same as the voice of your owner fingerprints.
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (owner_prints && (H.bioHolder.Uid != owner_prints))
-				are_you_the_law(M, msg[1])
+				are_you_the_law(M, message.content)
 				return
 		else
-			are_you_the_law(M, msg[1])
+			are_you_the_law(M, message.content)
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
 		if(!src.projectiles && !src.projectiles.len > 1)
@@ -1374,7 +1373,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			M.update_inhands()
 			UpdateIcon()
 
-		var/text = msg[1]
+		var/text = message.content
 		text = sanitize_talk(text)
 		if (fingerprints_can_shoot(M))
 			switch(text)
