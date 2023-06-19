@@ -339,3 +339,52 @@ TYPEINFO(/obj/item/fish_portal)
 	item_state = "aquarium"
 	slots = 6
 	can_hold = 	list(/obj/item/fish)
+
+//wall trophy
+/obj/item/wall_trophy
+	name = "Fish trophy"
+	desc = "to be added"
+	icon = 'icons/obj/items/fishing_gear.dmi'
+	icon_state = "wall_trophy"
+	item_state = "wall_trophy"
+	//do we have something attached?
+	var/item_added = FALSE
+	//what items are allowed to be attached?
+	var/allowed_item = /obj/item/fish/
+
+	New()
+		..()
+
+	//attaches item to the trophy
+	proc/add_item(var/obj/item/W, var/mob/user, params)
+		if (W == src)
+			boutput(user, "<span class='notice'>You can't attach [W] to another [src]. Duh.</span>")
+			return
+		if (!istype(W, allowed_item))
+			boutput(user, "<span class='notice'>You can't attach [W] to the [src].</span>")
+			return
+		if (item_added == TRUE)
+			boutput(user,"<span class='notice'>There is already something attached!</span>")
+			return
+		if(W.cant_drop)
+			boutput(user, "<span class='alert'>You can't attach [W] to the [src]! It's attached to you!</span>")
+			return
+		src.place_on(W, user, params)
+		W.set_loc(src)
+		src.vis_contents += W
+		src.UpdateIcon()
+		item_added = TRUE
+		boutput(user, "<span class='notice'>You attach [W] to \the [src].</span>")
+
+	attackby(var/obj/item/W, var/mob/user, params)
+		add_item(W, user, click_params)
+		return
+
+	Exited(var/obj/item/W)
+		var/mob/user
+		MOVE_OUT_TO_TURF_SAFE(W, src)
+		src.vis_contents -= W
+		src.UpdateIcon()
+		item_added = FALSE
+		boutput(user,"<span class='notice'>You unattach [W] from \the [src].</span>")
+		. = ..()

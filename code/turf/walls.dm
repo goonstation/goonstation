@@ -88,7 +88,7 @@ TYPEINFO(/turf/simulated/wall)
 
 // Made this a proc to avoid duplicate code (Convair880).
 /turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
+	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))//hack, no floor lights on walls
 		return
 
 	// the wall is the target turf, the source is the turf where the user is standing
@@ -116,6 +116,19 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 	finish_attaching(W, user, dir)
+	return
+
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, var/light_dir, x_pixel, y_pixel) //we don't want code duplication
+	if (!user)
+		return
+	boutput(user, "You attach \the [W] to [src].")
+	W.set_loc(src)
+	//position of the object
+	W.pixel_y = y_pixel
+	W.pixel_x = x_pixel
+	src.add_fingerprint(user)
+	W.set_dir(light_dir)
+	user.u_equip(W)
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
@@ -256,6 +269,10 @@ TYPEINFO(/turf/simulated/wall)
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
+	else if (istype(W, /obj/item/wall_trophy))
+		src.attach_item(user, W)
+		return
+
 	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -332,6 +349,10 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if (istype(W, /obj/item/light_parts))
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
+		return
+
+	else if (istype(W, /obj/item/wall_trophy))
+		src.attach_item(user, W)
 		return
 
 	else if (isweldingtool(W))
