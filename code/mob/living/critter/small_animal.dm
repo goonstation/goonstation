@@ -2636,7 +2636,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		..()
 		for (var/mob/living/critter/small_animal/walrus/walrus in view(7, src))
 			if (!(is_incapacitated(walrus) && walrus.ai?.enabled))
-				var/datum/aiTask/task = walrus.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
+				var/datum/aiTask/task = walrus.ai.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(walrus.ai, walrus.ai.default_task))
 				task.target = M
 				walrus.ai.priority_tasks += task
 				walrus.ai.interrupt()
