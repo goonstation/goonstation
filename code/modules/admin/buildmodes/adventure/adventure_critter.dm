@@ -38,7 +38,7 @@
 		"Drone (HK)" = /obj/critter/gunbot/drone/heavydrone,
 		"Drone (SC)" = /obj/critter/gunbot/drone,
 		"Fermid" = /mob/living/critter/fermid,
-		"Floating Thing" = /obj/critter/floateye,
+		"Floating Thing" = /mob/living/critter/small_animal/floateye,
 		"Floor (chompy)" = /obj/critter/monster_door/floor,
 		"Ice Spider" = /mob/living/critter/spider/ice,
 		"Ice Spider (baby)" = /mob/living/critter/spider/ice/baby,

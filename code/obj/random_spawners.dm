@@ -1104,7 +1104,7 @@
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
 	/mob/living/critter/small_animal/dog/shiba,
-	/obj/critter/pig,
+	/mob/living/critter/small_animal/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,

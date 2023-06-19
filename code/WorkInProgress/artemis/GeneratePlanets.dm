@@ -244,7 +244,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(15))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
