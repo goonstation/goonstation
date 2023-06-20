@@ -32,7 +32,7 @@
 	pixel_x = -10;
 	pixel_y = -21;
 	color = "#60f542";
-	desc = "A cute little cup poster...seems a bit slimey, though."
+	desc = "A cute little cup poster...seems a bit slimy, though."
 	},
 /turf/simulated/floor/white/checker2,
 /area/dmm_suite/clear_area)
@@ -91,7 +91,7 @@
 	},
 /obj/item/paper{
 	info = "snaily softserve's slowstop soda shop is a salt allergy-safe enviroment.";
-	name = "slimey paper";
+	name = "slimy paper";
 	pixel_x = -5;
 	pixel_y = 3
 	},
