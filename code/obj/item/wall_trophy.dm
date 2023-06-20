@@ -94,6 +94,7 @@ Subtypes:
 		if (src.anchored)
 			if (!can_unanchor) return //checks if item can be unanchored
 			src.anchored = FALSE
+			playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		. = ..()
 
 	Exited(var/obj/item/W)

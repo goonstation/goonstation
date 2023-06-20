@@ -119,7 +119,6 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, var/light_dir, x_pixel, y_pixel) //we don't want code duplication
-	boutput(user, "You attach \the [W] to [src].")
 	W.set_loc(src)
 	//position of the object
 	W.pixel_y = y_pixel
@@ -128,6 +127,8 @@ TYPEINFO(/turf/simulated/wall)
 	W.set_dir(light_dir)
 	user.u_equip(W)
 	W.anchored = TRUE
+	boutput(user, "You attach \the [W] to [src].")
+	playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
