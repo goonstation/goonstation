@@ -125,7 +125,7 @@
 /obj/machinery/illuminated_sign/open_neon{
 	pixel_y = 25;
 	on = 1;
-	name = ""Snaily Softserve's Slowstop Soda Shop""
+	name = "Snaily Softserve's Slowstop Soda Shop"
 	},
 /obj/storage/secure/closet/fridge{
 	pixel_y = 0;
