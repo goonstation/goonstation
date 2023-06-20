@@ -175,8 +175,6 @@
 	pass_unstable = TRUE
 
 	Cross(atom/movable/mover)
-		if (dir in ordinal)
-			. = ..()
 		if (istype(mover, /obj/projectile))
 			return 1
 		if ((get_dir(loc, mover) & dir) && (dir in cardinal))
@@ -185,8 +183,6 @@
 			return 1
 
 	Uncross(atom/movable/O, do_bump = TRUE)
-		if (dir in ordinal)
-			. = ..()
 		if (!src.density)
 			. = 1
 		else if (istype(O, /obj/projectile))
