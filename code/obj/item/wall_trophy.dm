@@ -11,7 +11,7 @@ Subtypes:
 
 /obj/item/wall_trophy
 	name = "Wall Trophy"
-	desc = "You shouldn't be seeing this probably"
+	desc = "Simple wall trophy that can display items on a wall."
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "wall_trophy"
 	item_state = "wall_trophy"
