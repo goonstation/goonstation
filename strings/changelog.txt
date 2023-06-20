@@ -1,4 +1,7 @@
 
+(t)tue jun 20 23
+(u)aloe
+(+)RP werewolves now have their hunger deplete at half speed, but they can only fill the need by feeding on humans.
 (t)mon jun 19 23
 (u)Gannets
 (p)14645

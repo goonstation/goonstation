@@ -51914,7 +51914,10 @@
 	name = "Catering Hangar"
 	})
 "jKC" = (
-/obj/machinery/atmospherics/binary/passive_gate,
+/obj/machinery/atmospherics/binary/passive_gate{
+	on = 1;
+	target_pressure = 1e+031
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "jKH" = (
@@ -64456,8 +64459,7 @@
 /obj/machinery/light,
 /obj/item/reagent_containers/food/snacks/candy/butterscotch{
 	pixel_x = 4;
-	pixel_y = 8;
-	
+	pixel_y = 8
 	},
 /obj/item/reagent_containers/food/drinks/tea{
 	pixel_x = -7;

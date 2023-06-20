@@ -39,7 +39,7 @@
 /area/noGenerate)
 "s" = (
 /obj/submachine/chicken_incubator,
-/obj/machinery/light/small/broken{
+/obj/machinery/light/small/sticky/broken{
 	dir = 4
 	},
 /turf/unsimulated/floor/greenblack/corner{
@@ -50,7 +50,7 @@
 /turf/unsimulated/floor/green,
 /area/noGenerate)
 "y" = (
-/obj/machinery/light/small/broken,
+/obj/machinery/light/small/sticky/broken,
 /turf/unsimulated/floor/greenblack{
 	dir = 1
 	},
