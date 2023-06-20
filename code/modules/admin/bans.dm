@@ -274,7 +274,7 @@ var/global/list/playersSeen = list()
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = ckey(input(src, "Ckey, leave blank to skip)", "Ban") as null|text)
+			data["ckey"] = ckey(input(src, "Ckey, leave blank to skip", "Ban") as null|text)
 			var/auto_fill
 			if (data["ckey"])
 				auto_fill = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
