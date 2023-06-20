@@ -3,13 +3,11 @@ Contains Wall Trophy code
 
 Subtypes:
 	Fish wall trophy
-
-
 */
 
 
 //wall trophy
-//this is literally just plate code but with wall attachment
+//some things are taken from plate code
 
 /obj/item/wall_trophy
 	name = "Wall Trophy"
@@ -18,6 +16,7 @@ Subtypes:
 	icon_state = "wall_trophy"
 	item_state = "wall_trophy"
 
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	//do we have something attached?
 	var/item_added = FALSE
@@ -26,18 +25,27 @@ Subtypes:
 	//can we un anchor the object?
 	var/can_unanchor = TRUE
 	//for spawning it with an item
-	var/intitial_item = null
+	var/initial_item = list()
 	//automatically anchors the item that gets attached to it
 	var/auto_anchor = FALSE
 
 	New()
 		..()
+		/*for mapping
+			checks for item in initial items and adds them to the trophy
+
+		*/
+		BLOCK_SETUP(BLOCK_BOOK)
+		for (var/type in src.initial_item)
+			. = src.add_item(new type(src.loc))
+			if (!.)
+				stack_trace("Failed to add item to trophy with initial items. [identify_object(src)]- likely can not accept this kind of object")
 
 	//procs
 
 	//attaches item to the trophy
-	//Some sprites look pretty janky if you try to put it in centre so it's based on clicks
-	proc/add_item(var/obj/item/W, var/mob/user, click_params)
+	proc/add_item(var/obj/item/W, var/mob/user, params)
+		. = FALSE
 		if (W == src)
 			boutput(user, "<span class='notice'>You can't attach [W] to another [src]. Duh.</span>")
 			return
@@ -50,7 +58,8 @@ Subtypes:
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You can't attach [W] to the [src]! It's attached to you!</span>")
 			return
-		src.place_on(W, user, click_params)
+		. = TRUE
+		src.place_on(W, user, params)
 		W.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		W.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		W.event_handler_flags |= NO_MOUSEDROP_QOL
@@ -74,9 +83,10 @@ Subtypes:
 		item_added = FALSE
 		boutput(user,"<span class='notice'>You unattach [W] from \the [src].</span>")
 
+
 	//attacked by item
-	attackby(var/obj/item/W, var/mob/user, click_params)
-		add_item(W, user, click_params)
+	attackby(var/obj/item/W, var/mob/user)
+		add_item(W, user)
 		return
 
 	//unattaching the trophy from the wall
@@ -90,8 +100,13 @@ Subtypes:
 		remove_item(W)
 		. = ..()
 
-	//fish trophy available for fishing tickets
+	//fish wall mount
 	fish_trophy
 		name = "'Biggest catch' Fish Wall Mount"
 		desc = "This Wall Mount can be hung on a wall and display fish for everyone to see. Show off your catch!"
 		allowed_item = /obj/item/fish/
+
+		//allows player to regulate where to put it, some fish sprites look janky otherwise
+		attackby(var/obj/item/W, var/mob/user, click_params)
+			add_item(W, user, click_params)
+			return
