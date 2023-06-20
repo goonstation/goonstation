@@ -2689,13 +2689,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		modify_christmas_cheer(-20)
 		if (gibbed)
 			return ..()
-
 		src.desc = "The lifeless corpse of [src], why would anyone do such a thing?"
 
 		for (var/mob/living/critter/small_animal/seal/seal in view(7, src))
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
 				seal.visible_message("<span class='emote'><b>[seal]</b> [pick("groans","yelps")]!</span>")
 				seal.ai.move_away(src, 10)
+
+		..()
 
 /* ================================================ */
 /* -------------------- Walrus ---------------------- */
