@@ -119,8 +119,6 @@ TYPEINFO(/turf/simulated/wall)
 	return
 
 /turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, var/light_dir, x_pixel, y_pixel) //we don't want code duplication
-	if (!user)
-		return
 	boutput(user, "You attach \the [W] to [src].")
 	W.set_loc(src)
 	//position of the object
@@ -270,8 +268,8 @@ TYPEINFO(/turf/simulated/wall)
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/wall_trophy))
-		src.attach_item(user, W)
+	else if (istype(W, /obj/item/wall_trophy/))
+		src.attach_item(user, W, dir, y_pixel = 3)
 		return
 
 	else if (isweldingtool(W))
@@ -352,8 +350,8 @@ TYPEINFO(/turf/simulated/wall)
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/wall_trophy))
-		src.attach_item(user, W)
+	else if (istype(W, /obj/item/wall_trophy/))
+		src.attach_item(user, W, dir, y_pixel = 3)
 		return
 
 	else if (isweldingtool(W))
