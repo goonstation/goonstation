@@ -3087,6 +3087,39 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 10
 	slime_chance = 11
 
+/mob/living/critter/small_animal/slug/snail/diner
+	name = "Snaily Softserve"
+	real_name = "snaildiner"
+	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	icon_state = "snail"
+	icon_state_dead = "snail-dead"
+	blood_id = "hemolymph"
+	health_brute = 30
+	health_burn = 30
+	slime_chance = 25
+	blood_color = "#f846cc"
+	color = "#ffabfb"
+	pet_text = "gently pats"
+	speechverb_say = "blurps"
+	voice_name = "Snaily Softserve"
+	memory = "i love being a snail..."
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
+	dir_locked = 1
+
+	New()
+		..()
+		var/image/bow = image('icons/obj/clothing/item_hats.dmi', "hbow-mint")
+		bow.appearance_flags = KEEP_TOGETHER
+		bow.pixel_y= 3
+		bow.pixel_x= -9
+		bow.loc = src
+		bow.layer= src.layer +0.1
+		src.overlays += bow
+		/*src.UpdateOverlays(bow, "bow") */
+
+
+
+
 /* =============================================== */
 /* ------------------ Butterfly ------------------ */
 /* =============================================== */
