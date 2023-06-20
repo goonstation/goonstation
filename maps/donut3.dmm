@@ -38945,6 +38945,10 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"lRi" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/bar)
 "lRu" = (
 /obj/item/device/radio/intercom/engineering{
 	dir = 8
@@ -119388,7 +119392,7 @@ mpU
 mpU
 mpU
 pjW
-qle
+lRi
 uiz
 jKR
 qle
@@ -125426,9 +125430,9 @@ pQh
 kjE
 gyG
 pQh
-nNm
-qle
-qle
+ioE
+lRi
+lRi
 atU
 jKR
 qle
