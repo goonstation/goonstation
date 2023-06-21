@@ -3430,7 +3430,7 @@
 	dir = 8;
 	icon_state = "red4"
 	},
-/area/diner/cow)
+/area/void_diner)
 "alv" = (
 /obj/decal/cleanable/greenpuke,
 /turf/unsimulated/floor/white/grime,
@@ -9934,7 +9934,7 @@
 "aHj" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "aHo" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -66575,7 +66575,7 @@
 "fTb" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "fTe" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-18"
@@ -66750,7 +66750,7 @@
 /obj/stool/chair,
 /mob/living/carbon/human/fatherjack/cow,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "ghc" = (
 /obj/storage/cart/trash,
 /obj/item/scrap,
@@ -66876,7 +66876,7 @@
 "glz" = (
 /obj/lattice,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "gmA" = (
 /obj/tree,
 /turf/unsimulated/outdoors/grass,
@@ -67059,7 +67059,7 @@
 /obj/item/plate/tray,
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "gDC" = (
 /obj/iomoon_puzzle/meat_ganglion{
 	id = "meatland_third"
@@ -67148,7 +67148,7 @@
 	dir = 1;
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "gJV" = (
 /turf/unsimulated/floor/bluewhite,
 /area/centcom/offices/varshie)
@@ -67752,7 +67752,7 @@
 	dir = 1;
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "hHZ" = (
 /obj/iomoon_puzzle/ancient_robot_door/meat{
 	dir = 4;
@@ -67800,7 +67800,7 @@
 /turf/unsimulated/floor/carpet{
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "hNm" = (
 /obj/machinery/vending/snack{
 	status = 1
@@ -67917,12 +67917,12 @@
 /area/centcom/offices/virvatuli)
 "hSU" = (
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "hTV" = (
 /obj/lattice,
 /obj/machinery/vending/standard,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "hUt" = (
 /obj/storage/crate/bin,
 /turf/unsimulated/floor/caution/corner/nw,
@@ -68147,7 +68147,7 @@
 "imL" = (
 /obj/submachine/slot_machine,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "inE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -68331,7 +68331,7 @@
 	icon_state = "gib7"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "ixU" = (
 /obj/decal/exhibit/midrange{
 	exhibit_id = "ex_centcom_midrange_1";
@@ -68351,7 +68351,7 @@
 /area/iomoon/base)
 "iBf" = (
 /turf/unsimulated/wall/void,
-/area/diner/cow)
+/area/void_diner)
 "iBp" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -68512,7 +68512,7 @@
 /obj/lattice,
 /obj/submachine/chef_oven,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "iNm" = (
 /obj/item/device/light/magic_lantern{
 	dir = 4;
@@ -68598,7 +68598,7 @@
 /turf/unsimulated/floor/carpet{
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "iRA" = (
 /obj/cauldron/jellybean/ephemeral,
 /turf/unsimulated/floor{
@@ -68638,7 +68638,7 @@
 "iTT" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "iVt" = (
 /obj/machinery/light{
 	dir = 1;
@@ -68882,7 +68882,7 @@
 	dir = 4;
 	icon_state = "red4"
 	},
-/area/diner/cow)
+/area/void_diner)
 "jns" = (
 /obj/machinery/light,
 /turf/unsimulated/floor{
@@ -68951,7 +68951,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/cashreg,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "jvd" = (
 /obj/effects/precipitation/snow/grey/tile,
 /obj/decoration/syndcorpse10{
@@ -69066,7 +69066,7 @@
 /area/iomoon/base/underground)
 "jEp" = (
 /turf/unsimulated/floor/stairs,
-/area/diner/cow)
+/area/void_diner)
 "jEZ" = (
 /obj/decal/poster/wallsign/dont_panic{
 	pixel_y = -31;
@@ -69369,7 +69369,7 @@
 /obj/machinery/espresso_machine,
 /obj/item/reagent_containers/food/drinks/espressocup,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "kfN" = (
 /turf/unsimulated/floor/caution/south,
 /area/centcom/offices/azrun)
@@ -69472,7 +69472,7 @@
 /obj/machinery/vending/cola/red,
 /obj/map/light/screen,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "koF" = (
 /obj/item/sticker/gold_star{
 	pixel_x = -10;
@@ -69497,7 +69497,7 @@
 /obj/lattice,
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "kqJ" = (
 /obj/decal/exhibit/midrange{
 	exhibit_id = "ex_centcom_midrange_4";
@@ -69692,7 +69692,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "kNR" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -69709,7 +69709,7 @@
 	pixel_x = 32
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "kPz" = (
 /obj/decal/cleanable/sakura,
 /obj/item/reagent_containers/food/snacks/ramen_bowl{
@@ -69730,7 +69730,7 @@
 "kPR" = (
 /obj/submachine/foodprocessor,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "kQq" = (
 /obj/table/auto,
 /obj/item/pinpointer/nuke,
@@ -69997,7 +69997,7 @@
 /obj/lattice,
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "llH" = (
 /obj/invisible_teleporter/receive_only{
 	id = "murderentry"
@@ -70271,7 +70271,7 @@
 	pixel_y = 2
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "lFh" = (
 /obj/grille/catwalk,
 /obj/railing/orange/reinforced{
@@ -70462,7 +70462,7 @@
 "lPH" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "lQe" = (
 /obj/window_blinds,
 /turf/unsimulated/wall/generic{
@@ -70693,7 +70693,7 @@
 "mkm" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "mlB" = (
 /obj/cable,
 /obj/cable{
@@ -70740,7 +70740,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/eggsplat,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "mor" = (
 /obj/machinery/light{
 	dir = 4;
@@ -70910,7 +70910,7 @@
 /obj/item/soup_pot,
 /obj/item/ladle,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "mAe" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -70967,7 +70967,7 @@
 /turf/unsimulated/floor/carpet{
 	dir = 10
 	},
-/area/diner/cow)
+/area/void_diner)
 "mEy" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -70985,7 +70985,7 @@
 /obj/lattice,
 /obj/kitchenspike,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "mFv" = (
 /obj/decal/cleanable/dirt/dirt5,
 /obj/stool/bench/blue/auto,
@@ -71493,7 +71493,7 @@
 "nqJ" = (
 /obj/landmark/lrt/voiddiner,
 /turf/unsimulated/floor/plating/damaged1,
-/area/diner/cow)
+/area/void_diner)
 "nqU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -71517,7 +71517,7 @@
 "nrv" = (
 /obj/machinery/gibber/output_west,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "nrB" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
@@ -71686,7 +71686,7 @@
 	dir = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "nyz" = (
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -71784,7 +71784,7 @@
 	dir = 9;
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "nIA" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 8
@@ -71864,7 +71864,7 @@
 	pixel_y = 7
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "nLL" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/flute{
 	pixel_x = 7;
@@ -72348,7 +72348,7 @@
 /area/syndicate_station_space)
 "ouA" = (
 /turf/unsimulated/floor/plating/damaged2,
-/area/diner/cow)
+/area/void_diner)
 "owu" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -72389,7 +72389,7 @@
 /obj/item/reagent_containers/food/snacks/ice_cream_cone,
 /obj/item/reagent_containers/food/snacks/condiment/chocchips,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "ozw" = (
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
@@ -72415,7 +72415,7 @@
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "oBf" = (
 /mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
@@ -72902,7 +72902,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "plh" = (
 /obj/table/wood/auto/desk{
 	color = "#333333";
@@ -73188,7 +73188,7 @@
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "pAj" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -73214,7 +73214,7 @@
 /obj/lattice,
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "pCx" = (
 /obj/machinery/light{
 	dir = 1;
@@ -73825,7 +73825,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/microwave,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "qvf" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -74178,7 +74178,7 @@
 /obj/item/plant/herb/grass,
 /obj/item/plant/herb/grass,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "qZP" = (
 /turf/unsimulated/floor/purple/side{
 	dir = 1
@@ -74290,7 +74290,7 @@
 "reH" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "rfM" = (
 /obj/table/wood/auto,
 /obj/item/paper_bin{
@@ -74383,7 +74383,7 @@
 	pixel_x = 28
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "rkU" = (
 /obj/decal/cleanable/glitter/harmless,
 /obj/critter/domestic_bee/walp_bee,
@@ -74661,7 +74661,7 @@
 	dir = 1
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "rBq" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -74861,7 +74861,7 @@
 	name = "Kitchen Door"
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "rQp" = (
 /obj/admin_plaque{
 	name = "Sov's Office"
@@ -75107,7 +75107,7 @@
 "seK" = (
 /obj/machinery/vending/kitchen,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "seL" = (
 /obj/stool/chair{
 	dir = 8
@@ -75238,7 +75238,7 @@
 /turf/unsimulated/floor/stairs/wide/other{
 	dir = 8
 	},
-/area/diner/cow)
+/area/void_diner)
 "spQ" = (
 /obj/admin_plaque{
 	desc = "A nameplate signifying who this office belongs to. It's been decorated with stickers, how cute.";
@@ -75315,7 +75315,7 @@
 /obj/lattice,
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "sCF" = (
 /obj/table/reinforced/auto,
 /obj/item/currency/spacecash/million,
@@ -75628,7 +75628,7 @@
 "tdU" = (
 /obj/machinery/vending/alcohol,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "teq" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/gangzone)
@@ -75841,7 +75841,7 @@
 "two" = (
 /obj/lattice,
 /turf/space,
-/area/diner/cow)
+/area/void_diner)
 "txc" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -75872,7 +75872,7 @@
 	dir = 10;
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "tyt" = (
 /obj/landmark{
 	name = "telesci"
@@ -75993,7 +75993,7 @@
 /area/hospital)
 "tKt" = (
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "tLq" = (
 /obj/item/cigbutt{
 	pixel_x = 9;
@@ -76041,7 +76041,7 @@
 "tPE" = (
 /obj/machinery/teleport/portal_ring,
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "tPH" = (
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/plating,
@@ -76283,7 +76283,7 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "uhA" = (
 /obj/lattice,
 /obj/cable{
@@ -76794,7 +76794,7 @@
 /area/crater/biodome/crew)
 "uVv" = (
 /turf/simulated/wall/auto/reinforced/old,
-/area/diner/cow)
+/area/void_diner)
 "uWx" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8;
@@ -77297,7 +77297,7 @@
 /turf/unsimulated/floor/carpet{
 	icon_state = "red2"
 	},
-/area/diner/cow)
+/area/void_diner)
 "vJC" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77410,7 +77410,7 @@
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
 	},
-/area/diner/cow)
+/area/void_diner)
 "vSr" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
@@ -77621,7 +77621,7 @@
 	dir = 4
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "wlR" = (
 /obj/securearea,
 /obj/map/light/graveyard,
@@ -77807,7 +77807,7 @@
 /area/crunch)
 "wxF" = (
 /turf/unsimulated/floor/plating/scorched,
-/area/diner/cow)
+/area/void_diner)
 "wxG" = (
 /obj/tombstone{
 	dir = 9
@@ -77943,7 +77943,7 @@
 /area/centcom/offices/efrem)
 "wIJ" = (
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "wIZ" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/plasmastone,
@@ -78181,7 +78181,7 @@
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/still,
 /turf/unsimulated/floor/plating,
-/area/diner/cow)
+/area/void_diner)
 "xbL" = (
 /obj/lattice{
 	dir = 1;
@@ -78582,7 +78582,7 @@
 	pixel_y = 8
 	},
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "xEP" = (
 /turf/unsimulated/wall/generic{
 	dir = 4;
@@ -78631,7 +78631,7 @@
 	pixel_x = 5
 	},
 /turf/unsimulated/floor/void,
-/area/diner/cow)
+/area/void_diner)
 "xHd" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 6
@@ -78716,7 +78716,7 @@
 "xMP" = (
 /obj/machinery/light/small,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "xNL" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-7"
@@ -78725,7 +78725,7 @@
 "xNY" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
-/area/diner/cow)
+/area/void_diner)
 "xOb" = (
 /obj/railing/yellow/reinforced,
 /turf/unsimulated/floor/stairs/dark{
@@ -78776,7 +78776,7 @@
 /turf/unsimulated/floor/carpet{
 	dir = 10
 	},
-/area/diner/cow)
+/area/void_diner)
 "xSY" = (
 /obj/machinery/communications_dish,
 /obj/lattice,
@@ -78933,7 +78933,7 @@
 "yan" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "yaC" = (
 /turf/unsimulated/floor/arrival/corner{
 	dir = 1
@@ -78987,7 +78987,7 @@
 "yfT" = (
 /obj/submachine/ice_cream_dispenser,
 /turf/unsimulated/outdoors/grass,
-/area/diner/cow)
+/area/void_diner)
 "ygA" = (
 /obj/table/neon/auto,
 /obj/machinery/computer3/generic/personal/personel_alt{
