@@ -2080,7 +2080,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		else
 		// straight pipe
 			src.dir = directions[1]
-			current.icon_state = "pipe-s"
+			src.icon_state = "pipe-s"
 			update_icon(src)
 	else
 	// DO NOT MAKE JUNCTIONS, FOOLS.
