@@ -121,6 +121,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 
 		else if (istype(W, /obj/item/wall_trophy/))
 			src.attach_item(user, W, dir, y_pixel = 3)
+			playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 			return
 
 		/* ----- Deconstruction ----- */

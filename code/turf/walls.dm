@@ -128,7 +128,6 @@ TYPEINFO(/turf/simulated/wall)
 	user.u_equip(W)
 	W.anchored = TRUE
 	boutput(user, "You attach \the [W] to [src].")
-	playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
@@ -271,6 +270,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if (istype(W, /obj/item/wall_trophy/))
 		src.attach_item(user, W, dir, y_pixel = 3)
+		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		return
 
 	else if (isweldingtool(W))
@@ -353,6 +353,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if (istype(W, /obj/item/wall_trophy/))
 		src.attach_item(user, W, dir, y_pixel = 3)
+		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		return
 
 	else if (isweldingtool(W))
