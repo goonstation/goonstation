@@ -11496,7 +11496,11 @@
 /area/lower_arctic/lower)
 "aNt" = (
 /obj/machinery/light/runway_light/delay4,
-/turf/unsimulated/floor/airless,
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
 /area/space)
 "aNu" = (
 /mob/living/critter/small_animal/wasp,
@@ -41856,7 +41860,11 @@
 /area/owlery/gangzone)
 "cCj" = (
 /obj/machinery/light/runway_light/delay5,
-/turf/unsimulated/floor/airless,
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
 /area/space)
 "cCk" = (
 /obj/decal/fakeobjects{
@@ -66826,6 +66834,11 @@
 "gGM" = (
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/teleport)
+"gGU" = (
+/obj/machinery/light/runway_light/delay5,
+/obj/lattice,
+/turf/space,
+/area/space)
 "gHt" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -70718,6 +70731,14 @@
 	dir = 4
 	},
 /area/centcom)
+"mHf" = (
+/obj/machinery/light/runway_light/delay4,
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "mIm" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -75976,6 +75997,13 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"ueq" = (
+/obj/machinery/light/runway_light/delay5,
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
 "uex" = (
 /obj/machinery/light{
 	dir = 8
@@ -79972,7 +80000,7 @@ cnw
 cnw
 cnw
 aEN
-cCj
+gGU
 cCS
 cCS
 cCj
@@ -81177,7 +81205,7 @@ cnw
 cnw
 cnw
 aEN
-cCj
+ueq
 cCS
 cCS
 cBB
@@ -95957,7 +95985,7 @@ aaa
 aaa
 axy
 aEN
-aNt
+mHf
 bCx
 bNa
 cdh
