@@ -12,7 +12,7 @@
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
 
-	boutput(world, "<h2 class='alert'>[title]</h2><span class='[css_class]'>[text]</span>")
+	boutput(world, "<h2 class='alert'>[title]</h2><span class='[css_class]'>[text]</span><br><br>")
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 

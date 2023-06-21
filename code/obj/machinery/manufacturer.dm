@@ -1161,12 +1161,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		src.updateUsrDialog()
 
 	proc/scan_card(obj/item/I)
-		if (istype(I, /obj/item/device/pda2))
-			var/obj/item/device/pda2/P = I
-			if(P.ID_card)
-				I = P.ID_card
-		if (istype(I, /obj/item/card/id))
-			var/obj/item/card/id/ID = I
+		var/obj/item/card/id/ID = get_id_card(I)
+		if (istype(ID))
 			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(ID.registered)
@@ -2659,7 +2655,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
-		/datum/manufacture/beaconkit
+		/datum/manufacture/beaconkit,
+		/datum/manufacture/podgps
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks

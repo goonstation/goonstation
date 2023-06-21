@@ -42,14 +42,14 @@ Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
 Map: [global.map_setting]
 "}
-	var/success = ircbot.export("issue", list(
+	var/list/success = ircbot.export("issue", list(
 		"title" = title,
 		"body" = desc,
 		"secret" = form.data["secret"],
 	))
 	if (!form.disposed)
 		qdel(form)
-	if(success)
+	if(success && success["status"] != "error")
 		tgui_alert(user_client.mob, "Issue reported!", "Issue reported!")
 		if(prob(easteregg_chance))
 			var/mob/living/critter/small_animal/cockroach/actual_bug = new(user_client.mob.loc)

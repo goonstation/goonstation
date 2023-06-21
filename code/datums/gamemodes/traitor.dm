@@ -70,16 +70,16 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		add_wraith()
+		add_wraith(num_wraiths)
 
 	return 1
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		if (traitor.special_role == ROLE_WRAITH) // agony.
-			traitor.add_antagonist(ROLE_WRAITH)
+			traitor.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START)
 		else
-			traitor.add_antagonist(ROLE_TRAITOR)
+			traitor.add_antagonist(ROLE_TRAITOR, source = ANTAGONIST_SOURCE_ROUND_START)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 

@@ -154,6 +154,14 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		var/type = pick(concrete_typesof(/obj/item/device/light/glowstick/))
+		var/obj/item/device/light/glowstick/newstick = new type(src.loc)
+		newstick.light_c.a = clamp(passed_genes?.get_effective_value("potency")/60, 0.33, 1) * 255
+		newstick.turnon()
+		qdel(src)
+		return newstick
+
 	proc/burst()
 		var/turf/T = get_turf(src.loc)
 		make_cleanable( /obj/decal/cleanable/generic,T)
@@ -332,8 +340,11 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
 				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
-			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
+			else if (istype(W, /obj/item/match) && W:on == MATCH_LIT) /// random bullshit go!
 				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
+
+			else if (istype(W, /obj/item/device/light/candle) && W:on)
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W]. Flameception!</span>")
 
 			else if (W.burning)
 				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
@@ -699,8 +710,8 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				src.UpdateOverlays(null, "light-lightplane")
 		else
 			if (!src.light.enabled)
-				src.light.attach_x = 0.5 + pixel_x / world.icon_size
-				src.light.attach_y = 0.5 + pixel_y / world.icon_size
+				src.light.attach_x = pixel_x / world.icon_size
+				src.light.attach_y = pixel_y / world.icon_size
 				src.light.enable()
 				src.UpdateOverlays(image(src.icon, "floodlight-light"), "light")
 				var/image/light_lightplane = image(src.icon, "floodlight-light")

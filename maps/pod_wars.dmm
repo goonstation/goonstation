@@ -2204,16 +2204,16 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "ig" = (
 /obj/storage/crate,
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/really_small,
-/obj/item/spacecash/random/tourist,
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/really_small,
+/obj/item/currency/spacecash/tourist,
+/obj/item/currency/spacecash/tourist,
 /obj/item/storage/box/record/radio/nostalgic,
 /turf/simulated/floor/blue/side{
 	dir = 5
@@ -2290,7 +2290,7 @@
 /area/pod_wars/spacejunk/uvb67/power)
 "iv" = (
 /obj/item/storage/box/record/clown_collection,
-/obj/item/spacecash/million,
+/obj/item/currency/spacecash/million,
 /turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/restaurant)
 "iw" = (
@@ -10190,7 +10190,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},

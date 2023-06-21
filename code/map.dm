@@ -73,6 +73,8 @@ var/global/list/mapNames = list(
 			if (!map_settings)
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
+
+			setup_z_level_parallax_settings()
 		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
@@ -285,6 +287,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
+	goonhub_map = "https://cdn.discordapp.com/attachments/412381738510319626/1116907371999010836/output.png"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
