@@ -72,9 +72,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 			return FALSE
 		src.owner.antagonists.Add(src)
 
-	Del()
+	disposing()
 		if (owner && !src.pseudo)
-			antagonists["[src.id]"] -= src
+			LAZYLISTREMOVE(antagonists["[src.id]"], src)
+			if (isnull(antagonists["[src.id]"]))
+				antagonists -= "[src.id]"
 
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue

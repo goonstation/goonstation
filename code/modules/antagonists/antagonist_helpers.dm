@@ -1,5 +1,5 @@
 /// An associative list of all antagonist IDs, associated with a list of all antagonist datums of that ID.
-var/list/antagonists = list()
+var/list/list/antagonists = list()
 
 /**
  * Gets a list of all antagonist datums of ID role_id, or of all IDs if no ID is specified.
