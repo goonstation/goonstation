@@ -2030,6 +2030,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 				directions += dir_to_pipe
 		for(var/obj/disposalpipe/maybe_pipe in get_step(src, dir_to_pipe))
 		// this checks all the different subtypes of pipe
+		// wow this is horrendous why did i make it this way
 			// the ones which spit out at 90 degrees
 			if (istype(maybe_pipe, /obj/disposalpipe/block_sensing_outlet)\
 			|| istype(maybe_pipe, /obj/disposalpipe/type_sensing_outlet))
@@ -2067,14 +2068,15 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		if (src.dpdir == NORTHWEST || src.dpdir == NORTHEAST || src.dpdir == SOUTHWEST || src.dpdir == SOUTHEAST)
 		// curved pipe
 			// this is to make it face the right way, for the icon. due to how the dmi is
-			if (src.dpdir == NORTHEAST)
-				src.dir = NORTH
-			else if (src.dpdir == NORTHWEST)
-				src.dir = WEST
-			else if (src.dpdir == SOUTHEAST)
-				src.dir = EAST
-			else if (src.dpdir == SOUTHWEST)
-				src.dir = SOUTH
+			switch (src.dpdir)
+				if (NORTHEAST)
+					src.dir = NORTH
+				if (NORTHWEST)
+					src.dir = WEST
+				if (SOUTHEAST)
+					src.dir = EAST
+				if (SOUTHWEST)
+					src.dir = SOUTH
 			src.icon_state = "pipe-c"
 			update_icon(src)
 		else
