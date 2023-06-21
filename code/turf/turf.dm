@@ -12,10 +12,11 @@
 
 	unsimulated
 		pass_unstable = FALSE
+		event_handler_flags = IMMUNE_SINGULARITY
 		/// If ReplaceWith() actually does a thing or not.
 		var/can_replace_with_stuff = FALSE
-#ifdef RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit
+#ifdef CI_RUNTIME_CHECKING
+		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
 #endif
 		allows_vehicles = FALSE
 
@@ -89,7 +90,7 @@
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.RL_SetOpacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.set_opacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -112,7 +113,7 @@
 		F["[path].color"] >> color
 		F["[path].density"] >> density
 		F["[path].opacity"] >> opacity
-		RL_SetOpacity(opacity)
+		set_opacity(opacity)
 		F["[path].pixel_x"] >> pixel_x
 		F["[path].pixel_y"] >> pixel_y
 		return DESERIALIZE_OK
@@ -262,7 +263,7 @@
 		icon_state = "darkvoid"
 		name = "void"
 		desc = "Yep, this is fine."
-	#ifndef RUNTIME_CHECKING
+	#ifndef CI_RUNTIME_CHECKING
 	if(buzztile == null && prob(0.01) && src.z == Z_LEVEL_STATION) //Dumb shit to trick nerds.
 		buzztile = src
 		icon_state = "wiggle"
@@ -658,6 +659,9 @@ proc/generate_space_color()
 			else
 				new_turf = new /turf/space(src)
 
+	for (var/obj/ladder/embed/L in orange(1))
+		L.UpdateIcon()
+
 	if(keep_old_material && oldmat && !istype(new_turf, /turf/space)) new_turf.setMaterial(oldmat)
 
 	new_turf.icon_old = icon_old //TODO: Change it so original turf path is remembered, for turfening floors
@@ -709,7 +713,7 @@ proc/generate_space_color()
 	//example of failure : fire destorying a wall, the fire goes away, the area BEHIND the wall that used to be blocked gets strip()ped and now it leaves a blue glow (negative fire color)
 	if (new_turf.opacity != old_opacity)
 		new_turf.set_opacity(old_opacity)
-		new_turf.RL_SetOpacity(!new_turf.opacity)
+		new_turf.set_opacity(!new_turf.opacity)
 
 
 	if (handle_air)
@@ -809,7 +813,6 @@ proc/generate_space_color()
 		floor = ReplaceWith(replacement)
 	else
 		floor = ReplaceWith("Space")
-
 	return floor
 
 /turf/proc/ReplaceWithConcreteFloor()
@@ -866,6 +869,8 @@ proc/generate_space_color()
 //	..()
 //moved step and slip functions into Carbon and Human files!
 
+TYPEINFO(/turf/simulated)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0
@@ -873,7 +878,6 @@ proc/generate_space_color()
 	var/mutable_appearance/wet_overlay = null
 	var/default_melt_cap = 30
 	can_write_on = 1
-	mat_appearances_to_ignore = list("steel")
 	text = "<font color=#aaa>."
 
 	oxygen = MOLES_O2STANDARD
@@ -987,6 +991,8 @@ proc/generate_space_color()
 	plane = PLANE_FLOOR
 #endif
 
+/turf/unsimulated/wall/generic
+
 /turf/unsimulated/wall/solidcolor
 	name = "invisible solid turf"
 	desc = "A solid... nothing? Is that even a thing?"
@@ -1088,7 +1094,8 @@ proc/generate_space_color()
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		R.change_stack_amount(-1)
-		ReplaceWithLattice()
+		var/obj/lattice/lattice = new(src)
+		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
 		if (R.material)
 			src.setMaterial(C.material)
 		return

@@ -271,6 +271,9 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			..()
 			delProperty("chemprot")
 
+	waders
+		name = "angler's waders"
+
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
 	desc = "Damn, thems some big shoes."
@@ -317,7 +320,6 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			src.add_fingerprint(user)
 			return
 		return ..()
-
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()

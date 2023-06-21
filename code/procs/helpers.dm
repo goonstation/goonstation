@@ -689,7 +689,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -779,7 +779,9 @@ proc/get_angle(atom/a, atom/b)
 			if (admins)
 				linkSrc = "%admin_ref%"
 			else
-				linkSrc = "\ref[usr.client.holder]"
+				if (isnull(user))
+					user = usr
+				linkSrc = "\ref[user.client.holder]"
 			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
 
 	return text
@@ -1220,6 +1222,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	while (ismob(M.loc) || isobj(M.loc))
 		. += M.loc
 		M = M.loc
+
+proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
@@ -1800,7 +1811,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1834,7 +1845,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1857,7 +1870,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)

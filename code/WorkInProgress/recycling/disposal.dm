@@ -1018,6 +1018,8 @@ TYPEINFO(/obj/disposalpipe/loafer)
 
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
+TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
+	mat_appearances_to_ignore = list("negativematter")
 /obj/item/reagent_containers/food/snacks/einstein_loaf
 	name = "einstein-rosen loaf"
 	desc = "A hypothetical feature of loaf-spacetime. Maybe this could be used as a material?"
@@ -1027,11 +1029,13 @@ TYPEINFO(/obj/disposalpipe/loafer)
 	force = 0
 	throwforce = 0
 	initial_volume = 400
+	mat_changename = FALSE
+	default_material = "negativematter"
+
 
 	New()
 		..()
 		src.reagents.add_reagent("liquid spacetime",11)
-		src.setMaterial(getMaterial("negativematter"), appearance = 0, setname = 0)
 
 /obj/item/reagent_containers/food/snacks/prison_loaf
 	name = "prison loaf"

@@ -1,6 +1,6 @@
 // Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-#ifdef RUNTIME_CHECKING
+#ifdef CI_RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()
@@ -67,7 +67,7 @@ proc/check_door_turfs()
 	var/list/log_lines = list()
 	for_by_tcl(door, /obj/machinery/door)
 		var/turf/T = door.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) && !istype(door, /obj/machinery/door/poddoor) || T.density)
 			log_lines += "[door] [door.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Doors on invalid turfs:\n" + jointext(log_lines, "\n"))
@@ -77,7 +77,7 @@ proc/check_window_turfs()
 	for(var/obj/window/window in world)
 		if (QDELETED(window)) return
 		var/turf/T = window.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) || T.density)
 			log_lines += "[window] [window.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Windows on invalid turfs:\n" + jointext(log_lines, "\n"))

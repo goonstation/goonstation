@@ -648,36 +648,37 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 
 
 //0.308
-/obj/item/gun/kinetic/minigun
-	name = "minigun"
-	desc = "The M134 Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+/obj/item/gun/kinetic/minigun // it is now STRONK
+	name = "\improper Alpha Hydrae minigun"
+	desc = "The M134 Alpha Hydrae Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 100
-	auto_eject = 1
+	max_ammo_capacity = 200 //its a minigun it can have some ammo
+	two_handed = TRUE
+	auto_eject = 0
+	has_empty_state = 1
+	spread_angle = 15 //15 degrees is a lot
+	can_dual_wield = TRUE //if you can figure it out, you can do it
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD
 
-	spread_angle = 25
-	can_dual_wield = 0
-
-	slowdown = 5
-	slowdown_time = 15
-
-	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/minigun
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.4)
+		setProperty("movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
@@ -2422,19 +2423,7 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 		..()
 
 	attack_self(mob/user)
-		if (src.broke_open)
-			src.broke_open = FALSE
-		else
-			src.broke_open = TRUE
-			src.casings_to_eject = src.shells_to_eject
-
-			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
-				src.ejectcasings()
-				src.shells_to_eject = 0
-
-		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
-
-		update_icon()
+		src.toggle_action(user)
 		..()
 
 	attackby(obj/item/I, mob/user)
@@ -2452,3 +2441,23 @@ ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message("<span class='alert'><b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!</span>")
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+

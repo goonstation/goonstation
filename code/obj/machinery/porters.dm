@@ -501,7 +501,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
@@ -786,10 +786,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
-								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)

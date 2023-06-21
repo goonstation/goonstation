@@ -116,7 +116,7 @@
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_SALVAGER)
+		M.mind?.add_antagonist(ROLE_SALVAGER, source = ANTAGONIST_SOURCE_ADMIN)
 		return
 
 // Stubs for the public

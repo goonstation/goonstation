@@ -158,7 +158,7 @@
 
 
 	proc/process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(H)
+		if(H && !ischangeling(H))
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
 			H.stamina_stun(mult)
@@ -290,7 +290,8 @@
 		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
-			H.set_stamina(min(0, H.stamina))
+			if (!ischangeling(H))
+				H.set_stamina(min(0, H.stamina))
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
@@ -922,11 +923,15 @@
 							damage += H.limbs.r_leg.limb_hit_bonus
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
-
-					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					if(issilicon(dive_attack_hit))
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+					else
+						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

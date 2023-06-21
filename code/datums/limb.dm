@@ -55,9 +55,10 @@
 
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, 2, 9, 0, 0.7, 0) // 0.7x stamina damage. No crits.
-			msgs.damage_type = DAMAGE_BLUNT
-			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.flush(0)
+			if (msgs)
+				msgs.damage_type = DAMAGE_BLUNT
+				user.attack_effects(target, user.zone_sel?.selecting)
+				msgs.flush(0)
 
 			special_next = 0
 		else
@@ -1578,7 +1579,37 @@
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("pummel", "pound", "mangle")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+/datum/limb/sword
+	help(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	disarm(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	grab(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (!user || !target)
+			return 0
+
+		if (!target.melee_attack_test(user))
+			return
+
+		if (no_logs != 1)
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a sword arm at [log_loc(user)].")
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		var/action = pick("stab", "slashe", "cut")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their sword!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)

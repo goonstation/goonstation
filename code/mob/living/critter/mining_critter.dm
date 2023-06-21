@@ -219,6 +219,7 @@
 				return
 			if(prob(40))
 				src.tamed = TRUE
+				src.ai_retaliates = FALSE
 				src.visible_message("[src] enjoyed the [I] and seems more docile!")
 				src.emote("burp")
 			src.aftereat()

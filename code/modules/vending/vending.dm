@@ -156,8 +156,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		..()
 		src.panel_image = image(src.icon, src.icon_panel)
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 	var/lastvend = 0
 
 	disposing()
@@ -327,7 +326,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
-	if (istype(W, /obj/item/spacecash))
+	if (istype(W, /obj/item/currency/spacecash))
 		if (src.pay)
 			src.credit += W.amount
 			W.amount = 0
@@ -468,7 +467,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (R.product_amount < 1)
 			display_amount = "OUT OF STOCK"
 		.["productList"] += list(list(
-			"path" = R.product_path,
+			"ref" = ref(R),
 			"name" = R.product_name,
 			"amount" = display_amount,
 			"cost" = R.product_cost,
@@ -497,6 +496,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if(!P.owner && src.scan?.registered)
 			.["owner"] = src.scan.registered
 			P.owner = src.scan.registered
+			P.owneraccount = FindBankAccountByName(src.scan.registered)
 		else
 			.["owner"] = P.owner
 		.["playerBuilt"] = TRUE
@@ -550,7 +550,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							R.product_cost = text2num(params["cost"])
 				update_static_data(usr)
 		if("rename")
@@ -563,13 +563,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							P.promoimage = R.icon
 							P.updateAppearance()
 		// return cash
 		if("returncash")
 			if (src.credit > 0)
-				var/obj/item/spacecash/returned = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 				returned.setup(src.get_output_location(), src.credit)
 				src.credit = 0
 		if("vend")
@@ -606,10 +606,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 
 				var/list/plist = player_list || product_list
 				for (var/datum/data/vending_product/R in plist)
-					if(R.product_path == text2path(params["target"]))
+					if(ref(R) == (params["target"]))
 						product_amount = R.product_amount
 						product = R
-				if(product_amount <= 0 || isnull(text2path(params["target"])))
+				if(product_amount <= 0 || isnull(product))
 					return
 				src.vend_ready = 0
 				src.prevend_effect()
@@ -617,7 +617,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 				SPAWN(src.vend_delay)
 					src.vend_ready = 1
 					for (var/datum/data/vending_product/R in plist)
-						if(R.product_path == text2path(params["target"]))
+						if(ref(R) == params["target"])
 							product_amount = R.product_amount
 							product = R
 					var/atom/movable/vended = src.vend_product(product, usr)
@@ -631,6 +631,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 							account["current_money"] -= product.product_cost
 						else
 							src.credit -= product.product_cost
+						if (!player_list)
+							wagesystem.shipping_budget += round(product.product_cost * profit) // cogwerks - maybe money shouldn't just vanish into the aether idk
+						else
+							//Players get 90% of profit from player vending machines QMs get 10%
+							var/obj/machinery/vending/player/vMachine = src
+							vMachine.owneraccount["current_money"] += round(product.product_cost * profit)
+							wagesystem.shipping_budget += round(product.product_cost * (1 - profit))
 					src.currently_vending = null
 					update_static_data(usr)
 				if(product.logged_on_vend)
@@ -808,7 +815,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (href_list["return_credits"])
 			SPAWN(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -1476,7 +1483,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1, 5), cost=PAY_UNTRAINED/10, hidden = 1)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 	blue
 		icon_state = "grife"
@@ -1498,7 +1505,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1,5), cost=PAY_UNTRAINED/10, hidden = 1)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -2799,9 +2806,9 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 

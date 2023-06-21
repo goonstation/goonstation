@@ -467,7 +467,7 @@ proc/create_fluff(datum/mind/target)
 			for (var/obj/item/device/pda2/PDA in L)
 				if (PDA.ID_card)
 					current_cash += PDA.ID_card.money
-			for (var/obj/item/spacecash/C in L)
+			for (var/obj/item/currency/spacecash/C in L)
 				current_cash += C.amount
 
 		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0

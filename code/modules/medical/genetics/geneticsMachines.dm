@@ -506,7 +506,7 @@
 			if (!istype(H) || isprematureclone(H))
 				return
 			var/datum/bioEffect/mutantrace/BE = locate(params["ref"])
-			if (H.mutantrace && !H.mutantrace?.genetics_removable)
+			if (!H.mutantrace?.genetics_removable)
 				//this should probably be a UI notification but I'm not touching that code with a ten foot pole
 				scanner_alert(ui.user, "Unable to purge corrupt genotype.")
 				return
@@ -1079,7 +1079,7 @@
 					"precisionEmitter" = genResearch.isResearched(/datum/geneticsResearchEntry/rad_precision),
 					"materialMax" = genResearch.max_material,
 					"mutantRaces" = list(list(
-						"name" = "Human",
+						"name" = "Clear Mutantrace",
 						"icon" = "template",
 						"ref" = "\ref[null]",
 						)),
