@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
@@ -413,7 +413,7 @@ proc/Create_Tommyname()
 /obj/machinery/power/debug_generator
 	name = "mysterious petrol generator"
 	desc = "Holds untold powers. Literally. Untold power. Get it? Power. Watts? Ok, fine. This thing spits out unlimited watt-volts!! There. I said it!"
-	icon_state = "ggenoff"
+	icon_state = "ggen0"
 	density = 1
 	var/generating = 0
 	New()
@@ -425,11 +425,11 @@ proc/Create_Tommyname()
 		if(generating > 0)
 			SubscribeToProcess()
 			powernet = get_direct_powernet()
-			icon_state = "ggenoff"
+			icon_state = "ggen0"
 		else
 			UnsubscribeProcess()
 			powernet = null
-			icon_state = "ggen"
+			icon_state = "ggen1"
 
 	process()
 		..()

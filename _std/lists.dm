@@ -345,11 +345,16 @@ proc/params2complexlist(params)
 	for(var/item in L)
 		. |= item
 
+#define shuffle_list_interval(x, start, end) \
+	do { \
+	for(var/i in start to end - 1) \
+		x.Swap(i, rand(i, end)) \
+	} while (0)
+
 #define shuffle_list(x) \
 	do { \
 	var/listlen = length(x); \
-	for(var/i in 1 to listlen - 1) \
-		x.Swap(i, rand(i, listlen)) \
+	shuffle_list_interval(x, 1, listlen) \
 	} while (0)
 
 /// Reverses a list in place

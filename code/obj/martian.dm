@@ -2,8 +2,24 @@
 	name ="Strange Computer"
 	desc ="This appears to be some sort of martian computer. The display is in an incomprehensible language."
 	icon = 'icons/turf/martian.dmi'
-	icon_state = "display_scroll"
+	icon_state = "display-scroll"
 	anchored = ANCHORED
+
+	off
+		icon_state = "display-off"
+		desc = "This appears to be some sort of martian computer. Or maybe a television.  Or an arcade machine.  Who the hell knows?"
+
+	broken
+		icon_state = "display-broken"
+		desc = "This appears to be some sort of martian computer. A broken one, at that."
+
+	graphic
+		icon_state = "display-graphic"
+		desc = "This appears to be some sort of martian computer. Is it marking something?"
+
+	blink
+		icon_state = "display-blink"
+		desc = "This appears to be some sort of martian computer. What is this trying to say?"
 
 /obj/crevice
 	name ="Mysterious Crevice"

@@ -268,8 +268,7 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new
-	src.vis_contents += src.chat_text
+	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -794,8 +793,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	var/atom/oldloc = src.loc
-
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -813,17 +810,6 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
-
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -2202,6 +2188,14 @@
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
 	src.gib()
 
+/mob/proc/smite_gib()
+	var/turf/T = get_turf(src)
+	showlightning_bolt(T)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	src.unequip_all()
+	src.emote("scream")
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2371,6 +2365,7 @@
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
+	. = ..()
 	update_clothing()
 
 /mob/proc/throw_item(atom/target, list/params)
@@ -2838,6 +2833,8 @@
 		return
 
 	if (waddle_walking)
+		if(isdead(src) || is_incapacitated(src) || src.lying)
+			return
 		makeWaddle(src)
 
 	last_move_dir = move_dir
@@ -2880,10 +2877,12 @@
 	equipment_proxy.aquatic_movement = GET_ATOM_PROPERTY(src, PROP_MOB_EQUIPMENT_MOVESPEED_FLUID)
 
 // alright this is copy pasted a million times across the code, time for SOME unification - cirr
-// no text description though, because it's all different everywhere
-/mob/proc/vomit(var/nutrition=0, var/specialType=null)
+/mob/proc/vomit(var/nutrition=0, var/specialType=null, var/flavorMessage="[src] vomits!")
+	if (src.reagents?.get_reagent_amount("promethazine")) // Anti-emetics stop vomiting from occuring
+		return
 	SEND_SIGNAL(src, COMSIG_MOB_VOMIT, 1)
 	playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	src.visible_message(flavorMessage)
 	if(specialType)
 		if(!locate(specialType) in src.loc)
 			var/atom/A = new specialType(src.loc)
@@ -3063,11 +3062,7 @@
 
 /mob/proc/get_id(not_worn = FALSE)
 	RETURN_TYPE(/obj/item/card/id)
-	if(istype(src.equipped(), /obj/item/card/id))
-		return src.equipped()
-	if(istype(src.equipped(), /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.equipped()
-		return pda.ID_card
+	return get_id_card(src.equipped())
 
 /mob/proc/add_karma(how_much)
 	src.mind?.add_karma(how_much)
@@ -3107,6 +3102,55 @@
 	SEND_SIGNAL(A, COMSIG_ATOM_EXAMINE, src, result)
 	boutput(src, result.Join("\n"))
 
+/mob/verb/global_help_verb() // (atom/A = null as null|mob|obj|turf in view(,usr))
+	set name = "Help"
+	set category = "Commands"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = FALSE
+
+	// This has no arguments because I want it to be clickable directly from the Commands tab (to show the general help message) and when typed into
+	// the command bar. If we gave this an argument it would always give you an ugly list of things you can see.
+	// But we still do want arguments so we can use it from the right click menu etc.
+	// It's sort of a mess, but it works. Trust me.
+	var/atom/target = length(args) >= 1 ? args[1] : null
+
+	if(target)
+		var/success = src.help_examine(target)
+		if(!success)
+			boutput(src, "Sadly \the [target] has no help message attached.")
+	else
+		boutput(src, {"<span class='helpmsg'>
+			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
+			You can also do that by alt+doubleclicking on that object.<br>
+			If you are new here consider looking at the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for help.<br>
+			You can also press <b>F3</b> to ask the mentors for help.<br>
+			For reporting rulebreaking or rules questions press <b>F1</b>.<br>
+		</span>"})
+
+/atom/verb/help_verb()
+	set name = "Help"
+	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = FALSE // overriden to TRUE on things which have a help message
+	set hidden = TRUE // ditto
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
+
+/// Same as help_verb but this one except visible, added dynamically when requested by signals
+/atom/proc/help_verb_dynamic()
+	set name = "Help"
+	set category = "Local"
+	set desc = "Shows you a help message on how to use an object."
+	set popup_menu = TRUE
+	set hidden = FALSE
+	set src in view()
+
+	var/success = usr.help_examine(src)
+	if(!success)
+		boutput(usr, "Sadly \the [src] has no help message attached.")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

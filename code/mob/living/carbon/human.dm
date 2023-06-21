@@ -18,7 +18,7 @@
 	var/dump_contents_chance = 20
 
 	var/image/health_mon = null
-	var/list/implant_icons = null
+	var/list/prodoc_icons = null
 	var/image/arrestIcon = null
 
 	var/pin = null
@@ -72,6 +72,7 @@
 	var/special_three_state = "none"
 
 	var/ignore_organs = 0 // set to 1 to basically skip the handle_organs() proc
+	var/robotic_organs = 0
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
@@ -167,6 +168,8 @@
 
 	var/datum/humanInventory/inventory = null
 
+	var/default_mutantrace = /datum/mutantrace/human
+
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
@@ -196,12 +199,13 @@
 	health_mon = image('icons/effects/healthgoggles.dmi',src,"100",EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(health_mon)
 
-	implant_icons = list()
-	implant_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	implant_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
-	for (var/implant in implant_icons)
-		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(implant_icons[implant])
+	prodoc_icons = list()
+	prodoc_icons["health"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["cloner"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["other"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	prodoc_icons["robotic_organs"] = image('icons/effects/healthgoggles.dmi',src,null,EFFECTS_LAYER_UNDER_4)
+	for (var/implant in prodoc_icons)
+		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_image(prodoc_icons[implant])
 
 	arrestIcon = image('icons/effects/sechud.dmi',src,null,EFFECTS_LAYER_UNDER_4)
 	get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_image(arrestIcon)
@@ -231,6 +235,7 @@
 			MB.power = microbombs_4_everyone
 
 	src.text = "<font color=#[random_hex(3)]>@"
+	src.set_mutantrace(src.default_mutantrace)
 	src.update_colorful_parts()
 
 	init_preferences?.apply_post_new_stuff(src)
@@ -479,7 +484,7 @@
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
 /mob/living/carbon/human/is_open_container()
-	return !src.organHolder.head
+	return !(src.organHolder?.head)
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -508,12 +513,12 @@
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(health_mon)
 		health_mon.dispose()
 		health_mon = null
-	if(implant_icons)
-		for (var/implant in implant_icons)
-			var/image/I = implant_icons[implant]
+	if(prodoc_icons)
+		for (var/implant in prodoc_icons)
+			var/image/I = prodoc_icons[implant]
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_image(I)
 			I.dispose()
-		implant_icons = null
+		prodoc_icons = null
 	if(arrestIcon)
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_image(arrestIcon)
 		arrestIcon.dispose()
@@ -571,8 +576,9 @@
 	..()
 
 /mob/living/carbon/human/death(gibbed)
-	if (ticker.mode)
-		ticker.mode.on_human_death(src)
+	if (ticker?.mode)
+		ticker.mode?.on_human_death(src)
+		ticker.mode?.check_win()
 	if(src.mind && src.mind.damned) // Ha you arent getting out of hell that easy.
 		src.hell_respawn()
 		return
@@ -622,7 +628,7 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace && src.mutantrace.onDeath(gibbed))
+	if (src.mutantrace.onDeath(gibbed))
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -703,9 +709,10 @@
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			NORMAL BUSINESS
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	emote("deathgasp") //let the world KNOW WE ARE DEAD
+	if (!HAS_ATOM_PROPERTY(src, PROP_MOB_SUPPRESS_DEATH_SOUND))
+		emote("deathgasp") //let the world KNOW WE ARE DEAD
 
-	if (!src.mutantrace || inafterlife(src)) // wow fucking racist
+	if (!inafterlife(src))
 		modify_christmas_cheer(-7)
 
 	src.canmove = 0
@@ -757,8 +764,6 @@
 			for(var/turf/T in view(2, src.loc))
 				if(locate(/obj/neon_lining) in T.contents)
 					src.unlock_medal("Party Hard", 1)
-
-	ticker.mode?.check_win()
 
 #ifdef RESTART_WHEN_ALL_DEAD
 	var/cancel
@@ -1225,9 +1230,6 @@
 	return null
 
 /mob/living/carbon/human/get_slot_from_item(var/obj/item/I)
-	if (!(I in src.contents))
-		return null
-
 	//wanted the following to be a switch case but those expect constant expressions
 
 	if (src.w_uniform == I)
@@ -1324,7 +1326,7 @@
 	if (!ai_active && is_npc)
 		ai_set_active(1)
 
-/mob/living/carbon/human/get_heard_name()
+/mob/living/carbon/human/get_heard_name(just_name_itself=FALSE)
 	var/alt_name = ""
 	if (src.name != src.real_name)
 		if (src.wear_id && src.wear_id:registered && src.wear_id:registered != src.real_name)
@@ -1339,12 +1341,20 @@
 		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
 	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
+			if (just_name_itself)
+				return src.wear_id:registered
 			rendered += "[src.wear_id:registered]</span>"
 		else
+			if (just_name_itself)
+				return "Unknown"
 			rendered += "Unknown</span>"
 	else if (src.vdisfigured)
+		if (just_name_itself)
+			return "Unknown"
 		rendered += "Unknown</span>"
 	else
+		if (just_name_itself)
+			return src.real_name
 		rendered += "[src.real_name]</span>[alt_name]"
 
 	return rendered
@@ -1423,16 +1433,10 @@
 		return 1*/
 
 /mob/living/carbon/human/say_quote(var/text)
-	var/sayverb = null
-	if (src.mutantrace)
-		if (src.mutantrace.voice_message)
-			src.voice_name = src.mutantrace.voice_name
-			src.voice_message = src.mutantrace.voice_message
-		sayverb = src.mutantrace.say_verb()
-	else
-		src.voice_name = initial(src.voice_name)
-		src.voice_message = initial(src.voice_message)
-
+	if (src.mutantrace.voice_message)
+		src.voice_name = src.mutantrace.voice_name
+		src.voice_message = src.mutantrace.voice_message
+	var/sayverb = src.mutantrace.say_verb()
 	var/special = 0
 	if (src.stamina < STAMINA_WINDED_SPEAK_MIN)
 		special = "gasp_whisper"
@@ -2132,6 +2136,8 @@
 			if (istype(I, /obj/item/card/id) && src.w_uniform)
 				return TRUE
 			if (istype(I, /obj/item/device/pda2) && src.w_uniform) // removed the check for the ID card in here because tbh it was silly that you could only equip it to the ID slot when it had a card  :I
+				return TRUE
+			if (istype(I, /obj/item/clothing/lanyard) && src.w_uniform)
 				return TRUE
 		if (slot_back)
 			if (I.c_flags & ONBACK)
@@ -2943,6 +2949,8 @@
 
 /mob/living/carbon/human/set_mutantrace(var/datum/mutantrace/mutantrace_type)
 
+	if(!mutantrace_type)
+		mutantrace_type = src.default_mutantrace
 	if(src.mutantrace)
 		qdel(src.mutantrace) // so that disposing() runs and removes mutant traits
 		. = 1
@@ -2953,7 +2961,7 @@
 	if(ispath(mutantrace_type, /datum/mutantrace) )	//Set a new mutantrace only if passed one
 		src.mutantrace = new mutantrace_type(src)
 		src.mutantrace.MutateMutant(src, "set")
-		src.mutantrace.on_attach() // Mutant race initalization, to avoid issues with abstract representation in New()
+		src.mutantrace.on_attach(src) // Mutant race initalization, to avoid issues with abstract representation in New()
 		. = 1
 
 	if(.)
@@ -3104,9 +3112,7 @@
 		.= 4 * (src.hand ? 1 : -1) * (src.dir & WEST ? 1 : -1)
 
 /mob/living/carbon/human/get_hand_pixel_y()
-	.= -5
-	if (src.mutantrace)
-		.+= src.mutantrace.hand_offset
+	.= -5 + src.mutantrace.hand_offset
 
 /mob/living/carbon/human/verb/show_inventory()
 	set name = "Show Inventory"
@@ -3241,11 +3247,9 @@
 	. = ..()
 	if(. || not_worn)
 		return
-	if(istype(src.wear_id, /obj/item/card/id))
-		return src.wear_id
-	if(istype(src.wear_id, /obj/item/device/pda2))
-		var/obj/item/device/pda2/pda = src.wear_id
-		return pda.ID_card
+	var/obj/item/card/id/id_card = get_id_card(src.wear_id)
+	if (istype(id_card))
+		return id_card
 
 /mob/living/carbon/human/is_hulk()
 	if (src.bioHolder && src.bioHolder.HasEffect("hulk"))
@@ -3391,12 +3395,7 @@
 		return get_singleton(/datum/pronouns/abomination)
 	if(src.wear_id)
 		// not using get_id() because we don't want held IDs
-		var/obj/item/card/id/id = null
-		if(istype(src.wear_id, /obj/item/card/id))
-			id = src.wear_id
-		else if(istype(src.wear_id, /obj/item/device/pda2))
-			var/obj/item/device/pda2/pda = src.wear_id
-			id = pda.ID_card
+		var/obj/item/card/id/id = get_id_card(src.wear_id)
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()

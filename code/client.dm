@@ -598,9 +598,6 @@
 	if(winget(src, "menu.fullscreen", "is-checked") == "true")
 		winset(src, null, "mainwindow.titlebar=false;mainwindow.is-maximized=true")
 
-	if(winget(src, "menu.hide_status_bar", "is-checked") == "true")
-		winset(src, null, "mainwindow.statusbar=false")
-
 	if(winget(src, "menu.hide_menu", "is-checked") == "true")
 		winset(src, null, "mainwindow.menu='';menub.is-visible = true")
 
@@ -1062,7 +1059,7 @@ var/global/curr_day = null
 			var/target = href_list["nick"]
 			var/t = input("Message:", text("Mentor Message")) as null|message
 			if(!(src.holder && src.holder.level >= LEVEL_ADMIN))
-				t = strip_html(t, 1500)
+				t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
@@ -1100,7 +1097,7 @@ var/global/curr_day = null
 				if (href_list["target"])
 					M = ckey_to_mob(href_list["target"])
 				if (!(src.holder && src.holder.level >= LEVEL_ADMIN))
-					t = strip_html(t, 1500)
+					t = strip_html(t, MAX_MESSAGE_LEN * 4, strip_newlines=FALSE)
 				if (!( t ))
 					return
 				if (!src || !src.mob) //ZeWaka: Fix for null.client

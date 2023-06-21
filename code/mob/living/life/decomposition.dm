@@ -14,7 +14,7 @@
 			if (!isrestrictedz(T.z) && H.loc == T && T.temp_flags & HAS_KUDZU) //only infect if on the floor
 				H.infect_kudzu()
 
-			if (H.mutantrace && !H.mutantrace.decomposes)
+			if (!H.mutantrace.decomposes)
 				return ..()
 
 			var/suspend_rot = \
@@ -31,7 +31,7 @@
 			if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 				return ..()
 
-			if (!(suspend_rot || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
+			if (!(suspend_rot || HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_MIASMA) || istype(owner.loc, /obj/item/body_bag) || (istype(owner.loc, /obj/storage) && owner.loc:welded) || istype(owner.loc, /obj/statue)))
 				icky_icky_miasma(T)
 
 			var/env_temp = 0
@@ -43,7 +43,7 @@
 
 			if(H.time_until_decomposition < 0)
 				H.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
-				if (suspend_rot)
+				if (suspend_rot || HAS_ATOM_PROPERTY(owner, PROP_MOB_NO_DECOMPOSITION))
 					return ..()
 				H.decomp_stage = min(H.decomp_stage + 1, DECOMP_STAGE_SKELETONIZED)
 				owner.update_body()

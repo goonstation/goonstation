@@ -122,7 +122,7 @@
 
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
-		. = "abear"
+		. = "abear-dead"
 		if (!HH.limb)
 			. += "-l"
 		HH = hands[2]

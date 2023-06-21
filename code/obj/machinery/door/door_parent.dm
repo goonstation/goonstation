@@ -33,6 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/sound_deny = 0
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
+	var/autoclose_delay = 15 SECONDS
 
 	var/health = 400
 	var/health_max = 400
@@ -180,6 +181,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
+		if(ignore_light_or_cam_opacity)
+				ignore_light_or_cam_opacity = FALSE
+				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -504,10 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
@@ -579,10 +580,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time)
 
 		if(src.visible)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(1)
-			else
-				src.RL_SetOpacity(1)
+			src.set_opacity(1)
 
 		src.closed()
 
@@ -599,7 +597,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/opened()
 	if(autoclose)
-		sleep(15 SECONDS)
+		sleep(src.autoclose_delay)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else
@@ -642,6 +640,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
+
+/obj/machinery/door/set_opacity(newopacity)
+	if(ignore_light_or_cam_opacity)
+		src.opacity = newopacity
+	else
+		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)
@@ -711,6 +715,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	. = ..()
 
 // APRIL FOOLS
+TYPEINFO(/obj/machinery/door/unpowered/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/machinery/door/unpowered/wood
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
@@ -726,7 +732,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
-	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from

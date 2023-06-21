@@ -5,7 +5,6 @@
 	max_stages = 3
 	spread = "The patient's kidneys are starting to fail"
 	cure = "anti-toxin drugs"
-	reagentcure = list("organ_drug2")
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -31,7 +30,7 @@
 		H.cure_disease(D)
 		return
 
-	//so you only need to remove the one kidney to cure the disease. 
+	//so you only need to remove the one kidney to cure the disease.
 	if ((failing_organ == "l" && !H.organHolder.left_kidney) || (failing_organ == "r" && !H.organHolder.right_kidney))
 		H.cure_disease(D)
 		return

@@ -513,7 +513,7 @@
 	pixel_y = 5
 	},
 /obj/table/neon/auto,
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
@@ -684,7 +684,7 @@
 	pixel_x = -6;
 	pixel_y = 13
 	},
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "wT" = (
@@ -904,7 +904,7 @@
 "CG" = (
 /obj/structure/girder/reinforced,
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "CK" = (
 /obj/decal/cleanable/dirt/dirt3,
@@ -963,7 +963,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/structure/girder/reinforced,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "FY" = (
 /obj/lattice,
@@ -1235,7 +1235,7 @@
 /turf/simulated/floor/terrazzo,
 /area/prefab/dreamplaza)
 "Ng" = (
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/wall,
 /area/noGenerate)
 "Nl" = (
 /obj/lattice{

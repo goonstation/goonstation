@@ -3,7 +3,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD")
+"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD", "promethazine")
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */

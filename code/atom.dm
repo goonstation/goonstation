@@ -4,8 +4,10 @@
   * Lots of functionality resides in this type.
   */
 TYPEINFO(/atom)
-	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	/// A list of procs that should appear on the admin interact menu (must support being called without arguments)
 	var/list/admin_procs = null
+	/// A list of material IDs that should be ignored when applying appearance
+	var/list/mat_appearances_to_ignore = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
@@ -15,6 +17,18 @@ TYPEINFO(/atom)
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
 	var/list/cooldowns
+
+	/// Material id of this object as a material id (lowercase string), set on New()
+	var/default_material = null
+	/// Does this object use appearance from the material?
+	var/uses_material_appearance = FALSE
+
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	/// DO NOT override this directly, use HELP_MESSAGE_OVERRIDE instead.
+	/// Example: HELP_MESSAGE_OVERRIDE("Use a <b>screwdriver</b> to unscrew the cover.")
+	var/help_message = null
 
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
@@ -69,6 +83,13 @@ TYPEINFO(/atom)
 
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
+
+	New(turf/newLoc)
+		. = ..()
+		// Lets stop having 5 implementations of this that all do it differently
+		if (!src.material && default_material)
+			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename, copy = FALSE)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -666,6 +687,12 @@ TYPEINFO(/atom)
 
 /atom/proc/get_desc(dist, mob/user)
 
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
+/// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
+/// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
+
 /**
   * a proc to completely override the standard formatting for examine text
 	* to prevent more copy paste
@@ -1072,21 +1099,57 @@ TYPEINFO(/atom)
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	var/on_turf = isturf(src.loc)
+
 	var/oldopacity = src.opacity
-	src.opacity = newopacity
+
+	if(!on_turf)
+		src.opacity = newopacity
+		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+		return
+
+	// the following happens only if we are on a turf
+	var/turf/our_turf = get_turf(src)
+
+	var/old_turf_total_opacity = our_turf.opacity + our_turf.opaque_atom_count
+	var/total_opacity_changed = (old_turf_total_opacity == 0) || (old_turf_total_opacity == 1 && newopacity == 0)
+
+	if(RL_Started && total_opacity_changed)
+		var/list/datum/light/lights = list()
+		for (var/turf/T in view(RL_MaxRadius, src))
+			if (T.RL_Lights)
+				lights |= T.RL_Lights
+
+		var/list/affected = list()
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.strip(++RL_Generation)
+
+		if (src != our_turf)
+			our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
+
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.apply()
+		if (RL_Started)
+			for (var/turf/T as anything in affected)
+				RL_UPDATE_LIGHT(T)
+	else
+		our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
-	if (isturf(src.loc))
-		// Not a turf, so we must send a signal to the turf
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+	// Not a turf, so we must send a signal to the turf
+	SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
 	// Below is a "smart" signal on a turf that only get called when the opacity
 	// actually changes in a meaningfull way. If atom is on a turf and we are
 	// obscuring vision in a turf that was originally not obscured. Or we are on a
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
-	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+	if (total_opacity_changed)
 		var/turf/T = src.loc
 		T.contents_set_opacity_smart(oldopacity, src)
 
@@ -1266,3 +1329,19 @@ TYPEINFO(/atom)
 	G.gift = src
 
 	return G
+
+/atom/onVarChanged(variable, oldval, newval)
+	. = ..()
+	switch(variable)
+		if("opacity")
+			src.opacity = oldval
+			src.set_opacity(newval)
+		if("density")
+			src.density = oldval
+			src.set_density(newval)
+		if("dir")
+			src.dir = oldval
+			src.set_dir(newval)
+		if("icon_state")
+			src.icon_state = oldval
+			src.set_icon_state(newval)

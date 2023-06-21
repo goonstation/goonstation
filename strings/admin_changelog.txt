@@ -1,3 +1,17 @@
+(t)fri jun 16 23
+(u)Sord
+(+)ASAY now shows your current alt key if you have one set
+(u)LeahTheTech
+(*)It is now once again possible to assign a custom objective when adding an antagonist to someone.
+(t)mon jun 05 23
+(u)LeahTheTech
+(*)Removed the old broken admin respawn-panel verb in favour of the new custom-ghost-spawn verb.
+(t)fri jun 02 23
+(u)LeahTheTech
+(*)Added a flock conversion build mode.
+(t)sat may 27 23
+(u)LeahTheTech
+(*)Added a new admin verb: Distribute Tokens. Gives an antag token to every <i>roundstart</i> antag.
 (t)tue may 23 23
 (u)pali
 (*)There's now a <b>Halt!</b> button in player options. It stops the player's movement for 5 seconds.<br>Intended for when someone prays and you want to fulfull their prayer but they just keep running away like a silly goose.

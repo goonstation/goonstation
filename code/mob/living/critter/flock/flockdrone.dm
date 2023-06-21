@@ -245,7 +245,7 @@
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.flock.z_level_check(src))
-			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
+			flock_speak(null, "Control of drone [src.real_name] surrendered.", src.flock)
 
 		controller = null
 		src.update_health_icon()
@@ -453,6 +453,15 @@
 		return TRUE
 	else
 		return ..()
+
+/mob/living/critter/flock/click(atom/target, list/params)
+	. = ..()
+	if (istype(target, /obj/machinery/door/feather) && !in_interact_range(target, src))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
 
 /mob/living/critter/flock/drone/DblClick(location, control, params)
 	. = ..()
@@ -1266,7 +1275,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/currency/spacebux))
 		return FALSE
 	return ..()
 
@@ -1276,7 +1285,7 @@
 
 	var/mob/living/critter/flock/drone/F = holder
 	src.instant_absorb = item.amount > 1 && round(F.resources_per_health * item.health) == 0
-	src.ignore_amount = istype(item, /obj/item/spacecash)
+	src.ignore_amount = istype(item, /obj/item/currency/spacecash)
 
 	item.inventory_counter?.show_count()
 

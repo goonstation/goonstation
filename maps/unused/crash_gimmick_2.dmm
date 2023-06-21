@@ -221,7 +221,7 @@
 	},
 /area/built_zone)
 "jT" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ky" = (

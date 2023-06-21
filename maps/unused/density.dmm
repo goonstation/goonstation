@@ -1867,7 +1867,7 @@
 /turf/space,
 /area/station/engine/coldloop)
 "ep" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop pressure release valve"
 	},
@@ -2930,7 +2930,7 @@
 /turf/space,
 /area/station/engine/coldloop)
 "gI" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop pressure release valve"
 	},
@@ -3531,7 +3531,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "hS" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -3809,7 +3809,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "it" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -3836,7 +3836,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iv" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /obj/cable{
@@ -4157,7 +4157,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
 "iW" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/blue,
@@ -4167,7 +4167,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/armory)
 "iY" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "iZ" = (

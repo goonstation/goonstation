@@ -19,7 +19,6 @@
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
-	faction = MOB_AI_FACTION_WRAITH
 
 	var/atom/movable/overlay/animation = null
 
@@ -57,6 +56,8 @@
 	var/hearghosts = TRUE
 
 	var/datum/movement_controller/movement_controller
+
+	faction = FACTION_WRAITH
 
 	//////////////
 	// Wraith Overrides
@@ -663,15 +664,6 @@
 //////////////
 // Related procs and verbs
 //////////////
-
-// i am dumb - marq
-/mob/proc/wraithize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		src.mind.add_antagonist(ROLE_WRAITH)
-		return
-	return null
 
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new
