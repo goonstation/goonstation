@@ -95,7 +95,7 @@ Subtypes:
 			if (!can_unanchor) return //checks if item can be unanchored
 			src.anchored = FALSE
 			playsound(src, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
-			boutput(user,"<span class='notice'>You unattach [src].</span>")
+			boutput(user,"You unattach [src].")
 		. = ..()
 
 	Exited(var/obj/item/W)
