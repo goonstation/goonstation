@@ -146,6 +146,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		return
 
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "grillitem")
 			if (!oldval && newval)
 				SubscribeToProcess()

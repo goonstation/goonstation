@@ -20,7 +20,7 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/wanderer_aggressive/scavenger
+	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
@@ -122,7 +122,7 @@
 
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
-		. = "abear"
+		. = "abear-dead"
 		if (!HH.limb)
 			. += "-l"
 		HH = hands[2]

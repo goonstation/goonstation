@@ -1041,13 +1041,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/mob/living/critter/mimic)
+		types = list(/mob/living/critter/mimic/virtual)
 
 	meaty
 		name = "Meat Thing"
 		point_cost = 1
 		count = 2
-		types = list(/obj/critter/blobman/meaty_martha)
+		types = list(/mob/living/critter/blobman/meat)
 
 	martian
 		name = "Martian"

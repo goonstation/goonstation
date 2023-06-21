@@ -181,7 +181,7 @@
 
 /datum/game_mode/spy_theft/post_setup()
 	for(var/datum/mind/spy in traitors)
-		spy.add_antagonist(ROLE_SPY_THIEF)
+		spy.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()

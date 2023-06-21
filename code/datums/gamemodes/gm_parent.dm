@@ -123,29 +123,6 @@ ABSTRACT_TYPE(/datum/game_mode)
 					if(!foundmachete)
 						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
 
-				if (traitor.special_role == ROLE_FLOCKMIND)
-					for (var/flockname in flocks)
-						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor)
-							stuff_to_output += "Peak total compute value reached: [flock.stats.peak_compute]"
-							if(length(flock.trace_minds))
-								stuff_to_output += "Flocktraces:"
-								for (var/trace_name in flock.trace_minds)
-									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
-
-							if (flock.relay_finished)
-								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
-								var/time = TIME
-								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
-									if (time - flocktrace.creation_time >= 5 MINUTES)
-										if (!istype(flocktrace.loc, /mob/living/critter/flock/drone))
-											flocktrace.unlock_medal("To the stars", TRUE)
-										else
-											var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
-											flockdrone.unlock_medal("To the stars", TRUE)
-
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
@@ -239,6 +216,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
 				unpicked_candidate_minds.Add(player.mind)
 
+	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
+									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
+
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
 
@@ -261,6 +241,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		return candidates
 
 /// Set up an antag with default equipment, objectives etc as they would be in mixed
+/// Should only be used for roundstart setup
 /datum/game_mode/proc/equip_antag(datum/mind/antag)
 	if (antag.assigned_role == "Chaplain" && antag.special_role == ROLE_VAMPIRE)
 		// vamp will burn in the chapel before he can react
@@ -269,7 +250,12 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	antag.add_antagonist(antag.special_role)
+	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
+
+	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
+	if (!antag_datum.uses_pref_name)
+		var/datum/player/player = antag.get_player()
+		player.joined_names = list()
 
 /datum/game_mode/proc/check_win()
 

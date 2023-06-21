@@ -21,7 +21,7 @@ TYPEINFO(/datum/component/waddling)
 
 /datum/component/waddling/proc/Waddle()
 	var/mob/living/L = parent
-	if(isdead(L) || L.getStatusDuration("stunned") || L.lying)
+	if(isdead(L) || is_incapacitated(L) || L.lying)
 		return
 	var/matrix/M = matrix(L.transform)
 	animate(L, pixel_z = height, time = 0)

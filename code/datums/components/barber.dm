@@ -285,8 +285,8 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 											"[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
 									"You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
-	else if(!M.mutantrace || M.hair_override)
-		return 1 // is human or mutant forced to be hairy, should be fine
+	else if((M.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR) || M.hair_override)
+		return 1 // has human hair or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
