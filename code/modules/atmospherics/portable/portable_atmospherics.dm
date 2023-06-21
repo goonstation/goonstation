@@ -142,5 +142,16 @@
 			else
 				boutput(user, "<span class='notice'>Nothing happens.</span>")
 				return
-
+	else if (istype(W, /obj/item/reagent_containers/balloon))
+		var/obj/item/reagent_containers/balloon/balloon = W
+		var/amount = balloon.breaths * BREATH_VOLUME - TOTAL_MOLES(balloon.air)
+		if (amount <= 0)
+			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
+			return
+		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
+		balloon.air.merge(removed)
+		balloon.UpdateIcon()
+		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] fills [balloon] from src.</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
+		return // copied from canister.dm heres to hoping i broke nothing
 	return
