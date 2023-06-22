@@ -1,4 +1,117 @@
 
+(t)thu jun 22 23
+(u)tarmunora
+(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
+(u)aloe
+(+)Werewolves on RP get double time before they're forcibly transformed.
+(u)Wisemonster
+(p)14572
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a catering warp beacon to cog2
+(u)RubberRats
+(p)14612
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The detective now has a clipboard in their locker.
+(u)mbc, pali
+(*)Oshan trench holes are now a lot more visible. The trench algae just illuminates them a lot or something.
+(t)wed jun 21 23
+(u)Gannets
+(p)14659
+(e)🗺🌱|A-Mapping, A-Hydroponics
+(*)A fishing pool, research terminal and fishing supplies vendor has been added to most in-rotation maps. You'll find them in hydroponics, hydroponics storage or the ranch.
+(t)tue jun 20 23
+(u)aloe
+(+)RP werewolves now have their hunger deplete at half speed, but they can only fill the need by feeding on humans.
+(t)mon jun 19 23
+(u)Gannets
+(p)14645
+(e)💅|C-QoL
+(+)Basic fishing rods are now free in fishing vendors.
+(+)There's now less log-spam when fishing around other players.
+(t)sun jun 18 23
+(u)aloe
+(*)Wizards and werewolves have been enabled in mixed RP mode with a low probability. May revert this depending on how it goes.
+(u)tarmunora
+(*)Prismatic spray spell cost reduction, increased power.
+(t)sat jun 17 23
+(u)Amylizzle
+(p)14603
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a sign to Clarion and Nadir to track how long it's been since the last nuclear meltdown on each map.
+(u)Glamurio (Ryou)
+(p)14491
+(e)🗺🔎🔒💅⚙|A-Mapping, C-Code-Quality, A-Secret, C-QoL, A-Internal
+(+)Fishing tokens now stack.
+(u)tarmunora
+(*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
+(u)Gannets
+(p)14618
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(+)Adds 12 additional fish to exisiting fishing spots.
+(+)Sprites by Wolfolotl, Thatdude & sian.
+(t)fri jun 16 23
+(u)LeahTheTech
+(*)Balloons can now be filled at gas canisters and inhaling from them will inhale a portion of the gas inside. Each balloon can hold 5 breaths.
+(+)Revolutionary status is now always removed on death, and head revolutionaries who are turned into cyborgs will not retain their ability to see other rev icons.
+(t)thu jun 15 23
+(u)tarmunora
+(+)Grave Fever now has an incubation period before it starts causing stuns etc.
+(u)aloe
+(+)Promethazine (anti-vomit chem) now works in hyposprays and the medical director's syringe gun.
+(t)wed jun 14 23
+(u)LeahTheTech
+(+)Mops now actually clean cleanables (like bloody footprints etc.)
+(+)Plague rats now fit in pet carriers.
+(t)tue jun 13 23
+(u)pali
+(+)pod portals no longer have 1% chance to gib, instead it is 2% chance to get teleported to a random space tile
+(u)Virva & Gannets
+(p)14561
+(e)🔊|C-Sound
+(+)Added Virva's sounds for catching fish, researching fish and using research tickets.
+(u)aloe
+(*)Late-join antagonist roles will no longer override antag preferences. If you would become a latejoin antag but you have that type disabled, you simply won't be an antag.
+(u)Cheekybrdy
+(p)14527
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(+)Added 2 new fishing spots, the mainframe and the ice cream machine!
+(t)mon jun 12 23
+(u)Gannets
+(p)14550
+(e)🆕💅|C-Feature, C-QoL
+(+)You can now empty out portable aquariums in to the fishing research terminal. This saves you 6 whole clicks!
+(u)Erinexx
+(p)14545
+(e)🎨|C-Sprites
+(+)Added Boar Vessel, 600-500 BC, Etruscan, ceramic
+(u)pali
+(+)Glue duration increased by a factor of 4. (Now 20 seconds per unit of glue.)
+(u)DimWhat
+(p)14547
+(e)🎨💊|C-Sprites, A-Medical
+(+)Resprited Plasmatoid lungs. Ow... pointy.
+(u)tarmunora
+(+)taser recharge rack can hold waveguns, taser smg, taser shotgun as well.
+(+)postit boxes limited to 20 sticky notes
+(u)pali
+(+)You can now emag the fishing hats for even wackier hat text.
+(u)Blackrep
+(p)14538
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)The bartender's sawn off can now be spun closed using twirl emote
+(t)sat jun 10 23
+(u)Wisemonster
+(p)14522
+(e)🆕|C-Feature
+(+)Civilian cyborgs can now go fishin'.
+(u)monkeymilesmoo
+(p)14501
+(e)🪲🧱|C-Bug, A-Materials
+(*)Plating on a wall can now be of a different material from the girder it was built on without being absorbed by the girder on placement.
+(u)Garash
+(p)14511
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Neutrons emitted by the nuclear reactor are now visible for people with infrared vision, (which is granted by mesons amongst other means.)
 (t)fri jun 09 23
 (u)Glamurio (Ryou)
 (p)14438

@@ -326,7 +326,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
 		return
-	if (istype(W, /obj/item/spacecash))
+	if (istype(W, /obj/item/currency/spacecash))
 		if (src.pay)
 			src.credit += W.amount
 			W.amount = 0
@@ -569,7 +569,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		// return cash
 		if("returncash")
 			if (src.credit > 0)
-				var/obj/item/spacecash/returned = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 				returned.setup(src.get_output_location(), src.credit)
 				src.credit = 0
 		if("vend")
@@ -815,7 +815,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 		if (href_list["return_credits"])
 			SPAWN(src.vend_delay)
 				if (src.credit > 0)
-					var/obj/item/spacecash/returned = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 					returned.setup(src.get_output_location(), src.credit)
 
 					usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
@@ -1483,7 +1483,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/lime, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/grones, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1, 5), cost=PAY_UNTRAINED/10, hidden = 1)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 	blue
 		icon_state = "grife"
@@ -1505,7 +1505,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky, 10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/spooky2,10, cost=PAY_UNTRAINED/6)
 			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater, 10, cost=PAY_UNTRAINED/4)
-			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, rand(1,5), cost=PAY_UNTRAINED/10, hidden = 1)
+			product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/drinks/cola/random, 10, cost=PAY_UNTRAINED/10)
 
 /obj/machinery/vending/electronics
 	name = "ElecTek Vendomaticotron"
@@ -2806,9 +2806,9 @@ TYPEINFO(/obj/machinery/vending/chem)
 		product_list += new/datum/data/vending_product(/obj/item/clow_key, 5, cost=PAY_TRADESMAN/2)      //      (please laugh)
 		product_list += new/datum/data/vending_product(/obj/item/card_box/solo, 5, cost=PAY_UNTRAINED/4)
 		product_list += new/datum/data/vending_product(/obj/item/paper/book/from_file/solo_rules, 5, cost=PAY_UNTRAINED/5)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
-		product_list += new/datum/data/vending_product(/obj/item/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/fivehundred, 10, cost=PAY_UNTRAINED/4)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/thousand, 10, cost=PAY_UNTRAINED/2)
+		product_list += new/datum/data/vending_product(/obj/item/currency/fakecash/hundredthousand, 1, cost=PAY_DOCTORATE)
 		product_list += new/datum/data/vending_product(/obj/item/dice/weighted, rand(1,3), cost=PAY_TRADESMAN/2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/dice/d1, rand(0,1), cost=PAY_TRADESMAN/3, hidden=1)
 
@@ -3286,6 +3286,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/ampoule,
 		/obj/item/chem_pill_bottle,
+		/obj/item/storage/box/patchbox,
 	)
 
 	New()

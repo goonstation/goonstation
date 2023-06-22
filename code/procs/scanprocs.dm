@@ -786,7 +786,7 @@
 			Pressure: [round(pressure, 0.1)] kPa<br>\
 			Temperature: [round(check_me.temperature)] K<br>\
 			Volume: [check_me.volume] L<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]"
+			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf
