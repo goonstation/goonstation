@@ -468,6 +468,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 					if (!old_reactions.Find(C))
 						var/turf/T = 0
+						if(C.temperature_change)
+							src.total_temperature += C.temperature_change
 						if (my_atom)
 							for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
 								if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
@@ -501,7 +503,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 									FG.skip_next_update = 1
 								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
 						if(C.result)
-							src.add_reagent(C.result, created_volume)
+							src.add_reagent(C.result, created_volume,, src.total_temperature)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 							src.update_total()
 							if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
