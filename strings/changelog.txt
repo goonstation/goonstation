@@ -1,5 +1,7 @@
 
 (t)wed jun 21 23
+(u)tarmunora
+(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
 (u)Gannets
 (p)14659
 (e)🗺🌱|A-Mapping, A-Hydroponics
