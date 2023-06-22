@@ -71,7 +71,7 @@
 					affecting.layer = initial(affecting.layer)
 				affecting.pixel_x = initial(affecting.pixel_x)
 				affecting.pixel_y = initial(affecting.pixel_y)
-				affecting.set_density(1)
+				affecting.set_density(initial(affecting.density))
 
 
 			if (state == GRAB_PIN)
