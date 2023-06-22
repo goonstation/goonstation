@@ -39280,7 +39280,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ciE" = (
-/turf/simulated/floor/airless/stairs/wood/wide,
+/turf/simulated/floor/stairs/wood/wide,
 /area/station/ranch)
 "ciF" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -41857,7 +41857,7 @@
 	name = "E light switch";
 	pixel_x = 24
 	},
-/turf/simulated/floor/airless/stairs/wood/wide{
+/turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},
 /area/station/ranch)
