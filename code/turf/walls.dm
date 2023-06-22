@@ -118,14 +118,47 @@ TYPEINFO(/turf/simulated/wall)
 	finish_attaching(W, user, dir)
 	return
 
-/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, var/light_dir, x_pixel, y_pixel) //we don't want code duplication
-	W.set_loc(src)
-	//position of the object
-	W.pixel_y = y_pixel
-	W.pixel_x = x_pixel
-	src.add_fingerprint(user)
-	W.set_dir(light_dir)
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, setdir = null) //we don't want code duplication
+
+	//reset object position
+	//not doing so breaks it's further position
+	W.pixel_y = 0
+	W.pixel_x = 0
+
+
+	//based on light fixture code
+	var/turf/target = src
+	var/turf/source = get_turf(user)
+
+
+	var/direction = 0
+
+	for (var/d in cardinal)
+		if (get_step(source,d) == target)
+			direction = d
+			break
+
+	if (!direction)
+		boutput(user, "<span class='alert'> Attaching [W] seems hard in this position...</span>")
+		return
+
 	user.u_equip(W)
+	W.set_loc(get_turf(user))
+
+	if (user.dir == EAST)
+		W.pixel_x = 32
+		W.pixel_y = 3
+	else if (user.dir == WEST)
+		W.pixel_x = -32
+		W.pixel_y = 3
+	else if (user.dir == NORTH)
+		W.pixel_y = 35
+		W.pixel_x = 0
+	else
+		W.pixel_y = -21
+		W.pixel_x = 0
+
+	src.add_fingerprint(user)
 	W.anchored = TRUE
 	boutput(user, "You attach \the [W] to [src].")
 	return
@@ -269,7 +302,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 	else if (istype(W, /obj/item/wall_trophy/))
-		src.attach_item(user, W, dir, y_pixel = 3)
+		src.attach_item(user, W)
 		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		return
 
@@ -352,7 +385,7 @@ TYPEINFO(/turf/simulated/wall)
 		return
 
 	else if (istype(W, /obj/item/wall_trophy/))
-		src.attach_item(user, W, dir, y_pixel = 3)
+		src.attach_item(user, W)
 		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		return
 
