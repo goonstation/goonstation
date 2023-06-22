@@ -2977,10 +2977,6 @@
 /obj/decal/cleanable/machine_debris,
 /turf/space/fluid/noexplosion,
 /area/dank_trench)
-"iC" = (
-/turf/space,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/mantavault)
 "iD" = (
 /obj/indestructible/invisible_block/opaque,
 /turf/unsimulated/floor/longtile/black,
@@ -2989,10 +2985,6 @@
 /obj/decoration/ntcratesmall{
 	dir = 4
 	},
-/turf/unsimulated/floor/longtile/black,
-/area/mantavault)
-"iF" = (
-/turf/space,
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
 "iG" = (
@@ -3104,14 +3096,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
-"AE" = (
-/turf/space,
-/turf/unsimulated/wall/trench,
-/area/dank_trench)
-"AH" = (
-/turf/space,
-/turf/cordon,
-/area/cordon)
 "AJ" = (
 /obj/ladder{
 	icon_state = "ladder_wall";
@@ -3119,10 +3103,6 @@
 	pixel_y = 0
 	},
 /turf/unsimulated/floor/longtile/black,
-/area/mantavault)
-"AL" = (
-/turf/space,
-/turf/unsimulated/floor/special/fogofcheating,
 /area/mantavault)
 "AR" = (
 /turf/unsimulated/floor/special/fogofcheating,
@@ -3137,10 +3117,6 @@
 "Co" = (
 /turf/unsimulated/floor/longtile/black,
 /area/mantavault)
-"Cr" = (
-/turf/space,
-/turf/space,
-/area/space)
 "Dz" = (
 /obj/item/device/infra_sensor,
 /turf/unsimulated/floor/martian,
@@ -12978,34 +12954,34 @@ AR
 AR
 AR
 AR
-AL
-AL
-iC
-iF
-iF
-iC
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+AR
+AR
+Bg
+Co
+Co
+Bg
+ab
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -13280,7 +13256,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 iG
@@ -13307,7 +13283,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -13582,7 +13558,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 AV
 Co
@@ -13609,7 +13585,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -13884,7 +13860,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 iD
 Co
@@ -13911,7 +13887,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14186,7 +14162,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 iD
 Co
@@ -14213,7 +14189,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14488,7 +14464,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 iH
@@ -14515,7 +14491,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -14790,7 +14766,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 Co
@@ -14817,7 +14793,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15092,7 +15068,7 @@ AR
 AR
 AR
 AR
-AL
+AR
 AR
 Bg
 Co
@@ -15119,7 +15095,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15394,7 +15370,7 @@ Bg
 Bg
 Bg
 Bg
-iC
+Bg
 Bg
 Bg
 Bg
@@ -15421,7 +15397,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15696,13 +15672,13 @@ ab
 ab
 ab
 ab
-AH
 ab
 ab
 ab
 ab
 ab
 ab
+ab
 gW
 gW
 gW
@@ -15723,7 +15699,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -15998,7 +15974,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -16025,7 +16000,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -16292,15 +16268,8 @@ Ip
 gy
 gP
 gP
-AE
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+Ip
+ab
 gW
 gW
 gW
@@ -16327,7 +16296,14 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -16629,7 +16605,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -16896,15 +16872,8 @@ Ip
 Ip
 Ip
 Ip
-AE
-AH
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+Ip
+ab
 gW
 gW
 gW
@@ -16931,7 +16900,14 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -17206,7 +17182,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17233,7 +17208,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -17508,7 +17484,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17535,7 +17510,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -17810,7 +17786,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -17837,7 +17812,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -18112,14 +18088,6 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
 gW
 gW
 gW
@@ -18139,7 +18107,15 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -18421,7 +18397,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -18441,7 +18416,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -18723,7 +18699,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -18743,7 +18718,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19025,7 +19001,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19045,7 +19020,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19327,7 +19303,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19347,7 +19322,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19629,7 +19605,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19649,7 +19624,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -19931,7 +19907,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -19951,7 +19926,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -20233,7 +20209,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -20253,7 +20228,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -20535,27 +20511,27 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -20850,7 +20826,7 @@ gW
 gW
 gW
 gW
-Cr
+gW
 gW
 gW
 gW
@@ -21145,16 +21121,16 @@ gW
 gW
 gW
 gW
-Cr
-Cr
 gW
 gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW
@@ -21447,7 +21423,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -21456,7 +21431,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -21749,7 +21725,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -21758,7 +21733,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22051,7 +22027,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22060,7 +22035,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22353,7 +22329,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22362,7 +22337,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22655,7 +22631,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22664,7 +22639,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -22957,7 +22933,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -22966,7 +22941,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23259,7 +23235,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23268,7 +23243,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23561,7 +23537,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23570,7 +23545,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -23863,7 +23839,6 @@ gW
 gW
 gW
 gW
-Cr
 gW
 gW
 gW
@@ -23872,7 +23847,8 @@ gW
 gW
 gW
 gW
-Cr
+gW
+gW
 gW
 gW
 gW
@@ -24165,16 +24141,16 @@ gW
 gW
 gW
 gW
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
-Cr
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
+gW
 gW
 gW
 gW

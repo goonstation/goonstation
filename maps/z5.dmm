@@ -525,12 +525,6 @@
 "nA" = (
 /turf/simulated/floor,
 /area/mining/quarters)
-"nD" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/noGenerate)
 "nG" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
@@ -704,12 +698,6 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
-/area/noGenerate)
-"oG" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
 /area/noGenerate)
 "oH" = (
 /obj/table/reinforced/auto,
@@ -2597,12 +2585,6 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"zO" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/noGenerate)
 "zP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -3292,10 +3274,6 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
-"Em" = (
-/turf/space,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/mining/hangar)
 "En" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -4141,12 +4119,6 @@
 	},
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"Jp" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/noGenerate)
 "Js" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -5192,10 +5164,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"QO" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
-/area/noGenerate)
 "QR" = (
 /obj/lattice,
 /obj/item/raw_material/shard,
@@ -5914,12 +5882,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
-"Vu" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 9
-	},
-/area/noGenerate)
 "Vy" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -6027,10 +5989,6 @@
 /obj/cable,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup3)
-"Wu" = (
-/turf/space,
-/turf/space,
-/area/noGenerate)
 "Wv" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent,
@@ -6038,12 +5996,6 @@
 	dir = 4
 	},
 /area/mining/hangar)
-"Ww" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/noGenerate)
 "Wx" = (
 /obj/rail{
 	dir = 8;
@@ -6559,12 +6511,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
-"ZM" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/noGenerate)
 "ZR" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair{
@@ -39707,7 +39653,7 @@ ab
 ab
 ab
 ab
-Wu
+ab
 ab
 ab
 ab
@@ -40009,7 +39955,12 @@ ab
 ab
 ab
 ab
-Wu
+ab
+ab
+ab
+aW
+ab
+ab
 ab
 ab
 aW
@@ -40017,11 +39968,6 @@ ab
 ab
 ab
 ab
-aW
-Wu
-Wu
-Wu
-Wu
 ab
 aa
 aa
@@ -40311,7 +40257,7 @@ ab
 ab
 ab
 aW
-Wu
+ab
 ab
 ab
 aX
@@ -40320,10 +40266,10 @@ bt
 bt
 bt
 bi
-Wu
 ab
 ab
-Wu
+ab
+ab
 ab
 ab
 aa
@@ -40625,7 +40571,7 @@ RN
 RN
 Kc
 ab
-Wu
+ab
 ab
 ab
 ab
@@ -40927,7 +40873,7 @@ CA
 RN
 Kc
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -41833,7 +41779,7 @@ KJ
 RN
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -42135,7 +42081,7 @@ Wq
 RN
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -42437,8 +42383,8 @@ Xs
 RN
 Kc
 Kc
-zO
-zO
+FM
+FM
 ab
 ab
 ab
@@ -42740,7 +42686,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -43042,7 +42988,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -43344,7 +43290,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 HU
 ab
 ab
@@ -43646,7 +43592,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 HU
 ab
 ab
@@ -43948,7 +43894,7 @@ SU
 XW
 SU
 SU
-QO
+Kc
 HU
 ab
 ab
@@ -44250,7 +44196,7 @@ za
 YK
 Nc
 SU
-nD
+HU
 HU
 ab
 ab
@@ -44530,7 +44476,7 @@ ab
 ab
 ab
 ab
-Ww
+ZS
 Kc
 Kc
 Kc
@@ -44832,7 +44778,7 @@ ab
 ab
 ep
 ab
-ZM
+RK
 Kc
 Kc
 Kc
@@ -45134,7 +45080,7 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 Kc
 Kc
@@ -45436,8 +45382,8 @@ ab
 ab
 ab
 ab
-Ww
-Ww
+ZS
+ZS
 Kc
 Kc
 Pz
@@ -45739,8 +45685,8 @@ bt
 bt
 bt
 ZS
-Ww
-Ww
+ZS
+ZS
 Kc
 tF
 Pz
@@ -46344,7 +46290,7 @@ bu
 bu
 bu
 bu
-ZM
+RK
 Kc
 Kc
 GW
@@ -46621,15 +46567,15 @@ XR
 HW
 UX
 HW
-Jp
-zO
+Bt
+FM
 ab
 ab
 ab
 ab
-Vu
-Jp
-Jp
+DW
+Bt
+Bt
 FM
 ab
 ab
@@ -46646,7 +46592,7 @@ ab
 ab
 ab
 ab
-Wu
+ab
 ab
 Kc
 Kc
@@ -46924,12 +46870,12 @@ HW
 wO
 HW
 Kc
-zO
-Jp
-Jp
-Jp
-Jp
-Vu
+FM
+Bt
+Bt
+Bt
+Bt
+DW
 Kc
 Kc
 FM
@@ -46948,12 +46894,12 @@ ab
 ep
 ab
 ab
-Wu
+ab
 ab
 ab
 Kc
 Qm
-nD
+HU
 RN
 pb
 Mt
@@ -48410,7 +48356,7 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 ab
 ab
@@ -48712,12 +48658,12 @@ ab
 HW
 HW
 HW
-ZM
+RK
 Kc
 Kc
 Kc
 FM
-Wu
+ab
 ab
 ab
 ab
@@ -49019,7 +48965,7 @@ Vn
 Vn
 Lq
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -49047,7 +48993,7 @@ sP
 Jv
 Jv
 Jv
-Em
+sP
 sP
 sP
 Jv
@@ -49316,13 +49262,13 @@ ab
 HW
 HW
 HW
-ZM
+RK
 Kc
 Kc
 JX
 Kc
-zO
-Wu
+FM
+ab
 ab
 ab
 ab
@@ -49618,13 +49564,13 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 Kc
 JX
 Kc
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -49919,18 +49865,18 @@ ab
 ab
 ab
 ab
-Vu
-Vu
+DW
+DW
 Kc
 Kc
 JX
 Kc
 Kc
-zO
-Jp
-Jp
-Jp
-Jp
+FM
+Bt
+Bt
+Bt
+Bt
 EU
 Ya
 Od
@@ -50221,7 +50167,7 @@ ab
 ab
 ep
 ab
-Vu
+DW
 Kc
 Kc
 Kc
@@ -55657,7 +55603,7 @@ Ws
 ab
 ab
 ab
-Ww
+ZS
 HW
 HW
 Tn
@@ -57821,8 +57767,8 @@ ab
 ce
 ab
 ab
-Ww
-oG
+ZS
+HA
 Pz
 Qm
 Pz
@@ -58691,7 +58637,7 @@ Kc
 Hx
 Kr
 Hx
-Ww
+ZS
 Kc
 Kc
 Fv
@@ -58993,13 +58939,13 @@ HA
 GJ
 NQ
 aY
-Ww
-oG
-oG
-Ww
+ZS
+HA
+HA
+ZS
 Kc
 Kc
-nD
+HU
 HW
 HW
 HW
@@ -59031,7 +58977,7 @@ bu
 bu
 bu
 bu
-Ww
+ZS
 HA
 ZS
 Kc
@@ -59298,10 +59244,10 @@ aY
 fK
 ab
 ab
-Ww
-oG
-oG
-nD
+ZS
+HA
+HA
+HU
 aY
 NQ
 aY

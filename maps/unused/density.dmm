@@ -3514,11 +3514,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "hR" = (
-/obj/machinery/ignition_switch{
-	id = "tox_ignition1";
-	pixel_x = -24;
-	pixel_y = -8
-	},
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
 	frequency = 1229;
@@ -5928,8 +5923,7 @@
 /area/station/medical/medbay/surgery)
 "mx" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -6632,7 +6626,6 @@
 	name = "Magnet Area Boundary"
 	},
 /turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "nX" = (
 /obj/item/rcd_ammo/big,
@@ -6854,11 +6847,7 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
-	intact = 0
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	intact = 0
+	
 	},
 /area/mining/magnet)
 "ou" = (
@@ -6893,10 +6882,6 @@
 	dir = 6;
 	layer = 2
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6;
-	layer = 2
-	},
 /area/mining/magnet)
 "ov" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
@@ -6919,7 +6904,6 @@
 	icon_state = "magnet";
 	pixel_x = 16
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	layer = 2
@@ -6933,7 +6917,6 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 2;
 	icon_state = "catwalk_cross";
@@ -6949,7 +6932,6 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2
@@ -6968,7 +6950,6 @@
 	dir = 4;
 	icon_state = "mmagnet"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 6;
 	layer = 2

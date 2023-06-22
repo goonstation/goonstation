@@ -5118,7 +5118,7 @@
 	},
 /area/station/chapel/sanctuary)
 "ajT" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "chapelgun";
 	name = "Chapel Mass Driver Button";
 	pixel_x = 0;
@@ -5387,7 +5387,9 @@
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "akr" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "aks" = (
@@ -5812,7 +5814,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "ale" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/chapel/office)
 "alf" = (
@@ -7660,7 +7662,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aow" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aox" = (
@@ -7878,7 +7880,7 @@
 	layer = 3;
 	level = 1
 	},
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/machinery/camera{
 	c_tag = "Morgue";
 	dir = 4
@@ -9914,7 +9916,6 @@
 /turf/simulated/floor/airless/plating/scorched,
 /area/station/engine/proto_gangway)
 "att" = (
-/turf/simulated/floor/airless/plating/scorched,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto_gangway)
 "atu" = (
@@ -10250,10 +10251,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
-"auh" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "aui" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -11790,7 +11787,6 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "axg" = (
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "axh" = (
@@ -12770,10 +12766,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
-"azm" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "azn" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13018,7 +13010,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "azH" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/research)
 "azI" = (
@@ -13052,10 +13044,6 @@
 /obj/window/reinforced,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"azL" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "azM" = (
 /obj/cable{
 	icon_state = "0-2";
@@ -13560,10 +13548,6 @@
 	},
 /turf/simulated/floor/blackwhite/side,
 /area/station/medical/research)
-"aAP" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto)
 "aAQ" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 4
@@ -13863,7 +13847,7 @@
 "aBo" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "aBp" = (
@@ -22154,7 +22138,6 @@
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aPZ" = (
 /turf/simulated/wall,
@@ -22741,7 +22724,6 @@
 "aRb" = (
 /obj/cable,
 /obj/item/cable_coil/cut,
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aRc" = (
@@ -23035,7 +23017,6 @@
 /area/space)
 "aRH" = (
 /obj/item/cable_coil/cut,
-/turf/space,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "aRI" = (
@@ -27461,8 +27442,8 @@
 /obj/item/kitchen/utensil/spoon,
 /obj/item/kitchen/utensil/knife,
 /obj/item/paper/book/from_file/cookbook,
-/obj/item/reagent_containers/glass/bottle/icing,
-/obj/item/reagent_containers/glass/bottle/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 8
@@ -33823,7 +33804,7 @@
 	icon_state = "intact";
 	dir = 5
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 10;
 	pixel_y = 24
@@ -35384,7 +35365,6 @@
 	pixel_y = 15
 	},
 /turf/simulated/floor/plating/damaged3,
-/turf/simulated/floor/plating/damaged2,
 /area/station/chapel/sanctuary)
 "bok" = (
 /obj/grille/steel,
@@ -35529,15 +35509,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/space)
-"bow" = (
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "box" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -35580,7 +35551,6 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/plating/airless,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/station/engine/proto)
 "boD" = (
@@ -36036,7 +36006,6 @@
 /turf/simulated/floor/caution/east,
 /area/space)
 "bpr" = (
-/turf/simulated/floor,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "bps" = (
@@ -36902,10 +36871,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"caB" = (
-/turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
 "caF" = (
 /obj/item/raw_material/shard/glass{
 	tag = "icon-medium";
@@ -36914,7 +36879,7 @@
 /turf/space,
 /area/space)
 "cfX" = (
-/obj/machinery/beacon{
+/obj/warp_beacon{
 	anchored = 1;
 	sname = "Zeta"
 	},
@@ -37136,7 +37101,7 @@
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingroom";
 	pixel_x = 24;
 	pixel_y = 10
@@ -47298,7 +47263,7 @@ aww
 aww
 aww
 axg
-azL
+axK
 ayA
 aww
 cqb
@@ -47525,7 +47490,7 @@ axd
 axI
 ayw
 axJ
-azL
+axK
 axJ
 aww
 aww
@@ -47980,8 +47945,8 @@ axK
 boC
 axg
 axK
-azL
-aAP
+axK
+axg
 axI
 aww
 cqb
@@ -48433,7 +48398,7 @@ axg
 axe
 axK
 axe
-aAP
+axg
 axI
 axI
 axI
@@ -49105,15 +49070,15 @@ cqb
 asN
 ats
 ats
-auh
-auh
-auh
+avq
+avq
+avq
 avq
 avq
 ats
 axO
 avq
-azm
+asN
 asN
 asN
 ats
@@ -49331,8 +49296,8 @@ cqb
 cqb
 asN
 att
-auh
-auh
+avq
+avq
 asN
 avq
 ats
@@ -49342,7 +49307,7 @@ axO
 asN
 avq
 asN
-azm
+asN
 asN
 cqb
 cqb
@@ -49562,7 +49527,7 @@ atu
 atu
 atu
 atu
-bow
+atu
 awx
 atu
 axP
@@ -79441,7 +79406,7 @@ cqb
 cqb
 cqb
 bZO
-caB
+aqp
 bZO
 cae
 aqo

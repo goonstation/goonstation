@@ -1115,7 +1115,7 @@
 /turf/simulated/floor/plating/airless,
 /area/russian)
 "acX" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "acY" = (
@@ -10342,7 +10342,9 @@
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "aHA" = (
-/obj/crematorium,
+/obj/machinery/traymachine/locking/crematorium{
+	id = "crematorium"
+	},
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aHB" = (
@@ -12025,7 +12027,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)
 "aNu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aNv" = (
@@ -14823,7 +14825,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aWu" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aWv" = (
@@ -14833,7 +14835,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aWw" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /turf/simulated/floor/black,
 /area/station/medical/medbay)
 "aWx" = (
@@ -15367,7 +15369,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aYE" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15384,7 +15386,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
 "aYG" = (
-/obj/morgue,
+/obj/machinery/traymachine/morgue,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -16914,7 +16916,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bdU" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/industrial,
 /area/station/engine/storage)
 "bdW" = (
@@ -26538,7 +26540,7 @@
 	tag = "icon-intact (EAST)"
 	},
 /obj/machinery/meter,
-/obj/machinery/ignition_switch{
+/obj/machinery/activation_button/ignition_switch{
 	id = "mixingsparker";
 	pixel_x = 24;
 	pixel_y = 10
@@ -27124,7 +27126,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bFt" = (
-/obj/machinery/driver_button{
+/obj/machinery/activation_button/driver_button{
 	id = "sciencedriver";
 	pixel_y = -24
 	},

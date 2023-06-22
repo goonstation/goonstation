@@ -3046,9 +3046,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "akE" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3057,16 +3057,14 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost/syndicateassaultvessel)
 "akG" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
 "akH" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicateassaultvessel)
 "akI" = (
 /obj/table/reinforced/bar/auto{
@@ -3164,12 +3162,6 @@
 	},
 /turf/space/fluid/manta/nospawn,
 /area/mantaSpace)
-"akV" = (
-/turf/simulated/shuttle/wall{
-	dir = 4;
-	icon_state = "wall3"
-	},
-/area/listeningpost/syndicateassaultvessel)
 "akW" = (
 /obj/lattice{
 	dir = 9;
@@ -3489,9 +3481,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alP" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "diagonalWall3"
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3507,9 +3499,9 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alR" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
@@ -3523,9 +3515,8 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alU" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -3695,9 +3686,9 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "amq" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
 	},
 /turf/space/fluid/manta,
 /area/listeningpost/syndicateassaultvessel)
@@ -6227,9 +6218,7 @@
 /area/station/mining/staff_room)
 "asC" = (
 /obj/machinery/torpedo_tube/syndicate,
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicateassaultvessel)
 "asD" = (
 /obj/machinery/light/incandescent/warm{
@@ -34019,6 +34008,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/portlowerhallway)
+"dPP" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "dRs" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8;
@@ -36739,6 +36735,13 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/green,
 /area/station/crewquarters/cryotron)
+"jQE" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "jRl" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -39271,6 +39274,13 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperport)
+"pZP" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "qai" = (
 /obj/table/auto,
 /obj/item/remote/porter/port_a_nanomed,
@@ -40572,6 +40582,9 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
+"tzW" = (
+/turf/space/fluid/manta,
+/area/listeningpost/syndicateassaultvessel)
 "tAG" = (
 /obj/shrub{
 	desc = "It's probably not suspicious that this plant is not only still alive, but thriving.";
@@ -82729,7 +82742,7 @@ aaa
 arH
 akE
 alO
-alU
+jQE
 arH
 aaa
 aaa
@@ -84838,13 +84851,13 @@ aaa
 aaa
 aaa
 aaa
-akE
+pZP
 akH
-akV
-akV
+akH
+akH
 alO
-akV
-akV
+akH
+akH
 akH
 akH
 aun
@@ -85443,7 +85456,7 @@ akH
 akH
 aln
 alt
-akV
+akH
 alC
 alD
 xyl
@@ -85736,16 +85749,16 @@ aaa
 aaa
 aaa
 aaa
-akV
+akH
 akL
 bMv
 ale
 wTa
-akV
+akH
 alk
 lNJ
 avM
-akV
+akH
 alr
 alB
 alP
@@ -86043,11 +86056,11 @@ akN
 alc
 alD
 bMz
-akV
+akH
 alg
 alo
 alu
-akV
+akH
 alr
 lSE
 akH
@@ -86647,11 +86660,11 @@ akN
 ald
 alD
 bMA
-akV
+akH
 ali
 oWi
 alq
-akV
+akH
 alr
 sVZ
 akH
@@ -86944,16 +86957,16 @@ aaa
 aaa
 aaa
 aaa
-akV
+akH
 alb
 bMw
 bMx
 bMB
-akV
+akH
 alk
 vzC
 avM
-akV
+akH
 alr
 yhC
 alR
@@ -87246,7 +87259,7 @@ aaa
 aaa
 aaa
 aaa
-akG
+tzW
 akH
 akH
 qAx
@@ -87255,7 +87268,7 @@ akH
 akH
 als
 alt
-akV
+akH
 alC
 alD
 doS
@@ -87858,13 +87871,13 @@ aaa
 aaa
 aaa
 aaa
-akG
+dPP
 akH
-akV
-akV
+akH
+akH
 alO
-akV
-akV
+akH
+akH
 akH
 akH
 aun

@@ -15,7 +15,6 @@
 	name = "river pipe"
 	},
 /turf/unsimulated/floor/plating/damaged2,
-/turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "aag" = (
 /obj/decal/fakeobjects/pipe{
@@ -23,7 +22,6 @@
 	name = "grimy pipe"
 	},
 /turf/unsimulated/floor/plating/damaged2,
-/turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "aah" = (
 /obj/precursor_puzzle/orb_stand{
@@ -23668,12 +23666,6 @@
 /obj/map/light/lava,
 /turf/unsimulated/floor/lava,
 /area/iomoon)
-"bws" = (
-/turf/unsimulated/floor/setpieces/bluefloor,
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 8
-	},
-/area/precursor)
 "bwu" = (
 /obj/cable{
 	d1 = 4;
@@ -23842,14 +23834,6 @@
 /obj/map/light/lava,
 /turf/unsimulated/floor/lava,
 /area/iomoon/robot_ruins)
-"bxd" = (
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 4
-	},
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 8
-	},
-/area/precursor)
 "bxe" = (
 /turf/unsimulated/wall/setpieces/leadwindow/gray,
 /area/iomoon/base)
@@ -24000,12 +23984,6 @@
 	name = "???"
 	},
 /area/precursor/pit)
-"bxU" = (
-/turf/space/no_replace,
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 8
-	},
-/area/precursor)
 "bxV" = (
 /obj/storage/crate,
 /obj/random_item_spawner/medicine,
@@ -36919,9 +36897,6 @@
 "cnw" = (
 /turf/space,
 /area/space)
-"cnx" = (
-/turf/simulated/wall/void,
-/area/crunch/wtc)
 "cny" = (
 /obj/stool/chair/office/syndie{
 	dir = 8
@@ -93092,8 +93067,8 @@ alZ
 alZ
 alZ
 cnB
-cnx
-cnx
+alZ
+alZ
 cnB
 cnB
 alZ
@@ -97215,8 +97190,8 @@ bgr
 bgr
 bgr
 bgh
-bxU
-bxU
+biU
+biU
 bgr
 bgr
 aaa
@@ -97508,7 +97483,7 @@ bgr
 bgE
 bij
 biA
-bxd
+biU
 biA
 bij
 biA
@@ -97807,10 +97782,10 @@ bfQ
 bfQ
 bfQ
 biA
-bws
+biU
 bij
 biA
-bxd
+biU
 biA
 bij
 biA
@@ -98109,10 +98084,10 @@ bfQ
 bfQ
 bfQ
 biA
-bws
+biU
 bij
 biA
-bxd
+biU
 biA
 bij
 biA
@@ -98414,7 +98389,7 @@ bgr
 bgE
 bij
 biA
-bxd
+biU
 biA
 bij
 biA
@@ -98716,7 +98691,7 @@ bgr
 bgr
 bgr
 bgr
-bxd
+biU
 bgr
 bgr
 bgr
