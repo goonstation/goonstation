@@ -13719,10 +13719,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby)
-"aJP" = (
-/obj/stool/chair,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "aJR" = (
 /obj/vehicle/floorbuffer{
 	dir = 8
@@ -13987,10 +13983,8 @@
 	},
 /area/station/hallway/primary/west)
 "aKE" = (
-/obj/stool/chair{
-	dir = 1
-	},
-/turf/simulated/floor/plating/random,
+/obj/fishing_pool/portable,
+/turf/simulated/floor/green,
 /area/station/maintenance/northwest)
 "aKF" = (
 /obj/storage/secure/closet/security/equipment,
@@ -14137,8 +14131,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/inner)
 "aLb" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable,
+/obj/machinery/plantpot,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aLc" = (
@@ -38441,7 +38434,21 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "cfW" = (
-/obj/machinery/plantpot,
+/obj/table/round/auto,
+/obj/item/seed/cannabis,
+/obj/item/caution{
+	desc = "Caution! Construction Zone!";
+	name = "caution sign";
+	pixel_x = 4;
+	pixel_y = 10
+	},
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -8;
+	pixel_y = 7
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "cfX" = (
@@ -40532,6 +40539,21 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"cOT" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Hydroponics"
+	},
+/obj/access_spawn/hydro,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -41638,22 +41660,7 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "fRB" = (
-/obj/table/round/auto,
-/obj/item/seed/cannabis,
-/obj/item/caution{
-	desc = "Caution! Construction Zone!";
-	name = "caution sign";
-	pixel_x = 4;
-	pixel_y = 10
-	},
-/obj/decal/cleanable/cobweb{
-	icon_state = "cobweb2"
-	},
-/obj/item/storage/pill_bottle/cyberpunk{
-	pixel_x = -8;
-	pixel_y = 7
-	},
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor,
 /area/station/maintenance/northwest)
 "fTt" = (
 /obj/machinery/incubator{
@@ -41661,6 +41668,12 @@
 	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"fTM" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "fUm" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating/random,
@@ -41819,6 +41832,11 @@
 	},
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
+"gim" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "giE" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	id = "mining_podbay"
@@ -45564,6 +45582,10 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/storage/eva)
+"sQS" = (
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor,
+/area/station/maintenance/northwest)
 "sRT" = (
 /obj/item/device/radio/intercom/science,
 /turf/simulated/floor/engine,
@@ -45683,6 +45705,10 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
+"tqH" = (
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "tst" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -46420,6 +46446,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
+"wbx" = (
+/obj/stool/chair,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "wbZ" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -46893,6 +46923,10 @@
 	dir = 9
 	},
 /area/evilreaver/security)
+"xCx" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "xED" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor,
@@ -77757,11 +77791,11 @@ aLK
 iUC
 bWp
 agY
-agY
-agY
-agY
+aLb
+aLb
+wbx
 cfW
-cfW
+fTM
 aLL
 nkh
 aMf
@@ -78362,10 +78396,10 @@ aUD
 bWp
 agY
 agY
-agY
-cfB
-agY
-agY
+aia
+sQS
+fRB
+xCx
 ubH
 aLF
 aMf
@@ -78664,10 +78698,10 @@ aIb
 bWp
 agY
 agY
-agY
-agY
-agY
-agY
+aia
+fRB
+fRB
+tqH
 ubH
 aLF
 aMf
@@ -78965,9 +78999,9 @@ aBo
 bWP
 aIc
 nFR
-nFR
-aLb
-aJP
+gim
+aia
+fRB
 fRB
 aKE
 ubH
@@ -79270,7 +79304,7 @@ aia
 aia
 aia
 aLD
-aLD
+cOT
 aLD
 aLL
 aLL

@@ -20738,11 +20738,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "bvR" = (
-/obj/storage/secure/closet/civilian/hydro,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
+/obj/fishing_pool/portable,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "bvT" = (
@@ -38423,6 +38423,11 @@
 "fpw" = (
 /obj/disposalpipe/segment/food,
 /obj/reagent_dispensers/watertank/big,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -39646,8 +39651,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east,
-/obj/storage/secure/closet/civilian/hydro,
 /obj/decal/cleanable/dirt,
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "gpl" = (
@@ -40070,6 +40075,10 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargobay)
+"gGB" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/grey,
+/area/station/hydroponics/bay)
 "gGT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -47242,12 +47251,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "nbL" = (
-/obj/machinery/plantpot,
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
 	},
 /obj/machinery/light_switch/north,
+/obj/stool/chair/green{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Botanist"
+	},
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "nbR" = (
@@ -50691,12 +50705,6 @@
 	},
 /area/station/security/secwing)
 "qdQ" = (
-/obj/stool/chair/green{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
 /obj/machinery/light/small{
 	dir = 8;
 	pixel_x = -12
@@ -50708,6 +50716,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "qea" = (
@@ -54269,12 +54278,10 @@
 /turf/simulated/floor,
 /area/station/security/secwing)
 "tkn" = (
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Hydroponics"
-	},
-/obj/access_spawn/hydro,
-/obj/firedoor_spawn,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/decal/cleanable/dirt,
+/obj/storage/crate/bloody,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "tkE" = (
@@ -57192,14 +57199,13 @@
 	},
 /area/station/hallway/secondary/exit)
 "vPo" = (
-/obj/disposalpipe/segment/food,
-/obj/reagent_dispensers/compostbin,
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Hydroponics"
 	},
-/turf/simulated/floor,
+/obj/access_spawn/hydro,
+/obj/firedoor_spawn,
+/turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "vPw" = (
 /turf/simulated/floor/neutral/corner{
@@ -58436,14 +58442,11 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "wSh" = (
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/item/reagent_containers/glass/bottle/ammonia/large,
-/obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
 	},
-/obj/storage/crate/bloody,
+/obj/reagent_dispensers/compostbin,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "wTx" = (
@@ -59612,8 +59615,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "xLO" = (
-/obj/machinery/plantpot,
 /obj/decal/cleanable/dirt,
+/obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "xLW" = (
@@ -114272,7 +114275,7 @@ bkw
 blE
 bmT
 vIY
-pUl
+tkn
 kAy
 evU
 bpC
@@ -114576,7 +114579,7 @@ nbR
 boo
 wSh
 pUl
-pUl
+gGB
 gpc
 bvR
 boo
@@ -114877,8 +114880,8 @@ wCK
 bmV
 boo
 boo
+vPo
 boo
-tkn
 boo
 boo
 boo
@@ -115179,7 +115182,7 @@ blJ
 viJ
 pyB
 fpw
-vPo
+leU
 leU
 wmT
 buR
