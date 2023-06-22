@@ -39342,6 +39342,11 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ciP" = (
@@ -46427,6 +46432,7 @@
 	pixel_y = 4
 	},
 /obj/storage/secure/closet/security/forensics,
+/obj/cable,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "vLl" = (
@@ -47161,6 +47167,9 @@
 /obj/item/spraybottle/detective,
 /obj/item/hand_labeler,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ydh" = (
