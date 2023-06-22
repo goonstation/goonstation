@@ -329,7 +329,7 @@ proc/generate_space_color()
 
 /turf/space/update_icon(starlight_alpha=255)
 	..()
-	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+	if(!isnull(space_color) && (!istype(src, /turf/space/fluid) || istype(src, /turf/space/fluid/warp_z5)))
 		src.color = space_color
 
 	if(fullbright)

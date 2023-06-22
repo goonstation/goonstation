@@ -314,7 +314,7 @@
 	allow_hole = 0
 
 	color = OCEAN_COLOR
-	// fullbright = 1
+	fullbright = 1
 
 	edge
 		icon_state = "pit_wall"
