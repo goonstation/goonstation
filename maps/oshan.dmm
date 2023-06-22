@@ -15853,6 +15853,11 @@
 	desc = "Those chickens are up to something...";
 	name = "suspicious popcorn"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aQr" = (
@@ -39329,9 +39334,6 @@
 /area/station/ranch)
 "ciO" = (
 /obj/cable{
-	icon_state = "2-8"
-	},
-/obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "2-4"
@@ -39523,10 +39525,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/sea_elevator_room)
 "cjz" = (
-/obj/storage/cart/forensic,
-/obj/item/storage/box/evidence,
-/obj/item/hand_labeler,
-/obj/item/spraybottle/detective,
+/obj/machinery/computer/security/wooden_tv,
+/obj/item/clothing/head/fedora{
+	pixel_y = 11
+	},
+/obj/cable,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "cjB" = (
@@ -46416,18 +46419,14 @@
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "vKP" = (
-/obj/machinery/computer/security/wooden_tv,
 /obj/machinery/power/apc/autoname_south,
-/obj/cable,
-/obj/item/clothing/head/fedora{
-	pixel_y = 11
-	},
 /obj/machinery/light_switch/west{
 	pixel_y = -4
 	},
 /obj/blind_switch/area/west{
 	pixel_y = 4
 	},
+/obj/storage/secure/closet/security/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "vLl" = (
@@ -47149,18 +47148,19 @@
 	},
 /area/station/engine/elect)
 "ybD" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/machinery/disposal/mail/small/autoname{
 	dir = 4;
 	mail_tag = "fitness room"
 	},
-/obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /obj/disposalpipe/trunk/mail{
 	dir = 4;
 	mail_tag = "detective's office"
 	},
+/obj/storage/cart/forensic,
+/obj/item/storage/box/evidence,
+/obj/item/spraybottle/detective,
+/obj/item/hand_labeler,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ydh" = (
