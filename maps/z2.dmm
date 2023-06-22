@@ -84,10 +84,6 @@
 	dir = 9;
 	icon_state = "catwalk_cross"
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 9;
@@ -101,10 +97,6 @@
 	dir = 10
 	},
 /obj/map/light/lava,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 1;
@@ -195,10 +187,6 @@
 /obj/grille/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -3508,6 +3496,9 @@
 	icon_state = "floor"
 	},
 /area/moon/museum)
+"alZ" = (
+/turf/unsimulated/wall/void,
+/area/crunch/wtc)
 "amb" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -38438,9 +38429,6 @@
 	},
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
-"cta" = (
-/turf/simulated/wall/void,
-/area/crunch)
 "ctb" = (
 /turf/unsimulated/floor/void,
 /area/crunch/wtc)
@@ -63017,10 +63005,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 1;
@@ -65484,10 +65468,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 10;
@@ -65722,10 +65702,6 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/iomoon/floor{
-	dir = 8;
-	icon_state = "iocrust_edge"
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 8;
@@ -66439,10 +66415,6 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -66819,10 +66791,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 9;
@@ -67148,10 +67116,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 10;
@@ -67394,10 +67358,6 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 8
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	icon_state = "catwalk";
@@ -67691,10 +67651,6 @@
 	},
 /obj/map/light/lava,
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	icon_state = "catwalk_cross";
@@ -67839,9 +67795,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/iomoon/floor{
-	icon_state = "iocrust_corner"
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 1;
@@ -67861,10 +67814,6 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -68771,10 +68720,6 @@
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 4;
@@ -68854,10 +68799,6 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 4;
@@ -69578,10 +69519,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/iomoon/floor{
-	dir = 8;
-	icon_state = "iocrust_corner"
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 4;
@@ -70010,10 +69947,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	dir = 1;
 	icon_state = "catwalk";
@@ -70034,10 +69967,6 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/iomoon/floor{
-	dir = 4;
-	icon_state = "iocrust_edge"
-	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -70101,10 +70030,6 @@
 /obj/grille/catwalk,
 /obj/railing/orange/reinforced{
 	dir = 8
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -70681,10 +70606,6 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 6;
@@ -70883,10 +70804,6 @@
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -71468,10 +71385,6 @@
 	dir = 4
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 6;
@@ -71545,10 +71458,6 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -73458,10 +73367,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/iomoon/floor{
-	dir = 6;
-	icon_state = "iocrust_edge"
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	icon_state = "catwalk_cross";
@@ -75144,26 +75049,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
-"sJD" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/iomoon/floor{
-	icon_state = "iocrust_edge"
-	},
-/turf/unsimulated/floor{
-	carbon_dioxide = 16;
-	icon_state = "catwalk_cross";
-	name = "hot catwalk support";
-	temperature = 372.15
-	},
-/area/iomoon)
 "sJH" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 1
@@ -75310,10 +75195,6 @@
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/iomoon/floor{
-	dir = 9;
-	icon_state = "iocrust_edge"
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
@@ -75967,10 +75848,6 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 8;
@@ -76234,10 +76111,6 @@
 	dir = 1
 	},
 /obj/railing/orange/reinforced,
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 4;
@@ -76437,10 +76310,6 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 8
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -78290,10 +78159,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 1;
@@ -78546,10 +78411,6 @@
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	dir = 4;
@@ -82887,7 +82748,7 @@ jCK
 uOS
 uOS
 uOS
-sJD
+qjg
 byg
 byg
 byg
@@ -92335,9 +92196,9 @@ bIY
 bIY
 bIY
 bIY
-cta
-cta
-cta
+bIY
+bIY
+bIY
 bKw
 ctd
 ctg
@@ -93227,19 +93088,19 @@ ccF
 ccF
 cbu
 aaa
-cnx
-cnx
-cnx
+alZ
+alZ
+alZ
 cnB
 cnx
 cnx
 cnB
 cnB
-cnx
-cnx
-cnx
-cnx
-cnx
+alZ
+alZ
+alZ
+alZ
+alZ
 ctb
 bKw
 bKw
@@ -93529,7 +93390,7 @@ cfq
 ccX
 cbu
 aaa
-cnx
+alZ
 cnK
 crA
 erU
@@ -93831,7 +93692,7 @@ ceX
 ceX
 cbu
 aaa
-cnx
+alZ
 crr
 crB
 crM
@@ -94146,9 +94007,9 @@ cnB
 csD
 csK
 csS
-cnx
-cta
-cta
+alZ
+bIY
+bIY
 bIY
 bIY
 bIY
@@ -94746,11 +94607,11 @@ csa
 crE
 tze
 cnB
-cnx
-cnx
-cnx
-cnx
-cnx
+alZ
+alZ
+alZ
+alZ
+alZ
 bIY
 bIY
 bIY
@@ -96548,7 +96409,7 @@ dTc
 dTc
 daS
 aaa
-cnx
+alZ
 cnB
 crs
 crC
@@ -96850,7 +96711,7 @@ daT
 daT
 daM
 aaa
-ctb
+alZ
 cnB
 cnB
 crD
@@ -97152,7 +97013,7 @@ daT
 daT
 daM
 aaa
-ctb
+alZ
 ctb
 cry
 crA
@@ -97167,8 +97028,8 @@ csG
 csO
 csX
 cnB
-cnx
-cnx
+alZ
+alZ
 aaa
 ctn
 ctn
@@ -97454,7 +97315,7 @@ daX
 daX
 daM
 aaa
-cnz
+alZ
 cnC
 crz
 crJ
@@ -97470,7 +97331,7 @@ csP
 ctb
 ctb
 ctb
-cnx
+alZ
 aaa
 ctn
 ctn
@@ -97756,9 +97617,9 @@ dch
 dch
 daM
 aaa
-cnx
-cnx
-cnx
+alZ
+alZ
+alZ
 cnB
 cnB
 cnB
@@ -97767,12 +97628,12 @@ cnB
 cnB
 cnB
 cnB
-cnx
-cnx
+alZ
+alZ
 cnz
 ctb
 ctc
-cnx
+alZ
 aaa
 ctn
 ctn
@@ -98070,11 +97931,11 @@ aaa
 aaa
 aaa
 aaa
-cnx
-cnx
-cnx
-cnx
-cnx
+alZ
+alZ
+alZ
+alZ
+alZ
 aaa
 ctn
 ctn

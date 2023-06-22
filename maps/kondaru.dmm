@@ -196,9 +196,6 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
 /area/station/hangar/main)
 "aaJ" = (
 /obj/grille/catwalk{
@@ -775,7 +772,7 @@
 /area/station/hangar/main)
 "acA" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/cable{
 	icon_state = "0-2"
@@ -13155,9 +13152,7 @@
 /area/station/security/secwing)
 "aTv" = (
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating{
-	icon_state = "platingdmg2"
-	},
+/turf/simulated/floor/plating/damaged2,
 /area/research_outpost/indigo_rye)
 "aTw" = (
 /obj/cable{
@@ -16982,7 +16977,7 @@
 /area/station/security/checkpoint/podbay)
 "bhP" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{
@@ -29268,7 +29263,7 @@
 /area/station/crew_quarters/market)
 "bZR" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM");
 	dir = 8
 	},
 /obj/machinery/alarm{
@@ -31906,31 +31901,21 @@
 /turf/space,
 /area/research_outpost/indigo_rye)
 "ciG" = (
-/turf/simulated/floor/airless/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating/damaged3,
 /area/research_outpost/indigo_rye)
 "ciH" = (
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating/damaged1,
 /area/research_outpost/indigo_rye)
 "ciI" = (
 /obj/structure/girder/displaced,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating/damaged1,
 /area/research_outpost/indigo_rye)
 "ciJ" = (
-/turf/simulated/floor/airless/plating{
-	icon_state = "panelscorched"
-	},
+/turf/simulated/floor/plating/scorched,
 /area/research_outpost/indigo_rye)
 "ciK" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating/damaged1,
 /area/research_outpost/indigo_rye)
 "ciL" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -31964,9 +31949,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating/damaged1,
 /area/research_outpost/indigo_rye)
 "ciS" = (
 /obj/decal/cleanable/oil,
@@ -35936,9 +35919,7 @@
 	},
 /area/station/ai_monitored/armory)
 "dww" = (
-/turf/simulated/floor/airless/plating{
-	icon_state = "platingdmg3"
-	},
+/turf/simulated/floor/plating/damaged3,
 /area/space)
 "dwL" = (
 /obj/stool/bench/blue/auto,
@@ -36794,7 +36775,7 @@
 /area/station/maintenance/inner/sw)
 "ecb" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/disposalpipe/segment/transport{
@@ -39623,7 +39604,7 @@
 /area/station/medical/medbay)
 "gow" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 8
 	},
 /obj/cable{
@@ -44055,9 +44036,7 @@
 /area/station/crew_quarters/courtroom)
 "kpw" = (
 /obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating{
-	icon_state = "platingdmg1"
-	},
+/turf/simulated/floor/plating/damaged1,
 /area/research_outpost/indigo_rye)
 "kpG" = (
 /obj/machinery/disposal,
@@ -45553,7 +45532,7 @@
 /area/station/crew_quarters/showers)
 "lBy" = (
 /obj/machinery/computer/barcode/qm{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -48211,7 +48190,7 @@
 /area/station/security/main)
 "nTf" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Ejection","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/cable{
@@ -53165,7 +53144,7 @@
 /area/station/crew_quarters/courtroom)
 "sqi" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod Bay","Research","Security","QM");
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Pod  Bay","Research","Security","QM");
 	dir = 4
 	},
 /obj/machinery/power/data_terminal,
@@ -54207,7 +54186,7 @@
 /area/station/crew_quarters/quarters_north)
 "thB" = (
 /obj/machinery/computer/barcode{
-	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
+	destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod  Bay","Security","QM")
 	},
 /obj/cable{
 	icon_state = "0-2"
