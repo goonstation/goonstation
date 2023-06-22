@@ -70738,6 +70738,14 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"dDH" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/warp_beacon/catering,
+/turf/space,
+/area/space)
 "dEt" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
@@ -104019,7 +104027,7 @@ aaa
 aaa
 aaa
 aaa
-adb
+dDH
 adw
 aef
 aeP
