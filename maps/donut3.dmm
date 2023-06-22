@@ -6138,19 +6138,11 @@
 	},
 /area/station/crew_quarters/kitchen)
 "bKP" = (
-/obj/stool/chair/couch/green{
-	dir = 4
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
-/obj/decal/tile_edge/line/green{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/obj/item/device/radio/intercom/botany,
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "bKQ" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/cable{
@@ -11213,7 +11205,7 @@
 /turf/simulated/floor/black,
 /area/station/janitor/office)
 "dnk" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -13186,18 +13178,16 @@
 /turf/simulated/floor/circuit/red,
 /area/station/security/hos)
 "dVF" = (
-/obj/table/wood/round/auto,
-/obj/item/decoration/ashtray{
-	pixel_x = 7;
-	pixel_y = 7
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
 	},
-/obj/item/device/light/zippo{
-	pixel_x = -5;
-	pixel_y = 2
+/obj/stool/chair/couch/green,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
 	},
-/obj/item/reagent_containers/glass/water_pipe{
-	pixel_x = 3;
-	pixel_y = 6
+/obj/landmark/start{
+	name = "Botanist"
 	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
@@ -14311,7 +14301,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
-/obj/storage/crate,
+/obj/decorative_pot,
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "eoB" = (
@@ -16527,6 +16517,19 @@
 	},
 /area/station/security/hos)
 "eYZ" = (
+/obj/table/wood/round/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/device/light/zippo{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/water_pipe{
+	pixel_x = 3;
+	pixel_y = 6
+	},
 /obj/disposalpipe/segment{
 	dir = 8
 	},
@@ -18420,6 +18423,23 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/maintenance)
 "fDl" = (
+/obj/decal/tile_edge/line/green{
+	dir = 9;
+	icon_state = "line2"
+	},
+/obj/stool/chair/couch/green{
+	dir = 8
+	},
+/obj/machinery/firealarm{
+	pixel_y = 24;
+	text = "NF"
+	},
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/obj/decal/tile_edge/stripe/corner/extra_big2{
+	dir = 10
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -25646,8 +25666,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "hNX" = (
-/obj/warp_beacon{
-	name = "Security Beacon"
+/obj/warp_beacon/security{
+	name = "Security Hangar Beacon"
 	},
 /obj/lattice,
 /turf/space,
@@ -27341,7 +27361,7 @@
 /obj/machinery/light/small/sticky/harsh{
 	dir = 8
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -29441,8 +29461,8 @@
 /area/station/science/lab)
 "iWp" = (
 /obj/lattice,
-/obj/warp_beacon/qm{
-	name = "Public hangar beacon"
+/obj/warp_beacon/mainpod1{
+	name = "Main Hangar Beacon"
 	},
 /turf/space,
 /area/space)
@@ -31716,7 +31736,6 @@
 "jES" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/dirt/jen,
-/obj/storage/closet/fire,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "jEZ" = (
@@ -32189,6 +32208,17 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "jKL" = (
+/obj/stool/chair/couch/green{
+	dir = 4
+	},
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
+/obj/landmark/start{
+	name = "Botanist"
+	},
+/obj/item/device/radio/intercom/botany,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -38069,6 +38099,10 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/hangar/arrivals)
+"lEi" = (
+/obj/storage/closet/fire,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "lEk" = (
 /obj/table/wood/auto,
 /obj/bedsheetbin,
@@ -44599,7 +44633,6 @@
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/lobby)
 "nDB" = (
-/obj/machinery/light/incandescent/netural,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -45624,7 +45657,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/interrogation)
 "nUB" = (
-/obj/machinery/chem_heater{
+/obj/machinery/chem_heater/chemistry{
 	dir = 8
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -48259,13 +48292,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "oLn" = (
-/obj/decal/tile_edge/line/green{
-	dir = 5;
-	icon_state = "line2"
+/obj/disposalpipe/segment{
+	dir = 8
 	},
-/obj/decorative_pot,
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "oLv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -54622,19 +54653,10 @@
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "qHk" = (
-/obj/decal/tile_edge/line/green{
-	dir = 1;
-	icon_state = "line1"
-	},
-/obj/stool/chair/couch/green,
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
+/obj/machinery/light/incandescent/netural,
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "qHn" = (
 /obj/railing/orange,
 /turf/simulated/floor/plating/jen,
@@ -58342,25 +58364,9 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
 "rLj" = (
-/obj/decal/tile_edge/line/green{
-	dir = 9;
-	icon_state = "line2"
-	},
-/obj/stool/chair/couch/green{
-	dir = 8
-	},
-/obj/machinery/firealarm{
-	pixel_y = 24;
-	text = "NF"
-	},
-/obj/landmark/start{
-	name = "Botanist"
-	},
-/obj/decal/tile_edge/stripe/corner/extra_big2{
-	dir = 10
-	},
-/turf/simulated/floor/wood/five,
-/area/station/hydroponics/bay)
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "rLr" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen/blue,
@@ -69080,10 +69086,10 @@
 	},
 /area/station/solar/west)
 "vbS" = (
-/obj/warp_beacon{
-	name = "Science Hangar Beacon"
-	},
 /obj/lattice,
+/obj/warp_beacon/research{
+	name = "Research Hangar Beacon"
+	},
 /turf/space,
 /area/space)
 "vca" = (
@@ -71435,12 +71441,12 @@
 /turf/space,
 /area/space)
 "vMx" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -71972,6 +71978,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/line/green{
+	dir = 1;
+	icon_state = "line1"
+	},
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "vTk" = (
@@ -72320,7 +72330,9 @@
 /area/station/maintenance/inner/north)
 "vYk" = (
 /obj/lattice,
-/obj/warp_beacon/qm,
+/obj/warp_beacon/qm{
+	name = "QM Hangar Beacon"
+	},
 /turf/space,
 /area/space)
 "vYl" = (
@@ -74913,6 +74925,10 @@
 "wMg" = (
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
+"wMh" = (
+/obj/fishing_pool/portable,
+/turf/simulated/floor/dirt,
+/area/station/ranch)
 "wMm" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 1;
@@ -128439,7 +128455,7 @@ sSb
 vzA
 vzA
 vzA
-vzA
+bKP
 eVk
 jyt
 lMh
@@ -128741,7 +128757,7 @@ vra
 vzA
 vzA
 vzA
-vzA
+oLn
 dou
 mfs
 ssO
@@ -129347,7 +129363,7 @@ jRn
 ibv
 oJO
 nDB
-mfs
+qHk
 wqJ
 rGw
 eoq
@@ -129649,8 +129665,8 @@ ebZ
 pgL
 oJP
 leI
-mfs
 rLj
+wqJ
 fDl
 ssI
 tqD
@@ -129951,8 +129967,8 @@ lGJ
 fKp
 aSY
 qyZ
-mfs
-qHk
+wMh
+wqJ
 dVF
 eYZ
 smZ
@@ -130254,7 +130270,7 @@ sOz
 mfs
 pvp
 mfs
-bKP
+wqJ
 jKL
 tFA
 azp
@@ -130555,8 +130571,8 @@ jem
 tWQ
 gfu
 uQt
+lEi
 wqJ
-oLn
 vTd
 pZO
 smZ
@@ -130857,7 +130873,7 @@ vET
 aRA
 jxj
 hYv
-wqJ
+ofw
 wqJ
 hyh
 gwE

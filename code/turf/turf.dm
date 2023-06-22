@@ -329,7 +329,7 @@ proc/generate_space_color()
 
 /turf/space/update_icon(starlight_alpha=255)
 	..()
-	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
+	if(!isnull(space_color) && (!istype(src, /turf/space/fluid) || istype(src, /turf/space/fluid/warp_z5)))
 		src.color = space_color
 
 	if(fullbright)
@@ -967,13 +967,6 @@ TYPEINFO(/turf/simulated)
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
 	text = "<font color=#aaa>."
-
-/turf/unsimulated/floor
-	name = "floor"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-	text = "<font color=#aaa>."
-	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"

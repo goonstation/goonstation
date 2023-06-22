@@ -3286,6 +3286,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/ampoule,
 		/obj/item/chem_pill_bottle,
+		/obj/item/storage/box/patchbox,
 	)
 
 	New()
