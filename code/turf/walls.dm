@@ -118,7 +118,7 @@ TYPEINFO(/turf/simulated/wall)
 	finish_attaching(W, user, dir)
 	return
 
-/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W, setdir = null) //we don't want code duplication
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W) //we don't want code duplication
 
 	//reset object position
 	//not doing so breaks it's further position
@@ -134,7 +134,7 @@ TYPEINFO(/turf/simulated/wall)
 	var/direction = 0
 
 	for (var/d in cardinal)
-		if (get_step(source,d) == target)
+		if (get_step(source, d) == target)
 			direction = d
 			break
 
