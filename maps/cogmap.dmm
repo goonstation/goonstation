@@ -5642,13 +5642,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "aso" = (
-/obj/storage/cart/hotdog{
-	req_access_txt = "28"
+/obj/machinery/chem_dispenser/chef,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge2";
+	dir = 1
 	},
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
-/obj/item/reagent_containers/food/snacks/hotdog,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "asp" = (
@@ -56331,6 +56329,20 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/engine)
+"okH" = (
+/obj/storage/cart/hotdog{
+	req_access_txt = "28"
+	},
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/item/reagent_containers/food/snacks/hotdog,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "okK" = (
 /obj/disposalpipe/switch_junction{
 	dir = 1;
@@ -119507,7 +119519,7 @@ aie
 amj
 qVo
 aox
-apJ
+okH
 aqW
 asu
 qDG
