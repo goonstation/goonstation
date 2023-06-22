@@ -29107,21 +29107,6 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
-"bCj" = (
-/obj/decal/tile_edge/line/purple{
-	dir = 6;
-	icon_state = "line4"
-	},
-/obj/machinery/light/incandescent/netural,
-/obj/item/storage/wall/research_supplies{
-	pixel_x = 32;
-	pixel_y = 0
-	},
-/obj/machinery/chem_heater,
-/turf/simulated/floor/blackwhite/corner{
-	dir = 1
-	},
-/area/station/science/chemistry)
 "bCl" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -34131,6 +34116,9 @@
 	},
 /turf/simulated/floor/green,
 /area/station/medical/research)
+"ebt" = (
+/turf/unsimulated/wall/auto/adventure/fake_window,
+/area/listeningpost/syndicateassaultvessel)
 "ebx" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -39444,9 +39432,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/starboardtorpedoes)
-"qAx" = (
-/turf/unsimulated/wall/auto/adventure/fake_window,
-/area/listeningpost/syndicateassaultvessel)
 "qBh" = (
 /obj/machinery/light/incandescent/cool{
 	dir = 8;
@@ -39802,6 +39787,21 @@
 	icon_state = "fgreen2"
 	},
 /area/station/engine/engineering/ce)
+"rpp" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/decal/tile_edge/line/purple{
+	dir = 1;
+	icon_state = "line3"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	nostick = 1;
+	pixel_x = 10
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/station/science/chemistry)
 "rpq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -40418,21 +40418,6 @@
 /obj/item/circuitboard/teleporter,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"sXW" = (
-/obj/machinery/chem_heater,
-/obj/decal/tile_edge/line/purple{
-	dir = 1;
-	icon_state = "line3"
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 4;
-	nostick = 1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/blackwhite{
-	dir = 8
-	},
-/area/station/science/chemistry)
 "tak" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -41130,6 +41115,21 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/starboardlowerhallway)
+"uWb" = (
+/obj/decal/tile_edge/line/purple{
+	dir = 6;
+	icon_state = "line4"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/item/storage/wall/research_supplies{
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/blackwhite/corner{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "uYi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -85435,8 +85435,8 @@ aaa
 akE
 akH
 akH
-qAx
-qAx
+ebt
+ebt
 akH
 akH
 aln
@@ -86036,7 +86036,7 @@ aaa
 aaa
 akW
 akZ
-qAx
+ebt
 akN
 alc
 alD
@@ -86338,7 +86338,7 @@ aaa
 akU
 akX
 atw
-qAx
+ebt
 akP
 alD
 alD
@@ -86640,7 +86640,7 @@ aaa
 aaa
 akY
 ala
-qAx
+ebt
 akN
 ald
 alD
@@ -87247,8 +87247,8 @@ aaa
 akG
 akH
 akH
-qAx
-qAx
+ebt
+ebt
 akH
 akH
 als
@@ -98346,11 +98346,11 @@ bnV
 bsx
 btg
 aHp
-sXW
+rpp
 bxC
 bzm
 bAG
-bCj
+uWb
 bzg
 bEU
 bDL

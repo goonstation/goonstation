@@ -83,6 +83,10 @@
 			points_last = points
 			src.updateText(0, src.x_occupied, src.y_occupied)
 
+	/// Called just before we're removed from a mob
+	proc/onRemove()
+		return
+
 	proc/updateCounters()
 		// this is probably dogshit but w/e
 		if (!owner || !owner.client)
@@ -1130,6 +1134,7 @@
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
 				H.composite_owner = null
+				H.onRemove(src.owner)
 				holders -= H
 		updateButtons()
 
