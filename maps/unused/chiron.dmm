@@ -20404,17 +20404,13 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aPd" = (
-/obj/machinery/recharge_station{
-	allow_clothes = 1
-	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/caution/corner/nw{
 	dir = 1
 	},
 /area/station/medical/robotics)
 "aPe" = (
-/obj/machinery/recharge_station{
-	allow_clothes = 1
-	},
+/obj/machinery/recharge_station,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},

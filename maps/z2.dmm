@@ -31,7 +31,6 @@
 	target_id = "SURFACE"
 	},
 /obj/map/light/cyan,
-/turf/unsimulated/floor/setpieces/bluefloor,
 /turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 8
 	},
@@ -43,7 +42,6 @@
 	pixel_y = 11
 	},
 /obj/map/light/cyan,
-/turf/unsimulated/floor/setpieces/bluefloor,
 /turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 8
 	},
@@ -54,9 +52,6 @@
 	target_id = "EXIT"
 	},
 /obj/map/light/cyan,
-/turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 4
-	},
 /turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 8
 	},
@@ -71,17 +66,11 @@
 	name = "swag device"
 	},
 /turf/unsimulated/floor/setpieces/bluefloor{
-	dir = 4
-	},
-/turf/unsimulated/floor/setpieces/bluefloor{
 	dir = 8
 	},
 /area/precursor)
 "aaq" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
 	dir = 9;
@@ -219,7 +208,6 @@
 /obj/iomoon_puzzle/button{
 	id = "iomoon_burntpuzzleD;iomoon_burntroomE"
 	},
-/turf/space/no_replace,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor3"
 	},
@@ -247,22 +235,6 @@
 	},
 /turf/unsimulated/iomoon/floor,
 /area/iomoon)
-"abg" = (
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel{
-	density = 1;
-	name = "very much a wormhole distortion";
-	opacity = 1
-	},
-/area/adventure/channel)
-"abi" = (
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/teleport)
-"abl" = (
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "abm" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -545,22 +517,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"acj" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
-"ack" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "acl" = (
 /obj/machinery/light/small/iomoon{
 	name = "maintenance light";
@@ -592,14 +548,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/hospital)
-"acv" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "acw" = (
 /obj/machinery/light/small/iomoon{
 	dir = 4
@@ -657,14 +605,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/adventure/channel/flingy)
-"acK" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "acM" = (
 /turf/unsimulated/floor/bluewhite,
 /area/hospital)
@@ -716,14 +656,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"ada" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "adf" = (
 /obj/table/auto,
 /obj/item/storage/box/crayon,
@@ -1105,7 +1037,6 @@
 /area/hospital)
 "aeh" = (
 /obj/structure/girder,
-/turf/unsimulated/floor/plating,
 /turf/unsimulated/floor/plating/damaged2,
 /area/crunch)
 "aei" = (
@@ -1934,13 +1865,6 @@
 "agm" = (
 /turf/unsimulated/floor/caution/north,
 /area/hospital/samostrel)
-"agn" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space/no_replace,
-/turf/unsimulated/floor/void/channel,
-/area/adventure/channel/flingy)
 "ago" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "Oh.  Gross.";
@@ -2563,7 +2487,6 @@
 /area/crunch)
 "ahI" = (
 /obj/decal/fakeobjects/lighttube_broken,
-/turf/unsimulated/floor/plating,
 /turf/unsimulated/floor/plating/damaged2,
 /area/crunch)
 "ahJ" = (
@@ -22198,10 +22121,6 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon)
-"brD" = (
-/turf/unsimulated/floor/void/channel,
-/turf/space/no_replace,
-/area/adventure/channel/flingy)
 "brE" = (
 /obj/decal/fakeobjects/pipe/heat{
 	dir = 4
@@ -24423,10 +24342,6 @@
 	icon_state = "fred1"
 	},
 /area/iomoon/base)
-"bAc" = (
-/turf/unsimulated/floor/void/channel,
-/turf/space/no_replace,
-/area/adventure/channel/teleport)
 "bAf" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -24733,12 +24648,6 @@
 	icon_state = "";
 	name = "power conduit"
 	},
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor3"
-	},
-/area/iomoon/robot_ruins)
-"bBh" = (
-/turf/space/no_replace,
 /turf/unsimulated/iomoon/ancient_floor{
 	icon_state = "ancientfloor3"
 	},
@@ -28589,10 +28498,6 @@
 	},
 /turf/unsimulated/floor/ancient,
 /area/crunch)
-"bNv" = (
-/turf/unsimulated/floor/plating,
-/turf/unsimulated/floor/plating/damaged2,
-/area/crunch)
 "bNw" = (
 /obj/machinery/light/worn{
 	dir = 4
@@ -30204,7 +30109,6 @@
 /turf/unsimulated/floor/stairs,
 /area/crypt/sigma)
 "bSL" = (
-/turf/space/no_replace,
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
 "bSM" = (
@@ -31229,10 +31133,6 @@
 "bWD" = (
 /turf/unsimulated/wall/setpieces/bloodwall,
 /area/meat_derelict/main)
-"bWE" = (
-/turf/unsimulated/floor/airless/white,
-/turf/unsimulated/floor/plating/damaged2,
-/area/crunch)
 "bWF" = (
 /obj/landmark{
 	name = "bombtest-bomb"
@@ -56497,10 +56397,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/iomoon/floor{
-	dir = 4;
-	icon_state = "iocrust_edge"
-	},
 /turf/unsimulated/floor{
 	dir = 4;
 	icon_state = "catwalk_cross";
@@ -66600,12 +66496,6 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
-/turf/unsimulated/iomoon/floor{
-	dir = 8;
-	icon_state = "iocrust_edge";
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 20;
 	dir = 8;
@@ -66650,10 +66540,6 @@
 /obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 1
-	},
-/turf/unsimulated/floor/lava{
-	deadly = 0;
-	temperature = 372.15
 	},
 /turf/unsimulated/floor{
 	carbon_dioxide = 16;
@@ -68314,20 +68200,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/sim/gunsim/lobby)
-"iXL" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon_state = "wall_trans"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/turf/unsimulated/wall/generic{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall"
-	},
-/area/hospital/samostrel)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -69704,12 +69576,6 @@
 /obj/machinery/light/runway_light,
 /turf/space,
 /area/syndicate_station_space)
-"lqh" = (
-/turf/unsimulated/wall/auto/adventure/shuttle{
-	opacity = 0
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle,
-/area/hospital/samostrel)
 "lqm" = (
 /obj/decal/exhibit/midrange{
 	exhibit_id = "ex_centcom_midrange_6";
@@ -71978,21 +71844,6 @@
 	},
 /turf/unsimulated/floor/stairs/quilty,
 /area/owlery/owllock)
-"owJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon_state = "wall_trans"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/turf/unsimulated/wall/generic{
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall"
-	},
-/area/hospital/samostrel)
 "owK" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/floor/martian,
@@ -72222,18 +72073,6 @@
 	icon_state = "wall_trans"
 	},
 /turf/unsimulated/floor/void/channel,
-/area/hospital/samostrel)
-"oSn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon_state = "wall_trans"
-	},
-/turf/unsimulated/floor/void/channel,
-/turf/unsimulated/wall/generic{
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall"
-	},
 /area/hospital/samostrel)
 "oSp" = (
 /obj/item/device/radio/intercom/virtual,
@@ -77324,21 +77163,6 @@
 	},
 /turf/space,
 /area/wizard_station_space)
-"wuZ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon_state = "wall_trans"
-	},
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/turf/unsimulated/wall/generic{
-	dir = 4;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "diagonalWall"
-	},
-/area/hospital/samostrel)
 "wvs" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -78410,14 +78234,6 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/mining)
-"xXb" = (
-/turf/unsimulated/floor/void/channel{
-	density = 1;
-	name = "very much a wormhole distortion";
-	opacity = 1
-	},
-/turf/space/no_replace,
-/area/adventure/channel)
 "xXj" = (
 /obj/shrub{
 	dir = 4
@@ -83708,7 +83524,7 @@ bLn
 bLn
 bLP
 bLy
-bNv
+bMy
 bLy
 ahI
 aDC
@@ -84611,7 +84427,7 @@ aDC
 aDC
 bLy
 bLn
-bNv
+bMy
 bLy
 bJE
 bJE
@@ -84913,8 +84729,8 @@ bTU
 aDC
 aDC
 aDC
-bNv
-bNv
+bMy
+bMy
 bJE
 bJE
 bJE
@@ -86380,7 +86196,7 @@ bJE
 bJV
 bMy
 bLy
-bNv
+bMy
 bNR
 bOp
 bOI
@@ -90637,7 +90453,7 @@ bKB
 bLd
 bLd
 bKw
-bWE
+bMy
 aDC
 bKw
 bKw
@@ -91224,7 +91040,7 @@ bQC
 bLn
 bLn
 bOv
-bNv
+bMy
 bJE
 bJE
 bKw
@@ -128626,17 +128442,17 @@ bqb
 brT
 bpo
 aaT
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
-bBh
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
+bBY
 ahX
 ahX
 aaa
@@ -157038,15 +156854,6 @@ aaa
 kmt
 kmt
 kmt
-xXb
-xXb
-xXb
-xXb
-xXb
-xXb
-xXb
-xXb
-xXb
 kmt
 kmt
 kmt
@@ -157060,7 +156867,16 @@ kmt
 kmt
 kmt
 kmt
-abg
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
+kmt
 kmt
 kmt
 kmt
@@ -157340,14 +157156,6 @@ aaa
 kmt
 gGM
 gGM
-abi
-abi
-abi
-abi
-abi
-abi
-abi
-abi
 gGM
 gGM
 gGM
@@ -157375,7 +157183,15 @@ gGM
 gGM
 gGM
 gGM
-abi
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
+gGM
 gGM
 gGM
 gGM
@@ -157642,15 +157458,15 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -157944,20 +157760,6 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-kfa
-kfa
-kfa
-kfa
-kfa
-abl
 kfa
 kfa
 kfa
@@ -157979,14 +157781,28 @@ kfa
 kfa
 kfa
 kfa
-abl
-kfa
-abl
-kfa
-abl
 kfa
 kfa
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kmt
@@ -158246,18 +158062,18 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -158548,18 +158364,18 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -158850,10 +158666,6 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
 kfa
 kfa
 kfa
@@ -158865,7 +158677,11 @@ kfa
 kfa
 kfa
 kfa
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -158878,10 +158694,10 @@ xXL
 pEv
 rQO
 abU
-agn
+xXL
 kfa
 kfa
-abl
+kfa
 kfa
 kfa
 kfa
@@ -159152,9 +158968,6 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
 kfa
 kfa
 kfa
@@ -159163,10 +158976,13 @@ kfa
 kfa
 kfa
 kfa
-abl
 kfa
 kfa
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -159187,11 +159003,11 @@ kfa
 kfa
 kfa
 kfa
-abl
 kfa
 kfa
 kfa
-brD
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -159454,8 +159270,8 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -159756,8 +159572,8 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -160058,8 +159874,8 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -160360,9 +160176,9 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
+kfa
+kfa
+kfa
 kfa
 kfa
 abU
@@ -160662,10 +160478,10 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
 kfa
 acG
 adp
@@ -160964,12 +160780,12 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-acj
+kfa
+kfa
+kfa
+kfa
+kfa
+abU
 adp
 abB
 adv
@@ -161266,17 +161082,17 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
 acG
 abr
 abr
 abr
 abr
-iXL
+rnA
 adt
 aeP
 abr
@@ -161568,14 +161384,14 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-ack
-acK
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+gLu
+xcv
+kfa
 fUS
 abr
 abr
@@ -161870,15 +161686,15 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-acj
-acK
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+abU
+xcv
+kfa
 abr
 abB
 abB
@@ -162174,8 +161990,8 @@ gGM
 kfa
 qfQ
 abr
-lqh
-lqh
+abn
+abn
 abr
 abr
 abr
@@ -162474,7 +162290,7 @@ aaa
 kmt
 gGM
 jJx
-lqh
+abn
 abr
 abF
 abT
@@ -162482,7 +162298,7 @@ abr
 acn
 abF
 abr
-wuZ
+eQe
 aea
 aei
 hkn
@@ -163682,7 +163498,7 @@ aaa
 kmt
 gGM
 iSv
-lqh
+abn
 abr
 abS
 abX
@@ -163690,10 +163506,10 @@ abr
 abX
 abS
 abr
-iXL
+rnA
 abB
 abB
-owJ
+iaA
 abr
 abr
 abr
@@ -163986,8 +163802,8 @@ gGM
 kfa
 fUS
 abr
-lqh
-lqh
+abn
+abn
 abr
 abr
 abr
@@ -163996,7 +163812,7 @@ abr
 abr
 adZ
 abr
-wuZ
+eQe
 aeU
 abB
 adZ
@@ -164286,15 +164102,15 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-abl
-acj
-ada
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+abU
+uFz
+kfa
 abr
 abB
 abB
@@ -164588,15 +164404,15 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-acv
-ada
-abl
-oSn
+kfa
+kfa
+kfa
+kfa
+kfa
+nQp
+uFz
+kfa
+qfQ
 abr
 abr
 abr
@@ -164890,17 +164706,17 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
 acG
 abr
 abr
 abr
 abr
-wuZ
+eQe
 aev
 aeN
 abr
@@ -165192,12 +165008,12 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
-acj
+kfa
+kfa
+kfa
+kfa
+kfa
+abU
 adp
 ads
 adN
@@ -165494,11 +165310,11 @@ aaa
 kmt
 gGM
 kfa
-abl
-abl
-abl
-abl
-abl
+kfa
+kfa
+kfa
+kfa
+kfa
 acz
 adp
 adu
@@ -167319,25 +167135,25 @@ kfa
 kfa
 kfa
 kfa
-brD
-brD
-kfa
-brD
-brD
 kfa
 kfa
-brD
-brD
-kfa
-brD
-brD
 kfa
 kfa
-brD
-brD
 kfa
-brD
-brD
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
+kfa
 kfa
 kfa
 kfa
@@ -168527,21 +168343,21 @@ gGM
 gGM
 gGM
 gGM
-bAc
 gGM
 gGM
 gGM
 gGM
 gGM
 gGM
-bAc
 gGM
 gGM
 gGM
 gGM
 gGM
 gGM
-bAc
+gGM
+gGM
+gGM
 gGM
 gGM
 gGM

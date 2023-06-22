@@ -19,10 +19,6 @@
 	name = "strange machine"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "ah" = (
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -34,17 +30,6 @@
 	tag = "icon-reinf_tabledir"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
-/area/space)
-"ak" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "al" = (
 /obj/table/reinforced{
@@ -53,10 +38,6 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "am" = (
 /turf/unsimulated/floor/plating/scorched,
@@ -117,10 +98,7 @@
 	icon_state = "hvent";
 	name = "air vent"
 	},
-/turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/space)
 "aB" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -134,9 +112,6 @@
 /turf/unsimulated/floor/stairs{
 	dir = 8
 	},
-/area/space)
-"aD" = (
-/turf/space,
 /area/space)
 "aE" = (
 /obj/grille/catwalk{
@@ -207,12 +182,6 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/space)
-"aO" = (
-/turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall3"
-	},
-/area/space)
 "aP" = (
 /obj/lattice{
 	tag = "icon-lattice-dir (NORTHEAST)";
@@ -221,27 +190,11 @@
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
-"aQ" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
-	},
-/area/space)
 "aR" = (
 /turf/simulated/shuttle/wall{
 	tag = "icon-wall (EAST)";
 	icon_state = "wall";
 	dir = 4
-	},
-/area/space)
-"aS" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/shuttle/wall{
-	tag = "icon-wall (NORTHEAST)";
-	icon_state = "wall";
-	dir = 5
 	},
 /area/space)
 "aT" = (
@@ -273,29 +226,9 @@
 /obj/machinery/door/supernorn/command,
 /turf/simulated/floor/concrete,
 /area/space)
-"ba" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	tag = "icon-diagonalWall (NORTHWEST)";
-	icon_state = "diagonalWall";
-	dir = 9
-	},
-/area/space)
 "bb" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
-	},
-/area/space)
-"bc" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
 	},
 /area/space)
 "bd" = (
@@ -423,42 +356,6 @@
 	},
 /turf/simulated/floor/concrete,
 /area/space)
-"bu" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	tag = "icon-wall (NORTHEAST)";
-	icon_state = "wall";
-	dir = 5
-	},
-/area/space)
-"bv" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
-	},
-/area/space)
-"bw" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
-	},
-/area/space)
-"bx" = (
-/turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/shuttle/wall{
-	tag = "icon-diagonalWall (NORTHWEST)";
-	icon_state = "diagonalWall";
-	dir = 9
-	},
-/area/space)
 "by" = (
 /obj/machinery/door/supernorn/engineering{
 	icon_state = "vclosed";
@@ -490,10 +387,6 @@
 	name = "unusual machine"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "bC" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -663,12 +556,6 @@
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
 /area/space)
-"bV" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/space,
-/area/space)
 "bW" = (
 /obj/machinery/atmospherics/binary/valve{
 	tag = "icon-valve0 (EAST)";
@@ -807,11 +694,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/turf/simulated/shuttle/wall{
-	tag = "icon-diagonalWall (NORTHWEST)";
-	icon_state = "diagonalWall";
-	dir = 9
-	},
 /area/space)
 "cj" = (
 /obj/decal/fakeobjects/pipe/heat{
@@ -841,11 +723,6 @@
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
 	},
 /area/space)
 "cm" = (
@@ -909,11 +786,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
 	},
-/turf/simulated/shuttle/wall{
-	tag = "icon-wall (NORTHEAST)";
-	icon_state = "wall";
-	dir = 5
-	},
 /area/space)
 "cs" = (
 /obj/decal/fakeobjects/pipe{
@@ -923,11 +795,6 @@
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor3"
-	},
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
 	},
 /area/space)
 "ct" = (
@@ -1062,10 +929,6 @@
 	name = "Air Scrubber"
 	},
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "cG" = (
 /obj/stomachacid,
@@ -1074,10 +937,6 @@
 "cH" = (
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/setpieces/ancient_pit/shaft,
-/turf/simulated/floor/concrete{
-	icon_state = "rustgrate3";
-	name = "rusty grate"
-	},
 /area/space)
 "cI" = (
 /obj/stomachacid,
@@ -1175,10 +1034,7 @@
 /area/space)
 "cU" = (
 /obj/stomachacid,
-/turf/unsimulated/wall{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "wall3"
-	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/space)
 "cV" = (
 /obj/decal/fakeobjects/shuttlethruster{
@@ -1210,11 +1066,6 @@
 	tag = "icon-intact-f (SOUTHEAST)"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
-	},
 /area/space)
 "cZ" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -1231,11 +1082,6 @@
 	dir = 10
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
-/turf/simulated/shuttle/wall{
-	tag = "icon-wall (NORTHEAST)";
-	icon_state = "wall";
-	dir = 5
-	},
 /area/space)
 "db" = (
 /obj/stomachacid,
@@ -1289,11 +1135,6 @@
 	tag = "icon-intact-f (NORTHEAST)"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "wall";
-	tag = "icon-wall (NORTHEAST)"
-	},
 /area/space)
 "dj" = (
 /obj/decal/fakeobjects/shuttleengine,
@@ -1306,11 +1147,6 @@
 	tag = "icon-intact-f (NORTHWEST)"
 	},
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
-/turf/simulated/shuttle/wall{
-	tag = "icon-diagonalWall (NORTHWEST)";
-	icon_state = "diagonalWall";
-	dir = 9
-	},
 /area/space)
 "dl" = (
 /obj/stomachacid,
@@ -1662,23 +1498,23 @@ aa
 ab
 ab
 ah
-ak
+as
 am
 am
 am
 an
 an
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 an
 an
 an
 an
 am
-ak
+as
 ah
 ab
 ab
@@ -1687,23 +1523,23 @@ aa
 ab
 ab
 ah
-ak
+as
 an
 an
 an
 an
 an
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 an
 an
 an
 an
 an
-ak
+as
 ah
 ab
 ab
@@ -1712,23 +1548,23 @@ aa
 ab
 ab
 ah
-ak
+as
 an
 an
 an
 an
 an
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 an
 an
 an
 an
 an
-ak
+as
 ah
 ab
 ab
@@ -1744,9 +1580,9 @@ cG
 ah
 ab
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 ab
 ah
@@ -2732,23 +2568,23 @@ aa
 ab
 ab
 ah
-ak
+as
 am
 am
 ah
 au
 au
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 au
 au
 ah
 am
 am
-ak
+as
 ah
 ab
 ab
@@ -2757,7 +2593,7 @@ aa
 ab
 ab
 ah
-ak
+as
 an
 an
 ah
@@ -2773,7 +2609,7 @@ au
 ah
 an
 an
-ak
+as
 ah
 ab
 ab
@@ -2782,23 +2618,23 @@ aa
 ab
 ab
 ah
-ak
+as
 an
 an
 an
 an
 an
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 an
 an
 an
 an
 an
-ak
+as
 ah
 ab
 ab
@@ -2814,9 +2650,9 @@ cG
 cG
 cS
 ah
-ak
-ak
-ak
+as
+as
+as
 ah
 cS
 cG
@@ -3086,7 +2922,7 @@ ab
 ab
 ab
 bH
-ak
+as
 bH
 ab
 ab
@@ -3193,7 +3029,7 @@ ab
 ab
 ab
 bH
-ak
+as
 bH
 ab
 ab
@@ -3300,7 +3136,7 @@ ab
 ab
 ab
 bH
-ak
+as
 bH
 ab
 ab
@@ -3407,7 +3243,7 @@ ab
 ab
 ab
 bH
-ak
+as
 bH
 ab
 ab
@@ -3700,13 +3536,13 @@ ah
 ah
 aw
 aG
-aO
+ah
 at
 at
 at
 at
 at
-aO
+ah
 aG
 bz
 ah
@@ -3725,13 +3561,13 @@ ah
 ah
 aw
 bA
-aO
+ah
 bE
 bK
 bE
 bK
 bE
-aO
+ah
 ay
 bz
 ah
@@ -3748,17 +3584,17 @@ ab
 ab
 ah
 ah
-bV
+ax
 bY
-aO
+ah
 at
 at
 at
 at
 at
-aO
+ah
 cz
-bV
+ax
 ah
 ah
 ab
@@ -3854,7 +3690,7 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 bZ
 aP
@@ -3866,7 +3702,7 @@ as
 aP
 cA
 ax
-ak
+as
 ah
 ab
 ab
@@ -3914,13 +3750,13 @@ ah
 as
 ax
 aH
-aQ
+as
 aR
 aR
 aR
 aR
 aR
-bw
+as
 aH
 ax
 as
@@ -3939,13 +3775,13 @@ ah
 as
 ax
 aH
-aQ
+as
 aR
 aR
 aR
 aR
 aR
-bw
+as
 aH
 ax
 as
@@ -3961,19 +3797,19 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 ca
-aQ
+as
 ch
 cm
 cm
 cm
 cq
-bw
+as
 cB
 ax
-ak
+as
 ah
 ab
 ab
@@ -4022,11 +3858,11 @@ at
 ax
 aH
 aR
-ba
 bb
 bb
 bb
-bu
+bb
+bb
 aR
 aH
 ax
@@ -4047,11 +3883,11 @@ at
 ax
 aH
 aR
-ba
+bb
 bb
 aR
 bb
-bu
+bb
 aR
 aH
 ax
@@ -4068,7 +3904,7 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 cb
 ce
@@ -4080,7 +3916,7 @@ cr
 cv
 cC
 ax
-ak
+as
 ah
 ab
 ab
@@ -4450,11 +4286,11 @@ at
 ax
 aH
 aR
-bc
 bb
 bb
 bb
-bv
+bb
+bb
 aR
 aH
 ax
@@ -4475,11 +4311,11 @@ at
 ax
 aH
 aR
-bc
+bb
 bb
 aR
 bb
-bv
+bb
 aR
 aH
 ax
@@ -4496,7 +4332,7 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 aH
 cg
@@ -4508,7 +4344,7 @@ cs
 ct
 aH
 ax
-ak
+as
 ah
 ab
 ab
@@ -4556,13 +4392,13 @@ ah
 as
 ax
 aH
-aS
+as
 aR
 aR
 aR
 aR
 aR
-bx
+as
 aH
 ax
 as
@@ -4581,13 +4417,13 @@ ah
 as
 ax
 aH
-aS
+as
 aR
 aR
 aR
 aR
 aR
-bx
+as
 aH
 ax
 as
@@ -4603,19 +4439,19 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 aH
-aS
+as
 cg
 cp
 cp
 cp
 ct
-bx
+as
 aH
 ax
-ak
+as
 ah
 ab
 ab
@@ -4710,7 +4546,7 @@ ab
 ab
 ab
 ah
-ak
+as
 ax
 aH
 aT
@@ -4722,7 +4558,7 @@ as
 aT
 aH
 ax
-ak
+as
 ah
 ab
 ab
@@ -4770,13 +4606,13 @@ ah
 ah
 ay
 aI
-aO
+ah
 at
 at
 at
 at
 at
-aO
+ah
 aI
 bA
 ah
@@ -4795,13 +4631,13 @@ ah
 ah
 ay
 aI
-aO
+ah
 at
 at
 at
 at
 at
-aO
+ah
 aI
 bA
 ah
@@ -4820,13 +4656,13 @@ ah
 ah
 ay
 aI
-aO
+ah
 at
 at
 at
 at
 at
-aO
+ah
 aI
 bA
 ah
@@ -5538,8 +5374,8 @@ aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 au
 au
@@ -5555,16 +5391,16 @@ au
 au
 au
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 au
 au
@@ -5580,8 +5416,8 @@ au
 au
 au
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -5605,8 +5441,8 @@ au
 au
 au
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -5620,8 +5456,8 @@ aa
 aa
 ah
 ag
-ak
-ak
+as
+as
 ap
 au
 aA
@@ -5637,16 +5473,16 @@ au
 aA
 au
 ap
-ak
-ak
+as
+as
 bB
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 au
 aA
@@ -5662,16 +5498,16 @@ au
 aA
 au
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 au
 aA
@@ -5687,16 +5523,16 @@ au
 aA
 au
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 au
 aA
@@ -5712,9 +5548,9 @@ au
 aA
 au
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
@@ -5727,8 +5563,8 @@ aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 au
 au
@@ -5744,41 +5580,41 @@ au
 au
 au
 ah
-ak
-ak
-ah
-ah
-aa
-aa
-ah
-ah
-ak
-ak
-ah
-au
-au
-au
-au
-au
-au
-au
-au
-au
-au
-au
-au
-au
-ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
+ah
+au
+au
+au
+au
+au
+au
+au
+au
+au
+au
+au
+au
+au
+ah
+as
+as
+ah
+ah
+aa
+aa
+ah
+ah
+as
+as
 ah
 au
 au
@@ -5794,8 +5630,8 @@ au
 au
 au
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -5819,8 +5655,8 @@ au
 au
 au
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -5972,13 +5808,13 @@ ab
 ah
 aC
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 aC
 ah
@@ -6079,13 +5915,13 @@ ah
 ah
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 ah
@@ -6186,13 +6022,13 @@ ah
 an
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 an
@@ -6293,13 +6129,13 @@ ah
 an
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 an
@@ -6400,13 +6236,13 @@ ah
 an
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 an
@@ -6507,13 +6343,13 @@ ah
 ah
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 ah
@@ -6614,13 +6450,13 @@ ab
 ah
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 ah
@@ -6721,13 +6557,13 @@ ah
 ah
 an
 ah
-ak
+as
 au
 au
 au
 au
 au
-ak
+as
 ah
 an
 ah
@@ -6797,8 +6633,8 @@ aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 an
 an
@@ -6814,16 +6650,16 @@ ah
 an
 an
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 an
 an
@@ -6839,16 +6675,16 @@ ah
 an
 an
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 an
 an
@@ -6864,16 +6700,16 @@ ah
 an
 an
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 cG
 cG
@@ -6889,8 +6725,8 @@ ah
 cG
 cG
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -6904,8 +6740,8 @@ aa
 aa
 ah
 ag
-ak
-ak
+as
+as
 ap
 av
 an
@@ -6921,16 +6757,16 @@ an
 an
 aL
 ap
-ak
-ak
+as
+as
 bB
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 av
 an
@@ -6938,7 +6774,7 @@ ah
 ab
 ab
 ah
-ak
+as
 ah
 ab
 ab
@@ -6946,16 +6782,16 @@ ah
 an
 aL
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 av
 an
@@ -6971,16 +6807,16 @@ an
 an
 aL
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
 ah
-ak
-ak
-ak
+as
+as
+as
 ap
 av
 cO
@@ -6996,9 +6832,9 @@ cG
 cO
 aL
 ap
-ak
-ak
-ak
+as
+as
+as
 ah
 aa
 aa
@@ -7036,8 +6872,8 @@ aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 ah
@@ -7045,7 +6881,7 @@ ah
 ab
 ab
 ah
-ak
+as
 ah
 ab
 ab
@@ -7053,16 +6889,16 @@ ah
 ah
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 ah
@@ -7078,16 +6914,16 @@ ah
 ah
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
 aa
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 ah
@@ -7103,8 +6939,8 @@ ah
 ah
 ah
 ah
-ak
-ak
+as
+as
 ah
 ah
 aa
@@ -7122,7 +6958,7 @@ ah
 ah
 ah
 ab
-aD
+ab
 ab
 ab
 ah
@@ -7152,7 +6988,7 @@ ab
 ab
 ab
 ah
-ak
+as
 ah
 ab
 ab
