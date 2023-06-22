@@ -2426,7 +2426,7 @@ var/global/noir = 0
 								var/datum/antagonist/A = V
 								antag_options[initial(A.display_name)] = initial(A.id)
 
-							var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign to everyone.", "Everyone's a Traitor", antag_options)
+							var/selected_keyvalue = tgui_input_list(usr, "Choose an antagonist role to assign to everyone.", "Make Everyone An Antagonist", antag_options)
 							if (!selected_keyvalue)
 								return
 
@@ -2434,13 +2434,13 @@ var/global/noir = 0
 
 							var/equip_traitor = TRUE
 							if (antagonist_role_id == ROLE_TRAITOR)
-								if (tgui_alert(usr, "Hard Mode?", "Everyone's a Traitor", list("Yes", "No")) == "Yes")
+								if (tgui_alert(usr, "Hard Mode?", "Make Everyone An Antagonist", list("Yes", "No")) == "Yes")
 									equip_traitor = FALSE
 
-							var/custom_objective = tgui_input_text(usr, "What should the objective be?", "Everyone's a Traitor")
+							var/custom_objective = tgui_input_text(usr, "What should their objective be?", "Make Everyone An Antagonist")
 							if (!custom_objective)
 								return
-							var/escape_objective = tgui_input_list(usr, "Which escaping objective?", "Everyone's a Traitor", typesof(/datum/objective/escape/) + "None")
+							var/escape_objective = tgui_input_list(usr, "What should their escape objective be?", "Make Everyone An Antagonist", typesof(/datum/objective/escape/) + "None")
 							if (!escape_objective)
 								return
 
