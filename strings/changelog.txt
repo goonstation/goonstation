@@ -1,4 +1,19 @@
 
+(t)thu jun 22 23
+(u)tarmunora
+(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
+(u)aloe
+(+)Werewolves on RP get double time before they're forcibly transformed.
+(u)Wisemonster
+(p)14572
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a catering warp beacon to cog2
+(u)RubberRats
+(p)14612
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The detective now has a clipboard in their locker.
+(u)mbc, pali
+(*)Oshan trench holes are now a lot more visible. The trench algae just illuminates them a lot or something.
 (t)wed jun 21 23
 (u)Gannets
 (p)14659
