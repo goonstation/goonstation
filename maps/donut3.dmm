@@ -25666,8 +25666,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "hNX" = (
-/obj/warp_beacon{
-	name = "Security Beacon"
+/obj/warp_beacon/security{
+	name = "Security Hangar Beacon"
 	},
 /obj/lattice,
 /turf/space,
@@ -29461,8 +29461,8 @@
 /area/station/science/lab)
 "iWp" = (
 /obj/lattice,
-/obj/warp_beacon/qm{
-	name = "Public hangar beacon"
+/obj/warp_beacon/mainpod1{
+	name = "Main Hangar Beacon"
 	},
 /turf/space,
 /area/space)
@@ -69086,10 +69086,10 @@
 	},
 /area/station/solar/west)
 "vbS" = (
-/obj/warp_beacon{
-	name = "Science Hangar Beacon"
-	},
 /obj/lattice,
+/obj/warp_beacon/research{
+	name = "Research Hangar Beacon"
+	},
 /turf/space,
 /area/space)
 "vca" = (
@@ -72330,7 +72330,9 @@
 /area/station/maintenance/inner/north)
 "vYk" = (
 /obj/lattice,
-/obj/warp_beacon/qm,
+/obj/warp_beacon/qm{
+	name = "QM Hangar Beacon"
+	},
 /turf/space,
 /area/space)
 "vYl" = (
