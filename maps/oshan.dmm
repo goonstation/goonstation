@@ -40158,10 +40158,6 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"doO" = (
-/obj/item/toy/handheld/robustris,
-/turf/simulated/floor/shuttlebay,
-/area/station/maintenance/inner/central)
 "dsz" = (
 /obj/rack,
 /obj/item/tank/jetpack/micro,
@@ -41595,14 +41591,15 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/item/reagent_containers/food/snacks/popcorn{
-	desc = "Those chickens are up to something...";
-	name = "suspicious popcorn"
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	desc = "Those chickens are up to something...";
+	name = "suspicious popcorn";
+	bites_left = 100
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
@@ -41759,6 +41756,15 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"hhE" = (
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
+/obj/item/paper,
+/obj/item/currency/spacecash/five,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "hkh" = (
 /obj/storage/crate/furnacefuel,
 /obj/item/raw_material/char,
@@ -42695,6 +42701,13 @@
 	dir = 8
 	},
 /area/station/medical/staff)
+"jVP" = (
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "jWq" = (
 /obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/redblack{
@@ -43064,6 +43077,13 @@
 /area/station/crew_quarters/market{
 	name = "Supply Lobby"
 	})
+"kUz" = (
+/obj/machinery/conveyor/SN/carousel,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "kUZ" = (
 /obj/landmark{
 	name = "blobstart"
@@ -44017,6 +44037,11 @@
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"nEi" = (
+/obj/machinery/conveyor/SN/carousel,
+/obj/plasticflaps,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "nEo" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/produce{
@@ -45084,6 +45109,11 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"qHI" = (
+/obj/item/toy/handheld/robustris,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "qLc" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon19,
 /turf/simulated/floor/wood,
@@ -45698,6 +45728,11 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"sSg" = (
+/obj/machinery/drainage/big,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/shuttlebay,
+/area/shuttle/sea_elevator_room)
 "sTn" = (
 /obj/machinery/door/unpowered/martian,
 /obj/decal/aliencomputer{
@@ -45975,6 +46010,13 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"tPx" = (
+/obj/cable/reinforced{
+	icon_state = "1-2-thick"
+	},
+/obj/item/pen,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "tPK" = (
 /obj/shrub,
 /obj/landmark/spawner/loot,
@@ -86139,15 +86181,15 @@ shK
 aCD
 aCD
 aCD
+aCD
+aCD
+aCD
 cnm
 bTz
 nzt
 ajT
 rjO
 fBy
-aCD
-aCD
-aCD
 aCD
 aCD
 aCD
@@ -86440,17 +86482,17 @@ cja
 shK
 aCD
 aqn
+aqn
+aqn
+aqn
 szB
 jxl
-doO
+qHI
 cja
 ciW
 xDC
 iBs
 szB
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -86731,16 +86773,19 @@ urh
 uCG
 ciM
 ciM
+jVP
 ciM
 ciM
-ciM
-ciM
-ciM
+tPx
+hhE
 ciM
 ciM
 liH
 shK
 aCD
+aqn
+aqn
+aqn
 aqn
 szB
 szB
@@ -86750,9 +86795,6 @@ ciW
 aCD
 szB
 szB
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -87031,18 +87073,21 @@ aqn
 aCD
 dlf
 knC
+nEi
 knC
 knC
 knC
+kUz
 knC
 knC
 knC
-knC
-knC
-knC
+nEi
 knC
 iQu
 aCD
+aqn
+aqn
+aqn
 aqn
 aqn
 aqn
@@ -87050,9 +87095,6 @@ chd
 cja
 ciW
 chd
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -87348,13 +87390,13 @@ aCD
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 chd
 cja
 ckv
 chd
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -87650,13 +87692,13 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 rBz
 cgY
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -87952,13 +87994,13 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 pvB
-sak
+sSg
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -88249,6 +88291,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 aLV
 aLV
@@ -88258,9 +88303,6 @@ aLV
 rBz
 cgY
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -88551,6 +88593,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 kKb
 cfR
@@ -88561,9 +88606,6 @@ gtM
 acL
 aLV
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -88853,6 +88895,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 cgg
 cgk
@@ -88863,9 +88908,6 @@ uTE
 acL
 lwY
 ciS
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -89155,6 +89197,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 cge
 cgi
@@ -89165,9 +89210,6 @@ jtM
 acL
 xca
 ciS
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -89457,6 +89499,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 gND
 gND
@@ -89467,9 +89512,6 @@ acL
 wye
 aLV
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -89759,6 +89801,9 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 aLV
 aLV
@@ -89768,9 +89813,6 @@ aLV
 cgY
 cgY
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -90066,13 +90108,13 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 sak
 sak
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
@@ -90368,13 +90410,13 @@ aqn
 aqn
 aqn
 aqn
+aqn
+aqn
+aqn
 aLV
 cgY
 cgY
 aLV
-aqn
-aqn
-aqn
 aqn
 aqn
 aqn
