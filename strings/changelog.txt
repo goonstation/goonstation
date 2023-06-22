@@ -1,4 +1,12 @@
 
+(t)wed jun 21 23
+(u)Gannets
+(p)14659
+(e)🗺🌱|A-Mapping, A-Hydroponics
+(*)A fishing pool, research terminal and fishing supplies vendor has been added to most in-rotation maps. You'll find them in hydroponics, hydroponics storage or the ranch.
+(t)tue jun 20 23
+(u)aloe
+(+)RP werewolves now have their hunger deplete at half speed, but they can only fill the need by feeding on humans.
 (t)mon jun 19 23
 (u)Gannets
 (p)14645

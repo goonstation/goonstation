@@ -306,7 +306,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aU" = (
-/obj/wingrille_spawn/full,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/janitor_setpiece)
 "aV" = (
@@ -425,10 +425,6 @@
 /obj/machinery/r_door_control/podbay{
 	id = "jani_outpost";
 	pixel_x = 32
-	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -704,8 +700,8 @@ aA
 aj
 aj
 aj
-aA
-aA
-aA
+aj
+aj
+aj
 aa
 "}

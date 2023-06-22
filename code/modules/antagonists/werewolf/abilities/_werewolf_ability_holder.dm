@@ -186,6 +186,7 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
+				M.sims?.affectMotive("Ravenous Hunger", healing * 5)
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
