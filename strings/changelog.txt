@@ -1,5 +1,7 @@
 
 (t)thu jun 22 23
+(u)tarmunora
+(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
 (u)aloe
 (+)Werewolves on RP get double time before they're forcibly transformed.
 (u)Wisemonster
@@ -13,8 +15,6 @@
 (u)mbc, pali
 (*)Oshan trench holes are now a lot more visible. The trench algae just illuminates them a lot or something.
 (t)wed jun 21 23
-(u)tarmunora
-(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
 (u)Gannets
 (p)14659
 (e)🗺🌱|A-Mapping, A-Hydroponics
