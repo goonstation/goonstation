@@ -1,5 +1,18 @@
 
 (t)fri jun 23 23
+(u)Skeletonman0
+(p)14458
+(e)🆕🎨📦💡|C-Feature, C-Sprites, A-Game-Objects, A-Station-Systems
+(+)Added a new mechcomp component that lets you more easily manipulate text for stuff like signs
+(u)Glamurio (Ryou)
+(p)14574
+(e)🆕🗺💅|C-Feature, A-Mapping, C-QoL
+(*)Donut 2 Escape has been refurbished to include a larger area and escape pods.
+(+)Donut 2 Robotics and adjacent maintenance has received an overhaul.
+(u)Azrun
+(p)14667
+(e)🔒⚖🧫🧛|A-Secret, C-Balance, C-Experimental, A-Gamemodes
+(+)Salvagers investigate securing their comm channels...
 (u)zay25325
 (p)14634
 (e)|
