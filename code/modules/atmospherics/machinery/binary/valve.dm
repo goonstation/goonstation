@@ -5,15 +5,10 @@
 	desc = "A pipe valve"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
+	/// Are we letting gas pass through us?
 	var/open = FALSE
-	var/high_risk = FALSE //Does this valve have enough grief potential that the admins should be messaged when this is opened?
-
-/obj/machinery/atmospherics/binary/valve/update_icon(animation)
-	if(animation)
-		flick("valve[src.open][!src.open]",src)
-		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
-	else
-		icon_state = "valve[open]"
+	/// Does this valve have enough grief potential that the admins should be messaged when this is opened?
+	var/high_risk = FALSE
 
 /obj/machinery/atmospherics/binary/valve/New()
 	..()
@@ -22,6 +17,13 @@
 	qdel(src.air2)
 	src.air2 = null
 	UnsubscribeProcess()
+
+/obj/machinery/atmospherics/binary/valve/update_icon(animation)
+	if(animation)
+		flick("valve[src.open][!src.open]",src)
+		playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
+	else
+		icon_state = "valve[open]"
 
 /obj/machinery/atmospherics/binary/valve/network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 	if(reference == node1)
@@ -46,6 +48,7 @@
 			if(!isnull(node1))
 				return node1.network_expand(new_network, src)
 
+/// Open us up and connect the networks we are connected to.
 /obj/machinery/atmospherics/binary/valve/proc/open()
 	if(open)
 		return FALSE
@@ -65,6 +68,7 @@
 
 	return FALSE
 
+/// Close us down and split the network we are connected to.
 /obj/machinery/atmospherics/binary/valve/proc/close()
 	if(!open)
 		return FALSE
@@ -94,7 +98,8 @@
 		src.close()
 	else
 		src.open()
-		if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
+		if(high_risk)
+			message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
 	add_fingerprint(user)
 
 /obj/machinery/atmospherics/binary/valve/attackby(var/obj/item/G, var/mob/user)
@@ -124,7 +129,8 @@
 /obj/machinery/atmospherics/binary/valve/notify_admins
 	high_risk = TRUE
 
-/obj/machinery/atmospherics/binary/valve/digital // can be controlled by AI
+/// Can be controlled by AI
+/obj/machinery/atmospherics/binary/valve/digital
 	name = "digital valve"
 	desc = "A digitally controlled valve."
 	icon = 'icons/obj/atmospherics/digital_valve.dmi'
