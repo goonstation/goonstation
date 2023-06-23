@@ -642,6 +642,9 @@ var/global/mob/twitch_mob = 0
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
+#ifdef RANDOM_ROOM_CHECKING
+	placeAllRandomRooms()
+#endif
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()

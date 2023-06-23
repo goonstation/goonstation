@@ -1463,6 +1463,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\vpn_bonk\vpn_bonk.dm"
 #include "code\modules\worldgen\GenerateMining.dm"
 #include "code\modules\worldgen\PrefabRuntimeChecker.dm"
+#include "code\modules\worldgen\RandomRoomRuntimeChecker.dm"
 #include "code\modules\worldgen\worldgen_parent.dm"
 #include "code\modules\worldgen\mapgen\_MapGenerator.dm"
 #include "code\modules\worldgen\mapgen\DesertGenerator.dm"
