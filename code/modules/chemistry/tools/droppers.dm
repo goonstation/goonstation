@@ -47,6 +47,11 @@
 	afterattack(obj/target, mob/user, flag)
 		if (!src.reagents || !target.reagents)
 			return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				return
 
 		if ((src.customizable_settings_available && src.transfer_mode == TO_SELF) || (!src.customizable_settings_available && !src.reagents.total_volume))
 			var/t = min(src.transfer_amount, target.reagents.total_volume) // Can't draw more than THEY have.

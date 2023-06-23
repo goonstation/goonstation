@@ -13,6 +13,7 @@
 	initial_volume = 50
 	var/image/fluid_image
 	var/icon_style = "beaker"
+	accepts_lid = TRUE
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	object_flags = NO_GHOSTCRITTER
 

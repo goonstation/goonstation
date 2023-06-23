@@ -106,6 +106,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			user.show_text("[src] seems to be out of order.", "red")
 			return
 
+		if (B.current_lid)
+			boutput(user, "<span class='alert'>You cannot put the [B.name] in the [src.name] while it has a lid on it.</span>")
+			return
 		/*
 		if (isrobot(user))
 			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents

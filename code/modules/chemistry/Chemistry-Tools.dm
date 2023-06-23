@@ -22,11 +22,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	move_triggered = 1
 	var/last_new_initial_reagents = 0 //fuck
 
+	var/accepts_lid = FALSE //!if true, container will accept beaker lids. lids should not go onto containers that aren't open
+	var/obj/item/beaker_lid/current_lid = null //!the lid applied to the container
+	var/image/lid_image = null
+	var/original_icon_state = null
+
 	New(loc, new_initial_reagents)
 		..()
 		last_new_initial_reagents = new_initial_reagents
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
+		original_icon_state = icon_state
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
@@ -66,6 +72,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	attack(mob/M, mob/user, def_zone)
 		return
 	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/beaker_lid))
+			try_to_apply_lid(I, user)
 		if (reagents)
 			reagents.physical_shock(I.force)
 		return
@@ -111,6 +119,34 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			return
 
 		src.transfer_all_reagents(over_object, usr)
+
+	proc/try_to_apply_lid(obj/item/beaker_lid/lid, mob/user)
+		if(!src.accepts_lid)
+			boutput(user, "<span class='alert'>The [lid] won't fit on the [src]!</span>")
+			return
+		else if(src.current_lid)
+			boutput(user, "<span class='alert'>You could never, ever, fit a second lid on the [src]!</span>")
+			return
+		else
+			boutput(user, "<span class='notice'>You click the [lid] onto the [src].</span>")
+			apply_lid(lid, user)
+
+	proc/apply_lid(obj/item/beaker_lid/lid, mob/user) //todo: add a sound?
+		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		current_lid = lid
+		user.u_equip(lid)
+		lid.set_loc(src)
+		if (!src.lid_image)
+			src.lid_image = image(src.icon)
+			src.lid_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			src.lid_image.icon_state = "[src.original_icon_state]-lid"
+		src.UpdateOverlays(src.lid_image, "lid")
+
+	proc/remove_current_lid(mob/user)
+		ADD_FLAG(src.flags, OPENCONTAINER)
+		src.current_lid.set_loc(get_turf(src))
+		current_lid = null
+		src.UpdateOverlays(null, "lid")
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
@@ -163,7 +199,7 @@ proc/ui_describe_reagents(atom/A)
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
-		if (ismob(target) && !target.is_open_container()) // pour reagents down their neck (if possible)
+		if (ismob(target) && !target.is_open_container() && src.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
 				return
@@ -208,7 +244,7 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && src.is_open_container()) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
 			var/obj/fluid/F = target
 			if (!src.reagents.total_volume)
 				if (!F.group || !F.group.reagents.total_volume)
@@ -234,7 +270,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -249,7 +285,12 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container() && target.reagents && !isturf(target)) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container() && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+			if(istype(target, /obj/item/reagent_containers))
+				var/obj/item/reagent_containers/t = target
+				if(t.current_lid)
+					boutput(user, "<span class='alert'>You cannot transfer liquids to the [target.name] while it has a lid on it!</span>")
+					return
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -264,7 +305,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (istype(target, /obj/item/sponge)) // dump contents onto it
+		else if (istype(target, /obj/item/sponge) && src.is_open_container()) // dump contents onto it
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -277,7 +318,7 @@ proc/ui_describe_reagents(atom/A)
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
-		else if (istype(target, /turf/space/fluid)) //specific exception for seafloor rn, since theres no others
+		else if (istype(target, /turf/space/fluid) && src.is_open_container()) //specific exception for seafloor rn, since theres no others
 			if (src.reagents.total_volume >= src.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[src] is full.</span>")
 				return
@@ -285,7 +326,7 @@ proc/ui_describe_reagents(atom/A)
 				src.reagents.add_reagent("silicon_dioxide", src.reagents.maximum_volume - src.reagents.total_volume) //should add like, 100 - 85 sand or something
 			boutput(user, "<span class='notice'>You scoop some of the sand into [src].</span>")
 
-		else if (reagents.total_volume)
+		else if (reagents.total_volume && src.is_open_container())
 			if (isobj(target) && (target:flags & NOSPLASH))
 				return
 
@@ -419,7 +460,10 @@ proc/ui_describe_reagents(atom/A)
 		return
 
 	attack_self(mob/user as mob)
-		if (src.splash_all_contents)
+		if(current_lid)
+			boutput(user, "<span class='notice'>You pop the lid off of the [src].</span>")
+			remove_current_lid()
+		else if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
 		else
@@ -622,3 +666,9 @@ proc/ui_describe_reagents(atom/A)
 	name = "reagent glass (surfactant)"
 	icon_state = "liquid"
 	initial_reagents = list("fluorosurfactant"=20)
+
+/obj/item/beaker_lid
+	name = "beaker lid"
+	desc = "A one-size fits all beaker lid, capable of an airtight seal on any compatible beaker."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "lid"
