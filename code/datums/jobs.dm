@@ -1066,7 +1066,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
 	slot_rhan = list(/obj/item/tank/jetpack)
 	slot_eyes = list(/obj/item/clothing/glasses/construction)
-	slot_poc1 = list(/obj/item/spacecash/fivehundred)
+	slot_poc1 = list(/obj/item/currency/spacecash/fivehundred)
 	slot_poc2 = list(/obj/item/room_planner)
 	slot_suit = list(/obj/item/clothing/suit/space/engineer)
 	slot_head = list(/obj/item/clothing/head/helmet/space/engineer)
@@ -1306,7 +1306,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_belt = list(/obj/item/storage/fanny)
 	slot_jump = list(/obj/item/clothing/under/misc/tourist)
 	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/spacecash/random/tourist) // Exact amount is randomized.
+	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_lhan = list(/obj/item/camera)
 	slot_rhan = list(/obj/item/storage/photo_album)
@@ -1794,7 +1794,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/casualjeansblue)
 	slot_head = list(/obj/item/clothing/head/mime_beret)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	slot_poc1 = list(/obj/item/spacecash/twenty)
+	slot_poc1 = list(/obj/item/currency/spacecash/twenty)
 	slot_poc2 = list(/obj/item/pen/pencil)
 	slot_lhan = list(/obj/item/storage/toolbox/artistic)
 	items_in_backpack = list(/obj/item/canvas, /obj/item/canvas, /obj/item/storage/box/crayon/basic ,/obj/item/paint_can/random)
@@ -2480,7 +2480,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/storage/ntsc_pouch/ntso)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/NTberet,
-							/obj/item/spacecash/fivehundred)
+							/obj/item/currency/spacecash/fivehundred)
 
 	faction = FACTION_NANOTRASEN
 
@@ -2597,7 +2597,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt/consultant) //needs their own secret channel
 	slot_card = /obj/item/card/id/command
 	slot_poc1 = list(/obj/item/device/pda2/ntso)
-	slot_poc2 = list(/obj/item/spacecash/fivehundred)
+	slot_poc2 = list(/obj/item/currency/spacecash/fivehundred)
 	items_in_backpack = list(/obj/item/storage/firstaid/regular,
 							/obj/item/clothing/head/helmet/space/ntso,
 							/obj/item/clothing/suit/space/ntso,
@@ -2831,7 +2831,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list(/obj/item/storage/fanny)
 	slot_jump = list(/obj/item/clothing/under/misc/tourist)
 	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/spacecash/random/tourist) // Exact amount is randomized.
+	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
 	slot_lhan = list(/obj/item/camera)
 	slot_rhan = list(/obj/item/storage/photo_album)
@@ -2942,7 +2942,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_glov = list(/obj/item/clothing/gloves/swat/NT)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/nanotrasen)
-		items_in_backpack = list(/obj/item/survival_machete, /obj/item/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete, /obj/item/currency/spacecash/hundred)
 
 		commander
 			name = "NanoTrasen Commander"
@@ -2988,7 +2988,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		slot_glov = list(/obj/item/clothing/gloves/swat)
 		slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 		slot_poc2 = list(/obj/item/device/pda2/pod_wars/syndicate)
-		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/spacecash/hundred)
+		items_in_backpack = list(/obj/item/survival_machete/syndicate, /obj/item/currency/spacecash/hundred)
 
 		commander
 			name = "Syndicate Commander"

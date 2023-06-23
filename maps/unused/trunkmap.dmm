@@ -1222,10 +1222,6 @@
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
-"ado" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/white,
-/area/russian)
 "adp" = (
 /obj/overlay{
 	density = 1;
@@ -6442,14 +6438,6 @@
 "atz" = (
 /turf/simulated/floor/carpet/blue,
 /area/station/crew_quarters/heads)
-"atA" = (
-/obj/table/wood{
-	dir = 9
-	},
-/obj/item/spacecash,
-/obj/item/storage/firstaid/regular,
-/turf/simulated/floor/carpet/blue,
-/area/station/crew_quarters/heads)
 "atB" = (
 /obj/stool/chair{
 	dir = 8
@@ -8368,14 +8356,6 @@
 "azM" = (
 /turf/simulated/wall,
 /area/station/crew_quarters/juryroom)
-"azN" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/atmos/highcap_storage)
 "azO" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
 	frequency = 1441;
@@ -8387,12 +8367,6 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/atmos/highcap_storage)
-"azP" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "azR" = (
 /turf/simulated/wall,
@@ -9237,14 +9211,6 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"aDl" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/escape{
-	dir = 4
-	},
-/area/station/atmos/highcap_storage)
 "aDm" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -11869,10 +11835,6 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/atmos/highcap_storage)
-"aMW" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/white/side,
 /area/station/atmos/highcap_storage)
 "aMX" = (
 /obj/machinery/computer/general_air_control/large_tank_control{
@@ -25071,10 +25033,6 @@
 "bzk" = (
 /turf/simulated/floor/black,
 /area/station/science/lab)
-"bzl" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/black,
-/area/station/science/lab)
 "bzm" = (
 /obj/machinery/door_control{
 	id = "mixingwaste";
@@ -25713,33 +25671,12 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lobby)
-"bCm" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/red/side{
-	dir = 8
-	},
-/area/station/science/lobby)
 "bCn" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	level = 2
 	},
 /turf/simulated/floor,
-/area/station/science/lobby)
-"bCo" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
 /area/station/science/lobby)
 "bCp" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -26233,10 +26170,6 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
-"bDp" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/red/side,
-/area/station/science/lobby)
 "bDq" = (
 /obj/machinery/camera{
 	c_tag = "Atomospherics Gas Processing East";
@@ -26252,12 +26185,6 @@
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
-	},
-/turf/simulated/floor/darkblue,
-/area/station/science/lab)
-"bDs" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
 	},
 /turf/simulated/floor/darkblue,
 /area/station/science/lab)
@@ -26594,12 +26521,6 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/portables_connector{
-	dir = 4
-	},
-/turf/simulated/floor/red,
-/area/station/science/lab)
-"bEl" = (
-/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -27429,12 +27350,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"bVo" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
-/area/station/atmos/highcap_storage)
 "bVF" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -28417,6 +28332,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"fat" = (
+/obj/machinery/camera{
+	c_tag = "Atmospherics Southeast";
+	dir = 1
+	},
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/blue/side{
+	dir = 0
+	},
+/area/station/atmos/highcap_storage)
 "fbz" = (
 /turf/space,
 /area/station/chapel/sanctuary)
@@ -29321,13 +29246,6 @@
 "hSI" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
-"hTh" = (
-/obj/machinery/atmospherics/binary/valve/digital{
-	dir = 0;
-	name = "Incinerator Gas Vent"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "hTy" = (
 /obj/machinery/door/window/northleft{
 	dir = 2;
@@ -29416,6 +29334,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"ilm" = (
+/obj/machinery/atmospherics/binary/valve/digital{
+	dir = 4;
+	name = "Incinerator Gas Release"
+	},
+/obj/machinery/door_control{
+	id = "Disposal Exit";
+	name = "Exterior Vent Control";
+	pixel_y = -25
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "imn" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -29507,14 +29437,6 @@
 /obj/fitness/weightlifter,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
-"ixw" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/atmos/highcap_storage)
 "iyN" = (
 /obj/table/auto,
 /obj/item/storage/belt/utility,
@@ -30581,6 +30503,14 @@
 	},
 /turf/simulated/wall,
 /area/station/janitor/office)
+"ldw" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/atmos/highcap_storage)
 "ldy" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/r_wall,
@@ -30714,6 +30644,19 @@
 /obj/cable,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"lkT" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/red/side{
+	dir = 8
+	},
+/area/station/science/lobby)
 "lmJ" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/poddoor{
@@ -30752,6 +30695,12 @@
 /obj/window/reinforced/east,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"ltF" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/atmos/highcap_storage)
 "luc" = (
 /turf/simulated/wall/r_wall,
 /area/station/ai_monitored/armory)
@@ -31321,6 +31270,12 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
+"nus" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
 "nva" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -31570,6 +31525,12 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"oib" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/blue/side{
+	dir = 0
+	},
+/area/station/atmos/highcap_storage)
 "ojE" = (
 /obj/item/device/light/flashlight,
 /turf/simulated/floor/blue/side{
@@ -31650,18 +31611,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
-"ouv" = (
-/obj/machinery/atmospherics/binary/valve/digital{
-	dir = 4;
-	name = "Incinerator Gas Release"
-	},
-/obj/machinery/door_control{
-	id = "Disposal Exit";
-	name = "Exterior Vent Control";
-	pixel_y = -25
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "ozk" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -32083,17 +32032,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"pWs" = (
+"pSD" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
-/obj/machinery/door_control{
-	id = "ntexecution";
-	name = "Waste Vent Control";
-	pixel_y = -23
+/turf/simulated/floor/yellow/side{
+	dir = 4
 	},
-/turf/simulated/floor,
-/area/station/security/prison)
+/area/station/atmos/highcap_storage)
 "qay" = (
 /obj/cable{
 	d1 = 4;
@@ -32358,6 +32304,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
+"qAa" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/escape{
+	dir = 4
+	},
+/area/station/atmos/highcap_storage)
 "qAL" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -32376,6 +32330,14 @@
 /obj/machinery/lawrack,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
+"qDa" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/red/side{
+	dir = 4
+	},
+/area/station/science/lobby)
 "qEo" = (
 /obj/stool/bed,
 /obj/machinery/light/small{
@@ -32399,6 +32361,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"qLR" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/white,
+/area/russian)
 "qNl" = (
 /obj/cable{
 	d1 = 1;
@@ -32682,6 +32648,17 @@
 	icon_state = "carpetN"
 	},
 /area/station/security/hos)
+"rvN" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/door_control{
+	id = "ntexecution";
+	name = "Waste Vent Control";
+	pixel_y = -23
+	},
+/turf/simulated/floor,
+/area/station/security/prison)
 "rwe" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -32831,6 +32808,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/solar/west)
+"rKD" = (
+/obj/machinery/atmospherics/binary/valve/digital{
+	dir = 0;
+	name = "Incinerator Gas Vent"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "rNj" = (
 /obj/cable{
 	d1 = 1;
@@ -32919,16 +32903,6 @@
 	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
-"rXN" = (
-/obj/machinery/camera{
-	c_tag = "Atmospherics Southeast";
-	dir = 1
-	},
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/blue/side{
-	dir = 0
-	},
-/area/station/atmos/highcap_storage)
 "rYp" = (
 /obj/cable{
 	d2 = 8;
@@ -33159,6 +33133,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"sNg" = (
+/obj/table/wood{
+	dir = 9
+	},
+/obj/item/currency/spacecash,
+/obj/item/storage/firstaid/regular,
+/turf/simulated/floor/carpet/blue,
+/area/station/crew_quarters/heads)
 "sOw" = (
 /obj/machinery/camera{
 	c_tag = "Southwest firesuit storage";
@@ -33803,6 +33785,12 @@
 "uhz" = (
 /turf/simulated/wall/r_wall,
 /area/station/science/storage)
+"uiF" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue,
+/area/station/science/lab)
 "ulh" = (
 /obj/machinery/camera{
 	c_tag = "Eng SE";
@@ -34231,6 +34219,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/brig/prison)
+"vok" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "vpW" = (
 /turf/simulated/shuttle/wall,
 /area/space)
@@ -34300,6 +34292,10 @@
 	},
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"vDC" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/white/side,
+/area/station/atmos/highcap_storage)
 "vDM" = (
 /turf/simulated/floor/caution/north,
 /area/station/hangar/engine)
@@ -34964,6 +34960,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/engine)
+"xLk" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/red/side,
+/area/station/science/lobby)
 "xMO" = (
 /obj/cable{
 	d1 = 2;
@@ -77590,7 +77590,7 @@ apx
 ars
 arJ
 asw
-atA
+sNg
 avk
 awj
 aaa
@@ -82793,7 +82793,7 @@ bCI
 bCI
 bCI
 aLI
-aMW
+vDC
 aOf
 aPr
 aQq
@@ -83397,7 +83397,7 @@ bCI
 bCI
 bCI
 aLI
-aMW
+vDC
 aOf
 aPq
 aQq
@@ -84001,7 +84001,7 @@ bCI
 bCI
 bCI
 aLI
-rXN
+fat
 aOf
 aPr
 aQq
@@ -84605,7 +84605,7 @@ bCI
 bCI
 bCI
 aLI
-bVo
+oib
 aOf
 aPr
 aQq
@@ -85197,17 +85197,17 @@ aaa
 aaa
 aRs
 aKl
-aDl
+qAa
 aCF
-aDl
+qAa
 mMn
-azN
+ldw
 ffT
-azN
+ldw
 tGs
-ixw
+pSD
 azO
-azP
+ltF
 aKE
 aKF
 edA
@@ -92744,7 +92744,7 @@ lJC
 lJC
 cqK
 tBv
-hTh
+rKD
 ngD
 wUM
 myk
@@ -93349,7 +93349,7 @@ tpm
 lNc
 nUR
 nUR
-ouv
+ilm
 lNc
 gck
 aaa
@@ -94844,7 +94844,7 @@ buU
 bwg
 bxA
 byV
-bCm
+lkT
 bmC
 bEh
 bFn
@@ -95147,7 +95147,7 @@ bwh
 btb
 byW
 bCn
-bDp
+xLk
 bEi
 bFo
 dWu
@@ -95448,7 +95448,7 @@ buc
 bwi
 bxB
 byX
-bCo
+qDa
 bqd
 bqd
 bFp
@@ -97563,8 +97563,8 @@ bwm
 bxO
 bzk
 bzk
-bDs
-bEl
+uiF
+nus
 bFv
 jCV
 bva
@@ -97863,7 +97863,7 @@ aab
 bvb
 bwn
 bxP
-bzl
+vok
 bCu
 bDt
 bEm
@@ -112533,7 +112533,7 @@ abj
 abE
 acm
 acL
-ado
+qLR
 adL
 aei
 abh
@@ -117916,7 +117916,7 @@ vwB
 uMB
 bUK
 vIe
-pWs
+rvN
 vey
 aaa
 aaa

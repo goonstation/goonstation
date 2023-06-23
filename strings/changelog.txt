@@ -1,3 +1,57 @@
+
+(t)fri jun 23 23
+(u)zay25325
+(p)14634
+(e)|
+(+)vending machines put money into your hand instead of dropping it
+(t)thu jun 22 23
+(u)tarmunora
+(*)Wizard fireball is now stonger with a longer cooldown, prismatic spray damage reduced.
+(u)Wisemonster
+(p)14572
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added a catering warp beacon to cog2
+(u)RubberRats
+(p)14612
+(e)💅📦|C-QoL, A-Game-Objects
+(+)The detective now has a clipboard in their locker.
+(u)mbc, pali
+(*)Oshan trench holes are now a lot more visible. The trench algae just illuminates them a lot or something.
+(t)wed jun 21 23
+(u)Gannets
+(p)14659
+(e)🗺🌱|A-Mapping, A-Hydroponics
+(*)A fishing pool, research terminal and fishing supplies vendor has been added to most in-rotation maps. You'll find them in hydroponics, hydroponics storage or the ranch.
+(t)tue jun 20 23
+(u)aloe
+(+)RP werewolves now have their hunger deplete at half speed, but they can only fill the need by feeding on humans.
+(t)mon jun 19 23
+(u)Gannets
+(p)14645
+(e)💅|C-QoL
+(+)Basic fishing rods are now free in fishing vendors.
+(+)There's now less log-spam when fishing around other players.
+(t)sun jun 18 23
+(u)aloe
+(*)Wizards and werewolves have been enabled in mixed RP mode with a low probability. May revert this depending on how it goes.
+(u)tarmunora
+(*)Prismatic spray spell cost reduction, increased power.
+(t)sat jun 17 23
+(u)Amylizzle
+(p)14603
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Adds a sign to Clarion and Nadir to track how long it's been since the last nuclear meltdown on each map.
+(u)Glamurio (Ryou)
+(p)14491
+(e)🗺🔎🔒💅⚙|A-Mapping, C-Code-Quality, A-Secret, C-QoL, A-Internal
+(+)Fishing tokens now stack.
+(u)tarmunora
+(*)Benign grenades deal significantly less damage when launched out of a grenade launcher.
+(u)Gannets
+(p)14618
+(e)🆕🎨📦🌱|C-Feature, C-Sprites, A-Game-Objects, A-Hydroponics
+(+)Adds 12 additional fish to exisiting fishing spots.
+(+)Sprites by Wolfolotl, Thatdude & sian.
 (t)fri jun 16 23
 (u)LeahTheTech
 (*)Balloons can now be filled at gas canisters and inhaling from them will inhale a portion of the gas inside. Each balloon can hold 5 breaths.
