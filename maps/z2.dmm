@@ -15276,7 +15276,7 @@
 /turf/unsimulated/floor/stairs,
 /area/crater/biodome/south)
 "aYz" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
@@ -16193,7 +16193,7 @@
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bbb" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bbc" = (

@@ -58557,10 +58557,10 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/chem_heater{
+/obj/machinery/disposal/small,
+/obj/machinery/chem_heater/chemistry{
 	pixel_y = 5
 	},
-/obj/machinery/disposal/small,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cMB" = (
@@ -60977,7 +60977,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "cSf" = (
-/obj/machinery/chem_heater,
 /obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -60986,6 +60985,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -61023,8 +61023,8 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSk" = (
-/obj/machinery/chem_heater,
 /obj/machinery/light,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSl" = (
@@ -70737,6 +70737,14 @@
 "dDA" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
+/area/space)
+"dDH" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/warp_beacon/catering,
+/turf/space,
 /area/space)
 "dEt" = (
 /obj/machinery/atmospherics/unary/vent_pump{
@@ -104019,7 +104027,7 @@ aaa
 aaa
 aaa
 aaa
-adb
+dDH
 adw
 aef
 aeP
