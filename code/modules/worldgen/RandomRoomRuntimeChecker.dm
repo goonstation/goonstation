@@ -28,13 +28,13 @@
 	for (var/room_type in room_types)
 		var/datum/mapPrefab/random_room/R = new room_type()
 		var/turf/T = locate(1+AST_MAPBORDER, 1+AST_MAPBORDER, Z_LEVEL_STATION)
-		var/loaded = file2text(M.prefabPath)
+		var/loaded = file2text(R.prefabPath)
 		var/dmm_suite/D = new/dmm_suite()
-		D.read_map(loaded,T.x,T.y,T.z,M.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
-		boutput(world, "<span class='alert'>Prefab placement [M.type][M.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]")
+		D.read_map(loaded, T.x, T.y, T.z, R.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
+		boutput(world, "<span class='alert'>Prefab placement [R.type][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]")
 		sleep(1 SECOND)
 		// cleanup
-		var/turf/other_corner = locate(T.x + M.prefabSizeX, T.y + M.prefabSizeY, T.z)
+		var/turf/other_corner = locate(T.x + R.prefabSizeX, T.y + R.prefabSizeY, T.z)
 		for(var/turf/T2 in block(T, other_corner))
 			for(var/x in T2)
 				try
