@@ -1839,7 +1839,7 @@
 	dir = 4;
 	name = "Chaplain's Office"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "afO" = (
 /obj/storage/secure/closet/civilian/chaplain,
@@ -5381,7 +5381,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "arC" = (
-/obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -7786,9 +7785,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "ayp" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -7801,9 +7797,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
+/turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ayq" = (
 /obj/machinery/shower{
@@ -8663,14 +8657,14 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment{
-	dir = 8
+	dir = 4
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/maintenance/southwest)
+/area/station/maintenance/south)
 "aBc" = (
 /obj/machinery/lawrack,
 /obj/machinery/light{
@@ -8864,7 +8858,7 @@
 	dir = 4
 	},
 /obj/access_spawn/maint,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aBG" = (
 /obj/machinery/door_control{
@@ -11253,7 +11247,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/turf/space,
+/turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "aIE" = (
 /obj/table/reinforced/auto,
@@ -13439,6 +13433,11 @@
 /obj/cable{
 	icon_state = "2-6"
 	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/black,
 /area/station/storage/tech)
 "aPQ" = (
@@ -14432,7 +14431,6 @@
 	},
 /area/station/science/teleporter)
 "aSz" = (
-/obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -15093,7 +15091,7 @@
 	icon_state = "4-8"
 	},
 /obj/access_spawn/maint,
-/turf/space,
+/turf/simulated/floor,
 /area/station/maintenance/south)
 "aUl" = (
 /obj/stool/chair{
@@ -17564,7 +17562,7 @@
 /area/station/medical/medbay/cloner)
 "dgw" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "dil" = (
 /obj/cable{
@@ -18150,7 +18148,7 @@
 /area/station/maintenance/southwest)
 "fVw" = (
 /obj/wingrille_spawn/auto,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "fWD" = (
 /obj/disposalpipe/segment{
@@ -18244,10 +18242,7 @@
 	},
 /area/station/hangar/main)
 "gxQ" = (
-/obj/bookshelf/persistent{
-	density = 0;
-	pixel_y = 19
-	},
+/obj/bookshelf,
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -18262,6 +18257,11 @@
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"gBk" = (
+/obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/southeast)
 "gBK" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -19630,10 +19630,7 @@
 /area/station/engine/elect)
 "mGr" = (
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/chapel/office)
@@ -20097,7 +20094,7 @@
 	name = "Chaplain's Office"
 	},
 /obj/firedoor_spawn,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/wood/seven,
 /area/station/chapel/office)
 "owD" = (
 /obj/decal/poster/wallsign/stencil/left/n,
@@ -20906,7 +20903,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/captain,
-/turf/space,
+/turf/simulated/floor/shuttlebay,
 /area/station/bridge/captain)
 "rxv" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -21100,7 +21097,7 @@
 "tce" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/window_blinds/cog2/right,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area/station/security/detectives_office)
 "tct" = (
 /obj/stool/chair/office{
@@ -59571,7 +59568,7 @@ aQF
 aWS
 aom
 aFc
-aBa
+fcj
 aiZ
 aEq
 aEq
@@ -63808,7 +63805,7 @@ aGa
 aGJ
 aHo
 aGG
-aQq
+aBa
 axA
 aIR
 aQk
@@ -69246,7 +69243,7 @@ aUI
 aUI
 aXN
 aHS
-aGj
+gBk
 aUI
 aUI
 aUI
@@ -70409,8 +70406,8 @@ aaa
 aaa
 abb
 abz
-abb
 lNp
+abb
 abb
 aje
 adc
