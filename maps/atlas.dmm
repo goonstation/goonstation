@@ -10529,7 +10529,7 @@
 "aGj" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/access_spawn/maint,
-/turf/space,
+/turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "aGk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -18257,11 +18257,6 @@
 /obj/item/clothing/head/helmet/welding,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"gBk" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt,
-/obj/access_spawn/maint,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/southeast)
 "gBK" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -69243,7 +69238,7 @@ aUI
 aUI
 aXN
 aHS
-gBk
+aGj
 aUI
 aUI
 aUI
