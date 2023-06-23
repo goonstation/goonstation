@@ -1,9 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
-/area/space)
-"ab" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ac" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -22,7 +19,7 @@
 	dir = 6
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ag" = (
 /obj/storage/crate/furnacefuel,
@@ -93,11 +90,11 @@
 	icon_state = "lattice-dir";
 	dir = 6
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ar" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "as" = (
 /turf/simulated/floor/sanitary/white,
@@ -186,7 +183,7 @@
 	dir = 10
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aJ" = (
 /obj/table/reinforced/auto,
@@ -231,7 +228,7 @@
 	icon_state = "lattice-dir";
 	dir = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "aQ" = (
 /obj/table/reinforced/auto,
@@ -325,7 +322,7 @@
 	dir = 9
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bg" = (
 /obj/table/auto,
@@ -381,7 +378,7 @@
 	dir = 5
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bp" = (
 /obj/machinery/door/airlock/pyro/medical,
@@ -482,7 +479,7 @@
 	icon_state = "lattice-dir";
 	dir = 2
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bH" = (
 /turf/simulated/floor/shuttlebay,
@@ -495,7 +492,7 @@
 	icon_state = "lattice-dir-b";
 	dir = 5
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bK" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose,
@@ -512,7 +509,7 @@
 	dir = 1
 	},
 /obj/machinery/light/runway_light,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bN" = (
 /obj/lattice{
@@ -521,7 +518,7 @@
 	dir = 9
 	},
 /obj/machinery/light/runway_light,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bO" = (
 /obj/lattice{
@@ -529,7 +526,7 @@
 	dir = 5
 	},
 /obj/machinery/light/runway_light,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bP" = (
 /obj/lattice{
@@ -538,7 +535,7 @@
 	dir = 2
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bQ" = (
 /obj/lattice{
@@ -547,7 +544,7 @@
 	dir = 2
 	},
 /obj/machinery/light/runway_light/delay3,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bR" = (
 /obj/lattice{
@@ -556,7 +553,7 @@
 	dir = 9
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bS" = (
 /obj/lattice{
@@ -564,7 +561,7 @@
 	dir = 5
 	},
 /obj/machinery/light/runway_light/delay4,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "bT" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -725,26 +722,26 @@ aa
 aa
 "}
 (2,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (3,1,1) = {"
 ac
@@ -758,15 +755,15 @@ aq
 aq
 aq
 bf
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (4,1,1) = {"
 ac
@@ -782,13 +779,13 @@ ac
 ap
 ap
 ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (5,1,1) = {"
 ac
@@ -808,9 +805,9 @@ ac
 bG
 bG
 bM
-ab
-ab
-ab
+aa
+aa
+aa
 "}
 (6,1,1) = {"
 ac
@@ -828,11 +825,11 @@ bj
 by
 ac
 ac
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (7,1,1) = {"
 ac
@@ -854,7 +851,7 @@ aq
 bG
 bG
 bM
-ab
+aa
 "}
 (8,1,1) = {"
 ac
@@ -873,13 +870,13 @@ bz
 bE
 ap
 bJ
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
 "}
 (9,1,1) = {"
-ab
+aa
 ac
 aj
 as
@@ -896,12 +893,12 @@ ai
 ac
 bL
 bN
-ab
-ab
-ab
+aa
+aa
+aa
 "}
 (10,1,1) = {"
-ab
+aa
 ac
 ai
 at
@@ -923,7 +920,7 @@ bQ
 bR
 "}
 (11,1,1) = {"
-ab
+aa
 ac
 ak
 as
@@ -945,7 +942,7 @@ bQ
 bS
 "}
 (12,1,1) = {"
-ab
+aa
 ac
 ai
 ai
@@ -962,12 +959,12 @@ ai
 ac
 bL
 bO
-ab
-ab
-ab
+aa
+aa
+aa
 "}
 (13,1,1) = {"
-ab
+aa
 ac
 al
 au
@@ -982,14 +979,14 @@ bv
 ch
 bH
 bK
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (14,1,1) = {"
-ab
+aa
 ad
 am
 av
@@ -1004,14 +1001,14 @@ bw
 bB
 bH
 bK
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (15,1,1) = {"
-ab
+aa
 ac
 an
 aw
@@ -1026,14 +1023,14 @@ bw
 bC
 bH
 bK
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 "}
 (16,1,1) = {"
-ab
+aa
 ae
 ao
 av
@@ -1051,11 +1048,11 @@ ac
 bG
 bG
 bM
-ab
-ab
+aa
+aa
 "}
 (17,1,1) = {"
-ab
+aa
 ac
 ap
 ap
@@ -1068,77 +1065,77 @@ ac
 ac
 ac
 ac
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (18,1,1) = {"
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
 aI
 aP
 aP
 aP
 aP
 bo
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (19,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}
 (20,1,1) = {"
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 "}

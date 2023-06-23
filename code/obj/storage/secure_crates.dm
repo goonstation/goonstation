@@ -88,11 +88,11 @@
 			/obj/item/storage/box/stinger_kit,\
 			/obj/item/storage/box/stun_landmines)
 
-	sarin_grenades
+	saxitoxin_grenades
 		name = "nerve agent crate (DANGER)"
 		req_access_txt = "52"
 		spawn_contents = list(/obj/item/reagent_containers/syringe/atropine = 3,\
-		/obj/item/chem_grenade/sarin = 3)
+		/obj/item/chem_grenade/saxitoxin = 3)
 
 /obj/storage/secure/crate/bee
 	name = "Secure Bee crate"

@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -818,9 +818,9 @@
 	/obj/item/scrap,
 	/obj/item/sheet/glass,
 	/obj/item/sheet/steel,
-	/obj/item/spacecash/five,
-	/obj/item/spacecash/random/really_small,
-	/obj/item/spacecash/random/small,
+	/obj/item/currency/spacecash/five,
+	/obj/item/currency/spacecash/really_small,
+	/obj/item/currency/spacecash/small,
 	/obj/item/stamp,
 	/obj/item/stick,
 	/obj/item/tile/steel)
@@ -895,15 +895,6 @@
 	/obj/item/mine/stun/armed,
 	/obj/item/mine/blast/armed)
 
-// Surplus crate picker.
-/obj/random_item_spawner/landmine/surplus
-	name = "random land mine spawner (surplus crate)"
-	amt2spawn = 1
-	items2spawn = list(/obj/item/mine/radiation,
-	/obj/item/mine/incendiary,
-	/obj/item/mine/stun,
-	/obj/item/mine/blast)
-
 // Loot Crate picker.
 /obj/random_item_spawner/loot_crate/surplus
 	name = "Loot Crate Spawner"
@@ -928,8 +919,8 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/spacecash/buttcoin,
-		/obj/item/spacecash/random/tourist,
+		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
 /obj/random_pod_spawner
@@ -937,7 +928,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1109,9 +1100,10 @@
 	/obj/critter/bat,
 	/mob/living/critter/small_animal/mouse,
 	/obj/critter/opossum,
-	/obj/critter/dog/george/blair,
-	/obj/critter/dog/george/orwell,
-	/obj/critter/dog/george/shiba,
+	/mob/living/critter/small_animal/dog,
+	/mob/living/critter/small_animal/dog/george,
+	/mob/living/critter/small_animal/dog/blair,
+	/mob/living/critter/small_animal/dog/shiba,
 	/obj/critter/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
@@ -1880,28 +1872,28 @@
 		new /obj/item/breaching_charge{
 			pixel_x = 10;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = 4;
 			pixel_y = -2
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = -2;
 			pixel_y = -5
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -3;
 			pixel_y = 7
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/breaching_hammer{
 			pixel_x = -1;
 			pixel_y = 1
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/gun/kinetic/riot40mm/breach{
 			pixel_x = -5;
 			pixel_y = 8
-			}(src.loc)
+		}(src.loc)
 		new /obj/item/ammo/bullets/breach_flashbang{
 			pixel_x = -4;
 			pixel_y = 3
-			}(src.loc)
+		}(src.loc)

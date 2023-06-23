@@ -5,8 +5,9 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
-var/global/list/detailed_machine_power = list()
-var/global/list/detailed_machine_power_prev = list()
+var/global/detailed_machine_power_log_zlevels = (1 << Z_LEVEL_STATION)
+var/global/datum/machine_power_data/detailed_power_data
+var/global/datum/machine_power_data/detailed_power_data_last
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -52,11 +53,15 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
+	last_input_loop_time = 0
+
 	list/muted_keys = list()
 
 	server_start_time = 0
+	round_start_time = 0
 	round_time_check = 0			// set to world.timeofday when round starts, then used to calculate round time
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
+	list/deferred_powernet_objs = list()
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
 	regex/full_url_regex = null
@@ -87,6 +92,9 @@ var/global
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = 0
+
+	/// Contains objects in ID-based switched object groups, such as blinds and their switches
+	list/switched_objs = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -242,7 +250,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
-	traitorsseeeachother = FALSE
+	antagonists_see_each_other = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -252,7 +260,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"
@@ -303,6 +311,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 
@@ -417,45 +429,6 @@ var/global
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
-	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
-	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
-	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
-	antag_traitor = image('icons/mob/antag_overlays.dmi', icon_state = "traitor")
-	antag_changeling = image('icons/mob/antag_overlays.dmi', icon_state = "changeling")
-	antag_wizard = image('icons/mob/antag_overlays.dmi', icon_state = "wizard")
-	antag_vampire = image('icons/mob/antag_overlays.dmi', icon_state = "vampire")
-	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
-	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
-	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
-	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
-	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
-	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
-	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
-	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
-	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	antag_syndicate_comm = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
-	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
-	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
-	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
-	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
-	antag_wraith = image('icons/mob/antag_overlays.dmi', icon_state = "wraith")
-	antag_omnitraitor = image('icons/mob/antag_overlays.dmi', icon_state = "omnitraitor")
-	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
-	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
-	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
-	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
-	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
-	antag_pirate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate")
-	antag_pirate_first_mate = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_first_mate")
-	antag_pirate_captain = image('icons/mob/antag_overlays.dmi', icon_state = "pirate_captain")
-
-	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
-	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
-	pod_wars_SY = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	pod_wars_SY_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
-
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
 
@@ -477,11 +450,6 @@ var/global
 
 	centralConn = 1 //Are we able to connect to the central server?
 	centralConnTries = 0 //How many times have we tried and failed to connect?
-
-	/* nuclear reactor & parameter set, if it exists */
-	obj/machinery/power/nuke/fchamber/nuke_core = null
-	obj/machinery/power/nuke/nuke_turbine/nturbine = null
-	datum/nuke_knobset/nuke_knobs = null
 
 	//Resource Management
 	list/localResources = list()
@@ -509,7 +477,7 @@ var/global
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	list/icon/z_level_maps = list()
+	datum/minimap_renderer/minimap_renderer
 	list/minimap_marker_targets = list()
 
 	/// When toggled on creating new /turf/space will be faster but they will be slightly broken

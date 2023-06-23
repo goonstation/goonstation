@@ -107,7 +107,7 @@ Turfs and decal for the space rift
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -387,6 +387,7 @@ Turfs and decal for the space rift
 	name = "time-space breach"
 	desc = "Uhh.  UHHHH.  uh."
 	fullbright = 0
+	plane = PLANE_FLOOR
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "timehole"
 
@@ -396,4 +397,4 @@ Turfs and decal for the space rift
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "timehole_edge"
 	plane = PLANE_FLOOR
-	anchored = 1
+	anchored = ANCHORED

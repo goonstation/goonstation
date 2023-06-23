@@ -1,6 +1,10 @@
 /datum/antagonist/wizard
 	id = ROLE_WIZARD
 	display_name = "wizard"
+	antagonist_icon = "wizard"
+	success_medal = "You're no Elminster!"
+	faction = FACTION_WIZARD
+	uses_pref_name = FALSE
 
 	/// The ability holder of this wizard, containing their respective abilities.
 	var/datum/abilityHolder/wizard/ability_holder
@@ -8,7 +12,7 @@
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
 
-	give_equipment(vr_equipment_restrictions = FALSE)
+	give_equipment()
 		if (!ishuman(src.owner.current))
 			return FALSE
 
@@ -23,7 +27,7 @@
 		H.RegisterSignal(H, COMSIG_LIVING_LIFE_TICK, /mob/proc/emp_hands)
 
 		// Initial abilities; all unlockable abilities will be handled by the abilityHolder.
-		if (!vr_equipment_restrictions)
+		if (!src.vr)
 			src.ability_holder.addAbility(/datum/targetable/spell/phaseshift)
 			src.ability_holder.addAbility(/datum/targetable/spell/magicmissile)
 			src.ability_holder.addAbility(/datum/targetable/spell/clairvoyance)
@@ -44,15 +48,15 @@
 		H.equip_if_possible(new /obj/item/device/radio/headset/wizard(H), H.slot_ears)
 		H.equip_if_possible(new /obj/item/clothing/suit/wizrobe(H), H.slot_wear_suit)
 		H.equip_if_possible(new /obj/item/clothing/head/wizard(H), H.slot_head)
-		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(H), H.slot_shoes)
+		H.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/paper/Wizardry101(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/staff(H), H.slot_r_hand)
 
-		if (!vr_equipment_restrictions)
+		if (!src.vr)
 			H.equip_if_possible(new /obj/item/teleportation_scroll(H), H.slot_l_hand)
 
-		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(vr_equipment_restrictions)
+		var/obj/item/SWF_uplink/SB = new /obj/item/SWF_uplink(src.vr)
 		SB.wizard_key = src.owner.key
 		H.equip_if_possible(SB, H.slot_belt)
 
@@ -67,7 +71,7 @@
 		else
 			randomname = pick_string_autokey("names/wizard_male.txt")
 
-		if (!vr_equipment_restrictions)
+		if (!src.vr && !src.pseudo)
 			SPAWN(0)
 				var/newname = tgui_input_text(H, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname)
 				if(newname && newname != randomname)
@@ -95,6 +99,19 @@
 
 		SPAWN(2.5 SECONDS)
 			src.owner.current.assign_gimmick_skull()
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_WIZARD)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	relocate()
 		if (!job_start_locations["wizard"])

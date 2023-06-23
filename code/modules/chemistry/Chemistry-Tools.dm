@@ -28,6 +28,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		ensure_reagent_holder()
 		create_initial_reagents(new_initial_reagents)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
 			reagents.move_trigger(M, kindof)
@@ -135,7 +139,8 @@ proc/ui_describe_reagents(atom/A)
 				colorR = current_reagent.fluid_r,
 				colorG = current_reagent.fluid_g,
 				colorB = current_reagent.fluid_b,
-				volume = current_reagent.volume
+				volume = current_reagent.volume,
+				state = current_reagent.reagent_state,
 			)))
 	return thisContainerData
 
@@ -373,9 +378,11 @@ proc/ui_describe_reagents(atom/A)
 
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
-				src.reagents.trans_to(I, 5)
-				logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				if (src.reagents.trans_to(I, 5))
+					logTheThing(LOG_CHEMISTRY, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+					user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
+				else
+					boutput(user, "<span class='notice'>[I] is already fully coated, more won't do any good.</span>")
 				return
 
 		//Hacky thing to make silver bullets (maybe todo later : all items can be dipped in any solution?)
@@ -519,7 +526,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return ..()
 		boutput(user, "You start propping \the [src] above \the [target]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/setup_bucket_prank, list(target, user), src.icon, src.icon_state, \
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(setup_bucket_prank), list(target, user), src.icon, src.icon_state, \
 					src.visible_message("<span class='alert'><B>[user] props a [src] above \the [target]</B></span>"), \
 					INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
@@ -528,7 +535,7 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user,"<b>There's already a bucket prank set up!</b>")
 			return
 		logTheThing(LOG_COMBAT, user, "Set up a bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
-		RegisterSignal(targetDoor, COMSIG_DOOR_OPENED, .proc/bucket_prank)
+		RegisterSignal(targetDoor, COMSIG_DOOR_OPENED, PROC_REF(bucket_prank))
 		user.u_equip(src)
 		src.set_loc(targetDoor)
 		user.visible_message("<span class='alert'>Props \the [src] above \the [targetDoor]!</span>","<span class='alert'>You prop \the [src] above \the [targetDoor]. The next person to come through will get splashed!</span>")
@@ -546,11 +553,13 @@ proc/ui_describe_reagents(atom/A)
 		if(!IN_RANGE(AM, targetDoor, 1)) //not in range or AM is null
 			src.set_loc(get_turf(targetDoor))
 			src.reagents.reaction(get_turf(targetDoor))
+			src.reagents.clear_reagents()
 			src.visible_message("<span class='alert'>[src] falls from \the [targetDoor][splash? ", splashing its contents on the floor" : ""].</span>")
 		else //we're in range, splash the AM, splash the floor
 			logTheThing(LOG_COMBAT, AM, "Victim of bucket-door-prank with reagents: [log_reagents(src)] on [targetDoor]")
 			src.reagents.reaction(AM, TOUCH, src.reagents.total_volume/2) //half on the mover
 			src.reagents.reaction(get_turf(targetDoor)) //half on the floor
+			src.reagents.clear_reagents()
 			if(ishuman(AM))
 				//the bucket lands on your head for maximum comedy
 				var/mob/living/carbon/human/H = AM

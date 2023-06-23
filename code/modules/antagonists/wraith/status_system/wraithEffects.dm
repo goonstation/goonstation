@@ -289,6 +289,7 @@
 			M.icon_state = "poltergeist-corp"
 			M.update_body()
 		M.set_density(TRUE)
+		M.event_handler_flags &= ~MOVE_NOCLIP
 		REMOVE_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M)
 		M.see_invisible = INVIS_NONE
 		M.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
@@ -307,6 +308,7 @@
 			M.update_body()
 		M.visible_message(pick("<span class='alert'>[M] vanishes!</span>", "<span class='alert'>The [M] dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
 		M.set_density(FALSE)
+		M.event_handler_flags |= MOVE_NOCLIP
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M, INVIS_SPOOKY)
 		M.see_invisible = INVIS_SPOOKY
 		M.removeOverlayComposition(/datum/overlayComposition/insanity_light)

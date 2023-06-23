@@ -49,6 +49,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 65
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mars
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mars
 
  ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/mars_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -131,15 +133,6 @@
 	oxygen = 0
 	temperature = 100
 	fullbright = 0
-
-	update_icon()
-		var/image/ambient_light = src.GetOverlayImage("ambient")
-		var/image/weather = src.GetOverlayImage("weather")
-		..()
-		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
-			overlay_refs.len = 0
-		src.UpdateOverlays(ambient_light, "ambient")
-		src.UpdateOverlays(weather, "weather")
 
  ///for the mapgen mountains, temp until we get something better
 /turf/simulated/wall/auto/asteroid/mars

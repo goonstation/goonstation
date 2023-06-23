@@ -57,13 +57,13 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	var/list/raretier = list( // rare tier, 2% chance
 		/obj/item/clothing/gloves/yellow,
 		/obj/item/clothing/glasses/sunglasses,
-		/obj/item/clothing/shoes/sandal,
+		/obj/item/clothing/shoes/sandal/magic,
 		/obj/item/hand_tele,
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/gimmickbomb/hotdog,
 		/obj/item/card/id/captains_spare,
 		/obj/item/storage/banana_grenade_pouch,
-		/obj/critter/brullbar, // have fun!
+		/mob/living/critter/brullbar, // have fun!
 		/obj/item/artifact/teleport_wand,
 		/obj/item/storage/firstaid/crit
 	)
@@ -130,7 +130,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	name = "modified GeneTek Scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/chefbot
@@ -138,7 +138,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 	desc = "It seems to still be sparking..."
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "chefbot0"
-	anchored = 1
+	anchored = ANCHORED
 
 /obj/decal/fakeobjects/brokengamblebot
 	name = "inactive gambling robot"

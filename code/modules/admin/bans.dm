@@ -88,7 +88,7 @@ var/global/list/playersSeen = list()
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
-	if (!expired && (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID)) //Insert a new ban for this JERK
+	if (!expired && (row["ckey"] != ckey || (row["ip"] != ip && row["ip"] != "N/A") || (row["compID"] != compID && row["compID"] != "N/A"))) //Insert a new ban for this JERK
 		var/newChain = 0
 		if (text2num(row["previous"]) > 0) //if we matched a previous auto-added ban
 			if (text2num(row["chain"]) > 0)
@@ -274,12 +274,11 @@ var/global/list/playersSeen = list()
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
-			if (auto == "No")
-				data["compID"] = input(src, "Computer ID", "Ban") as null|text
-				data["ip"] = input(src, "IP Address", "Ban") as null|text
-			else if (data["ckey"])
+			data["ckey"] = ckey(input(src, "Ckey, leave blank to skip", "Ban") as null|text)
+			var/auto_fill
+			if (data["ckey"])
+				auto_fill = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
+			if (auto_fill == "Yes")
 				var/list/response
 				try
 					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
@@ -290,6 +289,9 @@ var/global/list/playersSeen = list()
 					boutput(src, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
 				data["ip"] = response["last_ip"]
 				data["compID"] = response["last_compID"]
+			else
+				data["compID"] = input(src, "Computer ID", "Ban") as null|text
+				data["ip"] = input(src, "IP Address", "Ban") as null|text
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id

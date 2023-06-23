@@ -4,19 +4,19 @@
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	plane = PLANE_NOSHADOW_ABOVE
+	plane = PLANE_NOSHADOW_ABOVE_NOWARP
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
-	density = 0
-	canmove = 1
-	blinded = 0
-	anchored = 1	//  don't get pushed around
-	var/observe_round = 0
-	var/health_shown = 0
-	var/arrest_shown = 0
-	var/delete_on_logout = 1
-	var/delete_on_logout_reset = 1
+	density = FALSE
+	canmove = TRUE
+	blinded = FALSE
+	anchored = ANCHORED	//  don't get pushed around
+	var/observe_round = FALSE
+	var/health_shown = FALSE
+	var/arrest_shown = FALSE
+	var/delete_on_logout = TRUE
+	var/delete_on_logout_reset = TRUE
 	var/obj/item/clothing/head/wig/wig = null
-	var/in_point_mode = 0
+	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
 
@@ -152,23 +152,25 @@
 		src.bioHolder = newbio
 
 
-//#ifdef HALLOWEEN
+// Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
 	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
+
+	return 1
+
 #ifdef HALLOWEEN
+/mob/dead/observer/Crossed(atom/movable/mover)
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
 #endif
 
-	return 1
-
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost")
+	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -205,10 +207,6 @@
 #endif
 	if (..(parent))
 		return 1
-	if (src.client && src.client.holder) //ov1
-		// overlays
-		//src.updateOverlaysClient(src.client)
-		src.antagonist_overlay_refresh(0, 0) // Observer Life() only runs for admin ghosts (Convair880).
 
 #ifdef TWITCH_BOT_ALLOWED
 	if (IS_TWITCH_CONTROLLED(src))
@@ -299,7 +297,7 @@
 	if(src.key || src.client)
 
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
-			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/mob, hell_respawn), src.mind)
 			return null
 		var/datum/mind/mind = src.mind
 

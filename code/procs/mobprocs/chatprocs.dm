@@ -228,7 +228,7 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
-		var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/num = hex2num(copytext(md5(src.get_heard_name(just_name_itself=TRUE)), 1, 7))
 		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
 
 		var/turf/T = get_turf(src)
@@ -276,7 +276,7 @@
 			if (!the_wraith.hearghosts)
 				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -465,6 +465,13 @@
 
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
+
+	if(src.find_type_in_hand(/obj/item/megaphone))
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if(megaphone.makes_you_quieter)
+			loudness -= 1
+		else
+			loudness += 1
 
 	if (src.speech_void)
 		text = voidSpeak(text)
@@ -773,7 +780,8 @@
 /mob/proc/heard_say(var/mob/other)
 	return
 
-/mob/proc/lastgasp()
+/mob/proc/lastgasp(allow_dead=FALSE)
+	set waitfor = FALSE
 	return
 
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)

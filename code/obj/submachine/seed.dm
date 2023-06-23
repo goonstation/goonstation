@@ -5,7 +5,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 	name = "PlantMaster Mk4"
 	desc = "An advanced machine used for manipulating the genes of plant seeds. It also features an inbuilt seed extractor."
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "geneman-on"
 	flags = NOSPLASH | TGUI_INTERACTIVE | FPRINT
@@ -112,6 +112,8 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 		)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.mode == "overview" && src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "Plantmaster")
@@ -541,6 +543,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					boutput(user, "<span class='alert'>No items were loaded from the satchel!</span>")
 				S.UpdateIcon()
+				S.tooltip_rebuild = 1
 				for(var/datum/tgui/ui in tgui_process.open_uis_by_src["\ref[src]"]) //this is basically tgui_process.update_uis for static data
 					if(ui?.src_object && ui.user && ui.src_object.ui_host(ui.user))
 						update_static_data(ui.user, ui)
@@ -673,7 +676,7 @@ TYPEINFO(/obj/submachine/chem_extractor)
 	name = "reagent extractor"
 	desc = "A machine which can extract reagents from matter. Has a slot for a beaker and a chute to put things into."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = NO_MOUSEDROP_QOL
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	icon = 'icons/obj/objects.dmi'
@@ -705,6 +708,8 @@ TYPEINFO(/obj/submachine/chem_extractor)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
+		if (src.inserted)
+			SEND_SIGNAL(src.inserted.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ReagentExtractor", src.name)
@@ -906,7 +911,7 @@ TYPEINFO(/obj/submachine/seed_vendor)
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "seeds"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	flags = TGUI_INTERACTIVE
 	var/hacked = 0

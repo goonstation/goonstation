@@ -119,7 +119,7 @@
 	icon_state = "hld0"
 	opacity = 1
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	examine()
 		. = ..()
@@ -200,13 +200,13 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/, /*"virtual key",*/ "golden key", "bee key", "iron key", /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ "literal skeleton key", "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key",*/ /*"virtual key",*/ "golden key", /*"bee key",*/ "iron key", /*"iridium key",*/ "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
 	name = "steel beams"
 	desc = "A bunch of unfortunately placed, tightly packed steel beams. You cannot get a meaningful glimpse of what's on the other side."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 	icon = 'icons/obj/stationobjs.dmi'
@@ -227,7 +227,7 @@
 /obj/faint_shimmer
 	name = "faint shimmer"
 	desc = "Huh."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	invisibility = INVIS_CLOAK
 	blend_mode = 4

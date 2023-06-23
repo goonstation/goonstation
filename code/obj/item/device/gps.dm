@@ -157,7 +157,7 @@ TYPEINFO(/obj/item/device/gps)
 			return
 		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
 			src.add_dialog(usr)
-			var/turf/T = get_turf(usr)
+			var/turf/T = get_turf(src)
 			if(href_list["getcords"])
 				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				return

@@ -28,6 +28,43 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if (!made_reagents)
 			make_reagents()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		// If we've got a piece of fruit or veg that contains seeds. More often than
+		// not this is fruit but some veg do this too.
+		var/datum/plantgenes/new_genes = src.plantgenes
+
+		HYPpassplantgenes(passed_genes,new_genes)
+		src.generation = harvested_plantpot.generation
+		// Copy the genes from the plant we're harvesting to the new piece of produce.
+
+		if(origin_plant.hybrid)
+			// We need to do special shit with the genes if the plant is a spliced
+			// hybrid since they run off instanced datums rather than referencing
+			// a specific already-existing one.
+			var/plantType = origin_plant.type
+			var/datum/plant/hybrid = new plantType(src)
+			for(var/V in origin_plant.vars)
+				if(issaved(origin_plant.vars[V]) && V != "holder")
+					hybrid.vars[V] = origin_plant.vars[V]
+			src.planttype = hybrid
+
+		// Now we calculate the effect of quality on the item
+		switch(quality_status)
+			if("jumbo")
+				src.heal_amt *= 2
+				src.bites_left *= 2
+			if("rotten")
+				src.heal_amt = 0
+			if("malformed")
+				src.heal_amt += rand(-2,2)
+				src.bites_left += rand(-2,2)
+		if (src.bites_left < 1)
+			src.bites_left = 1
+		// We also want to put any reagents the plant produces into the new item.
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
+
 	disposing()
 		src.plantgenes = null
 		..()
@@ -505,7 +542,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			hitMob.TakeDamageAccountArmor("chest", rand(damMin, damMax), 0)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = 1
 		if(target.x > src.x || (target.x == src.x && target.y > src.y))
 			src.icon_state = "[base_icon_state]-spin-right"
@@ -1303,7 +1340,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(isliving(AM))
 			var/mob/living/L = AM
 			if(L.throwing)
-				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, .proc/someone_landed_on_us)
+				src.RegisterSignal(L, COMSIG_MOVABLE_THROW_END, PROC_REF(someone_landed_on_us))
 
 /obj/item/reagent_containers/food/snacks/plant/coconutmeat/
 	name = "coconut meat"
@@ -1417,6 +1454,17 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 4
 	heal_amt = 2
 	food_color = "#FF00FF"
+	validforhat = 1
+
+/obj/item/reagent_containers/food/snacks/plant/mustard
+	name = "mustard seed pod"
+	crop_suffix = " seed pod"
+	desc = "Not as technologically advanced as the name might suggest."
+	icon_state = "mustard"
+	planttype = /datum/plant/fruit/mustard
+	bites_left = 1
+	food_color = "#FFCC00"
+	food_effects = list("food_warm", "food_disease_resist")
 	validforhat = 1
 
 // Weird alien fruit

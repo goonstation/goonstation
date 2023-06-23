@@ -3,7 +3,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 "oculine", "mannitol", "penteticacid", "styptic_powder", "methamphetamine", "spaceacillin", "saline",\
 "salicylic_acid", "cryoxadone", "blood", "bloodc", "synthflesh",\
 "menthol", "cold_medicine", "antihistamine", "ipecac",\
-"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD")
+"booster_enzyme", "anti_fart", "goodnanites", "smelling_salt", "CBD", "promethazine")
 
 /* =================================================== */
 /* -------------------- Hypospray -------------------- */
@@ -65,6 +65,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 		tgui_process.update_uis(src)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		SEND_SIGNAL(src.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "Hypospray", "Hypospray")

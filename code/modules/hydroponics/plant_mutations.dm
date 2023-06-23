@@ -490,7 +490,8 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/random
+	crop = /obj/item/fish/botany
+	dont_rename_crop = TRUE
 	special_proc_override = TRUE
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -613,7 +614,7 @@
 			B.icon = 'icons/effects/hydroponics.dmi'
 			B.icon_state = "radpulse"
 			B.name = "radioactive pulse"
-			B.anchored = 1
+			B.anchored = ANCHORED
 			B.set_density(0)
 			B.layer = 5 // TODO what layer should this be on?
 			SPAWN(2 SECONDS)
@@ -679,7 +680,7 @@
 	dont_rename_crop = TRUE
 	name_prefix = "Money "
 	iconmod = "TreeCash"
-	crop = /obj/item/spacecash
+	crop = /obj/item/currency/spacecash
 	required_mutation = /datum/plantmutation/tree/paper
 	PTrange = list(30, null)
 	chance = 50
@@ -706,7 +707,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
 			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
@@ -716,7 +717,7 @@
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime"))) return 0
 		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)

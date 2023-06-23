@@ -9,7 +9,6 @@
 	pointCost = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
-	restricted_area_check = 0
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
 
@@ -30,19 +29,19 @@
 
 			if (M.special_sprint & SPRINT_BAT)
 				M.special_sprint &= ~SPRINT_BAT
-				icon_state = "mist"
+				icon_state = "batform"
 			else
 				M.special_sprint |= SPRINT_BAT
-				icon_state = "mist"
+				icon_state = "batform-on"
 		else
 			M.special_sprint &= ~SPRINT_BAT
 
 			if (M.special_sprint & SPRINT_BAT_CLOAKED)
 				M.special_sprint &= ~SPRINT_BAT_CLOAKED
-				icon_state = "mist"
+				icon_state = "batform"
 			else
 				M.special_sprint |= SPRINT_BAT_CLOAKED
-				icon_state = "mist"
+				icon_state = "batform-on"
 
 		boutput(M, "<span class='notice'>Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
 
@@ -68,7 +67,7 @@
 	pointCost = 0
 	when_stunned = 0
 	not_when_handcuffed = 0
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	var/duration = 50
 	unlock_message = "You have gained mist form. It temporarily turns you incorporeal, allowing you to pass through solid objects."
 

@@ -68,6 +68,7 @@
 	message["toxloss"] = M.get_toxin_damage()
 	message["oxyloss"] = M.get_oxygen_deprivation()
 	message["gibbed"] = gibbed ? 1 : 0
+	message["last_words"] = M.last_words
 
 	hublog << list2params(message)
 
@@ -151,18 +152,10 @@
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 						special = length(O.mobs_fed_on)
-			if (ROLE_VAMPTHRALL)
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
-			if ("spyminion")
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
-			if (ROLE_MINDHACK)
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
+			if (ROLE_VAMPTHRALL, ROLE_MINDHACK)
+				var/datum/mind/master = M.get_master(traitor_type)
+				if (master?.current)
+					special = master.current.real_name
 			if (ROLE_FLOCKMIND)
 				var/relay_successful = FALSE
 				if (isflockmob(M.current))
@@ -190,10 +183,10 @@
 						message["success"] = 1
 			if (ROLE_SPY_THIEF)
 				special = "Bounties claimed: "
-				for(var/stolen_item_name in M.spy_stolen_items)
-					if (stolen_item_name != "")
-						special += stolen_item_name
-						special += ", "
+				var/datum/antagonist/spy_thief/antag_role = M.get_antagonist(ROLE_SPY_THIEF)
+				for(var/obj/stolen_item in antag_role.stolen_items)
+					if (stolen_item.name != "")
+						special += "[stolen_item.name], "
 
 		message["special"] = special
 

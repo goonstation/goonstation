@@ -17,6 +17,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	var/casecolor = "empty"
 	var/filled = 0.5
+	/// Spawns it in as empty
+	var/isempty = FALSE
 	pressure_resistance = 7*ONE_ATMOSPHERE
 	var/temperature_resistance = 1000 + T0C
 	volume = 1000
@@ -35,6 +37,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		src.AddComponent(/datum/component/bullet_holes, 5, 0)
 		atmos_dmi = image('icons/obj/atmospherics/atmos.dmi')
 		bomb_dmi = image('icons/obj/canisterbomb.dmi')
+
+#define POP_ANIMATE_TIME 0.3 SECONDS // im a define FIEND. timed to roughly match the sound
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -56,7 +60,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
 			return
 		src.valve_open = TRUE
-		user.gib()
+		playsound(user.loc, 'sound/effects/cani_suicide.ogg', 90, 0)
+		user.add_filter("canister pop", 1, displacement_map_filter(icon=icon('icons/effects/distort.dmi', "canister_pop"), size=0, y=8))
+		animate(user.get_filter("canister pop"), size=50, time=POP_ANIMATE_TIME, easing=SINE_EASING)
+
+		SPAWN(POP_ANIMATE_TIME)
+			user.gib()
+
+#undef POP_ANIMATE_TIME
 
 	powered()
 		return 1
@@ -65,32 +76,39 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	name = "Canister: \[N2O\]"
 	icon_state = "redws"
 	casecolor = "redws"
+
 /obj/machinery/portable_atmospherics/canister/nitrogen
 	name = "Canister: \[N2\]"
 	icon_state = "red"
 	casecolor = "red"
+
 /obj/machinery/portable_atmospherics/canister/oxygen
 	name = "Canister: \[O2\]"
 	icon_state = "blue"
 	casecolor = "blue"
+
 /obj/machinery/portable_atmospherics/canister/toxins
 	name = "Canister \[Plasma\]"
 	icon_state = "orange"
 	casecolor = "orange"
+
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide
 	name = "Canister \[CO2\]"
 	icon_state = "black"
 	casecolor = "black"
+
 /obj/machinery/portable_atmospherics/canister/air
 	name = "Canister \[Air\]"
 	icon_state = "grey"
 	casecolor = "grey"
 	filled = 2
+
 /obj/machinery/portable_atmospherics/canister/air/large
 	name = "High-Volume Canister \[Air\]"
 	icon_state = "greyred"
 	casecolor = "greyred"
 	filled = 5
+
 /obj/machinery/portable_atmospherics/canister/empty
 	name = "Canister \[Empty\]"
 	icon_state = "empty"
@@ -382,6 +400,18 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(src)
+	else if (istype(W, /obj/item/reagent_containers/balloon))
+		var/obj/item/reagent_containers/balloon/balloon = W
+		var/amount = balloon.breaths * BREATH_VOLUME - TOTAL_MOLES(balloon.air)
+		if (amount <= 0)
+			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
+			return
+		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
+		balloon.air.merge(removed)
+		balloon.UpdateIcon()
+		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] fills [balloon] from src.</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
+		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		user.lastattacked = src
@@ -462,7 +492,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 			. = TRUE
 		if("anchor")
 			if(!src.anchored)
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 				playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 				. = TRUE
@@ -573,7 +603,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						if (anchored)
 							src.visible_message("<B><font color=#B7410E>A faint click is heard from inside the canister, but the effect is not immediately apparent.</font></B>")
 						else
-							anchored = 1
+							anchored = ANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 					if("leak")
 						src.det.failsafe_engage()
@@ -649,10 +679,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 						src.det.failsafe_engage()
 						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						if (anchored)
-							anchored = 0
+							anchored = UNANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the inside the canister, unsecuring itself.</font></B>")
 						else
-							anchored = 1
+							anchored = ANCHORED
 							src.visible_message("<B><font color=#B7410E>A loud click is heard from the bottom of the canister, securing itself.</font></B>")
 					if ("leak")
 						src.det.failsafe_engage()
@@ -697,58 +727,51 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 		return
 	return
 
+/obj/machinery/portable_atmospherics/canister/damage_blunt(amount)
+	src.health -= amount
+	src.healthcheck()
+
 /obj/machinery/portable_atmospherics/canister/toxins/New()
-
 	..()
-
-	src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.toxins = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/oxygen/New()
-
 	..()
-
-	src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.oxygen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
-
 	..()
-
-	var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-	trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.nitrous_oxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/nitrogen/New()
-
 	..()
-
-	src.air_contents.temperature = 80
-	src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.temperature = 80
+		src.air_contents.nitrogen = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide/New()
-
 	..()
-	src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.carbon_dioxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
-
 
 /obj/machinery/portable_atmospherics/canister/air/New()
-
 	..()
-	src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-	src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
+	if (!src.isempty)
+		src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
+

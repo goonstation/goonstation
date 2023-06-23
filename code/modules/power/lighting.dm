@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/light_parts)
 	name = "Area Lighting"
 	event_handler_flags = IMMUNE_SINGULARITY | USE_FLUID_ENTER
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/area/my_area = null
 	var/list/lights = list()
 	var/brightness_placeholder = 1	//hey, maybe later use this in a way that is more optimized than iterating through each individual light
@@ -85,7 +85,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube1"
 	desc = "A lighting fixture."
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
@@ -180,7 +180,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	name = "floor lamp"
 	icon = 'icons/obj/lighting.dmi'
 	desc = "A tall and thin lamp that rests comfortably on the floor."
-	anchored = 1
+	anchored = ANCHORED
 	light_type = /obj/item/light/bulb
 	allowed_type = /obj/item/light/bulb
 	fitting = "bulb"
@@ -239,6 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	broken //Made at first to replace a decal in cog1's wreckage area
 		name = "shattered light bulb"
+		icon_state = "bulb-broken"
 
 		New()
 			..()
@@ -252,6 +253,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			..()
 			autoposition()
 
+		netural
+			name = "incandescent light bulb"
+			light_type = /obj/item/light/bulb/neutral
 		greenish
 			name = "greenish incandescent light bulb"
 			light_type = /obj/item/light/bulb/greenish
@@ -285,6 +289,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+		broken //Made at first to replace a decal in cog1's wreckage area
+			name = "shattered light bulb"
+			icon_state = "bulb-broken"
+
+			New()
+				..()
+				current_lamp.light_status = LIGHT_BROKEN
 
 
 
@@ -337,6 +349,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/bulb/harsh/very
 
+	broken
+		name = "shattered floor light"
+		icon_state = "floor-broken"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
+
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
 	base_state = "ebulb"
@@ -347,6 +367,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 0
 	removable_bulb = 1
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		if (T.z == Z_LEVEL_STATION && istype(T.loc, /area/station))
+			START_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
+
+	disposing()
+		..()
+		STOP_TRACKING_CAT(TR_CAT_STATION_EMERGENCY_LIGHTS)
 
 	exitsign
 		name = "illuminated exit sign"
@@ -411,7 +441,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	New()
 		..()
 		if(src.connected_dock)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, PROC_REF(dock_signal_handler))
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
@@ -476,7 +506,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	name = "tripod light"
 	desc = "A large portable light tripod."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "tripod1"
 	base_state = "tripod"
 	fitting = "bulb"
@@ -629,6 +659,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			light_type = /obj/item/light/tube/harsh/very
 
 	broken
+		name = "shattered light fixture"
+		icon_state = "tube-broken"
 
 		New()
 			..()

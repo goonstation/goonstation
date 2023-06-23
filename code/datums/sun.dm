@@ -19,7 +19,7 @@
 		return
 	counter = 0
 
-	angle = ((rate*world.realtime/100)%360 + 360)%360
+	angle = ((rate*TIME/100)%360 + 360)%360
 	// gives about a 60 minute rotation time
 	// now 45 - 75 minutes, depending on rate
 

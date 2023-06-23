@@ -2,10 +2,11 @@
 ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
+	mat_appearances_to_ignore = list("gnesis")
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
@@ -19,7 +20,7 @@ TYPEINFO(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	mat_appearances_to_ignore = list("gnesis")
+	default_material = "gnesis"
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -56,7 +57,6 @@ TYPEINFO(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)

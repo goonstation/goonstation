@@ -70,7 +70,8 @@
 		return L
 
 	proc/remove_lifeprocess(type)
-		var/datum/lifeprocess/L = lifeprocesses?[type]
+		if(!lifeprocesses) return //sometimes list is null, causes runtime.
+		var/datum/lifeprocess/L = lifeprocesses[type]
 		lifeprocesses -= type
 		qdel(L)
 
@@ -110,6 +111,14 @@
 	..()
 	//wel gosh, its important that we do this otherwisde the crew could spawn into an airless room and then immediately die
 	last_life_tick = TIME
+	restore_life_processes()
+
+/mob/living/full_heal()
+	. = ..()
+	if (src.ai && src.is_npc) src.ai.enable()
+	src.remove_ailments()
+	src.change_misstep_chance(-INFINITY)
+	restore_life_processes()
 
 /mob/living/disposing()
 	for (var/datum/lifeprocess/L in lifeprocesses)
@@ -122,7 +131,7 @@
 	var/list/heartbeatOverlays = list()
 	var/last_human_life_tick = 0
 
-/mob/living/critter/New()
+/mob/living/critter/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/blood)
 	//add_lifeprocess(/datum/lifeprocess/bodytemp) //maybe enable per-critter
@@ -142,7 +151,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/human/New()
+/mob/living/carbon/human/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/arrest_icon)
 	add_lifeprocess(/datum/lifeprocess/blood)
@@ -166,7 +175,7 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/carbon/cube/New()
+/mob/living/carbon/cube/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/chems)
@@ -179,12 +188,12 @@
 	add_lifeprocess(/datum/lifeprocess/blindness)
 	add_lifeprocess(/datum/lifeprocess/radiation)
 
-/mob/living/silicon/ai/New()
+/mob/living/silicon/ai/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/sight)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/hivebot/New()
+/mob/living/silicon/hivebot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -193,7 +202,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
 
-/mob/living/silicon/robot/New()
+/mob/living/silicon/robot/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/hud)
@@ -205,13 +214,12 @@
 	add_lifeprocess(/datum/lifeprocess/robot_locks)
 
 
-/mob/living/silicon/drone/New()
+/mob/living/silicon/drone/restore_life_processes()
 	..()
 	add_lifeprocess(/datum/lifeprocess/canmove)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 
 /mob/living/Life(datum/controller/process/mobs/parent)
-	set invisibility = INVIS_NONE
 	if (..())
 		return 1
 
@@ -263,7 +271,7 @@
 			// Zephyr-class interdictor: carbon mobs in range gain a buff to stamina recovery, which can accumulate to linger briefly
 			if (iscarbon(src))
 				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(10,src,TRUE,ITDR_ZEPHYR))
+					if (IX.expend_interdict(4,src,TRUE,ITDR_ZEPHYR))
 						src.changeStatus("zephyr_field", 3 SECONDS * life_mult)
 						break
 
@@ -280,7 +288,6 @@
 		if (src.client) //ov1
 			// overlays
 			src.updateOverlaysClient(src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (src.observers.len)
 			for (var/mob/x in src.observers)
@@ -309,6 +316,8 @@
 		return 1
 
 	var/mult = (max(tick_spacing, TIME - last_human_life_tick) / tick_spacing)
+	
+	src.mutantrace.onLife(mult)
 
 	if (farty_party)
 		src.emote("fart")
@@ -331,9 +340,6 @@
 			var/obj/item/parts/human_parts/leg/D = src.limbs.r_leg
 			if(D.original_holder && src != D.original_holder)
 				D.foreign_limb_effect()
-
-	if (src.mutantrace)
-		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
 
@@ -430,7 +436,7 @@
 		hud.update_charge()
 		hud.update_tools()
 
-/mob/living/seanceghost/Life(parent)
+/mob/living/intangible/seanceghost/Life(parent)
 	if (..(parent))
 		return 1
 	if (!src.abilityHolder)
@@ -605,9 +611,6 @@
 					if (src.wear_mask)
 						if (src.internal)
 							resist_prob += 100
-				else if (D.spread == "Sight")
-					if (src.eyes_protected_from_light())
-						resist_prob += 190
 
 		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")

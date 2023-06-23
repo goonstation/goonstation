@@ -436,7 +436,7 @@
 	desc = "A self-heating TV dinner. You should probably use a fork."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	bites_left = 2
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.

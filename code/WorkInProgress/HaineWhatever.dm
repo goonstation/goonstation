@@ -650,7 +650,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette wheel and a little ball."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_w0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_e/partner = null
 	var/running = 0
@@ -699,7 +699,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A table with a roulette layout, used for placing bets."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "roulette_e"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/roulette_table_w/partner = null
 	var/list/bets = null
@@ -792,7 +792,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "BJ1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/on = 1
 	var/plays = 0
@@ -1304,26 +1304,24 @@ TYPEINFO(/obj/submachine/blackjack)
 				user.suiciding = 0
 		return 1
 
+TYPEINFO(/obj/item/gun/bling_blaster)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/gun/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"
 	icon_state = "bling_blaster"
 	mat_changename = 0
 	mat_changedesc = 0
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
 	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
 	var/cash_amt = 1000
 	var/cash_max = 1000
 	var/shot_cost = 100
-	var/possible_bling_common = list(/obj/item/spacecash,/obj/item/spacecash/five,/obj/item/spacecash/ten)
-	var/possible_bling_uncommon = list(/obj/item/spacecash/hundred,/obj/item/coin)
+	var/possible_bling_common = list(/obj/item/currency/spacecash,/obj/item/currency/spacecash/five,/obj/item/currency/spacecash/ten)
+	var/possible_bling_uncommon = list(/obj/item/currency/spacecash/hundred,/obj/item/coin)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
 		if (!istype(target, /turf) || !istype(start, /turf))
@@ -1345,7 +1343,7 @@ TYPEINFO(/obj/submachine/blackjack)
 					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
-			var/chosen_bling// = pick(60;/obj/item/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
+			var/chosen_bling// = pick(60;/obj/item/currency/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
 			if (islist(src.possible_bling_rare) && prob(10))
 				chosen_bling = pick(src.possible_bling_rare)
 			else if (islist(src.possible_bling_uncommon) && prob(20))
@@ -1353,7 +1351,7 @@ TYPEINFO(/obj/submachine/blackjack)
 			else if (islist(src.possible_bling_common))
 				chosen_bling = pick(src.possible_bling_common)
 			else
-				chosen_bling = /obj/item/spacecash
+				chosen_bling = /obj/item/currency/spacecash
 			var/obj/item/bling = new chosen_bling
 			bling.set_loc(T)
 			bling.throwforce = 8
@@ -1368,7 +1366,7 @@ TYPEINFO(/obj/submachine/blackjack)
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		shoot(get_turf(target), get_turf(user), user, 0, 0)
 
-	attackby(var/obj/item/spacecash/C, mob/user)
+	attackby(var/obj/item/currency/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
@@ -1661,7 +1659,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_switch1-throw"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Switch Icon"
@@ -1685,7 +1683,7 @@ TYPEINFO(/obj/item/space_thing)
 	desc = "This is an object that's just for testing the knife switch art. Don't use it!"
 	icon = 'icons/obj/knife_switch.dmi'
 	icon_state = "knife_base1"
-	anchored = 1
+	anchored = ANCHORED
 
 	verb/change_icon()
 		set name = "Change Board Icon"
@@ -1703,14 +1701,6 @@ TYPEINFO(/obj/item/space_thing)
 	attack_hand(mob/user)
 		src.change_icon()
 		return
-
-// tOt I ain't agree to no universal corgi ban
-// and no one's gunna get it if they just see George and Blair okay!!
-// and I can't just rename the pug!!!
-/obj/critter/dog/george/orwell
-	name = "Orwell"
-	icon_state = "corgi"
-	doggy = "corgi"
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-=+KALI-MA+=-=-=-=-=-=-=-=-=-=-=-=-=-*/

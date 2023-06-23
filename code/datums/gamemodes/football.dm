@@ -27,6 +27,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 	var/list/obj/decal/big_number/clock_num
 	var/list/obj/decal/big_number/red_num
 	var/list/obj/decal/big_number/blue_num
+	var/datum/allocated_region/stadium = null
 	do_antag_random_spawns = 0
 
 	announce()
@@ -34,6 +35,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 		boutput(world, "<B>Get ready to play some football!</B>")
 
 	pre_setup()
+		src.stadium = get_singleton(/datum/mapPrefab/allocated/football).load()
 		// EVERYONE IS A football player.
 		for(var/client/C)
 			var/mob/new_player/player = C.mob
@@ -279,7 +281,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 					if (!player.current || isdead(player.current))
 						if (!player.current.client)
 							continue //ZeWaka: fix for null.preferences
-						var/mob/living/carbon/human/newbody = new(null, null, player.current.client.preferences, TRUE)
+						var/mob/living/carbon/human/newbody = new(pick(football_spawns[team]), null, player.current.client.preferences, TRUE)
 
 						if (player) //Mind transfer also handles key transfer.
 							player.transfer_to(newbody)

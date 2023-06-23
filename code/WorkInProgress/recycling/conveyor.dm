@@ -15,8 +15,8 @@
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
-	power_usage = 100
+	anchored = ANCHORED
+	power_usage = 0
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
@@ -281,9 +281,11 @@
 	if(!operable)
 		operating = OP_OFF
 	if(!operating || (status & NOPOWER))
+		power_usage = 0
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
 	else
+		power_usage = 100
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 
@@ -551,7 +553,7 @@
 	name = "diverter"
 	desc = "A diverter arm for a conveyor belt."
 	pass_unstable = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	layer = FLY_LAYER
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
@@ -682,7 +684,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	var/id = ""
 	/// the list of converyors that are controlled by this switch
 	var/list/conveyors
-	anchored = 1
+	anchored = ANCHORED
 	/// time last used
 	var/last_used = 0
 
@@ -692,7 +694,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 		START_TRACKING
 		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", PROC_REF(trigger))
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()
@@ -778,7 +780,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/conveyor_switch, proc/trigger)
 	name = "carousel power unit"
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"

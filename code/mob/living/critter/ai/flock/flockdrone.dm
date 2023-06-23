@@ -4,6 +4,11 @@
 	..()
 	default_task = get_instance(/datum/aiTask/prioritizer/flock/drone, list(src))
 
+/datum/aiHolder/flock/drone/was_harmed(obj/item/W, mob/M)
+	. = ..()
+	if (!istype(src.current_task, /datum/aiTask/timed/targeted/flockdrone_shoot))
+		src.interrupt()
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // main default "what do we do next" task, run for one tick and then switches to a new task

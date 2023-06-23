@@ -3,28 +3,6 @@
 
 // Added kyle2143's werewolf patch (Gannets).
 
-/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
-
-// Currently only used by omnitraitor setup. It should be removed when omnitraitors are datumised.
-/mob/proc/make_werewolf()
-	if (ishuman(src))
-		var/datum/abilityHolder/werewolf/A = src.get_ability_holder(/datum/abilityHolder/werewolf)
-		if (A && istype(A))
-			return
-		var/datum/abilityHolder/werewolf/W = src.add_ability_holder(/datum/abilityHolder/werewolf)
-		W.addAbility(/datum/targetable/werewolf/werewolf_feast)
-		W.addAbility(/datum/targetable/werewolf/werewolf_pounce)
-		W.addAbility(/datum/targetable/werewolf/werewolf_thrash)
-		W.addAbility(/datum/targetable/werewolf/werewolf_throw)
-		W.addAbility(/datum/targetable/werewolf/werewolf_tainted_saliva)
-		W.addAbility(/datum/targetable/werewolf/werewolf_defense)
-		W.addAbility(/datum/targetable/werewolf/werewolf_transform)
-		// W.addAbility(/datum/targetable/werewolf/werewolf_spread_affliction) //not using for now, but could be fun later ish.
-		src.resistances += /datum/ailment/disease/lycanthropy
-
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			src.show_antag_popup("werewolf")
-
 ////////////////////////////////////////////// Helper procs //////////////////////////////
 
 // Avoids C&P code for that werewolf disease.
@@ -65,7 +43,7 @@
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 			SPAWN(0.5 SECONDS)
-				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+				if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
@@ -208,6 +186,7 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
+				M.sims?.affectMotive("Ravenous Hunger", healing * 5)
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
@@ -341,9 +320,28 @@
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
-		..()
+		. = ..()
 		awaken_time = rand(5, 10)*100
+		#ifdef RP_MODE
+		awaken_time *= 2
+		#endif
 		src.tainted_saliva_reservoir = new/datum/reagents(500)
+
+	transferOwnership(mob/newbody)
+		. = ..()
+		if (ishuman(newbody))
+			var/mob/living/carbon/human/H = newbody
+			if (H.sims)
+				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
+				qdel(H.sims)
+				H.sims = new /datum/simsHolder/rp/wolf(H)
+
+	onRemove()
+		. = ..()
+		var/mob/living/carbon/human/H = src.owner
+		if (istype(H.sims, /datum/simsHolder/rp/wolf))
+			qdel(H.sims)
+			H.sims = new /datum/simsHolder/rp(H)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()

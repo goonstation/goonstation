@@ -1,9 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/allowGenerate)
 "ab" = (
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "ac" = (
 /obj/machinery/door/poddoor/blast{
@@ -83,7 +83,7 @@
 	dir = 4;
 	icon_state = "bigstripe-edge"
 	},
-/obj/decal/fakeobjects/lightbulb_broken,
+/obj/machinery/light/small/broken,
 /turf/simulated/floor/shuttlebay,
 /area/janitor_setpiece)
 "ao" = (
@@ -100,19 +100,21 @@
 /area/janitor_setpiece)
 "ap" = (
 /obj/decal/cleanable/fungus,
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "aq" = (
 /obj/decal/cleanable/rust,
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "ar" = (
-/obj/machinery/door/airlock/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "as" = (
 /obj/decal/cleanable/gangtag,
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "at" = (
 /obj/machinery/vending/coffee,
@@ -161,20 +163,18 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "az" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aA" = (
 /turf/variableTurf/wall,
 /area/noGenerate)
 "aB" = (
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
@@ -205,7 +205,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aG" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aH" = (
@@ -232,11 +232,11 @@
 	pixel_x = 0;
 	pixel_y = 32
 	},
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "aL" = (
 /obj/decal/cleanable/ripped_poster,
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "aM" = (
 /obj/decal/fakeobjects/pipe/heat{
@@ -306,7 +306,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aU" = (
-/obj/wingrille_spawn/full,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/janitor_setpiece)
 "aV" = (
@@ -317,20 +317,17 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aW" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	tag = ""
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aX" = (
 /obj/storage/closet/wardrobe/specialty_janitor,
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 4;
-	icon_state = "tube-broken"
-	},
 /obj/item/gun/flamethrower/assembled/loaded/napalm,
+/obj/machinery/light/incandescent/broken{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aY" = (
@@ -339,7 +336,7 @@
 	layer = 4;
 	pixel_x = 0
 	},
-/turf/simulated/wall/auto,
+/turf/simulated/wall/auto/supernorn,
 /area/janitor_setpiece)
 "aZ" = (
 /obj/decal/cleanable/generic,
@@ -429,12 +426,12 @@
 	id = "jani_outpost";
 	pixel_x = 32
 	},
-/obj/machinery/light{
-	dir = 4;
-	icon_state = "tube1"
-	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"iO" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor,
+/area/janitor_setpiece)
 
 (1,1,1) = {"
 aj
@@ -526,7 +523,7 @@ ad
 ah
 ah
 ah
-ar
+iO
 ba
 ba
 ap
@@ -703,8 +700,8 @@ aA
 aj
 aj
 aj
-aA
-aA
-aA
+aj
+aj
+aj
 aa
 "}

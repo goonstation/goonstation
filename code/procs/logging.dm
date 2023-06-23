@@ -62,7 +62,7 @@ var/global/logLength = 0
 			if (LOG_WHISPER) logs[LOG_SPEECH] += ingameLog
 			if (LOG_STATION) logs[LOG_STATION] += ingameLog
 			if (LOG_COMBAT)
-				if (A?.dont_log_combat)
+				if (A?.dont_log_combat || istype(source, /mob/living/carbon/human/preview))
 					return
 				logs[LOG_COMBAT] += ingameLog
 			if (LOG_TELEPATHY) logs[LOG_TELEPATHY] += ingameLog

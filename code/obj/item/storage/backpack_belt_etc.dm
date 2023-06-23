@@ -12,10 +12,11 @@
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/storage/box/starter)
 	duration_remove = 3 SECONDS
 	duration_put = 3 SECONDS
+	var/satchel_compatible = TRUE
 
 	blue
 		icon_state = "backpackb"
@@ -485,7 +486,7 @@
 	desc = "A small leather pouch, suitable for storing ammunition and other essential equipment for the operation of flintlock weaponry. It has room on it's strap to sling a flintlock rifle over."
 	icon_state = "flintlock_satchel"
 	item_state = "flintlock_satchel"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/gun/kinetic/single_action/flintlock/rifle)
 	spawn_contents = list(/obj/item/gun/kinetic/single_action/flintlock/rifle, /obj/item/ammo/bullets/flintlock/rifle)
 	slots = 4
@@ -530,7 +531,7 @@
 	w_class = W_CLASS_BULKY
 	slots = 5
 	max_wclass = W_CLASS_NORMAL
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 5
@@ -592,7 +593,7 @@
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	max_wclass = W_CLASS_SMALL
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	stamina_damage = 10
 	stamina_cost = 5
 	stamina_crit_chance = 5
@@ -627,7 +628,7 @@
 			return
 		return ..()
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
+	attackby(obj/item/W, mob/user)
 		if(!can_use())
 			boutput(user, "<span class='alert'>You need to wear [src] for that.</span>")
 			return
@@ -639,7 +640,24 @@
 	icon_state = "utilitybelt"
 	item_state = "utility"
 	can_hold = list(/obj/item/deconstructor)
-	in_list_or_max = 1
+	check_wclass = 1
+
+/obj/item/storage/belt/utility/nt_engineer
+	name = "specialist engineering belt"
+	desc = "A high capacity engineering belt."
+	can_hold = list(
+		/obj/item/rcd,
+		/obj/item/rcd_ammo,
+		/obj/item/deconstructor,
+		/obj/item/sheet,
+		/obj/item/tile
+	)
+	spawn_contents = list(
+		/obj/item/rcd/construction,
+		/obj/item/rcd_ammo/medium,
+		/obj/item/tool/omnitool,
+		/obj/item/device/analyzer/atmospheric/upgraded
+	)
 
 /obj/item/storage/belt/utility/prepared/ceshielded
 	name = "aurora MKII utility belt"
@@ -650,7 +668,7 @@
 	can_hold = list(/obj/item/rcd,
 	/obj/item/rcd_ammo,
 	/obj/item/deconstructor)
-	in_list_or_max = 1
+	check_wclass = 1
 	inventory_counter_enabled = 1
 
 	New()
@@ -689,6 +707,17 @@
 	/obj/item/device/multitool,
 	/obj/item/deconstructor)
 
+/obj/item/storage/belt/utility/virtual
+	name = "virtual utility belt"
+	desc = "Are these tools DLC?"
+	spawn_contents = list(/obj/item/crowbar/vr,
+	/obj/item/weldingtool/vr,
+	/obj/item/wirecutters/vr,
+	/obj/item/screwdriver/vr,
+	/obj/item/wrench/vr,
+	/obj/item/device/multitool,
+	/obj/item/deconstructor)
+
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
 	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
@@ -699,7 +728,7 @@
 	icon_state = "injectorbelt"
 	item_state = "medical"
 	can_hold = list(/obj/item/robodefibrillator)
-	in_list_or_max = 1
+	check_wclass = 1
 
 /obj/item/storage/belt/medical/prepared
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
@@ -716,11 +745,11 @@
 
 /obj/item/storage/belt/roboticist/prepared
 	spawn_contents = list(
-	/obj/item/crowbar,
-	/obj/item/weldingtool,
-	/obj/item/wirecutters,
-	/obj/item/screwdriver,
-	/obj/item/wrench,
+	/obj/item/crowbar/grey,
+	/obj/item/weldingtool/grey,
+	/obj/item/wirecutters/grey,
+	/obj/item/screwdriver/grey,
+	/obj/item/wrench/grey,
 	/obj/item/circular_saw,
 	/obj/item/scalpel
 	)
@@ -732,7 +761,7 @@
 	can_hold = list(
 		/obj/item/mining_tool,
 		/obj/item/mining_tools)
-	in_list_or_max = 1
+	check_wclass = 1
 
 /obj/item/storage/belt/mining/prepared
 	spawn_contents = list(/obj/item/mining_tool/power_pick,
@@ -750,14 +779,14 @@
 	item_state = "rancher"
 	can_hold = list(
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod)
-	in_list_or_max = 1
+		/obj/item/fishing_rod/basic)
+	check_wclass = 1
 
 	prepared
 		spawn_contents = list(/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
 		/obj/item/chicken_carrier,
-		/obj/item/fishing_rod)
+		/obj/item/fishing_rod/basic)
 
 /obj/item/storage/belt/hunter
 	name = "trophy belt"
@@ -787,7 +816,7 @@
 	/obj/item/device/prisoner_scanner,
 	/obj/item/gun/energy/ntgun,
 	/obj/item/gun/energy/cornicen3)
-	in_list_or_max = 1
+	check_wclass = 1
 
 // kiki's detective shoulder (holster)
 // get it? like kiki's delivery service? ah, i'll show myself out.
@@ -845,7 +874,7 @@
 	icon_state = "minerbelt"
 	item_state = "utility"
 	can_hold = list(/obj/item/ammo/bullets)
-	in_list_or_max = 0
+	check_wclass = 0
 
 ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /obj/item/storage/belt/gun
@@ -875,7 +904,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
 	slots = 4
-	in_list_or_max = 0
+	check_wclass = 0
 	gun_type = /obj/item/gun/kinetic/revolver
 	can_hold = list(/obj/item/ammo/bullets/a357)
 	can_hold_exact = list(/obj/item/gun/kinetic/revolver)
@@ -887,7 +916,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "pistol_belt"
 	item_state = "pistol_belt"
 	slots = 5
-	in_list_or_max = 0
+	check_wclass = 0
 	gun_type = /obj/item/gun/kinetic/pistol
 	can_hold = list(/obj/item/ammo/bullets/bullet_9mm)
 	can_hold_exact = list(/obj/item/gun/kinetic/pistol)
@@ -899,7 +928,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	icon_state = "smartgun_belt"
 	item_state = "smartgun_belt"
 	slots = 5
-	in_list_or_max = 0
+	check_wclass = 0
 	gun_type = /obj/item/gun/kinetic/pistol/smart/mkII
 	can_hold = list(/obj/item/ammo/bullets/bullet_22/smartgun)
 	can_hold_exact = list(/obj/item/gun/kinetic/pistol/smart/mkII)
@@ -917,7 +946,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	/obj/item/chem_grenade,
 	/obj/item/storage/grenade_pouch,
 	/obj/item/ammo/bullets/grenade_round)
-	in_list_or_max = 0
+	check_wclass = 0
 
 // combat medic storage 7 slot
 
@@ -959,11 +988,13 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 
 	equipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 0, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.add_wrestle_powers(src.fake)
 
 	unequipped(var/mob/user)
 		..()
-		user.make_wrestler(0, 1, 1, fake)
+		if (!user.mind.get_antagonist(ROLE_WRESTLER))
+			user.remove_wrestle_powers(src.fake)
 
 /obj/item/storage/belt/wrestling/fake
 	name = "fake wrestling belt"

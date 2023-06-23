@@ -30,7 +30,7 @@
 				else
 					/* Order for this stuff:
 					Lung failure
-					Sarin/Strychnine
+					Saxitoxin/Strychnine
 					Severe Oxygen Loss
 					Lung damage
 					Other Poisons
@@ -65,7 +65,7 @@
 								if(H.find_ailment_by_type(/datum/ailment/disease/respiratory_failure))
 									boutput(user, "<span class='alert'>You hear fluid sloughing around inside [(user != H) ? "[H]'s" : "your"] lungs, interspersed with crackling noises.</span>")
 									user.playsound_local(user, 'sound/effects/cracklesstethoscope.ogg', 40, 0, -6)
-								else if(H.reagents.has_reagent("sarin") || H.reagents.has_reagent("strychnine") ||  H.reagents.has_reagent("coniine"))
+								else if(H.reagents.has_reagent("saxitoxin") || H.reagents.has_reagent("strychnine") ||  H.reagents.has_reagent("coniine"))
 									boutput(user, "<span class='alert'>You hear what sounds like a distorted, high-pitched wheeze inside [(user != H) ? "[H]'s" : "your"] lungs.</span>")
 									user.playsound_local(user, 'sound/effects/hyperventstethoscope.ogg', 40, 0, -6)
 								else if(H.get_oxygen_deprivation() > 80)

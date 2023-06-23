@@ -1080,7 +1080,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			afterUse(user)
 			//if (!hit)
 			playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
-		return
+		return 1
 
 
 	proc/on_hit(var/hit, var/mult = 1)
@@ -1814,7 +1814,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	desc = ""
 	icon = 'icons/effects/160x160.dmi'
 	icon_state = ""
-	anchored = 1
+	anchored = ANCHORED
 	pass_unstable = FALSE
 	layer = EFFECTS_LAYER_1
 	pixel_x = -64

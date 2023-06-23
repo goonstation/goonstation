@@ -9,7 +9,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "engine"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/obj/machinery/atmospherics/binary/reactor_turbine/turbine_handle = null
 	var/list/history
 	var/const/history_max = 50
@@ -48,13 +48,13 @@
 		if (status & (NOPOWER|BROKEN))
 			return
 
-		if(turbine_handle.overspeed & src.icon_state != "engine1")
+		if(turbine_handle.overspeed && src.icon_state != "engine1")
 			src.icon_state = "engine1"
 			src.UpdateIcon()
-		else if(turbine_handle.stalling & src.icon_state != "engine2")
+		else if(turbine_handle.stalling && src.icon_state != "engine2")
 			src.icon_state = "engine2"
 			src.UpdateIcon()
-		else if(src.icon_state != "engine")
+		else if(!turbine_handle.overspeed && !turbine_handle.stalling && src.icon_state != "engine")
 			src.icon_state = "engine"
 			src.UpdateIcon()
 
@@ -95,21 +95,21 @@
 			if("loadChange")
 				var/x = params["newVal"]
 				src.turbine_handle.stator_load = min(max(x,1),10e30)
-				logTheThing("station", src, null, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src.turbine_handle] stator load configured to [x] by [ui.user]")
 			if("volChange")
 				var/x = params["newVal"]
 				src.turbine_handle.flow_rate = min(max(x,1),10e5)
-				logTheThing("station", src, null, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
+				logTheThing(LOG_STATION, src, "[src.turbine_handle] flow rate configured to [x] by [ui.user]")
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 /obj/machinery/power/nuclear/reactor_control
 	name = "Reactor Control Computer"
-	desc = "A computer for configuring and monitoring the a nuclear reactor."
+	desc = "A computer for configuring and monitoring a nuclear reactor."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/obj/machinery/atmospherics/binary/nuclear_reactor/reactor_handle = null
 
 	process()
@@ -180,17 +180,13 @@
 
 		switch(action)
 			if("adjustCR")
-				logTheThing("station", src, null, "[src.reactor_handle] control rod insertion configured to [params["crvalue"]]% by [ui.user]")
-				for(var/x=1 to length(src.reactor_handle.component_grid))
-					for(var/y=1 to length(src.reactor_handle.component_grid[1]))
-						if(src.reactor_handle.component_grid[x][y])
-							if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
-								var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
-								CR.configured_insertion_level = text2num(params["crvalue"])/100
+				logTheThing(LOG_STATION, src, "[src.reactor_handle] control rod insertion configured to [params["crvalue"]]% by [ui.user]")
+				src.reactor_handle.set_control_rods(text2num(params["crvalue"]))
+
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]
 				if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
 					var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
 					CR.configured_insertion_level = !CR.configured_insertion_level
-					logTheThing("station", src, null, "[src.reactor_handle] control rod at [x],[y] insertion configured to [CR.configured_insertion_level*100]% by [ui.user]")
+					logTheThing(LOG_STATION, src, "[src.reactor_handle] control rod at [x],[y] insertion configured to [CR.configured_insertion_level*100]% by [ui.user]")

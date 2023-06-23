@@ -14,10 +14,10 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
-	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
+	desc = "A device used for the slow but precise heating and cooling of chemicals."
 	density = 1
-	anchored = 1
-	icon = 'icons/obj/chemical.dmi'
+	anchored = ANCHORED
+	icon = 'icons/obj/heater.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
@@ -27,7 +27,7 @@ TYPEINFO(/obj/machinery/chem_heater)
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
-	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	var/static/image/icon_beaker = image('icons/obj/heater.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -101,6 +101,8 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemHeater", src.name)
@@ -253,9 +255,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 				else if (target_temp < src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-cool"
 				else
-					src.icon_state = "heater"
+					src.icon_state = "heater-closed"
 			else
-				src.icon_state = "heater"
+				src.icon_state = "heater-closed"
 		else
 			src.icon_state = "heater"
 
@@ -286,6 +288,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
 
+	chemistry
+		icon = 'icons/obj/heater_chem.dmi'
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -301,10 +306,11 @@ TYPEINFO(/obj/machinery/chem_master)
 	name = "CheMaster 3000"
 	desc = "A computer-like device used in the production of various pharmaceutical items. It has a slot for a beaker on the top."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "mixer0"
 	flags = NOSPLASH
+	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/beaker_cache = null
@@ -333,7 +339,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if (src.status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
-		
+
 		if (src.beaker && src.beaker == B)
 			return
 
@@ -461,6 +467,8 @@ TYPEINFO(/obj/machinery/chem_master)
 		return TRUE
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemMaster", "Chemical Master 3000")
@@ -546,7 +554,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(isnull(name) || !length(name) || name == " ")
 			name = null
 			if(src.beaker)
-				name = src.beaker.reagents.get_master_reagent_name()				
+				name = src.beaker.reagents.get_master_reagent_name()
 		return name
 
 	ui_data(mob/user)
@@ -884,7 +892,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	name = "ChemiCompiler CCS1001"
 	desc = "This device looks very difficult to use."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "chemicompiler_st_off"
 	flags = NOSPLASH
@@ -896,7 +904,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", .proc/runscript)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", PROC_REF(runscript))
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
@@ -995,7 +1003,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 	name = "fractional still"
 	desc = "A towering piece of industrial equipment. It reeks of hydrocarbons."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	power_usage = 500
 	var/active = 0
 	var/overall_temp = T20C
@@ -1262,6 +1270,7 @@ TYPEINFO(/obj/machinery/chemicompiler_stationary)
 				boutput(user, "<span class='notice'>[loadcount] items were loaded from the satchel!</span>")
 
 			S.UpdateIcon()
+			S.tooltip_rebuild = 1
 			src.updateUsrDialog()
 
 		else

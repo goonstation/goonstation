@@ -11,7 +11,7 @@
 	alpha = 180
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
@@ -583,6 +583,7 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
+	anchored = ANCHORED_ALWAYS
 	var/nextAttackMsg = 0
 
 	New()

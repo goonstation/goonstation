@@ -64,7 +64,7 @@
 		var/obj/whitehole/whitehole = new (T, grow_duration, duration, source_location, TRUE)
 		whitehole.activity_modifier = activity_modifier
 		message_admins("White Hole anomaly with origin [whitehole.source_location] spawning in [log_loc(T)]")
-		logTheThing("admin", usr, null, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
+		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
 /obj/whitehole
@@ -74,7 +74,7 @@
 	icon_state = "whole"
 	opacity = 0
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	pixel_x = -64
 	pixel_y = -64
 	event_handler_flags = IMMUNE_SINGULARITY
@@ -176,7 +176,7 @@
 			/datum/reagent/flockdrone_fluid = 3,
 		),
 		"chapel" = list(
-			/obj/item/storage/bible = 2,
+			/obj/item/bible = 2,
 			/obj/item/device/light/candle = 10,
 			/obj/item/device/light/candle/small = 15,
 			/obj/item/device/light/candle/spooky = 2,
@@ -221,7 +221,7 @@
 			/obj/item/seashell = 2,
 			"trenchloot" = 5,
 			"ore" = 5,
-			/obj/critter/shark = 1,
+			/mob/living/critter/aquatic/shark = 1,
 			/obj/critter/gunbot/drone/gunshark = 0.5,
 			/obj/critter/gunbot/drone/buzzdrone/fish = 0.8,
 			/obj/naval_mine/standard = 0.2,
@@ -269,8 +269,8 @@
 		),
 		"asteroid" = list(
 			"ore" = 200,
-			/obj/critter/rockworm = 3,
-			/obj/critter/fermid = 10,
+			/mob/living/critter/rockworm = 3,
+			/mob/living/critter/fermid = 10,
 			/obj/storage/crate/loot = 2,
 			/obj/storage/crate/loot/puzzle = 2,
 			/mob/living/carbon/human/normal/miner = 0.1,
@@ -378,7 +378,7 @@
 			/obj/stool/chair/office/syndie = 1,
 			/obj/item/paper/book/from_file/syndies_guide = 0.5,
 			/obj/item/beartrap/armed = 1,
-			/datum/reagent/harmful/sarin = 0.1,
+			/datum/reagent/harmful/saxitoxin = 0.1,
 			/datum/reagent/blood = 1,
 			/mob/living/critter/robotic/sawfly = 2,
 			/obj/item/reagent_containers/food/snacks/donkpocket_w = 1,
@@ -512,7 +512,7 @@
 			/mob/living/critter/small_animal/cat/jones = 5,
 			/obj/item/clothing/suit/bedsheet/captain = 2,
 			/obj/item/card/id/captains_spare = 0.1,
-			/obj/item/spacecash/random/small = 5,
+			/obj/item/currency/spacecash/small = 5,
 			/obj/item/stamp/hop = 1,
 			/obj/item/stamp/cap = 1,
 			/obj/item/stamp/centcom = 1,
@@ -635,12 +635,12 @@
 			/obj/item/sticker/postit = 0.5,
 		),
 		"cargo" = list(
-			/obj/item/spacecash/five = 10,
-			/obj/item/spacecash/ten = 10,
-			/obj/item/spacecash/twenty = 10,
-			/obj/item/spacecash/fifty = 5,
-			/obj/item/spacecash/hundred = 3,
-			/obj/item/spacecash/fivehundred = 0.3,
+			/obj/item/currency/spacecash/five = 10,
+			/obj/item/currency/spacecash/ten = 10,
+			/obj/item/currency/spacecash/twenty = 10,
+			/obj/item/currency/spacecash/fifty = 5,
+			/obj/item/currency/spacecash/hundred = 3,
+			/obj/item/currency/spacecash/fivehundred = 0.3,
 			/obj/item/paper = 15,
 			/obj/item/paper_bin = 5,
 			/obj/item/hand_labeler = 5,
@@ -837,6 +837,7 @@
 
 		if(triggered_by_event)
 			//spatial interdictor: can't stop the white hole, but it can mitigate it
+			//consumes 500 units of charge (250,000 joules) to reduce white hole duration
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))
@@ -1116,7 +1117,7 @@
 			var/obj/item/old_grenade/grenade = .
 			if(prob(50))
 				SPAWN(rand(1 SECOND, 10 SECONDS))
-					grenade.prime()
+					grenade.detonate()
 		else if(istype(., /obj/item/chem_grenade))
 			var/obj/item/chem_grenade/grenade = .
 			if(prob(50))
@@ -1294,6 +1295,7 @@
 
 
 /datum/fishing_spot/whitehole
+	rod_tier_required = 2
 	fishing_atom_type = /obj/whitehole
 
 	generate_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)

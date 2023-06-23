@@ -1,6 +1,6 @@
 // Not quite a unit test but achieves the same goal. Ran for each map unlike actual unit tests.
 
-#ifdef RUNTIME_CHECKING
+#ifdef CI_RUNTIME_CHECKING
 
 proc/check_map_correctness()
 	check_missing_navbeacons()
@@ -67,7 +67,7 @@ proc/check_door_turfs()
 	var/list/log_lines = list()
 	for_by_tcl(door, /obj/machinery/door)
 		var/turf/T = door.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) && !istype(door, /obj/machinery/door/poddoor) || T.density)
 			log_lines += "[door] [door.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Doors on invalid turfs:\n" + jointext(log_lines, "\n"))
@@ -77,7 +77,7 @@ proc/check_window_turfs()
 	for(var/obj/window/window in world)
 		if (QDELETED(window)) return
 		var/turf/T = window.loc
-		if(istype(T.loc, /turf/space) || T.density)
+		if(istype(T, /turf/space) || T.density)
 			log_lines += "[window] [window.type] on [T.x], [T.y], [T.z] in [T.loc]"
 	if(length(log_lines))
 		CRASH("Windows on invalid turfs:\n" + jointext(log_lines, "\n"))
@@ -95,12 +95,23 @@ proc/check_networked_data_terminals()
 		CRASH("Terminal-less machinery:\n" + jointext(log_lines, "\n"))
 
 proc/check_blinds_switches()
-	var/list/blinds_without_switches = list()
-	for_by_tcl(blinds, /obj/window_blinds)
-		if(isnull(blinds.mySwitch))
-			blinds_without_switches += "Blind at [blinds.x], [blinds.y], [blinds.z] in [get_area(blinds)]"
-	if(length(blinds_without_switches))
-		CRASH("Blinds without switches:\n" + jointext(blinds_without_switches, "\n"))
+	var/list/blind_switch_IDs = list()
+	var/list/IDs_without_switches = list()
+	for_by_tcl(blinds, /obj/window_blinds) //get all the blinds
+		var/area/area_of_thing = get_area(blinds)
+		var/new_id = blinds.id ? blinds.id : "[area_of_thing.name]"
+		blind_switch_IDs["[new_id]"] = FALSE //have an entry for each ID that's marked as false
+	for_by_tcl(blind_switch, /obj/blind_switch) //then check for blinds match
+		var/area/area_of_thing = get_area(blind_switch)
+		var/new_id = blind_switch.id ? blind_switch.id : "[area_of_thing.name]"
+		for(var/seek_ID in blind_switch_IDs)
+			if(new_id == seek_ID)
+				blind_switch_IDs[seek_ID] = TRUE //and update ID entries to TRUE if a switch satisfies them
+	for(var/seek_ID in blind_switch_IDs) //once all switches and blinds are iterated over, check for any absences
+		if(blind_switch_IDs[seek_ID] == FALSE)
+			IDs_without_switches += "[seek_ID]"
+	if(length(IDs_without_switches))
+		CRASH("Blinds IDs without switches:\n" + jointext(IDs_without_switches, "\n"))
 
 proc/check_apcless_station_areas()
 	var/list/log_lines = list()

@@ -251,7 +251,7 @@
 		message_admins("A canister bomb would have detonated at at [T.loc.name] ([log_loc(T)]) but was forced to dud!")
 		return
 
-	src.attachedTo.anchored = 0
+	src.attachedTo.anchored = UNANCHORED
 	src.attachedTo.remove_simple_light("canister")
 
 	if (src.defused)
@@ -303,6 +303,8 @@
 	if (src.part_fs.timing)
 		return
 	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
+		return
+	if (src.attachedTo.destroyed)
 		return
 	src.safety = 0
 	src.part_fs.timing = 1
