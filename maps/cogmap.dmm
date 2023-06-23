@@ -39323,8 +39323,8 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "com" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "con" = (
@@ -40546,10 +40546,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "crv" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crw" = (
@@ -41413,13 +41413,13 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctW" = (
-/obj/machinery/chem_heater,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "ctX" = (
@@ -45539,7 +45539,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	frequency = 1445;
@@ -45874,7 +45874,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "emu" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/fishing_pool/portable,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "emz" = (
@@ -46981,8 +46981,6 @@
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "flp" = (
-/obj/table/auto,
-/obj/machinery/recharger,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -49926,10 +49924,10 @@
 /area/station/engine/power)
 "hRW" = (
 /obj/item/toy/plush/small{
+	desc = "You found a new friend! A faded tag on his foot says \"For Paige\".";
 	layer = 3.1;
-	pixel_y = 4;
 	name = "Paul";
-	desc = "You found a new friend! A faded tag on his foot says \"For Paige\"."
+	pixel_y = 4
 	},
 /obj/stool/chair/comfy,
 /obj/cable{
@@ -51473,7 +51471,6 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/storage/crate,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "jsu" = (
@@ -52206,7 +52203,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "jYd" = (
-/obj/storage/secure/closet/civilian/hydro,
+/obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "jYz" = (
@@ -53129,8 +53126,8 @@
 	},
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Inlet Meter";
-	tag = "Hot Loop Inlet Meter";
-	pixel_x = -12
+	pixel_x = -12;
+	tag = "Hot Loop Inlet Meter"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -53898,6 +53895,10 @@
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
+"lRw" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/grime,
+/area/space)
 "lSg" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/fakeobjects/skeleton/decomposed_corpse{
@@ -54912,8 +54913,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Inlet Meter";
-	tag = "Cold Loop Inlet Meter";
-	pixel_x = 12
+	pixel_x = 12;
+	tag = "Cold Loop Inlet Meter"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -55408,8 +55409,8 @@
 "ntQ" = (
 /obj/machinery/atmospherics/mixer/flipped{
 	dir = 1;
-	id_tag = "engine_combust";
 	frequency = 1225;
+	id_tag = "engine_combust";
 	master_id = "engine_combust_control"
 	},
 /turf/simulated/floor/red,
@@ -55418,8 +55419,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Outlet Meter";
-	tag = "Hot Loop Outlet Meter";
-	pixel_x = -12
+	pixel_x = -12;
+	tag = "Hot Loop Outlet Meter"
 	},
 /obj/cable{
 	d1 = 4;
@@ -61492,14 +61493,13 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "sTC" = (
-/obj/rack,
-/obj/item/storage/toolbox/emergency,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "sUG" = (
@@ -62816,6 +62816,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "ugY" = (
@@ -64850,11 +64851,12 @@
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
 "wfn" = (
-/obj/storage/crate,
-/obj/decal/cleanable/cobweb2,
 /obj/machinery/light/small{
 	dir = 4
 	},
+/obj/table/auto,
+/obj/machinery/recharger,
+/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "wft" = (
@@ -66139,6 +66141,10 @@
 	dir = 6
 	},
 /area/station/medical/medbay/psychiatrist)
+"xla" = (
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/simulated/floor/grime,
+/area/station/storage/hydroponics)
 "xmb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -66604,8 +66610,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/machinery/power/stats_meter{
 	name = "Cold Loop Outlet Meter";
-	tag = "Cold Loop Outlet Meter";
-	pixel_x = 12
+	pixel_x = 12;
+	tag = "Cold Loop Outlet Meter"
 	},
 /obj/cable{
 	d1 = 4;
@@ -66928,7 +66934,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "ybI" = (
-/obj/storage/cart,
+/obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "ycE" = (
@@ -127064,7 +127070,7 @@ auq
 fxZ
 oFJ
 eiP
-jYd
+xla
 fqB
 adC
 aaj
@@ -127669,7 +127675,7 @@ auq
 nVt
 auq
 fqB
-aaG
+lRw
 adC
 adC
 adC

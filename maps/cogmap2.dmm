@@ -4848,8 +4848,8 @@
 "amQ" = (
 /obj/decal/cleanable/cobweb2,
 /obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
+	id = "smiling";
+	pixel_y = 32
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/north)
@@ -8986,6 +8986,9 @@
 /turf/space,
 /area/space)
 "axu" = (
+/obj/storage/crate,
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -10800,8 +10803,8 @@
 	pixel_y = 20
 	},
 /obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
+	id = "smiling";
+	pixel_y = 32
 	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/chapel/sanctuary)
@@ -15999,10 +16002,7 @@
 	},
 /area/shuttle/arrival/station)
 "aOo" = (
-/obj/item/storage/box/beakerbox,
-/obj/storage/crate,
-/obj/item/paper/book/from_file/hydroponicsguide,
-/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -16502,9 +16502,7 @@
 	},
 /area/station/hydroponics/bay)
 "aPB" = (
-/obj/storage/crate,
-/obj/item/bee_egg_carton,
-/obj/item/bee_egg_carton,
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -17064,16 +17062,6 @@
 	},
 /area/station/hydroponics/bay)
 "aQW" = (
-/obj/stool/chair/comfy/blue{
-	desc = "It's all ripped and grimy. Gross.";
-	dir = 4;
-	name = "grody blue chair"
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
-"aQX" = (
 /obj/table/wood/auto,
 /obj/item/device/reagentscanner,
 /obj/item/reagent_containers/glass/bottle/weedkiller,
@@ -17082,7 +17070,7 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"aQY" = (
+"aQX" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/glass/bottle/fruitful,
 /obj/item/reagent_containers/glass/bottle/topcrop,
@@ -17094,17 +17082,17 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"aQZ" = (
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
+"aQY" = (
+/obj/item/storage/box/beakerbox,
 /obj/storage/crate,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
+/obj/item/paper/book/from_file/hydroponicsguide,
+/obj/item/paper/book/from_file/hydroponicsguide,
+/turf/simulated/floor/grass{
+	name = "astroturf"
 	},
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 5
-	},
+/area/station/hydroponics/bay)
+"aQZ" = (
+/obj/fishing_pool/portable,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -58569,10 +58557,10 @@
 /obj/disposalpipe/trunk{
 	dir = 4
 	},
-/obj/machinery/chem_heater{
+/obj/machinery/disposal/small,
+/obj/machinery/chem_heater/chemistry{
 	pixel_y = 5
 	},
-/obj/machinery/disposal/small,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cMB" = (
@@ -60989,7 +60977,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "cSf" = (
-/obj/machinery/chem_heater,
 /obj/item/device/radio/intercom/science,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -60998,6 +60985,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -61035,8 +61023,8 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSk" = (
-/obj/machinery/chem_heater,
 /obj/machinery/light,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSl" = (
@@ -70750,6 +70738,14 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"dDH" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/warp_beacon/catering,
+/turf/space,
+/area/space)
 "dEt" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8
@@ -75137,6 +75133,11 @@
 /obj/machinery/light,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"qNC" = (
+/obj/wingrille_spawn/auto,
+/obj/storage/cart,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "qNE" = (
 /obj/table/reinforced/auto,
 /obj/decal/stripe_delivery,
@@ -75339,6 +75340,16 @@
 	name = "reinforced plating"
 	},
 /area/station/quartermaster/refinery)
+"rqR" = (
+/obj/stool/chair/comfy/blue{
+	desc = "It's all ripped and grimy. Gross.";
+	dir = 4;
+	name = "grody blue chair"
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "rsm" = (
 /obj/lattice{
 	dir = 8;
@@ -75718,6 +75729,21 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/hor)
+"sFE" = (
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "sFU" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /obj/machinery/atmospherics/binary/valve/notify_admins{
@@ -101011,7 +101037,7 @@ aFD
 aHq
 aIU
 azn
-azn
+sFE
 aKt
 aCc
 aKu
@@ -102827,7 +102853,7 @@ axz
 azn
 azn
 azn
-azn
+rqR
 hFn
 aTk
 aXB
@@ -103121,7 +103147,7 @@ azn
 aCd
 aDl
 qlm
-awf
+qNC
 awf
 awf
 qlm
@@ -104001,7 +104027,7 @@ aaa
 aaa
 aaa
 aaa
-adb
+dDH
 adw
 aef
 aeP

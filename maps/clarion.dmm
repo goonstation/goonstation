@@ -17630,7 +17630,6 @@
 	dir = 8
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater,
 /obj/machinery/disposal/mail/small{
 	dir = 4;
 	mail_tag = "chemistry";
@@ -17638,6 +17637,7 @@
 	message = "1";
 	name = "mail chute-'Chemistry'"
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
@@ -17662,10 +17662,10 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_heater,
 /obj/blind_switch/area/east{
 	dir = 4
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -27115,7 +27115,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "fCB" = (
