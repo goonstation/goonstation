@@ -442,10 +442,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = src.y - rand(-5,5)
-			var/targety = src.y - rand(-5,5)
-			var/turf/newtarget = locate(targetx, targety, src.z)
-			shoot_projectile_ST(src, PJ, newtarget)
+			var/targetx = T.y - rand(-5,5)
+			var/targety = T.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, T.z)
+			shoot_projectile_ST(T, PJ, newtarget)
 			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
@@ -563,10 +563,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = src.y - rand(-5,5)
-		var/targety = src.y - rand(-5,5)
-		var/turf/newtarget = locate(targetx, targety, src.z)
-		shoot_projectile_ST(src, burst_circle, newtarget)
+		var/targetx = T.y - rand(-5,5)
+		var/targety = T.y - rand(-5,5)
+		var/turf/newtarget = locate(targetx, targety, T.z)
+		shoot_projectile_ST(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
 
