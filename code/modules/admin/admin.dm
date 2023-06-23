@@ -2448,7 +2448,7 @@ var/global/noir = 0
 								escape_objective = null
 
 							for (var/mob/living/carbon/human/H in mobs)
-								if (isdead(H) || !H.mind || !H.client)
+								if (isdead(H) || !H.mind || !H.key)
 									continue
 
 								H.mind.add_antagonist(antagonist_role_id, do_equip = equip_traitor, do_objectives = FALSE, source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
