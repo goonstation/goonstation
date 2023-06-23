@@ -237,6 +237,15 @@ TYPEINFO(/atom)
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
+
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
 		if (!src.reagents || !A.reagents)

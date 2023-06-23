@@ -153,7 +153,7 @@
 			src.add_fingerprint(user)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the maintenance panel on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the maintenance panel on the [src].</span>")
-			flags ^= OPENCONTAINER
+			src.set_open_container(!src.is_open_container())
 			UpdateIcon()
 		else if(iswrenchingtool(W) && open)
 			src.add_fingerprint(user)

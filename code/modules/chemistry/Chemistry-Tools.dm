@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 			apply_lid(lid, user)
 
 	proc/apply_lid(obj/item/beaker_lid/lid, mob/user) //todo: add a sound?
-		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(FALSE)
 		current_lid = lid
 		user.u_equip(lid)
 		lid.set_loc(src)
@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.UpdateOverlays(src.lid_image, "lid")
 
 	proc/remove_current_lid(mob/user)
-		ADD_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(TRUE)
 		src.current_lid.set_loc(get_turf(src))
 		current_lid = null
 		src.UpdateOverlays(null, "lid")
