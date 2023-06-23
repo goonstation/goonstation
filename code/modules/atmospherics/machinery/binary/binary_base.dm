@@ -11,14 +11,11 @@
 /obj/machinery/atmospherics/binary/New()
 	..()
 	switch(dir)
-		if(NORTH)
+		if(NORTH, SOUTH)
 			initialize_directions = NORTH|SOUTH
-		if(SOUTH)
-			initialize_directions = NORTH|SOUTH
-		if(EAST)
+		if(EAST, WEST)
 			initialize_directions = EAST|WEST
-		if(WEST)
-			initialize_directions = EAST|WEST
+
 	air1 = new /datum/gas_mixture
 	air2 = new /datum/gas_mixture
 
@@ -40,11 +37,9 @@
 		network2 = new_network
 
 	if(src in new_network.normal_members)
-		return 0
+		return FALSE
 
 	new_network.normal_members += src
-
-	return null
 
 /obj/machinery/atmospherics/binary/disposing()
 	// Signal air disposing...
@@ -107,9 +102,8 @@
 		network2.normal_members += src
 		network2.build_network(node2, src)
 
-
 /obj/machinery/atmospherics/binary/return_network(obj/machinery/atmospherics/reference)
-	build_network()
+	src.build_network()
 
 	if(reference==node1)
 		return network1
@@ -123,7 +117,7 @@
 	if(network2 == old_network)
 		network2 = new_network
 
-	return 1
+	return TRUE
 
 /obj/machinery/atmospherics/binary/return_network_air(datum/pipe_network/reference)
 	var/list/results = list()
@@ -139,11 +133,11 @@
 	if(reference==node1)
 		if (network1)
 			network1.dispose()
-			network1 = null
+		network1 = null
 		node1 = null
 
 	else if(reference==node2)
 		if (network2)
 			network2.dispose()
-			network2 = null
+		network2 = null
 		node2 = null
