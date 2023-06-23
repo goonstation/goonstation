@@ -27502,12 +27502,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "erz" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/decal/poster/wallsign/poster_human{
+	pixel_y = 30;
+	pixel_x = 5
 	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
+/turf/simulated/floor/escape{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit)
 "erC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -33966,10 +33968,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
-"jFc" = (
-/obj/item_dispenser/medical_mask,
-/turf/simulated/wall/auto/supernorn,
-/area/station/medical/robotics)
 "jFs" = (
 /obj/stool/chair/office/red{
 	dir = 8;
@@ -47995,9 +47993,14 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "uod" = (
-/obj/decal/poster/wallsign/poster_human,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hallway/secondary/exit)
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/black/side{
+	dir = 4
+	},
+/area/station/medical/robotics)
 "uof" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -70749,7 +70752,7 @@ gIS
 ecb
 lXX
 aNA
-jFc
+aKL
 aPj
 aNb
 aNb
@@ -71358,7 +71361,7 @@ ghh
 leK
 aNh
 aNb
-erz
+aNb
 aNb
 aOw
 gFD
@@ -71658,7 +71661,7 @@ arN
 aKL
 yeP
 oLr
-aPl
+uod
 aNM
 lhR
 aPl
@@ -74947,8 +74950,8 @@ ani
 ani
 aaa
 aaa
-uod
-aqL
+dRI
+erz
 qrB
 fqV
 hSd
