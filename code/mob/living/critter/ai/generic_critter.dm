@@ -134,7 +134,10 @@
 /datum/aiTask/succeedable/critter/range_attack
 	name = "ranged attack subtask"
 	var/has_started = FALSE
+	/// Maximum range to engage the target from
 	var/max_range = 6
+	/// Minimum range from the target before trying to flee
+	var/min_range = 3
 
 /datum/aiTask/succeedable/critter/range_attack/failed()
 	var/mob/living/critter/C = holder.owner
@@ -152,12 +155,12 @@
 	if(!has_started)
 		var/mob/living/critter/C = holder.owner
 		var/mob/T = holder.target
-		if(C && T && BOUNDS_DIST(C, T) > 3)
+		if(C && T && BOUNDS_DIST(C, T) > src.min_range)
 			holder.owner.set_dir(get_dir(C, T))
 			C.critter_attack(T)
 			has_started = TRUE
 		else
-			C.ai.move_away(T, 3)
+			C.ai.move_away(T, src.min_range)
 
 /datum/aiTask/succeedable/critter/range_attack/on_reset()
 	has_started = FALSE
