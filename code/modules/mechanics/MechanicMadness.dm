@@ -19,7 +19,7 @@
 	name="Generic MechComp Housing"
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
-	can_hold=list(/obj/item/mechanics)
+	can_hold=list(/obj/item/mechanics, /obj/item/device/gps)
 	var/list/users = list() // le chumps who have opened the housing
 	deconstruct_flags = DECON_NONE //nope, so much nope.
 	slots=1
