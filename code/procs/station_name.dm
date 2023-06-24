@@ -163,7 +163,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	var/formattedName = ""
 
 	for (var/word in words)
-		if (isnum(text2num(word)))
+		if (isnum(text2num(word)) && "[text2num(word)]" == word)
 			formattedName += "[word] "
 			continue
 
