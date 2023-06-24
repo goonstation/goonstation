@@ -144,7 +144,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 	proc/remove_current_lid(mob/user)
 		src.set_open_container(TRUE)
-		src.current_lid.set_loc(get_turf(src))
+		user.put_in_hand_or_drop(src.current_lid)
 		current_lid = null
 		src.UpdateOverlays(null, "lid")
 
@@ -462,7 +462,7 @@ proc/ui_describe_reagents(atom/A)
 	attack_self(mob/user as mob)
 		if(current_lid)
 			boutput(user, "<span class='notice'>You pop the lid off of the [src].</span>")
-			remove_current_lid()
+			remove_current_lid(user)
 		else if (src.splash_all_contents)
 			boutput(user, "<span class='notice'>You tighten your grip on the [src]. You will now splash in [src.amount_per_transfer_from_this] unit increments.</span>")
 			src.splash_all_contents = 0
@@ -672,3 +672,7 @@ proc/ui_describe_reagents(atom/A)
 	desc = "A one-size fits all beaker lid, capable of an airtight seal on any compatible beaker."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "lid"
+	w_class = W_CLASS_TINY
+
+	attackby(obj/item/reagent_containers/container, mob/user)
+		container.try_to_apply_lid(src, user)

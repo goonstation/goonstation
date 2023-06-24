@@ -336,6 +336,26 @@ datum
 			result_amount = 1
 			reaction_speed = 10
 
+		steam_open_container //you can't hold it in a beaker without a lid
+			name = "Steam Open Container"
+			id = "steam_open_container"
+			result = "water"
+			required_reagents = list("steam" = 1)
+			mix_phrase = "White gas pours out of the [holder.name]."
+			hidden = TRUE
+			result_amount = 1
+
+			does_react(var/datum/reagents/holder)
+				return holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group)
+
+			on_reaction(datum/reagents/holder)
+				var/list/covered = holder.covered_turf()
+				if (covered.len < 5)
+					for(var/turf/t in covered)
+						var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+						smoke.set_up(1, 0, t)
+						smoke.start()
+
 		calomel
 			name = "Calomel"
 			id = "calomel"
