@@ -341,7 +341,7 @@ datum
 			id = "steam_open_container"
 			result = "water"
 			required_reagents = list("steam" = 1)
-			mix_phrase = "White gas pours out of the [holder.name]."
+			mix_phrase = "White gas pours out of the solution."
 			hidden = TRUE
 			result_amount = 1
 
