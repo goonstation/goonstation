@@ -245,7 +245,7 @@
 
 			if ("server_on_hub")
 				config.server_on_hub = text2num(value)
-				world.server_on_hub = config.server_on_hub
+				world.visibility = config.server_on_hub
 
 			if ("medalhub")
 				config.medal_hub = value
