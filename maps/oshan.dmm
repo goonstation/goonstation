@@ -1015,10 +1015,6 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "ack" = (
-/obj/submachine/chef_sink/chem_sink{
-	layer = 3;
-	pixel_y = 8
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	icon_state = "pipe-c"
@@ -3483,10 +3479,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/junction/left/south,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "aiT" = (
@@ -5473,6 +5466,7 @@
 /obj/stool/chair/comfy{
 	dir = 1
 	},
+/obj/disposalpipe/segment,
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "anS" = (
@@ -41183,6 +41177,15 @@
 	name = "organic floor"
 	},
 /area/evilreaver/bridge)
+"esE" = (
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Morgue";
+	req_access_txt = "29"
+	},
+/obj/access_spawn/morgue,
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating/random,
+/area/station/medical/morgue)
 "euS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42390,6 +42393,12 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
+"ioY" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/morgue)
 "iqs" = (
 /obj/lattice,
 /turf/simulated/floor/plating/damaged3,
@@ -42855,6 +42864,15 @@
 /obj/machinery/manufacturer/science,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"jzH" = (
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/green,
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "jBU" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/incandescent/netural,
@@ -44400,6 +44418,12 @@
 	},
 /turf/simulated/floor/bluegreen,
 /area/station/medical/medbay/treatment2)
+"onU" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue,
+/area/station/medical/medbay/psychiatrist)
 "oox" = (
 /obj/machinery/disposal/small{
 	dir = 1;
@@ -44572,6 +44596,9 @@
 	icon_state = "0-2"
 	},
 /obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/obj/disposalpipe/segment{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -45256,6 +45283,13 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
+"rgN" = (
+/obj/machinery/disposal/small/east,
+/obj/disposalpipe/trunk/south,
+/turf/simulated/floor/green,
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "rgY" = (
 /obj/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
@@ -46303,6 +46337,10 @@
 /obj/table/wood/auto/desk{
 	pixel_y = -2
 	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
 "vIJ" = (
@@ -46990,6 +47028,9 @@
 	},
 /obj/item/decoration/flower_vase{
 	pixel_x = -7
+	},
+/obj/disposalpipe/segment{
+	dir = 4
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/psychiatrist)
@@ -90443,7 +90484,7 @@ afW
 agB
 fJW
 ahz
-ahz
+onU
 agG
 cFN
 anP
@@ -91046,8 +91087,8 @@ afA
 afA
 ajG
 acy
-ahB
-ahB
+rgN
+jzH
 ahB
 aiW
 eIy
@@ -93157,7 +93198,7 @@ afp
 afq
 axA
 afM
-agb
+agc
 chD
 acj
 acm
@@ -93459,8 +93500,8 @@ afp
 afq
 axA
 afN
-agc
-chD
+agb
+esE
 ack
 acn
 acn
@@ -94069,7 +94110,7 @@ chD
 chD
 ahm
 ahH
-ahG
+ioY
 ajJ
 akM
 alu
