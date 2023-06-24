@@ -1,4 +1,9 @@
 
+(t)sat jun 24 23
+(u)Amylizzle
+(p)14687
+(e)🪲|C-Bug
+(+)Artifact generators will no longer shoot lighting through walls.
 (t)fri jun 23 23
 (u)Skeletonman0
 (p)14458
