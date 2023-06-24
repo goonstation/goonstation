@@ -339,7 +339,6 @@ datum
 		steam_open_container //you can't hold it in a beaker without a lid
 			name = "Steam Open Container"
 			id = "steam_open_container"
-			result = "water"
 			required_reagents = list("steam" = 1)
 			mix_phrase = "White gas pours out of the solution."
 			hidden = TRUE
