@@ -166,6 +166,8 @@ var/global/datum/speech_manager/SpeechManager = new()
 	var/real_ident = null
 	/// Handle to the atom used for identification - this is not ideal
 	var/atom/ident_speaker = null
+	/// Speaker location format modifier - also not ideal. TODO separate formating and content
+	var/speaker_location_text = null
 
 	/// Create a new message datum with associated metadata, parsing and sanitization.
 	New(var/message as text, var/atom/speaker, var/language_id = "english")
@@ -607,7 +609,7 @@ ABSTRACT_TYPE(/datum/listen_module/input)
 	/// Use this input to format the message appropriately for the channel
 	/// This is where all formatting logic should go unless you're doing something *really* weird
 	proc/format(var/datum/say_message/message)
-		return "[message.speaker] [message.say_verb], \"[message.content]\"" //default behaviour
+		return "[message.speaker] [message.speaker_location_text] [message.say_verb], \"[message.content]\"" //default behaviour
 
 TYPEINFO(/datum/listen_module/modifier)
 	id = "modifier_base"

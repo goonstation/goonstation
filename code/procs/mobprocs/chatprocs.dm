@@ -11,13 +11,7 @@
 	set name = "say"
 	if (!message)
 		return
-	if (src.client && url_regex?.Find(message) && !client.holder)
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
-		return
 	src.say(message)
-	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
-		logTheThing(LOG_SAY, src, "SAY: [html_encode(message)] [log_loc(src)]")
 
 /mob/verb/sa_verb(message as text)
 	set name = "sa"
@@ -36,11 +30,6 @@
 	set name = "say_main_radio"
 	set desc = "Speaking on the main radio frequency"
 	set hidden = 1
-	if (src.capitalize_speech())
-		var/i = 1
-		while (copytext(msg, i, i+1) == " ")
-			i++
-		msg = capitalize(copytext(msg, i))
 	src.say_verb(";" + msg)
 
 /mob/living/say_radio()

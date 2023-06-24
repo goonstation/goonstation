@@ -10,14 +10,57 @@ TYPEINFO(/datum/listen_module/input/ears)
 		//if we have a prefix set and this message doesn't match it
 		if(src.my_prefix != null && message.prefix != src.my_prefix && !(islist(src.my_prefix) && (message.prefix in src.my_prefix)))
 			return null
+
 		//range 0 means it's only audible if it's from inside you (ie radios, direct messages)
 		if(message.heard_range == 0 && (src.parent_tree.parent == message.speaker.loc))
-			. = ..()
-		else if(src.parent_tree.parent in viewers(min(message.heard_range, src.hearing_range), message.speaker)) // view? viewers? hearers?
-			. = ..()
-		else if((message.flags & SAYFLAG_WHISPER) && (src.parent_tree.parent in viewers(src.hearing_range, message.speaker)))
-			message.content = stars(message.content)
-			. = ..()
+			.=..()
+		//first check if it's possible that the turfs the speaker and listener are stood on could have heard eachother
+		if(IN_RANGE(src.parent_tree.parent, message.speaker, src.hearing_range))
+			//if listener and speaker are stood on a turf that is in range, do normal hearing
+			if(isturf(src.parent_tree.parent.loc) && isturf(message.speaker.loc))
+				if(src.parent_tree.parent in viewers(min(message.heard_range, src.hearing_range), message.speaker)) // view? viewers? hearers?
+					.=..()
+				else if((message.flags & SAYFLAG_WHISPER) && (src.parent_tree.parent in viewers(src.hearing_range, message.speaker))) //we didn't quite hear it because it was whispered
+					message.content = stars(message.content)
+					.=..()
+			else
+				//speaker is inside something or listener is, or both.
+				//if it's a whisper, we can only hear it if we're in the same place
+				if((message.flags & SAYFLAG_WHISPER) && (src.parent_tree.parent != message.speaker.loc))
+					return null
+				//get relative muffling between them
+				var/atom/movable/speaker_loc = message.speaker.loc
+				var/relative_thickness = 0
+				var/matched_loc = FALSE
+				var/atom/movable/outermost = null
+				while(!isturf(speaker_loc))
+					outermost = speaker_loc
+					if(speaker_loc == src.parent_tree.parent.loc)
+						matched_loc = TRUE
+						break
+					else
+						relative_thickness += speaker_loc.soundproofing
+						speaker_loc = speaker_loc.loc
+				if(!matched_loc) //we're not in the same box
+					var/atom/movable/hearer_loc = src.parent_tree.parent.loc
+					while(!isturf(hearer_loc))
+						relative_thickness += hearer_loc.soundproofing
+						hearer_loc = hearer_loc.loc
+
+				if(isnull(outermost) || relative_thickness < 0 || matched_loc & relative_thickness == 0)
+					message.speaker_location_text = ""
+				else if (relative_thickness == 0)
+					message.speaker_location_text = "(on [bicon(outermost)] [outermost])"
+				else if (relative_thickness < 10)
+					message.speaker_location_text = "(inside [bicon(outermost)] [outermost])"
+				else if (relative_thickness < 20)
+					message.card_ident = null //muffled voicetype - hacky, use a flag instead
+					message.speaker_location_text = "muffled (inside [bicon(outermost)] [outermost])"
+				else
+					return null //too thick to hear message
+				.=..()
+
+
 
 	format(datum/say_message/message)
 		//because radio messages need to impart a little extra info, but they are heard like any spoken message, we do that formatting here conditionally
