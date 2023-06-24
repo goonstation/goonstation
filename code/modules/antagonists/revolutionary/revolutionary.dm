@@ -3,6 +3,7 @@
 	display_name = "revolutionary"
 	antagonist_icon = "rev"
 	display_at_round_end = FALSE
+	remove_on_death = TRUE
 
 	New()
 		. = ..()

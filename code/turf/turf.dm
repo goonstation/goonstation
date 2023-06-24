@@ -327,7 +327,7 @@ proc/generate_space_color()
 	)
 #endif
 
-/turf/space/update_icon(starlight_alpha=255)
+/turf/space/update_icon(starlight_alpha=255, starlight_color_override=null)
 	..()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
@@ -340,7 +340,7 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = src.color
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
 		UpdateOverlays(starlight, "starlight")
@@ -967,13 +967,6 @@ TYPEINFO(/turf/simulated)
 	fullbright = 0 // cogwerks changed as a lazy fix for newmap- if this causes problems change back to 1
 	stops_space_move = 1
 	text = "<font color=#aaa>."
-
-/turf/unsimulated/floor
-	name = "floor"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-	text = "<font color=#aaa>."
-	plane = PLANE_FLOOR
 
 /turf/unsimulated/wall
 	name = "wall"

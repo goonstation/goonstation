@@ -22,7 +22,7 @@
 	w_class = W_CLASS_BULKY
 
 	/// Please override this in child types to specify what can actually fit in.
-	var/allowed_mob_type = /mob/living/critter/small_animal
+	var/allowed_mob_types = list(/mob/living/critter/small_animal, /mob/living/critter/wraith/plaguerat)
 	/// Time it takes for each action (eg. grabbing, releasing).
 	var/actionbar_duration = 2 SECONDS
 	/// If FALSE, an occupant cannot escape the carrier on their own.
@@ -92,7 +92,7 @@
 		src.UpdateIcon()
 
 		if (src.default_mob_type)
-			if (!ispath(src.default_mob_type, src.allowed_mob_type))
+			if (!src.is_allowed_type(src.default_mob_type))
 				return
 			var/mob/spawned_mob = new src.default_mob_type
 			if (spawned_mob)
@@ -132,7 +132,7 @@
 		if (user.a_intent == INTENT_HARM)
 			return ..()
 		if (istype(M))
-			if (!istype(M,src.allowed_mob_type))
+			if (!src.is_allowed_type(M.type))
 				boutput(user, "<span class='alert'>[M] can't quite fit inside [src]!</span>")
 				return ..()
 			if (src.carrier_max_capacity <= length(src.carrier_occupants))
@@ -183,6 +183,12 @@
 			src.eject_mob(Obj)
 			src.visible_message("<span class='alert'>[Obj] bursts out of [src]!</span>")
 		..()
+
+	proc/is_allowed_type(type)
+		for (var/allowed_type in src.allowed_mob_types)
+			if (ispath(type, allowed_type))
+				return TRUE
+		return FALSE
 
 	/// Called when a given mob/user steals a mob after an actionbar.
 	proc/trap_mob(mob/mob_to_trap, mob/user)
@@ -258,7 +264,7 @@
 /obj/item/pet_carrier/admin_crimes
 	name = "pet carrier (ADMIN CRIMES EDITION)"
 	desc = "A surprisingly roomy carrier for transporting living things. All of them."
-	allowed_mob_type = /mob
+	allowed_mob_types = list(/mob)
 	actionbar_duration = 0
 	can_break_out = FALSE
 	carrier_max_capacity = INFINITY

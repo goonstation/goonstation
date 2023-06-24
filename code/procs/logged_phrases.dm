@@ -106,7 +106,7 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+",
+			@"\bl(:?ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
