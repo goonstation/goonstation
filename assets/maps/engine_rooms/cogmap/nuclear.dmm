@@ -13,6 +13,13 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
+"cg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
 "eF" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8
@@ -35,13 +42,6 @@
 	dir = 6
 	},
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/inner)
-"hP" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "hS" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -66,13 +66,11 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "jt" = (
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
 /area/station/engine/inner)
 "jC" = (
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -96,6 +94,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "mP" = (
@@ -105,7 +104,6 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "nk" = (
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/inner)
 "nx" = (
@@ -168,7 +166,6 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "wF" = (
-/obj/machinery/light/small/floor,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -188,7 +185,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "zw" = (
-/obj/machinery/light/small/floor,
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "AH" = (
@@ -270,6 +267,11 @@
 	can_rupture = 0;
 	dir = 4
 	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"Lh" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Ma" = (
@@ -396,7 +398,7 @@ Ma
 in
 xq
 fi
-Ma
+Lh
 TM
 "}
 (3,1,1) = {"
@@ -405,7 +407,7 @@ AH
 WB
 qO
 qO
-hP
+cg
 qO
 jr
 vv
@@ -492,7 +494,7 @@ TC
 "}
 (10,1,1) = {"
 Kv
-rk
+zw
 KG
 Wj
 in
@@ -500,7 +502,7 @@ qO
 qO
 eF
 qO
-qO
+cg
 nM
 "}
 (11,1,1) = {"

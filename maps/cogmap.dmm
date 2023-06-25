@@ -50505,6 +50505,10 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"iSd" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "iSF" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 10
@@ -50903,9 +50907,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "jkJ" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/decal/stripe_delivery,
 /obj/cable{
 	icon_state = "4-8"
@@ -114850,7 +114851,7 @@ adC
 adC
 adC
 adC
-jxq
+iSd
 bsN
 ekW
 bHu

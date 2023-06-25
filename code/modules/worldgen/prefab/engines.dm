@@ -2,19 +2,18 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 	folder = "engine_rooms"
 
 /datum/mapPrefab/engine_room
+	name = null
 	maxNum = 1
 
 	post_cleanup(turf/target, datum/loadedProperties/props)
 		. = ..()
-		for(var/obj/O in bounds(target.x-1, target.y-1, props.maxX+1, props.maxY+1, target.z))
-			O.initialize()
 		var/comp1type = null
 		var/comp2type = null
 		var/engine_type = filename_from_path(src.prefabPath, strip_extension=TRUE)
 		switch(engine_type)
 			if("none")
-				comp1type = null //type select computer
-				comp2type = null
+				comp1type = /obj/machinery/engine_selector //type select computer
+				comp2type = /obj/landmark/engine_computer/two
 			if("nuclear")
 				comp1type = /obj/machinery/power/nuclear/reactor_control
 				comp2type = /obj/machinery/power/nuclear/turbine_control
@@ -25,16 +24,31 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 				comp1type = /obj/machinery/computer3/generic/engine
 				comp2type = /obj/machinery/computer/power_monitor
 
-		for_by_tcl(comp1, /obj/landmark/engine_computer/one)
-			comp1.replaceWith(comp1type)
-		for_by_tcl(comp2, /obj/landmark/engine_computer/two)
-			comp2.replaceWith(comp2type)
+		for_by_tcl(comp, /obj/landmark/engine_computer)
+			if(istype(comp, /obj/landmark/engine_computer/one))
+				comp.replaceWith(comp1type)
+			else
+				comp.replaceWith(comp2type)
+
+		for(var/obj/O in bounds(target, -1, -1, props.maxX+2, props.maxY+2))
+			O.initialize()
+			if(istype(O, /obj/machinery/atmospherics/pipe))
+				var/obj/machinery/atmospherics/pipe/P = O
+				P.build_network()
+			else if(istype(O, /obj/cable))
+				var/obj/cable/C = O
+				C.update_network()
 
 
 /obj/landmark/engine_room
 	var/size = null
-	icon = 'icons/effects/mapeditor/11x11engine_room.dmi'
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/effects/mapeditor/engine_room.dmi'
 	icon_state = "11x11engine_room"
+#else
+	icon = null
+	icon_state = null
+#endif
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
 	opacity = 1
@@ -49,11 +63,19 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		STOP_TRACKING
 		..()
 
-	proc/apply()
-		var/datum/mapPrefab/engine_room/room_prefab = pick_map_prefab(/datum/mapPrefab/engine_room, list(lowertext(map_settings.name)))
-		if(isnull(room_prefab))
+	proc/apply(var/type_force = "none")
+		var/list/datum/mapPrefab/engine_room/prefab_list = get_map_prefabs(/datum/mapPrefab/engine_room)
+		//filter by map and rename
+		var/list/datum/mapPrefab/engine_room/room_prefabs = list()
+		for(var/name in prefab_list)
+			var/datum/mapPrefab/prefab = prefab_list[name]
+			if(lowertext(map_settings.name) in prefab.tags)
+				prefab.generate_default_name()
+				room_prefabs[prefab.name] = prefab
+		if(isnull(room_prefabs))
 			CRASH("No engine room prefab found for map: " + lowertext(map_settings.name))
-		room_prefab.applyTo(src.loc)
+		var/datum/mapPrefab/engine_room/room_prefab = room_prefabs[type_force] ? room_prefabs[type_force] : pick(room_prefabs)
+		room_prefab.applyTo(src.loc, DMM_OVERWRITE_OBJS)
 		logTheThing(LOG_DEBUG, null, "Applied engine room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
 
@@ -70,6 +92,9 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		..()
 
 	proc/replaceWith(var/type)
+		if(!type)
+			qdel(src)
+			return
 		var/obj/comp = new type(src.loc)
 		comp.initialize()
 		qdel(src)
@@ -79,3 +104,27 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 
 /obj/landmark/engine_computer/two
 	name = "comp2"
+
+/obj/machinery/engine_selector
+	name = "Engine Teleport Request Computer"
+	icon = 'icons/obj/computer.dmi'
+	icon_state = "teleport"
+	desc = "A computer for requesting teleportation and installation of an engine"
+	density = TRUE
+	anchored = ANCHORED
+
+	attack_hand(mob/user)
+		. = ..()
+		var/list/datum/mapPrefab/engine_room/prefab_list = get_map_prefabs(/datum/mapPrefab/engine_room)
+		//filter by map and rename
+		var/list/choices = list()
+		for(var/name in prefab_list)
+			var/datum/mapPrefab/prefab = prefab_list[name]
+			if(lowertext(map_settings.name) in prefab.tags)
+				prefab.generate_default_name()
+				choices += prefab.name
+		var/engine_choice = tgui_input_list(user, "Choose an engine type!", "Engine Selector", choices)
+		new /obj/landmark/engine_computer/one(src.loc) //replace our computer landmark so it can be swapped out
+		for_by_tcl(landmark, /obj/landmark/engine_room)
+			landmark.apply(engine_choice)
+		qdel(src)

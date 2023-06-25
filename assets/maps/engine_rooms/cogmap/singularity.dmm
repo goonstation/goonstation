@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "cp" = (
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "dV" = (
@@ -8,7 +8,11 @@
 	can_rupture = 0;
 	dir = 4
 	},
-/obj/cablespawner,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ed" = (
@@ -20,12 +24,8 @@
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
-/area/station/engine/inner)
-"eZ" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "fi" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -34,7 +34,7 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "gR" = (
@@ -42,7 +42,11 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/cablespawner,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "hc" = (
@@ -67,14 +71,14 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "ix" = (
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "jr" = (
@@ -82,12 +86,12 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "ko" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/inner)
 "lh" = (
@@ -110,14 +114,14 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "mc" = (
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -133,13 +137,13 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ok" = (
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "oy" = (
@@ -149,8 +153,20 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"oE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "oJ" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
@@ -180,6 +196,7 @@
 /area/station/engine/inner)
 "pp" = (
 /obj/machinery/emitter,
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "pO" = (
@@ -201,7 +218,7 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
@@ -210,15 +227,19 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "tn" = (
-/obj/cablespawner,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "tB" = (
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "up" = (
@@ -231,7 +252,7 @@
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "xq" = (
@@ -239,7 +260,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "AI" = (
@@ -252,7 +273,7 @@
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "CR" = (
@@ -260,6 +281,7 @@
 /obj/machinery/emitter{
 	dir = 8
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "CY" = (
@@ -272,11 +294,12 @@
 /obj/machinery/emitter{
 	dir = 4
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "GR" = (
 /obj/cablespawner,
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "Ig" = (
@@ -288,6 +311,7 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
+/obj/machinery/light,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Lj" = (
@@ -297,7 +321,7 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "Ma" = (
@@ -309,7 +333,7 @@
 /area/station/engine/inner)
 "Mf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "Mp" = (
@@ -319,7 +343,7 @@
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "PX" = (
@@ -362,7 +386,7 @@
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "Vp" = (
@@ -372,8 +396,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "WQ" = (
-/obj/wingrille_spawn/reinforced_crystal/full,
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -386,13 +409,16 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "YC" = (
 /obj/machinery/power/collector_control,
 /obj/machinery/power/data_terminal,
 /obj/cable/brown,
+/obj/machinery/light{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "YG" = (
@@ -406,7 +432,7 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 
@@ -441,7 +467,7 @@ cp
 pp
 qy
 Mp
-eZ
+Mp
 Mp
 ed
 CR
@@ -459,7 +485,7 @@ Mp
 AI
 Rp
 eR
-dV
+oE
 Ig
 "}
 (5,1,1) = {"
@@ -519,7 +545,7 @@ sP
 pp
 qy
 Mp
-eZ
+Mp
 Mp
 qy
 GB

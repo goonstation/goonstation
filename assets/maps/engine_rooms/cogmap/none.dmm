@@ -11,7 +11,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "fi" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/plating,
@@ -50,6 +50,11 @@
 "ko" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/plating,
+/area/station/engine/inner)
+"kI" = (
+/obj/machinery/light/small/floor,
+/obj/landmark/engine_room,
+/turf/simulated/floor/grey,
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
@@ -123,6 +128,10 @@
 "qR" = (
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
+"tf" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
 "tn" = (
 /obj/cable/brown{
 	icon_state = "1-8"
@@ -153,7 +162,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "AQ" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
@@ -165,9 +174,14 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "EA" = (
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
+/area/station/engine/inner)
+"FL" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grey,
 /area/station/engine/inner)
 "GB" = (
 /turf/simulated/floor/plating,
@@ -219,7 +233,7 @@ GB
 nx
 GB
 qR
-nk
+kI
 "}
 (2,1,1) = {"
 GB
@@ -265,9 +279,9 @@ GB
 GB
 OJ
 ed
+tf
 GB
-GB
-GB
+tf
 GB
 GB
 xq
@@ -291,9 +305,9 @@ hV
 qy
 GB
 GB
+tf
 GB
-GB
-GB
+tf
 ok
 ix
 mc
@@ -349,5 +363,5 @@ GB
 PX
 GB
 qR
-nk
+FL
 "}
