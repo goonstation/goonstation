@@ -346,10 +346,6 @@
 "aaI" = (
 /turf/simulated/floor/plating/airless,
 /area/space)
-"aaJ" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/wall/auto/reinforced/gannets,
-/area/station/science/lab)
 "aaK" = (
 /obj/machinery/atmospherics/pipe/tank{
 	icon_state = "intact";
@@ -1124,12 +1120,6 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
-/turf/simulated/floor/shuttlebay{
-	name = "test chamber plating"
-	},
-/area/station/science/testchamber)
-"abZ" = (
-/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/shuttlebay{
 	name = "test chamber plating"
 	},
@@ -1960,10 +1950,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
-"adA" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/grime,
-/area/station/science/lab)
 "adB" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -2114,31 +2100,12 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/science/lab)
-"adN" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/station/science/lab)
 "adO" = (
 /obj/machinery/light/small{
 	dir = 1
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
-"adP" = (
-/obj/cable{
-	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
-	},
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
-/area/station/science/lab)
 "adQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2281,10 +2248,6 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grime,
-/area/station/science/lab)
-"aec" = (
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/caution/east,
 /area/station/science/lab)
 "aed" = (
 /turf/simulated/floor/white,
@@ -2555,13 +2518,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/engine/core)
-"aeD" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/atmospherics/binary/valve,
-/turf/simulated/floor/grime,
-/area/station/science/lab)
 "aeE" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -2991,12 +2947,6 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
-"afp" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "afq" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -7021,13 +6971,6 @@
 	dir = 2
 	},
 /area/station/hallway/secondary/entry)
-"amw" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "amx" = (
 /turf/space,
 /area/shuttle/merchant_shuttle/left_station/cogmap)
@@ -14977,13 +14920,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
-"aDq" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop bypass outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aDr" = (
 /obj/machinery/mass_driver{
 	dir = 8;
@@ -16326,13 +16262,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aGx" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "cold loop bypass inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aGy" = (
 /obj/fitness/weightlifter,
 /turf/simulated/floor/wood,
@@ -16773,12 +16702,6 @@
 "aHu" = (
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/solar/west)
-"aHv" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "mixing valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aHw" = (
 /obj/machinery/light{
 	dir = 1;
@@ -17030,12 +16953,6 @@
 /obj/machinery/secscanner,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
-"aHZ" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop pressure release valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aIb" = (
 /obj/cable{
 	d1 = 1;
@@ -17635,19 +17552,6 @@
 	icon_state = "engine_caution_east"
 	},
 /area/station/mining/refinery)
-"aJs" = (
-/obj/machinery/light/small{
-	icon_state = "bulb1";
-	dir = 8
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot loop inlet west"
-	},
-/obj/cable{
-	icon_state = "2-5"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aJt" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -17666,12 +17570,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aJv" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot loop inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aJw" = (
 /obj/cable{
 	d1 = 1;
@@ -17680,15 +17578,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
-"aJx" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop inlet valve"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aJy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -18777,18 +18666,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"aLI" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot loop outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"aLJ" = (
-/obj/machinery/atmospherics/binary/valve{
-	name = "cold loop outlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aLK" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -19342,13 +19219,6 @@
 	name = "autoname - SS13";
 	network = "SS13";
 	tag = ""
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
-"aMO" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "hot loop outlet west"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -20132,13 +20002,6 @@
 	intact = 0
 	},
 /area/station/solar/south)
-"aOn" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "combustion chamber inlet valve"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "aOo" = (
 /obj/overlay{
 	anchored = 1;
@@ -20443,14 +20306,6 @@
 	target_pressure = 1000
 	},
 /turf/simulated/wall/r_wall,
-/area/station/engine/core)
-"aOQ" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4;
-	name = "combustion chamber inlet valve"
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/engine,
 /area/station/engine/core)
 "aOR" = (
 /obj/lattice{
@@ -30834,28 +30689,6 @@
 	dir = 10
 	},
 /area/station/crew_quarters/heads)
-"biO" = (
-/obj/table/wood/auto,
-/obj/item/spacecash,
-/obj/item/coin{
-	pixel_x = 4;
-	pixel_y = 11
-	},
-/obj/item/coin{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	icon_state = "camera";
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/carpet{
-	icon_state = "fgreen2";
-	dir = 2
-	},
-/area/station/crew_quarters/heads)
 "biP" = (
 /obj/table/wood/auto,
 /obj/item/clipboard,
@@ -32260,12 +32093,6 @@
 "blC" = (
 /turf/simulated/wall/auto/gannets,
 /area/station/hallway/secondary/exit)
-"blD" = (
-/obj/machinery/atmospherics/binary/valve{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast)
 "blE" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9;
@@ -34221,20 +34048,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bqq" = (
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/machinery/atmospherics/binary/valve{
-	name = "hot loop pressure release valve"
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core)
 "bqs" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -34243,6 +34056,54 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"eIz" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop pressure release valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"fAx" = (
+/obj/table/wood/auto,
+/obj/item/currency/spacecash,
+/obj/item/coin{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/coin{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	icon_state = "camera";
+	name = "autoname - SS13"
+	},
+/turf/simulated/floor/carpet{
+	icon_state = "fgreen2";
+	dir = 2
+	},
+/area/station/crew_quarters/heads)
+"fKU" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop outlet west"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"gGv" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop bypass inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"gHJ" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/shuttlebay{
+	name = "test chamber plating"
+	},
+/area/station/science/testchamber)
 "ijs" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -34287,6 +34148,35 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"kod" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "combustion chamber inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"kpg" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop inlet valve"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"lbK" = (
+/obj/machinery/light/small{
+	icon_state = "bulb1";
+	dir = 8
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop inlet west"
+	},
+/obj/cable{
+	icon_state = "2-5"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "ldl" = (
 /obj/table/auto,
 /obj/machinery/power/apc{
@@ -34311,6 +34201,40 @@
 	dir = 2
 	},
 /area/station/medical/head)
+"lLC" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"mcc" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop pressure release valve"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"mCI" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
+"mVG" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "combustion chamber inlet valve"
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "nOn" = (
 /obj/machinery/lawrack,
 /obj/cable{
@@ -34319,6 +34243,39 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/turret_protected/ai_upload)
+"nOT" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop inlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"nWx" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"pKR" = (
+/obj/cable{
+	icon_state = "2-8";
+	d1 = 2;
+	d2 = 8
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"qoF" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "cold loop outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"qQx" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "mixing valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "rAI" = (
 /obj/storage/crate/rcd/CE,
 /obj/machinery/light{
@@ -34329,6 +34286,13 @@
 	dir = 9
 	},
 /area/station/engine/engineering/ce)
+"sHP" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop bypass outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "teZ" = (
 /obj/item/device/radio/intercom{
 	dir = 1;
@@ -34360,6 +34324,13 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai_upload)
+"ufn" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 "vdr" = (
 /obj/table/auto,
 /obj/item/storage/photo_album{
@@ -34378,6 +34349,35 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"vRs" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"wcW" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/station/science/lab)
+"wRx" = (
+/obj/machinery/atmospherics/binary/valve,
+/turf/simulated/floor/caution/east,
+/area/station/science/lab)
+"xhn" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/science/lab)
+"xZJ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "hot loop outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
 
 (1,1,1) = {"
 aaa
@@ -68092,7 +68092,7 @@ bjC
 bgn
 bhk
 bic
-biO
+fAx
 bll
 bjS
 bpB
@@ -75345,7 +75345,7 @@ blC
 blC
 blC
 blC
-blD
+mCI
 bdI
 bmr
 bmA
@@ -88295,7 +88295,7 @@ aex
 aHf
 aHf
 aID
-aJs
+lbK
 aKH
 aLH
 aMN
@@ -88595,12 +88595,12 @@ aEI
 aem
 bqj
 bqp
-bqq
+mcc
 aIE
 aJt
 aJt
 aGu
-aMO
+fKU
 aIJ
 aNy
 aOO
@@ -89201,9 +89201,9 @@ aFU
 aeC
 aHQ
 aIG
-aJv
+lLC
 aKJ
-aLI
+xZJ
 aMQ
 aFU
 aON
@@ -89508,8 +89508,8 @@ aKK
 aFU
 aFU
 aNE
-aOn
-aOQ
+kod
+mVG
 aHf
 amE
 aQM
@@ -89805,11 +89805,11 @@ aIP
 aHh
 aHS
 aII
-aJx
+kpg
 aKL
-aLJ
+qoF
 aMR
-amw
+ufn
 aGw
 aGw
 aHf
@@ -90409,13 +90409,13 @@ aaZ
 aHi
 aFp
 aym
-afp
+nOT
 amt
 aMT
 aym
 asl
 aHT
-aHZ
+eIz
 aJq
 amE
 aQM
@@ -90710,13 +90710,13 @@ aaa
 aaa
 aHi
 aFp
-aDq
+sHP
 aFS
 akO
 aFS
-aGx
+gGv
 aGt
-aHv
+qQx
 aIo
 aeC
 aaa
@@ -103626,7 +103626,7 @@ acp
 aaa
 add
 aaM
-adA
+nWx
 aaU
 aXq
 bpS
@@ -103926,7 +103926,7 @@ aaa
 aaa
 aaa
 aaH
-aaJ
+wcW
 aaN
 ale
 ale
@@ -104230,7 +104230,7 @@ add
 add
 add
 aaQ
-adA
+nWx
 aaV
 aax
 adY
@@ -104532,7 +104532,7 @@ add
 adp
 adz
 aeo
-aeD
+vRs
 aav
 aay
 aaB
@@ -104835,7 +104835,7 @@ ady
 adD
 adL
 aen
-adA
+nWx
 aaz
 aaC
 aaE
@@ -105135,7 +105135,7 @@ ade
 add
 adq
 ale
-adP
+pKR
 aeb
 aJw
 aHc
@@ -105438,7 +105438,7 @@ add
 add
 add
 adM
-aec
+wRx
 aep
 adR
 add
@@ -105739,7 +105739,7 @@ adg
 adl
 ads
 adB
-adN
+xhn
 aed
 aeq
 aeF
@@ -106019,7 +106019,7 @@ abE
 abE
 abO
 abU
-abZ
+gHJ
 aak
 abh
 acg

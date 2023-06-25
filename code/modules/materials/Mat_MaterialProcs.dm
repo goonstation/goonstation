@@ -565,12 +565,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				return
 			lastTrigger = world.time
 			var/mob/mobenter = entering
+			logTheThing(LOG_COMBAT, mobenter, "soulsteel-possesses [owner] at [log_loc(owner)].")
 			if(mobenter.client)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
 				OB.canspeak = 0
 				OB.show_antag_popup("soulsteel")
+
 		return
 
 /datum/materialProc/reflective_onbullet

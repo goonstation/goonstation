@@ -55,7 +55,7 @@ THROWING DARTS
 		. = ..()
 
 	proc/can_implant(mob/target, mob/user)
-		return 1
+		return !istype(target, /mob/living/critter/robotic)
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
@@ -740,7 +740,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	var/custom_orders = null // ex: kill the captain, dance constantly, don't speak, etc
 
 	can_implant(var/mob/living/carbon/human/target, var/mob/user)
-		if (!istype(target))
+		if (!..() || !istype(target))
 			return FALSE
 		if (!implant_hacker)
 			if (ismob(user))
