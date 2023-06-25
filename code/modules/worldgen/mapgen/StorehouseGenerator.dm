@@ -52,7 +52,9 @@
 				if(cell_grid[i][j] == DOOR)
 					if(cell_grid[i-1][j] && cell_grid[i+1][j] && cell_grid[i][j-1] && cell_grid[i][j+1])
 						cell_grid[i][j] = FLOOR
-				else if(is_wall(i,j))
+					else
+						continue
+				if(is_wall(i,j))
 					cell_grid[i][j] = WALL
 
 
