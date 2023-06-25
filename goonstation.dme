@@ -1470,6 +1470,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\mapgen\JungleGenerator.dm"
 #include "code\modules\worldgen\mapgen\MarsGenerator.dm"
 #include "code\modules\worldgen\mapgen\SnowGenerator.dm"
+#include "code\modules\worldgen\mapgen\StorehouseGenerator.dm"
 #include "code\modules\worldgen\mapgen\biomes\_biome.dm"
 #include "code\modules\worldgen\mapgen\biomes\VoidGenerator.dm"
 #include "code\modules\worldgen\prefab\allocated.dm"
