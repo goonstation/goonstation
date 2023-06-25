@@ -40,6 +40,8 @@ ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
 	var/issawfly = FALSE //for sawfly remote
+	///damage when loaded into a 40mm convesion chamber
+	var/launcher_damage = 25
 
 	attack_self(mob/user as mob)
 		if (!src.armed)
@@ -148,18 +150,21 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "banana"
 	icon_state_armed = "banana1"
 	payload = /obj/item/bananapeel
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/cheese_sandwich
 	name = "cheese sandwich grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/banana_corndog
 	name = "banana corndog grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/wasp
 	name = "suspicious looking grenade"
@@ -437,10 +442,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = src.y - rand(-5,5)
-			var/targety = src.y - rand(-5,5)
-			var/turf/newtarget = locate(targetx, targety, src.z)
-			shoot_projectile_ST(src, PJ, newtarget)
+			var/targetx = T.y - rand(-5,5)
+			var/targety = T.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, T.z)
+			shoot_projectile_ST(T, PJ, newtarget)
 			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
@@ -454,6 +459,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
+	launcher_damage = 30
 
 	New()
 		..()
@@ -472,6 +478,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	item_state = "fragnade"
 	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
+	launcher_damage = 30
 
 	detonate()
 		var/turf/T = ..()
@@ -544,6 +551,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	icon_state_armed = "foam-dart1"
 	var/custom_projectile_type = /datum/projectile/bullet/foamdart/biodegradable
 	var/pellets_to_fire = 18
+	launcher_damage = 5
 
 	detonate()
 		var/turf/T = ..()
@@ -555,10 +563,10 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			burst_circle.spread_projectile_type = src.custom_projectile_type
 			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
 		burst_circle.pellets_to_fire = src.pellets_to_fire
-		var/targetx = src.y - rand(-5,5)
-		var/targety = src.y - rand(-5,5)
-		var/turf/newtarget = locate(targetx, targety, src.z)
-		shoot_projectile_ST(src, burst_circle, newtarget)
+		var/targetx = T.y - rand(-5,5)
+		var/targety = T.y - rand(-5,5)
+		var/turf/newtarget = locate(targetx, targety, T.z)
+		shoot_projectile_ST(T, burst_circle, newtarget)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
 
@@ -616,6 +624,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
+	launcher_damage = 20
 
 	detonate()
 		var/turf/simulated/T = ..()
@@ -686,6 +695,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
+	launcher_damage = 10
 
 	detonate()
 		var/turf/T = ..()
@@ -1477,6 +1487,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
 	material_amt = 0.3
+	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product

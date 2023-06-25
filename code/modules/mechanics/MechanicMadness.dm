@@ -494,12 +494,12 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
-	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
-		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(level == 2 || (istype(over_object, /obj/item/mechanics) && over_object.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
-			return ..()
+			return
 
-		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT, over_object, usr)
 		return
 
 	proc/componentSay(var/string)
@@ -615,7 +615,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
-		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+		if (istype(W, /obj/item/currency/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
 			current_buffer += W.amount
 			if (src.price <= 0)
@@ -626,7 +626,7 @@
 
 				if (current_buffer > price)
 					componentSay("Here is your change!")
-					var/obj/item/spacecash/C = new /obj/item/spacecash(user.loc, current_buffer - price)
+					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, current_buffer - price)
 					user.put_in_hand_or_drop(C)
 
 				collected += price
@@ -645,7 +645,7 @@
 
 	proc/ejectmoney()
 		if (collected)
-			var/obj/item/spacecash/S = new /obj/item/spacecash
+			var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 			S.setup(get_turf(src), collected)
 			collected = 0
 			tooltip_rebuild = 1
@@ -4129,6 +4129,89 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
 
+/obj/item/mechanics/textmanip
+	name = "Text manipulation component"
+	desc = "Allows for controlling text you send in."
+	icon_state = "comp_text"
+
+	/// do we enforce lowercase(false)/uppercase(true) or leave it as is
+	var/uppertext_mode = null
+	/// do we limit the length of the output
+	var/text_limit = null
+	/// do we trim whitespace from the ends of the output
+	var/trim_text = FALSE
+	/// do we capitalize the first letter of the output
+	var/cap_first = FALSE
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle UPPERCASE/lowercase",PROC_REF(setCapsMode))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Length Limit on Text",PROC_REF(setTextLimit))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle Whitespace Trimming",PROC_REF(setTrimming))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle Capitalizing First Letter",PROC_REF(setFirstCap))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Input", PROC_REF(parseText))
+
+	get_desc()
+		var/upp = "Disabled"
+		if (src.uppertext_mode != null)
+			upp = src.uppertext_mode ? "UPPERCASE" : "lowercase"
+		. += "<br><span class='notice'>Uppercase/Lowercase output: [upp]</span>"
+
+		. += "<br><span class='notice'>Text length limit: [src.text_limit ? "[src.text_limit] characters" : "Disabled"]</span>"
+		. += "<br><span class='notice'>Trim whitespace: [src.trim_text ? "Enabled" : "Disabled"]</span>"
+		. += "<br><span class='notice'>First letter capitalized: [src.cap_first ? "Enabled" : "Disabled"]</span>"
+
+	proc/setCapsMode(var/datum/mechanicsMessage/input, mob/user)
+		if (src.uppertext_mode == null)
+			boutput(user, "Now forcing output text to be lowercase")
+			src.uppertext_mode = FALSE
+		else if (src.uppertext_mode == FALSE)
+			boutput(user, "Now forcing output text to be uppercase")
+			src.uppertext_mode = TRUE
+		else if (src.uppertext_mode == TRUE)
+			boutput(user, "Uppercase/lowercase output disabled")
+			src.uppertext_mode = null
+
+	proc/setTextLimit(var/datum/mechanicsMessage/input, mob/user)
+		var/num = input(user, "Number of Characters allowed in text (leave blank to disable)", "Text length limit") as num|null
+		if (num != null)
+			src.text_limit = num
+			boutput(user, "Now limiting text to [num] characters")
+		else
+			src.text_limit = null
+			boutput(user, "Text limit removed")
+
+	proc/setTrimming(var/datum/mechanicsMessage/input, mob/user)
+		src.trim_text = !src.trim_text
+		if (src.trim_text)
+			boutput(user, "Now trimming whitespace from the ends of output text")
+		else
+			boutput(user, "Text whitespace trimming is now disabled")
+
+	proc/setFirstCap(var/datum/mechanicsMessage/input, mob/user)
+		src.cap_first = !src.cap_first
+		if (src.cap_first)
+			boutput(user, "Now Capitalizing first letter of text")
+		else
+			boutput(user, "First Letter Capitalization is now disabled")
+
+	proc/parseText(var/datum/mechanicsMessage/input)
+		var/text = input.signal
+
+		if (src.cap_first)
+			text = uppertext(copytext_char(text,1,2)) + copytext_char(text,2)
+		if (src.uppertext_mode != null)
+			text = src.uppertext_mode ? uppertext(text) : lowertext(text)
+		if (src.text_limit)
+			text = copytext_char(text,1,src.text_limit+1)
+		if (src.trim_text)
+			text = trim(text)
+
+		if (!length(text) || src.text_limit == 0)
+			return
+
+		input.signal = text
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 
 
 /obj/item/mechanics/bomb

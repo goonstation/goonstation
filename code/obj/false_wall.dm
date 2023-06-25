@@ -165,6 +165,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
 			//actually do the opening things
 			src.set_density(0)
+			src.flags &= ~ALWAYS_SOLID_FLUID
 			src.gas_impermeable = 0
 			src.pathable = 1
 			src.update_air_properties()
@@ -172,8 +173,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			if(!floorintact)
 				src.setIntact(FALSE)
 				src.levelupdate()
-			if(checkForMultipleDoors())
-				update_nearby_tiles()
+			update_nearby_tiles()
 			src.operating = 0
 		return 1
 
@@ -184,6 +184,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		src.name = src.material ? "[src.material.name] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
+		src.flags |= ALWAYS_SOLID_FLUID
 		src.gas_impermeable = 1
 		src.pathable = 0
 		src.update_air_properties()
