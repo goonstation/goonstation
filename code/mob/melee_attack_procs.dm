@@ -23,8 +23,11 @@
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
+		else if (ishuman(M))
 			src.administer_CPR(M)
+		else
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)

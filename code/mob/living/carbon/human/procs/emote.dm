@@ -815,7 +815,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","noncontagiousyawn","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -829,12 +829,15 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "noncontagiousyawn")
+						message = "<B>[src]</B> yawns."
+						maptext_out = "<I>yawns</I>"
 					else if (act == "yawn")
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
 						for (var/mob/living/carbon/C in view(5,get_turf(src)))
 							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
-								C.emote("yawn")
+								C.emote("noncontagiousyawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
