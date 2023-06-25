@@ -494,12 +494,12 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
-	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
-		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(level == 2 || (istype(over_object, /obj/item/mechanics) && over_object.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
-			return ..()
+			return
 
-		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT, over_object, usr)
 		return
 
 	proc/componentSay(var/string)
