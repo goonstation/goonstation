@@ -41182,7 +41182,7 @@
 	name = "Morgue";
 	req_access_txt = "29"
 	},
-/obj/access_spawn/morgue,
+/obj/access_spawn/robotics,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/medical/morgue)
