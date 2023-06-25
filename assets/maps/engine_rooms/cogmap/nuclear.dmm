@@ -5,6 +5,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
+"ca" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/inner)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -87,7 +93,6 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
-/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "mP" = (
@@ -134,6 +139,9 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
+"qf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/inner)
 "qO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -146,6 +154,10 @@
 /area/station/engine/inner)
 "rk" = (
 /turf/simulated/floor/engine,
+/area/station/engine/inner)
+"rs" = (
+/obj/decal/poster/wallsign/accident_sign,
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/inner)
 "tS" = (
 /obj/cable/brown{
@@ -242,6 +254,12 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
+/area/station/engine/inner)
+"CX" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "De" = (
 /turf/simulated/floor/engine/caution/east,
@@ -399,7 +417,7 @@ qR
 nk
 "}
 (2,1,1) = {"
-Kv
+rs
 mt
 in
 Wj
@@ -412,7 +430,7 @@ Lh
 TM
 "}
 (3,1,1) = {"
-Kv
+ca
 AH
 WB
 qO
@@ -490,7 +508,7 @@ rk
 MU
 "}
 (9,1,1) = {"
-Kv
+CX
 rk
 HS
 HF
@@ -503,8 +521,8 @@ rk
 TC
 "}
 (10,1,1) = {"
-Kv
-zw
+qf
+rk
 KG
 Wj
 in

@@ -44535,6 +44535,10 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -51219,13 +51223,6 @@
 	},
 /turf/simulated/floor/stairs/wood/wide,
 /area/station/medical/staff)
-"jxq" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
-/obj/decal/stripe_delivery,
-/turf/simulated/floor/grey,
-/area/station/engine/inner)
 "jxO" = (
 /obj/table/auto,
 /obj/machinery/glass_recycler,
@@ -51491,6 +51488,13 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
+"jJy" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "jJT" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 4
@@ -56291,6 +56295,11 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "oQP" = (
@@ -59198,6 +59207,16 @@
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"rBk" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable/black{
+	icon_state = "4-8"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
 "rBL" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
@@ -63312,9 +63331,6 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "vks" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -64902,6 +64918,13 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/atmosphere/pumpcontrol,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -113641,7 +113664,7 @@ qzc
 bqp
 bsN
 vks
-cKO
+jJy
 adC
 adC
 adC
@@ -114848,8 +114871,8 @@ lsA
 bGe
 bqp
 bsN
-jxq
-tAw
+iSd
+rBk
 adC
 adC
 adC

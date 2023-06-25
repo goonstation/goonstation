@@ -123,6 +123,8 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			var/datum/mapPrefab/prefab = prefab_list[name]
 			if(lowertext(map_settings.name) in prefab.tags)
 				prefab.generate_default_name()
+				if(prefab.name == "none")
+					continue
 				choices += prefab.name
 		var/engine_choice = tgui_input_list(user, "Choose an engine type!", "Engine Selector", choices)
 		new /obj/landmark/engine_computer/one(src.loc) //replace our computer landmark so it can be swapped out
