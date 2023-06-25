@@ -25,10 +25,14 @@ TYPEINFO(/obj/machinery/conveyor) {
 	var/operating = CONVEYOR_STOPPED
 	/// true if can operate (no broken segments in this belt run)
 	var/operable = TRUE
+	/// Direction for objects going into the conveyor.
 	var/dir_in = NORTH
+	/// Direction for objects going out of the conveyor.
 	var/dir_out = SOUTH
 	var/currentdir = SOUTH
+	/// Determines whether the conveyor can be modified and deconstructed. (Whether the cover is open.)
 	var/deconstructable = FALSE
+	/// Determines whether the conveyor can have it's cover open, that is, whether it can be deconstructable at all.
 	var/protected = FALSE
 	/// the control ID, what the conveyor switch refers to when looking for new conveyors at world init.
 	var/id = ""
@@ -178,6 +182,17 @@ TYPEINFO(/obj/machinery/conveyor) {
 	id = "carousel"
 	move_lag = 5.5
 	operating = 1
+
+/obj/machinery/conveyor/get_help_message(dist, mob/user)
+	if (src.deconstructable)
+		return {"To change the conveyor belt directions, you must use a <b>crowbar</b> or any other prying item.
+		Click-drag anything into the conveyor belt, and the direction into it will change to that direction.
+		Click-drag the conveyor belt to anything, and the direction out of it will change to that direction.
+		Click-drag a conveyor belt to another to automatically assign each one's direction.
+		To change the conveyor belt's direction, link it to a conveyor belt switch through a <b>mulitool</b> by click-dragging one to another.
+		To close the conveyor belt's cover and make it operational again, simply use a <b>screwdriver</b> on it."}
+	else
+		return "To open the conveyor belt's cover and make any changes to it, use a <b>screwdriver</b> on it. For more instructions on it, see the help message with it's cover open."
 
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
@@ -331,6 +346,10 @@ TYPEINFO(/obj/machinery/conveyor) {
 	else if (operating == CONVEYOR_REVERSE)
 		new_icon += dir_out_char + dir_in_char
 
+	if (src.deconstructable)
+		src.icon_state = new_icon + "-map"
+		return
+
 	if (operating == CONVEYOR_STOPPED || (status & NOPOWER))
 		new_icon += "-still"
 	else
@@ -443,7 +462,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		if (dir_target_atom in ordinal) // Sanitize the direction we want to pick. We just want to have no diagonals, since it isn't supported by conveyor belts at the time of this commit.
 			dir_target_atom &= (WEST | EAST) // Roughly translates to "dir_target_atom is itself but only east or west direction"
 
-		if (dir_target_atom == src.dir_out) // Swap directions if the player is trying to set the same direction to both directions.
+		if (dir_target_atom == src.dir_in) // Swap directions if the player is trying to set the same direction to both directions.
 			src.dir_in = dir_out
 		src.dir_out = dir_target_atom
 		src.update()
@@ -536,9 +555,9 @@ TYPEINFO(/obj/machinery/conveyor) {
 		if (ON_COOLDOWN(user, "conveyor_belt_cover", 1 SECOND))
 			return
 
-		var/actionbar_duration = 5 SECONDS
+		var/actionbar_duration = 2 SECONDS
 		if (user.traitHolder.getTrait("training_engineer"))
-			actionbar_duration = 2 SECONDS
+			actionbar_duration = 0.5 SECONDS
 
 		user.show_text("You start [src.deconstructable ? "" : "un-"]screwing \the [src]'s cover.")
 		SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, PROC_REF(toggle_deconstructability), list(user), src.icon, src.icon_state, null, null)
@@ -578,7 +597,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			var/obj/machinery/conveyor_switch/connected_switch = src.linked_switches[1]
 			src.operating = connected_switch.position
 			src.setdir()
-
+		src.update()
 		return 1
 
 	else
@@ -588,7 +607,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		if (length(src.linked_switches))
 			src.operating = CONVEYOR_STOPPED
 			src.setdir()
-
+		src.update()
 		return 1
 
 /obj/machinery/conveyor/attack_hand(mob/user)
