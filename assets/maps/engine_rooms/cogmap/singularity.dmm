@@ -34,12 +34,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "fi" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
-	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
@@ -272,10 +272,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "AQ" = (
-/obj/machinery/atmospherics/pipe/manifold{
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "Bk" = (
