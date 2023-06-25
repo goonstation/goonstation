@@ -3454,7 +3454,7 @@ datum
 			result_amount = 1
 			instant = 0 // bacteria needs some time to grow in this medium
 			reaction_speed = 0.25
-			mix_phrase = "An unbearable stench emancipates from the mixture as slowly coagulates."
+			mix_phrase = "An unbearable stench emancipates from the mixture as it slowly coagulates."
 			mix_sound = 'sound/misc/fuse.ogg'
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
