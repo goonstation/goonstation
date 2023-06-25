@@ -3449,22 +3449,41 @@ datum
 			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
-		ecoli // needed for filgrastim vOv
-			name = "E.Coli Bacteria"
-			id = "e.coli"
+		ecoli // hobo-chem recipe to disconnect E.Coli from pathology chems
+			name = "contaminated food E.Coli"
+			id = "contaminated food E.Coli"
 			result = "e.coli"
-			required_reagents = list("poo" = 1, "bacterialmedium" = 1)
+			required_reagents = list("sewage" = 5, "cholesterol" = 4)
 			result_amount = 1
+			instant = 0 // bacteria needs some time to grow in this medium
+			reaction_speed = 0.25
+			mix_phrase = "An unbearable stench emancipates from the mixture as slowly coagulates."
+			mix_sound = 'sound/misc/fuse.ogg'
 
-		catdrugs
-			name = "Cat Drugs"
-			id = "catdrugs"
-			result = "catdrugs"
-			required_temperature = T0C + 100
-			result_amount = 3
-			required_reagents = list("catonium" = 1, "psilocybin" = 1, "ammonia" = 1, "fuel" = 1)
-			mix_phrase = "The mixture hisses oddly."
-			mix_sound = 'sound/voice/animal/cat_hiss.ogg'
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				// sewage is a catalyst and does not get used in the process
+				holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature)
+				// Byproduct is some nutrients from the decomposted egg and some bacterials toxins
+				holder.add_reagent("poo", created_volume * 2,,holder.total_temperature)
+				holder.add_reagent("toxin", created_volume,,holder.total_temperature)
+				// the decomposition process create some unbearable stench
+				var/turf/location = pick(holder.covered_turf())
+				location.fluid_react_single("miasma", created_volume * 4, airborne = 1)
+
+
+		ecoli/ecoli2
+			name = "E.Coli 2"
+			id = "E.Coli 2"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "meat_slurry" = 4)
+
+		ecoli/ecoli3
+			name = "E.Coli 3"
+			id = "E.Coli 3"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "beff" = 4)
+
+
 
 		boilpee // a shameful cogwerks. hobo chemistry, assistant-sourcable source of ammonia for various other reactions.
 			name = "Boiled Pee"
