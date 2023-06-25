@@ -5,14 +5,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
-"bJ" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
 "cg" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
@@ -66,20 +58,21 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "jt" = (
+/obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
 /area/station/engine/inner)
 "jC" = (
+/obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
-	d1 = 1;
 	d2 = 2;
-	icon_state = "1-2"
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
@@ -104,6 +97,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "nk" = (
+/obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner,
 /area/station/engine/inner)
 "nx" = (
@@ -151,6 +145,7 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
+/obj/machinery/light/small/floor/warm,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "vv" = (
@@ -166,6 +161,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "wF" = (
+/obj/storage/closet/radiation,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -209,13 +205,21 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Cw" = (
-/obj/cable{
-	d2 = 2;
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 8
+	},
+/obj/cable/brown{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal,
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 8
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"CR" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/cable/brown{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
@@ -449,8 +453,8 @@ KI
 ap
 rk
 Cw
-bJ
-bJ
+mP
+ap
 lh
 "}
 (7,1,1) = {"
@@ -463,7 +467,7 @@ Hy
 mP
 XE
 mP
-mP
+CR
 hc
 "}
 (8,1,1) = {"

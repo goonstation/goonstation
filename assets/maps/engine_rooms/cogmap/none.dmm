@@ -119,12 +119,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
-"qO" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
 "qR" = (
 /turf/simulated/floor/grey/side,
 /area/station/engine/inner)
@@ -265,11 +259,11 @@ nk
 GB
 GB
 GB
+tf
 GB
 GB
 GB
-GB
-GB
+tf
 GB
 dV
 nk
@@ -279,9 +273,9 @@ GB
 GB
 OJ
 ed
-tf
 GB
-tf
+GB
+GB
 GB
 GB
 xq
@@ -305,9 +299,9 @@ hV
 qy
 GB
 GB
-tf
 GB
-tf
+GB
+GB
 ok
 ix
 mc
@@ -317,11 +311,11 @@ hc
 GB
 CY
 GB
+tf
 GB
 GB
 GB
-GB
-GB
+tf
 GB
 Vp
 nk
@@ -348,7 +342,7 @@ jr
 jr
 jr
 fi
-qO
+jr
 Tn
 nk
 "}

@@ -30,14 +30,11 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			else
 				comp.replaceWith(comp2type)
 
-		for(var/obj/O in bounds(target, -1, -1, props.maxX+2, props.maxY+2))
-			O.initialize()
-			if(istype(O, /obj/machinery/atmospherics/pipe))
-				var/obj/machinery/atmospherics/pipe/P = O
-				P.build_network()
-			else if(istype(O, /obj/cable))
-				var/obj/cable/C = O
-				C.update_network()
+
+			for(var/obj/O in bounds(target, -1, -1, props.maxX+2, props.maxY+2))
+				O.initialize()
+				O.UpdateIcon()
+			makepowernets()
 
 
 /obj/landmark/engine_room
