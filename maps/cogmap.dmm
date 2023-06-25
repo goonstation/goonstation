@@ -45607,10 +45607,10 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/reactor_stats,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
+/obj/landmark/engine_computer/two,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -65008,7 +65008,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/power_monitor,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 10
@@ -65017,6 +65016,7 @@
 	dir = 1;
 	pixel_y = 16
 	},
+/obj/landmark/engine_computer/one,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},

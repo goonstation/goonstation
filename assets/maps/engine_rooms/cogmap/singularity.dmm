@@ -1,22 +1,31 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cp" = (
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
+/area/station/engine/inner)
 "dV" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 4
 	},
 /obj/cablespawner,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ed" = (
 /obj/cablespawner,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "eR" = (
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"eZ" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "fi" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -25,7 +34,8 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "gR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -33,7 +43,7 @@
 	dir = 10
 	},
 /obj/cablespawner,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "hc" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -42,13 +52,13 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "hS" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "outlet purge valve"
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "hV" = (
 /obj/cable/brown{
@@ -57,24 +67,28 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "ix" = (
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "ko" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/corner,
 /area/station/engine/inner)
 "lh" = (
 /obj/cable{
@@ -82,30 +96,35 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grey,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "ln" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "hot loop inlet valve"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "lU" = (
 /obj/cable/brown,
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "mc" = (
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
+	},
 /area/station/engine/inner)
 "nk" = (
-/turf/simulated/floor/grey,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "nx" = (
 /obj/machinery/atmospherics/binary/passive_gate{
@@ -120,7 +139,8 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "oy" = (
 /obj/cable/brown{
@@ -129,7 +149,24 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"oJ" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_engine,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
 /area/station/engine/inner)
 "pl" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -139,23 +176,23 @@
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "pp" = (
 /obj/machinery/emitter,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "pO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
 	name = "cold loop inlet valve"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "qy" = (
 /obj/machinery/power/data_terminal,
 /obj/cablespawner,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "qO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -164,14 +201,25 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
 /area/station/engine/inner)
-"qR" = (
-/turf/simulated/floor/grey/side,
+"sP" = (
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "tn" = (
 /obj/cablespawner,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"tB" = (
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "up" = (
 /obj/cable/brown{
@@ -183,53 +231,64 @@
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "xq" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 10
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "AI" = (
 /obj/machinery/field_generator,
 /obj/cablespawner,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "AQ" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"CR" = (
+/obj/cablespawner,
+/obj/machinery/emitter{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "CY" = (
 /obj/machinery/power/collector_array,
 /obj/machinery/power/data_terminal,
 /obj/cable/brown,
-/turf/simulated/floor/plating,
-/area/station/engine/inner)
-"EA" = (
-/turf/simulated/floor/grey/side{
-	dir = 1
-	},
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "GB" = (
-/turf/simulated/floor/plating,
+/obj/machinery/emitter{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"GR" = (
+/obj/cablespawner,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
+/area/station/engine/inner)
+"Ig" = (
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "JY" = (
 /obj/machinery/power/collector_control,
 /obj/machinery/power/data_terminal,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Lj" = (
 /obj/cable/brown{
@@ -238,23 +297,30 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "Ma" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 5
 	},
-/obj/machinery/emitter{
-	dir = 8
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"Mf" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/west,
+/area/station/engine/inner)
+"Mp" = (
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "OJ" = (
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "PX" = (
 /obj/machinery/atmospherics/binary/passive_gate{
@@ -263,7 +329,7 @@
 	pixel_y = 1;
 	target_pressure = 1e+031
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "Rp" = (
 /obj/machinery/power/collector_array,
@@ -271,23 +337,20 @@
 /obj/cable/brown{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "SK" = (
 /obj/machinery/the_singularitygen,
 /obj/cablespawner,
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Tn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
 	dir = 9
 	},
-/obj/machinery/emitter{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "TM" = (
 /obj/cable/brown{
@@ -299,24 +362,42 @@
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 "Vp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
+"WQ" = (
+/obj/wingrille_spawn/reinforced_crystal/full,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 8
+	},
+/area/station/engine/inner)
+"Xg" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
 "YC" = (
 /obj/machinery/power/collector_control,
 /obj/machinery/power/data_terminal,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
 /obj/cable/brown,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"YG" = (
+/obj/cablespawner,
+/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "ZF" = (
 /obj/cable/brown{
@@ -325,69 +406,70 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating,
+/obj/wingrille_spawn/reinforced_crystal/full,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
 
 (1,1,1) = {"
-EA
-GB
+nk
+Ig
 ln
-GB
-GB
-GB
-GB
+Ig
+Ig
+Ig
+Ig
 nx
-GB
-qR
+Ig
+Ig
 nk
 "}
 (2,1,1) = {"
-GB
-GB
+WQ
+tB
 xq
-ko
-ko
-ko
-ko
+Mf
+oJ
+Mf
+Mf
 AQ
 ko
 Ma
-nk
+Ig
 "}
 (3,1,1) = {"
-GB
+cp
 pp
 qy
-GB
-GB
-GB
+Mp
+eZ
+Mp
 ed
-tn
-tn
+CR
+GR
 dV
-nk
+Ig
 "}
 (4,1,1) = {"
 OJ
 CY
 AI
-GB
-GB
-GB
+Mp
+Mp
+Mp
 AI
 Rp
 eR
 dV
-nk
+Ig
 "}
 (5,1,1) = {"
 Lj
 CY
-tn
-GB
-GB
-GB
-tn
+YG
+Mp
+Mp
+Mp
+YG
 Rp
 oy
 gR
@@ -396,11 +478,11 @@ hS
 (6,1,1) = {"
 up
 YC
-tn
-GB
+YG
+Mp
 SK
-tn
-tn
+YG
+YG
 JY
 lU
 tn
@@ -409,11 +491,11 @@ lh
 (7,1,1) = {"
 hV
 CY
-tn
-GB
-GB
-GB
-tn
+YG
+Mp
+Mp
+Mp
+YG
 Rp
 TM
 pl
@@ -423,51 +505,51 @@ hc
 hV
 CY
 AI
-tn
-tn
-tn
+YG
+YG
+YG
 AI
 Rp
 ZF
 Vp
-nk
+Ig
 "}
 (9,1,1) = {"
-ok
+sP
 pp
 qy
-GB
-GB
-GB
+Mp
+eZ
+Mp
 qy
 GB
 ok
 Vp
-nk
+Ig
 "}
 (10,1,1) = {"
 mc
 ix
-pl
+Xg
 jr
-jr
+oJ
 jr
 jr
 fi
 qO
 Tn
-nk
+Ig
 "}
 (11,1,1) = {"
-EA
-GB
+nk
+Ig
 pO
-GB
-GB
-GB
-GB
+Ig
+Ig
+Ig
+Ig
 PX
-GB
-qR
+Ig
+Ig
 nk
 "}
