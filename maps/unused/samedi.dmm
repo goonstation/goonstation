@@ -11986,8 +11986,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail/vertical,
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/kitchen,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "aAz" = (
@@ -14358,8 +14358,8 @@
 	name = "Cold Storage";
 	req_access_txt = "25;28;"
 	},
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/kitchen,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/stairs{
 	dir = 8
 	},
@@ -24439,8 +24439,8 @@
 	name = "Patchy's Cabana";
 	req_access_txt = "5;25;"
 	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/medical,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "bbV" = (
@@ -28778,8 +28778,8 @@
 	name = "Patchy's Cabana";
 	req_access_txt = "5;25;"
 	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/medical,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "blm" = (
@@ -41481,8 +41481,8 @@
 	req_access_txt = "25"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/research,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "bNU" = (
@@ -43227,8 +43227,8 @@
 	name = "The Alchemist's Nook";
 	req_access_txt = "25"
 	},
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/research,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/south)
 "bRx" = (

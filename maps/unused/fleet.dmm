@@ -1443,7 +1443,7 @@
 	name = "Pad Shutters";
 	panel_open = 1
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -1754,7 +1754,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "dR" = (
@@ -1898,7 +1898,7 @@
 	name = "Pad Shutters";
 	panel_open = 1
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "ee" = (
@@ -2247,7 +2247,7 @@
 	name = "Tenebrae Command";
 	req_access = null
 	},
-/obj/access_spawn/research_director,
+/obj/effects/map_helper/access/research_director,
 /turf/simulated/floor/blackwhite{
 	dir = 8
 	},
@@ -2301,7 +2301,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -2480,7 +2480,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "fp" = (
@@ -3218,7 +3218,7 @@
 	id = "qmout"
 	},
 /obj/machinery/door/window/southleft,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "gN" = (
@@ -3533,7 +3533,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cargo Dock"
 	},
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hD" = (
@@ -3997,7 +3997,7 @@
 	name = "Maru Hangar";
 	req_access = null
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "iD" = (
@@ -4444,7 +4444,7 @@
 	name = "Reprod Lab";
 	req_access = null
 	},
-/obj/access_spawn/engineering_mechanic,
+/obj/effects/map_helper/access/engineering_mechanic,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -4806,7 +4806,7 @@
 	name = "Cargo Bay";
 	req_access_txt = "31"
 	},
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "1-2"
@@ -4818,7 +4818,7 @@
 	name = "Mining";
 	req_access = null
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -5050,7 +5050,7 @@
 	name = "Fore Zone";
 	req_access_txt = null
 	},
-/obj/access_spawn/engineering_power,
+/obj/effects/map_helper/access/engineering_power,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	d1 = 4;
@@ -5153,8 +5153,8 @@
 	dir = 4;
 	name = "Maru Hangar"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/engineering,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
 "kQ" = (
@@ -5165,7 +5165,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Weapons Locker"
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/secwing)
 "kS" = (
@@ -6134,7 +6134,7 @@
 	dir = 4;
 	name = "Detention Unit"
 	},
-/obj/access_spawn/brig,
+/obj/effects/map_helper/access/brig,
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
 "mP" = (
@@ -6682,7 +6682,7 @@
 	name = "Hammer Command";
 	req_access = null
 	},
-/obj/access_spawn/hos,
+/obj/effects/map_helper/access/hos,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -6755,7 +6755,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Primary Secure Zone"
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -6796,7 +6796,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/access_spawn/forensics,
+/obj/effects/map_helper/access/forensics,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "od" = (
@@ -8498,7 +8498,7 @@
 	name = "Maru Command";
 	req_access = null
 	},
-/obj/access_spawn/engineering_chief,
+/obj/effects/map_helper/access/engineering_chief,
 /obj/grille/catwalk{
 	dir = 5
 	},
@@ -9013,7 +9013,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Robotics"
 	},
-/obj/access_spawn/robotics,
+/obj/effects/map_helper/access/robotics,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -9290,7 +9290,7 @@
 	dir = 4;
 	name = "Morgue"
 	},
-/obj/access_spawn/morgue,
+/obj/effects/map_helper/access/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "sW" = (
@@ -9797,7 +9797,7 @@
 /obj/machinery/door/airlock/pyro/medical{
 	name = "Morgue"
 	},
-/obj/access_spawn/morgue,
+/obj/effects/map_helper/access/morgue,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -9952,7 +9952,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Kitchen"
 	},
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/kitchen,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -10139,7 +10139,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/medical_director,
+/obj/effects/map_helper/access/medical_director,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -10243,7 +10243,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -10516,7 +10516,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "vi" = (
@@ -10911,7 +10911,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/kitchen,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
@@ -11018,7 +11018,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -11667,7 +11667,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "xm" = (
@@ -11878,7 +11878,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/space)
 "xG" = (
@@ -11887,7 +11887,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "xH" = (
@@ -12432,7 +12432,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Janitorial Wing"
 	},
-/obj/access_spawn/janitor,
+/obj/effects/map_helper/access/janitor,
 /turf/simulated/floor/wood,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
@@ -13117,7 +13117,7 @@
 	name = "Dionysus Auxiliary Access";
 	req_access_txt = null
 	},
-/obj/access_spawn/engineering_power,
+/obj/effects/map_helper/access/engineering_power,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
@@ -13916,7 +13916,7 @@
 	id = "chapel_visitation";
 	name = "Chapel Office"
 	},
-/obj/access_spawn/chapel_office,
+/obj/effects/map_helper/access/chapel_office,
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "BC" = (
@@ -14886,7 +14886,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/ai_upload,
+/obj/effects/map_helper/access/ai_upload,
 /turf/simulated/floor/grey,
 /area/station/turret_protected/ai)
 "Dt" = (
@@ -15116,7 +15116,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/captain,
+/obj/effects/map_helper/access/captain,
 /turf/simulated/floor/grey,
 /area/station/bridge/captain{
 	name = "Meridian Command"
@@ -18980,7 +18980,7 @@
 /area/research_outpost/indigo_rye)
 "LU" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19481,8 +19481,8 @@
 	name = "Core Access";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -19824,8 +19824,8 @@
 	name = "Bicameral Chamber";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor,
 /area/station/engine/power{
@@ -19885,8 +19885,8 @@
 	name = "Core Access";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "6-8"
 	},
@@ -20760,7 +20760,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -22759,8 +22759,8 @@
 	name = "Corelock";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24336,8 +24336,8 @@
 	name = "Core Access";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24935,8 +24935,8 @@
 	name = "Engine Gas Storage";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -25242,8 +25242,8 @@
 	},
 /obj/disposalpipe/segment/transport,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/grey,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -25252,8 +25252,8 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Hardware Chamber"
 	},
-/obj/access_spawn/engineering_engine,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/engineering_engine,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},

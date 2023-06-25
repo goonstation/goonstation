@@ -9045,8 +9045,8 @@
 /obj/machinery/door/airlock/gannets/chemistry/alt{
 	req_access = null
 	},
-/obj/access_spawn/heads,
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/heads,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor/purple{
 	dir = 5
 	},
@@ -21782,7 +21782,7 @@
 /obj/item/card/id/owlgold{
 	name = "James Musujasa (Head Of Personnel)"
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/office)
 "bqv" = (
@@ -36913,7 +36913,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Bedroom"
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cnv" = (
@@ -40031,7 +40031,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "VIP Suite"
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cxA" = (
@@ -41453,7 +41453,7 @@
 /obj/machinery/door/airlock/gannets/medical/alt{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/lab)
 "cBj" = (
@@ -41619,7 +41619,7 @@
 /area/space)
 "cBK" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "cBL" = (
@@ -42148,7 +42148,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 8
 	},
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/black,
 /area/owlery/Owlopen)
 "cCW" = (
@@ -42774,7 +42774,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cEv" = (
@@ -42921,7 +42921,7 @@
 	dir = 8;
 	locked = 1
 	},
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -42990,7 +42990,7 @@
 /area/owlery/Owlopen)
 "cEY" = (
 /obj/machinery/door/airlock/pyro/sci_alt,
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/lab)
 "cEZ" = (
@@ -43446,7 +43446,7 @@
 /obj/table/reinforced/auto,
 /obj/item/storage/box/id_kit,
 /obj/item/reagent_containers/food/snacks/donkpocket,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /obj/item/device/radio/intercom/adventure/owlery,
 /turf/unsimulated/floor/redblack{
 	dir = 5
@@ -43728,7 +43728,7 @@
 	icon_state = "right"
 	},
 /obj/random_item_spawner/desk_stuff,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
@@ -43943,7 +43943,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/carpet/grime,
 /area/owlery/office)
 "cHs" = (
@@ -44170,7 +44170,7 @@
 /obj/table/reinforced/auto,
 /obj/item/card/id,
 /obj/item/instrument/whistle,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
@@ -44385,7 +44385,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "cIw" = (
@@ -44418,7 +44418,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/sanitary/blue,
 /area/owlery/office)
 "cIB" = (
@@ -44499,7 +44499,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/effects/map_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cIM" = (
@@ -44548,7 +44548,7 @@
 /obj/machinery/door/window{
 	layer = 4
 	},
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /obj/machinery/light/emergency{
 	dir = 8
 	},
@@ -44956,7 +44956,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
 "cJQ" = (
@@ -45003,7 +45003,7 @@
 	dir = 8;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/office)
 "cJV" = (
@@ -45238,7 +45238,7 @@
 /obj/machinery/door/airlock/gannets/command/alt{
 	dir = 8
 	},
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/office)
 "cKG" = (
@@ -45958,7 +45958,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/item/paper/randomencounter,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack,
 /area/owlery/Owlopen)
 "cMz" = (
@@ -46924,7 +46924,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 8
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cOV" = (
@@ -47040,7 +47040,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 8
 	},
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cPm" = (
@@ -47775,7 +47775,7 @@
 	icon_state = "right"
 	},
 /obj/item/paper/paperwelcome,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack{
 	dir = 6
 	},
@@ -48238,7 +48238,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
 "cRO" = (
@@ -48620,7 +48620,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
 "cSI" = (
@@ -48645,7 +48645,7 @@
 	dir = 4;
 	locked = 1
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/owllock)
 "cSM" = (
@@ -49375,7 +49375,7 @@
 /area/owlery/Owlmait2)
 "cUq" = (
 /obj/machinery/door/airlock/pyro/classic,
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cUr" = (
@@ -49595,7 +49595,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "cUO" = (
@@ -49611,7 +49611,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /turf/unsimulated/floor/plating,
 /area/owlery/owllock)
 "cUQ" = (
@@ -49931,7 +49931,7 @@
 /area/owlery/Owlmait2)
 "cVA" = (
 /obj/machinery/door/airlock/pyro/engineering,
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -49951,7 +49951,7 @@
 	req_access_txt = "0"
 	},
 /obj/machinery/recharger,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
@@ -50789,7 +50789,7 @@
 /area/owlery/Owlmait2)
 "cXd" = (
 /obj/machinery/door/airlock/pyro/security,
-/obj/access_spawn/owlsecurity,
+/obj/effects/map_helper/access/owlsecurity,
 /turf/unsimulated/floor/green,
 /area/owlery/owleryhall)
 "cXf" = (
@@ -51164,7 +51164,7 @@
 /area/owlery/Owlmait2)
 "cXT" = (
 /obj/machinery/door/airlock/pyro/classic,
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -51228,7 +51228,7 @@
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
 	},
-/obj/access_spawn/owlmaint,
+/obj/effects/map_helper/access/owlmaint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -62258,7 +62258,7 @@
 /area/centcom/lobby)
 "dLM" = (
 /obj/machinery/door/airlock/pyro/command/centcom,
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dLN" = (
@@ -62800,7 +62800,7 @@
 /obj/machinery/door/airlock/pyro/command/centcom{
 	dir = 4
 	},
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dNj" = (
@@ -63532,7 +63532,7 @@
 /obj/machinery/door/airlock/pyro/command/centcom{
 	dir = 4
 	},
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -64044,8 +64044,8 @@
 /obj/machinery/door/airlock/gannets/command/alt{
 	req_access = null
 	},
-/obj/access_spawn/heads,
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/heads,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -69719,7 +69719,7 @@
 /area/centcom/offices/kyle)
 "lkL" = (
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/owlcommand,
+/obj/effects/map_helper/access/owlcommand,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
 "lkO" = (
@@ -77515,7 +77515,7 @@
 /obj/machinery/door/airlock/pyro/command/centcom{
 	dir = 4
 	},
-/obj/access_spawn/admin_override,
+/obj/effects/map_helper/access/admin_override,
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "wwz" = (
@@ -78484,7 +78484,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/effects/map_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
@@ -78640,7 +78640,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/access_spawn/syndie_shuttle,
+/obj/effects/map_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "xZJ" = (

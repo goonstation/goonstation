@@ -23,7 +23,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
 "aad" = (
@@ -37,7 +37,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Illicit Deals Tunnel"
 	},
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos)
@@ -331,7 +331,7 @@
 	name = "Box Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -385,7 +385,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -551,7 +551,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
@@ -650,7 +650,7 @@
 	dir = 8;
 	name = "Engineering"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -909,7 +909,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Genetics"
 	},
-/obj/access_spawn/medlab,
+/obj/effects/map_helper/access/medlab,
 /obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/medical/research)
@@ -988,7 +988,7 @@
 	name = "Genetics"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medlab,
+/obj/effects/map_helper/access/medlab,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/research)
@@ -1055,7 +1055,7 @@
 	name = "Control Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/power)
 "asG" = (
@@ -1271,7 +1271,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research_director,
+/obj/effects/map_helper/access/research_director,
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "ayf" = (
@@ -1427,7 +1427,7 @@
 	icon_state = "delivery2"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden{
 	name = "Space Garden"
@@ -1629,7 +1629,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aFY" = (
@@ -1975,7 +1975,7 @@
 	name = "Kitchen"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/kitchen,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -2020,7 +2020,7 @@
 	name = "Box Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/east{
@@ -2272,7 +2272,7 @@
 	name = "Toxin Storage"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/tox,
+/obj/effects/map_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "aUp" = (
@@ -2442,7 +2442,7 @@
 	dir = 4;
 	name = "Freezer"
 	},
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/kitchen,
 /obj/firedoor_spawn,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 1
@@ -2784,7 +2784,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
@@ -3399,7 +3399,7 @@
 	dir = 4;
 	name = "EVA Storage"
 	},
-/obj/access_spawn/eva,
+/obj/effects/map_helper/access/eva,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "buK" = (
@@ -4565,7 +4565,7 @@
 	name = "Engineering Airlock"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "bTm" = (
@@ -5111,7 +5111,7 @@
 /obj/item/paper/book/from_file/hydroponicsguide,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /turf/simulated/floor/caution,
 /area/station/hydroponics/bay)
 "cdD" = (
@@ -5389,7 +5389,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "cif" = (
@@ -5484,7 +5484,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -5533,7 +5533,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "cmi" = (
@@ -5798,7 +5798,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -6050,7 +6050,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/stockex)
 "cxz" = (
@@ -6172,7 +6172,7 @@
 	name = "Quartermaster's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -6249,7 +6249,7 @@
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "cBd" = (
-/obj/access_spawn/engineering_chief,
+/obj/effects/map_helper/access/engineering_chief,
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	desc = "I rule over this land. Do not forget it.";
 	dir = 4;
@@ -6335,7 +6335,7 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -6506,7 +6506,7 @@
 	name = "Research Director's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research_director,
+/obj/effects/map_helper/access/research_director,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -6708,7 +6708,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/arrivals)
 "cKo" = (
@@ -6776,7 +6776,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -6876,7 +6876,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	name = "Arrivals Security Checkpoint"
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -6962,7 +6962,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -7162,7 +7162,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -7475,7 +7475,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	name = "Toxins Emergency Catwalk"
 	},
-/obj/access_spawn/tox,
+/obj/effects/map_helper/access/tox,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -7843,9 +7843,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/medical_director,
-/obj/access_spawn/research,
-/obj/access_spawn/chemistry,
+/obj/effects/map_helper/access/medical_director,
+/obj/effects/map_helper/access/research,
+/obj/effects/map_helper/access/chemistry,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "dkh" = (
@@ -8051,7 +8051,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/caution,
 /area/station/engine/monitoring)
 "dol" = (
@@ -8059,7 +8059,7 @@
 	dir = 4;
 	name = "AI Core"
 	},
-/obj/access_spawn/ai_upload,
+/obj/effects/map_helper/access/ai_upload,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	dir = 4;
@@ -8565,7 +8565,7 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor/orange,
 /area/station/quartermaster/office)
 "dza" = (
@@ -8602,8 +8602,8 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/security,
+/obj/effects/map_helper/access/heads,
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
@@ -8797,7 +8797,7 @@
 	name = "Research Lobby"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -8871,7 +8871,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/bluewhite{
 	dir = 1
@@ -9177,7 +9177,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/engineering_mechanic,
+/obj/effects/map_helper/access/engineering_mechanic,
 /turf/simulated/floor/orange,
 /area/station/engine/elect)
 "dKY" = (
@@ -9750,7 +9750,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "Robotics Closet"
 	},
-/obj/access_spawn/robotics,
+/obj/effects/map_helper/access/robotics,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -9900,7 +9900,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/tox_storage,
+/obj/effects/map_helper/access/tox_storage,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -10445,7 +10445,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /turf/simulated/floor/carpet/blue/fancy/narrow/south,
 /area/station/bridge/hos)
 "ens" = (
@@ -10873,7 +10873,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/tech_storage,
+/obj/effects/map_helper/access/tech_storage,
 /turf/simulated/floor/grey,
 /area/station/storage/tech)
 "exm" = (
@@ -11034,7 +11034,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "eAO" = (
@@ -11146,7 +11146,7 @@
 	name = "Quartermaster's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -11444,7 +11444,7 @@
 	name = "Cloning"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery/storage)
 "eJf" = (
@@ -11798,7 +11798,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -11938,12 +11938,12 @@
 	name = "Research Staff Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/medical_director,
-/obj/access_spawn/chemistry,
+/obj/effects/map_helper/access/medical_director,
+/obj/effects/map_helper/access/chemistry,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "eVx" = (
@@ -12115,7 +12115,7 @@
 	name = "Detective";
 	req_access = null
 	},
-/obj/access_spawn/forensics,
+/obj/effects/map_helper/access/forensics,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -12483,7 +12483,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/bathroom)
 "fgN" = (
@@ -13415,8 +13415,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/bar,
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/bar,
+/obj/effects/map_helper/access/kitchen,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "fCu" = (
@@ -13425,7 +13425,7 @@
 	name = "Artifact Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -13492,7 +13492,7 @@
 	name = "Head of Personnel Front Desk"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -14255,7 +14255,7 @@
 	dir = 4;
 	name = "Gas Storage"
 	},
-/obj/access_spawn/engineering_storage,
+/obj/effects/map_helper/access/engineering_storage,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -14300,7 +14300,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbooth)
 "fWe" = (
@@ -14386,8 +14386,8 @@
 	name = "Mining Hallway"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/mining,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/mining,
+/obj/effects/map_helper/access/cargo,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -14643,7 +14643,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge/luxury_seating)
@@ -15074,7 +15074,7 @@
 	name = "Bridge"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
@@ -15313,7 +15313,7 @@
 	dir = 4;
 	name = "Medbay"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 4;
@@ -15468,7 +15468,7 @@
 	name = "Head of Personnel's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -15524,7 +15524,7 @@
 	name = "Power Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -15639,13 +15639,13 @@
 	pixel_y = -3
 	},
 /obj/disposalpipe/segment/mail,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
 	rand_pos = 0;
 	pixel_y = 6
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
 	autoclose = 0
@@ -16104,7 +16104,7 @@
 "gMo" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
@@ -16501,7 +16501,7 @@
 	name = "Brig"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/brig,
+/obj/effects/map_helper/access/brig,
 /obj/disposalpipe/segment/ejection,
 /obj/cable{
 	icon_state = "1-2"
@@ -17022,7 +17022,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "heI" = (
@@ -17682,7 +17682,7 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/item/item_box/medical_patches/styptic{
 	pixel_y = 2;
@@ -17999,7 +17999,7 @@
 	dir = 4;
 	name = "Morgue"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -18008,7 +18008,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/access_spawn/crematorium,
+/obj/effects/map_helper/access/crematorium,
 /turf/simulated/floor/sanitary,
 /area/station/medical/morgue)
 "hzD" = (
@@ -18264,7 +18264,7 @@
 	name = "Quartermaster's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -18282,7 +18282,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/wood,
 /area/station/security/checkpoint/east{
 	name = "Ticket Office"
@@ -18337,7 +18337,7 @@
 	dir = 1;
 	name = "Gas Storage"
 	},
-/obj/access_spawn/engineering_storage,
+/obj/effects/map_helper/access/engineering_storage,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
@@ -18557,7 +18557,7 @@
 	name = "Head of Security's Room";
 	req_access = null
 	},
-/obj/access_spawn/hos,
+/obj/effects/map_helper/access/hos,
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)
@@ -18625,7 +18625,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/chapel_office,
+/obj/effects/map_helper/access/chapel_office,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -18802,7 +18802,7 @@
 	dir = 4;
 	name = "Quartermaster's Office"
 	},
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -19531,7 +19531,7 @@
 	name = "Research Locker Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -20784,7 +20784,7 @@
 	dir = 1;
 	name = "Engineering Staff Room"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -21013,8 +21013,8 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/access_spawn/chemistry,
-/obj/access_spawn/medical_director,
+/obj/effects/map_helper/access/chemistry,
+/obj/effects/map_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "iOM" = (
@@ -21240,7 +21240,7 @@
 	dir = 4;
 	name = "Medbay"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -22447,7 +22447,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "jur" = (
@@ -22774,7 +22774,7 @@
 	dir = 4;
 	name = "Chapel Office"
 	},
-/obj/access_spawn/chapel_office,
+/obj/effects/map_helper/access/chapel_office,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -23291,7 +23291,7 @@
 	name = "Telescience"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -23338,7 +23338,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -23437,7 +23437,7 @@
 	dir = 4;
 	name = "Engineering Staff Room"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -23820,7 +23820,7 @@
 	dir = 1;
 	autoclose = 0
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -23915,7 +23915,7 @@
 /obj/item/stamp,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/wood,
 /area/station/security/checkpoint/east{
 	name = "Ticket Office"
@@ -23970,7 +23970,7 @@
 	name = "Kitchen"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/kitchen,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -24381,7 +24381,7 @@
 	name = "Toxins Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -24449,7 +24449,7 @@
 	name = "Staff Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -24827,7 +24827,7 @@
 	dir = 4;
 	name = "Mechanics"
 	},
-/obj/access_spawn/engineering_mechanic,
+/obj/effects/map_helper/access/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -25376,7 +25376,7 @@
 	name = "Judge's Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
@@ -25553,7 +25553,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -25895,7 +25895,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/stripe_delivery,
-/obj/access_spawn/eva,
+/obj/effects/map_helper/access/eva,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
 "kUW" = (
@@ -26103,7 +26103,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/tox,
+/obj/effects/map_helper/access/tox,
 /turf/simulated/floor,
 /area/station/science/storage)
 "kZK" = (
@@ -26427,8 +26427,8 @@
 	name = "Catering Storage"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/bar,
-/obj/access_spawn/kitchen,
+/obj/effects/map_helper/access/bar,
+/obj/effects/map_helper/access/kitchen,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "lil" = (
@@ -26678,7 +26678,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -27266,7 +27266,7 @@
 	name = "Head of Security's Office";
 	req_access = null
 	},
-/obj/access_spawn/hos,
+/obj/effects/map_helper/access/hos,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 1;
@@ -27473,7 +27473,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27842,7 +27842,7 @@
 	dir = 4;
 	name = "Engineering Staff Room"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /turf/simulated/floor/orange,
 /area/station/engine/engineering/breakroom)
@@ -27898,7 +27898,7 @@
 	name = "Maintenance Access";
 	req_access = null
 	},
-/obj/access_spawn/robotics,
+/obj/effects/map_helper/access/robotics,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -27925,7 +27925,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/shuttlebay,
 /area/station/science/teleporter)
 "lNT" = (
@@ -28294,7 +28294,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "MD's Office"
 	},
-/obj/access_spawn/medical_director,
+/obj/effects/map_helper/access/medical_director,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -28670,7 +28670,7 @@
 	name = "Bridge"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /obj/machinery/secscanner{
 	dir = 4;
 	pixel_x = -20
@@ -29348,7 +29348,7 @@
 	})
 "msc" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
@@ -29457,7 +29457,7 @@
 	name = "AI Station"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/ai_upload,
+/obj/effects/map_helper/access/ai_upload,
 /obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "1-2"
@@ -29495,7 +29495,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "mvr" = (
@@ -30049,7 +30049,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/engineering_mechanic,
+/obj/effects/map_helper/access/engineering_mechanic,
 /turf/simulated/floor/orange,
 /area/station/engine/elect)
 "mHh" = (
@@ -30117,7 +30117,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -30165,7 +30165,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -30508,7 +30508,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -30640,7 +30640,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hos,
+/obj/effects/map_helper/access/hos,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -31707,7 +31707,7 @@
 	dir = 4;
 	name = "Bar"
 	},
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/bar,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
@@ -31778,7 +31778,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research_director,
+/obj/effects/map_helper/access/research_director,
 /turf/simulated/floor/grey,
 /area/station/science/research_director)
 "nus" = (
@@ -31923,7 +31923,7 @@
 	name = "North Solar Panels"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -32315,7 +32315,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Cargo Dock"
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -32408,7 +32408,7 @@
 /obj/item/satchel/hydro,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /turf/simulated/floor/caution,
 /area/station/hydroponics/bay)
 "nKr" = (
@@ -32983,7 +32983,7 @@
 	name = "Illicit Deals Tunnel"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -33064,7 +33064,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/main)
@@ -33199,7 +33199,7 @@
 	dir = 1;
 	name = "Cloning"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -33441,7 +33441,7 @@
 "odp" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/disposalpipe/segment,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
@@ -33615,7 +33615,7 @@
 	name = "Medical Storage"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -33649,7 +33649,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "ohJ" = (
@@ -33862,13 +33862,13 @@
 	name = "Chemistry"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/medical_director,
-/obj/access_spawn/chemistry,
+/obj/effects/map_helper/access/medical_director,
+/obj/effects/map_helper/access/chemistry,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "onD" = (
@@ -33891,7 +33891,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/orange/side{
 	dir = 4
 	},
@@ -34287,7 +34287,7 @@
 	dir = 8;
 	pixel_x = 20
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34481,7 +34481,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
@@ -34663,7 +34663,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -36843,7 +36843,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Ranch"
 	},
-/obj/access_spawn/rancher,
+/obj/effects/map_helper/access/rancher,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 2;
@@ -37308,7 +37308,7 @@
 	dir = 4;
 	name = "Morgue"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -37705,7 +37705,7 @@
 	name = "Detective's Office";
 	req_access = null
 	},
-/obj/access_spawn/forensics,
+/obj/effects/map_helper/access/forensics,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -37946,7 +37946,7 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/access_spawn/tox,
+/obj/effects/map_helper/access/tox,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "qfS" = (
@@ -37994,7 +37994,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -38366,7 +38366,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
-/obj/access_spawn/janitor,
+/obj/effects/map_helper/access/janitor,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -38904,7 +38904,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -38945,7 +38945,7 @@
 	name = "Botanist's Office"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -39445,7 +39445,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "qJa" = (
@@ -39823,7 +39823,7 @@
 	dir = 1;
 	name = "Cargo Staff Room"
 	},
-/obj/access_spawn/engineering_mechanic,
+/obj/effects/map_helper/access/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -39940,7 +39940,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
@@ -40041,7 +40041,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -40253,7 +40253,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/effects/map_helper/access/sec_lockers,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/security/secoffquarters)
@@ -40459,7 +40459,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "rgB" = (
@@ -40724,7 +40724,7 @@
 /turf/space,
 /area/space)
 "rmT" = (
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
 	pixel_y = 1;
@@ -40734,7 +40734,7 @@
 	pixel_y = 4;
 	pixel_x = -3
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
 	autoclose = 0
@@ -40920,7 +40920,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "rrt" = (
@@ -41341,7 +41341,7 @@
 	name = "Monkeydome"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -41514,7 +41514,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/rancher,
+/obj/effects/map_helper/access/rancher,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "rDw" = (
@@ -42027,7 +42027,7 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/door_timer/genpop/new_walls/west,
-/obj/access_spawn/brig,
+/obj/effects/map_helper/access/brig,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -42159,7 +42159,7 @@
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/wood,
 /area/station/security/checkpoint/east{
 	name = "Ticket Office"
@@ -42234,7 +42234,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/airless/caution,
 /area/station/engine/eva)
 "rRw" = (
@@ -42477,7 +42477,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -42536,7 +42536,7 @@
 	id = "boomroom";
 	name = "Test Chamber Shutters"
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/science/testchamber)
 "rYf" = (
@@ -42544,7 +42544,7 @@
 	name = "East Solar Panels"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -43025,7 +43025,7 @@
 /area/station/engine/inner)
 "sfP" = (
 /obj/machinery/door/airlock/classic,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/firedoor_spawn,
 /obj/machinery/door/poddoor/blast{
 	density = 0;
@@ -43110,7 +43110,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -43464,7 +43464,7 @@
 	pixel_y = 10;
 	pixel_x = -8
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8;
 	autoclose = 0
@@ -43500,7 +43500,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Magnet Control Room"
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -43599,7 +43599,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -43610,7 +43610,7 @@
 	name = "Engineering Storage"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "srN" = (
@@ -43618,7 +43618,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -43847,7 +43847,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering/restroom{
@@ -44039,7 +44039,7 @@
 	name = "Robotics"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/robotics,
+/obj/effects/map_helper/access/robotics,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -44183,7 +44183,7 @@
 	name = "Surgery"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -44295,8 +44295,8 @@
 	name = "Mining Hallway"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/mining,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/mining,
+/obj/effects/map_helper/access/cargo,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/east{
@@ -44540,7 +44540,7 @@
 	name = "Botany"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -44580,8 +44580,8 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/access_spawn/chemistry,
-/obj/access_spawn/medical_director,
+/obj/effects/map_helper/access/chemistry,
+/obj/effects/map_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "sNd" = (
@@ -44756,11 +44756,11 @@
 	name = "Teleporter"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/teleporter,
+/obj/effects/map_helper/access/teleporter,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/teleporter)
 "sSl" = (
@@ -44894,7 +44894,7 @@
 	name = "Plasma Storage"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/tox_storage,
+/obj/effects/map_helper/access/tox_storage,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "sUs" = (
@@ -44946,7 +44946,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	name = "Chief Engineer's Room"
 	},
-/obj/access_spawn/engineering_chief,
+/obj/effects/map_helper/access/engineering_chief,
 /turf/simulated/floor/orange,
 /area/station/crew_quarters/ce)
 "sVM" = (
@@ -45137,7 +45137,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "sZc" = (
@@ -45525,7 +45525,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45608,7 +45608,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "tiI" = (
@@ -46002,7 +46002,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -46150,7 +46150,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "AI Upload"
 	},
-/obj/access_spawn/ai_upload,
+/obj/effects/map_helper/access/ai_upload,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
@@ -46545,7 +46545,7 @@
 	name = "Medical Booth"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -46903,7 +46903,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "tLN" = (
@@ -47132,7 +47132,7 @@
 	dir = 1;
 	name = "Morgue"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -47203,7 +47203,7 @@
 	name = "Research Lobby"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -47361,8 +47361,8 @@
 	dir = 4;
 	name = "Cargo Dock"
 	},
-/obj/access_spawn/cargo,
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/cargo,
+/obj/effects/map_helper/access/mining,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 4;
@@ -47393,7 +47393,7 @@
 /obj/table/reinforced/chemistry/auto,
 /obj/item/paper_bin,
 /obj/item/pen/pencil,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
@@ -47486,7 +47486,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -47852,7 +47852,7 @@
 	name = "Medbay"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
@@ -48214,7 +48214,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/medbay)
@@ -49054,7 +49054,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /turf/simulated/floor/carpet/blue/fancy/narrow/north,
 /area/station/bridge/hos)
 "uLD" = (
@@ -49251,7 +49251,7 @@
 	name = "Monkeydome"
 	},
 /obj/decal/boxingropeenter,
-/obj/access_spawn/medlab,
+/obj/effects/map_helper/access/medlab,
 /obj/firedoor_spawn,
 /obj/cable{
 	d1 = 1;
@@ -49646,7 +49646,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "uWJ" = (
@@ -49675,7 +49675,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/mining/staff_room)
@@ -49846,7 +49846,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -50595,7 +50595,7 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /turf/simulated/floor/orange,
 /area/station/quartermaster/office)
 "vqQ" = (
@@ -50680,7 +50680,7 @@
 	name = "Captain's Quarters"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/captain,
+/obj/effects/map_helper/access/captain,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -51691,7 +51691,7 @@
 	dir = 4;
 	name = "Mining"
 	},
-/obj/access_spawn/mining,
+/obj/effects/map_helper/access/mining,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
@@ -52163,7 +52163,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/ejection,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -52531,7 +52531,7 @@
 	dir = 8;
 	autoclose = 0
 	},
-/obj/access_spawn/heads,
+/obj/effects/map_helper/access/heads,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -52542,7 +52542,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -52795,7 +52795,7 @@
 	dir = 4;
 	name = "Medbay"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
@@ -52868,7 +52868,7 @@
 /obj/item/clothing/gloves/boxing{
 	pixel_x = 3
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 1;
 	autoclose = 0
@@ -52909,7 +52909,7 @@
 	name = "Research Lobby"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -52980,7 +52980,7 @@
 	name = "Custodial Closet"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/janitor,
+/obj/effects/map_helper/access/janitor,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -53060,7 +53060,7 @@
 	name = "Head of Personnel's Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/head_of_personnel,
+/obj/effects/map_helper/access/head_of_personnel,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	icon_state = "4-8"
@@ -53115,7 +53115,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "wuL" = (
@@ -53403,7 +53403,7 @@
 	name = "Research Computer Lab"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/research,
+/obj/effects/map_helper/access/research,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -53417,7 +53417,7 @@
 "wCM" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
@@ -53601,7 +53601,7 @@
 	name = "Interrogation Room"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/decal/tile_edge/stripe{
 	dir = 6;
 	icon_state = "delivery2"
@@ -53655,7 +53655,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/cargo,
+/obj/effects/map_helper/access/cargo,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grey,
 /area/station/quartermaster/office)
@@ -53706,7 +53706,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/janitor,
+/obj/effects/map_helper/access/janitor,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "wHr" = (
@@ -53928,7 +53928,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -54508,7 +54508,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
@@ -54554,7 +54554,7 @@
 	name = "Maintenance Access"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/maint,
+/obj/effects/map_helper/access/maint,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
 	icon_state = "1-2"
@@ -54649,7 +54649,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "East Solar Panels"
 	},
-/obj/access_spawn/engineering,
+/obj/effects/map_helper/access/engineering,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
@@ -55019,7 +55019,7 @@
 	name = "Botany"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/hydro,
+/obj/effects/map_helper/access/hydro,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -56103,7 +56103,7 @@
 	name = "Courtroom"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -56187,7 +56187,7 @@
 /obj/table/reinforced/bar/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/firedoor/pyro,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/wood,
 /area/station/security/checkpoint/east{
 	name = "Ticket Office"
@@ -56337,8 +56337,8 @@
 	name = "Chemistry"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/chemistry,
-/obj/access_spawn/medical_director,
+/obj/effects/map_helper/access/chemistry,
+/obj/effects/map_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "xLr" = (
@@ -57069,7 +57069,7 @@
 	req_access_txt = "1"
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/security,
+/obj/effects/map_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ycu" = (

@@ -13808,7 +13808,7 @@
 /obj/item/pen,
 /obj/disposalpipe/segment,
 /obj/machinery/door/window/southleft,
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aSU" = (
@@ -15338,7 +15338,7 @@
 	name = "Robotics";
 	req_access_txt = "29"
 	},
-/obj/access_spawn/medical,
+/obj/effects/map_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aYB" = (
@@ -15925,7 +15925,7 @@
 	name = "Bar Maintenance";
 	req_access_txt = "14;25"
 	},
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "baK" = (
@@ -16453,7 +16453,7 @@
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bar)
 "bcu" = (
@@ -18920,7 +18920,7 @@
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
-/obj/access_spawn/bar,
+/obj/effects/map_helper/access/bar,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bkb" = (
