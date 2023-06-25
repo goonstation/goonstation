@@ -840,148 +840,148 @@
 
 
 /obj/machinery/atmospherics/pipe/manifold
-		icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
-		icon_state = "manifold"//-f"
-		name = "pipe manifold"
-		desc = "A manifold composed of regular pipes"
-		level = 1
-		volume = 105
-		dir = SOUTH
-		initialize_directions = EAST|NORTH|WEST
-		var/obj/machinery/atmospherics/node1
-		var/obj/machinery/atmospherics/node2
-		var/obj/machinery/atmospherics/node3
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi'
+	icon_state = "manifold"//-f"
+	name = "pipe manifold"
+	desc = "A manifold composed of regular pipes"
+	level = 1
+	volume = 105
+	dir = SOUTH
+	initialize_directions = EAST|NORTH|WEST
+	var/obj/machinery/atmospherics/node1
+	var/obj/machinery/atmospherics/node2
+	var/obj/machinery/atmospherics/node3
 
-		overfloor
-			level = 2
+	overfloor
+		level = 2
 
-		New()
-			switch(dir)
-				if(NORTH)
-					initialize_directions = EAST|SOUTH|WEST
-				if(SOUTH)
-					initialize_directions = WEST|NORTH|EAST
-				if(EAST)
-					initialize_directions = SOUTH|WEST|NORTH
-				if(WEST)
-					initialize_directions = NORTH|EAST|SOUTH
+	New()
+		switch(dir)
+			if(NORTH)
+				initialize_directions = EAST|SOUTH|WEST
+			if(SOUTH)
+				initialize_directions = WEST|NORTH|EAST
+			if(EAST)
+				initialize_directions = SOUTH|WEST|NORTH
+			if(WEST)
+				initialize_directions = NORTH|EAST|SOUTH
 
-			..()
+		..()
 
-		hide(var/i)
-			if(level == 1 && istype(loc, /turf/simulated))
-				invisibility = i ? INVIS_ALWAYS : INVIS_NONE
-			UpdateIcon()
+	hide(var/i)
+		if(level == 1 && istype(loc, /turf/simulated))
+			invisibility = i ? INVIS_ALWAYS : INVIS_NONE
+		UpdateIcon()
 
-		pipeline_expansion()
-			return list(node1, node2, node3)
+	pipeline_expansion()
+		return list(node1, node2, node3)
 
-		process()
-			..()
+	process()
+		..()
 
-			if(!node1)
-				parent.mingle_with_turf(loc, 70)
+		if(!node1)
+			parent.mingle_with_turf(loc, 70)
 
-			else if(!node2)
-				parent.mingle_with_turf(loc, 70)
+		else if(!node2)
+			parent.mingle_with_turf(loc, 70)
 
-			else if(!node3)
-				parent.mingle_with_turf(loc, 70)
+		else if(!node3)
+			parent.mingle_with_turf(loc, 70)
 
-		disposing()
-			node1?.disconnect(src)
-			node2?.disconnect(src)
-			node3?.disconnect(src)
-			parent = null
-			..()
+	disposing()
+		node1?.disconnect(src)
+		node2?.disconnect(src)
+		node3?.disconnect(src)
+		parent = null
+		..()
 
-		disconnect(obj/machinery/atmospherics/reference)
-			if(reference == node1)
-				if(istype(node1, /obj/machinery/atmospherics/pipe))
-					if (parent)
-						parent.dispose()
-					parent = null
-				node1 = null
+	disconnect(obj/machinery/atmospherics/reference)
+		if(reference == node1)
+			if(istype(node1, /obj/machinery/atmospherics/pipe))
+				if (parent)
+					parent.dispose()
+				parent = null
+			node1 = null
 
-			if(reference == node2)
-				if(istype(node2, /obj/machinery/atmospherics/pipe))
-					if (parent)
-						parent.dispose()
-					parent = null
-				node2 = null
+		if(reference == node2)
+			if(istype(node2, /obj/machinery/atmospherics/pipe))
+				if (parent)
+					parent.dispose()
+				parent = null
+			node2 = null
 
-			if(reference == node3)
-				if(istype(node3, /obj/machinery/atmospherics/pipe))
-					if (parent)
-						parent.dispose()
-					parent = null
-				node3 = null
+		if(reference == node3)
+			if(istype(node3, /obj/machinery/atmospherics/pipe))
+				if (parent)
+					parent.dispose()
+				parent = null
+			node3 = null
 
-			UpdateIcon()
+		UpdateIcon()
 
-			..()
+		..()
 
-		update_icon()
-			if(node1 && node2&& node3)
-				icon_state = "manifold"//[invisibility ? "-f" : ""]"
-				alpha = invisibility ? 128 : 255
+	update_icon()
+		if(node1 && node2&& node3)
+			icon_state = "manifold"//[invisibility ? "-f" : ""]"
+			alpha = invisibility ? 128 : 255
 
-			else
-				var/connected = 0
-				var/unconnected = 0
-				var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
-
-				if(node1)
-					connected |= get_dir(src, node1)
-				if(node2)
-					connected |= get_dir(src, node2)
-				if(node3)
-					connected |= get_dir(src, node3)
-
-				unconnected = (~connected)&(connect_directions)
-
-				icon_state = "manifold_[connected]_[unconnected]"
-
-				if(!connected)
-					qdel(src)
-
-			return
-
-		initialize()
+		else
+			var/connected = 0
+			var/unconnected = 0
 			var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node1 = target
-							break
+			if(node1)
+				connected |= get_dir(src, node1)
+			if(node2)
+				connected |= get_dir(src, node2)
+			if(node3)
+				connected |= get_dir(src, node3)
 
-					connect_directions &= ~direction
-					break
+			unconnected = (~connected)&(connect_directions)
+
+			icon_state = "manifold_[connected]_[unconnected]"
+
+			if(!connected)
+				qdel(src)
+
+		return
+
+	initialize()
+		var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
+
+		for(var/direction in cardinal)
+			if(direction&connect_directions)
+				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+					if(target.initialize_directions & get_dir(target,src))
+						node1 = target
+						break
+
+				connect_directions &= ~direction
+				break
 
 
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node2 = target
-							break
+		for(var/direction in cardinal)
+			if(direction&connect_directions)
+				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+					if(target.initialize_directions & get_dir(target,src))
+						node2 = target
+						break
 
-					connect_directions &= ~direction
-					break
+				connect_directions &= ~direction
+				break
 
 
-			for(var/direction in cardinal)
-				if(direction&connect_directions)
-					for(var/obj/machinery/atmospherics/target in get_step(src,direction))
-						if(target.initialize_directions & get_dir(target,src))
-							node3 = target
-							break
+		for(var/direction in cardinal)
+			if(direction&connect_directions)
+				for(var/obj/machinery/atmospherics/target in get_step(src,direction))
+					if(target.initialize_directions & get_dir(target,src))
+						node3 = target
+						break
 
-					connect_directions &= ~direction
-					break
+				connect_directions &= ~direction
+				break
 
-			var/turf/T = src.loc			// hide if turf is not intact
-			hide(T.intact)
-			//UpdateIcon()
+		var/turf/T = src.loc			// hide if turf is not intact
+		hide(T.intact)
+		//UpdateIcon()
