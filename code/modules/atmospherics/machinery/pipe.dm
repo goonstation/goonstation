@@ -859,15 +859,7 @@ obj/machinery/atmospherics/pipe
 
 		New()
 			..()
-			switch(dir)
-				if(NORTH)
-					initialize_directions = EAST|SOUTH|WEST
-				if(SOUTH)
-					initialize_directions = WEST|NORTH|EAST
-				if(EAST)
-					initialize_directions = SOUTH|WEST|NORTH
-				if(WEST)
-					initialize_directions = NORTH|EAST|SOUTH
+			initialize_directions = (NORTH|SOUTH|EAST|WEST) ^ dir
 
 		hide(var/i)
 			if(level == 1 && istype(loc, /turf/simulated))
