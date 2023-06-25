@@ -5,6 +5,7 @@
 	uses_pref_name = FALSE
 
 	var/static/starting_freq = null
+	var/salvager_points
 
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
@@ -98,6 +99,12 @@
 
 		. = sanitize_frequency(.)
 		starting_freq = .
+
+	handle_round_end(log_data)
+		var/list/dat = ..()
+		if (length(dat))
+			dat.Insert(2,"They collected [src.salvager_points] points worth of material.")
+		return dat
 
 /datum/job/special/salvager
 	name = "Salvager"
