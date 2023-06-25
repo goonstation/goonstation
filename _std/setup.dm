@@ -121,6 +121,9 @@ var/ZLOG_START_TIME
 // this handles StrongDMM (and other editors using SpacemanDMM parser), toggle it manually if using a different editor
 #if (defined(SPACEMAN_DMM) || defined(FASTDMM))
 #define IN_MAP_EDITOR
+#if (defined(USE_PERSPECTIVE_EDITOR_WALLS))
+	#define PERSPECTIVE_EDITOR_WALL
+#endif
 #endif
 
 //do we want to check incoming clients to see if theyre using a vpn?
