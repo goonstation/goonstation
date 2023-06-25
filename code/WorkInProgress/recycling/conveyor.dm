@@ -627,7 +627,6 @@ TYPEINFO(/obj/machinery/conveyor) {
 		user.remove_pulling()
 	return
 
-
 // make the conveyor broken
 // also propagate inoperability to any connected conveyor with the same ID
 /obj/machinery/conveyor/proc/broken()
@@ -690,6 +689,11 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 		. = ..()
 
+/obj/machinery/conveyor/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.id = null
+	src.next_conveyor = null
+	src.linked_switches = list()
 /obj/item/debug_conveyor_layer
 	name = "conveyor layer"
 	icon = 'icons/obj/recycling.dmi'
