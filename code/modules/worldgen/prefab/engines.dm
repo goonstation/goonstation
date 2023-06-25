@@ -127,6 +127,8 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 					continue
 				choices += prefab.name
 		var/engine_choice = tgui_input_list(user, "Choose an engine type!", "Engine Selector", choices)
+		if(src.disposed)
+			return //don't apply twice
 		new /obj/landmark/engine_computer/one(src.loc) //replace our computer landmark so it can be swapped out
 		for_by_tcl(landmark, /obj/landmark/engine_room)
 			landmark.apply(engine_choice)
