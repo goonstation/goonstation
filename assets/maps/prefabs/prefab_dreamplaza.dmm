@@ -513,7 +513,7 @@
 	pixel_y = 5
 	},
 /obj/table/neon/auto,
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/marble/border_wb{
 	dir = 8
 	},
@@ -684,7 +684,7 @@
 	pixel_x = -6;
 	pixel_y = 13
 	},
-/obj/item/spacecash/random/small,
+/obj/item/currency/spacecash/small,
 /turf/simulated/floor/purple/checker,
 /area/prefab/dreamplaza)
 "wT" = (

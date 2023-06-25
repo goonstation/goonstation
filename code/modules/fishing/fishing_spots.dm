@@ -49,7 +49,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
 	user.put_in_hand_or_drop(fish)
 	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
-	playsound(user, 'sound/effects/fish_catch.ogg', 50, 1)
+	playsound(user, 'sound/effects/fish_catch.ogg', 75, 1)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 
@@ -68,6 +68,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
 	/mob/living/carbon/human/npc/monkey/sea = 5,\
+	/obj/item/fish/barracuda = 5,\
+	/obj/item/fish/sailfish = 2,\
 	/obj/item/fish/sardine = 20)
 
 /datum/fishing_spot/swamp
@@ -106,6 +108,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/reagent_containers/food/snacks/shell = 20, \
 	/obj/item/reagent_containers/food/snacks/burger/moldy = 5, \
 	/obj/item/raw_material/scrap_metal = 5, \
+	/obj/item/fish/dace = 5,\
+	/obj/item/fish/minnow = 5,\
 	/obj/item/fish/bass = 9,\
 	/obj/item/fish/salmon = 7,\
 	/obj/item/fish/herring = 6,\
@@ -169,17 +173,34 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/coelacanth = 5,\
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
+	/obj/item/fish/barracuda = 5,\
+	/obj/item/fish/sailfish = 2,\
 	/obj/item/fish/sardine = 20)
 
 /datum/fishing_spot/nuclear_reactor
 	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor
 	rod_tier_required = 2
-	fish_available = list(/obj/item/fish/carp = 40,\
+	fish_available = list(/obj/item/fish/goldfish = 30,\
+	/obj/item/fish/bass = 20,\
+	/obj/item/fish/salmon = 20,\
+	/obj/item/fish/carp = 15,\
+	/obj/item/fish/rainbow_trout = 10,\
+	/obj/item/fish/chub = 10,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/arapaima = 10,\
+	/obj/item/fish/eel = 15,\
+	/obj/item/fish/catfish = 20,\
+	/obj/item/fish/tiger_oscar = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
-	/obj/item/fish/coelacanth = 5,\
+	/obj/item/fish/tuna = 10,\
+	/obj/item/fish/cod = 15,\
+	/obj/item/fish/flounder = 10,\
+	/obj/item/fish/mahimahi = 10,\
+	/obj/item/fish/shrimp = 15,\
+	/obj/item/fish/sardine = 20,\
 	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake = 1)
 
 	generate_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
@@ -203,7 +224,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/eel = 15,\
+	/obj/item/fish/catfish = 20,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
@@ -231,7 +254,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/eel = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
@@ -249,6 +273,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 10,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 /datum/fishing_spot/water_cooler
@@ -263,6 +289,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 /datum/fishing_spot/kitchen_sink
@@ -272,12 +300,14 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
-	/obj/item/fish/tuna = 10,\
-	/obj/item/fish/cod = 15,\
+	/obj/item/fish/dace = 15,\
+	/obj/item/fish/minnow = 15,\
 	/obj/item/fish/flounder = 10,\
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
 	/obj/item/fish/sardine = 20,\
+	/obj/item/fish/barracuda = 5,\
+	/obj/item/fish/sailfish = 2,\
 	/obj/item/clothing/head/chefhat = 10,\
 	/obj/item/reagent_containers/food/snacks/swedish_fish = 10)
 
@@ -289,11 +319,16 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/chub = 10,\
+	/obj/item/fish/catfish = 20,\
+	/obj/item/fish/tiger_oscar = 15,\
+	/obj/item/fish/eel = 15,\
 	/obj/item/fish/herring = 15,\
 	/obj/item/fish/red_herring = 5,\
 	/obj/item/fish/flounder = 10,\
 	/obj/item/fish/mahimahi = 10,\
 	/obj/item/fish/shrimp = 15,\
+	/obj/item/fish/barracuda = 5,\
+	/obj/item/fish/sailfish = 2,\
 	/obj/item/fish/sardine = 20)
 
 /datum/fishing_spot/bathtub
@@ -305,7 +340,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/arapaima = 10,\
+	/obj/item/fish/eel = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
@@ -329,12 +366,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
 	/obj/item/fish/mandarin_fish = 5,\
-	/obj/item/fish/tuna = 10,\
-	/obj/item/fish/cod = 15,\
-	/obj/item/fish/flounder = 10,\
-	/obj/item/fish/mahimahi = 10,\
-	/obj/item/fish/shrimp = 15,\
-	/obj/item/fish/sardine = 20)
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30)
 
 /datum/fishing_spot/watertank/big
 	fishing_atom_type = /obj/reagent_dispensers/watertank/big
@@ -345,7 +378,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/fish/herring = 40,\
 	/obj/item/fish/tuna = 30,\
 	/obj/item/fish/cod = 20,\
+	/obj/item/fish/dace = 15,\
+	/obj/item/fish/minnow = 15,\
 	/obj/item/fish/flounder = 15,\
+	/obj/item/fish/barracuda = 5,\
+	/obj/item/fish/sailfish = 2,\
 	/obj/critter/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
 	/obj/critter/frog = 10)
@@ -354,16 +391,18 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/plantpot
 	rod_tier_required = 1
 	fish_available = list(/obj/item/fish/goldfish = 20,\
+	/obj/item/fish/dace = 5,\
+	/obj/item/fish/minnow = 5,\
 	/obj/item/plant/herb/grass = 20,\
 	/obj/critter/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
 	/obj/critter/frog = 10)
-/*
+
 /datum/fishing_spot/blob
 	fishing_atom_type = /obj/blob
 	rod_tier_required = 2
 	fish_available = list(/obj/item/fish/blobfish = 25)
-*/
+
 // Trash fishing spots
 /datum/fishing_spot/disposal_chute // doesn't work yet
 	fishing_atom_type = /obj/machinery/disposal
@@ -391,6 +430,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 /datum/fishing_spot/bucket
@@ -405,6 +446,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 /datum/fishing_spot/drain
@@ -412,11 +455,17 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 1
 	fish_available = list(/obj/item/fish/goldfish = 30,\
 	/obj/item/fish/bass = 20,\
+	/obj/item/fish/dace = 15,\
+	/obj/item/fish/minnow = 15,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/arapaima = 10,\
+	/obj/item/fish/catfish = 20,\
+	/obj/item/fish/tiger_oscar = 15,\
+	/obj/item/fish/eel = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20)
 
@@ -533,7 +582,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/arapaima = 10,\
+	/obj/item/fish/eel = 15,\
+	/obj/item/fish/catfish = 20,\
+	/obj/item/fish/tiger_oscar = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
@@ -555,7 +608,11 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/carp = 15,\
 	/obj/item/fish/rainbow_trout = 10,\
 	/obj/item/fish/chub = 10,\
-	/obj/item/fish/carp = 40,\
+	/obj/item/fish/pike = 10,\
+	/obj/item/fish/arapaima = 10,\
+	/obj/item/fish/eel = 15,\
+	/obj/item/fish/catfish = 20,\
+	/obj/item/fish/tiger_oscar = 15,\
 	/obj/item/fish/bass = 30,\
 	/obj/item/fish/salmon = 20,\
 	/obj/item/fish/herring = 15,\
@@ -592,6 +649,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 //martian wallholes
@@ -629,7 +688,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/vending
 	rod_tier_required = 1
 	fish_available = list(/obj/item/coin = 25,\
-	/obj/item/spacecash/random/really_small = 20)
+	/obj/item/currency/spacecash/really_small = 20)
 
 //Arc electroplater
 /datum/fishing_spot/arc_electroplater
@@ -678,6 +737,8 @@ datum/fishing_spot/golden_toilet
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 10,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 //elevator shafts
@@ -705,6 +766,8 @@ datum/fishing_spot/golden_toilet
 	/obj/item/fish/blue_tang = 15,\
 	/obj/item/fish/firefish = 5,\
 	/obj/item/fish/yellow_tang = 15,\
+	/obj/item/fish/lionfish = 15,\
+	/obj/item/fish/betta = 30,\
 	/obj/item/fish/mandarin_fish = 5)
 
 //ice cream machine
@@ -728,3 +791,4 @@ datum/fishing_spot/golden_toilet
 	/obj/item/disk/data/floppy/demo = 25,\
 	/obj/item/disk/data/cartridge/clown = 15,\
 	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
+
