@@ -192,7 +192,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		To change the conveyor belt's direction, link it to a conveyor belt switch through a <b>mulitool</b> by click-dragging one to another.
 		To close the conveyor belt's cover and make it operational again, simply use a <b>screwdriver</b> on it."}
 	else
-		return "To open the conveyor belt's cover and make any changes to it, use a <b>screwdriver</b> on it. For more instructions on it, see the help message with it's cover open."
+		return "To open the conveyor belt's cover and make any changes to it, use a <b>screwdriver</b> on it."
 
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
