@@ -25,16 +25,20 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 				comp2type = /obj/machinery/computer/power_monitor
 
 		for_by_tcl(comp, /obj/landmark/engine_computer)
+			showswirl(comp, TRUE)
 			if(istype(comp, /obj/landmark/engine_computer/one))
 				comp.replaceWith(comp1type)
 			else
 				comp.replaceWith(comp2type)
 
+		for(var/turf/T in block(target, locate(props.maxX, props.maxY, target.z)))
+			leaveresidual(T)
 
-			for(var/obj/O in bounds(target, -1, -1, props.maxX+2, props.maxY+2))
+		for(var/turf/T in block(locate(target.x-1, target.y-1, target.z), locate(props.maxX+2, props.maxY+2, target.z)))
+			for(var/obj/O in T)
 				O.initialize()
 				O.UpdateIcon()
-			makepowernets()
+		makepowernets()
 
 
 /obj/landmark/engine_room

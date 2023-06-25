@@ -49837,12 +49837,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "ieV" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 5
-	},
 /obj/disposalpipe/segment,
 /obj/cable{
 	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
@@ -56136,6 +56136,13 @@
 	dir = 9
 	},
 /area/station/engine/elect)
+"oJC" = (
+/obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/engine/inner)
 "oKj" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -56794,6 +56801,9 @@
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
+/obj/cable/brown{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "pui" = (
@@ -56837,7 +56847,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "pwv" = (
@@ -57073,10 +57086,6 @@
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "pDb" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8;
-	level = 2
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -57084,6 +57093,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated,
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -57504,9 +57514,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "pXI" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 4
-	},
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -58179,6 +58186,9 @@
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/hotloop)
 "qBh" = (
@@ -63029,6 +63039,9 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "vbu" = (
@@ -65287,9 +65300,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "xhj" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10
-	},
 /obj/disposalpipe/segment{
 	dir = 1
 	},
@@ -112126,7 +112136,7 @@ uKI
 uKI
 gWZ
 eJV
-btv
+bqk
 iIP
 iEJ
 qAr
@@ -112429,8 +112439,8 @@ wpy
 nsT
 puK
 xhj
-wpy
-wpy
+oJC
+oJC
 ieV
 exH
 pUY

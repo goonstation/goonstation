@@ -117,6 +117,16 @@
 	},
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/inner)
+"pA" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
 "pO" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -135,6 +145,16 @@
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "rk" = (
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"tS" = (
+/obj/cable/brown{
+	icon_state = "1-2"
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 4
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "up" = (
@@ -174,10 +194,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "yp" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
+/obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
-/obj/machinery/meter,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "zw" = (
@@ -226,17 +246,28 @@
 "De" = (
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/inner)
-"Fg" = (
+"ES" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 6
+	dir = 5
 	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"Fg" = (
 /obj/machinery/meter,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Hy" = (
 /obj/cable/brown{
 	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
+"HF" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
@@ -260,16 +291,6 @@
 "KG" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
-"KI" = (
-/obj/cable/brown{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
@@ -302,18 +323,10 @@
 /area/station/engine/inner)
 "OO" = (
 /obj/cable/brown,
-/obj/machinery/atmospherics/binary/reactor_turbine,
 /obj/cable/brown{
-	icon_state = "1-4"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/engine,
-/area/station/engine/inner)
-"PC" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/atmospherics/binary/reactor_turbine,
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "PX" = (
@@ -324,13 +337,6 @@
 	target_pressure = 1e+031
 	},
 /turf/simulated/floor/engine/caution/east,
-/area/station/engine/inner)
-"Sd" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0;
-	dir = 5
-	},
-/turf/simulated/floor/engine,
 /area/station/engine/inner)
 "Tp" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -420,10 +426,10 @@ TC
 "}
 (4,1,1) = {"
 Kv
-AH
-HS
+fi
+pA
 Fg
-Sd
+rk
 rk
 rk
 AH
@@ -433,10 +439,10 @@ IG
 "}
 (5,1,1) = {"
 Kv
-AH
-HS
 rk
 HS
+rk
+rk
 rk
 rk
 AH
@@ -446,10 +452,10 @@ hS
 "}
 (6,1,1) = {"
 up
-XE
 mP
+tS
 OO
-KI
+mP
 ap
 rk
 Cw
@@ -459,10 +465,10 @@ lh
 "}
 (7,1,1) = {"
 Kv
-AH
-HS
 rk
 HS
+rk
+rk
 Hy
 mP
 XE
@@ -472,10 +478,10 @@ hc
 "}
 (8,1,1) = {"
 Kv
-AH
+rk
 HS
 yp
-HS
+rk
 rk
 rk
 AH
@@ -485,10 +491,10 @@ MU
 "}
 (9,1,1) = {"
 Kv
-fi
-PC
-Bm
+rk
 HS
+HF
+ES
 zw
 AX
 Bm

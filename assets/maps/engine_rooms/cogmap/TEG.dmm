@@ -684,9 +684,6 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core)
 "Ru" = (
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/grey,
 /area/station/engine/inner)
