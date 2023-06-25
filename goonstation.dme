@@ -577,6 +577,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\banshark.dm"
 #include "code\modules\admin\bioeffectmanager.dm"
 #include "code\modules\admin\bomb_monitor.dm"
+#include "code\modules\admin\ca_viewer.dm"
 #include "code\modules\admin\centcomviewer.dm"
 #include "code\modules\admin\create.dm"
 #include "code\modules\admin\custom_spawn_event.dm"
