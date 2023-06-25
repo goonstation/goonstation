@@ -90,8 +90,9 @@ datum/mind
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
 			return
-
+		var/mob/old_mob = null
 		if (current)
+			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
@@ -121,7 +122,7 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
-		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
+		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
 
 
 	proc/swap_with(mob/target)
@@ -198,8 +199,13 @@ datum/mind
 	proc/set_miranda(new_text)
 		miranda = new_text
 
+	proc/get_miranda()
+		if (isproc(src.miranda)) //imfunctionalprogrammer
+			return call(src.miranda)()
+		return src.miranda
+
 	proc/show_miranda(mob/recipient)
-		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[miranda]"
+		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[src.get_miranda()]"
 
 		recipient.Browse(output,"window=miranda;title=Miranda Rights")
 
@@ -217,7 +223,7 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
 		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
@@ -236,7 +242,7 @@ datum/mind
 		return FALSE
 
 	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
-	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
+	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_CONVERTED, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
 		if (!master)
 			return FALSE
 		// To avoid wacky shenanigans
@@ -251,7 +257,7 @@ datum/mind
 				return TRUE
 		return FALSE
 
-	proc/add_generic_antagonist(role_id, display_name, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
+	proc/add_generic_antagonist(role_id, display_name, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		if (!role_id || !display_name)
 			return FALSE
 		// Check for mutual exclusivity for real antagonists.

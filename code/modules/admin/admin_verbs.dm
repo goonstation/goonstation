@@ -369,6 +369,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_disco_lights,
 		/client/proc/cmd_blindfold_monkeys,
 		/client/proc/cmd_terrainify_station,
+		/client/proc/cmd_caviewer,
 		/client/proc/cmd_custom_spawn_event,
 		/client/proc/cmd_special_shuttle,
 		/client/proc/toggle_radio_maptext,
@@ -2504,7 +2505,7 @@ var/list/fun_images = list()
 	var/total = 0
 	for (var/client/client in clients)
 		for (var/datum/antagonist/antag in client.mob.mind.antagonists)
-			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START)
+			if (antag.assigned_by == ANTAGONIST_SOURCE_ROUND_START && !antag.pseudo)
 				boutput(src, "Giving token to roundstart [antag.display_name] [key_name(client.mob)]...")
 				total += 1
 				client.set_antag_tokens(client.antag_tokens + 1)
