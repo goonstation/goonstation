@@ -19488,6 +19488,9 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/hangar)
 "bdW" = (
@@ -40649,11 +40652,10 @@
 /area/station/ranch)
 "duw" = (
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-2"
 	},
-/obj/machinery/power/apc/autoname_south,
-/turf/simulated/floor,
-/area/research_outpost/chamber)
+/turf/simulated/floor/caution/south,
+/area/research_outpost/hangar)
 "dvD" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/small/autoname{
@@ -42477,6 +42479,12 @@
 /obj/item/device/radio/intercom/cargo,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"iIe" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/research_outpost/hangar)
 "iIT" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -42523,6 +42531,9 @@
 "iMs" = (
 /obj/cable{
 	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -42927,11 +42938,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/turf/simulated/floor,
-/area/research_outpost/chamber)
+/turf/simulated/floor/shuttlebay,
+/area/research_outpost/hangar)
 "jMz" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
@@ -44050,6 +44058,9 @@
 "nvJ" = (
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
@@ -45801,6 +45812,12 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
+"tOE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor,
+/area/research_outpost/hangar)
 "tPK" = (
 /obj/shrub,
 /obj/landmark/spawner/loot,
@@ -46094,6 +46111,12 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/janitor/office)
+"uZz" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/research_outpost/hangar)
 "vac" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin,
@@ -129347,11 +129370,11 @@ bZd
 bZd
 tWw
 nvJ
-aRD
-cHP
-bdU
-bdU
-bdU
+tOE
+duw
+jMv
+jMv
+uZz
 bdU
 beb
 aqn
@@ -129653,7 +129676,7 @@ aRD
 cHP
 gyC
 bdF
-bdU
+iIe
 gyC
 beb
 aqn
@@ -130257,7 +130280,7 @@ bds
 bds
 bbg
 ksg
-ksg
+jwF
 bec
 mZL
 aqn
@@ -131764,7 +131787,7 @@ beh
 fTt
 wfi
 wfi
-jMv
+wfi
 kgN
 fhb
 prZ
@@ -132066,7 +132089,7 @@ azm
 luP
 phi
 mIT
-duw
+mIT
 bdt
 sso
 prZ
