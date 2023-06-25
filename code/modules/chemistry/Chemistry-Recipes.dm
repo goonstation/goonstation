@@ -2004,7 +2004,7 @@ datum
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
 						explosion_new(my_atom, location, 2.25/amt)
-						fireflash(location, 0)
+						fireflash(location, ,0)
 				return
 
 		magnesium_chloride
@@ -3481,10 +3481,7 @@ datum
 			required_reagents = list("sewage" = 5, "beff" = 4)
 
 
-
-
-
-	catdrugs
+		catdrugs
 			name = "Cat Drugs"
 			id = "catdrugs"
 			result = "catdrugs"
@@ -3493,7 +3490,6 @@ datum
 			required_reagents = list("catonium" = 1, "psilocybin" = 1, "ammonia" = 1, "fuel" = 1)
 			mix_phrase = "The mixture hisses oddly."
 			mix_sound = 'sound/voice/animal/cat_hiss.ogg'
-
 
 		boilpee // a shameful cogwerks. hobo chemistry, assistant-sourcable source of ammonia for various other reactions.
 			name = "Boiled Pee"
@@ -4248,7 +4244,7 @@ datum
 			result = "lime"
 			required_reagents = list("calcium_carbonate" = 1)
 			result_amount = 1
-			min_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
+			required_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
 			mix_phrase = "The white powder settles into little clusters of powder."
 			mix_sound = 'sound/misc/fuse.ogg'
 
