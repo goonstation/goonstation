@@ -2004,7 +2004,7 @@ datum
 						location = pick(holder.covered_cache)
 						holder.covered_cache -= location
 						explosion_new(my_atom, location, 2.25/amt)
-						fireflash(location, ,0)
+						fireflash(location, 0)
 				return
 
 		magnesium_chloride
@@ -3472,7 +3472,7 @@ datum
 			name = "E.Coli 2"
 			id = "E.Coli 2"
 			result = "e.coli"
-			min_reagents = list("sewage" = 5, "meat_slurry" = 4)
+			required_reagents = list("sewage" = 5, "meat_slurry" = 4)
 
 		ecoli/ecoli3
 			name = "E.Coli 3"
@@ -4244,7 +4244,7 @@ datum
 			result = "lime"
 			required_reagents = list("calcium_carbonate" = 1)
 			result_amount = 1
-			required_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
+			min_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
 			mix_phrase = "The white powder settles into little clusters of powder."
 			mix_sound = 'sound/misc/fuse.ogg'
 
