@@ -91,6 +91,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
+	var/list/friends = list()
+
 	var/pull_w_class = W_CLASS_SMALL
 
 	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
@@ -1323,6 +1325,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (C in src.friends) return FALSE
 		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
