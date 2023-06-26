@@ -34,6 +34,7 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
+			container.update_icon()
 		M.death(FALSE)
 
 /obj/mapping_helper/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
@@ -134,8 +135,8 @@
 
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
-			container.update_icon()
 			H.set_loc(container)
+			container.update_icon()
 
 	do_damage(var/mob/living/carbon/human/H) // Override if you want specific damage numbers / types
 		H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
@@ -214,5 +215,5 @@
 
 //////////////////////// Critter corpses ////////////////////////
 
-/obj/mob_spawn/corpse/critter/owl
+/obj/mapping_helper/mob_spawn/corpse/critter/owl
 	spawn_type = /mob/living/critter/small_animal/bird/owl
