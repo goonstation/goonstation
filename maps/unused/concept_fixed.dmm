@@ -838,11 +838,9 @@
 	},
 /area/station/garden/owlery)
 "abH" = (
-/obj/critter/owl{
-	aggressive = 0;
-	angertext = "hoots uncontrollably at";
-	atkcarbon = 1;
-	health = 10000;
+/mob/living/critter/small_animal/bird/owl{
+	health_brute = 200;
+	health_burn = 200;
 	name = "Hooty McOwlface"
 	},
 /turf/simulated/floor/grass{
@@ -20305,9 +20303,7 @@
 /area/station/crew_quarters/fitness)
 "aMU" = (
 /obj/poolwater,
-/obj/critter/sealpup{
-	tag = "icon-seal (EAST)";
-	icon_state = "seal";
+/mob/living/critter/small_animal/seal{
 	dir = 4
 	},
 /turf/simulated/floor{
@@ -20831,9 +20827,9 @@
 /area/station/crew_quarters/fitness)
 "aNQ" = (
 /obj/poolwater,
-/obj/critter/walrus{
+/mob/living/critter/small_animal/walrus{
 	name = "Willy the Space Walrus";
-	opensdoors = 0
+	
 	},
 /turf/simulated/floor{
 	icon = 'icons/turf/floors.dmi';

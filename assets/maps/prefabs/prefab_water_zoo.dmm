@@ -9,7 +9,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/zoo)
 "d" = (
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

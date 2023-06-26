@@ -20,8 +20,8 @@
 						/mob/living/critter/small_animal/mouse,
 						/obj/critter/opossum,
 						/obj/critter/parrot/eclectus,
-						/obj/critter/pig,
-						/obj/critter/walrus)
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/walrus)
 
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
