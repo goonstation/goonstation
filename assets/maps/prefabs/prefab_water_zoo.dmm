@@ -8,12 +8,6 @@
 "c" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/zoo)
-"d" = (
-/obj/critter/zombie,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/prefab/zoo)
 "e" = (
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -21,6 +15,12 @@
 /area/prefab/zoo)
 "f" = (
 /obj/critter/microman,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"g" = (
+/mob/living/critter/zombie,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -63,10 +63,6 @@
 "m" = (
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/black/grime,
-/area/prefab/zoo)
-"n" = (
-/obj/mob_spawn/corpse/critter/random/martian,
-/turf/simulated/floor/plating,
 /area/prefab/zoo)
 "o" = (
 /obj/storage/crate/loot,
@@ -166,6 +162,10 @@
 	name = "astroturf"
 	},
 /area/prefab/zoo)
+"V" = (
+/obj/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
 "X" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/item/clothing/shoes/clown_shoes/blue,
@@ -221,7 +221,7 @@ b
 a
 a
 c
-n
+V
 q
 c
 w
@@ -274,7 +274,7 @@ b
 (6,1,1) = {"
 b
 c
-d
+g
 e
 k
 l

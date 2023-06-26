@@ -64,7 +64,7 @@
 		"Brullbar" = /mob/living/critter/brullbar,
 		"Brullbar (king)" = /mob/living/critter/brullbar/king,
 		"Zapping Robot" = /mob/living/critter/robotic/repairbot/security,
-		"Zombie" = /obj/critter/zombie,
-		"Zombie (science)"  = /obj/critter/zombie/scientist,
-		"Zombie (security)"  = /obj/critter/zombie/security,
+		"Zombie" = /mob/living/critter/zombie,
+		"Zombie (science)"  = /mob/living/critter/zombie/scientist,
+		"Zombie (security)"  = /mob/living/critter/zombie/security,
 	)
