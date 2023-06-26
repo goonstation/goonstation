@@ -221,7 +221,7 @@
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(16))
-				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+				new /mob/living/critter/small_animal/hallucigenia(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
