@@ -487,7 +487,6 @@
 			return
 		if (!gibbed)
 			src.gib()
-		return ..()
 
 /*/mob/living/critter/mechmonstrosity/test
 	name = "Mechanical Monstrosity"
