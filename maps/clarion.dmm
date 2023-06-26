@@ -21545,13 +21545,13 @@
 	},
 /area/station/engine/gas)
 "bDs" = (
-/obj/machinery/portable_atmospherics/canister/empty,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
 /area/station/engine/gas)
 "bDt" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
@@ -21596,14 +21596,6 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/west,
 /area/station/engine/gas)
-"bEp" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/simulated/floor,
-/area/station/engine/gas)
-"bEq" = (
-/obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor,
-/area/station/engine/gas)
 "bEr" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/caution/east{
@@ -21638,19 +21630,9 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/west)
-"bEV" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
-/turf/simulated/floor/caution/west,
-/area/station/engine/gas)
 "bEW" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
-/area/station/engine/gas)
-"bEX" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/caution/east{
-	dir = 8
-	},
 /area/station/engine/gas)
 "bFn" = (
 /obj/submachine/cargopad{
@@ -21732,7 +21714,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/substation/east)
 "bFB" = (
-/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/gas)
 "bFC" = (
@@ -21741,11 +21723,11 @@
 /area/station/engine/gas)
 "bFD" = (
 /obj/machinery/light,
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/caution/south,
 /area/station/engine/gas)
 "bFE" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor{
 	dir = 8;
 	icon_state = "corner_east"
@@ -33047,6 +33029,10 @@
 /obj/access_spawn,
 /turf/simulated/floor/plating,
 /area/station/chapel/funeral_parlor)
+"kYh" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/simulated/floor,
+/area/station/engine/gas)
 "kYD" = (
 /turf/space,
 /area/shuttle/escape/station)
@@ -73434,7 +73420,7 @@ oGs
 mVD
 bDr
 bEo
-bEV
+bEo
 bFB
 bzU
 aaH
@@ -73690,7 +73676,7 @@ enl
 wZA
 lxl
 bDs
-bEp
+bEW
 bEW
 bFC
 xEm
@@ -73947,8 +73933,8 @@ sml
 xOX
 bCp
 bDt
-bEq
-bEW
+kYh
+kYh
 bFD
 xEm
 aaI
@@ -74205,7 +74191,7 @@ qdv
 bCp
 bDu
 bEr
-bEX
+bEr
 bFE
 bGg
 jxr
