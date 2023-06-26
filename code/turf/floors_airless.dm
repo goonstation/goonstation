@@ -30,14 +30,6 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
-	proc/MakeCatwalk(var/obj/item/rods/rods)
-		if (rods)
-			rods.change_stack_amount(-1)
-
-		var/obj/grille/catwalk/catwalk = new
-		catwalk.setMaterial(rods?.material)
-		catwalk.set_loc(src)
-
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
 			var/actionbar_duration = 2 SECONDS

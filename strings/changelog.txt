@@ -1,4 +1,6 @@
 (t)sun jun 25 23
+(u)aloe
+(+)Petting werewolves now gets you bit.
 (u)LeahTheTech
 (+)Inspectors now have unique "miranda rights"
 (t)sat jun 24 23
