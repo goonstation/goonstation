@@ -245,7 +245,7 @@ Custom Books
 	desc = "A very rare first print of the fabled Space Law book."
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "lawbook"
-	file_path = "strings/books/space_law.txt"
+	file_path = "strings/books/space_law_old.txt"
 
 	density = 0
 	opacity = 0
