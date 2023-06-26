@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	mutant_appearance_flags = HUMAN_APPEARANCE_FLAGS
 	dna_mutagen_banned = FALSE
 	race_mutation = /datum/bioEffect/mutantrace/human
-	
+
 /datum/mutantrace/blob // podrick's july assjam submission, it's pretty cute
 	name = "blob"
 	icon = 'icons/mob/blob_ambassador.dmi'
@@ -1292,6 +1292,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /datum/mutantrace/abomination/admin/weak //This also does not get any of the OnLife effects
 	ruff_tuff_and_ultrabuff = 0
 
+/// Probability someone gets bit when patting a werewolf
+#define SNAP_PROB 50
 /datum/mutantrace/werewolf
 	name = "werewolf"
 	icon = 'icons/mob/werewolf.dmi'
@@ -1337,12 +1339,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.max_health += 50
 			health_update_queue |= src.mob
 			src.original_name = src.mob.real_name
-			src.mob.real_name = "werewolf"
+			src.mob.real_name = "Werewolf"
 			src.mob.UpdateName()
 
 			src.mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
 			src.mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
+
+			RegisterSignal(src.mob, COMSIG_ATTACKHAND, PROC_REF(snap_at_maybe))
 
 	disposing()
 		if (ishuman(src.mob))
@@ -1360,6 +1364,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.bioHolder.RemoveEffect("protanopia")
 			src.mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
+
+			UnregisterSignal(src.mob, COMSIG_ATTACKHAND)
 
 			if (!isnull(src.original_name))
 				src.mob.real_name = src.original_name
@@ -1411,6 +1417,18 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					SPAWN(1 SECOND)
 						src.mob?.emote_allowed = 1
 		return message
+
+	/// Has a chance to snap at mobs that try to pet them.
+	/// We don't really have a 'bite' proc and the damage/bleed procs are all kinds of fucked up so I'm just reusing the arms
+	proc/snap_at_maybe(mob/source, mob/target)
+		if (prob(SNAP_PROB) && target.a_intent == INTENT_HELP)
+			playsound(src.mob, 'sound/voice/animal/werewolf_attack1.ogg', 60, TRUE)
+			src.mob.visible_message("<span class='alert'>[src.mob] snaps at [target]!</span>", "<span class='alert'>You snap at [target]!</span>")
+			src.mob.set_a_intent(INTENT_HARM)
+			src.mob.hand_attack(target)
+
+#undef SNAP_PROB
+
 
 /datum/mutantrace/hunter
 	name = "hunter"
