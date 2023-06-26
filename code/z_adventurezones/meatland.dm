@@ -433,27 +433,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
 
-/obj/critter/zombie/meatmonaut
-	name = "Lost Cosmonaut"
-	desc = "Soviet presence near NT stations is rarely overt. For good reasons, as this fellow probably learned too late.  Seriously, where is his face? Grody."
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "sovmeat"
-	health = 26
-	brutevuln = 0.6
-	atcritter = 0
-	eats_brains = 0
-	generic = 0
-
-	ChaseAttack(mob/M)
-		if(!attacking)
-			src.CritterAttack(M)
-		return
-
-	CritterAttack(mob/M)
-		if (prob(20))
-			playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
-		return ..()
-
 /obj/item/disk/data/fixed_disk/meatland
 
 	New()

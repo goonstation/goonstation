@@ -199,8 +199,13 @@ datum/mind
 	proc/set_miranda(new_text)
 		miranda = new_text
 
+	proc/get_miranda()
+		if (isproc(src.miranda)) //imfunctionalprogrammer
+			return call(src.miranda)()
+		return src.miranda
+
 	proc/show_miranda(mob/recipient)
-		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[miranda]"
+		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[src.get_miranda()]"
 
 		recipient.Browse(output,"window=miranda;title=Miranda Rights")
 

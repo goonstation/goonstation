@@ -1780,8 +1780,8 @@
 
 							LAGCHECK(LAG_MED)
 							var/crabMax = 5
-							for (var/obj/critter/crab/party/responseCrab in range(7, src))
-								if (!responseCrab.alive)
+							for (var/mob/living/critter/small_animal/crab/party/responseCrab in range(7, src))
+								if (is_incapacitated(responseCrab))
 									continue
 								if (crabMax-- < 0)
 									break

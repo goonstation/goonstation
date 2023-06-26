@@ -1455,12 +1455,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/critter/slug))
-			var/obj/critter/slug/S = AM
-			S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-			S.CritterDeath()
-			return
-		else if (!isliving(AM) || isobj(AM) || isintangible(AM))
+		if (!isliving(AM) || isobj(AM) || isintangible(AM))
 			return
 		var/mob/M = AM
 		var/oopschance = 0
