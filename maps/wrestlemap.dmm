@@ -5175,6 +5175,10 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
+"cec" = (
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "ceg" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "East Hallway"
@@ -8862,16 +8866,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"dDw" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "dDK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19986,6 +19980,20 @@
 /obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"iwL" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/chem_heater/chemistry,
+/obj/machinery/light,
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/station/medical/medbay/pharmacy)
 "ixn" = (
 /obj/table/reinforced/auto,
 /obj/item/stamp,
@@ -37017,20 +37025,6 @@
 	dir = 5
 	},
 /area/station/science/lobby)
-"pLm" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/chem_heater,
-/obj/machinery/light,
-/turf/simulated/floor/bluewhite{
-	dir = 10
-	},
-/area/station/medical/medbay/pharmacy)
 "pLE" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -40829,10 +40823,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
-"roI" = (
-/obj/machinery/chem_heater,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "roJ" = (
 /obj/reagent_dispensers/foamtank,
 /obj/decal/tile_edge/stripe{
@@ -48222,6 +48212,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
+"utq" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "utx" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -87926,7 +87926,7 @@ xzy
 iOe
 xWX
 cAn
-roI
+cec
 iSp
 fgq
 cJy
@@ -88491,7 +88491,7 @@ aTU
 bYu
 cHY
 hsU
-pLm
+iwL
 aTU
 hPL
 dFx
@@ -89130,7 +89130,7 @@ onw
 vDW
 oNm
 sYp
-roI
+cec
 aYI
 xzy
 dQP
@@ -89736,7 +89736,7 @@ xzy
 sYp
 jQJ
 rYQ
-roI
+cec
 cAn
 sYc
 vMw
@@ -109932,7 +109932,7 @@ fAg
 fAg
 nQE
 htx
-dDw
+utq
 fAg
 kqR
 kSN

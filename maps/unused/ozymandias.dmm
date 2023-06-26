@@ -36804,7 +36804,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/office)
 "jCQ" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -59532,7 +59532,7 @@
 /turf/space,
 /area/space)
 "pqQ" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "pqR" = (
@@ -67120,7 +67120,7 @@
 /turf/simulated/floor/engine/caution/south,
 /area/station/science/teleporter)
 "rnv" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -10
@@ -84093,7 +84093,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "vmY" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "vnd" = (
@@ -86075,7 +86075,6 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -90872,7 +90871,7 @@
 /turf/simulated/floor/purplewhite,
 /area/station/science/lobby)
 "wPn" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/blueblack/corner{
 	dir = 8
 	},

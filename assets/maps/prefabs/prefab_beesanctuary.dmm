@@ -577,7 +577,7 @@
 /turf/unsimulated/floor/caution/corner/ne,
 /area/prefab/bee_sanctuary)
 "uc" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/purpleblack{
 	dir = 6
 	},
@@ -1646,7 +1646,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/dirt5,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "Vd" = (
