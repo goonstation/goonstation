@@ -1,5 +1,14 @@
 
 (t)mon jun 26 23
+(u)Amylizzle
+(p)14596
+(e)🗺⚖🧫💨📦|A-Mapping, C-Balance, C-Experimental, A-Atmospherics, A-Game-Objects
+(*)NT Research has revealed that Plasma can become unstable in the nuclear reactor. Please consider using other coolants. (See the minor changelog for details)
+(+)Plasma's heat capacity has been reduced by 25%
+(+)Oxygen, Nitrogen, N2O and CO2's heat capacities have been doubled (or more)
+(+)In the nuclear reactor, Plasma will now produce lots of neutrons and decay more quickly into Fallout.
+(+)In the nuclear reactor, CO2 will act like a control rod, absorbing neutrons and slightly increasing in temperature.
+(+)In the nuclear reactor, Fallout will occasionally decompose into a random gas.
 (u)Tyrant
 (p)14665
 (e)🗺🍝|A-Mapping, A-Catering
