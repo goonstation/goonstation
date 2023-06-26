@@ -472,13 +472,15 @@
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cable/auto/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
+	// check to see if the cable should indeed be overriden and made to connect.
+	for (var/obj/temp in get_loc(src).contents)
+		if (istype(temp, /obj/machinery/power/terminal) || istype(temp, /obj/machinery/power/smes))
+			src.override_centre_connection = TRUE
 	var/declarer = 0
 	// first we have to make sure we're checking the correct kind of cable
 	for (var/obj/cable/auto/self_loc in range(0, src))
 		if (self_loc.color == src.color)
-			selftile += self_loc
-	if (length(selftile) > 1)
-		CRASH("[length(selftile)] identical cable spawners on coordinate [src.x] x [src.y] y!")
+			CRASH("multiple identical cable spawners at [src.x] x [src.y] y")
 	for (var/dir_to_cs in list(NORTH, EAST, NORTHWEST, NORTHEAST))
 	// checks for cable spawners around itself
 		// declarer is the dir being checked at present
