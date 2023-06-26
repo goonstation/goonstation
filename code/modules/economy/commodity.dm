@@ -372,7 +372,7 @@
 
 /datum/commodity/boogiebot
 	comname = "Boogiebot"
-	comtype = /obj/critter/boogiebot
+	comtype = /mob/living/critter/small_animal/boogiebot
 	desc = "The latest in boogie technology!"
 	onmarket = 0
 	price = 5000
