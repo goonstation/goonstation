@@ -39323,8 +39323,8 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "com" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "con" = (
@@ -40546,10 +40546,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "crv" = (
-/obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crw" = (
@@ -41413,13 +41413,13 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "ctW" = (
-/obj/machinery/chem_heater,
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "ctX" = (
@@ -45539,7 +45539,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /obj/item/device/radio/intercom{
 	dir = 1;
 	frequency = 1445;
