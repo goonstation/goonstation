@@ -1,10 +1,10 @@
-/obj/map_helper/firedoor_spawn
+/obj/mapping_helper/firedoor_spawn
 	name = "firedoor spawn"
 	desc = "Place this over a door to spawn a firedoor underneath. Sets direction, too!"
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "f_spawn"
 
-/obj/map_helper/firedoor_spawn/setup()
+/obj/mapping_helper/firedoor_spawn/setup()
 	for (var/obj/machinery/door/D in src.loc)
 		var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
 		P.set_dir(D.dir)

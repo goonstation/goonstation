@@ -1654,7 +1654,7 @@
 /area/wrecknsspolaris/vault)
 "fc" = (
 /obj/machinery/door/airlock/pyro/weapons/noemag,
-/obj/effects/map_helper/access/polariscargo,
+/obj/mapping_helper/access/polariscargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/wrecknsspolaris/vault)
@@ -1818,7 +1818,7 @@
 	id = "polarisdoor";
 	name = "Secure Vault"
 	},
-/obj/effects/map_helper/access/polarisimportant,
+/obj/mapping_helper/access/polarisimportant,
 /obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
@@ -2038,7 +2038,7 @@
 /obj/machinery/door/airlock/pyro/weapons/noemag{
 	name = "Cargo Bay"
 	},
-/obj/effects/map_helper/access/polariscargo,
+/obj/mapping_helper/access/polariscargo,
 /obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)

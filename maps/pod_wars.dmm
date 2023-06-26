@@ -210,7 +210,7 @@
 /area/pod_wars/spacejunk/uvb67/central)
 "aX" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -485,7 +485,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "ce" = (
@@ -544,7 +544,7 @@
 /area/space)
 "cp" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -637,7 +637,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "cG" = (
@@ -1103,7 +1103,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -1508,7 +1508,7 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/mining)
 "fI" = (
@@ -1545,7 +1545,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "fP" = (
@@ -1753,7 +1753,7 @@
 /area/pod_wars/team1/manufacturing)
 "gy" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "gz" = (
@@ -1914,7 +1914,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -1924,7 +1924,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 8
 	},
@@ -2191,7 +2191,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -2226,7 +2226,7 @@
 /area/pod_wars/spacejunk/reliant)
 "ij" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3341,7 +3341,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/manufacturing)
 "mN" = (
@@ -3638,7 +3638,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "nP" = (
@@ -3785,7 +3785,7 @@
 /area/pod_wars/spacejunk/fstation/secdock)
 "or" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3809,7 +3809,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -3941,7 +3941,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -4405,7 +4405,7 @@
 /area/pod_wars/spacejunk/fstation)
 "qs" = (
 /obj/machinery/door/airlock/pyro/glass/engineering,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -5638,7 +5638,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5748,7 +5748,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -5816,7 +5816,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "vH" = (
@@ -6153,7 +6153,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma{
 	dir = 4
 	},
@@ -6689,7 +6689,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
@@ -6860,7 +6860,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "zt" = (
@@ -6885,7 +6885,7 @@
 /area/pod_wars/spacejunk/fstation)
 "zw" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7467,7 +7467,7 @@
 /area/pod_wars/spacejunk/miningoutpost)
 "BI" = (
 /obj/machinery/door/airlock/pyro/glass/mining,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team2/mining)
 "BJ" = (
@@ -7769,7 +7769,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
@@ -8039,7 +8039,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -8585,7 +8585,7 @@
 /area/pod_wars/spacejunk/fstation/primary)
 "FZ" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -9084,7 +9084,7 @@
 /area/pod_wars/spacejunk/fstation/bar)
 "HW" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/hangar)
 "HX" = (
@@ -9562,7 +9562,7 @@
 /area/pod_wars/spacejunk/fstation)
 "JL" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/specialroom/bar,
 /area/pod_wars/team1/bar)
 "JM" = (
@@ -9689,7 +9689,7 @@
 /area/pod_wars/team1/hangar)
 "Ko" = (
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/blue,
 /area/pod_wars/team1/bridge)
 "Kq" = (
@@ -11036,7 +11036,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -11280,7 +11280,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bridge)
 "QB" = (
@@ -11442,7 +11442,7 @@
 /area/pod_wars/team1/hangar)
 "Rm" = (
 /obj/machinery/door/airlock/pyro/glass,
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/hangar)
 "Rn" = (
@@ -12125,7 +12125,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team1/medbay)
@@ -12161,7 +12161,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/cloning)
@@ -12300,7 +12300,7 @@
 /obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -12388,7 +12388,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/bar)
 "UY" = (
@@ -12597,7 +12597,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VK" = (
@@ -12654,7 +12654,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /turf/unsimulated/floor/red,
 /area/pod_wars/team2/central_hallway)
 "VY" = (
@@ -13616,7 +13616,7 @@
 /obj/machinery/door/airlock/pyro/glass/med{
 	hardened = 1
 	},
-/obj/effects/map_helper/access/syndie_shuttle,
+/obj/mapping_helper/access/syndie_shuttle,
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
 /turf/unsimulated/floor/white,
 /area/pod_wars/team2/medbay)
@@ -13681,7 +13681,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/effects/map_helper/access/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/yellow,
 /area/pod_wars/team1/manufacturing)
 "ZM" = (
