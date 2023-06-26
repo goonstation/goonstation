@@ -66157,7 +66157,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/mob_spawn/corpse/human/owlery_security/assistant,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -66945,7 +66945,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 8
 	},
-/obj/mob_spawn/corpse/human/owlery_security,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "hPT" = (
@@ -69214,7 +69214,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
-/obj/mob_spawn/corpse/human/owlery_security/assistant,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "lrK" = (
@@ -69917,7 +69917,7 @@
 /obj/machinery/light/emergency{
 	dir = 1
 	},
-/obj/mob_spawn/corpse/human/owlery_security/assistant,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/gangzone)
 "moP" = (
@@ -69961,7 +69961,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gib1"
 	},
-/obj/mob_spawn/corpse/human/owlery_security,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "muz" = (
@@ -70490,7 +70490,7 @@
 /area/syndicate_station_space)
 "ncf" = (
 /obj/decal/cleanable/blood,
-/obj/mob_spawn/corpse/human/owlery_security/assistant,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/greenwhite{
 	dir = 8
 	},
@@ -70548,7 +70548,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibtorso"
 	},
-/obj/mob_spawn/corpse/human/owlery_security,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/red,
 /area/owlery/gangzone)
 "ngk" = (
@@ -72031,7 +72031,7 @@
 /area/iomoon/base)
 "pbN" = (
 /obj/decal/cleanable/blood/splatter,
-/obj/mob_spawn/corpse/human/owlery_security,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/yellowblack{
 	dir = 4
 	},
@@ -75639,7 +75639,7 @@
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
 	},
-/obj/mob_spawn/corpse/human/owlery_security,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security,
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
 "ulB" = (
@@ -76876,7 +76876,7 @@
 /obj/decal/cleanable/blood/tracks{
 	icon_state = "drip5"
 	},
-/obj/mob_spawn/corpse/human/owlery_security/assistant,
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security/assistant,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
 "wga" = (
