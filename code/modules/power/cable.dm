@@ -473,7 +473,7 @@
 /obj/cable/auto/proc/check(var/obj/cable/cable)
 	var/list/selftile = list()
 	// check to see if the cable should indeed be overriden and made to connect.
-	for (var/obj/temp in get_loc(src).contents)
+	for (var/obj/temp in range(0, src))
 		if (istype(temp, /obj/machinery/power/terminal) || istype(temp, /obj/machinery/power/smes))
 			src.override_centre_connection = TRUE
 	var/declarer = 0
