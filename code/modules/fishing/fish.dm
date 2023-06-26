@@ -554,4 +554,4 @@ Alien/mutant/other fish:
 	icon_state = "treefish"
 	inhand_color = "#22c912"
 	value  = FISH_RARITY_RARE
-	fillet_type = /obj/item/nature/wood/twig
+	fillet_type = /obj/item/material_piece/organic/wood
