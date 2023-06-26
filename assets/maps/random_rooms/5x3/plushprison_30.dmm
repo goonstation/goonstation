@@ -1,7 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/damaged5,
+/turf/simulated/floor/black,
 /area/space)
 "b" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -9,10 +9,10 @@
 	dir = 1
 	},
 /obj/item/reagent_containers/food/drinks/bowl,
-/turf/simulated/floor/grass,
+/turf/simulated/floor/grass/random,
 /area/space)
 "d" = (
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "g" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -24,14 +24,14 @@
 	},
 /obj/item/reagent_containers/food/drinks/bowl,
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/grass,
+/turf/simulated/floor/grass/random,
 /area/space)
 "i" = (
 /obj/railing{
 	dir = 1
 	},
 /obj/item/toy/plush/small/deneb,
-/turf/simulated/floor/grass,
+/turf/simulated/floor/grass/random,
 /area/space)
 "w" = (
 /obj/railing{
@@ -44,7 +44,7 @@
 	pixel_x = -5
 	},
 /obj/machinery/light/incandescent/netural,
-/turf/simulated/floor/grass,
+/turf/simulated/floor/grass/random,
 /area/space)
 "B" = (
 /obj/item/pet_carrier{
@@ -53,7 +53,7 @@
 /obj/item/toy/plush/small/tuba{
 	pixel_y = -5
 	},
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "E" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -66,7 +66,7 @@
 /obj/machinery/light/incandescent/small{
 	dir = 1
 	},
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "M" = (
 /obj/table/wood,
@@ -86,11 +86,11 @@
 	pixel_y = 2;
 	pixel_x = 2
 	},
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "P" = (
 /obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "R" = (
 /obj/item/pet_carrier{
@@ -99,11 +99,11 @@
 /obj/item/toy/plush/small{
 	pixel_y = -4
 	},
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 "Z" = (
 /obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/auto/grass,
+/turf/simulated/floor/black,
 /area/space)
 
 (1,1,1) = {"
