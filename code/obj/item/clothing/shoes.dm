@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	name = "galoshes"
 	desc = "Rubber boots that prevent slipping on wet surfaces."
 	icon_state = "galoshes"
-	c_flags = NOSLIP
+	c_flags = NOSLIP | NO_LUBE_SLIP
 	step_sound = "step_rubberboot"
 	step_priority = STEP_PRIORITY_LOW
 

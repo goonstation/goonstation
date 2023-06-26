@@ -64,7 +64,8 @@
 #define ONBACK						(1<<17)
 /// can be work on the belt
 #define ONBELT						(1<<18)
-
+/// for galoshes that are immune to lube + harmlube
+#define NO_LUBE_SLIP				(1<<19)
 
 //Suit blood flags
 #define SUITBLOOD_ARMOR 1

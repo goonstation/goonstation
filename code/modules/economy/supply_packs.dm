@@ -395,15 +395,16 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/janitor
 	name = "Janitorial Supplies"
-	desc = "x3 Buckets, x3 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves"
+	desc = "x3 Buckets, x3 Mop, x3 Wet Floor Signs, x3 Cleaning Grenades, x1 Mop Bucket, x1 Rubber Gloves, 1x Galoshes"
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/glass/bucket = 3,
 					/obj/item/mop = 3,
 					/obj/item/caution = 3,
 					/obj/item/chem_grenade/cleaner = 3,
 					/obj/mopbucket,
-					/obj/item/clothing/gloves/long)
-	cost = 500
+					/obj/item/clothing/gloves/long,
+					/obj/item/clothing/shoes/galoshes)
+	cost = 1500
 	containertype = /obj/storage/crate
 	containername = "Janitorial Supplies"
 

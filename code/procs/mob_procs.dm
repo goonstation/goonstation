@@ -103,10 +103,16 @@
 	return 1
 
 
-/mob/proc/can_slip()
+/mob/proc/can_slip(var/lube_slip = FALSE)
 	return 1
 
-/mob/living/carbon/human/can_slip()
+/mob/living/carbon/human/can_slip(var/lube_slip = FALSE)
+	if (lube_slip)
+		if (src.shoes && (src.shoes.c_flags & NO_LUBE_SLIP))
+			return 0
+		else
+			//only galoshes saves you from lubeslips
+			return 1
 	if (src.lying)
 		return 0
 	if (!src.shoes)

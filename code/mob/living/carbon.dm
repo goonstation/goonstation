@@ -44,20 +44,22 @@
 							src.inertia_dir = 0
 							return
 					if (2) //lube
-						src.remove_pulling()
-						src.changeStatus("weakened", 3.5 SECONDS)
-						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
-						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
-						var/atom/target = get_edge_target_turf(src, src.dir)
-						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+						if (src.can_slip(TRUE))
+							src.remove_pulling()
+							src.changeStatus("weakened", 3.5 SECONDS)
+							boutput(src, "<span class='notice'>You slipped on the floor!</span>")
+							playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
+							var/atom/target = get_edge_target_turf(src, src.dir)
+							src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
-						src.remove_pulling()
-						src.changeStatus("weakened", 6 SECONDS)
-						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
-						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
-						var/atom/target = get_edge_target_turf(src, src.dir)
-						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
-						random_brute_damage(src, 10)
+						if (src.can_slip(TRUE))
+							src.remove_pulling()
+							src.changeStatus("weakened", 6 SECONDS)
+							playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
+							boutput(src, "<span class='notice'>You slipped on the floor!</span>")
+							var/atom/target = get_edge_target_turf(src, src.dir)
+							src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
+							random_brute_damage(src, 10)
 
 		var/turf/T = NewLoc
 		if(T.sticky)
