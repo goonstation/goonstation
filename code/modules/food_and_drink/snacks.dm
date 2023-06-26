@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(src.warm == DONK_WARM)
 			M.reagents?.add_reagent("honk_fart",15)
 		else
-			M.reagents?.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("anti_fart",15)
 		..()
 
 	cooltime()

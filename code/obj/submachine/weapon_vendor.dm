@@ -573,7 +573,7 @@
 	name = "Basic fishing rod"
 	path = /obj/item/fishing_rod/basic
 	description = "A basic fishing rod."
-	cost = 5
+	cost = 0
 
 /datum/materiel/fishing_gear/upgraded_rod
 	name = "Upgraded fishing rod"

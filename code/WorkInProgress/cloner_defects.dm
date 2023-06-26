@@ -32,7 +32,7 @@
 
 /mob/living/carbon/human/New()
 	. = ..()
-	cloner_defects  = new(src)
+	cloner_defects  = new /datum/cloner_defect_holder(src)
 
 /mob/living/carbon/human/var/datum/cloner_defect_holder/cloner_defects
 
@@ -311,11 +311,14 @@ ABSTRACT_TYPE(/datum/cloner_defect/stamregen_down)
 
 // no /major currently because a few stacked would be miserable
 
-ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 /datum/cloner_defect/brain_damage
-	name = "Call Aloe Oh No"
+	name = "Major Concussive Complication"
+	severity = CLONER_DEFECT_SEVERITY_MAJOR
 	stackable = FALSE // until I add some way to remove these, stacking a few (2 of the major ones, even) would kill you instantly
 	desc = "Subject has sustained a form of concussion during the cloning process."
+
+	init()
+		src.data = list("amount" = rand(60, 90))
 
 	on_add()
 		. = ..()
@@ -324,21 +327,6 @@ ABSTRACT_TYPE(/datum/cloner_defect/brain_damage)
 		if (src.owner.traitHolder.hasTrait("weakorgans"))
 			damage /= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
 		src.owner.take_brain_damage(damage)
-
-
-/datum/cloner_defect/brain_damage/minor
-	name = "Minor Concussive Complication"
-	severity = CLONER_DEFECT_SEVERITY_MINOR
-
-	init()
-		src.data = list("amount" = rand(10, 40))
-
-/datum/cloner_defect/brain_damage/major
-	name = "Major Concussive Complication"
-	severity = CLONER_DEFECT_SEVERITY_MAJOR
-
-	init()
-		src.data = list("amount" = rand(50, 90))
 
 ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 /datum/cloner_defect/organ_damage
@@ -383,7 +371,6 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 	on_add()
 		. = ..()
 		owner.traitHolder.addTrait("puritan")
-
 
 /datum/cloner_defect/arm_swap //! Left and right arms are swapped, making them both initially useless TODO actually implement
 	name = "Limb Discombobulation"
