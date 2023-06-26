@@ -25,9 +25,8 @@
 	},
 /area/space)
 "k" = (
-/obj/item/device/light/candle/small{
-	icon_state = "lil_candle1";
-	pixel_y = -1;
+/obj/candle_light{
+	pixel_y = 7;
 	pixel_x = 7
 	},
 /obj/decal/cleanable/blood/tracks{
@@ -38,10 +37,8 @@
 	},
 /area/space)
 "n" = (
-/obj/item/device/light/candle/small{
-	icon_state = "lil_candle1";
-	pixel_x = -4;
-	pixel_y = -4
+/obj/candle_light{
+	pixel_y = 7
 	},
 /obj/decal/cleanable/blood/tracks,
 /turf/simulated/floor/grasstodirt{
@@ -68,10 +65,8 @@
 /turf/simulated/grass,
 /area/space)
 "U" = (
-/obj/item/device/light/candle{
-	icon_state = "candle";
-	pixel_x = 10;
-	pixel_y = 3
+/obj/candle_light{
+	pixel_x = 11
 	},
 /obj/decal/cleanable/blood/tracks{
 	dir = 5
@@ -82,10 +77,8 @@
 	},
 /area/space)
 "V" = (
-/obj/item/device/light/candle{
-	icon_state = "candle";
-	pixel_x = -6;
-	pixel_y = 7
+/obj/candle_light{
+	pixel_x = -7
 	},
 /obj/decal/cleanable/blood/drip,
 /turf/simulated/floor/grasstodirt{
