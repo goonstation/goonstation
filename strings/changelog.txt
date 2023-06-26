@@ -1,5 +1,7 @@
 
 (t)mon jun 26 23
+(u)tarmunora
+(*)A certain machine in the void now only works on humans and small animals.
 (u)Amylizzle
 (p)14596
 (e)🗺⚖🧫💨📦|A-Mapping, C-Balance, C-Experimental, A-Atmospherics, A-Game-Objects

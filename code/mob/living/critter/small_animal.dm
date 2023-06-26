@@ -61,6 +61,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 1
+	void_mindswappable = TRUE
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/wanderer
 	ai_retaliates = TRUE
@@ -3745,6 +3746,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	use_custom_color = FALSE
 	var/allow_pickup_requests = TRUE
+	void_mindswappable = FALSE
 
 	New()
 		..()

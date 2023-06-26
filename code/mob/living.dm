@@ -125,6 +125,8 @@
 
 	var/const/singing_prefix = "%"
 
+	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	src.create_mob_silhouette()
 	..()

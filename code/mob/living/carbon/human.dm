@@ -167,6 +167,8 @@
 	blood_volume = 500
 	dna_to_absorb = 10
 
+	void_mindswappable = TRUE
+
 	var/datum/humanInventory/inventory = null
 
 	var/default_mutantrace = /datum/mutantrace/human
