@@ -14,9 +14,11 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 			D.UpdateIcon()
 
 /obj/mapping_helper/airlock/bolter
+	name = "airlock bolter"
 	icon_state = "bolted"
 	bolt = TRUE
 
 /obj/mapping_helper/airlock/welder
+	name = "airlock welder"
 	icon_state = "welded"
 	weld = TRUE
