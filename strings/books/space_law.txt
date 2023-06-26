@@ -67,7 +67,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 		</li>
 	</ul>
     <h4>Moderate Crimes:</h4>
-	<i>For Medium Crimes, a brig time ranging from 30 seconds to 3 minutes is recommended, depending on the gravity and impact of the crime.</i><br>
+	<i>For Moderate Crimes, a brig time ranging from 30 seconds to 3 minutes is recommended, depending on the gravity and impact of the crime.</i><br>
 	<ul style='list-style-type:disc'>
 		<li>Aggravated assault
 			<ul style='list-style-type:circle'>
