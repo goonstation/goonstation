@@ -31,7 +31,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/von_ricken)
 "bE" = (
-/obj/critter/mechmonstrositycrawler,
+/mob/living/critter/robotic/crawler,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
