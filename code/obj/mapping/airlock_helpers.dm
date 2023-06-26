@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 /obj/mapping_helper/airlock
 	name = "airlock helper parent"
-	icon = 'icons/map-editing/airlock.dmi'
+	icon = 'icons/map-editing/airlocks.dmi'
 	var/bolt = FALSE
 	var/weld = FALSE
 
