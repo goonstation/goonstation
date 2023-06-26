@@ -4,14 +4,22 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 /datum/mapPrefab/engine_room
 	name = null
 	maxNum = 1
+	post_init()
+		var/filename = filename_from_path(src.prefabPath, strip_extension=FALSE)
+		var/regex/probability_regex = regex(@"^(.*)_(\d+)\.dmm$")
+		if(probability_regex.Find(filename))
+			src.probability = text2num(probability_regex.group[2])
+			src.name = probability_regex.group[1]
+		else
+			src.probability = 100
+			src.name = src.generate_default_name()
 
 	post_cleanup(turf/target, datum/loadedProperties/props)
 		. = ..()
 		var/comp1type = null
 		var/comp2type = null
-		var/engine_type = filename_from_path(src.prefabPath, strip_extension=TRUE)
-		switch(engine_type)
-			if("none")
+		switch(src.name)
+			if("choice")
 				comp1type = /obj/machinery/engine_selector //type select computer
 				comp2type = /obj/landmark/engine_computer/two
 			if("nuclear")
@@ -64,18 +72,19 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		STOP_TRACKING
 		..()
 
-	proc/apply(var/type_force = "none")
+	proc/apply(var/type_force = null)
 		var/list/datum/mapPrefab/engine_room/prefab_list = get_map_prefabs(/datum/mapPrefab/engine_room)
-		//filter by map and rename
 		var/list/datum/mapPrefab/engine_room/room_prefabs = list()
 		for(var/name in prefab_list)
 			var/datum/mapPrefab/prefab = prefab_list[name]
 			if(lowertext(map_settings.name) in prefab.tags)
-				prefab.generate_default_name()
-				room_prefabs[prefab.name] = prefab
-		if(isnull(room_prefabs))
-			CRASH("No engine room prefab found for map: " + lowertext(map_settings.name))
-		var/datum/mapPrefab/engine_room/room_prefab = room_prefabs[type_force] ? room_prefabs[type_force] : pick(room_prefabs)
+				if(!type_force)
+					room_prefabs[prefab] = prefab.probability
+				else if(prefab.name == type_force)
+					room_prefabs[prefab] = prefab.probability
+		if(!length(room_prefabs))
+			CRASH("No engine room prefab found for map: [lowertext(map_settings.name)] [type_force ? "and forced type [type_force]" : ""]")
+		var/datum/mapPrefab/engine_room/room_prefab = weighted_pick(room_prefabs)
 		room_prefab.applyTo(src.loc, DMM_OVERWRITE_OBJS)
 		logTheThing(LOG_DEBUG, null, "Applied engine room prefab: [room_prefab] to [log_loc(src)]")
 		qdel(src)
@@ -122,8 +131,7 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 		for(var/name in prefab_list)
 			var/datum/mapPrefab/prefab = prefab_list[name]
 			if(lowertext(map_settings.name) in prefab.tags)
-				prefab.generate_default_name()
-				if(prefab.name == "none")
+				if(prefab.name == "choice")
 					continue
 				choices += prefab.name
 		var/engine_choice = tgui_input_list(user, "Choose an engine type!", "Engine Selector", choices)
