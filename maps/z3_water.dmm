@@ -425,7 +425,7 @@
 	name = "Sergeant's Office";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/wrecknsspolaris)
 "co" = (
@@ -435,7 +435,7 @@
 	name = "Sergeant's Private Quarters";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/wrecknsspolaris)
 "cq" = (
@@ -667,7 +667,7 @@
 	name = "Bridge";
 	req_access = null
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris)
 "cT" = (
@@ -1655,7 +1655,7 @@
 "fc" = (
 /obj/machinery/door/airlock/pyro/weapons/noemag,
 /obj/effects/map_helper/access/polariscargo,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fd" = (
@@ -1798,7 +1798,7 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "fz" = (
@@ -1819,7 +1819,7 @@
 	name = "Secure Vault"
 	},
 /obj/effects/map_helper/access/polarisimportant,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fB" = (
@@ -1887,7 +1887,7 @@
 /area/wrecknsspolaris)
 "fM" = (
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -1899,14 +1899,14 @@
 	icon_state = "maint_closed";
 	name = "Maintenance"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "fO" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	name = "NSS Polaris"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "floor"
@@ -2039,7 +2039,7 @@
 	name = "Cargo Bay"
 	},
 /obj/effects/map_helper/access/polariscargo,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "gh" = (

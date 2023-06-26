@@ -1167,7 +1167,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -1337,7 +1337,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "sf" = (
@@ -1397,7 +1397,7 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/power)
@@ -1661,7 +1661,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Maint Crew Quarters"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "uc" = (
@@ -1876,7 +1876,7 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "vC" = (
@@ -2515,7 +2515,7 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "zm" = (
@@ -2609,7 +2609,7 @@
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "zQ" = (
@@ -2736,7 +2736,7 @@
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/hangar)
 "AA" = (
@@ -3270,7 +3270,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/dock)
@@ -4425,7 +4425,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -5267,7 +5267,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/comms)
@@ -5364,7 +5364,7 @@
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/hangar)
 "RK" = (
@@ -5471,7 +5471,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "SJ" = (
@@ -5607,7 +5607,7 @@
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "TH" = (
@@ -6091,7 +6091,7 @@
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/refinery)
 "WJ" = (
@@ -6311,7 +6311,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Yf" = (
