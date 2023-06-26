@@ -471,7 +471,6 @@
 
 /// checks around itself for cables, adds up to 8 bits to cable_surr
 /obj/cable/auto/proc/check(var/obj/cable/cable)
-	var/list/selftile = list()
 	// check to see if the cable should indeed be overriden and made to connect.
 	for (var/obj/temp in range(0, src))
 		if (istype(temp, /obj/machinery/power/terminal) || istype(temp, /obj/machinery/power/smes))
