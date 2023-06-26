@@ -1,5 +1,10 @@
 
 (t)mon jun 26 23
+(u)Tyrant
+(p)14665
+(e)🗺🍝|A-Mapping, A-Catering
+(*)Added a kitchen dispenser to cogmap1. It's in the spot where hot dog carts used to be.
+(+)The hotdog cart in cogmap1 has been moved to the back rooms.
 (u)MitchSmith
 (p)14696
 (e)🎨|C-Sprites
