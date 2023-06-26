@@ -457,6 +457,10 @@
 		..()
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
+	setup_healths()
+		add_hh_robot(src.health_brute, src.health_brute_vuln)
+		add_hh_robot_burn(src.health_burn, src.health_brute_vuln)
+
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
