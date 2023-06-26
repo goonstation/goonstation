@@ -1,0 +1,133 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/damaged5,
+/area/space)
+"b" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/railing{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/bowl,
+/turf/simulated/floor/grass,
+/area/space)
+"d" = (
+/turf/simulated/floor/auto/grass,
+/area/space)
+"g" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/railing{
+	dir = 1
+	},
+/obj/railing{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/bowl,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/grass,
+/area/space)
+"i" = (
+/obj/railing{
+	dir = 1
+	},
+/obj/item/toy/plush/small/deneb,
+/turf/simulated/floor/grass,
+/area/space)
+"w" = (
+/obj/railing{
+	dir = 4
+	},
+/obj/railing{
+	dir = 1
+	},
+/obj/item/toy/plush/small/chris{
+	pixel_x = -5
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/grass,
+/area/space)
+"B" = (
+/obj/item/pet_carrier{
+	icon_state = "carrier-full-open"
+	},
+/obj/item/toy/plush/small/tuba{
+	pixel_y = -5
+	},
+/turf/simulated/floor/auto/grass,
+/area/space)
+"E" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/pet_carrier{
+	icon_state = "carrier-full-open"
+	},
+/obj/item/toy/plush/small/arthur{
+	pixel_y = -9
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1
+	},
+/turf/simulated/floor/auto/grass,
+/area/space)
+"M" = (
+/obj/table/wood,
+/obj/item/clothing/under/rank/rancher{
+	pixel_y = -2;
+	pixel_x = -5
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1
+	},
+/obj/item/device/key/generic{
+	pixel_y = 9;
+	pixel_x = 2;
+	desc = "It unlocks or locks carriers, but seems to be broken."
+	},
+/obj/item/clothing/head/beret/prisoner{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/turf/simulated/floor/auto/grass,
+/area/space)
+"P" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/auto/grass,
+/area/space)
+"R" = (
+/obj/item/pet_carrier{
+	icon_state = "carrier-full-open"
+	},
+/obj/item/toy/plush/small{
+	pixel_y = -4
+	},
+/turf/simulated/floor/auto/grass,
+/area/space)
+"Z" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/auto/grass,
+/area/space)
+
+(1,1,1) = {"
+R
+d
+b
+"}
+(2,1,1) = {"
+M
+a
+w
+"}
+(3,1,1) = {"
+d
+Z
+d
+"}
+(4,1,1) = {"
+E
+d
+g
+"}
+(5,1,1) = {"
+B
+P
+i
+"}
