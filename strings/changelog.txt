@@ -1,3 +1,26 @@
+
+(t)mon jun 26 23
+(u)tarmunora
+(*)A certain machine in the void now only works on humans and small animals.
+(*)Several "tougher" mobs that were converted to mob critters recently are now immune to stamina stuns once again.
+(u)Amylizzle
+(p)14596
+(e)🗺⚖🧫💨📦|A-Mapping, C-Balance, C-Experimental, A-Atmospherics, A-Game-Objects
+(*)NT Research has revealed that Plasma can become unstable in the nuclear reactor. Please consider using other coolants. (See the minor changelog for details)
+(+)Plasma's heat capacity has been reduced by 25%
+(+)Oxygen, Nitrogen, N2O and CO2's heat capacities have been doubled (or more)
+(+)In the nuclear reactor, Plasma will now produce lots of neutrons and decay more quickly into Fallout.
+(+)In the nuclear reactor, CO2 will act like a control rod, absorbing neutrons and slightly increasing in temperature.
+(+)In the nuclear reactor, Fallout will occasionally decompose into a random gas.
+(u)Tyrant
+(p)14665
+(e)🗺🍝|A-Mapping, A-Catering
+(*)Added a kitchen dispenser to cogmap1. It's in the spot where hot dog carts used to be.
+(+)The hotdog cart in cogmap1 has been moved to the back rooms.
+(u)MitchSmith
+(p)14696
+(e)🎨|C-Sprites
+(+)Resprited Fire Alarms
 (t)sun jun 25 23
 (u)aloe
 (+)Taking items off of unconcious people is now faster. Taking items off of dead people is much faster.

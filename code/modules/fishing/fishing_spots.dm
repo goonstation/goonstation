@@ -77,9 +77,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	rod_tier_required = 1
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
-	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
-	/obj/critter/frog = 10,\
+	/mob/living/critter/small_animal/frog = 10,\
 	/obj/item/clothing/head/rafflesia = 5)
 /*
 /datum/fishing_spot/test
@@ -385,9 +385,9 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/barracuda = 5,\
 	/obj/item/fish/sailfish = 2,\
 	/obj/item/fish/treefish = 5,\
-	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
-	/obj/critter/frog = 10)
+	/mob/living/critter/small_animal/frog = 10)
 
 /datum/fishing_spot/plantpot
 	fishing_atom_type = /obj/machinery/plantpot
@@ -396,10 +396,10 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/dace = 5,\
 	/obj/item/fish/minnow = 5,\
 	/obj/item/plant/herb/grass = 20,\
-	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
 	/obj/item/fish/treefish = 5,\
-	/obj/critter/frog = 10)
+	/mob/living/critter/small_animal/frog = 10)
 
 /datum/fishing_spot/blob
 	fishing_atom_type = /obj/blob
@@ -759,9 +759,9 @@ datum/fishing_spot/golden_toilet
 	/obj/item/fish/tuna = 30,\
 	/obj/item/fish/cod = 20,\
 	/obj/item/fish/flounder = 15,\
-	/obj/critter/slug = 10,\
+	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
-	/obj/critter/frog = 10)
+	/mob/living/critter/small_animal/frog = 10)
 
 //chemical barrel
 /datum/fishing_spot/chemical_barrel
