@@ -633,12 +633,6 @@
 	dir = 8
 	},
 /area/space)
-"bQ" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadcap"
-	},
-/area/space)
 "bR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -1169,13 +1163,6 @@
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
-	},
-/area/space)
-"dv" = (
-/turf/unsimulated/wall/generic{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadcap"
 	},
 /area/space)
 "dw" = (
@@ -5696,13 +5683,6 @@
 	icon_state = "gib5"
 	},
 /obj/machinery/telejam/active,
-/turf/space,
-/area/space)
-"pi" = (
-/obj/decal/cleanable/robot_debris{
-	icon_state = "gib5"
-	},
-/obj/critter/zombie/scientist,
 /turf/space,
 /area/space)
 "pj" = (
@@ -10952,6 +10932,13 @@
 	icon_state = "floor4"
 	},
 /area/space)
+"Gy" = (
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib5"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/area/space)
 "Jv" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -10976,6 +10963,19 @@
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
+/area/space)
+"SN" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadcap"
+	},
+/area/space)
+"SP" = (
+/turf/unsimulated/wall/generic{
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadcap"
+	},
 /area/space)
 
 (1,1,1) = {"
@@ -19405,7 +19405,7 @@ aa
 aa
 aa
 aa
-bQ
+SN
 dO
 cK
 cn
@@ -19415,7 +19415,7 @@ cR
 cn
 cK
 bZ
-dv
+SP
 aa
 aa
 aa
@@ -19781,7 +19781,7 @@ ot
 oc
 oJ
 oU
-pi
+Gy
 pw
 pM
 qc
@@ -19861,7 +19861,7 @@ aa
 aa
 aa
 aa
-bQ
+SN
 ca
 cK
 cK
@@ -19871,7 +19871,7 @@ cn
 cK
 cK
 bZ
-dv
+SP
 aa
 aa
 aa
