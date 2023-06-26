@@ -548,7 +548,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(18))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 

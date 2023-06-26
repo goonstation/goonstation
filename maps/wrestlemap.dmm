@@ -5175,10 +5175,6 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/entry)
-"cec" = (
-/obj/machinery/chem_heater/chemistry,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "ceg" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "East Hallway"
@@ -15444,6 +15440,10 @@
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
+"gwq" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "gwD" = (
 /obj/decal/tile_edge/stripe,
 /obj/cable{
@@ -19091,6 +19091,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"hYZ" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/station/crew_quarters/pool)
 "hZO" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
@@ -19980,20 +19986,6 @@
 /obj/item/storage/box/lightbox/tubes,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
-"iwL" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/machinery/chem_heater/chemistry,
-/obj/machinery/light,
-/turf/simulated/floor/bluewhite{
-	dir = 10
-	},
-/area/station/medical/medbay/pharmacy)
 "ixn" = (
 /obj/table/reinforced/auto,
 /obj/item/stamp,
@@ -24491,10 +24483,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters_south)
-"kmA" = (
-/obj/critter/owl,
-/turf/simulated/grass,
-/area/station/garden/owlery)
 "kmN" = (
 /obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/stripe{
@@ -25398,6 +25386,10 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
+"kJj" = (
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/grass,
+/area/station/garden/owlery)
 "kJq" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -26163,12 +26155,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"lbi" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/bluewhite{
-	dir = 5
-	},
-/area/station/crew_quarters/pool)
 "lbj" = (
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/brig{
@@ -37025,6 +37011,20 @@
 	dir = 5
 	},
 /area/station/science/lobby)
+"pLm" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/chem_heater/chemistry,
+/obj/machinery/light,
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/station/medical/medbay/pharmacy)
 "pLE" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -40823,6 +40823,10 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
+"roI" = (
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "roJ" = (
 /obj/reagent_dispensers/foamtank,
 /obj/decal/tile_edge/stripe{
@@ -43410,10 +43414,6 @@
 "soM" = (
 /turf/space,
 /area/station/com_dish/comdish)
-"soR" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "spc" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -48116,6 +48116,16 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/elect)
+"urZ" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/medical,
+/obj/firedoor_spawn,
+/turf/simulated/floor/white,
+/area/station/medical/medbooth)
 "usj" = (
 /turf/simulated/floor/stairs/wide/middle{
 	dir = 1
@@ -48212,16 +48222,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/head)
-"utq" = (
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
-	},
-/obj/access_spawn/medical,
-/obj/firedoor_spawn,
-/turf/simulated/floor/white,
-/area/station/medical/medbooth)
 "utx" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 1;
@@ -87926,7 +87926,7 @@ xzy
 iOe
 xWX
 cAn
-cec
+roI
 iSp
 fgq
 cJy
@@ -88491,7 +88491,7 @@ aTU
 bYu
 cHY
 hsU
-iwL
+pLm
 aTU
 hPL
 dFx
@@ -89130,7 +89130,7 @@ onw
 vDW
 oNm
 sYp
-cec
+roI
 aYI
 xzy
 dQP
@@ -89736,7 +89736,7 @@ xzy
 sYp
 jQJ
 rYQ
-cec
+roI
 cAn
 sYc
 vMw
@@ -101139,7 +101139,7 @@ vnX
 hGG
 ouV
 nXF
-kmA
+kJj
 utW
 diA
 sZz
@@ -101443,7 +101443,7 @@ ouV
 pxV
 atS
 aCJ
-kmA
+kJj
 nXF
 eYK
 fAn
@@ -101746,7 +101746,7 @@ diA
 utW
 gnx
 diA
-kmA
+kJj
 uJN
 ria
 biY
@@ -102044,7 +102044,7 @@ vnX
 vnX
 hGG
 ouV
-kmA
+kJj
 diA
 diA
 diA
@@ -109932,7 +109932,7 @@ fAg
 fAg
 nQE
 htx
-utq
+urZ
 fAg
 kqR
 kSN
@@ -115356,7 +115356,7 @@ uEA
 ohJ
 ehT
 ohJ
-soR
+gwq
 aZY
 aZY
 aZY
@@ -115955,7 +115955,7 @@ tkM
 vnX
 vnX
 iik
-lbi
+hYZ
 mXZ
 osj
 ohJ

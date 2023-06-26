@@ -5476,11 +5476,6 @@
 	name = "plating"
 	},
 /area/station/mining/magnet)
-"bgT" = (
-/obj/critter/owl,
-/obj/machinery/drone_recharger,
-/turf/simulated/floor/grass,
-/area/russian/radiation)
 "bgW" = (
 /obj/machinery/alarm{
 	pixel_y = 20
@@ -6140,22 +6135,7 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"bio" = (
-/obj/critter/owl,
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grass,
-/area/russian/radiation)
 "bip" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/grass,
-/area/russian/radiation)
-"biq" = (
-/obj/critter/owl,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -15000,6 +14980,14 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"bTM" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/space,
+/area/space)
 "bUH" = (
 /obj/machinery/disposal/transport{
 	name = "transport chute - monkey pen"
@@ -37825,24 +37813,6 @@
 	},
 /turf/space,
 /area/space)
-"dyE" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/space,
-/area/space)
 "dyF" = (
 /obj/lattice{
 	dir = 1;
@@ -38558,14 +38528,6 @@
 	},
 /turf/space,
 /area/space)
-"dDz" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
-	},
-/turf/space,
-/area/space)
 "dDA" = (
 /obj/decal/cleanable/molten_item,
 /turf/space,
@@ -38831,10 +38793,6 @@
 	},
 /turf/space,
 /area/space)
-"dEJ" = (
-/obj/stool/bed,
-/turf/space,
-/area/space)
 "dEK" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/shard,
@@ -38986,108 +38944,6 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
-	},
-/turf/space,
-/area/space)
-"dFF" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-6"
-	},
-/turf/space,
-/area/space)
-"dFG" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "2-9"
-	},
-/turf/space,
-/area/space)
-"dFH" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-10"
-	},
-/turf/space,
-/area/space)
-"dFI" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/turf/space,
-/area/space)
-"dFJ" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/space,
-/area/space)
-"dFK" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
 	},
 /turf/space,
 /area/space)
@@ -39540,6 +39396,10 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"dQU" = (
+/obj/stool/bed,
+/turf/space,
+/area/space)
 "dRY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -40140,13 +40000,6 @@
 	dir = 4
 	},
 /turf/space,
-/area/russian/radiation)
-"exK" = (
-/turf/simulated/wall/auto/asteroid/lighted{
-	color = "#d1e6ff";
-	icon_state = "asteroid-8";
-	topnumber = 3
-	},
 /area/russian/radiation)
 "exL" = (
 /obj/cable{
@@ -41424,6 +41277,25 @@
 	desc = " It is made of temp."
 	},
 /area/russian/radiation)
+"fij" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/space,
+/area/space)
 "fiW" = (
 /obj/shrub{
 	dir = 8;
@@ -46076,6 +45948,29 @@
 	icon_state = "norn-4"
 	},
 /area/russian/radiation)
+"hia" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-6"
+	},
+/turf/space,
+/area/space)
 "hif" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Botany"
@@ -50380,6 +50275,22 @@
 	name = "steel catwalk support"
 	},
 /area/space)
+"jmT" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/grime{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon_old = "grimy";
+	icon_state = "damaged5"
+	},
+/area/russian/radiation)
 "jnB" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -50493,6 +50404,13 @@
 	icon_old = "platingdmg1";
 	icon_state = "panelscorched";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"jpF" = (
+/turf/simulated/wall/auto/asteroid/lighted{
+	color = "#d1e6ff";
+	icon_state = "asteroid-8";
+	topnumber = 3
 	},
 /area/russian/radiation)
 "jpM" = (
@@ -51567,6 +51485,11 @@
 	desc = " It is made of steel.";
 	name = "steel floor"
 	},
+/area/russian/radiation)
+"jMd" = (
+/mob/living/critter/small_animal/bird/owl,
+/obj/machinery/drone_recharger,
+/turf/simulated/floor/grass,
 /area/russian/radiation)
 "jMF" = (
 /obj/disposaloutlet{
@@ -53633,6 +53556,21 @@
 	name = "steel plating"
 	},
 /area/space)
+"kUq" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/space,
+/area/space)
 "kUJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -54518,6 +54456,24 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
+"lmK" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-8"
+	},
+/turf/space,
+/area/space)
 "lmL" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 2
@@ -61848,6 +61804,13 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"oAN" = (
+/mob/living/critter/small_animal/bird/owl,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/grass,
+/area/russian/radiation)
 "oAS" = (
 /obj/table/auto,
 /obj/machinery/espresso_machine,
@@ -62947,6 +62910,20 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"pfd" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/space,
+/area/space)
 "pfs" = (
 /obj/machinery/atmospherics/binary/valve/purge{
 	dir = 4
@@ -63518,6 +63495,16 @@
 	icon_old = "yellow";
 	icon_state = "damaged3";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"pwe" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/carpet/grime{
+	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "pwR" = (
@@ -65532,12 +65519,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"quU" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall_space"
-	},
-/area/station/hallway/secondary/exit)
 "qvt" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
 	icon_state = "shuttle-14"
@@ -70450,6 +70431,14 @@
 	},
 /turf/space,
 /area/space)
+"sPI" = (
+/mob/living/critter/small_animal/bird/owl,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/grass,
+/area/russian/radiation)
 "sQm" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/toolbox/emergency,
@@ -71159,6 +71148,25 @@
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-4"
 	},
+/area/space)
+"tkS" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/turf/space,
 /area/space)
 "tkY" = (
 /obj/grille/steel,
@@ -74117,6 +74125,18 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"uVo" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable,
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "2-9"
+	},
+/turf/space,
+/area/space)
 "uVp" = (
 /obj/cable{
 	d1 = 1;
@@ -75648,6 +75668,18 @@
 	icon_old = "plating";
 	icon_state = "panelscorched";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"vRh" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/grime{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon_old = "grimy";
+	icon_state = "damaged4"
 	},
 /area/russian/radiation)
 "vRJ" = (
@@ -77874,6 +77906,12 @@
 /obj/decal/cleanable/paper,
 /turf/space,
 /area/russian/radiation)
+"xcy" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "wall_space"
+	},
+/area/station/hallway/secondary/exit)
 "xcz" = (
 /obj/item/clothing/under/misc/clown/fancy,
 /obj/reagent_dispensers/heliumtank,
@@ -79197,22 +79235,6 @@
 	desc = " It is made of temp."
 	},
 /area/russian/radiation)
-"xRG" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "4-10"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/grime{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon_old = "grimy";
-	icon_state = "damaged5"
-	},
-/area/russian/radiation)
 "xRS" = (
 /obj/cable{
 	d1 = 1;
@@ -79478,28 +79500,6 @@
 	icon_state = "6-8"
 	},
 /turf/space,
-/area/russian/radiation)
-"yaD" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/grime{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon_old = "grimy";
-	icon_state = "damaged4"
-	},
-/area/russian/radiation)
-"ycc" = (
-/obj/cable{
-	d1 = 2;
-	d2 = 4;
-	icon_state = "5-8"
-	},
-/turf/simulated/floor/carpet/grime{
-	desc = " It is made of temp."
-	},
 /area/russian/radiation)
 "ycE" = (
 /obj/item/chair/folded,
@@ -89732,7 +89732,7 @@ beN
 pBv
 brm
 bhE
-bio
+sPI
 biY
 gqD
 bkX
@@ -90032,7 +90032,7 @@ bcm
 xHU
 beO
 xHU
-bgT
+jMd
 bhF
 bip
 bja
@@ -90638,7 +90638,7 @@ ykH
 tzb
 bgX
 bhG
-biq
+oAN
 brm
 brm
 yfl
@@ -92665,7 +92665,7 @@ xIH
 dGb
 xHU
 xRk
-yaD
+vRh
 yfB
 ylW
 vWR
@@ -92967,7 +92967,7 @@ dGb
 xxW
 xHU
 xRp
-ycc
+pwe
 yfI
 xHj
 kPK
@@ -93268,7 +93268,7 @@ wqi
 xqy
 xjo
 xIp
-xRG
+jmT
 aEb
 xoU
 xHs
@@ -93875,7 +93875,7 @@ vMB
 xSb
 ycZ
 xIp
-exK
+jpF
 avp
 xiI
 wdx
@@ -124335,7 +124335,7 @@ dGb
 dGb
 dGb
 dGb
-quU
+xcy
 arl
 arl
 arl
@@ -153122,7 +153122,7 @@ dGb
 dGb
 dGb
 dGb
-dDz
+bTM
 dde
 dCw
 dEb
@@ -158858,7 +158858,7 @@ dGb
 dGb
 dFo
 dEZ
-dEJ
+dQU
 dEm
 dFo
 dDe
@@ -164291,7 +164291,7 @@ dGb
 dGb
 dGb
 dGb
-dFF
+hia
 dFw
 dGb
 dGb
@@ -164307,7 +164307,7 @@ dFv
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb
@@ -164593,7 +164593,7 @@ dGb
 dGb
 dGb
 dGb
-dFG
+uVo
 dFx
 dGb
 dGb
@@ -164609,7 +164609,7 @@ dFv
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb
@@ -164895,7 +164895,7 @@ dGb
 dGb
 dGb
 dFT
-dFH
+tkS
 dFy
 dGb
 dGb
@@ -164911,7 +164911,7 @@ dGb
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb
@@ -165197,7 +165197,7 @@ dGb
 dGb
 dGb
 dGb
-dFI
+fij
 dFz
 dFz
 dGb
@@ -165213,7 +165213,7 @@ dGb
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb
@@ -165499,7 +165499,7 @@ dGb
 dGb
 dGb
 dFT
-dFJ
+pfd
 dFz
 dGb
 dGb
@@ -165515,7 +165515,7 @@ dFv
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb
@@ -165801,7 +165801,7 @@ dGb
 dGb
 dGb
 dFT
-dFK
+kUq
 dFA
 dGb
 dGb
@@ -165817,7 +165817,7 @@ dFv
 dGb
 dGb
 dFT
-dyE
+lmK
 dFw
 dGb
 dGb

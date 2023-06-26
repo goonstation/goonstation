@@ -3061,18 +3061,6 @@
 /obj/storage/crate,
 /turf/simulated/floor/grime,
 /area/station/mining/magnet)
-"amV" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/computer/announcement{
-	name = "Engineering Announcement Computer";
-	req_access_txt = "19"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/engine/engineering/ce)
 "amX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -16618,11 +16606,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
-"blv" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 9
-	},
-/area/space)
 "blw" = (
 /obj/securearea,
 /turf/simulated/shuttle/wall{
@@ -19523,6 +19506,10 @@
 "bKK" = (
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/turret_protected/AIsat)
+"bLr" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "bLT" = (
 /mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -20335,6 +20322,18 @@
 	},
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
+"cIo" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/computer/announcement{
+	name = "Engineering Announcement Computer";
+	req_access_txt = "19"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/engine/engineering/ce)
 "cIr" = (
 /obj/table/auto,
 /obj/item/hand_labeler,
@@ -20852,6 +20851,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"dzC" = (
+/turf/simulated/wall/auto/asteroid{
+	dir = 9
+	},
+/area/space)
 "dAo" = (
 /obj/machinery/camera{
 	c_tag = "Habitation Ring South Junction";
@@ -21944,19 +21948,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
-"eXh" = (
-/obj/critter/owl,
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/garden/owlery)
 "eXm" = (
 /obj/grille/catwalk{
 	dir = 1
@@ -22126,6 +22117,13 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"fhl" = (
+/mob/living/critter/small_animal/bird/owl{
+	desc = "His name is Carl.";
+	name = "space owl named Carl"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/garden/owlery)
 "fim" = (
 /obj/item/wrench,
 /obj/storage/crate,
@@ -22772,11 +22770,6 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
-"fXO" = (
-/obj/pool/perspective,
-/obj/critter/sealpup,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "fYi" = (
 /obj/lattice{
 	dir = 10;
@@ -29131,6 +29124,14 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"oeq" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor{
+	icon = 'icons/misc/beach.dmi';
+	icon_state = "sand";
+	name = "sand"
+	},
+/area/station/crew_quarters/pool)
 "oes" = (
 /obj/machinery/rkit,
 /obj/item/electronics/scanner,
@@ -30494,6 +30495,15 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
+"pBA" = (
+/mob/living/critter/small_animal/bird/owl{
+	desc = "You've heard that this owl is a real jerk.";
+	health_brute = 20;
+	health_burn = 20;
+	name = "owl of ill-repute"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/garden/owlery)
 "pBJ" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -30902,10 +30912,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"pYc" = (
-/obj/critter/walrus,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "pYE" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33920,14 +33926,6 @@
 	name = "sand"
 	},
 /area/station/crew_quarters/pool)
-"tlN" = (
-/obj/critter/sealpup,
-/turf/simulated/floor{
-	icon = 'icons/misc/beach.dmi';
-	icon_state = "sand";
-	name = "sand"
-	},
-/area/station/crew_quarters/pool)
 "tlX" = (
 /obj/machinery/camera{
 	c_tag = "Research Sector Mixing Room";
@@ -34371,14 +34369,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
-"tHn" = (
-/obj/critter/owl{
-	desc = "You've heard that this owl is a real jerk.";
-	health = 40;
-	name = "owl of ill-repute"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/garden/owlery)
 "tIy" = (
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
@@ -35864,6 +35854,11 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"vsx" = (
+/obj/pool/perspective,
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "vsI" = (
 /obj/machinery/light{
 	dir = 4;
@@ -35899,6 +35894,19 @@
 	},
 /turf/space,
 /area/station/engine/proto)
+"vvb" = (
+/mob/living/critter/small_animal/bird/owl,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/grass/random,
+/area/station/garden/owlery)
 "vvD" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -37546,13 +37554,6 @@
 /obj/machinery/lrteleporter,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"xrU" = (
-/obj/critter/owl{
-	desc = "His name is Carl.";
-	name = "space owl named Carl"
-	},
-/turf/simulated/floor/grass/random,
-/area/station/garden/owlery)
 "xta" = (
 /obj/item/device/radio/intercom{
 	broadcasting = 0;
@@ -44319,7 +44320,7 @@ aaa
 aaa
 aaa
 baI
-blv
+dzC
 blC
 bkX
 bla
@@ -74409,7 +74410,7 @@ vNm
 bEu
 nRo
 ave
-pYc
+bLr
 bjM
 oWh
 tkO
@@ -74714,7 +74715,7 @@ ave
 bjM
 bjQ
 cjc
-tlN
+oeq
 axW
 loj
 wjJ
@@ -75031,7 +75032,7 @@ xFS
 xFS
 gRb
 aEy
-tHn
+pBA
 cTU
 eqv
 cTU
@@ -75317,7 +75318,7 @@ nRJ
 ave
 bjM
 qUv
-fXO
+vsx
 axW
 ueo
 ecT
@@ -75602,7 +75603,7 @@ axu
 bol
 anl
 bqp
-amV
+cIo
 aoL
 aoG
 apJ
@@ -75633,7 +75634,7 @@ xFS
 xFS
 aDd
 xFS
-xrU
+fhl
 xFS
 ogC
 tfa
@@ -76232,7 +76233,7 @@ uHC
 qBr
 tfa
 aAX
-eXh
+vvb
 wAG
 jYN
 nBa
