@@ -194,7 +194,7 @@
 	spawn_type = /mob/living/carbon/human/normal
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
 
-/obj/mob_spawn/corpse/human/owlery_security
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security
 	spawn_type = /mob/living/carbon/human/normal/securityofficer
 	decomp_stage = DECOMP_STAGE_BLOATED
 	delete_id = TRUE
