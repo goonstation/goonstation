@@ -28862,7 +28862,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "fpT" = (
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 1
 	},
 /area/station/hallway/secondary/researchshuttle)
@@ -35123,7 +35123,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "kCD" = (
-/turf/simulated/floor/airless/green/corner,
+/turf/simulated/floor/green/corner,
 /area/station/hallway/secondary/researchshuttle)
 "kCO" = (
 /obj/cable{
@@ -37638,7 +37638,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "mFq" = (
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 4
 	},
 /area/station/hallway/secondary/researchshuttle)
@@ -46812,7 +46812,7 @@
 	},
 /area/station/science/lobby)
 "tsi" = (
-/turf/simulated/floor/airless/green/corner{
+/turf/simulated/floor/green/corner{
 	dir = 8
 	},
 /area/station/hallway/secondary/researchshuttle)
