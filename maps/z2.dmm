@@ -67292,7 +67292,7 @@
 	name = "old kidney"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet,
-/obj/mob_spawn/corpse/critter/owl,
+/obj/mapping_helper/mob_spawn/corpse/critter/owl,
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "itY" = (
