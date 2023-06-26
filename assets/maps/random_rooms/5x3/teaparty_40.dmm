@@ -15,14 +15,14 @@
 	pixel_y = 3;
 	pixel_x = -10
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "b" = (
 /obj/stool/chair/comfy{
 	pixel_y = 19;
 	dir = 1
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "d" = (
 /obj/table/clothred/auto,
@@ -50,7 +50,7 @@
 	pixel_y = 2;
 	pixel_x = 16
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "m" = (
 /obj/decoration/regallamp{
@@ -70,7 +70,7 @@
 /obj/candle_light{
 	layer = 1
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "n" = (
 /obj/stool/chair/material/mauxite{
@@ -81,7 +81,7 @@
 	name = "Silly kitty toy";
 	pixel_y = -5
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "o" = (
 /obj/stool/chair/comfy/throne_gold{
@@ -95,7 +95,7 @@
 	name = "Pretty blue dress";
 	desc = "They've been expecting you!"
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "s" = (
 /obj/stool/chair/wooden/scrap{
@@ -107,21 +107,21 @@
 	pixel_y = -13;
 	layer = 2.89
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "w" = (
 /obj/stool/chair/wooden{
 	dir = 1;
 	pixel_y = 13
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "z" = (
 /obj/stool/chair/comfy/barber_chair{
 	pixel_y = 16;
 	dir = 1
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "A" = (
 /obj/table/clothred/auto,
@@ -160,7 +160,7 @@
 	pixel_x = 3;
 	pixel_y = 5
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "U" = (
 /obj/stool/chair/office/red{
@@ -174,7 +174,7 @@
 	pixel_y = 9;
 	pixel_x = -8
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 "W" = (
 /obj/table/clothred/auto,
@@ -216,7 +216,7 @@
 	pixel_y = -9;
 	name = "pocketwatch"
 	},
-/turf/simulated/floor/airless/grasslush/thinner,
+/turf/simulated/floor/grasslush/thinner,
 /area/space)
 
 (1,1,1) = {"
