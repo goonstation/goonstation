@@ -580,6 +580,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
+	no_stamina_stuns = TRUE
 
 	setup_hands()
 		..()
