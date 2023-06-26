@@ -1284,8 +1284,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "martian_flesh"
 	sample_verb = "scoop"
 	can_sample = 1
-	icon = null
-	icon_state = "rel-gib2"
+	icon_state = "gib2"
 
 /obj/decal/cleanable/martian_viscera/fluid
 	name = "sticky martian goop"

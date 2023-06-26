@@ -628,6 +628,27 @@ ABSTRACT_TYPE(/datum/terrainify)
 			space += S
 		convert_turfs(space)
 
+		logTheThing(LOG_ADMIN, ui.user, "turned space into a plasma space.")
+		logTheThing(LOG_DIARY, ui.user, "turned space into a plasma space.", "admin")
+		message_admins("[key_name(ui.user)] turned space into a plasma space.")
+
+/datum/terrainify/storehouse
+	name = "Storehouse"
+	desc = "Load some nearby storehouse (Run before other Generators!)"
+
+	convert_station_level(params, datum/tgui/ui)
+		if (!..())
+			return
+		var/list/turf/space = list()
+		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+			space += S
+		var/datum/map_generator/generator = new/datum/map_generator/storehouse_generator
+		generator.generate_terrain(space)
+
+		logTheThing(LOG_ADMIN, ui.user, "added some storehouses to space.")
+		logTheThing(LOG_DIARY, ui.user, "added some storehouses to space.", "admin")
+		message_admins("[key_name(ui.user)] added storehouse to space.")
+
 /datum/terrainify_editor
 	var/static/list/datum/terrainify/terrains
 	var/datum/terrainify/active_terrain

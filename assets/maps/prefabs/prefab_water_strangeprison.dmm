@@ -150,10 +150,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/sanitary,
 /area/prefab/sea_prison)
-"aE" = (
-/obj/critter/zombie,
-/turf/simulated/floor/sanitary,
-/area/prefab/sea_prison)
 "aF" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -331,11 +327,6 @@
 /obj/table/auto,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
-"bi" = (
-/obj/critter/zombie/security,
-/obj/stool,
-/turf/simulated/floor/red,
-/area/prefab/sea_prison)
 "bj" = (
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor,
@@ -468,15 +459,24 @@
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
-"bH" = (
-/mob/living/critter/small_animal/bird/goose,
-/turf/simulated/floor,
-/area/prefab/sea_prison)
 "bI" = (
 /obj/stool/bed,
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/skeleton,
 /obj/machinery/light/incandescent/harsh,
 /turf/simulated/floor,
+/area/prefab/sea_prison)
+"dp" = (
+/mob/living/critter/zombie,
+/turf/simulated/floor/sanitary,
+/area/prefab/sea_prison)
+"CB" = (
+/mob/living/critter/small_animal/bird/goose,
+/turf/simulated/floor,
+/area/prefab/sea_prison)
+"Kz" = (
+/mob/living/critter/zombie/security,
+/obj/stool,
+/turf/simulated/floor/red,
 /area/prefab/sea_prison)
 
 (1,1,1) = {"
@@ -751,7 +751,7 @@ aT
 aT
 bo
 af
-bH
+CB
 aa
 ab
 "}
@@ -906,7 +906,7 @@ aa
 aR
 aT
 aT
-bi
+Kz
 bq
 aT
 aT
@@ -1198,7 +1198,7 @@ aa
 al
 au
 aB
-aE
+dp
 au
 au
 aM

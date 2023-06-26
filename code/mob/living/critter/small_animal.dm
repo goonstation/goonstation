@@ -1807,7 +1807,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	var/aggressive = TRUE
-	var/list/friends = list()
 
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
@@ -1889,7 +1888,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return TRUE
 
 	valid_target(mob/living/C)
-		if (C in src.friends) return FALSE //don't attack frens :)
 		if (istype(C, /mob/living/critter/small_animal/rattlesnake)) return FALSE //don't attack space rattlesnakes(the snake would lose)
 		return ..()
 
@@ -1931,7 +1929,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
 	var/aggressive = TRUE
-	var/list/friends = list()
 	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
 
 	New()
@@ -2014,7 +2011,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
-		if (C in src.friends) return FALSE //don't attack frens :) TODO replace with faction system
 		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
 			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
 				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close

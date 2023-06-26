@@ -6004,13 +6004,6 @@
 	},
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"aFi" = (
-/obj/machinery/camera{
-	network = "Pathopost"
-	},
-/obj/critter/zombie/scientist,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aFj" = (
 /turf/simulated/wall/auto/asteroid,
 /area/h7/asteroid)
@@ -6109,10 +6102,6 @@
 	},
 /turf/simulated/floor,
 /area/h7/control)
-"aFM" = (
-/obj/critter/zombie/security,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aFU" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -6190,13 +6179,6 @@
 /obj/stool/chair/red{
 	dir = 8
 	},
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
-"aGe" = (
-/obj/machinery/light/worn{
-	dir = 4
-	},
-/obj/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
 "aGf" = (
@@ -7222,11 +7204,6 @@
 /obj/lattice,
 /turf/space,
 /area/abandonedmedicalship)
-"aJB" = (
-/obj/stool/chair,
-/obj/critter/zombie/scientist,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aJD" = (
 /obj/decal/floatingtiles{
 	dir = 8
@@ -7786,13 +7763,6 @@
 /obj/machinery/telejam/active,
 /turf/space,
 /area/abandonedmedicalship)
-"aLs" = (
-/obj/decal/cleanable/robot_debris{
-	icon_state = "gib5"
-	},
-/obj/critter/zombie/scientist,
-/turf/space,
-/area/abandonedmedicalship)
 "aLt" = (
 /obj/critter/gunbot/drone/buzzdrone,
 /turf/space,
@@ -7965,17 +7935,6 @@
 "aLU" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/h7/computer_core)
-"aLV" = (
-/obj/machinery/light/worn{
-	dir = 8
-	},
-/obj/stool/chair{
-	dir = 1
-	},
-/obj/critter/zombie/scientist,
-/turf/space,
-/turf/simulated/floor,
-/area/abandonedoutpostthing)
 "aLW" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/scorched,
@@ -12539,11 +12498,6 @@
 	name = "void"
 	},
 /area/h7/lab)
-"aYz" = (
-/obj/critter/zombie/h7,
-/turf/space,
-/turf/simulated/floor,
-/area/h7/lab)
 "aYD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12623,17 +12577,6 @@
 	dir = 8
 	},
 /area/h7)
-"aYU" = (
-/obj/stool/bed,
-/obj/critter/zombie/scientist,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "yellow";
-	icon_state = "bedsheet-yellow"
-	},
-/turf/simulated/floor/purplewhite{
-	dir = 10
-	},
-/area/abandonedoutpostthing)
 "aYV" = (
 /turf/space,
 /turf/simulated/floor/plating,
@@ -12846,14 +12789,6 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/h7/lab)
-"aZL" = (
-/mob/living/critter/small_animal/floateye,
-/turf/simulated/aprilfools{
-	desc = "A strange shifting void ...";
-	icon_state = "void";
-	name = "void"
-	},
 /area/h7/lab)
 "aZM" = (
 /obj/decal/floatingtiles{
@@ -13151,20 +13086,7 @@
 	dir = 8
 	},
 /area/h7)
-"baN" = (
-/obj/critter/zombie/scientist,
-/turf/space,
-/turf/simulated/floor/purplewhite{
-	dir = 8
-	},
-/area/abandonedoutpostthing)
 "baO" = (
-/turf/space,
-/turf/simulated/floor/white,
-/area/abandonedoutpostthing)
-"baP" = (
-/obj/critter/zombie/scientist,
-/obj/machinery/telejam/active,
 /turf/space,
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
@@ -13309,13 +13231,6 @@
 /turf/space,
 /turf/simulated/floor/purplewhite{
 	dir = 8
-	},
-/area/abandonedoutpostthing)
-"bbm" = (
-/obj/critter/zombie/scientist,
-/turf/space,
-/turf/simulated/floor/purplewhite{
-	dir = 4
 	},
 /area/abandonedoutpostthing)
 "bbn" = (
@@ -13509,10 +13424,6 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/turf/simulated/floor,
-/area/h7/lab)
-"bbN" = (
-/obj/critter/zombie/h7,
 /turf/simulated/floor,
 /area/h7/lab)
 "bbO" = (
@@ -14331,16 +14242,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/west,
-/area/h7/lab)
-"bff" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/stool,
-/obj/critter/zombie/h7,
-/turf/simulated/floor,
 /area/h7/lab)
 "bfh" = (
 /obj/decal/fakeobjects{
@@ -17263,6 +17164,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/derelict_ai_sat)
+"cCz" = (
+/mob/living/critter/zombie/biosuit,
+/turf/simulated/floor,
+/area/h7/lab)
 "cEs" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -18543,6 +18448,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"gxv" = (
+/mob/living/critter/small_animal/floateye,
+/turf/simulated/aprilfools{
+	desc = "A strange shifting void ...";
+	icon_state = "void";
+	name = "void"
+	},
+/area/h7/lab)
 "gxH" = (
 /obj/stool/chair/couch/yellow{
 	dir = 8;
@@ -18650,6 +18563,11 @@
 "gQF" = (
 /turf/simulated/floor/plating/scorched,
 /area/diner/hangar)
+"gRB" = (
+/mob/living/critter/zombie/biosuit,
+/turf/space,
+/turf/simulated/floor,
+/area/h7/lab)
 "gVs" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/item/paper/businesscard/biteylou{
@@ -19039,6 +18957,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"hZW" = (
+/obj/machinery/light/worn{
+	dir = 4
+	},
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "ibe" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/tile_edge/check/yellow{
@@ -19424,6 +19349,16 @@
 /obj/item/clothing/glasses/vr/arcade,
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"iXG" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/stool,
+/mob/living/critter/zombie/biosuit,
+/turf/simulated/floor,
+/area/h7/lab)
 "iYn" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -19626,6 +19561,17 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/space)
+"jtY" = (
+/obj/machinery/light/worn{
+	dir = 8
+	},
+/obj/stool/chair{
+	dir = 1
+	},
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "jvm" = (
 /obj/decal/fakeobjects/airlock_broken,
 /turf/simulated/floor/black,
@@ -20280,6 +20226,13 @@
 	dir = 5
 	},
 /area/derelict_ai_sat)
+"lxr" = (
+/obj/machinery/camera{
+	network = "Pathopost"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "lxB" = (
 /obj/item/wrench,
 /obj/cable{
@@ -21872,6 +21825,17 @@
 /obj/storage/crate/loot,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
+"pKY" = (
+/obj/stool/bed,
+/mob/living/critter/zombie/scientist,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "yellow";
+	icon_state = "bedsheet-yellow"
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 10
+	},
+/area/abandonedoutpostthing)
 "pMZ" = (
 /obj/cable{
 	d1 = 1;
@@ -23147,6 +23111,10 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"tdJ" = (
+/mob/living/critter/zombie/security,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "tfx" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -23383,6 +23351,13 @@
 	},
 /turf/space,
 /area/bee_trader)
+"tJt" = (
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib5"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/area/abandonedmedicalship)
 "tJT" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -23525,6 +23500,13 @@
 	},
 /turf/space,
 /area/space)
+"ukV" = (
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/abandonedoutpostthing)
 "unf" = (
 /obj/cable{
 	d1 = 1;
@@ -24099,6 +24081,11 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"vRy" = (
+/obj/stool/chair,
+/mob/living/critter/zombie/scientist,
+/turf/simulated/floor,
+/area/abandonedoutpostthing)
 "vRE" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
@@ -24776,6 +24763,12 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"xVr" = (
+/mob/living/critter/zombie/scientist,
+/obj/machinery/telejam/active,
+/turf/space,
+/turf/simulated/floor/white,
+/area/abandonedoutpostthing)
 "xYM" = (
 /obj/machinery/conveyor/WE{
 	id = "robot_factory";
@@ -24881,6 +24874,13 @@
 "yiv" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
+"yiU" = (
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/turf/simulated/floor/purplewhite{
+	dir = 4
+	},
+/area/abandonedoutpostthing)
 "ylg" = (
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
@@ -36494,7 +36494,7 @@ aYx
 aZt
 bav
 aXK
-bbN
+cCz
 bcu
 bcH
 bcS
@@ -37094,7 +37094,7 @@ aXk
 aXN
 aYx
 aYx
-aZL
+gxv
 aZZ
 aYx
 aYx
@@ -37998,7 +37998,7 @@ aQr
 aQr
 aXk
 aXP
-aYz
+gRB
 aZt
 aZM
 aYx
@@ -38919,7 +38919,7 @@ bdy
 bdA
 bdA
 bdA
-bff
+iXG
 aXK
 aXK
 aXj
@@ -98191,7 +98191,7 @@ bmK
 aHb
 aLj
 aLp
-aLs
+tJt
 aLB
 aLI
 olS
@@ -104417,7 +104417,7 @@ aGb
 aGU
 aJi
 aGc
-aLV
+jtY
 aMD
 aDy
 aab
@@ -104717,7 +104717,7 @@ kse
 aDy
 aFg
 aFg
-aJB
+vRy
 aJW
 aMa
 aFg
@@ -104740,7 +104740,7 @@ aaa
 tmu
 aXv
 aYh
-aYU
+pKY
 aDy
 aab
 aab
@@ -105348,7 +105348,7 @@ aZb
 aDy
 aZO
 bag
-baN
+ukV
 bbl
 sFV
 aDy
@@ -105922,7 +105922,7 @@ aab
 aDy
 aFg
 aFg
-aFM
+tdJ
 aFg
 aGY
 aFg
@@ -105952,7 +105952,7 @@ aXA
 aZF
 aZW
 aWH
-baP
+xVr
 baO
 bbZ
 aDy
@@ -106227,7 +106227,7 @@ aFx
 aFg
 aFg
 aHe
-aFM
+tdJ
 aFg
 aFx
 aMT
@@ -106557,7 +106557,7 @@ aDy
 aZY
 bau
 baQ
-bbm
+yiU
 bcm
 aDy
 aab
@@ -107128,7 +107128,7 @@ aab
 aab
 aab
 aDy
-aFi
+lxr
 aFg
 aFg
 aGd
@@ -107433,7 +107433,7 @@ aDy
 aFg
 aFx
 aFV
-aGe
+hZW
 aHz
 aDy
 aLb

@@ -185,7 +185,7 @@
 	pixel_x = -16
 	pixel_y = -16
 	var/number_left = 5
-	var/critter_type = /obj/critter/zombie
+	var/critter_type = /mob/living/critter/zombie
 
 /obj/hellportal/New()
 	..()

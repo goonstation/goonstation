@@ -4845,14 +4845,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/quartersB)
-"amQ" = (
-/obj/decal/cleanable/cobweb2,
-/obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/maintenance/north)
 "amR" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -8985,18 +8977,6 @@
 	},
 /turf/space,
 /area/space)
-"axu" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
 "axv" = (
 /obj/shrub{
 	dir = 1
@@ -10775,36 +10755,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"aBx" = (
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
-/obj/item/clothing/under/suit,
-/obj/item/clothing/under/shirt_pants,
-/obj/item/clothing/shoes/black,
-/obj/item/clothing/head/fedora,
-/obj/item/clothing/glasses/eyepatch{
-	name = "costume eyepatch"
-	},
-/obj/disposalpipe/segment/morgue,
-/obj/item/clothing/head/mime_beret,
-/obj/item/clothing/head/mime_bowler,
-/obj/item/clothing/under/misc/mime,
-/obj/item/clothing/under/misc/mime/alt,
-/obj/item/clothing/suit/suspenders,
-/obj/item/clothing/suit/scarf,
-/obj/storage/closet/dresser{
-	anchored = 1;
-	name = "costume dresser";
-	pixel_y = 20
-	},
-/obj/ladder/embed{
-	pixel_y = 32;
-	id = "smiling"
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/chapel/sanctuary)
 "aBy" = (
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
@@ -15679,10 +15629,6 @@
 "aNy" = (
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
-"aNz" = (
-/mob/living/critter/small_animal/seal,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/pool)
 "aNA" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/wood,
@@ -16497,14 +16443,6 @@
 /area/shuttle/arrival/station)
 "aPA" = (
 /obj/machinery/light,
-/turf/simulated/floor/grass{
-	name = "astroturf"
-	},
-/area/station/hydroponics/bay)
-"aPB" = (
-/obj/storage/crate,
-/obj/item/bee_egg_carton,
-/obj/item/bee_egg_carton,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -17671,10 +17609,6 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
-"aSv" = (
-/mob/living/critter/small_animal/walrus,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "aSw" = (
 /obj/landmark/spawner{
 	icon_state = "chimp-start";
@@ -17797,15 +17731,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
-"aSN" = (
-/mob/living/critter/small_animal/bird/owl,
-/obj/machinery/firealarm{
-	pixel_x = 1;
-	pixel_y = 26;
-	text = "NF"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "aSO" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
@@ -17817,17 +17742,6 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSQ" = (
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
-"aSR" = (
-/obj/shrub{
-	dir = 1
-	},
-/mob/living/critter/small_animal/bird/owl,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSS" = (
@@ -18945,25 +18859,6 @@
 	dir = 5;
 	icon_state = "fgreen3"
 	},
-/area/station/garden/owlery)
-"aVF" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/mob/living/critter/small_animal/bird/owl,
-/turf/simulated/floor/carpet{
-	dir = 5;
-	icon_state = "fgreen2"
-	},
-/area/station/garden/owlery)
-"aVH" = (
-/mob/living/critter/small_animal/bird/owl{
-	desc = "You've heard that this owl is a real jerk.";
-	health_brute = 20;
-	health_burn = 20;
-	name = "owl of ill-repute"
-	},
-/turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVI" = (
 /turf/simulated/floor/plating/scorched,
@@ -20100,10 +19995,6 @@
 	dir = 6;
 	icon_state = "fgreen2"
 	},
-/area/station/garden/owlery)
-"aYz" = (
-/mob/living/critter/small_animal/bird/owl,
-/turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aYA" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -21328,13 +21219,6 @@
 /obj/landmark{
 	icon_state = "pest-start";
 	name = "peststart"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
-"bbw" = (
-/mob/living/critter/small_animal/bird/owl{
-	desc = "His name is Carl.";
-	name = "space owl named Carl"
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -58563,19 +58447,6 @@
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
-"cMA" = (
-/obj/machinery/light/emergency{
-	pixel_x = -16
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/chem_heater{
-	pixel_y = 5
-	},
-/obj/machinery/disposal/small,
-/turf/simulated/floor/black,
-/area/station/medical/medbay/pharmacy)
 "cMB" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment{
@@ -60989,20 +60860,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
-"cSf" = (
-/obj/machinery/chem_heater,
-/obj/item/device/radio/intercom/science,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/station/science/chemistry)
 "cSg" = (
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -61033,11 +60890,6 @@
 	},
 /area/station/science/chemistry)
 "cSj" = (
-/turf/simulated/floor/purplewhite,
-/area/station/science/chemistry)
-"cSk" = (
-/obj/machinery/chem_heater,
-/obj/machinery/light,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cSl" = (
@@ -70948,6 +70800,36 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/hotloop)
+"ekE" = (
+/obj/item/clothing/under/suit/dress{
+	desc = "A black dress. Very formal.";
+	name = "black dress"
+	},
+/obj/item/clothing/under/suit,
+/obj/item/clothing/under/shirt_pants,
+/obj/item/clothing/shoes/black,
+/obj/item/clothing/head/fedora,
+/obj/item/clothing/glasses/eyepatch{
+	name = "costume eyepatch"
+	},
+/obj/disposalpipe/segment/morgue,
+/obj/item/clothing/head/mime_beret,
+/obj/item/clothing/head/mime_bowler,
+/obj/item/clothing/under/misc/mime,
+/obj/item/clothing/under/misc/mime/alt,
+/obj/item/clothing/suit/suspenders,
+/obj/item/clothing/suit/scarf,
+/obj/storage/closet/dresser{
+	anchored = 1;
+	name = "costume dresser";
+	pixel_y = 20
+	},
+/obj/ladder/embed{
+	id = "smiling";
+	pixel_y = 32
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/chapel/sanctuary)
 "enN" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -71132,6 +71014,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"eLv" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/white,
+/area/station/crew_quarters/pool)
 "eLQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -71326,6 +71212,15 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/station/engine/substation/east)
+"foW" = (
+/mob/living/critter/small_animal/bird/owl,
+/obj/machinery/firealarm{
+	pixel_x = 1;
+	pixel_y = 26;
+	text = "NF"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "fqO" = (
 /obj/machinery/light{
 	dir = 1;
@@ -71918,6 +71813,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
+"hqY" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fgreen2"
+	},
+/area/station/garden/owlery)
 "hsE" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -71938,6 +71843,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
+"hye" = (
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "hyI" = (
 /obj/machinery/launcher_loader/south{
 	door_delay = 5
@@ -71991,6 +71902,10 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/solar/south)
+"hFj" = (
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "hFn" = (
 /turf/simulated/wall/auto/supernorn{
 	icon_state = "12"
@@ -73154,6 +73069,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/emergency)
+"kKP" = (
+/obj/fishing_pool/portable,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "kLC" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -74376,6 +74297,24 @@
 /obj/item/currency/spacecash/ten,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/southeast)
+"odx" = (
+/obj/machinery/light/emergency{
+	pixel_x = -16
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/small,
+/obj/machinery/chem_heater/chemistry{
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/station/medical/medbay/pharmacy)
+"ofB" = (
+/obj/wingrille_spawn/auto,
+/obj/storage/cart,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "ois" = (
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 28
@@ -74447,6 +74386,17 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/storage/emergency)
+"olu" = (
+/obj/shrub{
+	dir = 1
+	},
+/mob/living/critter/small_animal/bird/owl,
+/obj/landmark{
+	icon_state = "kudzu-start";
+	name = "kudzustart"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "olE" = (
 /obj/decal/tile_edge/stripe{
 	dir = 6;
@@ -74580,6 +74530,12 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/ai_monitored/storage/eva)
+"oQG" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "oQS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_caution{
@@ -74623,6 +74579,21 @@
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
+"pca" = (
+/obj/storage/crate,
+/obj/item/bee_egg_carton,
+/obj/item/bee_egg_carton,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "pdE" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -74674,6 +74645,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload)
+"ppX" = (
+/obj/decal/cleanable/cobweb2,
+/obj/ladder/embed{
+	id = "smiling";
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/scorched,
+/area/station/maintenance/north)
 "pqB" = (
 /obj/window_blinds/cog2{
 	dir = 4
@@ -75582,6 +75561,20 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
+"sdv" = (
+/obj/item/device/radio/intercom/science,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/science/chemistry)
 "sfG" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -76033,6 +76026,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/podbay)
+"tqB" = (
+/mob/living/critter/small_animal/bird/owl{
+	desc = "His name is Carl.";
+	name = "space owl named Carl"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "trh" = (
 /obj/submachine/chef_sink/chem_sink{
 	desc = "A water-filled unit intended for hand-washing purposes.";
@@ -76498,6 +76498,15 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"uXe" = (
+/mob/living/critter/small_animal/bird/owl{
+	desc = "You've heard that this owl is a real jerk.";
+	health_brute = 20;
+	health_burn = 20;
+	name = "owl of ill-repute"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "uYS" = (
 /obj/rack,
 /obj/item/wrench,
@@ -76551,6 +76560,10 @@
 	dir = 4
 	},
 /area/station/ranch)
+"vle" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "vlg" = (
 /obj/table/wood/auto,
 /obj/item/dice/magic8ball{
@@ -76606,6 +76619,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
+"voZ" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/warp_beacon/catering,
+/turf/space,
+/area/space)
 "vrU" = (
 /obj/table/wood/auto,
 /obj/item/plantanalyzer,
@@ -77107,6 +77128,11 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"xBx" = (
+/obj/machinery/light,
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/purplewhite,
+/area/station/science/chemistry)
 "xBG" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -101012,7 +101038,7 @@ aFD
 aHq
 aIU
 azn
-azn
+aQZ
 aKt
 aCc
 aKu
@@ -102814,7 +102840,7 @@ gTd
 ath
 auF
 awe
-axu
+pca
 azn
 azn
 aCd
@@ -102828,7 +102854,7 @@ axz
 azn
 azn
 azn
-azn
+aQW
 hFn
 aTk
 aXB
@@ -103122,7 +103148,7 @@ azn
 aCd
 aDl
 qlm
-awf
+ofB
 awf
 awf
 qlm
@@ -103130,7 +103156,7 @@ axr
 azn
 azn
 azn
-aQW
+aQX
 hFn
 aTl
 aUI
@@ -103432,7 +103458,7 @@ awd
 aMZ
 azn
 azn
-aQX
+aQY
 aSk
 aTn
 baK
@@ -103734,7 +103760,7 @@ nCq
 aJa
 azn
 azn
-aQY
+aOo
 aSk
 aTn
 baK
@@ -104002,7 +104028,7 @@ aaa
 aaa
 aaa
 aaa
-adb
+voZ
 adw
 aef
 aeP
@@ -104336,9 +104362,9 @@ aIZ
 aKv
 awh
 aNa
-aOo
-aPB
-aQZ
+oQG
+hye
+kKP
 aKy
 aTp
 aUM
@@ -105326,7 +105352,7 @@ cMh
 cNB
 cOW
 cQr
-cSf
+sdv
 cTA
 cVb
 cQu
@@ -107138,7 +107164,7 @@ cMn
 cNG
 cPc
 cPb
-cSk
+xBx
 cTD
 cVg
 cWj
@@ -111966,7 +111992,7 @@ cGJ
 cIf
 cJq
 cKZ
-cMA
+odx
 cNO
 cPm
 cQK
@@ -113701,7 +113727,7 @@ aNx
 aOG
 aPV
 aRo
-aSv
+vle
 aRo
 aVa
 aKN
@@ -114603,7 +114629,7 @@ aHV
 aJv
 aKO
 aMi
-aNz
+eLv
 aOH
 aPV
 aRo
@@ -121836,13 +121862,13 @@ anU
 ape
 aql
 akq
-amQ
+ppX
 akt
 avq
 awJ
 ayv
 azW
-aBx
+ekE
 aCO
 aDS
 alM
@@ -123063,7 +123089,7 @@ aMv
 aMv
 aQk
 aRF
-aSN
+foW
 aSQ
 aVx
 ilH
@@ -123975,7 +124001,7 @@ hyQ
 aSQ
 aSQ
 aSQ
-bbw
+tqB
 bcx
 qGS
 bef
@@ -124277,7 +124303,7 @@ aVB
 aWP
 aSM
 aSQ
-aSR
+olu
 bcy
 bdw
 beg
@@ -125481,7 +125507,7 @@ tJa
 aQs
 aRK
 aSQ
-aVF
+hqY
 aWT
 aSM
 aSQ
@@ -125785,7 +125811,7 @@ aQn
 aSQ
 ilH
 aSQ
-aYz
+hFj
 aSQ
 bby
 bcx
@@ -126991,7 +127017,7 @@ aQw
 aRF
 aSM
 aSQ
-aVH
+uXe
 aXA
 aYu
 chV
