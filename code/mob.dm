@@ -1954,8 +1954,8 @@
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
-			var/obj/critter/owl/O = new /obj/critter/owl(src.loc)
-			O.name = pick("Hooty Mc[src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
+			var/mob/living/critter/small_animal/bird/owl/owl = new /mob/living/critter/small_animal/bird/owl(src.loc)
+			owl.name = pick("Hooty Mc [src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()

@@ -3776,7 +3776,18 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
+						var/critter = pick(
+						/mob/living/critter/small_animal/cockroach,
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/cat,
+						/mob/living/critter/small_animal/mouse,
+						/mob/living/critter/small_animal/wasp,
+						/mob/living/critter/small_animal/bird/owl,
+						/mob/living/critter/small_animal/bird/goose,
+						/mob/living/critter/small_animal/bird/goose/swan,
+						/obj/critter/domestic_bee,
+						/mob/living/critter/small_animal/walrus,
+						/mob/living/critter/small_animal/seal)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
