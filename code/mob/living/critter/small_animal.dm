@@ -71,6 +71,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	var/eye_color = 0
 
 	var/is_pet = null // null = autodetect
+	///Do we randomize stuff?
+	var/generic = TRUE
 
 	New(loc)
 		if(isnull(src.is_pet))
@@ -2184,7 +2186,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	var/frog_sound = list('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg', 'sound/voice/screams/frogscream4.ogg')
 
 	New()
-		if (prob(80))
+		if (src.generic && prob(80))
 			if (prob(1))
 				src.icon_state = "frog-space"
 				src.icon_state_dead = "frog-space-dead"
