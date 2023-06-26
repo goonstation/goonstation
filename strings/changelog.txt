@@ -1,5 +1,7 @@
 (t)sun jun 25 23
 (u)aloe
+(+)Taking items off of unconcious people is now faster. Taking items off of dead people is much faster.
+(u)aloe
 (+)Petting werewolves now gets you bit.
 (u)LeahTheTech
 (+)Inspectors now have unique "miranda rights"
