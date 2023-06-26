@@ -1,10 +1,10 @@
 <center><h2>Justice on Nanotrasen Stations: A Treatise on Space Law</h2></center>
 	<h3>A Brief Introduction to the Space Law</h3><hr>
-	This Law Book, whilst important, is in its just core just what it is: a fancy paper in a fancy cover with fancy words written inside of it. It's the Letter of the Law, a generalisation of cases used by lawyers to try and pull a stunt. It is important, but as a Security Officer, you should obey to the Spirit of the Law, not the Letter. The Letter of the Law is to give you directions, but the Spirit of the Law is what should make the rulings.<br><br>
- Your primary duty onboard Nanotrasen stations is to protect the crew in good faith, and so you must always consider the circumstances of a crime. Hitting a crewmate accidentally while fighting a much bigger threat should probably be waived, whilst spilling lube near open airlocks should perhaps be prosecuted more harshly.<br>
+	This Law Book, while important, is in its core just what it is: a fancy paper in a fancy cover with fancy words written inside of it. It's the Letter of the Law, a generalization of cases used by lawyers to try and pull a stunt. It is important, but as a Security Officer, you should obey to the Spirit of the Law, not the Letter. The Letter of the Law is to give you directions, but the Spirit of the Law is what should make the rulings.<br><br>
+ Your primary duty onboard Nanotrasen stations is to protect the crew in good faith, and so you must always consider the circumstances of a crime. Hitting a crewmate accidentally while fighting a much bigger threat should probably be waived, while spilling lube near open airlocks should perhaps be prosecuted more harshly.<br>
 The accused's intent is just as important, and must be considered as well. The difference between Aggravated Assault and Attempted Murder can be very hard to ascertain, and, when in doubt, you should default to the less serious crime. <br><br>
 
-	Always use your best judgement and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to advice of fellow officers and superiors. <br> <br>
+	Always use your best judgment and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to advice of fellow officers and superiors. <br> <br>
 
 As a Security Assistant, generally the same principles apply to you, but with half of the responsibility. Your primary role is to assist the Security team in the best way you can, whether that be through sorting out Security records, wardening any prisoners being held in the brig or manning the security cameras.<br>
 Despite what your fellow officers might tell you, supplying the Security team with alcohol is NOT within your role expectation and should NOT be done while on duty.<hr>
@@ -31,15 +31,15 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 				<li>To deliberately damage the station without impacting its productivity.</li>
 			</ul>
 		</li>
-        <li>Posession of dangerous contraband
+        <li>Possession of dangerous contraband
 			<ul style='list-style-type:circle'>
-				<li>To be in posession of a dangerous piece of contraband.<br>
+				<li>To be in possession of a dangerous piece of contraband.<br>
 				<i>Includes variable types of weaponry and explosives.</i><br>
                 <i>Separate less than lethal weapons may be registred at security using contraband stickers for the purposes of exploration or self defense.</i><br>
-                <i>The bartender's shotgun, and medical director's tranquiliser rifle are exempt from confiscation while being used in good faith.</i></li>
+                <i>The bartender's shotgun, and medical director's tranquilizer rifle are exempt from confiscation while being used in good faith.</i></li>
         </ul>
             <ul style='list-style-type:circle'>
-            <li>To be in posession of equipment manufactured by a hostile corporation.<br>
+            <li>To be in possession of equipment manufactured by a hostile corporation.<br>
 			<i>Includes variable types of non-dangerous contraband gear and equipment.</i></li>
 				</ul>
         <li>Creating a Workplace Hazard
@@ -90,7 +90,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 		<li>Sabotage
 			<ul style='list-style-type:circle'>
 				<li>To engage in maliciously destructive actions, impacting the productivity of the station, but not the safety of the crew.</li>
-				<i>All actions impacting the safety of the crew or grievousely impacting the productivity of a department or the station as a whole should be classified as acts of Grand Sabotage.</i>
+				<i>All actions impacting the safety of the crew or grievously impacting the productivity of a department or the station as a whole should be classified as acts of Grand Sabotage.</i>
 			</ul>
 		</li>
         <li>Breaking and Entering into a sensitive area
@@ -119,7 +119,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 		<li>Grand Sabotage
 			<ul style='list-style-type:circle'>
 				<li>To engage in maliciously destructive actions, seriously threatening the crew or the station</li>
-				<i>Bombing, flooding the hallways with harmful gases, subverting or attempting to subvert the sillicons, and other actions that could seriousely injure multiple people at once, as well as actions that could prevent a department or the station as a whole from functionning entirely, all count as Grand Sabotage.</i>
+				<i>Bombing, flooding the hallways with harmful gases, subverting or attempting to subvert the sillicons, and other actions that could seriously injure multiple people at once, as well as actions that could prevent a department or the station as a whole from functioning entirely, all count as Grand Sabotage.</i>
 			</ul>
 		</li>
         <li>Breaking and Entering into a protected area
@@ -136,20 +136,20 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 			</ul>
 		</li>
 	</ul>
-    	<h4>Additionnal Circumstances and Special Cases:</h4>
+    	<h4>Additional Circumstances and Special Cases:</h4>
 	<i>The following is a list of aggravating and alleviating circumstances to crime, the respective recommended amendments to the sentence, as well as greatly variable crimes.</i><br>
 	<ul style='list-style-type:disc'>
 		<li>Cooperation with security
 			<ul style='list-style-type:circle'>
 				<li>To assist the investigation during interrogation</li>
-                <i>Such assistance may include but is not limited to: a full confession, providing names of accomplices, revealing aditionnal circumstances unkown to the investigation prior to the arrest.</i><br>
-                <i>A reduction for up to 50% of the sentence is recommended, depending on the helpfullnes of the provided information, and the willingness to deliver it.</i>
+                <i>Such assistance may include but is not limited to: a full confession, providing names of accomplices, revealing additional circumstances unknown to the investigation prior to the arrest.</i><br>
+                <i>A reduction for up to 50% of the sentence is recommended, depending on the helpfullness of the provided information, and the willingness to deliver it.</i>
 			</ul>
 		</li>
 		<li>Surrender
 			<ul style='list-style-type:circle'>
-				<li>To willinfully surrender to security forces</li>
-				<i>For this condition to apply, the perpetrator should willingly come to a member of security, confessing to their crimes and taking the punishment. Simply getting arresting without resistance is not surrender.</i>
+				<li>To willfully surrender to security forces</li>
+				<i>For this condition to apply, the perpetrator should willingly come to a member of security, confessing to their crimes and taking the punishment. Simply getting arrested without resistance is not surrender.</i>
                 <i>A reduction for up to 25% of the sentence is recommended.</i>
 			</ul>
 		</li>
@@ -163,9 +163,9 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
         <li>Resisting arrest
 			<ul style='list-style-type:circle'>
 				<li>To actively prevent one's own arrest</li>
-				<i><b>This should only apply if the initial charge is valid. If the initial charge is not valid or has been disproofed, an immediate release is in order.</b></i><br>
-                <i>Assaulting crew or officers during an arrest counts and should be treated as an aditionnal assault charge, and not resisting arrest. Shoving, bolting doors, building walls and running away from officers during an arrest count as resisting arrest.</i><br>
-                <i>For resisting arrest, an aditionnal 30 to 60 seconds in the brig are recommended.</i>
+				<i><b>This should only apply if the initial charge is valid. If the initial charge is not valid or has been disproved, an immediate release is in order.</b></i><br>
+                <i>Assaulting crew or officers during an arrest counts and should be treated as an additional assault charge, and not resisting arrest. Shoving, bolting doors, building walls and running away from officers during an arrest count as resisting arrest.</i><br>
+                <i>For resisting arrest, an additional 30 to 60 seconds in the brig are recommended.</i>
 			</ul>
 		</li>
         <li>Repeat offender
@@ -177,43 +177,43 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
         <li>Mind control
 			<ul style='list-style-type:circle'>
 				<li>To regain one's own will after being direct mind control of another person</li>
-                <i>Mind control include misuse of AI laws, the use of mindhack devices and of revolutionnary devices.</i><br>
-                <i>An immediate release is in order. All crimes commited by the controlled person or sillicon are to be transfered to the root actor.</i>
+                <i>Mind control includes misuse of AI laws, the use of mindhack devices and of revolutionary devices.</i><br>
+                <i>An immediate release is in order. All crimes committed by the controlled person or sillicon are to be transferred to the root actor.</i>
 			</ul>
 		</li>
         <li>Aiding and Abetting
 			<ul style='list-style-type:circle'>
 				<li>To assist a known criminal outside of one's duty</li>
-                <i>Intent and circumstances are important: Treating a criminal's bleeding as a medical doctor is not a crime, whilst providing a criminal with an explosive device is.</i><br>
+                <i>Intent and circumstances are important: Treating a criminal's bleeding as a medical doctor is not a crime, while providing a criminal with an explosive device is.</i><br>
                 <i>From 50% to the full charge applied to the initial perpetrator is to be applied to the accomplice, depending on the extent of the aid provided.</i>
 			</ul>
 		</li>
         <li>Escape from the Brig
 			<ul style='list-style-type:circle'>
 				<li>To flee confinement for any reason other than to escape impending lethal danger</li>
-                <i>In case of an escape, the timer should be reset and an aditionnal 30 seconds added. In  case of multiple escapes, see the addendum about executions.</i>
+                <i>In case of an escape, the timer should be reset and an additional 30 seconds added. In  case of multiple escapes, see the section about executions.</i>
 			</ul>
 		</li>
 	</ul>
     <hr>
     <h3>Capital Punishment</h3>
-    Only two forms of Capital Punishment are allowed onboard of NT stations:
+    Only two forms of Capital Punishment are allowed onboard of NanoTrasen stations:
     <ul style='list-style-type:disc'>
     <li>Exile from the station. Can be done either by throwing the criminal into space, letting them take enough internals to survive as well as a spacesuit, or by delivering the criminal to a neutral turf, such as the space dinner. After getting exiled, any sightings of the exiled on station should result in an immediate execution.
     </li>
     <li>Execution. The method should be quick and humane: preferably firing squad or spacing. It is encouraged to allow the criminal to say their last words before getting executed.
     </li>
     </ul><br>
-    A capital punishment may be warranted in the following cases:
+    Capital punishment may be warranted in the following cases:
     <ul style='list-style-type:disc'>
     <li>The criminal is not an NT employee. Based on this grounds <b> ONLY EXILE </b> is allowed, unless one of the other conditions have been met.<br>
     <i>Please note that any humanoid being may apply to become an NT employee in the Head of Personnel's office instead of getting exiled. Such request should be granted, but crewmanship may be revoked if said new hire commits a Moderate Crime or worse.</i></li>
     <li>The criminal has reoffended multiple times, with solid evidence to back up each arrest. Generally, on the 3rd Major Crime or the 4th Moderate Crime, capital punishment is warranted.</li>
-    <li>The criminal has prooven to be uncontainable, appliable after the criminal has escaped the brig twice or more. </li>
+    <li>The criminal has proven to be uncontainable, appliable after the criminal has escaped the brig twice or more. </li>
     </ul>
-        If a criminal has warranted execution and you believe they should be executed, the execution should be authorised by one of the following, in order of preference from most preferable to least preferable: the Head of Security, the NanoTrasen Security Consultant, the Captain.<br>
-    If all of the aformentionned personnel are not present on the shift, KIA, MIA, incapacitated or otherwise unresponsive, then any security officer can authorise an execution.<br>
-    <i>Unresponsive personnel are personnel that have not responded for 3 minutes or more to a request to authorise an execution.</i>
+        If a criminal has warranted execution and you believe they should be executed, the execution should be authorized by one of the following, in order of preference from most preferable to least preferable: the Head of Security, the NanoTrasen Security Consultant, the Captain.<br>
+    If all of the aformentionned personnel are not present on the shift, KIA, MIA, incapacitated or otherwise unresponsive, then any security officer can authorize an execution.<br>
+    <i>Unresponsive personnel are personnel that have not responded for 3 minutes or more to a request to authorize an execution.</i>
 <hr>
 <h3> Engagement Protocol </h3>
 As a Security Officer, you are expected to practice a modicum of due process in detaining, searching, and arresting people. Suspects still have rights, and treating people like scum will usually just turn into more crime and bring about a swift end to your existence. <b>Never use lethal force when nonlethal force will do!</b><br>
@@ -224,9 +224,8 @@ As a Security Officer, you are expected to practice a modicum of due process in 
 		<li>Handcuff the suspect and restrain them by pulling them. If their crime requires a brig time, a search or an interrogation, bring them into the security office.</li>
 		<li>If a search is warranted, when in the brig, tell them you're going to search them before doing so. Empty their pockets and remove their backpack. Look through everything. Be sure to open containers inside containers, such as boxes inside backpacks. Be sure to replace all items in the containers when you're done. <b><i>Don't strip them in the hallways!</i></b></li>
 		<li>Confiscate any contraband and/or stolen items, as well as any tools that were used in previous crimes, these need to be placed in a proper evidence locker, or crate and should not be left on the brig floor, or used for personal use, if stolen, return the items to their rightful owners.</li>
-        <li>If you need to brig them, put them in a cell and remove the hancuffs once inside. Remember to set the timer!</li>
+        <li>If you need to brig them, put them in a cell and remove the handcuffs once inside. Remember to set the timer!</li>
 		<li>Update their security record if needed.</li>
         </ul>
 <b>N.B.</b> : It is <FONT COLOR="#ff0000"><b><i>highly illegal</i></b></FONT> for NanoTrasen security to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors!
 <hr>
-
