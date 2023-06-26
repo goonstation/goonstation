@@ -1,5 +1,9 @@
 
 (t)mon jun 26 23
+(u)Gannets & Sian
+(p)14729
+(e)🎨|C-Sprites
+(+)Adds 5 more fish. Sprited by Sian.
 (u)tarmunora
 (*)A certain machine in the void now only works on humans and small animals.
 (*)Several "tougher" mobs that were converted to mob critters recently are now immune to stamina stuns once again.
