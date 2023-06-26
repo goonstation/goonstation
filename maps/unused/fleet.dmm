@@ -1066,6 +1066,16 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/tenebrae)
+"cs" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Dionysus Auxiliary Access";
+	req_access_txt = null
+	},
+/obj/mapping_helper/access/engineering_power,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast{
+	name = "Dionysus Maintenance"
+	})
 "ct" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/caution/corner/misc{
@@ -1431,29 +1441,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"do" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Teleporter Pad";
-	req_access_txt = "24"
-	},
-/obj/machinery/door/poddoor/pyro{
-	dir = 4;
-	id = "scienceteleporter";
-	name = "Pad Shutters";
-	panel_open = 1
-	},
-/obj/mapping_helper/access/research,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/science/teleporter)
 "dp" = (
 /obj/cable{
 	d1 = 4;
@@ -1746,17 +1733,6 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
-"dQ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Chemistry Lab"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "dR" = (
 /obj/cable{
 	d1 = 1;
@@ -1887,19 +1863,6 @@
 	panel_open = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/science/teleporter)
-"ed" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "scienceteleporter2";
-	name = "Teleporter Pad"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "scienceteleporter";
-	name = "Pad Shutters";
-	panel_open = 1
-	},
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "ee" = (
 /obj/machinery/light{
@@ -2236,24 +2199,6 @@
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
 	})
-"eN" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Tenebrae Command";
-	req_access = null
-	},
-/obj/mapping_helper/access/research_director,
-/turf/simulated/floor/blackwhite{
-	dir = 8
-	},
-/area/station/science/research_director{
-	name = "Tenebrae Command Center"
-	})
 "eO" = (
 /obj/cable{
 	d1 = 4;
@@ -2294,17 +2239,6 @@
 	dir = 4
 	},
 /area/station/science/tenebrae)
-"eU" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Artifact Lab"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/research,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor,
-/area/station/science/artifact)
 "eV" = (
 /obj/machinery/door/airlock/pyro/external{
 	name = "Owl Zone Access"
@@ -2470,19 +2404,6 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/science/tenebrae)
-"fo" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Teleporter Lab"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/white,
-/area/station/science/teleporter)
 "fp" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -3213,14 +3134,6 @@
 "gL" = (
 /turf/simulated/floor,
 /area/station/garden/owlery)
-"gM" = (
-/obj/machinery/conveyor/NS{
-	id = "qmout"
-	},
-/obj/machinery/door/window/southleft,
-/obj/mapping_helper/access/cargo,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "gN" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -3528,13 +3441,6 @@
 "hB" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/quartermaster/office)
-"hC" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo Dock"
-	},
-/obj/mapping_helper/access/cargo,
-/turf/simulated/floor,
 /area/station/quartermaster/office)
 "hD" = (
 /turf/simulated/wall/auto/supernorn,
@@ -3991,15 +3897,6 @@
 "iB" = (
 /turf/simulated/floor/orangeblack,
 /area/station/mining/staff_room)
-"iC" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Maru Hangar";
-	req_access = null
-	},
-/obj/mapping_helper/access/mining,
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "iD" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 8
@@ -4439,17 +4336,6 @@
 /area/station/turret_protected/AIbaseoutside{
 	name = "Hammer Defense Zone"
 	})
-"jz" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Reprod Lab";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_mechanic,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/elect)
 "jA" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -4801,29 +4687,6 @@
 /area/station/engine/storage{
 	name = "Maru Equipment"
 	})
-"kj" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cargo Bay";
-	req_access_txt = "31"
-	},
-/obj/mapping_helper/access/cargo,
-/obj/disposalpipe/segment/vertical,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
-"kk" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Mining";
-	req_access = null
-	},
-/obj/mapping_helper/access/mining,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "kl" = (
 /obj/cable,
 /obj/cable{
@@ -5044,23 +4907,6 @@
 /area/station/engine/storage{
 	name = "Maru Equipment"
 	})
-"kF" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Fore Zone";
-	req_access_txt = null
-	},
-/obj/mapping_helper/access/engineering_power,
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/yellow,
-/area/station/engine/storage{
-	name = "Maru Equipment"
-	})
 "kG" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -5148,25 +4994,9 @@
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
 	})
-"kP" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Maru Hangar"
-	},
-/obj/mapping_helper/access/engineering,
-/obj/mapping_helper/access/cargo,
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
 "kQ" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/security/secwing)
-"kR" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Weapons Locker"
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/black,
 /area/station/security/secwing)
 "kS" = (
 /obj/cable{
@@ -6129,14 +5959,6 @@
 /obj/item/card_box/plain,
 /turf/simulated/floor/black/grime,
 /area/station/security/secwing)
-"mO" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Detention Unit"
-	},
-/obj/mapping_helper/access/brig,
-/turf/simulated/floor/black/grime,
-/area/station/security/secwing)
 "mP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6676,20 +6498,6 @@
 /area/station/security/hos{
 	name = "Hammer Command"
 	})
-"nR" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Hammer Command";
-	req_access = null
-	},
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/security/hos{
-	name = "Hammer Command"
-	})
 "nS" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -6751,16 +6559,6 @@
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
-"nX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Primary Secure Zone"
-	},
-/obj/mapping_helper/access/security,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/secwing)
 "nY" = (
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -6784,20 +6582,6 @@
 /obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
-/area/station/security/detectives_office)
-"oc" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Detective's Office";
-	req_access = null
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/mapping_helper/access/forensics,
-/turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "od" = (
 /obj/grille/catwalk{
@@ -8492,30 +8276,6 @@
 /obj/item/staple_gun,
 /turf/simulated/floor/caution/south,
 /area/station/medical/robotics)
-"rq" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Maru Command";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_chief,
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/yellowblack{
-	dir = 4
-	},
-/area/station/engine/engineering/ce{
-	name = "Maru Bridge"
-	})
 "rr" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/caution/south,
@@ -9009,16 +8769,6 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
-"su" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics"
-	},
-/obj/mapping_helper/access/robotics,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/robotics)
 "sv" = (
 /obj/machinery/vending/standard,
 /turf/simulated/wall/auto/supernorn,
@@ -9283,14 +9033,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/morgue)
-"sV" = (
-/obj/machinery/door/airlock/pyro/medical{
-	dir = 4;
-	name = "Morgue"
-	},
-/obj/mapping_helper/access/morgue,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "sW" = (
@@ -9793,18 +9535,6 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
-"tU" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "Morgue"
-	},
-/obj/mapping_helper/access/morgue,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/sanitary/white,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
 "tV" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/latex,
@@ -9945,15 +9675,6 @@
 /area/station/crew_quarters/bar)
 "uj" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
-"uk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Kitchen"
-	},
-/obj/mapping_helper/access/kitchen,
-/turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
@@ -10130,22 +9851,6 @@
 /area/station/medical/head{
 	name = "Asclepius Command"
 	})
-"uB" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Asclepius Command";
-	req_access = null
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/medical_director,
-/turf/simulated/floor/bluewhite{
-	dir = 8
-	},
-/area/station/medical/head{
-	name = "Asclepius Command"
-	})
 "uC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10233,20 +9938,6 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research{
 	name = "Genetic Research"
-	})
-"uI" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Medbay"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/blue,
-/area/station/medical/medbay{
-	name = "Asclepius Primary Zone"
 	})
 "uJ" = (
 /obj/iv_stand,
@@ -10512,13 +10203,6 @@
 "vg" = (
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"vh" = (
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg,
-/obj/mapping_helper/access/cargo,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "vi" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor,
@@ -10902,21 +10586,6 @@
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
 	})
-"vS" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/kitchen,
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/cafeteria{
-	name = "Dionysus Primary Zone"
-	})
 "vT" = (
 /obj/cable{
 	d1 = 1;
@@ -11006,20 +10675,6 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/bluewhite,
-/area/station/medical/research{
-	name = "Genetic Research"
-	})
-"wc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Genetics Division"
-	},
-/obj/disposalpipe/segment/horizontal,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/medical,
-/turf/simulated/floor/blue,
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
@@ -11658,18 +11313,6 @@
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"xl" = (
-/obj/machinery/door/airlock/pyro{
-	name = "Hydroponics"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/access/hydro,
-/turf/simulated/floor,
-/area/station/hydroponics/bay)
 "xm" = (
 /obj/cable{
 	d2 = 2;
@@ -11867,29 +11510,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/wood/two,
 /area/station/bridge/hos)
-"xF" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Dionysus Front Office";
-	req_access = null
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/head_of_personnel,
-/turf/simulated/floor/carpet/red/fancy/edge/sw,
-/area/space)
-"xG" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg,
-/obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4
-	},
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/red,
-/area/station/security/secwing)
 "xH" = (
 /obj/cable{
 	d1 = 4;
@@ -12423,19 +12043,6 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
-	})
-"yG" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/machinery/door/airlock/pyro{
-	name = "Janitorial Wing"
-	},
-/obj/mapping_helper/access/janitor,
-/turf/simulated/floor/wood,
-/area/station/maintenance/southeast{
-	name = "Dionysus Maintenance"
 	})
 "yH" = (
 /obj/decal/poster/wallsign/stencil/right/d{
@@ -13112,16 +12719,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
-"zU" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Dionysus Auxiliary Access";
-	req_access_txt = null
-	},
-/obj/mapping_helper/access/engineering_power,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southeast{
-	name = "Dionysus Maintenance"
-	})
 "zV" = (
 /obj/lattice{
 	dir = 6;
@@ -13892,6 +13489,29 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
+"By" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Teleporter Pad";
+	req_access_txt = "24"
+	},
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "scienceteleporter";
+	name = "Pad Shutters";
+	panel_open = 1
+	},
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "Bz" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -13910,14 +13530,6 @@
 /area/station/turret_protected/ai)
 "BA" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/chapel/sanctuary)
-"BB" = (
-/obj/machinery/door/airlock/pyro{
-	id = "chapel_visitation";
-	name = "Chapel Office"
-	},
-/obj/mapping_helper/access/chapel_office,
-/turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "BC" = (
 /obj/wingrille_spawn/auto,
@@ -14876,19 +14488,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"Ds" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "AI Core"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/ai_upload,
-/turf/simulated/floor/grey,
-/area/station/turret_protected/ai)
 "Dt" = (
 /obj/machinery/turretid{
 	name = "Core Defenses Control";
@@ -15101,22 +14700,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/grey,
-/area/station/bridge/captain{
-	name = "Meridian Command"
-	})
-"DQ" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	name = "Captain's Quarters";
-	req_access = null
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/mapping_helper/access/captain,
 /turf/simulated/floor/grey,
 /area/station/bridge/captain{
 	name = "Meridian Command"
@@ -16120,24 +15703,8 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"FJ" = (
-/obj/stool/chair/wooden,
-/obj/critter/owl,
-/turf/simulated/floor/carpet/green/fancy/edge/north,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "FK" = (
 /turf/simulated/floor/carpet/green/fancy/edge/ne,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"FL" = (
-/obj/critter/owl,
-/turf/simulated/floor{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass"
-	},
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -16426,12 +15993,6 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
-"Gm" = (
-/obj/critter/owl,
-/turf/simulated/floor/carpet/green/fancy/edge/sw,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Gn" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -16555,6 +16116,20 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
+"GB" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Detective's Office";
+	req_access = null
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/access/forensics,
+/turf/simulated/floor/carpet/grime,
+/area/station/security/detectives_office)
 "GC" = (
 /obj/cable{
 	d1 = 4;
@@ -17194,6 +16769,17 @@
 	dir = 1
 	},
 /area/research_outpost/indigo_rye)
+"HQ" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Reprod Lab";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/elect)
 "HR" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -18978,14 +18564,6 @@
 	},
 /turf/simulated/floor/black,
 /area/research_outpost/indigo_rye)
-"LU" = (
-/obj/machinery/door/airlock/pyro/command/alt,
-/obj/mapping_helper/access/research,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/research_outpost/indigo_rye)
 "LV" = (
 /obj/cable{
 	d1 = 2;
@@ -19475,21 +19053,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"MP" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Core Access";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
 "MQ" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	on = 1;
@@ -19814,23 +19377,23 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"Nr" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"Ns" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Maru Hangar"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Bicameral Chamber";
-	req_access = null
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
+"Nt" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Detention Unit"
 	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor,
-/area/station/engine/power{
-	name = "Erebus Power Room"
-	})
+/obj/mapping_helper/access/brig,
+/turf/simulated/floor/black/grime,
+/area/station/security/secwing)
 "Nu" = (
 /obj/lattice,
 /obj/machinery/atmospherics/pipe/simple/insulated,
@@ -19874,23 +19437,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating/airless,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
-"Ny" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	can_rupture = 0
-	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Core Access";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/obj/cable{
-	icon_state = "6-8"
-	},
-/turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
@@ -20120,6 +19666,12 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"NS" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "NT" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -20756,15 +20308,6 @@
 	dir = 5
 	},
 /area/station/hydroponics/bay)
-"OL" = (
-/obj/table/reinforced/auto,
-/obj/machinery/cashreg,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/hydro,
-/turf/simulated/floor/green/side{
-	dir = 6
-	},
-/area/station/hydroponics/bay)
 "OM" = (
 /obj/cable{
 	d1 = 1;
@@ -21198,22 +20741,10 @@
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
-"Pp" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/pool/no_animate,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
 "Pq" = (
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/garden/aviary{
-	name = "Demeter Primary Zone"
-	})
-"Pr" = (
-/obj/critter/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -22692,6 +22223,47 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"RO" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Maru Command";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_chief,
+/obj/grille/catwalk{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/yellowblack{
+	dir = 4
+	},
+/area/station/engine/engineering/ce{
+	name = "Maru Bridge"
+	})
+"RP" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Fore Zone";
+	req_access_txt = null
+	},
+/obj/mapping_helper/access/engineering_power,
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/yellow,
+/area/station/engine/storage{
+	name = "Maru Equipment"
+	})
 "RR" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 4;
@@ -22715,6 +22287,17 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"RT" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Mining";
+	req_access = null
+	},
+/obj/mapping_helper/access/mining,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "RU" = (
 /obj/machinery/computer3/terminal/zeta{
 	dir = 4;
@@ -22745,25 +22328,11 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
-"RX" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Corelock";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
+"RW" = (
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor/carpet/green/fancy/edge/sw,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "RZ" = (
 /obj/machinery/atmospherics/binary/valve{
@@ -22777,6 +22346,18 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Sa" = (
+/obj/machinery/door/airlock/pyro{
+	name = "Hydroponics"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "Sb" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -22870,6 +22451,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Sp" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Cargo Dock"
+	},
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "Sq" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -22878,6 +22466,19 @@
 /turf/simulated/floor/plating,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Sr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/machinery/door/airlock/pyro{
+	name = "Janitorial Wing"
+	},
+/obj/mapping_helper/access/janitor,
+/turf/simulated/floor/wood,
+/area/station/maintenance/southeast{
+	name = "Dionysus Maintenance"
 	})
 "St" = (
 /obj/lattice{
@@ -22919,6 +22520,19 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Sz" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "AI Core"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/ai_upload,
+/turf/simulated/floor/grey,
+/area/station/turret_protected/ai)
 "SA" = (
 /obj/machinery/mass_driver{
 	dir = 4;
@@ -22937,6 +22551,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power{
 	name = "Erebus Power Room"
+	})
+"SD" = (
+/obj/stool/chair/wooden,
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
 	})
 "SF" = (
 /obj/wingrille_spawn/auto,
@@ -22984,6 +22605,15 @@
 	},
 /area/station/solar/small_backup1{
 	name = "Erebus Solar Array"
+	})
+"SL" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Kitchen"
+	},
+/obj/mapping_helper/access/kitchen,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
 	})
 "SM" = (
 /obj/cable{
@@ -23035,6 +22665,21 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
+	})
+"SR" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "SS" = (
 /obj/machinery/atmospherics/binary/passive_gate{
@@ -23095,6 +22740,15 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"SW" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Maru Hangar";
+	req_access = null
+	},
+/obj/mapping_helper/access/mining,
+/turf/simulated/floor/orangeblack,
+/area/station/mining/staff_room)
 "SX" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -23104,6 +22758,21 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
+	})
+"Tb" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/grey,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
 	})
 "Tc" = (
 /obj/machinery/shuttle/engine/heater{
@@ -23174,6 +22843,15 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Tl" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/mapping_helper/access/hydro,
+/turf/simulated/floor/green/side{
+	dir = 6
+	},
+/area/station/hydroponics/bay)
 "Tm" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/orangeblack/side{
@@ -23353,6 +23031,29 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"TP" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/cafeteria{
+	name = "Dionysus Primary Zone"
+	})
+"TR" = (
+/obj/machinery/door/airlock/pyro/medical{
+	dir = 4;
+	name = "Morgue"
+	},
+/obj/mapping_helper/access/morgue,
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/morgue)
 "TS" = (
 /obj/cable{
 	d1 = 2;
@@ -23422,6 +23123,15 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Ub" = (
+/mob/living/critter/small_animal/bird/owl,
+/turf/simulated/floor{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "grass"
+	},
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
 "Uc" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -23436,6 +23146,18 @@
 "Ud" = (
 /obj/machinery/atmospherics/binary/circulatorTemp/right,
 /turf/simulated/floor/darkpurple,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"Ue" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	dir = 4;
+	name = "Engine Gas Storage";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
@@ -23474,6 +23196,19 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Uk" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Hardware Chamber"
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/darkpurple,
+/area/station/hallway/primary/east{
+	name = "Erebus Primary Zone"
+	})
 "Um" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -23485,6 +23220,16 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Up" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Robotics"
+	},
+/obj/mapping_helper/access/robotics,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "Uq" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -23546,6 +23291,19 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Uz" = (
+/obj/machinery/door/airlock/pyro/glass{
+	id = "scienceteleporter2";
+	name = "Teleporter Pad"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "scienceteleporter";
+	name = "Pad Shutters";
+	panel_open = 1
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/engine,
+/area/station/science/teleporter)
 "UB" = (
 /obj/disposalpipe/segment/transport{
 	dir = 1;
@@ -23634,6 +23392,25 @@
 /obj/item/currency/spacecash/hundred,
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
+"UP" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 4
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/red,
+/area/station/security/secwing)
+"US" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Primary Secure Zone"
+	},
+/obj/mapping_helper/access/security,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/secwing)
 "UT" = (
 /obj/cable{
 	d1 = 4;
@@ -23664,6 +23441,24 @@
 /turf/simulated/floor/grey,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"UV" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Tenebrae Command";
+	req_access = null
+	},
+/obj/mapping_helper/access/research_director,
+/turf/simulated/floor/blackwhite{
+	dir = 8
+	},
+/area/station/science/research_director{
+	name = "Tenebrae Command Center"
 	})
 "UW" = (
 /obj/lattice,
@@ -23816,6 +23611,14 @@
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
 	})
+"Vl" = (
+/obj/machinery/conveyor/NS{
+	id = "qmout"
+	},
+/obj/machinery/door/window/southleft,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "Vm" = (
 /obj/disposalpipe/segment/bent/west,
 /obj/machinery/conveyor/NS{
@@ -23930,6 +23733,31 @@
 /area/station/solar/small_backup1{
 	name = "Erebus Solar Array"
 	})
+"VC" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "Morgue"
+	},
+/obj/mapping_helper/access/morgue,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary/white,
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
+"VE" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Teleporter Lab"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/white,
+/area/station/science/teleporter)
 "VH" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
@@ -23988,6 +23816,14 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"VP" = (
+/obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/research_outpost/indigo_rye)
 "VQ" = (
 /obj/machinery/door_control{
 	id = "tox_vent";
@@ -24009,6 +23845,17 @@
 	dir = 1;
 	icon_state = "line1"
 	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"VR" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24113,6 +23960,26 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Wb" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/garden/aviary{
+	name = "Demeter Primary Zone"
+	})
+"Wd" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Genetics Division"
+	},
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/blue,
+/area/station/medical/research{
+	name = "Genetic Research"
+	})
 "Wf" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -24143,6 +24010,13 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Wi" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Weapons Locker"
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/black,
+/area/station/security/secwing)
 "Wl" = (
 /obj/table/wood/auto,
 /obj/displaycase{
@@ -24185,6 +24059,36 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
+	})
+"Wr" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Hammer Command";
+	req_access = null
+	},
+/obj/mapping_helper/access/hos,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/security/hos{
+	name = "Hammer Command"
+	})
+"Ws" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Captain's Quarters";
+	req_access = null
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/captain,
+/turf/simulated/floor/grey,
+/area/station/bridge/captain{
+	name = "Meridian Command"
 	})
 "Wt" = (
 /obj/cable{
@@ -24331,17 +24235,6 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
-"WS" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Core Access";
-	req_access = null
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
 "WV" = (
 /obj/submachine/ranch_feed_grinder,
 /obj/item/reagent_containers/food/snacks/plant/corn,
@@ -24460,6 +24353,17 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Xh" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Artifact Lab"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/research,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor,
+/area/station/science/artifact)
 "Xi" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power{
@@ -24635,6 +24539,13 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
+"XG" = (
+/obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg,
+/obj/mapping_helper/access/cargo,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "XH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -24806,6 +24717,22 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Ye" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Asclepius Command";
+	req_access = null
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/medical_director,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/head{
+	name = "Asclepius Command"
+	})
 "Yf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/core{
@@ -24929,17 +24856,36 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
-"YB" = (
+"Yz" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engine Gas Storage";
+	name = "Bicameral Chamber";
 	req_access = null
 	},
 /obj/mapping_helper/access/engineering_engine,
 /obj/mapping_helper/access/research,
-/turf/simulated/floor/engine,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor,
+/area/station/engine/power{
+	name = "Erebus Power Room"
+	})
+"YA" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Medbay"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay{
+	name = "Asclepius Primary Zone"
 	})
 "YC" = (
 /obj/decal/poster/wallsign/stencil/left/r{
@@ -24978,6 +24924,37 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YI" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/obj/cable{
+	icon_state = "6-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
+"YJ" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	name = "Dionysus Front Office";
+	req_access = null
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/head_of_personnel,
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/space)
 "YK" = (
 /obj/decal/tile_edge/line/blue,
 /obj/machinery/atmospherics/portables_connector{
@@ -24987,6 +24964,18 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"YL" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Cargo Bay";
+	req_access_txt = "31"
+	},
+/obj/mapping_helper/access/cargo,
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "YM" = (
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Inlet Meter";
@@ -25145,6 +25134,26 @@
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
 	})
+"Za" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 4;
+	name = "Corelock";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/engine,
+/area/station/engine/core{
+	name = "Erebus Plasmitics Zone"
+	})
 "Zb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
@@ -25204,6 +25213,17 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai)
+"Zo" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4;
+	name = "Chemistry Lab"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/access/research,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "Zs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -25233,34 +25253,14 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
-"Zu" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
+"Zw" = (
+/obj/machinery/door/airlock/pyro{
+	id = "chapel_visitation";
+	name = "Chapel Office"
 	},
-/obj/disposalpipe/segment/transport,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/turf/simulated/floor/grey,
-/area/station/engine/core{
-	name = "Erebus Plasmitics Zone"
-	})
-"Zx" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Hardware Chamber"
-	},
-/obj/mapping_helper/access/engineering_engine,
-/obj/mapping_helper/access/research,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/darkpurple,
-/area/station/hallway/primary/east{
-	name = "Erebus Primary Zone"
-	})
+/obj/mapping_helper/access/chapel_office,
+/turf/simulated/floor/black,
+/area/station/chapel/sanctuary)
 "Zy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
@@ -50754,7 +50754,7 @@ Ck
 EU
 FH
 Gc
-Gm
+RW
 EU
 Ck
 aa
@@ -51356,7 +51356,7 @@ aa
 aa
 DI
 EU
-FJ
+SD
 Gd
 Gn
 EU
@@ -52262,7 +52262,7 @@ aa
 Ck
 EU
 Fn
-FL
+Ub
 EU
 EU
 Fn
@@ -52817,7 +52817,7 @@ lr
 lr
 lr
 lr
-nR
+Wr
 lr
 lr
 HB
@@ -54929,7 +54929,7 @@ wv
 jm
 jm
 kQ
-mO
+Nt
 kQ
 jm
 oz
@@ -55530,7 +55530,7 @@ lF
 jn
 jT
 kr
-kR
+Wi
 kr
 kr
 kr
@@ -55837,7 +55837,7 @@ lx
 mg
 mP
 mP
-nX
+US
 oB
 oU
 pq
@@ -55880,7 +55880,7 @@ Bw
 BK
 Ck
 Pn
-Pp
+Wb
 Pn
 Pn
 Pt
@@ -56184,7 +56184,7 @@ Ck
 Pg
 Pn
 Pn
-Pr
+NS
 EB
 EZ
 Fq
@@ -56466,7 +56466,7 @@ tG
 tG
 tG
 xc
-xF
+YJ
 yc
 aa
 aa
@@ -56740,7 +56740,7 @@ jW
 ku
 ij
 kQ
-xG
+UP
 kQ
 kQ
 kQ
@@ -58020,7 +58020,7 @@ cO
 cO
 cO
 cO
-eN
+UV
 cO
 cO
 aa
@@ -58555,7 +58555,7 @@ lE
 mn
 mU
 nx
-oc
+GB
 oG
 pc
 pm
@@ -58623,7 +58623,7 @@ bU
 cP
 dm
 cQ
-ed
+Uz
 eP
 cX
 fj
@@ -58877,7 +58877,7 @@ si
 sI
 tj
 tj
-uk
+SL
 uX
 uX
 wD
@@ -59225,7 +59225,7 @@ bU
 bU
 bU
 cR
-do
+By
 cR
 bU
 eR
@@ -59832,7 +59832,7 @@ cT
 dq
 dJ
 ef
-fo
+VE
 fd
 fm
 fC
@@ -60389,7 +60389,7 @@ Xn
 rB
 si
 si
-vS
+TP
 si
 xh
 xK
@@ -60399,7 +60399,7 @@ OH
 zp
 zz
 zK
-zU
+cs
 Aa
 rQ
 aa
@@ -60998,7 +60998,7 @@ wH
 xj
 xM
 yp
-yG
+Sr
 zd
 zr
 zA
@@ -61901,7 +61901,7 @@ ur
 vf
 vf
 wK
-xl
+Sa
 xO
 ys
 sh
@@ -61921,7 +61921,7 @@ BO
 BO
 BO
 BO
-DQ
+Ws
 BO
 BO
 aa
@@ -61944,7 +61944,7 @@ cz
 bV
 bW
 bW
-dQ
+Zo
 bW
 bW
 fb
@@ -62203,7 +62203,7 @@ us
 vg
 vg
 OK
-OL
+Tl
 xe
 yt
 yH
@@ -63430,7 +63430,7 @@ AI
 AI
 AI
 AI
-Ds
+Sz
 AI
 En
 BO
@@ -63456,7 +63456,7 @@ Im
 dz
 dU
 eo
-eU
+Xh
 fg
 di
 cL
@@ -64286,7 +64286,7 @@ hS
 hS
 hS
 hS
-rq
+RO
 hS
 hS
 tF
@@ -64936,7 +64936,7 @@ OI
 AJ
 AU
 Bi
-BB
+Zw
 Bi
 Cv
 CU
@@ -65191,7 +65191,7 @@ hz
 nU
 ir
 iV
-jz
+HQ
 kg
 kD
 EC
@@ -66099,7 +66099,7 @@ hz
 hz
 hz
 hB
-kF
+RP
 la
 lL
 mt
@@ -66395,7 +66395,7 @@ gS
 aY
 eh
 hp
-gM
+Vl
 hW
 iu
 iY
@@ -66999,7 +66999,7 @@ ff
 aY
 em
 em
-hC
+Sp
 hY
 iw
 ja
@@ -67306,7 +67306,7 @@ hZ
 ix
 jb
 jD
-kj
+YL
 kJ
 le
 lP
@@ -67608,7 +67608,7 @@ ia
 iy
 jc
 jE
-vh
+XG
 kH
 lf
 lQ
@@ -67635,7 +67635,7 @@ sq
 sq
 sq
 sq
-uB
+Ye
 sq
 sq
 Px
@@ -68108,7 +68108,7 @@ iJ
 Lu
 LF
 LQ
-LU
+VP
 LZ
 Me
 Mi
@@ -68540,7 +68540,7 @@ rX
 ss
 sU
 sU
-tU
+VC
 uE
 vp
 vZ
@@ -69444,12 +69444,12 @@ qZ
 rE
 rY
 sc
-sV
+TR
 tw
 tT
 uH
 uH
-wc
+Wd
 tT
 xo
 se
@@ -69722,7 +69722,7 @@ oX
 iA
 jf
 iA
-kk
+RT
 kN
 ll
 lS
@@ -70047,7 +70047,7 @@ qZ
 ro
 rG
 sa
-su
+Up
 sX
 ty
 tW
@@ -70625,11 +70625,11 @@ aa
 aa
 hG
 hH
-iC
+SW
 hH
 hH
 hF
-kP
+Ns
 hF
 hG
 Xa
@@ -71259,7 +71259,7 @@ sw
 sY
 tB
 ua
-uI
+YA
 vx
 wh
 wp
@@ -74911,7 +74911,7 @@ Yf
 Yf
 Yf
 Yf
-YB
+Ue
 Yf
 Yf
 Yf
@@ -77319,7 +77319,7 @@ Ty
 Su
 Mq
 Su
-WS
+VR
 UY
 Nc
 Zj
@@ -77622,7 +77622,7 @@ sL
 Mr
 Mx
 Yf
-MP
+SR
 Ne
 Np
 Wh
@@ -77632,7 +77632,7 @@ Sb
 TC
 ZH
 VY
-Zu
+Tb
 WY
 UU
 Yb
@@ -77927,7 +77927,7 @@ MG
 MQ
 Nf
 Nq
-Ny
+YI
 NR
 So
 ST
@@ -78234,7 +78234,7 @@ RS
 TL
 YP
 WN
-RX
+Za
 Sq
 Yk
 UK
@@ -78838,7 +78838,7 @@ NU
 Yr
 SN
 SF
-RX
+Za
 Uc
 Yk
 Tz
@@ -79134,7 +79134,7 @@ MB
 MK
 MT
 Ni
-Nr
+Yz
 NB
 VN
 VN
@@ -80347,7 +80347,7 @@ NE
 Ob
 Vd
 YX
-Zx
+Uk
 ZA
 Ym
 Yk
