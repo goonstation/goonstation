@@ -31,6 +31,8 @@ TYPEINFO(/datum/mapPrefab/engine_room)
 			if("singularity")
 				comp1type = /obj/machinery/computer3/generic/engine
 				comp2type = /obj/machinery/computer/power_monitor
+			else
+				CRASH("Selected an unknown engine type - did you forget to put it here?")
 
 		for_by_tcl(comp, /obj/landmark/engine_computer)
 			showswirl(comp, TRUE)
