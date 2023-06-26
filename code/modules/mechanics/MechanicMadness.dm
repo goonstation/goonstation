@@ -2320,6 +2320,7 @@
 		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
 		telelight.plane = PLANE_SELFILLUM
 		telelight.alpha = 180
+		telelight.appearance_flags |= RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 
 	disposing()
 		STOP_TRACKING
