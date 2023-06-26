@@ -49,7 +49,7 @@
 					if("Ancient repairbots")
 						mob_choice = /mob/living/critter/robotic/repairbot/security
 					if("Monstrosity crawlers")
-						mob_choice = /obj/critter/mechmonstrositycrawler
+						mob_choice = /mob/living/critter/robotic/crawler
 					if("Shades")
 						mob_choice = /mob/living/critter/shade
 					if("Bats")
