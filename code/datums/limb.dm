@@ -1519,7 +1519,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+		if (istype(target,/mob/living/critter/small_animal/trilobite))
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")

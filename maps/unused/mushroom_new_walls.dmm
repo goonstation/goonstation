@@ -21991,7 +21991,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "eXh" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -22820,7 +22820,7 @@
 /area/station/hydroponics/bay)
 "fXO" = (
 /obj/pool/perspective,
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "fYi" = (
@@ -30949,7 +30949,7 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "pYc" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "pYE" = (
@@ -33967,7 +33967,7 @@
 	},
 /area/station/crew_quarters/pool)
 "tlN" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor{
 	icon = 'icons/misc/beach.dmi';
 	icon_state = "sand";
@@ -34418,9 +34418,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "tHn" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "You've heard that this owl is a real jerk.";
-	health = 40;
+	health_brute = 20;
+	health_burn = 20;
 	name = "owl of ill-repute"
 	},
 /turf/simulated/floor/grass/random,
@@ -37593,7 +37594,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
 "xrU" = (
-/obj/critter/owl{
+/mob/living/critter/small_animal/bird/owl{
 	desc = "His name is Carl.";
 	name = "space owl named Carl"
 	},

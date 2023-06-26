@@ -242,3 +242,6 @@
 		spawn_type = /mob/living/carbon/human/normal/securityassistant
 
 //////////////////////// Critter corpses ////////////////////////
+
+/obj/mob_spawn/corpse/critter/owl
+	spawn_type = /mob/living/critter/small_animal/bird/owl

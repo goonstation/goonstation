@@ -979,8 +979,12 @@ var/datum/action_controller/actions
 
 		duration += ExtraDuration
 
-		if(source.reagents && source.reagents.has_reagent("crime"))
+		if (source.reagents && source.reagents.has_reagent("crime"))
 			duration /= 5
+		if (isunconscious(target))
+			duration /= 2
+		else if (isdead(target))
+			duration /= 3
 		..()
 
 	onStart()

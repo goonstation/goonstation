@@ -5331,7 +5331,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "crB" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -8377,6 +8377,14 @@
 	dir = 4
 	},
 /area/station/engine/elect)
+"dLc" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "dLd" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 8
@@ -8493,18 +8501,9 @@
 	},
 /area/station/security/brig)
 "dOQ" = (
-/obj/storage/secure/crate/eng{
-	name = "Fissile Materials Crate"
-	},
-/obj/access_spawn/engineering_engine,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
 	},
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -10819,6 +10818,13 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"eOg" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "eOp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21058,10 +21064,8 @@
 	},
 /area/station/hallway/secondary/west)
 "jbY" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 1
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
@@ -23906,12 +23910,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "klL" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "kmb" = (
@@ -25855,8 +25854,9 @@
 /area/station/maintenance/disposal)
 "kZS" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "lag" = (
@@ -26332,6 +26332,20 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"ljH" = (
+/obj/storage/secure/crate/eng{
+	name = "Fissile Materials Crate"
+	},
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "ljS" = (
 /turf/space/fluid/warp_z5/edge,
 /area/space)
@@ -26951,10 +26965,8 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "lwL" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
@@ -30680,12 +30692,11 @@
 /area/station/crew_quarters/quarters_east)
 "nab" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 6
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -49762,7 +49773,7 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "vJu" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -53817,6 +53828,9 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
 "xCT" = (
@@ -55180,17 +55194,6 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
-"yiB" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/hallway/primary/southeast)
 "yiG" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/industrial,
@@ -112620,9 +112623,9 @@ ibV
 ocD
 mvp
 jQr
-sSm
+ljH
 dOQ
-ocD
+dLc
 ocD
 vEo
 fdg
@@ -112925,8 +112928,8 @@ ocD
 ocD
 ocD
 ocD
-yiB
-vEo
+ocD
+eOg
 fdg
 rZb
 vWX
