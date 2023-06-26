@@ -151,7 +151,7 @@
 /turf/simulated/floor/sanitary,
 /area/prefab/sea_prison)
 "aE" = (
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/simulated/floor/sanitary,
 /area/prefab/sea_prison)
 "aF" = (
@@ -332,7 +332,7 @@
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "bi" = (
-/obj/critter/zombie/security,
+/mob/living/critter/zombie/security,
 /obj/stool,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)

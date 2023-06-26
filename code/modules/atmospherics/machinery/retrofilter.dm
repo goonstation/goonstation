@@ -35,7 +35,6 @@ obj/machinery/atmospherics/retrofilter
 	var/const/MODE_NITROGEN = 2 //Let nitrogen through
 	var/const/MODE_CO2 = 4 //Let CO2 through
 	var/const/MODE_PLASMA = 8 //Let plasma through.
-	var/const/MODE_TRACE = 16 //Let trace gases (Like N2O) through.
 
 	var/locked = 1
 	var/open = 0
@@ -215,7 +214,7 @@ obj/machinery/atmospherics/retrofilter
 				src.overlays += image(src.icon, "filter-n2")
 			if (filter_mode & MODE_CO2)
 				src.overlays += image(src.icon, "filter-co2")
-			if (filter_mode & (MODE_PLASMA | MODE_TRACE))
+			if (filter_mode & MODE_PLASMA)
 				src.overlays += image(src.icon, "filter-tox")
 
 		return
@@ -270,13 +269,6 @@ obj/machinery/atmospherics/retrofilter
 				if(removed.carbon_dioxide)
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
-			if (filter_mode & MODE_TRACE)
-				if(removed && length(removed.trace_gases))
-					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
-						if(trace_gas)
-							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
-							filtered_gas.moles = trace_gas.moles
-							removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)

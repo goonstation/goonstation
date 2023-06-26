@@ -81,6 +81,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common

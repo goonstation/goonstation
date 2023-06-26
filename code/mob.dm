@@ -1453,10 +1453,11 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	if (isnull(src.mind.miranda))
-		src.say_verb("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
+	var/miranda = src.mind.get_miranda()
+	if (isnull(miranda))
+		src.say_verb(DEFAULT_MIRANDA)
 		return
-	src.say_verb(src.mind.miranda)
+	src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1465,12 +1466,7 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		if (isnull(src.mind.miranda))
-			src.mind.set_miranda("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
-
-		src.mind.show_miranda(src)
-
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda) as null|text
+		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
 		if (!new_rights || new_rights == src.mind.miranda)
 			src.show_text("Miranda rights not changed.", "red")
 			return

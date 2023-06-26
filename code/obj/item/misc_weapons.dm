@@ -226,7 +226,7 @@ TYPEINFO(/obj/item/sword)
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
-		user.unlock_medal("The Force is strong with this one", 1)
+		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
@@ -1028,6 +1028,7 @@ TYPEINFO(/obj/item/bat)
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "baseballbat"
 	item_state = "baseballbat"
+	hitsound = 'sound/impact_sounds/bat_wood.ogg'
 	hit_type = DAMAGE_BLUNT
 	force = 12
 	throwforce = 7

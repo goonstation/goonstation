@@ -669,15 +669,6 @@
 // Related procs and verbs
 //////////////
 
-// i am dumb - marq
-/mob/proc/wraithize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		src.mind.add_antagonist(ROLE_WRAITH)
-		return
-	return null
-
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new
 	for (var/mob/living/carbon/human/H in view(M))

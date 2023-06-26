@@ -1789,7 +1789,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 1
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
 	var/aggressive = TRUE
-	var/list/friends = list()
 
 	add_abilities = list(/datum/targetable/critter/wasp_sting/scorpion_sting,
 						/datum/targetable/critter/pincer_grab)
@@ -1832,10 +1831,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
 				src.aggressive = FALSE
+				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
 				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
 				src.aggressive = TRUE
+				src.ai_retaliates = TRUE
 				return
 		..()
 
@@ -1869,7 +1870,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			return TRUE
 
 	valid_target(mob/living/C)
-		if (C in src.friends) return FALSE //don't attack frens :)
 		if (istype(C, /mob/living/critter/small_animal/rattlesnake)) return FALSE //don't attack space rattlesnakes(the snake would lose)
 		return ..()
 
@@ -1914,7 +1914,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP //annoy a snake enough and pay the price
 	var/aggressive = TRUE
-	var/list/friends = list()
 	add_abilities = list(/datum/targetable/critter/wasp_sting/snake_bite)
 
 	New()
@@ -1959,10 +1958,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
 				src.aggressive = FALSE
+				src.ai_retaliates = FALSE
 				return
 			else if((M.a_intent == INTENT_DISARM) && !src.aggressive)
 				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
 				src.aggressive = TRUE
+				src.ai_retaliates = TRUE
 				return
 		..()
 
@@ -1995,7 +1996,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	valid_target(mob/living/C)
 		if (istype(C, /mob/living/critter/small_animal/scorpion)) return FALSE //don't attack scorpions(they can spawn together)
-		if (C in src.friends) return FALSE //don't attack frens :) TODO replace with faction system
 		if (ishuman(C) || issilicon(C))    //creating the snake's defensive behavior
 			if(GET_DIST(src, C) <= 3 && GET_DIST(src, C) >= 1) //it will only actually target humans and silicons if in very close proximity
 				if(!ON_COOLDOWN(src, "rattle", 3 SECONDS))      //it will rattle defensively if somewhat close
@@ -3640,12 +3640,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_burn = 35
 	is_npc = FALSE
 	use_custom_color = FALSE
+	var/allow_pickup_requests = TRUE
 
 	New()
 		..()
 		src.real_name = "[pick_string("mentor_mice_prefixes.txt", "mentor_mouse_prefix")] [src.name]"
 		src.name = src.real_name
 		abilityHolder.addAbility(/datum/targetable/critter/mentordisappear)
+		abilityHolder.addAbility(/datum/targetable/critter/mentortoggle)
 
 	setup_overlays()
 		if(!src.colorkey_overlays)
@@ -3666,7 +3668,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.UpdateOverlays(null, "hair")
 
 	attack_hand(mob/living/M)
-		src.into_pocket(M)
+		if (allow_pickup_requests)
+			src.into_pocket(M)
+		else
+			. = ..()
 
 	proc/into_pocket(mob/M, var/voluntary = 1)
 		if(M == src || isdead(src))
@@ -3766,8 +3771,17 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.ghostize()
 			qdel(M)
 
+/datum/targetable/critter/mentortoggle
+	name = "Toggle Pick Up Requests"
+	desc = "Enable or disable player pick up requests."
+	icon_state = "mentordisappear"
+	icon_state = "mentortoggle"
 
-
+	cast(mob/target)
+		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
+		M.allow_pickup_requests = !M.allow_pickup_requests
+		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
+		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

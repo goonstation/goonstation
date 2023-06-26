@@ -152,18 +152,10 @@
 				for (var/datum/objective/specialist/werewolf/feed/O in M.objectives)
 					if (O && istype(O, /datum/objective/specialist/werewolf/feed/))
 						special = length(O.mobs_fed_on)
-			if (ROLE_VAMPTHRALL)
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
-			if ("spyminion")
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
-			if (ROLE_MINDHACK)
-				if (M.master)
-					var/mob/mymaster = ckey_to_mob(M.master)
-					if (mymaster) special = mymaster.real_name
+			if (ROLE_VAMPTHRALL, ROLE_MINDHACK)
+				var/datum/mind/master = M.get_master(traitor_type)
+				if (master?.current)
+					special = master.current.real_name
 			if (ROLE_FLOCKMIND)
 				var/relay_successful = FALSE
 				if (isflockmob(M.current))

@@ -1574,7 +1574,6 @@ var/global/noir = 0
 		if ("addabil")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				var/origin = href_list["origin"]
 				if (!M) return
 				if (!M.abilityHolder)
 					tgui_alert(usr,"No ability holder detected. Create a holder first!")
@@ -1590,8 +1589,6 @@ var/global/noir = 0
 				M.abilityHolder.updateButtons()
 				message_admins("[key_name(usr)] added ability [ab_to_add] to [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "added ability [ab_to_add] to [constructTarget(M,"admin")].")
-				if (origin == "manageabils")//called via ability management panel
-					usr.client.cmd_admin_manageabils(M)
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
@@ -1647,42 +1644,6 @@ var/global/noir = 0
 				var/mob/M = locate(href_list["target"])
 				if (!M) return
 				usr.client.cmd_admin_manageabils(M)
-			else
-				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
-
-		if ("manageabils_remove")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				var/datum/targetable/A = locate(href_list["ability"])
-				if (!M || !A) return
-				message_admins("[key_name(usr)] removed ability [A] from [key_name(M)].")
-				logTheThing(LOG_ADMIN, usr, "removed ability [A] from [constructTarget(M,"admin")].")
-				M.abilityHolder.removeAbilityInstance(A)
-				M.abilityHolder.updateButtons()
-				usr.client.cmd_admin_manageabils(M)
-			else
-				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
-
-		if ("manageabils_alter_cooldown")
-			if (src.level >= LEVEL_PA)
-				var/mob/M = locate(href_list["target"])
-				var/datum/targetable/A = locate(href_list["ability"])
-				if (!M || !A) return
-				var/input = input(usr, "Enter a cooldown in deciseconds", "Alter Cooldown", A.cooldown) as num|null
-				if(isnull(input))
-					return
-				else if(input < 0)
-					A.cooldown = 0
-				else
-					A.cooldown = round(input)
-				usr.client.cmd_admin_manageabils(M)
-			else
-				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
-
-		if ("manageabilt_debug_vars")
-			if (src.level >= LEVEL_PA)
-				var/datum/targetable/A = locate(href_list["ability"])
-				usr.client.debug_variables(A)
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
 
@@ -1902,15 +1863,29 @@ var/global/noir = 0
 			var/do_equipment = tgui_alert(usr, "Give the antagonist its default equipment? (Uplinks, clothing, special abilities, etc.)", "Add Antagonist", list("Yes", "No", "Cancel"))
 			if (do_equipment == "Cancel")
 				return
-			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Cancel"))
-			if (do_objectives == "Cancel" || !M?.mind || !selected_keyvalue)
+			var/do_objectives = tgui_alert(usr, "Assign randomly-generated objectives?", "Add Antagonist", list("Yes", "No", "Custom"))
+			if (!M?.mind || !selected_keyvalue)
 				return
-			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. Objectives will [do_objectives == "Yes" ? "be generated automatically" : "not be present"]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
+			var/custom_objective = ""
+			if (do_objectives == "Custom")
+				custom_objective = tgui_input_text(usr, "Input custom objective text", "Custom objective")
+			var/do_objectives_text = ""
+			switch (do_objectives)
+				if ("No")
+					do_objectives_text = "Objectives will not be present"
+				if ("Yes")
+					do_objectives_text = "Objectives will be generated automatically"
+				if ("Custom")
+					do_objectives_text = "A custom objective will be added"
+			if (tgui_alert(usr, "[M.real_name] (ckey [M.ckey]) will immediately become \a [selected_keyvalue]. Equipment and abilities will[do_equipment == "Yes" ? "" : " NOT"] be added. [do_objectives_text]. Is this what you want?", "Add Antagonist", list("Make it so.", "Cancel.")) != "Make it so.") // This is definitely not ideal, but it's what we have for now
 				return
 			boutput(usr, "<span class='notice'>Adding antagonist of type \"[selected_keyvalue]\" to mob [M.real_name] (ckey [M.ckey])...</span>")
 			var/success = M.mind.add_antagonist(antag_options[selected_keyvalue], do_equipment == "Yes", do_objectives == "Yes", source = ANTAGONIST_SOURCE_ADMIN, respect_mutual_exclusives = FALSE)
 			if (success)
 				boutput(usr, "<span class='notice'>Addition successful. [M.real_name] (ckey [M.ckey]) is now \a [selected_keyvalue].</span>")
+				if (length(custom_objective))
+					new /datum/objective/regular(custom_objective, M.mind, M.mind.get_antagonist(antag_options[selected_keyvalue]))
+					tgui_alert(M, "Your objective is: [custom_objective]", "Objective")
 			else
 				boutput(usr, "<span class='alert'>Addition failed with return code [success]. The mob may be incompatible. Report this to a coder.</span>")
 
@@ -4557,86 +4532,10 @@ var/global/noir = 0
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/dat = list()
-	dat += {"
-		<html>
-		<head>
-		<title>Ability Management Panel</title>
-		<style>
-		table {
-			border:1px solid #ff4444;
-			border-collapse: collapse;
-			width: 100%;
-		}
-
-		td {
-			padding: 8px;
-			text-align: left;
-		}
-
-		th {
-			background-color: #ff4444;
-			color: white;
-			padding: 8px;
-			text-align: left;
-		}
-
-		th:nth-child(4), td:nth-child(4) {text-align: center;}
-		tr:nth-child(odd) {background-color: #f2f2f2;}
-		tr:hover {background-color: #e2e2e2;}
-
-
-		.button {
-			padding: 6px 12px;
-			text-align: center;
-			float: right;
-			display: inline-block;
-			font-size: 12px;
-			margin: 0px 2px;
-			cursor: pointer;
-			color: white;
-			border: 2px solid #008CBA;
-			background-color: #008CBA;
-			text-decoration: none;
-		}
-		</style>
-		</head>
-		<body>
-		<h1>
-			Abilities of [M.name]
-			<a href='?src=\ref[src.holder];action=manageabils;target=\ref[M];origin=manageabils' class="button">&#x1F504;</a>
-			<a href='?src=\ref[src.holder];action=addabil;target=\ref[M];origin=manageabils' class="button">&#x2795;</a>
-		</h1>
-		<table>
-			<tr>
-				<th>Remove</th>
-				<th>Name</th>
-				<th>Type Path</th>
-				<th>Cooldown</th>
-			</tr>
-		"}
-
-	if (!M.abilityHolder)
-		return
-	var/list/abils = list()
-	if (istype(M.abilityHolder, /datum/abilityHolder/composite))
-		var/datum/abilityHolder/composite/CH = M.abilityHolder
-		if (CH.holders.len)
-			for (var/datum/abilityHolder/AH in CH.holders)
-				abils += AH.abilities //get a list of all the different abilities in each holder
-	else
-		abils += M.abilityHolder.abilities
-
-	for (var/datum/targetable/A in abils)
-		dat += {"
-			<tr>
-				<td><a href='?src=\ref[src.holder];action=manageabils_remove;target=\ref[M];ability=\ref[A];origin=manageabils'>remove</a></td>
-				<td><a href='?src=\ref[src.holder];action=manageabilt_debug_vars;ability=\ref[A];origin=manageabils'>[A.name]</a></td>
-				<td>[A.type]
-				<td><a href='?src=\ref[src.holder];action=manageabils_alter_cooldown;target=\ref[M];ability=\ref[A];origin=manageabils'>[isnull(A.cooldown) ? "&#x26D4;" : A.cooldown]</a></td>
-			</tr>"}
-	dat += "</table></body></html>"
-	usr.Browse(dat.Join(),"window=manageabils;size=700x400")
+	if (isnull(holder.abilitymanager))
+		holder.abilitymanager = new
+	holder.abilitymanager.target_mob = M
+	holder.abilitymanager.ui_interact(src.mob)
 
 /client/proc/cmd_admin_managetraits(var/mob/M in mobs)
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)

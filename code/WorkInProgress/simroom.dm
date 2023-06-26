@@ -504,7 +504,7 @@
 	for(var/turf/T in landmarks["[network]_critter_spawn"])
 		switch(program)
 			if("zombies")
-				new/obj/critter/zombie(T)
+				new /mob/living/critter/zombie(T)
 			else
 				break
 

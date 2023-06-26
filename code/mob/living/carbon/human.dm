@@ -165,6 +165,7 @@
 	can_bleed = 1
 	blood_id = "blood"
 	blood_volume = 500
+	dna_to_absorb = 10
 
 	var/datum/humanInventory/inventory = null
 
