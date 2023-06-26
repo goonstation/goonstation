@@ -62,10 +62,15 @@ Alien/mutant/other fish:
 		Void fish
 		Sun fish
 		Blobfish
+		Lava fish
+		Molten fish
+		Golden fish
+		Ling fish
+		Tree fish
 	Unimplemented:
 		Blood fish
-		Lava fish
 */
+
 // These catagories aren't used currently.
 #define FISH_CATEGORY_FRESHWATER "freshwater"
 #define FISH_CATEGORY_OCEAN "ocean"
@@ -449,6 +454,7 @@ Alien/mutant/other fish:
 	icon_state = "meat"
 	inhand_color = "#af2323"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 /*
 /obj/item/fish/blood_fish
 	name = "blood fish"
@@ -463,6 +469,16 @@ Alien/mutant/other fish:
 	icon_state = "eyefish"
 	inhand_color = "#f0f0f0"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/item_box/googly_eyes
+
+/obj/item/fish/lingfish
+	name = "splashing horror"
+	desc = "A writhing, flailing mass of tissue pantomiming a sick caricature of a fish. You should probably just put this one back."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "lingfish"
+	inhand_color = "#e08d6b"
+	value  = FISH_RARITY_EPIC
+	fillet_type = /mob/living/critter/blobman/meat
 
 //void
 /obj/item/fish/void_fish
@@ -490,15 +506,30 @@ Alien/mutant/other fish:
 	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
-/*
+
 //lava moon
 /obj/item/fish/lava_fish
 	name = "lava fish"
-	desc = "a blazing hot catch straight from the planet's core!"
-	icon_state = "bass_old"
+	desc = "A blazing hot catch straight from the planet's core!"
+	icon_state = "lavafish"
 	inhand_color = "#eb2d2d"
+	value  = FISH_RARITY_EPIC
+
+	New()
+		setProperty("flammable", 8)
+		return ..()
+
+/obj/item/fish/igneous_fish
+	name = "igneous fish"
+	desc = "A fish formed of cooled volcanic magma, neat! Still hot to handle though!"
+	icon_state = "moltenfish"
+	inhand_color = "#380c0c"
 	value  = FISH_RARITY_RARE
-*/
+
+	New()
+		setProperty("flammable", 6)
+		return ..()
+
 //blob
 /obj/item/fish/blobfish
 	name = "blobfish"
@@ -507,3 +538,20 @@ Alien/mutant/other fish:
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
 
+//other
+/obj/item/fish/real_goldfish
+	name = "prosperity pilchard"
+	desc = "A symbol of good fortune, this fish's shining scales are said to be extremely valuable!."
+	icon_state = "goldenfish"
+	inhand_color = "#f0ec08"
+	value  = FISH_RARITY_LEGENDARY
+	fillet_type = /obj/item/raw_material/gold
+
+/obj/item/fish/treefish
+	name = "arboreal bass"
+	desc = "TODO"
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "treefish"
+	inhand_color = "#22c912"
+	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/nature/wood/twig
