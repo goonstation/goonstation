@@ -28139,7 +28139,7 @@
 	},
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/obj/item/reagent_containers/food/drinks/mug/random_color,
+/obj/item/paper/book/from_file/matsci_guide,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gAf" = (
