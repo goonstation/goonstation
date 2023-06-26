@@ -19823,15 +19823,6 @@
 "buK" = (
 /turf/simulated/floor/damaged2,
 /area/station/quartermaster/storage)
-"buM" = (
-/obj/disposalpipe/segment,
-/obj/machinery/navbeacon/mule/QM1_north/east,
-/obj/decal/stripe_caution,
-/obj/machinery/bot/mulebot{
-	home_destination = "QM #1"
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "buN" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
@@ -28146,9 +28137,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/computer/chem_requester/science{
-	area_name = "Quartermaster's office"
-	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/obj/item/reagent_containers/food/drinks/mug/random_color,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "gAf" = (
@@ -29710,16 +29701,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"hZx" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/obj/machinery/light,
-/obj/table/reinforced/auto,
-/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
-/obj/item/paper/book/from_file/matsci_guide,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "hZS" = (
 /obj/table/glass/reinforced/auto,
 /turf/simulated/floor/white,
@@ -39835,7 +39816,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/barcode/qm/no_belthell,
+/obj/machinery/computer/barcode/qm/no_belthell{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "rAe" = (
@@ -40680,16 +40663,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"skj" = (
-/obj/disposalpipe/segment/mail{
-	dir = 8;
-	icon_state = "pipe-c"
-	},
-/obj/machinery/computer/barcode/qm{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "sky" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -45294,6 +45267,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
+/obj/machinery/bot/mulebot/QM1,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "wtl" = (
