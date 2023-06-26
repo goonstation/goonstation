@@ -19869,10 +19869,6 @@
 /obj/disposalpipe/segment,
 /obj/machinery/navbeacon/mule/QM1_north/east,
 /obj/decal/stripe_caution,
-/obj/machinery/computer/chem_requester/science{
-	area_name = "Quartermaster's office";
-	dir = 4
-	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "buN" = (
@@ -29773,7 +29769,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/table/reinforced/auto,
+/obj/machinery/computer/chem_requester/science{
+	area_name = "Quartermaster's office"
+	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "hZS" = (
@@ -39623,7 +39621,7 @@
 	},
 /area/station/science/lobby)
 "rhb" = (
-/obj/decal/stripe_caution,
+/obj/decal/stripe_delivery,
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "rig" = (
@@ -40721,9 +40719,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/computer/barcode/qm/no_belthell{
-	dir = 4
-	},
+/obj/machinery/computer/barcode/qm/no_belthell,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "sky" = (
