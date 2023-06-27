@@ -107,7 +107,12 @@
 	win_path = "/obj/window/auto"
 	full_win = TRUE
 	no_dirs = TRUE
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "wingrille_new"
+	color = "#A3DCFF"
+#else
 	icon_state = "wingrille_f"
+#endif
 
 // Reinforced Glass window
 /obj/mapping_helper/wingrille_spawn/auto/reinforced
