@@ -88,9 +88,9 @@
 
 /obj/mapping_helper/wingrille_spawn/hardened/full
 	name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		icon_state = "b-wingrille_f"
-		full_win = TRUE
+	icon_state = "br-wingrille"
+	icon_state = "b-wingrille_f"
+	full_win = TRUE
 
 // Flock window used by the flock trader
 /obj/mapping_helper/wingrille_spawn/flock
@@ -114,12 +114,12 @@
 // Reinforced Glass window
 /obj/mapping_helper/wingrille_spawn/auto/reinforced
 	name = "reinforced autowindow grille spawner"
-		win_path = "/obj/window/auto/reinforced"
+	win_path = "/obj/window/auto/reinforced"
 #ifdef PERSPECTIVE_EDITOR_WALL
-		icon_state = "r-wingrille_new"
-		color = "#72c8fd"
+	icon_state = "r-wingrille_new"
+	color = "#72c8fd"
 #else
-		icon_state = "r-wingrille_f"
+	icon_state = "r-wingrille_f"
 #endif
 
 // Plasmaglass window
