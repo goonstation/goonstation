@@ -997,6 +997,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 				initialize()
 
 	initialize()
+		if(src.disposed)
+			return //do not initialize twice
 		. = ..()
 		src.set_up()
 		qdel(src)
