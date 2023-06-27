@@ -134,7 +134,7 @@
 #endif
 
 // Reinforced Plasmaglass window
-/obj/mapping_helper/wingrille_spawn/auto/reinforced
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced
 	name = "reinforced crystal autowindow grille spawner"
 	win_path = "/obj/window/auto/crystal/reinforced"
 #ifdef PERSPECTIVE_EDITOR_WALL
