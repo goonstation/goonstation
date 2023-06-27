@@ -149,10 +149,10 @@
 		for (var/mob/living/L in global.mobs)
 			if (issilicon(L) || isAIeye(L))
 				if (prob(33))
-					var/had_reagents = FALSE
+					//var/had_reagents = FALSE
 					if (!L.reagents)
 						L.create_reagents(25)
-						had_reagents = TRUE
+						//had_reagents = TRUE
 					L.metabolizes = TRUE
 					L.add_lifeprocess(/datum/lifeprocess/chems)
 
