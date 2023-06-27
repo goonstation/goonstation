@@ -1,4 +1,9 @@
+
 (t)tue jun 27 23
+(u)Lord_Earthfire
+(p)14698
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)The E.Coli recipe was changed entirely, requiring the mixing of sewage with either beff, meat slurry or cholesterine. Beware of the miasma generation!
 (u)aloe
 (*)During ion storms, silicons will now experience sensor malfunctions (drugs).
 (u)pali
