@@ -2,8 +2,6 @@
 	name = "window grille spawner"
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
-	anchored = ANCHORED
-	invisibility = INVIS_ALWAYS
 	var/win_path = "/obj/window"
 	var/grille_path = "/obj/grille/steel"
 	var/full_win = 0 // adds a full window as well
