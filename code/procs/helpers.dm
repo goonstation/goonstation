@@ -751,9 +751,10 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				if(ckey_and_alt_key)
+				if(ckey_and_alt_key && FALSE)
 					text += "[the_key] (as [the_client.fakekey])"
-				text += "[the_client.fakekey]"
+				else
+					text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
