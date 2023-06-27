@@ -46765,20 +46765,11 @@
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "fmc" = (
-/obj/item/extinguisher{
-	pixel_x = 10;
-	pixel_y = 6
-	},
-/obj/table/glass/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
 /obj/cable/brown{
 	icon_state = "1-2"
-	},
-/obj/item/storage/box/cablesbox{
-	pixel_x = -2;
-	pixel_y = 3
 	},
 /obj/disposalpipe/segment{
 	dir = 1
@@ -66202,6 +66193,15 @@
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
+	},
+/obj/table/glass/auto,
+/obj/item/storage/box/cablesbox{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/item/extinguisher{
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
