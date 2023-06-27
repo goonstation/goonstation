@@ -2,7 +2,7 @@
 	name = "Food Poisoning"
 	max_stages = 3
 	spread = "Non-Contagious"
-	cure = "Sleep"
+	cure = "Sleep, Spaceacillin"
 	associated_reagent = "salmonella"
 	reagentcure = list("spaceacillin")
 	affected_species = list("Human")
