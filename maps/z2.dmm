@@ -804,7 +804,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adp" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/hospital/samostrel)
 "adq" = (
@@ -1515,7 +1515,7 @@
 /turf/unsimulated/floor/specialroom/freezer,
 /area/hospital)
 "afi" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -4251,7 +4251,7 @@
 	layer = 2.5;
 	name = "power conduit"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/hospital/samostrel)
 "aoE" = (
@@ -9761,7 +9761,7 @@
 	},
 /area/moon/museum)
 "aHj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/void,
 /area/void_diner)
 "aHo" = (
@@ -10589,7 +10589,7 @@
 	},
 /area/marsoutpost)
 "aKz" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/syndicate_station/battlecruiser)
 "aKA" = (
@@ -13143,7 +13143,7 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/north)
 "aSt" = (
@@ -20643,7 +20643,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
 "bno" = (
@@ -28202,7 +28202,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/sim/racing_track)
 "bMg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bMm" = (
@@ -28664,7 +28664,7 @@
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
 "bNJ" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/wood/three,
 /area/afterlife/heaven/hydroponics)
 "bNK" = (
@@ -31774,7 +31774,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch)
 "bYB" = (
@@ -33399,7 +33399,7 @@
 	},
 /area/meat_derelict/guts)
 "cdK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "cdL" = (
@@ -33707,7 +33707,7 @@
 	},
 /area/meat_derelict/entry)
 "ceL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
 "ceM" = (
@@ -33775,7 +33775,7 @@
 	},
 /area/meat_derelict/entry)
 "cfa" = (
-/obj/wingrille_spawn,
+/obj/mapping_helper/wingrille_spawn,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -35265,7 +35265,7 @@
 	},
 /area/sim/area2)
 "cji" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable,
 /obj/machinery/power/terminal,
 /turf/unsimulated/floor/plating/random,
@@ -38219,7 +38219,7 @@
 /turf/unsimulated/wall/other,
 /area/crunch/wtc)
 "csF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csG" = (
@@ -38312,7 +38312,7 @@
 /area/crunch/wtc)
 "csV" = (
 /obj/item/mechanics/triplaser,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csW" = (
@@ -39197,7 +39197,7 @@
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
 "cvy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/blackwhite{
 	dir = 8
 	},
@@ -39580,7 +39580,7 @@
 /turf/unsimulated/floor/lava,
 /area/afterlife/hell)
 "cwJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cwL" = (
@@ -39915,7 +39915,7 @@
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "cxA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/staffhall)
 "cxB" = (
@@ -40439,7 +40439,7 @@
 /turf/unsimulated/floor/sanitary/white,
 /area/owlery/staffhall)
 "cyZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/staffhall)
 "cza" = (
@@ -41320,7 +41320,7 @@
 	},
 /area/owlery/staffhall)
 "cBq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cBr" = (
@@ -41398,7 +41398,7 @@
 	},
 /area/owlery/Owlmait)
 "cBE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cBF" = (
@@ -41943,7 +41943,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cDa" = (
@@ -42184,7 +42184,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cDE" = (
@@ -42711,7 +42711,7 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "cFa" = (
@@ -42767,7 +42767,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cFi" = (
@@ -43678,7 +43678,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cHB" = (
@@ -44031,7 +44031,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/office)
 "cIu" = (
@@ -46020,11 +46020,11 @@
 	},
 /area/owlery/gangzone)
 "cNY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/gangzone)
 "cNZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -46372,7 +46372,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cOH" = (
@@ -47289,7 +47289,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/black,
 /area/owlery/gangzone)
 "cQO" = (
@@ -47721,7 +47721,7 @@
 	},
 /area/owlery/gangzone)
 "cRJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/owleryhall)
 "cRK" = (
@@ -47809,13 +47809,13 @@
 /turf/unsimulated/floor/stairs/dark,
 /area/owlery/Owlmait2)
 "cRU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 8
 	},
 /area/owlery/gangzone)
 "cRV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -49696,7 +49696,7 @@
 /turf/unsimulated/grass,
 /area/owlery/Owlmait2)
 "cWh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cWi" = (
@@ -54273,7 +54273,7 @@
 /turf/unsimulated/floor/white,
 /area/syndicate_station/medbay)
 "dhD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "dhE" = (
@@ -54985,7 +54985,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/wizard_station)
 "dkm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wizard_station)
 "dkn" = (
@@ -55881,7 +55881,7 @@
 	},
 /area/iomoon/base)
 "drK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "drL" = (
@@ -56271,7 +56271,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "dtW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "dtX" = (
@@ -56334,7 +56334,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "due" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "dug" = (
@@ -56447,7 +56447,7 @@
 	},
 /area/centcom)
 "duB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -56463,7 +56463,7 @@
 	},
 /area/centcom/gallery)
 "duD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "duE" = (
@@ -59768,7 +59768,7 @@
 	},
 /area/centcom/lounge)
 "dGR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/lounge)
 "dGS" = (
@@ -60923,7 +60923,7 @@
 	},
 /area/centcom/lounge)
 "dKk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/garden)
 "dKl" = (
@@ -61177,7 +61177,7 @@
 	},
 /area/centcom/garden)
 "dKL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/centcom/lobby)
 "dKM" = (
@@ -66837,7 +66837,7 @@
 /obj/channel{
 	required_to_pass = 1e+009
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/south)
 "hOu" = (
@@ -67553,7 +67553,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "iMA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -67894,7 +67894,7 @@
 	},
 /area/iomoon/base/underground)
 "jjv" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/assault_pod)
 "jjW" = (
@@ -67924,7 +67924,7 @@
 	},
 /area/centcom/lounge)
 "jlk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "jlH" = (
@@ -68896,7 +68896,7 @@
 	icon_state = "blue"
 	})
 "kUZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "kVN" = (
@@ -72537,7 +72537,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "pHO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -74724,7 +74724,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "sGP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -75563,7 +75563,7 @@
 	icon_state = "blue"
 	})
 "tZZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor{
 	name = "plating"
 	},
@@ -76088,7 +76088,7 @@
 	},
 /area/titlescreen)
 "uPK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "uPN" = (
@@ -78285,7 +78285,7 @@
 	icon_state = "blue"
 	})
 "yan" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/outdoors/grass,
 /area/void_diner)
 "yaC" = (

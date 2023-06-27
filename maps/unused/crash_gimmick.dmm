@@ -556,7 +556,7 @@
 	},
 /area/russian/radiation)
 "arb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -599,7 +599,7 @@
 /turf/space,
 /area/station/hallway/secondary/exit)
 "arm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -1058,7 +1058,7 @@
 /turf/space,
 /area/russian/radiation)
 "aHj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -2146,7 +2146,7 @@
 	},
 /area/russian/radiation)
 "aPO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2167,7 +2167,7 @@
 /turf/space,
 /area/space)
 "aQD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -3849,7 +3849,7 @@
 	},
 /area/station/mining/magnet)
 "baS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3952,7 +3952,7 @@
 	},
 /area/russian/radiation)
 "bbK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -4297,7 +4297,7 @@
 	},
 /area/russian/radiation)
 "bdc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -4310,7 +4310,7 @@
 	},
 /area/russian/radiation)
 "bdd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -4741,7 +4741,7 @@
 	},
 /area/russian/radiation)
 "beE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -5356,7 +5356,7 @@
 	},
 /area/russian/radiation)
 "bfZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -5798,7 +5798,7 @@
 	},
 /area/station/mining/magnet)
 "bhD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -6105,7 +6105,7 @@
 	},
 /area/station/mining/magnet)
 "bin" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -6245,7 +6245,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating{
@@ -6472,7 +6472,7 @@
 	},
 /area/russian/radiation)
 "biX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -7913,7 +7913,7 @@
 	},
 /area/station/mining/magnet)
 "bnG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/airless/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -8483,7 +8483,7 @@
 	},
 /area/space)
 "bpo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -8599,7 +8599,7 @@
 	},
 /area/russian/radiation)
 "bqY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -8674,7 +8674,7 @@
 /turf/space,
 /area/russian/radiation)
 "brh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -8983,7 +8983,7 @@
 	},
 /area/russian/radiation)
 "brX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -9051,7 +9051,7 @@
 /turf/simulated/floor/grass,
 /area/russian/radiation)
 "bsd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -9565,7 +9565,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -9634,7 +9634,7 @@
 	},
 /area/russian/radiation)
 "btL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -9650,7 +9650,7 @@
 	},
 /area/russian/radiation)
 "btQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -9666,7 +9666,7 @@
 	},
 /area/russian/radiation)
 "btR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -9744,7 +9744,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -10557,7 +10557,7 @@
 	},
 /area/russian/radiation)
 "bwP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -10694,7 +10694,7 @@
 	},
 /area/russian/radiation)
 "bxz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -10829,7 +10829,7 @@
 	},
 /area/russian/radiation)
 "byY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	burnt = 1;
@@ -11004,7 +11004,7 @@
 	},
 /area/russian/radiation)
 "bzw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	burnt = 1;
@@ -11838,7 +11838,7 @@
 	},
 /area/russian/radiation)
 "bDu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -11851,7 +11851,7 @@
 	},
 /area/russian/radiation)
 "bDw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -13336,7 +13336,7 @@
 	},
 /area/russian/radiation)
 "bLQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -13344,7 +13344,7 @@
 	},
 /area/russian/radiation)
 "bLR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -13353,7 +13353,7 @@
 	},
 /area/russian/radiation)
 "bLT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 10
 	},
@@ -13413,7 +13413,7 @@
 	},
 /area/space)
 "bNo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -13421,7 +13421,7 @@
 	},
 /area/russian/radiation)
 "bNp" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -14177,7 +14177,7 @@
 	},
 /area/russian/radiation)
 "bRr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -15120,7 +15120,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -15169,7 +15169,7 @@
 	},
 /area/russian/radiation)
 "bWK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -16223,7 +16223,7 @@
 	},
 /area/space)
 "cbW" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -16244,7 +16244,7 @@
 	},
 /area/russian/radiation)
 "cbX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -16262,7 +16262,7 @@
 	},
 /area/russian/radiation)
 "cbY" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -16283,7 +16283,7 @@
 	},
 /area/russian/radiation)
 "cca" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -16304,7 +16304,7 @@
 	},
 /area/russian/radiation)
 "ccb" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -17687,7 +17687,7 @@
 	},
 /area/russian/radiation)
 "chr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -18532,7 +18532,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -19067,7 +19067,7 @@
 	},
 /area/russian/radiation)
 "cnh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -19775,7 +19775,7 @@
 	},
 /area/russian/radiation)
 "cqH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -19844,7 +19844,7 @@
 	},
 /area/russian/radiation)
 "cqM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/medbay,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -20335,7 +20335,7 @@
 	},
 /area/russian/radiation)
 "crz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2{
 	layer = 2.9;
 	pixel_y = 13
@@ -20375,7 +20375,7 @@
 	},
 /area/station/science/testchamber)
 "crG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -20412,7 +20412,7 @@
 	},
 /area/russian/radiation)
 "crL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -20707,7 +20707,7 @@
 	},
 /area/shuttle/arrival/station)
 "ctl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -21214,7 +21214,7 @@
 	},
 /area/russian/radiation)
 "cuN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -22256,7 +22256,7 @@
 	},
 /area/russian/radiation)
 "cyx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22277,7 +22277,7 @@
 	},
 /area/russian/radiation)
 "cyy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22298,7 +22298,7 @@
 	},
 /area/russian/radiation)
 "cyz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22349,7 +22349,7 @@
 	},
 /area/russian/radiation)
 "cyF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -22357,7 +22357,7 @@
 	},
 /area/russian/radiation)
 "cyG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -22371,7 +22371,7 @@
 	},
 /area/russian/radiation)
 "cyH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -22386,7 +22386,7 @@
 	},
 /area/russian/radiation)
 "cyL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -23696,7 +23696,7 @@
 	},
 /area/russian/radiation)
 "cCK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -23822,7 +23822,7 @@
 	},
 /area/russian/radiation)
 "cCU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -23889,7 +23889,7 @@
 	},
 /area/russian/radiation)
 "cDa" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -24041,7 +24041,7 @@
 	},
 /area/russian/radiation)
 "cDs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter";
@@ -24448,7 +24448,7 @@
 	},
 /area/russian/radiation)
 "cFl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/left{
 	layer = 2.9;
@@ -24460,7 +24460,7 @@
 	},
 /area/russian/radiation)
 "cFm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle{
 	layer = 2.9;
@@ -24475,7 +24475,7 @@
 	},
 /area/russian/radiation)
 "cFn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/right{
 	layer = 2.9;
@@ -24845,7 +24845,7 @@
 	},
 /area/russian/radiation)
 "cGj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -24882,7 +24882,7 @@
 	},
 /area/russian/radiation)
 "cGn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -25017,7 +25017,7 @@
 	},
 /area/russian/radiation)
 "cGG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -25467,14 +25467,14 @@
 	},
 /area/russian/radiation)
 "cIh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/built_zone)
 "cIj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -26308,7 +26308,7 @@
 	},
 /area/russian/radiation)
 "cJG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -26353,7 +26353,7 @@
 	},
 /area/russian/radiation)
 "cJK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -26572,7 +26572,7 @@
 	},
 /area/russian/radiation)
 "cKl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -26623,7 +26623,7 @@
 	},
 /area/russian/radiation)
 "cKJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -26760,7 +26760,7 @@
 	},
 /area/russian/radiation)
 "cKW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -26872,7 +26872,7 @@
 	},
 /area/russian/radiation)
 "cLj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter2";
@@ -26904,7 +26904,7 @@
 	},
 /area/russian/radiation)
 "cLm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter";
@@ -27575,7 +27575,7 @@
 	},
 /area/russian/radiation)
 "cMt" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating/random{
@@ -27587,7 +27587,7 @@
 	},
 /area/russian/radiation)
 "cMu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment,
@@ -27600,7 +27600,7 @@
 	},
 /area/russian/radiation)
 "cMv" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment/cargo,
@@ -27893,7 +27893,7 @@
 	},
 /area/russian/radiation)
 "cNE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -28279,7 +28279,7 @@
 	},
 /area/russian/radiation)
 "cOs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -28468,7 +28468,7 @@
 	},
 /area/russian/radiation)
 "cOH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -28573,7 +28573,7 @@
 	},
 /area/russian/radiation)
 "cOP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -28744,7 +28744,7 @@
 	},
 /area/russian/radiation)
 "cPg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 10;
 	id = "scienceteleporter2";
@@ -28758,7 +28758,7 @@
 	},
 /area/russian/radiation)
 "cPh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 1;
 	id = "scienceteleporter2";
@@ -28990,7 +28990,7 @@
 	},
 /area/russian/radiation)
 "cQl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -29001,7 +29001,7 @@
 	},
 /area/russian/radiation)
 "cQm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -29012,7 +29012,7 @@
 	},
 /area/russian/radiation)
 "cQn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating{
@@ -29021,7 +29021,7 @@
 	},
 /area/russian/radiation)
 "cQq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment,
@@ -29031,7 +29031,7 @@
 	},
 /area/russian/radiation)
 "cQr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -29046,7 +29046,7 @@
 	},
 /area/russian/radiation)
 "cQs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating{
@@ -29184,7 +29184,7 @@
 	},
 /area/russian/radiation)
 "cQH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -29468,7 +29468,7 @@
 	},
 /area/russian/radiation)
 "cRf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -29486,7 +29486,7 @@
 	},
 /area/russian/radiation)
 "cRh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating{
@@ -29510,7 +29510,7 @@
 	},
 /area/russian/radiation)
 "cRk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -29685,7 +29685,7 @@
 	},
 /area/russian/radiation)
 "cSs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	layer = 2.9;
 	pixel_y = 13
@@ -29696,7 +29696,7 @@
 	},
 /area/russian/radiation)
 "cSu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	layer = 2.9;
 	pixel_y = 13
@@ -29710,7 +29710,7 @@
 	},
 /area/russian/radiation)
 "cSv" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right{
 	layer = 2.9;
 	pixel_y = 13
@@ -29721,7 +29721,7 @@
 	},
 /area/russian/radiation)
 "cSw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -29739,7 +29739,7 @@
 	},
 /area/russian/radiation)
 "cSx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -29797,7 +29797,7 @@
 	},
 /area/russian/radiation)
 "cSA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -29813,7 +29813,7 @@
 	},
 /area/russian/radiation)
 "cSB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -30114,7 +30114,7 @@
 /turf/space,
 /area/space)
 "cTr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -30122,7 +30122,7 @@
 	},
 /area/russian/radiation)
 "cTs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -30727,7 +30727,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -30739,7 +30739,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -30754,7 +30754,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -30771,7 +30771,7 @@
 	},
 /area/russian/radiation)
 "cVm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -30843,7 +30843,7 @@
 /turf/space,
 /area/russian/radiation)
 "cVy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -31089,7 +31089,7 @@
 	},
 /area/russian/radiation)
 "cWq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -31330,7 +31330,7 @@
 	},
 /area/russian/radiation)
 "cWJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -31404,7 +31404,7 @@
 	},
 /area/russian/radiation)
 "cWP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -31613,7 +31613,7 @@
 /turf/space,
 /area/russian/radiation)
 "cXk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -32275,7 +32275,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -34388,7 +34388,7 @@
 	},
 /area/russian/radiation)
 "dhl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -34870,7 +34870,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	burnt = 1;
@@ -34884,7 +34884,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -35151,7 +35151,7 @@
 	},
 /area/russian/radiation)
 "dkc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -35243,7 +35243,7 @@
 	},
 /area/russian/radiation)
 "dkm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -35256,14 +35256,14 @@
 "dkn" = (
 /obj/decal/poster/wallsign/security,
 /obj/disposalpipe/segment/brig,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
 "dkq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -36069,7 +36069,7 @@
 	},
 /area/russian/radiation)
 "dmT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -37889,7 +37889,7 @@
 	},
 /area/shuttle/arrival/station)
 "dHu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -37926,7 +37926,7 @@
 	},
 /area/built_zone)
 "dIo" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38043,7 +38043,7 @@
 	},
 /area/shuttle/arrival/station)
 "dKN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	icon_state = "floor2";
@@ -38076,7 +38076,7 @@
 	},
 /area/russian/radiation)
 "dMH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -38130,7 +38130,7 @@
 	},
 /area/built_zone)
 "dOL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -38370,7 +38370,7 @@
 	},
 /area/shuttle/arrival/station)
 "dSZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -38466,7 +38466,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "dWz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -38616,12 +38616,12 @@
 	},
 /area/russian/radiation)
 "eaX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -39127,7 +39127,7 @@
 	},
 /area/russian/radiation)
 "eIz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/pool,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -39395,7 +39395,7 @@
 	},
 /area/russian/radiation)
 "ePe" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -40048,7 +40048,7 @@
 /turf/space,
 /area/russian/radiation)
 "fdE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -40342,7 +40342,7 @@
 	},
 /area/russian/radiation)
 "fjo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -40682,7 +40682,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -40794,7 +40794,7 @@
 	},
 /area/russian/radiation)
 "ftj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -41082,7 +41082,7 @@
 	},
 /area/russian/radiation)
 "fBm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/sanitary/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -41297,7 +41297,7 @@
 	},
 /area/russian/radiation)
 "fET" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -41307,7 +41307,7 @@
 	},
 /area/russian/radiation)
 "fEZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -41320,7 +41320,7 @@
 	},
 /area/russian/radiation)
 "fFg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -41335,7 +41335,7 @@
 	},
 /area/russian/radiation)
 "fFk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -41600,7 +41600,7 @@
 	},
 /area/russian/radiation)
 "fNS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -42122,12 +42122,12 @@
 	},
 /area/russian/radiation)
 "fZp" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -42963,7 +42963,7 @@
 	},
 /area/russian/radiation)
 "gql" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	burnt = 1;
@@ -43155,7 +43155,7 @@
 	},
 /area/russian/radiation)
 "guz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -43506,7 +43506,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -43894,7 +43894,7 @@
 	},
 /area/russian/radiation)
 "gJw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -44168,7 +44168,7 @@
 	},
 /area/russian/radiation)
 "gOy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
@@ -44184,7 +44184,7 @@
 	},
 /area/russian/radiation)
 "gPk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -44350,7 +44350,7 @@
 /turf/simulated/grass,
 /area/russian/radiation)
 "gRE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -45250,7 +45250,7 @@
 	},
 /area/russian/radiation)
 "hqG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -45268,7 +45268,7 @@
 	},
 /area/russian/radiation)
 "hrm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -45364,7 +45364,7 @@
 /turf/space,
 /area/russian/radiation)
 "hve" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 1
 	},
@@ -45377,7 +45377,7 @@
 	},
 /area/russian/radiation)
 "hvP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg2";
@@ -45593,7 +45593,7 @@
 	},
 /area/russian/radiation)
 "hFe" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -45604,7 +45604,7 @@
 	},
 /area/russian/radiation)
 "hFj" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/security,
 /obj/cable,
 /obj/cable{
@@ -46477,7 +46477,7 @@
 	},
 /area/russian/radiation)
 "hZT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -47096,7 +47096,7 @@
 	},
 /area/russian/radiation)
 "iow" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -47211,7 +47211,7 @@
 	},
 /area/russian/radiation)
 "irm" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -47398,7 +47398,7 @@
 	},
 /area/russian/radiation)
 "iyo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -47855,7 +47855,7 @@
 	},
 /area/russian/radiation)
 "iJB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -48399,7 +48399,7 @@
 	},
 /area/russian/radiation)
 "iSU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/bar,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating{
@@ -48430,7 +48430,7 @@
 	},
 /area/russian/radiation)
 "iUb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/bar,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -49855,7 +49855,7 @@
 	},
 /area/russian/radiation)
 "jwk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 1
 	},
@@ -49868,7 +49868,7 @@
 	},
 /area/russian/radiation)
 "jwq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -50014,7 +50014,7 @@
 	},
 /area/russian/radiation)
 "jzr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/space,
 /area/space)
 "jzL" = (
@@ -50261,7 +50261,7 @@
 	},
 /area/russian/radiation)
 "jCp" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -52192,7 +52192,7 @@
 	},
 /area/russian/radiation)
 "kBS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -52250,7 +52250,7 @@
 	},
 /area/russian/radiation)
 "kDY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg1";
@@ -52258,7 +52258,7 @@
 	},
 /area/russian/radiation)
 "kEr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random{
 	broken = 1;
@@ -52269,7 +52269,7 @@
 	},
 /area/russian/radiation)
 "kED" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -52290,7 +52290,7 @@
 	},
 /area/russian/radiation)
 "kFB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -52323,7 +52323,7 @@
 	},
 /area/russian/radiation)
 "kFQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -52462,7 +52462,7 @@
 	},
 /area/russian/radiation)
 "kHW" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -52472,7 +52472,7 @@
 	},
 /area/russian/radiation)
 "kIq" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -52480,7 +52480,7 @@
 	},
 /area/russian/radiation)
 "kIw" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -53361,7 +53361,7 @@
 	},
 /area/russian/radiation)
 "lja" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -53946,7 +53946,7 @@
 /turf/space,
 /area/russian/radiation)
 "lsw" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -53977,7 +53977,7 @@
 	},
 /area/russian/radiation)
 "lsL" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -54547,7 +54547,7 @@
 /area/russian/radiation)
 "lEz" = (
 /obj/cable,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -55580,7 +55580,7 @@
 	},
 /area/russian/radiation)
 "maX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -55608,7 +55608,7 @@
 	},
 /area/russian/radiation)
 "mbA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -55971,7 +55971,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -55989,7 +55989,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -56099,7 +56099,7 @@
 	},
 /area/russian/radiation)
 "muu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/airless/random{
 	desc = " It is made of steel.";
 	name = "plating"
@@ -56432,7 +56432,7 @@
 	},
 /area/russian/radiation)
 "mAM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
@@ -56981,7 +56981,7 @@
 	},
 /area/russian/radiation)
 "mKl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -57587,7 +57587,7 @@
 	},
 /area/russian/radiation)
 "mZl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -58631,7 +58631,7 @@
 	},
 /area/russian/radiation)
 "nzs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -58639,7 +58639,7 @@
 	},
 /area/russian/radiation)
 "nzE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/junction/middle/west,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -58882,7 +58882,7 @@
 /turf/space,
 /area/russian/radiation)
 "nEr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -59142,7 +59142,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	burnt = 1;
@@ -59440,7 +59440,7 @@
 	},
 /area/russian/radiation)
 "nSQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 5
 	},
@@ -59450,7 +59450,7 @@
 	},
 /area/russian/radiation)
 "nTh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
 	},
@@ -59463,7 +59463,7 @@
 	},
 /area/russian/radiation)
 "nTo" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
 	},
@@ -59477,7 +59477,7 @@
 	},
 /area/russian/radiation)
 "nTD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 4
 	},
@@ -59927,7 +59927,7 @@
 	},
 /area/russian/radiation)
 "odk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -60065,7 +60065,7 @@
 	},
 /area/russian/radiation)
 "oeV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "panelscorched";
@@ -60585,7 +60585,7 @@
 	},
 /area/russian/radiation)
 "oqX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	burnt = 1;
@@ -60625,7 +60625,7 @@
 	},
 /area/russian/radiation)
 "orx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	burnt = 1;
@@ -61498,7 +61498,7 @@
 	},
 /area/russian/radiation)
 "oHF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -61605,7 +61605,7 @@
 	},
 /area/russian/radiation)
 "oLm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -61758,7 +61758,7 @@
 	},
 /area/russian/radiation)
 "oOa" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -61811,7 +61811,7 @@
 	},
 /area/russian/radiation)
 "oPm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -64226,7 +64226,7 @@
 	},
 /area/russian/radiation)
 "qjE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -64932,7 +64932,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "qwb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	name = "steel shuttle floor"
@@ -65552,7 +65552,7 @@
 	},
 /area/russian/radiation)
 "qIW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/cargo{
 	dir = 4
 	},
@@ -65847,7 +65847,7 @@
 	},
 /area/russian/radiation)
 "qPD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/ejection{
 	dir = 8
 	},
@@ -66038,7 +66038,7 @@
 	},
 /area/russian/radiation)
 "qSJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -66057,7 +66057,7 @@
 	},
 /area/russian/radiation)
 "qSZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -66087,7 +66087,7 @@
 /turf/space,
 /area/russian/radiation)
 "qTX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -66264,7 +66264,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "rcK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttle{
 	desc = " It is made of steel.";
 	icon_state = "floor2";
@@ -66745,7 +66745,7 @@
 	},
 /area/russian/radiation)
 "rmf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -67484,7 +67484,7 @@
 	},
 /area/russian/radiation)
 "rEl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -68117,7 +68117,7 @@
 	},
 /area/russian/radiation)
 "rSf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -68136,7 +68136,7 @@
 	},
 /area/russian/radiation)
 "rSh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -68155,7 +68155,7 @@
 	},
 /area/russian/radiation)
 "rSC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -68387,7 +68387,7 @@
 	},
 /area/russian/radiation)
 "rYn" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -68427,7 +68427,7 @@
 	},
 /area/station/ranch)
 "rZi" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -68437,7 +68437,7 @@
 	},
 /area/station/ranch)
 "saH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -68450,7 +68450,7 @@
 /turf/space,
 /area/space)
 "sbh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -68478,7 +68478,7 @@
 	},
 /area/russian/radiation)
 "scA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating{
 	broken = 1;
@@ -68505,7 +68505,7 @@
 	},
 /area/station/ranch)
 "sdi" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/structure/woodwall,
 /obj/disposalpipe/segment/produce{
 	dir = 4
@@ -68986,7 +68986,7 @@
 	},
 /area/russian/radiation)
 "snQ" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -69120,7 +69120,7 @@
 	},
 /area/station/ranch)
 "srm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -69222,7 +69222,7 @@
 	},
 /area/russian/radiation)
 "suD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -69860,7 +69860,7 @@
 	},
 /area/station/ranch)
 "sOX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/lattice,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -70111,7 +70111,7 @@
 	},
 /area/russian/radiation)
 "sXs" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -71140,7 +71140,7 @@
 	},
 /area/russian/radiation)
 "tAY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -72833,7 +72833,7 @@
 /turf/space,
 /area/russian/radiation)
 "usi" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -73743,7 +73743,7 @@
 	},
 /area/russian/radiation)
 "uWq" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -73751,14 +73751,14 @@
 /turf/simulated/floor/plating,
 /area/russian/radiation)
 "uWz" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/russian/radiation)
 "uWS" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
@@ -74736,7 +74736,7 @@
 	},
 /area/russian/radiation)
 "vzm" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -74747,7 +74747,7 @@
 /turf/simulated/floor/plating,
 /area/russian/radiation)
 "vzJ" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -74758,7 +74758,7 @@
 /turf/simulated/floor/plating,
 /area/russian/radiation)
 "vzS" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
@@ -75615,7 +75615,7 @@
 	},
 /area/russian/radiation)
 "vZw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg3";
@@ -78151,7 +78151,7 @@
 	},
 /area/russian/radiation)
 "xop" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -78161,7 +78161,7 @@
 	},
 /area/russian/radiation)
 "xoE" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -78178,7 +78178,7 @@
 	},
 /area/russian/radiation)
 "xpb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "2-5"
 	},
@@ -78204,7 +78204,7 @@
 	},
 /area/russian/radiation)
 "xpK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -78214,7 +78214,7 @@
 	},
 /area/russian/radiation)
 "xqy" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -79001,7 +79001,7 @@
 	},
 /area/russian/radiation)
 "xLJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/space,
 /area/russian/radiation)
 "xLN" = (

@@ -286,7 +286,7 @@
 /area/research_outpost/protest)
 "acr" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -322,7 +322,7 @@
 /area/station/crew_quarters/bathroom)
 "adH" = (
 /obj/disposalpipe/segment/mail,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery/storage)
 "aea" = (
@@ -663,7 +663,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "ali" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -827,7 +827,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "apf" = (
@@ -1492,7 +1492,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
 "aEX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/data)
@@ -1947,7 +1947,7 @@
 /turf/simulated/floor/black/side,
 /area/station/engine/storage)
 "aPh" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -2046,7 +2046,7 @@
 	name = "Seating Area"
 	})
 "aQS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "aRl" = (
@@ -2148,7 +2148,7 @@
 /turf/simulated/floor/sand,
 /area/station/bridge)
 "aTv" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "aTw" = (
@@ -2174,7 +2174,7 @@
 	},
 /area/station/solar/north)
 "aTU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "aUp" = (
@@ -2248,7 +2248,7 @@
 "aWL" = (
 /obj/disposalpipe/segment,
 /obj/decal/poster/wallsign/hazard_danger,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "aXl" = (
@@ -2457,7 +2457,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bdz" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -2476,7 +2476,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)
 "bdH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "bdN" = (
@@ -2654,7 +2654,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "bhO" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
@@ -2749,7 +2749,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/sw,
 /area/station/security/main)
 "bkC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -2968,7 +2968,7 @@
 /turf/simulated/floor/green/side,
 /area/research_outpost/protest)
 "bpS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -3057,7 +3057,7 @@
 /turf/space,
 /area/space)
 "brb" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
@@ -3305,7 +3305,7 @@
 /turf/space,
 /area/space)
 "bvi" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -3370,7 +3370,7 @@
 	})
 "bxl" = (
 /obj/disposalpipe/segment/horizontal,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "bxq" = (
@@ -3541,7 +3541,7 @@
 	name = "Ringside Hallway"
 	})
 "bAA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingrope{
 	dir = 5
 	},
@@ -3669,7 +3669,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "bCX" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -3706,7 +3706,7 @@
 	},
 /area/station/medical/medbay/treatment1)
 "bDX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "bEn" = (
@@ -3895,7 +3895,7 @@
 /turf/space,
 /area/space)
 "bGA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay)
@@ -4418,7 +4418,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "bSi" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -4522,7 +4522,7 @@
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/security/main)
 "bUb" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 4;
@@ -4534,12 +4534,12 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
 "bUs" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
 "bUt" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter,
 /obj/cable{
 	d2 = 4;
@@ -4688,7 +4688,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "bXm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
@@ -4902,7 +4902,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lab)
 "cbl" = (
@@ -5032,7 +5032,7 @@
 	},
 /area/listeningpost/syndicate_teleporter)
 "cdD" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -5267,7 +5267,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/inner/the_cage)
 "cij" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/east)
 "cin" = (
@@ -5454,7 +5454,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "cna" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -5624,7 +5624,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/solar/north)
 "crk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "crn" = (
@@ -5684,7 +5684,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_north)
 "ctH" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5734,7 +5734,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "cul" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -5852,7 +5852,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/data)
 "cwo" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -5918,7 +5918,7 @@
 	},
 /area/station/medical/research)
 "cxf" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating/airless,
 /area/station/crew_quarters/captain)
@@ -6203,7 +6203,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "cCu" = (
@@ -6249,7 +6249,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "cDv" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
 "cDA" = (
@@ -6423,7 +6423,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/power)
 "cHS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -6506,7 +6506,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "cIW" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering/breakroom)
 "cJb" = (
@@ -6588,7 +6588,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "cLs" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "cLt" = (
@@ -6799,7 +6799,7 @@
 /turf/simulated/floor/grass,
 /area/station/ranch)
 "cRB" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering)
 "cRE" = (
@@ -6879,7 +6879,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
 "cSO" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable,
 /obj/cable{
@@ -7390,7 +7390,7 @@
 /turf/simulated/floor,
 /area/station/storage/tools)
 "ddk" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "ddr" = (
@@ -7422,7 +7422,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry)
 "ddM" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 8;
 	id = "boomroom";
@@ -7562,7 +7562,7 @@
 	},
 /area/station/hallway/primary/south)
 "dgt" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "dgz" = (
@@ -7634,7 +7634,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "dhJ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/monitoring)
 "dhL" = (
@@ -8075,7 +8075,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "drq" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -8491,7 +8491,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "dAz" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos)
 "dAG" = (
@@ -8515,7 +8515,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "dBn" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -8573,7 +8573,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/engineering)
 "dCk" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
@@ -8844,7 +8844,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "dIJ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/magnet)
 "dIV" = (
@@ -9270,7 +9270,7 @@
 	name = "Maintenance Shack"
 	})
 "dRV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
@@ -9296,7 +9296,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "dSE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingrope,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
@@ -9565,7 +9565,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "dYn" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -9574,7 +9574,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "dZB" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
@@ -9604,7 +9604,7 @@
 	name = "Crashed Limo"
 	})
 "eaX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ranch)
 "ebd" = (
@@ -9875,7 +9875,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
 "egG" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
 	name = "Seating Area"
@@ -9898,7 +9898,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/maintenance/south)
 "egR" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/cargo_staff_room)
 "eho" = (
@@ -10391,7 +10391,7 @@
 	},
 /area/station/medical/medbay)
 "equ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "eqw" = (
@@ -11024,7 +11024,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "eEY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "eFi" = (
@@ -11084,7 +11084,7 @@
 	},
 /area/station/crew_quarters/quarters_south)
 "eGC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -11124,7 +11124,7 @@
 /area/station/maintenance/inner/the_cage)
 "eHk" = (
 /obj/disposalpipe/segment/brig,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -11262,7 +11262,7 @@
 "eJY" = (
 /obj/disposalpipe/segment,
 /obj/decal/poster/wallsign/hazard_danger,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "eKo" = (
@@ -11293,7 +11293,7 @@
 /turf/simulated/floor/carpet/purple/standard/edge/west,
 /area/station/crew_quarters/stockex)
 "eLG" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/breakroom)
 "eLI" = (
@@ -11374,7 +11374,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/south)
 "eNU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -11625,7 +11625,7 @@
 /turf/space,
 /area/space)
 "eUs" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "eUu" = (
@@ -11695,7 +11695,7 @@
 	name = "Ringside Hallway"
 	})
 "eVp" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_electrical,
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/plating/random,
@@ -11719,7 +11719,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "eVD" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
@@ -11772,7 +11772,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -11887,7 +11887,7 @@
 	},
 /area/station/hallway/primary/south)
 "eXG" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/gas)
 "eYb" = (
@@ -12128,7 +12128,7 @@
 /turf/simulated/floor/yellowblack,
 /area/station/mining/staff_room)
 "ffl" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/checkpoint/sec_foyer)
 "fft" = (
@@ -12262,7 +12262,7 @@
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
 "fhX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "fic" = (
@@ -12292,7 +12292,7 @@
 	d2 = 8;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "fiP" = (
@@ -12306,7 +12306,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/quarters_south)
 "fjh" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
@@ -13198,7 +13198,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/south,
 /area/station/crew_quarters/captain)
 "fCk" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
@@ -13214,7 +13214,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/jazz)
 "fCv" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -13369,7 +13369,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "fGI" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
 "fGL" = (
@@ -13782,7 +13782,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/storage)
 "fOc" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/east{
 	name = "Cargo Hallway"
@@ -13894,7 +13894,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
 "fRg" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/commentators_desk)
 "fRj" = (
@@ -14218,7 +14218,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "fXT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "fXV" = (
@@ -14680,7 +14680,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "gis" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -14790,7 +14790,7 @@
 /turf/simulated/floor/carpet/green/fancy,
 /area/station/crew_quarters/jazz)
 "gkZ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/gas)
 "gla" = (
@@ -15165,7 +15165,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "gtI" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
@@ -15508,7 +15508,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
 "gDd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "gDz" = (
@@ -15913,7 +15913,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/security/hos)
 "gMH" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -16082,7 +16082,7 @@
 	},
 /area/station/security/secoffquarters)
 "gPC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/decal/boxingrope,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
@@ -16565,7 +16565,7 @@
 /area/station/mining/staff_room)
 "gYP" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -16763,7 +16763,7 @@
 	},
 /area/station/science/lobby)
 "hdX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
@@ -17107,7 +17107,7 @@
 /turf/simulated/floor/plating,
 /area/station/com_dish/comdish)
 "hlq" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "hlB" = (
@@ -17245,7 +17245,7 @@
 /area/station/science/lobby)
 "hpk" = (
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -17264,7 +17264,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/north)
 "hpp" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "hpF" = (
@@ -17315,7 +17315,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "hrb" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "hrd" = (
@@ -17323,7 +17323,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/cloner)
 "hrk" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -17940,7 +17940,7 @@
 /turf/simulated/floor/wood,
 /area/station/chapel/sanctuary)
 "hDd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -18143,7 +18143,7 @@
 /turf/space,
 /area/space)
 "hGN" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "hGP" = (
@@ -18278,7 +18278,7 @@
 	},
 /area/station/medical/medbay)
 "hIT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -18438,7 +18438,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/power)
 "hMA" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/airless/plating,
 /area/abandonedship{
 	name = "Crashed Limo"
@@ -18485,7 +18485,7 @@
 /turf/simulated/floor/wood/six,
 /area/station/crew_quarters/hos)
 "hNP" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "hOg" = (
@@ -18784,7 +18784,7 @@
 /turf/simulated/floor/orange/side,
 /area/station/hallway/primary/west)
 "hVs" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -19211,7 +19211,7 @@
 	},
 /area/station/engine/engineering/ce)
 "igk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "ign" = (
@@ -19353,7 +19353,7 @@
 	},
 /area/station/security/processing)
 "ijC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
 "ijR" = (
@@ -19467,7 +19467,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/security/hos)
 "imZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/processing)
 "inc" = (
@@ -20818,7 +20818,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "iNl" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -21261,7 +21261,7 @@
 	},
 /area/station/hallway/primary/central)
 "iUy" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -21344,7 +21344,7 @@
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/primary/west)
 "iWd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
@@ -21363,7 +21363,7 @@
 	name = "Crashed Limo"
 	})
 "iWH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/showers{
@@ -21374,7 +21374,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "iWT" = (
@@ -21703,7 +21703,7 @@
 	name = "Teleporter Blast Shield";
 	opacity = 0
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "jcR" = (
@@ -21858,7 +21858,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/ranch)
 "jfY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 9;
 	layer = 3.1
@@ -22253,7 +22253,7 @@
 /turf/simulated/floor/redblack,
 /area/station/crew_quarters/courtroom)
 "jnU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
 	name = "The Cage Arena"
@@ -22349,7 +22349,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/teleporter)
 "jqG" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -22626,7 +22626,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai_upload_foyer)
 "jxv" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -22736,7 +22736,7 @@
 /turf/simulated/floor/white/checker2,
 /area/station/crew_quarters/kitchen)
 "jAT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
@@ -22783,7 +22783,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry)
 "jBF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/north)
 "jBQ" = (
@@ -22961,7 +22961,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "jGx" = (
@@ -23575,7 +23575,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "jRv" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -23668,7 +23668,7 @@
 	},
 /area/station/engine/power)
 "jSW" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "jTp" = (
@@ -23697,7 +23697,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "jTC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "jTQ" = (
@@ -23718,7 +23718,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "jUf" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -24301,7 +24301,7 @@
 /turf/simulated/floor,
 /area/station/hangar/main)
 "kgW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/utility)
 "kgX" = (
@@ -24981,7 +24981,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "kza" = (
@@ -25511,7 +25511,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/power)
 "kIF" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "kIR" = (
@@ -25575,7 +25575,7 @@
 /area/station/engine/inner)
 "kKB" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos)
 "kKS" = (
@@ -25731,12 +25731,12 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "kPp" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "kPs" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/plating,
 /area/station/bridge)
@@ -25794,7 +25794,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "kQZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 4
 	},
@@ -26112,7 +26112,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/south,
 /area/listeningpost)
 "kYa" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/observatory)
 "kYc" = (
@@ -26872,7 +26872,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/restroom)
 "lpu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
 "lqg" = (
@@ -26898,7 +26898,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "lrD" = (
@@ -27138,7 +27138,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/south,
 /area/station/crew_quarters/data)
 "lxr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingrope{
 	dir = 9
 	},
@@ -27375,7 +27375,7 @@
 	name = "Crashed Limo"
 	})
 "lAq" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
@@ -27430,7 +27430,7 @@
 /turf/simulated/floor/sand,
 /area/station/hallway/secondary/exit)
 "lBW" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/decal/boxingrope,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
@@ -27754,7 +27754,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/science/lab)
 "lIp" = (
@@ -27885,7 +27885,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/station/hangar/main)
 "lKY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/lobby)
 "lLc" = (
@@ -28277,7 +28277,7 @@
 	name = "Locker Room"
 	})
 "lUJ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 4
 	},
@@ -28642,7 +28642,7 @@
 /turf/simulated/floor,
 /area/station/storage/emergencyinternals)
 "maX" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/lobby)
 "mbw" = (
@@ -28661,7 +28661,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -28724,7 +28724,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -28943,7 +28943,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "mhF" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/sec)
 "mhN" = (
@@ -29040,7 +29040,7 @@
 	name = "Engineering Toilets"
 	})
 "mjl" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "mjS" = (
@@ -29068,7 +29068,7 @@
 /turf/simulated/floor/orange,
 /area/station/quartermaster/office)
 "mky" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	layer = 2.9;
 	pixel_y = 13
@@ -29094,7 +29094,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/utility)
 "mlf" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 5;
 	layer = 3.1
@@ -29331,7 +29331,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "mqt" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
 "mqw" = (
@@ -29582,7 +29582,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "mxe" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -29973,7 +29973,7 @@
 	name = "Maintenance Shack"
 	})
 "mFh" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/fitness)
@@ -30072,7 +30072,7 @@
 /turf/simulated/floor/neutral/side,
 /area/station/storage/tools)
 "mGp" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -30293,7 +30293,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "mMH" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/security/brig{
@@ -30508,7 +30508,7 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/pool)
 "mRR" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	layer = 2.9;
 	pixel_y = 13
@@ -30570,7 +30570,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northwest)
 "mUM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /obj/window_blinds/cog2/middle{
 	dir = 4
@@ -30656,7 +30656,7 @@
 /turf/simulated/floor/carpet/blue/fancy/narrow/south,
 /area/station/bridge/hos)
 "mXd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "mXr" = (
@@ -30679,7 +30679,7 @@
 	name = "Seating Area"
 	})
 "mXI" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge/luxury_seating)
 "mXZ" = (
@@ -30744,7 +30744,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "mZC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 9;
 	id = "boomroom";
@@ -31334,7 +31334,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/qm)
 "nlC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -31665,7 +31665,7 @@
 	name = "Cargo Hallway"
 	})
 "nrO" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -31805,7 +31805,7 @@
 /turf/simulated/floor/wood/two,
 /area/research_outpost/protest)
 "nuI" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "nvb" = (
@@ -31852,7 +31852,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/captain)
 "nwm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
@@ -32021,7 +32021,7 @@
 	name = "The Ring"
 	})
 "nBL" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -32084,7 +32084,7 @@
 	name = "Crashed Limo"
 	})
 "nDj" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
 "nDL" = (
@@ -32225,11 +32225,11 @@
 	},
 /area/station/quartermaster/office)
 "nHb" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/com_dish/auxdish)
 "nHc" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{
 	name = "Boardroom"
@@ -32294,7 +32294,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/data)
 "nIe" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /obj/window_blinds/cog2/middle{
 	dir = 5
@@ -32388,7 +32388,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/utility)
 "nJF" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
 "nJU" = (
@@ -32439,7 +32439,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "nKy" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "nKZ" = (
@@ -32749,7 +32749,7 @@
 /turf/space,
 /area/station/mining/staff_room)
 "nQE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbooth)
 "nQN" = (
@@ -33135,7 +33135,7 @@
 /turf/simulated/grass,
 /area/station/garden/owlery)
 "nXG" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -33548,7 +33548,7 @@
 	},
 /area/station/solar/west)
 "oeZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -33609,7 +33609,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "ohq" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
 "ohs" = (
@@ -33833,7 +33833,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "omJ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/central)
 "onk" = (
@@ -34206,7 +34206,7 @@
 /turf/simulated/floor/carpet/purple/standard/narrow/south,
 /area/station/crew_quarters/arcade)
 "ouV" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/garden/owlery)
 "ovt" = (
@@ -34276,7 +34276,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/power)
 "owE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/data)
 "owR" = (
@@ -34529,7 +34529,7 @@
 	name = "Seating Area"
 	})
 "oEZ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -34819,7 +34819,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "oNd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -34952,7 +34952,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "oPj" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -34996,7 +34996,7 @@
 	},
 /area/station/science/lab)
 "oQf" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/storage/emergencyinternals)
 "oQi" = (
@@ -35066,7 +35066,7 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "oRm" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -35318,7 +35318,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "oWj" = (
@@ -35545,7 +35545,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "pbp" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/north)
 "pbt" = (
@@ -35699,7 +35699,7 @@
 /turf/simulated/floor/black,
 /area/station/janitor/supply)
 "peq" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating/airless,
 /area/station/crew_quarters/captain)
@@ -37115,7 +37115,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/engineering)
 "pNS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/random,
 /area/station/hangar/main)
@@ -37135,7 +37135,7 @@
 /turf/simulated/floor/grey,
 /area/station/storage/warehouse)
 "pOw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "pOG" = (
@@ -37176,7 +37176,7 @@
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "pPq" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
@@ -37403,7 +37403,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/main)
 "pVN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
 "pVO" = (
@@ -38052,7 +38052,7 @@
 /turf/space,
 /area/space)
 "qgU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "qhd" = (
@@ -38242,7 +38242,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "qky" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "qkG" = (
@@ -38327,7 +38327,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
 "qly" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
 	d2 = 4;
@@ -38600,7 +38600,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "qry" = (
@@ -38711,7 +38711,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "qtM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -38741,7 +38741,7 @@
 	name = "Research Locker Room"
 	})
 "qtS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/north{
@@ -39766,7 +39766,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "qOF" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 2;
@@ -39897,7 +39897,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/baroffice)
 "qQQ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload)
 "qRu" = (
@@ -40014,7 +40014,7 @@
 /area/station/maintenance/northwest)
 "qUf" = (
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "qUi" = (
@@ -40155,7 +40155,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/captain)
 "qXm" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -40165,7 +40165,7 @@
 /turf/simulated/floor,
 /area/station/bridge/hos)
 "qXr" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/glow/blue{
 	icon_state = "boxing"
 	},
@@ -40182,7 +40182,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "qXF" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingrope{
 	layer = 3.1
 	},
@@ -40315,7 +40315,7 @@
 /obj/machinery/door/firedoor/pyro{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 4
 	},
@@ -40593,7 +40593,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "riW" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment1)
 "riY" = (
@@ -40848,7 +40848,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "roE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "roI" = (
@@ -40995,7 +40995,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rsE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -41146,7 +41146,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "rvB" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 2;
@@ -41963,7 +41963,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "rKT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "rKZ" = (
@@ -42037,7 +42037,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_south)
 "rMA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/interrogation)
 "rME" = (
@@ -42773,7 +42773,7 @@
 	name = "Security Lobby"
 	})
 "sbZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market{
 	name = "Seating Area"
@@ -43232,7 +43232,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "sjZ" = (
@@ -43248,7 +43248,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "skC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 5
 	},
@@ -43748,7 +43748,7 @@
 /turf/simulated/floor/airless/caution,
 /area/station/engine/eva)
 "svC" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 2;
@@ -43874,7 +43874,7 @@
 	name = "The Cage Arena"
 	})
 "szk" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/central{
@@ -43894,7 +43894,7 @@
 /turf/simulated/floor/green,
 /area/station/hallway/primary/central)
 "szC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -43950,7 +43950,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/storage)
 "sBd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "sBj" = (
@@ -44537,7 +44537,7 @@
 	},
 /area/station/engine/inner)
 "sPi" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery/storage)
 "sPL" = (
@@ -44547,7 +44547,7 @@
 /turf/simulated/floor/plating/airless/random,
 /area/station/hallway/secondary/construction)
 "sPP" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/security/secwing{
 	name = "Security Lobby"
@@ -44844,7 +44844,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
 "sWS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -44890,7 +44890,7 @@
 	},
 /area/station/hallway/primary/central)
 "sXu" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -44979,7 +44979,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "sYp" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "sYT" = (
@@ -45202,7 +45202,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "tdi" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/stockex)
 "tdm" = (
@@ -45289,7 +45289,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "teG" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -45681,7 +45681,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "tmU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -45959,7 +45959,7 @@
 /turf/simulated/floor/red,
 /area/station/hallway/primary/central)
 "tub" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /obj/cable{
 	d1 = 1;
@@ -46267,7 +46267,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery/storage)
 "tBK" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
 "tBM" = (
@@ -46364,11 +46364,11 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "tDw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/engine/eva)
 "tDC" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	layer = 2.9;
 	pixel_y = 13
@@ -46684,7 +46684,7 @@
 /turf/simulated/floor/white,
 /area/station/security/secoffquarters)
 "tJj" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -47065,20 +47065,20 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/quartermaster/refinery)
 "tRO" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/science/research_director)
 "tRP" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
 	})
 "tRQ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -47120,7 +47120,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "tTn" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 10;
 	id = "boomroom";
@@ -47130,7 +47130,7 @@
 /area/station/science/testchamber)
 "tTp" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "tTs" = (
@@ -47169,7 +47169,7 @@
 	name = "Research Computer Lab"
 	})
 "tVl" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
@@ -47402,7 +47402,7 @@
 /turf/simulated/floor/caution/west,
 /area/station/science/teleporter)
 "ude" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 4
 	},
@@ -47468,7 +47468,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery/storage)
 "udT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating/random,
 /area/station/engine/monitoring)
@@ -47588,7 +47588,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "uhP" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -48100,7 +48100,7 @@
 	},
 /area/station/hangar/sec)
 "utm" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/teleporter)
 "utn" = (
@@ -48155,7 +48155,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "uuv" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -48210,7 +48210,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/the_cage)
 "uvG" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
@@ -48255,7 +48255,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "uwa" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade)
 "uwi" = (
@@ -48271,7 +48271,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/decal/boxingropeenter{
 	layer = 3.1
 	},
@@ -48585,7 +48585,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/teleporter)
 "uDO" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "uDR" = (
@@ -48907,7 +48907,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/north)
 "uJO" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -48975,7 +48975,7 @@
 	name = "Laundry Room"
 	})
 "uLD" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -49098,7 +49098,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "uNZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -49398,7 +49398,7 @@
 /turf/simulated/floor,
 /area/station/science/bot_storage)
 "uSZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "uTd" = (
@@ -49623,7 +49623,7 @@
 /turf/simulated/floor,
 /area/station/bridge/hos)
 "uYl" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/data)
 "uYo" = (
@@ -49817,7 +49817,7 @@
 	name = "Ringside Hallway"
 	})
 "vbS" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/boxingropeenter{
 	dir = 9
 	},
@@ -50000,7 +50000,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "vfW" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/storage/eva)
@@ -50032,7 +50032,7 @@
 /turf/simulated/floor/red,
 /area/station/security/processing)
 "vhd" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -50559,7 +50559,7 @@
 	},
 /area/station/hallway/primary/south)
 "vqE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 8
 	},
@@ -51344,7 +51344,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/power)
 "vIq" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51441,7 +51441,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "vKx" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/janitor/office)
 "vKV" = (
@@ -51449,7 +51449,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "vLy" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
@@ -51729,7 +51729,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/atmos/hookups/central)
 "vPU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/lounge)
@@ -52126,7 +52126,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/arcade)
 "vXW" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/science/gen_storage{
 	name = "Research Computer Lab"
@@ -52254,7 +52254,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
 "waw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/garden{
 	name = "Space Garden"
@@ -52298,7 +52298,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "wcb" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz)
 "wce" = (
@@ -52738,7 +52738,7 @@
 	name = "Ringside Hallway"
 	})
 "wlo" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
@@ -52869,7 +52869,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/west)
 "woD" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "woN" = (
@@ -53532,7 +53532,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "wER" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
 	dir = 4
 	},
@@ -53581,7 +53581,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "wFL" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/lobby)
 "wFU" = (
@@ -53671,7 +53671,7 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/mining/staff_room)
 "wHA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
 "wHC" = (
@@ -54050,7 +54050,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "wPj" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay/cloner)
 "wPo" = (
@@ -54453,7 +54453,7 @@
 /turf/simulated/floor/circuit/white,
 /area/station/turret_protected/ai)
 "wYf" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "wYg" = (
@@ -54481,7 +54481,7 @@
 /turf/simulated/floor/carpet/green/fancy/edge/se,
 /area/station/engine/engineering/breakroom)
 "wYE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
 "wYW" = (
@@ -54491,7 +54491,7 @@
 	},
 /area/station/bridge)
 "wYZ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	id = "boomroom";
 	name = "Test Chamber Shutters"
@@ -54702,7 +54702,7 @@
 /turf/simulated/floor,
 /area/station/bridge/hos)
 "xdZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "xea" = (
@@ -55513,7 +55513,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/captain)
 "xuy" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_electrical,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
@@ -55561,7 +55561,7 @@
 	},
 /area/station/engine/inner)
 "xvo" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "xvD" = (
@@ -55859,7 +55859,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/escape)
 "xAv" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
 "xAC" = (
@@ -56203,11 +56203,11 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
 "xHr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/research_outpost/protest)
 "xHv" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/storage)
 "xIb" = (
@@ -56380,7 +56380,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/crew_quarters/arcade)
 "xNf" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -56485,7 +56485,7 @@
 	name = "Ticket Office"
 	})
 "xQd" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle{
 	dir = 6
 	},
@@ -56985,7 +56985,7 @@
 /turf/simulated/floor/caution,
 /area/station/engine/engineering)
 "yav" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/medical/medbay)
 "yaT" = (

@@ -3051,7 +3051,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "dIA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/swampzone/interiors/outbuildings)
 "dIX" = (
@@ -4978,7 +4978,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater)
 "fMn" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/bluewhite{
 	dir = 5
 	},
@@ -5336,7 +5336,7 @@
 	},
 /area/crypt/mausoleum)
 "gjD" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/bluewhite{
 	dir = 1
 	},
@@ -12283,7 +12283,7 @@
 	},
 /area/crypt/graveyard)
 "oxV" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "oxW" = (
@@ -12570,7 +12570,7 @@
 /turf/unsimulated/floor/black,
 /area/syndicate_station)
 "oTd" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -14436,7 +14436,7 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "rhP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/wood/eight{
 	dir = 8
 	},
@@ -16873,7 +16873,7 @@
 	},
 /area/swampzone/deeps)
 "ues" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/wall/cave{
 	name = "rock"
 	},
@@ -18930,7 +18930,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/swampzone/interiors/bonktek/funktek)
 "wtf" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -19089,7 +19089,7 @@
 	},
 /area/crater/cave/lower)
 "wzM" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/bluewhite{
 	dir = 8
 	},
@@ -20073,7 +20073,7 @@
 /turf/unsimulated/floor/white,
 /area/swampzone/interiors/outbuildings)
 "xSs" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/unsimulated/floor/bluewhite{
 	dir = 4
 	},

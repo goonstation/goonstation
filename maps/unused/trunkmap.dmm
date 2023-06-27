@@ -14916,7 +14916,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aWJ" = (
-/obj/wingrille_spawn/reinforced,
+/obj/mapping_helper/wingrille_spawn/reinforced,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aWK" = (
@@ -15662,7 +15662,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aZF" = (
-/obj/wingrille_spawn/reinforced,
+/obj/mapping_helper/wingrille_spawn/reinforced,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},

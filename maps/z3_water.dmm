@@ -60,7 +60,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bk" = (
@@ -1649,7 +1649,7 @@
 /turf/space/fluid/noexplosion,
 /area/wrecknsspolaris/outside/back)
 "fb" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fc" = (
@@ -2159,7 +2159,7 @@
 /turf/unsimulated/wall/trench/side,
 /area/dank_trench)
 "gz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/dank_trench)
 "gA" = (

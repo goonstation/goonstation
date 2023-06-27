@@ -706,7 +706,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/tenebrae)
 "bE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -715,7 +715,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/tenebrae)
 "bF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/tenebrae)
 "bG" = (
@@ -886,7 +886,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/chemistry)
 "bW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "bX" = (
@@ -1211,11 +1211,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/tenebrae)
 "cM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/tenebrae)
 "cN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/research_director{
 	name = "Tenebrae Command Center"
@@ -1237,7 +1237,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "cR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
 	id = "scienceteleporter";
@@ -1300,7 +1300,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/science/tenebrae)
 "cZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/artifact)
 "da" = (
@@ -1856,7 +1856,7 @@
 	name = "Tenebrae Command Center"
 	})
 "ec" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
@@ -2130,7 +2130,7 @@
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/maru)
 "eG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/science/tenebrae)
@@ -2222,7 +2222,7 @@
 	},
 /area/station/science/tenebrae)
 "eR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "eS" = (
@@ -2847,7 +2847,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "gk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/science/construction{
 	name = "Tenebrae Maintenance"
@@ -3159,7 +3159,7 @@
 /turf/space,
 /area/space)
 "gR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3192,7 +3192,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/mining/staff_room)
 "gV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/maru)
 "gW" = (
@@ -3432,14 +3432,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/elect)
 "hz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "hA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "hB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "hD" = (
@@ -3463,7 +3463,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "hH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
 "hI" = (
@@ -3565,7 +3565,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "hR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering/ce{
 	name = "Maru Bridge"
@@ -3727,7 +3727,7 @@
 	name = "Hammer Crew Quarters"
 	})
 "ik" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -3745,7 +3745,7 @@
 	name = "Hammer Crew Quarters"
 	})
 "il" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -4208,7 +4208,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/secwing)
 "jn" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -4270,7 +4270,7 @@
 /turf/space,
 /area/space)
 "ju" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -4995,7 +4995,7 @@
 	name = "Maru Primary Zone"
 	})
 "kQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "kS" = (
@@ -5015,7 +5015,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
 "kU" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -5079,7 +5079,7 @@
 	name = "Maru Equipment"
 	})
 "la" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/storage{
 	name = "Maru Equipment"
@@ -5269,7 +5269,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "lq" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 9;
@@ -5288,7 +5288,7 @@
 	name = "Hammer Command"
 	})
 "ls" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -5489,7 +5489,7 @@
 	name = "Maru Primary Zone"
 	})
 "lP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/engineering{
 	name = "Maru Primary Zone"
@@ -5535,7 +5535,7 @@
 /turf/space,
 /area/space)
 "lW" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 6;
@@ -5888,7 +5888,7 @@
 	name = "Hammer Defense Zone"
 	})
 "mH" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -6156,7 +6156,7 @@
 	name = "Hammer Defense Zone"
 	})
 "ni" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -6279,7 +6279,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "nu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -6362,7 +6362,7 @@
 	name = "Maru Power Room"
 	})
 "nD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
 	name = "Maru Power Room"
@@ -6555,7 +6555,7 @@
 	name = "Maru Primary Zone"
 	})
 "nW" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
@@ -6567,19 +6567,19 @@
 	name = "Hammer Primary Concourse"
 	})
 "nZ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "oa" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "ob" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
@@ -6724,7 +6724,7 @@
 /turf/space,
 /area/space)
 "op" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 10;
@@ -6738,7 +6738,7 @@
 	name = "Hammer Command"
 	})
 "oq" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 5;
@@ -6999,7 +6999,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/garden/owlery)
 "oN" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 5;
@@ -7239,7 +7239,7 @@
 	},
 /area/station/garden/owlery)
 "pk" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 10;
@@ -7253,7 +7253,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "pl" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -7295,7 +7295,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "pq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/security/main{
 	name = "Hammer Primary Concourse"
@@ -7627,7 +7627,7 @@
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/hammer)
 "qf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/hammer)
 "qg" = (
@@ -7774,7 +7774,7 @@
 /turf/space,
 /area/space)
 "qw" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -7951,7 +7951,7 @@
 	name = "Asclepius Quarters"
 	})
 "qN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -7962,7 +7962,7 @@
 	name = "Asclepius Quarters"
 	})
 "qO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/staff{
 	name = "Asclepius Quarters"
@@ -8106,7 +8106,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "ra" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "rb" = (
@@ -8362,7 +8362,7 @@
 	name = "Dionysus Cryocore"
 	})
 "rC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -8373,7 +8373,7 @@
 	name = "Dionysus Cryocore"
 	})
 "rD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
@@ -8632,7 +8632,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "sf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -8652,7 +8652,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "si" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -8726,7 +8726,7 @@
 	name = "Dionysus Cryocore"
 	})
 "sp" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/head{
 	name = "Asclepius Command"
@@ -9469,7 +9469,7 @@
 /turf/space,
 /area/space)
 "tP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -9647,7 +9647,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "uf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/bridge/hos)
 "ug" = (
@@ -9934,7 +9934,7 @@
 	name = "Genetic Research"
 	})
 "uH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/research{
 	name = "Genetic Research"
@@ -10167,7 +10167,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "vc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/left{
 	dir = 8
 	},
@@ -10603,7 +10603,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "vU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 8
 	},
@@ -10875,7 +10875,7 @@
 	name = "Asclepius Primary Zone"
 	})
 "wu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -11020,14 +11020,14 @@
 	name = "Dionysus Primary Zone"
 	})
 "wH" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 9
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "wI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/middle{
 	dir = 10
 	},
@@ -11309,7 +11309,7 @@
 	name = "Dionysus Primary Zone"
 	})
 "xk" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/window_blinds/cog2/right,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
@@ -11991,7 +11991,7 @@
 	name = "Asclepius Equipment Room"
 	})
 "yA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/maintenance{
 	name = "Asclepius Equipment Room"
@@ -12531,7 +12531,7 @@
 	name = "Dionysus Maintenance"
 	})
 "zA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast{
 	name = "Dionysus Maintenance"
@@ -12957,7 +12957,7 @@
 	name = "Meridian Primary Zone"
 	})
 "As" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -12969,13 +12969,13 @@
 	name = "Meridian Primary Zone"
 	})
 "At" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain{
 	name = "Meridian Primary Zone"
 	})
 "Au" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain{
@@ -13183,7 +13183,7 @@
 	name = "Meridian Primary Zone"
 	})
 "AP" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "AQ" = (
@@ -13484,7 +13484,7 @@
 	name = "Demeter Solar Array"
 	})
 "Bx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/bridge/captain{
 	name = "Meridian Command"
@@ -13532,7 +13532,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "BC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "BD" = (
@@ -13604,7 +13604,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "BM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 9;
@@ -13618,7 +13618,7 @@
 	name = "Meridian Command"
 	})
 "BN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -13665,7 +13665,7 @@
 	name = "Meridian Command"
 	})
 "BS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -13768,7 +13768,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "Cc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -13837,7 +13837,7 @@
 /turf/simulated/floor/caution/south,
 /area/research_outpost/indigo_rye)
 "Cj" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
 	id = "test_chamber2";
 	name = "Test Chamber Shield"
@@ -13850,7 +13850,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Cl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 6;
@@ -13870,7 +13870,7 @@
 	name = "Meridian Command"
 	})
 "Cn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/junction/left/north,
 /obj/cable{
 	d2 = 4;
@@ -13947,7 +13947,7 @@
 /turf/simulated/floor/grey,
 /area/station/turret_protected/ai)
 "Cu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/switch_junction/biofilter/left,
 /obj/cable{
 	d2 = 8;
@@ -14134,7 +14134,7 @@
 	name = "Demeter Primary Zone"
 	})
 "CK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 4;
@@ -14311,7 +14311,7 @@
 	name = "Meridian Primary Zone"
 	})
 "Dd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2"
@@ -14388,7 +14388,7 @@
 /turf/space,
 /area/space)
 "Dl" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -14628,7 +14628,7 @@
 	name = "Demeter Primary Zone"
 	})
 "DI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -14853,7 +14853,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Ef" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 10;
@@ -14867,7 +14867,7 @@
 	name = "Meridian Command"
 	})
 "Eg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	dir = 5;
@@ -15959,7 +15959,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "Gi" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west{
 	name = "Meridian Maintenance"
@@ -16792,7 +16792,7 @@
 	name = "Demeter Operations Room"
 	})
 "HS" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south{
 	name = "Demeter Operations Room"
@@ -18503,7 +18503,7 @@
 /turf/simulated/floor/sanitary,
 /area/research_outpost/indigo_rye)
 "LL" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/research_outpost/indigo_rye)
 "LM" = (
@@ -18809,7 +18809,7 @@
 	name = "Erebus Solar Array"
 	})
 "Mt" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -18820,7 +18820,7 @@
 	name = "Erebus Power Room"
 	})
 "Mu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/power{
 	name = "Erebus Power Room"
@@ -19347,7 +19347,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "No" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 9
@@ -19653,7 +19653,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "NQ" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -19683,7 +19683,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "NU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
@@ -22395,7 +22395,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "Sf" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 6
@@ -22459,7 +22459,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "Sq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	icon_state = "4-9"
 	},
@@ -22560,7 +22560,7 @@
 	name = "Demeter Primary Zone"
 	})
 "SF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 4
@@ -22575,7 +22575,7 @@
 	name = "Erebus Primary Zone"
 	})
 "SI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -22624,7 +22624,7 @@
 /turf/space,
 /area/space)
 "SN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 4
@@ -22861,7 +22861,7 @@
 	name = "Erebus Primary Zone"
 	})
 "Tn" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -22945,7 +22945,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "Tx" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	level = 2
@@ -23133,7 +23133,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Uc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -23319,7 +23319,7 @@
 	name = "Erebus Primary Zone"
 	})
 "UC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
@@ -23380,7 +23380,7 @@
 	name = "Erebus Maintenance Room"
 	})
 "UN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/engine/core{
 	name = "Erebus Plasmitics Zone"
@@ -24212,7 +24212,7 @@
 	name = "Erebus Primary Zone"
 	})
 "WN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
 	dir = 5
@@ -24598,7 +24598,7 @@
 	name = "Erebus Plasmitics Zone"
 	})
 "XL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
@@ -24644,7 +24644,7 @@
 	name = "Hammer Primary Concourse"
 	})
 "XT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -24830,7 +24830,7 @@
 	name = "Erebus Primary Zone"
 	})
 "Yr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/atmospherics/binary/pump{
 	dir = 8;
 	frequency = 1225;
