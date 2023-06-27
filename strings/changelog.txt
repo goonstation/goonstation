@@ -1,4 +1,6 @@
 (t)tue jun 27 23
+(u)aloe
+(*)During ion storms, silicons will now experience sensor malfunctions (drugs).
 (u)pali
 (+)The Finnish, Scots and French accents no longer add words to the end of sentences. And Swedish bork chance has been decreased.
 (t)mon jun 26 23
