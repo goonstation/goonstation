@@ -1105,7 +1105,7 @@
 	},
 /area/station/crew_quarters/hor)
 "aeI" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 5
 	},
@@ -1797,7 +1797,7 @@
 	},
 /area/station/science/lab)
 "ahB" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -3104,7 +3104,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "ank" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-R"
@@ -3116,7 +3116,7 @@
 	},
 /area/shuttle/arrival/station)
 "anl" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-M"
@@ -3128,7 +3128,7 @@
 	},
 /area/shuttle/arrival/station)
 "anm" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/shuttle/engine/heater{
 	dir = 1;
 	icon_state = "alt_heater-L"
@@ -3435,7 +3435,7 @@
 /turf/space,
 /area/supply/sell_point)
 "aoW" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -15648,7 +15648,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
@@ -17575,7 +17575,7 @@
 	},
 /area/station/security/processing)
 "boZ" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
@@ -18199,7 +18199,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "bsn" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bso" = (
@@ -21187,7 +21187,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bFo" = (
@@ -23109,7 +23109,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/pool)
 "cgI" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-8"
 	},
@@ -23802,7 +23802,7 @@
 	detector_id = "AI Core";
 	dir = 4
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "cMp" = (
@@ -24518,7 +24518,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "dpc" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "dpn" = (
@@ -24586,7 +24586,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "drq" = (
@@ -26018,7 +26018,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "epT" = (
@@ -26743,7 +26743,7 @@
 	},
 /area/station/medical/medbay/cloner)
 "eQk" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
@@ -29330,7 +29330,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "gTi" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -29419,7 +29419,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
@@ -31969,7 +31969,7 @@
 	},
 /area/station/hydroponics/bay)
 "iZW" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -34312,7 +34312,7 @@
 	detector_id = "AI Core";
 	dir = 8
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "kMZ" = (
@@ -36204,7 +36204,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -38466,7 +38466,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
 "nLy" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/disposalpipe/segment/transport,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
@@ -38824,7 +38824,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -39377,7 +39377,7 @@
 	area_access = 99;
 	detector_id = "AI Core"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "orH" = (
@@ -41716,7 +41716,7 @@
 /area/station/science/lobby)
 "qcT" = (
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "qcX" = (
@@ -41784,7 +41784,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "qfA" = (
@@ -42134,7 +42134,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "qss" = (
@@ -44824,7 +44824,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "snf" = (
@@ -45015,7 +45015,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "sro" = (
@@ -45529,11 +45529,11 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "sJD" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "sJN" = (
@@ -45579,7 +45579,7 @@
 /area/station/hydroponics/bay)
 "sKT" = (
 /obj/cable,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
@@ -46140,7 +46140,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "tbY" = (
@@ -48722,7 +48722,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "vgP" = (
@@ -48794,7 +48794,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/networked/secdetector{
 	area_access = 99;
 	density = 0;
@@ -48933,7 +48933,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "vmW" = (
@@ -49332,7 +49332,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "vDj" = (
@@ -52182,7 +52182,7 @@
 	detector_id = "AI Core";
 	dir = 1
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/ai_upload)
 "xOm" = (

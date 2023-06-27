@@ -1074,7 +1074,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "es" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/storage)
 "et" = (
@@ -1837,7 +1837,7 @@
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "gP" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/porthall)
 "gQ" = (
@@ -3569,7 +3569,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/primary)
 "nC" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/mining)
 "nE" = (
@@ -4067,7 +4067,7 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
 "pp" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/mining)
 "pr" = (
@@ -4329,7 +4329,7 @@
 /area/pod_wars/spacejunk/restaurant/solars)
 "qa" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/cloning)
 "qb" = (
@@ -6536,7 +6536,7 @@
 /turf/simulated/floor/purple/side,
 /area/pod_wars/spacejunk/fstation)
 "yb" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bar)
 "yf" = (
@@ -6585,7 +6585,7 @@
 /obj/forcefield/energyshield/perma/pod_wars/nanotrasen{
 	dir = 4
 	},
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/medbay)
 "yn" = (
@@ -7490,7 +7490,7 @@
 	},
 /area/pod_wars/spacejunk/fstation/mess)
 "BL" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bar)
 "BM" = (
@@ -8081,7 +8081,7 @@
 	},
 /area/pod_wars/team1/manufacturing)
 "Ef" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/starboardhall)
 "Eg" = (
@@ -9634,7 +9634,7 @@
 /area/space)
 "JZ" = (
 /obj/forcefield/energyshield/perma/pod_wars/syndicate,
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/medbay)
 "Ka" = (
@@ -9663,7 +9663,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "Kg" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/bridge)
 "Ki" = (
@@ -10196,7 +10196,7 @@
 	},
 /area/pod_wars/spacejunk/restaurant)
 "Mr" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/bridge)
 "Ms" = (
@@ -12785,7 +12785,7 @@
 	},
 /area/pod_wars/team2/mining)
 "Wr" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team1/powergen)
 "Ws" = (
@@ -12996,7 +12996,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Xn" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/unsimulated/floor/plating,
 /area/pod_wars/team2/power)
 "Xp" = (

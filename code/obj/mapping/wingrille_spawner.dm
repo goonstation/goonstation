@@ -101,6 +101,8 @@
 
 // NEW SPAWNERS - auto perspective windows
 
+// Normal windows
+
 // Glass window
 /obj/mapping_helper/wingrille_spawn/auto
 	name = "autowindow grille spawner"
@@ -114,17 +116,6 @@
 	icon_state = "wingrille_f"
 #endif
 
-// Reinforced Glass window
-/obj/mapping_helper/wingrille_spawn/auto/reinforced
-	name = "reinforced autowindow grille spawner"
-	win_path = "/obj/window/auto/reinforced"
-#ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "r-wingrille_new"
-	color = "#72c8fd"
-#else
-	icon_state = "r-wingrille_f"
-#endif
-
 // Plasmaglass window
 /obj/mapping_helper/wingrille_spawn/auto/crystal
 	name = "crystal autowindow grille spawner"
@@ -134,17 +125,6 @@
 	color = "#A114FF"
 #else
 	icon_state = "wingrille_f"
-#endif
-
-// Reinforced Plasmaglass window
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced
-	name = "reinforced crystal autowindow grille spawner"
-	win_path = "/obj/window/auto/crystal/reinforced"
-#ifdef PERSPECTIVE_EDITOR_WALL
-	icon_state = "r-wingrille_new"
-	color = "#8713d4"
-#else
-	icon_state = "r-wingrille_f"
 #endif
 
 // Uqill glass, bohrum reinforced window
@@ -159,6 +139,34 @@
 	icon_state = "r-wingrille_f"
 #endif
 
+// Reinforced windows
+
+// Reinforced Glass window
+/obj/mapping_helper/wingrille_spawn/auto/reinforced
+	name = "reinforced autowindow grille spawner"
+	win_path = "/obj/window/auto/reinforced"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "r-wingrille_new"
+	color = "#72c8fd"
+#else
+	icon_state = "r-wingrille_f"
+#endif
+
+// Reinforced Plasmaglass window
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal
+	name = "reinforced crystal autowindow grille spawner"
+	win_path = "/obj/window/auto/crystal/reinforced"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	color = "#8713d4"
+#endif
+
+//Tuff windows with increased explosion resistance
+
+// Tough glass window
+/obj/mapping_helper/wingrille_spawn/auto/tuff
+	name = "tuff stuff reinforced autowindow grille spawner"
+	win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
+
 /obj/mapping_helper/wingrille_spawn/auto/hardened/tuff
 	name = "tuff hardened autowindow grille spawner"
 	win_path = "/obj/window/auto/hardened/the_tuff_stuff"
@@ -168,8 +176,3 @@
 #else
 	icon_state = "br-wingrille"
 #endif
-
-// Tough glass window
-/obj/mapping_helper/wingrille_spawn/auto/tuff
-	name = "tuff stuff reinforced autowindow grille spawner"
-	win_path = "/obj/window/auto/reinforced/the_tuff_stuff"

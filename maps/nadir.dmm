@@ -2648,7 +2648,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "bld" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
@@ -12454,7 +12454,7 @@
 	},
 /area/station/crew_quarters/pool)
 "fDm" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
@@ -15299,7 +15299,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "gLY" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
@@ -16470,7 +16470,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "hiW" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -25912,7 +25912,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/equipment)
 "laQ" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
@@ -26986,7 +26986,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
 "lxn" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "lxv" = (
