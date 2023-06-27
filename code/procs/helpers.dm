@@ -2560,7 +2560,12 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "***NULL***"
 	if (!istype(thing))
 		return thing
-	return "\"[thing]\" ([thing.type])"
+
+	var/msg = "\"[thing]\" ([thing.type])"
+	if (ismob(thing))
+		var/mob/mobthing = thing
+		msg += " {Key: [key_name(mobthing)]}" // IM RUNNING OUT OF BRACKET TYPES
+	return msg
 
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)
