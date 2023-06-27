@@ -296,14 +296,14 @@
 	name = "Security";
 	req_access_txt = "1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "bd" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "be" = (
@@ -358,11 +358,11 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bp" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bq" = (
@@ -371,7 +371,7 @@
 	name = "bail payment device"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "br" = (
@@ -379,7 +379,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bs" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/red,
 /area/prefab/sea_prison)
 "bt" = (
@@ -405,7 +405,7 @@
 	name = "Security";
 	req_access_txt = "1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor,
 /area/prefab/sea_prison)
 "bx" = (

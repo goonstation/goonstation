@@ -9,7 +9,7 @@
 	var/full_win = 0 // adds a full window as well
 	var/no_dirs = 0 //ignore directional
 
-	proc/setup()
+	setup()
 		if (!locate(text2path(src.grille_path)) in get_turf(src))
 			var/obj/grille/new_grille = text2path(src.grille_path)
 			new new_grille(src.loc)
@@ -17,7 +17,7 @@
 		if (!no_dirs)
 			for (var/dir in cardinal)
 				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
+				if ((!locate(/obj/mapping_helper/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
 					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
 					if(new_win)
 						new new_win(src.loc)
@@ -31,96 +31,120 @@
 				var/obj/window/new_win = text2path(src.win_path)
 				new new_win(src.loc)
 
-	full
-		icon_state = "wingrille_f"
-		full_win = 1
+// OLD SPAWNERS - flat windows
 
-	reinforced
-		name = "reinforced window grille spawner"
-		icon_state = "r-wingrille"
-		win_path = "/obj/window/reinforced"
+// Glass window
+/obj/mapping_helper/wingrille_spawn/full
+	icon_state = "wingrille_f"
+	full_win = TRUE
 
-		full
-			icon_state = "r-wingrille_f"
-			full_win = 1
+// Reinforced Glass window
+/obj/mapping_helper/wingrille_spawn/reinforced
+	name = "reinforced window grille spawner"
+	icon_state = "r-wingrille"
+	win_path = "/obj/window/reinforced"
 
-	crystal
-		name = "crystal window grille spawner"
-		icon_state = "p-wingrille"
-		win_path = "/obj/window/crystal"
+/obj/mapping_helper/wingrille_spawn/reinforced/full
+	icon_state = "r-wingrille_f"
+	full_win = TRUE
 
-		full
-			icon_state = "p-wingrille_f"
-			full_win = 1
+// Plasmaglass window
+/obj/mapping_helper/wingrille_spawn/crystal
+	name = "crystal window grille spawner"
+	icon_state = "p-wingrille"
+	win_path = "/obj/window/crystal"
 
-	reinforced_crystal
-		name = "reinforced crystal window grille spawner"
-		icon_state = "pr-wingrille"
-		win_path = "/obj/window/crystal/reinforced"
+/obj/mapping_helper/wingrille_spawn/crystal/full
+	icon_state = "p-wingrille_f"
+	full_win = TRUE
 
-		full
-			icon_state = "pr-wingrille_f"
-			full_win = 1
+// Reinforced Plasmaglass window
+/obj/mapping_helper/wingrille_spawn/reinforced_crystal
+	name = "reinforced crystal window grille spawner"
+	icon_state = "pr-wingrille"
+	win_path = "/obj/window/crystal/reinforced"
 
-	bulletproof
-		name = "bulletproof window grille spawner"
+/obj/mapping_helper/wingrille_spawn/reinforced_crystal/full
+	icon_state = "pr-wingrille_f"
+	full_win = TRUE
+
+// Ultra tough Uqillglass window
+/obj/mapping_helper/wingrille_spawn/bulletproof
+	name = "bulletproof window grille spawner"
+	icon_state = "br-wingrille"
+	win_path = "/obj/window/bulletproof"
+
+/obj/mapping_helper/wingrille_spawn/bulletproof/full
+	name = "bulletproof window grille spawner"
+	icon_state = "br-wingrille"
+	icon_state = "b-wingrille_f"
+	full_win = TRUE
+
+// Uqill glass, bohrum reinforced window
+/obj/mapping_helper/wingrille_spawn/hardened
+	name = "hardened window grille spawner"
+	icon_state = "br-wingrille"
+	win_path = "/obj/window/hardened"
+
+/obj/mapping_helper/wingrille_spawn/hardened/full
+	name = "hardened window grille spawner"
 		icon_state = "br-wingrille"
-		win_path = "/obj/window/bulletproof"
+		icon_state = "b-wingrille_f"
+		full_win = TRUE
 
-		full
-			name = "bulletproof window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
+// Flock window used by the flock trader
+/obj/mapping_helper/wingrille_spawn/flock
+	icon = 'icons/misc/featherzone.dmi'
+	icon_state = "wingrille"
+	win_path = "/obj/window/feather"
+	grille_path = "/obj/grille/flock"
+	full_win = TRUE
+	no_dirs = TRUE
 
-	hardened
-		name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/hardened"
+// NEW SPAWNERS - auto perspective windows
 
-		full
-			name = "hardened window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
+// Glass window
+/obj/mapping_helper/wingrille_spawn/auto
+	name = "autowindow grille spawner"
+	win_path = "/obj/window/auto"
+	full_win = TRUE
+	no_dirs = TRUE
+	icon_state = "wingrille_f"
 
-	auto
-		name = "autowindow grille spawner"
-		win_path = "/obj/window/auto"
-		full_win = 1
-		no_dirs = 1
-		icon_state = "wingrille_f"
-
-		reinforced
-			name = "reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced"
+// Reinforced Glass window
+/obj/mapping_helper/wingrille_spawn/auto/reinforced
+	name = "reinforced autowindow grille spawner"
+		win_path = "/obj/window/auto/reinforced"
 #ifdef PERSPECTIVE_EDITOR_WALL
-			icon_state = "r-wingrille_new"
-			color = "#72c8fd"
+		icon_state = "r-wingrille_new"
+		color = "#72c8fd"
 #else
-			icon_state = "r-wingrille_f"
+		icon_state = "r-wingrille_f"
 #endif
 
-		crystal
-			name = "crystal autowindow grille spawner"
-			win_path = "/obj/window/auto/crystal"
+// Plasmaglass window
+/obj/mapping_helper/wingrille_spawn/auto/crystal
+	name = "crystal autowindow grille spawner"
+	win_path = "/obj/window/auto/crystal"
 #ifdef PERSPECTIVE_EDITOR_WALL
-			icon_state = "wingrille_new"
-			color = "#A114FF"
+	icon_state = "wingrille_new"
+	color = "#A114FF"
 #else
-			icon_state = "wingrille_f"
+	icon_state = "wingrille_f"
 #endif
 
-			reinforced
-				name = "reinforced crystal autowindow grille spawner"
-				win_path = "/obj/window/auto/crystal/reinforced"
+// Reinforced Plasmaglass window
+/obj/mapping_helper/wingrille_spawn/auto/reinforced
+	name = "reinforced crystal autowindow grille spawner"
+	win_path = "/obj/window/auto/crystal/reinforced"
 #ifdef PERSPECTIVE_EDITOR_WALL
-				icon_state = "r-wingrille_new"
-				color = "#8713d4"
+	icon_state = "r-wingrille_new"
+	color = "#8713d4"
 #else
-				icon_state = "r-wingrille_f"
+	icon_state = "r-wingrille_f"
 #endif
 
-		tuff
-			name = "tuff stuff reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
+// Tough glass window
+/obj/mapping_helper/wingrille_spawn/auto/tuff
+	name = "tuff stuff reinforced autowindow grille spawner"
+	win_path = "/obj/window/auto/reinforced/the_tuff_stuff"

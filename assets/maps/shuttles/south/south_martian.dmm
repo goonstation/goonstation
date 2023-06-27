@@ -477,7 +477,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "xT" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/unsimulated/floor{
 	icon = 'icons/turf/martian.dmi';
 	icon_state = "floor1"
