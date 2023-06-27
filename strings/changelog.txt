@@ -1,5 +1,16 @@
 
 (t)mon jun 26 23
+(u)Sord
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)New scrap weapon crafting system. See minor changelog for details
+(+)Create a scrap handle from some steel sheets and Alt + Double click it to see the next steps and other items you'll need
+(u)Gannets & Sian
+(p)14729
+(e)🎨|C-Sprites
+(+)Adds 5 more fish. Sprited by Sian.
+(u)tarmunora
+(*)A certain machine in the void now only works on humans and small animals.
+(*)Several "tougher" mobs that were converted to mob critters recently are now immune to stamina stuns once again.
 (u)Amylizzle
 (p)14596
 (e)🗺⚖🧫💨📦|A-Mapping, C-Balance, C-Experimental, A-Atmospherics, A-Game-Objects
