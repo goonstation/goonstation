@@ -2539,7 +2539,7 @@
 /area/station/hallway/primary/west)
 "ahm" = (
 /turf/simulated/floor/yellow/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "ahq" = (
 /obj/cable{
 	d1 = 1;
@@ -4379,7 +4379,6 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "ano" = (
-/obj/machinery/computer/prison_shuttle,
 /obj/cable{
 	d2 = 4;
 	icon_state = "0-4"
@@ -9152,8 +9151,7 @@
 /area/station/medical/medbay)
 "aCS" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+	dir = 8
 	},
 /obj/machinery/light{
 	dir = 4
@@ -9674,8 +9672,7 @@
 /area/station/atmos/highcap_storage)
 "aEP" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 8;
-	
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
@@ -12093,7 +12090,6 @@
 "aND" = (
 /obj/table/auto,
 /obj/item/aiModule/teleporterOffline,
-/obj/item/aiModule/prototypeEngineOffline,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aNE" = (
@@ -13760,7 +13756,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/white,
-/area/station/maintenance/northeast)
+/area/station/medical/medbay)
 "aSP" = (
 /obj/machinery/sleep_console{
 	dir = 8
@@ -14038,11 +14034,7 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/crew_quarters/barber_shop)
-"aTU" = (
-/obj/machinery/light,
-/turf/simulated/floor,
-/area/station/crew_quarters/barber_shop)
+/area/station/hallway/primary/north)
 "aTV" = (
 /obj/storage/closet/wardrobe/black,
 /turf/simulated/floor/plating,
@@ -14270,13 +14262,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
-"aUG" = (
-/obj/grille/steel,
-/obj/window/reinforced/east,
-/obj/window/reinforced/west,
-/obj/window/reinforced/north,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aUH" = (
 /obj/machinery/door/airlock/medical{
 	name = "Morgue";
@@ -14833,10 +14818,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
-"aWw" = (
-/obj/machinery/traymachine/morgue,
-/turf/simulated/floor/black,
-/area/station/medical/medbay)
 "aWx" = (
 /obj/landmark/start{
 	name = "mstart"
@@ -15037,12 +15018,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 9
 	},
-/area/station/hallway/primary/north)
-"aXt" = (
-/turf/simulated/floor/blue/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
+/area/station/hallway/primary/west)
 "aXu" = (
 /obj/cable{
 	d1 = 1;
@@ -15052,7 +15028,7 @@
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
-/area/station/hallway/primary/north)
+/area/station/hallway/primary/west)
 "aXv" = (
 /turf/simulated/floor/blue/side{
 	dir = 1
@@ -15332,7 +15308,7 @@
 	req_access_txt = "5"
 	},
 /turf/simulated/floor/white,
-/area/station/maintenance/northeast)
+/area/station/medical/medbay)
 "aYA" = (
 /obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/glass{
@@ -15384,15 +15360,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/morgue)
-"aYG" = (
-/obj/machinery/traymachine/morgue,
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/black,
-/area/station/medical/medbay)
 "aYH" = (
 /obj/cable{
 	d1 = 4;
@@ -15698,7 +15665,7 @@
 	tag = "icon-tube1 (WEST)"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "aZL" = (
 /obj/cable{
 	d1 = 1;
@@ -15960,17 +15927,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay)
-"baN" = (
-/obj/grille/steel,
-/obj/window/reinforced/west,
-/obj/window/reinforced/west{
-	dir = 2;
-	tag = "icon-rwindow"
-	},
-/obj/window/reinforced/east,
-/obj/window/reinforced/north,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "baO" = (
 /obj/machinery/door/airlock/medical{
 	name = "Medbay Scientist Access";
@@ -17241,7 +17197,7 @@
 "beU" = (
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "beV" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -17327,7 +17283,7 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/west)
+/area/station/maintenance/northwest)
 "bfp" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
@@ -17716,7 +17672,7 @@
 /obj/item/wrench/monkey,
 /obj/grille/steel,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/chapel/sanctuary)
 "bgI" = (
 /obj/machinery/door/window/southleft,
 /turf/simulated/floor{
@@ -17833,12 +17789,12 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bgZ" = (
 /turf/simulated/floor/yellow/side{
 	dir = 9
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bha" = (
 /obj/cable{
 	d1 = 1;
@@ -17849,11 +17805,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"bhb" = (
-/turf/simulated/floor/yellow/side{
-	dir = 1
-	},
-/area/station/hallway/primary/north)
 "bhc" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -18164,7 +18115,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bik" = (
 /obj/cable{
 	d1 = 1;
@@ -18185,7 +18136,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bim" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
@@ -18196,7 +18147,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bin" = (
 /obj/cable{
 	d1 = 4;
@@ -18357,19 +18308,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"biL" = (
-/obj/disposalpipe/segment,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
-"biM" = (
-/turf/simulated/floor,
-/area/station/chapel/sanctuary)
-"biN" = (
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/chapel/sanctuary)
 "biO" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -18445,19 +18383,19 @@
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bja" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bjb" = (
 /obj/machinery/door/airlock/glass{
 	name = "Central Access"
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bjc" = (
 /obj/cable{
 	d1 = 1;
@@ -18478,7 +18416,7 @@
 	tag = ""
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bje" = (
 /obj/machinery/light{
 	dir = 4;
@@ -18684,17 +18622,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
-"bjz" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "bjA" = (
 /obj/cable{
 	d1 = 4;
@@ -18706,15 +18633,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/hallway/secondary/exit)
-"bjB" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/chapel/sanctuary)
+/area/station/hallway/primary/east)
 "bjC" = (
 /obj/cable{
 	d1 = 4;
@@ -18841,7 +18760,7 @@
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bjQ" = (
 /obj/cable{
 	d1 = 1;
@@ -18856,12 +18775,12 @@
 	pixel_y = -24
 	},
 /turf/simulated/floor/yellow/side,
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bjS" = (
 /turf/simulated/floor/yellow/side{
 	dir = 6
 	},
-/area/station/hallway/secondary/entry)
+/area/station/hallway/primary/west)
 "bjT" = (
 /obj/machinery/vending/cola/blue,
 /obj/disposalpipe/segment,
@@ -19058,12 +18977,6 @@
 	},
 /turf/simulated/floor/purple/side,
 /area/station/hallway/primary/east)
-"bku" = (
-/turf/simulated/floor/purple/side,
-/area/station/hallway/secondary/exit)
-"bkv" = (
-/turf/simulated/floor/darkpurple/side,
-/area/station/hallway/secondary/exit)
 "bkw" = (
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
@@ -20197,7 +20110,7 @@
 	req_access_txt = "12"
 	},
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/bar)
+/area/station/hallway/primary/north)
 "bnw" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -21323,27 +21236,24 @@
 "bqj" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bqk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/window{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bql" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bqm" = (
 /turf/simulated/floor/industrial,
-/area/station/science/gen_storage)
-"bqn" = (
-/turf/simulated/wall/r_wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bqo" = (
 /obj/table/auto,
 /obj/machinery/nuclearbomb{
@@ -21824,21 +21734,21 @@
 	dir = 4
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "brq" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/window{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "brr" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "brs" = (
 /obj/table/auto,
 /obj/machinery/recharger,
@@ -22208,7 +22118,7 @@
 	tag = "icon-window"
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bsi" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/cable{
@@ -22222,20 +22132,20 @@
 	tag = "icon-window"
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bsj" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bsk" = (
 /obj/machinery/light{
 	dir = 4;
 	tag = "icon-tube1 (EAST)"
 	},
 /turf/simulated/floor/industrial,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bsl" = (
 /obj/cable{
 	d1 = 1;
@@ -22476,7 +22386,7 @@
 	},
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/hallway/primary/central)
+/area/station/hallway/primary/north)
 "bsL" = (
 /obj/grille/steel,
 /obj/window{
@@ -22603,11 +22513,11 @@
 /area/station/science/lobby)
 "btb" = (
 /turf/simulated/wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "btc" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "btd" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/window{
@@ -22618,7 +22528,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bte" = (
 /obj/cable{
 	d1 = 1;
@@ -22628,21 +22538,21 @@
 /obj/item/device/analyzer/atmospheric,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "btf" = (
 /obj/item/cigbutt,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "btg" = (
 /obj/storage/secure/closet/research/uniform,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bth" = (
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -23040,7 +22950,7 @@
 	tag = "icon-window"
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bua" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/window{
@@ -23049,7 +22959,7 @@
 	tag = "icon-window"
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bub" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/window{
@@ -23061,7 +22971,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buc" = (
 /obj/cable{
 	d1 = 1;
@@ -23069,13 +22979,13 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/industrial,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bud" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bue" = (
 /obj/cable{
 	d1 = 1;
@@ -23447,24 +23357,24 @@
 	tag = "icon-tube1 (WEST)"
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buU" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buV" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buW" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buX" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/machinery/light{
@@ -23475,7 +23385,7 @@
 	icon_state = "xtra_bigstripe-corner2"
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buY" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -23483,7 +23393,7 @@
 /obj/window/reinforced/west,
 /obj/window/reinforced/south,
 /turf/simulated/floor/plating,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "buZ" = (
 /obj/cable{
 	d1 = 1;
@@ -23887,11 +23797,11 @@
 "bwf" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwg" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwh" = (
 /obj/window{
 	dir = 4
@@ -23901,7 +23811,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwi" = (
 /obj/cable{
 	d1 = 1;
@@ -23914,7 +23824,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/industrial,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwj" = (
 /obj/cable{
 	d1 = 4;
@@ -23930,7 +23840,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwk" = (
 /obj/cable{
 	d1 = 2;
@@ -23939,7 +23849,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwl" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -23947,7 +23857,7 @@
 	},
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/grime,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bwm" = (
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -24560,7 +24470,7 @@
 	tag = "icon-fire"
 	},
 /turf/simulated/wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxB" = (
 /obj/cable{
 	d1 = 1;
@@ -24573,7 +24483,7 @@
 	req_access_txt = "8"
 	},
 /turf/simulated/floor/industrial,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxI" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -24582,7 +24492,7 @@
 /obj/window/reinforced/south,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxJ" = (
 /obj/cable{
 	d1 = 1;
@@ -24596,7 +24506,7 @@
 	tag = "icon-fire"
 	},
 /turf/simulated/wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxK" = (
 /obj/cable{
 	d1 = 4;
@@ -24604,7 +24514,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxL" = (
 /obj/cable{
 	d1 = 4;
@@ -24612,7 +24522,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/wall/r_wall,
-/area/station/science/gen_storage)
+/area/station/science/storage)
 "bxM" = (
 /obj/cable{
 	d1 = 4;
@@ -25176,10 +25086,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/central)
-"bAt" = (
-ce,
-/turf/simulated/wall/auto/asteroid,
-/area/space)
 "bAu" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -27232,6 +27138,14 @@ ce,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/power)
+"bKj" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/simulated/wall,
+/area/station/hallway/primary/north)
 "bKu" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -28621,7 +28535,7 @@ ce,
 /area/station/engine/engineering)
 "fYF" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = new/obj/item/captaingun
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
@@ -29826,6 +29740,12 @@ ce,
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
+"jRk" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/east)
 "jRE" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -31949,6 +31869,20 @@ ce,
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"pIa" = (
+/obj/grille/steel,
+/obj/window{
+	dir = 4;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/obj/window{
+	dir = 8;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/north)
 "pJK" = (
 /obj/cable{
 	d1 = 1;
@@ -33333,6 +33267,25 @@ ce,
 	},
 /turf/simulated/wall,
 /area/station/engine/power)
+"tpL" = (
+/obj/grille/steel,
+/obj/window{
+	dir = 1;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/obj/window{
+	dir = 4;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/obj/window{
+	dir = 8;
+	icon_state = "rwindow";
+	reinf = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/hallway/primary/north)
 "tra" = (
 /obj/decal/boxingrope{
 	dir = 9;
@@ -33343,6 +33296,12 @@ ce,
 "tsO" = (
 /turf/simulated/floor/caution/east,
 /area/space)
+"tuM" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "tuU" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -33525,6 +33484,14 @@ ce,
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
+"tOC" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "tPy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33624,7 +33591,7 @@ ce,
 /obj/machinery/computer/general_air_control{
 	frequency = 1441;
 	name = "Supply Air Tank Monitor";
-	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon Dioxide", "tox_sensor" = "science")
+	sensors = list("n2_sensor" = "Nitrogen", "o2_sensor" = "Oxygen", "co2_sensor" = "Carbon  Dioxide", "tox_sensor" = "science")
 	},
 /obj/machinery/light,
 /turf/simulated/floor,
@@ -33985,6 +33952,10 @@ ce,
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"uFA" = (
+/obj/machinery/door/firedoor/border_only,
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "uMv" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engineering Solar Control"
@@ -34045,7 +34016,6 @@ ce,
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/computer/prison_shuttle,
 /turf/simulated/floor,
 /area/station/security/prison)
 "uTi" = (
@@ -34512,12 +34482,6 @@ ce,
 /obj/item/sheet/glass/reinforced/fullstack,
 /turf/simulated/floor,
 /area/station/security/prison)
-"woU" = (
-/obj/machinery/computer/prison_shuttle,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/brig/prison)
 "wpY" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/field_generator,
@@ -34793,6 +34757,15 @@ ce,
 /obj/item/wrench,
 /turf/simulated/floor/plating/scorched,
 /area/station/security/prison)
+"xhR" = (
+/obj/machinery/door/firedoor/border_only,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/west)
 "xiq" = (
 /obj/landmark{
 	name = "kudzustart"
@@ -43598,7 +43571,7 @@ bwN
 bxg
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -43900,7 +43873,7 @@ bwO
 bxh
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -44202,7 +44175,7 @@ bwT
 bxi
 afz
 btR
-bAt
+btR
 aaa
 aaa
 aaa
@@ -44504,7 +44477,7 @@ bxe
 afz
 afz
 btR
-bAt
+btR
 aaz
 aaa
 aaa
@@ -66395,12 +66368,12 @@ aDD
 aaa
 aTO
 aFZ
-ahc
-ahc
-bck
-bdf
-bck
-ahc
+bkL
+bkL
+uFA
+xhR
+uFA
+bkL
 aaa
 aaa
 aab
@@ -66699,10 +66672,10 @@ aDD
 aVv
 aXs
 aZK
-aPt
+aZM
 bdg
-aPt
-ahc
+aZM
+bkL
 aaa
 aab
 aab
@@ -66999,12 +66972,12 @@ aDD
 aRZ
 aNE
 aDD
-aXt
-aPt
+aXv
 aZM
-aQO
+aZM
+bdg
 beU
-ahc
+bkL
 aHY
 aHY
 aHY
@@ -67303,9 +67276,9 @@ aJL
 aQQ
 aXu
 aZL
-aPv
+aZL
 bdh
-aPt
+aZM
 bgY
 ajN
 ajN
@@ -67605,13 +67578,13 @@ aTP
 aDD
 aXv
 aZM
-aPt
-aQO
-beO
-ahc
-ahc
-ahc
-ahc
+aZM
+bdg
+aZM
+bkL
+bkL
+bkL
+bkL
 bkL
 amj
 amj
@@ -68207,11 +68180,11 @@ aDD
 aaa
 aTO
 aFZ
-ahc
-ahc
-aPt
-aQP
-aPv
+bkL
+bkL
+aZM
+tOC
+aZL
 bha
 bik
 aZL
@@ -68510,13 +68483,13 @@ aab
 aab
 aab
 aab
-ahc
-aPt
-aPt
-aXG
-bhb
-ahZ
-aPt
+bkL
+aZM
+aZM
+tuM
+bhc
+bdg
+aZM
 ahm
 bkO
 blT
@@ -68816,9 +68789,9 @@ aZS
 bcl
 bdi
 beV
-bhb
-ahZ
-aPt
+bhc
+bdg
+aZM
 ahm
 bkP
 amZ
@@ -69120,7 +69093,7 @@ bdj
 beW
 bhc
 bdg
-aPt
+aZM
 bjR
 ahu
 blU
@@ -69421,8 +69394,8 @@ bau
 bdp
 beW
 bhc
-aQO
-aPt
+bdg
+aZM
 ahl
 ahu
 ahI
@@ -69723,8 +69696,8 @@ bau
 bdq
 bfi
 bhc
-aQO
-aPt
+bdg
+aZM
 ahm
 ahu
 ahH
@@ -70327,8 +70300,8 @@ bau
 bau
 bfn
 aZM
-aQO
-aPt
+bdg
+aZM
 ahu
 ahu
 ahI
@@ -70629,8 +70602,8 @@ bau
 bau
 aVw
 aZM
-aQO
-aPt
+bdg
+aZM
 ahu
 bkQ
 aac
@@ -71233,7 +71206,7 @@ bcl
 bdr
 aZS
 aZM
-aQO
+bdg
 bjd
 ahu
 amZ
@@ -71533,10 +71506,10 @@ aQS
 aSe
 aPz
 aPz
-ahc
+aVx
 bhf
-aQO
-aPt
+bdg
+aZM
 ahu
 ahu
 blW
@@ -72139,8 +72112,8 @@ aVx
 aVx
 aVx
 aZM
-aQO
-aPt
+bdg
+aZM
 bjU
 bkT
 blY
@@ -72441,8 +72414,8 @@ bco
 aXA
 ahk
 aZM
-aQO
-aPt
+bdg
+aZM
 bjV
 bkU
 blZ
@@ -72743,10 +72716,10 @@ aXA
 aXA
 bfp
 aZM
-aQO
-aPt
+bdg
+aZM
 bjU
-ahc
+bkL
 ayJ
 bAL
 bAK
@@ -73047,8 +73020,8 @@ ahk
 bho
 bio
 bho
-ahc
-ahc
+bkL
+bkL
 bAK
 bAL
 bAL
@@ -73960,7 +73933,7 @@ aiJ
 aiJ
 aSH
 aiJ
-bAx
+aiJ
 bsB
 ajl
 but
@@ -74262,7 +74235,7 @@ ahM
 ahL
 aic
 aiJ
-bAx
+aiJ
 bsC
 ajk
 but
@@ -74564,7 +74537,7 @@ ahM
 ahM
 aic
 aiJ
-bAx
+aiJ
 bsD
 ajl
 but
@@ -74866,7 +74839,7 @@ ahM
 ahM
 aid
 ajm
-bAx
+aiJ
 bsE
 ajl
 ajS
@@ -75168,7 +75141,7 @@ aib
 ahM
 aiI
 alC
-bAx
+aiJ
 anh
 bAy
 buu
@@ -75470,7 +75443,7 @@ aib
 boD
 aiI
 bqH
-bAx
+aiJ
 bsF
 btC
 ajl
@@ -75772,7 +75745,7 @@ aib
 ahN
 aiI
 alC
-bAx
+aiJ
 bsG
 ajn
 buv
@@ -76074,7 +76047,7 @@ ahO
 ahO
 bpJ
 bqI
-brP
+bKj
 bsH
 ajo
 buw
@@ -77280,11 +77253,11 @@ aTW
 bAx
 bnx
 bAx
-bAx
-bqK
-brR
+aiJ
+tpL
+pIa
 bsK
-bAx
+aiJ
 buy
 aUq
 aUq
@@ -79983,7 +79956,7 @@ aIB
 aPK
 aQU
 aOs
-aTU
+aPP
 aVI
 aXK
 baD
@@ -90254,7 +90227,7 @@ aSO
 aUz
 aSO
 aEJ
-baN
+bbq
 bcv
 bek
 bgh
@@ -93573,7 +93546,7 @@ aEJ
 aQt
 aRA
 axT
-aUG
+aGL
 aWr
 aYA
 axT
@@ -95091,8 +95064,8 @@ bcQ
 aWt
 aWt
 aUH
-beO
-bjz
+biB
+ben
 bgm
 blq
 bmK
@@ -95695,9 +95668,9 @@ aWt
 aWt
 aWt
 ahb
-biK
+jRk
 ben
-bku
+bgm
 blq
 bmM
 bnX
@@ -95990,8 +95963,8 @@ aQy
 aJy
 aSY
 aFp
-aWw
-aYG
+aWu
+aYE
 aWt
 aWu
 aWu
@@ -96306,9 +96279,9 @@ blq
 bmO
 bnY
 bpm
-bqn
-bqn
-bqn
+uhz
+uhz
+uhz
 btg
 bud
 buX
@@ -96610,8 +96583,8 @@ bnZ
 bpn
 bqo
 brs
-bqn
-bqn
+uhz
+uhz
 btb
 buY
 buY
@@ -96903,9 +96876,9 @@ bcR
 bev
 bcR
 bhZ
-biL
+biE
 bjA
-bkv
+bDM
 blr
 bmQ
 boa
@@ -97205,8 +97178,8 @@ bcS
 bcS
 bcS
 bcS
-biM
-bjB
+beO
+bjG
 bkw
 blq
 bmR
@@ -97507,8 +97480,8 @@ bcS
 bew
 bgs
 bcS
-biN
-bjB
+biK
+bjG
 bkw
 bls
 bmS
@@ -97809,8 +97782,8 @@ bcS
 bez
 bgt
 bcS
-biM
-bjB
+beO
+bjG
 bkw
 bls
 bmT
@@ -98111,8 +98084,8 @@ bcS
 beA
 bgu
 bcS
-biM
-bjB
+beO
+bjG
 bkw
 blt
 bmU
@@ -98414,7 +98387,7 @@ beJ
 beJ
 bcS
 beO
-bjB
+bjG
 bkx
 bls
 bmV
@@ -99017,8 +98990,8 @@ bcS
 beL
 bgG
 bcS
-biM
-bjD
+beO
+bjG
 bkw
 bls
 bmX
@@ -99322,7 +99295,7 @@ bcS
 bid
 bjE
 bky
-bhN
+bsr
 bmY
 bog
 bog
@@ -108813,7 +108786,7 @@ aaa
 aaa
 aaa
 sfI
-woU
+eNv
 qWt
 tFL
 vmZ
