@@ -145,6 +145,23 @@
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
+		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
+		for (var/mob/living/L in global.mobs)
+			if (issilicon(L) || isAIeye(L))
+				if (prob(33))
+					//var/had_reagents = FALSE
+					if (!L.reagents)
+						L.create_reagents(25)
+						//had_reagents = TRUE
+					L.metabolizes = TRUE
+					L.add_lifeprocess(/datum/lifeprocess/chems)
+
+					L.reagents.add_reagent(pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin"), 25)
+
+					SPAWN(rand(1 MINUTE, 2 MINUTES))
+						L.metabolizes = initial(L.metabolizes)
+						L.remove_lifeprocess(/datum/lifeprocess/chems)
+
 		SPAWN(message_delay * stage_delay)
 
 			// Fuck up some categories
@@ -156,6 +173,7 @@
 		categories = list()
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
+
 
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
@@ -337,3 +355,4 @@ ABSTRACT_TYPE(/datum/ion_category)
 				pda.run_program(prog)
 				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
 				alert_prog.send_alert(rand(1,4), TRUE)
+
