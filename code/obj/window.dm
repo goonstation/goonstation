@@ -973,6 +973,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	default_reinforcement = "bohrum"
+
 	the_tuff_stuff
 		explosion_resistance = 5
 

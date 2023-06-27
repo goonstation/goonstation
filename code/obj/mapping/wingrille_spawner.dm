@@ -144,6 +144,28 @@
 	icon_state = "r-wingrille_f"
 #endif
 
+// Uqill glass, bohrum reinforced window
+/obj/mapping_helper/wingrille_spawn/auto/hardened
+	name = "hardened autowindow grille spawner"
+	win_path = "/obj/window/auto/hardened"
+	icon_state = "br-wingrille"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "wingrille_new"
+	color = "#66a94e"
+#else
+	icon_state = "r-wingrille_f"
+#endif
+
+/obj/mapping_helper/wingrille_spawn/auto/hardened/tuff
+	name = "tuff hardened autowindow grille spawner"
+	win_path = "/obj/window/auto/hardened/the_tuff_stuff"
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "r-wingrille_new"
+	color = "#3D692D"
+#else
+	icon_state = "br-wingrille"
+#endif
+
 // Tough glass window
 /obj/mapping_helper/wingrille_spawn/auto/tuff
 	name = "tuff stuff reinforced autowindow grille spawner"
