@@ -354,7 +354,14 @@
 		if(rads <= 0)
 			return
 
-		src.AddComponent(/datum/component/radioactive, min(rads*3, 100), TRUE, FALSE, 5)
+		var/datum/component/radioactive/rads_comp = src.GetComponent(/datum/component/radioactive)
+		if(!rads_comp)
+			src.AddComponent(/datum/component/radioactive, min((rads*2 > 100) ? rads*2/4 : rads*2, 100), TRUE, (rads*2 > 100), 5)
+		else
+			rads_comp.radStrength = min((rads*2 > 100) ? rads*2/4 : rads*2, 100)
+			rads_comp.neutron = (rads*2 > 100)
+			rads_comp.do_filters()
+
 		rads -= 5
 
 		if(rads <= 0)
@@ -701,7 +708,7 @@
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
 #undef REACTOR_GRID_WIDTH
