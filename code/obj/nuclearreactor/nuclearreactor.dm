@@ -708,7 +708,7 @@
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
 		..()
 
 #undef REACTOR_GRID_WIDTH
