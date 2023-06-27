@@ -174,8 +174,6 @@
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
 
-	proc/drug_robot(mob/living/L)
-
 
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
