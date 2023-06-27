@@ -159,6 +159,8 @@
 					L.reagents.add_reagent(pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin"), 25)
 
 					SPAWN(rand(1 MINUTE, 2 MINUTES))
+						if (!had_reagents)
+							qdel(L.reagents)
 						L.metabolizes = initial(L.metabolizes)
 						L.remove_lifeprocess(/datum/lifeprocess/chems)
 
