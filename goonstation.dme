@@ -1965,6 +1965,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\mapping\airlock_helpers.dm"
 #include "code\obj\mapping\firedoor_spawn.dm"
 #include "code\obj\mapping\mob_spawn.dm"
+#include "code\obj\mapping\wingrille_spawner.dm"
 #include "code\obj\nuclearreactor\centrifuge.dm"
 #include "code\obj\nuclearreactor\destroyed_reactor.dm"
 #include "code\obj\nuclearreactor\misc.dm"
