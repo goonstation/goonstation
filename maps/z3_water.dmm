@@ -1486,7 +1486,7 @@
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "eD" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/unsimulated/floor/yellow,
 /area/wrecknsspolaris)
 "eE" = (

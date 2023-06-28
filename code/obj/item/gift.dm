@@ -276,7 +276,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/pen/crayon/rainbow,
 	/obj/item/storage/box/crayon,
 	/obj/item/device/light/zippo/gold,
-	/obj/item/spacecash/random/really_small,
+	/obj/item/currency/spacecash/really_small,
 	/obj/item/rubberduck,
 	/obj/item/rubber_hammer,
 	/obj/item/bang_gun,
@@ -360,7 +360,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/gun/kinetic/beepsky,
 	/obj/item/gun/kinetic/gungun,
 #endif
-	/obj/item/spacecash/random/small)
+	/obj/item/currency/spacecash/small)
 
 var/global/list/xmas_gift_paths = list(/obj/item/clothing/suit/sweater,
 	/obj/item/clothing/suit/sweater/red,

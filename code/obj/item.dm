@@ -969,6 +969,7 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	return
@@ -1175,7 +1176,7 @@
 		logTheThing(LOG_COMBAT, user, "uses [src] ([type], object name: [initial(name)]) on [constructTarget(M,"combat")]")
 		return
 
-	if (user.mind && user.mind.special_role == ROLE_VAMPTHRALL && isvampire(M) && user.is_mentally_dominated_by(M))
+	if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
 		boutput(user, "<span class='alert'>You cannot harm your master!</span>") //This message was previously sent to the attacking item. YEP.
 		return
 

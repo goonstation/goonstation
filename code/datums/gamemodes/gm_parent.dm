@@ -178,16 +178,14 @@ ABSTRACT_TYPE(/datum/game_mode)
 		catch(var/exception/e)
 			logTheThing(LOG_DEBUG, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
-	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
-	for (var/V in concrete_typesof(/datum/antagonist))
-		var/datum/antagonist/dummy = V
-		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
-			#ifdef DATA_LOGGER
-			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
-			#endif
-			var/antag_dat = A.handle_round_end(TRUE)
-			if (A.display_at_round_end && length(antag_dat))
-				stuff_to_output.Add(antag_dat)
+	// Display all antagonist datums.
+	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+		#ifdef DATA_LOGGER
+		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
+		#endif
+		var/antag_dat = antagonist_role.handle_round_end(TRUE)
+		if (antagonist_role.display_at_round_end && length(antag_dat))
+			stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -215,6 +213,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 				candidates += player.mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
 				unpicked_candidate_minds.Add(player.mind)
+
+	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
+									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
@@ -247,7 +248,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	antag.add_antagonist(antag.special_role)
+	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
 	if (!antag_datum.uses_pref_name)

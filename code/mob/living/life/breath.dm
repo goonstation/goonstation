@@ -211,6 +211,7 @@
 
 		return null
 
+	///Return value is the number of lungs that successfully breathed
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (owner.nodamage) return
 		var/area/A = get_area(owner)
@@ -247,10 +248,11 @@
 		left_breath.volume = breath.volume / 2
 		right_breath.volume = breath.volume / 2
 
+		var/success = 0
 		if (!human_owner?.organHolder?.left_lung?.broken)
-			human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
+			success += human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
 		if (!human_owner?.organHolder?.right_lung?.broken)
-			human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
+			success += human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
 
 		breath.merge(left_breath)
 		breath.merge(right_breath)
@@ -261,5 +263,5 @@
 		for(var/emote in status_updates.emotes)
 			human_owner?.emote(emote)
 
-		return 1
+		return success
 

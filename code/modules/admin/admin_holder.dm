@@ -43,6 +43,7 @@
 	var/datum/color_matrix_editor/color_matrix_editor = null
 	var/datum/centcomviewer/centcomviewer = null
 	var/datum/bioeffectmanager/bioeffectmanager = null
+	var/datum/abilitymanager/abilitymanager = null
 
 	var/list/hidden_categories = null
 

@@ -818,9 +818,9 @@
 	/obj/item/scrap,
 	/obj/item/sheet/glass,
 	/obj/item/sheet/steel,
-	/obj/item/spacecash/five,
-	/obj/item/spacecash/random/really_small,
-	/obj/item/spacecash/random/small,
+	/obj/item/currency/spacecash/five,
+	/obj/item/currency/spacecash/really_small,
+	/obj/item/currency/spacecash/small,
 	/obj/item/stamp,
 	/obj/item/stick,
 	/obj/item/tile/steel)
@@ -919,8 +919,8 @@
 		/obj/item/raw_material/uqill,
 		/obj/item/raw_material/cerenkite,
 		/obj/item/raw_material/erebite,
-		/obj/item/spacecash/buttcoin,
-		/obj/item/spacecash/random/tourist,
+		/obj/item/currency/spacecash/buttcoin,
+		/obj/item/currency/spacecash/tourist,
 		/obj/item/a_gift/easter)
 
 /obj/random_pod_spawner
@@ -1104,13 +1104,13 @@
 	/mob/living/critter/small_animal/dog/george,
 	/mob/living/critter/small_animal/dog/blair,
 	/mob/living/critter/small_animal/dog/shiba,
-	/obj/critter/pig,
+	/mob/living/critter/small_animal/pig,
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
 	/mob/living/critter/spider/nice,
-	/obj/critter/goose,
-	/obj/critter/goose/swan)
+	/mob/living/critter/small_animal/bird/goose,
+	/mob/living/critter/small_animal/bird/goose/swan)
 
 	one
 		amt2spawn = 1

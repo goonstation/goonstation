@@ -466,17 +466,6 @@
 	return
 #undef DO_NOTHING
 
-/mob/proc/is_mentally_dominated_by(var/mob/dominator)
-	if (!dominator || !src.mind)
-		return 0
-
-	if (src.mind.master)
-		var/mob/mymaster = ckey_to_mob(src.mind.master)
-		if (mymaster && (mymaster == dominator))
-			return 1
-
-	return 0
-
 /mob/proc/violate_hippocratic_oath()
 	if(!src.mind)
 		return 0

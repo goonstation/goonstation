@@ -611,7 +611,7 @@
 	pixel_x = 10
 	},
 /obj/table/reinforced,
-/obj/item/spacecash,
+/obj/item/currency/spacecash,
 /turf/simulated/floor/wood/three,
 /area/prefab/shooting_range)
 "RX" = (

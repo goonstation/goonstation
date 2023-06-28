@@ -14,7 +14,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "ae" = (
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "af" = (
@@ -57,7 +57,7 @@
 /area/prefab/sea_monkey_hideout)
 "am" = (
 /obj/item/raw_material/gold,
-/obj/item/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "an" = (
@@ -448,17 +448,17 @@
 /area/prefab/sea_monkey_hideout)
 "bE" = (
 /obj/storage/crate,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/fivehundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/five,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/fivehundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/five,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "bF" = (
@@ -536,25 +536,25 @@
 /area/prefab/sea_monkey_hideout)
 "bQ" = (
 /obj/storage/crate,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/fivehundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/hundred,
-/obj/item/spacecash/five,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/fivehundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/hundred,
+/obj/item/currency/spacecash/five,
+/obj/item/currency/spacecash/thousand,
 /obj/item/raw_material/gold,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
-/obj/item/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
+/obj/item/currency/spacecash/thousand,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "bR" = (
@@ -974,7 +974,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "dd" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "de" = (
@@ -1064,7 +1064,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "ds" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dt" = (

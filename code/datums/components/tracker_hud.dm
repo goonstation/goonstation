@@ -62,7 +62,7 @@
 	if (isatom(src.parent))
 		var/turf/target_turf = get_turf(src.target)
 		var/turf/parent_turf = get_turf(src.parent)
-		if (target_turf.z != parent_turf.z)
+		if (target_turf?.z != parent_turf?.z)
 			src.hudarrow.alpha = 0
 			return
 	src.hudarrow.alpha = 127
