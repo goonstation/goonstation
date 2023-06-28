@@ -98,11 +98,11 @@
 
 		//status lights
 		//gas input/output
-		if(TOTAL_MOLES(air1) > 100)
+		if(air1 && TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(TOTAL_MOLES(air2) > 100)
+		if(air2 && TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -701,7 +701,8 @@
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
-				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+				src.component_grid[x][y].melt()
 		..()
 
 #undef REACTOR_GRID_WIDTH
