@@ -495,6 +495,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.harvest_warning = 1
 			do_update_icon = TRUE
 			post_alert(list("event" = "harvestable", "plant" = src.current.name))
+			src.HYPplant_matured()
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
 			do_update_icon = TRUE
@@ -1534,6 +1535,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.health -= damage_amount
 			return 1
 		else return 0
+
+	proc/HYPplant_matured()
+		src.plantgenes.mutation.HYPmatured_proc_M(src)
 
 // Hydroponics procs not specific to the plantpot start here.
 
