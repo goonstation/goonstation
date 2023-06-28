@@ -350,6 +350,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts the skin of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck open with [src]!</span>",\
@@ -369,6 +370,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> slices the tissue around [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] spine with [src]!</span>",\
@@ -388,6 +390,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right eye in with [src]!</span>",\
@@ -407,6 +410,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts away the flesh holding [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] left eye in with [src]!</span>",\
@@ -434,6 +438,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head open with [src]!</span>",\
@@ -453,6 +458,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_high, 0)
 					take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				if (patient.organHolder.brain)
@@ -477,6 +483,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				if (patient.organHolder.skull)
@@ -510,6 +517,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("chest", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt open with [src]!</span>",\
@@ -529,6 +537,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("chest", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines with [src]!</span>",\
@@ -703,6 +712,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
@@ -722,6 +732,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] lower abdomen open with [src]!</span>",\
@@ -746,6 +757,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] liver out with [src]!</span>",\
@@ -772,6 +784,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] intestines out with [src]!</span>",\
@@ -794,6 +807,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut in preparation to access  [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] kidneys with [src]!</span>",\
@@ -820,6 +834,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					if (patient.organHolder.spleen)
@@ -843,6 +858,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] aorta and vena cava with [src]!</span>",\
@@ -864,6 +880,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					if (!patient.organHolder.tail)	// Doesnt have tail at all, likely removed earlier
@@ -960,6 +977,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					surgeon.visible_message("<span class='alert'><b>[surgeon][fluff]!</b></span>")
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs most of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] neck with [src]!</span>",\
@@ -979,6 +997,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws through the last of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] head's connections to [surgeon == patient ? "[his_or_her(patient)]" : "[patient]'s"] body with [src]!</span>",\
@@ -1006,6 +1025,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				var/missing_fluff = ""
@@ -1030,6 +1050,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				if (patient.organHolder.brain)
@@ -1059,6 +1080,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("head", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				if (patient.organHolder.skull)
@@ -1097,6 +1119,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt with [src]!</span>",\
@@ -1116,6 +1139,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					patient.TakeDamage("chest", damage_low, 0)
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 					CREATE_BLOOD_SPLOOSH(patient)
+					display_slipup_image(surgeon, patient.loc)
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
@@ -1145,6 +1169,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					if(!patient.organHolder.tail)
@@ -1169,6 +1194,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					if(!patient.organHolder.tail)
@@ -1195,6 +1221,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1215,6 +1242,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> saws open [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1237,6 +1265,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts out [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] heart with [src]!</span>",\
 						"<span class='alert'>You cut out [surgeon == patient ? "your" : "[patient]'s"] heart with [src]!</span>",\
@@ -1671,6 +1700,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_low, 0)
 				take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> inserts [src] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye socket!</span>",\
@@ -1690,6 +1720,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.TakeDamage("head", damage_high, 0)
 				take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 				CREATE_BLOOD_SPLOOSH(patient)
+				display_slipup_image(surgeon, patient.loc)
 				return 1
 
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> removes [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] eye with [src]!</span>",\
@@ -1762,6 +1793,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut on [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
@@ -1782,6 +1814,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] right abdomen open with [src]!</span>",\
@@ -1815,6 +1848,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_high, 0)
 						take_bleeding_damage(patient, surgeon, damage_high, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] lung out with [src]!</span>",\
@@ -1846,6 +1880,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] appendix out with [src]!</span>",\
@@ -1872,6 +1907,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] stomach out with [src]!</span>",\
@@ -1895,6 +1931,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> makes a cut just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] ribcage with [src]!</span>",\
@@ -1920,6 +1957,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 
@@ -1956,6 +1994,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 						patient.TakeDamage("chest", damage_low, 0)
 						take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = 1)
 						CREATE_BLOOD_SPLOOSH(patient)
+						display_slipup_image(surgeon, patient.loc)
 						return 1
 
 					surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] [target_side] kidney out with [src]!</span>",\
@@ -2084,3 +2123,15 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return TRUE
 
 #undef CREATE_BLOOD_SPLOOSH
+
+///Spawns an image above a patient when you slip up. Only the surgeon sees it.
+/proc/display_slipup_image(var/mob/target, var/loc)
+	if (!target || !loc)
+		return
+	var/slipup_icon_state = "slipup1"
+	if (prob(1))
+		//You lose your medical license
+		slipup_icon_state = "slipup3"
+	else if (prob(10))
+		slipup_icon_state = "slipup2"
+	new/obj/decal/slipup(loc, slipup_icon_state, target)

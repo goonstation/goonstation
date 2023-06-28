@@ -809,3 +809,35 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide/arrow_s
 	name = "Directional Navigation Guide"
 	icon_state = "endpiece_s"
+
+/obj/decal/slipup
+	name = ""
+	desc = ""
+	anchored = ANCHORED
+	mouse_opacity = 0
+	icon = null
+	icon_state = null
+	alpha = 0
+	opacity = 0
+	pixel_x = -32
+	plane = PLANE_NOSHADOW_ABOVE
+
+	New(var/location = null, var/state = null, var/mob/target = null)
+		..()
+		if(location)
+			src.set_loc(location)
+		else
+			src.set_loc(usr.loc)
+
+		var/new_state = "slipup"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/96x32.dmi', src, new_state)
+			target << image
+
+		animate(src, time = 0.5 SECOND, alpha = 255)
+		animate(pixel_y = 60, pixel_x = rand(-64, 0), alpha = 0, time = 2.5 SECONDS, easing = SINE_EASING)
+		SPAWN(3.5 SECONDS)
+			qdel(src)
