@@ -1,5 +1,5 @@
 (t)tue jun 27 23
-(u)Sord
+(u)tarmunora
 (*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
 (t)fri jun 16 23
 (u)Sord
