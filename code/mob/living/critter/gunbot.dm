@@ -223,6 +223,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
+	is_npc = TRUE
 
 	get_melee_protection(zone, damage_type)
 		return 4
