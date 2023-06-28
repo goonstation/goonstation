@@ -716,7 +716,7 @@
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge"
 	},
-/obj/critter/boogiebot,
+/mob/living/critter/small_animal/boogiebot,
 /obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/airless/damaged3,
 /area/noGenerate)

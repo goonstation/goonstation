@@ -642,6 +642,9 @@ var/global/mob/twitch_mob = 0
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
+#ifdef RANDOM_ROOM_CHECKING
+	placeAllRandomRooms()
+#endif
 #ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
@@ -706,7 +709,7 @@ var/global/mob/twitch_mob = 0
 			var/line = details["line"]
 			var/name = details["name"]
 			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
-#ifndef PREFAB_CHECKING
+#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
