@@ -351,7 +351,8 @@
 
 /mob/living/proc/hand_range_attack(atom/target, params, location, control, origParams)
 	var/datum/limb/L = src.equipped_limb()
-	if (L && L.attack_range(target,src,params))
+	if (L && L.attack_range(target, src, params))
+		src.lastattacked = src
 		return TRUE
 	return FALSE
 
