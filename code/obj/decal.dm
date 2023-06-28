@@ -451,6 +451,20 @@ obj/decal/fakeobjects/teleport_pad
 			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
 			..()
 
+// Robots
+/obj/decal/fakeobjects/robot
+	name = "robot"
+	real_name = "robot"
+	desc = "A Security Robot, something seems a bit off."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	hugo
+		name = "HUGO"
+
+	henk
+		name - "HENK"
+
 //sealab prefab fakeobjs
 
 /obj/decal/fakeobjects/pcb

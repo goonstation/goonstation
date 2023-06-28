@@ -8186,7 +8186,7 @@
 /area/crater/cave)
 "aIO" = (
 /obj/item/wrench,
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -8201,7 +8201,7 @@
 /turf/unsimulated/floor/black,
 /area/marsoutpost/vault)
 "aIS" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	dir = 8
 	},
 /turf/unsimulated/floor{
@@ -16516,7 +16516,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bja" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor/carpet/grime,
 /area/drone/crew_quarters)
 "bjb" = (
@@ -17120,7 +17120,7 @@
 /area/drone/office)
 "bkw" = (
 /obj/map/light/white,
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor{
 	dir = 4;
 	icon = 'icons/misc/racing.dmi';
@@ -17129,7 +17129,7 @@
 /area/drone/office)
 "bkx" = (
 /obj/map/light/white,
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor{
 	dir = 8;
 	icon = 'icons/misc/racing.dmi';
@@ -19378,7 +19378,7 @@
 	},
 /area/drone)
 "brf" = (
-/obj/critter/gunbot/heavy,
+/mob/living/critter/robotic/gunbot,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -30006,7 +30006,7 @@
 	},
 /area/meat_derelict/guts)
 "cff" = (
-/obj/critter/gunbot,
+/mob/living/critter/robotic/gunbot/light,
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor,
 /area/crunch)
@@ -35867,9 +35867,6 @@
 /obj/machinery/light/emergency,
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/staffhall)
-"cxL" = (
-/turf/unsimulated/wall/auto/reinforced/supernorn,
-/area/space)
 "cxM" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -36110,7 +36107,7 @@
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
-/area/owlery/lab)
+/area/owlery/staffhall)
 "cyv" = (
 /obj/storage/closet/office,
 /turf/unsimulated/floor/blackwhite{
@@ -36158,7 +36155,7 @@
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
-/area/owlery/lab)
+/area/owlery/staffhall)
 "cyz" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light{
@@ -36358,7 +36355,7 @@
 /turf/unsimulated/floor/blackwhite{
 	dir = 1
 	},
-/area/owlery/lab)
+/area/owlery/staffhall)
 "czg" = (
 /obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/tracks{
@@ -36408,11 +36405,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
-"czm" = (
-/turf/unsimulated/wall/setpieces/fakewindow{
-	dir = 6
-	},
-/area/space)
 "czn" = (
 /obj/decal/cleanable/gangtag,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -44604,21 +44596,6 @@
 	dir = 8
 	},
 /area/owlery/owllock)
-"cTF" = (
-/obj/decal/tile_edge/line/black{
-	dir = 8;
-	icon_state = "line1"
-	},
-/obj/critter/gunbot/heavy{
-	anchored = 1;
-	dir = 4;
-	min_quality = 50;
-	mobile = 0;
-	name = "HUGO";
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood/two,
-/area/syndicate/minerva5/command)
 "cTG" = (
 /obj/machinery/light/emergency,
 /obj/disposalpipe/segment{
@@ -44709,20 +44686,6 @@
 	dir = 4
 	},
 /area/owlery/owllock)
-"cTQ" = (
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "line1"
-	},
-/obj/critter/gunbot/heavy{
-	anchored = 1;
-	dir = 8;
-	min_quality = 50;
-	name = "HENK";
-	wanderer = 0
-	},
-/turf/unsimulated/floor/wood/two,
-/area/syndicate/minerva5/command)
 "cTS" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -45007,7 +44970,7 @@
 	pixel_y = 16
 	},
 /turf/unsimulated/grass,
-/area/owlery/lab)
+/area/owlery/Owlmait2)
 "cUA" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -45429,7 +45392,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
 "cVw" = (
-/turf/unsimulated/wall/auto/reinforced/gannets,
+/turf/simulated/wall/auto/jen/dark2,
 /area/syndicate/minerva5/command)
 "cVx" = (
 /obj/item/casing/shotgun/red,
@@ -47517,7 +47480,7 @@
 	name = "Water Loop Inlet"
 	},
 /turf/unsimulated/floor/airless/grime,
-/area/owlery/lab)
+/area/owlery/Owlmait2)
 "cZw" = (
 /obj/decal/fakeobjects/pipe{
 	density = 1;
@@ -69756,7 +69719,7 @@
 /turf/unsimulated/floor/redblack{
 	dir = 10
 	},
-/area/owlery/lab)
+/area/owlery/Owlopen)
 "otN" = (
 /obj/machinery/light/small/floor{
 	layer = null
@@ -79365,7 +79328,7 @@ cVw
 cXJ
 cWN
 cWN
-cTF
+cWN
 cYN
 cXj
 cVw
@@ -81177,7 +81140,7 @@ cVw
 cWx
 cWQ
 cWQ
-cTQ
+cWQ
 cZp
 cXk
 cVw
@@ -95323,7 +95286,7 @@ cxj
 aOe
 cwS
 cxo
-cxL
+aBY
 aBY
 bUr
 cEm
@@ -96837,7 +96800,7 @@ aOe
 bUr
 bxW
 czJ
-czm
+aOe
 cnw
 cnw
 teq
