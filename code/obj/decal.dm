@@ -280,6 +280,19 @@ obj/decal/fakeobjects/cargopad
 	anchored = UNANCHORED
 	density = 1
 
+/obj/decal/fakeobjects/robot/security
+	name = "robot"
+	real_name = "robot"
+	desc = "A Security Robot, something seems a bit off."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	hugo
+		name = "HUGO"
+
+	henk
+		name = "HENK"
+
 /obj/decal/fakeobjects/apc_broken
 	name = "broken APC"
 	desc = "A smashed local power unit."
@@ -450,20 +463,6 @@ obj/decal/fakeobjects/teleport_pad
 			icon_state = "laundry-p"
 			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
 			..()
-
-// Robots
-/obj/decal/fakeobjects/robot
-	name = "robot"
-	real_name = "robot"
-	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
-
-	hugo
-		name = "HUGO"
-
-	henk
-		name - "HENK"
 
 //sealab prefab fakeobjs
 

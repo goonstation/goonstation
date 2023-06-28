@@ -61798,6 +61798,16 @@
 "fQk" = (
 /turf/unsimulated/floor/black/corner,
 /area/iomoon/base)
+"fQD" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/robot/security/henk{
+	dir = 8
+	},
+/turf/unsimulated/floor/wood/two,
+/area/syndicate/minerva5/command)
 "fRh" = (
 /obj/map/light/graveyard,
 /obj/tree{
@@ -63767,6 +63777,16 @@
 	dir = 9
 	},
 /area/crunch/wtc)
+"icZ" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/decal/fakeobjects/robot/security/hugo{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/syndicate/minerva5/command)
 "idw" = (
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/plating,
@@ -79328,7 +79348,7 @@ cVw
 cXJ
 cWN
 cWN
-cWN
+icZ
 cYN
 cXj
 cVw
@@ -81140,7 +81160,7 @@ cVw
 cWx
 cWQ
 cWQ
-cWQ
+fQD
 cZp
 cXk
 cVw

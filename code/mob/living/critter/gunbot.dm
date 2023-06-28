@@ -142,7 +142,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	setup_hands()
 		..()
-		HH = hands[2]
+		var/datum/handHolder/HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
 		HH.icon = 'icons/mob/critter_ui.dmi'
