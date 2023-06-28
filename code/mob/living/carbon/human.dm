@@ -165,6 +165,9 @@
 	can_bleed = 1
 	blood_id = "blood"
 	blood_volume = 500
+	dna_to_absorb = 10
+
+	void_mindswappable = TRUE
 
 	var/datum/humanInventory/inventory = null
 

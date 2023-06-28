@@ -846,7 +846,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "asteroid-perspective-map"
+#else
 	icon_state = "asteroid-map"
+#endif
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1

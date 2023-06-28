@@ -73,7 +73,7 @@
 			M.verbs += /mob/proc/recite_miranda
 			M.verbs += /mob/proc/add_miranda
 			if (!isnull(M.mind))
-				M.mind.miranda = "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."
+				M.mind.miranda = DEFAULT_MIRANDA
 		M.faction |= src.faction
 
 		SPAWN(0)
@@ -1477,6 +1477,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Inspector")
 		return
 
+	proc/inspector_miranda()
+		return "You have been found to be in breach of Nanotrasen corporate regulation [rand(1,100)][pick(uppercase_letters)]. You are allowed a grace period of 5 minutes to correct this infringement before you may be subjected to disciplinary action including but not limited to: strongly worded tickets, reduction in pay, and being buried in paperwork for the next [rand(10,20)] standard shifts."
+
 	special_setup(var/mob/living/carbon/human/M)
 		..()
 		if (!M)
@@ -1488,7 +1491,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 			var/obj/item/clipboard/with_pen/inspector/clipboard = new /obj/item/clipboard/with_pen/inspector(B)
 			B.storage.add_contents(clipboard)
 			clipboard.set_owner(M)
-
+		M.mind?.set_miranda(PROC_REF(inspector_miranda))
 		return
 
 /datum/job/special/random/director

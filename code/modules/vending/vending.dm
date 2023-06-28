@@ -571,6 +571,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item)
 			if (src.credit > 0)
 				var/obj/item/currency/spacecash/returned = new /obj/item/currency/spacecash
 				returned.setup(src.get_output_location(), src.credit)
+				usr.put_in_hand_or_eject(returned) // try to eject it into the users hand, if we can
 				src.credit = 0
 		if("vend")
 			if(params["target"])
@@ -1587,6 +1588,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/disposalconstruct/mechanics_sensor, 10)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigbuilder, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/sigcheckcomp, 30)
+		product_list += new/datum/data/vending_product(/obj/item/mechanics/textmanip, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/synthcomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/telecomp, 30)
 		product_list += new/datum/data/vending_product(/obj/item/mechanics/zapper, 10)
@@ -3286,6 +3288,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/ampoule,
 		/obj/item/chem_pill_bottle,
+		/obj/item/storage/box/patchbox,
 	)
 
 	New()

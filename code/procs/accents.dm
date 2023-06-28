@@ -854,9 +854,6 @@
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(2))
-		modded += " :DDDDD"
 	return modded
 
 /proc/tommify(var/string)
@@ -887,9 +884,9 @@
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
 
-	if(prob(15))
-		modded += " Bork Bork Bork!"
 	if(prob(5))
+		modded += " Bork Bork Bork!"
+	if(prob(1))
 		modded += " Bork."
 
 	return modded
@@ -1477,10 +1474,6 @@ var/list/zalgo_mid = list(
 // this list got too big to maintain as a list literal, so now it lives in strings/language/scots.txt
 
 /proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)
-	// at hufflaw's request
-	if(prob(1) && prob(1))
-		string += " You just made an enemy for life!"
-
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
@@ -1513,8 +1506,6 @@ var/list/zalgo_mid = list(
 		modded_tokens += modified_token
 
 	var/modded = jointext(modded_tokens, " ")
-	if(prob(2))
-		modded += pick(" Och!"," Och aye the noo!"," Help ma Boab!"," Hoots!"," Micthy me!"," Get tae fuck!")
 
 	return modded
 
@@ -1570,19 +1561,6 @@ var/list/zalgo_mid = list(
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(5))
-		modded += " Tabarnak!"
-	if(prob(3))
-		modded += " Calisse de merde."
-	if(prob(3))
-		modded += " You dum-h'ass!"
-	if(prob(2))
-		modded += " Saint-simonac de viarge!"
-	if(prob(2))
-		modded += " Mon hosti d'con."
-	if(prob(1))
-		modded += " Hon Hon Hon. :3"
 	return modded
 
 /proc/tabarnak_parse(var/datum/text_roamer/R)

@@ -14896,13 +14896,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/crematorium)
-"ayc" = (
-/obj/critter/boogiebot,
-/turf/simulated/floor/carpet{
-	dir = 10;
-	icon_state = "fred4"
-	},
-/area/station/crew_quarters/jazz)
 "ayd" = (
 /mob/living/critter/small_animal/cat/jones,
 /obj/cable{
@@ -14946,16 +14939,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"ayl" = (
-/obj/critter/owl{
-	aggressive = 0;
-	angertext = "hoots uncontrollably at";
-	atkcarbon = 1;
-	health = 10000;
-	name = "Hooty McOwlface"
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/garden/owlery)
 "ayn" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
@@ -14986,18 +14969,10 @@
 	dir = 1
 	},
 /area/station/crew_quarters/pool)
-"ays" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "ayt" = (
 /obj/critter/turtle/sylvester/HoS,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/hos)
-"ayu" = (
-/obj/critter/walrus,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "ayv" = (
 /obj/dartboard{
 	pixel_y = 26
@@ -35661,25 +35636,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"brT" = (
-/obj/machinery/chem_heater,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor,
-/area/station/science/chemistry)
-"brU" = (
-/obj/machinery/chem_heater,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor,
-/area/station/science/chemistry)
 "brV" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -35694,11 +35650,6 @@
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
-"brW" = (
-/obj/machinery/chem_heater,
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/simulated/floor,
-/area/station/science/chemistry)
 "brX" = (
 /obj/machinery/chem_master,
 /obj/machinery/light_switch{
@@ -66638,22 +66589,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
-"eTN" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/machinery/chem_heater,
-/obj/item/device/radio/intercom{
-	dir = 1;
-	frequency = 1445;
-	layer = 9.6;
-	name = "Medical Intercom"
-	},
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "eTW" = (
 /obj/table/auto,
 /obj/item/plate,
@@ -67812,6 +67747,22 @@
 	icon_state = "Stairs2_wide"
 	},
 /area/station/hydroponics/bay)
+"ifQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/machinery/chem_heater/chemistry,
+/obj/item/device/radio/intercom{
+	dir = 1;
+	frequency = 1445;
+	layer = 9.6;
+	name = "Medical Intercom"
+	},
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "ifZ" = (
 /obj/cable/brown{
 	d1 = 1;
@@ -67984,6 +67935,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
+"iHL" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "iIN" = (
 /obj/cable,
 /obj/cable{
@@ -68755,6 +68710,18 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"kRV" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/station/science/chemistry)
 "kWj" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -69163,6 +69130,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
+"mrr" = (
+/mob/living/critter/small_animal/bird/owl{
+	health_brute = 200;
+	health_burn = 200;
+	name = "Hooty McOwlface"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/garden/owlery)
 "mvm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp/green{
@@ -70596,6 +70571,10 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
+"rvj" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "rwe" = (
 /obj/cable{
 	d1 = 4;
@@ -70628,6 +70607,13 @@
 	dir = 9
 	},
 /area/station/medical/medbay/surgery)
+"rxo" = (
+/mob/living/critter/small_animal/boogiebot,
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred4"
+	},
+/area/station/crew_quarters/jazz)
 "rxx" = (
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -70740,6 +70726,13 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/medical/dome)
+"rSU" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/simulated/floor,
+/area/station/science/chemistry)
 "rTP" = (
 /obj/cable/yellow{
 	d1 = 2;
@@ -71880,6 +71873,11 @@
 	icon_state = "catwalk_cross"
 	},
 /area/mining/magnet)
+"vwU" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor,
+/area/station/science/chemistry)
 "vyx" = (
 /obj/machinery/light,
 /turf/simulated/floor/escape,
@@ -115020,7 +115018,7 @@ bIR
 csC
 csA
 aKX
-ayc
+rxo
 aNA
 aFc
 aEc
@@ -119541,7 +119539,7 @@ bdS
 bUT
 cyO
 cyO
-ayu
+iHL
 bUQ
 cxY
 cCN
@@ -119841,7 +119839,7 @@ aAD
 bYO
 cxY
 bUT
-ays
+rvj
 cyO
 cyO
 bUQ
@@ -120145,7 +120143,7 @@ cxY
 bUT
 cyO
 cyO
-ays
+rvj
 bUO
 crC
 cCf
@@ -121049,7 +121047,7 @@ aXU
 chU
 cxY
 bUT
-ays
+rvj
 cyO
 cyO
 bUP
@@ -121665,7 +121663,7 @@ coD
 bOP
 aKN
 cur
-ayl
+mrr
 bOS
 coE
 cAw
@@ -128685,7 +128683,7 @@ cya
 cya
 cya
 cya
-eTN
+ifQ
 lGK
 bVh
 xcb
@@ -130494,7 +130492,7 @@ aFa
 bEA
 aoV
 bDh
-brU
+rSU
 czm
 bAq
 aXB
@@ -132303,13 +132301,13 @@ bDx
 aOL
 bWs
 cBq
-brW
+vwU
 aoe
 alE
 ajC
 lCI
 adc
-brT
+kRV
 aau
 bgm
 cCO
