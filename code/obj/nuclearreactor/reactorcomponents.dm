@@ -102,7 +102,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		src.setMaterial(src.material, TRUE, FALSE, FALSE)
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
 		if(istype(parent))
-			parent._comp_grid_overlay_update = TRUE
+			parent.MarkGridForUpdate()
 			parent.UpdateIcon()
 		src.neutron_cross_section = 5.0
 		src.thermal_cross_section = 1.0

@@ -94,8 +94,10 @@
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
-	update_icon()
+	proc/MarkGridForUpdate()
+		src._comp_grid_overlay_update = TRUE
 
+	update_icon()
 		//status lights
 		//gas input/output
 		if(air1 && TOTAL_MOLES(air1) > 100)
