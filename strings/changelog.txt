@@ -1,5 +1,22 @@
 
+(t)tue jun 27 23
+(u)Lord_Earthfire
+(p)14698
+(e)🔄⚗|C-Rework, A-Chemistry
+(+)The E.Coli recipe was changed entirely, requiring the mixing of sewage with either beff, meat slurry or cholesterine. Beware of the miasma generation!
+(u)aloe
+(*)During ion storms, silicons will now experience sensor malfunctions (drugs).
+(u)pali
+(+)The Finnish, Scots and French accents no longer add words to the end of sentences. And Swedish bork chance has been decreased.
 (t)mon jun 26 23
+(u)Sord
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)New scrap weapon crafting system. See minor changelog for details
+(+)Create a scrap handle from some steel sheets and Alt + Double click it to see the next steps and other items you'll need
+(u)Gannets & Sian
+(p)14729
+(e)🎨|C-Sprites
+(+)Adds 5 more fish. Sprited by Sian.
 (u)tarmunora
 (*)A certain machine in the void now only works on humans and small animals.
 (*)Several "tougher" mobs that were converted to mob critters recently are now immune to stamina stuns once again.
