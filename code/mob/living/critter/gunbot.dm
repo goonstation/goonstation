@@ -37,6 +37,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		src.UpdateOverlays(eye_light, "eye_light")
 
 	death(var/gibbed)
+		if (!gibbed)
+			src.gib()
 		..(gibbed = TRUE, do_drop_equipment = FALSE)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
