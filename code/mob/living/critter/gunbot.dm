@@ -1,3 +1,6 @@
+TYPEINFO(/mob/living/critter/robotic/gunbot)
+	mats = 20
+
 /mob/living/critter/robotic/gunbot
 	name = "robot"
 	real_name = "robot"
@@ -5,7 +8,7 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
 	custom_gib_handler = /proc/robogibs
-	hand_count = 3
+	hand_count = 2
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
@@ -60,16 +63,6 @@
 		HH.can_range_attack = TRUE
 
 		HH = hands[2]
-		HH.limb = new /datum/limb/gun/kinetic/abg
-		HH.name = "ABG Riot Suppression Appendage"
-		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "handabg"
-		HH.limb_name = "ABG Riot Suppression Appendage"
-		HH.can_hold_items = FALSE
-		HH.can_attack = TRUE
-		HH.can_range_attack = TRUE
-
-		HH = hands[3]
 		HH.limb = new /datum/limb/small_critter/strong
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handn"
@@ -141,11 +134,30 @@
 		if (src.hand_range_attack(target))
 			return TRUE
 
-/mob/living/critter/robotic/gunbot/players
+/mob/living/critter/robotic/gunbot/strong // Midrounds
 	hand_count = 3
 	health_brute = 75
 	health_burn = 50
 	is_npc = FALSE
+
+	setup_hands()
+		..()
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/abg
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
 
 	get_melee_protection(zone, damage_type)
 		return 6
@@ -160,8 +172,9 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_nuke_bot"
 	eye_light_icon = "mars_nuke_bot_eye"
-	health_brute = 75
-	health_burn = 50
+	hand_count = 3
+	health_brute = 100
+	health_burn = 100
 
 	is_npc = FALSE
 	faction = FACTION_SYNDICATE
@@ -178,6 +191,23 @@
 		HH.can_attack = TRUE
 		HH.can_range_attack = TRUE
 
+		HH = hands[2]
+		HH.limb = new /datum/limb/gun/kinetic/abg
+		HH.name = "ABG Riot Suppression Appendage"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handabg"
+		HH.limb_name = "ABG Riot Suppression Appendage"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
+
+		HH = hands[3]
+		HH.limb = new /datum/limb/small_critter/strong
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "gunbothand"
+		HH.limb_name = "gunbot hands"
+
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
 
@@ -188,6 +218,9 @@
 		return 2.5
 
 /mob/living/critter/robotic/gunbot/syndicate/polaris
+	name = "Unmarked Robot"
+	real_name = "Unmarked Robot"
+	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
 
@@ -196,3 +229,30 @@
 
 	get_ranged_protection()
 		return 2
+
+/mob/living/critter/robotic/gunbot/syndicate/polaris/ketchup
+	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Ketchup."
+
+/mob/living/critter/robotic/gunbot/syndicate/polaris/mustard
+	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard."
+
+/mob/living/critter/robotic/gunbot/light
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "syndibot"
+	hand_count = 2
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.5
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/smg
+		HH.name = "9mm Anti-Personnel Arm"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "hand38"
+		HH.limb_name = "9mm Anti-Personnel Arm"
+		HH.can_hold_items = FALSE
+		HH.can_attack = TRUE
+		HH.can_range_attack = TRUE
