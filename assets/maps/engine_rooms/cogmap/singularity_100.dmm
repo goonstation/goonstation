@@ -438,6 +438,18 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
+"Pq" = (
+/obj/item/gun/kinetic/antisingularity{
+	pixel_x = -16
+	},
+/obj/item/ammo/bullets/antisingularity,
+/obj/item/ammo/bullets/antisingularity,
+/obj/item/ammo/bullets/antisingularity,
+/obj/storage/secure/crate/eng{
+	name = "Singularity buster crate"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/inner)
 "Pw" = (
 /obj/cable/brown{
 	icon_state = "4-8"
@@ -657,7 +669,7 @@ YC
 Mp
 Mp
 SK
-Mp
+Pq
 Mp
 JY
 ZF
