@@ -1,5 +1,8 @@
 
 (t)wed jun 28 23
+(u)tarmunora
+(+)Port-a-puke, wrestling belt no longer in spythief bounty reward pool.
+(+)Spythives spawn in pair in mixed.
 (u)LeahTheTech
 (+)Glowstick trees now glow in soft rainbow colours while ready for harvesting.
 (t)tue jun 27 23
