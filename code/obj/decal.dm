@@ -838,6 +838,6 @@ obj/decal/fakeobjects/teleport_pad
 			target << image
 
 		animate(src, time = 0.5 SECOND, alpha = 255)
-		animate(pixel_y = 60, pixel_x = rand(-64, 0), alpha = 0, time = 2.5 SECONDS, easing = SINE_EASING)
-		SPAWN(3.5 SECONDS)
+		animate(pixel_y = 60, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
+		SPAWN(2 SECONDS)
 			qdel(src)
