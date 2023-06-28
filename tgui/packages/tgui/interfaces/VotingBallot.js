@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-const AdminControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
+const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
   if (!isAdmin) return null;
   return (
     <Stack>
@@ -91,7 +91,7 @@ export const VotingBallot = (props, context) => {
               <Section
                 title={`Poll #${index + 1}`}
                 buttons={
-                  <AdminControls
+                  <PollControls
                     isAdmin={isAdmin}
                     act={act}
                     pollId={poll.id}
