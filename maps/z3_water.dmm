@@ -1847,12 +1847,7 @@
 /obj/machinery/handscanner{
 	pixel_y = 32
 	},
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Ketchup.";
-	name = "Unmarked Robot"
-	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris/ketchup,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fH" = (
@@ -1987,12 +1982,7 @@
 	pixel_y = 32
 	},
 /obj/map/light/green,
-/mob/living/critter/robotic/gunbot{
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn.";
-	icon_state = "mars_nuke_bot";
-	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard.";
-	name = "Unmarked Robot"
-	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris/mustard,
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
 "fZ" = (
