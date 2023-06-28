@@ -820,6 +820,7 @@ obj/decal/fakeobjects/teleport_pad
 	alpha = 0
 	opacity = 0
 	pixel_x = -32
+	pixel_y = 16
 	plane = PLANE_NOSHADOW_ABOVE
 
 	New(var/location = null, var/state = null, var/mob/target = null)
@@ -837,7 +838,11 @@ obj/decal/fakeobjects/teleport_pad
 			var/image/image = image('icons/effects/96x32.dmi', src, new_state)
 			target << image
 
+		var/matrix/original = matrix()
+		original.Scale(0.9)
+		src.transform = original
+
 		animate(src, time = 0.5 SECOND, alpha = 255)
-		animate(pixel_y = 60, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
+		animate(pixel_y = 64, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
 		SPAWN(2 SECONDS)
 			qdel(src)
