@@ -97,6 +97,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 	vending = 2
 	genome = 8
 	force_seed_on_harvest = -1
+	stop_size_scaling = TRUE
 	mutations = list(/datum/plantmutation/creeper/tumbling)
 	//stabilizer is the bad commut for the plant here, toxic the good one
 	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/reagent_adder/toxic)
