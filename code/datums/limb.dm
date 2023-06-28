@@ -213,6 +213,7 @@
 	var/reload_time = 20 SECONDS
 	var/shots = 4
 	var/current_shots = 0
+	var/spread_angle = 15
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
@@ -243,7 +244,7 @@
 			ON_COOLDOWN(src, "[src] reload", src.reload_time)
 
 	proc/shoot_range(atom/target, var/mob/user, params)
-		shoot_projectile_ST_pixel(user, proj, target)
+		shoot_projectile_ST_pixel_spread(user, proj, target, spread_angle = src.spread_angle)
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
@@ -294,6 +295,14 @@
 		current_shots = 3
 		cooldown = 3 SECONDS
 		reload_time = 20 SECONDS
+		muzzle_flash = "muzzle_flash"
+
+	smg
+		proj = new/datum/projectile/bullet/bullet_9mm/smg
+		shots = 2
+		current_shots = 2
+		cooldown = 3 SECONDS
+		reload_time = 10 SECONDS
 		muzzle_flash = "muzzle_flash"
 
 	abg
