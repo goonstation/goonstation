@@ -5,7 +5,7 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
 	custom_gib_handler = /proc/robogibs
-	hand_count = 1
+	hand_count = 3
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
@@ -43,12 +43,6 @@
 					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 		return null
-
-	specific_emote_type(var/act)
-		switch (act)
-			if ("scream")
-				return 2
-		return ..()
 
 	setup_equipment_slots()
 		equipment += new /datum/equipmentHolder/ears/intercom(src)
@@ -166,6 +160,8 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_nuke_bot"
 	eye_light_icon = "mars_nuke_bot_eye"
+	health_brute = 75
+	health_burn = 50
 
 	is_npc = FALSE
 	faction = FACTION_SYNDICATE
@@ -192,8 +188,8 @@
 		return 2.5
 
 /mob/living/critter/robotic/gunbot/syndicate/polaris
-	health_brute = 30
-	health_burn = 30
+	health_brute = 20
+	health_burn = 20
 
 	get_melee_protection(zone, damage_type)
 		return 4

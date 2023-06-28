@@ -225,13 +225,13 @@
 
 	proc/shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		//slightly cursed ref usage because we can't use ON_COOLDOWN with datums
-		if (GET_COOLDOWN(user, "\ref[src] reload") && !current_shots)
+		if (GET_COOLDOWN(src, "[src] reload") && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
 		else if (current_shots <= 0)
 			current_shots = shots
 		if (current_shots > 0)
-			if (ON_COOLDOWN(user, "\ref[src] shoot", src.cooldown))
+			if (ON_COOLDOWN(src, "[src] shoot", src.cooldown))
 				return
 			. = TRUE
 			current_shots--
@@ -240,12 +240,10 @@
 			else
 				src.shoot_range(target, user, params)
 		if (current_shots <= 0)
-			ON_COOLDOWN(user, "\ref[src] reload", src.reload_time)
+			ON_COOLDOWN(src, "[src] reload", src.reload_time)
 
 	proc/shoot_range(atom/target, var/mob/user, params)
-		var/pox = text2num(params["icon-x"]) - 16
-		var/poy = text2num(params["icon-y"]) - 16
-		shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+		shoot_projectile_ST_pixel(user, proj, target)
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
@@ -282,8 +280,8 @@
 		src.point_blank(target, user)
 
 	/// despite the name, this means reloading
-	is_on_cooldown(var/mob/user)
-		return GET_COOLDOWN(user, "\ref[src] reload")
+	is_on_cooldown()
+		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
