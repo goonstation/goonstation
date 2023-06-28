@@ -18,7 +18,6 @@
 	speechverb_stammer = "states"
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
-	metabolizes = 0
 
 	ai_retaliates = FALSE
 	ai_type = /datum/aiHolder/ranged
@@ -148,7 +147,7 @@
 		if (src.hand_range_attack(target))
 			return TRUE
 
-/mob/living/critter/robotic/gunbot/strong
+/mob/living/critter/robotic/gunbot/players
 	hand_count = 3
 	health_brute = 75
 	health_burn = 50
