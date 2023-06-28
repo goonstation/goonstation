@@ -12,9 +12,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
-	health_brute = 20
+	health_brute = 15
 	health_brute_vuln = 1
-	health_burn = 20
+	health_burn = 15
 	health_burn_vuln = 1
 	speechverb_say = "states"
 	speechverb_gasp = "states"

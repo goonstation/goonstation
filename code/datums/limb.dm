@@ -213,7 +213,7 @@
 	var/reload_time = 20 SECONDS
 	var/shots = 4
 	var/current_shots = 0
-	var/spread_angle = 15
+	var/spread_angle = 8
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
@@ -289,20 +289,13 @@
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
+
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
 		current_shots = 3
 		cooldown = 3 SECONDS
 		reload_time = 20 SECONDS
-		muzzle_flash = "muzzle_flash"
-
-	smg
-		proj = new/datum/projectile/bullet/bullet_9mm/smg
-		shots = 2
-		current_shots = 2
-		cooldown = 3 SECONDS
-		reload_time = 10 SECONDS
 		muzzle_flash = "muzzle_flash"
 
 	abg
@@ -312,6 +305,15 @@
 		cooldown = 3 SECONDS
 		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+	smg
+		proj = new/datum/projectile/bullet/bullet_9mm/smg
+		shots = 2
+		current_shots = 2
+		cooldown = 3 SECONDS
+		reload_time = 10 SECONDS
+		muzzle_flash = "muzzle_flash"
+		spread_angle = 15
 
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
@@ -347,6 +349,7 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
+		spread_angle = 0
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
@@ -369,6 +372,7 @@
 		current_shots = 1
 		cooldown = 3 SECONDS
 		reload_time = 3 SECONDS
+		spread_angle = 0
 
 	disruptor
 		proj = new/datum/projectile/disruptor/high
