@@ -154,12 +154,6 @@
 "aF" = (
 /turf/simulated/floor/plating/random,
 /area/space)
-"aG" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_trans";
-	dir = 8
-	},
-/area/space)
 "aH" = (
 /turf/space/cavern,
 /area/space)
@@ -241,16 +235,14 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/space/cavern,
 /area/space)
 "aV" = (
 /obj/structure/girder/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/space)
@@ -281,8 +273,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
@@ -296,22 +287,19 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/airless/engine/caution/north,
 /area/space)
 "bb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "bc" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/pool/perspective{
 	tag = "icon-pool (WEST)";
@@ -580,15 +568,13 @@
 /area/space)
 "bT" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "bU" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -623,12 +609,10 @@
 /area/space)
 "cb" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /obj/fluid_spawner{
 	amount = 2700
@@ -649,12 +633,10 @@
 /area/space)
 "ce" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/fluid_spawner{
 	amount = 2700
@@ -688,15 +670,13 @@
 /area/space)
 "ck" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	
+	dir = 5
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "cl" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -1810,22 +1790,21 @@
 /area/space)
 "fG" = (
 /obj/machinery/beamline{
-	name = "gas extractor (PLACEHOLDER)"
+	name = "gas extractor (PLACEHOLDER)";
+	icon_state = "beamline-0"
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fH" = (
 /obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "fI" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/wall/auto/asteroid/comet/ice_dense,
 /area/space)
@@ -1835,8 +1814,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/space/cavern,
 /area/space)
@@ -1901,8 +1879,7 @@
 "fT" = (
 /obj/grille/catwalk,
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
@@ -1912,8 +1889,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/space/cavern,
 /area/space)
@@ -1925,15 +1901,13 @@
 /area/space)
 "fW" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 6;
-	
+	dir = 6
 	},
 /turf/simulated/floor,
 /area/space)
 "fX" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/space)
@@ -1976,8 +1950,7 @@
 "ge" = (
 /obj/structure/girder/reinforced,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 5;
-	
+	dir = 5
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/space)
@@ -1990,8 +1963,7 @@
 /area/space)
 "gg" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor,
 /area/space)
@@ -2057,15 +2029,13 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
 "gp" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -2074,12 +2044,10 @@
 /area/space)
 "gr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -2097,41 +2065,35 @@
 "gt" = (
 /obj/wingrille_spawn/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 6;
-	
+	dir = 6
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "gu" = (
 /obj/wingrille_spawn/reinforced/full,
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "gv" = (
 /obj/machinery/atmospherics/pipe/tank/oxygen{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "gw" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "gx" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -2193,12 +2155,10 @@
 /area/space)
 "gF" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -2248,12 +2208,10 @@
 /area/space)
 "gN" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -2355,10 +2313,11 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "he" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_trans";
-	dir = 1
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/engine,
 /area/space)
 "hf" = (
 /obj/structure/girder/reinforced,
@@ -2529,10 +2488,11 @@
 	},
 /area/space)
 "hJ" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_trans";
-	dir = 4
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
 	},
+/turf/simulated/floor/airless/engine,
 /area/space)
 "hK" = (
 /turf/simulated/floor/grass/leafy,
@@ -2969,19 +2929,16 @@
 /area/space)
 "iT" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 6;
-	
+	dir = 6
 	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
-	dir = 5;
-	
+	dir = 5
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -3190,7 +3147,8 @@
 /area/space)
 "jz" = (
 /obj/machinery/beamline{
-	name = "gas extractor (PLACEHOLDER)"
+	name = "gas extractor (PLACEHOLDER)";
+	icon_state = "beamline-0"
 	},
 /turf/simulated/floor,
 /area/space)
@@ -3362,8 +3320,7 @@
 	},
 /obj/disposalpipe/trunk/east,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -3540,8 +3497,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -3552,8 +3508,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -3564,56 +3519,47 @@
 	},
 /obj/disposalpipe/trunk/west,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "kw" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/fluid_spawner{
 	amount = 2700
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 9;
-	
+	dir = 9
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "kx" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	
+	dir = 5
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "ky" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/pool,
 /area/space)
 "kz" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5;
-	
+	dir = 5
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /turf/simulated/floor/pool,
 /area/space)
@@ -4442,7 +4388,8 @@
 /turf/unsimulated/iomoon/plating,
 /area/space)
 "ng" = (
-/turf/unsimulated/wall/setpieces/bunker_grille{
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/terra8.dmi';
 	icon_state = "grille-burly";
 	dir = 8
 	},
@@ -4787,15 +4734,21 @@
 /turf/simulated/floor/airless/plating,
 /area/space)
 "oc" = (
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_floor2"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 1
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/space)
 "od" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_floor2"
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/space)
 "oe" = (
@@ -5660,7 +5613,10 @@
 	},
 /area/space)
 "qx" = (
-/turf/unsimulated/wall/setpieces/bunker_grille,
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/terra8.dmi';
+	icon_state = "grille-burly"
+	},
 /area/space)
 "qy" = (
 /obj/decal/fakeobjects/operatorconsole,
@@ -7320,12 +7276,6 @@
 	icon_state = "diamondtile"
 	},
 /area/space)
-"uA" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
-	dir = 9
-	},
-/area/space)
 "uB" = (
 /obj/vehicle/forklift,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -7369,16 +7319,8 @@
 /area/space)
 "uG" = (
 /obj/table/reinforced/auto,
-/turf/simulated/shuttle/wall{
-	dir = 1;
-	icon_state = "wall3_floor2"
-	},
-/area/space)
-"uH" = (
-/obj/table/reinforced/auto,
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_floor2"
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/space)
 "uI" = (
@@ -7402,12 +7344,6 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/longtile/black,
-/area/space)
-"uL" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "diagonalWall3";
-	dir = 6
-	},
 /area/space)
 "uM" = (
 /obj/machinery/light/runway_light,
@@ -7435,7 +7371,10 @@
 /area/space)
 "uQ" = (
 /obj/machinery/neosmelter,
-/turf/unsimulated/wall/setpieces/bunker_grille,
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/terra8.dmi';
+	icon_state = "grille-burly"
+	},
 /area/space)
 "uR" = (
 /obj/machinery/door/airlock/classic,
@@ -7454,7 +7393,8 @@
 	icon_state = "xtra_bigstripe-edge";
 	dir = 1
 	},
-/turf/unsimulated/wall/setpieces/bunker_grille{
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/terra8.dmi';
 	icon_state = "grille-burly";
 	dir = 8
 	},
@@ -7661,6 +7601,53 @@
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
+	},
+/area/space)
+"yp" = (
+/turf/simulated/floor/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "Floor3"
+	},
+/area/space)
+"JK" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
+"MA" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "Floor3"
+	},
+/area/space)
+"MC" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
+"UV" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/airless/engine,
+/area/space)
+"ZC" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/shuttle{
+	icon = 'icons/turf/floors.dmi';
+	icon_state = "Floor3"
 	},
 /area/space)
 
@@ -52712,7 +52699,7 @@ hg
 hg
 nZ
 hg
-st
+sN
 hj
 og
 eT
@@ -53000,9 +52987,9 @@ aq
 eT
 mW
 hj
-tf
+MC
 hg
-ux
+ZC
 kb
 kb
 qm
@@ -53317,7 +53304,7 @@ nY
 nY
 nY
 oc
-st
+sN
 hj
 hj
 iG
@@ -53612,7 +53599,7 @@ kb
 qm
 qu
 kb
-sK
+yp
 hg
 uO
 nY
@@ -54820,14 +54807,14 @@ kb
 qm
 qu
 kb
-uL
+yp
 hg
 nY
 nY
 nY
 nY
 uE
-uH
+uG
 hj
 hj
 hj
@@ -55129,7 +55116,7 @@ nY
 nY
 nY
 od
-hJ
+sV
 hj
 hj
 iM
@@ -55418,7 +55405,7 @@ mW
 hj
 he
 hg
-st
+MA
 kb
 kb
 qm
@@ -55732,7 +55719,7 @@ hg
 hg
 nZ
 hg
-hJ
+sV
 hj
 og
 eT
@@ -75657,7 +75644,7 @@ hg
 hg
 nZ
 hg
-ur
+sN
 hj
 of
 is
@@ -76250,7 +76237,7 @@ aq
 gM
 mW
 hj
-tf
+MC
 hg
 kb
 kb
@@ -76261,7 +76248,7 @@ hq
 nY
 nY
 nY
-oc
+JK
 hj
 hj
 hj
@@ -77458,7 +77445,7 @@ aq
 gM
 mW
 hj
-uL
+he
 hg
 kb
 kb
@@ -77469,7 +77456,7 @@ hq
 nY
 nY
 nY
-aG
+od
 hj
 hj
 hj
@@ -78073,7 +78060,7 @@ hg
 hg
 nZ
 hg
-uA
+sV
 hj
 iH
 is
@@ -84397,11 +84384,11 @@ aq
 eS
 hj
 kA
-tf
+qX
 hj
 hp
 hp
-ur
+sN
 kA
 hj
 fg
@@ -84419,11 +84406,11 @@ aq
 eS
 hj
 kA
-tf
+qX
 hj
 hp
 hp
-ur
+UV
 kA
 hj
 fg
@@ -84697,7 +84684,7 @@ as
 aq
 aq
 eS
-aG
+qX
 bS
 ei
 ei
@@ -84705,7 +84692,7 @@ ld
 ei
 ei
 le
-ur
+sN
 fg
 aq
 aq
@@ -84719,7 +84706,7 @@ aq
 aq
 aq
 eS
-aG
+qX
 bS
 ei
 ei
@@ -84727,7 +84714,7 @@ ld
 ei
 ei
 le
-ur
+UV
 fg
 aq
 aq
