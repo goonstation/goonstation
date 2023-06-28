@@ -5,13 +5,13 @@
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_sec_bot"
 	custom_gib_handler = /proc/robogibs
-	hand_count = 3
+	hand_count = 1
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
-	health_brute = 75
+	health_brute = 20
 	health_brute_vuln = 1
-	health_burn = 50
+	health_burn = 20
 	health_burn_vuln = 1
 	speechverb_say = "states"
 	speechverb_gasp = "states"
@@ -19,6 +19,12 @@
 	speechverb_exclaim = "declares"
 	speechverb_ask = "queries"
 	metabolizes = 0
+
+	ai_retaliates = FALSE
+	ai_type = /datum/aiHolder/ranged
+	faction = FACTION_DERELICT
+	is_npc = TRUE
+
 	var/eye_light_icon = "mars_sec_bot_eye"
 
 	New()
@@ -29,15 +35,7 @@
 		src.UpdateOverlays(eye_light, "eye_light")
 
 	death(var/gibbed)
-		..(gibbed, 0)
-		if (!gibbed)
-			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			make_cleanable(/obj/decal/cleanable/oil,src.loc)
-			ghostize()
-			qdel(src)
-		else
-			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			make_cleanable(/obj/decal/cleanable/oil,src.loc)
+		..(gibbed = TRUE, do_drop_equipment = FALSE)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
@@ -90,10 +88,10 @@
 		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
 
 	get_melee_protection(zone, damage_type)
-		return 6
+		return 3
 
 	get_ranged_protection()
-		return 2
+		return 1.5
 
 	get_disorient_protection()
 		return max(..(), 80)
@@ -150,17 +148,17 @@
 		if (src.hand_range_attack(target))
 			return TRUE
 
-
-/mob/living/critter/robotic/gunbot/AI
-	health_brute = 20
-	health_burn = 20
-	is_npc = TRUE
+/mob/living/critter/robotic/gunbot/strong
+	hand_count = 3
+	health_brute = 75
+	health_burn = 50
+	is_npc = FALSE
 
 	get_melee_protection(zone, damage_type)
-		return 3
+		return 6
 
 	get_ranged_protection()
-		return 1.5
+		return 2
 
 /mob/living/critter/robotic/gunbot/syndicate
 	name = "Syndicate robot"
@@ -170,6 +168,7 @@
 	icon_state = "mars_nuke_bot"
 	eye_light_icon = "mars_nuke_bot_eye"
 
+	is_npc = FALSE
 	faction = FACTION_SYNDICATE
 
 	setup_hands()
@@ -193,10 +192,9 @@
 	get_ranged_protection()
 		return 2.5
 
-/mob/living/critter/robotic/gunbot/syndicate/AI
+/mob/living/critter/robotic/gunbot/syndicate/polaris
 	health_brute = 30
 	health_burn = 30
-	is_npc = TRUE
 
 	get_melee_protection(zone, damage_type)
 		return 4
