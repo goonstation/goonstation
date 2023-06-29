@@ -197,6 +197,8 @@
 
 				.["custom_names"] = custom_names
 
+				.["target_card_look"] = src.modify.icon_state
+
 
 				var/list/civilian_jobs = list()
 				var/list/engineering_jobs = list()
@@ -290,12 +292,12 @@
 				)
 
 				.["icons"] = list(
-					list(style = "none", name = "Plain", icon = getCardBase64Img("id")),
-					list(style = "blue", name = "Civilian", icon = getCardBase64Img("id_civ")),
-					list(style = "yellow", name = "Engineering", icon = getCardBase64Img("id_eng")),
-					list(style = "purple", name = "Research", icon = getCardBase64Img("id_res")),
-					list(style = "red", name = "Security", icon = getCardBase64Img("id_sec")),
-					list(style = "green", name = "Command", icon = getCardBase64Img("id_com")),
+					list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+					list(style = "blue", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
+					list(style = "yellow", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
+					list(style = "purple", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
+					list(style = "red", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
+					list(style = "green", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
 				)
 
 				user.unlock_medal("Identity Theft", 1)
@@ -398,6 +400,7 @@
 							src.modify.access -= access_type
 						else
 							src.modify.access += access_type
+						src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 						logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
 
 			if ("pronouns")
@@ -440,6 +443,8 @@
 					if (params["colour"])
 						update_card_colour(params["colour"])
 
+					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
+
 			if ("reg")
 				if (src.authenticated)
 					var/t2 = src.modify
@@ -450,6 +455,8 @@
 					if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
 						logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 						src.modify.registered = t1
+
+					src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 
 					playsound(src.loc, "keyboard", 50, 1, -15)
 
@@ -503,6 +510,7 @@
 				src.modify.assignment = src.custom_names[slot]
 				var/list/selected_access_list = src.custom_access_list[slot]
 				src.modify.access = selected_access_list.Copy()
+				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 			if ("modify")
 				src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"

@@ -63,7 +63,7 @@ const DeptBox = (props, context) => {
 
 export const IDComputer = (_props, context) => {
   const { act, data } = useBackend(context);
-  const { mode, manifest, target_name, target_owner, target_rank, scan_name, pronouns, custom_names,
+  const { mode, manifest, target_name, target_owner, target_rank, target_card_look, scan_name, pronouns, custom_names,
     standard_jobs, accesses_by_area, icons } = data;
 
   return (
@@ -174,7 +174,8 @@ export const IDComputer = (_props, context) => {
 
                   <Section title="Custom Card Look">
                     {icons.map(icon => (
-                      <Button key={icon.style} onClick={() => act("colour", { colour: icon.style })}>
+                      <Button key={icon.style} onClick={() => act("colour", { colour: icon.style })}
+                        selected={icon.card_look === target_card_look}>
                         <Image
                           verticalAlign="middle"
                           my="0.2rem"
