@@ -131,6 +131,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		*/
 		var/ejected_beaker = null
 		if (src.beaker?.loc == src)
+			beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
 
@@ -146,6 +147,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
+		B.reagents?.handle_reactions()
 		src.UpdateIcon()
 		src.ui_interact(user)
 
@@ -315,6 +317,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					if(beaker.loc == src)
 						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
+							beaker.reagents?.handle_reactions()
 						else
 							beaker.set_loc(src.loc)
 					beaker = null

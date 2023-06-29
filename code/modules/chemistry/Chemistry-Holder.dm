@@ -468,8 +468,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 					if (!old_reactions.Find(C))
 						var/turf/T = 0
-						if(C.temperature_change)
-							src.total_temperature += C.temperature_change
 						if (my_atom)
 							for(var/mob/living/M in AIviewers(7, get_turf(my_atom)) )	//Fuck you, ghosts
 								if (C.mix_phrase) boutput(M, "<span class='notice'>[bicon(my_atom)] [C.mix_phrase]</span>")
@@ -529,6 +527,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			if (C.result_amount <= 0)
 				src.active_reactions -= C
 				continue
+			if(C.temperature_change)
+				src.total_temperature += C.temperature_change
 			var/speed = C.reaction_speed
 			for (var/reagent in C.required_reagents)
 				var/required_amount = C.required_reagents[reagent] * speed / C.result_amount
