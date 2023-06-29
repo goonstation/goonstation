@@ -707,14 +707,18 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		var/datum/handHolder/HH = get_active_hand()
 		if (!L || !HH)
 			return
-		if (!HH.can_attack && (HH.can_range_attack || HH.can_special_attack()))
-			hand_range_attack(target, params)
-		else if (HH.can_attack)
+		if ((HH.can_range_attack || HH.can_special_attack()))
+			if (BOUNDS_DIST(src, target) > 0)
+				hand_range_attack(target, params)
+				return
+		if (HH.can_attack)
 			if (ismob(target))
 				if (a_intent != INTENT_HELP)
 					if (mob_flags & AT_GUNPOINT)
 						for(var/obj/item/grab/gunpoint/G in grabbed_by)
 							G.shoot()
+				HH.set_cooldown_overlay()
+				src.lastattacked = target
 				switch (a_intent)
 					if (INTENT_HELP)
 						if (can_help)
@@ -1379,7 +1383,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	/// How the critter should attack from range (Only applicable for ranged limbs)
 	proc/critter_range_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
-		src.hand_range_attack(target)
+		src.hand_attack(target)
 		return TRUE
 
 	///How the critter should use abilities, return TRUE to indicate ability usage success

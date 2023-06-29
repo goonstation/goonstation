@@ -63,12 +63,10 @@
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
-		user.lastattacked = target
 
 	proc/disarm(mob/living/target, var/mob/living/user)
 		if (special_next)
@@ -76,7 +74,6 @@
 			special_next = 0
 		else
 			user.disarm(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/grab(mob/living/target, var/mob/living/user)
@@ -86,7 +83,6 @@
 		if (issilicon(target))
 			return
 		user.grab_other(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	//calls attack specials if we got em
@@ -225,7 +221,6 @@
 		src.shoot(target, user, TRUE)
 
 	proc/shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		//slightly cursed ref usage because we can't use ON_COOLDOWN with datums
 		if (GET_COOLDOWN(src, "[src] reload") && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
