@@ -1574,8 +1574,8 @@ var/global/mob/twitch_mob = 0
 						for(var/i = 1, i <= length(memory_info), i++)
 							meminfos += field_names[i] + ": " + memory_info[i]
 						fdel(statm_file)
-					catch(var/exception/e)
-						stack_trace("[e.name]\n[e.desc]")
+					catch(var/exception/e2)
+						stack_trace("[e2.name]\n[e2.desc]")
 					if(length(meminfos))
 						ircmsg["meminfo"] = jointext(meminfos, "\n")
 				return ircbot.response(ircmsg)
