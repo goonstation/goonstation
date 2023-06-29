@@ -260,6 +260,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	item = /obj/item/storage/belt/wrestling
 	cost = 7
 	desc = "A haunted antique wrestling belt, imbued with the spirits of wrestlers past. Wearing it unlocks a number of wrestling moves, which can be accessed in a separate command tab."
+	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/generic/spy_sticker_kit
 	name = "Spy Sticker Kit"
@@ -917,8 +918,10 @@ This is basically useless for anyone but miners.
 	name = "Port-a-Puke"
 	item = /obj/machinery/portapuke
 	cost = 7
+	not_in_crates = 1
 	desc = "An experimental torture chamber that will make any human placed inside puke until they die!"
 	job = list("Janitor")
+	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/monkey_barrel
 	name = "Barrel-O-Monkeys"

@@ -43,7 +43,7 @@
 	var/image/static_image = null
 	var/in_point_mode = 0
 	var/butt_op_stage = 0.0 // sigh
-	var/dna_to_absorb = 10
+	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
@@ -125,6 +125,8 @@
 
 	var/const/singing_prefix = "%"
 
+	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	src.create_mob_silhouette()
 	..()
@@ -138,6 +140,9 @@
 		src.stamina_bar = new(src)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
+
+	if (src.isFlying)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE

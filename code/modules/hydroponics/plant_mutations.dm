@@ -60,6 +60,9 @@
 			attacked_proc_override = 0
 		return lasterr
 
+	proc/HYPmatured_proc_M(var/obj/machinery/plantpot/POT)
+		return
+
 // Tomato Mutations
 
 /datum/plantmutation/tomato/incendiary
@@ -744,6 +747,15 @@
 	name_prefix = "Glowstick "
 	iconmod = "TreeGlow"
 	crop = /obj/item/device/light/glowstick
+
+	HYPmatured_proc_M(obj/machinery/plantpot/POT)
+		. = ..()
+		POT.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
+		animate_rainbow_glow(POT.simple_light, 5 SECONDS, 10 SECONDS)
+
+	HYPharvested_proc_M(obj/machinery/plantpot/POT, mob/user)
+		. = ..()
+		POT.remove_simple_light("glowstick_tree")
 
 //peanuuts
 

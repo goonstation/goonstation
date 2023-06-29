@@ -3446,12 +3446,40 @@ datum
 			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
-		ecoli // needed for filgrastim vOv
-			name = "E.Coli Bacteria"
-			id = "e.coli"
+		ecoli // hobo-chem recipe to disconnect E.Coli from pathology chems
+			name = "contaminated food E.Coli"
+			id = "contaminated food E.Coli"
 			result = "e.coli"
-			required_reagents = list("poo" = 1, "bacterialmedium" = 1)
+			required_reagents = list("sewage" = 5, "cholesterol" = 4)
 			result_amount = 1
+			instant = 0 // bacteria needs some time to grow in this medium
+			reaction_speed = 0.25
+			mix_phrase = "An unbearable stench emancipates from the mixture as it slowly coagulates."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				// sewage is a catalyst and does not get used in the process
+				holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature)
+				// Byproduct is some nutrients from the decomposted egg and some bacterials toxins
+				holder.add_reagent("poo", created_volume * 2,,holder.total_temperature)
+				holder.add_reagent("toxin", created_volume,,holder.total_temperature)
+				// the decomposition process create some unbearable stench
+				var/turf/location = pick(holder.covered_turf())
+				location.fluid_react_single("miasma", created_volume * 4, airborne = 1)
+
+
+		ecoli/ecoli2
+			name = "E.Coli 2"
+			id = "E.Coli 2"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "meat_slurry" = 4)
+
+		ecoli/ecoli3
+			name = "E.Coli 3"
+			id = "E.Coli 3"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "beff" = 4)
+
 
 		catdrugs
 			name = "Cat Drugs"
@@ -3776,7 +3804,18 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
+						var/critter = pick(
+						/mob/living/critter/small_animal/cockroach,
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/cat,
+						/mob/living/critter/small_animal/mouse,
+						/mob/living/critter/small_animal/wasp,
+						/mob/living/critter/small_animal/bird/owl,
+						/mob/living/critter/small_animal/bird/goose,
+						/mob/living/critter/small_animal/bird/goose/swan,
+						/obj/critter/domestic_bee,
+						/mob/living/critter/small_animal/walrus,
+						/mob/living/critter/small_animal/seal)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)

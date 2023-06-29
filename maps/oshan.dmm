@@ -12284,10 +12284,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
-"aGk" = (
-/obj/machinery/chem_heater,
-/turf/simulated/floor/specialroom/medbay,
-/area/station/medical/medbay/pharmacy)
 "aGl" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/disposal,
@@ -13166,11 +13162,6 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/purple/checker,
-/area/station/science/chemistry)
-"aIA" = (
-/obj/machinery/chem_heater,
-/obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aID" = (
@@ -14136,11 +14127,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/inner)
-"aLb" = (
-/obj/machinery/power/apc/autoname_east,
-/obj/cable,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/northwest)
 "aLc" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 4
@@ -17661,10 +17647,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/iss)
-"aVN" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/grass,
-/area/space)
 "aVO" = (
 /obj/computer3frame{
 	anchored = 1;
@@ -30746,10 +30728,6 @@
 "bJA" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
-"bJB" = (
-/obj/critter/walrus,
-/turf/simulated/floor/grass,
-/area/space)
 "bJC" = (
 /obj/plasticflaps,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -31840,14 +31818,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"bMX" = (
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/critter/boogiebot,
-/turf/simulated/floor/black,
-/area/station/crew_quarters/jazz)
 "bMY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -40349,6 +40319,10 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"cqq" = (
+/obj/machinery/light/incandescent/blueish,
+/turf/simulated/floor,
+/area/station/maintenance/northwest)
 "crW" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -40532,6 +40506,9 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"cSf" = (
+/turf/simulated/floor,
+/area/station/maintenance/northwest)
 "cSE" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	req_access_txt = "1"
@@ -40668,6 +40645,11 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
+"doD" = (
+/obj/machinery/chem_heater/chemistry,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/purple/checker,
+/area/station/science/chemistry)
 "doK" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
@@ -40743,6 +40725,10 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"dzh" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/grass,
+/area/space)
 "dAu" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/item/device/radio/intercom/security{
@@ -41466,6 +41452,10 @@
 	name = "rusty airlock"
 	},
 /turf/simulated/floor/plating/damaged3,
+/area/space)
+"fzL" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/grass,
 /area/space)
 "fBA" = (
 /obj/table/reinforced/auto{
@@ -43623,6 +43613,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/crew_quarters/quartersA)
+"lXQ" = (
+/obj/submachine/fishing_upload_terminal/portable,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "lYX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -44459,6 +44453,21 @@
 /obj/machinery/light_switch/south,
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"oMb" = (
+/obj/machinery/door/airlock/pyro/alt{
+	dir = 4;
+	name = "Hydroponics"
+	},
+/obj/access_spawn/hydro,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "oOi" = (
 /obj/rack,
 /obj/item/furniture_parts/table/wood,
@@ -45541,6 +45550,11 @@
 /obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"sDQ" = (
+/obj/cable,
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/northwest)
 "sEn" = (
 /obj/machinery/light/incandescent/harsh,
 /obj/decal/stripe_caution,
@@ -45573,6 +45587,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
+"sSO" = (
+/obj/machinery/chem_heater/chemistry,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "sTn" = (
 /obj/machinery/door/unpowered/martian,
 /obj/decal/aliencomputer{
@@ -45632,6 +45650,10 @@
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/circuit/green,
 /area/station/turret_protected/Zeta)
+"taN" = (
+/obj/submachine/weapon_vendor/fishing/portable,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "tbh" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Catering Storage"
@@ -46247,6 +46269,10 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
+"vAC" = (
+/obj/fishing_pool/portable,
+/turf/simulated/floor/green,
+/area/station/maintenance/northwest)
 "vCx" = (
 /obj/machinery/conveyor/EN/carousel,
 /turf/simulated/floor/shuttlebay,
@@ -46546,6 +46572,14 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
+"wCn" = (
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/mob/living/critter/small_animal/boogiebot,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/jazz)
 "wFh" = (
 /obj/machinery/disposal/morgue,
 /obj/disposalpipe/trunk/morgue{
@@ -77757,11 +77791,11 @@ aLK
 iUC
 bWp
 agY
-agY
-agY
-agY
 cfW
 cfW
+aJP
+fRB
+aKE
 aLL
 nkh
 aMf
@@ -78362,10 +78396,10 @@ aUD
 bWp
 agY
 agY
-agY
-cfB
-agY
-agY
+aia
+cqq
+cSf
+taN
 ubH
 aLF
 aMf
@@ -78664,10 +78698,10 @@ aIb
 bWp
 agY
 agY
-agY
-agY
-agY
-agY
+aia
+cSf
+cSf
+lXQ
 ubH
 aLF
 aMf
@@ -78965,11 +78999,11 @@ aBo
 bWP
 aIc
 nFR
-nFR
-aLb
-aJP
-fRB
-aKE
+sDQ
+aia
+cSf
+cSf
+vAC
 ubH
 bgj
 aMf
@@ -79270,7 +79304,7 @@ aia
 aia
 aia
 aLD
-aLD
+oMb
 aLD
 aLL
 aLL
@@ -81738,7 +81772,7 @@ bIK
 bJD
 bKr
 bLT
-bMX
+wCn
 bOh
 bPk
 bJD
@@ -88309,7 +88343,7 @@ ana
 bWj
 bWj
 aBl
-aGk
+sSO
 cgy
 haX
 ayt
@@ -109469,7 +109503,7 @@ aGo
 alD
 aHU
 aGp
-aIA
+doD
 aFl
 aJd
 aoj
@@ -130760,9 +130794,9 @@ aVl
 aVl
 bMl
 aVl
-bJB
+dzh
 aVl
-aVN
+fzL
 aVl
 buR
 buR
@@ -131362,7 +131396,7 @@ buR
 aVl
 aVl
 aVl
-aVN
+fzL
 aVl
 aVl
 bKW

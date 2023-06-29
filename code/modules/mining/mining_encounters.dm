@@ -244,9 +244,9 @@
 			/obj/storage/crate/trench_loot/weapons4,
 			)
 	var/static/list/enemies = list(
-			/mob/living/critter/small_animal/trilobite/ai_controlled,
-			/mob/living/critter/small_animal/hallucigenia/ai_controlled,
-			/mob/living/critter/small_animal/pikaia/ai_controlled
+			/mob/living/critter/small_animal/trilobite,
+			/mob/living/critter/small_animal/hallucigenia,
+			/mob/living/critter/small_animal/pikaia
 	)
 
 	generate(var/obj/magnet_target_marker/target)

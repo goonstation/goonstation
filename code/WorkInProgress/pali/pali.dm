@@ -185,7 +185,7 @@
 	pixel_x = -16
 	pixel_y = -16
 	var/number_left = 5
-	var/critter_type = /obj/critter/zombie
+	var/critter_type = /mob/living/critter/zombie
 
 /obj/hellportal/New()
 	..()
@@ -586,3 +586,31 @@ ADMIN_INTERACT_PROCS(/obj/portal/to_space, proc/give_counter)
 	New()
 		. = ..()
 		give_counter()
+
+
+/mob/living/carbon/human/npc/monkey/extremely_fast
+	blood_id = "triplemeth"
+	var/fastness_factor = 5 //! Expected value of number of ai_process() calls per tick
+
+	New()
+		..()
+		src.AddComponent(/datum/component/afterimage, 20, 0.03 SECONDS)
+		src.name = "\proper extremely fast [src.name]"
+		src.real_name = src.name
+
+		var/datum/movement_modifier/mod = new
+		mod.multiplicative_slowdown = 0.1
+		src.movement_modifiers += mod
+
+	ai_init()
+		. = ..()
+		src.ai_movedelay = 1
+		src.ai_actiondelay = 1
+
+	ai_process()
+		. = ..()
+		src.ai_actiondelay = 0
+
+		if(prob(100 * (1 - 1 / src.fastness_factor)))
+			SPAWN(0.2 SECONDS)
+				src.ai_process()

@@ -2037,7 +2037,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "aWy" = (
-/obj/machinery/vending/hydroponics,
+/obj/submachine/weapon_vendor/fishing/portable,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "aWz" = (
@@ -3892,9 +3892,9 @@
 /area/station/crew_quarters/kitchen)
 "bIs" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -10;
+	id = "nadirstall_e3";
 	pixel_x = 10;
-	id = "nadirstall_e3"
+	pixel_y = -10
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_east)
@@ -4463,7 +4463,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
 "bVY" = (
-/obj/machinery/plantpot,
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/black/grime,
 /area/station/hydroponics{
 	do_not_irradiate = 1;
@@ -5331,7 +5331,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "crB" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/engine/caution/south,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -8377,6 +8377,14 @@
 	dir = 4
 	},
 /area/station/engine/elect)
+"dLc" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
+	},
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "dLd" = (
 /obj/item/device/radio/intercom/AI{
 	dir = 8
@@ -8493,18 +8501,9 @@
 	},
 /area/station/security/brig)
 "dOQ" = (
-/obj/storage/secure/crate/eng{
-	name = "Fissile Materials Crate"
-	},
-/obj/access_spawn/engineering_engine,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/obj/item/raw_material/cerenkite,
-/turf/simulated/floor/engine/caution/misc{
-	dir = 6
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 4
 	},
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -9062,8 +9061,8 @@
 	},
 /obj/machinery/drainage,
 /obj/sign_switch/north{
-	pixel_y = 22;
-	id = "nadirstall_sci"
+	id = "nadirstall_sci";
+	pixel_y = 22
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/science/lobby{
@@ -9789,7 +9788,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "etS" = (
-/obj/machinery/plantpot,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -10320,14 +10318,14 @@
 /area/station/engine/core/nuclear)
 "eEC" = (
 /obj/machinery/illuminated_sign/occupancy{
+	id = "nadirstall_shw2";
 	pixel_x = 11;
-	pixel_y = -6;
-	id = "nadirstall_shw2"
+	pixel_y = -6
 	},
 /obj/machinery/illuminated_sign/occupancy{
+	id = "nadirstall_shw1";
 	pixel_x = 11;
-	pixel_y = 8;
-	id = "nadirstall_shw1"
+	pixel_y = 8
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_east)
@@ -10820,6 +10818,13 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"eOg" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "eOp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10848,7 +10853,7 @@
 /turf/simulated/floor/grey/side,
 /area/station/crew_quarters/lounge)
 "eOY" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/engine,
 /area/station/medical/medbay/pharmacy)
 "eOZ" = (
@@ -12291,7 +12296,6 @@
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "fvZ" = (
-/obj/machinery/plantpot,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
 /area/station/hydroponics{
@@ -14303,9 +14307,9 @@
 /area/station/crew_quarters/courtroom)
 "gpK" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -10;
+	id = "nadirstall_e1";
 	pixel_x = 10;
-	id = "nadirstall_e1"
+	pixel_y = -10
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_east)
@@ -17383,7 +17387,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
@@ -17721,14 +17725,14 @@
 /area/station/hallway/primary/southeast)
 "hFq" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -10;
+	id = "nadirstall_nw1";
 	pixel_x = -10;
-	id = "nadirstall_nw1"
+	pixel_y = -10
 	},
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -10;
+	id = "nadirstall_nw2";
 	pixel_x = 10;
-	id = "nadirstall_nw2"
+	pixel_y = -10
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/showers)
@@ -18143,7 +18147,7 @@
 	},
 /area/station/bridge)
 "hQc" = (
-/obj/machinery/hydro_growlamp,
+/obj/fishing_pool/portable,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "hQg" = (
@@ -20024,8 +20028,8 @@
 /area/station/crew_quarters/barber_shop)
 "iAU" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_x = -11;
-	id = "nadirstall_sec2"
+	id = "nadirstall_sec2";
+	pixel_x = -11
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
@@ -21060,10 +21064,8 @@
 	},
 /area/station/hallway/secondary/west)
 "jbY" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 1
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine/caution/south,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
@@ -21395,9 +21397,9 @@
 	})
 "jiW" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -10;
+	id = "nadirstall_e2";
 	pixel_x = 10;
-	id = "nadirstall_e2"
+	pixel_y = -10
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/quarters_east)
@@ -23908,12 +23910,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "klL" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/machinery/plantpot,
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "kmb" = (
@@ -24245,7 +24242,6 @@
 	},
 /area/station/crew_quarters/quarters_east)
 "kry" = (
-/obj/machinery/plantpot,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -25858,8 +25854,9 @@
 /area/station/maintenance/disposal)
 "kZS" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 6
+	},
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/northeast)
 "lag" = (
@@ -26335,6 +26332,20 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"ljH" = (
+/obj/storage/secure/crate/eng{
+	name = "Fissile Materials Crate"
+	},
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/obj/item/raw_material/cerenkite,
+/turf/simulated/floor/yellowblack,
+/area/station/engine/monitoring{
+	name = "Nuclear Control Room"
+	})
 "ljS" = (
 /turf/space/fluid/warp_z5/edge,
 /area/space)
@@ -26601,10 +26612,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/eva)
-"loU" = (
-/obj/machinery/plantpot,
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "lpa" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/cable{
@@ -26958,10 +26965,8 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "lwL" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
-/turf/simulated/floor/engine/caution/corner{
-	dir = 4
-	},
+/obj/machinery/portable_atmospherics/canister/carbon_dioxide,
+/turf/simulated/floor/engine/caution/north,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
 	})
@@ -27856,9 +27861,9 @@
 /obj/machinery/power/data_terminal,
 /obj/item/storage/wall{
 	name = "bath cabinet";
+	pixel_x = 7;
 	pixel_y = 32;
-	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel);
-	pixel_x = 7
+	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
 /area/station/bridge/captain)
@@ -30687,12 +30692,11 @@
 /area/station/crew_quarters/quarters_east)
 "nab" = (
 /obj/table/reinforced/auto,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 6
-	},
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/item/paper_bin,
+/obj/item/pen,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -34590,9 +34594,9 @@
 /area/station/hallway/secondary/exit)
 "oNZ" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_y = -4;
 	id = "nadirstall_sci";
-	pixel_x = -11
+	pixel_x = -11;
+	pixel_y = -4
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/lobby{
@@ -35694,8 +35698,8 @@
 /area/station/hallway/primary/northeast)
 "poP" = (
 /obj/machinery/illuminated_sign/occupancy{
-	pixel_x = 11;
-	id = "nadirstall_sec1"
+	id = "nadirstall_sec1";
+	pixel_x = 11
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/equipment)
@@ -37114,8 +37118,8 @@
 	pixel_x = -12
 	},
 /obj/sign_switch/north{
-	pixel_x = 11;
-	id = "nadirstall_shw2"
+	id = "nadirstall_shw2";
+	pixel_x = 11
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -41390,8 +41394,8 @@
 	pixel_x = -12
 	},
 /obj/sign_switch/north{
-	pixel_x = 11;
-	id = "nadirstall_shw1"
+	id = "nadirstall_shw1";
+	pixel_x = 11
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
@@ -48669,7 +48673,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "vkt" = (
-/obj/machinery/chem_heater,
+/obj/machinery/chem_heater/chemistry,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/chemistry)
 "vkv" = (
@@ -49769,7 +49773,7 @@
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
 "vJu" = (
-/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/monitoring{
 	name = "Nuclear Control Room"
@@ -50757,8 +50761,8 @@
 	pixel_y = 21
 	},
 /obj/sign_switch/west{
-	pixel_x = -21;
-	id = "nadirstall_sec2"
+	id = "nadirstall_sec2";
+	pixel_x = -21
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/equipment)
@@ -51859,12 +51863,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/crematorium)
 "wJP" = (
-/obj/machinery/plantpot,
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/submachine/fishing_upload_terminal/portable,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "wJT" = (
@@ -53376,8 +53380,8 @@
 	dir = 4
 	},
 /obj/sign_switch/north{
-	pixel_x = 14;
-	id = "nadirstall_sec1"
+	id = "nadirstall_sec1";
+	pixel_x = 14
 	},
 /obj/decoration/toiletholder{
 	pixel_y = 32
@@ -53823,6 +53827,9 @@
 "xCS" = (
 /obj/stool/chair{
 	dir = 8
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
 	},
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/northeast)
@@ -55187,17 +55194,6 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
-"yiB" = (
-/obj/machinery/plantpot{
-	anchored = 1
-	},
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
-/turf/simulated/floor/greenblack{
-	dir = 1
-	},
-/area/station/hallway/primary/southeast)
 "yiG" = (
 /obj/storage/cart/trash,
 /turf/simulated/floor/industrial,
@@ -93885,8 +93881,8 @@ hOK
 ajV
 ajV
 ajV
-loU
-loU
+ajV
+ajV
 kry
 irP
 jdK
@@ -112627,9 +112623,9 @@ ibV
 ocD
 mvp
 jQr
-sSm
+ljH
 dOQ
-ocD
+dLc
 ocD
 vEo
 fdg
@@ -112932,8 +112928,8 @@ ocD
 ocD
 ocD
 ocD
-yiB
-vEo
+ocD
+eOg
 fdg
 rZb
 vWX
