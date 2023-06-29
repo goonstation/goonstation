@@ -1,4 +1,10 @@
 
+(t)thu jun 29 23
+(u)Tyrant
+(p)14684
+(e)🗺💅|A-Mapping, C-QoL
+(+)Genetics in Oshan now has a disposal chute.
+(+)Robotics Storage in Oshan now has a door connecting to the morgue directly.
 (t)wed jun 28 23
 (u)tarmunora
 (+)Port-a-puke, wrestling belt no longer in spythief bounty reward pool.
