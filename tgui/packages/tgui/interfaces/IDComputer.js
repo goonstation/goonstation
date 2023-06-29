@@ -23,7 +23,7 @@ const DeptBox = (props, context) => {
     target_accesses,
   } = props;
   return (
-    <Section title={name} class={`IDComputer__DeptBox ${(colour && `IDComputer__DeptBox_color_${colour}`)}`}>
+    <Section title={name} class={`IDComputer__DeptBox ${(colour && `IDComputer__DeptBox_color_${colour}`)}`} mb="0.25rem">
       {jobs && jobs.map((job, index) => {
         return (
           <>
