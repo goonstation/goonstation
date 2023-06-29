@@ -2435,8 +2435,8 @@ proc/accent_piglatin(string)
 	return jointext(modded_tokens, "")
 
 proc/piglatin_replace(match, one, two)
-	if(findtext(two, regex(@"[aeiou]", "i"), length(two)))
-		return "[two][one]yay"
+	if(!one && findtext(two, regex(@"[aeiou]", "i"), length(two)))
+		return "[two]yay"
 	else
 		return "[two][one]ay"
 
