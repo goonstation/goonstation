@@ -842,9 +842,9 @@ obj/decal/fakeobjects/teleport_pad
 		original.Scale(0.05)
 		src.transform = original
 
-		animate(src,transform = matrix(1, MATRIX_SCALE), time = 2 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
+		animate(src,transform = matrix(1, MATRIX_SCALE), time = 1 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
 		animate(time = 1 SECOND, alpha = 0, pixel_y = 8, easing = CIRCULAR_EASING)
-		SPAWN(3 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)
 
 /obj/decal/slipup_clumsy
