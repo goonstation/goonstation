@@ -20,6 +20,7 @@ const DeptBox = (props, context) => {
     isCustomRank,
 
     accesses,
+    target_accesses,
   } = props;
   return (
     <Section title={name} class={`IDComputer__DeptBox ${(colour && `IDComputer__DeptBox_color_${colour}`)}`}>
@@ -53,7 +54,7 @@ const DeptBox = (props, context) => {
           <Button
             onClick={() => act("access", { access: access.id, allowed: !access.allowed })}
             key={access.id}
-            selected={access.allowed}
+            selected={target_accesses.includes(access.id)}
           >{access.name}
           </Button>);
       })}
@@ -64,7 +65,7 @@ const DeptBox = (props, context) => {
 export const IDComputer = (_props, context) => {
   const { act, data } = useBackend(context);
   const { mode, manifest, target_name, target_owner, target_rank, target_card_look, scan_name, pronouns, custom_names,
-    standard_jobs, accesses_by_area, icons } = data;
+    target_accesses, standard_jobs, accesses_by_area, icons } = data;
 
   return (
     <Window
@@ -167,7 +168,8 @@ export const IDComputer = (_props, context) => {
                   <Section title="Specific Area Access">
                     {accesses_by_area.map(area =>
                       area.accesses.length > 0 && (
-                        <DeptBox key={area.name} name={area.name} colour={area.color} accesses={area.accesses} />
+                        <DeptBox key={area.name} name={area.name} colour={area.color} accesses={area.accesses}
+                          target_accesses={target_accesses} />
                       )
                     )}
                   </Section>

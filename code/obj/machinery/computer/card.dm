@@ -155,6 +155,105 @@
 			ui = new(user, src, "IDComputer", name)
 			ui.open()
 
+	ui_static_data()
+		. = list()
+
+		var/list/civilian_jobs = list()
+		var/list/engineering_jobs = list()
+		var/list/research_jobs = list()
+		var/list/security_jobs = list()
+		var/list/command_jobs = list()
+
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/civilian))
+			if (initial(job.name) && job != /datum/job/civilian/AI && job != /datum/job/civilian/cyborg)
+				civilian_jobs.Add(initial(job.name))
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/engineering))
+			if (initial(job.name))
+				engineering_jobs.Add(initial(job.name))
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/research))
+			if (initial(job.name))
+				research_jobs.Add(initial(job.name))
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/security))
+			if (initial(job.name))
+				security_jobs.Add(initial(job.name))
+		for (var/datum/job/job as anything in concrete_typesof(/datum/job/command))
+			if (initial(job.name) && job != /datum/job/command/head_of_security)
+				command_jobs.Add(initial(job.name))
+
+		var/list/civilian_access = list()
+		var/list/engineering_access = list()
+		var/list/supply_access = list()
+		var/list/research_access = list()
+		var/list/security_access = list()
+		var/list/command_access = list()
+
+		for(var/A in access_name_lookup)
+			if (access_name_lookup[A] in civilian_access_list)
+				civilian_access.Add(access_data(A))
+			if (access_name_lookup[A] in engineering_access_list)
+				engineering_access.Add(access_data(A))
+			if (access_name_lookup[A] in supply_access_list)
+				supply_access.Add(access_data(A))
+			if (access_name_lookup[A] in research_access_list)
+				research_access.Add(access_data(A))
+			if (access_name_lookup[A] in security_access_list)
+				security_access.Add(access_data(A))
+			if (access_name_lookup[A] in command_access_list)
+				command_access.Add(access_data(A))
+
+		if (src.departmentcomp)
+			switch(src.department)
+				if (1) // eng
+					civilian_jobs = list("Staff Assistant")
+					//stock engineering_jobs are good
+					research_jobs = null
+					security_jobs = null
+					command_jobs = null
+				if (2) // med
+					civilian_jobs = list("Staff Assistant")
+					engineering_jobs = null
+					research_jobs = list("Medical Doctor", "Geneticist", "Roboticist")
+					security_jobs = null
+					command_jobs = null
+				if (3) // research
+					civilian_jobs = list("Staff Assistant")
+					engineering_jobs = null
+					research_jobs = list("Scientist")
+					security_jobs = null
+					command_jobs = null
+				if (4) // sec
+					civilian_jobs = list("Staff Assistant", "Clown")
+					engineering_jobs = null
+					research_jobs = null
+					//stock security_jobs are good
+					command_jobs = null
+
+		.["standard_jobs"] = list(
+			list(name = "Civilian", color = "blue", jobs = civilian_jobs),
+			list(name = "Supply and Maintainence", color = "yellow", jobs = engineering_jobs),
+			list(name = "Research and Medical", color = "purple", jobs = research_jobs),
+			list(name = "Security", color = "red", jobs = security_jobs),
+			list(name = "Command", color = "green", jobs = command_jobs),
+		)
+
+		.["accesses_by_area"] = list(
+			list(name = "Civilian", color = "blue", accesses = civilian_access),
+			list(name = "Engineering", color = "yellow", accesses = engineering_access),
+			list(name = "Supply", color = "yellow", accesses = supply_access),
+			list(name = "Science and Medical", color = "purple", accesses = research_access),
+			list(name = "Security", color = "red", accesses = security_access),
+			list(name = "Command", color = "green", accesses = command_access),
+		)
+
+		.["icons"] = list(
+			list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
+			list(style = "blue", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
+			list(style = "yellow", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
+			list(style = "purple", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
+			list(style = "red", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
+			list(style = "green", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
+		)
+
 	ui_data(mob/user)
 		. = list()
 
@@ -199,117 +298,17 @@
 
 				.["target_card_look"] = src.modify.icon_state
 
-
-				var/list/civilian_jobs = list()
-				var/list/engineering_jobs = list()
-				var/list/research_jobs = list()
-				var/list/security_jobs = list()
-				var/list/command_jobs = list()
-
-				for (var/datum/job/job as anything in concrete_typesof(/datum/job/civilian))
-					if (initial(job.name) && job != /datum/job/civilian/AI && job != /datum/job/civilian/cyborg)
-						civilian_jobs.Add(initial(job.name))
-				for (var/datum/job/job as anything in concrete_typesof(/datum/job/engineering))
-					if (initial(job.name))
-						engineering_jobs.Add(initial(job.name))
-				for (var/datum/job/job as anything in concrete_typesof(/datum/job/research))
-					if (initial(job.name))
-						research_jobs.Add(initial(job.name))
-				for (var/datum/job/job as anything in concrete_typesof(/datum/job/security))
-					if (initial(job.name))
-						security_jobs.Add(initial(job.name))
-				for (var/datum/job/job as anything in concrete_typesof(/datum/job/command))
-					if (initial(job.name) && job != /datum/job/command/head_of_security)
-						command_jobs.Add(initial(job.name))
-
-				var/list/civilian_access = list()
-				var/list/engineering_access = list()
-				var/list/supply_access = list()
-				var/list/research_access = list()
-				var/list/security_access = list()
-				var/list/command_access = list()
-
-				for(var/A in access_name_lookup)
-					var/allowed = 0
-					if(access_name_lookup[A] in src.modify.access)
-						allowed = 1
-
-					if (access_name_lookup[A] in civilian_access_list)
-						civilian_access.Add(access_data(A, allowed))
-					if (access_name_lookup[A] in engineering_access_list)
-						engineering_access.Add(access_data(A, allowed))
-					if (access_name_lookup[A] in supply_access_list)
-						supply_access.Add(access_data(A, allowed))
-					if (access_name_lookup[A] in research_access_list)
-						research_access.Add(access_data(A, allowed))
-					if (access_name_lookup[A] in security_access_list)
-						security_access.Add(access_data(A, allowed))
-					if (access_name_lookup[A] in command_access_list)
-						command_access.Add(access_data(A, allowed))
-
-				if (src.departmentcomp)
-					switch(src.department)
-						if (1) // eng
-							civilian_jobs = list("Staff Assistant")
-							//engineering_jobs are good
-							research_jobs = null
-							security_jobs = null
-							command_jobs = null
-						if (2) // med
-							civilian_jobs = list("Staff Assistant")
-							engineering_jobs = null
-							research_jobs = list("Medical Doctor", "Geneticist", "Roboticist")
-							security_jobs = null
-							command_jobs = null
-						if (3) // research
-							civilian_jobs = list("Staff Assistant")
-							engineering_jobs = null
-							research_jobs = list("Scientist")
-							security_jobs = null
-							command_jobs = null
-						if (4) // sec
-							civilian_jobs = list("Staff Assistant", "Clown")
-							engineering_jobs = null
-							research_jobs = null
-							//security_jobs are good
-							command_jobs = null
-
-				.["standard_jobs"] = list(
-					list(name = "Civilian", color = "blue", jobs = civilian_jobs),
-					list(name = "Supply and Maintainence", color = "yellow", jobs = engineering_jobs),
-					list(name = "Research and Medical", color = "purple", jobs = research_jobs),
-					list(name = "Security", color = "red", jobs = security_jobs),
-					list(name = "Command", color = "green", jobs = command_jobs),
-				)
-
-				.["accesses_by_area"] = list(
-					list(name = "Civilian", color = "blue", accesses = civilian_access),
-					list(name = "Engineering", color = "yellow", accesses = engineering_access),
-					list(name = "Supply", color = "yellow", accesses = supply_access),
-					list(name = "Science and Medical", color = "purple", accesses = research_access),
-					list(name = "Security", color = "red", accesses = security_access),
-					list(name = "Command", color = "green", accesses = command_access),
-				)
-
-				.["icons"] = list(
-					list(style = "none", name = "Plain", card_look = "id", icon = getCardBase64Img("id")),
-					list(style = "blue", name = "Civilian", card_look = "id_civ", icon = getCardBase64Img("id_civ")),
-					list(style = "yellow", name = "Engineering", card_look = "id_eng", icon = getCardBase64Img("id_eng")),
-					list(style = "purple", name = "Research", card_look = "id_res", icon = getCardBase64Img("id_res")),
-					list(style = "red", name = "Security", card_look = "id_sec", icon = getCardBase64Img("id_sec")),
-					list(style = "green", name = "Command", card_look = "id_com", icon = getCardBase64Img("id_com")),
-				)
+				.["target_accesses"] = src.modify.access
 
 				user.unlock_medal("Identity Theft", 1)
 
 			else
 				.["mode"] = "unauthenticated"
 
-	proc/access_data(var/A, var/allowed)
+	proc/access_data(var/A)
 		. = list(list(
 			name = A,
-			id = access_name_lookup[A],
-			allowed = allowed
+			id = access_name_lookup[A]
 		))
 
 
