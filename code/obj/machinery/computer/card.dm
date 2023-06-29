@@ -336,10 +336,10 @@
 				if (src.modify)
 					src.modify.update_name()
 					if (src.eject)
-						src.eject.set_loc(src.loc)
+						usr.put_in_hand_or_eject(src.eject)
 						src.eject = null
 					else
-						src.modify.set_loc(src.loc)
+						usr.put_in_hand_or_eject(src.modify)
 					src.modify = null
 				else
 					var/obj/item/I = usr.equipped()
@@ -370,7 +370,7 @@
 				try_authenticate()
 			if ("scan")
 				if (src.scan)
-					src.scan.set_loc(src.loc)
+					usr.put_in_hand_or_eject(src.scan)
 					src.scan = null
 				else
 					var/obj/item/I = usr.equipped()
