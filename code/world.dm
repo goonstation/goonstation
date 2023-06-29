@@ -1557,7 +1557,7 @@ var/global/mob/twitch_mob = 0
 				if(world.system_type == "UNIX")
 					try
 						var/meminfo_file = "data/meminfo.txt"
-						fcopy("/proc/meminfo", "meminfo_file")
+						fcopy("/proc/meminfo", meminfo_file)
 						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
 						if(length(memory_info) >= 3)
 							memory_info.len = 3

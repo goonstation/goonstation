@@ -50172,7 +50172,14 @@
 /turf/unsimulated/floor/red,
 /area/syndicate_station/battlecruiser)
 "dgW" = (
+/obj/item/item_box/googly_eyes{
+	pixel_x = -6
+	},
 /obj/storage/crate/packing,
+/obj/item/item_box/googly_eyes/angry{
+	pixel_y = -5;
+	pixel_x = 3
+	},
 /obj/item/paint_can/random,
 /obj/item/pen/crayon/random,
 /turf/unsimulated/floor/black/grime,
