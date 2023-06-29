@@ -708,7 +708,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (!L || !HH)
 			return
 		if ((HH.can_range_attack || HH.can_special_attack()))
-			if (BOUNDS_DIST(src, target) > 0)
+			if (GET_DIST(src, target) > 1)
 				hand_range_attack(target, params)
 				return
 		if (HH.can_attack)
