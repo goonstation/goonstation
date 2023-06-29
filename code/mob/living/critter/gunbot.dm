@@ -12,10 +12,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	can_throw = FALSE
 	can_grab = FALSE
 	can_disarm = FALSE
-	health_brute = 15
+	health_brute = 20
 	health_brute_vuln = 1
-	health_burn = 15
-	health_burn_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 0.5
 	speechverb_say = "states"
 	speechverb_gasp = "states"
 	speechverb_stammer = "states"
@@ -171,7 +171,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 /mob/living/critter/robotic/gunbot/strong // Midrounds
 	hand_count = 3
 	health_brute = 75
+	health_brute_vuln = 1
 	health_burn = 50
+	health_burn_vuln = 1
 	is_npc = FALSE
 
 	setup_hands()
@@ -211,7 +213,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	eye_light_icon = "mars_nuke_bot_eye"
 	hand_count = 3
 	health_brute = 100
+	health_brute_vuln = 1
 	health_burn = 100
+	health_burn_vuln = 1
 	speak_lines = FALSE
 
 	is_npc = FALSE
