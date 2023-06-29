@@ -4,12 +4,15 @@
 	spread = "Non-Contagious"
 	cure = "Robustissin, Robust Coffee, getting robusted"
 	associated_reagent = "sheltestgrog"
-	reagentcure = list("robustissin", "coffee")
+	reagentcure = list("cold_medicine", "coffee")
 	affected_species = list("Human")
 	stage_prob = 5
 
 /datum/ailment/disease/frog_flu/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
+		return
+	if(!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
 		return
 	if(affected_mob.health <= 15 && probmult(33))
 		boutput(affected_mob, "<span class='alert'>You feel the frog essence leaving your battered body.</span>")

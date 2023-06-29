@@ -75,7 +75,7 @@
 	desc = "A very fancy statue of somebody who probably caused a very fancy explosion"
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/Readstuff.dmi'
 	icon_state = "goldnerd"
 
@@ -84,6 +84,6 @@
 	desc = "This guy is wearing syndicate gear. What are they doing here?"
 	opacity = 0
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/Readstuff.dmi'
 	icon_state = "deadsyndie"

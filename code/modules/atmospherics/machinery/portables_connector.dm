@@ -13,18 +13,9 @@
 	level = 0
 	layer = PIPE_LAYER
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	New()
-		initialize_directions = dir
 		..()
+		initialize_directions = dir
 
 	network_disposing(datum/pipe_network/reference)
 		if (network == reference)

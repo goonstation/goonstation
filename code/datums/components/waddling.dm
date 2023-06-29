@@ -12,15 +12,16 @@ TYPEINFO(/datum/component/waddling)
 	)
 
 /datum/component/waddling/Initialize(height=4, angle=16)
+	. = ..()
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.height = height
 	src.angle = angle
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/Waddle)
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(Waddle))
 
 /datum/component/waddling/proc/Waddle()
 	var/mob/living/L = parent
-	if(isdead(L) || L.getStatusDuration("stunned") || L.lying)
+	if(isdead(L) || is_incapacitated(L) || L.lying)
 		return
 	var/matrix/M = matrix(L.transform)
 	animate(L, pixel_z = height, time = 0)

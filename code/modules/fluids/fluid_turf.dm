@@ -20,7 +20,7 @@
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "sand_other"
 	color = OCEAN_COLOR
-	pathable = 0
+	pathable = 1
 	mat_changename = 0
 	mat_changedesc = 0
 	fullbright = 0
@@ -221,7 +221,7 @@
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(16))
-				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+				new /mob/living/critter/small_animal/hallucigenia(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
@@ -314,7 +314,15 @@
 	allow_hole = 0
 
 	color = OCEAN_COLOR
-	// fullbright = 1
+	fullbright = 1
+
+	New()
+		. = ..()
+		var/noise_scale = 55
+		var/r1 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
+		UpdateIcon(140, col)
 
 	edge
 		icon_state = "pit_wall"
@@ -338,6 +346,12 @@
 			return
 		if (locate(/obj/lattice) in src)
 			return
+		if (AM.anchored == 2)
+			return
+		if (ismob(AM))
+			var/mob/M = AM
+			if (M.client?.flying)
+				return
 		return_if_overlay_or_effect(AM)
 
 		try_build_turf_list()
@@ -424,6 +438,12 @@
 						src.linked_hole = hole
 						src.add_simple_light("trenchhole", list(120, 120, 120, 120))
 						break
+
+/turf/space/fluid/trench/nospawn
+	spawningFlags = null
+
+	generate_worldgen()
+		return
 
 /turf/space/fluid/nospawn
 	spawningFlags = null

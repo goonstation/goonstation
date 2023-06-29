@@ -39,12 +39,9 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "g" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
 /obj/warp_beacon/miningasteroidbelt,
-/turf/variableTurf/clear,
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/noGenerate)
 "h" = (
 /obj/lattice{

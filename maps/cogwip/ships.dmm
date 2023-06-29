@@ -633,12 +633,6 @@
 	dir = 8
 	},
 /area/space)
-"bQ" = (
-/turf/unsimulated/wall{
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadcap"
-	},
-/area/space)
 "bR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -1169,13 +1163,6 @@
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
-	},
-/area/space)
-"dv" = (
-/turf/unsimulated/wall{
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "leadcap"
 	},
 /area/space)
 "dw" = (
@@ -1846,7 +1833,7 @@
 	},
 /area/space)
 "fh" = (
-/obj/critter/cat,
+/mob/living/critter/small_animal/cat,
 /turf/unsimulated/floor/carpet{
 	dir = 3;
 	icon_state = "green2"
@@ -2646,7 +2633,8 @@
 /turf/space/no_replace,
 /area/space)
 "ho" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hp" = (
 /obj/table/auto,
@@ -2831,11 +2819,13 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "hR" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hS" = (
 /turf/simulated/floor/blue/side{
@@ -2857,11 +2847,13 @@
 /area/space)
 "hU" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "hV" = (
 /obj/machinery/vending/cola/blue,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "hW" = (
 /turf/simulated/floor/shuttlebay,
@@ -2876,7 +2868,8 @@
 /area/space)
 "hZ" = (
 /obj/machinery/door/unpowered/wood,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/space)
 "ia" = (
 /turf/unsimulated/floor/specialroom/chapel{
@@ -3261,7 +3254,7 @@
 /area/space)
 "jc" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/paper_bin,
 /obj/item/pen/odd,
 /turf/unsimulated/floor/setpieces/oldfloor,
@@ -3735,7 +3728,8 @@
 /obj/machinery/light_switch/north{
 	pixel_y = 30
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kp" = (
 /obj/stool/chair{
@@ -3815,10 +3809,12 @@
 "ky" = (
 /obj/decal/cleanable/dirt,
 /obj/item/storage/toolbox/mechanical,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kz" = (
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kA" = (
 /obj/decal/fakeobjects{
@@ -3877,7 +3873,8 @@
 /area/space)
 "kH" = (
 /obj/decal/fakeobjects/vacuumtape,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kI" = (
 /obj/decal/fakeobjects{
@@ -4011,11 +4008,13 @@
 /area/space)
 "kT" = (
 /obj/decal/fakeobjects/operatorconsole,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/space)
 "kU" = (
 /obj/decal/fakeobjects/cpucontroller,
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "kV" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -4418,7 +4417,7 @@
 /turf/space,
 /area/space)
 "mb" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
 "mc" = (
@@ -5457,7 +5456,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/critter/mouse{
+/mob/living/critter/small_animal/mouse{
 	name = "Sgt. Pepper"
 	},
 /turf/simulated/floor/carpet/grime,
@@ -5577,7 +5576,8 @@
 	name = "Prisoner Transfer Ship";
 	req_access_txt = "1"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/space)
 "oS" = (
 /obj/decal/cleanable/robot_debris{
@@ -5683,13 +5683,6 @@
 	icon_state = "gib5"
 	},
 /obj/machinery/telejam/active,
-/turf/space,
-/area/space)
-"pi" = (
-/obj/decal/cleanable/robot_debris{
-	icon_state = "gib5"
-	},
-/obj/critter/zombie/scientist,
 /turf/space,
 /area/space)
 "pj" = (
@@ -6429,7 +6422,7 @@
 /area/space)
 "rf" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/airless/plating/scorched,
 /area/space)
 "rg" = (
@@ -8396,7 +8389,8 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "vA" = (
 /obj/indestructible/shuttle_corner{
@@ -8474,7 +8468,8 @@
 /area/space)
 "vM" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "vN" = (
 /obj/machinery/light{
@@ -8646,7 +8641,8 @@
 /obj/item/tank/emergency_oxygen,
 /obj/item/tank/emergency_oxygen,
 /obj/item/tank/emergency_oxygen,
-/turf/unsimulated/floor/bot/darkpurple,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/darkpurple,
 /area/space)
 "wj" = (
 /obj/cable{
@@ -10518,7 +10514,7 @@
 /area/space)
 "AJ" = (
 /obj/table/reinforced/auto,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /turf/simulated/floor/yellowblack,
 /area/space)
 "AK" = (
@@ -10936,6 +10932,13 @@
 	icon_state = "floor4"
 	},
 /area/space)
+"Gy" = (
+/obj/decal/cleanable/robot_debris{
+	icon_state = "gib5"
+	},
+/mob/living/critter/zombie/scientist,
+/turf/space,
+/area/space)
 "Jv" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -10960,6 +10963,19 @@
 /obj/item/reagent_containers/food/drinks/cola/random,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
+/area/space)
+"SN" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadcap"
+	},
+/area/space)
+"SP" = (
+/turf/unsimulated/wall/generic{
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadcap"
+	},
 /area/space)
 
 (1,1,1) = {"
@@ -19389,7 +19405,7 @@ aa
 aa
 aa
 aa
-bQ
+SN
 dO
 cK
 cn
@@ -19399,7 +19415,7 @@ cR
 cn
 cK
 bZ
-dv
+SP
 aa
 aa
 aa
@@ -19765,7 +19781,7 @@ ot
 oc
 oJ
 oU
-pi
+Gy
 pw
 pM
 qc
@@ -19845,7 +19861,7 @@ aa
 aa
 aa
 aa
-bQ
+SN
 ca
 cK
 cK
@@ -19855,7 +19871,7 @@ cn
 cK
 cK
 bZ
-dv
+SP
 aa
 aa
 aa

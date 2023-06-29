@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
+	-precondition: not in tutorial, can_afford(flock.current_egg_cost), and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5
@@ -88,12 +88,12 @@ stare
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
-///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost FLOCK_LAY_EGG_COST)
+///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost flock.current_egg_cost)
 /datum/aiTask/sequence/goalbased/flock/proc/current_egg_cost()
 	var/mob/living/critter/flock/flockcritter = src.holder.owner
 	if (!flockcritter?.flock)
 		return FLOCK_LAY_EGG_COST
-	return FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+	return flockcritter.flock.current_egg_cost + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST)
 
 
 /datum/aiTask/sequence/goalbased/flock/switched_to()
@@ -109,7 +109,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/rally
 	name = "rallying"
 	weight = 0
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 	max_dist = 0
 
 	New()
@@ -127,11 +127,11 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve
+// precondition: Not in tutorial and flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 
 /datum/aiTask/sequence/goalbased/flock/replicate/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -160,7 +160,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(!F)
 		return TRUE
-	if(F && !F.can_afford(FLOCK_LAY_EGG_COST))
+	if(F && !F.can_afford(F.flock.current_egg_cost))
 		return TRUE
 	var/turf/simulated/floor/feather/N = get_turf(holder.owner)
 	if(!N)
@@ -184,11 +184,11 @@ stare
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // NEST + REPLICATION GOAL
 // targets: valid nesting sites
-// precondition: FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST resources + 7.5 in reserve for every drone after the first 10 up to a max of 200 extra in reserve, no flocktiles in view
+// precondition: Not in tutorial and FLOCK_CONVERT_COST + flock.current_egg_cost resources + 7.5 in reserve for every drone after the first 10 up to a max of (flockcritter.flock.current_egg_cost + FLOCK_LAY_EGG_COST) extra in reserve, no flocktiles in view
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	max_dist = 2
 
 /datum/aiTask/sequence/goalbased/flock/nest/New(parentHolder, transTask)
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock)
+	if (!F?.flock || F.flock.flockmind.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
@@ -405,7 +405,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
@@ -484,7 +483,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HELP)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
@@ -606,8 +604,8 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/rummage/get_targets()
 	. = list()
-	for(var/obj/item/storage/I in view(max_dist, holder.owner))
-		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
+	for(var/obj/item/storage/I in view(max_dist, holder.owner)) // flock can only see /obj/item/storage
+		if(length(I.storage.get_contents()) && I.loc != holder.owner)
 			. += I
 
 
@@ -627,7 +625,7 @@ stare
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(container_target) // fix runtime Cannot read null.contents
-		return !length(container_target.contents) || (F.absorber.item == container_target)
+		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else
 		return FALSE
@@ -651,7 +649,7 @@ stare
 				return
 			else
 				// we've opened a HUD, do a fake HUD click
-				container_target.hud.relay_click("boxes", F, dummy_params)
+				container_target.storage.hud.relay_click("boxes", F, dummy_params)
 				if(isitem(F.equipped()))
 					F.drop_item()
 					return
@@ -689,7 +687,7 @@ stare
 		return FALSE // can't harvest anyway, if not a flockdrone
 
 /datum/aiTask/sequence/goalbased/flock/harvest/valid_target(obj/item/I)
-	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/game_kit)
+	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/boardgame/chess)
 
 /datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
 	. = list()
@@ -831,7 +829,7 @@ stare
 			if(prob(60))
 				// dodge
 				walk(flockdrone, 0)
-				walk_rand(flockdrone, 2, 2)
+				walk_rand(flockdrone, 2, 1)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
@@ -867,7 +865,7 @@ stare
 	name = "capturing"
 	weight = 15
 	max_dist = 12
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/New(parentHolder, transTask)
@@ -948,7 +946,6 @@ stare
 	if (drone)
 		drone.set_hand(2) // nanite spray
 		drone.set_a_intent(INTENT_DISARM)
-		drone.hud?.update_intent()
 		drone.hud?.update_hands()
 	has_started = FALSE
 
@@ -972,7 +969,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
@@ -1021,7 +1017,7 @@ stare
 ///Since we don't want flockdrones building barricades randomly, this task only exists for the targetable version to inherit from
 /datum/aiTask/sequence/goalbased/flock/barricade
 	name = "barricading"
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/barricade/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -1035,7 +1031,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_DISARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/succeedable/barricade
@@ -1079,7 +1074,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/deconstruct
 	name = "deconstructing"
 	weight = 8
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -1097,7 +1092,6 @@ stare
 	if(F)
 		F.active_hand = 2 // nanite spray
 		F.set_a_intent(INTENT_HARM)
-		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/get_targets()

@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
-	anchored = 1
+	anchored = ANCHORED
 	flags = OPENCONTAINER
 
 	var/on = 0 //Are we currently spraying???
@@ -61,6 +61,9 @@
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
+				if (isnull(src.reagents.reagent_list[current_id]))
+					stack_trace("[identify_object(src)] had `[current_id]` in its reagent list, but the value was null")
+					continue
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 				if (current_reagent.id == "water" || current_reagent.id == "cleaner")
 					continue

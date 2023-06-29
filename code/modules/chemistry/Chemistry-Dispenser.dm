@@ -7,18 +7,20 @@ var/list/basic_elements = list(
 	)
 
 ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
+TYPEINFO(/obj/machinery/chem_dispenser)
+	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
-	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = null
@@ -228,7 +230,7 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
 				beaker = null
 			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
-			robogibs(src.loc,null)
+			robogibs(src.loc)
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			qdel(src)
 			return
@@ -242,6 +244,8 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		remove_distant_beaker()
+		if (src.beaker)
+			SEND_SIGNAL(src.beaker.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ChemDispenser", src.name)
@@ -275,31 +279,11 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 
 	ui_data(mob/user)
 		. = list()
-		var/list/beakerContentsTemp = list()
 		.["idCardInserted"] = !isnull(src.user_id)
 		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
-		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
-		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
 		.["isRecording"] = src.recording_state
 		.["activeRecording"] = src.get_recording_text()
-		if(beaker)
-			var/datum/reagents/R = beaker.reagents
-			var/datum/color/average = R.get_average_color()
-			.["currentBeakerName"] = beaker.name
-			.["finalColor"] = average.to_rgba()
-			if(istype(R) && R.reagent_list.len>0)
-				for(var/reagent in R.reagent_list)
-					var/datum/reagent/current_reagent = R.reagent_list[reagent]
-					beakerContentsTemp.Add(list(list(
-						name = reagents_cache[reagent],
-						id = reagent,
-						colorR = current_reagent.fluid_r,
-						colorG = current_reagent.fluid_g,
-						colorB = current_reagent.fluid_b,
-						state = current_reagent.reagent_state,
-						volume = current_reagent.volume
-					)))
-		.["beakerContents"] = beakerContentsTemp
+		.["container"] = ui_describe_reagents(src.beaker)
 
 	proc/get_recording_text()
 		. = ""
@@ -319,7 +303,7 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 				beaker.reagents.handle_reactions()
 				src.UpdateIcon()
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
-				use_power(10)
+				use_power(amount)
 				if(src.recording_state)
 					src.recording_queue += "[params["reagentId"]]=[isnum(amount) ? amount : 10]"
 				. = TRUE
@@ -393,6 +377,7 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 					return
 				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
 				if(istype(group) && current_account && (group in current_account.groups))
+					var/total_power_use = 0
 					for (var/reagent in group.reagents)
 						var/tuple = params2list(reagent)
 						var/key = tuple[1]
@@ -401,10 +386,11 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 							var/amt = 10
 							if (isnum(value))
 								amt = value
+							total_power_use += amt
 							beaker.reagents.add_reagent(key,amt)
 							beaker.reagents.handle_reactions()
 					src.UpdateIcon()
-					use_power(length(group.reagents) * 10)
+					use_power(total_power_use)
 				playsound(src.loc, dispense_sound, 50, 1, 0.3)
 				. = TRUE
 			if ("card")
@@ -493,7 +479,7 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser/soda
 	name = "soda fountain"
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
-	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
+	dispensable_reagents = list("cola", "ginger_ale", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
 								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
 	icon_state = "alc_dispenser"
@@ -517,6 +503,11 @@ ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 	dispenser_name = "Soda"
 
 	dispense_sound = 'sound/effects/splort.ogg'
+
+/obj/machinery/chem_dispenser/botany
+	name = "botany dispenser"
+	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
+	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
 
 // Reagent Groups
 

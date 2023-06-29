@@ -16,6 +16,8 @@
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/voice/wraith/revleave.ogg"
 
+	faction = FACTION_WRAITH
+
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
@@ -37,6 +39,9 @@
 
 
 	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
 		if (!gibbed)
 			playsound(src, src.deathsound, 50, 0)
 			qdel(src)

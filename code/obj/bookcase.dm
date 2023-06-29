@@ -1,9 +1,11 @@
+TYPEINFO(/obj/bookshelf)
+	mat_appearances_to_ignore = list("wood")
 /obj/bookshelf
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
 	icon = 'icons/obj/furniture/bookshelf.dmi'
 	icon_state = "bookshelf_small"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/capacity = 30 //how many books can it hold?
 	var/list/obj/item/paper/bookshelf_contents = list() //ordered list of books
@@ -46,7 +48,7 @@
 	src.UpdateIcon()
 
 /obj/bookshelf/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/storage/bible))
+	if(istype(W, /obj/item/bible))
 		boutput(user, "\The [W] is too holy to be put on a shelf with non-holy books.")
 		return
 
@@ -181,6 +183,8 @@
 					curr_contents.Add(list(book_vars))
 			file_curr_books(curr_contents)
 
+TYPEINFO(/obj/item/furniture_parts/bookshelf)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/bookshelf
 	name = "bookshelf parts"
 	desc = "A collection of parts that can be used to construct a bookshelf."

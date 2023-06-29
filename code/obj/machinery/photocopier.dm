@@ -1,12 +1,15 @@
+TYPEINFO(/obj/machinery/photocopier)
+	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "This machine uses paper to copy photos, work documents... anything paper-based, really. "
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/machines/photocopier.dmi'
 	icon_state = "close_sesame"
 	pixel_x = 2 //its just a bit limited by sprite width, needs a small offset
-	mats = 16 //just to make photocopiers mech copyable, how could this possibly go wrong?
+	power_usage = 10
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
 	var/use_state = 0 //0 is closed, 1 is open, 2 is busy, closed by default
 	var/paper_amount = 0.0 //starts at 0.0, increments by one for every paper added, max of... 30 sheets
@@ -106,7 +109,7 @@
 					src.paper_info["name"] = P.name
 					src.paper_info["desc"] = P.desc
 					src.paper_info["info"] = P.info
-					src.paper_info["stamps"] = P.stamps
+					src.paper_info["stamps"] = P.stamps?.Copy()
 					src.paper_info["form_fields"] = P.form_fields
 					src.paper_info["field_counter"] = P.field_counter
 					src.paper_info["icon_state"] = P.icon_state
@@ -184,6 +187,7 @@
 						flick("print", src)
 						sleep(1.8 SECONDS)
 						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
+						use_power(5)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0
@@ -224,6 +228,7 @@
 			P.desc = src.paper_info["desc"]
 			P.info = src.paper_info["info"]
 			P.stamps = src.paper_info["stamps"]
+			P.stamps = P.stamps?.Copy()
 			P.form_fields = src.paper_info["form_fields"]
 			P.field_counter = src.paper_info["field_counter"]
 			P.icon_state = src.paper_info["icon_state"]
@@ -254,7 +259,7 @@
 			P.name = "butt"
 			P.desc = "butt butt butt"
 			P.info = "{<b>butt butt butt butt butt butt<br>butt butt<br>butt</b>}" //6 butts then 2 butts then 1 butt haha
-			P.icon = 'icons/obj/surgery.dmi'
+			P.icon = 'icons/obj/items/organs/butt.dmi'
 			P.icon_state = "butt"
 
 		else

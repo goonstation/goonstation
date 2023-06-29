@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
+
 /obj/window
 	name = "window"
 	icon = 'icons/obj/window.dmi'
@@ -23,14 +26,18 @@
 	var/stab_resist = 0
 	var/corrode_resist = 0
 	var/temp_resist = 0
-	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
+	var/image/damage_image = null
+	default_material = "glass"
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.1
 
 	the_tuff_stuff
 		explosion_resistance = 3
@@ -39,8 +46,6 @@
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
-		if (default_material)
-			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
@@ -97,7 +102,7 @@
 	disposing()
 		connect_image = null
 		density = 0
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles(need_rebuild=1, selfnotify=1)
 		. = ..()
 
 	Move()
@@ -111,6 +116,13 @@
 		update_nearby_tiles(need_rebuild=1)
 
 		return
+
+	set_dir(new_dir)
+		. = ..()
+		if(new_dir in cardinal)
+			src.material_amt = 0.1
+		else
+			src.material_amt = 0.2
 
 	onMaterialChanged()
 		..()
@@ -131,6 +143,9 @@
 				set_opacity(1) // useless opaque window)
 			else
 				set_opacity(0)
+
+			if(src.material.special_naming)
+				name = src.material.specialNaming(src)
 
 		if (istype(reinforcement))
 
@@ -162,6 +177,7 @@
 			qdel(src)
 		else if (src.health == 0 && !nosmash)
 			smash()
+		UpdateIcon()
 
 	damage_slashing(var/amount)
 		if (!isnum(amount))
@@ -175,6 +191,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_piercing(var/amount)
 		if (!isnum(amount))
@@ -188,6 +205,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_corrosive(var/amount)
 		if (!isnum(amount) || amount <= 0)
@@ -199,6 +217,7 @@
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			smash()
+		UpdateIcon()
 
 	damage_heat(var/amount, var/nosmash)
 		if (!isnum(amount) || amount <= 0)
@@ -217,6 +236,7 @@
 				qdel(src)
 			else
 				smash()
+		UpdateIcon()
 
 	ex_act(severity)
 		// Current windows have 30 HP
@@ -351,7 +371,7 @@
 				damage_blunt(O.throwforce)
 
 		if (src && src.health <= 2 && !reinforcement)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.stops_space_move = 0
 			step(src, get_dir(AM, src))
 		..()
@@ -504,23 +524,25 @@
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/target = get_step(source,dir)
+		var/list/turf/simulated/affected_simturfs = list()
+		if (issimulatedturf(src.loc))
+			affected_simturfs += src.loc
+		if (is_cardinal(src.dir) && issimulatedturf(get_step(src, src.dir)))
+			affected_simturfs += get_step(src, src.dir)
+		else if (!is_cardinal(src.dir))
+			for (var/neigh_dir in cardinal)
+				if (issimulatedturf(get_step(src, neigh_dir)))
+					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild |= source.parent
+			for(var/turf/simulated/T in affected_simturfs)
+				if(T.parent) //Rebuild/update nearby group geometry
+					air_master.groups_to_rebuild |= T.parent
 				else
-					air_master.tiles_to_update |= source
-			if(istype(target))
-				if(target.parent)
-					air_master.groups_to_rebuild |= target.parent
-				else
-					air_master.tiles_to_update |= target
+					air_master.tiles_to_update |= T
 		else
-			if(istype(source)) air_master.tiles_to_update |= source
-			if(istype(target)) air_master.tiles_to_update |= target
+			for(var/turf/simulated/T in affected_simturfs)
+				air_master.tiles_to_update |= T
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -536,8 +558,9 @@
 			if(istype(w))
 				w.tilenotify(src.loc)
 
-		if (selfnotify && istype(source))
-			source.selftilenotify() //for fluids
+		if (selfnotify && isturf(src.loc))
+			var/turf/T = src.loc
+			T.selftilenotify() //for fluids
 
 		return 1
 
@@ -737,6 +760,7 @@
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
+	var/connectdir
 	var/static/list/connects_to = typecacheof(list(
 		/obj/machinery/door,
 		/obj/window,
@@ -766,6 +790,7 @@
 		/turf/unsimulated/wall/auto/adventure/shuttle,
 		/turf/simulated/wall/auto/marsoutpost,
 		/turf/simulated/wall/false_wall,
+		/turf/simulated/wall/auto/feather,
 	))
 
 	/// Gotta be a typecache list
@@ -798,9 +823,10 @@
 		if (!src.anchored)
 			icon_state = "[mod]0"
 			src.UpdateOverlays(null, "connect")
+			update_damage_overlay()
 			return
 
-		var/connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
+		connectdir = get_connected_directions_bitflag(connects_to, connects_to_exceptions, connect_diagonal=1)
 		var/overlaydir = get_connected_directions_bitflag(connects_to, (connects_to_exceptions + connects_with_overlay_exceptions), connect_diagonal=1)
 
 		src.icon_state = "[mod][connectdir]"
@@ -812,6 +838,7 @@
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
+		src.update_damage_overlay()
 
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
@@ -820,6 +847,26 @@
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+	proc/update_damage_overlay()
+		var/health_percentage = health/health_max
+		if (!src.damage_image)
+			src.damage_image = image('icons/obj/window_damage.dmi')
+			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
+			if(src.material?.mat_id == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+				src.damage_image.alpha = 85
+			else
+				src.damage_image.alpha = 180
+
+		if(health_percentage < 0.15) //only look very broken when it's about to break
+			src.damage_image.icon_state = "heavy-[connectdir]"
+		else if(health_percentage < 0.6)
+			src.damage_image.icon_state = "medium-[connectdir]"
+		else if(health_percentage < 0.9)
+			src.damage_image.icon_state = "light-[connectdir]"
+		else
+			src.damage_image.icon_state = null
+		src.UpdateOverlays(src.damage_image, "damage")
 
 /obj/window/auto/the_tuff_stuff
 	explosion_resistance = 3
@@ -874,7 +921,7 @@
 	name = "extremely indestructible window"
 	desc = "An EXTREMELY indestructible window. An absurdly robust one at that."
 	var/initialPos
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	New()
 		..()
 		initialPos = loc
@@ -934,7 +981,7 @@
 	icon = 'icons/obj/window.dmi'
 	icon_state = "wingrille"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 	//layer = 99
 	pressure_resistance = 4*ONE_ATMOSPHERE
@@ -1028,7 +1075,6 @@
 			icon_state = "b-wingrille_f"
 			full_win = 1
 
-
 	auto
 		name = "autowindow grille spawner"
 		win_path = "/obj/window/auto"
@@ -1039,17 +1085,32 @@
 		reinforced
 			name = "reinforced autowindow grille spawner"
 			win_path = "/obj/window/auto/reinforced"
+#ifdef PERSPECTIVE_EDITOR_WALL
+			icon_state = "r-wingrille_new"
+			color = "#72c8fd"
+#else
 			icon_state = "r-wingrille_f"
+#endif
 
 		crystal
 			name = "crystal autowindow grille spawner"
 			win_path = "/obj/window/auto/crystal"
-			icon_state = "p-wingrille_f"
+#ifdef PERSPECTIVE_EDITOR_WALL
+			icon_state = "wingrille_new"
+			color = "#A114FF"
+#else
+			icon_state = "wingrille_f"
+#endif
 
 			reinforced
 				name = "reinforced crystal autowindow grille spawner"
 				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "pr-wingrille_f"
+#ifdef PERSPECTIVE_EDITOR_WALL
+				icon_state = "r-wingrille_new"
+				color = "#8713d4"
+#else
+				icon_state = "r-wingrille_f"
+#endif
 
 		tuff
 			name = "tuff stuff reinforced autowindow grille spawner"
@@ -1094,16 +1155,16 @@
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
 		dir = 1
-		default_material = "metal"
+		default_material = "steel"
 
 // flock windows
 
 /obj/window/auto/feather
+	default_material = "gnesisglass"
 	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
-	connects_to += /turf/simulated/wall/auto/feather
 	..()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, FALSE, TRUE, TRUE)
@@ -1135,6 +1196,8 @@
 		var/mob/living/critter/flock/drone/F = mover
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
+TYPEINFO(/obj/window/feather)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/window/feather
 	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
@@ -1142,7 +1205,6 @@
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass

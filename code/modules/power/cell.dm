@@ -165,6 +165,7 @@
 
 // recharge the cell
 /obj/item/cell/proc/give(var/amount)
+	. = min(maxcharge-charge, amount)
 	charge = min(maxcharge, charge+amount)
 	if(rigged && amount > 0)
 		if (rigger)
@@ -225,12 +226,11 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for_by_tcl(B, /obj/item/storage/bible)
+		for_by_tcl(B, /obj/item/bible)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)
 				explosion(src, T, -1, -1, 2, 3)
-		bible_contents.Remove(src)
 		qdel(src)
 		return
 	var/turf/T = get_turf(src.loc)
@@ -320,7 +320,7 @@
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
+	src.recharge_rate = 0.25 * round(endurance/rand(25,30))
 	src.charge = src.max_charge
 	..()
 

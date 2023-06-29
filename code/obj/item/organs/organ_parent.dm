@@ -9,11 +9,11 @@
 	var/organ_holder_name = "organ"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 0
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "brain"
-	flags = TABLEPASS
+	flags = TABLEPASS | FPRINT
 	force = 1
 	health = 4
 	w_class = W_CLASS_TINY
@@ -115,6 +115,8 @@
 
 		..()
 
+	add_fingerprint(mob/living/M as mob, hidden_only = TRUE)
+		. = ..()
 
 	New(loc, datum/organHolder/nholder)
 		..()
@@ -139,6 +141,11 @@
 			src.blood_reagent = src.donor.blood_id
 		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.max_damage += passed_genes?.get_effective_value("endurance")
+		src.fail_damage += passed_genes?.get_effective_value("endurance")
+		return src
+
 	disposing()
 		if (src.holder)
 			for(var/thing in holder.organ_list)
@@ -150,8 +157,6 @@
 					holder.vars[thing] = null
 
 
-		if (donor?.organs) //not all mobs have organs/organholders (fish)
-			donor.organs -= src
 		donor = null
 
 		if (bones)
@@ -214,6 +219,8 @@
 		if(!istype(src.donor_original)) // If we were spawned without an owner, they're our new original owner
 			src.donor_original = H
 
+		if (src.robotic)
+			H.robotic_organs++
 
 		//Kinda repeated below too. Cure the organ failure disease if this organ is above a certain HP
 		if (src.donor)
@@ -238,6 +245,9 @@
 		if (src.donor)
 			if (failure_disease)
 				src.donor.cure_disease(failure_disease)
+
+			if (src.robotic)
+				src.donor.robotic_organs--
 
 		if (!src.donor_DNA && src.donor && src.donor.bioHolder)
 			src.donor_DNA = src.donor.bioHolder.Uid
@@ -297,7 +307,7 @@
 
 	//damage/heal obj. Provide negative values for healing.	//maybe I'll change cause I don't like this. But this functionality is found in some other damage procs for other things, might as well keep it consistent.
 	take_damage(brute, burn, tox, damage_type)
-		if(isvampire(donor) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head) || istype(src, /obj/item/skull) || istype(src, /obj/item/clothing/head/butt)))
+		if((isvampire(donor) || istype(ticker?.mode, /datum/game_mode/battle_royale)) && !(istype(src, /obj/item/organ/chest) || istype(src, /obj/item/organ/head)))
 			return //vampires are already dead inside
 
 		src.brute_dam += brute

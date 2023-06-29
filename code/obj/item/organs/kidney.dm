@@ -4,6 +4,7 @@
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 7
+	icon = 'icons/obj/items/organs/kidney.dmi'
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
@@ -131,6 +132,9 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+TYPEINFO(/obj/item/organ/kidney/cyber)
+	mats = 6
+
 /obj/item/organ/kidney/cyber
 	name = "cyberkidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
@@ -140,7 +144,6 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	min_chem_metabolism_modifier = 75
 	max_chem_metabolism_modifier = 150
 

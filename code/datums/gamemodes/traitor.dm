@@ -1,5 +1,5 @@
 /datum/game_mode/traitor
-	name = "traitor"
+	name = "Traitor"
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
@@ -13,7 +13,7 @@
 #ifdef RP_MODE
 	var/const/pop_divisor = 10
 #else
-	var/const/pop_divisor = 6
+	var/const/pop_divisor = 7
 #endif
 
 
@@ -31,7 +31,7 @@
 		if(player.ready)
 			num_players++
 
-	var/randomizer = rand(12)
+	var/randomizer = rand(7)
 	var/num_traitors = 1
 	var/num_wraiths = 0
 	var/token_wraith = 0
@@ -39,7 +39,7 @@
 	if(traitor_scaling)
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
-	if(num_traitors > 2 && prob(10))
+	if(num_traitors >= 4 && prob(10))
 		num_traitors -= 1
 		num_wraiths = 1
 
@@ -70,51 +70,21 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		add_wraith()
+		add_wraith(num_wraiths)
 
 	return 1
 
 /datum/game_mode/traitor/post_setup()
 	for(var/datum/mind/traitor in traitors)
 		if (traitor.special_role == ROLE_WRAITH) // agony.
-			generate_wraith_objectives(traitor)
+			traitor.add_antagonist(ROLE_WRAITH, source = ANTAGONIST_SOURCE_ROUND_START)
 		else
-			traitor.add_antagonist(ROLE_TRAITOR)
+			traitor.add_antagonist(ROLE_TRAITOR, source = ANTAGONIST_SOURCE_ROUND_START)
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/traitor/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list()
-	possible_modes.Add("revolution", "wizard", "nuke", "traitor", "changeling")
-	possible_modes -= "[ticker.mode]"
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(traitors))
-/*
-	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
-		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
-			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
-			intercept.name = "paper- 'Cent. Com. Status Summary'"
-			intercept.info = intercepttext
-
-			comm.messagetitle.Add("Cent. Com. Status Summary")
-			comm.messagetext.Add(intercepttext)
-*/
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.traitors)
 
 /datum/game_mode/traitor/declare_completion()
 	. = ..()
@@ -122,7 +92,7 @@
 /datum/game_mode/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module", law, 1, TRUE, TRUE)
 	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/traitor/proc/get_mob_list()

@@ -151,7 +151,7 @@ var/datum/score_tracker/score_tracker
 			// something glitched out and broke so give them a free pass on it
 			score_expenses = 100
 		else
-			var/profit_target = 300000
+			var/profit_target = wagesystem.total_stipend
 			var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			if (totalfunds == 0)
 				score_expenses = 0
@@ -283,15 +283,18 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		for (var/I in A)
-			if (istype(I, /obj/item/storage))
+		if (istype(A, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/SC = A
+			. += SC.amount
+		else if (istype(A, /obj/item/card/id))
+			var/obj/item/card/id/ID = A
+			. += ID.money
+		else if (A.storage)
+			for (var/obj/item/I as anything in A.storage.get_contents())
 				. += get_cash_in_thing(I)
-			if (istype(I, /obj/item/spacecash))
-				var/obj/item/spacecash/SC = I
-				. += SC.amount
-			if (istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				. += ID.amount
+		else
+			for (var/I in A)
+				. += get_cash_in_thing(I)
 
 	proc/heisenhat_stats()
 		. = list()
@@ -407,7 +410,7 @@ var/datum/score_tracker/score_tracker
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
 		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
-		score_tracker.score_text += "<B>Profit Made from Initial Budget:</B> [round(score_tracker.score_expenses)]%<BR>"
+		score_tracker.score_text += "<B>Station Profitabilty:</B> [round(score_tracker.score_expenses)]%<BR>"
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_civ)]%<BR>"
 		score_tracker.score_text += "<BR>"
 	 /* until this is actually done or being worked on im just going to comment it out

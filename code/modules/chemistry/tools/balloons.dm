@@ -17,9 +17,13 @@
 	var/balloon_color = "white"
 	var/last_reag_total = 0
 	var/tied = FALSE
+	//how many breaths should this balloon fill with at a canister
+	var/breaths = 5
+	var/datum/gas_mixture/air = new
 
 	New()
 		..()
+		src.air.volume = 14 //source: I made it the fuck up
 		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
 			UpdateIcon()
@@ -33,7 +37,16 @@
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		src.reagents.maximum_volume = src.reagents.maximum_volume + passed_genes?.get_effective_value("endurance") // more endurance = larger and more sturdy balloons!
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
+
 	update_icon()
+		if (TOTAL_MOLES(src.air) >= BREATH_VOLUME)
+			src.icon_state = "balloon_[src.balloon_color]_inflated"
+			src.item_state = src.icon_state
+			return
 		if (src.reagents)
 			if (src.reagents.total_volume)
 				src.icon_state = "balloon_[src.balloon_color]_[src.reagents.has_reagent("helium") || src.reagents.has_reagent("hydrogen") ? "inflated" : "full"]"
@@ -99,8 +112,9 @@
 		var/list/actions = list()
 		if (user.mind && user.mind.assigned_role == "Clown")
 			actions += "Make balloon animal"
-		if (src.reagents.total_volume > 0 && !src.tied)
+		if (src.reagents.total_volume > 0 || TOTAL_MOLES(src.air) >= BREATH_VOLUME)
 			actions += "Inhale"
+		if (!src.tied)
 			actions += "Tie off"
 		if (H.urine >= 2 && !src.tied)
 			actions += "Pee in it"
@@ -108,7 +122,11 @@
 			user.show_text("You can't think of anything to do with [src].", "red")
 			return
 
-		var/action = input(user, "What do you want to do with the balloon?") as null|anything in actions
+		var/action
+		if (length(actions) == 1 && actions[1] == "Inhale")
+			action = "Inhale"
+		else
+			action = input(user, "What do you want to do with the balloon?") as null|anything in actions
 
 		switch (action)
 			if ("Make balloon animal")
@@ -167,7 +185,16 @@
 			if ("Inhale")
 				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
 				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
+				logTheThing(LOG_CHEMISTRY, H, "inhales from [src] [log_reagents(src)] at [log_loc(H)].")
 				src.reagents.trans_to(H, 40)
+				var/datum/lifeprocess/breath/breathing = H.lifeprocesses?[/datum/lifeprocess/breath]
+				if (breathing && TOTAL_MOLES(src.air) >= BREATH_VOLUME)
+					var/datum/gas_mixture/breath = src.air.remove(BREATH_VOLUME)
+					breath.volume = BREATH_VOLUME
+					if (breathing.handle_breath(breath))
+						//some extra O2 healing on top of the normal breath so this is even somewhat practical
+						user.take_oxygen_deprivation(-15)
+					src.UpdateIcon()
 				return
 
 			if ("Pee in it")
@@ -184,7 +211,7 @@
 				src.tied = TRUE
 
 	afterattack(obj/target, mob/user)
-		if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

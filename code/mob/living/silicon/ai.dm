@@ -1,5 +1,5 @@
 var/global/list/available_ai_shells = list()
-var/datum/tgui/map_ui
+var/atom/movable/minimap_ui_handler/ai_minimap_ui
 var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Very Happy" = "ai_veryhappy",\
 	"Neutral" = "ai_neutral",\
@@ -8,7 +8,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	"Surprised" = "ai_surprised",\
 	"Sad" = "ai_sad",\
 	"Mad" = "ai_mad",\
-	"BSOD" = "ai_bsod",\
+	/*"BSOD" = "ai_bsod", RESERVED FOR BEING DEAD*/\
 	"Text" = "ai_text",\
 	"Text (Inverted)" = "ai_text-inverted",\
 	"Blank" = "ai_blank",\
@@ -37,7 +37,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
@@ -125,12 +125,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	req_access = list(access_heads)
 	var/obj/item/clothing/head/hat = null
 
-/*
-	var/datum/game_mode/malfunction/AI_Module/module_picker/malf_picker
-	var/processing_time = 100
-	var/list/datum/game_mode/malfunction/AI_Module/current_modules = list()
-
-*/
 	var/fire_res_on_core = 0
 
 	health = 250
@@ -201,6 +195,13 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	STOP_TRACKING
 	if (light)
 		light.dispose()
+	for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
+		if (O.owner == src)
+			O.is_on = FALSE
+			O.owner = null
+			O.emotion = null
+			O.message = null
+			O.face_color = null
 	..()
 
 /mob/living/silicon/ai/New(loc, var/empty = 0, var/skinToApply = "default")
@@ -210,6 +211,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 
 	ai_station_map = new /obj/minimap/ai
+	AddComponent(/datum/component/minimap_marker, MAP_AI | MAP_SYNDICATE, "ai")
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
@@ -357,13 +359,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			if(src.law_rack_connection)
 				var/raw = tgui_alert(user,"Do you want to overwrite the linked rack?", "Linker", list("Yes", "No"))
 				if (raw == "Yes")
-					src.law_rack_connection = linker.linked_rack
-					logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)] with a linker by [user]")
-					var/area/A = get_area(src.law_rack_connection)
-					boutput(user, "You connect [src.name] to the stored law rack at [A.name].")
-					src.playsound_local(src, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
-					src.show_text("<h3>You have been connected to a law rack</h3>", "red")
-					src.show_laws()
+					src.set_law_rack(linker.linked_rack, user)
 		else
 			boutput(user,"Linker lost connection to the stored law rack!")
 		return
@@ -426,7 +422,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			src.visible_message("<span class='alert'><b>[user.name]</b> repairs some of the damage to [src.name]'s wiring.</span>")
 		else boutput(user, "<span class='alert'>There's no burn damage on [src.name]'s wiring to mend.</span>")
 
-	else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	else if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.dismantle_stage >= 2)
 			boutput(user, "<span class='alert'>You must close the cover to swipe an ID card.</span>")
 		else
@@ -446,7 +442,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			user.drop_item()
 			W.set_loc(src)
 			var/obj/item/organ/brain/B = W
-			if (B.owner && (B.owner.dnr || jobban_isbanned(B.owner.current, "AI")))
+			if (B.owner && (B.owner.get_player()?.dnr || jobban_isbanned(B.owner.current, "AI")))
 				src.visible_message("<span class='alert'>\The [B] is hit by a spark of electricity from \the [src]!</span>")
 				B.combust()
 				return
@@ -676,12 +672,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 				if (ishuman(user) && prob(10))
 					var/mob/living/carbon/human/M = user
 					boutput(user, "<span class='alert'>You stub your toe! Ouch!</span>")
-					var/obj/item/organ/foot = null
-					if(M.hand)
-						foot = M.organs["r_leg"]
-					else
-						foot = M.organs["l_leg"]
-					foot.take_damage(3, 0)
+					M.TakeDamage(M.hand ? "r_leg" : "l_leg", 3, 0, 0, DAMAGE_BLUNT)
 					user.changeStatus("weakened", 2 SECONDS)
 		user.lastattacked = src
 	src.update_appearance()
@@ -964,6 +955,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			. += "[src.name] follows the same laws you do.<br>"
 
 /mob/living/silicon/ai/emote(var/act, var/voluntary = 0)
+	..()
 	var/param = null
 	if (findtext(act, " ", 1, null))
 		var/t1 = findtext(act, " ", 1, null)
@@ -1037,7 +1029,6 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -1302,7 +1293,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		if (1)
 			if (istype(src.cell,/obj/item/cell/))
 				if (src.cell.charge > 5)
-					src.cell.charge -= 5
+					src.cell.use(5)
 				else if (!isdead(src))
 					src.cell.charge = 0
 					src.show_text("<b>ALERT: Internal battery expired. Shutting down to prevent system damage.</b>", "red")
@@ -1402,22 +1393,12 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 /mob/living/silicon/ai/Logout()
 	src.removeOverlaysClient(src.client) //ov1
-	// Only turn off the status displays if we're dead.
-	if (isdead(src))
-		for (var/obj/machinery/ai_status_display/O in machine_registry[MACHINES_STATUSDISPLAYS]) //change status
-			if (O.owner == src)
-				O.is_on = FALSE
-				O.owner = null
-				O.emotion = null
-				O.message = null
-				O.face_color = null
 	..()
-	return
 
 /mob/living/silicon/ai/say_understands(var/other)
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if(!H.mutantrace || !H.mutantrace.exclusive_language)
+		if(!H.mutantrace.exclusive_language)
 			return 1
 	if (isrobot(other))
 		return 1
@@ -1616,6 +1597,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
@@ -1672,6 +1658,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	set category = "AI Commands"
 	set name = "State Fake Laws"
 
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	for(var/a_law in src.fake_laws)
 		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
@@ -1681,6 +1671,11 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
 	set name = "State All Laws"
+
+	if (ON_COOLDOWN(src,"state_laws", 20 SECONDS))
+		boutput(src, "<span class='alert'>Your law processor needs time to cool down!</span>")
+		return
+
 	if (tgui_alert(src.get_message_mob(), "Are you sure you want to reveal ALL your laws? You will be breaking the rules if a law forces you to keep it secret.", "State Laws", list("State Laws", "Cancel")) != "State Laws")
 		return
 
@@ -1969,25 +1964,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
 		return
+	if (!ai_minimap_ui)
+		ai_minimap_ui = new(src, "ai_map", src.ai_station_map, "AI Station Map", "ntos")
 
-	map_ui = tgui_process.try_update_ui(usr, message_mob, map_ui)
-	if (!map_ui)
-		if (!winexists(usr, "ai_map"))
-			winset(message_mob.client, "ai_map", list2params(list(
-				"type" = "map",
-				"size" = "300,300",
-			)))
-			var/atom/movable/screen/handler = new
-			handler.plane = 0
-			handler.mouse_opacity = 0
-			handler.screen_loc = "ai_map:1,1"
-			message_mob.client.screen += handler
-
-			ai_station_map.screen_loc = "ai_map;1,1"
-			handler.vis_contents += ai_station_map
-			message_mob.client.screen += ai_station_map
-		map_ui = new(usr, message_mob, "AIMap")
-		map_ui.open()
+	ai_minimap_ui.ui_interact(message_mob)
 
 /mob/living/silicon/ai/verb/rename_self()
 	set category = "AI Commands"
@@ -2286,7 +2266,7 @@ proc/is_mob_trackable_by_AI(var/mob/M)
 		return 0
 	if (istype(M, /mob/new_player))
 		return 0
-	if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+	if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 		return 0
 	if(M.z != 1 && M.z != usr.z)
 		return 0
@@ -2317,7 +2297,7 @@ proc/get_mobs_trackable_by_AI()
 			continue //cameras can't follow people who haven't started yet DUH OR DIDN'T YOU KNOW THAT
 		if (HAS_ATOM_PROPERTY(M, PROP_MOB_AI_UNTRACKABLE))
 			continue
-		if (ishuman(M) && (istype(M:wear_id, /obj/item/card/id/syndicate) || (istype(M:wear_id, /obj/item/device/pda2) && M:wear_id:ID_card && istype(M:wear_id:ID_card, /obj/item/card/id/syndicate))))
+		if (ishuman(M) && istype(get_id_card(M:wear_id), /obj/item/card/id/syndicate))
 			continue
 		if (istype(M,/mob/living/critter/aquatic) || istype(M, /mob/living/critter/small_animal/ranch_base/chicken))
 			continue
@@ -2649,7 +2629,7 @@ proc/get_mobs_trackable_by_AI()
 				A.cell = src.cell
 				src.cell.set_loc(A)
 				src.cell = null
-			A.anchored = 0
+			A.anchored = UNANCHORED
 			A.dismantle_stage = 4
 			A.update_appearance()
 			qdel(src)
@@ -2690,6 +2670,12 @@ proc/get_mobs_trackable_by_AI()
 		src.UpdateOverlays(src.image_background_overlay, "background")
 		src.UpdateOverlays(src.image_top_overlay, "top")
 
+
+/mob/living/silicon/ai/latejoin
+	New()
+		..()
+		qdel(src.brain)
+		src.brain = new /obj/item/organ/brain/latejoin(src)
 
 ABSTRACT_TYPE(/obj/item/ai_plating_kit)
 /obj/item/ai_plating_kit

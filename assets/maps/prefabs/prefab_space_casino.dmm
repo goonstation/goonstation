@@ -383,8 +383,8 @@
 /turf/simulated/floor/wood,
 /area/prefab/space_casino)
 "NK" = (
-/obj/machinery/door/airlock/maintenance,
 /obj/decal/cleanable/blood/tracks,
+/obj/machinery/door/airlock,
 /turf/simulated/floor/blackwhite/whitegrime,
 /area/prefab/space_casino)
 "Od" = (
@@ -403,7 +403,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/prefab/space_casino)
 "Qa" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "QF" = (
 /obj/decal/fakeobjects/pipe{
@@ -425,10 +425,12 @@
 /turf/simulated/floor/wood,
 /area/prefab/space_casino)
 "Tb" = (
-/turf/simulated/wall/auto/asteroid,
+/turf/variableTurf/wall,
 /area/prefab/space_casino)
 "Tq" = (
-/obj/machinery/door/airlock/maintenance,
+/obj/machinery/door/airlock{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/prefab/space_casino)
 "Ug" = (
@@ -436,8 +438,8 @@
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/prefab/space_casino)
 "UU" = (
-/turf/space,
-/area/space)
+/turf/variableTurf/clear,
+/area/allowGenerate)
 "Vl" = (
 /obj/submachine/slot_machine,
 /turf/simulated/floor/carpet/red/fancy/edge/west,

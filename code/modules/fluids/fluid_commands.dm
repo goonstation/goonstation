@@ -163,10 +163,20 @@ client/proc/replace_space_exclusive()
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
 #endif
-
 			T.color = ocean_color
 			LAGCHECK(LAG_REALTIME)
 
+// catwalks sim water otherwise
+#ifndef UNDERWATER_MAP
+		for(var/turf/simulated/floor/airless/plating/catwalk/C in world)
+			if (C.z != 1 || istype(C, /turf/space/fluid/warp_z5)) continue
+			var/turf/orig = locate(C.x, C.y, C.z)
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+			T.color = ocean_color
+			LAGCHECK(LAG_REALTIME)
+#endif
+
+		remove_all_parallax_layers()
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -200,11 +210,13 @@ client/proc/dereplace_space()
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			restore_parallax_layers_to_default(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			restore_parallax_layers_to_default()
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0

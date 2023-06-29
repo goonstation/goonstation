@@ -4,7 +4,7 @@
 	icon = 'icons/obj/power.dmi'
 	icon_state = "smes"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	New()
 		..()
 		SPAWN(1 SECOND)
@@ -18,7 +18,7 @@
 	desc = "An artificial intelligence unit which requires the brain of a living organism to function as a neural processor."
 	icon = 'icons/mob/ai.dmi'
 	icon_state = "ai"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	opacity = 0
 
@@ -48,7 +48,7 @@
 			TheAI.set_loc(src)
 			B.set_loc(TheAI)
 			TheAI.brain = B
-			TheAI.anchored = 0
+			TheAI.anchored = UNANCHORED
 			TheAI.dismantle_stage = 3
 			TheAI.update_appearance()
 			qdel(src)
@@ -168,6 +168,9 @@
 		for (var/obj/machinery/turret/construction/aTurret in turrets)
 			aTurret.setState(enabled, lethal)
 
+TYPEINFO(/obj/item/room_marker)
+	mats = 6
+
 /obj/item/room_marker
 	name = "\improper Room Designator"
 	icon = 'icons/obj/construction.dmi'
@@ -175,7 +178,6 @@
 	item_state = "gun"
 	w_class = W_CLASS_SMALL
 
-	mats = 6
 	var/using = 0
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
@@ -273,11 +275,13 @@
 
 		return affected
 
+TYPEINFO(/obj/item/clothing/glasses/construction)
+	mats = 6
+
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
 	icon_state = "construction"
 	item_state = "construction"
-	mats = 6
 	desc = "The latest technology in viewing live blueprints."
 
 /obj/item/lamp_manufacturer/organic
@@ -294,13 +298,15 @@
 		..()
 		inventory_counter.update_number(metal_ammo)
 
+TYPEINFO(/obj/item/material_shaper)
+	mats = 6
+
 /obj/item/material_shaper
 	name = "\improper Window Planner"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "shaper"
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	mats = 6
 	click_delay = 1
 
 	var/mode = 0
@@ -488,13 +494,15 @@
 			processing = 0
 			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
+TYPEINFO(/obj/item/room_planner)
+	mats = 6
+
 /obj/item/room_planner
 	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
-	mats = 6
 	w_class = W_CLASS_SMALL
 	click_delay = 1
 
@@ -566,20 +574,27 @@
 		// selectedicon is the file we selected
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
+			selectedtype = null
 			states += icon_states('icons/turf/construction_floors.dmi')
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
 			selectedicon = 'icons/turf/construction_floors.dmi'
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+
 		if (mode == "walls")
+			selectedtype = null
+			selectedicon = null
+			selectedmod = null
 			states += wallicons
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
-			if(!selectedtype)
-				selectedtype = states[1]
-			selectedicon = wallicons[selectedtype]
-			selectedmod = wallmods[selectedtype]
+			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(newtype)
+				selectedtype = newtype
+				selectedicon = wallicons[selectedtype]
+				selectedmod = wallmods[selectedtype]
 
-
+		if (isnull(selectedtype))
+			selecting = 0
+			return
 
 		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
 			turf_op = 0
@@ -619,7 +634,7 @@
 				break
 		if (old)
 			old.Attackby(src, user)
-		else
+		else if (!isnull(selectedtype))
 			var/class = marker_class[mode]
 			old = new class(T, selectedicon, selectedtype, mode)
 
@@ -628,6 +643,9 @@
 			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
 			old:check(selectedmod)
+		else
+			boutput(user, "<span class='alert'>No type selected for current mode!</span>")
+			return 0
 		boutput(user, "<span class='notice'>Done.</span>")
 
 		return 1
@@ -636,7 +654,7 @@
 	name = "\improper Plan Marker"
 	icon = 'icons/turf/construction_walls.dmi'
 	icon_state = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION
@@ -665,7 +683,7 @@
 	name = "\improper Window Plan Marker"
 	icon = 'icons/obj/grille.dmi'
 	icon_state = "grille-0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_CONSTRUCTION

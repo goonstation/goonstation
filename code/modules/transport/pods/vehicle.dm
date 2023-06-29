@@ -4,7 +4,7 @@
 	icon_state = "podfire"
 	density = 1
 	flags = FPRINT | USEDELAY
-	anchored = 1
+	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
@@ -28,6 +28,7 @@
 	var/maxhealth = 200
 	var/health_percentage = 100 // cogwerks: health percentage check for bigpods
 	var/damage_overlays = 0 // cogwerks: 0 = normal, 1 = dented, 2 = on fire
+	var/acid_damage_multiplier = 1 // kubius: multiplier to damage taken from acid sea turfs (1 is full, 0 is none). 0 for syndie, 0.5 for subs
 	var/obj/item/device/radio/intercom/ship/intercom = null //All ships have these is used by communication array
 	var/weapon_class = 0 //what weapon class a ship is
 	var/powercapacity = 0 //How much power the ship's components can use, set by engine
@@ -48,12 +49,10 @@
 	var/view_offset_x = 0
 	var/view_offset_y = 0
 	var/datum/movement_controller/movement_controller
-	/// Whether the pod can ignore [/turf/var/allows_vehicles].
-	var/ignore_turf_restrictions = FALSE
 
-	var/req_smash_velocity = 9 //7 is the 'normal' cap right now
+	var/req_smash_velocity = 7 //7 is the 'normal' cap right now
 	var/hitmob = 0
-	var/ram_self_damage_multiplier = 0.09
+	var/ram_self_damage_multiplier = 0.5
 
 	/// I got sick of having the comms type swapping code in 17 New() ship types
 	/// so this is the initial type of comms array this vehicle will have
@@ -114,6 +113,17 @@
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (health < maxhealth && isweldingtool(W))
+			var/turf/T = get_turf(src)
+			if(T.active_liquid)
+				if(T.active_liquid.my_depth_level >= 3 && T.active_liquid.group.reagents.get_reagent_amount("tene")) //SO MANY PERIODS
+					boutput(user, "<span class='alert'>The damaged parts are saturated with fluid. You need to move somewhere drier.</span>")
+					return
+#ifdef MAP_OVERRIDE_NADIR
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				//prevent in-acid welding from extending excursion times indefinitely
+				boutput(user, "<span class='alert'>The damaged parts are saturated with acid. You need to move somewhere with less pressure.</span>")
+				return
+#endif
 			if(!W:try_weld(user, 1))
 				return
 			src.health += 30
@@ -333,6 +343,9 @@
 
 			else if (href_list["unm_w"])
 				if (src.m_w_system)
+					if (!src.m_w_system.removable)
+						boutput(usr, "<span class='alert'>[src.m_w_system] is fused to the hull and cannot be removed.</span>")
+						return
 					m_w_system.deactivate()
 					components -= m_w_system
 					if (uses_weapon_overlays && m_w_system.appearanceString)
@@ -432,6 +445,23 @@
 		if (src.m_w_system?.muzzle_flash)
 			muzzle_flash_any(src, dir_to_angle(shoot_dir), src.m_w_system.muzzle_flash)
 
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = 'sound/impact_sounds/Metal_Clang_3.ogg'
+		if (isitem(AM))
+			var/obj/item/I = AM
+			switch(I.hit_type)
+				if (DAMAGE_BLUNT, DAMAGE_CRUSH)
+					src.health -= AM.throwforce / 1.5
+				if (DAMAGE_CUT, DAMAGE_STAB)
+					src.health -= AM.throwforce / 2
+				if (DAMAGE_BURN)
+					src.health -= AM.throwforce / 3
+		else
+			src.health -= AM.throwforce / 1.5 // assuming most non-items aren't sharp
+		src.visible_message("<span class='alert'>[src] has been hit by \the [AM].")
+		checkhealth()
+		..()
+
 	bullet_act(var/obj/projectile/P)
 		if(P.shooter == src)
 			return
@@ -443,10 +473,7 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		var/damage = 0
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		if (damage <= 10 && P.proj_data.ks_ratio <= 0.1) //make stun weapons do some damage
-			damage = round(P.power, 1.0)
+		var/damage = round(P.power, 1.0)
 
 		var/hitsound = null
 		switch(P.proj_data.damage_type)
@@ -495,7 +522,7 @@
 		*/
 
 	blob_act(var/power)
-		src.health -= power * 2
+		src.health -= power * 3
 		checkhealth()
 
 	get_desc()
@@ -576,7 +603,7 @@
 		if (get_move_velocity_magnitude() > 5)
 			var/power = get_move_velocity_magnitude()
 
-			src.health -= min(power * ram_self_damage_multiplier,5)
+			src.health -= min(power * ram_self_damage_multiplier,10)
 			checkhealth()
 
 			if (istype(target, /obj/machinery/vehicle/))
@@ -627,15 +654,8 @@
 							D.try_force_open(src)
 					if (istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 						qdel(O)
-
-				if (istype(target, /obj/window))
-					var/obj/window/W = target
-					W.health = 0
-					W.smash()
-
-				if (istype(O, /obj/grille))
-					var/obj/grille/G = target
-					G.damage_slashing(15)
+				var/obj_damage = 5 * power
+				target.damage_blunt(obj_damage)
 
 				if (istype(O, /obj/table))
 					var/obj/table/table = target
@@ -644,10 +664,6 @@
 				if (istype(O,/obj/machinery/vending))
 					var/obj/machinery/vending/V = O
 					V.fall(src)
-				if (istype(O,/obj/machinery/portable_atmospherics/canister))
-					var/obj/machinery/portable_atmospherics/canister/C = O
-					C.health -= power
-					C.healthcheck()
 				logTheThing(LOG_COMBAT, src, "(piloted by [constructTarget(src.pilot,"combat")]) crashes into [constructTarget(target,"combat")] [log_loc(src)].")
 
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
@@ -665,13 +681,9 @@
 		src.health -= 50
 		checkhealth()
 
-	Move(turf/NewLoc, Dir=0, step_x=0, step_y=0)
+	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		// set return value to default
-		if(NewLoc.allows_vehicles || src.ignore_turf_restrictions)
-			.= ..(NewLoc,Dir,step_x,step_y)
-		else
-			src.Bump(NewLoc) // to avoid implementing Cross() on all station turfs, we do it ourselves.
-			. = FALSE
+		.=..(NewLoc,Dir,step_x,step_y)
 
 		if (movement_controller)
 			movement_controller.update_owner_dir()
@@ -710,10 +722,18 @@
 
 		..()
 
-	process()
+	process(mult)
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+#ifdef MAP_OVERRIDE_NADIR
+		if(src.acid_damage_multiplier > 0)
+			var/T = get_turf(src)
+			if(istype(T,/turf/space/fluid) || istype(T,/turf/simulated/floor/plating/airless/asteroid))
+				var/power = get_move_velocity_magnitude()
+				src.health -= max(0.1 * power, 0.2) * acid_damage_multiplier * mult
+				checkhealth()
+#endif
 
 	proc/checkhealth()
 		myhud?.update_health()
@@ -999,6 +1019,10 @@
 		boutput(boarder, "There is no more room!")
 		return
 
+	if(!src.pilot && (ismobcritter(boarder)))
+		boutput(boarder, "<span class='alert'>You don't know how to pilot a pod, you can only enter as a passenger!</span>")
+		return
+
 	actions.start(new/datum/action/bar/board_pod(src,boarder), boarder)
 
 /obj/machinery/vehicle/proc/finish_board_pod(var/mob/boarder)
@@ -1011,7 +1035,7 @@
 	M.set_loc(src, src.view_offset_x, src.view_offset_y)
 	M.reset_keymap()
 	M.recheck_keys()
-	if(!src.pilot && !isghostcritter(boarder))
+	if(!src.pilot && !(ismobcritter(boarder)))
 		src.ion_trail.start()
 	src.find_pilot()
 	if (M.client)
@@ -1149,7 +1173,7 @@
 	if(src.pilot && (src.pilot.disposed || isdead(src.pilot) || src.pilot.loc != src))
 		src.pilot = null
 	for(var/mob/living/M in src) // fuck's sake stop assigning ghosts and observers to be the pilot
-		if(!src.pilot && !M.stat && M.client && !isghostcritter(M))
+		if(!src.pilot && !M.stat && M.client && !(ismobcritter(M)))
 			src.pilot = M
 			break
 
@@ -1303,7 +1327,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(atmostank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(atmostank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	dat += "<B>Fuel Status:</B> "
@@ -1326,7 +1350,7 @@
 			if(unknown_level > 0.01)
 				dat += " OTHER: [round(unknown_level)]%"
 
-		dat += " Temperature: [round(fueltank.air_contents.temperature-T0C)]&deg;C<br>"
+		dat += " Temperature: [round(TO_CELSIUS(fueltank.air_contents.temperature))]&deg;C<br>"
 	else
 		dat += "<font color=red>No tank installed!</font><BR>"
 	if(src.engine)
@@ -1454,7 +1478,7 @@
 ////////////////////////////////////////////////////////////////////////
 
 /obj/machinery/vehicle/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-	if (!user.client || !isliving(user) || isintangible(usr))
+	if (!user.client || !isliving(user) || isintangible(user))
 		return
 	if (is_incapacitated(user))
 		user.show_text("Not when you're incapacitated.", "red")
@@ -1667,6 +1691,8 @@
 		var/obj/machinery/vehicle/ship = usr.loc
 		if(ship.com_system)
 			if(ship.com_system.active)
+				if(ship.com_system.go_home())
+					return
 				ship.going_home = 1
 				boutput(usr, "[ship.ship_message("Course set for station level. Traveling off the edge of the current level will take you to the station level.")]")
 			else
@@ -1677,8 +1703,7 @@
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
 /obj/machinery/vehicle/proc/go_home()
-	return null
-
+	. = src.com_system?.get_home_turf()
 
 
 
@@ -1692,8 +1717,7 @@
 	icon_state = "minisub_body"
 	var/body_type = "minisub"
 	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
-	ignore_turf_restrictions = TRUE
-	uses_weapon_overlays = FALSE
+	uses_weapon_overlays = 0
 	health = 100
 	maxhealth = 100
 	speed = 0 // speed literally does nothing? what??
@@ -1751,6 +1775,7 @@
 /obj/machinery/vehicle/tank/minisub
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
+	acid_damage_multiplier = 0.5
 
 	New()
 		..()
@@ -1799,6 +1824,7 @@
 	icon_state = "syndisub_body"
 	health = 150
 	maxhealth = 150
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -1911,7 +1937,7 @@
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)

@@ -2,7 +2,7 @@
 	//Sort of like a holder mob for brain-triggered assemblies
 	name = "brain thing"
 	real_name = "brain thing"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "cool_brain"
 	canmove = 0
 	nodamage = 1
@@ -59,11 +59,6 @@
 
 		return "warbles, \"[text]\"";
 
-
-
-	emote()
-		return
-
 	proc/display_message(var/message, var/quiet = 0, var/emote = 0)
 		//This will make sure the surroundings can hear what the brain thing has to say
 		var/message_range = quiet ? 1 : 7
@@ -116,7 +111,7 @@
 	ghostize()
 		var/mob/dead/observer/O = ..()
 		if(O)
-			O.icon = 'icons/obj/surgery.dmi'
+			O.icon = 'icons/obj/items/organs/brain.dmi'
 			O.icon_state = "cool_brain"
 			O.alpha = 155
 

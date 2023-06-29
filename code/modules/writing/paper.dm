@@ -95,13 +95,17 @@
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = tgui_alert(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball"))
+		var/fold = tgui_input_list(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball", "Cigarette packet"))
 		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
 			user.show_text("You fold the paper into a hat! Neat.", "blue")
 			var/obj/item/clothing/head/paper_hat/H = new()
+			user.put_in_hand_or_drop(H)
+		else if (fold == "Cigarette packet")
+			user.show_text("You fold the paper into a cigarette packet! Neat.", "blue")
+			var/obj/item/cigpacket/paperpack/H = new()
 			user.put_in_hand_or_drop(H)
 		else
 			var/obj/item/paper/folded/F = null
@@ -211,6 +215,7 @@
 				if(info != in_paper)
 					boutput(ui.user, "You write on \the [src]!");
 					info = in_paper
+					phrase_log.log_phrase("paper", info, no_duplicates=FALSE)
 					update_static_data(usr,ui)
 			. = TRUE
 
@@ -237,7 +242,7 @@
 	var/obj/O = user.equipped()
 	var/time_type = istype(O, /obj/item/stamp/clown) ? "HONK O'CLOCK" : "SHIFT TIME"
 	var/T = ""
-	T = time_type + ": [time2text(world.timeofday, "DD MMM 2053, hh:mm:ss")]"
+	T = time_type + ": [time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")]"
 
 	// TODO: change this awful array name & stampAssetType
 	var/stamp_assets = list(
@@ -281,9 +286,9 @@
 		)
 	else if(istype(O, /obj/item/stamp))
 		var/obj/item/stamp/stamp = O
-		stamp.current_state = stamp_assets[stamp.current_mode]
+		stamp.current_state = stamp_assets[STAMP_IDS[stamp.current_mode]]
 		. += list(
-			"stampClass" = stamp_assets[stamp.current_mode],
+			"stampClass" = stamp_assets[STAMP_IDS[stamp.current_mode]],
 			"editMode" = PAPER_MODE_STAMPING,
 			"penFont" = "FAKE",
 			"penColor" = "FAKE",
@@ -638,6 +643,8 @@
 
 /obj/item/paper_bin/get_desc()
 	var/n = src.amount
+	if (n == INFINITY)
+		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
@@ -680,14 +687,14 @@
 	var/is_reassignable = 1
 	var/assignment = null
 	var/available_modes = list("Granted", "Denied", "Void", "Current Time", "Your Name");
-	var/current_mode = "stamp-sprite-ok"
+	var/current_mode = "Granted"
 	var/current_state = null
 
 /obj/item/stamp/New()
 	..()
 	if(special_mode)
 		available_modes += special_mode
-		current_mode = (STAMP_IDS[special_mode])
+		current_mode = special_mode
 
 /obj/item/stamp/proc/set_assignment(A)
 	if (istext(A))
@@ -718,11 +725,11 @@
 	var/NM = input(usr, "Configure \the [src]?", "[src.name]", src.current_mode) in src.available_modes
 	if (!NM || !length(NM) || !(NM in src.available_modes))
 		return
-	src.current_mode = (STAMP_IDS[NM])
+	src.current_mode = NM
 	boutput(usr, "<span class='notice'>You set \the [src] to '[NM]'.</span>")
 	return
 
-/obj/item/stamp/examine()
+/obj/item/stamp/get_desc()
 	. = ..()
 	. += "It is set to '[current_mode]' mode."
 

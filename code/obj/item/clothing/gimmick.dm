@@ -56,6 +56,9 @@
 	desc = "Uhh, how long has this even been here? It looks kinda grubby and, uhh, singed. Wait, is that blood?"
 	icon_state = "santa"
 	item_state = "santahat"
+	hides_from_examine = C_EARS
+	c_flags = null
+	see_face = 1
 
 	noslow
 		setupProperties()
@@ -150,23 +153,39 @@
 	icon_state = "smiles"
 	see_face = 0
 
+TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/waldo
 	name = "striped shirt and jeans"
 	desc = "A very distinctive outfit."
 	icon_state = "waldo"
 	item_state = "waldo"
+	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
+TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/odlaw
 	name = "yellow-striped shirt and jeans"
 	desc = "A rather sinister outfit."
 	icon_state = "odlaw"
 	item_state = "odlaw"
+	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
+TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/fake_waldo
 	name = "striped shirt and jeans"
 	desc = "A very odd outfit."
 	icon_state = "waldont1"
 	item_state = "waldont1"
+	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
+
 	New()
 		..()
 		icon_state = "waldont[rand(1,6)]"
@@ -336,6 +355,7 @@
 	icon_state = "batman"
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
+	hides_from_examine = C_EARS
 	see_face = 0
 
 /obj/item/clothing/head/helmet/batman
@@ -343,6 +363,9 @@
 	desc = "I AM THE BAT"
 	icon_state = "batcowl"
 	item_state = "batcowl"
+	c_flags = COVERSEYES | COVERSMOUTH
+	hides_from_examine = C_EARS
+	see_face = 0
 
 // see procitizen.dm for batman verbs
 
@@ -498,6 +521,19 @@
 	icon_state = "pinkclown"
 	//item_state = "pinkclown"
 
+	waddle
+		desc = "Pink clown shoes, they look a bit funny..."
+
+		equipped(var/mob/user, var/slot)
+			..()
+			user.AddComponent(/datum/component/waddling)
+
+		unequipped(mob/user)
+			..()
+			var/datum/component/waddling/component = user.GetComponent(/datum/component/waddling)
+			component.RemoveComponent()
+
+
 /obj/item/clothing/mask/clown_hat/yellow
 	name = "yellow clown mask"
 	desc = "A ray of sunshine."
@@ -568,38 +604,25 @@
 		..()
 		setProperty("coldprot", 40)
 
+
 /obj/item/device/energy_shield/viking
 	name = "TN-FIDEI Energy Shield"
 	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	item_state = "vshield"
 	throwforce = 7
+	throw_speed = 1
+	throw_range = 5
 	w_class = W_CLASS_NORMAL
 
-	turn_off()
-		if(user)
-			user.underlays -= shield_overlay
-			user.energy_shield = null
-			shield_overlay = null
-		user = null
-		active = 0
+	New()
+		. = ..()
+		AddComponent(/datum/component/cell_holder, new /obj/item/ammo/power_cell/self_charging/disruptor, TRUE, 100, FALSE)
+		AddComponent(/datum/component/wearertargeting/energy_shield, list(SLOT_BELT, SLOT_L_HAND, SLOT_R_HAND), 0.75, 1, TRUE, 5) //blocks 75% of damage taken, up to 100 damage total
 
-	turn_on(var/mob/user2)
-
-		if(user2.energy_shield)
-			boutput(user2, "<span class='alert'>Cannot activate more than one shield.</span>")
-			return
-
-		user = user2
-		if(!can_use())
-			turn_off()
-			return
-		user.energy_shield = src
-		shield_overlay = image('icons/effects/effects.dmi',user,"enshield",MOB_LAYER+1)
-		user.underlays += shield_overlay
-		active = 1
 
 // Merchant
 
@@ -659,19 +682,20 @@
 	icon_state = "spiderman"
 	item_state = "bogloves"
 	see_face = 0
+	hides_from_examine = C_GLASSES|C_EARS
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
 	desc = "FAPPO!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	see_face = 0
 
 /obj/item/clothing/mask/horse_mask
 	name = "horse mask"
 	desc = "Neigh."
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_GLASSES|C_EARS
 	see_face = 0
 
 	cursed
@@ -688,6 +712,7 @@
 	desc = "This cat head was built to the highest ethical standards.  50% less child labor used in production than competing novelty cat heads."
 	icon_state = "genki"
 	c_flags = COVERSEYES | COVERSMOUTH | MASKINTERNALS
+	hides_from_examine = C_EARS|C_GLASSES
 
 //birdman for nieks
 
@@ -697,6 +722,7 @@
 	icon_state = "birdman"
 	see_face = 0
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //FACT: space birds can breathe in space
+	hides_from_examine = C_EARS
 
 /obj/item/clothing/under/gimmick/birdman
 	name = "birdman suit"
@@ -723,7 +749,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
 
 	setupProperties()
 		..()
@@ -735,6 +761,10 @@
 	name = "plastic power helmet"
 	desc = "Wow this really looks like a noise marine helmet. But it's not!"
 	icon_state = "nm_helm"
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	c_flags = COVERSEYES | COVERSMOUTH
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/power
 	name = "unpainted cardboard space marine armor"
@@ -778,6 +808,8 @@
 	desc = "Shame this doesn't have real loudspeakers built into it."
 	icon_state = "nm_back"
 
+TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/dawson
 	name = "Aged hipster clothes"
 	desc = "A worn-out brown coat with acid-washed jeans and a yellow-stained shirt. The previous owner must've been a real klutz."
@@ -785,6 +817,10 @@
 	item_state = "dawson"
 	cant_self_remove = 1
 	cant_other_remove = 1
+	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
+
 	equipped(var/mob/user, var/slot)
 		..()
 		if(slot == SLOT_W_UNIFORM && ishuman(user))
@@ -851,7 +887,7 @@
 /obj/item/clothing/mask/skull
 	name = "skull mask"
 	desc = "A spooky skull mask. You're getting the heebie-jeebies just looking at it!"
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
 	item_state = "death"
 	see_face = 0
@@ -878,6 +914,7 @@
 	item_state = "bee"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/suit/monkey
 	name = "monkey costume"
@@ -890,6 +927,7 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_LAYER_BASE
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
@@ -925,6 +963,7 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	wear_layer = MOB_FULL_SUIT_LAYER
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 	see_face = 0
@@ -961,6 +1000,10 @@
 	desc = "A familiar, yet legally distinct helmet."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_GLASSES|C_EARS|C_MASK
+	seal_hair = 1
+	see_face = 0
 
 /obj/item/clothing/suit/armor/sneaking_suit
 	name = "sneaking suit"
@@ -970,7 +1013,6 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/armor/sneaking_suit/costume
 	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
@@ -1073,7 +1115,10 @@
 	desc = "A stylish red scarf, to add some colour to the monochrome mime get-up."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	wear_layer = MOB_GLASSES_LAYER2
 	icon_state = "scarf"
+	c_flags = ONBACK
+
 
 	setupProperties()
 		..()
@@ -1143,7 +1188,7 @@
 					if (H.gloves)
 						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
 						return
-					if (user == H) // is this some form of masturbation?? giving yourself a wedding ring???? or are you too lazy to just equip it like a normal person????????
+					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\
 						"You slip [src] onto your own finger. Legally, you are now married to yourself. Congrats.")
 					else
@@ -1235,16 +1280,15 @@
 						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
+TYPEINFO(/obj/item/clothing/gloves/ring/gold)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/clothing/gloves/ring/gold
 	name = "gold ring"
 	icon_state = "gring"
 	item_state = "gring"
 	material_prints = "shallow scratches"
 	mat_changename = 0 // okay let's just be "gold ring" and not "flimsy soft good gold ring" tia
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 /obj/item/clothing/gloves/ring/titanium // fancy loot crate ring that gives you hulk, basically. real overpowered?  :T
 	name = "titanium ring"
@@ -1400,7 +1444,8 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER
+	c_flags = COVERSMOUTH | COVERSEYES
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 
@@ -1408,6 +1453,8 @@
 	name = "red skull mask and cowl"
 	desc = "Looking at this fills you with joy! You're not sure why. That's kind of a weird thing to feel about something that looks like this."
 	icon_state = "joyful"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_MASK|C_GLASSES|C_EARS
 	seal_hair = 1
 
 /obj/item/clothing/under/rotten
@@ -1452,11 +1499,17 @@
 	icon_state = "pajamas"
 	item_state = "pajamas"
 
+
+TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
+	mat_appearances_to_ignore = list("jean")
 /obj/item/clothing/under/gimmick/shirtnjeans
 	name = "shirt and jeans"
 	desc = "A white shirt and a pair of torn jeans."
 	icon_state = "shirtnjeans"
 	item_state = "white"
+	material_piece = /obj/item/material_piece/cloth/jean
+	mat_changename = FALSE
+	default_material = "jean"
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"
@@ -1508,6 +1561,7 @@
 	name = "werewolf mask"
 	desc = "The mask of a wolfman getup."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_GLASSES|C_MASK|C_EARS
 	seal_hair = 1
 	icon_state = "wwmask"
 
@@ -1537,6 +1591,7 @@
 	name = "abomination mask"
 	desc =  "The abomination mask straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
 	seal_hair = 1
 	icon_state = "abommask"
 
@@ -1544,6 +1599,7 @@
 	name = "zombie mask"
 	desc = "The mask of a zombie. Man, they really captured the discolouration of rotten flesh."
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
+	hides_from_examine = C_EARS
 	seal_hair = 1
 	icon_state = "zombmask"
 
@@ -1551,7 +1607,7 @@
 	name = "hotdog suit"
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
 	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
@@ -1566,6 +1622,7 @@
 	desc = "Dracula who?"
 	body_parts_covered = TORSO
 	icon_state = "vampcape"
+	c_flags = ONBACK
 
 /obj/item/clothing/under/gimmick/superhero
 	name = "crimefighting costume"
@@ -1763,6 +1820,11 @@
 	desc = "Wow! It's just like the real thing!"
 	icon_state = "big_lizard"
 	item_state = "big_lizard"
+	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_EARS|C_GLASSES|C_MASK
+	seal_hair = 1
+	see_face = 0
+
 
 //sock hats
 
@@ -1819,6 +1881,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_purple"
+	c_flags = ONBACK
 
 /obj/item/clothing/suit/witchcape_mint
 	name = "Mint Witch Cape"
@@ -1826,6 +1889,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+	c_flags = ONBACK
 
 // marching band stuff
 /obj/item/clothing/under/gimmick/marchingband

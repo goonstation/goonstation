@@ -13,6 +13,12 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Returns one of the base materials by id.
 /proc/getMaterial(mat)
+	#ifdef CHECK_MORE_RUNTIMES
+	if (!istext(mat))
+		CRASH("getMaterial() called with a non-text argument [mat].")
+	if (!(mat in material_cache))
+		CRASH("getMaterial() called with an invalid material id [mat].")
+	#endif
 	if(!istext(mat))
 		return null
 	return material_cache?[mat]
@@ -67,7 +73,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
-	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
+
+	if(M1.value != M2.value || M1.name != M2.name  || M1.color ~! M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
 		return 0
 
 	for(var/datum/material_property/P1 in M1.properties)
@@ -88,8 +95,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /// Called AFTER the material of the object was changed.
 /atom/proc/onMaterialChanged()
 	if(istype(src.material))
-		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
-		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
+		explosion_resistance = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? sqrt(round(max(4, material.getProperty("density")) - 4)) : explosion_protection
 		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
 
 
@@ -107,11 +114,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if(src.mat_changedesc)
 		src.desc = initial(src.desc)
 
-	src.alpha = initial(src.alpha)
-	src.color = initial(src.color)
-
-	src.UpdateOverlays(null, "material")
-
+	src.setMaterialAppearance(null)
 	src.material = null
 
 //Time for some super verbose proc names.
@@ -126,9 +129,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			else
 				string = P.desc
 	return string
-
-/// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
-/atom/var/list/mat_appearances_to_ignore = null
 
 /proc/getMaterialPrefixList(datum/material/base)
 	. = list()
@@ -164,13 +164,17 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	if (src.mat_changename && setname)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
-		if(use_descriptors)
-			src.name_prefix(strPrefix ? strPrefix : "")
-			src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
-		src.name_prefix(mat1.name ? mat1.name : "")
-		if(use_descriptors)
-			src.name_suffix(strSuffix ? "of [strSuffix]" : "")
-		src.UpdateName()
+		if(mat1.special_naming)
+			src.UpdateName()
+			src.name = mat1.specialNaming(src)
+		else
+			if(use_descriptors)
+				src.name_prefix(strPrefix ? strPrefix : "")
+				src.name_prefix(length(getQualityName(mat1.quality)) ? getQualityName(mat1.quality) : "")
+			src.name_prefix(mat1.name ? mat1.name : "")
+			if(use_descriptors)
+				src.name_suffix(strSuffix ? "of [strSuffix]" : "")
+			src.UpdateName()
 
 	if (src.mat_changedesc && setname)
 		if (istype(src, /obj))
@@ -182,27 +186,69 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc += " It's probably not very valuable to a reputable buyer."
 	if(appearance)
 		src.setMaterialAppearance(mat1)
-
+	src.material_applied_appearance = appearance //set the flag for whether we want to reapply material appearance on icon update
 	src.material?.triggerOnRemove(src)
 	src.material = mat1
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
 
+/atom/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
+/image/proc/materialless_icon_state()
+	. = src.icon_state ? splittext(src.icon_state,"$$")[1] : ""
+
 /// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
-/atom/proc/setMaterialAppearance(var/datum/material/mat1)
-	var/set_color_alpha = TRUE
-	src.alpha = 255
-	src.color = null
-	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
-		if (mat1.name in src.mat_appearances_to_ignore)
-			set_color_alpha = FALSE
-	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
+/// Order of precedence is as follows:
+/// if the material is in the list of appearences to ignore, do nothing
+/// If an iconstate exists in the icon for iconstate$$materialID, that is chosen
+/// If the material has mat_changeappaerance set, then first texture is applied, then color (including alpha)
+/atom/proc/setMaterialAppearance(datum/material/mat1)
+	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
+	src.color = initial(src.color)
+	var/base_icon_state = materialless_icon_state()
+	if (isnull(mat1) || (mat1.mat_id in src.get_typeinfo().mat_appearances_to_ignore))
+		src.icon_state = base_icon_state
+		src.setTexture(null, key="material")
+		return
+
+	var/potential_new_icon_state = "[base_icon_state]$$[mat1.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		src.icon_state = potential_new_icon_state
+		src.setTexture(null, key="material")
+		return
+
+	if (src.mat_changeappearance)
 		if (mat1.texture)
 			src.setTexture(mat1.texture, mat1.texture_blend, "material")
-		src.alpha = mat1.alpha
-		src.color = mat1.color
+		else
+			src.setTexture(null, key="material")
+		if(mat1.applyColor)
+			src.alpha = mat1.alpha
+			src.color = mat1.color
+
+/// Applies material icon_state override to an /image based on this atom's material (or the material provided)
+/atom/proc/setMaterialAppearanceForImage(image/img, datum/material/mat=null)
+	if(isnull(mat))
+		mat = src.material
+	var/base_icon_state = img.materialless_icon_state()
+	if (isnull(mat) || (mat.mat_id in src.get_typeinfo().mat_appearances_to_ignore))
+		img.icon_state = base_icon_state
+		return
+	var/potential_new_icon_state = "[base_icon_state]$$[mat.mat_id]"
+	if(src.is_valid_icon_state(potential_new_icon_state))
+		img.icon_state = potential_new_icon_state
+		return
+
+/atom/proc/is_valid_icon_state(var/state, icon=null)
+	if(isnull(icon))
+		icon = src.icon
+	if(isnull(global.valid_icon_states[icon]))
+		global.valid_icon_states[icon] = list()
+		for(var/icon_state in icon_states(src.icon))
+			global.valid_icon_states[icon][icon_state] = 1
+	return state in global.valid_icon_states[icon]
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -244,8 +290,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
-		if(newMat)
-			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -260,8 +304,6 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
-			if(newMat)
-				newProc.owner = newMat
 	return newList
 
 /// Merges two materials and returns result as new material.
@@ -278,7 +320,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.suffixes = (mat1.suffixes | mat2.suffixes)
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
-	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.name = mat1.interpolateName(mat2, 0.5)
 	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
@@ -295,6 +337,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
 	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
 	else newMat.edible = FALSE
+
+	newMat.special_naming = FALSE // the naming proc doesn't carry over anyway
 
 	newMat.mixOnly = FALSE
 
@@ -527,3 +571,28 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()
+
+/**
+ * Returns the thermal conductivity between two materials, based on thermal and electrical conductivity mat property.
+ * Thermal conductivity ranges from 0 (perfect insulator) to infinity. Excellent conductors like copper are about 100
+*/
+proc/calculateHeatTransferCoefficient(var/datum/material/matA, var/datum/material/matB)
+	var/hTC1 = 5
+	var/hTC2 = 5
+	if(matA)
+		if(matA.hasProperty("thermal") && matA.hasProperty("electrical"))
+			hTC1 = (max(matA.getProperty("thermal"),0) + max(matA.getProperty("electrical"),0))/2
+		else if(matA.hasProperty("thermal"))
+			hTC1 = max(matA.getProperty("thermal"),0)
+		else if(matA.hasProperty("electrical"))
+			hTC1 = max(matA.getProperty("electrical"),0)
+	if(matB)
+		if(matB.hasProperty("thermal") && matB.hasProperty("electrical"))
+			hTC2 = (max(matB.getProperty("thermal"),0) + max(matB.getProperty("electrical"),0))/2
+		else if(matB.hasProperty("thermal"))
+			hTC2 = max(matB.getProperty("thermal"),0)
+		else if(matB.hasProperty("electrical"))
+			hTC2 = max(matB.getProperty("electrical"),0)
+	//average thermal conductivity approximated as 10^(x/5)-1
+	//common values 0 = 0, 5 = 10, 10 = 100
+	return ((10**(hTC1/5)-1)+(10**(hTC2/5)-1))/2

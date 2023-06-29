@@ -14,6 +14,13 @@
 		if (!prob(process_proc_chance))
 			return 1
 
+	/// This proc is called when a commut does modify a stat. This lets more plants be affected by stuff like superior quality
+	/// and move some magic numbers out of plantpot.dm
+	/// This proc takes the base value of the stat and returns a modifier that is added/subtracted from the plant
+	proc/get_plant_stat_modifier(var/datum/plantgenes/gene_pool, var/gene_stat as text, var/value_base)
+		if (!gene_pool || !gene_stat)
+			return 0
+
 /datum/plant_gene_strain/immunity_toxin
 	name = "Toxin Immunity"
 	desc = "This genetic strain enables a plant to wholly resist damage from toxic substances."
@@ -68,13 +75,26 @@
 /datum/plant_gene_strain/quality
 	name = "Superior Quality"
 	desc = "Produce harvested from this plant will be of a greater quality than usual."
-	var/quality_mult = 2
+	var/quality_mult = 0.2
 	var/quality_mod = 5
+
+	get_plant_stat_modifier(var/datum/plantgenes/gene_pool, var/gene_stat as text, var/value_base)
+		if (!gene_pool || !gene_stat)
+			return 0
+		if (gene_stat == "potency")
+			return max(0, value_base * src.quality_mult)
 
 /datum/plant_gene_strain/quality/inferior
 	name = "Inferior Quality"
 	desc = "Produce harvested from this plant will be of much worse quality than usual."
+	quality_mult = -0.2
 	negative = 1
+
+	get_plant_stat_modifier(var/datum/plantgenes/gene_pool, var/gene_stat as text, var/value_base)
+		if (!gene_pool || !gene_stat)
+			return 0
+		if (gene_stat == "potency")
+			return min(0, value_base * src.quality_mult)
 
 /datum/plant_gene_strain/splicing
 	name = "Splice Enabler"
@@ -85,6 +105,13 @@
 	name = "Splice Blocker"
 	desc = "Chromosomal alterations prevent seeds from this plant from being spliced as easily."
 	negative = 1
+
+/datum/plant_gene_strain/splicing/disabled
+	name = "Splice Disabler"
+	desc = "Chromosomal alterations prevent seeds from this plant from being spliced at all."
+	negative = 1
+	chance = 100
+	splice_mod = 100
 
 /datum/plant_gene_strain/damage_res
 	name = "Damage Resistance"
@@ -174,6 +201,11 @@
 		var/turf/T = PP.loc
 		if (istype(T,/turf/) && T.RL_GetBrightness() >= 1)
 			PP.growth += 2
+
+/datum/plant_gene_strain/variable_harvest
+	name = "Variable Harvest"
+	desc = "This gene causes the plant to produce a variable number of harvests."
+	chance = 50
 
 /datum/plant_gene_strain/reagent_adder
 	name = "Hyperaquacity"

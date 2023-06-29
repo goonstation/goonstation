@@ -20,6 +20,7 @@
 //Station Namer
 //Revhead tracker
 //Head tracker
+//Generator Controller
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -507,7 +508,7 @@ Code:
 			null, \
 			FALSE \
 		)
-		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 	on_deactivated(obj/item/device/pda2/pda)
 		qdel(get_radio_connection_by_id(pda, "report"))
@@ -558,10 +559,12 @@ Code:
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
 	var/obj/machinery/carouselpower/carousel
+	var/obj/machinery/atmospherics/binary/reactor_turbine/nuke_turbine
+	var/obj/machinery/atmospherics/binary/nuclear_reactor/nuke_reactor
 
 	proc/find_machinery(obj/ref, type)
 		if(!ref || ref.disposed)
-			ref = locate(type) in machine_registry[MACHINES_POWER]
+			ref = locate(type) in (machine_registry[MACHINES_POWER] + machine_registry[MACHINES_FISSION])
 			if(ref?.z != 1) ref = null
 		. = ref
 
@@ -578,14 +581,18 @@ Code:
 		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//NUKE
+		nuke_turbine = find_machinery(nuke_turbine, /obj/machinery/atmospherics/binary/reactor_turbine)
+		nuke_reactor = find_machinery(nuke_reactor, /obj/machinery/atmospherics/binary/nuclear_reactor)
 		//PTL
 		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
 		. = src.return_text_header()
-
+		. += "<BR>"
+		//TEG
 		if (generator)
 			engine_found = TRUE
-			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "<h4>Thermo-Electric Generator Status</h4>"
 			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
 			. += "<BR>"
 
@@ -601,6 +608,7 @@ Code:
 				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
 				. += "<BR>"
 
+		// SINGULO
 		if(length(by_type[/obj/machinery/power/collector_control]))
 			var/controler_index = 1
 			var/collector_index = 1
@@ -608,7 +616,7 @@ Code:
 				collector_index = 1
 				if(C?.active && C.z == 1)
 					engine_found = TRUE
-					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "<h4>Radiation Collector [controler_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
 					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
@@ -616,12 +624,43 @@ Code:
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
 					. += "<BR>"
 
+		// NUKE
+		if(nuke_reactor)
+			engine_found = TRUE
+			// for some unfathomable reason trying to detect reactor rod insertion broke the whole damn thing. Todo for a better coder i guess
+			. += "<BR><h4>Reactor Status</h4>"
+			. += "Radiation Level: [engineering_notation(nuke_reactor.radiationLevel)] clicks<BR>"
+			. += "Reactor temperature: [nuke_reactor.temperature] K<BR>"
+			// . += "Control rod insertion: [rodlevel * 100]%"
+			if (isnull(nuke_turbine))
+				. += "<B>Error!</B> No turbine detected!<BR>"
+		if (nuke_turbine)
+			engine_found = TRUE
+			. += "<h4>Turbine Status</h4>"
+			. += "Output : [engineering_notation(nuke_turbine.lastgen)]W<BR>"
+			. += "RPM : [engineering_notation(nuke_turbine.RPM)]<BR>"
+			. += "Stator Load: [engineering_notation(nuke_turbine.stator_load)]J/RPM<BR>"
+			. += "Turbine contents temperature : [engineering_notation(nuke_turbine.air_contents?.temperature)] K<BR>"
+			if (isnull(nuke_reactor))
+				. += "<B>Error!</B> No reactor detected!<BR>"
+			. += "<BR>"
+
+		//HOTSPOT
+		if(length(by_type[/obj/machinery/power/vent_capture]))
+			. += "<h4>Vent Capture Unit Status</h4>"
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
+					engine_found = TRUE
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
+		. += "<HR>"
+		// CATALYTICS
 		if(length(by_type[/obj/machinery/power/catalytic_generator]))
 			var/generator_index = 1
 			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
 				if(C.z == 1)
 					engine_found = TRUE
-					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "<h4>Catalytic Generator [generator_index++] Status</h4>"
 					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
 					if(C.anode_unit?.contained_rod)
 						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
@@ -635,16 +674,10 @@ Code:
 						. += "No Cathode Rod Installed<BR>"
 					. += "<BR>"
 
-		if(length(by_type[/obj/machinery/power/vent_capture]))
-			. += "<BR><h4>Vent Capture Unit Status</h4>"
-			for_by_tcl(V, /obj/machinery/power/vent_capture)
-				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
-					engine_found = TRUE
-					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
-			. += "<BR>"
+		// todo: have some solar stats pop up, like angle and rate and whatnot. Once #13206 is in this'll have more info
 
 		if(!engine_found)
-			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
+			. += "<B>Error!</B> No power source detected!<BR><BR>"
 
 		. += "<HR>"
 		if(laser)
@@ -1468,3 +1501,178 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+// utility for controlling power machinery
+/datum/computer/file/pda_program/power_controller
+	name = "Power Controller v1.0" // you should totally increment this if you make changes
+	size = 4
+	var/list/device_statuses = list()
+	var/list/device_messages = list()
+	var/list/cooldowns = list()
+
+	var/freq = FREQ_POWER_SYSTEMS
+
+	on_activated(obj/item/device/pda2/pda)
+		src.master.AddComponent(/datum/component/packet_connected/radio, \
+			"power_control",\
+			src.freq, \
+			src.master.net_id, \
+			null, \
+			FALSE, \
+			ADDRESS_TAG_POWER, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
+		src.get_devices()
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, null))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>Power Controller</h4>"
+		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan</a>"
+		dat += "<hr>"
+		for (var/gen in src.device_statuses)
+			var/list/data = params2list(src.device_statuses[gen]["data"])
+			var/list/variables = params2list(src.device_statuses[gen]["vars"])
+			var/device = src.device_statuses[gen]["device"]
+
+			dat += "<b>[strip_html(gen)]\> [device ? strip_html(device) : ""]</b><ul>"
+
+			if (length(data) > 0)
+				dat += "<b>Data:</b><br>"
+				for (var/field in data)
+					dat += "[strip_html(field)]: [strip_html(data[field])]<br>"
+
+			if (length(variables) > 0)
+				dat += "<br><b>Variables:</b><br>"
+				for (var/field in variables)
+					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[html_encode(field)]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+
+			dat += "</ul>"
+
+			if (gen in src.device_messages)
+				dat += "<b>Last Message:</b> [src.device_messages[gen]]"
+
+			dat += "<hr>"
+
+		return dat
+
+	Topic(href, href_list)
+		if (..())
+			return
+
+		if (href_list["scan"])
+			if (ON_COOLDOWN(src, "scan", 1 SECOND))
+				return
+
+			src.get_devices()
+
+		else if (href_list["set_var"])
+			if (!href_list["netid"])
+				return
+
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src.master
+			signal.data["address_1"] = href_list["netid"]
+			signal.data["sender"] = src.master.net_id
+			signal.data["command"] = "set_var"
+			signal.data["var_name"] = html_decode(href_list["set_var"])
+
+			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Editor") as text) // better safe than sorry!
+
+			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+		src.master.add_fingerprint(usr)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!signal || !src.master.net_id || signal.encryption)
+			return
+
+		var/sender = signal.data["sender"]
+		if (!sender)
+			return
+
+		if (signal.data["command"] == "ping_reply")
+			src.get_device_status(sender)
+			return
+
+		if (!signal.data["address_tag"] || signal.data["address_tag"] != ADDRESS_TAG_POWER)
+			return // we can assume we are not talking to a viable device
+
+		switch (signal.data["command"])
+			if ("status")
+				if (!signal.data["data"] && !signal.data["vars"])
+					return
+
+				src.device_statuses[sender] = signal.data // this packet should contain all the data we need
+				src.master.updateSelfDialog()
+				return
+
+			if ("error")
+				if (!(sender in src.device_statuses))
+					src.get_device_status()
+					return
+
+				if (!signal.data["data"])
+					return
+
+				if (!(sender in src.device_messages))
+					src.device_messages.Add(sender)
+
+				src.device_messages[sender] = signal.data["data"]
+				src.master.updateSelfDialog()
+				return
+
+	proc/get_device_status(var/target_id)
+		if (!target_id)
+			return
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = target_id
+		signal.data["sender"] = src.master.net_id
+		signal.data["command"] = "status"
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+	proc/get_devices() // ping all devices
+		src.device_statuses.Cut()
+		src.device_messages.Cut()
+		src.master.updateSelfDialog()
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = "ping"
+		signal.data["sender"] = src.master.net_id
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "power_control")
+
+//Genebooth Tracker
+/datum/computer/file/pda_program/genebooth_tracker
+	name = "Genebooth Tracker"
+	size = 6
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		var/booth_counter = 0
+		for_by_tcl(booth, /obj/machinery/genetics_booth)
+			booth_counter += 1
+			. += "<hr><h4>GeneBooth [booth_counter]</h4>"
+			for (var/datum/geneboothproduct/product as anything in booth.offered_genes)
+				. += "<b>[product.name]</b> [product.cost][CREDIT_SIGN] | [product.uses] uses left"
+				if(product.locked)
+					. += " (locked)"
+				. += "<br>"
+				if(product.desc)
+					. += product.desc
+					. += "<br>"

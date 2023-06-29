@@ -1,5 +1,49 @@
 //See bottom of file for valid materials in /simple recipes.
 
+/datum/matfab_recipe/simple/nuclear
+	name = "Nuclear Component - base"
+	desc = "You shouldn't see this"
+	category = "Nuclear"
+	result = /obj/item/reactor_component
+
+	postProcess(obj/item/reactor_component/I)
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		if(!I.material.hasProperty("density"))
+			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty("hard"))
+			I.material.setProperty("hard", 1)
+		if(I.material.mat_id=="ice") //ice is cold
+			I.temperature = T0C-10
+
+/datum/matfab_recipe/simple/nuclear/fuel_rod
+	name = "Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/fuel_rod
+
+/datum/matfab_recipe/simple/nuclear/control_rod
+	name = "Control Rod"
+	desc = "A control rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/control_rod
+
+/datum/matfab_recipe/simple/nuclear/heat_exchanger
+	name = "Heat Exchanger"
+	desc = "A heat exchanger component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/heat_exchanger
+
+/datum/matfab_recipe/simple/nuclear/gas_channel
+	name = "Coolant Channel"
+	desc = "A coolant channel component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/gas_channel
+
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
 	desc = "A complete space suit."
@@ -28,7 +72,7 @@
 
 /datum/matfab_recipe/mining_mod_conc
 	name = "Tool mod (Concussive)"
-	desc = "A mod for mining tools. Increases AOE."
+	desc = "A mod for mining tools. Increases area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -44,7 +88,7 @@
 
 /datum/matfab_recipe/mining_head_pick
 	name = "Tool head (Pick)"
-	desc = "A Pick head. Picks have high power but no AOE."
+	desc = "A Pick head. Picks have high power but no area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -64,7 +108,7 @@
 
 /datum/matfab_recipe/mining_head_blaster
 	name = "Tool head (Blaster)"
-	desc = "A Blaster head. Blasters have lower power but very high AOE."
+	desc = "A Blaster head. Blasters have lower power but very high area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -83,7 +127,7 @@
 
 /datum/matfab_recipe/mining_head_hammer
 	name = "Tool head (Hammer)"
-	desc = "A Hammer head. Hammers have a wide AOE and normal power."
+	desc = "A Hammer head. Hammers have a wide area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -102,7 +146,7 @@
 
 /datum/matfab_recipe/mining_head_drill
 	name = "Tool head (Drill)"
-	desc = "A Drill head. Hammers have a long AOE and normal power."
+	desc = "A Drill head. Drills have a long area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -195,7 +239,7 @@
 
 /datum/matfab_recipe/spear
 	name = "Spear"
-	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
+	desc = "A simple spear with long reach."
 	category = "Weapons"
 
 	New()
@@ -280,7 +324,7 @@
 
 /datum/matfab_recipe/lens
 	name = "Lens"
-	desc = "A Lens used as a component in various objects."
+	desc = "A lens used as a component in various objects."
 	category = "Components"
 
 	New()
@@ -299,7 +343,7 @@
 
 /datum/matfab_recipe/tripod
 	name = "Tripod"
-	desc = "A tripod."
+	desc = "A tripod for attaching a light to."
 	category = "Components"
 
 	New()
@@ -505,7 +549,7 @@
 
 /datum/matfab_recipe/tripodbulb
 	name = "Tripod bulb"
-	desc = "a replacement tripod light bulb. Lens color affects light color."
+	desc = "A replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -527,7 +571,7 @@
 		return
 
 /datum/matfab_recipe/sheet
-	name = "Material Sheet"
+	name = "Material sheet"
 	desc = "Sheets for construction purposes."
 	category = "Tools"
 
@@ -551,6 +595,22 @@
 				newObj.setMaterial(source.material)
 			newObj.change_stack_amount((amount*10) - newObj.amount)
 			newObj.set_loc(getOutputLocation(owner))
+
+/datum/matfab_recipe/thermocouple
+	name = "Themocouple"
+	desc = "For use in a Thermo Electric Generator."
+	category = "Tools"
+
+	New()
+		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		..()
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		var/obj/item/source = getObjectByPartName("Sheet")
+		var/obj/item/teg_semiconductor/newObj = new()
+		if(source?.material)
+			newObj.setMaterial(source.material)
+		newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/cell_small
 	name = "Small energy cell"
@@ -613,21 +673,23 @@
 			var/master_chem = chemical.reagents.get_master_reagent()
 			var/master_chem_name = chemical.reagents.get_master_reagent_name()
 
+			var/datum/material/mat = copyMaterial(refined.material)
+
 			var/datum/materialProc/generic_reagent_onlife/O = new/datum/materialProc/generic_reagent_onlife(master_chem,1)
-			refined.material.triggersOnLife.Cut()
-			refined.material.addTrigger(refined.material.triggersOnLife, O)
+			mat.triggersOnLife.Cut()
+			mat.addTrigger(mat.triggersOnLife, O)
 
 			var/datum/materialProc/generic_reagent_onattack_depleting/A = new/datum/materialProc/generic_reagent_onattack_depleting(master_chem,1,10,25)
-			refined.material.triggersOnAttack.Cut()
-			refined.material.addTrigger(refined.material.triggersOnAttack, A)
+			mat.triggersOnAttack.Cut()
+			mat.addTrigger(mat.triggersOnAttack, A)
 
 			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
-				refined.material.canMix = 0
-				refined.material.name = "[master_chem_name]-infused [refined.material.name]"
-				refined.material.mat_id = "[master_chem_name][refined.material.mat_id]"
-				W.setMaterial(refined.material)
+				mat.canMix = 0
+				mat.name = "[master_chem_name]-infused [mat.name]"
+				mat.mat_id = "[master_chem_name][mat.mat_id]"
+				W.setMaterial(mat)
 				W.change_stack_amount(9)
 
 			W.set_loc(getOutputLocation(owner))

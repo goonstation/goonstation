@@ -17,6 +17,7 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
+#define FLOCK_ANNOTATION_IGNORE "ignore"
 
 // flock intangibles
 #define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
@@ -28,9 +29,9 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
-#define FLOCK_RELAY_COMPUTE_COST 500 // total compute
+#define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
 
-#define FLOCKTRACE_COMPUTE_COST 100
+#define FLOCKTRACE_COMPUTE_COST 100 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
@@ -54,3 +55,32 @@
 #define FLOCK_DRONE_WANDER_PAUSE_COUNT 5
 // maximum number of flockdrones allowed
 #define FLOCK_DRONE_LIMIT 75
+
+//TUTORIAL
+#define FLOCK_ACTION_RIFT_SPAWN "spawn rift"
+#define FLOCK_ACTION_RIFT_COMPLETE "rift complete"
+#define FLOCK_ACTION_GATECRASH "gatecrash"
+#define FLOCK_ACTION_DIFFRACT "diffract drone"
+#define FLOCK_ACTION_MARK_TILE "designate tile"
+#define FLOCK_ACTION_PARTITION "partition mind"
+#define FLOCK_ACTION_HEAL "heal"
+#define FLOCK_ACTION_RADIO_STUN "radio stun"
+#define FLOCK_ACTION_NARROWBEAM "narrowbeam"
+#define FLOCK_ACTION_CONTROL_PANEL "control panel"
+#define FLOCK_ACTION_PING "ping"
+#define FLOCK_ACTION_MARK_DECONSTRUCT "deconstruct flag"
+#define FLOCK_ACTION_DRAGMOVE "click drag move"
+#define FLOCK_ACTION_MARK_ENEMY "designate enemy"
+#define FLOCK_ACTION_TEALPRINT_PLACE "place tealprint"
+#define FLOCK_ACTION_TEALPRINT_COMPLETE "building complete"
+//drones
+#define FLOCK_ACTION_DRONE_CONTROL "control drone"
+#define FLOCK_ACTION_DRONE_RELEASE "release drone"
+#define FLOCK_ACTION_DRONE_SELECT "select drone"
+#define FLOCK_ACTION_DRONE_ORDER "order drone"
+
+#define FLOCK_ACTION_GAIN_RESOURCES "gain resources"
+#define FLOCK_ACTION_START_CONVERSION "start conversion"
+#define FLOCK_ACTION_FLOORRUN "floorrun"
+#define FLOCK_ACTION_CAGE "cage"
+#define FLOCK_ACTION_TURF_CLAIM "claim turf"

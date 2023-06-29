@@ -1,17 +1,20 @@
-//bot go brr?
 //GUNS GUNS GUNS
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "lasercannon"
-	item_state = "cannon"
+	item_state = "vexillifer"
+	wear_state = "vexillifer"
+	var/active_state = "lasercannon"
+	var/collapsed_state = "lasercannon-empty"
+	var/state = TRUE
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_LARGE
 
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -28,11 +31,28 @@
 		set_current_projectile(new/datum/projectile/laser/asslaser)
 		..()
 
+	attack_self(mob/user)
+		. = ..()
+		src.swap_state()
+
+	proc/swap_state()
+		if(state)
+			src.icon_state = collapsed_state
+			w_class = W_CLASS_NORMAL
+		else
+			src.icon_state = active_state
+			w_class = W_CLASS_BULKY
+		state = !state
+
+	canshoot(mob/user)
+		. = ..() && state
+
 	setupProperties()
 		..()
 		setProperty("movespeed", 0.3)
 
 	flashy
+		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
@@ -81,7 +101,7 @@
 	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
-	hit_type = DAMAGE_BURN
+	hit_type = DAMAGE_STAB
 	icon_state = "laser_white"
 	shot_sound = 'sound/weapons/optio.ogg'
 	implanted = null
@@ -212,8 +232,8 @@
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -469,6 +489,22 @@
 				if(head)
 					head.throw_at(get_edge_target_turf(head, get_dir(O, H) ? get_dir(O, H) : H.dir),2,1)
 					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
+				H.death()
+
+/obj/item/ammo/bullets/pipeshot/chems/saltshot
+	sname = "salt load"
+	desc = "This appears to be a bunch of salt shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/salt
+
+	get_desc(dist, mob/user)
+		if (dist <= 1)
+			. = "The shells smell like [prob(1) ? "deadchat. What?" : "the ocean."]"
+
+/datum/pipeshotrecipe/chem/salt
+	thingsneeded = 4
+	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
+	craftname = "salt"
+	reagents_req = list("salt"=5)
 
 //magical crap
 /obj/item/enchantment_scroll
@@ -535,7 +571,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put suggestions into. If you're lucky, they might even be read!"
 	var/taken_suggestion = 0
 	var/list/turf/floors = null
@@ -598,21 +634,15 @@
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
-/obj/item/storage/desk_drawer/lily/
-	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-)
-
 /obj/table/wood/auto/desk/lily
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/lily/L = new(src)
-		src.desk_drawer = L
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+						/obj/item/reagent_containers/food/snacks/cake)
 
 /obj/machinery/door/unpowered/wood/lily
 
@@ -640,22 +670,25 @@
 		loved += M
 
 //misc stuffs
+TYPEINFO(/obj/item/device/geiger)
+	mats = 5
+
 /obj/item/device/geiger
 	name = "geiger counter"
 	desc = "A device used to passively measure raditation."
 	icon_state = "geiger-0"
 	item_state = "geiger"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 5
 
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
 
 	proc/change_icon_state(source, stage)
 		switch(stage)
@@ -704,3 +737,43 @@
 			user.u_equip(src)
 			qdel(src)
 		. = ..()
+
+//DIRTY DIRTY PLAYERS
+/obj/submachine/laundry_machine/portable
+	name = "Port-A-Laundry"
+	desc = "Don't ask."
+	anchored = UNANCHORED
+	pixel_y = 6
+	var/homeloc
+
+	New()
+		. = ..()
+		LAZYLISTADD(portable_machinery, src)
+		animate_bumble(src, Y1 = 1, Y2 = -1, slightly_random = 0)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
+		src.homeloc = get_turf(src)
+
+	disposing()
+		if (islist(portable_machinery))
+			portable_machinery.Remove(src)
+		..()
+
+/obj/item/remote/porter/port_a_laundry
+	name = "Port-A-Laundry Remote"
+	icon = 'icons/obj/porters.dmi'
+	icon_state = "remote"
+	item_state = "electronic"
+	desc = "A remote that summons a Port-A-Laundry."
+	machinery_name = "Port-a-Laundry"
+
+	get_machinery()
+		if (!src)
+			return
+
+		for (var/obj/submachine/laundry_machine/portable/LP in portable_machinery)
+			var/turf/T = get_turf(LP)
+			if (isrestrictedz(T?.z)) // Don't show stuff in "somewhere", okay.
+				continue
+			if (!(LP in src.machinerylist))
+				src.machinerylist["[src.machinery_name] #[src.machinerylist.len + 1] at [get_area(LP)]"] += LP // Don't remove the #[number] part here.
+		return

@@ -2,13 +2,15 @@
 /*----------Butt----------*/
 /*========================*/
 
+TYPEINFO(/obj/item/clothing/head/butt)
+	mat_appearances_to_ignore = list("butt")
 /obj/item/clothing/head/butt
 	name = "butt"
 	desc = "It's a butt. It goes on your head."
 	var/organ_holder_name = "butt"
 	var/organ_holder_location = "chest"
 	var/organ_holder_required_op_stage = 4
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/butt.dmi'
 	icon_state = "butt-nc"
 	force = 1
 	w_class = W_CLASS_TINY
@@ -27,11 +29,10 @@
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
-	var/made_from = "butt"
+	default_material = "butt"
+	mat_changename = "butt"
 
 	disposing()
-		if (donor?.organs)
-			donor.organs -= src
 		if (holder)
 			holder.butt = null
 
@@ -41,7 +42,6 @@
 
 	New(loc, datum/organHolder/nholder)
 		..()
-		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 		if (istype(nholder) && nholder.donor)
 			src.holder = nholder
 			src.donor = nholder.donor
@@ -176,13 +176,15 @@
 	proc/on_fart(var/mob/farted_on) // what is wrong with me
 		return
 
+TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
+	mat_appearances_to_ignore = list("pharosium")
 /obj/item/clothing/head/butt/cyberbutt // what the fuck am I doing with my life
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."
 	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
-	made_from = "pharosium"
+	default_material = "pharosium"
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for

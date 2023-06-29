@@ -20,7 +20,7 @@
 		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blood_status")
 		curse_icon.blend_mode = BLEND_ADD
 		curse_icon.plane = PLANE_ABOVE_LIGHTING
-		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
@@ -60,7 +60,7 @@
 		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blind_status")
 		curse_icon.blend_mode = BLEND_ADD
 		curse_icon.plane = PLANE_ABOVE_LIGHTING
-		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
@@ -101,7 +101,7 @@
 		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "weak_status")
 		curse_icon.blend_mode = BLEND_ADD
 		curse_icon.plane = PLANE_ABOVE_LIGHTING
-		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 		curse_icon.pixel_y = 28
 		curse_icon.alpha = 170
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
@@ -142,15 +142,15 @@
 			curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "rot_status")
 			curse_icon.blend_mode = BLEND_ADD
 			curse_icon.plane = PLANE_ABOVE_LIGHTING
-			curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+			curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 			curse_icon.pixel_y = 26
 			curse_icon.alpha = 170
 			get_image_group(CLIENT_IMAGE_GROUP_CURSES).add_image(curse_icon)
 
 	OnLife(mult)
 		if (probmult(5))
-			owner.visible_message("<span class='alert'>[owner] suddenly vomits on the floor!</span>")
-			owner.vomit(rand(3,5))
+			var/vomit_message = "<span class='alert'>[owner] suddenly vomits on the floor!</span>"
+			owner.vomit(rand(3,5), null, vomit_message)
 		if (probmult(3))
 			owner.emote(pick("cough", "sneeze"))
 

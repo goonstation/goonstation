@@ -15,4 +15,5 @@
 
 	disposing()
 		qdel(src.stam_monitor)
+		src.stam_monitor = null
 		. = ..()

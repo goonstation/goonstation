@@ -19,7 +19,7 @@
 	icon = 'icons/obj/weapon_rack.dmi'
 	icon_state = "swordstand1"
 	var/amount = 1
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
@@ -68,13 +68,21 @@
 		req_access = list(access_security)
 
 		recharger
-			name = "taser recharger rack"
-			desc = "A taser rack that can charge up to 3 taser guns. Handy!"
+			name = "security weapon recharger rack"
+			desc = "A taser rack that can charge up to 3 security weapons. Handy!"
 			icon_state = "taser_charge_rack"
 			amount = 3
 			max_amount = 3
 			stand_type = "taser_charge_rack"
+			contained_weapon_name = "security weapon"
 			recharges_contents = 1
+
+			valid_item(obj/item/I)
+				return(istype(I, /obj/item/gun/energy/taser_gun) ||\
+				istype(I, /obj/item/gun/energy/tasershotgun) ||\
+				istype(I, /obj/item/gun/energy/tasersmg) ||\
+				istype(I, /obj/item/gun/energy/wavegun)
+				)
 
 			empty
 				icon_state = "taser_rack0"
@@ -163,7 +171,7 @@
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
-			if (istype(W, src.contained_weapon))
+			if (valid_item(W))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -220,18 +228,24 @@
 			return
 
 		src.add_fingerprint(user)
-		var/obj/item/myWeapon = locate(src.contained_weapon) in src
+		var/obj/item/myWeapon
+		for(var/obj/item/I in src)
+			if(valid_item(I))
+				myWeapon = I
+				break
 		if (myWeapon)
 			if (src.amount >= 1)
 				src.amount--
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		else
 			if (src.amount >= 1)
 				src.amount--
 				myWeapon = new src.contained_weapon(src.loc)
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
+				logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		src.update()
 		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
 		if (src.amount <= 0) //prevents a runtime if it's empty
@@ -244,7 +258,7 @@
 	process() // Override the normal process proc with this:
 		if(recharges_contents)
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
-				if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
+				if(!valid_item(A)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
 				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
@@ -312,6 +326,9 @@
 			if (WIRE_POWER)
 				if (src.working) src.working = 0
 				else src.working = 1
+
+	proc/valid_item(obj/item/I)
+		return istype(I, contained_weapon)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)

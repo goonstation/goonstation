@@ -6,14 +6,14 @@
 	icon_state = "unmelted-unlit"
 	w_class = W_CLASS_SMALL
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	col_r = 0.2
 	col_g = 0.2
 	col_b = 0.8
 	var/sparks = 7
 	var/burn_state = 0
-	var/burnt = false
+	var/burnt = FALSE
 	var/light_ticks = 60
 
 	New()
@@ -116,7 +116,7 @@
 					src.icon_state = "smelted-unlit"
 				if(2)
 					src.icon_state = "melted-unlit"
-			src.burnt = true
+			src.burnt = TRUE
 			light.disable()
 			processing_items -= src
 			if(user)

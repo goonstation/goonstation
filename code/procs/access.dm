@@ -66,6 +66,8 @@
  */
 /obj/proc/allowed(mob/M)
 	. = 0
+	if(M?.client?.holder?.ghost_interaction)
+		return 2
 	// easy out for if no access is required
 	if (src.check_access(null))
 		return 1
@@ -127,15 +129,7 @@
 		src.req_access = null
 		return 1
 
-	if (istype(I, /obj/item/device/pda2))
-		var/obj/item/device/pda2/P = I
-		if (P.ID_card)
-			I = P.ID_card
-	else if (istype(I, /obj/item/magtractor))
-		var/obj/item/magtractor/mag = I
-		if (istype(mag.holding, /obj/item/card/id))
-			I = mag.holding
-	var/obj/item/card/id/ID = I
+	var/obj/item/card/id/ID = get_id_card(I)
 	// not ID
 	if (!istype(ID))
 		return 0
@@ -241,7 +235,7 @@
 		if("Medical Director")
 			return list(access_robotics, access_medical, access_morgue,
 						access_maint_tunnels, access_tech_storage, access_medical_lockers,
-						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload
+						access_medlab, access_heads, access_eva, access_medical_director, access_ai_upload, access_teleporter
 						#ifndef SCIENCE_PATHO_MAP
 						, access_pathology
 						#endif
@@ -251,7 +245,7 @@
 						access_tech_storage, access_engineering_storage, access_engineering_eva, access_engineering_atmos,
 						access_engineering_power, access_engineering_engine, access_mining_shuttle,
 						access_engineering_control, access_engineering_mechanic, access_engineering_chief, access_mining, access_mining_outpost,
-						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_supply_console, access_hangar)
+						access_heads, access_ai_upload, access_construction, access_eva, access_cargo, access_supply_console, access_hangar, access_teleporter)
 		if("Head of Mining", "Mining Supervisor")
 			return list(access_engineering, access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,
@@ -325,9 +319,9 @@
 			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
-			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
-						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,
-						access_tech_storage,access_engineering_mechanic,)
+			return list(access_engineering, access_maint_tunnels, access_external_airlocks, access_engineering_control,
+						access_engineering_storage, access_engineering_atmos, access_engineering_engine, access_engineering_power,
+						access_tech_storage, access_engineering_mechanic, access_construction)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,

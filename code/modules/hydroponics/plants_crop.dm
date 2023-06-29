@@ -163,7 +163,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 /datum/plant/crop/cotton
 	name = "Cotton"
 	seedcolor = "#FFFFFF"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/raw_material/cotton
 	starthealth = 10
 	growtime = 40
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 /datum/plant/crop/tree // :effort:
 	name = "Tree"
 	seedcolor = "#9C5E13"
-	dont_rename_crop = true
+	dont_rename_crop = TRUE
 	crop = /obj/item/material_piece/organic/wood
 	starthealth = 40
 	growtime = 200
@@ -191,6 +191,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	special_proc = 1 // for dogwood tree
 	vending = 1
 	attacked_proc = 1 // for dogwood tree
+	harvested_proc = 1 // for glowstick tree
 	mutations = list(/datum/plantmutation/tree/money, /datum/plantmutation/tree/rubber,/datum/plantmutation/tree/sassafras, /datum/plantmutation/tree/dog,/datum/plantmutation/tree/paper)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/resistance_drought)
 

@@ -13,12 +13,16 @@
 
 	New()
 		..()
-		#ifdef UPSCALED_MAP
-		groups_to_create *= 4
+		#ifdef HOTSPOTS_ENABLED
+		setup_hotspots()
 		#endif
-		#ifdef UNDERWATER_MAP
+
+	proc/setup_hotspots()
+		#ifdef UPSCALED_MAP
+		src.groups_to_create *= 4
+		#endif
 		var/datum/sea_hotspot/new_hotspot = 0
-		for (var/i = 1, i <= groups_to_create, i++)
+		for (var/i = 1, i <= src.groups_to_create, i++)
 			new_hotspot = new
 			hotspot_groups += new_hotspot
 			var/turf/T = 0
@@ -29,12 +33,6 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-		#endif
-		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
-		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
-
-  		//var/obj/A = new /obj(locate(1,1,1))
-  		//A.icon = map
 
 	#ifdef UNDERWATER_MAP
 	var/list/map_colors = list(
@@ -58,12 +56,12 @@
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
+					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
-					else if (T.name == "trench floor" || T.name == "\proper space")
+					else if (istype(T, /turf/space))
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
+						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -647,7 +645,7 @@
 	desc = "A hole dug in the seafloor."
 	icon = 'icons/obj/sealab_power.dmi'
 	icon_state = "venthole_1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	ex_act(severity)
@@ -687,6 +685,9 @@
 
 #define VENT_GENFACTOR 300
 
+TYPEINFO(/obj/item/vent_capture_unbuilt)
+	mats = 8
+
 /obj/item/vent_capture_unbuilt
 	name = "unbuilt vent capture unit"
 	desc = "An unbuilt piece of machinery that converts vent output into electricity."
@@ -694,7 +695,6 @@
 	icon_state = "hydrovent_unbuilt"
 	item_state = "vent"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	attackby(var/obj/item/W, var/mob/user)
@@ -732,7 +732,7 @@
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/last_gen = 0
 	var/total_gen = 0
@@ -742,6 +742,7 @@
 	New()
 		..()
 		START_TRACKING
+		AddComponent(/datum/component/mechanics_holder)
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -815,6 +816,7 @@
 			add_avail(sgen)
 			total_gen += sgen
 		last_gen = sgen
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "power=[last_gen]&powerfmt=[engineering_notation(last_gen)]W&total=[total_gen]&totalfmt=[engineering_notation(total_gen)]J")
 
 	get_desc(dist)
 		if (!built)
@@ -835,13 +837,17 @@
 				return
 		return*/
 
+TYPEINFO(/obj/machinery/power/stomper)
+	mats = 8
+
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
+	status = REQ_PHYSICAL_ACCESS
 
 	var/power_up_realtime = 30
 	var/const/power_cell_usage = 4
@@ -854,7 +860,6 @@
 	var/powerupsfx = 'sound/machines/shieldgen_startup.ogg'
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
-	mats = 8
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
@@ -890,7 +895,7 @@
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !user.equipped())
+			if(cell && !user.equipped() && in_interact_range(src, user))
 				cell.UpdateIcon()
 				user.put_in_hand_or_drop(cell)
 
@@ -988,7 +993,7 @@
 			if (isliving(M))
 				random_brute_damage(M, 55, 1)
 				M.changeStatus("weakened", 1 SECOND)
-				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
@@ -1009,6 +1014,9 @@
 		if(Obj == src.cell)
 			src.cell = null
 
+TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
+	mats = 20
+
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
@@ -1017,7 +1025,6 @@
 	step_sound = "step_plating"
 	step_priority = STEP_PRIORITY_LOW
 	laces = LACES_NONE
-	mats = 20
 	burn_possible = 0
 	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
@@ -1285,7 +1292,7 @@
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x
 		decal.pixel_y = src.pixel_y
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.icon_state = "[src.icon_state]-rip1"
 		src.can_put_up = 0
 		user.put_in_hand_or_drop(src)
@@ -1296,6 +1303,6 @@
 			"You attach [src] to [A].")
 			user.u_equip(src)
 			src.set_loc(A)
-			src.anchored = 1
+			src.anchored = ANCHORED
 		else
 			return ..()

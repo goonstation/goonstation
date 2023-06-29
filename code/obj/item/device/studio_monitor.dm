@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
+	mats = 0
+
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
@@ -5,16 +8,16 @@
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
-	anchored = 0
+	anchored = UNANCHORED
 	speaker_range = 7
-	mats = 0
 	broadcasting = 0
 	listening = 0
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
@@ -43,7 +46,7 @@
 		return hear
 
 	speech_bubble()
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
 		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -185,9 +188,9 @@
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
-			frame_img.appearance_flags = RESET_COLOR
+			frame_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 			rocked_out_img = image('icons/misc/abilities.dmi',"rocked_out")
-			rocked_out_img.appearance_flags = RESET_COLOR
+			rocked_out_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()
@@ -457,10 +460,10 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 
 		return ..(timePassed)

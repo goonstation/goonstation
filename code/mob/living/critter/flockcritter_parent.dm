@@ -1,3 +1,5 @@
+TYPEINFO(/mob/living/critter/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -13,7 +15,7 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
+	default_material = "gnesis"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
@@ -55,13 +57,11 @@
 	burn.value = src.health_burn
 	burn.maximum_value = src.health_burn
 	burn.last_value = src.health_burn
-	burn.damage_multiplier = 0.2
+	burn.damage_multiplier = 0.4
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
-	qdel(abilityHolder)
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -185,7 +185,7 @@
 	return FALSE
 
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
+	if (..(parent) || isdead(src))
 		return TRUE
 
 	// automatic extinguisher! after some time, anyway
@@ -242,7 +242,7 @@
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
 	if (src.flock)
-		src.flock.deaths++
+		src.flock.stats.deaths++
 		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
@@ -324,6 +324,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		F?.flock?.unreserveTurf(F.real_name)
 
@@ -331,6 +332,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
 			return
@@ -427,7 +429,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
@@ -437,7 +439,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(F, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
@@ -451,7 +453,7 @@
 		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 		new /obj/flock_structure/egg(get_turf(F), F.flock)
 		playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, extrarange = -10)
-		F.pay_resources(FLOCK_LAY_EGG_COST)
+		F.pay_resources(F.flock.current_egg_cost)
 
 /////////////////////////////////////////////////////////////////////////////////
 // REPAIR ACTION
@@ -620,6 +622,7 @@
 			return
 
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+		F.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
 		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
 		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")

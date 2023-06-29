@@ -83,7 +83,7 @@
 			p2.status = 1
 
 			if(src.active)
-				R.part1.armed = 1
+				R.part1.armed = TRUE
 				R.part1.icon_state = text("motion[]", 1)
 				R.c_state(1, src)
 
@@ -240,7 +240,7 @@
 			dispose()
 			return
 		src.icon = null
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.set_density(0)
 		var/list/atom/movable/overlay/boom = list()
 		var/list/atom/movable/overlay/boom_tips = list()

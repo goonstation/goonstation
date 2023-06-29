@@ -154,9 +154,7 @@
 /turf/simulated/floor/airless/specialroom/cafeteria,
 /area/prefab/silverglass/eats)
 "fR" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
+/obj/grille/catwalk,
 /obj/cable,
 /obj/cable{
 	d2 = 8;
@@ -214,7 +212,7 @@
 	icon_state = "4-8"
 	},
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "gW" = (
 /obj/cable{
@@ -431,7 +429,7 @@
 "oj" = (
 /obj/lattice,
 /obj/structure/girder,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "ok" = (
 /turf/simulated/floor/caution/westeast,
@@ -474,10 +472,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /obj/machinery/power/tracker/silverglass,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
@@ -501,7 +496,7 @@
 /obj/computer3frame/terminal{
 	dir = 4
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "pF" = (
 /obj/cable{
@@ -571,9 +566,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 10
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 1;
 	icon_state = "catwalk_cross"
@@ -613,9 +606,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/grille/catwalk{
-	dir = 5
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
 	icon_state = "catwalk_cross"
@@ -625,7 +616,7 @@
 /obj/item/electronics/soldering{
 	pixel_y = 6
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "th" = (
 /obj/stool/bed,
@@ -928,18 +919,10 @@
 /obj/item/screwdriver{
 	pixel_x = 3
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "FH" = (
-/obj/machinery/manufacturer/general{
-	desc = "There are bits and pieces of the internal mechanisms poking out the side. It's seen better days.";
-	free_resource_amt = 0;
-	free_resources = null;
-	malfunction = 1;
-	name = "grody manufacturer";
-	supplemental_desc = null;
-	wires = 11
-	},
+/obj/machinery/manufacturer/general/grody,
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/plating,
 /area/prefab/silverglass)
@@ -948,13 +931,13 @@
 /area/prefab/silverglass/bay)
 "Ga" = (
 /obj/table/reinforced/auto,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Gq" = (
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 1
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Gs" = (
 /obj/lattice{
@@ -990,14 +973,14 @@
 	icon_state = "1-2"
 	},
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Ij" = (
 /obj/item/rubberduck{
 	pixel_x = 4;
 	pixel_y = 5
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Ik" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -1024,7 +1007,7 @@
 /area/prefab/silverglass/bay)
 "IS" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Jb" = (
 /turf/simulated/wall/auto/supernorn,
@@ -1093,9 +1076,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 9
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
@@ -1115,10 +1096,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -1154,7 +1132,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "NN" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
@@ -1166,11 +1144,11 @@
 /area/prefab/silverglass/bay)
 "NW" = (
 /obj/item/reagent_containers/food/drinks/mug,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "NY" = (
 /obj/decal/cleanable/paper,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Oz" = (
 /obj/machinery/light/small{
@@ -1303,20 +1281,13 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/silverglass/bay)
-"SD" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/noGenerate)
 "SJ" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
 /obj/drink_rack/cup{
 	pixel_y = 32
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "Tf" = (
 /obj/machinery/r_door_control{
@@ -1356,7 +1327,7 @@
 	},
 /area/prefab/silverglass)
 "TR" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "TU" = (
 /obj/decal/cleanable/dirt/jen,
@@ -1391,7 +1362,7 @@
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
 	pixel_y = 9
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "UV" = (
 /turf/simulated/wall/auto/supernorn,
@@ -1425,7 +1396,7 @@
 /area/prefab/silverglass/research)
 "VP" = (
 /obj/decal/cleanable/machine_debris,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "VZ" = (
 /turf/simulated/floor/shuttlebay,
@@ -1440,7 +1411,7 @@
 /area/prefab/silverglass/eats)
 "Ww" = (
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "WC" = (
 /obj/decal/cleanable/dirt,
@@ -1451,10 +1422,10 @@
 	icon_state = "2-8"
 	},
 /obj/lattice,
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/eats)
 "Xb" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/prefab/silverglass/research)
 "Xx" = (
 /turf/simulated/floor,
@@ -1525,9 +1496,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -1561,9 +1530,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 4
 	},
@@ -1572,17 +1539,6 @@
 /obj/item/wrench,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/silverglass/bay)
-"Zf" = (
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/variableTurf/clear,
-/area/noGenerate)
 "Zj" = (
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
@@ -1593,7 +1549,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/space,
+/turf/simulated/floor/airless/plating/damaged1,
 /area/prefab/silverglass/eats)
 "ZF" = (
 /obj/cable{
@@ -2318,7 +2274,7 @@ ZG
 ZG
 op
 ZG
-SD
+lB
 YN
 Jb
 Jb
@@ -2347,7 +2303,7 @@ ZG
 op
 ZG
 lB
-Zf
+YN
 kk
 ZG
 op

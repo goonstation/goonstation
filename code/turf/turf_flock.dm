@@ -1,6 +1,8 @@
 // -----
 // FLOOR
 // -----
+TYPEINFO(/turf/simulated/floor/feather)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
@@ -8,9 +10,9 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
 	flags = USEDELAY
-	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	broken = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -23,11 +25,11 @@
 	var/brightness = 0.5
 	var/on = FALSE
 	var/connected = FALSE //used for collector
+	var/datum/flock/flock = null
 
 
 /turf/simulated/floor/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	light = new /datum/light/point
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
@@ -78,6 +80,7 @@
 	off()
 	icon_state = "floor-broken"
 	broken = TRUE
+	src.flock.all_owned_tiles -= src
 	for (var/mob/living/critter/flock/drone/flockdrone in src.contents)
 		if (flockdrone.floorrunning)
 			flockdrone.end_floorrunning()
@@ -151,6 +154,12 @@
 	src.light.disable()
 	on = FALSE
 
+/turf/simulated/floor/feather/Del()
+	if (src.flock)
+		src.flock.all_owned_tiles -= src
+	src.flock = null
+	..()
+
 /turf/simulated/floor/feather/broken
 	name = "weird broken floor"
 	desc = "Disco's dead, baby."
@@ -170,6 +179,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	connect_diagonal = TRUE
 	connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
+TYPEINFO(/turf/simulated/wall/auto/feather)
+	mat_appearances_to_ignore = list("steel", "gnesis")
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
@@ -181,9 +192,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	var/max_health = 250
 	var/repair_per_resource = 5
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	mat_appearances_to_ignore = list("steel", "gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
+	default_material = "gnesis"
 	var/broken = FALSE
 	var/on = FALSE
 
@@ -195,9 +206,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 		//else
 		//	icon_state = icon_state + (src.on ? "on" : "")
 
+/turf/simulated/wall/auto/feather/tutorial
+	opacity = FALSE
+
 /turf/simulated/wall/auto/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.health = src.max_health
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)

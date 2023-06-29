@@ -189,7 +189,7 @@ var/global
 			return
 
 		var/list/connData = json_decode(cookie)
-		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
+		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
@@ -201,7 +201,7 @@ var/global
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (found.len > 0 && found["ckey"] != src.owner.ckey)
+			if (length(found) && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
@@ -217,9 +217,9 @@ var/global
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
-				banData["compID"] = src.owner.computer_id
+				banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.owner.computer_id) // don't add CID if original ban doesn't have one
 				banData["akey"] = "Auto Banner"
-				banData["ip"] = src.owner.address
+				banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.owner.address) // don't add IP if original ban doesn't have one
 				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
 				banData["mins"] = 0
 				addBan(banData)
@@ -405,7 +405,9 @@ var/global
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
-		message = replacetext(message, "\u2028", "") // this character crashes the js side and I don't know how to fix it there
+		// shittery that breaks text or worse
+		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+		message = replacetext(message, shittery_regex, "")
 
 		//Grab us a client if possible
 		var/client/C

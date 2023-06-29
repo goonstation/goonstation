@@ -1,19 +1,26 @@
 /// # Flock Structure Parent
 ABSTRACT_TYPE(/obj/flock_structure)
+TYPEINFO(/obj/flock_structure)
+	var/cancellable = TRUE
+	mat_appearances_to_ignore = list("gnesis")
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"
-	anchored = TRUE
+	anchored = ANCHORED
 	density = TRUE
 	name = "uh oh"
 	desc = "CALL A CODER THIS SHOULDN'T BE SEEN"
-	///Shown on the TGUI tooltip for the structure
+	/// Shown on the TGUI tooltip for the structure
 	var/flock_desc = "THIS ALSO SHOULDN'T BE SEEN AAAA"
+	/// The actual name of the structure shown to the flock
+	var/flock_id = "ERROR"
+	/// Does this structure show up in the list of flock structures shown in the tutorial?
+	var/show_in_tutorial = FALSE
+	var/tutorial_desc = ""
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	mat_appearances_to_ignore = list("gnesis")
-	var/flock_id = "ERROR"
+	default_material = "gnesis"
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -29,12 +36,14 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
-	//base compute provided
+	///base compute provided
 	var/compute = 0
-	//resource cost for building
-	var/resourcecost = 50
-	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
-	var/passthrough = FALSE
+	///resource cost for building
+	var/resourcecost = 0
+	/// can flockdrones pass through this akin to a grille?
+	var/passthrough = TRUE
+	/// if the building can be supported by a sapper structure
+	var/accepts_sapper_power = FALSE
 	/// TIME of last process
 	var/last_process
 	/// normal expected tick spacing
@@ -48,7 +57,6 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	last_process = TIME
 	health_max = health
 	time_started = world.timeofday
-	setMaterial(getMaterial("gnesis"))
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
 	if(F)
@@ -229,6 +237,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	src.update_health_icon()
 	return ceil(health_given / src.repair_per_resource)
 
+/obj/flock_structure/proc/sapper_power()
+	return src.accepts_sapper_power
+
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
 	user.lastattacked = src
@@ -345,4 +356,4 @@ ABSTRACT_TYPE(/obj/flock_structure)
 		. = TRUE
 
 /obj/flock_structure/Cross(atom/movable/mover)
-	return istype(mover,/mob/living/critter/flock)
+	return istype(mover,/mob/living/critter/flock) && src.passthrough

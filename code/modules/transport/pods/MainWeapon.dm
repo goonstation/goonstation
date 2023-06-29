@@ -12,6 +12,9 @@
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
 
+	/// Can it be removed by a player
+	var/removable = TRUE
+
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
 
@@ -30,6 +33,8 @@
 					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
+			if(uses_ammunition)
+				dat += {"<b>Remaining ammo:</b> [remaining_ammunition]<BR>"}
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
 		user.Browse(dat, "window=ship_main_weapon")
@@ -162,6 +167,7 @@
 	firerate = 5
 	icon_state = "strelka"
 	muzzle_flash = "muzzle_flash_laser"
+	removable = FALSE
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"
@@ -375,8 +381,8 @@
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	firerate = 100
 	var/increment
-	var/pod_is_large = false
-	var/core_inserted = false
+	var/pod_is_large = FALSE
+	var/core_inserted = FALSE
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state= "SPS_empty"
 
@@ -397,12 +403,12 @@
 				purge.dir &= EAST | WEST
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
-			pod_is_large = true
+			pod_is_large = TRUE
 			flick("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
-			pod_is_large = false
+			pod_is_large = FALSE
 			flick("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
@@ -455,7 +461,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SPS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Purge System!</span>", 1)
@@ -463,7 +469,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SPS")
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Purge System!</span>", 1)
@@ -475,7 +481,7 @@
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))

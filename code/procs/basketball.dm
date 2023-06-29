@@ -77,7 +77,7 @@
 
 	playsound(M.loc, "explosion", 50, 1)
 	var/obj/overlay/O = new/obj/overlay(get_turf(target))
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.name = "Explosion"
 	O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 	O.pixel_x = -92
@@ -429,7 +429,8 @@
 	var/selfdestruct = 0
 	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	item_state = "radio"
 	throwforce = 5
 	w_class = W_CLASS_SMALL

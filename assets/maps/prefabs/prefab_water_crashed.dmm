@@ -1,10 +1,10 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "aa" = (
 /turf/variableTurf/clear,
-/area/space)
+/area/allowGenerate/trench)
 "ab" = (
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ad" = (
 /obj/item/raw_material/shard,
 /turf/simulated/floor/airless/plating,
@@ -29,8 +29,8 @@
 /area/station/turret_protected/sea_crashed)
 "ah" = (
 /obj/item/raw_material/shard,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ai" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
@@ -86,7 +86,7 @@
 "au" = (
 /obj/item/raw_material/scrap_metal,
 /turf/variableTurf/clear,
-/area/space)
+/area/noGenerate)
 "av" = (
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
@@ -110,11 +110,11 @@
 "aB" = (
 /obj/item/raw_material/shard,
 /turf/variableTurf/clear,
-/area/space)
+/area/noGenerate)
 "aC" = (
 /obj/item/scrap,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "aD" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/darkblue,
@@ -159,12 +159,10 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/turret_protected/sea_crashed)
 "aP" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aQ" = (
@@ -184,12 +182,10 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aS" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "aT" = (
@@ -244,7 +240,7 @@
 /area/station/turret_protected/sea_crashed)
 "ba" = (
 /obj/decal/fakeobjects/firealarm_broken{
-	dir = 8;
+	dir = 4;
 	icon_state = "firex";
 	pixel_x = -24
 	},
@@ -255,8 +251,8 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "bc" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -348,8 +344,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bq" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/command/alt,
+/obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "br" = (
@@ -370,46 +366,27 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bt" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
-"bu" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/turf/simulated/floor{
-	icon_state = "floorscorched1"
-	},
-/area/station/turret_protected/sea_crashed)
 "bv" = (
 /obj/decal/fakeobjects/firealarm_broken{
-	dir = 1;
 	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
-"bw" = (
-/turf/simulated/floor{
-	icon_state = "damaged2"
-	},
-/area/station/turret_protected/sea_crashed)
 "bx" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "by" = (
 /obj/decal/cleanable/dirt,
-/obj/decal/fakeobjects/lighttube_broken{
+/obj/machinery/light/incandescent/broken{
 	dir = 1
 	},
 /turf/simulated/floor/grime,
@@ -426,59 +403,25 @@
 "bC" = (
 /turf/simulated/floor/caution/west,
 /area/station/turret_protected/sea_crashed)
-"bD" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 9;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
-"bE" = (
-/obj/decal/cleanable/rust,
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
 "bF" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
-/area/station/turret_protected/sea_crashed)
-"bG" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 5;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "bH" = (
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/sea_crashed)
 "bI" = (
 /obj/storage/crate/biohazard,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bJ" = (
 /obj/storage/secure/crate/plasma,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bK" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
-/area/station/turret_protected/sea_crashed)
-"bL" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray,
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bM" = (
 /obj/critter/gunbot/heavy{
@@ -491,7 +434,8 @@
 /obj/machinery/door/poddoor{
 	id = "transportship";
 	layer = 9;
-	name = "Blast Door"
+	name = "Blast Door";
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
@@ -511,24 +455,15 @@
 /area/station/turret_protected/sea_crashed)
 "bR" = (
 /obj/storage/crate/clown,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bS" = (
 /obj/storage/crate/materials,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bT" = (
 /obj/storage/crate/robotics_supplies,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "bU" = (
 /obj/decal/fakeobjects{
@@ -540,12 +475,6 @@
 	name = "security camera"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/turret_protected/sea_crashed)
-"bV" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 8;
-	icon_state = "leadjunction_gray"
-	},
 /area/station/turret_protected/sea_crashed)
 "bW" = (
 /obj/machinery/networked/nuclear_charge,
@@ -563,12 +492,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
-"bY" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadjunction_gray"
-	},
-/area/station/turret_protected/sea_crashed)
 "bZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -580,71 +503,45 @@
 	},
 /turf/simulated/floor/caution/east,
 /area/station/turret_protected/sea_crashed)
-"ca" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "damaged4"
-	},
-/area/station/turret_protected/sea_crashed)
 "cb" = (
 /obj/storage/crate/internals,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cc" = (
 /obj/storage/crate/furnacefuel,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cd" = (
 /obj/storage/secure/crate/bee,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ce" = (
+/obj/decal/cleanable/oil/streak,
 /obj/machinery/door/poddoor{
 	id = "transportship";
 	layer = 9;
-	name = "Blast Door"
+	name = "Blast Door";
+	dir = 4
 	},
-/obj/decal/cleanable/oil/streak,
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
 "cf" = (
 /obj/storage/crate/freezer{
 	name = "Freezer - Spare Parts"
 	},
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "cg" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ch" = (
 /obj/storage/crate/rcd,
-/turf/simulated/floor/shuttle{
-	icon = 'icons/turf/floors.dmi';
-	icon_state = "delivery"
-	},
+/turf/simulated/floor/plating,
 /area/station/turret_protected/sea_crashed)
 "ci" = (
 /obj/decal/cleanable/rust,
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 10;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "cj" = (
 /obj/decal/fakeobjects{
@@ -654,10 +551,7 @@
 	icon_state = "wallterm0";
 	name = "broken computer"
 	},
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 4;
-	icon_state = "leadwall_gray"
-	},
+/turf/unsimulated/wall/auto/lead/gray,
 /area/station/turret_protected/sea_crashed)
 "ck" = (
 /obj/decal/cleanable/oil/streak,
@@ -667,12 +561,6 @@
 	name = "Blast Door"
 	},
 /turf/simulated/floor/black/grime,
-/area/station/turret_protected/sea_crashed)
-"cl" = (
-/turf/unsimulated/wall/setpieces/leadwall/gray{
-	dir = 6;
-	icon_state = "leadwall_gray"
-	},
 /area/station/turret_protected/sea_crashed)
 "cm" = (
 /turf/simulated/floor/caution/corner/sw,
@@ -684,18 +572,12 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/turret_protected/sea_crashed)
 "cp" = (
-/obj/machinery/light,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "cq" = (
-/obj/decal/fakeobjects/lighttube_broken,
+/obj/machinery/light/incandescent/broken,
 /turf/simulated/floor/grime,
-/area/station/turret_protected/sea_crashed)
-"cr" = (
-/turf/simulated/floor{
-	dir = 1;
-	icon_state = "damaged2"
-	},
 /area/station/turret_protected/sea_crashed)
 "cs" = (
 /turf/simulated/floor/red/side,
@@ -729,12 +611,8 @@
 	},
 /area/station/turret_protected/sea_crashed)
 "cv" = (
-/obj/decal/fakeobjects/lightbulb_broken{
-	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
-	dir = 1;
-	icon_state = "bulb0";
-	name = "inactive light bulb";
-	tag = ""
+/obj/machinery/light/small/sticky/broken{
+	dir = 1
 	},
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -782,9 +660,8 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cB" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
@@ -849,8 +726,8 @@
 /area/station/turret_protected/sea_crashed)
 "cL" = (
 /obj/decal/cleanable/machine_debris,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "cM" = (
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
@@ -885,18 +762,16 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cR" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cS" = (
 /obj/item/raw_material/scrap_metal,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "cT" = (
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/red,
@@ -921,11 +796,6 @@
 	icon_state = "showerhead";
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/decals/misc.dmi';
-	icon_state = "drain";
-	name = "drain"
-	},
 /obj/window/cubicle{
 	desc = "A panel designed to separate bathroom stalls, turning one gross room into many.";
 	dir = 2;
@@ -933,6 +803,7 @@
 	name = "stall panel";
 	tag = ""
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -956,8 +827,8 @@
 	dir = 8;
 	icon_state = "floattiles3"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "da" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1000,11 +871,7 @@
 	icon_state = "showerhead";
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/decals/misc.dmi';
-	icon_state = "drain";
-	name = "drain"
-	},
+/obj/machinery/drainage,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -1030,7 +897,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "di" = (
-/obj/machinery/light,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "dj" = (
@@ -1038,23 +905,22 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "dk" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dl" = (
 /obj/decal/cleanable/machine_debris,
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dm" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/security/alt,
+/obj/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dn" = (
@@ -1077,11 +943,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dq" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
@@ -1134,11 +997,8 @@
 /area/station/turret_protected/sea_crashed)
 "dx" = (
 /obj/item/storage/toolbox/mechanical,
-/obj/decal/fakeobjects/lighttube_broken{
-	desc = "This light might be broken.  It's probably not wired up, though.";
-	dir = 1;
-	icon_state = "tube0";
-	name = "inactive light tube"
+/obj/machinery/light/incandescent/broken{
+	dir = 1
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
@@ -1266,12 +1126,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dF" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dG" = (
@@ -1310,8 +1168,8 @@
 "dI" = (
 /obj/lattice,
 /obj/decal/floatingtiles,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dJ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -1378,26 +1236,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
-"dM" = (
-/obj/decal/fakeobjects/firelock_broken{
-	dir = 8;
-	icon_state = "door0"
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/pyro/security/alt,
-/turf/simulated/floor/red,
-/area/station/turret_protected/sea_crashed)
 "dN" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 2;
 	icon_state = "alt_propulsion"
-	},
-/turf/variableTurf/clear,
-/area/station/turret_protected/sea_crashed)
-"dQ" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
 	},
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
@@ -1406,75 +1248,48 @@
 	dir = 4;
 	icon_state = "alt_propulsion"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dU" = (
 /obj/decal/cleanable/rust,
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dV" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
 	},
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dW" = (
 /obj/item/raw_material/scrap_metal,
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "dX" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/floatingtiles{
 	icon_state = "floattiles2"
 	},
 /obj/lattice,
-/turf/variableTurf/wall,
-/area/space)
-"eb" = (
-/obj/grille/catwalk{
-	dir = 2;
-	icon_state = "catwalk_cross"
-	},
-/turf/variableTurf/clear,
-/area/station/turret_protected/sea_crashed)
+/turf/variableTurf/floor,
+/area/noGenerate)
 "ec" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 2;
 	icon_state = "alt_propulsion"
 	},
-/turf/variableTurf/wall,
-/area/station/turret_protected/sea_crashed)
-"ed" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/variableTurf/clear,
+/turf/variableTurf/floor,
 /area/station/turret_protected/sea_crashed)
 "ee" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
+/obj/grille/catwalk,
 /turf/variableTurf/clear,
 /area/station/turret_protected/sea_crashed)
-"eg" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/variableTurf/clear,
-/area/station/turret_protected/sea_crashed)
-"ei" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/variableTurf/clear,
-/area/station/turret_protected/sea_crashed)
+"pO" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
 "sR" = (
 /obj/critter/gunbot/heavy{
 	dir = 4;
@@ -1483,13 +1298,16 @@
 /obj/item/implantcase/robust,
 /turf/simulated/floor/black/grime,
 /area/station/turret_protected/sea_crashed)
+"vj" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
 aa
 aa
-aa
-aa
-aa
+vj
+vj
+vj
 aa
 aa
 aa
@@ -1519,14 +1337,14 @@ aa
 aa
 "}
 (2,1,1) = {"
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
+vj
+vj
+vj
+vj
+vj
+vj
+vj
+vj
 aa
 aa
 aa
@@ -1553,19 +1371,19 @@ aa
 aa
 "}
 (3,1,1) = {"
-aa
-aa
-aa
+vj
+vj
+vj
 au
 aB
-aa
+vj
 aV
 ai
 ai
 be
 be
 be
-bo
+be
 be
 be
 be
@@ -1587,8 +1405,8 @@ aa
 aa
 "}
 (4,1,1) = {"
-ab
-ab
+pO
+pO
 ah
 ab
 aC
@@ -1621,7 +1439,7 @@ aa
 aa
 "}
 (5,1,1) = {"
-ab
+pO
 ad
 ak
 ax
@@ -1633,7 +1451,7 @@ as
 be
 bs
 bs
-bw
+as
 bJ
 as
 cc
@@ -1655,7 +1473,7 @@ aa
 aa
 "}
 (6,1,1) = {"
-ab
+pO
 af
 al
 ay
@@ -1689,7 +1507,7 @@ aa
 aa
 "}
 (7,1,1) = {"
-ab
+pO
 ag
 am
 az
@@ -1723,7 +1541,7 @@ aa
 aa
 "}
 (8,1,1) = {"
-ab
+pO
 ai
 an
 ao
@@ -1735,10 +1553,10 @@ bj
 bp
 as
 bA
-bD
-bL
-bL
-bL
+bF
+bF
+bF
+bF
 ci
 cn
 as
@@ -1752,12 +1570,12 @@ be
 dr
 dD
 be
-aa
+vj
 aa
 aa
 "}
 (9,1,1) = {"
-ab
+pO
 ai
 ao
 aA
@@ -1769,7 +1587,7 @@ bh
 be
 as
 bA
-bE
+ci
 sR
 bF
 bM
@@ -1786,8 +1604,8 @@ be
 ds
 dD
 be
-aa
-aa
+vj
+vj
 aa
 "}
 (10,1,1) = {"
@@ -1801,11 +1619,11 @@ aZ
 as
 bk
 be
-bu
+bx
 bA
 bF
 bN
-bV
+bF
 bN
 bF
 cn
@@ -1820,9 +1638,9 @@ be
 dt
 dE
 bo
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (11,1,1) = {"
 aa
@@ -1843,7 +1661,7 @@ bP
 bO
 cj
 cn
-cr
+as
 be
 be
 be
@@ -1854,9 +1672,9 @@ be
 be
 dF
 be
-dQ
 ee
-aa
+ee
+vj
 "}
 (12,1,1) = {"
 aa
@@ -1888,9 +1706,9 @@ dm
 du
 cC
 dm
-eb
-eg
-aa
+ee
+ee
+vj
 "}
 (13,1,1) = {"
 aa
@@ -1903,7 +1721,7 @@ bc
 ar
 as
 bq
-bw
+as
 bA
 bF
 bP
@@ -1921,10 +1739,10 @@ cC
 dm
 cC
 cC
-dM
-eb
-eg
-aa
+dm
+ee
+ee
+vj
 "}
 (14,1,1) = {"
 aa
@@ -1956,9 +1774,9 @@ be
 be
 dF
 be
-ed
-ei
-aa
+ee
+ee
+vj
 "}
 (15,1,1) = {"
 aa
@@ -1975,7 +1793,7 @@ bx
 bA
 bF
 bN
-bY
+bF
 ce
 bF
 cn
@@ -1990,9 +1808,9 @@ be
 dt
 dG
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (16,1,1) = {"
 aa
@@ -2011,7 +1829,7 @@ bF
 bQ
 bF
 bQ
-bE
+ci
 cn
 as
 ct
@@ -2024,9 +1842,9 @@ bp
 dv
 dD
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (17,1,1) = {"
 aa
@@ -2041,11 +1859,11 @@ aD
 bo
 as
 bA
-bG
-bL
-bL
-bL
-cl
+bF
+bF
+bF
+bF
+bF
 cn
 ar
 be
@@ -2058,9 +1876,9 @@ be
 dw
 dD
 be
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (18,1,1) = {"
 aa
@@ -2082,7 +1900,7 @@ bH
 bH
 co
 cq
-be
+bo
 cG
 cI
 cI
@@ -2092,9 +1910,9 @@ be
 dx
 dC
 bo
-aa
-aa
-aa
+vj
+vj
+vj
 "}
 (19,1,1) = {"
 aa
@@ -2126,9 +1944,9 @@ be
 dp
 dH
 be
+pO
 ab
-ab
-aa
+vj
 "}
 (20,1,1) = {"
 aa
@@ -2145,7 +1963,7 @@ bs
 bs
 as
 bS
-ca
+as
 cg
 ar
 bs
@@ -2162,14 +1980,14 @@ dJ
 dL
 ec
 ab
-aa
+vj
 "}
 (21,1,1) = {"
 aa
 aa
 aa
 aa
-ab
+pO
 ai
 ai
 ae
@@ -2196,14 +2014,14 @@ dK
 dL
 ec
 ab
-aa
+vj
 "}
 (22,1,1) = {"
 aa
 aa
 aa
-aa
-ab
+vj
+pO
 ab
 aC
 ah
@@ -2236,29 +2054,29 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aB
+vj
+vj
+vj
+ab
+ah
 aC
 ab
 ah
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+pO
+pO
+pO
+pO
+pO
+pO
+pO
+pO
 cL
 cS
 ab
 ab
-ab
+pO
 be
 dW
 dX
@@ -2270,23 +2088,23 @@ aa
 aa
 aa
 aa
+vj
+vj
+vj
+vj
+vj
+vj
 aa
 aa
 aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-aa
-ab
-ab
+vj
+vj
+pO
+pO
+pO
 ab
 ab
 ab

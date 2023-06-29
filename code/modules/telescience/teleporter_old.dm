@@ -1,9 +1,11 @@
+TYPEINFO(/obj/machinery/teleport)
+	mats = 10
+
 /obj/machinery/teleport
 	name = "teleport"
 	icon = 'icons/obj/teleporter.dmi'
 	density = 1
-	anchored = 1
-	mats = 10
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	New()
@@ -79,6 +81,7 @@
 			break
 		return found
 
+ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc/disengage)
 /obj/machinery/teleport/portal_generator
 	name = "portal generator"
 	desc = "This fancy piece of machinery generates the portal. You can flick it on and off."
@@ -204,6 +207,8 @@
 			return 1
 
 	M.set_loc(tmploc)
+	SEND_SIGNAL(M,COMSIG_MOVABLE_TELEPORTED)
+
 	if (sparks)
 		elecflash(M, power=3)
 	return 0

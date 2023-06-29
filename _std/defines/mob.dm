@@ -51,9 +51,9 @@
 /// Burning Lv1 starts at this duration.
 #define BURNING_LV1 0
 /// Burning Lv2 starts at this duration.
-#define BURNING_LV2 200
+#define BURNING_LV2 30 SECONDS
 /// Burning Lv3 starts at this duration.
-#define BURNING_LV3 400
+#define BURNING_LV3 60 SECONDS
 
 //hearing
 #define HEARING_NORMAL 0
@@ -75,3 +75,6 @@
 #define DECOMP_STAGE_DECAYED 2
 #define DECOMP_STAGE_HIGHLY_DECAYED 3
 #define DECOMP_STAGE_SKELETONIZED 4
+
+//idk where else to put this
+#define DEFAULT_MIRANDA "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."

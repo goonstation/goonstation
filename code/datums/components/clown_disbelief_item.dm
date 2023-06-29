@@ -8,12 +8,11 @@ TYPEINFO(/datum/component/clown_disbelief_item)
 	initialization_args = list()
 
 /datum/component/clown_disbelief_item/Initialize()
-	SHOULD_CALL_PARENT(1)
 	..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, .proc/on_unequip)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(on_unequip))
 
 	src.disbelief_image = image('icons/effects/effects.dmi', null, "nothing")
 	src.disbelief_image.name = "\u200b" // zero width space

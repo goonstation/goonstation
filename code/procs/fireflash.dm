@@ -34,7 +34,6 @@
 				L.bodytemperature = max(temp/3, L.bodytemperature)
 				LAGCHECK(LAG_REALTIME)
 			for(var/obj/critter/C in T)
-				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				SPAWN(0.5 SECONDS)
@@ -180,7 +179,7 @@
 		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
 			var/melt = 1643.15 // default steel melting point
-			if (T.material && T.material.getProperty("flammable") > 3) //wood walls?
+			if (T.material && T.material.getProperty("flammable") > 4) //wood walls?
 				melt = 505.93 / 2 //451F (divided by 2 b/c it's multiplied by 2 below)
 				bypass_RNG = 1
 			var/divisor = melt

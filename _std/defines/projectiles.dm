@@ -82,6 +82,7 @@
 #define AMMO_GYROJET "gyrojet"
 #define AMMO_FLECHETTE "flechette"
 #define AMMO_BLOWDART "blowdart"
+#define AMMO_STAPLE "staple"
 
 #define AMMO_DART_ALL AMMO_FOAMDART,AMMO_BLOWDART
 
@@ -89,5 +90,7 @@
 #define AMMO_DERRINGER_LITERAL "spawner_derringer"
 #define AMMO_HOWITZER "howitzer"
 #define AMMO_FLINTLOCK "flintlock"
+#define AMMO_FLINTLOCK_RIFLE "flintlock_rifle"
+#define AMMO_FLINTLOCK_MORTAR "flintlock_hand_mortar"
 #define AMMO_COILGUN "coilgun"
 #define AMMO_KUVALDA "kuvalda"

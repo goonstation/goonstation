@@ -24,6 +24,7 @@
 	hud_state = "cloak"
 	f_active = 1
 	var/image/shield = null
+	icon_state = "medusa"
 
 	Use(mob/user as mob)
 		if(!active)
@@ -65,8 +66,10 @@
 	name = "Alloyed Solutions Ore Scoop/Hold"
 	desc = "Allows the ship to scoop up ore automatically."
 	var/capacity = 300
+	var/max_stack_scoop = 20 //! if you try to put stacks inside the item, this one limits how much you can in one action. Creating 100 items out of a stack in a single action should not happen.
 	hud_state = "cargo"
 	f_active = 1
+	icon_state = "ore_hold"
 
 	Use(mob/user as mob)
 		activate()
@@ -140,7 +143,9 @@
 	/obj/machinery/oreaccumulator,
 	/obj/machinery/bot,
 	/obj/machinery/nuclearbomb,
-	/obj/bomb_decoy)
+	/obj/bomb_decoy,
+	/obj/gold_bee,
+	/obj/reagent_dispensers/beerkeg)
 
 	hud_state = "cargo"
 	f_active = 1
@@ -322,6 +327,7 @@
 	f_active = 1
 	power_used = 80
 	hud_state = "tractor_beam"
+	icon_state = "trac_beam"
 
 	run_component()
 		if(settingup)
@@ -466,6 +472,7 @@
 	desc = "A useful navigation device for those lost in space."
 	f_active = 1
 	power_used = 50
+	icon_state = "ship_gps"
 
 	Use(mob/user as mob)
 		opencomputer(user)
@@ -780,6 +787,47 @@
 			boutput(usr, "Code reset.  Please type new code and press enter.")
 			show_lock_panel(usr)
 
+/obj/item/shipcomponent/secondary_system/lock/bioscan
+	name = "Biometric Hatch Locking Unit"
+	desc = "A basic hatch locking mechanism with a biometric scan."
+	system = "Lock"
+	f_active = 1
+	power_used = 0
+	icon_state = "lock"
+	code = ""
+	configure_mode = 0 //If true, entering a valid code sets that as the code.
+	var/bdna = null
+
+	show_lock_panel(mob/living/user)
+		if (isliving(user))
+			if (isnull(bdna))
+				boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes you as its key!</span>")
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
+				bdna = user?.bioHolder?.Uid
+				ship.locked = 0
+			else if ((bdna == user.bioHolder?.Uid) || (bdna == user.blood_DNA) )
+				ship.locked = !ship.locked
+				boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+			else
+				var/valid_dna_source = null
+				if(ishuman(user))
+					var/obj/item/parts/human_parts/limb
+					var/mob/living/carbon/human/H = user
+					limb = H.l_hand
+					if(limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+					limb = H.r_hand
+					if(!valid_dna_source && limb && ((istype(limb) && limb.original_DNA == bdna) || (limb.blood_DNA == bdna)))
+						valid_dna_source = limb
+
+				if(valid_dna_source)
+					if(user.loc == src.ship)
+						boutput(user, "<span class='alert'>You press [valid_dna_source] against \the [src] for a moment.</span>")
+					else
+						src.ship.visible_message("[user] holds [valid_dna_source] against the [src.ship] for a moment.")
+					ship.locked = !ship.locked
+					boutput(user, "<span class='alert'>[ship] is now [ship.locked ? "locked" : "unlocked"]!</span>")
+
 /obj/item/shipcomponent/secondary_system/crash
 	name = "Syndicate Explosive Entry Device"
 	desc = "The SEED that when explosively planted in a space station, lets you grow into the best death blossom you can be."
@@ -789,6 +837,7 @@
 	var/crashhits = 10
 	var/in_bump = 0
 	hud_state = "seed"
+	icon_state = "pod_seed"
 
 	Use(mob/user as mob)
 		activate()
@@ -809,9 +858,8 @@
 		boutput(B, "<span class='alert'>You eject!</span>")
 		ship.leave_pod(B)
 		ship.visible_message("<span class='alert'>[B] launches out of the [ship]!</span>")
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
-		step(B,ship.dir,0)
+		for(var/i in 1 to 3)
+			step(B, turn(ship.dir, 180), 0)
 		step_rand(B, 0)
 		//B.remove_shipcrewmember_powers(ship.weapon_class)
 	for(var/obj/item/shipcomponent/SC in src)
@@ -827,6 +875,7 @@
 	walk(src, 0)
 	in_bump = 1
 	crashhits--
+	logTheThing(LOG_COMBAT, ship.pilot, "uses a SEED to crash into [A] at [log_loc(A)]")
 	if(isturf(A))
 		if((istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced)) && prob(40))
 			in_bump = 0
@@ -866,14 +915,16 @@
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
-		if(O.density && O.anchored != 2)
+		var/turf/T = get_turf(O)
+		if(O.density && O.anchored != ANCHORED_ALWAYS && !isrestrictedz(T?.z))
 			boutput(ship.pilot, "<span class='alert'><B>You crash into [O]!</B></span>")
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			if(O.bound_width==32 && O.bound_height==32)
+				O.anchored = UNANCHORED
 			O.throw_at(target, 4, 2)
-			O.anchored = 0
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)
 				crashhits -= 3
@@ -909,7 +960,7 @@
 	f_active = 1
 	hud_state = "SRS_icon"
 	var/cooldown = 0
-	var/core_inserted = false
+	var/core_inserted = FALSE
 	var/health_snapshot
 	var/image/rewind
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
@@ -955,7 +1006,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SRS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Rewind System!</span>", 1)
@@ -963,7 +1014,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SRS")
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Rewind System!</span>", 1)

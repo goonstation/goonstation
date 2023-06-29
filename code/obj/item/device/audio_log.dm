@@ -1,10 +1,12 @@
+TYPEINFO(/obj/item/audio_tape)
+	mats = 3
+
 /obj/item/audio_tape
 	name = "compact tape"
 	desc = "A small audio tape.  You could make some rad mix-tapes with this!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recordertape"
 	w_class = W_CLASS_TINY
-	mats = 3
 
 	var/log_line = 1 //Which line of the log it's on.
 	var/max_lines = 100
@@ -71,6 +73,9 @@
 #define MODE_RECORDING 1
 #define MODE_PLAYING 2
 
+TYPEINFO(/obj/item/device/audio_log)
+	mats = 4
+
 /obj/item/device/audio_log
 	name = "audio log"
 	desc = "A fairly spartan recording device."
@@ -87,7 +92,6 @@
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
 	var/self_destruct = FALSE
-	mats = 4
 
 	wall_mounted
 		name = "Mounted Logger"
@@ -103,8 +107,7 @@
 	New()
 		..()
 		if (!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 		SPAWN(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)

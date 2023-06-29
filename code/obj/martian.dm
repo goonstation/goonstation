@@ -2,15 +2,31 @@
 	name ="Strange Computer"
 	desc ="This appears to be some sort of martian computer. The display is in an incomprehensible language."
 	icon = 'icons/turf/martian.dmi'
-	icon_state = "display_scroll"
-	anchored = 1
+	icon_state = "display-scroll"
+	anchored = ANCHORED
+
+	off
+		icon_state = "display-off"
+		desc = "This appears to be some sort of martian computer. Or maybe a television.  Or an arcade machine.  Who the hell knows?"
+
+	broken
+		icon_state = "display-broken"
+		desc = "This appears to be some sort of martian computer. A broken one, at that."
+
+	graphic
+		icon_state = "display-graphic"
+		desc = "This appears to be some sort of martian computer. Is it marking something?"
+
+	blink
+		icon_state = "display-blink"
+		desc = "This appears to be some sort of martian computer. What is this trying to say?"
 
 /obj/crevice
 	name ="Mysterious Crevice"
 	desc = "Perhaps you shouldn't stick your hand in."
 	icon = 'icons/turf/martian.dmi'
 	icon_state = "crevice0"
-	anchored = 1
+	anchored = ANCHORED
 	var/used = 0
 	var/id = null
 
@@ -59,7 +75,7 @@
 
 	else if(prob(60))
 		boutput(user, "<span class='alert'>You pull something out!</span>")
-		var/itemtype = pick(/obj/item/reagent_containers/glass/wateringcan/artifact,/obj/item/artifact/forcewall_wand,/obj/item/strange_candle,/obj/critter/cat,/obj/item/skull,/obj/item/gnomechompski,/obj/item/bat,/obj/critter/meatslinky,/obj/item/paint_can,/obj/item/mine/stun)
+		var/itemtype = pick(/obj/item/reagent_containers/glass/wateringcan/artifact,/obj/item/artifact/forcewall_wand,/obj/item/strange_candle,/mob/living/critter/small_animal/cat,/obj/item/skull,/obj/item/gnomechompski,/obj/item/bat,/obj/critter/meatslinky,/obj/item/paint_can,/obj/item/mine/stun)
 		new itemtype(src.loc)
 		var/obj/decal/cleanable/blood/gibs/gib =make_cleanable( /obj/decal/cleanable/blood/gibs, src.loc )
 		gib.streak_cleanable(user.dir)

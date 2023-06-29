@@ -19,7 +19,7 @@ var/global/list/adventure_elements_by_id = list()
 	New()
 		if (src.opacity)
 			src.set_opacity(0)
-			RL_SetOpacity(1)
+			set_opacity(1)
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
 		else
@@ -48,7 +48,7 @@ var/global/list/adventure_elements_by_id = list()
 	desc = "Marks a selection in Adventure Mode."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	disposing()
 		icon_state = null
@@ -390,7 +390,7 @@ var/global/list/adventure_elements_by_id = list()
 	invisibility = INVIS_ALWAYS_ISH
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

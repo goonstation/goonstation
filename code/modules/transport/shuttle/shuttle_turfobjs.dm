@@ -99,6 +99,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
 	icon = 'icons/turf/walls_shuttle.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
+	icon_state = "mapwall"
+#endif
 	light_mod = "wall-"
 	opacity = 0
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
@@ -107,6 +112,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	attack_hand()
 	hitby()
 		. = ..()
+	burn_down()
 	reagent_act()
 	bullet_act()
 	ex_act()
@@ -121,7 +127,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 // ---------------------------------------------- OBJECTS -------------------------------------
 
 /obj/indestructible/
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	attackby()
 	attack_hand()

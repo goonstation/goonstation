@@ -1,3 +1,6 @@
+TYPEINFO(/turf/simulated/wall)
+	mat_appearances_to_ignore = list("steel")
+
 /turf/simulated/wall
 	name = "wall"
 	desc = "Looks like a regular wall."
@@ -13,12 +16,13 @@
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
+	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
+	default_material = "steel"
 
-	/// The material name (string) that this will default to if a material is not otherwise set
-	var/default_material = "steel"
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
+	var/girdermaterial = null
 
 	New()
 		..()
@@ -34,9 +38,6 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
-
-		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
@@ -128,94 +129,71 @@
 	newlight.status = 1 // LIGHT_EMPTY
 	if (istype(src,/turf/simulated/wall/auto))
 		newlight.nostick = 0
-		newlight.autoposition()
+		newlight.autoposition(light_dir)
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)
 	qdel(parts)
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
+	var/datum/material/defaultMaterial = getMaterial("steel")
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				B.set_reinforcement(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				B.set_reinforcement(M)
+
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			B.set_reinforcement(src.material)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
 				var/atom/A = new /obj/structure/girder/reinforced(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 
 				if (prob(50))
 					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
-					if (src.material)
-						B.setMaterial(src.material)
-					else
-						B.setMaterial(getMaterial("steel"), copy = FALSE)
+					B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
 
 	else
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				C.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				C.setMaterial(M, copy = FALSE)
+
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			B.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+			C.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
 
-				if (src.material)
-					B.setMaterial(src.material)
-				else
-					B.setMaterial(getMaterial("steel"), copy = FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
-					if (src.material)
-						C.setMaterial(src.material)
-					else
-						C.setMaterial(getMaterial("steel"), copy = FALSE)
+					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+
 
 	var/atom/D = ReplaceWithFloor()
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
 		D.setMaterial(getMaterial("steel"), copy = FALSE)
+
 
 /turf/simulated/wall/burn_down()
 	src.ReplaceWithFloor()
@@ -340,6 +318,7 @@
 				health *= 0.75
 			if(src.material.material_flags & MATERIAL_CRYSTAL)
 				health /= 2
+				desc += " Wait where did the girder go?"
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)

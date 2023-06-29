@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Knob, LabeledList, Section, Stack, Table } from '../components';
+import { AnimatedNumber, Button, Knob, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { formatTime } from '../format';
 

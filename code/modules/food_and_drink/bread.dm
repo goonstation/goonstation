@@ -8,11 +8,25 @@
 	heal_amt = 1
 	food_color = "#FFFFCC"
 	real_name = "bread"
-	flags = ONBELT | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
 	initial_volume = 30
 	initial_reagents = "bread"
 	food_effects = list("food_hp_up")
+
+	/// how many times the bread has been teleported
+	var/teleport_count = 0
+	/// the number of teleports to start rolling to turn into a mimic
+	var/teleport_requirement = 100
+
+	New()
+		..()
+		src.RegisterSignal(src,COMSIG_MOVABLE_TELEPORTED,PROC_REF(mutate))
+
+	disposing()
+		src.UnregisterSignal(src,COMSIG_MOVABLE_TELEPORTED)
+		..()
 
 	attack(mob/M, mob/user, def_zone)
 		if (user == M)
@@ -22,6 +36,13 @@
 		else
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
+
+	/// rolls to turn the bread loaf into a mimic once the requirement is reached
+	proc/mutate()
+		src.teleport_count += 1
+		if (src.teleport_count > src.teleport_requirement)
+			if (prob(0.01))
+				src.become_mimic()
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W) || issawingtool(W))
@@ -191,6 +212,14 @@
 		initial_reagents = list("bread"=5,"cornsyrup"=5,"honey"=10)
 		meal_time_flags = MEAL_TIME_DINNER
 
+	french
+		name = "slice of french bread"
+		desc = "A slice of a french piece of bread. Merveilleux!"
+		icon_state = "baguetteslice"
+		heal_amt = 2
+		real_name = "french bread"
+		food_color = "#C78000"
+
 	New()
 		..()
 		src.pixel_x += rand(-3,3)
@@ -231,7 +260,7 @@
 		heal_amt = 5
 		real_name = "elvis toast"
 		initial_volume = 30
-		initial_reagents = list("bread"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"essenceofelvis"=25)
 		food_effects = list("food_warm", "food_energized")
 		meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
@@ -243,6 +272,14 @@
 		real_name = "terror toast"
 		food_effects = list("food_warm", "food_all")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
+
+	french
+		name = "toasted slice of french bread"
+		icon_state = "baguettetoast"
+		desc = "It's French, it's toasted, but it's not french toast."
+		heal_amt = 2
+		real_name = "toasted french bread"
+		food_color = "#B04000"
 
 	New()
 		..()
@@ -271,7 +308,7 @@
 		heal_amt = 6
 		real_name = "elvis cheese toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"cheese"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"cheese"=5,"essenceofelvis"=25)
 
 	New()
 		..()
@@ -300,7 +337,7 @@
 		heal_amt = 4
 		real_name ="bacon elvis toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"porktonium"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"porktonium"=5,"essenceofelvis"=25)
 
 	New()
 		..()
@@ -350,7 +387,7 @@
 	desc = "Hon hon hon, oui oui! Needs to be cut into slices before eating."
 	stamina_damage = 5
 	stamina_cost = 1
-	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice
+	var/slicetype = /obj/item/reagent_containers/food/snacks/breadslice/french
 
 	New()
 		..()

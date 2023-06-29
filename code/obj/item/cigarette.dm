@@ -39,6 +39,7 @@
 	New()
 		..()
 		src.create_reagents(60)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 110, 135, 90, src.on)
 
 		if (src.on) //if we spawned lit, do something about it!
 			src.on = 0
@@ -84,7 +85,7 @@
 				src.reagents.trans_to(target, 5)
 			qdel (src)
 			return
-		else if (istype(target, /obj/item/match) && src.on)
+		else if (istype(target, /obj/item/match) && src.on == MATCH_LIT)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
 			src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
@@ -120,6 +121,8 @@
 
 			hit_type = DAMAGE_BURN
 
+			SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
 	proc/put_out(var/mob/user as mob, var/message as text)
 		if (src.on == 1)
 			src.on = -1
@@ -138,6 +141,8 @@
 			processing_items.Remove(src)
 
 			hit_type = DAMAGE_BLUNT
+
+			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
 			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
 
@@ -330,8 +335,11 @@
 		if (src.on == 1 && !src.exploding && src.reagents.total_volume <= 20)
 			src.put_out(user, "<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			return ..()
+		else if (user.client)
+			if (!user.client.check_key(KEY_THROW)) //checks if player is in throw mode to avoid double messages
+				user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
+				return ..()
 		else
-			user.visible_message("<span class='alert'><b>[user]</b> drops [src]. Guess they've had enough for the day.</span>", group = "cig_drop")
 			return ..()
 
 
@@ -532,13 +540,16 @@
 	var/max_cigs = 6
 	var/cigtype = /obj/item/clothing/mask/cigarette
 	var/package_style = "cigpacket"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
 
 	New()
 		..()
+		if (!cigtype)
+			return
 		for(var/i in 1 to src.max_cigs)
 			new src.cigtype(src)
 
@@ -563,6 +574,13 @@
 	cigtype = /obj/item/clothing/mask/cigarette/propuffs
 	icon_state = "cigpacket-r"
 	package_style = "cigpacket-r"
+
+/obj/item/cigpacket/paperpack
+	name = "paper cigarette packet"
+	desc = "A flavor surprise in each cigarette, lovingly wrapped in the finest papers."
+	cigtype = null
+	icon_state = "cigpacket-wo"
+	package_style = "cigpacket-w"
 
 /obj/item/cigpacket/random
 	name = "odd cigarette packet"
@@ -655,7 +673,8 @@
 	var/cigcount = 5
 	var/cigtype = /obj/item/clothing/mask/cigarette/cigar
 	var/package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -719,7 +738,8 @@
 	cigcount = 5
 	cigtype = /obj/item/clothing/mask/cigarette/cigar/gold
 	package_style = "cigarbox"
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 3
 	stamina_cost = 3
 	rand_pos = 1
@@ -888,8 +908,7 @@
 	burn_output = 600
 	burn_possible = 1
 
-	/// 0 = unlit, 1 = lit, -1 is burnt out/broken or otherwise unable to be lit
-	var/on = 0
+	var/on = MATCH_UNLIT
 
 	var/light_mob = 0
 	var/life_timer = 0
@@ -906,13 +925,14 @@
 		light.attach(src)
 		src.life_timer = rand(15,25)
 
+
 	pickup(mob/user)
 		..()
 		light.attach(user)
 
 	dropped(mob/user)
 		..()
-		if (isturf(src.loc) && src.on > 0)
+		if (isturf(src.loc) && src.on == MATCH_LIT)
 			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
@@ -921,7 +941,7 @@
 				light.attach(src)
 
 	process()
-		if (src.on > 0)
+		if (src.on == MATCH_LIT)
 			if (src.life_timer >= 0)
 				life_timer--
 			var/location = src.loc
@@ -942,7 +962,7 @@
 			//sleep(1 SECOND)
 
 	proc/light(var/mob/user as mob)
-		src.on = 1
+		src.on = MATCH_LIT
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
@@ -952,7 +972,7 @@
 		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
-		src.on = -1
+		src.on = MATCH_INERT
 		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
@@ -970,26 +990,26 @@
 		processing_items.Remove(src)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			if (temperature > T0C+200)
 				src.visible_message("<span class='alert'>The [src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
-		if (src.on > 0)
+		if (src.on > MATCH_UNLIT)
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
 				target.reagents.temperature_reagents(4000,10)
 				return
-		else if (src.on == -1)
+		else if (src.on == MATCH_INERT)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
 			return
-		else if (src.on == 0)
+		else if (src.on == MATCH_UNLIT)
 			if (istype(target, /obj/item/match) && target:on > 0)
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
@@ -1079,7 +1099,7 @@
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
-			if (src.on > 0)
+			if (src.on == MATCH_LIT)
 				user.visible_message("<b>[user]</b> [pick("licks [his_or_her(user)] finger and snuffs out [src].", "waves [src] around until it goes out.")]")
 				src.put_out(user)
 		else
@@ -1096,7 +1116,8 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	w_class = W_CLASS_TINY
 	throwforce = 4
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	click_delay = 0.7 SECONDS
 	stamina_damage = 5
@@ -1150,7 +1171,6 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			user.visible_message("<span class='alert'>Without even breaking stride, [user] flips open and lights [src] in one smooth movement.</span>")
 			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
 			user.update_inhands()
 
@@ -1163,7 +1183,6 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			user.visible_message("<span class='alert'>You hear a quiet click, as [user] shuts off [src] without even looking what they're doing. Wow.</span>")
 			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
 			user.update_inhands()
 
@@ -1333,7 +1352,7 @@
 
 	New()
 		. = ..()
-		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), PROC_REF(update_hotbox_flag))
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

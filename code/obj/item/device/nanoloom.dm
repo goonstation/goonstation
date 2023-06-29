@@ -2,7 +2,8 @@
 	name = "nanoloom"
 	desc = "A small device capable of rapidly repairing degradation in equipment using material from an attached spool cartridge."
 	icon_state = "nanoloom"
-	flags = ONBELT | SUPPRESSATTACK
+	flags = FPRINT | SUPPRESSATTACK
+	c_flags = ONBELT
 	click_delay = 0.7 SECONDS
 	rand_pos = FALSE
 

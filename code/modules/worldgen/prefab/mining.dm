@@ -258,6 +258,20 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 16
 		prefabSizeY = 16
 
+	larrys_laundry // Cheffie's Laundromat with port-a-laundry
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_larrys_laundromat.dmm"
+		prefabSizeX = 17
+		prefabSizeY = 20
+
+	mauxite_hideout // Cheffie's Fermid infested hideout with grenade casings
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/prefab_mauxite_hideout.dmm"
+		prefabSizeX = 22
+		prefabSizeY = 20
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -299,7 +313,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //also sneakily contains diner and siphon shaft cover
 		prefabSizeX = 47
-		prefabSizeY = 41
+		prefabSizeY = 47
 
 	miracliumsurvey
 		underwater = 1

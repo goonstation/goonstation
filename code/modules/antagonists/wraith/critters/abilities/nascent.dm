@@ -29,7 +29,7 @@
 
 /datum/targetable/critter/nascent/become_voidhound
 	name = "Become voidhound"
-	desc = "Become a stealthy void hound and prey on people from the shadows"
+	desc = "Become a stealthy void hound and prey on people from the shadows."
 	icon_state = "choose_hound"
 	cooldown = 0
 	targeted = 0
@@ -46,7 +46,7 @@
 				W = N.master
 		var/mob/living/critter/wraith/voidhound/S = new /mob/living/critter/wraith/voidhound(get_turf(holder.owner), W)
 		var/mob/living/critter/wraith/nascent/N = holder.owner
-		boutput(holder.owner, "<span class='alert'><b>You become a voidhound!</b></span>")
+		boutput(holder.owner, "<span class='alert'><b>You become a voidhound! Stay in the shadows or cloak to heal and regain stamina!</b></span>")
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)
@@ -77,7 +77,7 @@
 				W = N.master
 		var/mob/living/critter/wraith/spiker/S = new /mob/living/critter/wraith/spiker(get_turf(holder.owner), W)
 		var/mob/living/critter/wraith/nascent/N = holder.owner
-		boutput(holder.owner, "<span class='alert'><b>You become a tentacle fiend!</b></span>")
+		boutput(holder.owner, "<span class='alert'><b>You become a tentacle fiend! Use your hook to bring people to you and lash at them, or shuffle away from danger!</b></span>")
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
 		animate_buff_in(S)

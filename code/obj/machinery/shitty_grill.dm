@@ -1,12 +1,14 @@
+TYPEINFO(/obj/machinery/shitty_grill)
+	mats = 20
+
 /obj/machinery/shitty_grill
 	name = "shitty grill"
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	flags = NOSPLASH
-	mats = 20
 	var/obj/item/grillitem = null
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook
@@ -127,7 +129,7 @@
 
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
+		if (W.w_class > src.max_wclass || W.storage)
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
@@ -144,6 +146,7 @@
 		return
 
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "grillitem")
 			if (!oldval && newval)
 				SubscribeToProcess()
@@ -266,7 +269,7 @@
 		if (src.cooktime >= 60)
 			if (ismob(src.grillitem))
 				var/mob/M = src.grillitem
-				INVOKE_ASYNC(M, /mob.proc/ghostize)
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, ghostize))
 			else
 				for (var/mob/M in src.grillitem)
 					M.ghostize()

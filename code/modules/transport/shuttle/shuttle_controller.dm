@@ -34,7 +34,7 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, TYPE_PROC_REF(/datum/ircbot, event), "shuttlecall", src.timeleft())
 
 		return TRUE
 
@@ -100,13 +100,13 @@ datum/shuttle_controller
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
 						if (ticker?.mode)
-							if (ticker.mode.shuttle_available == 0)
+							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DISABLED)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
 								direction = 1
 								endtime = null
 								return 0
-							if (ticker.mode.shuttle_available == 2 && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
+							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DELAY && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
 								callcount++
 								command_alert("CentCom reports that the emergency shuttle has veered off course due to unknown interference. The next shuttle will be equipped with electronic countermeasures to break through.");
 								online = 0
@@ -240,7 +240,6 @@ datum/shuttle_controller
 							else if(istype( A, /mob ))
 								var/mob/M = A
 								shake_camera(M, 32, 32)
-								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
 								SPAWN(1 DECI SECOND)

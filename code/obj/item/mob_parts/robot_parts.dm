@@ -4,25 +4,28 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 	icon = 'icons/obj/robot_parts.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "buildpipe"
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	streak_decal = /obj/decal/cleanable/oil
 	streak_descriptor = "oily"
 	var/appearanceString = "generic"
 	var/icon_state_base = ""
-	accepts_normal_human_overlays = 0
-	skintoned = 0
+	accepts_normal_human_overlays = FALSE
+	skintoned = FALSE
 	/// Robot limbs shouldn't get replaced through mutant race changes
 	limb_is_unnatural = TRUE
 	kind_of_limb = (LIMB_ROBOT)
 
-	decomp_affected = 0
+	decomp_affected = FALSE
 	var/robot_movement_modifier
 
 	var/max_health = 100
 	var/dmg_blunt = 0
 	var/dmg_burns = 0
-	var/weight = 0     // for calculating speed modifiers
-	var/powerdrain = 0 // does this part consume any extra power
+	/// for calculating speed modifiers
+	var/weight = 0
+	/// does this part consume any extra power
+	var/powerdrain = 0
 
 	force = 6
 	stamina_damage = 40
@@ -52,12 +55,15 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts)
 			if(60 to INFINITY)
 				. += "<span class='alert'>It looks terribly burnt up.</span>"
 
-	getMobIcon(var/lying)
-		if (src.standImage)
-			return src.standImage
+	getMobIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT, icon/mutantrace_override, force = FALSE)
+		if (force)
+			qdel(src.bodyImage)
+			src.bodyImage = null
+		if (src.bodyImage)
+			return src.bodyImage
 
-		src.standImage = image('icons/mob/human.dmi', "[src.icon_state_base]-[appearanceString]")
-		return standImage
+		src.bodyImage = image(mutantrace_override || src.partIcon, icon_state = "[src.icon_state_base]-[appearanceString]")
+		return bodyImage
 
 	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
@@ -170,9 +176,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/ai_interface/ai_interface = null
 	var/visible_eyes = 1
-
-		// Screen head specific
-	var/mode = "lod" // lod (light-on-dark) or dol (dark-on-light)
+	// Screen head specific
+	/// lod (light-on-dark) or dol (dark-on-light)
+	var/mode = "lod"
 	var/face = "happy"
 
 	examine()
@@ -200,7 +206,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			if ( !(B.owner && B.owner.key) && !istype(W, /obj/item/organ/brain/latejoin) )
 				boutput(user, "<span class='alert'>This brain doesn't look any good to use.</span>")
 				return
-			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.dnr) ) //If the borg-to-be is jobbanned or has DNR set
+			else if ( B.owner  &&  (jobban_isbanned(B.owner.current,"Cyborg") || B.owner.get_player().dnr) ) //If the borg-to-be is jobbanned or has DNR set
 				boutput(user, "<span class='alert'>The brain disintigrates in your hands!</span>")
 				user.drop_item()
 				qdel(B)
@@ -393,7 +399,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 	icon_state_base = "body"
 	icon_state = "body-generic"
 	slot = "chest"
-	//These vars track the wiring/cell that the chest needs before you can stuff it on a frame
+	// These vars track the wiring/cell that the chest needs before you can stuff it on a frame
 	var/wires = 0
 	var/obj/item/cell/cell = null
 
@@ -497,7 +503,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm)
 	desc = "A metal arm for a cyborg. It won't be able to use as many tools without it!"
 	max_health = 60
 	can_hold_items = 1
-	accepts_normal_human_overlays = 1
+	accepts_normal_human_overlays = TRUE
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
@@ -578,8 +584,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -606,8 +612,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
@@ -652,8 +658,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two metal sheets to reinforce this component.</span>")
@@ -680,8 +686,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 				M.change_stack_amount(-2)
 				if (M.amount < 1)
 					user.drop_item()
-					del(M)
-				del(src)
+					qdel(M)
+				qdel(src)
 				return
 			else
 				boutput(user, "<span class='alert'>You need at least two reinforced metal sheets to reinforce this component.</span>")
@@ -885,8 +891,10 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "robot frame"
 	icon_state = "robo_suit"
 	max_health = 5000
-	var/syndicate = 0 ///This will make the borg a syndie one
+	/// This will make the borg a syndie one
+	var/syndicate = FALSE
 	var/emagged = 0
+	var/freemodule = TRUE
 	var/obj/item/parts/robot_parts/head/head = null
 	var/obj/item/parts/robot_parts/chest/chest = null
 	var/obj/item/parts/robot_parts/l_arm = null
@@ -894,6 +902,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	var/obj/item/parts/robot_parts/l_leg = null
 	var/obj/item/parts/robot_parts/r_leg = null
 	var/obj/item/organ/brain/brain = null
+	appearance_flags = KEEP_TOGETHER
 
 	New()
 		..()
@@ -1066,25 +1075,47 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			return
 
 	update_icon()
-		src.overlays = null
-		if(src.chest) src.overlays += image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, OBJ_LAYER, 2)
-		if(src.head) src.overlays += image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, OBJ_LAYER, 2)
+		if(src.chest)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "body-" + src.chest.appearanceString, FLOAT_LAYER, 2),"chest")
+		else
+			src.UpdateOverlays(null,"chest")
+
+		if(src.head)
+			src.UpdateOverlays(image('icons/mob/robots.dmi', "head-" + src.head.appearanceString, FLOAT_LAYER, 2),"head")
+		else
+			src.UpdateOverlays(null,"head")
 
 		if(src.l_leg)
-			if(src.l_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.l_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_leg-" + src.l_leg.appearanceString, FLOAT_LAYER, 2),"l_leg")
+		else
+			src.UpdateOverlays(null,"l_leg")
 
 		if(src.r_leg)
-			if(src.r_leg.slot == "leg_both") src.overlays += image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, OBJ_LAYER, 2)
+			if(src.r_leg.slot == "leg_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_leg-" + src.r_leg.appearanceString, FLOAT_LAYER, 2),"r_leg")
+		else
+			src.UpdateOverlays(null,"r_leg")
 
 		if(src.l_arm)
-			if(src.l_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.l_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "l_arm-" + src.l_arm.appearanceString, FLOAT_LAYER, 2),"l_arm")
+		else
+			src.UpdateOverlays(null,"l_arm")
 
 		if(src.r_arm)
-			if(src.r_arm.slot == "arm_both") src.overlays += image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
-			else src.overlays += image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, OBJ_LAYER, 2)
+			if(src.r_arm.slot == "arm_both")
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+			else
+				src.UpdateOverlays(image('icons/mob/robots.dmi', "r_arm-" + src.r_arm.appearanceString, FLOAT_LAYER, 2),"r_arm")
+		else
+			src.UpdateOverlays(null,"r_arm")
 
 	proc/check_completion()
 		if (src.chest && src.head)
@@ -1107,7 +1138,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 		if (!src.head)
 			// how the fuck did you even do this
-			stack_trace("Attempted to finish a cyborg from borg frame [src] (\ref[src]) without a head. That's bad.")
+			stack_trace("Attempted to finish a cyborg from borg frame [identify_object(src)] without a head. That's bad.")
 			borg.death()
 			qdel(src)
 			return
@@ -1143,7 +1174,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			boutput(usr, "<span class='notice'>You activate the frame and a audible beep emanates from the head.</span>")
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 		else
-			stack_trace("We finished cyborg [borg] (\ref[borg]) from frame [src] (\ref[src]) with a brain, but somehow lost the brain??? Where did it go")
+			stack_trace("We finished cyborg [identify_object(borg)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			borg.death()
 			qdel(src)
 			return
@@ -1163,9 +1194,9 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)
 					ticker.mode:revolutionaries += borg.mind
-					ticker.mode:update_rev_icons_added(borg.mind)
 				if (src.emagged)
 					borg.emagged = 1
+					borg.mind.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 					SPAWN(0)
 						borg.update_appearance()
 				else if (src.syndicate)
@@ -1177,17 +1208,13 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 
 			borg.job = "Cyborg"
 
-		// final check to guarantee the icon shows up for everyone
-		if(borg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-			if ((borg.mind in ticker.mode:revolutionaries) || (borg.mind in ticker.mode:head_revolutionaries))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
 		borg.update_appearance()
 
 		qdel(src)
 		return
 
 /obj/item/parts/robot_parts/robot_frame/syndicate
-	syndicate = 1
+	syndicate = TRUE
 
 // UPGRADES
 // Cyborg

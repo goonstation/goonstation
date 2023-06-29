@@ -2021,7 +2021,7 @@
 /turf/simulated/floor,
 /area/bridge)
 "eA" = (
-/obj/critter/cat{
+/mob/living/critter/small_animal/cat{
 	desc = "Head of mouse-catching and tuna taste-testing.";
 	health = 15;
 	name = "Jones"
@@ -5987,7 +5987,7 @@
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nM" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nN" = (
@@ -10953,7 +10953,8 @@
 /turf/simulated/floor,
 /area/tdome)
 "yU" = (
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/tdome)
 "yV" = (
 /turf/simulated/floor/red/side{
@@ -12737,7 +12738,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "Dd" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/bar,
 /area/space_diner)
 "De" = (
@@ -13273,7 +13274,8 @@
 	desc = "An emergency shower, for decontamination. Sometimes..";
 	name = "Decontamination Shower"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/medical/cdc)
 "Er" = (
 /obj/cable{
@@ -13601,7 +13603,6 @@
 /area/zeta/security)
 "Fa" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
@@ -13900,7 +13901,6 @@
 /area/zeta/security)
 "Fy" = (
 /obj/machinery/door/airlock/external{
-	ai_no_access = 0;
 	implant_lock = 0;
 	name = "Outpost Shuttle Access";
 	req_access_txt = "11"
@@ -14217,7 +14217,7 @@
 	dir = 8
 	},
 /obj/spawner/newbomb/timer,
-/obj/deskclutter,
+/obj/decal/cleanable/desk_clutter,
 /obj/item/reagent_containers/food/drinks/rum_spaced,
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
@@ -14729,7 +14729,8 @@
 	dir = 8
 	},
 /obj/reagent_dispensers/watertank,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/chemistry)
 "Hk" = (
 /obj/machinery/light{
@@ -14961,7 +14962,8 @@
 /area/zeta)
 "HJ" = (
 /obj/reagent_dispensers/fueltank,
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/chemistry)
 "HK" = (
 /obj/cable{
@@ -15455,7 +15457,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "IE" = (
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -15760,7 +15762,7 @@
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Jd" = (
-/obj/machinery/atmospherics/valve,
+/obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/ai_monitored/storage/secure)
 "Je" = (
@@ -16603,7 +16605,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "KH" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -16618,7 +16621,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/machinery/atmospherics/valve{
+/obj/machinery/atmospherics/binary/valve{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -16785,7 +16788,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "La" = (
 /obj/machinery/beacon{
@@ -16817,7 +16821,8 @@
 /obj/machinery/artifact{
 	name = "Test Artifact"
 	},
-/turf/simulated/floor/bot/white,
+/obj/decal/stripe_caution,
+/turf/simulated/floor/white,
 /area/artifact)
 "Lf" = (
 /obj/cable{
@@ -16859,7 +16864,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Ll" = (
 /obj/cable{
@@ -16886,7 +16892,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/syringe,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Ln" = (
 /obj/cable{
@@ -16999,7 +17006,8 @@
 	},
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "Lx" = (
 /obj/cable{
@@ -17035,7 +17043,8 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/gunner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LA" = (
 /obj/cable{
@@ -17132,13 +17141,15 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LI" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/guardbot_dock,
 /obj/cable,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/zeta/bot_storage)
 "LJ" = (
 /obj/machinery/light,
@@ -17719,7 +17730,8 @@
 /obj/machinery/networked/mainframe/zeta{
 	tag = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/turret_protected/Zeta)
 "MJ" = (
 /obj/cable{
@@ -17863,7 +17875,8 @@
 	icon_state = "grey_target_prism";
 	dir = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/turret_protected/Zeta)
 "MV" = (
 /obj/cable{
@@ -19216,7 +19229,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/engine/miningoutpost)
 "Qa" = (
 /obj/machinery/conveyor/WE{
@@ -20189,7 +20203,7 @@
 /turf/simulated/wall/auto/asteroid,
 /area/space)
 "Sn" = (
-/obj/critter/rockworm,
+/mob/living/critter/rockworm,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "So" = (

@@ -96,10 +96,11 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 	argument_types = list(/datum/command_argument/string="ckey")
 	var/action_name
 	var/ckey
+	var/allow_disconnected = FALSE
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/prepare(user, ckey)
 	src.ckey = ckey
-	var/mob/M = ckey_to_mob(ckey, 0)
+	var/mob/M = allow_disconnected ? ckey_to_mob_maybe_disconnected(ckey, 0) : ckey_to_mob(ckey, 0)
 	if(!M)
 		system.reply("Ckey not found.", user)
 		return null
@@ -107,7 +108,7 @@ ABSTRACT_TYPE(/datum/spacebee_extension_command/state_based/confirmation/mob_tar
 	return "You are about to [src.action_name] [M] ([M.ckey])[isdead(M) ? " DEAD" : ""][checktraitor(M) ? " \[T\]" : ""]."
 
 /datum/spacebee_extension_command/state_based/confirmation/mob_targeting/do_it(user)
-	var/mob/M = ckey_to_mob(ckey)
+	var/mob/M = allow_disconnected ? ckey_to_mob_maybe_disconnected(ckey) : ckey_to_mob(ckey)
 	if(!M)
 		system.reply("Ckey [ckey] disappeared in the meantime, huh.", user)
 		return

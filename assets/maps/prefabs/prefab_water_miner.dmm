@@ -231,31 +231,38 @@
 /area/prefab/sea_mining)
 "aX" = (
 /obj/machinery/oreaccumulator,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aY" = (
 /obj/item/extinguisher,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aZ" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "ba" = (
 /obj/machinery/vending/coffee,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bb" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bc" = (
 /obj/machinery/vending/snack,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "bd" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "be" = (
 /obj/item/device/gps{
@@ -269,13 +276,13 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
-ab
-ab
-ab
+ap
+ap
+ap
+ap
+ap
+ap
+ap
 ab
 ab
 ab
@@ -384,7 +391,7 @@ ab
 ab
 "}
 (8,1,1) = {"
-ap
+ab
 ab
 ab
 ab
@@ -401,7 +408,7 @@ ab
 ab
 "}
 (9,1,1) = {"
-ap
+ab
 ab
 ab
 ab
@@ -418,7 +425,7 @@ ab
 ab
 "}
 (10,1,1) = {"
-ap
+ab
 aa
 aa
 aa
@@ -435,7 +442,7 @@ aa
 ab
 "}
 (11,1,1) = {"
-ap
+ab
 aa
 ad
 ah
@@ -449,10 +456,10 @@ ax
 ax
 aZ
 aa
-ab
+ap
 "}
 (12,1,1) = {"
-ab
+ap
 aa
 ae
 ae
@@ -466,10 +473,10 @@ aU
 ax
 ba
 ac
-ab
+ap
 "}
 (13,1,1) = {"
-ab
+ap
 ac
 ae
 ae
@@ -486,7 +493,7 @@ ac
 ap
 "}
 (14,1,1) = {"
-ab
+ap
 ac
 ae
 ae
@@ -503,7 +510,7 @@ ac
 ap
 "}
 (15,1,1) = {"
-ab
+ap
 ac
 ae
 ae
@@ -520,7 +527,7 @@ ac
 ap
 "}
 (16,1,1) = {"
-ab
+ap
 aa
 ae
 ae
@@ -551,7 +558,7 @@ ae
 aY
 aX
 aa
-ab
+ap
 "}
 (18,1,1) = {"
 ab
@@ -578,12 +585,12 @@ ae
 aj
 ae
 aj
-ab
-ab
-ab
-ab
-ab
-ab
+ap
+ap
+ap
+ap
+ap
+ap
 ab
 ab
 "}
@@ -595,10 +602,10 @@ aa
 aa
 aa
 aa
-ab
-ab
-ab
-ab
+ap
+ap
+ap
+ap
 ab
 ab
 ab
@@ -611,10 +618,10 @@ ab
 ab
 ab
 ab
-ab
-ab
-ab
-ab
+ap
+ap
+ap
+ap
 ab
 ab
 ab

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/lightbreaker)
+	mats = 15
+
 /obj/item/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
@@ -11,7 +14,6 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4

@@ -1,3 +1,6 @@
+TYPEINFO(/obj/machinery/secscanner)
+	mats = 18
+
 /obj/machinery/secscanner
 	name = "security scanner"
 	desc = "The latest innovation in invasive imagery, the programmable NT-X100 will scan anyone who walks through it with fans to simulate being patted down. <em>Nanotrasen is not to be held responsible for any deaths caused by the results the machine gives, or the machine itself.</em>"
@@ -5,11 +8,11 @@
 	icon_state = "scanner_on"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = 2
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
+	power_usage = 5
 	var/timeBetweenUses = 20//I can see this being fun
 	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
@@ -132,8 +135,6 @@
 
 			return //no, we're a vibe checker not a security device. our work is done
 
-		target.show_text( "You feel [pick("funny", "wrong", "confused", "dangerous", "sickly", "puzzled", "happy")].", "blue" )
-
 		if (contraband >= 4)
 			contraband = round(contraband)
 
@@ -180,17 +181,17 @@
 
 		var/mob/living/carbon/human/perp = target
 
-		if (perp.mutantrace)
-			if (istype(perp.mutantrace, /datum/mutantrace/abomination))
-				threatcount += 8
-			else if (istype(perp.mutantrace, /datum/mutantrace/zombie))
-				threatcount += 6
-			else if (istype(perp.mutantrace, /datum/mutantrace/werewolf) || istype(perp.mutantrace, /datum/mutantrace/hunter))
-				threatcount += 4
-			else if (istype(perp.mutantrace, /datum/mutantrace/cat))
-				threatcount += 3
+		//yass TODO: move this to a var on mutantrace
+		if (istype(perp.mutantrace, /datum/mutantrace/abomination))
+			threatcount += 8
+		else if (istype(perp.mutantrace, /datum/mutantrace/zombie))
+			threatcount += 6
+		else if (istype(perp.mutantrace, /datum/mutantrace/werewolf) || istype(perp.mutantrace, /datum/mutantrace/hunter))
+			threatcount += 4
+		else if (istype(perp.mutantrace, /datum/mutantrace/cat))
+			threatcount += 3
 
-		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+		if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
 			if(isnull(data_core.security.find_record("name", perp.name)))
 				threatcount += 5
 
@@ -269,8 +270,8 @@
 			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 				if (!has_contraband_permit)
 					threatcount += perp.back.get_contraband() * 0.5
-			if (istype(perp.back, /obj/item/storage/))
-				for( var/obj/item/item in perp.back.contents )
+			if (perp.back?.storage)
+				for(var/obj/item/item in perp.back.storage.get_contents())
 					if (istype(item, /obj/item/gun/))
 						if (!has_carry_permit)
 							threatcount += item.get_contraband() * 0.5

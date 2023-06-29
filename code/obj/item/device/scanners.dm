@@ -11,16 +11,20 @@ Contains:
 
 //////////////////////////////////////////////// T-ray scanner //////////////////////////////////
 
+TYPEINFO(/obj/item/device/t_scanner)
+	mats = list("CRY-1", "CON-1")
+
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
 	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
 	var/on = 0
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
-	m_amt = 150
-	mats = 5
+	m_amt = 50
+	g_amt = 20
 	var/scan_range = 3
 	var/client/last_client = null
 	var/image/last_display = null
@@ -103,7 +107,7 @@ Contains:
 				img.color = A.color
 				img.overlays = A.overlays
 				img.alpha = 100
-				img.appearance_flags = RESET_ALPHA | RESET_COLOR
+				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
 			if (T.disposal_image)
@@ -140,14 +144,17 @@ that cannot be itched
 
 //////////////////////////////////////// Forensic scanner ///////////////////////////////////
 
+TYPEINFO(/obj/item/device/detective_scanner)
+	mats = 3
+
 /obj/item/device/detective_scanner
 	name = "forensic scanner"
 	desc = "Used to scan objects for DNA and fingerprints."
 	icon_state = "fs"
 	w_class = W_CLASS_SMALL // PDA fits in a pocket, so why not the dedicated scanner (Convair880)?
 	item_state = "electronic"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
-	mats = 3
+	flags = FPRINT | TABLEPASS | CONDUCT | SUPPRESSATTACK
+	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
 	var/distancescan = 0
@@ -278,19 +285,22 @@ that cannot be itched
 
 ///////////////////////////////////// Health analyzer ////////////////////////////////////////
 
+TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
+	mats = 5
+
 /obj/item/device/analyzer/healthanalyzer
 	name = "health analyzer"
 	icon_state = "health-no_up"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "healthanalyzer-no_up" // someone made this sprite and then this was never changed to it for some reason???
 	desc = "A hand-held body scanner able to distinguish vital signs of the subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
-	mats = 5
 	var/disease_detection = 1
 	var/reagent_upgrade = 0
 	var/reagent_scan = 0
@@ -364,6 +374,7 @@ that cannot be itched
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
 		scan_health_overhead(M, user)
@@ -402,6 +413,9 @@ that cannot be itched
 /obj/item/device/analyzer/healthanalyzer/vr
 	icon = 'icons/effects/VR.dmi'
 
+TYPEINFO(/obj/item/device/analyzer/healthanalyzer_upgrade)
+	mats = 2
+
 /obj/item/device/analyzer/healthanalyzer_upgrade
 	name = "health analyzer upgrade"
 	desc = "A small upgrade card that allows standard health analyzers to detect reagents present in the patient, and ProDoc Healthgoggles to scan patients' health from a distance."
@@ -411,6 +425,8 @@ that cannot be itched
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
+
+TYPEINFO(/obj/item/device/analyzer/healthanalyzer_organ_upgrade)
 	mats = 2
 
 /obj/item/device/analyzer/healthanalyzer_organ_upgrade
@@ -422,9 +438,11 @@ that cannot be itched
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 2
 
 ///////////////////////////////////// Reagent scanner //////////////////////////////
+
+TYPEINFO(/obj/item/device/reagentscanner)
+	mats = 5
 
 /obj/item/device/reagentscanner
 	name = "reagent scanner"
@@ -432,13 +450,13 @@ that cannot be itched
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "reagentscan"
 	desc = "A hand-held device that scans and lists the chemicals inside the scanned subject."
-	flags = FPRINT | ONBELT | TABLEPASS | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 3
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
 	m_amt = 200
-	mats = 5
 	var/scan_results = null
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
@@ -479,19 +497,27 @@ that cannot be itched
 
 /////////////////////////////////////// Atmos analyzer /////////////////////////////////////
 
+TYPEINFO(/obj/item/device/analyzer/atmospheric)
+	mats = 3
+
 /obj/item/device/analyzer/atmospheric
-	desc = "A hand-held environmental scanner which reports current gas levels."
+	desc = "A hand-held environmental scanner which reports current gas levels and can track nearby hull breaches."
 	name = "atmospheric analyzer"
 	icon_state = "atmos-no_up"
 	item_state = "analyzer"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
-	mats = 3
 	var/analyzer_upgrade = 0
+	///The breach we are currently tracking
+	var/atom/target = null
+	var/hudarrow_color = "#0df0f0"
+	///We keep track of the airgroup so we can acquire a new breach after the old one is patched, even if the user is standing on space at the time
+	var/datum/air_group/tracking_airgroup = null
 
 	// Distance upgrade action code
 	pixelaction(atom/target, params, mob/user, reach)
@@ -508,14 +534,67 @@ that cannot be itched
 
 		src.add_fingerprint(user)
 
-		var/turf/location = get_turf(user)
-		if (isnull(location))
-			user.show_text("Unable to obtain a reading.", "red")
-			return
+		if (!src.target)
+			src.find_breach()
+			if (src.target)
+				user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
+				src.UpdateOverlays(image('icons/obj/items/device.dmi', "atmos-tracker"), "breach_tracker")
+		else
+			src.tracker_off(user)
 
-		user.visible_message("<span class='notice'><b>[user]</b> takes an atmospheric reading of [location].</span>")
-		boutput(user, scan_atmospheric(location, visible = 1)) // Moved to scanprocs.dm to cut down on code duplication (Convair880).
-		return
+	proc/tracker_off(mob/user)
+		src.UpdateOverlays(null, "breach_tracker")
+		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
+		src.target = null
+		src.tracking_airgroup = null
+
+	///Search the current airgroup for space borders and point to the closest one
+	proc/find_breach()
+		var/turf/simulated/T = get_turf(src)
+		if (!src.tracking_airgroup)
+			if (!istype(T) || !T.parent)
+				boutput(src.loc, "<span class='alert'>Unable to read atmospheric flow.</span>")
+				return
+			src.tracking_airgroup = T.parent
+
+		for (var/turf/breach in src.tracking_airgroup?.space_borders)
+			for (var/dir in cardinal)
+				var/turf/space/potential_space = get_step(breach, dir)
+				if (istype(potential_space) && (!src.target || (GET_DIST(src.target, T) > GET_DIST(potential_space, T))))
+					src.target = potential_space
+					break
+		if (!src.target)
+			src.tracking_airgroup = null
+			boutput(src.loc, "<span class='alert'>No breaches found in current atmosphere.</span>")
+			return
+		if (ismob(src.loc))
+			var/datum/component/tracker_hud/arrow = src.loc.GetComponent(/datum/component/tracker_hud)
+			arrow?.change_target(src.target)
+		src.RegisterSignal(src.target, COMSIG_TURF_REPLACED, PROC_REF(update_breach))
+
+	///When our target is replaced (most likely no longer a breach), pick a new one
+	proc/update_breach(turf/replaced, turf/new_turf)
+		src.UnregisterSignal(src.target, COMSIG_TURF_REPLACED)
+		//the signal has to be sent before the turf is replaced, but we need to search after it has been replaced, hence the accursed SPAWN(1)
+		SPAWN(1)
+			if (!istype(new_turf, /turf/space))
+				src.target = null
+				src.find_breach()
+				if (!src.target)
+					src.tracker_off(src.loc)
+
+	//we duplicate a little pinpointer code
+	pickup(mob/user)
+		. = ..()
+		if (src.target)
+			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
+
+	dropped(mob/user)
+		. = ..()
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
 
 	attackby(obj/item/W, mob/user)
 		addUpgrade(src, W, user, src.analyzer_upgrade)
@@ -550,6 +629,9 @@ that cannot be itched
 	analyzer_upgrade = 1
 	icon_state = "atmos"
 
+TYPEINFO(/obj/item/device/analyzer/atmosanalyzer_upgrade)
+	mats = 2
+
 /obj/item/device/analyzer/atmosanalyzer_upgrade
 	name = "atmospherics analyzer upgrade"
 	desc = "A small upgrade card that allows standard atmospherics analyzers to detect environmental information at a distance."
@@ -559,7 +641,6 @@ that cannot be itched
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	mats = 2
 
 ///////////////// method to upgrade an analyzer if the correct upgrade cartridge is used on it /////////////////
 /obj/item/device/analyzer/proc/addUpgrade(obj/item/device/src as obj, obj/item/device/W as obj, mob/user as mob, upgraded as num, active as num, iconState as text, itemState as text)
@@ -608,17 +689,56 @@ that cannot be itched
 
 ///////////////////////////////////////////////// Prisoner scanner ////////////////////////////////////
 
+TYPEINFO(/obj/item/device/prisoner_scanner)
+	mats = 3
+
 /obj/item/device/prisoner_scanner
 	name = "security RecordTrak"
 	desc = "A device used to scan in prisoners and update their security records."
 	icon_state = "recordtrak"
-	var/mode = 1
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
-	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | EXTRADELAY
-	mats = 3
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
+
+	#define PRISONER_MODE_NONE 1
+	#define PRISONER_MODE_PAROLED 2
+	#define PRISONER_MODE_RELEASED 3
+	#define PRISONER_MODE_INCARCERATED 4
+
+	///List of record settings
+	var/static/list/modes = list(PRISONER_MODE_NONE, PRISONER_MODE_PAROLED, PRISONER_MODE_INCARCERATED, PRISONER_MODE_RELEASED)
+	///The current setting
+	var/mode = PRISONER_MODE_NONE
+	/// The sechud flag that will be applied when scanning someone
+	var/sechud_flag = "None"
+
+	var/list/datum/contextAction/contexts = list()
+
+	New()
+		var/datum/contextLayout/experimentalcircle/context_menu = new
+		context_menu.center = TRUE
+		src.contextLayout = context_menu
+		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/prisoner_scanner))
+			var/datum/contextAction/prisoner_scanner/action = new actionType()
+			if (action.mode in src.modes)
+				src.contexts += action
+
+	get_desc()
+		. = ..()
+		var/mode_string = "None"
+		if (src.mode == PRISONER_MODE_PAROLED)
+			mode_string = "Paroled"
+		else if (src.mode == PRISONER_MODE_RELEASED)
+			mode_string = "Released"
+		else if (src.mode == PRISONER_MODE_INCARCERATED)
+			mode_string = "Incarcerated"
+
+		. += "<br>Arrest mode: <span class='notice'>[mode_string]</span>"
+		if (sechud_flag != initial(src.sechud_flag))
+			. += "<br>Active SecHUD Flag: <span class='notice'>[src.sechud_flag]</span>"
 
 	attack(mob/living/carbon/human/M, mob/user)
 		if (!istype(M))
@@ -630,13 +750,14 @@ that cannot be itched
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
 		//	boutput(user, "<span class='alert'>Device only works in designated security areas!</span>")
 		//	return
-		boutput(user, "<span class='notice'>You scan in [M]</span>")
-		boutput(M, "<span class='alert'>[user] scans you with the Securotron-5000</span>")
+		boutput(user, "<span class='notice'>You scan in [M].</span>")
+		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
 			if (lowertext(R["name"]) == lowertext(M.name))
 				//Update Information
 				R["name"] = M.name
 				R["sex"] = M.gender
+				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
@@ -654,6 +775,7 @@ that cannot be itched
 			//Update Information
 			src.active1["name"] = M.name
 			src.active1["sex"] = M.gender
+			src.active1["pronouns"] = M.get_pronouns().name
 			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)
@@ -668,28 +790,38 @@ that cannot be itched
 		////Security Records
 		var/datum/db_record/E = data_core.security.find_record("name", src.active1["name"])
 		if(E)
-			if(src.mode == 1)
-				E["criminal"] = "Incarcerated"
-			else if(src.mode == 2)
-				E["criminal"] = "Parolled"
-			else if(src.mode == 3)
-				E["criminal"] = "Released"
-			else
-				E["criminal"] = "None"
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					E["criminal"] = "None"
+
+				if(PRISONER_MODE_PAROLED)
+					E["criminal"] = "Parolled"
+
+				if(PRISONER_MODE_RELEASED)
+					E["criminal"] = "Released"
+
+				if(PRISONER_MODE_INCARCERATED)
+					E["criminal"] = "Incarcerated"
+			E["sec_flag"] = src.sechud_flag
 			return
 
 		src.active2 = new /datum/db_record()
 		src.active2["name"] = src.active1["name"]
 		src.active2["id"] = src.active1["id"]
-		if(src.mode == 1)
-			src.active2["criminal"] = "Incarcerated"
-		else if(src.mode == 2)
-			src.active2["criminal"] = "Parolled"
-		else if(src.mode == 3)
-			src.active2["criminal"] = "Released"
-		else
-			src.active2["criminal"] = "None"
-		src.active2["sec_flag"] = "None"
+		switch (mode)
+			if(PRISONER_MODE_NONE)
+				src.active2["criminal"] = "None"
+
+			if(PRISONER_MODE_PAROLED)
+				src.active2["criminal"] = "Parolled"
+
+			if(PRISONER_MODE_RELEASED)
+				src.active2["criminal"] = "Released"
+
+			if(PRISONER_MODE_INCARCERATED)
+				src.active2["criminal"] = "Incarcerated"
+
+		src.active2["sec_flag"] = src.sechud_flag
 		src.active2["mi_crim"] = "None"
 		src.active2["mi_crim_d"] = "No minor crime convictions."
 		src.active2["ma_crim"] = "None"
@@ -700,22 +832,83 @@ that cannot be itched
 		return
 
 	attack_self(mob/user as mob)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 
-		if (src.mode == 1)
-			src.mode = 2
-			boutput(user, "<span class='notice'>you switch the record mode to Parolled</span>")
-		else if (src.mode == 2)
-			src.mode = 3
-			boutput(user, "<span class='notice'>you switch the record mode to Released</span>")
-		else if (src.mode == 3)
-			src.mode = 4
-			boutput(user, "<span class='notice'>you switch the record mode to None</span>")
-		else
-			src.mode = 1
-			boutput(user, "<span class='notice'>you switch the record mode to Incarcerated</span>")
+	proc/switch_mode(var/mode, set_flag, var/mob/user)
+		if (set_flag)
+			var/flag = tgui_input_text(user, "Flag:", "Set SecHUD Flag", initial(src.sechud_flag), SECHUD_FLAG_MAX_CHARS)
+			if (!isnull(flag) && src.sechud_flag != flag)
+				src.sechud_flag = flag
+				tooltip_rebuild = TRUE
+		else if (src.mode != mode)
+			src.mode = mode
+			tooltip_rebuild = TRUE
+
+			switch (mode)
+				if(PRISONER_MODE_NONE)
+					boutput(user, "<span class='notice'>you switch the record mode to None.</span>")
+
+				if(PRISONER_MODE_PAROLED)
+					boutput(user, "<span class='notice'>you switch the record mode to Paroled.</span>")
+
+				if(PRISONER_MODE_RELEASED)
+					boutput(user, "<span class='notice'>you switch the record mode to Released.</span>")
+
+				if(PRISONER_MODE_INCARCERATED)
+					boutput(user, "<span class='notice'>you switch the record mode to Incarcerated.</span>")
 
 		add_fingerprint(user)
 		return
+
+	dropped(var/mob/user)
+		. = ..()
+		if (src.sechud_flag != initial(src.sechud_flag))
+			src.sechud_flag = initial(src.sechud_flag)
+			tooltip_rebuild = TRUE
+		user.closeContextActions()
+
+//// Prisoner Scanner Context Action
+/datum/contextAction/prisoner_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = FALSE
+	desc = ""
+	icon_state = "wrench"
+	var/mode = PRISONER_MODE_NONE
+
+	execute(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		if(!istype(prisoner_scanner))
+			return
+		prisoner_scanner.switch_mode(src.mode, istype(src, /datum/contextAction/prisoner_scanner/set_sechud_flag), user)
+
+	checkRequirements(var/obj/item/device/prisoner_scanner/prisoner_scanner, var/mob/user)
+		return prisoner_scanner in user
+
+	// a "mode" that acts as a simple way to set the sechud flag
+	set_sechud_flag
+		name = "Set Flag"
+		icon_state = "flag"
+	Paroled
+		name = "Paroled"
+		icon_state = "paroled"
+		mode = PRISONER_MODE_PAROLED
+	incarcerated
+		name = "Incarcerated"
+		icon_state = "incarcerated"
+		mode = PRISONER_MODE_INCARCERATED
+	released
+		name = "Released"
+		icon_state = "released"
+		mode = PRISONER_MODE_RELEASED
+	none
+		name = "None"
+		icon_state = "none"
+		mode = PRISONER_MODE_NONE
+
+#undef PRISONER_MODE_NONE
+#undef PRISONER_MODE_PAROLED
+#undef PRISONER_MODE_RELEASED
+#undef PRISONER_MODE_INCARCERATED
 
 /obj/item/device/ticket_writer
 	name = "Security TicketWriter 2000"
@@ -724,7 +917,8 @@ that cannot be itched
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 
 	attack_self(mob/user)
 		var/menuchoice = tgui_alert(user, "What would you like to do?", "Ticket writer", list("Ticket", "Nothing"))
@@ -784,13 +978,16 @@ that cannot be itched
 
 
 
+TYPEINFO(/obj/item/device/appraisal)
+	mats = 5
+
 /obj/item/device/appraisal
 	name = "cargo appraiser"
 	desc = "Handheld scanner hooked up to Cargo's market computers. Estimates sale value of various items."
-	flags = FPRINT|ONBELT|TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	m_amt = 150
-	mats = 5
 	icon_state = "CargoA"
 	item_state = "electronic"
 
@@ -839,6 +1036,14 @@ that cannot be itched
 					if (T.crate_tag == C.delivery_destination)
 						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
 						out_text = "<strong>Prices from [T.name]</strong><br>"
+				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+					if(C.delivery_destination == "REQ_THIRDPARTY")
+						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
+					else if (RC.req_code == C.delivery_destination)
+						var/evaluated = RC.requisify(C,TRUE)
+						if(evaluated == "Contents sufficient for marked requisition.")
+							sell_value = RC.payout
+						out_text = "<strong>[evaluated]</strong><br>"
 
 			if (sell_value == -1)
 				// no trader on the crate
@@ -875,7 +1080,7 @@ that cannot be itched
 			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
-			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA
+			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
 			if (chat_text)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)

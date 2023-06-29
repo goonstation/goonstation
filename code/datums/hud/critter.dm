@@ -193,7 +193,7 @@
 		return
 	src.throwing.icon_state = "throw[src.master.in_throw_mode]"
 
-/// recieves clicks from the screen hud objects
+/// receives clicks from the screen hud objects
 /datum/hud/critter/relay_click(id, mob/user, list/params)
 	if (copytext(id, 1, 5) == "hand")
 		var/handid = text2num(copytext(id, 5))
@@ -223,7 +223,6 @@
 						src.master.set_a_intent(INTENT_HELP)
 					else
 						src.master.set_a_intent(INTENT_GRAB)
-				src.update_intent()
 
 			if ("mintent")
 				if (src.master.m_intent == "run")
@@ -261,7 +260,7 @@
 				if (icon_y > 16 || src.master.in_throw_mode)
 					src.master.toggle_throw_mode()
 				else
-					src.master.drop_item()
+					src.master.drop_item(null, TRUE)
 			if ("resist")
 				src.master.resist()
 
@@ -443,9 +442,10 @@
 	src.toxin.icon_state = "tox[status]"
 
 /// updates radiation hud element
-/datum/hud/critter/proc/update_rad_indicator(var/status)
+/datum/hud/critter/proc/update_rad_indicator()
 	if (!src.rad) // not rad :'(
 		return
+	var/status = (TIME - src.master.last_radiation_dose_time) < LIFE_PROCESS_TICK_SPACING
 	src.rad.icon_state = "rad[status]"
 
 /// updates resting status
@@ -517,7 +517,7 @@
 /datum/hud/critter/proc/create_radiation_element()
 	src.rad = src.create_screen("rad","Radiation Warning", src.hud_icon, "rad0",\
 	"EAST[src.next_topright()], NORTH", HUD_LAYER, tooltipTheme = "statusRad")
-	src.rad.desc = "This indicator warns that you are irradiated. You will take toxic and burn damage until the situation is remedied."
+	src.rad.desc = "This indicator warns that you are being irradiated. You will accumulate rads and take burn damage until the situation is remedied."
 
 /datum/hud/critter/proc/create_bleeding_element()
 	src.bleeding = src.create_screen("bleeding","Bleed Warning", src.hud_icon, "blood0",\

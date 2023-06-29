@@ -4,6 +4,61 @@
 
 {%hackmd @ZeWaka/dark-theme %}
 
+## Codebase Expectations
+
+The question this section aims to answer is: "What can I reasonably expect about this codebase, my contributions, and the maintainers?"
+
+Essentially, this is more of a FAQ section.
+
+### Maintainers / Developers
+
+The Goonstation codebase maintainers/developers are a part of the general admin team for the Goonstation servers. They are The People Who Decide What Goes In The Game. You can identify these people on the Discord by their red/amaranth name.
+On GitHub, they'll also show up as a member of the Goonstation organization: ![](https://i.imgur.com/xcWNk5p.png).
+
+Please do not unnecessarily ping us directly unless someone explicitly says it's ok. If you have a question for developers, you can generally reach us (or perhaps a fellow contributor can answer your question) in the #imXYZ discord channels, like #imcoder.
+
+### PRs
+
+As for pull requests, there are some limitations on what we accept, detailed more throughly in [Unwanted Contributions](#Unwanted-Contributions) below. Also, we occasionally hold *Feature Freezes*, where PRs adding new features are not accepted, and will be automatically closed unless you seek approval from a developer before submitting it.
+
+As far as a timeline on getting your PR merged, there is none. This is a volunteer-ran project, people have lives outside of the game. It'll get merged when it gets merged. There is also no need to keep your PR up to date with the master branch. Generally, you only should need to touch your PR if there is a merge conflict or a dev asks you to change something.
+
+*Note: Specifically for TGUI PRs, you don't really need to worry about merge conflicts due to their nature*.
+
+### Large scale PRs
+Large scale feature or rework PRs should be discussed **before** being written, so that feedback can be given at an early stage and to avoid wasted effort and frustration if the proposed content wouldn't pass review at a later stage.
+Examples of these kinds of PR include, but are not limited to:
+- Adding a new antagonist/gamemode or majorly reworking an old one
+- Adding a major department feature, like a new engine type
+- Fundamentally rewriting a major system (atmos, chemistry etc.)
+- New maps
+- New mutantraces
+- New traitor equipment
+- New roundstart jobs
+
+The discord [`#Player-Projects`](https://discord.com/channels/182249960895545344/1023681825060700180) forum exists specifically for contributors working on large projects to discuss their plans with other players and developers and to collaborate on group projects, and you are highly encouraged to make a post there to help develop your idea.
+
+Successful examples of such projects include:
+- Reworking the Flockmind antagonist (4 collaborators)
+- Rewriting the boardgame UI (2 collaborators)
+- Adding the nuclear fission engine (single person with sprites from multiple devs)
+
+Writing and submitting a large scale PR without seeking feedback first may result in potentially months of wasted effort, so you do so at your own peril!
+### Issues
+
+As this is a purely volunteer open-source game, you may notice we have hundreds of unresolved issues. This is just how it is. Feel free to fix as many bugs as your heart desires - ideally [linking them as closed](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) with `Fixes #1234` in your fix PR. If you are a member of the triage team (which is very easy to join, [it's a *tiny* form](#Triage-Team)) you can feel free to close duplicate or not-actually-a-bug issues.
+
+### Unwanted Contributions
+
+Not all contributions are welcome, as is the nature of things. Obviously, anything that would break our general community or game rules (for example, our anti-bigotry ones) will get immediately closed.
+
+Sometimes, not all PRs work out. Sometimes, they just need a few changes. Other times, they need more work - this could be that it doesn't jive with our design philosophy, we have other concrete reasons we don't want to see it in the game, or perhaps we just don't like it. Depending on the PR and the contributor, we'll generally try and work with the contributor to get the PR to a state amendable to all.
+
+However, if we don't see the PR ever being merged, at the end of the day the project is under the development team's supervision and we have the final word on inclusions. That's just how it goes sometimes - the main repository is open source, and anyone is free to fork the code.
+
+## Personal Information
+Git history is (more-or-less) immutable. For your own safety, make sure that you don't have any personal information in your git username or email (check with `git config user.name` and `git config user.email`) and think very hard before using an account you also use for professional work/etc. Github offers a `noreply` email that you can [enable](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-email-preferences/setting-your-commit-email-address) and use for your git email.
+
 ## Triage Team
 Have you contributed to the game and want to get more involved? Join our triage team!
 

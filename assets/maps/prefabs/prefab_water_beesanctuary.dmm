@@ -119,7 +119,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt/dirt5,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
 "fz" = (
@@ -157,9 +157,7 @@
 	},
 /area/prefab/bee_sanctuary)
 "gO" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
+/obj/grille/catwalk,
 /obj/disposalpipe/segment{
 	desc = "An underfloor transport pipe.";
 	dir = 1;
@@ -806,7 +804,7 @@
 /turf/unsimulated/floor/caution/corner/se,
 /area/prefab/bee_sanctuary)
 "HE" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/unsimulated/floor/purpleblack{
 	dir = 6
 	},
@@ -834,7 +832,8 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor/delivery/caution,
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack,
 /area/prefab/bee_sanctuary)
 "Jq" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -1045,7 +1044,7 @@
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Pd" = (
-/obj/tree1{
+/obj/tree{
 	dir = 8
 	},
 /obj/river{
@@ -1295,10 +1294,10 @@
 	},
 /area/prefab/bee_sanctuary)
 "WS" = (
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
-/obj/tree1{
+/obj/tree{
 	dir = 4
 	},
 /turf/unsimulated/grass,

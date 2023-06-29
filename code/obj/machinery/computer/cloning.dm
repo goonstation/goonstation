@@ -5,7 +5,7 @@
 #define MESSAGE_SHOW_TIME 	5 SECONDS
 
 var/global/cloning_with_records = TRUE
-
+ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/clone_someone)
 /obj/machinery/computer/cloning
 	name = "Cloning Console"
 	desc = "Use this console to operate a cloning scanner and pod. There is a slot to insert modules - they can be removed with a screwdriver."
@@ -95,9 +95,19 @@ var/global/cloning_with_records = TRUE
 	return
 
 /obj/machinery/computer/cloning/proc/records_scan()
+	// check if we're busy cloning
+	var/all_cloning = TRUE
+	for (var/obj/machinery/clonepod/P in linked_pods)
+		if (!P.attempting)
+			// at least one free pod
+			all_cloning = FALSE
+	if (all_cloning)
+		icon_state = "dnap"
+		return TRUE
+	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
 		var/mob/selected = find_ghost_by_key(R["ckey"])
-		if (!selected || (selected.mind && selected.mind.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
@@ -143,8 +153,8 @@ var/global/cloning_with_records = TRUE
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
-	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
-		var/obj/item/spacecash/cash = W
+	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
@@ -227,7 +237,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
-		show_message("Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected.")
+		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
 		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
 		show_message("Error: Extreme genetic degredation present.", "danger")
@@ -239,7 +249,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
 	if (subject.mob_flags & IS_BONEY)
-		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
+		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
 		show_message("Error: Unable to scan alive patient.")
@@ -283,10 +293,9 @@ var/global/cloning_with_records = TRUE
 	if(!isnull(subject.traitHolder))
 		R["traits"] = subject.traitHolder.copy(null)
 
+	R["defects"] = subject.cloner_defects.copy()
+
 	var/obj/item/implant/cloner/imp = new(subject)
-	imp.implanted = TRUE
-	imp.owner = subject
-	subject.implant.Add(imp)
 	R["imp"] = "\ref[imp]"
 
 	if (!isnull(subjMind)) //Save that mind so traitors can continue traitoring after cloning.
@@ -308,6 +317,16 @@ var/global/cloning_with_records = TRUE
 			selected_record = R
 			break
 	return selected_record
+
+/obj/machinery/computer/cloning/proc/scan_someone()
+	src.scan_mob(src.scanner?.occupant)
+
+/obj/machinery/computer/cloning/proc/clone_someone()
+	for (var/datum/db_record/record in src.records)
+		var/mob/ghost = find_ghost_by_key(record["ckey"])
+		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+			src.clone_record(record)
+			return
 
 /obj/machinery/computer/cloning/proc/clone_record(datum/db_record/C)
 	if (!istype(C))
@@ -354,7 +373,7 @@ var/global/cloning_with_records = TRUE
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.dnr)
+	if (selected.mind && selected.mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
@@ -376,7 +395,7 @@ var/global/cloning_with_records = TRUE
 			account_credit = Ba["current_money"]
 
 		if ((src.held_credit + account_credit) >= wagesystem.clone_cost)
-			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+			if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 				var/from_account = min(wagesystem.clone_cost, account_credit)
 				if (from_account > 0)
 					Ba["current_money"] -= from_account
@@ -390,7 +409,7 @@ var/global/cloning_with_records = TRUE
 		else
 			show_message("Insufficient funds to begin clone cycle.", "warning")
 
-	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"]))
+	else if (pod1.growclone(selected, C["name"], C["mind"], C["holder"], C["abilities"] , C["traits"], C["defects"]))
 		show_message("Cloning cycle activated.", "success")
 		src.records.Remove(C)
 		qdel(C)
@@ -406,7 +425,11 @@ proc/find_ghost_by_key(var/find_key)
 	var/datum/player/player = find_player(find_key)
 	if (player?.client?.mob)
 		var/mob/M = player.client.mob
-		if(iswraith(M) || istype(M, /mob/dead/target_observer/hivemind_observer))
+		if(istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				return null
+		if(iswraith(M))
 			return null
 		if (isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
 			return M
@@ -416,16 +439,18 @@ proc/find_ghost_by_key(var/find_key)
 #define PROCESS_STRIP 1
 #define PROCESS_MINCE 2
 
+TYPEINFO(/obj/machinery/clone_scanner)
+	mats = 15
+
 /obj/machinery/clone_scanner
 	name = "cloning machine scanner"
 	desc = "A machine that you stuff living, and freshly not-so-living people into in order to scan them for cloning"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	var/locked = 0
 	var/mob/occupant = null
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/computer/cloning/connected = null
@@ -512,7 +537,8 @@ proc/find_ghost_by_key(var/find_key)
 		return
 
 	proc/move_mob_inside(var/mob/M, var/mob/user)
-		if (!can_operate(user) || !ishuman(M)) return
+		if (!can_operate(user) || !ishuman(M) || QDELETED(M))
+			return
 
 		M.remove_pulling()
 		M.set_loc(src)
@@ -771,7 +797,7 @@ proc/find_ghost_by_key(var/find_key)
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R["ckey"] == selected_record["ckey"])
+				if (R.fields["ckey"] == selected_record.get_field("ckey"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 

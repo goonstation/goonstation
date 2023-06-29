@@ -5,6 +5,7 @@ var/list/dirty_keystates = list()
 	var/last_keys = 0
 	var/keys_dirty = 0
 	var/keys_modifier = 0
+	var/skip_next_left_click = FALSE
 
 	var/keys_remove_next_process = 0
 
@@ -129,7 +130,7 @@ var/list/dirty_keystates = list()
 		SEND_SIGNAL(user, COMSIG_MOB_MOUSEUP, object,location,control,params)
 
 
-		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not recieve mouse events from unseen tiles.
+		//If we click a tile we cannot see (object is null), pass along a Click. Ordinarily, Click() does not receive mouse events from unseen tiles.
 		//Handle the null object by finding the turf that lies in the screenloc of the null click.
 		//How should we distinguish whether the original click was 'null' later on if we need to? location will == "map", that might be fine to identify with?
 		//(this fixes the behavior of guns not firing if you clicked a hidden tile. now you can actually shoot in the dark or in a small tunnel!)
@@ -147,10 +148,25 @@ var/list/dirty_keystates = list()
 
 		return
 
-	Click(atom/object, location, control, params)
-		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
+	DblClick(atom/target, location, control, params)
+		var/list/paramslist = params2list(params)
+		if (paramslist["button"] == "left")
+			var/result = src.mob.double_click(target, location, control, paramslist)
+			if(result)
+				src.skip_next_left_click = TRUE
+			else
+				..()
+		else
+			..()
 
+	Click(atom/object, location, control, params)
 		var/list/parameters = params2list(params)
+
+		if(skip_next_left_click && parameters["button"] == "left")
+			skip_next_left_click = FALSE
+			return
+
+		object.RawClick(location, control, params) //Required since atom/Click is effectively broken for some reason, and sometimes you just need it. If you have a better idea let me know.
 
 		if (admin_intent)
 			src.mob.admin_interact(object,parameters)
@@ -229,6 +245,9 @@ var/list/dirty_keystates = list()
 				if(A == object || !isturf(A.loc) || !ismovable(A) || !A.mouse_opacity) continue
 				filtered.Add(A)
 			if(filtered.len) object = pick(filtered)
+
+		if(control == "infowindow.info" && text2num(parameters["icon-x"]) > 32)
+			parameters["icon-x"] = "16"
 
 		var/next = user.click(object, parameters, location, control)
 
@@ -323,6 +342,7 @@ var/list/dirty_keystates = list()
 /proc/start_input_loop()
 	SPAWN(0)
 		while (1)
+			last_input_loop_time = TIME
 			process_keystates()
 
 			for(var/client/C as anything in clients) // as() is ok here since we nullcheck

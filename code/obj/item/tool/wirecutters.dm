@@ -5,7 +5,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wirecutters.dmi'
 	icon_state = "wirecutters"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_SNIPPING
 	health = 5
 	w_class = W_CLASS_SMALL
@@ -60,3 +61,18 @@
 	desc = "A tool used to cut wires and bars of metal. This pair has a yellow handle."
 	icon_state = "wirecutters-yellow"
 	item_state = "wirecutters-yellow"
+
+/obj/item/wirecutters/grey
+	desc = "A tool used to cut wires and bars of metal. The handle is perturbingly grey."
+	icon_state = "wirecutters-grey"
+	item_state = "wirecutters-grey"
+
+/obj/item/wirecutters/orange
+	desc = "A tool used to cut wires and bars of metal. This pair bears a striking orange grip."
+	icon_state = "wirecutters-orange"
+	item_state = "wirecutters-orange"
+
+/obj/item/wirecutters/green
+	desc = "A tool used to cut wires and bars of metal. Its handle is a nice verdigris color."
+	icon_state = "wirecutters-green"
+	item_state = "wirecutters-green"

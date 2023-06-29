@@ -13,7 +13,8 @@ WET FLOOR SIGN
 	name = "spray bottle"
 	icon_state = "cleaner"
 	item_state = "cleaner"
-	flags = ONBELT|TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK
+	flags = TABLEPASS|OPENCONTAINER|FPRINT|EXTRADELAY|SUPPRESSATTACK|ACCEPTS_MOUSEDROP_REAGENTS
+	c_flags = ONBELT
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	throwforce = 3
 	w_class = W_CLASS_SMALL
@@ -87,7 +88,7 @@ WET FLOOR SIGN
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "tsunami"
 	alpha = 175
-	anchored = 1
+	anchored = ANCHORED
 
 	New(var/_loc, var/atom/target)
 		..()
@@ -180,7 +181,7 @@ WET FLOOR SIGN
 	var/lastUse = null
 
 	afterattack(atom/A as mob|obj, mob/user as mob)
-		if (istype(A, /obj/item/storage))
+		if (A.storage)
 			return
 		if (!isturf(user.loc))
 			return
@@ -205,7 +206,7 @@ WET FLOOR SIGN
 	return
 
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
-	if (istype(A, /obj/item/storage))
+	if (A.storage)
 		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
@@ -344,10 +345,10 @@ WET FLOOR SIGN
 		if (mopcount > 0)
 			mopcount--
 	else if (U && isturf(U))
-		//U.clean_forensic()
+		U.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
-		//A.clean_forensic()
+		A.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 
 	if (mopcount >= 9) //Okay this stuff is an ugly hack and i feel bad about it.
@@ -728,10 +729,15 @@ WET FLOOR SIGN
 			src.payload = W
 			W.set_loc(src)
 			return
+		else if (isscrewingtool(W))
+			user.show_message("You [src.anchored ? "un" : ""]screw [src] [src.anchored ? "from" : "to"] the floor.")
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			src.anchored = !src.anchored
+			return
 		. = ..()
 
 	HasProximity(atom/movable/AM)
-		if(iscarbon(AM) && isturf(src.loc) && prob(20) && !ON_COOLDOWN(src, "spray", 3 SECONDS) && src.payload?.reagents)
+		if(iscarbon(AM) && isturf(src.loc) && !ON_COOLDOWN(src, "spray", 1.5 SECONDS) && src.payload?.reagents)
 			if(ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if(istype(H.shoes, /obj/item/clothing/shoes/galoshes))
@@ -759,7 +765,7 @@ WET FLOOR SIGN
 	throw_spin = 0
 	var/currentSelection = "wet"
 	var/ownerKey = null
-	anchored = 0
+	anchored = UNANCHORED
 
 	attack_hand(mob/user)
 		if(user.key != ownerKey && ownerKey != null)
@@ -821,7 +827,7 @@ WET FLOOR SIGN
 	icon_state = "holo-wet"
 	alpha = 230
 	pixel_y = 16
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_BASE
 	var/datum/light/light
 	var/obj/holoparticles/holoparticles
@@ -857,7 +863,7 @@ WET FLOOR SIGN
 	name = ""
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "holoparticles"
-	anchored = 1
+	anchored = ANCHORED
 	alpha= 230
 	pixel_y = 14
 	layer = EFFECTS_LAYER_BASE
@@ -865,12 +871,14 @@ WET FLOOR SIGN
 
 // handheld vacuum
 
+TYPEINFO(/obj/item/handheld_vacuum)
+	mats = list("bamboo"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum
 	name = "handheld vacuum"
 	desc = "Sucks smoke. Sucks small items. Sucks just in general!"
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "handvac"
-	mats = list("bamboo"=3, "MET-1"=10)
 	health = 7
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
@@ -939,18 +947,16 @@ WET FLOOR SIGN
 			special.pixelaction(target, params, user, reach) // a hack to let people disarm when clicking at close range
 		else if(istype(target, /obj/storage) && src.trashbag)
 			var/obj/storage/storage = target
-			for(var/obj/item/I in src.trashbag)
+			for(var/obj/item/I in src.trashbag.storage.get_contents())
 				I.set_loc(storage)
-			src.trashbag.calc_w_class(null)
 			boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 			src.tooltip_rebuild = 1
 			return
 		else if(istype(target, /obj/machinery/disposal))
 			var/obj/machinery/disposal/disposal = target
 			if(src.trashbag)
-				for(var/obj/item/I in src.trashbag)
+				for(var/obj/item/I in src.trashbag.storage.get_contents())
 					I.set_loc(disposal)
-				src.trashbag.calc_w_class(null)
 				boutput(user, "<span class='notice'>You empty \the [src] into \the [target].</span>")
 				src.tooltip_rebuild = 1
 				disposal.update()
@@ -1024,7 +1030,7 @@ WET FLOOR SIGN
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but has no trashbag!</span>")
 				. = FALSE
-			else if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
+			else if(src.trashbag.storage.is_full())
 				boutput(user, "<span class='alert'>\The [src] tries to suck up [item_desc] but its [src.trashbag] is full!</span>")
 				. = FALSE
 			else
@@ -1033,12 +1039,11 @@ WET FLOOR SIGN
 						I.set_loc(get_turf(user))
 				success = TRUE
 				SPAWN(0.5 SECONDS)
-					for(var/obj/item/I as anything in items_to_suck) // yes, this can go over capacity of the bag, that's intended
-						if(!I.anchored)
-							I.set_loc(src.trashbag)
-					src.trashbag.calc_w_class(null)
-					if(src.trashbag.current_stuff >= src.trashbag.max_stuff)
-						boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+					for(var/obj/item/I as anything in items_to_suck)
+						src.trashbag.storage.add_contents_safe(I)
+						if(src.trashbag.storage.is_full())
+							boutput(user, "<span class='notice'>[src]'s [src.trashbag] is now full.</span>")
+							break
 
 		src.tooltip_rebuild = 1
 		. |= success
@@ -1077,9 +1082,11 @@ WET FLOOR SIGN
 		else
 			. = ..()
 
+TYPEINFO(/obj/item/handheld_vacuum/overcharged)
+	mats = list("neutronium"=3, "MET-1"=10)
+
 /obj/item/handheld_vacuum/overcharged
 	name = "overcharged handheld vacuum"
-	mats = list("neutronium"=3, "MET-1"=10)
 	color = list(0,0,1, 0,1,0, 1,0,0)
 	New()
 		..()
@@ -1171,7 +1178,7 @@ WET FLOOR SIGN
 			playsound(master, 'sound/effects/suck.ogg', 40, TRUE, 0, 0.5)
 
 /obj/effect/suck
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	mouse_opacity = FALSE
 	plane = PLANE_NOSHADOW_BELOW
 	icon = 'icons/effects/effects.dmi'

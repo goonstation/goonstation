@@ -254,6 +254,16 @@ proc/filter_trait_hats(var/type)
 		..()
 		setProperty("meleeprot_head", 4)
 
+/obj/item/clothing/head/bigcaphat
+	name = "Captain of Captain's hat"
+	icon_state = "captainbig"
+	item_state = "caphat"
+	desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
+	setupProperties()
+		..()
+		setProperty("meleeprot_head", 6)
+
+
 /obj/item/clothing/head/centhat
 	name = "Cent. Comm. hat"
 	icon_state = "centcom"
@@ -473,6 +483,8 @@ proc/filter_trait_hats(var/type)
 		setProperty("coldprot", 15)
 		setProperty("heatprot", 5)
 
+TYPEINFO(/obj/item/clothing/head/that/gold)
+	mat_appearances_to_ignore = list("gold") // we already look fine ty
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."
@@ -480,7 +492,6 @@ proc/filter_trait_hats(var/type)
 	item_state = "gthat"
 	protective_temperature = 500
 	mat_changename = 0
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
 
 	setupProperties()
 		..()
@@ -680,7 +691,7 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		src.name = "[pick("fancy", "suave", "manly", "sexerific", "sextacular", "intellectual", "majestic", "euphoric")] fedora"
+		src.name = "[pick("fancy", "suave", "manly", "sectacular", "intellectual", "majestic", "euphoric")] fedora"
 
 /obj/item/clothing/head/cowboy
 	name = "cowboy hat"
@@ -997,7 +1008,7 @@ proc/filter_trait_hats(var/type)
 			var/turf/T = get_turf(src)
 			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
-			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
+			host.real_name = "[prob(10) ? SPACER_PICK("honorifics")+" " : ""][prob(20) ? SPACER_PICK("stuff")+" " : ""][SPACER_PICK("firstnames")+" "][prob(80) ? SPACER_PICK("nicknames")+" " : ""][prob(50)?SPACER_PICK("firstnames") : SPACER_PICK("lastnames")]"
 			host.name = host.real_name
 			boutput(host, "<span class='notice'>You suddenly feel a lot more like, uh, well like [host.real_name]!</span>")
 		if(isdead(host))
@@ -1647,12 +1658,6 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 		icon_state = "hbow-yellowpolkadot"
 		item_state = "hbow-yellowpolkadot"
 
-/obj/item/clothing/head/rafflesia
-	name = "rafflesia"
-	desc = "Usually reffered to as corpseflower due to its horrid odor, perfect for masking the smell of your stinky head."
-	icon_state = "rafflesiahat"
-	item_state = "rafflesiahat"
-
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
 	desc = "A hat for hunting space deer or solving a mystery."
@@ -1836,12 +1841,26 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
 
+/obj/item/clothing/head/pirate_captain
+	name = "pirate captain's hat"
+	desc = "A traditional pirate tricorne, adorned with a crimson feather, just to tell everyone who's boss."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+
+/obj/item/clothing/head/pirate_first_mate
+	name = "pirate first mate's hat"
+	desc = "Who needs a fancy red feather to show authority?"
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+
 //Lesbian Hat
+
+TYPEINFO(/obj/item/clothing/head/lesbian_hat)
+	mats = list("FAB-1"=5, "honey"=5)
 
 /obj/item/clothing/head/lesbian_hat
 	name = "very lesbian hat"
 	desc = "And they say subtlety is dead."
-	mats = list("FAB-1"=5, "honey"=5)
 	icon_state = "lesbeean"
 	item_state = "lesbeean"
 
@@ -1935,4 +1954,103 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "space_replica"
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
-	hides_from_examine = C_EARS|C_MASK|C_GLASSES
+
+// fishing hats
+
+/obj/item/clothing/head/fish_fear_me
+	name = "fish fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning angler."
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
+	var/favourite_word = "fish"
+	var/emag_multiplier = 0
+
+	proc/who()
+		if(prob(50 * emag_multiplier))
+			if (prob(20))
+				return pick("clowns", "captains", "staff assistants", "frogs", "bees", "traitors", "NanoTrasen", "Syndicate", "scientists", "anglers", "security officers")
+			var/tries = 50
+			var/atom_value = -INFINITY
+			do
+				var/atom/A = pick(world.contents)
+				var/A_value
+				if (istype(A, /turf/space))
+					A_value = -1
+				else if(istype(A, /area) || istype(A, /turf))
+					A_value = 0
+				else if(istype(A, /atom/movable/overlay) || istype(A, /atom/movable/screen) || istype(A, /obj/effect) || istype(A, /obj/effects) || istype(A, /obj/overlay))
+					continue
+				else
+					if (isobj(A) && !isitem(A))
+						A_value = 1
+					else
+						A_value = 3
+					var/turf/T = get_turf(A)
+					if (isnull(T))
+						A_value -= 2
+					else if (T.z == Z_LEVEL_STATION)
+						A_value += 1
+				var/atom_name = trim(stripTextMacros(A.name))
+				if (length(atom_name) <= 2)
+					continue
+				if (findtext(atom_name, " "))
+					A_value -= 0.5
+				if (A_value > atom_value)
+					. = atom_name
+					atom_value = A_value
+			while (atom_value < 4 && tries-- > 0)
+			return pluralize(.)
+		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
+
+	proc/do_what()
+		if(prob(5 * emag_multiplier))
+			return pick("robust", "eat", "desire")
+		. = pick("fear", "want", "love")
+
+	New()
+		..()
+		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
+		generate_name()
+
+	proc/generate_name()
+		var/list/who = list(who(), who(), who(), who())
+		if (prob(66))
+			var/have_fish = FALSE
+			for (var/who_word in who)
+				if (who_word == favourite_word)
+					have_fish = TRUE
+			if (!have_fish)
+				who[rand(1,4)] = favourite_word
+		who[1] = capitalize(who[1])
+		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
+		real_name = name
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		emag_multiplier = 1
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+	demag(mob/user)
+		. = ..()
+		emag_multiplier = 0
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+/obj/item/clothing/head/fish_fear_me/emagged
+	emag_multiplier = 1
+
+/obj/item/clothing/head/fish_fear_me/emagged/very
+	emag_multiplier = 3
+
+/obj/item/clothing/head/fish_fear_me/admin
+	name = "admin fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning admin."
+	favourite_word = "admins"
+
+	who()
+		. = pick("admins", "coders", "mentors", "players", "bugs", "feedback", "bans", "ahelps")
+
+	New()
+		. = ..()
+		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))

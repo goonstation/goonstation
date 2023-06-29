@@ -1,5 +1,4 @@
 
-ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 /datum/manufacture/mechanics/blob
 	name = "blob"
 	item_paths = list("ORG|RUB")
@@ -69,6 +68,8 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 	supplemental_desc = "This one is for producing blobs. What?"
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
+	default_material = "blob"
+	mat_changename = FALSE
 	available = list(
 		/datum/manufacture/mechanics/blob/base,
 		/datum/manufacture/mechanics/blob/wall,
@@ -86,10 +87,6 @@ ABSTRACT_TYPE(/datum/manufacture/mechanics/blob)
 	hidden = list(
 		/datum/manufacture/mechanics/blob_overmind
 	)
-
-	New()
-		..()
-		src.setMaterial(getMaterial("blob"), setname=FALSE)
 
 /obj/machinery/manufacturer/blob/filled
 	free_resource_amt = 10

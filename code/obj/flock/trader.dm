@@ -34,16 +34,14 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "shuttle-floor"
 
+TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
+	mat_appearances_to_ignore = list("steel","gnesis")
 /turf/simulated/floor/shuttlebay/flock
 	name = "shuttle bay plating"
-	mat_appearances_to_ignore = list("steel","gnesis")
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "shuttle-bay"
 	allows_vehicles = 1
-
-/turf/simulated/floor/shuttlebay/flock/New()
-	..()
-	setMaterial(getMaterial("gnesis"))
+	default_material = "gnesis"
 
 /turf/simulated/floor/shuttlebay/flock/middle
 	icon = 'icons/misc/featherzone.dmi'
@@ -66,7 +64,7 @@
 
 /obj/decal/fakeobjects/flock
 	icon = 'icons/misc/featherzone.dmi'
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /////////
@@ -95,6 +93,9 @@
 	icon_state = "antenna"
 	name = "fibrous pole"
 	desc = "Huh. Weird."
+
+/obj/decal/fakeobjects/flock/antenna/not_dense
+	density = FALSE
 
 /obj/decal/fakeobjects/flock/antenna/end
 	icon_state = "antenna-end"
@@ -338,7 +339,7 @@
 	name = "blank surface"
 	desc = "Huh."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/npc/trader/flock/trader
 
 /obj/flock_screen/proc/show_icon(var/state)
@@ -364,7 +365,7 @@
 	name = "open receptacle"
 	desc = "Probably don't stick your hand in it. Looks like some kinda plasma blender."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/npc/trader/flock/trader
 
 /obj/flock_reclaimer/attack_hand(mob/user)
@@ -428,7 +429,7 @@
 // make sure to put more specific types first, else they'll be skipped over in the processing
 /var/list/flocklore = list(
 	/obj/item/book_kinginyellow = "flocklore_king_in_yellow",
-	/obj/item/storage/bible = "flocklore_bible",
+	/obj/item/bible = "flocklore_bible",
 	/obj/item/space_thing = "flocklore_space_thing",
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy = "flocklore_buddy_egg",
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/moon = "flocklore_moon_egg",
@@ -454,7 +455,7 @@
 )
 // items that, instead of being flung aside, will gently be moved elsewhere
 /var/list/respected_items = list(
-	/obj/item/storage/bible,
+	/obj/item/bible,
 	/obj/item/space_thing,
 	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
 	/obj/item/feather,

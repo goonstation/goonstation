@@ -4,6 +4,7 @@
 	var/for_sale = FALSE
 	var/type_path = /obj/item/raw_material
 	var/list/stats = list()
+	var/amount_sold = 0
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -11,7 +12,7 @@
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_storage_unit"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/datum/ore_cloud_data/ores = list()
@@ -150,7 +151,6 @@
 			if (O in user.contents)
 				continue
 			src.load_item(M)
-			M.set_loc(src)
 			playsound(src, sound_load, 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
@@ -183,6 +183,7 @@
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
+			satchel.tooltip_rebuild = 1
 			if (amtload)
 				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
 			else
@@ -201,8 +202,7 @@
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
 			return
-		R.set_loc(src)
-		if (user && R)
+		if (user)
 			user.u_equip(R)
 			R.dropped(user)
 		add_ore_amount(R.material_name,R.amount,R)
@@ -234,7 +234,9 @@
 		OCD.amount += max(delta,0)
 		if(ore.material)
 			for(var/i in 1 to delta) //make some copies of the material if this is a stack
-				OCD.stats += ore.material
+				var/datum/material/matCopy = copyMaterial(ore.material)
+				matCopy.owner = null
+				OCD.stats += matCopy
 		OCD.amount = round(max(OCD.amount,0)) //floor values to avoid float imprecision
 		ores[material_name] = OCD
 
@@ -273,10 +275,12 @@
 		var/datum/ore_cloud_data/OCD = ores[material_name]
 		if(OCD)
 			amount_ejected = min(ejectamt, OCD.amount)
+			if (transmit)
+				OCD.amount_sold += amount_ejected
 			for(var/i in 1 to amount_ejected)
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
-				ore.setMaterial(OCD.stats[length(OCD.stats)], (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
+				ore.setMaterial(OCD.stats[length(OCD.stats)], TRUE, (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
 				ore.initial_material_name = ore.material.name
 				OCD.stats.Cut(length(OCD.stats))
 				ore.set_loc(eject_location)
@@ -337,7 +341,8 @@
 				"amount" = OCD.amount,
 				"price" = OCD.price,
 				"forSale" = OCD.for_sale,
-				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : ""
+				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : "",
+				"amountSold" = OCD.amount_sold
 			))
 
 		. = list(
