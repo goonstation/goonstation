@@ -298,6 +298,10 @@
 		reload_time = 20 SECONDS
 		muzzle_flash = "muzzle_flash"
 
+		fast
+			cooldown = 2 SECONDS
+			reload_time = 8 SECONDS
+
 	abg
 		proj = new/datum/projectile/bullet/abg
 		shots = 6

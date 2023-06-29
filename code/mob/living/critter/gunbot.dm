@@ -27,6 +27,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	faction = FACTION_DERELICT
 	is_npc = TRUE
 
+	var/speak_lines = TRUE
 	var/eye_light_icon = "mars_sec_bot_eye"
 
 	New()
@@ -55,7 +56,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/kinetic/arm38
+		HH.limb = new /datum/limb/gun/kinetic/arm38/fast
 		HH.name = ".38 Anti-Personnel Arm"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
@@ -136,6 +137,37 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		if (src.hand_range_attack(target))
 			return TRUE
 
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10) && src.speak_lines)
+			src.speak(pick("SECURITY OPERATION IN PROGRESS.","WARNING - YOU ARE IN A SECURITY ZONE.","ALERT - ALL OUTPOST PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN, ESPONIAGE DETECTED","THIS IS FOR THE FREE MARKET","NANOTRASEN BETRAYED YOU."))
+
+	proc/speak(var/message) // Come back and make this use say after speech rework is in
+		var/fontSize = 2
+		var/fontIncreasing = 1
+		var/fontSizeMax = 2
+		var/fontSizeMin = -2
+		var/messageLen = length(message)
+		var/processedMessage = ""
+
+		for (var/i = 1, i <= messageLen, i++)
+			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
+			if (fontIncreasing)
+				fontSize = min(fontSize+1, fontSizeMax)
+				if (fontSize >= fontSizeMax)
+					fontIncreasing = 0
+			else
+				fontSize = max(fontSize-1, fontSizeMin)
+				if (fontSize <= fontSizeMin)
+					fontIncreasing = 1
+			if(prob(10))
+				processedMessage += pick("%","##A","-","- - -","ERROR")
+
+		src.visible_message("<span class='game say'><span class='name'>[src]</span> blares, \"<B>[processedMessage]</B>\"")
+
+		return
+
 /mob/living/critter/robotic/gunbot/strong // Midrounds
 	hand_count = 3
 	health_brute = 75
@@ -144,7 +176,10 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 
 	setup_hands()
 		..()
-		var/datum/handHolder/HH = hands[2]
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/arm38
+
+		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
 		HH.name = "ABG Riot Suppression Appendage"
 		HH.icon = 'icons/mob/critter_ui.dmi'
@@ -177,6 +212,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	hand_count = 3
 	health_brute = 100
 	health_burn = 100
+	speak_lines = FALSE
 
 	is_npc = FALSE
 	faction = FACTION_SYNDICATE
@@ -189,9 +225,6 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handrifle"
 		HH.limb_name = "5.56 Rifle Arm"
-		HH.can_hold_items = FALSE
-		HH.can_attack = TRUE
-		HH.can_range_attack = TRUE
 
 		HH = hands[2]
 		HH.limb = new /datum/limb/gun/kinetic/abg
@@ -243,10 +276,11 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	icon = 'icons/mob/robots.dmi'
 	icon_state = "syndibot"
 	hand_count = 2
-	health_brute = 25
+	health_brute = 15
 	health_brute_vuln = 1
-	health_burn = 25
-	health_burn_vuln = 0.5
+	health_burn = 15
+	health_burn_vuln = 1
+	speak_lines = FALSE
 
 	setup_hands()
 		..()
@@ -256,6 +290,3 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "hand38"
 		HH.limb_name = "9mm Anti-Personnel Arm"
-		HH.can_hold_items = FALSE
-		HH.can_attack = TRUE
-		HH.can_range_attack = TRUE
