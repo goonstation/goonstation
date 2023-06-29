@@ -98,6 +98,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			return
 		src.melted = TRUE
 		src.name = "melted "+src.name
+		src.icon_state_cap += "_melted_[rand(1,4)]"
+		src.setMaterial(src.material, TRUE, FALSE, FALSE)
+		var/obj/machinery/atmospherics/binary/nuclear_reactor/parent = src.loc
+		if(istype(parent))
+			parent.MarkGridForUpdate()
+			parent.UpdateIcon()
 		src.neutron_cross_section = 5.0
 		src.thermal_cross_section = 1.0
 		src.is_control_rod = FALSE
@@ -140,7 +146,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			holder.material.triggerTemp(holder,holder.temperature)
 			src.material.triggerTemp(src,src.temperature)
 		if((src.temperature > src.melting_point) && (src.melt_health > 0))
-			src.melt_health -= 10
+			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
 			src.melt() //oh no
 

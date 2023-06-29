@@ -1,5 +1,23 @@
 
+(t)thu jun 29 23
+(u)tarmunora
+(*)Addedyay igpay atinlay accentyay utationmay
+(u)Tyrant
+(p)14684
+(e)🗺💅|A-Mapping, C-QoL
+(+)Genetics in Oshan now has a disposal chute.
+(+)Robotics Storage in Oshan now has a door connecting to the morgue directly.
+(t)wed jun 28 23
+(u)tarmunora
+(+)Port-a-puke, wrestling belt no longer in spythief bounty reward pool.
+(+)Spythives spawn in pair in mixed.
+(u)LeahTheTech
+(+)Glowstick trees now glow in soft rainbow colours while ready for harvesting.
 (t)tue jun 27 23
+(u)Lord_Earthfire
+(p)14685
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Enables the space GPS to be able to be wrenched into the device frame and mechcomp cabinet.
 (u)Lord_Earthfire
 (p)14698
 (e)🔄⚗|C-Rework, A-Chemistry
