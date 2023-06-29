@@ -717,8 +717,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					if (mob_flags & AT_GUNPOINT)
 						for(var/obj/item/grab/gunpoint/G in grabbed_by)
 							G.shoot()
-				HH.set_cooldown_overlay()
-				src.lastattacked = target
+
 				switch (a_intent)
 					if (INTENT_HELP)
 						if (can_help)
@@ -732,6 +731,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 					if (INTENT_GRAB)
 						if (HH.can_hold_items && can_grab)
 							L.grab(target, src)
+				HH.set_cooldown_overlay()
+				src.lastattacked = target
+
 			else
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
