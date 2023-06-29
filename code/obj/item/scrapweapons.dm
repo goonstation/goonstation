@@ -309,7 +309,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 				if (W.amount >= 2)
 					W.amount -= 2
 					src.wireadded = TRUE
-					boutput(user, "<span class='notice'>You attach the wire to the spear, now you just need some extra material.</span>")
+					boutput(user, "<span class='notice'>You attach the wire to the club, now you just need some extra material.</span>")
 					src.desc = "A metal shaft attached to a handle with wire wrapped around it. You should be able to improve it further."
 					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass<b>. to complete the club."
 					src.icon_state = "club-wire"

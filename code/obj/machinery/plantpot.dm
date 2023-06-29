@@ -1545,7 +1545,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		else return 0
 
 	proc/HYPplant_matured()
-		src.plantgenes.mutation.HYPmatured_proc_M(src)
+		src.plantgenes?.mutation?.HYPmatured_proc_M(src)
 
 // Hydroponics procs not specific to the plantpot start here.
 
