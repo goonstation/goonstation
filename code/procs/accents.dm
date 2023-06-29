@@ -2428,7 +2428,8 @@ proc/accent_piglatin(string)
 	var/list/modded_tokens = list()
 	var/regex/consclust = regex(@"(^[bcdfghjklmnpqrstvwxys]+)?(\l+)", "i")
 	for (var/token in tokens)
-		token = consclust.Replace(token, @"$2$1ay")
+		if(length(token) > 1)
+			token = consclust.Replace(token, @"$2$1ay")
 		modded_tokens += token
 	return jointext(modded_tokens, " ")
 
