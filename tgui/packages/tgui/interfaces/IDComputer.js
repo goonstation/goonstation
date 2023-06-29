@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Slider, Dropdown, Box } from "../components";
+import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Box } from "../components";
 import { Window } from '../layouts';
 
 const DeptBox = (props, context) => {
@@ -64,8 +64,7 @@ const DeptBox = (props, context) => {
 export const IDComputer = (_props, context) => {
   const { act, data } = useBackend(context);
   const { mode, manifest, target_name, target_owner, target_rank, scan_name, pronouns, custom_names,
-    civilian_access, engineering_access, supply_access, research_access, security_access, command_access,
-    icons } = data;
+    standard_jobs, accesses_by_area, icons } = data;
 
   return (
     <Window
@@ -154,28 +153,23 @@ export const IDComputer = (_props, context) => {
 
                   {/* Jobs organised into sections */}
                   <Section title="Standard Job Assignment">
-                    <DeptBox name="Civilian" colour="blue" current_job={target_rank}
-                      jobs={["Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown"]} />
-                    <DeptBox name="Supply and Maintainence" colour="yellow" current_job={target_rank}
-                      jobs={["Engineer", "Miner", "Quartermaster"]} />
-                    <DeptBox name="Research and Medical" colour="purple" current_job={target_rank}
-                      jobs={["Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist"]} />
-                    <DeptBox name="Security" colour="red" current_job={target_rank}
-                      jobs={["Security Officer", "Security Assistant", "Detective"]} />
-                    <DeptBox name="Command" colour="green" current_job={target_rank}
-                      jobs={["Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain"]} />
+                    {standard_jobs.map(jobGrouping =>
+                      jobGrouping.jobs && (
+                        <DeptBox key={jobGrouping.name} name={jobGrouping.name} colour={jobGrouping.color}
+                          current_job={target_rank} jobs={jobGrouping.jobs} />
+                      )
+                    )}
 
                     <DeptBox name="Custom" current_job={target_rank}
                       jobs={custom_names} isCustomRank />
                   </Section>
 
                   <Section title="Specific Area Access">
-                    <DeptBox name="Civilian" colour="blue" accesses={civilian_access} />
-                    <DeptBox name="Engineering" colour="yellow" accesses={engineering_access} />
-                    <DeptBox name="Supply" colour="yellow" accesses={supply_access} />
-                    <DeptBox name="Science and Medical" colour="purple" accesses={research_access} />
-                    <DeptBox name="Security" colour="red" accesses={security_access} />
-                    <DeptBox name="Command" colour="green" accesses={command_access} />
+                    {accesses_by_area.map(area =>
+                      area.accesses.length > 0 && (
+                        <DeptBox key={area.name} name={area.name} colour={area.color} accesses={area.accesses} />
+                      )
+                    )}
                   </Section>
 
                   <Section title="Custom Card Look">
