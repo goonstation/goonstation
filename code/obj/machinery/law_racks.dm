@@ -592,7 +592,8 @@
 						current_abilities |= ability.type
 					var/list/abilities_to_remove = current_abilities - ai_abilities
 					for(ability_type in abilities_to_remove)
-						aiAH.removeAbility(ability_type)
+						if (ispath(ability_type, /datum/targetable/ai/module))
+							aiAH.removeAbility(ability_type)
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)

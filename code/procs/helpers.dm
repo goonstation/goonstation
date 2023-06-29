@@ -689,7 +689,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -751,7 +751,10 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				text += "[the_client.fakekey]"
+				if(ckey_and_alt_key && FALSE)
+					text += "[the_key] (as [the_client.fakekey])"
+				else
+					text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -2560,7 +2563,12 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "***NULL***"
 	if (!istype(thing))
 		return thing
-	return "\"[thing]\" ([thing.type])"
+
+	var/msg = "\"[thing]\" ([thing.type])"
+	if (ismob(thing))
+		var/mob/mobthing = thing
+		msg += " {Key: [key_name(mobthing)]}" // IM RUNNING OUT OF BRACKET TYPES
+	return msg
 
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)

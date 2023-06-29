@@ -921,15 +921,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
 	return
 
-/proc/animate_rainbow_glow(var/atom/A)
+/proc/animate_rainbow_glow(var/atom/A, min_time = 5, max_time = 10)
 	if (!istype(A) && !isclient(A) && !istype(A, /image/chat_maptext))
 		return
-	animate(A, color = "#FF0000", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FFFF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FF00", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#00FFFF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#0000FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
-	animate(color = "#FF00FF", time = rand(5,10), loop = -1, easing = LINEAR_EASING)
+	animate(A, color = "#FF0000", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FFFF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FF00", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#00FFFF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#0000FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
+	animate(color = "#FF00FF", time = rand(min_time,max_time), loop = -1, easing = LINEAR_EASING)
 	return
 
 /proc/oscillate_colors(var/atom/A, var/list/colors_to_swap)
