@@ -2128,10 +2128,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/display_slipup_image(var/mob/target, var/loc)
 	if (!target || !loc)
 		return
-	var/slipup_icon_state = "slipup1"
-	if (prob(1))
-		//You lose your medical license
-		slipup_icon_state = "slipup3"
-	else if (prob(10))
-		slipup_icon_state = "slipup2"
-	new/obj/decal/slipup(loc, slipup_icon_state, target)
+	if (target.bioHolder.HasEffect("clumsy"))
+		var/slipup_icon_state = "slipup_clown1"
+		if (prob(1))
+			//You lose your medical license
+			slipup_icon_state = "slipup_clown3"
+		else if (prob(10))
+			slipup_icon_state = "slipup_clown2"
+		new/obj/decal/slipup_clumsy(loc, slipup_icon_state, target)
+	else
+		new/obj/decal/slipup(loc, "slipup", target)
