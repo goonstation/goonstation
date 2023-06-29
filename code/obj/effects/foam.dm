@@ -180,6 +180,7 @@
 						random_brute_damage(M, 10)
 			if(M.throwing)
 				//like with normal foam, each tile the person passes while on their wild ride, they get splashed by the foam
+				logTheThing(LOG_CHEMISTRY, M, "is hit by chemical foam [log_reagents(src)] at [log_loc(src)].")
 				src.reagents.reaction(M, TOUCH, 5)
 
 		else
