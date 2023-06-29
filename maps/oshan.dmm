@@ -41403,6 +41403,19 @@
 	icon_state = "green2"
 	},
 /area/station/bridge/customs)
+"fxC" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/window_blinds/cog2/right,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/chamber)
 "fxW" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -43343,6 +43356,7 @@
 /area/station/medical/medbay/pharmacy)
 "ljO" = (
 /obj/machinery/light/incandescent/netural,
+/obj/blind_switch/area/west,
 /turf/simulated/floor,
 /area/research_outpost/chamber)
 "llR" = (
@@ -44047,6 +44061,19 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost/hangar)
+"nyy" = (
+/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/window_blinds/cog2/middle,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/research_outpost/chamber)
 "nzW" = (
 /obj/machinery/light/incandescent/warm,
 /obj/decal/stripe_delivery,
@@ -46894,6 +46921,15 @@
 /area/station/crew_quarters/arcade)
 "xFh" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/window_blinds/cog2/left,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "test_chamber";
+	name = "Test Chamber Blast Door";
+	opacity = 0;
+	dir = 4
+	},
 /turf/simulated/floor/plating/random,
 /area/research_outpost/chamber)
 "xHw" = (
@@ -131482,7 +131518,7 @@ bZn
 bbE
 bZn
 bZn
-xFh
+fxC
 mIT
 xIA
 ljO
@@ -132388,7 +132424,7 @@ bZn
 bZn
 bZn
 bcS
-xFh
+nyy
 pFS
 jiM
 mIT
@@ -132690,7 +132726,7 @@ cKm
 asN
 bZn
 bca
-xFh
+fxC
 qXh
 qXh
 ret
