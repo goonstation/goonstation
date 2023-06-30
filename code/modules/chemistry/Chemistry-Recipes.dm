@@ -299,7 +299,7 @@ datum
 			name = "Steam Boiling"
 			id = "steam_boiling"
 			required_reagents = list("water" = 0) //removed in on_reaction()
-			required_temperature = T100C
+			min_temperature = T100C
 			mix_phrase = "The solution begins to boil."
 			instant = FALSE
 			result_amount = 1
@@ -327,7 +327,7 @@ datum
 			id = "steam_condensation"
 			result = "water"
 			required_reagents = list("steam" = 1)
-			required_temperature = -T100C
+			max_temperature = T100C
 			mix_phrase = "Clear liquid begins to condense in the solution."
 			instant = FALSE
 			result_amount = 1
@@ -3421,7 +3421,7 @@ datum
 			id = "diethylamine ignition"
 			required_reagents = list("diethylamine" = 1)
 			mix_phrase = "The mixture combusts!"
-			required_temperature = T0C + 250
+			min_temperature = T0C + 250
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				for (var/turf/T in holder.covered_turf())
