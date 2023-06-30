@@ -2005,7 +2005,9 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		owner.playsound_local(owner.loc, 'sound/machines/click.ogg', 60, 1)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.playsound_local(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()
