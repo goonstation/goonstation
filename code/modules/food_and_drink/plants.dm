@@ -1,5 +1,5 @@
 
-ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/
 	name = "fruit or vegetable"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
@@ -167,6 +167,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	slice_amount = 3
+	brew_result = "juice_tomato"
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		var/turf/T = get_turf(A)
@@ -331,6 +332,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
+	brew_result = "juice_orange"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
@@ -633,6 +635,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 2
 	initial_volume = 100
 	food_effects = list("food_refreshed")
+	brew_result = "capsaicin"
 
 	make_reagents()
 		..()
@@ -674,6 +677,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#FFFF00"
 	initial_volume = 30
+	brew_result = "ghostchilijuice"
 
 	make_reagents()
 		..()
@@ -697,6 +701,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#008000"
+	brew_result = "water"
 
 /obj/item/reagent_containers/food/snacks/plant/cucumber/
 	name = "cucumber"
@@ -708,6 +713,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#008000"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "water"
 
 /obj/item/reagent_containers/food/snacks/plant/strawberry/
 	name = "strawberry"
@@ -719,6 +725,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#FF2244"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "juice_strawberry"
 
 /obj/item/reagent_containers/food/snacks/plant/blueberry/
 	name = "blueberry"
@@ -729,6 +736,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#0000FF"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "juice_blueberry"
 
 /obj/item/reagent_containers/food/snacks/plant/blackberry/
 	name = "blackberry"
@@ -749,6 +757,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#a30325"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "juice_raspberry"
 
 /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	name = "blue raspberry"
@@ -871,6 +880,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	icon_state = "poison"
 	food_color = "#AC1515"
 	initial_volume = 100
+	brew_result = "capulettium"
 
 	make_reagents()
 		..()
@@ -1049,6 +1059,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
+	brew_result = "juice_lime"
 
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
@@ -1079,6 +1090,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
+	brew_result = "lemonade"
 
 
 /obj/item/reagent_containers/food/snacks/plant/lemon/wedge
@@ -1266,6 +1278,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_color = "#4D2600"
 	validforhat = 1
 	event_handler_flags = USE_FLUID_ENTER
+	brew_result = "pinacolada"
 
 	make_reagents()
 		..()
@@ -1369,6 +1382,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	edible = FALSE
 	food_color = "#F8D016"
 	validforhat = 1
+	brew_result = "pinacolada"
 
 /obj/item/reagent_containers/food/snacks/plant/pineappleslice
 	name = "pineapple slice"
@@ -1394,6 +1408,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	heal_amt = 3
 	food_color = "#302013"
 	validforhat = 1
+	brew_result = "coffee_fresh"
 
 	make_reagents()
 		..()

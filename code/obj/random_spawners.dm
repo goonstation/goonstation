@@ -74,6 +74,7 @@
 			new new_item(S)
 		else
 			new new_item(src.loc)
+
 /obj/random_item_spawner/snacks
 	name = "random snack spawner"
 	icon_state = "rand_snacks"
@@ -1897,3 +1898,65 @@
 			pixel_x = -4;
 			pixel_y = 3
 		}(src.loc)
+
+/obj/random_item_spawner/fruits
+	name = "random fruit spawner"
+	icon_state = "rand_fruits"
+	min_amt2spawn = 1
+	max_amt2spawn = 1
+
+	New()
+		// Get a list of all fruits
+		// This includes all the /wedge sub-types, as well as inedible ones like bowling melon
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant) \
+		// Exclude toxic / dangerous fruits
+		- list(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary,
+		/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
+		/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/,
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+		/obj/item/reagent_containers/food/snacks/plant/purplegoop
+		)
+		..()
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7

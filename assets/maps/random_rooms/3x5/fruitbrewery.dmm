@@ -1,0 +1,96 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/wood/seven,
+/area/space)
+"b" = (
+/turf/unsimulated/floor/wood/five,
+/area/space)
+"f" = (
+/obj/reagent_dispensers/still{
+	pixel_y = 10
+	},
+/obj/decal/cleanable/cobweb{
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/food/drinks/bottle/cider{
+	pixel_x = -10
+	},
+/turf/unsimulated/floor/wood/five,
+/area/space)
+"l" = (
+/obj/submachine/chef_sink{
+	dir = 8
+	},
+/turf/simulated/floor/wood/seven,
+/area/space)
+"z" = (
+/obj/table/wood/auto,
+/obj/random_item_spawner/fruits/few,
+/obj/machinery/light/small/sticky/warm{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/standard/narrow/north,
+/area/space)
+"D" = (
+/obj/machinery/light/small/sticky/warm,
+/turf/simulated/floor/wood/seven,
+/area/space)
+"J" = (
+/obj/storage/secure/closet/fridge{
+	pixel_y = 10;
+	pixel_x = 5
+	},
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/random_item_spawner/fruits/one_or_zero,
+/obj/item/reagent_containers/food/drinks/bottle/cider,
+/turf/simulated/floor/wood/seven,
+/area/space)
+"L" = (
+/turf/unsimulated/wall/auto/supernorn/wood,
+/area/space)
+"P" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/stairs/wood,
+/area/space)
+"X" = (
+/obj/table/wood/auto,
+/obj/random_item_spawner/fruits/one,
+/turf/simulated/floor/carpet/red/standard/narrow/south,
+/area/space)
+"Z" = (
+/obj/reagent_dispensers/still{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/machinery/light/small/broken{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/unsimulated/floor/wood/five,
+/area/space)
+
+(1,1,1) = {"
+z
+X
+a
+L
+f
+"}
+(2,1,1) = {"
+a
+a
+a
+P
+b
+"}
+(3,1,1) = {"
+J
+l
+D
+L
+Z
+"}
