@@ -93,10 +93,8 @@
 		else
 			return ..()
 
-	on_reagent_change()
-		..()
-		if (src.reagents.total_volume <= 0)
-			qdel(src)
+	on_reagent_transfer()
+		qdel(src)
 
 
 	proc/pill_action(mob/user, mob/target)

@@ -362,7 +362,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			target_reagents.update_total()
 			target_reagents.handle_reactions()
 
-
+		reagents_transferred()
 		return amount
 
 	proc/aggregate_pathogens()
@@ -887,6 +887,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	proc/reagents_changed(var/add = 0)
 		if (my_atom)
 			my_atom.on_reagent_change(add)
+		return
+
+	proc/reagents_transferred()
+		if (my_atom)
+			my_atom.on_reagent_transfer()
 		return
 
 	/// li'l tiny helper thing vOv
