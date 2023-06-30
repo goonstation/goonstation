@@ -1,8 +1,16 @@
-font face=Georgia color=black size='3'> WHERE AM I? A guide to the Typhon system<BR>
-A short book that really couldve been a pamphlet by Bichael Chain:<BR>
-<BR>
-So. WIP<BR>
-<BR>
-text<BR>
-<BR>
-text </font>
+<h1>WHERE AM I? A guide to the Typhon system</h1>
+A short book that really couldve been a pamphlet by Bichael Chain:<br>
+<br>
+So. You got to work and realised that when you looked out the window, you had no idea what you were seeing.Don't worry, it happened to us all once (unless you read this before getting your job, of course). With this helpful guide, you'll be an expert on space geography(?) in no time!<br>
+<br>
+<h2>Overview</h2>
+The vast majority of NT work is undertaken within the Typhon system. So to know where you are, first, you have to know all about the Typhon system.<br>
+In what's known to Earth astronomers as the Hyades Cluster, there exists a binary star system. The two stars, Šid and Fugere, orbit around a brown dwarf star known as Typhon. This is most likely where you are.<br>
+	<h3>Šid</h3>
+	Šid is a brilliant blue star, with 7 very different planets orbiting it. It's named after an ancient word meaning "brilliant"/"bright"/"radiant", and it lives up to its name. It was first reached and explored by the Clarion expedition.<br>
+		Of particular note is Abzu, the water planet with alien life its oceans! The Oshan Laboratory was constructed there in order to investigate further. I hope to go there someday...<br>
+	<h3>Fugere</h3>
+	Fugere is a sooty red giant star in the very last throes of its life. It has 5 planets outside of its outer atmosphere, and scans seem to indicate between 1 and 3 planets currently being absorbed into its firey mass. It's very fittingly named after the Latin word for running away.
+	<h3>Typhon</h3>
+	wip<br>
+wip</font>
