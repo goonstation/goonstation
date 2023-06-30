@@ -1,16 +1,53 @@
 <h1>WHERE AM I? A guide to the Typhon system</h1>
-A short book that really couldve been a pamphlet by Bichael Chain:<br>
+A short book that really couldve been a pamphlet by Bichael Chain<br>
+Edited by Betty Kane
 <br>
 So. You got to work and realised that when you looked out the window, you had no idea what you were seeing.Don't worry, it happened to us all once (unless you read this before getting your job, of course). With this helpful guide, you'll be an expert on space geography(?) in no time!<br>
 <br>
 <h2>Overview</h2>
-The vast majority of NT work is undertaken within the Typhon system. So to know where you are, first, you have to know all about the Typhon system.<br>
+The vast majority of NT work is undertaken within the 'Frontier system' (which is really more like 3 systems, but what do I know?). So to know where you are, first, you have to know all about the Typhon system.<br>
 In what's known to Earth astronomers as the Hyades Cluster, there exists a binary star system. The two stars, Šid and Fugere, orbit around a brown dwarf star known as Typhon. This is most likely where you are.<br>
 	<h3>Šid</h3>
 	Šid is a brilliant blue star, with 7 very different planets orbiting it. It's named after an ancient word meaning "brilliant"/"bright"/"radiant", and it lives up to its name. It was first reached and explored by the Clarion expedition.<br>
 		Of particular note is Abzu, the water planet with alien life its oceans! The Oshan Laboratory was constructed there in order to investigate further. I hope to go there someday...<br>
 	<h3>Fugere</h3>
-	Fugere is a sooty red giant star in the very last throes of its life. It has 5 planets outside of its outer atmosphere, and scans seem to indicate between 1 and 3 planets currently being absorbed into its firey mass. It's very fittingly named after the Latin word for running away.
+	Fugere is a sooty red giant star in the very last throes of its life. It has 5 planets outside of its outer atmosphere, and scans seem to indicate between 1 and 3 planets currently being absorbed into its firey mass. It's very fittingly named after the Latin word for running away. Its system was first explored by the Destiny expedition.
 	<h3>Typhon</h3>
-	wip<br>
-wip</font>
+	Ah, Typhon. The most unique celestial object that we know of today. Unlike most brown dwarf stars (aka really big gas giant planets that failed to become real stars), Typhon is not made of hydrogen and helium gas, but instead almost entirely made of what's now known as plasma. It's the giant purple thing with the black rings, basically.<br>
+	It has 12 significant satellites, but I can't be bothered to talk about most of them. Here are the most important ones.
+		<h4>Pendus, Fortitudo, Antistes</h4>
+		The three innermost planets are basically on fire constantly. The watchful eye satellite array sits around Pendus, watching Typhon for signs of weird stuff. The other two? dunno, who cares.<br>
+		Editor's note: Have some more information: Fortitudo is the core of what used to be a gas giant, and Antistes strongly resembles Venus.
+		<h4>Quadriga</h4>
+		The fourth 'planet' from Typhon is arguably the most important. Locked around it is the Channel, the wormhole that makes interstellar travel possible. And connects to... somewhere in the solar system, look, i'm not an expert.<br>
+		Anyway, the planet itself is more like a shattered husk of debris loosely held together by gravity and prayer. It's also basically a hive of traffic and activity, so anyone sensible leaves as quick as they can.
+		<h4>Amantes</h4>
+		The fifth planet is actually more like 2 planets. It looks like a peanut, lol. Two planets orbiting so close they are literally touching. Steer clear of Buttes Junction and clown town.
+		<h4>Faatus</h4>
+		Faatus, the sixth planet, is really neat. It's got like a load of steam and stuff. Shallow boiling seas. But aside from the literal boiling oceans, you could step outside without a spacesuit and be absolutely fine. Lots of colonies and stuff. Watch out for the locals.
+			<h5>Domus Dei</h5>
+			Nothing's ever come back from the moon of Faatus. Well, from under its atmosphere that is. Spooky.
+		<h4>Mundus</h4>
+		The seventh planet from Typhon is also in the goldilocks zone, which is nice for being alive outside. It has these two moons made out of mostly silicate. It sits in the middle of this big gap between the inner and outer planets.
+		<h4>Rota Fortuna</h4>
+		This almost-planet is placed super nicely for getting to the outer planets. So what happened? The pod wars, of course. Nanotrasen ended up winning and installing 3 stations around it in various lagrange points, named NT-12, NT-13, and NT-14. NT-13 is probably where you are.
+		<h4>Mors</h4>
+		Apparently this planet has martians? But they're not martians? Mortians?? Oh and it's hollow.
+		<h4>Magus</h4>
+		The tenth planet is covered with acid seas, made out of aqua tenebrae. Apparently someone's building a station under those oceans. Nadir or something. Weird. It also has a comet captured into its orbit, known as Regina.<br>
+		Author's Edit: Yo holy shit there's like a load of Miraclium there?? Why did no one tell me?
+		Editor's note: I wish I had time to write this myself with more professional language but I'm on a deadline.
+		<h4>Flaminica and its moon, Senex</h4>
+		Basically, they're really really cold. Apparently there's some ground based station, NT-Theta, on Senex. Dunno why, just go to Antarctica, its cold there too.<br>
+		Editor's note: There's life on Senex supposedly. And strange artifacts. Try and find that in Antarctica.
+		<h4>Estella</h4>
+		The 12th and furthest planet. Well, dwarf planet. It's got NT-20 there and is basically just a refuelling stop before heading off to the binary stars. Just like pluto, no one cares about it.<br>
+		Editor's note: The author does not in fact speak for every human, I personally like Pluto a lot.<br>
+		Author's edit: nerd<br>
+		Publisher's note: This better not be in the final draft.
+<h2>Where am I working?</h2>
+Nanotrasen is currently only hiring at NT-13 around Rota Fortuna, Oshan Laboratory on Abzu, or on Nadir Extraction Facility on Magus. Oh, and on the various ships shuttling back and forth around the system. You're probably on one of these. Use context clues such as looking out windows.<br>
+The debris field with the space diner and stuff is somewhere in what's known as the "Main Rings district", near Quadriga and Faatus.<br>
+The asteroid field which is currently having the hell strip mined out of it by various companies on the other hands is in the royal rings district, nearer Mors and Magus.<br>
+Oh, and Earth and stuff is all in the solar system still. At least at the time of writing.<br>
+Thanks for reading.</font>
