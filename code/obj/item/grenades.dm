@@ -1580,8 +1580,6 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
 				qdel(src.reagents)
-				if (istype(W, /obj/item/reagent_containers/pill) && W.reagents.total_volume <= 0)
-					qdel(W)
 				src.reagents = null
 				if (avg_volatility < 1) // B A D.
 					src.strength = 0

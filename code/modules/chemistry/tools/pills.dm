@@ -91,6 +91,8 @@
 			qdel(src)
 			return
 		else
+			if (src.reagents.total_volume <= 0)
+				qdel(src)
 			return ..()
 
 	proc/pill_action(mob/user, mob/target)
