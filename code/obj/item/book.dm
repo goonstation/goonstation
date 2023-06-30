@@ -573,3 +573,8 @@ all for the love of you.</tt>"}
 			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
 			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
 			now?"}
+
+/obj/item/paper/book/from_file/where_am_i
+	name = "Where am I? A guide to the Typhon system."
+	icon_state = "bookwai"
+	file_path = "strings/books/where_am_i.txt"
