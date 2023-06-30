@@ -27,8 +27,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/image/lid_image = null
 	var/original_icon_state = null
 
-	var/can_shatter = FALSE //!if true, container will shatter when reactions proc the shatter effect
-
 	New(loc, new_initial_reagents)
 		..()
 		last_new_initial_reagents = new_initial_reagents
@@ -151,15 +149,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		src.UpdateOverlays(null, "lid")
 
 	proc/shatter()
-		if(!can_shatter)
-			return
-		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
-		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
-		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
-		shard.set_loc(get_turf(src))
-		qdel(src)
+		return
 
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
@@ -206,7 +196,6 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "null"
 	amount_per_transfer_from_this = 10
 	can_recycle = TRUE //can this be put in a glass recycler?
-	can_shatter = TRUE
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
@@ -494,6 +483,15 @@ proc/ui_describe_reagents(atom/A)
 				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
 				src.reagents.reaction(get_turf(user), TOUCH)
 				src.reagents.clear_reagents()
+
+	shatter()
+		for(var/mob/M in AIviewers(src))
+			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
+		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
+		shard.set_loc(get_turf(src))
+		qdel(src)
 
 	is_open_container()
 		if(..() && !istype(src.loc, /obj/machinery/chem_dispenser))
