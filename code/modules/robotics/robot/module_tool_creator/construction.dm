@@ -19,7 +19,7 @@
 
 /datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced
 	name = "reinforced cable coil"
-	amount = 500
+	amount = 300
 	item_type = /obj/item/cable_coil/reinforced
 
 /datum/robot/module_tool_creator/item_type/amount/glass_sheet
