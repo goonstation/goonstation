@@ -42265,6 +42265,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge/hos)
 "iLH" = (

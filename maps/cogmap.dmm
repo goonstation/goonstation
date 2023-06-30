@@ -19312,6 +19312,7 @@
 	bcolor = "green";
 	icon_state = "bedsheet-green"
 	},
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bbd" = (
@@ -65066,8 +65067,8 @@
 "wnn" = (
 /obj/machinery/chem_dispenser/chef,
 /obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2";
-	dir = 1
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge2"
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)

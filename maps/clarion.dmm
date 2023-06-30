@@ -15552,7 +15552,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/mob/living/critter/small_animal/dog/blair,
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
@@ -24175,8 +24175,8 @@
 "cKW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/paper_bin{
 	pixel_x = 6;
@@ -24323,8 +24323,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -32009,8 +32009,8 @@
 "kgu" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/item/clipboard{
 	pixel_x = -7
@@ -34385,8 +34385,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/junction{
-	icon_state = "pipe-j2";
-	dir = 4
+	dir = 4;
+	icon_state = "pipe-j2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
@@ -39993,8 +39993,8 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple{
-	level = 2;
-	dir = 6
+	dir = 6;
+	level = 2
 	},
 /turf/simulated/floor/redwhite{
 	dir = 8
@@ -42235,8 +42235,8 @@
 /area/station/medical/research)
 "tMA" = (
 /obj/machinery/door/airlock/pyro/glass{
-	name = "Robotics Lab";
-	dir = 4
+	dir = 4;
+	name = "Robotics Lab"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/robotics,

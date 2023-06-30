@@ -6293,6 +6293,7 @@
 	},
 /area/ghostdrone_factory)
 "cQE" = (
+/mob/living/critter/small_animal/dog/george/orwell,
 /turf/simulated/floor/carpet/green/fancy/edge{
 	dir = 4
 	},
