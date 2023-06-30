@@ -7,32 +7,32 @@ So. You got to work and realised that when you looked out the window, you had no
 The vast majority of NT work is undertaken within the 'Frontier system' (which is really more like 3 systems, but what do I know?).
  So to know where you are, first, you have to know all about the Typhon system.<br>
 <br>In what's known to Earth astronomers as the Hyades Cluster, there exists a binary star system.
- The two stars, Šid and Fugere, orbit around a brown dwarf star known as Typhon. This is most likely where you are.<br>
+ The two stars, Šid and Fugere, orbit around a brown dwarf star known as Typhon. This is most likely where you are. Funnily, they tend to be called Shidd and Fugg for short, which is absolutely hilarious.<br>
 	<h3>Šid</h3>
-	Šid is a brilliant blue star, with 7 very different planets orbiting it. It's named after an ancient word meaning "brilliant"/"bright"/"radiant", and it lives up to its name. It was first reached and explored by the Clarion expedition.<br>
-		Of particular note is Abzu, the water planet with alien life its oceans! The Oshan Laboratory was constructed there in order to investigate further. I hope to go there someday...<br>
+	Šid is a brilliant blue star, with 7 very different planets orbiting it. It's named after an ancient Persian(?) word meaning "brilliant"/"bright"/"radiant", and it lives up to its name. It was first reached and explored by the Clarion expedition.<br>
+		<br>Of particular note is Abzu, the water planet with alien life its oceans! The Oshan Laboratory was constructed there in order to investigate further. I hope to go there someday...<br>
 		<i>Editor's note: Bichael Chain would later visit Oshan Laboratory and drown in its oceans on at least four separate occasions.</i>
 	<h3>Fugere</h3>
 	Fugere is a sooty red giant star in the very last throes of its life. It has 5 planets outside of its outer atmosphere, and scans seem to indicate between 1 and 3 planets currently being absorbed into its firey mass. It's very fittingly named after the Latin word for running away. Its system was first explored by the Destiny expedition.
 	<h3>Typhon</h3>
 	Ah, Typhon. The most unique celestial object that we know of today. Unlike most brown dwarf stars (aka really big gas giant planets that failed to become real stars), Typhon is not made of hydrogen and helium gas, but instead almost entirely made of what's now known as plasma. It's the giant purple thing with the black rings, basically.<br>
 	<br>It has 12 significant satellites, but I can't be bothered to talk about most of them. Here are the most important ones.<br>
-	<i>Editor's note: Bichael ended up writing about all 12 anyway.</i>
+	<i>Editor's note: Bichael ended up writing about all 12 anyway. He also inconsistently and incorrectly refers to some dwarf planets and captured asteroids/comets as planets.</i>
 		<h4>Pendus, Fortitudo, Antistes</h4>
 		The three innermost planets are basically on fire constantly. The watchful eye satellite array sits around Pendus, watching Typhon for signs of weird stuff. The other two? dunno, who cares.<br>
-		<i>Editor's note: Have some more information: Fortitudo is the core of what used to be a gas giant, and Antistes strongly resembles Venus.</i>
+		<i>Editor's note: Have some more information: Fortitudo is the core of what used to be a gas giant, and Antistes strongly resembles Venus in atmospheric composition.</i>
 		<h4>Quadriga</h4>
 		The fourth 'planet' from Typhon is arguably the most important. Locked around it is the <b>Channel</b>, the wormhole that makes interstellar travel possible. And connects to... somewhere in the solar system, look, i'm not an expert.<br>
 		Anyway, the planet itself is more like a shattered husk of debris loosely held together by gravity and prayer. It's also basically a hive of traffic and activity, so anyone sensible leaves as quick as they can.
 		<h4>Amantes</h4>
-		The fifth planet is actually more like 2 planets. It looks like a peanut, lol. Two planets orbiting so close they are literally touching. Steer clear of Buttes Junction and clown town.
+		The fifth planet is actually more like 2 planets. It looks like a peanut, lol. Two planets orbiting so close they are literally touching. Steer clear of Buttes Junction and clown town, which happen to be there.
 		<h4>Faatus</h4>
 		Faatus, the sixth planet, is really neat. It's got like a load of steam and stuff. Shallow boiling seas. But aside from the literal boiling oceans, you could step outside without a spacesuit and be absolutely fine. Lots of colonies and stuff. Watch out for the locals.
 			<h5>Domus Dei</h5>
 			Nothing's ever come back from the moon of Faatus. Well, from under its atmosphere that is. Spooky.
 		<h4>Mundus</h4>
 		The seventh planet from Typhon is also in the goldilocks zone, which is nice for being alive outside. It has these two moons made out of mostly silicate. It sits in the middle of this big gap between the inner and outer planets, which is why the area around it is called the Mundus Gap. Interestingly, the gap was named Mundus first, and they found the planet later.<br>
-		<i>Editor's note: The planet was definitely named first, not the region. No idea where he got that. Blatant lying.</i?
+		<i>Editor's note: The planet was definitely named first, not the region. No idea where he got that. Blatant lying.</i>
 		<h4>Rota Fortuna</h4>
 		This almost-planet is placed super nicely for getting to the outer planets. So what happened? The pod wars, of course. Nanotrasen ended up winning and installing 3 stations around it in various lagrange points, named NT-12, NT-13, and NT-14. NT-13 is probably where you are.
 		<h4>Mors</h4>
