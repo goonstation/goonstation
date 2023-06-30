@@ -1002,24 +1002,6 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			user.show_text("You connect \the [src] to \the [dropped]. Both share the same ID now.", "blue")
 
 		return ..()
-
-	attackby(var/obj/item/I, mob/user)
-		if (ispulsingtool(I))
-			var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
-			if (!connector)
-				return ..()
-			if (!istype(connector.connectee, /obj/machinery/conveyor_switch))
-				return ..()
-
-			var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
-			src.id = connected_switch.id
-			connected_switch.conveyors = src.conveyors
-			for (var/obj/machinery/conveyor/conveyor in src.conveyors)
-				conveyor.id = connected_switch.id
-				conveyor.linked_switches += connected_switch
-			user.show_text("You connect \the [src] to \the [connector.connectee]. Both share the same ID now.", "blue")
-
-		return ..()
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
 	.= 0
