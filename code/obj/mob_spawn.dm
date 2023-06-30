@@ -98,6 +98,7 @@
 		SPAWN(1)
 			for (var/obj/item/implant/health/implant as anything in H.implant)
 				qdel(implant)
+			H.implant = list()
 
 		APPLY_ATOM_PROPERTY(H, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
 		APPLY_ATOM_PROPERTY(H, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
