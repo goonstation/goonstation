@@ -91,8 +91,13 @@
 			qdel(src)
 			return
 		else
-			qdel(src)
 			return ..()
+
+	on_reagent_change()
+		..()
+		if (src.reagents.total_volume <= 0)
+			qdel(src)
+
 
 	proc/pill_action(mob/user, mob/target)
 		if (iscarbon(target) || ismobcritter(target))
