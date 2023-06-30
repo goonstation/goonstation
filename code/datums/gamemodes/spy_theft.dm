@@ -124,7 +124,7 @@
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
 			if (istype(antag_role))
-				antag_role.redeemed_items.Add(item)
+				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
 			new reward.item2(pda_turf)
 		if (reward.item3)
@@ -372,10 +372,6 @@
 	station_bounties[/obj/item/storage/belt/utility] = 1
 	station_bounties[/obj/item/storage/belt/security] = 2
 
-	station_bounties[/obj/item/instrument/large/piano/grand] = 1
-	station_bounties[/obj/item/instrument/large/piano] = 1
-	station_bounties[/obj/item/instrument/large/organ] = 1
-	station_bounties[/obj/item/instrument/large/jukebox] = 1
 	station_bounties[/obj/item/instrument/saxophone] = 1
 	station_bounties[/obj/item/instrument/bagpipe] = 1
 	station_bounties[/obj/item/instrument/bikehorn/dramatic] = 1
@@ -517,6 +513,11 @@
 	big_station_bounties[/obj/machinery/power/smes] = 2
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3
+
+	big_station_bounties[/obj/item/instrument/large/piano/grand] = 1
+	big_station_bounties[/obj/item/instrument/large/piano] = 1
+	big_station_bounties[/obj/item/instrument/large/organ] = 1
+	big_station_bounties[/obj/item/instrument/large/jukebox] = 1
 
 	active_bounties.len = 0
 
