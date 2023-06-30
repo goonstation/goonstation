@@ -3,6 +3,8 @@
 (u)aloe
 (+)Spy thief stealing action bars are no longer interrupted by movement.
 (+)The click when a spy starts stealing an item is now only audible to the spy.
+(u)LeahTheTech
+(+)Chem dispensers now show the temperature of the reagents in their contained beaker.
 (u)Retrino
 (p)14639
 (e)💅👽|C-QoL, A-Mutantraces
