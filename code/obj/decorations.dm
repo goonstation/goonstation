@@ -987,13 +987,13 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Shidd"
+		name = "Fugere" // formerly known as fugg
 		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Fugg"
+		name = "Šid" // formerly known as Shidd, and the two stars were named the other way around once
 		desc = "A blazing young blue star."
 
 
