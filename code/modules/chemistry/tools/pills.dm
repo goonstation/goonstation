@@ -95,8 +95,7 @@
 
 	on_reagent_transfer()
 		qdel(src)
-
-
+	
 	proc/pill_action(mob/user, mob/target)
 		if (iscarbon(target) || ismobcritter(target))
 			if (target == user)
