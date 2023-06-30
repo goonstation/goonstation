@@ -9,6 +9,7 @@
 (+)Chem dispensers now show the temperature of the reagents in their contained beaker.
 (+)Engineering cyborgs now start with 200 of their resources (sheets, glass etc.) as oppose to 500.
 (+)Engineering cyborgs now start with 300 reinforced cables on Oshan.
+(+)Reinforced cables can now be made at the engineering fabricator using pharosium and synthblubber.
 (u)Retrino
 (p)14639
 (e)💅👽|C-QoL, A-Mutantraces
