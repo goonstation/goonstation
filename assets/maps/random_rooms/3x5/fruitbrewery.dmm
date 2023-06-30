@@ -1,11 +1,9 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/simulated/floor/wood/seven,
+/obj/decal/cleanable/dirt/jen,
+/turf/unsimulated/floor/stairs/wood,
 /area/space)
-"b" = (
-/turf/unsimulated/floor/wood/five,
-/area/space)
-"f" = (
+"o" = (
 /obj/reagent_dispensers/still{
 	pixel_y = 10
 	},
@@ -17,51 +15,28 @@
 	},
 /turf/unsimulated/floor/wood/five,
 /area/space)
-"l" = (
+"p" = (
 /obj/submachine/chef_sink{
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
 /area/space)
-"z" = (
-/obj/table/wood/auto,
-/obj/random_item_spawner/fruits/few,
-/obj/machinery/light/small/sticky/warm{
-	dir = 1
-	},
-/turf/simulated/floor/carpet/red/standard/narrow/north,
+"t" = (
+/turf/unsimulated/wall/auto/supernorn/wood,
 /area/space)
-"D" = (
+"x" = (
 /obj/machinery/light/small/sticky/warm,
 /turf/simulated/floor/wood/seven,
 /area/space)
-"J" = (
-/obj/storage/secure/closet/fridge{
-	pixel_y = 10;
-	pixel_x = 5
-	},
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/random_item_spawner/fruits/one_or_zero,
-/obj/item/reagent_containers/food/drinks/bottle/cider,
-/turf/simulated/floor/wood/seven,
-/area/space)
-"L" = (
-/turf/unsimulated/wall/auto/supernorn/wood,
-/area/space)
-"P" = (
-/obj/decal/cleanable/dirt/jen,
-/turf/unsimulated/floor/stairs/wood,
-/area/space)
-"X" = (
+"B" = (
 /obj/table/wood/auto,
-/obj/random_item_spawner/fruits/one,
-/turf/simulated/floor/carpet/red/standard/narrow/south,
+/obj/machinery/light/small/sticky/warm{
+	dir = 1
+	},
+/obj/random_item_spawner/fruits/some,
+/turf/simulated/floor/carpet/red/standard/narrow/north,
 /area/space)
-"Z" = (
+"C" = (
 /obj/reagent_dispensers/still{
 	pixel_x = 2;
 	pixel_y = 8
@@ -72,25 +47,44 @@
 	},
 /turf/unsimulated/floor/wood/five,
 /area/space)
+"D" = (
+/turf/unsimulated/floor/wood/five,
+/area/space)
+"E" = (
+/obj/table/wood/auto,
+/obj/random_item_spawner/fruits/few,
+/turf/simulated/floor/carpet/red/standard/narrow/south,
+/area/space)
+"J" = (
+/obj/storage/secure/closet/fridge{
+	pixel_y = 10;
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/cider,
+/turf/simulated/floor/wood/seven,
+/area/space)
+"N" = (
+/turf/simulated/floor/wood/seven,
+/area/space)
 
 (1,1,1) = {"
-z
-X
-a
-L
-f
+B
+E
+N
+t
+o
 "}
 (2,1,1) = {"
+N
+N
+N
 a
-a
-a
-P
-b
+D
 "}
 (3,1,1) = {"
 J
-l
-D
-L
-Z
+p
+x
+t
+C
 "}

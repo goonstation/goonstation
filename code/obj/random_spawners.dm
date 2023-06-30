@@ -1905,20 +1905,91 @@
 	min_amt2spawn = 1
 	max_amt2spawn = 1
 
+	// List of veggies
+	var/list/veggie_list = list(/obj/item/reagent_containers/food/snacks/plant/tomato,
+		/obj/item/reagent_containers/food/snacks/plant/chili,
+		/obj/item/reagent_containers/food/snacks/plant/cucumber,
+		/obj/item/reagent_containers/food/snacks/plant/corn,
+		/obj/item/reagent_containers/food/snacks/plant/onion,
+		/obj/item/reagent_containers/food/snacks/plant/lettuce,
+		/obj/item/reagent_containers/food/snacks/plant/bean,
+		/obj/item/reagent_containers/food/snacks/plant/peas,
+		/obj/item/reagent_containers/food/snacks/plant/potato,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
+		/obj/item/reagent_containers/food/snacks/plant/garlic,
+		/obj/item/reagent_containers/food/snacks/plant/eggplant,
+		/obj/item/reagent_containers/food/snacks/plant/turmeric,
+		/obj/item/reagent_containers/food/snacks/plant/mustard,
+		/obj/item/reagent_containers/food/snacks/plant/bamboo
+	)
+
 	New()
-		// Get a list of all fruits
-		// This includes all the /wedge sub-types, as well as inedible ones like bowling melon
-		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant) \
-		// Exclude toxic / dangerous fruits
-		- list(/obj/item/reagent_containers/food/snacks/plant/tomato/incendiary,
-		/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
-		/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
-		/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
-		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/,
-		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
-		/obj/item/reagent_containers/food/snacks/plant/purplegoop
-		)
+		setup_spawns()
 		..()
+
+	proc/setup_spawns()
+		// Get a list of all fruits
+		// This includes all the /wedge sub-types
+		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant) \
+		// Exclude veggies
+		- veggie_list \
+		// Exclude toxic / dangerous fruits
+		- list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
+		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
+		/obj/item/reagent_containers/food/snacks/plant/purplegoop,
+		/obj/item/reagent_containers/food/snacks/plant/melon/bowling
+		)
+
+	one
+		amt2spawn = 1
+
+	two
+		amt2spawn = 2
+
+	three
+		amt2spawn = 3
+
+	four
+		amt2spawn = 4
+
+	five
+		amt2spawn = 5
+
+	six
+		amt2spawn = 6
+
+	seven
+		amt2spawn = 7
+
+	one_or_zero
+		min_amt2spawn = 0
+		max_amt2spawn = 1
+
+	maybe_few
+		min_amt2spawn = 0
+		max_amt2spawn = 2
+
+	few
+		min_amt2spawn = 1
+		max_amt2spawn = 3
+
+	some
+		min_amt2spawn = 3
+		max_amt2spawn = 5
+
+	lots
+		min_amt2spawn = 5
+		max_amt2spawn = 7
+
+/obj/random_item_spawner/fruits/veggies
+	name = "random vegetable spawner"
+	icon_state = "rand_veggies"
+
+	setup_spawns()
+		// Get a list of all veggies
+		items2spawn = veggie_list
 
 	one
 		amt2spawn = 1

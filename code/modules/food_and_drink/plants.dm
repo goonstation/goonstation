@@ -332,7 +332,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/orange/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
-	brew_result = "juice_orange"
+	brew_result = "schnapps"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat))
@@ -421,7 +421,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#FF9F87"
-	brew_result = "juice_grapefruit"
+	brew_result = "schnapps"
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/grapefruit/wedge
 	slice_amount = 6
@@ -466,7 +466,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice
 	slice_amount = 6
-
+	brew_result = "schnapps"
 
 /obj/item/reagent_containers/food/snacks/plant/melonslice/
 	name = "melon slice"
@@ -725,7 +725,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FF2244"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
-	brew_result = "juice_strawberry"
+	brew_result = "schnapps"
 
 /obj/item/reagent_containers/food/snacks/plant/blueberry/
 	name = "blueberry"
@@ -736,7 +736,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#0000FF"
 	food_effects = list("food_cold", "food_refreshed")
-	brew_result = "juice_blueberry"
+	brew_result = "wine"
 
 /obj/item/reagent_containers/food/snacks/plant/blackberry/
 	name = "blackberry"
@@ -747,6 +747,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#1d222f"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "wine"
 
 /obj/item/reagent_containers/food/snacks/plant/raspberry/
 	name = "raspberry"
@@ -757,7 +758,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#a30325"
 	food_effects = list("food_cold", "food_refreshed")
-	brew_result = "juice_raspberry"
+	brew_result = "wine"
 
 /obj/item/reagent_containers/food/snacks/plant/blueraspberry
 	name = "blue raspberry"
@@ -768,6 +769,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#65d8e6"
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "wine"
 
 /obj/item/reagent_containers/food/snacks/plant/pear/
 	name = "pear"
@@ -804,6 +806,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#DEBA5F"
+	brew_result = "peachschnapps"
 
 	New()
 		..()
@@ -914,6 +917,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FFFF00"
 	validforhat = 1
 	food_effects = list("food_cold", "food_refreshed")
+	brew_result = "juice_banana"
 
 	heal(var/mob/M)
 		if (src.icon_state == "banana")
@@ -951,6 +955,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	food_color = "#FF9900"
 	validforhat = 1
 	food_effects = list("food_cateyes", "food_refreshed")
+	brew_result = "juice_carrot"
 
 	make_reagents()
 		..()
@@ -965,6 +970,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
+	brew_result = "juice_pumpkin"
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
@@ -1012,6 +1018,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
+	brew_result = "pumpkinspicelatte"
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
@@ -1059,7 +1066,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/lime/wedge
 	slice_amount = 6
 	slice_suffix = "wedge"
-	brew_result = "juice_lime"
+	brew_result = "limeade"
 
 
 /obj/item/reagent_containers/food/snacks/plant/lime/wedge
@@ -1117,6 +1124,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = -1
 	food_color = "#008000"
 	initial_volume = 50
+	brew_result = "toxic_slurry"
 
 /obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega
 	name = "omega slurrypod"
@@ -1470,6 +1478,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 2
 	food_color = "#FF00FF"
 	validforhat = 1
+	brew_result = "wine"
 
 /obj/item/reagent_containers/food/snacks/plant/mustard
 	name = "mustard seed pod"
@@ -1523,6 +1532,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 1
 	food_color = "#ccccff"
 	validforhat = 1
+	brew_result = "luminol"
 	var/datum/light/light
 
 	spawnable
