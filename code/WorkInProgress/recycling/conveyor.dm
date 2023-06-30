@@ -582,6 +582,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 		var/obj/machinery/conveyor_switch/connected_switch = connector.connectee
 		src.id = connected_switch.id
 		src.linked_switches += connected_switch
+		connected_switch.conveyors += src
 		user.show_text("You connect \the [src] to \the [connector.connectee].", "blue")
 // attack with hand, move pulled object onto conveyor
 
@@ -684,7 +685,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 
 		if (!src.dir_in)
 			src.dir_in = NORTH // In the case there's no favorable dir_ins, pick north.
-		if (!src.dir_out)
+		if (!src.dir_out || src.dir_out == src.dir_in)
 			src.dir_out = turn(src.dir_in, 180) // In the case there's no favorable dir_outs, pick the contrary of dir_in.
 
 		. = ..()
@@ -878,6 +879,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
+	mechanics_type_override = /obj/machinery/conveyor_switch/built
 	icon_state = "switch-off"
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// current direction setting
