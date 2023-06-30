@@ -989,7 +989,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		src.conveyors = list()
 
 	MouseDrop_T(dropped, mob/user)
-		if (ispulsingtool(dropped))
+		if (user.find_tool_in_hand(TOOL_PULSING))
 			if (!istype(dropped, /obj/machinery/conveyor_switch))
 				return ..()
 			var/obj/machinery/conveyor_switch/connected_switch = dropped
