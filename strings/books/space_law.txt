@@ -1,15 +1,17 @@
 <center><h2>Justice on Nanotrasen Stations: A Treatise on Space Law</h2></center>
-	<h3>A Brief Introduction to the Space Law</h3><hr>
-	This Law Book, while important, is in its core just what it is: a fancy paper in a fancy cover with fancy words written inside of it. It's the Letter of the Law, a generalization of cases used by lawyers to try and pull a stunt. It is important, but as a Security Officer, you should obey to the Spirit of the Law, not the Letter. The Letter of the Law is to give you directions, but the Spirit of the Law is what should make the rulings.<br><br>
+<h3>A Brief Introduction to the Space Law</h3>
+
+This Law Book, while important, is in its core just what it is: a fancy paper in a fancy cover with fancy words written inside of it. It's the Letter of the Law, a generalization of cases used by lawyers to try and pull a stunt. It is important, but as a Security Officer, you should obey to the Spirit of the Law, not the Letter. The Letter of the Law is to give you directions, but the Spirit of the Law is what should make the rulings.<br><br>
  Your primary duty onboard Nanotrasen stations is to protect the crew in good faith, and so you must always consider the circumstances of a crime. Hitting a crewmate accidentally while fighting a much bigger threat should probably be waived, while spilling lube near open airlocks should perhaps be prosecuted more harshly.<br>
 The accused's intent is just as important, and must be considered as well. The difference between Aggravated Assault and Attempted Murder can be very hard to ascertain, and, when in doubt, you should default to the less serious crime. <br><br>
 
-	Always use your best judgment and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to advice of fellow officers and superiors. <br> <br>
+Always use your best judgment and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to advice of fellow officers and superiors. <br> <br>
 
 As a Security Assistant, generally the same principles apply to you, but with half of the responsibility. Your primary role is to assist the Security team in the best way you can, whether that be through sorting out Security records, wardening any prisoners being held in the brig or manning the security cameras.<br>
 Despite what your fellow officers might tell you, supplying the Security team with alcohol is NOT within your role expectation and should NOT be done while on duty.<hr>
 
-   	<h3>List of Criminal Charges</h3>
+<h3>List of Criminal Charges</h3>
+
 Here's a guideline for how you should probably treat suspects by each particular crime.<br>
 Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 	<h4>Minor Crimes:</h4>
@@ -61,8 +63,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 		</li>
         <li>Harassment
 			<ul style='list-style-type:circle'>
-				<li>To behave in a way meant to distress, annoy or torment someone.<br>
-				<i><FONT COLOR="#ff0000">IF YOU OR SOMEONE ELSE IS GETTING PURPOSEFULLY AND MALICIOUSELY HARASSED, AHELP IT!</FONT></i></li>
+				<li>To behave in a way meant to distress, annoy or torment someone.
 			</ul>
 		</li>
 	</ul>
@@ -96,14 +97,14 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
         <li>Breaking and Entering into a sensitive area
 			<ul style='list-style-type:circle'>
 				<li>To forcefully enter a sensitive area of the ship to which a person does not have access to.</li>
-				<i>Sensitive areas count as areas that contain sensitive and potentially dangerous equipment. Such areas include Security, the Bridge, as well as private offices of the Heads of Staff and the Command Teleporter. The Armory and AI chambers count as protected area and the respective charge should apply.</i>
+				<i>Sensitive areas count as areas that contain sensitive and potentially dangerous equipment. Such areas include Security, the Bridge, and other areas of similar purpose and restriction levels.</i>
 			</ul>
 		</li>
         <li>Theft
 			<ul style='list-style-type:circle'>
 				<li>To take items from areas one does not have access to or to take items or funds belonging to others or to the company as a whole, impacting the productivity of the station.</li>
                 <li>To take items from an area of the station considered as sensitive, that one does not have access to or to take items or funds belonging to others or to the company as a whole.</li>
-				<i>Sensitive areas count as areas that contain sensitive and potentially dangerous equipment. Such areas include Security, the Bridge, as well as private offices of the Heads of Staff and the Command Teleporter. The Armory and AI chambers count as protected area and the respective charge should apply.</i><br>
+				<i>Sensitive areas count as areas that contain sensitive and potentially dangerous equipment. Such areas include Security, the Bridge, and other areas of similar purpose and restriction levels.</i><br>
 			</ul>
 		</li>
 	</ul>
@@ -116,7 +117,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
                 <i>A harsher sentence should be applied when the victim is not reviveable, going up to 5 minutes but not exceeding it.</i>
 			</ul>
 		</li>
-		<li>Grand Sabotage
+		<li>Industrial Sabotage
 			<ul style='list-style-type:circle'>
 				<li>To engage in maliciously destructive actions, seriously threatening the crew or the station</li>
 				<i>Bombing, flooding the hallways with harmful gases, subverting or attempting to subvert the sillicons, and other actions that could seriously injure multiple people at once, as well as actions that could prevent a department or the station as a whole from functioning entirely, all count as Grand Sabotage.</i>
@@ -125,14 +126,14 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
         <li>Breaking and Entering into a protected area
 			<ul style='list-style-type:circle'>
 				<li>To forcefully enter a protected area of the ship to which a person does not have access to.</li>
-				<i>Only the Armory, AI upload and AI core count as protected areas of the ship. For all other areas, laxer charges should be used.</i>
+				<i>Protected areas are areas that contain straight up dangerous and destructive equipment.</i>
 			</ul>
 		</li>
         <li>Grand Theft
 			<ul style='list-style-type:circle'>
 				<li>To take items from areas one does not have access to or to take items or funds belonging to others or to the company as a whole, gravely impacting the productivity of the station.</li>
                 <li>To take items from an area of the station considered as protected, that one does not have access to.</li>
-				<i>Only the Armory, AI upload and AI core count as protected areas of the ship. For all other areas, laxer charges should be used.</i><br>
+				<i>Protected areas are areas that contain straight up dangerous and destructive equipment.</i><br>
 			</ul>
 		</li>
 	</ul>
@@ -204,7 +205,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
     <li>Execution. The method should be quick and humane: preferably firing squad or spacing. It is encouraged to allow the criminal to say their last words before getting executed.
     </li>
     </ul><br>
-    Capital punishment may be warranted in the following cases:
+    Capital punishment may be warranted if any of the following conditions are met:
     <ul style='list-style-type:disc'>
     <li>The criminal is not an NT employee. Based on this grounds <b> ONLY EXILE </b> is allowed, unless one of the other conditions have been met.<br>
     <i>Please note that any humanoid being may apply to become an NT employee in the Head of Personnel's office instead of getting exiled. Such request should be granted, but crewmanship may be revoked if said new hire commits a Moderate Crime or worse.</i></li>
@@ -227,5 +228,12 @@ As a Security Officer, you are expected to practice a modicum of due process in 
         <li>If you need to brig them, put them in a cell and remove the handcuffs once inside. Remember to set the timer!</li>
 		<li>Update their security record if needed.</li>
         </ul>
-<b>N.B.</b> : It is <FONT COLOR="#ff0000"><b><i>highly illegal</i></b></FONT> for NanoTrasen security to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors!
+<b>N.B.: It is <FONT COLOR="#ff0000"><i>highly illegal</i></FONT> for NanoTrasen security to make use of Syndicate devices. Do not use traitor gear as a non-traitor, even to apprehend traitors!</b>
 <hr>
+<h3>An Even Briefer Conclusion to the Space Law</h3>
+
+Now that we've covered all of the laws and protocols, let's be frank: there's no point of being a good guy if you don't have drip! Remember to dress appropriately and visibly, but with taste!<br><br>
+
+On a very important note as well, donuts and coffee might be the very thing that keep you alive during your stay on NT stations, so remember to always have a backup stash of those, and most importantly, at all and any costs, prevent staff assistants from stealing <FONT COLOR="#ff0000"><b>OUR</b></FONT> precious box of donuts!<br><br>
+
+And finally, remember to be cool. It may not always go the way you want it to go, sometimes the clown will slip you on a banana peel, sometimes the drunk staff assistat will shank another drunk staff assistant over a rubber duck, but that's just fine, keep your head cool, your shoulders back, snack on a <i>donut</i> and give some hugs to your Boss's pet turtle, and then maybe Sylvester will give you some love back!
