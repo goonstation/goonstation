@@ -11,8 +11,8 @@
 
 /datum/component/loctargeting/no_gravity/on_removed(atom/movable/source, atom/old_loc)
 	. = ..()
-	user.no_gravity = 0
 	var/mob/living/user = source.loc
+	user.no_gravity = 0
 	for (var/atom/movable/A as anything in user)
 		if (A.no_gravity)
 			user.no_gravity = 1 //keep on if we are still holdin stuff
