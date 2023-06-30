@@ -3516,6 +3516,7 @@
 /mob/living/critter/small_animal/cat{
 	desc = "How long has this cat been here?";
 	icon_state = "cat6";
+	icon_state_dead = "cat6-dead";
 	name = "jons the catte";
 	randomize_look = 0;
 	randomize_name = 0
