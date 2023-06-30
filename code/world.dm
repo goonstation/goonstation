@@ -1555,16 +1555,29 @@ var/global/mob/twitch_mob = 0
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
 				if(world.system_type == "UNIX")
+					var/list/meminfos = list()
 					try
 						var/meminfo_file = "data/meminfo.txt"
 						fcopy("/proc/meminfo", meminfo_file)
 						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
 						if(length(memory_info) >= 3)
 							memory_info.len = 3
-							ircmsg["meminfo"] = jointext(memory_info, "\n")
+							meminfos += memory_info
 						fdel(meminfo_file)
 					catch(var/exception/e)
 						stack_trace("[e.name]\n[e.desc]")
+					try
+						var/statm_file = "data/statm.txt"
+						fcopy("/proc/self/statm", statm_file)
+						var/list/memory_info = splittext(file2text(statm_file), " ")
+						var/list/field_names = list("size", "resident", "share", "text", "lib", "data", "dt")
+						for(var/i = 1, i <= length(memory_info), i++)
+							meminfos += field_names[i] + ": " + memory_info[i]
+						fdel(statm_file)
+					catch(var/exception/e2)
+						stack_trace("[e2.name]\n[e2.desc]")
+					if(length(meminfos))
+						ircmsg["meminfo"] = jointext(meminfos, "\n")
 				return ircbot.response(ircmsg)
 
 			if ("rev")
