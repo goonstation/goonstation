@@ -5,6 +5,9 @@
 (u)aloe
 (+)Spy thief stealing action bars are no longer interrupted by movement.
 (+)The click when a spy starts stealing an item is now only audible to the spy.
+(u)LeahTheTech
+(+)Chem dispensers now show the temperature of the reagents in their contained beaker.
+(+)Engineering cyborgs now start with 200 of their resources (sheets, glass etc.) as oppose to 500.
 (u)Retrino
 (p)14639
 (e)💅👽|C-QoL, A-Mutantraces
