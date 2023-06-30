@@ -572,7 +572,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
-	else if (ispulsingtool(I))
+	else if (ispulsingtool(I) && !src.deconstructable)
 		var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
 		if (!connector)
 			return ..()
