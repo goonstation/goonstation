@@ -729,7 +729,7 @@ Contents:
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
+				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/spacecash/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
 						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 						H.unlock_medal("To the Moon!",1)
@@ -864,7 +864,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			update_nearby_tiles()
 
 			if(operating == 1) //emag again
@@ -893,7 +893,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		update_nearby_tiles()
 
 		sleep(1 SECOND)

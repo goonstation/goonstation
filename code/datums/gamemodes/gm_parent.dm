@@ -81,71 +81,70 @@ ABSTRACT_TYPE(/datum/game_mode)
 		antags.Add(various)
 
 	for (var/datum/mind/traitor in antags)
-		try
-			var/traitorwin = 1
-			var/obj_count = 0
-			var/traitor_name
+		var/traitorwin = 1
+		var/obj_count = 0
+		var/traitor_name
 
-			// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
-			// Once antagonist datums are completed, this check should be removed entirely.
-			if (traitor.get_antagonist(traitor.special_role))
-				continue
+		// This is a really hacky check to prevent traitors from being outputted twice if their primary antag role has an antagonist datum that could be used for data instead.
+		// Once antagonist datums are completed, this check should be removed entirely.
+		if (traitor.get_antagonist(traitor.special_role))
+			continue
 
-			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
+		if (traitor.current)
+			traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
+		else
+			traitor_name = "[traitor.displayed_key] (character destroyed)"
+
+		if (traitor.special_role == ROLE_MINDHACK)
+			stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
+			continue // Objectives are irrelevant for mindhacks and thralls.
+		else if (traitor.special_role == ROLE_VAMPTHRALL)
+			stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
+			continue // Ditto.
+		else if (traitor.special_role == ROLE_FLOCKTRACE)
+			continue // Flocktraces are listed under their respective flockmind
+		else
+			if (traitor.late_special_role)
+				stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
+			else if (traitor.random_event_special_role)
+				stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.special_role]!"
 			else
-				traitor_name = "[traitor.displayed_key] (character destroyed)"
+				stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
 
-			if (traitor.special_role == ROLE_MINDHACK)
-				stuff_to_output += "<B>[traitor_name]</B> was mindhacked!"
-				continue // Objectives are irrelevant for mindhacks and thralls.
-			else if (traitor.special_role == ROLE_VAMPTHRALL)
-				stuff_to_output += "<B>[traitor_name]</B> was a vampire's thrall!"
-				continue // Ditto.
-			else if (traitor.special_role == ROLE_FLOCKTRACE)
-				continue // Flocktraces are listed under their respective flockmind
+			if (traitor.special_role == ROLE_SLASHER)
+				var/foundmachete = FALSE
+				for_by_tcl(M, /obj/item/slasher_machete)
+					if(M.slasher_key == traitor.current.ckey)
+						foundmachete = TRUE
+						var/outputval = round((M.force - 15) / 2.5)
+						stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
+						break
+				if(!foundmachete)
+					stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
+
+			for (var/datum/objective/objective in traitor.objectives)
+#ifdef CREW_OBJECTIVES
+				if (istype(objective, /datum/objective/crew)) continue
+#endif
+				obj_count++
+				if (objective.check_completion())
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
+					logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
+					if (!isnull(objective.medal_name) && !isnull(traitor.current))
+						traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
+				else
+					stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
+					logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
+					traitorwin = 0
+
+		// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
+		if (obj_count)
+			if (traitorwin)
+				if (traitor.current)
+					traitor.current.unlock_medal("MISSION COMPLETE", 1)
+				stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
 			else
-				if (traitor.late_special_role)
-					stuff_to_output += "<B>[traitor_name]</B> was a late-joining [traitor.special_role]!"
-				else if (traitor.random_event_special_role)
-					stuff_to_output += "<B>[traitor_name]</B> was a random event [traitor.special_role]!"
-				else
-					stuff_to_output += "<B>[traitor_name]</B> was a [traitor.special_role]!"
-
-				if (traitor.special_role == ROLE_SLASHER)
-					var/foundmachete = FALSE
-					for_by_tcl(M, /obj/item/slasher_machete)
-						if(M.slasher_key == traitor.current.ckey)
-							foundmachete = TRUE
-							var/outputval = round((M.force - 15) / 2.5)
-							stuff_to_output += "<B>Souls Stolen:</b> [outputval]"
-							break
-					if(!foundmachete)
-						stuff_to_output += "<B>Souls Stolen:</b> They did not finish with a machete!"
-
-				for (var/datum/objective/objective in traitor.objectives)
-	#ifdef CREW_OBJECTIVES
-					if (istype(objective, /datum/objective/crew)) continue
-	#endif
-					obj_count++
-					if (objective.check_completion())
-						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"
-						logTheThing(LOG_DIARY, traitor, "completed objective: [objective.explanation_text]")
-						if (!isnull(objective.medal_name) && !isnull(traitor.current))
-							traitor.current.unlock_medal(objective.medal_name, objective.medal_announce)
-					else
-						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='alert'>Failed</span>"
-						logTheThing(LOG_DIARY, traitor, "failed objective: [objective.explanation_text]. Womp womp.")
-						traitorwin = 0
-
-			// Please use objective.medal_name for medals that are tied to a specific objective instead of adding them here.
-			if (obj_count)
-				if (traitorwin)
-					if (traitor.current)
-						traitor.current.unlock_medal("MISSION COMPLETE", 1)
-					stuff_to_output += "<span class='success'>The [traitor.special_role] was successful!</span><br>"
-				else
-					stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
+				stuff_to_output += "<span class='alert'>The [traitor.special_role] has failed!</span><br>"
 
 	#ifdef DATALOGGER
 			if (traitorwin)
@@ -153,41 +152,34 @@ ABSTRACT_TYPE(/datum/game_mode)
 			else
 				game_stats.Increment("traitorloss")
 	#endif
-		catch(var/exception/e)
-			logTheThing(LOG_DEBUG, null, "Kyle|antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
 
 
 	// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
 	for (var/datum/mind/traitor in former_antagonists)
-		try
-			var/traitor_name
+		var/traitor_name
 
-			if (traitor.current)
-				traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
-			else
-				traitor_name = "[traitor.displayed_key] (character destroyed)"
+		if (traitor.current)
+			traitor_name = "[traitor.current.real_name] (played by [traitor.displayed_key])"
+		else
+			traitor_name = "[traitor.displayed_key] (character destroyed)"
 
-			if (traitor.former_antagonist_roles.len)
-				for (var/string in traitor.former_antagonist_roles)
-					if (string == ROLE_MINDHACK)
-						stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
-					else if (string == ROLE_VAMPTHRALL)
-						stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
-					else
-						stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
-		catch(var/exception/e)
-			logTheThing(LOG_DEBUG, null, "kyle|former-antag-runtime: [e.file]:[e.line] - [e.name] - [e.desc]")
+		if (traitor.former_antagonist_roles.len)
+			for (var/string in traitor.former_antagonist_roles)
+				if (string == ROLE_MINDHACK)
+					stuff_to_output += "<B>[traitor_name] was mindhacked!</B>"
+				else if (string == ROLE_VAMPTHRALL)
+					stuff_to_output += "<B>[traitor_name] was a vampire's thrall!</B>"
+				else
+					stuff_to_output += "<B>[traitor_name] was a [string]!</B>"
 
-	// Display all antagonist datums. We arrange them like this so that each antagonist is bundled together by type
-	for (var/V in concrete_typesof(/datum/antagonist))
-		var/datum/antagonist/dummy = V
-		for (var/datum/antagonist/A as anything in get_all_antagonists(initial(dummy.id)))
-			#ifdef DATA_LOGGER
-			game_stats.Increment(A.check_completion() ? "traitorwin" : "traitorloss")
-			#endif
-			var/antag_dat = A.handle_round_end(TRUE)
-			if (A.display_at_round_end && length(antag_dat))
-				stuff_to_output.Add(antag_dat)
+	// Display all antagonist datums.
+	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+		#ifdef DATA_LOGGER
+		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
+		#endif
+		var/antag_dat = antagonist_role.handle_round_end(TRUE)
+		if (antagonist_role.display_at_round_end && length(antag_dat))
+			stuff_to_output.Add(antag_dat)
 
 	boutput(world, stuff_to_output.Join("<br>"))
 
@@ -215,6 +207,9 @@ ABSTRACT_TYPE(/datum/game_mode)
 				candidates += player.mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
 				unpicked_candidate_minds.Add(player.mind)
+
+	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
+									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")
 
 	if(length(candidates) < number) // ran out of eligible players with the preference on, filling the gap with other players
 		logTheThing(LOG_DEBUG, null, "<b>Enemy Assignment</b>: Only [length(candidates)] players with be_[type] set to yes were ready. We need [number] so including players who don't want to be [type]s in the pool.")
@@ -247,7 +242,7 @@ ABSTRACT_TYPE(/datum/game_mode)
 		else
 			antag.special_role = ROLE_CHANGELING
 
-	antag.add_antagonist(antag.special_role)
+	antag.add_antagonist(antag.special_role, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	var/datum/antagonist/antag_datum = antag.get_antagonist(antag.special_role)
 	if (!antag_datum.uses_pref_name)

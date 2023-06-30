@@ -295,7 +295,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	name = "wrestling supplies closet"
 	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
 	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
-	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/under/shorts/random_color = 3,
 	/obj/item/clothing/mask/wrestling/black = 1,
 	/obj/item/clothing/mask/wrestling/blue = 1,
 	/obj/item/clothing/mask/wrestling/green = 1)

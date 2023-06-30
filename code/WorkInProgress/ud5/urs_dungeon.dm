@@ -642,7 +642,7 @@ var/johnbill_ursdungeon_code = "0420"
 /obj/item/storage/secure/ssafe/diner_arcade
 	configure_mode = 0
 	random_code = 0
-	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/currency/spacecash/small,/obj/item/currency/spacecash/small)
 	New()
 		..()
 		src.code = johnbill_ursdungeon_code

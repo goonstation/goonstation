@@ -2217,10 +2217,10 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Resource"
 
 
-/datum/manufacture/gps
+/datum/manufacture/podgps
 	name = "Ship's Navigation GPS"
-	item_paths = list("MET-1")
-	item_amounts = list(2)
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/gps)
 	time = 12 SECONDS
 	create = 1

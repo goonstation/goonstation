@@ -898,6 +898,8 @@ TYPEINFO(/obj/stool/wooden)
 /* -------------------- Folded Chairs -------------------- */
 /* ======================================================= */
 
+TYPEINFO(/obj/item/chair/folded)
+	mat_appearances_to_ignore = list("steel")
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
@@ -1267,9 +1269,9 @@ TYPEINFO(/obj/stool/chair/wooden)
 	/obj/item/reagent_containers/food/snacks/candy/candyheart,
 	/obj/item/bananapeel,
 	/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical,
-	/obj/item/spacecash/random/small,
-	/obj/item/spacecash/random/tourist,
-	/obj/item/spacecash/buttcoin)
+	/obj/item/currency/spacecash/small,
+	/obj/item/currency/spacecash/tourist,
+	/obj/item/currency/spacecash/buttcoin)
 
 	New()
 		..()

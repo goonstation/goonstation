@@ -16,9 +16,6 @@ datum
 
 		/// Will not react if below this
 		var/min_temperature = -INFINITY
-		/// Not used by default. -1 = not used.
-		/// Positive values for reaction to take place when hotter than value, negative to take place when cooler than abs(value)
-		var/required_temperature = -1
 		/// Will not react if above this
 		var/max_temperature = INFINITY
 
@@ -275,7 +272,7 @@ datum
 			id = "booster_enzyme"
 			result = "booster_enzyme"
 			required_reagents = list("diethylamine" = 1, "ethanol" = 1, "sulfur" = 1, "carbon" = 1, "hydrogen" = 1, "oxygen" = 1, "strange_reagent" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 4
 			mix_phrase = "The solution shows signs of life, forming shapes!"
 			hidden = TRUE
@@ -285,7 +282,7 @@ datum
 			id = "denatured_enzyme"
 			result = "denatured_enzyme"
 			required_reagents = list("booster_enzyme" = 1)
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			result_amount = 1
 			mix_phrase = "The solution burns, leaving behind a lifeless mass!"
 			hidden = TRUE
@@ -360,7 +357,7 @@ datum
 			id = "calomel"
 			result = "calomel"
 			required_reagents = list("mercury" = 1, "chlorine" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 1
 			mix_phrase = "Stinging vapors rise from the solution."
 
@@ -406,7 +403,7 @@ datum
 			required_reagents = list("msg" = 1, "milk" = 1, "salt" = 1, "chickensoup" = 1, "sugar" = 1,\
 			"cheese" = 1,/* "anima" = 1, */"grease" = 1, "water_holy" = 1, "pepperoni" = 1, "beff" = 1,\
 			"juice_tomato" = 1, "ectocooler" = 1)
-			//required_temperature = T0C + 400 // commenting out for now so you can actually make this, maybe
+			//min_temperature = T0C + 400 // commenting out for now so you can actually make this, maybe
 			result_amount = 12
 			mix_phrase = "The mixture reduces into a fine crystalline powder and an unbelievably delicious smell wafts upwards."
 			hidden = TRUE
@@ -415,7 +412,7 @@ datum
 			name = "Argine"
 			id = "argine"
 			result = "argine"
-			required_temperature = -25
+			max_temperature = 25
 			required_reagents = list("ethanol" = 1, "silicon" = 1, "water" = 1)
 			result_amount = 3 */
 
@@ -423,7 +420,7 @@ datum
 			name = "Chlorine Triflouride"
 			id = "infernite"
 			result = "infernite"
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			required_reagents = list("chlorine" = 1, "fluorine" = 3)
 			result_amount = 2
 			mix_phrase = "The mixture gives off significant heat."
@@ -446,7 +443,7 @@ datum
 			name = "FOOF"
 			id = "foof"
 			result = "foof"
-			required_temperature = 600
+			min_temperature = 600
 			required_reagents = list("oxygen" = 1, "flourine" = 1, "stabiliser" = 1)
 			result_amount = 1
 			mix_phrase = "The mixture violently erupts and seethes with fire."
@@ -520,7 +517,7 @@ datum
 			id = "ammoniumbicarbonate"
 			required_reagents = list("ammonia" = 1, "carbon" = 1, "oxygen" = 1)
 			result = "smelling_salt"
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			instant = 1
 			result_amount = 3
 			mix_phrase = "The mixture produces an aromatic fume."
@@ -530,7 +527,7 @@ datum
 			name = "Merculite"
 			id = "merculite"
 			result = "laffo"
-			required_temperature = 303
+			min_temperature = 303
 			required_reagents = list("phlogiston" = 1, "thermite" = 1, "fuel" = 1)
 			result_amount = 1 */
 
@@ -539,7 +536,7 @@ datum
 			id = "ash"
 			result = "ash"
 			required_reagents = list("paper" = 1)
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			result_amount = 1
 			mix_phrase = "The paper chars, seperating into a silky black powder."
 
@@ -820,7 +817,7 @@ datum
 			id = "simplesyrup"
 			result = "simplesyrup"
 			required_reagents = list("sugar" = 1, "water" = 1)
-			required_temperature = T0C + 80
+			min_temperature = T0C + 80
 			result_amount = 2
 			mix_phrase = "The sugar and water congeal in the heat into a gloopy syrup."
 			mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
@@ -1514,7 +1511,7 @@ datum
 			id = "lingtea"
 			result = "lingtea"
 			required_reagents = list("longisland" = 1, "neurotoxin" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The toxin upsets the delicate balance of alcohol and sours in this mix. Ew."
 
@@ -2085,7 +2082,7 @@ datum
 			required_reagents = list("magnesium_chloride" = 1, "ammonia" = 6)
 			result = "mg_nh3_cl"
 			result_amount = 1
-			required_temperature = T20C + 10
+			min_temperature = T20C + 10
 			mix_phrase = "The mixture seems to combine."
 
 		mg_nh3_cl_decomposition
@@ -2094,7 +2091,7 @@ datum
 			result = "magnesium_chloride"
 			required_reagents = list("mg_nh3_cl" = 1)
 			result_amount = 1
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				holder.add_reagent("ammonia", created_volume * 6)
@@ -2113,7 +2110,7 @@ datum
 			id = "graphene"
 			result = "graphene"
 			required_reagents = list("fuel" = 4, "iron" = 1, "silicon_dioxide" = 1)
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			result_amount = 2
 			reaction_speed = 1
 			instant = 0
@@ -2144,7 +2141,7 @@ datum
 			result = "copper"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			required_reagents = list("hemolymph" = 5, "cleaner" = 1,  "acetone" = 1)
-			required_temperature = T0C + 30 // just a little bit of heat
+			min_temperature = T0C + 30 // just a little bit of heat
 			result_amount = 1
 			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
 			hidden = TRUE
@@ -2169,7 +2166,7 @@ datum
 			required_reagents = list("mutagen" = 1, "lithium" = 1, "acetone" = 1, "bromine" = 1)
 			result_amount = 3
 			mix_phrase = "The substance turns a drab green and begins to bubble."
-		//  required_temperature = 170
+		//  min_temperature = 170
 
 		dna_mutagen/dna_mutagen2
 			id = "dna_mutagen2"
@@ -2193,7 +2190,7 @@ datum
 			id = "cyanide"
 			result = "cyanide"
 			required_reagents = list("oil" = 1, "ammonia" = 1, "oxygen" = 1) // more or less the industrial route to cyanide
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 1 // let's not make it too easy to mass produce
 			mix_phrase = "The mixture gives off a faint scent of almonds."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2238,7 +2235,7 @@ datum
 			id = "salicylic_acid"
 			result = "salicylic_acid"
 			required_reagents = list("sodium" = 1, "phenol" = 1, "carbon" = 1, "oxygen" = 1, "acid" = 1)
-			//required_temperature = 390
+			//min_temperature = 390
 			result_amount = 5
 			mix_phrase = "The mixture crystallizes."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2248,7 +2245,7 @@ datum
 			id = "menthol"
 			result = "menthol"
 			required_reagents = list("mint" = 1, "ethanol" = 1)
-			required_temperature = T0C + 50
+			min_temperature = T0C + 50
 			result_amount = 1
 			mix_phrase = "Large white crystals precipitate out of the mixture."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2260,7 +2257,7 @@ datum
 			required_reagents = list("iron" = 1, "oxygen" = 1, "acetic_acid" = 1, "salt" = 1)
 			result_amount = 4
 			mix_phrase = "The iron rapidly rusts."
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 
 		thermite
 			name = "Thermite"
@@ -2342,7 +2339,7 @@ datum
 			result = "acid"
 			required_reagents = list("sulfur" = 1, "hydrogen" = 1, "oxygen" = 1) // tobba chem revision: change to SO3 + H2O
 			result_amount = 2
-			//required_temperature = -160
+			//max_temperature = 160
 			mix_phrase = "The mixture gives off a sharp acidic tang."
 			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -2378,7 +2375,7 @@ datum
 			result = "pacid"
 			required_reagents = list("acid" = 1, "fluorine" = 1, "hydrogen" = 1, "potassium" = 1) // tobba chem revision: change to SO3 + HF
 			result_amount = 3
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			mix_phrase = "The mixture deepens to a dark blue, and slowly begins to corrode its container."
 			on_reaction(var/datum/reagents/holder, created_volume)
 				var/location = get_turf(holder.my_atom)
@@ -2410,7 +2407,7 @@ datum
 			result = "penteticacid"
 			required_reagents = list("fuel" = 1, "chlorine" = 1, "ammonia" = 1, "formaldehyde" = 1, "sodium" = 1, "cyanide" = 1)
 			// (dichloroethane + ammonia) + formaldehyde (maybe that should be implemented?) + (sodium cyanide) yields EDTA which is almost DPTA
-			//required_temperature = 310
+			//min_temperature = 310
 			result_amount = 6
 			mix_phrase = "The substance becomes very still, emitting a curious haze."
 
@@ -2420,7 +2417,7 @@ datum
 			result = "acetaldehyde"
 			required_reagents = list("chromium" = 1, "oxygen" = 1, "copper" = 1, "ethanol" = 1)
 			result_amount = 3
-			required_temperature = T0C + 275
+			min_temperature = T0C + 275
 			mix_phrase = "It smells like a bad hangover in here."
 
 		acetic_acid
@@ -2444,7 +2441,7 @@ datum
 			name = "Cyclopentanol"
 			id = "cyclopentanol"
 			result = "cyclopentanol"
-			required_temperature = T0C + 275
+			min_temperature = T0C + 275
 			required_reagents = list("acetic_acid" = 1, "ether" = 1, "barium" = 1, "hydrogen" = 1, "oxygen" = 1)
 			result_amount = 3
 			mix_phrase = "The mixture fizzles into a colorless liquid."
@@ -2453,7 +2450,7 @@ datum
 			name = "Kerosene"
 			id = "kerosene"
 			result = "kerosene"
-			required_temperature = T0C + 600
+			min_temperature = T0C + 600
 			required_reagents = list("cyclopentanol" = 1, "oxygen" = 3, "acetone" = 1, "hydrogen" = 1, "aluminium" = 1, "nickel" = 1)
 			result_amount = 3
 			mix_phrase = "This pungent odor could probably melt steel."
@@ -2465,7 +2462,7 @@ datum
 			result = "formaldehyde"
 			required_reagents = list("ethanol" = 1, "oxygen" = 1, "silver" = 1)
 			//ethanol as methanol, oxidized with a silver catalyst
-			required_temperature = T0C + 150 // really more like 620 but fuck it
+			min_temperature = T0C + 150 // really more like 620 but fuck it
 			result_amount = 2
 			mix_phrase = "Ugh, it smells like the morgue in here."
 
@@ -2474,7 +2471,7 @@ datum
 			id = "haloperidol"
 			result = "haloperidol"
 			required_reagents = list("chlorine" = 1, "fluorine" = 1, "aluminium" = 1, "anti_rad" = 1, "oil" = 1)
-			//required_temperature = 320
+			//min_temperature = 320
 			result_amount = 4
 			mix_phrase = "The chemicals mix into an odd pink slush."
 
@@ -2499,7 +2496,7 @@ datum
 			id = "charcoal"
 			result = "charcoal"
 			required_reagents = list("ash" = 1, "salt" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The mixture yields a fine black powder."
 			mix_sound = 'sound/misc/fuse.ogg'
@@ -2561,7 +2558,7 @@ datum
 			id = "mannitol"
 			result = "mannitol"
 			required_reagents = list("sugar" = 1, "hydrogen" = 1, "water" = 1)
-			//required_temperature = T0C + 150
+			//min_temperature = T0C + 150
 			result_amount = 2
 			mix_phrase = "The mixture bubbles slowly, making a slightly sweet odor."
 
@@ -2579,7 +2576,7 @@ datum
 			id = "perfluorodecalin"
 			result = "perfluorodecalin"
 			required_reagents = list("hydrogen" = 1, "fluorine" = 1, "salicylic_acid" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			// hydrogenate napthalene, then fluorinate
 			result_amount = 2 // lowered because the recipe is very easy
 			mix_phrase = "The mixture rapidly turns into a dense pink liquid."
@@ -2590,7 +2587,7 @@ datum
 			id = "styptic_powder"
 			result = "styptic_powder"
 			required_reagents = list("aluminium" = 1, "oxygen" = 1, "hydrogen" = 1, "acid" = 1)
-			//required_temperature = 325
+			//min_temperature = 325
 			result_amount = 4
 			mix_phrase = "The solution yields an astringent powder."
 
@@ -2607,7 +2604,7 @@ datum
 			id = "methamphetamine"
 			result = "methamphetamine"
 			required_reagents = list("ephedrine" = 1, "phosphorus" = 1, "hydrogen" = 1, "iodine" = 1) // tobba chem revision: change the hydrogen and iodine for hydroiodic acid
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 3
 			mix_phrase = "The solution fizzes and gives off toxic fumes."
 
@@ -2632,7 +2629,7 @@ datum
 			result = "neurodepressant"
 			required_reagents = list("acid" = 1, "neurotoxin" = 2, "acetone" = 1)
 			result_amount = 2
-			required_temperature = T0C + 450
+			min_temperature = T0C + 450
 			mix_phrase = "The neurotoxin breaks down, bubbling violently."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
@@ -2711,7 +2708,7 @@ datum
 			result = "royal_initrobeedril"
 			required_reagents = list("initropidril" = 1, "bee" = 1, "honey" = 1, "dna_mutagen" = 1, "royal_jelly" = 1)
 			result_amount = 5
-			required_temperature = T0C + 200
+			min_temperature = T0C + 200
 			mix_phrase = "A sweet and sugary scent drifts from the royal purple substance."
 			hidden = TRUE
 
@@ -2754,7 +2751,7 @@ datum
 			id = "honk_fart"
 			result = "honk_fart"
 			required_reagents = list("anti_fart" = 1, "fartonium" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 1
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			mix_phrase = "The chemicals hiss and fizz briefly, followed by one big bubble that smells like a fart."
@@ -2963,7 +2960,7 @@ datum
 			#endif
 			hidden = TRUE
 			mix_phrase = "The solution settles and congeals into a strange viscous fluid that seems to have the properties of both a liquid and a gas."
-			required_temperature = 0
+			max_temperature = 0
 
 
 		smokepowder
@@ -3025,7 +3022,7 @@ datum
 			id = "potash1"
 			result = "potash"
 			required_reagents = list("ash" = 1, "water" = 1)
-			required_temperature = T0C + 80
+			min_temperature = T0C + 80
 			result_amount = 1
 			mix_phrase = "A white crystalline residue forms as the water boils off."
 
@@ -3156,7 +3153,7 @@ datum
 			id = "nitrogen_dioxide"
 			result = "nitrogen_dioxide"
 			required_reagents = list("copper_nitrate" = 1)
-			required_temperature = T0C + 180
+			min_temperature = T0C + 180
 			result_amount = 2
 			mix_phrase = "The mixture gives off a biting odor."
 			on_reaction(var/datum/reagents/holder, created_volume)
@@ -3185,7 +3182,7 @@ datum
 			id = "silver_nitrate"
 			result = "silver_nitrate"
 			required_reagents = list("silver" = 1, "nitric_acid" = 2)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 1
 			mix_phrase = "The mixture bubbles and white crystals form."
 			hidden = TRUE
@@ -3198,7 +3195,7 @@ datum
 			id = "silver_fulminate"
 			result = "silver_fulminate"
 			required_reagents = list("silver_nitrate" = 1, "nitric_acid" = 1, "ethanol" = 1)
-			required_temperature = T0C + 80
+			min_temperature = T0C + 80
 			result_amount = 1
 			mix_phrase = "A shining powder precipitates from the mixture."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
@@ -3239,7 +3236,7 @@ datum
 			id = "silver_nitrate_decomposition"
 			result = "silver"
 			required_reagents = list("silver_nitrate" = 1)
-			required_temperature = T0C + 300
+			min_temperature = T0C + 300
 			result_amount = 1
 			mix_phrase = "Silver specks form in the mixture as it decomposes."
 			hidden = TRUE
@@ -3409,7 +3406,7 @@ datum
 			id = "diethylamine"
 			result = "diethylamine"
 			required_reagents = list("ammonia" = 1, "ethanol" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "A horrible smell pours forth from the mixture."
 			instant = FALSE
@@ -3443,7 +3440,7 @@ datum
 			id= "bathsalts"
 			result = "bathsalts"
 			required_reagents = list("msg" = 1, "yuck" = 1, "denatured_enzyme" = 1, "saltpetre" = 1, "cleaner" = 1, "mercury" = 1, "mugwort" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 6
 			mix_phrase = "Tiny cubic crystals precipitate out of the mixture. Huh."
 			mix_sound = 'sound/misc/fuse.ogg'
@@ -3461,7 +3458,7 @@ datum
 			name = "Diphenhydramine"
 			id = "diphenhydramine"
 			result = "antihistamine"
-			//required_temperature = 320
+			//min_temperature = 320
 			result_amount = 4
 			required_reagents = list("oil" = 1, "carbon" = 1, "bromine" = 1, "diethylamine" = 1, "ethanol" = 1)
 			// benzhydryl(benzene+carbon) bromide + 2-dimethylaminoethanol
@@ -3472,7 +3469,7 @@ datum
 			name = "Sulfonal"
 			id = "sulfonal"
 			result = "sulfonal"
-			//required_temperature = 320
+			//min_temperature = 320
 			result_amount = 2
 			required_reagents = list("acetone" = 1, "diethylamine" = 1, "sulfur" = 1)
 			mix_phrase = "The mixture gives off quite a stench."
@@ -3514,18 +3511,46 @@ datum
 			required_reagents = list("blood" = 1, "dna_mutagen" = 1, "beff" = 1, "spaceacillin" = 1)
 			result_amount = 2
 
-		ecoli // needed for filgrastim vOv
-			name = "E.Coli Bacteria"
-			id = "e.coli"
+		ecoli // hobo-chem recipe to disconnect E.Coli from pathology chems
+			name = "contaminated food E.Coli"
+			id = "contaminated food E.Coli"
 			result = "e.coli"
-			required_reagents = list("poo" = 1, "bacterialmedium" = 1)
+			required_reagents = list("sewage" = 5, "cholesterol" = 4)
 			result_amount = 1
+			instant = 0 // bacteria needs some time to grow in this medium
+			reaction_speed = 0.25
+			mix_phrase = "An unbearable stench emancipates from the mixture as it slowly coagulates."
+			mix_sound = 'sound/misc/fuse.ogg'
+
+			on_reaction(var/datum/reagents/holder, var/created_volume)
+				// sewage is a catalyst and does not get used in the process
+				holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature)
+				// Byproduct is some nutrients from the decomposted egg and some bacterials toxins
+				holder.add_reagent("poo", created_volume * 2,,holder.total_temperature)
+				holder.add_reagent("toxin", created_volume,,holder.total_temperature)
+				// the decomposition process create some unbearable stench
+				var/turf/location = pick(holder.covered_turf())
+				location.fluid_react_single("miasma", created_volume * 4, airborne = 1)
+
+
+		ecoli/ecoli2
+			name = "E.Coli 2"
+			id = "E.Coli 2"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "meat_slurry" = 4)
+
+		ecoli/ecoli3
+			name = "E.Coli 3"
+			id = "E.Coli 3"
+			result = "e.coli"
+			required_reagents = list("sewage" = 5, "beff" = 4)
+
 
 		catdrugs
 			name = "Cat Drugs"
 			id = "catdrugs"
 			result = "catdrugs"
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 3
 			required_reagents = list("catonium" = 1, "psilocybin" = 1, "ammonia" = 1, "fuel" = 1)
 			mix_phrase = "The mixture hisses oddly."
@@ -3535,7 +3560,7 @@ datum
 			name = "Boiled Pee"
 			id = "boilpee"
 			result = "ammonia"
-			required_temperature = T0C + 80
+			min_temperature = T0C + 80
 			result_amount = 1
 			required_reagents = list("urine" = 1, "water" = 1)
 			mix_phrase = "The mixture bubbles and gives off a sharp odor."
@@ -3546,7 +3571,7 @@ datum
 			name = "Crank"
 			id = "crank"
 			result = "crank"
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 5
 			instant = 1
 			required_reagents = list("antihistamine" = 1, "ammonia" = 1, "lithium" = 1, "fuel" = 1, "acid" = 1)
@@ -3573,7 +3598,7 @@ datum
 			name = "Krokodil"
 			id = "krokodil"
 			result = "krokodil"
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 5
 			required_reagents = list("morphine" = 1, "antihistamine" = 1, "cleaner" = 1, "phosphorus" = 1, "potassium" = 1, "fuel" = 1)
 			mix_phrase = "The mixture dries into a pale blue powder."
@@ -3583,7 +3608,7 @@ datum
 			name = "Cthonium"
 			id = "cthonium"
 			result = "cthonium"
-			//required_temperature = 666
+			//min_temperature = 666
 			result_amount = 2
 			//required_reagents = list("el_diablo" = 1, "salts1" = 1,"mugwort" = 1, "catonium" = 1, "bloodc" = 1, "sulfur" = 1, "liquid spacetime" = 1, "strange_reagent" = 1)
 			required_reagents = list("blood" = 1, "sulfur" = 1, "plasma" = 1)
@@ -3650,7 +3675,7 @@ datum
 			id = "badgrease"
 			result = "badgrease"
 			required_reagents = list("grease" = 1, "hydrogen" = 1)
-			required_temperature = T0C + 250
+			min_temperature = T0C + 250
 			result_amount = 2
 			mix_phrase = "The mixture emits a burnt, oily smell."
 
@@ -3659,7 +3684,7 @@ datum
 			id = "cornsyrup"
 			result = "cornsyrup"
 			required_reagents = list("cornstarch" = 1, "acid" = 1)
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			result_amount = 2
 			mix_phrase = "The mixture forms a viscous, clear fluid!"
 
@@ -3677,7 +3702,7 @@ datum
 			result = "gravy"
 			required_reagents = list("porktonium" = 1, "milk" = 1, "cornstarch" = 1)
 			result_amount = 3
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			mix_phrase = "The substance thickens and takes on a meaty odor."
 
 		pepperoni
@@ -3831,7 +3856,7 @@ datum
 			result = "life"
 			required_reagents = list("synthflesh" = 5, "blood" = 2, "strange_reagent" = 1)
 			result_amount = 8
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			mix_phrase = "The substance begins to wriggle disgustingly and climbs out of its container!"
 			hidden = TRUE
 			var/static/reaction_count = 0
@@ -3849,7 +3874,18 @@ datum
 					if(1 to 70)
 						new /mob/living/carbon/cube/meat(location)
 					if(71 to 94)
-						var/critter = pick(/mob/living/critter/small_animal/cockroach, /obj/critter/pig, /mob/living/critter/small_animal/cat, /mob/living/critter/small_animal/mouse, /mob/living/critter/small_animal/wasp, /obj/critter/owl, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/domestic_bee, /obj/critter/walrus, /obj/critter/sealpup)
+						var/critter = pick(
+						/mob/living/critter/small_animal/cockroach,
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/cat,
+						/mob/living/critter/small_animal/mouse,
+						/mob/living/critter/small_animal/wasp,
+						/mob/living/critter/small_animal/bird/owl,
+						/mob/living/critter/small_animal/bird/goose,
+						/mob/living/critter/small_animal/bird/goose/swan,
+						/obj/critter/domestic_bee,
+						/mob/living/critter/small_animal/walrus,
+						/mob/living/critter/small_animal/seal)
 						new critter(location)
 					if(95 to 97)
 						if (location.density)
@@ -3872,7 +3908,7 @@ datum
 			result = "ageinium"
 			required_reagents = list("acetone" = 1, "chocolate" = 1, "tea" = 1, "nicotine" = 1, "formaldehyde" = 1)
 			result_amount = 3
-			required_temperature = T0C + 117 // world's oldest person!
+			min_temperature = T0C + 117 // world's oldest person!
 			mix_phrase = "The bubbling mixture gives off a scent of perfume, hard candy, and death."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			hidden = TRUE
@@ -3903,7 +3939,7 @@ datum
 			result = "werewolf_part3"
 			required_reagents = list("werewolf_part1" = 1, "werewolf_part2" = 1)
 			result_amount = 2
-			required_temperature = T0C + 150
+			min_temperature = T0C + 150
 			hidden = TRUE
 
 		werewolf_serum_fake4
@@ -3947,7 +3983,7 @@ datum
 			required_reagents = list("sonicpowder" = 1, "egg" = 1, "bloodc" = 1, "strange_reagent" = 1, "sorium" = 1, "dna_mutagen" = 3)
 			result_amount = 1
 			// has to be <50C, as changeling blood boils off at that
-			required_temperature = T0C + 45
+			min_temperature = T0C + 45
 			mix_phrase = "The reagents combine with an audible ho0t."
 			mix_sound = 'sound/voice/animal/hoot.ogg'
 			hidden = TRUE
@@ -4010,7 +4046,7 @@ datum
 			result = null //"flaptonium"
 			required_reagents = list("egg" = 1, "colors" = 1, "chickensoup" = 1, "strange_reagent" = 1, "blood" = 1)
 			instant = 1
-			required_temperature = T0C + 100
+			min_temperature = T0C + 100
 			mix_phrase = "The substance turns an airy sky-blue and foams up into a new shape." // heh get it, get it, birds, sky, airy??? heh im the master of humor
 			mix_sound = 'sound/voice/burp.ogg'
 			var/static/reaction_count = 0
@@ -4086,7 +4122,7 @@ datum
 			id = "nitrogentriiodide"
 			result = "nitrotri_wet"
 			required_reagents = list("lube" = 1, "iodine" = 2, "silver" = 1, "fluorine" = 1, "cryostylane" = 1) //, "perfluorodecalin" = 1, "oil" = 1, "chlorine" = 1)
-			required_temperature = - 233 // -30 degrees celsius
+			max_temperature = T0C - 30 // -30 degrees celsius
 			min_temperature = 200 //Will not react below 200 K
 
 			/*
@@ -4116,7 +4152,7 @@ datum
 			id = "madness_toxin"
 			result = "madness_toxin"
 			required_reagents = list("prions" = 1, "methamphetamine" = 1, "mercury" = 1, "haloperidol" = 1, "sulfonal" = 1, "plasma" = 1, "LSD" = 1)
-			//required_temperature = 100 - T0C
+			//max_temperature = T0C - 100
 			result_amount = 8
 			mix_phrase = "The mixture forms a clear greenish liquid, emitting a nauseating smell reminiscent of chlorophyll and rubbing alcohol."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -4173,7 +4209,7 @@ datum
 			id = "reversium"
 			result = "reversium"
 			required_reagents = list("fliptonium" = 1, "hugs" = 1, "dna_mutagen" = 1, "mutagen" = 1)
-			//required_temperature = 100 - T0C
+			//max_temperature = T0C - 100
 			result_amount = 1
 			mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -4289,7 +4325,7 @@ datum
 			result = "lime"
 			required_reagents = list("calcium_carbonate" = 1)
 			result_amount = 1
-			required_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
+			min_temperature = T0C + 600 //actually synthesises at 825c/1090k but that wont work so lets put it down to an achievable num
 			mix_phrase = "The white powder settles into little clusters of powder."
 			mix_sound = 'sound/misc/fuse.ogg'
 
