@@ -225,9 +225,8 @@
 			src.icon_state = src.icon_style
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
 		..()
-		src.smash(T)
+		src.shatter()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"

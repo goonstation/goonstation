@@ -27,6 +27,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 	var/image/lid_image = null
 	var/original_icon_state = null
 
+	var/can_shatter = FALSE //!if true, container will shatter when reactions proc the shatter effect
+
 	New(loc, new_initial_reagents)
 		..()
 		last_new_initial_reagents = new_initial_reagents
@@ -148,6 +150,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		current_lid = null
 		src.UpdateOverlays(null, "lid")
 
+	proc/shatter()
+		if(!can_shatter)
+			return
+		for(var/mob/M in AIviewers(src))
+			boutput(M, "<span class='alert'>The <B>[src.name]</B> shatters!</span>")
+		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+		src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+		var/obj/item/raw_material/shard/glass/shard = new /obj/item/raw_material/shard/glass
+		shard.set_loc(get_turf(src))
+		qdel(src)
+
 ///Returns a serialized representation of the reagents of an atom for use with the ReagentInfo TGUI components
 ///Note that this is not a built in TGUI proc
 proc/ui_describe_reagents(atom/A)
@@ -193,6 +206,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "null"
 	amount_per_transfer_from_this = 10
 	can_recycle = TRUE //can this be put in a glass recycler?
+	can_shatter = TRUE
 	var/splash_all_contents = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
@@ -470,14 +484,6 @@ proc/ui_describe_reagents(atom/A)
 			boutput(user, "<span class='notice'>You loosen your grip on the [src]. You will now splash all of the [src]'s contents.</span>")
 			src.splash_all_contents = 1
 		return
-
-	proc/smash()
-		playsound(src.loc, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
-		var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
-		G.set_loc(src.loc)
-		var/turf/U = src.loc
-		src.reagents.reaction(U)
-		qdel(src)
 
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
