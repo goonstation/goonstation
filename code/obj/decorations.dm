@@ -988,13 +988,13 @@
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
 		name = "Fugere" // formerly known as fugg
-		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
+		desc = "A dying red subgiant star shrouded in cast-off shells of gas. Its name derives from the Latin verb, meaning to run away. It's sometimes called Fugg for short."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
 		name = "Šid" // formerly known as Shidd, and the two stars were named the other way around once
-		desc = "A blazing young blue star."
+		desc = "A blazing young blue star. Its name derives from the ancient persian name, Jamšid, where šid means brilliant or radiant. It's sometimes called Shidd for laughs."
 
 
 	domus_dei
