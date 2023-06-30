@@ -575,6 +575,6 @@ all for the love of you.</tt>"}
 			now?"}
 
 /obj/item/paper/book/from_file/where_am_i
-	name = "Where am I? A guide to the Typhon system."
+	name = "Where am I? A guide to the Frontier System."
 	icon_state = "bookwai"
 	file_path = "strings/books/where_am_i.txt"
