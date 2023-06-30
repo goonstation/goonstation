@@ -31,6 +31,7 @@
 #define UNIT_TEST_PASSED 0
 #define UNIT_TEST_FAILED 1
 
+#include "metadata_type_typos.dm"
 #include "rand.dm"
 #include "deletions.dm"
 #include "monkey_thunderdome.dm"
