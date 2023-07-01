@@ -157,24 +157,28 @@
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
+#define ROBOT_DRUG_VOLUME 25
 		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
 		for (var/mob/living/L in global.mobs)
 			if (issilicon(L) || isAIeye(L))
 				if (prob(33))
 					var/had_reagents = FALSE
 					if (!L.reagents)
-						L.create_reagents(25)
+						L.create_reagents(ROBOT_DRUG_VOLUME)
 						had_reagents = TRUE
 					L.metabolizes = TRUE
 					L.add_lifeprocess(/datum/lifeprocess/chems)
-
-					L.reagents.add_reagent(pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin"), 25)
+					var/drugid = pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin")
+					L.reagents.add_reagent(drugid, ROBOT_DRUG_VOLUME)
 
 					SPAWN(rand(1 MINUTE, 2 MINUTES))
 						if (!had_reagents)
 							qdel(L.reagents)
+						else
+							L.reagents.remove_reagent(drugid, ROBOT_DRUG_VOLUME)
 						L.metabolizes = initial(L.metabolizes)
 						L.remove_lifeprocess(/datum/lifeprocess/chems)
+#undef ROBOT_DRUG_VOLUME
 
 		SPAWN(message_delay * stage_delay)
 
