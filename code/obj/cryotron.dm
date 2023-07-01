@@ -198,7 +198,8 @@
 							add_person_to_storage(user)
 							respawn_controller.subscribeNewRespawnee(user.ckey)
 							user.mind?.get_player()?.dnr = TRUE
-							user.remove()
+							user.ghostize()
+       qdel(user)
 							return 1
 
 		return 0
