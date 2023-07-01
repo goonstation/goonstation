@@ -60,7 +60,8 @@
 	pixel_y = 10;
 	pixel_x = 5
 	},
-/obj/item/reagent_containers/food/drinks/bottle/cider,
+/obj/random_item_spawner/fruits/veggies/some,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/floor/wood/seven,
 /area/space)
 "N" = (
