@@ -22,7 +22,7 @@
 /turf/simulated/floor/wood/seven,
 /area/dmm_suite/clear_area)
 "t" = (
-/turf/unsimulated/wall/auto/supernorn/wood,
+/turf/simulated/wall/auto/supernorn/wood,
 /area/dmm_suite/clear_area)
 "x" = (
 /obj/machinery/light/small/sticky/warm,
