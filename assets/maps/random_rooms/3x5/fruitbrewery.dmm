@@ -31,7 +31,8 @@
 "B" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small/sticky/warm{
-	dir = 1
+	dir = 1;
+	pixel_y = 15
 	},
 /obj/random_item_spawner/fruits/some,
 /turf/simulated/floor/carpet/red/standard/narrow/north,

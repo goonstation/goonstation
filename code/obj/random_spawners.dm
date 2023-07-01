@@ -1914,13 +1914,16 @@
 		/obj/item/reagent_containers/food/snacks/plant/lettuce,
 		/obj/item/reagent_containers/food/snacks/plant/bean,
 		/obj/item/reagent_containers/food/snacks/plant/peas,
+		/obj/item/reagent_containers/food/snacks/plant/peas/ammonia,
 		/obj/item/reagent_containers/food/snacks/plant/potato,
 		/obj/item/reagent_containers/food/snacks/plant/pumpkin,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
 		/obj/item/reagent_containers/food/snacks/plant/garlic,
 		/obj/item/reagent_containers/food/snacks/plant/eggplant,
 		/obj/item/reagent_containers/food/snacks/plant/turmeric,
 		/obj/item/reagent_containers/food/snacks/plant/mustard,
-		/obj/item/reagent_containers/food/snacks/plant/bamboo
+		/obj/item/reagent_containers/food/snacks/plant/bamboo,
+		/obj/item/reagent_containers/food/snacks/plant/soylent
 	)
 
 	New()
@@ -1933,13 +1936,17 @@
 		items2spawn = concrete_typesof(/obj/item/reagent_containers/food/snacks/plant) \
 		// Exclude veggies
 		- veggie_list \
-		// Exclude toxic / dangerous fruits
+		// Exclude toxic / dangerous / fruits or subtypes
 		- list(/obj/item/reagent_containers/food/snacks/plant/pear/sickly,
 		/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon,
+		/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte,
 		/obj/item/reagent_containers/food/snacks/plant/slurryfruit,
 		/obj/item/reagent_containers/food/snacks/plant/slurryfruit/omega,
 		/obj/item/reagent_containers/food/snacks/plant/purplegoop,
-		/obj/item/reagent_containers/food/snacks/plant/melon/bowling
+		/obj/item/reagent_containers/food/snacks/plant/purplegoop/orangegoop,
+		/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili,
+		/obj/item/reagent_containers/food/snacks/plant/melon/bowling,
+		/obj/item/reagent_containers/food/snacks/plant/apple/stick
 		)
 
 	one
