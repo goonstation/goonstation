@@ -2,7 +2,7 @@
 "a" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/stairs/wood,
-/area/space)
+/area/dmm_suite/clear_area)
 "o" = (
 /obj/reagent_dispensers/still{
 	pixel_y = 10
@@ -14,20 +14,20 @@
 	pixel_x = -10
 	},
 /turf/unsimulated/floor/wood/five,
-/area/space)
+/area/dmm_suite/clear_area)
 "p" = (
 /obj/submachine/chef_sink{
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "t" = (
 /turf/unsimulated/wall/auto/supernorn/wood,
-/area/space)
+/area/dmm_suite/clear_area)
 "x" = (
 /obj/machinery/light/small/sticky/warm,
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "B" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small/sticky/warm{
@@ -36,7 +36,7 @@
 	},
 /obj/random_item_spawner/fruits/some,
 /turf/simulated/floor/carpet/red/standard/narrow/north,
-/area/space)
+/area/dmm_suite/clear_area)
 "C" = (
 /obj/reagent_dispensers/still{
 	pixel_x = 2;
@@ -47,15 +47,15 @@
 	pixel_y = 20
 	},
 /turf/unsimulated/floor/wood/five,
-/area/space)
+/area/dmm_suite/clear_area)
 "D" = (
 /turf/unsimulated/floor/wood/five,
-/area/space)
+/area/dmm_suite/clear_area)
 "E" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/fruits/few,
 /turf/simulated/floor/carpet/red/standard/narrow/south,
-/area/space)
+/area/dmm_suite/clear_area)
 "J" = (
 /obj/storage/secure/closet/fridge{
 	pixel_y = 10;
@@ -64,10 +64,10 @@
 /obj/random_item_spawner/fruits/veggies/some,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 "N" = (
 /turf/simulated/floor/wood/seven,
-/area/space)
+/area/dmm_suite/clear_area)
 
 (1,1,1) = {"
 B
