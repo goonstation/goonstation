@@ -148,10 +148,27 @@
 		if (amount <= 0)
 			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
 			return
+		else if (istype(src, /obj/machinery/portable_atmospherics/scrubber))
+			var/fillfrom = tgui_alert(user, "Fill balloon from liquid tank or air tank?", "Fill balloon", list("Air tank", "Liquid tank", "Cancel"))
+			if (fillfrom == "Cancel")
+				return
+			else if (fillfrom == "Liquid tank")
+				if (!src.reagents.total_volume && src.reagents)
+					user.show_text("[src] is empty.", "red")
+					return
+				if (reagents && reagents.total_volume >= reagents.maximum_volume)
+					user.show_text("[balloon] is full.", "red")
+					return
+				var/transferamt = balloon.reagents.maximum_volume - balloon.reagents.total_volume
+				var/trans = src.reagents.trans_to(balloon, transferamt)
+				user.show_text("You fill [balloon] with [trans] units of the contents of [src].", "blue")
+				user.update_inhands()
+				return
+			else
 		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
 		balloon.air.merge(removed)
 		balloon.UpdateIcon()
 		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] fills [balloon] from src.</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
-		return // copied from canister.dm heres to hoping i broke nothing
+		return // cut n' pasted from canister.dm heres to hoping i broke nothing
 	return
