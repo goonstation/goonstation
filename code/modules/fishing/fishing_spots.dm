@@ -115,9 +115,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/herring = 6,\
 	/obj/item/fish/red_herring = 1)
 
-/datum/fishing_spot/toilet/random
-	fishing_atom_type = /obj/item/storage/toilet/random
-
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
 	rod_tier_required = 3
@@ -207,9 +204,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 		var/atom/result = ..()
 		result.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 		return result
-
-/datum/fishing_spot/nuclear_reactor/prefilled
-	fishing_atom_type = /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/normal
 
 // Gannets new fishing spots
 // todo adjust availible fish lists & balance probabilities.
@@ -368,9 +362,6 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/mandarin_fish = 5,\
 	/obj/item/fish/lionfish = 15,\
 	/obj/item/fish/betta = 30)
-
-/datum/fishing_spot/watertank/big
-	fishing_atom_type = /obj/reagent_dispensers/watertank/big
 
 /datum/fishing_spot/river
 	fishing_atom_type = /obj/river
