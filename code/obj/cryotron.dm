@@ -183,7 +183,7 @@
 					if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
 						if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
 							add_person_to_storage(user)
-							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
+							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round to observe and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
 						return 1
 
 				if ("Observe")
