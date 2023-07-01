@@ -842,7 +842,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 		if (user.mind?.assigned_role == "Research Director")
 			. = "<br>A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
 		else
-			. = "<br>A stash of drugs. This might just be the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
+			. = "<br>A stash of drugs, and maybe the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
 
 /obj/table/reinforced/chemistry/allinone
 	name = "jam-packed lab counter"
