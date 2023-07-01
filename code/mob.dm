@@ -232,6 +232,8 @@
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
+	/// If TRUE then this mob won't be fully stunned by stamina stuns
+	var/no_stamina_stuns = FALSE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -1446,10 +1448,11 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	if (isnull(src.mind.miranda))
-		src.say_verb("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
+	var/miranda = src.mind.get_miranda()
+	if (isnull(miranda))
+		src.say_verb(DEFAULT_MIRANDA)
 		return
-	src.say_verb(src.mind.miranda)
+	src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1458,12 +1461,7 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		if (isnull(src.mind.miranda))
-			src.mind.set_miranda("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
-
-		src.mind.show_miranda(src)
-
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda) as null|text
+		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
 		if (!new_rights || new_rights == src.mind.miranda)
 			src.show_text("Miranda rights not changed.", "red")
 			return
@@ -1958,8 +1956,8 @@
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
-			var/obj/critter/owl/O = new /obj/critter/owl(src.loc)
-			O.name = pick("Hooty Mc[src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
+			var/mob/living/critter/small_animal/bird/owl/owl = new /mob/living/critter/small_animal/bird/owl(src.loc)
+			owl.name = pick("Hooty Mc [src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()

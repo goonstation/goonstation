@@ -16122,7 +16122,7 @@
 	})
 "FJ" = (
 /obj/stool/chair/wooden,
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -16133,7 +16133,7 @@
 	name = "Demeter Primary Zone"
 	})
 "FL" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "grass"
@@ -16427,7 +16427,7 @@
 	name = "Meridian Maintenance"
 	})
 "Gm" = (
-/obj/critter/owl,
+/mob/living/critter/small_animal/bird/owl,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -21199,7 +21199,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pp" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
@@ -21213,7 +21213,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pr" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"

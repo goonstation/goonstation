@@ -1284,8 +1284,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	sample_reagent = "martian_flesh"
 	sample_verb = "scoop"
 	can_sample = 1
-	icon = null
-	icon_state = "rel-gib2"
+	icon_state = "gib2"
 
 /obj/decal/cleanable/martian_viscera/fluid
 	name = "sticky martian goop"
@@ -1456,12 +1455,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 
 	Crossed(atom/movable/AM as mob|obj)
 		..()
-		if (istype(AM, /obj/critter/slug))
-			var/obj/critter/slug/S = AM
-			S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-			S.CritterDeath()
-			return
-		else if (!isliving(AM) || isobj(AM) || isintangible(AM))
+		if (!isliving(AM) || isobj(AM) || isintangible(AM))
 			return
 		var/mob/M = AM
 		var/oopschance = 0
