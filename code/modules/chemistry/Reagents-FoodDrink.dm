@@ -2788,10 +2788,6 @@ datum
 
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/slug))
-					var/obj/critter/slug/S = O
-					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-					S.CritterDeath()
 				if(istype(O, /obj/decal/icefloor))
 					qdel(O)
 				..(O, volume)

@@ -33083,7 +33083,7 @@
 	},
 /area/station/crew_quarters/pool)
 "buX" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "buY" = (
@@ -33759,7 +33759,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwI" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwJ" = (
