@@ -113,6 +113,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/bass = 9,\
 	/obj/item/fish/salmon = 7,\
 	/obj/item/fish/herring = 6,\
+	/obj/item/fish/real_goldfish = 5,\
 	/obj/item/fish/red_herring = 1)
 
 /datum/fishing_spot/spatial_tear
@@ -374,6 +375,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/flounder = 15,\
 	/obj/item/fish/barracuda = 5,\
 	/obj/item/fish/sailfish = 2,\
+	/obj/item/fish/treefish = 5,\
 	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
 	/mob/living/critter/small_animal/frog = 10)
@@ -387,6 +389,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/plant/herb/grass = 20,\
 	/mob/living/critter/small_animal/slug = 10,\
 	/mob/living/critter/small_animal/snake = 10,\
+	/obj/item/fish/treefish = 5,\
 	/mob/living/critter/small_animal/frog = 10)
 
 /datum/fishing_spot/blob
@@ -404,6 +407,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/raw_material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
+	/obj/item/fish/real_goldfish = 5,\
 	/obj/item/light/bulb/yellow/broken = 20)
 
 /datum/fishing_spot/janitor_bucket
@@ -455,6 +459,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/fish/tiger_oscar = 15,\
 	/obj/item/fish/eel = 15,\
 	/obj/item/fish/bass = 30,\
+	/obj/item/fish/real_goldfish = 5,\
 	/obj/item/fish/salmon = 20)
 
 // Alien/mutant fishing spots
@@ -465,13 +470,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/mob/living/critter/blobman = 5,\
 	/mob/living/critter/blobman/meat = 5,\
 	/obj/item/fish/eye_mutant = 15,\
+	/obj/item/fish/lingfish = 5,\
 	/obj/decal/cleanable/blood/gibs = 25,\
 	/obj/decal/cleanable/blood/gibs/core = 25)
 
 /datum/fishing_spot/lava_moon
 	fishing_atom_type = /turf/unsimulated/floor/lava
 	rod_tier_required = 3
-	fish_available = list(/obj/item/fish/firefish = 20,\
+	fish_available = list(/obj/item/fish/lava_fish = 25,\
+	/obj/item/fish/igneous_fish = 10,\
 	/obj/item/material_piece/slag = 20,\
 	/obj/decal/cleanable/ash = 20,\
 	/obj/item/reagent_containers/food/snacks/yuckburn = 20,\
@@ -663,7 +670,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/furnace
 	fishing_atom_type = /obj/machinery/power/furnace/thermo
 	rod_tier_required = 2
-	fish_available = list(/obj/item/fish/firefish = 50)
+	fish_available = list(/obj/item/fish/lava_fish = 25, \
+	/obj/item/fish/igneous_fish = 10)
 
 //#1 HOS mug
 /datum/fishing_spot/hosmug
@@ -676,13 +684,15 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fishing_atom_type = /obj/machinery/vending
 	rod_tier_required = 1
 	fish_available = list(/obj/item/coin = 25,\
+	/obj/item/fish/real_goldfish = 5,\
 	/obj/item/currency/spacecash/really_small = 20)
 
 //Arc electroplater
 /datum/fishing_spot/arc_electroplater
 	fishing_atom_type = /obj/machinery/arc_electroplater
 	rod_tier_required = 3
-	fish_available = list(/obj/item/fish/firefish = 50)
+	fish_available = list(/obj/item/fish/lava_fish = 25, \
+	/obj/item/fish/igneous_fish = 10)
 
 //golden toilet
 datum/fishing_spot/golden_toilet
