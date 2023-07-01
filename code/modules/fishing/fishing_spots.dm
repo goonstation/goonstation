@@ -404,10 +404,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	/obj/item/raw_material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
-	/obj/machinery/light/small/broken = 20)
-
-/datum/fishing_spot/disposal_chute/small
-	fishing_atom_type = /obj/machinery/disposal/small
+	/obj/item/light/bulb/yellow/broken = 20)
 
 /datum/fishing_spot/janitor_bucket
 	fishing_atom_type = /obj/mopbucket
@@ -713,7 +710,7 @@ datum/fishing_spot/golden_toilet
 	/obj/item/raw_material/shard/glass = 10,\
 	/obj/item/cigbutt = 20,\
 	/obj/item/reagent_containers/food/drinks/bottle/empty = 20,\
-	/obj/machinery/light/small/broken = 20)
+	/obj/item/light/bulb/yellow/broken = 20)
 
 //nadir ocean
 /datum/fishing_spot/nadir_ocean

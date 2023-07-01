@@ -1301,6 +1301,9 @@ TYPEINFO(/obj/item/light)
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+
+		broken
+			light_status = LIGHT_BROKEN
 	yellowish
 		name = "yellowish light bulb"
 		desc = "Fancy."
