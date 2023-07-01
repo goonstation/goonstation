@@ -760,11 +760,11 @@ proc/create_fluff(datum/mind/target)
 		if (!owner.current || isdead(owner.current))
 			return FALSE
 
-		for (var/datum/mind/mindCheck in get_all_antagonists(ROLE_GANG_LEADER))
-			if (mindCheck == owner)
+		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+			if (antagonist_role.owner == owner)
 				continue
 
-			if (mindCheck?.current && !isdead(mindCheck.current))
+			if (antagonist_role.owner.current && !isdead(antagonist_role.owner.current))
 				return FALSE
 
 		return TRUE

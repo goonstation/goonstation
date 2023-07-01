@@ -974,7 +974,7 @@
 /turf/simulated/floor/grass,
 /area/prefab/sea_monkey_hideout)
 "dd" = (
-/obj/critter/sealpup,
+/mob/living/critter/small_animal/seal,
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "de" = (
@@ -1064,7 +1064,7 @@
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "ds" = (
-/obj/critter/walrus,
+/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/prefab/sea_monkey_hideout)
 "dt" = (
