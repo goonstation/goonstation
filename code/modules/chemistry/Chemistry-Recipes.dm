@@ -1285,7 +1285,7 @@ datum
 			mix_phrase = "The drink turns a rich brown and smells like a hangover."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		cocktail_irishcoffee
+		cocktail_irishcoffee/fresh
 			id = "irishcoffee_fresh"
 			required_reagents = list("coffee_fresh" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
 
