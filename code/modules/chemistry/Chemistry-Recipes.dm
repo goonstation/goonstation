@@ -644,8 +644,8 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
 
-		laurapalmer/laurapalmer2
-			id = "laurapalmer2"
+		laurapalmer/fresh
+			id = "laurapalmer_fresh"
 			required_reagents = list("lemonade" = 1, "coffee_fresh" = 1)
 			result_amount = 2
 
@@ -738,10 +738,14 @@ datum
 			name = "cafe gele"
 			id = "cafe_gele"
 			result = "cafe_gele"
-			required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
+			required_reagents = list("coffee" = 6, "vanilla" = 1, "sugar" = 1)
 			result_amount = 8
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
+
+		cafe_gele/fresh
+			id = "cafe_gele_fresh"
+			required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
 
 		sodawater
 			name = "soda water"
@@ -1248,6 +1252,10 @@ datum
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
 		cocktail_b_russian/espresso
+			id = "b_russian_fresh"
+			required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
+
+		cocktail_b_russian/espresso
 			id = "b_russian_espresso"
 			required_reagents = list("vodka" = 1, "espresso" = 1)
 
@@ -1260,10 +1268,13 @@ datum
 			mix_phrase = "The drink abides."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
+		cocktail_w_russian/fresh
+			id = "w_russian_fresh"
+			required_reagents = list("vodka" = 1, "coffee_fresh" = 1, "milk" = 1)
+
 		cocktail_w_russian/w_russian2
 			id = "w_russian2"
 			required_reagents = list("b_russian" = 2, "milk" = 1)
-			result_amount = 3
 
 		cocktail_irishcoffee
 			name = "Irish Coffee"
@@ -1273,6 +1284,10 @@ datum
 			result_amount = 4
 			mix_phrase = "The drink turns a rich brown and smells like a hangover."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_irishcoffee
+			id = "irishcoffee_fresh"
+			required_reagents = list("coffee_fresh" = 1, "bourbon" = 1, "milk" = 1, "sugar" = 1)
 
 		cocktail_dbreath
 			name = "Dragon's Breath"
@@ -1328,6 +1343,11 @@ datum
 			result_amount = 2
 			mix_phrase = "The coffee, tonic, and vodka separate into dangerously drinkable layers."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		cocktail_eraser/fresh
+			id = "eraser_fresh"
+			result = "eraser"
+			required_reagents = list("vtonic" = 1, "coffee_fresh" = 1)
 
 		cocktail_madmen
 			name = "Old Fashioned"
@@ -1424,10 +1444,9 @@ datum
 			mix_phrase = "The coffee and tequila mix together. Liqueur? Who needs it?"
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		cocktail_bull/bull2
-			id = "bull2"
+		cocktail_bull/fresh
+			id = "bull_fresh"
 			required_reagents = list("tequila" = 1, "coffee_fresh" = 1)
-			result_amount = 2
 
 		cocktail_longisland_rcola
 			name = "Long Island Iced Tea"
@@ -1784,6 +1803,10 @@ datum
 			mix_sound = 'sound/voice/farts/fart3.ogg'
 			drinkrecipe = 1
 
+		duck_fart/fresh
+			id = "duckfart_fresh"
+			required_reagents = list("bourbon" = 1, "coffee_fresh" =1 , "milk" = 1)
+
 		pink_lemonade
 			name = "Pink lemonade"
 			id = "pinklemonade"
@@ -1876,10 +1899,9 @@ datum
 			mix_phrase = "Everything mixes together nicely, releasing a sweet smell."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		iced/thaiicedcoffee/thaiicedcoffee2
-			id = "thaiicedcoffee2"
+		iced/thaiicedcoffee/fresh
+			id = "thaiicedcoffee_fresh"
 			required_reagents = list("coffee_fresh" = 3, "sugar" = 1, "milk" = 1, "ice" = 1)
-			result_amount = 6
 
 		pepperminthotchocolate
 			name = "Peppermint Hot Chocolate"
@@ -3724,6 +3746,10 @@ datum
 			result_amount = 5
 			mix_phrase = "The solution emits a tutti frutti stench."
 			hidden = TRUE
+
+		energydrink/fresh
+			id = "energydrink_fresh"
+			required_reagents = list("voltagen" = 1, "coffee_fresh" = 1, "cola" = 3)
 
 		voltagen_arc
 			name = "Voltagen Arc"
