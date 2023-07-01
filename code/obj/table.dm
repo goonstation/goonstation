@@ -774,8 +774,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "basic supply lab counter"
 	desc = "Everything an aspiring chemist needs to start making chemicals!"
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/paper/book/from_file/pharmacopia,
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox = 2,
 				/obj/item/reagent_containers/glass/beaker/large = 2,
 				/obj/item/clothing/glasses/spectro,
@@ -787,8 +786,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "auxiliary supply lab counter"
 	desc = "Extra supplies for the discerning chemist."
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/storage/box/beakerbox,
+	drawer_contents = list(/obj/item/storage/box/beakerbox,
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/reagent_containers/food/drinks/fueltank,
@@ -803,9 +801,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "clerical supply lab counter"
 	desc = "It's only science if you write it down! Or blow yourself up."
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/paper_bin = 2,
-				/obj/item/hand_labeler
+	drawer_contents = list(/obj/item/paper_bin = 2,
+				/obj/item/hand_labeler,
 				/obj/item/clipboard = 2,
 				/obj/item/pen,
 				/obj/item/stamp,
@@ -815,18 +812,16 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 
 /obj/table/reinforced/chemistry/firstaid
 	name = "toxin care lab counter"
-	desc = "These drawers have been labeled "EMERGENCY TOXIN CARE," which means they're probably already close to empty."
+	desc = "These drawers have been labeled EMERGENCY TOXIN CARE, which means they're probably already close to empty."
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/storage/firstaid/toxin,
+	drawer_contents = list(/obj/item/storage/firstaid/toxin,
 				/obj/item/reagent_containers/emergency_injector/calomel)
 
 /obj/table/reinforced/chemistry/chemstorage
 	name = "chemical storage lab counter"
 	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/reagent_containers/glass/bottle/oil,
+	drawer_contents = list(/obj/item/reagent_containers/glass/bottle/oil,
 				/obj/item/reagent_containers/glass/bottle/phenol,
 				/obj/item/reagent_containers/glass/bottle/acid,
 				/obj/item/reagent_containers/glass/bottle/acetone,
@@ -837,8 +832,7 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	name = "seedy-looking lab counter"
 	desc = ""
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/plant/herb/cannabis/spawnable = 2,
+	drawer_contents = list(/obj/item/plant/herb/cannabis/spawnable = 2,
 				/obj/item/device/light/zippo,
 				/obj/item/reagent_containers/syringe/krokodil,
 				/obj/item/reagent_containers/syringe/morphine,
@@ -846,16 +840,15 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind?.assigned_role == "Research Director")
-			. = "A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
+			. = "<br>A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
 		else
-			. = "A stash of drugs. This might just be the RD's only positive contribution to the station. Too bad they cheaped out on the selection."
+			. = "<br>A stash of drugs. This might just be the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
 
 /obj/table/reinforced/chemistry/allinone
 	name = "jam-packed lab counter"
 	desc = "The drawers on these barely close, and rattle loudly when moved. Guess they tried to put too much crap in it."
 	has_drawer = TRUE
-	drawer_contents =
-		list(	/obj/item/paper/book/from_file/pharmacopia,
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
 				/obj/item/storage/box/beakerbox = 2,
 				/obj/item/storage/box/syringes,
 				/obj/item/paper_bin,
