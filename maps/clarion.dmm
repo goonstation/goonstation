@@ -15552,7 +15552,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/mob/living/critter/small_animal/dog/george/orwell,
+/mob/living/critter/small_animal/dog/blair,
 /turf/simulated/floor/carpet{
 	dir = 4;
 	icon_state = "fgreen2"
