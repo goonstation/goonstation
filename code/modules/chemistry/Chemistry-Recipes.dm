@@ -1251,7 +1251,7 @@ datum
 			mix_phrase = "The drink turns a deep brown as the coffee settles in."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 
-		cocktail_b_russian/espresso
+		cocktail_b_russian/fresh
 			id = "b_russian_fresh"
 			required_reagents = list("vodka" = 1, "coffee_fresh" = 1)
 
