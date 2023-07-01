@@ -8,10 +8,10 @@
 /datum/poll_ballot
 
 /datum/poll_ballot/ui_state(mob/user)
-	return tgui_admin_state.can_use_topic(src, user)
+	return tgui_always_state.can_use_topic(src, user)
 
 /datum/poll_ballot/ui_status(mob/user)
-	return tgui_admin_state.can_use_topic(src, user)
+	return tgui_always_state.can_use_topic(src, user)
 
 /datum/poll_ballot/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -44,7 +44,6 @@
 				option = copytext(html_encode(option), 1, MAX_MESSAGE_LEN)
 				if (option)
 					options += option
-			//options = json_encode(options)
 			if (!options) return
 
 			var/multiple_choice = tgui_alert(ui.user, "Multiple choice?", "Add Poll", list("Yes", "No"))
@@ -71,7 +70,6 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
 
@@ -87,7 +85,6 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
 
@@ -119,7 +116,6 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
 
@@ -143,7 +139,6 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
 
@@ -159,7 +154,6 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
 
@@ -191,6 +185,38 @@
 			request.begin_async()
 			UNTIL(request.is_complete())
 			var/datum/http_response/response = request.into_response()
-
 			if (rustg_json_is_valid(response.body))
 				message_admins(response.body)
+
+		if ("vote")
+			LAZYLISTINIT(poll_manager.cached_playerIds)
+			if (!poll_manager.cached_playerIds[ui.user.ckey])
+				var/datum/http_request/request = new
+				var/list/headers = list(
+					"Accept" = "application/json",
+					"Authorization" = config.goonhub_api_token,
+				)
+				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/players/stats?ckey=[ui.user.ckey]", null, headers)
+				request.begin_async()
+				UNTIL(request.is_complete())
+				var/datum/http_response/response = request.into_response()
+				var/list/data = json_decode(response.body)
+				poll_manager.cached_playerIds[ui.user.ckey] = data["data"]["id"]
+
+			var/datum/http_request/request = new
+			var/list/headers = list(
+				"Accept" = "application/json",
+				"Authorization" = config.goonhub_api_token,
+				"Content-Type" = "application/json"
+			)
+			var/list/body = list(
+				"player_id" = poll_manager.cached_playerIds[ui.user.ckey],
+			)
+			body = json_encode(body)
+			request.prepare(RUSTG_HTTP_METHOD_POST, "[config.goonhub_api_endpoint]/api/polls/option/pick/[params["optionId"]]", body, headers)
+			request.begin_async()
+			UNTIL(request.is_complete())
+			var/datum/http_response/response = request.into_response()
+			if (rustg_json_is_valid(response.body))
+				message_admins(response.body)
+

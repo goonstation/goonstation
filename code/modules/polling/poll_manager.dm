@@ -2,6 +2,7 @@ var/global/datum/poll_manager/poll_manager = new
 /// master poll controller for the server. Caches the results, syncs with api
 /datum/poll_manager
 	var/list/poll_data
+	var/list/cached_playerIds
 
 	/// fetch and cache the latest poll data from the API
 	proc/sync_polldata()

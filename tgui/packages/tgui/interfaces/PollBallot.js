@@ -3,38 +3,40 @@ import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
-  if (!isAdmin) return null;
   return (
     <Stack>
       <Stack.Item>
-        <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
-        <Button
-          tooltip="Edit Poll"
-          tooltipPosition="top"
-          icon="pen"
-          onClick={() => act('editPoll', { pollId })}
-        />
-        <Button
-          tooltip="Toggle Multiple Choice"
-          tooltipPosition="top"
-          color={multipleChoice ? 'good' : 'bad'}
-          icon="list-check"
-          onClick={() => act('toggleMultipleChoice', { pollId })}
-        />
+        {isAdmin ? (
+          <>
+            <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
+            <Button
+              tooltip="Edit Poll"
+              tooltipPosition="top"
+              icon="pen"
+              onClick={() => act('editPoll', { pollId })}
+            />
+            <Button.Confirm tooltip="Delete Poll" tooltipPosition="top" icon="trash" color="bad" onClick={() => act('deletePoll', { pollId })} />
+          </>
+        ) : null}
+        {multipleChoice ? (
+          <Button
+            tooltip="Multiple Choice"
+            tooltipPosition="top"
+            icon="list-check"
+          />
+        ) : null}
         <Button
           tooltip="Poll Status"
           tooltipPosition="top"
           color={pollStatus ? 'good' : 'bad'}
           icon={pollStatus ? 'lock-open' : 'lock'}
-          onClick={() => act('togglePollStatus', { pollId })}
         />
-        <Button.Confirm tooltip="Delete Poll" tooltipPosition="top" icon="trash" color="bad" onClick={() => act('deletePoll', { pollId })} />
       </Stack.Item>
     </Stack>
   );
 };
 
-const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
+const OptionControls = ({ isAdmin, act, optionId }) => {
   if (!isAdmin) return null;
   return (
     <Stack>
@@ -46,7 +48,7 @@ const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   );
 };
 
-const Ballot = ({ options, total_answers, act, pollId, isAdmin, pollStatus }) => {
+const Ballot = ({ options, total_answers, act, pollId, isAdmin }) => {
   if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
@@ -56,8 +58,6 @@ const Ballot = ({ options, total_answers, act, pollId, isAdmin, pollStatus }) =>
             <Stack>
               <Stack.Item grow>
                 <Button.Checkbox
-                  checked={option.voted}
-                  disabled={!pollStatus}
                   onClick={() => act('vote', { pollId, optionId: option.id })}
                 >
                   {option.option}
@@ -69,7 +69,6 @@ const Ballot = ({ options, total_answers, act, pollId, isAdmin, pollStatus }) =>
                   act={act}
                   pollId={pollId}
                   optionId={option.id}
-                  pollStatus={pollStatus}
                 />
               </Stack.Item>
             </Stack>
@@ -101,7 +100,7 @@ export const PollBallot = (props, context) => {
                     act={act}
                     pollId={poll.id}
                     pollStatus={poll.status}
-                    multipleChoice={poll.multiple_choice === "yes"}
+                    multipleChoice={poll.multiple_choice}
                   />
                 }>
                 <Stack vertical>
@@ -117,11 +116,11 @@ export const PollBallot = (props, context) => {
               </Section>
             </Stack.Item>
           ))}
-          {isAdmin && (
+          {isAdmin ? (
             <Stack.Item>
               <Button onClick={() => act('addPoll')}>Add Poll</Button>
             </Stack.Item>
-          )}
+          ) : null}
         </Stack>
       </Window.Content>
     </Window>
