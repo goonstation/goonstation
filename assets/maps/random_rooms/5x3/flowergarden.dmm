@@ -8,8 +8,8 @@
 /area/dmm_suite/clear_area)
 "c" = (
 /obj/item/wirecutters/green{
-	pixel_y = -15;
-	pixel_x = -15
+	pixel_y = -14;
+	pixel_x = -14
 	},
 /obj/map/light/yellow,
 /turf/simulated/floor/grasslush,
@@ -105,8 +105,7 @@
 	pixel_y = 3
 	},
 /obj/item/plant/herb/grass{
-	pixel_x = 5;
-	pixel_y = s
+	pixel_x = 5
 	},
 /obj/item/plant/herb/grass{
 	pixel_x = -6;
