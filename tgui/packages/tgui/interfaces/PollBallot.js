@@ -9,6 +9,12 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
       <Stack.Item>
         <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
         <Button
+          tooltip="Edit Poll"
+          tooltipPosition="top"
+          icon="pen"
+          onClick={() => act('editPoll', { pollId })}
+        />
+        <Button
           tooltip="Toggle Multiple Choice"
           tooltipPosition="top"
           color={multipleChoice ? 'good' : 'bad'}
@@ -28,24 +34,23 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
   );
 };
 
-
-const OptionControls = ({ isAdmin, act, pollId, optionIndex }) => {
+const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   if (!isAdmin) return null;
   return (
     <Stack>
       <Stack.Item>
-        <Button icon="pen" onClick={() => act('editOption', { pollId, optionIndex })} />
-        <Button.Confirm icon="trash" color="bad" onClick={() => act('deleteOption', { pollId, optionIndex })} />
+        <Button icon="pen" onClick={() => act('editOption', { optionId })} />
+        <Button.Confirm icon="trash" color="bad" onClick={() => act('deleteOption', { optionId })} />
       </Stack.Item>
     </Stack>
   );
 };
 
-const Ballot = ({ pollOptions, totalVotes, act, pollId, isAdmin, pollStatus }) => {
-  if (!pollOptions || pollOptions.length === 0) return null;
+const Ballot = ({ options, total_answers, act, pollId, isAdmin, pollStatus }) => {
+  if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
-      {pollOptions.map((option, index) => (
+      {options.map((option, index) => (
         <Stack.Item key={index}>
           <Stack vertical>
             <Stack>
@@ -53,9 +58,9 @@ const Ballot = ({ pollOptions, totalVotes, act, pollId, isAdmin, pollStatus }) =
                 <Button.Checkbox
                   checked={option.voted}
                   disabled={!pollStatus}
-                  onClick={() => act('vote', { pollId, option: index })}
+                  onClick={() => act('vote', { pollId, optionId: option.id })}
                 >
-                  {option.name}
+                  {option.option}
                 </Button.Checkbox>
               </Stack.Item>
               <Stack.Item>
@@ -63,13 +68,13 @@ const Ballot = ({ pollOptions, totalVotes, act, pollId, isAdmin, pollStatus }) =
                   isAdmin={isAdmin}
                   act={act}
                   pollId={pollId}
-                  optionIndex={index}
+                  optionId={option.id}
                   pollStatus={pollStatus}
                 />
               </Stack.Item>
             </Stack>
             <Stack.Item>
-              <ProgressBar value={option.voteCount / totalVotes} />
+              <ProgressBar value={option.answers_count / total_answers} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -78,34 +83,35 @@ const Ballot = ({ pollOptions, totalVotes, act, pollId, isAdmin, pollStatus }) =
   );
 };
 
-export const VotingBallot = (props, context) => {
+export const PollBallot = (props, context) => {
   const { act, data } = useBackend(context);
-  const { polls, isAdmin } = data;
+  const { isAdmin, polls } = data;
 
   return (
-    <Window title="Voting Ballot" width="750" height="800">
+    <Window title="Poll Ballot" width="750" height="800">
       <Window.Content>
         <Stack vertical>
-          {polls.map((poll, index) => (
+          {polls && polls.map((poll, index) => (
             <Stack.Item key={index}>
               <Section
-                title={`Poll #${index + 1}`}
+                title={poll.question}
                 buttons={
                   <PollControls
                     isAdmin={isAdmin}
                     act={act}
                     pollId={poll.id}
                     pollStatus={poll.status}
-                    multipleChoice={poll.multipleChoice}
+                    multipleChoice={poll.multiple_choice === "yes"}
                   />
                 }>
                 <Stack vertical>
                   <Ballot
-                    pollOptions={poll.options}
-                    totalVotes={poll.totalVotes}
+                    options={poll.options}
+                    total_answers={poll.total_answers}
                     act={act}
                     pollId={poll.id}
                     isAdmin={isAdmin}
+                    pollStatus={poll.status}
                   />
                 </Stack>
               </Section>
