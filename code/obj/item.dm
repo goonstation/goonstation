@@ -969,6 +969,7 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	return

@@ -979,8 +979,12 @@ var/datum/action_controller/actions
 
 		duration += ExtraDuration
 
-		if(source.reagents && source.reagents.has_reagent("crime"))
+		if (source.reagents && source.reagents.has_reagent("crime"))
 			duration /= 5
+		if (isunconscious(target))
+			duration /= 2
+		else if (isdead(target))
+			duration /= 3
 		..()
 
 	onStart()
@@ -1979,8 +1983,8 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
-	duration = 30
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "spy_steal"
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
@@ -2001,7 +2005,9 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.playsound_local(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()
