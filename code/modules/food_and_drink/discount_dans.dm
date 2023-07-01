@@ -586,7 +586,7 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_cherry","guacamole","egg","sewage","uranium"), 3)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_banana","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
 	heal(var/mob/M)

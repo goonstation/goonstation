@@ -3535,6 +3535,12 @@ datum
 			bladder_value = -1.5
 			taste = "tropical"
 
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				if(prob(6))
+					M.reagents.add_reagent("potassium", 2 * mult)
+				..()
+
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
 			id = "juice_grapefruit"

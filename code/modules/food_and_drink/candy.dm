@@ -458,7 +458,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		src.icon_state = "gummyworm-[rand(1,3)]"
-		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
+		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_banana", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
 		src.heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart
