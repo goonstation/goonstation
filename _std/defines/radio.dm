@@ -22,6 +22,7 @@
 #define RADIOCL_RESEARCH "rresearch"
 #define RADIOCL_CIVILIAN "rcivilian"
 #define RADIOCL_SYNDICATE "rsyndicate"
+#define RADIOCL_INTERCOM_AI "rintercomai"
 #define RADIOCL_OTHER "rother"
 
 // Frequency defines for headsets & intercoms (Convair880).

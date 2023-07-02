@@ -52,6 +52,13 @@
 	desc = "The energies within ebb and flow, driven by the source beneath."
 	},
 /area/noGenerate)
+"cF" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "dd" = (
 /obj/landmark{
 	name = "seafall"
@@ -110,6 +117,13 @@
 	dir = 10;
 	name = "siphon shaft wall"
 	},
+/area/noGenerate)
+"dV" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space/fluid/acid/clear,
 /area/noGenerate)
 "ec" = (
 /turf/simulated/floor/engine/caution/west,
@@ -201,13 +215,6 @@
 	icon_state = "floor2"
 	},
 /area/bee_trader)
-"gv" = (
-/obj/lattice{
-	dir = 9;
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid/acid/clear,
-/area/noGenerate)
 "gL" = (
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
@@ -234,6 +241,9 @@
 	icon_state = "floor2"
 	},
 /area/bee_trader)
+"hf" = (
+/turf/unsimulated/wall/auto/lead/blue,
+/area/shuttle/sea_elevator)
 "hk" = (
 /obj/stool/chair/wooden{
 	dir = 8
@@ -249,9 +259,6 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/shuttle/sea_elevator)
-"iJ" = (
-/turf/space/fluid/acid/clear,
-/area/noGenerate)
 "ji" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/firstaid/fire{
@@ -266,19 +273,17 @@
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
+"kh" = (
+/obj/machinery/r_door_control{
+	id = "nadir_minebot"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/shuttle/sea_elevator)
 "km" = (
 /obj/machinery/vehicle/pod_smooth/industrial/nadir,
 /turf/simulated/floor/engine,
 /area/shuttle/sea_elevator)
-"kv" = (
-/turf/unsimulated/wall/auto/lead/blue,
-/area/shuttle/sea_elevator)
-"kx" = (
-/obj/lattice,
-/obj/machinery/light/small/floor/greenish,
-/obj/warp_beacon{
-	name = "Subsurface Bay"
-	},
+"ku" = (
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "kD" = (
@@ -298,19 +303,12 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
-"lW" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid/acid/clear,
-/area/noGenerate)
 "lZ" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "mb" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/kitchen)
 "ms" = (
@@ -486,7 +484,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
@@ -508,7 +506,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "sX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/skeleton_trader)
 "ta" = (
@@ -602,13 +600,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
-"vX" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir-b"
-	},
-/turf/space/fluid/acid/clear,
-/area/noGenerate)
 "wk" = (
 /obj/item/cell/charged{
 	pixel_x = 8;
@@ -867,6 +858,12 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge,
 /area/diner/kitchen)
+"EU" = (
+/mob/living/critter/small_animal/boogiebot,
+/turf/simulated/floor/carpet/red/fancy/innercorner/east,
+/area/tech_outpost{
+	name = "The Recluse"
+	})
 "Fi" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/sensor/mining{
@@ -898,6 +895,13 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
+"Ft" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "Fw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/diner/kitchen)
@@ -1096,7 +1100,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/diner/dining)
 "LU" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/dining)
 "ME" = (
@@ -1124,6 +1128,12 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
+"Nh" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "Nl" = (
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -1155,7 +1165,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "NK" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/bee_trader)
 "NO" = (
@@ -1196,7 +1206,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "OI" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
@@ -1326,12 +1336,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"Tw" = (
-/obj/critter/boogiebot,
-/turf/simulated/floor/carpet/red/fancy/innercorner/east,
-/area/tech_outpost{
-	name = "The Recluse"
-	})
 "Tx" = (
 /obj/table/wood/round/auto,
 /obj/item/plate,
@@ -1396,6 +1400,14 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"UQ" = (
+/obj/lattice,
+/obj/machinery/light/small/floor/greenish,
+/obj/warp_beacon{
+	name = "Subsurface Bay"
+	},
+/turf/space/fluid/acid/clear,
+/area/noGenerate)
 "Vf" = (
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
@@ -1420,12 +1432,6 @@
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
-"VJ" = (
-/obj/machinery/r_door_control{
-	id = "nadir_minebot"
-	},
-/turf/unsimulated/wall/auto/lead/blue,
-/area/shuttle/sea_elevator)
 "VR" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/simulated/floor/black/grime,
@@ -1599,12 +1605,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
-"Zf" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid/acid/clear,
-/area/noGenerate)
 "Zp" = (
 /obj/table/auto,
 /obj/item/circuitboard/teleporter{
@@ -2125,7 +2125,7 @@ WQ
 WQ
 NC
 Rq
-Tw
+EU
 yd
 RH
 WQ
@@ -2495,11 +2495,11 @@ nw
 nw
 nw
 nw
-kv
-kv
-kv
-kv
-kv
+hf
+hf
+hf
+hf
+hf
 nw
 nw
 XP
@@ -2543,13 +2543,13 @@ nw
 nw
 nw
 nw
-kv
-kv
+hf
+hf
 bx
 bx
 bx
-kv
-kv
+hf
+hf
 XP
 XP
 XP
@@ -2608,9 +2608,9 @@ XP
 XP
 XP
 Nl
-iJ
-iJ
-iJ
+ku
+ku
+ku
 XP
 XP
 XP
@@ -2636,31 +2636,31 @@ XP
 XP
 "}
 (21,1,1) = {"
-kv
-kv
-kv
-kv
-kv
-kv
+hf
+hf
+hf
+hf
+hf
+hf
 Ap
 Ap
 Ap
 Ap
 Ap
-kv
+hf
 XP
 Nl
 Nl
 Nl
 XP
 XP
-iJ
+ku
 Nl
-iJ
-iJ
+ku
+ku
 Nl
-iJ
-iJ
+ku
+ku
 XP
 XP
 nw
@@ -2690,28 +2690,28 @@ mH
 xh
 xK
 jy
-kv
+hf
 fy
 gh
-kv
+hf
 dt
 dt
-kv
+hf
 Nl
-iJ
+ku
 Nl
 Nl
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 nw
 nw
 nw
@@ -2734,7 +2734,7 @@ XP
 XP
 "}
 (23,1,1) = {"
-kv
+hf
 ji
 tC
 ob
@@ -2746,26 +2746,26 @@ xI
 Ap
 Ap
 vs
-iJ
-iJ
+ku
+ku
 Nl
-iJ
+ku
 Nl
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
 nw
 nw
 nw
 Nl
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 Ol
 bd
 Sp
@@ -2795,26 +2795,26 @@ xI
 Vo
 Ap
 vs
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 nw
 nw
 nw
 nw
 nw
 Nl
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
 yh
 Iw
 LT
@@ -2832,26 +2832,26 @@ XP
 XP
 "}
 (25,1,1) = {"
-kv
-kv
+hf
+hf
 ii
 ii
-kv
-kv
+hf
+hf
 ob
 ob
-kv
+hf
 qu
 qu
-kv
+hf
 Nl
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 nw
 nw
 nw
@@ -2881,25 +2881,25 @@ XP
 XP
 "}
 (26,1,1) = {"
-kv
+hf
 ru
 ob
 ob
 mG
-kv
+hf
 se
 se
-kv
-kv
-kv
-VJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+hf
+hf
+hf
+kh
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 XP
 nw
 nw
@@ -2930,25 +2930,25 @@ XP
 XP
 "}
 (27,1,1) = {"
-kv
+hf
 pk
 ob
 tC
 lB
-kv
+hf
 oG
 fE
 sF
 OT
 oQ
 fG
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 XP
 XP
 nw
@@ -2979,25 +2979,25 @@ XP
 XP
 "}
 (28,1,1) = {"
-kv
-kv
+hf
+hf
 dd
 dd
-kv
-kv
+hf
+hf
 AG
 kD
 Be
 qu
 dC
 gL
-iJ
-iJ
-iJ
-gv
-iJ
-iJ
-iJ
+ku
+ku
+ku
+Ft
+ku
+ku
+ku
 XP
 XP
 XP
@@ -3029,10 +3029,10 @@ XP
 "}
 (29,1,1) = {"
 XP
-kv
+hf
 dd
 dd
-kv
+hf
 wr
 Ou
 nJ
@@ -3040,13 +3040,13 @@ Fp
 km
 eT
 gL
-Zf
-Zf
-Zf
-kx
-vX
-iJ
-iJ
+Nh
+Nh
+Nh
+UQ
+dV
+ku
+ku
 XP
 XP
 XP
@@ -3078,10 +3078,10 @@ XP
 "}
 (30,1,1) = {"
 XP
-kv
-kv
-kv
-kv
+hf
+hf
+hf
+hf
 Lv
 fv
 ZZ
@@ -3089,13 +3089,13 @@ Fp
 Fp
 eT
 gL
-iJ
-iJ
-iJ
-lW
-iJ
-iJ
-iJ
+ku
+ku
+ku
+cF
+ku
+ku
+ku
 XP
 XP
 nw
@@ -3130,7 +3130,7 @@ XP
 XP
 XP
 XP
-kv
+hf
 Fi
 fv
 zv
@@ -3138,13 +3138,13 @@ sF
 oQ
 ON
 gL
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
+ku
 XP
 XP
 nw
@@ -3179,7 +3179,7 @@ XP
 XP
 XP
 XP
-kv
+hf
 ey
 xX
 Xr
@@ -3187,12 +3187,12 @@ Be
 qu
 qu
 tA
-iJ
-iJ
-iJ
-iJ
-iJ
-iJ
+ku
+ku
+ku
+ku
+ku
+ku
 XP
 XP
 nw
@@ -3228,18 +3228,18 @@ XP
 XP
 XP
 XP
-kv
+hf
 wX
-kv
+hf
 wX
-kv
-kv
-kv
-kv
+hf
+hf
+hf
+hf
 Nl
-iJ
-iJ
-iJ
+ku
+ku
+ku
 Nl
 XP
 XP
@@ -3285,10 +3285,10 @@ XP
 XP
 XP
 XP
-iJ
-iJ
+ku
+ku
 Nl
-iJ
+ku
 Nl
 XP
 XP
@@ -3337,8 +3337,8 @@ XP
 XP
 Nl
 Nl
-iJ
-iJ
+ku
+ku
 XP
 XP
 XP
@@ -3386,7 +3386,7 @@ XP
 XP
 XP
 Nl
-iJ
+ku
 XP
 XP
 XP
@@ -3657,8 +3657,8 @@ Ug
 EL
 Ck
 dw
-iJ
-iJ
+ku
+ku
 Wr
 Wr
 Wr
@@ -3893,7 +3893,7 @@ nw
 nw
 nw
 nw
-iJ
+ku
 nw
 Wr
 UM
@@ -3942,7 +3942,7 @@ XP
 XP
 nw
 nw
-iJ
+ku
 nw
 Wr
 Wr

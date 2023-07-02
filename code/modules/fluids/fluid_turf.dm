@@ -221,7 +221,7 @@
 
 		if(spawningFlags & SPAWN_HALLU)
 			if (prob(1) && prob(16))
-				new /mob/living/critter/small_animal/hallucigenia/ai_controlled(src)
+				new /mob/living/critter/small_animal/hallucigenia(src)
 			else if (prob(1) && prob(18))
 				new /obj/overlay/tile_effect/cracks/spawner/pikaia(src)
 
@@ -315,6 +315,14 @@
 
 	color = OCEAN_COLOR
 	fullbright = 1
+
+	New()
+		. = ..()
+		var/noise_scale = 55
+		var/r1 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
+		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
+		UpdateIcon(140, col)
 
 	edge
 		icon_state = "pit_wall"

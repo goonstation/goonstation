@@ -134,8 +134,8 @@
 /turf/space/cavern,
 /area/space)
 "aB" = (
-/obj/wingrille_spawn/reinforced/full,
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/plating,
 /area/space)
 "aC" = (
@@ -197,7 +197,7 @@
 /turf/space/cavern,
 /area/space)
 "aN" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/plating,
 /area/space)
 "aO" = (
@@ -431,7 +431,7 @@
 /turf/simulated/shuttle/wall,
 /area/space)
 "bw" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/shuttle,
 /area/space)
 "bx" = (
@@ -739,7 +739,7 @@
 /turf/simulated/floor/wood/seven,
 /area/space)
 "cq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/space)
 "cr" = (
@@ -764,7 +764,7 @@
 /turf/simulated/floor/sanitary,
 /area/space)
 "ct" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
 /area/space)
@@ -1209,7 +1209,7 @@
 /turf/simulated/floor,
 /area/space)
 "dS" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/airless/plating,
 /area/space)
 "dT" = (
@@ -1503,12 +1503,12 @@
 /turf/simulated/floor/engine,
 /area/space)
 "eL" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/securearea,
 /turf/simulated/floor/airless/plating,
 /area/space)
 "eM" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/securearea,
 /turf/simulated/floor/plating,
 /area/space)
@@ -1735,7 +1735,7 @@
 /turf/space/cavern,
 /area/space)
 "fs" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/black,
 /area/space)
 "ft" = (
@@ -1946,7 +1946,7 @@
 /turf/simulated/floor,
 /area/space)
 "fY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/space)
 "fZ" = (
@@ -2103,7 +2103,7 @@
 /turf/simulated/floor/airless/engine/caution/north,
 /area/space)
 "gt" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 6;
 	
@@ -2111,7 +2111,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "gu" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4;
 	
@@ -2341,7 +2341,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ha" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/wall/auto/asteroid/comet,
 /area/space)
 "hb" = (
@@ -2352,7 +2352,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "hc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/engine,
 /area/space)
 "hd" = (
@@ -2435,7 +2435,7 @@
 	},
 /area/space)
 "hq" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3dir";
 	dir = 2
@@ -2493,7 +2493,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "hz" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -2688,11 +2688,11 @@
 /turf/simulated/floor/airless/engine/caution/south,
 /area/space)
 "hY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/space,
 /area/space)
 "hZ" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor,
 /area/space)
 "ia" = (
@@ -2770,7 +2770,7 @@
 /turf/space/cavern,
 /area/space)
 "in" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "io" = (
@@ -3778,7 +3778,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "lb" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/black,
 /area/space)
 "lc" = (
@@ -4323,7 +4323,7 @@
 	},
 /area/space)
 "mH" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/grey,
 /area/space)
 "mI" = (
@@ -5187,7 +5187,7 @@
 /turf/simulated/floor/longtile/black,
 /area/space)
 "oX" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
 /area/space)
 "oY" = (
@@ -5204,7 +5204,7 @@
 /turf/simulated/floor/engine,
 /area/space)
 "pa" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/industrial,
 /area/space)
 "pb" = (
@@ -6282,7 +6282,7 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/space)
 "sa" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/plating,
 /area/space)
@@ -7150,7 +7150,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/space)
 "tV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/space)
 "tW" = (
@@ -7719,7 +7719,7 @@
 /turf/simulated/floor/grey,
 /area/space)
 "vu" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/grey,
 /area/space)
 "vv" = (
@@ -7789,7 +7789,7 @@
 	},
 /area/space)
 "vC" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/shuttle,
 /turf/simulated/shuttle/wall/corner{
 	icon_state = "wallwin";

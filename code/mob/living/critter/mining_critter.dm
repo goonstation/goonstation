@@ -50,6 +50,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
+	no_stamina_stuns = TRUE
 
 	New()
 		..()

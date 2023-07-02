@@ -5,8 +5,11 @@
 
 	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
 	var/list/obj/stolen_items = list()
-	/// A list of items that this traitor has redeemed using their uplink. This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
-	var/list/obj/redeemed_items = list()
+	/// A list of buylist datums that this traitor has redeemed using their uplink.
+	///
+	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
+	var/list/redeemed_item_paths = list()
+
 
 	New()
 		if (!ticker?.mode?.spy_market)
@@ -117,13 +120,16 @@
 				stolen_item_detail = copytext(stolen_item_detail, 1, -2)
 			dat.Insert(2, "They stole [num_of_stolen_items <= 0 ? "nothing" : "[num_of_stolen_items] item[s_es(num_of_stolen_items)]"] with their spy thief uplink![stolen_item_detail]")
 
-			var/num_of_redeemed_items = length(src.redeemed_items)
+			var/num_of_redeemed_items = length(src.redeemed_item_paths)
 			var/redeemed_item_detail
 			if (num_of_redeemed_items)
 				redeemed_item_detail = "<br>They redeemed: "
-				for (var/obj/redeemed_item as anything in src.redeemed_items)
-					redeemed_item_detail += "[bicon(redeemed_item)] [redeemed_item.name], "
-				redeemed_item_detail = copytext(redeemed_item_detail, 1, -2)
+				// We type the loop as /datumm/syndicate_buylist for easier var access, but we're really iterating over a list of paths
+				for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
+					// Get the path of the actual item the buylist entry spawns
+					var/obj/item_type = initial(redeemed_entry.item)
+					redeemed_item_detail += "[bicon(icon(initial(item_type.icon), initial(item_type.icon_state)))] [initial(item_type.name)], "
+				redeemed_item_detail = copytext(redeemed_item_detail, 1, -2) // cut off the final comma and space
 			dat.Insert(3, "They redeemed [num_of_redeemed_items <= 0 ? "nothing" : "[num_of_redeemed_items] item[s_es(num_of_redeemed_items)]"] with their spy thief uplink![redeemed_item_detail]")
 
 		if (length(src.stolen_items) >= 7)

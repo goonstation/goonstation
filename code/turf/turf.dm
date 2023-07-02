@@ -166,6 +166,14 @@
 		if (length(src.camera_coverage_emitters))
 			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED
@@ -327,9 +335,9 @@ proc/generate_space_color()
 	)
 #endif
 
-/turf/space/update_icon(starlight_alpha=255)
+/turf/space/update_icon(starlight_alpha=255, starlight_color_override=null)
 	..()
-	if(!isnull(space_color) && (!istype(src, /turf/space/fluid) || istype(src, /turf/space/fluid/warp_z5)))
+	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
 	if(fullbright)
@@ -340,7 +348,7 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = src.color
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
 		UpdateOverlays(starlight, "starlight")
