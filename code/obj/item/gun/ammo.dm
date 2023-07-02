@@ -752,7 +752,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	w_class = W_CLASS_NORMAL
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
