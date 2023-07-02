@@ -26,6 +26,10 @@
 	var/mode = IV_DRAW
 	var/in_use = 0
 	var/slashed = 0
+	var/max_transfer_rate = 5
+	HELP_MESSAGE_OVERRIDE({"
+		Use this item in-hand with the <b>grab</b> intent to adjust the drip rate,
+		use any other intent to switch between drawing blood or injecting."})
 
 	New()
 		..()
@@ -81,9 +85,16 @@
 			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
-		src.mode = !(src.mode)
-		user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-		src.UpdateIcon()
+		if (user.a_intent != INTENT_GRAB)
+			src.mode = !(src.mode)
+			user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
+			src.UpdateIcon()
+		else 
+			if (src.amount_per_transfer_from_this >= src.max_transfer_rate)
+				src.amount_per_transfer_from_this = 1
+			else
+				src.amount_per_transfer_from_this++
+			user.show_text("You switch the drip rate of \the [src] to [src.amount_per_transfer_from_this].")
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ishuman(M))
