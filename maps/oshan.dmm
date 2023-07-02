@@ -20287,7 +20287,7 @@
 /area/station/engine/elect)
 "bnl" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "bnm" = (
@@ -37663,7 +37663,7 @@
 /area/station/crew_quarters/bar)
 "enw" = (
 /obj/decal/cleanable/machine_debris,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "epr" = (
@@ -38168,7 +38168,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "fpZ" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "fqU" = (
@@ -38298,7 +38298,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/arcade)
 "fFF" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "fGW" = (
@@ -39041,7 +39041,7 @@
 /area/station/crew_quarters/fitness)
 "gHq" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "gHR" = (
@@ -39522,7 +39522,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "hWu" = (
@@ -39621,7 +39621,7 @@
 /turf/simulated/floor,
 /area/station/storage/eeva)
 "iiQ" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/atmospherics)
 "ijt" = (
@@ -39759,7 +39759,7 @@
 /turf/simulated/floor,
 /area/research_outpost/toxins)
 "iwU" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "ixM" = (
@@ -40844,7 +40844,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibleg"
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "kFc" = (
@@ -41213,7 +41213,7 @@
 /area/station/medical/medbay/surgery/storage)
 "lrD" = (
 /obj/item/cigbutt,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "lrX" = (
@@ -42878,7 +42878,7 @@
 /area/station/hallway/primary/east)
 "oyx" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "oyP" = (
@@ -42977,7 +42977,7 @@
 /area/station/maintenance/southwest)
 "oLf" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "oLv" = (
@@ -43152,7 +43152,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "pbD" = (
@@ -43245,7 +43245,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "phT" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
 "pij" = (
@@ -43455,7 +43455,7 @@
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
 /obj/item/raw_material/shard/glass,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "pGJ" = (
@@ -44558,7 +44558,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "rJU" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "rMP" = (
@@ -45302,7 +45302,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "tQq" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "tQS" = (
@@ -45846,7 +45846,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "vlM" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "vmS" = (
@@ -45862,7 +45862,7 @@
 /area/station/chapel/sanctuary)
 "vnw" = (
 /obj/decal/cleanable/dirt,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "vnU" = (
@@ -45923,7 +45923,7 @@
 "vuq" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "vux" = (
@@ -46305,7 +46305,7 @@
 /area/evilreaver/bar)
 "wll" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "wnE" = (
@@ -46902,7 +46902,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "xKW" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "xLu" = (

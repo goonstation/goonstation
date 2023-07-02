@@ -3217,7 +3217,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "SF" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Ta" = (

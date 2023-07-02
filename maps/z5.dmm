@@ -164,7 +164,7 @@
 /area/noGenerate)
 "bF" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "cd" = (
@@ -243,7 +243,7 @@
 /area/mining/manufacturing)
 "cC" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "cR" = (
@@ -285,7 +285,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 4
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "dN" = (
@@ -371,7 +371,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "gu" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "gv" = (
@@ -424,14 +424,14 @@
 /area/spyshack)
 "gZ" = (
 /obj/decal/cleanable/dirt,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "hc" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "hv" = (
@@ -457,7 +457,7 @@
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "hF" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "hK" = (
@@ -496,7 +496,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "hY" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
 "ip" = (
@@ -539,7 +539,7 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/manufacturing)
 "kd" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "kf" = (
@@ -551,7 +551,7 @@
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
 "kw" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/atmospherics)
 "kz" = (
@@ -563,7 +563,7 @@
 /area/evilreaver/bar)
 "kA" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "kD" = (
@@ -573,7 +573,7 @@
 	},
 /area/evilreaver/security)
 "kR" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "lp" = (
@@ -1937,7 +1937,7 @@
 /area/mining/magnet_control)
 "vr" = (
 /obj/item/cigbutt,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "vs" = (
@@ -2806,7 +2806,7 @@
 /area/tech_outpost)
 "AG" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "AI" = (
@@ -3038,7 +3038,7 @@
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibleg"
 	},
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "BT" = (
@@ -3054,7 +3054,7 @@
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
 "BW" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/bar,
 /area/evilreaver/bar)
 "Cd" = (
@@ -3270,7 +3270,7 @@
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
 "DD" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/storage/tools)
 "DI" = (
@@ -5070,7 +5070,7 @@
 /area/mining/manufacturing)
 "PI" = (
 /obj/decal/cleanable/machine_debris,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/atmospherics)
 "PP" = (
@@ -5304,12 +5304,12 @@
 /turf/simulated/floor/grime,
 /area/mining/refinery)
 "Rt" = (
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
 "Ru" = (
 /obj/lattice,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
 /area/evilreaver/chapel)
 "Rv" = (
@@ -5680,7 +5680,7 @@
 "Uj" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "Uk" = (
@@ -6021,7 +6021,7 @@
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
 /obj/item/raw_material/shard/glass,
-/obj/mob_spawn/corpse/critter/random/martian,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "Ws" = (
