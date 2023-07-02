@@ -943,9 +943,6 @@ TYPEINFO(/atom)
 	return
 
 /atom/proc/on_reagent_transfer()
-	SHOULD_CALL_PARENT(TRUE)
-	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_TRANSFER)
-	return
 
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)

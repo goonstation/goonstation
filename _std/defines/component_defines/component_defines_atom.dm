@@ -28,8 +28,6 @@
 	#define COMSIG_ATOM_POST_UPDATE_ICON "atom_after_update_icon"
 	/// When reagents change
 	#define COMSIG_ATOM_REAGENT_CHANGE "atm_reag"
-	/// When reagents are transferred
-	#define COMSIG_ATOM_REAGENT_TRANSFER "atom_reagent_transfer"
 	/// When an atom is dragged onto something (usr, over_object, src_location, over_location, src_control, over_control, params)
 	#define COMSIG_ATOM_MOUSEDROP "atom_mousedrop"
 	/// When something is dragged onto an atom (object, usr, src_location, over_location, over_control, params)
