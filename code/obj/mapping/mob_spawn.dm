@@ -1,56 +1,43 @@
 // Mob spawners, for spawning mobs mainly for corpses right now
 // Concrete spawners are at the bottom of the file
 
-/obj/mob_spawn
+/obj/mapping_helper/mob_spawn
 	name = "Mob Spawn"
 	icon = 'icons/map-editing/mob_spawner.dmi'
 	icon_state = "corpse-human"
-	anchored = ANCHORED
-	invisibility = INVIS_ALWAYS
 	/// Path to spawn, should be a mob/living and not gib itself on death unless you want a mess
 	var/spawn_type = null
 	/// Container path such as a locker or crate, spawned with the corpse. It should obviously be openable by some means.
 	var/container_type = null
 
-	New()
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
-				if(!src.disposed)
-					src.initialize()
-		..()
-
-	initialize()
-		src.spawn_the_thing()
-
-	proc/spawn_the_thing()
+	setup()
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
-		qdel(src)
 
 	proc/do_damage(var/mob/living/M)
 		return
 
-/obj/mob_spawn/corpse/critter
+/obj/mapping_helper/mob_spawn/corpse/critter
 	name = "Critter Corpse Spawn"
 	icon_state = "corpse-critter"
 	spawn_type = /mob/living/critter/small_animal/bee // Type path to spawn
 	container_type = null
 
-	spawn_the_thing()
+	setup()
 		if(isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 		var/mob/living/M = new spawn_type(src.loc)
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
+			container.update_icon()
 		M.death(FALSE)
-		qdel(src)
 
-/obj/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
+/obj/mapping_helper/mob_spawn/corpse/human // Human spawner handles some randomisation / customisation
 	name = "Human Corpse Spawn"
 	icon_state = "corpse-human"
 	spawn_type = /mob/living/carbon/human/normal/assistant
@@ -81,7 +68,7 @@
 	/// If TRUE we break the headset and make it unscannable after spawning
 	var/break_headset = FALSE
 
-	spawn_the_thing()
+	setup()
 		if (isnull(src.spawn_type))
 			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
 
@@ -155,16 +142,14 @@
 
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
-			container.update_icon()
 			H.set_loc(container)
-
-		qdel(src)
+			container.update_icon()
 
 	do_damage(var/mob/living/carbon/human/H) // Override if you want specific damage numbers / types
 		H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)
 		H.take_oxygen_deprivation(rand(250, 300))
 
-/obj/mob_spawn/corpse/human/random
+/obj/mapping_helper/mob_spawn/corpse/human/random
 	name = "Random Human Corpse Spawn"
 	icon_state = "corpse-human-rand"
 	var/static/list/spawns = list(
@@ -190,7 +175,7 @@
 			src.spawn_type = weighted_pick(spawns)
 		..()
 
-/obj/mob_spawn/corpse/human/random/body_bag
+/obj/mapping_helper/mob_spawn/corpse/human/random/body_bag
 	icon_state = "bodybag-random"
 	container_type = /obj/item/body_bag
 
@@ -199,7 +184,7 @@
 		src.no_decomp = FALSE
 		..()
 
-/obj/mob_spawn/corpse/human/random/webbed
+/obj/mapping_helper/mob_spawn/corpse/human/random/webbed
 	icon_state = "webbed-random"
 	container_type = /obj/icecube/spider
 	husked = TRUE
@@ -213,11 +198,11 @@
 
 //////////////////////// Human corpses ////////////////////////
 
-/obj/mob_spawn/corpse/human/skeleton
+/obj/mapping_helper/mob_spawn/corpse/human/skeleton
 	spawn_type = /mob/living/carbon/human/normal
 	decomp_stage = DECOMP_STAGE_SKELETONIZED
 
-/obj/mob_spawn/corpse/human/owlery_security
+/obj/mapping_helper/mob_spawn/corpse/human/owlery_security
 	spawn_type = /mob/living/carbon/human/normal/securityofficer
 	decomp_stage = DECOMP_STAGE_BLOATED
 	delete_id = TRUE
@@ -237,5 +222,5 @@
 
 //////////////////////// Critter corpses ////////////////////////
 
-/obj/mob_spawn/corpse/critter/owl
+/obj/mapping_helper/mob_spawn/corpse/critter/owl
 	spawn_type = /mob/living/critter/small_animal/bird/owl

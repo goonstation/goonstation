@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "ac" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "ad" = (
@@ -39,7 +39,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Mining"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "aj" = (
@@ -47,7 +47,7 @@
 /turf/simulated/floor,
 /area/prefab/sea_mining)
 "ak" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/sea_mining)
 "al" = (
