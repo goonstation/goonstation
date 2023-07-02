@@ -133,7 +133,7 @@
 	},
 /area/bee_trader)
 "o" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/white,
 /area/bee_trader)
 "p" = (

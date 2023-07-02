@@ -405,7 +405,7 @@
 	dir = 4
 	},
 /obj/decal/mule/dropoff,
-/obj/access_spawn/maint,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "pd" = (
@@ -660,7 +660,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "yw" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "yD" = (
@@ -770,7 +770,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/mule/dropoff,
-/obj/access_spawn/maint,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "AX" = (
@@ -1022,7 +1022,7 @@
 	dir = 4
 	},
 /obj/decal/mule/dropoff,
-/obj/access_spawn/maint,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/prefab/von_ricken)
 "Jh" = (
@@ -1317,7 +1317,7 @@
 	dir = 8;
 	name = "Cyborg Storage"
 	},
-/obj/access_spawn/robotics,
+/obj/mapping_helper/access/robotics,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "RL" = (
@@ -1353,7 +1353,7 @@
 /obj/machinery/door/airlock/pyro/medical/alt{
 	name = "Operating Room"
 	},
-/obj/access_spawn/robotics,
+/obj/mapping_helper/access/robotics,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "SC" = (
@@ -1461,7 +1461,7 @@
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 "VE" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/von_ricken)
 "VG" = (
@@ -1591,7 +1591,7 @@
 	dir = 8;
 	pixel_y = 4
 	},
-/obj/access_spawn/robotics,
+/obj/mapping_helper/access/robotics,
 /turf/simulated/floor/black,
 /area/prefab/von_ricken)
 

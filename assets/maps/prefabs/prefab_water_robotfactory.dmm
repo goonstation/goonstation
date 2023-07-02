@@ -66,7 +66,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/prefab/replicant_lab)
 "ap" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "aq" = (
@@ -102,7 +102,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "av" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/cleanable/oil{
 	icon_state = "floor2"
 	},
@@ -125,7 +125,7 @@
 /obj/decal/cleanable/oil{
 	icon_state = "floor2"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "az" = (
@@ -152,7 +152,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/prefab/replicant_lab)
 "aD" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/cleanable/blood{
 	icon_state = "floor5"
 	},
@@ -211,7 +211,7 @@
 	},
 /area/prefab/replicant_lab)
 "aM" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay{
 	icon_state = "engine-blue"
 	},

@@ -247,7 +247,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/classic,
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "fy" = (
@@ -694,7 +694,7 @@
 "pb" = (
 /obj/machinery/power/terminal,
 /obj/cable,
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
 "ph" = (
@@ -797,7 +797,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "sG" = (
@@ -1246,7 +1246,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "zs" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/rudder{
 	pixel_y = -6
 	},
@@ -1410,7 +1410,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -1668,7 +1668,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/black,
 /area/pirate_ship)
 "JA" = (
@@ -1686,7 +1686,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
 	},
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "JI" = (
@@ -1932,7 +1932,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass,
-/obj/access_spawn/pirate_ship,
+/obj/mapping_helper/access/pirate_ship,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Pt" = (
@@ -1963,7 +1963,7 @@
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Qd" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
 	id = "peregrine_armoury";
@@ -2119,7 +2119,7 @@
 	},
 /area/pirate_ship)
 "TC" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/random,
 /area/pirate_ship)
 "TL" = (
