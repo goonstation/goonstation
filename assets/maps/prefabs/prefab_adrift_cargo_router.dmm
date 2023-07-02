@@ -233,7 +233,7 @@
 	},
 /area/prefab/adrift_cargorouter)
 "pU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/adrift_cargorouter)
 "qV" = (

@@ -94,15 +94,17 @@
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
-	update_icon()
+	proc/MarkGridForUpdate()
+		src._comp_grid_overlay_update = TRUE
 
+	update_icon()
 		//status lights
 		//gas input/output
-		if(TOTAL_MOLES(air1) > 100)
+		if(air1 && TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(TOTAL_MOLES(air2) > 100)
+		if(air2 && TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -364,6 +366,7 @@
 			shoot_projectile_XY(src, new /datum/projectile/neutron(max(5, min(rads*2,100))), rand(-10,10), rand(-10,10)) //for once, rand(range) returning int is useful
 
 	proc/catastrophicOverload()
+		world.save_intra_round_value("nuclear_accident_count_[map_settings.name]", 0)
 		var/sound/alarm = sound('sound/machines/meltdown_siren.ogg')
 		alarm.repeat = TRUE
 		alarm.volume = 40
@@ -693,7 +696,6 @@
 						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
 					if(4)
 						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
-
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown

@@ -88,18 +88,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	connects_to_exceptions = list()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn
 	))
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
 	icon = 'icons/turf/walls_shuttle.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "perspective-mapwall"
+#else
 	icon_state = "mapwall"
+#endif
 	light_mod = "wall-"
 	opacity = 0
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID

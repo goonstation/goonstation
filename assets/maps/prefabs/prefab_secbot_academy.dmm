@@ -515,7 +515,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/prefab/secbot_academy)
 "xl" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/grass/leafy,
 /area/prefab/secbot_academy)
 "xq" = (
@@ -654,7 +654,7 @@
 /turf/simulated/floor/white,
 /area/prefab/secbot_academy)
 "FQ" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/darkblue/checker,
 /area/prefab/secbot_academy)
 "FY" = (
@@ -868,7 +868,7 @@
 /turf/simulated/floor,
 /area/prefab/secbot_academy)
 "NY" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/darkblue,
 /area/prefab/secbot_academy)
 "Oc" = (

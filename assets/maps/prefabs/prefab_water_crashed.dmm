@@ -32,7 +32,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ai" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ak" = (
@@ -131,7 +131,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/sea_crashed)
 "aG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/variableTurf/wall,
 /area/station/turret_protected/sea_crashed)
 "aH" = (
@@ -159,12 +159,10 @@
 /turf/simulated/floor/carpet/green/fancy/edge/east,
 /area/station/turret_protected/sea_crashed)
 "aP" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aQ" = (
@@ -184,12 +182,10 @@
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aS" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "aT" = (
@@ -216,7 +212,7 @@
 /area/station/turret_protected/sea_crashed)
 "aV" = (
 /obj/item/raw_material/shard,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "aW" = (
@@ -244,7 +240,7 @@
 /area/station/turret_protected/sea_crashed)
 "ba" = (
 /obj/decal/fakeobjects/firealarm_broken{
-	dir = 8;
+	dir = 4;
 	icon_state = "firex";
 	pixel_x = -24
 	},
@@ -348,8 +344,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/sea_crashed)
 "bq" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/command/alt,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "br" = (
@@ -377,16 +373,14 @@
 /area/station/turret_protected/sea_crashed)
 "bv" = (
 /obj/decal/fakeobjects/firealarm_broken{
-	dir = 1;
 	pixel_x = 0;
 	pixel_y = 24
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "bx" = (
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1"
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
@@ -578,7 +572,7 @@
 /turf/simulated/floor/caution/corner/se,
 /area/station/turret_protected/sea_crashed)
 "cp" = (
-/obj/machinery/light,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "cq" = (
@@ -666,9 +660,8 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cB" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
@@ -769,12 +762,10 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cR" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cS" = (
@@ -805,11 +796,6 @@
 	icon_state = "showerhead";
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/decals/misc.dmi';
-	icon_state = "drain";
-	name = "drain"
-	},
 /obj/window/cubicle{
 	desc = "A panel designed to separate bathroom stalls, turning one gross room into many.";
 	dir = 2;
@@ -817,6 +803,7 @@
 	name = "stall panel";
 	tag = ""
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -884,11 +871,7 @@
 	icon_state = "showerhead";
 	pixel_y = 6
 	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/decals/misc.dmi';
-	icon_state = "drain";
-	name = "drain"
-	},
+/obj/machinery/drainage,
 /turf/simulated/floor{
 	icon_state = "freezerfloor2"
 	},
@@ -914,7 +897,7 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "di" = (
-/obj/machinery/light,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "dj" = (
@@ -922,12 +905,11 @@
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "dk" = (
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1"
-	},
 /obj/decal/cleanable/blood{
 	icon_state = "floor6"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
@@ -937,8 +919,8 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "dm" = (
-/obj/machinery/door/firedoor/border_only,
 /obj/machinery/door/airlock/pyro/security/alt,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dn" = (
@@ -1144,12 +1126,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dF" = (
-/obj/machinery/door/firedoor/border_only{
-	dir = 4
-	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dG" = (
@@ -1255,15 +1235,6 @@
 	icon_state = "alt_heater-R"
 	},
 /turf/simulated/floor/plating/random,
-/area/station/turret_protected/sea_crashed)
-"dM" = (
-/obj/decal/fakeobjects/firelock_broken{
-	dir = 8;
-	icon_state = "door0"
-	},
-/obj/machinery/door/firedoor/border_only,
-/obj/machinery/door/airlock/pyro/security/alt,
-/turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dN" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -1768,7 +1739,7 @@ cC
 dm
 cC
 cC
-dM
+dm
 ee
 ee
 vj

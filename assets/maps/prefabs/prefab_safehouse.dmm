@@ -26,12 +26,8 @@
 /obj/item/implanter{
 	pixel_x = -5
 	},
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 4;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = 10
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
@@ -136,7 +132,8 @@
 	layer = 3
 	},
 /obj/machinery/light/emergencyflashing{
-	dir = 4
+	dir = 4;
+	pixel_x = 10
 	},
 /obj/item/storage/briefcase/safehouse{
 	layer = 3.1
@@ -238,7 +235,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	name = "private quarters"
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/wood/two,
 /area/prefab/safehouse)
 "hp" = (
@@ -258,7 +255,8 @@
 	pixel_y = 9
 	},
 /obj/machinery/light/emergencyflashing{
-	dir = 8
+	dir = 8;
+	pixel_x = -10
 	},
 /turf/unsimulated/floor/circuit/vintage/vintage_CO2,
 /area/prefab/safehouse)
@@ -310,7 +308,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/safehouse)
 "kl" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/decal/cleanable/dirt/dirt5,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -319,17 +317,13 @@
 /area/prefab/safehouse)
 "kB" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 1;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_y = 14
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/neutral,
 /area/prefab/safehouse)
 "kC" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -339,7 +333,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
 "kN" = (
@@ -395,12 +389,8 @@
 	pixel_y = 11
 	},
 /obj/item/clothing/suit/bedsheet/royal,
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 4;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = 10
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/prefab/safehouse)
@@ -424,14 +414,10 @@
 /area/noGenerate)
 "my" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 1;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_y = 14
-	},
 /obj/submachine/chef_sink,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/prefab/safehouse)
 "mB" = (
@@ -525,7 +511,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/prefab/safehouse)
 "oM" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1;
 	name = "private medbay"
@@ -533,12 +519,8 @@
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
 "oY" = (
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 8;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = -10
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 10
@@ -653,12 +635,8 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/ne,
 /area/prefab/safehouse)
 "wp" = (
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 8;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = -10
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/shuttlebay,
 /area/prefab/safehouse)
@@ -679,12 +657,8 @@
 /area/prefab/safehouse)
 "wI" = (
 /obj/decal/cleanable/oil/streak,
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 4;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = 10
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/shuttlebay,
 /area/prefab/safehouse)
@@ -706,12 +680,8 @@
 /area/prefab/safehouse)
 "yx" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 1;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_y = 14
+/obj/machinery/light/incandescent{
+	dir = 1
 	},
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
@@ -746,12 +716,8 @@
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_y = 6
 	},
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 4;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = 10
+/obj/machinery/light/incandescent{
+	dir = 4
 	},
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/prefab/safehouse)
@@ -897,9 +863,8 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
+/obj/machinery/light/small/sticky{
+	dir = 1
 	},
 /turf/simulated/floor/blue,
 /area/prefab/safehouse)
@@ -942,7 +907,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
 "TW" = (
@@ -988,12 +953,8 @@
 /obj/decal/fakeobjects/recordplayer{
 	pixel_y = 4
 	},
-/obj/machinery/light{
-	brightness = 1.4;
-	dir = 8;
-	layer = 9.1;
-	name = "worn light fixture";
-	pixel_x = -10
+/obj/machinery/light/incandescent{
+	dir = 8
 	},
 /turf/simulated/floor/carpet/red/decal/outercross,
 /area/prefab/safehouse)
@@ -1017,7 +978,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
 "XO" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 8;
@@ -1029,11 +990,10 @@
 /obj/ladder{
 	id = "safehouse_storage"
 	},
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
 /obj/decal/cleanable/dirt,
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
 "Yq" = (

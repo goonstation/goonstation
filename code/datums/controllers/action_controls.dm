@@ -979,8 +979,12 @@ var/datum/action_controller/actions
 
 		duration += ExtraDuration
 
-		if(source.reagents && source.reagents.has_reagent("crime"))
+		if (source.reagents && source.reagents.has_reagent("crime"))
 			duration /= 5
+		if (isunconscious(target))
+			duration /= 2
+		else if (isdead(target))
+			duration /= 3
 		..()
 
 	onStart()
@@ -1295,6 +1299,7 @@ var/datum/action_controller/actions
 			H.update_inv()
 			for(var/mob/O in AIviewers(H))
 				O.show_message("<span class='alert'><B>[owner] manages to remove [target]'s handcuffs!</B></span>", 1)
+			logTheThing(LOG_COMBAT, owner, "removes [constructTarget(target,"combat")]'s handcuffs at [log_loc(owner)].")
 
 /datum/action/bar/private/icon/handcuffRemoval //This is used when you try to resist out of handcuffs.
 	duration = 600
@@ -1334,6 +1339,7 @@ var/datum/action_controller/actions
 			H.handcuffs.drop_handcuffs(H)
 			H.visible_message("<span class='alert'><B>[H] attempts to remove the handcuffs!</B></span>")
 			boutput(H, "<span class='notice'>You successfully remove your handcuffs.</span>")
+			logTheThing(LOG_COMBAT, H, "removes their own handcuffs at [log_loc(H)].")
 
 /datum/action/bar/private/icon/shackles_removal // Resisting out of shackles (Convair880).
 	duration = 450
@@ -1369,6 +1375,7 @@ var/datum/action_controller/actions
 				for(var/mob/O in AIviewers(H))
 					O.show_message("<span class='alert'><B>[H] manages to remove the shackles!</B></span>", 1)
 				H.show_text("You successfully remove the shackles.", "blue")
+				logTheThing(LOG_COMBAT, H, "removes their own shackles at [log_loc(H)].")
 
 
 /datum/action/bar/private/welding
@@ -1976,8 +1983,8 @@ var/datum/action_controller/actions
 
 
 /datum/action/bar/private/spy_steal //Used when a spy tries to steal a large object
-	duration = 30
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED
+	duration = 3 SECONDS
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ATTACKED
 	id = "spy_steal"
 	var/atom/target
 	var/obj/item/uplink/integrated/pda/spy/uplink
@@ -1998,7 +2005,9 @@ var/datum/action_controller/actions
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(owner.loc, 'sound/machines/click.ogg', 60, 1)
+		if (ismob(src.owner))
+			var/mob/M = src.owner
+			M.playsound_local(owner.loc, 'sound/machines/click.ogg', 60, 1)
 
 	onEnd()
 		..()
