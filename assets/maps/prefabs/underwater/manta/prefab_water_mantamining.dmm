@@ -143,7 +143,7 @@
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "aC" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/prefab/tunnelsnake)
 "aE" = (
@@ -191,7 +191,7 @@
 	dir = 2;
 	name = "Bridge"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "aS" = (
@@ -295,7 +295,7 @@
 	dir = 4;
 	name = "Mining Teleporter"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "bm" = (
@@ -311,7 +311,7 @@
 	dir = 4;
 	name = "Bathroom"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/sanitary,
 /area/prefab/tunnelsnake)
 "bo" = (
@@ -319,7 +319,7 @@
 	dir = 4;
 	name = "Mining"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/orange,
 /area/prefab/tunnelsnake)
 "bp" = (
@@ -386,7 +386,7 @@
 	dir = 2;
 	name = "Hangar"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/grime,
 /area/prefab/tunnelsnake)
 "bx" = (
@@ -401,7 +401,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/orange,
 /area/prefab/tunnelsnake)
 "bz" = (
@@ -560,7 +560,7 @@
 	dir = 2;
 	name = "Engine Room"
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/black,
 /area/prefab/tunnelsnake)
 "cq" = (
@@ -585,7 +585,7 @@
 /turf/simulated/floor,
 /area/prefab/tunnelsnake)
 "cv" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/prefab/tunnelsnake)
 "cw" = (

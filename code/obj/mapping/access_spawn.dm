@@ -1,27 +1,10 @@
-/obj/access_spawn
+/obj/mapping_helper/access
 	name = "access spawn"
 	desc = "Sets access of machines on the same turf as it to its access, then destroys itself."
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "access_spawn"
-	layer = OBJ_LAYER + 1 // yeah let's consistently be above doors
 
-	/*
-	 * loop through valid objects in the same location and, if they have no access set, set it to this one
-	 */
-
-	New()
-		..()
-		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN(5 DECI SECONDS)
-				src.setup()
-				qdel(src)
-
-	initialize()
-		..()
-		src.setup()
-		qdel(src)
-
-	proc/setup()
+	setup()
 		for (var/obj/machinery/M in src.loc)
 			if (!M.req_access)
 				M.req_access = src.req_access
@@ -41,33 +24,33 @@
 #define COMMAND "#00783c"
 
 //////////// Security ////
-/obj/access_spawn/security
+/obj/mapping_helper/access/security
 	name = "security access spawn"
 	req_access = list(access_security)
 	color = SECURITY
 
-/obj/access_spawn/brig
+/obj/mapping_helper/access/brig
 	name = "brig access spawn"
 	req_access = list(access_brig)
 	color = SECURITY
 
-/obj/access_spawn/sec_lockers
+/obj/mapping_helper/access/sec_lockers
 	name = "security weapons access spawn"
 	req_access = list(access_securitylockers)
 	color = SECURITY
 
-/obj/access_spawn/carry_permit
+/obj/mapping_helper/access/carry_permit
 	name = "carry permit access spawn"
 	req_access = list(access_carrypermit)
 	color = SECURITY
 
-/obj/access_spawn/forensics
+/obj/mapping_helper/access/forensics
 	name = "forensics access spawn"
 	req_access = list(access_forensics_lockers)
 	color = SECURITY
 
 //////////// Medical ////
-/obj/access_spawn/pathology // top of the list because of the whole "science or med" thing w/e
+/obj/mapping_helper/access/pathology // top of the list because of the whole "science or med" thing w/e
 	name = "pathology spawn"
 	#ifdef CREATE_PATHOGENS
 	req_access = list(access_pathology)
@@ -82,262 +65,262 @@
 	color = MEDICAL
 	#endif
 
-/obj/access_spawn/medical
+/obj/mapping_helper/access/medical
 	name = "medical access spawn"
 	req_access = list(access_medical)
 	color = MEDICAL
 
-/obj/access_spawn/medlocker
+/obj/mapping_helper/access/medlocker
 	name = "medical locker access spawn"
 	req_access = list(access_medical_lockers)
 	color = MEDICAL
 
-/obj/access_spawn/morgue
+/obj/mapping_helper/access/morgue
 	name = "morgue access spawn"
 	req_access = list(access_morgue)
 	color = MORGUE_BLACK
 
-/obj/access_spawn/medlab
+/obj/mapping_helper/access/medlab
 	name = "medlab access spawn"
 	req_access = list(access_medlab)
 	color = MEDICAL
 
-/obj/access_spawn/robotics
+/obj/mapping_helper/access/robotics
 	name = "robotics access spawn"
 	req_access = list(access_robotics)
 	color = MEDICAL
 
 //////////// Engineering ////
-/obj/access_spawn/cargo
+/obj/mapping_helper/access/cargo
 	name = "cargo access spawn"
 	req_access = list(access_cargo)
 	color = CARGO
 
-/obj/access_spawn/engineering
+/obj/mapping_helper/access/engineering
 	name = "engineering access spawn"
 	req_access = list(access_engineering)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_storage
+/obj/mapping_helper/access/engineering_storage
 	name = "engineering storage access spawn"
 	req_access = list(access_engineering_storage)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_eva
+/obj/mapping_helper/access/engineering_eva
 	name = "engineering EVA access spawn"
 	req_access = list(access_engineering_eva)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_power
+/obj/mapping_helper/access/engineering_power
 	name = "engineering power access spawn"
 	req_access = list(access_engineering_power)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_engine
+/obj/mapping_helper/access/engineering_engine
 	name = "engineering engine access spawn"
 	req_access = list(access_engineering_engine)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_power
+/obj/mapping_helper/access/engineering_power
 	name = "engineering power access spawn"
 	req_access = list(access_engineering_power)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_mechanic
+/obj/mapping_helper/access/engineering_mechanic
 	name = "engineering mechanics access spawn"
 	req_access = list(access_engineering_mechanic)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_atmos
+/obj/mapping_helper/access/engineering_atmos
 	name = "engineering atmos access spawn"
 	req_access = list(access_engineering_atmos)
 	color = ENGINEERING
 
-/obj/access_spawn/engineering_control
+/obj/mapping_helper/access/engineering_control
 	name = "engineering control access spawn"
 	req_access = list(access_engineering_control)
 	color = ENGINEERING
 
-/obj/access_spawn/mining_shuttle
+/obj/mapping_helper/access/mining_shuttle
 	name = "mining_shuttle access spawn"
 	req_access = list(access_mining_shuttle)
 	color = CARGO
 
-/obj/access_spawn/mining
+/obj/mapping_helper/access/mining
 	name = "mining EVA access spawn"
 	req_access = list(access_mining)
 	color = CARGO
 
-/obj/access_spawn/mining_outpost
+/obj/mapping_helper/access/mining_outpost
 	name = "mining_outpost access spawn"
 	req_access = list(access_mining_outpost)
 	color = CARGO
 
 //////////// Research ////
-/obj/access_spawn/tox
+/obj/mapping_helper/access/tox
 	name = "tox access spawn"
 	req_access = list(access_tox)
 	color = TOXINS
 
-/obj/access_spawn/tox_storage
+/obj/mapping_helper/access/tox_storage
 	name = "tox access spawn"
 	req_access = list(access_tox_storage)
 	color = TOXINS
 
-/obj/access_spawn/research
+/obj/mapping_helper/access/research
 	name = "research access spawn"
 	req_access = list(access_research)
 	color = RESEARCH
 
-/obj/access_spawn/chemistry
+/obj/mapping_helper/access/chemistry
 	name = "chem access spawn"
 	req_access = list(access_chemistry)
 	color = RESEARCH
 
-/obj/access_spawn/research_foyer
+/obj/mapping_helper/access/research_foyer
 	name = "research foyer access spawn"
 	req_access = list(access_researchfoyer)
 	color = RESEARCH
 
-/obj/access_spawn/artlab
+/obj/mapping_helper/access/artlab
 	name = "artlab access spawn"
 	req_access = list(access_artlab)
 	color = RESEARCH
 
-/obj/access_spawn/telesci
+/obj/mapping_helper/access/telesci
 	name = "telesci access spawn"
 	req_access = list(access_telesci)
 	color = RESEARCH
 
-/obj/access_spawn/robotdepot
+/obj/mapping_helper/access/robotdepot
 	name = "robot depot access spawn"
 	req_access = list(access_robotdepot)
 	color = RESEARCH
 
 //////////// Civilian ////
-/obj/access_spawn/maint
+/obj/mapping_helper/access/maint
 	name = "maint access spawn"
 	req_access = list(access_maint_tunnels)
 	color = MAINTENANCE
 
-/obj/access_spawn/emergency_storage
+/obj/mapping_helper/access/emergency_storage
 	name = "emergency storage access spawn"
 	req_access = list(access_emergency_storage)
 	color = MAINTENANCE
 
-/obj/access_spawn/chapel_office
+/obj/mapping_helper/access/chapel_office
 	name = "chapel office access spawn"
 	req_access = list(access_chapel_office)
 	color = MAINTENANCE
 
-/obj/access_spawn/tech_storage
+/obj/mapping_helper/access/tech_storage
 	name = "tech storage access spawn"
 	req_access = list(access_tech_storage)
 	color = MAINTENANCE
 
-/obj/access_spawn/bar
+/obj/mapping_helper/access/bar
 	name = "bar access spawn"
 	req_access = list(access_bar)
 	color = MAINTENANCE
 
-/obj/access_spawn/janitor
+/obj/mapping_helper/access/janitor
 	name = "janitor access spawn"
 	req_access = list(access_janitor)
 	color = MAINTENANCE
 
-/obj/access_spawn/crematorium
+/obj/mapping_helper/access/crematorium
 	name = "crematorium access spawn"
 	req_access = list(access_crematorium)
 	color = MAINTENANCE
 
-/obj/access_spawn/kitchen
+/obj/mapping_helper/access/kitchen
 	name = "kitchen access spawn"
 	req_access = list(access_kitchen)
 	color = MAINTENANCE
 
-/obj/access_spawn/hydro
+/obj/mapping_helper/access/hydro
 	name = "hydro access spawn"
 	req_access = list(access_hydro)
 	color = MAINTENANCE
 
-/obj/access_spawn/rancher
+/obj/mapping_helper/access/rancher
 	name = "ranch access spawn"
 	req_access = list(access_ranch)
 	color = MAINTENANCE
 
 //////////// Command/Heads ////
-/obj/access_spawn/emergency_storage // technically unused, sorta, mostly, kinda
+/obj/mapping_helper/access/emergency_storage // technically unused, sorta, mostly, kinda
 	name = "emergency storage access spawn"
 	req_access = list(access_emergency_storage)
 	color = MAINTENANCE
 
-/obj/access_spawn/ai_upload
+/obj/mapping_helper/access/ai_upload
 	name = "ai upload access spawn"
 	req_access = list(access_ai_upload)
 	color = COMMAND
 
-/obj/access_spawn/teleporter
+/obj/mapping_helper/access/teleporter
 	name = "teleporter access spawn"
 	req_access = list(access_teleporter)
 	color = COMMAND
 
-/obj/access_spawn/eva
+/obj/mapping_helper/access/eva
 	name = "eva access spawn"
 	req_access = list(access_eva)
 	color = COMMAND
 
-/obj/access_spawn/heads
+/obj/mapping_helper/access/heads
 	name = "heads access spawn"
 	req_access = list(access_heads)
 	color = COMMAND
 
-/obj/access_spawn/captain
+/obj/mapping_helper/access/captain
 	name = "captain access spawn"
 	req_access = list(access_captain)
 	color = COMMAND
 
-/obj/access_spawn/head_of_personnel
+/obj/mapping_helper/access/head_of_personnel
 	name = "HOP access spawn"
 	req_access = list(access_head_of_personnel)
 	color = COMMAND
 
-/obj/access_spawn/research_director
+/obj/mapping_helper/access/research_director
 	name = "RD access spawn"
 	req_access = list(access_research_director)
 	color = RESEARCH
 
-/obj/access_spawn/medical_director
+/obj/mapping_helper/access/medical_director
 	name = "MD access spawn"
 	req_access = list(access_medical_director)
 	color = MEDICAL
 
-/obj/access_spawn/hos
+/obj/mapping_helper/access/hos
 	name = "HOS access spawn"
 	req_access = list(access_maxsec)
 	color = SECURITY
 
-/obj/access_spawn/engineering_chief
+/obj/mapping_helper/access/engineering_chief
 	name = "CE access spawn"
 	req_access = list(access_engineering_chief)
 	color = ENGINEERING
 
 //////////// Other ////
-/obj/access_spawn/centcom
+/obj/mapping_helper/access/centcom
 	name = "centcom access spawn"
 	req_access = list(access_centcom)
 	color = COMMAND
 
-/obj/access_spawn/syndie_shuttle
+/obj/mapping_helper/access/syndie_shuttle
 	name = "syndie_shuttle access spawn"
 	req_access = list(access_syndicate_shuttle)
 	color = SECURITY
 
-/obj/access_spawn/pirate_ship
+/obj/mapping_helper/access/pirate_ship
 	name = "pirate ship access spawn"
 	req_access = list(access_pirate)
 	color = SECURITY
 
-/obj/access_spawn/admin_override //special admin override access spawner
+/obj/mapping_helper/access/admin_override //special admin override access spawner
 	name = "admin override access spawn"
 	color = SPECIAL
 
@@ -345,7 +328,7 @@
 		for (var/obj/O in src.loc)
 			O.admin_access_override = TRUE
 
-/obj/access_spawn/public
+/obj/mapping_helper/access/public
 	name = "public access spawn"
 	color = SPECIAL
 
@@ -354,33 +337,33 @@
 			O.req_access = null
 
 //////////// unsorted/unused ////
-/obj/access_spawn/hangar
+/obj/mapping_helper/access/hangar
 	name = "hangar access spawn"
 	req_access = list(access_hangar)
 	color = CARGO
 
 //////////////////////owlzone access///////
-/obj/access_spawn/owlmaint
+/obj/mapping_helper/access/owlmaint
 	name = "owlery maint access spawn"
 	req_access = list(access_owlerymaint)
 	color = ENGINEERING
 
-/obj/access_spawn/owlcommand
+/obj/mapping_helper/access/owlcommand
 	name = "owlery command access spawn"
 	req_access = list(access_owlerysec)
 	color = COMMAND
 
-/obj/access_spawn/owlsecurity
+/obj/mapping_helper/access/owlsecurity
 	name = "owlery sec access spawn"
 	req_access = list(access_owlerycommand)
 	color = SECURITY
 
-/obj/access_spawn/polariscargo
+/obj/mapping_helper/access/polariscargo
 	name = "polaris cargo access spawn"
 	req_access = list(access_polariscargo)
 	color = CARGO
 
-/obj/access_spawn/polarisimportant
+/obj/mapping_helper/access/polarisimportant
 	name = "polaris important access spawn"
 	req_access = list(access_polarisimportant)
 	color = CARGO

@@ -33,7 +33,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	opacity = 0
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor,
 /area/tutorial/flock)
 "k" = (
@@ -105,7 +105,7 @@
 /turf/simulated/floor,
 /area/tutorial/flock)
 "D" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
 /area/tutorial/flock)
 "E" = (

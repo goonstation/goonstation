@@ -1343,7 +1343,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.UpdateName()
 
 			src.mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			src.mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
 			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
 
 			RegisterSignal(src.mob, COMSIG_ATTACKHAND, PROC_REF(snap_at_maybe))
@@ -1362,7 +1361,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.mob.max_health -= 50
 			health_update_queue |= src.mob
 			src.mob.bioHolder.RemoveEffect("protanopia")
-			src.mob.bioHolder.RemoveEffect("accent_scoob_nerf")
 			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
 
 			UnregisterSignal(src.mob, COMSIG_ATTACKHAND)

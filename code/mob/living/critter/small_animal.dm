@@ -61,6 +61,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_brute_vuln = 1
 	health_burn = 20
 	health_burn_vuln = 1
+	void_mindswappable = TRUE
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/wanderer
 	ai_retaliates = TRUE
@@ -325,9 +326,6 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 
 	New()
 		..()
-		if(src.name == "jons the catte")
-			src.is_pet = TRUE
-			src.is_annoying = TRUE
 		if (src.randomize_name)
 			src.name = pick_string_autokey("names/cats.txt")
 			src.real_name = src.name
@@ -613,6 +611,16 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 			emag_act(user, W)
 		else
 			..()
+
+/mob/living/critter/small_animal/cat/jons
+	name = "jons the catte"
+	desc = "How long has this cat been here?"
+	icon_state = "cat6"
+	icon_state_dead = "cat6-dead"
+	randomize_look = FALSE
+	randomize_name = FALSE
+	is_pet = TRUE
+	is_annoying = TRUE
 
 /* ============================================= */
 /* -------------------- Dog -------------------- */
@@ -3745,6 +3753,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	is_npc = FALSE
 	use_custom_color = FALSE
 	var/allow_pickup_requests = TRUE
+	void_mindswappable = FALSE
 
 	New()
 		..()
