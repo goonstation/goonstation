@@ -21,8 +21,6 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	throw_speed = 1
 	throw_range = 5
 	is_syndicate = FALSE
-	mat_changename = FALSE // using custom sprites, might change later idk?
-	mat_changeappearance = FALSE
 
 /* Scrap weapon parts/in construction states */
 /obj/item/scrapweapons/parts
@@ -37,7 +35,7 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 	name = "scrap handle"
 	desc = "A handle for a yet unmade weapon. Try attaching something to it."
 	icon_state = "handle"
-	help_message = "You may attach the following items while holding a <b>lit welding tool</b> in your offhand to this handle to create a weapon:<br> A <b>scrap blade, shaft, or pole</b> which can be made with some metal sheets. <br> Or a shard of <b>glass, plasmaglass, or scrap metal</b> to create a dagger"
+	help_message = "You may attach the following items while holding a <b>lit welding tool</b> in your offhand to this handle to create a weapon:<br> A <b>scrap blade, shaft, or pole</b> which can be made with some metal sheets to make a machete, club, or spear, respectively. <br> Or a shard of <b>glass, plasmaglass, or scrap metal</b> to create a dagger"
 
 	attackby(obj/item/W, mob/user)
 		. = ..()
@@ -69,19 +67,18 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger)
 					boutput(user, "<span class='notice'>You fuse the handle and scrap metal into a scrap dagger.</span>")
 
+				else if (istype(W, /obj/item/raw_material/shard))
+					if (istype(W.material, /datum/material/crystal/glass))
+						qdel(W)
+						qdel(src)
+						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/glass)
+						boutput(user, "<span class='notice'>You fuse the handle and glass shard into a scrap dagger.</span>")
 
-				if (istype(W, /obj/item/raw_material/shard/glass))
-					qdel(W)
-					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/glass)
-					boutput(user, "<span class='notice'>You fuse the handle and glass shard into a scrap dagger.</span>")
-
-
-				if (istype(W, /obj/item/raw_material/shard/plasmacrystal))
-					qdel(W)
-					qdel(src)
-					user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/plasmaglass)
-					boutput(user, "<span class='notice'>You fuse the handle and plasmaglass shard into a scrap dagger.</span>")
+					else if (istype(W.material, /datum/material/crystal/plasmaglass))
+						qdel(W)
+						qdel(src)
+						user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/dagger/plasmaglass)
+						boutput(user, "<span class='notice'>You fuse the handle and plasmaglass shard into a scrap dagger.</span>")
 
 /obj/item/scrapweapons/parts/blade
 	name = "scrap blade"
@@ -306,12 +303,13 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 		hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	attackby(obj/item/W, mob/user)
-		if (src.wireadded == FALSE)
+		. = ..()
+		if (!src.wireadded)
 			if (istype(W, /obj/item/cable_coil))
 				if (W.amount >= 2)
 					W.amount -= 2
 					src.wireadded = TRUE
-					boutput(user, "<span class='notice'>You attach the wire to the spear, now you just need some extra material.</span>")
+					boutput(user, "<span class='notice'>You attach the wire to the club, now you just need some extra material.</span>")
 					src.desc = "A metal shaft attached to a handle with wire wrapped around it. You should be able to improve it further."
 					src.help_message = "Now attach a piece of <b>scrap metal, glass, or plasmaglass<b>. to complete the club."
 					src.icon_state = "club-wire"
@@ -322,17 +320,18 @@ ABSTRACT_TYPE(/obj/item/scrapweapons/weapons)
 			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/scrapmetal)
 			boutput(user, "<span class='notice'>You combine the club with the piece of scrap metal to add some extra weight.</span>")
 
-		else if (istype(W, /obj/item/raw_material/shard/glass))
-			qdel(W)
-			qdel(src)
-			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/glass)
-			boutput(user, "<span class='notice'>You combine the club with the glass shard.</span>")
+		else if (istype(W, /obj/item/raw_material/shard))
+			if (istype(W.material, /datum/material/crystal/glass))
+				qdel(W)
+				qdel(src)
+				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/glass)
+				boutput(user, "<span class='notice'>You combine the club with the glass shard.</span>")
 
-		else if (istype(W, /obj/item/raw_material/shard/plasmacrystal))
-			qdel(W)
-			qdel(src)
-			user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/plasmaglass)
-			boutput(user, "<span class='notice'>You combine the club with the plasmaglass shard.</span>")
+			else if (istype(W.material, /datum/material/crystal/plasmaglass))
+				qdel(W)
+				qdel(src)
+				user.put_in_hand_or_drop(new/obj/item/scrapweapons/weapons/club/plasmaglass)
+				boutput(user, "<span class='notice'>You combine the club with the glass shard</span>")
 
 /obj/item/scrapweapons/weapons/club/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))

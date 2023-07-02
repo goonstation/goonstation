@@ -2924,6 +2924,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
 #endif
+#ifdef MAP_OVERRIDE_OSHAN
+	/datum/manufacture/cable/reinforced,
+#endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,
 		/datum/manufacture/interdictor_kit,

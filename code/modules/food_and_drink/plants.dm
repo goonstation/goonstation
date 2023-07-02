@@ -1,5 +1,5 @@
 
-ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 /obj/item/reagent_containers/food/snacks/plant/
 	name = "fruit or vegetable"
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'

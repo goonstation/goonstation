@@ -235,7 +235,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	name = "private quarters"
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/wood/two,
 /area/prefab/safehouse)
 "hp" = (
@@ -308,7 +308,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/prefab/safehouse)
 "kl" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/decal/cleanable/dirt/dirt5,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -323,7 +323,7 @@
 /turf/simulated/floor/neutral,
 /area/prefab/safehouse)
 "kC" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
@@ -333,7 +333,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/plating,
 /area/prefab/safehouse)
 "kN" = (
@@ -511,7 +511,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/prefab/safehouse)
 "oM" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 1;
 	name = "private medbay"
@@ -907,7 +907,7 @@
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
 	},
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
 "TW" = (
@@ -978,7 +978,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/safehouse)
 "XO" = (
-/obj/access_spawn/public,
+/obj/mapping_helper/access/public,
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 8;

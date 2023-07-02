@@ -558,7 +558,7 @@
 	var/imdrone
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
-			max_stack = 500
+			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
 		if (other != src && check_valid_stack(src))
@@ -969,6 +969,7 @@
 	. = src.afterattack(target, user, reach, params)
 
 /obj/item/proc/afterattack(atom/target, mob/user, reach, params)
+	set waitfor = 0
 	PROTECTED_PROC(TRUE)
 	src.storage?.storage_item_after_attack(target, user, reach)
 	return
