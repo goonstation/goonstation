@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(src.warm == DONK_WARM)
 			M.reagents?.add_reagent("honk_fart",15)
 		else
-			M.reagents?.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("anti_fart",15)
 		..()
 
 	cooltime()
@@ -2484,7 +2484,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
 			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
 			qdel(src)
-		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice))
 			var/spawnloc = get_turf(src)
 			var/handspawn
 			if(istype(src.loc,/mob))
@@ -2493,12 +2493,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.set_loc(user)
 			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
 			switch(W.icon_state)
-				if("fillet-orange")
+				if("filletslice-orange")
 					nigiri.icon_state = "nigiri1"
-				if("fillet-pink")
+				if("filletslice-pink")
 					nigiri.icon_state = "nigiri2"
-				if("fillet-white")
+				if("filletslice-white")
 					nigiri.icon_state = "nigiri3"
+				if("filletslice-small")
+					nigiri.icon_state = "nigiri4"
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)
@@ -2607,7 +2609,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		src.icon_state = "nigiri[rand(1,3)]"
+		src.icon_state = "nigiri[rand(1,4)]"
 
 /obj/item/reagent_containers/food/snacks/riceandbeans
 	name = "rice and beans"
@@ -2736,7 +2738,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
 		reagents.add_reagent("anti_rad",7)
-		reagents.add_reagent("omnnizine",7)
+		reagents.add_reagent("omnizine",7)
 
 
 /obj/item/reagent_containers/food/snacks/greengoo
@@ -2837,7 +2839,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "water_holy"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry

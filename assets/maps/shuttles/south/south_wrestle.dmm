@@ -175,7 +175,7 @@
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "hY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/stage_edge{
 	layer = 2.9
 	},
@@ -299,7 +299,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "mr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "mu" = (
@@ -435,7 +435,7 @@
 	},
 /area/shuttle/escape/centcom)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -666,7 +666,7 @@
 /turf/unsimulated/floor/white/checker2,
 /area/shuttle/escape/centcom)
 "xT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "ye" = (
@@ -928,7 +928,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -967,7 +967,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "He" = (
@@ -1165,7 +1165,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge/se,
 /area/shuttle/escape/centcom)
 "Nt" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless/black/grime,
 /area/shuttle/escape/centcom)
 "NG" = (
@@ -1341,7 +1341,7 @@
 	},
 /area/centcom/outside)
 "SL" = (
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /turf/simulated/floor/airless/black/grime,
 /area/shuttle/escape/centcom)
@@ -1349,7 +1349,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/stairs{
 	dir = 1
 	},

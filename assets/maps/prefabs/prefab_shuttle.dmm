@@ -19,7 +19,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "floor3"
 	},
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "aD" = (
@@ -37,7 +37,7 @@
 	},
 /area/noGenerate)
 "aF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/scorched,
 /area/noGenerate)
 "aI" = (
@@ -58,7 +58,7 @@
 /area/noGenerate)
 "aP" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
@@ -126,7 +126,7 @@
 	},
 /area/noGenerate)
 "bz" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless{
 	icon_state = "floorgrime"
 	},
@@ -148,7 +148,7 @@
 	},
 /area/noGenerate)
 "bK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "bL" = (
@@ -412,7 +412,7 @@
 /area/allowGenerate)
 "zp" = (
 /obj/item/cable_coil/cut,
-/obj/critter/zombie/radiation,
+/mob/living/critter/zombie/radiation,
 /obj/decal/fakeobjects/pipe/heat{
 	icon_state = "10-b"
 	},
@@ -533,7 +533,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "Kz" = (
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)
 "Lr" = (
@@ -630,7 +630,7 @@
 /area/noGenerate)
 "SW" = (
 /obj/decal/cleanable/dirt,
-/obj/critter/zombie/scientist,
+/mob/living/critter/zombie/scientist,
 /obj/item/raw_material/rock,
 /turf/simulated/floor/plating/airless,
 /area/noGenerate)

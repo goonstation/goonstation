@@ -175,7 +175,7 @@ var/global/mob/twitch_mob = 0
 #endif
 		Z_LOG_DEBUG("Preload", "Map preload running.")
 
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 		world.log << ""
 		world.log << "========================================"
 		world.log << "\[[time2text(world.timeofday,"hh:mm:ss")]\] Starting new round"
@@ -511,7 +511,7 @@ var/global/mob/twitch_mob = 0
 
 	Z_LOG_DEBUG("World/Init", "Notifying Discord of new round")
 	ircbot.event("serverstart", list("map" = getMapNameFromID(map_setting), "gamemode" = (ticker?.hide_mode) ? "secret" : master_mode))
-#ifndef RUNTIME_CHECKING
+#ifndef CI_RUNTIME_CHECKING
 	world.log << "Map: [getMapNameFromID(map_setting)]"
 	logTheThing(LOG_STATION, null, "Map: [getMapNameFromID(map_setting)]")
 #endif
@@ -602,7 +602,7 @@ var/global/mob/twitch_mob = 0
 	Z_LOG_DEBUG("World/Init", "Running map-specific initialization...")
 	map_settings.init()
 
-	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(RUNTIME_CHECKING)
+	#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(CI_RUNTIME_CHECKING)
 	Z_LOG_DEBUG("World/Init", "Initializing region allocator...")
 	if(length(global.region_allocator.free_nodes) == 0)
 		global.region_allocator.add_z_level()
@@ -642,10 +642,13 @@ var/global/mob/twitch_mob = 0
 #ifdef PREFAB_CHECKING
 	placeAllPrefabs()
 #endif
-#ifdef RUNTIME_CHECKING
+#ifdef RANDOM_ROOM_CHECKING
+	placeAllRandomRooms()
+#endif
+#ifdef CI_RUNTIME_CHECKING
 	populate_station()
 	check_map_correctness()
-	SPAWN(10 SECONDS)
+	SPAWN(15 SECONDS)
 		Reboot_server()
 #endif
 #if defined(UNIT_TESTS) && !defined(UNIT_TESTS_RUN_TILL_COMPLETION)
@@ -690,7 +693,7 @@ var/global/mob/twitch_mob = 0
 	save_tetris_highscores()
 	if (current_state < GAME_STATE_FINISHED)
 		current_state = GAME_STATE_FINISHED
-#if defined(RUNTIME_CHECKING) || defined(UNIT_TESTS)
+#if defined(CI_RUNTIME_CHECKING) || defined(UNIT_TESTS)
 	for (var/client/C in clients)
 		ehjax.send(C, "browseroutput", "hardrestart")
 
@@ -706,7 +709,7 @@ var/global/mob/twitch_mob = 0
 			var/line = details["line"]
 			var/name = details["name"]
 			text2file("\[[timestamp]\] [file],[line]: [name]", "errors.log")
-#ifndef PREFAB_CHECKING
+#if !(defined(PREFAB_CHECKING) || defined(RANDOM_ROOM_CHECKING))
 	var/apc_error_str = debug_map_apc_count("\n", zlim=Z_LEVEL_STATION)
 	if (!is_blank_string(apc_error_str))
 		text2file(apc_error_str, "errors.log")
@@ -1552,16 +1555,29 @@ var/global/mob/twitch_mob = 0
 				ircmsg["ticklag"] = world.tick_lag
 				ircmsg["runtimes"] = global.runtime_count
 				if(world.system_type == "UNIX")
+					var/list/meminfos = list()
 					try
 						var/meminfo_file = "data/meminfo.txt"
-						fcopy("/proc/meminfo", "meminfo_file")
+						fcopy("/proc/meminfo", meminfo_file)
 						var/list/memory_info = splittext(file2text(meminfo_file), "\n")
 						if(length(memory_info) >= 3)
 							memory_info.len = 3
-							ircmsg["meminfo"] = jointext(memory_info, "\n")
+							meminfos += memory_info
 						fdel(meminfo_file)
 					catch(var/exception/e)
 						stack_trace("[e.name]\n[e.desc]")
+					try
+						var/statm_file = "data/statm.txt"
+						fcopy("/proc/self/statm", statm_file)
+						var/list/memory_info = splittext(file2text(statm_file), " ")
+						var/list/field_names = list("size", "resident", "share", "text", "lib", "data", "dt")
+						for(var/i = 1, i <= length(memory_info), i++)
+							meminfos += field_names[i] + ": " + memory_info[i]
+						fdel(statm_file)
+					catch(var/exception/e2)
+						stack_trace("[e2.name]\n[e2.desc]")
+					if(length(meminfos))
+						ircmsg["meminfo"] = jointext(meminfos, "\n")
 				return ircbot.response(ircmsg)
 
 			if ("rev")

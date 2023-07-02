@@ -12,7 +12,6 @@
 #define WIFI_NOISE_VOLUME 30
 #define LIGHT_UP_HOUSING SPAWN(0) src.light_up_housing()
 #define SEND_COOLDOWN_ID "MechComp send cooldown"
-#define src_exists_inside_user_or_user_storage (src.loc == user || src.stored?.linked_item.loc == user)
 
 // mechanics containers for mechanics components (read: portable horn [read: vuvuzela] honkers! yaaaay!)
 //
@@ -20,7 +19,7 @@
 	name="Generic MechComp Housing"
 	desc="You should not bee seeing this! Call 1-800-CODER or just crusher it"
 	icon='icons/misc/mechanicsExpansion.dmi'
-	can_hold=list(/obj/item/mechanics)
+	can_hold=list(/obj/item/mechanics, /obj/item/device/gps)
 	var/list/users = list() // le chumps who have opened the housing
 	deconstruct_flags = DECON_NONE //nope, so much nope.
 	slots=1
@@ -218,7 +217,7 @@
 									 // thinks it's not a constant and refuses to work with it.
 		desc="A rather chunky cabinet for storing up to 23 active mechanic components\
 		 at once.<br>It can only be connected to external components when bolted to the floor.<br>"
-		w_class = W_CLASS_BULKY //all the weight
+		w_class = W_CLASS_GIGANTIC //Shouldn't be stored in a backpack
 		num_f_icons=3
 		density=1
 		anchored = UNANCHORED
@@ -227,6 +226,8 @@
 		light_color = list(0, 179, 255, 255)
 
 		attack_hand(mob/user)
+			if (istype(user,/mob/living/object) && user == src.loc) // prevent wacky nullspace bug
+				return
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -234,6 +235,8 @@
 			return mouse_drop(user)
 
 		attack_self(mob/user as mob)
+			if (istype(user,/mob/living/object) && user == src.loc)
+				return
 			src.set_loc(get_turf(user))
 			user.drop_item()
 			return
@@ -491,27 +494,33 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 		return ..()
 
-	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
-		if(level == 2 || (istype(O, /obj/item/mechanics) && O.level == 2))
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(level == 2 || (istype(over_object, /obj/item/mechanics) && over_object.level == 2))
 			boutput(usr, "<span class='alert'>Both components need to be secured into place before they can be connected.</span>")
-			return ..()
+			return
 
-		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT,O,usr)
+		SEND_SIGNAL(src,_COMSIG_MECHCOMP_DROPCONNECT, over_object, usr)
 		return
 
 	proc/componentSay(var/string)
 		string = trim(sanitize(html_encode(string)))
 		var/maptext = null
-		var/mob/user = usr
-		if (src_exists_inside_user_or_user_storage && !src.storage)
-			maptext = make_chat_maptext(src.owner, "[string]", "color: #FFBF00;", alpha = 255)
+		var/maptext_loc = null //Location used for center of all_hearers scan "Probably where you want your text attached to."
+
+		if(istype_exact(src.stored?.linked_item, /obj/item/storage/mechanics/housing_handheld) && !src.storage) //Handles all text for the Device Frame
+			var/list/atom/movable/loc_chain = obj_loc_chain(src)
+			maptext_loc = loc_chain[length(loc_chain)] //location of stop most container or possibly a mob.
+
 		else
-			maptext = make_chat_maptext(src.loc, "[string]", "color: #FFBF00;", alpha = 255)
-		for(var/mob/O in all_hearers(7, src.loc))
+			maptext_loc = src.loc
+
+		maptext = make_chat_maptext(maptext_loc, "[string]", "color: #FFBF00;", alpha = 255)
+
+		for(var/mob/O in all_hearers(7, maptext_loc))
 			O.show_message("<span class='game radio' style='color: #FFBF00;'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks",  \
-			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1)
-			O.show_message(assoc_maptext = maptext)
-		playsound(src.loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
+			"beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",1, //Places text in the radio
+				assoc_maptext = maptext) //Places text in world
+		playsound(maptext_loc, 'sound/machines/reprog.ogg', 45, 2, pitch = 1.4)
 
 	hide(var/intact)
 		under_floor = (intact && level==1)
@@ -606,7 +615,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
-		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
+		if (istype(W, /obj/item/currency/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
 			current_buffer += W.amount
 			if (src.price <= 0)
@@ -617,7 +626,7 @@
 
 				if (current_buffer > price)
 					componentSay("Here is your change!")
-					var/obj/item/spacecash/C = new /obj/item/spacecash(user.loc, current_buffer - price)
+					var/obj/item/currency/spacecash/C = new /obj/item/currency/spacecash(user.loc, current_buffer - price)
 					user.put_in_hand_or_drop(C)
 
 				collected += price
@@ -636,7 +645,7 @@
 
 	proc/ejectmoney()
 		if (collected)
-			var/obj/item/spacecash/S = new /obj/item/spacecash
+			var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 			S.setup(get_turf(src), collected)
 			collected = 0
 			tooltip_rebuild = 1
@@ -2311,6 +2320,7 @@
 		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
 		telelight.plane = PLANE_SELFILLUM
 		telelight.alpha = 180
+		telelight.appearance_flags |= RESET_ALPHA | RESET_COLOR | RESET_TRANSFORM
 
 	disposing()
 		STOP_TRACKING
@@ -2818,7 +2828,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	density = 0
 	can_rotate = 1
 	var/obj/item/gun/Gun = null
-	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
+	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower, /obj/item/gun/reagent)
 	cabinet_banned = TRUE // non-functional thankfully
 	get_desc()
 		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
@@ -4120,6 +4130,89 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		logTheThing(LOG_STATION, null, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color], [x2], [y2]}")
 
+/obj/item/mechanics/textmanip
+	name = "Text manipulation component"
+	desc = "Allows for controlling text you send in."
+	icon_state = "comp_text"
+
+	/// do we enforce lowercase(false)/uppercase(true) or leave it as is
+	var/uppertext_mode = null
+	/// do we limit the length of the output
+	var/text_limit = null
+	/// do we trim whitespace from the ends of the output
+	var/trim_text = FALSE
+	/// do we capitalize the first letter of the output
+	var/cap_first = FALSE
+
+	New()
+		..()
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle UPPERCASE/lowercase",PROC_REF(setCapsMode))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set Length Limit on Text",PROC_REF(setTextLimit))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle Whitespace Trimming",PROC_REF(setTrimming))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Toggle Capitalizing First Letter",PROC_REF(setFirstCap))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Input", PROC_REF(parseText))
+
+	get_desc()
+		var/upp = "Disabled"
+		if (src.uppertext_mode != null)
+			upp = src.uppertext_mode ? "UPPERCASE" : "lowercase"
+		. += "<br><span class='notice'>Uppercase/Lowercase output: [upp]</span>"
+
+		. += "<br><span class='notice'>Text length limit: [src.text_limit ? "[src.text_limit] characters" : "Disabled"]</span>"
+		. += "<br><span class='notice'>Trim whitespace: [src.trim_text ? "Enabled" : "Disabled"]</span>"
+		. += "<br><span class='notice'>First letter capitalized: [src.cap_first ? "Enabled" : "Disabled"]</span>"
+
+	proc/setCapsMode(var/datum/mechanicsMessage/input, mob/user)
+		if (src.uppertext_mode == null)
+			boutput(user, "Now forcing output text to be lowercase")
+			src.uppertext_mode = FALSE
+		else if (src.uppertext_mode == FALSE)
+			boutput(user, "Now forcing output text to be uppercase")
+			src.uppertext_mode = TRUE
+		else if (src.uppertext_mode == TRUE)
+			boutput(user, "Uppercase/lowercase output disabled")
+			src.uppertext_mode = null
+
+	proc/setTextLimit(var/datum/mechanicsMessage/input, mob/user)
+		var/num = input(user, "Number of Characters allowed in text (leave blank to disable)", "Text length limit") as num|null
+		if (num != null)
+			src.text_limit = num
+			boutput(user, "Now limiting text to [num] characters")
+		else
+			src.text_limit = null
+			boutput(user, "Text limit removed")
+
+	proc/setTrimming(var/datum/mechanicsMessage/input, mob/user)
+		src.trim_text = !src.trim_text
+		if (src.trim_text)
+			boutput(user, "Now trimming whitespace from the ends of output text")
+		else
+			boutput(user, "Text whitespace trimming is now disabled")
+
+	proc/setFirstCap(var/datum/mechanicsMessage/input, mob/user)
+		src.cap_first = !src.cap_first
+		if (src.cap_first)
+			boutput(user, "Now Capitalizing first letter of text")
+		else
+			boutput(user, "First Letter Capitalization is now disabled")
+
+	proc/parseText(var/datum/mechanicsMessage/input)
+		var/text = input.signal
+
+		if (src.cap_first)
+			text = uppertext(copytext_char(text,1,2)) + copytext_char(text,2)
+		if (src.uppertext_mode != null)
+			text = src.uppertext_mode ? uppertext(text) : lowertext(text)
+		if (src.text_limit)
+			text = copytext_char(text,1,src.text_limit+1)
+		if (src.trim_text)
+			text = trim(text)
+
+		if (!length(text) || src.text_limit == 0)
+			return
+
+		input.signal = text
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 
 
 /obj/item/mechanics/bomb
@@ -4236,4 +4329,3 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 
 #undef IN_CABINET
 #undef LIGHT_UP_HOUSING
-#undef src_exists_inside_user_or_user_storage

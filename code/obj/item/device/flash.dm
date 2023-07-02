@@ -310,7 +310,7 @@ TYPEINFO(/obj/item/device/flash)
 			else
 				.= 1
 				if (!(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
-					H.mind?.add_antagonist(ROLE_REVOLUTIONARY)
+					H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
 				else
 					user.show_text("[H] is already a member of the revolution.", "red")
 			if (!nostun)

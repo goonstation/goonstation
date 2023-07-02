@@ -47,7 +47,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -157,7 +157,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "gy" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -320,7 +320,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -412,7 +412,7 @@
 	},
 /area/shuttle/escape/centcom)
 "pM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -436,7 +436,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qE" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -729,7 +729,7 @@
 	opacity = 0;
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -767,7 +767,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "EY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -900,7 +900,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -1071,7 +1071,7 @@
 	},
 /area/centcom)
 "VM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"

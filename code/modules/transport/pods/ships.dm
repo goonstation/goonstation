@@ -854,17 +854,21 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 			if (shoot_dir == SOUTHEAST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				var/turf/E = get_step(get_turf(src), EAST)
 				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 			if (shoot_dir == SOUTHWEST)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHEAST)
@@ -872,9 +876,11 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHWEST)
@@ -882,13 +888,16 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, src)
 				if (P)
 					P.mob_shooter = user
+					P.shooter = src
 				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 		else
 			if (shoot_dir == SOUTH || shoot_dir == WEST)
 				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5

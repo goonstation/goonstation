@@ -365,7 +365,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -490,7 +490,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				/obj/item/raw_material = "materials",
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
-				/obj/item/tile = "floor tiles")
+				/obj/item/tile = "floor tiles",
+				/obj/item/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -501,6 +502,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				var/staystill = user.loc
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
+						continue
+					if (thing.anchored)
 						continue
 					if (thing in user)
 						continue

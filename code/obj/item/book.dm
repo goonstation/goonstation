@@ -566,3 +566,10 @@ all for the love of you.</tt>"}
 	info = {"<h3>These coolers are for emergency use only</h3></br>
 			In the event of a meltdown scenario, activate the coolers and ensure the gas loop is pressurised.<br>
 			Use of these coolers outside of an emergency scenario will result in a loss of reactor efficiency and stalling of the turbine."}
+
+/obj/item/paper/locked_table_random_room
+	name = "dusty note"
+	info = {"Alright, so get this... I get these nice tables, with these nice locks... I set them up in this place where I can do my work in peace.
+			I heard something scary, so I leave for a few minutes, leaving my key behind. I come back. AND THEY'RE LOCKED... WITH A NOTE ON THE TABLE
+			SAYING THE KEY'S INSIDE ONE OF THEM. WHY??? I kicked the table, and YES, there is something metal in there. Well... what am I going to do
+			now?"}

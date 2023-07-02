@@ -283,7 +283,11 @@ ABSTRACT_TYPE(/obj/item/parts)
 	attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
 		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
 			return ..()
+
+		var/can_secure = FALSE
 		if(attacher)
+			can_secure = ismob(attacher) && (attacher.find_type_in_hand(/obj/item/suture) || attacher?.find_type_in_hand(/obj/item/staple_gun))
+
 			if(!can_act(attacher))
 				return
 			if(!src.easy_attach)
@@ -295,14 +299,14 @@ ABSTRACT_TYPE(/obj/item/parts)
 			attacher.remove_item(src)
 
 			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
-			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : "doesn't look very secure"]!</span>")
+			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : can_secure ? "looks very secure" : "doesn't look very secure"]!</span>")
 
 		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee
 		src.layer = initial(src.layer)
 		src.screen_loc = ""
 		src.set_loc(attachee)
-		src.remove_stage = src.easy_attach ? 0 : 2
+		src.remove_stage = (src.easy_attach || can_secure) ? 0 : 2
 
 		if (movement_modifier)
 			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)

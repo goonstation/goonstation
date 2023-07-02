@@ -106,6 +106,9 @@ o+`        `-` ``..-:yooos-..----------..`
 // Toggle this to turn .dispose() into qdel( ). Useful for trying to find lingering references locally.
 //#define DISPOSE_IS_QDEL
 
+// Toggle this to enable perspective wall icons in .dmm-compatible map editors. By default, icons in the editor will be flat.
+//#define USE_PERSPECTIVE_EDITOR_WALLS
+
 //------------- MAP OVERRIDES -------------//
 //-------Special Events:
 //#define MAP_OVERRIDE_CONSTRUCTION	// Construction mode
@@ -146,6 +149,10 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define UNIT_TESTS
 //#define UNIT_TESTS_RUN_TILL_COMPLETION // Bypass 10 Second Limit
+
+#ifdef CI_RUNTIME_CHECKING
+#define CHECK_MORE_RUNTIMES 1
+#endif
 
 //------ HOLIDAYS AND OTHER SUCH TOGGLES ------//
 

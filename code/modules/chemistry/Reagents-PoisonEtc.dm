@@ -1491,6 +1491,9 @@ datum
 						M.make_dizzy(1 * mult)
 						M.change_eye_blurry(6, 6)
 						M.change_misstep_chance(20 * mult)
+						if(M.reagents?.has_reagent("capulettium") && M.hasStatus("weakened"))
+							..()                      //will not cause emotes and puking if you are already downed by capulettium
+							return					  //for preserving the death diguise
 						if(probmult(15))
 							if(!M.hasStatus("slowed"))
 								M.setStatus("slowed", 2 SECONDS)
@@ -2204,7 +2207,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				. = ..()
-				var/poison_amount = holder.get_reagent_amount(src.id)
+				var/poison_amount = holder?.get_reagent_amount(src.id) // need to check holder as the reagent could be fully removed in the parent call
 				if(poison_amount > 5)
 					for(var/obj/item/I in oview(M,5))
 						if(probmult(2))

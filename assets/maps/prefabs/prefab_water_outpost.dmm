@@ -143,7 +143,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/prefab/deserted_outpost)
 "B" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/prefab/deserted_outpost)
 "C" = (

@@ -324,7 +324,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			message = say_gurgle(message)
 			messageEffects += "Gurgle"
 
-	if(H.mutantrace && !isdead(H))
+	if(!isdead(H))
 		message = H.mutantrace.say_filter(message)
 		messageEffects += "[H.mutantrace] say_filter()"
 

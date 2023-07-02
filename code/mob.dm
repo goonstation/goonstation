@@ -232,6 +232,8 @@
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
+	/// If TRUE then this mob won't be fully stunned by stamina stuns
+	var/no_stamina_stuns = FALSE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)
@@ -268,8 +270,7 @@
 
 	src.lastattacked = src //idk but it fixes bug
 	render_target = "\ref[src]"
-	src.chat_text = new
-	src.vis_contents += src.chat_text
+	src.chat_text = new(null, src)
 
 	src.name_tag = new
 	src.update_name_tag()
@@ -794,8 +795,6 @@
 	src.update_camera()
 
 /mob/set_loc(atom/new_loc, new_pixel_x = 0, new_pixel_y = 0)
-	var/atom/oldloc = src.loc
-
 	if (use_movement_controller && isobj(src.loc) && src.loc:get_movement_controller())
 		use_movement_controller = null
 
@@ -813,17 +812,6 @@
 			use_movement_controller = src.loc
 
 	walk(src,0) //cancel any walk movements
-
-	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
-		if(src.chat_text?.vis_locs?.len)
-			var/atom/movable/AM = src.chat_text.vis_locs[1]
-			AM.vis_contents -= src.chat_text
-		if(istype(src.loc, /turf))
-			src.vis_contents += src.chat_text
-		else
-			var/atom/movable/A = src
-			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
-			A?.vis_contents += src.chat_text
 
 /mob/proc/update_camera()
 	if (src.client)
@@ -1460,10 +1448,11 @@
 	set name = "Recite Miranda Rights"
 	if (isnull(src.mind))
 		return
-	if (isnull(src.mind.miranda))
-		src.say_verb("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
+	var/miranda = src.mind.get_miranda()
+	if (isnull(miranda))
+		src.say_verb(DEFAULT_MIRANDA)
 		return
-	src.say_verb(src.mind.miranda)
+	src.say_verb(miranda)
 
 /mob/proc/add_miranda()
 	set name = "Set Miranda Rights"
@@ -1472,12 +1461,7 @@
 	if (src.mind.last_memory_time + 10 <= world.time) // leaving it using this var cause vOv
 		src.mind.last_memory_time = world.time // why not?
 
-		if (isnull(src.mind.miranda))
-			src.mind.set_miranda("You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you.")
-
-		src.mind.show_miranda(src)
-
-		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.miranda) as null|text
+		var/new_rights = input(usr, "Change what you will say with the Say Miranda Rights verb.", "Set Miranda Rights", src.mind.get_miranda() || DEFAULT_MIRANDA) as null|text
 		if (!new_rights || new_rights == src.mind.miranda)
 			src.show_text("Miranda rights not changed.", "red")
 			return
@@ -1972,8 +1956,8 @@
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
-			var/obj/critter/owl/O = new /obj/critter/owl(src.loc)
-			O.name = pick("Hooty Mc[src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
+			var/mob/living/critter/small_animal/bird/owl/owl = new /mob/living/critter/small_animal/bird/owl(src.loc)
+			owl.name = pick("Hooty Mc [src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -2202,6 +2186,14 @@
 	make_cleanable(/obj/decal/cleanable/flockdrone_debris, T)
 	src.gib()
 
+/mob/proc/smite_gib()
+	var/turf/T = get_turf(src)
+	showlightning_bolt(T)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	src.unequip_all()
+	src.emote("scream")
+	src.gib()
+
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
 /mob/proc/get_all_items_on_mob()
@@ -2371,6 +2363,7 @@
 	is_jittery = 0
 
 /mob/onVarChanged(variable, oldval, newval)
+	. = ..()
 	update_clothing()
 
 /mob/proc/throw_item(atom/target, list/params)

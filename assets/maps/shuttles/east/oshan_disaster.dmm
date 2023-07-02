@@ -44,7 +44,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "bq" = (
@@ -172,7 +172,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "gy" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -335,7 +335,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -428,7 +428,7 @@
 	},
 /area/shuttle/escape/centcom)
 "pM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -452,7 +452,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qE" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "qW" = (
@@ -803,7 +803,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/shuttle/escape/centcom)
 "EY" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -966,7 +966,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -1160,7 +1160,7 @@
 	},
 /area/centcom)
 "VM" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"

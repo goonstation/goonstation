@@ -9,7 +9,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/zoo)
 "d" = (
-/obj/critter/zombie,
+/mob/living/critter/zombie,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -54,7 +54,7 @@
 	},
 /area/prefab/zoo)
 "k" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
 /area/prefab/zoo)
 "l" = (
