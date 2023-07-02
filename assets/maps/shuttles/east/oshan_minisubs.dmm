@@ -71,12 +71,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"cn" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle{
-	dir = 8
-	},
-/area/shuttle/escape/centcom)
 "dw" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -98,23 +92,30 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"dX" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/unsimulated/floor/plating,
+/area/shuttle/escape/centcom)
 "ev" = (
 /turf/unsimulated/floor/stairs/dark/wide{
 	dir = 6
 	},
 /area/centcom/outside)
-"fc" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Secure Transport";
-	opacity = 0;
-	hardened = 1
-	},
-/obj/access_spawn/security,
-/obj/forcefield/energyshield/perma,
-/turf/unsimulated/floor/shuttle{
+"fj" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
 	dir = 8;
-	icon_state = "floor4"
+	icon_state = "alt_heater-R"
 	},
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "fK" = (
 /turf/unsimulated/wall/auto/lead/blue,
@@ -151,19 +152,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"iT" = (
-/obj/machinery/door/airlock/pyro/medical{
-	name = "First-Aid Station";
-	opacity = 0;
-	hardened = 1
-	},
-/obj/access_spawn/medical,
-/obj/forcefield/energyshield/perma,
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor3"
-	},
-/area/shuttle/escape/centcom)
 "jn" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "12"
@@ -247,6 +235,23 @@
 	opacity = 0
 	},
 /area/centcom)
+"nf" = (
+/obj/machinery/door/airlock/pyro/command{
+	opacity = 0
+	},
+/obj/mapping_helper/access/heads,
+/obj/forcefield/energyshield/perma,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor2"
+	},
+/area/shuttle/escape/centcom)
+"nt" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "nv" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -390,6 +395,12 @@
 	dir = 10
 	},
 /area/centcom/outside)
+"tn" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "uh" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -406,18 +417,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"wm" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater"
-	},
-/turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
 "wB" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -495,6 +494,19 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
+"zF" = (
+/obj/machinery/door/airlock/pyro/medical{
+	name = "First-Aid Station";
+	opacity = 0;
+	hardened = 1
+	},
+/obj/mapping_helper/access/medical,
+/obj/forcefield/energyshield/perma,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor3"
+	},
+/area/shuttle/escape/centcom)
 "zG" = (
 /obj/decal/tile_edge/line/orange{
 	icon_state = "line1"
@@ -543,14 +555,6 @@
 	dir = 1
 	},
 /area/centcom)
-"AO" = (
-/obj/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
 "BQ" = (
 /obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor{
@@ -564,12 +568,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"Cp" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "CJ" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 9;
@@ -630,6 +628,12 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"Fq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
 "Gh" = (
 /obj/machinery/sleeper/compact{
 	dir = 8
@@ -694,6 +698,12 @@
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"Jj" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	dir = 8
+	},
+/area/shuttle/escape/centcom)
 "Jz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -767,6 +777,26 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
+"Pc" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/shuttle/escape/centcom)
+"PI" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Secure Transport";
+	opacity = 0;
+	hardened = 1
+	},
+/obj/mapping_helper/access/security,
+/obj/forcefield/energyshield/perma,
+/turf/unsimulated/floor/shuttle{
+	dir = 8;
+	icon_state = "floor4"
+	},
+/area/shuttle/escape/centcom)
 "PK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
@@ -777,12 +807,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"Qe" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "QC" = (
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/black,
@@ -805,13 +829,6 @@
 /obj/decal/poster/wallsign/hazard_caution,
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
-"Sp" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 8;
-	icon_state = "alt_propulsion"
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "Ui" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -829,17 +846,6 @@
 	},
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"Vm" = (
-/obj/machinery/door/airlock/pyro/command{
-	opacity = 0
-	},
-/obj/access_spawn/heads,
-/obj/forcefield/energyshield/perma,
-/turf/unsimulated/floor/shuttle{
-	dir = 8;
-	icon_state = "floor2"
-	},
-/area/shuttle/escape/centcom)
 "VI" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -848,12 +854,6 @@
 	dir = 4
 	},
 /area/centcom)
-"VO" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "VU" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";
@@ -1122,7 +1122,7 @@ Gl
 Gl
 Gl
 Gl
-Sp
+Pc
 Gl
 Gl
 Gl
@@ -1143,18 +1143,18 @@ PS
 kK
 Gl
 Gl
-Sp
+Pc
 Gl
 Gl
 Gl
 Gl
 Gl
 PK
-AO
-Qe
+fj
+nt
 Gl
 Gl
-Sp
+Pc
 Gl
 Ui
 Ha
@@ -1171,8 +1171,8 @@ ri
 Da
 Gl
 PK
-wm
-Qe
+dX
+nt
 Gl
 Gl
 Gl
@@ -1182,8 +1182,8 @@ uh
 yp
 Gl
 PK
-wm
-Qe
+dX
+nt
 qW
 RT
 RT
@@ -1198,9 +1198,9 @@ zZ
 iQ
 kK
 Gl
-iT
+zF
 pk
-iT
+zF
 Gl
 Gl
 Gl
@@ -1209,9 +1209,9 @@ jn
 kB
 jn
 Gl
-fc
+PI
 sT
-fc
+PI
 qW
 EF
 zZ
@@ -1231,11 +1231,11 @@ Gh
 jn
 Gl
 Gl
-Sp
+Pc
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 Gl
 jn
 dw
@@ -1254,20 +1254,20 @@ Fk
 Si
 fK
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 Gl
 PK
-wm
-Qe
+dX
+nt
 Gl
 Gl
 Gl
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 fK
 Si
 Fk
@@ -1286,9 +1286,9 @@ Gl
 Gl
 Gl
 Gl
-Vm
+nf
 Kh
-Vm
+nf
 Gl
 Gl
 Gl
@@ -1342,9 +1342,9 @@ Gl
 Gl
 Gl
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 Gl
 Gl
 Gl
@@ -1366,7 +1366,7 @@ aM
 pV
 yr
 Gl
-Sp
+Pc
 Gl
 Gl
 Gl
@@ -1378,7 +1378,7 @@ Gl
 Gl
 Gl
 Gl
-Sp
+Pc
 Gl
 yr
 Op
@@ -1394,20 +1394,20 @@ oQ
 XO
 fK
 PK
-wm
-Qe
+dX
+nt
 Gl
 Gl
-Sp
+Pc
 Gl
 Gl
 Gl
-Sp
+Pc
 Gl
 Gl
 PK
-wm
-Qe
+dX
+nt
 fK
 oF
 oQ
@@ -1426,16 +1426,16 @@ uh
 yp
 Gl
 PK
-wm
-Qe
+dX
+nt
 Gl
 PK
-AO
-Qe
+fj
+nt
 Gl
-fc
+PI
 sT
-fc
+PI
 fK
 Si
 Fk
@@ -1477,9 +1477,9 @@ Ao
 Ao
 of
 kK
-Cp
-cn
-VO
+Fq
+Jj
+tn
 Gl
 jn
 kB
@@ -1489,9 +1489,9 @@ jn
 kB
 jn
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 qW
 tm
 Ao
@@ -1509,13 +1509,13 @@ kU
 Gl
 Gl
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 Gl
-Cp
-cn
-VO
+Fq
+Jj
+tn
 lZ
 Gl
 Gl

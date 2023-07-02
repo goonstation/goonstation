@@ -17,12 +17,6 @@
 "ad" = (
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
-"ae" = (
-/turf/simulated/shuttle/wall/cockpit/flock{
-	icon_state = "shuttle-nose";
-	dir = 8
-	},
-/area/space)
 "ag" = (
 /obj/decal/fakeobjects/flock/wing{
 	icon_state = "wing";
@@ -30,18 +24,6 @@
 	},
 /turf/space,
 /area/space)
-"ah" = (
-/obj/wingrille_spawn/flock,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
-"ai" = (
-/obj/machinery/light/flock{
-	icon_state = "flock1";
-	dir = 8
-	},
-/obj/wingrille_spawn/flock,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
 "aj" = (
 /obj/decal/fakeobjects/flock/wing{
 	icon_state = "wing";
@@ -58,14 +40,6 @@
 "al" = (
 /obj/flock_screen,
 /turf/simulated/shuttle/wall/flock,
-/area/flock_trader)
-"am" = (
-/obj/wingrille_spawn/flock,
-/obj/machinery/light/flock{
-	icon_state = "flock1";
-	dir = 8
-	},
-/turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "an" = (
 /obj/machinery/light/flock{
@@ -457,6 +431,32 @@
 /obj/item/paper/flockstatsnote,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"jI" = (
+/obj/mapping_helper/wingrille_spawn/flock,
+/obj/machinery/light/flock{
+	icon_state = "flock1";
+	dir = 8
+	},
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
+"sp" = (
+/turf/simulated/shuttle/wall/cockpit/flock{
+	icon_state = "shuttle-nose";
+	dir = 8
+	},
+/area/space)
+"NJ" = (
+/obj/machinery/light/flock{
+	icon_state = "flock1";
+	dir = 8
+	},
+/obj/mapping_helper/wingrille_spawn/flock,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
+"Sk" = (
+/obj/mapping_helper/wingrille_spawn/flock,
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
 
 (1,1,1) = {"
 aa
@@ -634,7 +634,7 @@ aa
 aa
 aa
 aa
-ae
+sp
 aa
 aa
 aa
@@ -981,8 +981,8 @@ aa
 aa
 aa
 aa
-ah
-ah
+Sk
+Sk
 ad
 ap
 ao
@@ -1013,11 +1013,11 @@ aa
 aa
 aa
 aa
-ah
-ah
-ah
-ah
-ah
+Sk
+Sk
+Sk
+Sk
+Sk
 ao
 ao
 aO
@@ -1045,11 +1045,11 @@ aa
 aa
 aa
 aa
-ah
-ah
+Sk
+Sk
 ad
 as
-ah
+Sk
 ao
 ao
 cP
@@ -1081,12 +1081,12 @@ ad
 ad
 ad
 as
-ah
+Sk
 ao
 ao
 aS
 ad
-ah
+Sk
 ad
 aT
 av
@@ -1113,7 +1113,7 @@ ad
 ad
 ad
 as
-ah
+Sk
 ao
 ao
 ao
@@ -1145,12 +1145,12 @@ ad
 ad
 ad
 as
-ah
+Sk
 ao
 ao
 aS
 ad
-ah
+Sk
 ad
 aT
 av
@@ -1177,7 +1177,7 @@ ad
 ad
 ad
 as
-ah
+Sk
 ao
 ao
 aS
@@ -1209,10 +1209,10 @@ ad
 ad
 ad
 as
-ah
-ah
+Sk
+Sk
 aw
-ah
+Sk
 ad
 ad
 ad
@@ -1238,15 +1238,15 @@ aa
 aa
 aa
 ad
-ai
-am
-ah
-ah
+NJ
+jI
+Sk
+Sk
 ao
 ao
 ao
-am
-ai
+jI
+NJ
 ad
 aa
 aa
@@ -1269,8 +1269,8 @@ aa
 aa
 aa
 aa
-ah
-ah
+Sk
+Sk
 ad
 ax
 bb
@@ -1278,8 +1278,8 @@ ao
 ao
 ax
 ad
-ah
-ah
+Sk
+Sk
 aa
 aa
 aa
@@ -1302,15 +1302,15 @@ aa
 aa
 ab
 ad
-ah
+Sk
 ad
 ad
-ah
+Sk
 aw
-ah
+Sk
 ad
 ad
-ah
+Sk
 ad
 aU
 aa
@@ -1334,15 +1334,15 @@ aa
 ac
 ad
 ad
-ah
-ah
+Sk
+Sk
 ad
 au
 bh
 bk
 ad
-ah
-ah
+Sk
+Sk
 ad
 ad
 aU
