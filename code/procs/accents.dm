@@ -2423,6 +2423,21 @@ proc/accent_mocking(string)
 		letters += letter
 	return jointext(letters, "")
 
+proc/accent_piglatin(string)
+	var/list/tokens = splittext(string, regex(@"\b", "i"))
+	var/list/modded_tokens = list()
+	var/regex/consclust = regex(@"(^[bcdfghjklmnpqrstvwxys]+)?(\l+)", "i")
+	for (var/token in tokens)
+		if(length(token) > 1)
+			token = consclust.Replace(token, GLOBAL_PROC_REF(piglatin_replace))
+		modded_tokens += token
+	return jointext(modded_tokens, "")
+
+proc/piglatin_replace(match, one, two)
+	if(!one && findtext(two, regex(@"[aeiou]", "i"), length(two)))
+		return "[two]yay"
+	else
+		return "[two][one]ay"
 
 proc/accent_hacker(string, leet_chance=100)
 	var/static/list/leetspeak_suffix_translation = list(
