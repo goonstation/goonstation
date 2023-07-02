@@ -1323,6 +1323,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		M.equip_if_possible(L, M.slot_wear_id, FALSE)
 		M.spawnId(src)
 		var/obj/item/card/id = locate() in M
+		if (!id)
+			return
 		L.storage.add_contents(id, M, FALSE)
 
 /datum/job/special/space_cowboy
@@ -2855,6 +2857,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		M.equip_if_possible(L, M.slot_wear_id, FALSE)
 		M.spawnId(src)
 		var/obj/item/card/id = locate() in M
+		if (!id)
+			return
 		L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
