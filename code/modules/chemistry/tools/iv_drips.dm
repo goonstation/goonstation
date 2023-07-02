@@ -85,16 +85,16 @@
 			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
-		if (user.a_intent != INTENT_GRAB)
-			src.mode = !(src.mode)
-			user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
-			src.UpdateIcon()
-		else 
+		if (user.a_intent == INTENT_GRAB)
 			if (src.amount_per_transfer_from_this >= src.max_transfer_rate)
 				src.amount_per_transfer_from_this = 1
 			else
 				src.amount_per_transfer_from_this++
 			user.show_text("You switch the drip rate of \the [src] to [src.amount_per_transfer_from_this].")
+		else 
+			src.mode = !(src.mode)
+			user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
+			src.UpdateIcon()
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ishuman(M))
