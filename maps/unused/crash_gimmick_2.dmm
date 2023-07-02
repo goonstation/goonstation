@@ -623,7 +623,7 @@
 	},
 /area/space)
 "yX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "zB" = (
@@ -1311,7 +1311,7 @@
 	},
 /area/built_zone)
 "UQ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"

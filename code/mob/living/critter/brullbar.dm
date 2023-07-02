@@ -26,6 +26,7 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
 	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
+	no_stamina_stuns = TRUE
 	var/is_king = FALSE
 	var/limbpath = /datum/limb/brullbar
 	var/frenzypath = /datum/targetable/critter/frenzy

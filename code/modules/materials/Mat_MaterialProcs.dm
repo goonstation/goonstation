@@ -586,7 +586,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(isitem(owner))
 			var/obj/item/I = owner
 			I.no_gravity = 1
-			I.AddComponent(/datum/component/holdertargeting/no_gravity)
+			I.AddComponent(/datum/component/loctargeting/no_gravity)
 			animate_levitate(owner)
 		return
 

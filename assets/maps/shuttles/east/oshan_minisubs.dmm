@@ -72,7 +72,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "cn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -109,7 +109,7 @@
 	opacity = 0;
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -162,7 +162,7 @@
 	opacity = 0;
 	hardened = 1
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -412,7 +412,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "wm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -549,7 +549,7 @@
 	},
 /area/centcom)
 "AO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -848,7 +848,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	opacity = 0
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
