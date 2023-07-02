@@ -35,7 +35,7 @@
 	},
 /area/station/science/testchamber)
 "aae" = (
-/obj/wingrille_spawn/reinforced,
+/obj/mapping_helper/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "aaf" = (
@@ -32528,7 +32528,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmL" = (

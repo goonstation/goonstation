@@ -104,7 +104,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/prefab/ranch)
 "F" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/ranch)
 "G" = (

@@ -781,7 +781,7 @@
 /turf/simulated/floor/red,
 /area/prefab/water_treatment)
 "PJ" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/prefab/water_treatment)

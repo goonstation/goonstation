@@ -254,7 +254,7 @@
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "yA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/structure/woodwall{
 	icon_state = "woodwall2";
 	opacity = 0
@@ -393,7 +393,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Mw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/prefab/larrys_laundry)
@@ -488,7 +488,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "XT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/larrys_laundry)
 "Yh" = (

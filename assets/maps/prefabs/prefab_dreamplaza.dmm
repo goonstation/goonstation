@@ -85,7 +85,7 @@
 /turf/simulated/floor/marble/border_bw,
 /area/prefab/dreamplaza)
 "cc" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/neonsparkle{
 	dir = 1
 	},
@@ -224,7 +224,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "fS" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/neonretro{
 	dir = 1
 	},
@@ -386,7 +386,7 @@
 	},
 /area/prefab/dreamplaza)
 "lV" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/neonretro,
 /obj/map/light/purple{
 	brightness = 3
@@ -825,7 +825,7 @@
 /turf/simulated/floor/terrazzo,
 /area/prefab/dreamplaza)
 "zy" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/neonsparkle{
 	pixel_y = 4
 	},
@@ -1016,7 +1016,7 @@
 /turf/simulated/floor/marble/border_bw,
 /area/prefab/dreamplaza)
 "GE" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/decal/poster/wallsign/neonsparkle{
 	dir = 1;
 	pixel_y = 4
@@ -1041,7 +1041,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "HI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/neonicecream,
 /obj/map/light/pink,
 /turf/simulated/floor/purpleblack{
@@ -1193,7 +1193,7 @@
 	},
 /area/prefab/dreamplaza)
 "Lz" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/terrazzo/white,
 /area/prefab/dreamplaza)
 "LJ" = (
@@ -1207,7 +1207,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/prefab/dreamplaza)
 "Mi" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "Ms" = (
@@ -1306,7 +1306,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "PO" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
 /area/prefab/dreamplaza)
 "PP" = (
@@ -1558,7 +1558,7 @@
 /turf/simulated/floor/terrazzo/black,
 /area/prefab/dreamplaza)
 "Yr" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/neonsparkle,
 /obj/map/light/cyan,
 /turf/simulated/floor/purpleblack{
@@ -1613,7 +1613,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "ZN" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},

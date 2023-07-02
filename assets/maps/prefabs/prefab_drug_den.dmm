@@ -113,7 +113,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "gy" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/drug_den)
 "gD" = (
@@ -284,7 +284,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "sa" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/drug_den/party)
 "sP" = (
