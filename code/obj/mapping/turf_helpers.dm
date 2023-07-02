@@ -1,6 +1,11 @@
 /obj/mapping_helper/turfs
 	layer = TURF_LAYER
 
+/* ===== Burner and breaker for turfs =====
+* These may look out of place on non tiled flooring
+* use these instead of the scorched/burnt subtypes as they work all floors excluding shuttle
+*/
+
 /obj/mapping_helper/turfs/burner
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floorscorched1"
