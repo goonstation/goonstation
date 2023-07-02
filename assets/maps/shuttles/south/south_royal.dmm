@@ -806,7 +806,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "xT" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/marble/black,
 /area/shuttle/escape/centcom)
 "yK" = (

@@ -25,6 +25,7 @@
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
 	add_abilities = list(/datum/targetable/critter/tackle)
+	no_stamina_stuns = TRUE
 	var/droparms = TRUE
 
 	on_pet(mob/user)

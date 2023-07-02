@@ -232,6 +232,8 @@
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
+	/// If TRUE then this mob won't be fully stunned by stamina stuns
+	var/no_stamina_stuns = FALSE
 
 //obj/item/setTwoHanded calls this if the item is inside a mob to enable the mob to handle UI and hand updates as the item changes to or from 2-hand
 /mob/proc/updateTwoHanded(var/obj/item/I, var/twoHanded = 1)

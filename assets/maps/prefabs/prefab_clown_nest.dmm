@@ -140,7 +140,7 @@
 /turf/variableTurf/floor,
 /area/prefab/clown_nest)
 "rj" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/clown_nest)
 "rG" = (

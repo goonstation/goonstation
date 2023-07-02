@@ -32,7 +32,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "ai" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "ak" = (
@@ -131,7 +131,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/sea_crashed)
 "aG" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/variableTurf/wall,
 /area/station/turret_protected/sea_crashed)
 "aH" = (
@@ -162,7 +162,7 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "aQ" = (
@@ -185,7 +185,7 @@
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/darkblue,
 /area/station/turret_protected/sea_crashed)
 "aT" = (
@@ -212,7 +212,7 @@
 /area/station/turret_protected/sea_crashed)
 "aV" = (
 /obj/item/raw_material/shard,
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/plating,
 /area/station/turret_protected/sea_crashed)
 "aW" = (
@@ -345,7 +345,7 @@
 /area/station/turret_protected/sea_crashed)
 "bq" = (
 /obj/machinery/door/airlock/pyro/command/alt,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/turret_protected/sea_crashed)
 "br" = (
@@ -765,7 +765,7 @@
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/neutral,
 /area/station/turret_protected/sea_crashed)
 "cS" = (
@@ -920,7 +920,7 @@
 /area/noGenerate)
 "dm" = (
 /obj/machinery/door/airlock/pyro/security/alt,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/turret_protected/sea_crashed)
 "dn" = (
@@ -1129,7 +1129,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/turret_protected/sea_crashed)
 "dG" = (

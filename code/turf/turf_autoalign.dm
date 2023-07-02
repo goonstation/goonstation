@@ -203,14 +203,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/jen)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 		/turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
@@ -276,14 +276,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/jen)
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen,
 		/turf/simulated/wall/auto/shuttle, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /obj/plasticflaps
 	))
 	connects_with_overlay_exceptions = typecacheof(list(/turf/simulated/wall/auto/reinforced/jen))
@@ -350,13 +350,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/supernorn)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/supernorn
@@ -387,14 +387,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window,
-		/obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/plasticflaps
+		/obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/paper, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn
 	icon = 'icons/turf/walls_supernorn_smooth.dmi'
@@ -424,12 +424,12 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/yellow)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/yellow
@@ -452,11 +452,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/orange)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/orange
@@ -506,11 +506,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn, /obj/plasticflaps
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/reinforced/supernorn/blackred
 	icon = 'icons/turf/walls_manta.dmi'
@@ -530,7 +530,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/reinforced/paper, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/wingrille_spawn
+		/turf/simulated/wall/auto, /obj/table/reinforced/bar/auto, /obj/window, /obj/mapping_helper/wingrille_spawn
 	))
 	connects_with_overlay = typecacheof(list(/obj/table/reinforced/bar/auto))
 /turf/simulated/wall/auto/reinforced/paper
@@ -596,7 +596,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	. = ..()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
 		/turf/simulated/wall/auto/martian, /turf/unsimulated/wall/auto/adventure/martian,
@@ -604,7 +604,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/old)
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced, /obj/plasticflaps
 	))
 /turf/simulated/wall/auto/old
@@ -627,13 +627,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/old)
 		/turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/old,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/old,
 		/turf/simulated/wall/auto/reinforced/old, /turf/simulated/wall/auto/martian,
 		/obj/indestructible/shuttle_corner, /obj/plasticflaps
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/obj/plasticflaps
 	))
@@ -658,13 +658,13 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 		/turf/simulated/wall/auto/hedge, /turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 		/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-		/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 		/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 		/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/shuttle,
-		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen
 	))
 /turf/simulated/wall/auto/hedge // Some fun walls by Walpvrgis

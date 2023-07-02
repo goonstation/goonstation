@@ -1803,7 +1803,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
-						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)
+						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)
 				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)

@@ -32,7 +32,7 @@
 /turf/space,
 /area/space)
 "ah" = (
-/obj/wingrille_spawn/flock,
+/obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "ai" = (
@@ -40,7 +40,7 @@
 	icon_state = "flock1";
 	dir = 8
 	},
-/obj/wingrille_spawn/flock,
+/obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 "aj" = (
@@ -61,7 +61,7 @@
 /turf/simulated/shuttle/wall/flock,
 /area/flock_trader)
 "am" = (
-/obj/wingrille_spawn/flock,
+/obj/mapping_helper/wingrille_spawn/flock,
 /obj/machinery/light/flock{
 	icon_state = "flock1";
 	dir = 8
