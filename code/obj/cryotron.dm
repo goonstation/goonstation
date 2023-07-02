@@ -199,7 +199,7 @@
 							respawn_controller.subscribeNewRespawnee(user.ckey)
 							user.mind?.get_player()?.dnr = TRUE
 							user.ghostize()
-                            qdel(user)
+							qdel(user)
 							return 1
 
 		return 0
