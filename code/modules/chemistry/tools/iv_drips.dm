@@ -26,7 +26,10 @@
 	var/mode = IV_DRAW
 	var/in_use = 0
 	var/slashed = 0
+	var/hung_transfer_rate = 5 //how much this injects/pulls when on an IV stand
+	var/standard_transfer_rate = 5 // how much this injects/pulls when not on a stand
 	var/max_transfer_rate = 5
+
 	HELP_MESSAGE_OVERRIDE({"
 		Use this item in-hand with the <b>grab</b> intent to adjust the drip rate,
 		use any other intent to switch between drawing blood or injecting."})
@@ -85,16 +88,16 @@
 			src.UpdateIcon()
 
 	attack_self(mob/user as mob)
-		if (user.a_intent == INTENT_GRAB)
-			if (src.amount_per_transfer_from_this >= src.max_transfer_rate)
-				src.amount_per_transfer_from_this = 1
-			else
-				src.amount_per_transfer_from_this++
-			user.show_text("You switch the drip rate of \the [src] to [src.amount_per_transfer_from_this].")
-		else 
+		if (user.a_intent != INTENT_GRAB)
 			src.mode = !(src.mode)
 			user.show_text("You switch [src] to [src.mode ? "inject" : "draw"].")
 			src.UpdateIcon()
+		else 
+			if (src.hung_transfer_rate >= src.max_transfer_rate)
+				src.hung_transfer_rate = 1
+			else
+				src.hung_transfer_rate++
+			user.show_text("\The [src] will now drip [src.hung_transfer_rate] units when hung on an IV stand.")
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!ishuman(M))
@@ -159,6 +162,11 @@
 			src.stop_transfusion()
 			return
 
+		if (src.stand)
+			src.amount_per_transfer_from_this = src.hung_transfer_rate
+		else
+			src.amount_per_transfer_from_this = src.standard_transfer_rate
+		
 		if (src.mode == IV_INJECT)
 			if (src.patient.reagents.is_full())
 				src.patient.visible_message("<span class='notice'><b>[src.patient]</b>'s transfusion finishes.</span>",\
