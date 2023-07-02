@@ -2095,7 +2095,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/east)
 "aen" = (
 /obj/cable{
@@ -2970,7 +2971,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/east)
 "afH" = (
 /obj/cable{
@@ -2978,7 +2980,8 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/east)
 "afI" = (
 /obj/cable{
@@ -3385,7 +3388,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/east)
 "ags" = (
 /turf/simulated/wall/r_wall,
@@ -4818,7 +4822,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/solar/east)
 "ajo" = (
 /turf/simulated/floor/stairs{
@@ -7734,7 +7739,8 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aoH" = (
 /obj/item/storage/box/beakerbox,
@@ -7962,7 +7968,8 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "apg" = (
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "api" = (
 /obj/cable{
@@ -7973,7 +7980,8 @@
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "apj" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "apk" = (
 /obj/machinery/alarm{
@@ -8113,7 +8121,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "apA" = (
 /obj/item/device/radio/intercom{
@@ -8315,7 +8324,8 @@
 /area/station/chapel/sanctuary)
 "aqa" = (
 /obj/item/crowbar,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "aqb" = (
 /obj/cable{
@@ -8435,9 +8445,6 @@
 "aqo" = (
 /obj/machinery/launcher_loader/west,
 /turf/simulated/floor,
-/area/space)
-"aqp" = (
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 "aqq" = (
 /turf/simulated/wall/false_wall/reinforced,
@@ -9627,7 +9634,8 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "asN" = (
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "asO" = (
 /obj/machinery/power/data_terminal,
@@ -9636,7 +9644,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "asP" = (
 /obj/grille/steel,
@@ -9909,11 +9918,14 @@
 /turf/simulated/floor/purple,
 /area/space)
 "ats" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "att" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/burner,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "atu" = (
 /obj/cable{
@@ -9921,7 +9933,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "atv" = (
 /obj/airbridge_controller,
@@ -10248,10 +10261,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
-"auh" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/station/engine/proto_gangway)
 "aui" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -10850,9 +10859,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"avq" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/area/station/engine/proto_gangway)
 "avr" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -11447,7 +11453,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "awy" = (
 /obj/cable{
@@ -11769,7 +11776,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axe" = (
 /obj/cable{
@@ -11777,7 +11785,8 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axf" = (
 /obj/cable{
@@ -11788,8 +11797,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "axg" = (
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/plating/airless,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axh" = (
 /obj/grille{
@@ -12063,13 +12073,12 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "axI" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/area/station/engine/proto)
-"axJ" = (
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axK" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axL" = (
 /obj/cable{
@@ -12082,7 +12091,8 @@
 	d1 = 2;
 	d2 = 4
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axM" = (
 /obj/cable{
@@ -12098,7 +12108,8 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "axO" = (
 /obj/cable{
@@ -12106,7 +12117,8 @@
 	d1 = 4;
 	d2 = 8
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "axP" = (
 /obj/cable{
@@ -12114,7 +12126,8 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "axQ" = (
 /obj/cable,
@@ -12381,7 +12394,8 @@
 	charge = 0;
 	chargemode = 0
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "ayx" = (
 /obj/machinery/power/terminal{
@@ -12391,7 +12405,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "ayy" = (
 /obj/cable{
@@ -12418,7 +12433,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "ayA" = (
 /turf/simulated/floor/plating/airless,
@@ -12746,7 +12762,8 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "azl" = (
 /obj/machinery/power/apc{
@@ -12769,8 +12786,10 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "azm" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "azn" = (
 /obj/grille/steel,
@@ -13051,8 +13070,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "azL" = (
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/burner,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "azM" = (
 /obj/cable{
@@ -13079,7 +13100,8 @@
 "azN" = (
 /obj/machinery/computer/power_monitor,
 /obj/cable,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "azO" = (
 /obj/securearea{
@@ -13559,8 +13581,10 @@
 /turf/simulated/floor/blackwhite/side,
 /area/station/medical/research)
 "aAP" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "aAQ" = (
 /obj/machinery/door/firedoor/border_only{
@@ -21202,7 +21226,8 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aOw" = (
 /obj/cable{
@@ -22146,11 +22171,12 @@
 "aPY" = (
 /obj/cable,
 /obj/item/cable_coil/cut,
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/airless{
 	icon_state = "solarpanel";
 	name = "solar paneling"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aPZ" = (
 /turf/simulated/wall,
@@ -22737,8 +22763,9 @@
 "aRb" = (
 /obj/cable,
 /obj/item/cable_coil/cut,
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/plating/airless,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aRc" = (
 /obj/machinery/door/poddoor{
@@ -23031,8 +23058,9 @@
 /area/space)
 "aRH" = (
 /obj/item/cable_coil/cut,
+/obj/mapping_helper/turfs/damager,
 /turf/space,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/space)
 "aRI" = (
 /obj/window/reinforced{
@@ -26427,7 +26455,8 @@
 /turf/space,
 /area/space)
 "aYj" = (
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aYk" = (
 /obj/grille/steel,
@@ -35379,8 +35408,10 @@
 /obj/item/device/radio{
 	pixel_y = 15
 	},
-/turf/simulated/floor/plating/damaged3,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "bok" = (
 /obj/grille/steel,
@@ -35531,8 +35562,10 @@
 	d1 = 1;
 	d2 = 2
 	},
-/turf/simulated/floor/airless/plating/scorched,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/burner,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto_gangway)
 "box" = (
 /obj/grille/steel,
@@ -35576,8 +35609,9 @@
 	d1 = 4;
 	d2 = 8
 	},
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/plating/airless,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/proto)
 "boD" = (
 /obj/window/reinforced{
@@ -35658,7 +35692,8 @@
 	icon_state = "brokengrille";
 	tag = "icon-brokengrille"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "boJ" = (
 /obj/grille/steel,
@@ -35834,11 +35869,13 @@
 /area/space)
 "boW" = (
 /obj/window/reinforced,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "boX" = (
 /obj/stool/chair,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "boY" = (
 /obj/grille{
@@ -36032,8 +36069,9 @@
 /turf/simulated/floor/caution/east,
 /area/space)
 "bpr" = (
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/space)
 "bps" = (
 /turf/simulated/floor/caution/west,
@@ -36112,11 +36150,9 @@
 /obj/machinery/door/airlock,
 /turf/simulated/floor/plating,
 /area/space)
-"bLE" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/area/space)
 "bOG" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bOI" = (
 /obj/cable{
@@ -36899,8 +36935,9 @@
 /turf/simulated/floor/plating,
 /area/space)
 "caB" = (
+/obj/mapping_helper/turfs/damager,
 /turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "caF" = (
 /obj/item/raw_material/shard/glass{
@@ -37008,7 +37045,8 @@
 	tag = "icon-coil1";
 	icon_state = "coil1"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "chA" = (
 /obj/machinery/atmospherics/binary/valve,
@@ -47520,9 +47558,9 @@ aww
 axd
 axI
 ayw
-axJ
+axI
 azL
-axJ
+axI
 aww
 aww
 aww
@@ -47745,7 +47783,7 @@ cqb
 cqb
 aww
 axe
-axJ
+axI
 ayx
 axK
 axK
@@ -48659,7 +48697,7 @@ azl
 azN
 axK
 ayA
-axJ
+axI
 aww
 cqb
 cqb
@@ -49101,14 +49139,14 @@ cqb
 asN
 ats
 ats
-auh
-auh
-auh
-avq
-avq
+azm
+azm
+azm
+asN
+asN
 ats
 axO
-avq
+asN
 azm
 asN
 asN
@@ -49327,16 +49365,16 @@ cqb
 cqb
 asN
 att
-auh
-auh
+azm
+azm
 asN
-avq
+asN
 ats
 asN
 ats
 axO
 asN
-avq
+asN
 asN
 azm
 asN
@@ -77397,7 +77435,7 @@ cqb
 cqb
 cqb
 cnn
-bLE
+aYj
 cnn
 azK
 aQH
@@ -77625,7 +77663,7 @@ cqb
 cqb
 cae
 aaH
-aqp
+aYj
 azM
 aQK
 bjJ
@@ -79691,7 +79729,7 @@ boe
 bok
 box
 boI
-aqp
+aYj
 cqb
 cqb
 cqb

@@ -92,7 +92,8 @@
 	},
 /area/space)
 "am" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/space)
 "an" = (
 /turf/unsimulated/floor,
@@ -690,7 +691,8 @@
 /obj/landmark{
 	name = "iceelefall"
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/space)
 "bN" = (
 /turf/unsimulated/floor/stairs{

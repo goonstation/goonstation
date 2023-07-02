@@ -7037,12 +7037,14 @@
 	icon_state = "bulb1";
 	dir = 1
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "amH" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate/clown,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "amI" = (
 /obj/machinery/plantpot,
@@ -7180,7 +7182,8 @@
 	icon_state = "0-8"
 	},
 /obj/marker/supplymarker,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "amZ" = (
 /obj/cable{
@@ -7317,7 +7320,8 @@
 /obj/item/storage/goodybag,
 /obj/item/peripheral/videocard,
 /obj/item/storage/pill_bottle/cyberpunk,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "anp" = (
 /obj/decal/cleanable/dirt,
@@ -15194,7 +15198,8 @@
 /area/station/maintenance/west)
 "aEa" = (
 /obj/window/reinforced/east,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aEb" = (
 /obj/machinery/conveyor/SN{
@@ -15799,21 +15804,24 @@
 /area/station/crew_quarters/catering)
 "aFu" = (
 /obj/machinery/light/small,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aFv" = (
 /obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aFw" = (
 /obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aFx" = (
 /obj/floorpillstatue,
@@ -16072,7 +16080,8 @@
 	icon_state = "bulb1";
 	dir = 4
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aGa" = (
 /obj/cable{
@@ -16345,7 +16354,8 @@
 	dir = 8
 	},
 /obj/disposalpipe/trunk,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aGI" = (
 /obj/machinery/door/firedoor/border_only,
@@ -19389,7 +19399,8 @@
 	name = "Disposals Safety Shutters";
 	pixel_x = -24
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aNk" = (
 /turf/simulated/floor/plating/random,
@@ -30979,11 +30990,13 @@
 	})
 "bjo" = (
 /obj/machinery/vending/standard,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bjp" = (
 /obj/storage/closet/office,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bjq" = (
 /obj/cable{
@@ -31843,7 +31856,8 @@
 /area/station/maintenance/south)
 "bkZ" = (
 /obj/reagent_dispensers/foamtank,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bla" = (
 /obj/machinery/portable_atmospherics/pump,

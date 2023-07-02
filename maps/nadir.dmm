@@ -24175,7 +24175,8 @@
 /area/station/hallway/primary/northeast)
 "kqX" = (
 /obj/decal/cleanable/machine_debris,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/pasiphae/sys)
 "kqZ" = (
 /obj/table/reinforced/auto,
@@ -28508,7 +28509,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "mbG" = (
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/pasiphae/sys)
 "mbO" = (
 /turf/simulated/floor/redblack{

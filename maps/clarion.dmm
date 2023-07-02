@@ -961,7 +961,8 @@
 	tag = "icon-bathtub (WEST)"
 	},
 /obj/item/reagent_containers/glass/bottle/bubblebath,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/maintenance/northeast)
 "ado" = (
 /obj/disposalpipe/segment/mail,
@@ -16904,7 +16905,8 @@
 /area/station/science/lobby)
 "bkz" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/science/artifact)
 "bkC" = (
 /obj/machinery/firealarm{
@@ -19139,7 +19141,8 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/storage)
 "buK" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "buM" = (
 /obj/disposalpipe/segment,
@@ -20432,7 +20435,8 @@
 	name = "Cargo persistent notice board";
 	persistent_id = "cargo"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bBI" = (
 /obj/machinery/light{
@@ -25938,7 +25942,8 @@
 /obj/machinery/light_switch/west{
 	dir = 4
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "fhx" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
@@ -30585,7 +30590,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/science/artifact)
 "jli" = (
 /obj/disposalpipe/segment,
@@ -34617,7 +34623,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/science/artifact)
 "mUg" = (
 /obj/storage/closet/radiation,
@@ -39045,7 +39052,8 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "rbp" = (
 /obj/table/auto,
@@ -43187,7 +43195,8 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "uzQ" = (
 /obj/machinery/light{
@@ -44101,7 +44110,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/maintenance/northeast)
 "vpM" = (
 /obj/cable{
@@ -45119,7 +45129,8 @@
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/quartermaster/storage)
 "woQ" = (
 /obj/disposalpipe/segment/food,
@@ -46330,7 +46341,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/maintenance/northeast)
 "xzS" = (
 /obj/cable{

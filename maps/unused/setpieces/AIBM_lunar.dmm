@@ -1528,7 +1528,8 @@
 /area/moon/underground)
 "dS" = (
 /obj/table/auto,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/moon/underground)
 "dT" = (
 /obj/table/auto,

@@ -167,7 +167,8 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team2/power)
 "aM" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/greatwreck)
 "aN" = (
 /obj/window/cubicle{
@@ -3167,7 +3168,8 @@
 /turf/simulated/floor/engine,
 /area/pod_wars/team1/powergen)
 "mb" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/pod_wars/spacejunk/memorial_stats)
 "mc" = (
 /obj/cable{
@@ -3480,9 +3482,6 @@
 	},
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation/power)
-"ng" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/area/pod_wars/spacejunk/greatwreck)
 "nh" = (
 /obj/item_dispenser/bandage,
 /obj/machinery/clonegrinder{
@@ -5305,9 +5304,6 @@
 	dir = 5
 	},
 /area/pod_wars/team2/mining)
-"tW" = (
-/turf/simulated/floor/airless/plating/damaged2,
-/area/pod_wars/spacejunk/greatwreck)
 "tX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8967,7 +8963,8 @@
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/uvb67/power)
 "HE" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/pod_wars/spacejunk/greatwreck)
 "HF" = (
 /obj/grille/catwalk{
@@ -48607,15 +48604,15 @@ ae
 ae
 Yz
 ae
-tW
+aM
 HE
 Yz
 Yz
 iL
-tW
+aM
 iL
 iL
-ng
+aM
 iL
 Pw
 Pw
@@ -49116,7 +49113,7 @@ Yz
 iL
 iL
 aM
-ng
+aM
 Yz
 ae
 Pw
@@ -49615,7 +49612,7 @@ ae
 ae
 ae
 ae
-tW
+aM
 Yz
 iL
 iL
@@ -51128,7 +51125,7 @@ ae
 ae
 Yz
 ae
-ng
+aM
 aM
 ae
 ae
@@ -52127,7 +52124,7 @@ Pw
 ae
 ae
 ae
-ng
+aM
 Yz
 ae
 Ct
@@ -53129,7 +53126,7 @@ JW
 JW
 JW
 ae
-ng
+aM
 ae
 ae
 Yz
@@ -53637,7 +53634,7 @@ ae
 ae
 ae
 ae
-ng
+aM
 ae
 iL
 Ct
@@ -54139,8 +54136,8 @@ JW
 Pw
 Pw
 ae
-ng
-ng
+aM
+aM
 ae
 ae
 Pw
@@ -54643,7 +54640,7 @@ Pw
 Pw
 ae
 ae
-ng
+aM
 Pw
 Pw
 Pw

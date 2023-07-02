@@ -1823,10 +1823,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering,
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/airless/plating/scorched{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/russian/radiation)
 "aMK" = (
 /obj/disposalpipe/segment/transport{
@@ -14187,10 +14185,8 @@
 	},
 /area/russian/radiation)
 "bRs" = (
-/turf/simulated/floor/airless/plating/scorched{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bRt" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -36443,10 +36439,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering,
-/turf/simulated/floor/airless/plating/scorched{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/russian/radiation)
 "dxC" = (
 /obj/item/device/radio/beacon,
@@ -52789,10 +52783,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/airless/plating/scorched{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "kUJ" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -52811,10 +52803,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/scorched{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "kVu" = (
 /obj/lattice,
@@ -74486,10 +74476,8 @@
 	},
 /area/russian/radiation)
 "vqF" = (
-/turf/simulated/floor/damaged1{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/russian/radiation)
 "vqK" = (
 /obj/decal/cleanable/oil,

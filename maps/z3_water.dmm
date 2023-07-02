@@ -457,9 +457,6 @@
 	icon_state = "floor"
 	},
 /area/wrecknsspolaris)
-"cs" = (
-/turf/unsimulated/floor/damaged3,
-/area/wrecknsspolaris)
 "ct" = (
 /obj/machinery/door/airlock/pyro/glass/brig{
 	dir = 4;
@@ -1837,12 +1834,6 @@
 /obj/dialogueobj/securitycorpse6,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
-"fE" = (
-/turf/unsimulated/floor/damaged5,
-/area/wrecknsspolaris)
-"fF" = (
-/turf/unsimulated/floor/damaged1,
-/area/wrecknsspolaris)
 "fG" = (
 /obj/machinery/handscanner{
 	pixel_y = 32
@@ -1855,9 +1846,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/wrecknsspolaris/vault)
-"fH" = (
-/turf/unsimulated/floor/damaged2,
-/area/wrecknsspolaris)
 "fI" = (
 /obj/decoration/weirdmark{
 	desc = "A twin pair of weird looking energy burns on the wall, it looks like nothing you have ever seen before.";
@@ -1871,7 +1859,8 @@
 	},
 /area/wrecknsspolaris)
 "fJ" = (
-/turf/unsimulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor,
 /area/wrecknsspolaris)
 "fK" = (
 /obj/decal/cleanable/dirt/dirt5,
@@ -2831,7 +2820,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/unsimulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor,
 /area/dank_trench)
 "ik" = (
 /obj/decal/cleanable/dirt/jen,
@@ -5430,7 +5420,7 @@ cr
 fv
 cF
 dX
-fF
+fJ
 cr
 cr
 cr
@@ -6339,7 +6329,7 @@ dV
 dV
 gb
 cy
-fH
+fJ
 cr
 br
 dH
@@ -8443,7 +8433,7 @@ br
 co
 br
 br
-cs
+fJ
 dQ
 cy
 dY
@@ -9654,7 +9644,7 @@ by
 cr
 er
 da
-fE
+fJ
 dO
 dM
 da
@@ -9964,7 +9954,7 @@ cG
 cG
 cH
 ds
-fH
+fJ
 dF
 ff
 eq

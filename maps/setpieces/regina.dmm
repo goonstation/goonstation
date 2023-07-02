@@ -455,7 +455,8 @@
 /turf/simulated/floor/airless/grey/blackgrime,
 /area/regina)
 "jc" = (
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "jd" = (
 /turf/unsimulated/floor/plating,
@@ -724,7 +725,8 @@
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "nU" = (
 /obj/item/seed/alien,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "oi" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -1120,7 +1122,8 @@
 /turf/simulated/drawbridge/floor,
 /area/space)
 "uM" = (
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/regina)
 "vg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -1137,7 +1140,8 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/regina)
 "vy" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -1363,7 +1367,8 @@
 /obj/storage/crate{
 	name = "Dented Crate"
 	},
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "yW" = (
 /obj/decal/fakeobjects/teleport_pad,
@@ -1855,9 +1860,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"Kk" = (
-/turf/simulated/floor/airless/damaged3,
-/area/regina)
 "Km" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -1999,7 +2001,8 @@
 "Mc" = (
 /obj/decal/cleanable/dirt,
 /obj/computerframe,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/regina)
 "Mg" = (
 /obj/machinery/door/airlock/pyro/classic,
@@ -5803,7 +5806,7 @@ Wn
 Wn
 ig
 Mc
-Kk
+uM
 vp
 nU
 ig

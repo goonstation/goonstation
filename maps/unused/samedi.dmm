@@ -1533,7 +1533,8 @@
 /area/station/hallway/secondary/construction)
 "adj" = (
 /obj/structure/girder,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "adk" = (
 /obj/cable{
@@ -2299,8 +2300,9 @@
 	pixel_y = 20;
 	tag = ""
 	},
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/grime,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "aeP" = (
 /obj/stool/chair/couch{
@@ -2311,15 +2313,17 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/grime,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "aeQ" = (
 /obj/machinery/door/airlock/pyro{
 	icon_state = "door_closed";
 	dir = 4
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "aeR" = (
 /obj/grille/catwalk{
@@ -2593,7 +2597,8 @@
 /area/station/hallway/secondary/construction)
 "afz" = (
 /obj/machinery/bot/floorbot,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "afA" = (
 /obj/storage/crate,
@@ -2988,7 +2993,8 @@
 /obj/item/storage/box/syringes,
 /obj/storage/crate,
 /obj/item/instrument/vuvuzela,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "agm" = (
 /obj/machinery/door/poddoor/pyro{
@@ -3573,14 +3579,16 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "ahg" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/east)
 "ahh" = (
 /obj/cable{
@@ -3639,8 +3647,9 @@
 /obj/item/device/infra,
 /obj/item/device/infra,
 /obj/item/clothing/head/helmet/hardhat,
+/obj/mapping_helper/turfs/damager,
 /turf/simulated/floor/plating,
-/turf/simulated/floor/plating/damaged2,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction)
 "ahr" = (
 /turf/space,
@@ -8198,7 +8207,8 @@
 /area/station/mining/staff_room)
 "arG" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/refinery)
 "arH" = (
 /obj/machinery/computer/magnet,
@@ -8207,7 +8217,8 @@
 /area/station/mining/refinery)
 "arI" = (
 /obj/machinery/oreaccumulator,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/station/mining/refinery)
 "arJ" = (
 /obj/machinery/light/small{
@@ -13587,7 +13598,8 @@
 	d1 = 2;
 	d2 = 8
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "aDZ" = (
 /obj/stool/bed,
@@ -13941,7 +13953,8 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aEK" = (
 /turf/simulated/shuttle/wall/cockpit/window{
@@ -14484,7 +14497,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aFV" = (
 /obj/cable{
@@ -15060,7 +15074,8 @@
 /area/station/maintenance/disposal)
 "aHq" = (
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aHr" = (
 /obj/machinery/light/small{
@@ -16944,7 +16959,8 @@
 /obj/item/wrench,
 /obj/item/device/pda_module/flashlight/high_power,
 /obj/item/storage/firstaid/regular,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aLo" = (
 /turf/simulated/shuttle/wall{
@@ -17425,7 +17441,8 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aMy" = (
 /obj/disposalpipe/segment/horizontal,
@@ -17935,7 +17952,8 @@
 	pixel_x = -12
 	},
 /obj/item/plant/herb/cannabis/spawnable,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aND" = (
 /obj/stool/chair/couch{
@@ -17950,7 +17968,8 @@
 	pixel_y = 32
 	},
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aNE" = (
 /obj/machinery/r_door_control{
@@ -18029,7 +18048,8 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aNO" = (
 /obj/machinery/conveyor/WE{
@@ -18552,7 +18572,8 @@
 /area/station/maintenance/central)
 "aOY" = (
 /obj/item/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aOZ" = (
 /obj/machinery/conveyor/WE{
@@ -18982,7 +19003,8 @@
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/device/light/glowstick,
 /obj/item/instrument/harmonica,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aQa" = (
 /obj/rack,
@@ -25096,7 +25118,8 @@
 /area/station/medical/medbay)
 "bdq" = (
 /obj/storage/closet/office,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bdr" = (
 /obj/storage/closet/emergency,
@@ -29399,7 +29422,8 @@
 	pixel_x = 26;
 	pixel_y = 1
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bmL" = (
 /obj/cable{
@@ -29902,7 +29926,8 @@
 /area/station/bridge/captain)
 "bnU" = (
 /obj/reagent_dispensers/still,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bnV" = (
 /turf/simulated/floor/plating,
@@ -30210,7 +30235,8 @@
 	dir = 4;
 	pixel_x = 12
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "boE" = (
 /obj/critter/opossum/morty,
@@ -30453,7 +30479,8 @@
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bpd" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
 "bpe" = (
 /obj/cable,
@@ -31139,7 +31166,8 @@
 /obj/table/auto,
 /obj/random_item_spawner/med_tool,
 /obj/machinery/light/small,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "bqK" = (
 /obj/grille/catwalk{
@@ -37160,7 +37188,8 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "bEU" = (
 /obj/disposalpipe/segment/mail,
@@ -39598,8 +39627,10 @@
 	bcolor = "black";
 	icon_state = "bedsheet-black"
 	},
-/turf/simulated/floor/plating/damaged3,
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "bKu" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -39642,7 +39673,8 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bKz" = (
 /turf/simulated/wall/auto/supernorn,
@@ -47858,7 +47890,8 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "cbL" = (
 /obj/decal/cleanable/dirt,
@@ -48235,7 +48268,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "ccH" = (
 /obj/stool/chair/office{
@@ -48284,7 +48318,8 @@
 	d2 = 4
 	},
 /obj/machinery/power/apc/autoname_west,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "ccM" = (
 /obj/lattice{
@@ -48345,7 +48380,8 @@
 	desc = "Caution! Construction Zone!";
 	name = "caution sign"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "ccU" = (
 /turf/simulated/wall/auto/asteroid{
@@ -48413,7 +48449,8 @@
 /obj/decal/cleanable/oil,
 /obj/item/cigbutt,
 /obj/item/tank/air,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "cdf" = (
 /obj/machinery/light/small{
@@ -48422,7 +48459,8 @@
 	pixel_x = 12
 	},
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "cdg" = (
 /turf/simulated/floor/carpet/grime,

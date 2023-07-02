@@ -987,7 +987,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "acv" = (
 /obj/decal/cleanable/ash,
@@ -1690,7 +1691,8 @@
 	icon_state = "4-9"
 	},
 /obj/disposalpipe/segment/bent/south,
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "aed" = (
 /obj/cable{
@@ -1955,11 +1957,9 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"aeF" = (
-/turf/simulated/floor/airless/damaged3,
-/area/station/wreckage)
 "aeG" = (
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "aeH" = (
 /obj/decal/cleanable/dirt,
@@ -2148,7 +2148,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "afl" = (
 /turf/simulated/floor/bluegreen/side,
@@ -2482,7 +2483,8 @@
 	icon_state = "bloodydoor";
 	name = "broken airlock"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/station/wreckage)
 "agr" = (
 /obj/machinery/light/small,
@@ -6506,7 +6508,8 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/arrivals)
 "ase" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "asf" = (
 /obj/disposalpipe/segment{
@@ -34763,7 +34766,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "bOK" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -44972,13 +44976,15 @@
 /area/listeningpost/power)
 "cof" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /turf/simulated/floor/airless/plating,
 /area/space)
 "cog" = (
 /obj/decal/cleanable/molten_item,
+/obj/mapping_helper/turfs/damager,
 /turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "coh" = (
 /obj/grille/catwalk{
@@ -45192,7 +45198,8 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/crew_quarters/barber_shop)
 "coA" = (
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/crew_quarters/barber_shop)
 "coB" = (
 /obj/decal/cleanable/oil,
@@ -45530,7 +45537,8 @@
 /area/supply/delivery_point)
 "cpA" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "cpB" = (
 /obj/disposalpipe/segment{
@@ -46338,7 +46346,8 @@
 	name = "Permanent Atmospheric Forcefield";
 	powerlevel = 1
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "csO" = (
 /obj/table/auto,
@@ -47614,14 +47623,17 @@
 /area/listeningpost)
 "cww" = (
 /obj/item/raw_material/scrap_metal,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cwx" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cwy" = (
 /obj/decal/cleanable/molten_item,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cwA" = (
 /obj/table/wood/auto,
@@ -47753,7 +47765,8 @@
 	d2 = 4;
 	icon_state = "4-10"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cwR" = (
 /turf/space,
@@ -47766,7 +47779,8 @@
 	icon_state = "4-8"
 	},
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cwT" = (
 /obj/storage/crate/freezer{
@@ -47879,14 +47893,16 @@
 /area/space)
 "cxk" = (
 /obj/item/scrap,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cxl" = (
 /obj/disposalpipe/trunk{
 	dir = 4;
 	name = "food pipe"
 	},
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cxm" = (
 /obj/disposalpipe/segment{
@@ -47894,7 +47910,8 @@
 	name = "food pipe"
 	},
 /obj/item/mousetrap/armed,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cxn" = (
 /obj/disposalpipe/segment{
@@ -48053,7 +48070,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cxH" = (
 /turf/space,
@@ -48079,7 +48097,8 @@
 	icon_state = "5-8"
 	},
 /obj/landmark/artifact,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cxK" = (
 /obj/decal/fakeobjects{
@@ -48244,8 +48263,9 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/listeningpost/power)
 "cyl" = (
+/obj/mapping_helper/turfs/damager,
 /turf/space,
-/turf/simulated/floor/airless/plating/damaged2,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "cym" = (
 /obj/cable{
@@ -53934,7 +53954,8 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering,
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/combustion_chamber)
 "iwa" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -56902,7 +56923,8 @@
 /area/station/maintenance/northeast)
 "njR" = (
 /obj/machinery/vending/air_vendor,
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/jazz{
 	requires_power = 0
 	})
@@ -57371,7 +57393,8 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/access/engineering,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/station/engine/combustion_chamber)
 "nYc" = (
 /obj/disposalpipe/segment/produce{
@@ -62435,7 +62458,8 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "wnf" = (
 /obj/disposalpipe/segment/brig{
@@ -141160,7 +141184,7 @@ aaa
 acr
 aaE
 adZ
-aeF
+aeG
 aeG
 abk
 wMY

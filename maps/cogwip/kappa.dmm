@@ -4759,7 +4759,8 @@
 	},
 /area/space)
 "nS" = (
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/space)
 "nT" = (
 /turf/simulated/floor/engine/caution/westeast,

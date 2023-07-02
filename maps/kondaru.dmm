@@ -16,7 +16,8 @@
 /turf/space,
 /area/space)
 "aae" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aaf" = (
 /obj/lattice,
@@ -51,7 +52,8 @@
 	icon_state = "1-2"
 	},
 /obj/item/cigpacket/propuffs,
-/turf/simulated/floor/airless/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aan" = (
 /obj/decal/fakeobjects/cargopad,
@@ -67,7 +69,8 @@
 "aap" = (
 /obj/item/raw_material/shard,
 /obj/item/reagent_containers/dropper/mechanical,
-/turf/simulated/floor/airless/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aaq" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -90,7 +93,8 @@
 	},
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aas" = (
 /obj/cable{
@@ -100,13 +104,15 @@
 	icon_state = "1-4"
 	},
 /obj/item/clothing/suit/space/emerg,
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/space)
 "aat" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aau" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -140,7 +146,8 @@
 	icon_state = "4-8"
 	},
 /obj/item/raw_material/shard,
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aay" = (
 /obj/lattice{
@@ -150,7 +157,8 @@
 /turf/space,
 /area/space)
 "aaz" = (
-/turf/simulated/floor/airless/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aaA" = (
 /obj/cable{
@@ -175,7 +183,8 @@
 	icon_state = "engineoff";
 	name = "broken machine"
 	},
-/turf/simulated/floor/airless/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless,
 /area/space)
 "aaD" = (
 /turf/simulated/shuttle/wall{
@@ -33433,7 +33442,8 @@
 "dae" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/shard/glass,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_south)
 "daf" = (
 /turf/simulated/floor/caution/corner/sw,
@@ -41216,7 +41226,8 @@
 	},
 /area/station/security/brig/solitary)
 "iVD" = (
-/turf/simulated/floor/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "iWG" = (
 /obj/table/wood/round/auto,
@@ -42094,7 +42105,8 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "jGn" = (
 /obj/disposalpipe/segment/morgue{
@@ -45108,7 +45120,8 @@
 /area/station/turret_protected/armory_outside)
 "mdB" = (
 /obj/machinery/computer/security/wooden_tv,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/security/beepsky)
 "mdC" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -45715,7 +45728,8 @@
 /obj/item/storage/secure/ssafe/loot{
 	pixel_x = -28
 	},
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "mFy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -55197,7 +55211,8 @@
 	desc = "It's all covered in a sticky mess, and there are chunks of uniform fused to the bone.";
 	name = "sticky skeleton"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_south)
 "uqR" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -57548,7 +57563,8 @@
 /area/station/hydroponics/bay)
 "wnA" = (
 /obj/decal/cleanable/ash,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/station/crew_quarters/quarters_south)
 "wnB" = (
 /obj/table/auto,
@@ -58495,7 +58511,8 @@
 /area/station/hallway/secondary/exit)
 "wXg" = (
 /obj/structure/woodwall,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/station/garden/aviary)
 "wXQ" = (
 /obj/disposalpipe/segment/brig{
