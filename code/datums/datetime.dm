@@ -15,13 +15,16 @@
 	var/second = text2num(parts[6])
 	timeInByondFormat = text2num(time2text(world.timeofday, "hh:mm:ss")) + second + (minute * 60) + (hour * 3600) + (day * 86400) + (month * 2592000) + (year * 31104000)
 
-/datum/datetime/proc/toIso8601()
-	var/year = text2num(time2text(timeInByondFormat, "YYYY"))
-	var/month = text2num(time2text(timeInByondFormat, "MM"))
-	var/day = text2num(time2text(timeInByondFormat, "DD"))
-	var/hour = text2num(time2text(timeInByondFormat, "hh"))
-	var/minute = text2num(time2text(timeInByondFormat, "mm"))
-	var/second = text2num(time2text(timeInByondFormat, "ss"))
+/datum/dateTime/proc/toIso8601()
+	var/timeString = time2text(timeInByondFormat, "YYYY-MM-DDThh:mm:ssZ")
+	var/list/parts = splittext(timeString, "-")
+	var/year = parts[1]
+	var/month = parts[2]
+	var/day = splittext(parts[3], "T")[1]
+	var/timeParts = splittext(splittext(parts[3], "T")[2], ":")
+	var/hour = timeParts[1]
+	var/minute = timeParts[2]
+	var/second = splittext(timeParts[3], "Z")[1]
 	return "[year]-[month]-[day]T[hour]:[minute]:[second]Z"
 
 /datum/datetime/proc/addTime(years = 0, months = 0, days = 0, hours = 0, minutes = 0, seconds = 0)
