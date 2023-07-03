@@ -23488,6 +23488,16 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"cSo" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction{
+	dir = 4;
+	icon_state = "pipe-j2"
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/lobby)
 "cSA" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -24666,6 +24676,24 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
+"dVW" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay)
+"dXf" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "Robotics Lab";
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/robotics,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/medical/robotics)
 "dXn" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable,
@@ -24960,6 +24988,27 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"ejL" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1;
+	autoclose = 0
+	},
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 3
+	},
+/obj/item/pen{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/obj/item/stamp{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "ejQ" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -33759,10 +33808,18 @@
 /obj/machinery/door/airlock/pyro/glass/mining{
 	name = "Mining"
 	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/mining,
-/turf/simulated/floor/orangeblack,
-/area/station/mining/staff_room)
+/obj/machinery/light/small/floor,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/junction{
+	icon_state = "pipe-j2";
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/station/medical/medbay/surgery)
 "mqj" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39954,6 +40011,28 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/east)
+"rKT" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/disposal/small{
+	dir = 4
+	},
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	level = 2;
+	dir = 6
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/station/medical/medbay/surgery)
 "rLc" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -47251,6 +47330,26 @@
 	icon_state = "fpurple2"
 	},
 /area/station/science/research_director)
+"yis" = (
+/obj/table/reinforced/auto,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 1;
+	autoclose = 0
+	},
+/obj/item/clipboard{
+	pixel_x = -7
+	},
+/obj/item/clothing/glasses/healthgoggles{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/mapping_helper/access/medical,
+/turf/simulated/floor/specialroom/medbay,
+/area/station/medical/medbay/pharmacy)
 "yiQ" = (
 /obj/cable{
 	icon_state = "0-2"
