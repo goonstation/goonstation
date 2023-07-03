@@ -761,6 +761,15 @@
 	proc/add_glow(obj/object)
 		object.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
 		animate_rainbow_glow(object.simple_light, 5 SECONDS, 10 SECONDS)
+		var/image/glowverlay = object.SafeGetOverlayImage("glowverlay", 'icons/obj/hydroponics/plants_crop.dmi', "TreeGlow-glow")
+		if (istype(object, /obj/decorative_pot)) //*dies of cringe*
+			glowverlay.pixel_x = 2
+		glowverlay.plane = PLANE_ABOVE_LIGHTING
+		object.UpdateOverlays(glowverlay, "glowverlay", 0, 1)
+
+	proc/remove_glow(obj/object)
+		object.remove_simple_light("glowstick_tree")
+		object.UpdateOverlays(null, "glowverlay")
 
 	HYPmatured_proc_M(obj/machinery/plantpot/POT)
 		. = ..()
@@ -773,11 +782,11 @@
 
 	HYPharvested_proc_M(obj/machinery/plantpot/POT, mob/user)
 		. = ..()
-		POT.remove_simple_light("glowstick_tree")
+		src.remove_glow(POT)
 
 	HYPdestroyplant_proc_M(obj/machinery/plantpot/POT, mob/user)
 		. = ..()
-		POT.remove_simple_light("glowstick_tree")
+		src.remove_glow(POT)
 
 //peanuuts
 

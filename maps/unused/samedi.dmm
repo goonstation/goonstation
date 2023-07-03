@@ -11976,20 +11976,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
-"aAy" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "Catering Storage";
-	req_access_txt = "25;28;"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/catering)
 "aAz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/arrivals)
@@ -14347,22 +14333,6 @@
 	level = 2
 	},
 /turf/simulated/floor/black,
-/area/station/crew_quarters/catering)
-"aFE" = (
-/obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
-	level = 2
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Cold Storage";
-	req_access_txt = "25;28;"
-	},
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
 /area/station/crew_quarters/catering)
 "aFF" = (
 /turf/simulated/floor/specialroom/freezer,
@@ -17268,7 +17238,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aMc" = (
@@ -17851,7 +17821,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aNp" = (
@@ -18469,7 +18439,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aOJ" = (
@@ -19394,7 +19364,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aQT" = (
@@ -19406,7 +19376,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aQU" = (
@@ -19721,7 +19691,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRQ" = (
@@ -19734,7 +19704,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRR" = (
@@ -24428,21 +24398,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/pharmacy)
-"bbU" = (
-/obj/machinery/door/firedoor/pyro{
-	icon_state = "fdoor0";
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	icon_state = "door_closed";
-	name = "Patchy's Cabana";
-	req_access_txt = "5;25;"
-	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "bbV" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 1;
@@ -28772,16 +28727,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"bll" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "Patchy's Cabana";
-	req_access_txt = "5;25;"
-	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/maintenance/west)
 "blm" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 4
@@ -33082,10 +33027,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/pool)
-"buX" = (
-/mob/living/critter/small_animal/seal,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "buY" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -33756,10 +33697,6 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
-"bwI" = (
-/mob/living/critter/small_animal/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwJ" = (
@@ -41474,17 +41411,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
-"bNT" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "The Alchemist's Nook";
-	req_access_txt = "25"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/south)
 "bNU" = (
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
@@ -43216,21 +43142,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lab)
-"bRw" = (
-/obj/machinery/door/firedoor/pyro{
-	icon_state = "fdoor0";
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	icon_state = "door_closed";
-	name = "The Alchemist's Nook";
-	req_access_txt = "25"
-	},
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/south)
 "bRx" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1;
@@ -48992,6 +48903,10 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
+"djQ" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "dBh" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -49043,6 +48958,22 @@
 	dir = 9
 	},
 /area/station/science/teleporter)
+"exU" = (
+/obj/machinery/atmospherics/pipe/simple{
+	icon_state = "intact";
+	level = 2
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Cold Storage";
+	req_access_txt = "25;28;"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/station/crew_quarters/catering)
 "ezK" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/machinery/light/small{
@@ -49066,6 +48997,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"fBL" = (
+/obj/machinery/door/firedoor/pyro{
+	icon_state = "fdoor0";
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_closed";
+	name = "The Alchemist's Nook";
+	req_access_txt = "25"
+	},
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/south)
 "fEA" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/cable{
@@ -49268,6 +49214,10 @@
 	dir = 10
 	},
 /area/station/science/teleporter)
+"lkY" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "mhm" = (
 /obj/machinery/atmospherics/binary/valve{
 	name = "Chapel Repressurization"
@@ -49414,6 +49364,21 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
+"pWU" = (
+/obj/machinery/door/firedoor/pyro{
+	icon_state = "fdoor0";
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_closed";
+	name = "Patchy's Cabana";
+	req_access_txt = "5;25;"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "pZQ" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
@@ -49441,6 +49406,20 @@
 /obj/item/pen,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"sNE" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "Catering Storage";
+	req_access_txt = "25;28;"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "uaz" = (
 /obj/table/wood/auto,
 /obj/displaycase{
@@ -49481,6 +49460,27 @@
 	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
+"wAT" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "Patchy's Cabana";
+	req_access_txt = "5;25;"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/maintenance/west)
+"wFw" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "The Alchemist's Nook";
+	req_access_txt = "25"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/south)
 "xLm" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -81963,7 +81963,7 @@ aXt
 aYE
 aZC
 aZC
-bll
+wAT
 bdt
 beL
 bgd
@@ -82566,7 +82566,7 @@ aWp
 aWq
 aYG
 aLs
-bbU
+pWU
 baT
 bdv
 beL
@@ -94087,7 +94087,7 @@ bDl
 bDE
 bDW
 bEs
-bNT
+wFw
 bFI
 bGw
 bHl
@@ -94994,7 +94994,7 @@ bCk
 bDZ
 cdE
 bEW
-bRw
+fBL
 bGz
 bHo
 bIc
@@ -97945,7 +97945,7 @@ axY
 axR
 azp
 aAj
-aAy
+sNE
 aBY
 aDk
 aEq
@@ -98855,7 +98855,7 @@ aAY
 aAY
 aDn
 aEt
-aFE
+exU
 aHh
 aIx
 aJL
@@ -105837,7 +105837,7 @@ brp
 brt
 bti
 bud
-buX
+djQ
 buY
 buY
 bxi
@@ -106745,7 +106745,7 @@ brt
 bud
 buY
 buY
-buX
+djQ
 bxj
 bxU
 byF
@@ -107045,7 +107045,7 @@ brt
 bst
 btk
 bud
-buX
+djQ
 buY
 buY
 bxk
@@ -107349,7 +107349,7 @@ brt
 bud
 buY
 buY
-bwI
+lkY
 bxk
 bxU
 byG

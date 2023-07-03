@@ -146,7 +146,7 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "gR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless/scorched,
 /area/prefab/crashed_hop_shuttle)
 "hB" = (
@@ -172,18 +172,18 @@
 	opacity = 1
 	})
 "iR" = (
-/obj/access_spawn/head_of_personnel,
+/obj/mapping_helper/access/head_of_personnel,
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4
 	},
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "jd" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "jm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "jK" = (
@@ -431,7 +431,7 @@
 /turf/simulated/floor/damaged5,
 /area/prefab/crashed_hop_shuttle)
 "zh" = (
-/obj/access_spawn/head_of_personnel,
+/obj/mapping_helper/access/head_of_personnel,
 /obj/machinery/door/airlock/pyro/command,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
@@ -609,7 +609,7 @@
 /turf/variableTurf/clear,
 /area/prefab/crashed_hop_shuttle)
 "MD" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/prefab/crashed_hop_shuttle)
 "MK" = (
@@ -641,7 +641,7 @@
 /area/prefab/crashed_hop_shuttle)
 "Nx" = (
 /obj/machinery/door/airlock/pyro/glass/command,
-/obj/access_spawn/head_of_personnel,
+/obj/mapping_helper/access/head_of_personnel,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Oo" = (
@@ -791,7 +791,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "Yh" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2{
 	dir = 8
 	},
@@ -822,7 +822,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/prefab/crashed_hop_shuttle)
 "YX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/prefab/crashed_hop_shuttle)
 "Zn" = (
@@ -832,7 +832,7 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "Zx" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 

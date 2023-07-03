@@ -308,7 +308,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "mb" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/kitchen)
 "ms" = (
@@ -484,7 +484,7 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
 	},
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/mining,
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
@@ -506,7 +506,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "sX" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/skeleton_trader)
 "ta" = (
@@ -1100,7 +1100,7 @@
 /turf/simulated/floor/engine/caution/east,
 /area/diner/dining)
 "LU" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/dining)
 "ME" = (
@@ -1165,7 +1165,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "NK" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/bee_trader)
 "NO" = (
@@ -1206,7 +1206,7 @@
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "OI" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
 /area/diner/hallway{
 	name = "Space Diner Backhall"
