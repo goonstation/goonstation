@@ -6,18 +6,6 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
   return (
     <Stack>
       <Stack.Item>
-        {isAdmin ? (
-          <>
-            <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
-            <Button
-              tooltip="Edit Poll"
-              tooltipPosition="top"
-              icon="pen"
-              onClick={() => act('editPoll', { pollId })}
-            />
-            <Button.Confirm tooltip="Delete Poll" tooltipPosition="top" icon="trash" color="bad" onClick={() => act('deletePoll', { pollId })} />
-          </>
-        ) : null}
         {multipleChoice ? (
           <Button
             tooltip="Multiple Choice"
@@ -31,6 +19,18 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
           color={pollStatus ? 'good' : 'bad'}
           icon={pollStatus ? 'lock-open' : 'lock'}
         />
+        {isAdmin ? (
+          <>
+            <Button tooltip="Add Option" tooltipPosition="top" icon="plus" onClick={() => act('addOption', { pollId })} />
+            <Button
+              tooltip="Edit Poll"
+              tooltipPosition="top"
+              icon="pen"
+              onClick={() => act('editPoll', { pollId })}
+            />
+            <Button.Confirm tooltip="Delete Poll" tooltipPosition="top" icon="trash" color="bad" onClick={() => act('deletePoll', { pollId })} />
+          </>
+        ) : null}
       </Stack.Item>
     </Stack>
   );
