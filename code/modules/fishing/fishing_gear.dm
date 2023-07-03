@@ -32,7 +32,13 @@
 	//todo: attack particle?? some sort of indicator of where we're fishing
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
-			var/datum/fishing_spot/fishing_spot = global.fishing_spots[target.type]
+			var/datum/fishing_spot/fishing_spot = null
+			var/fishing_spot_type = target.type
+			while (fishing_spot_type != null)
+				fishing_spot = global.fishing_spots[fishing_spot_type]
+				if (fishing_spot != null)
+					break
+				fishing_spot_type = type2parent(fishing_spot_type)
 			if (fishing_spot)
 				if (fishing_spot.rod_tier_required > src.tier)
 					user.visible_message("<span class='alert'>You need a higher tier rod to fish here!</span>")

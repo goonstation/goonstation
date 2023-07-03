@@ -1,4 +1,14 @@
 
+(t)mon jul 03 23
+(u)RubberRats
+(p)14695
+(e)🪲🔎📦🚗|C-Bug, C-Code-Quality, A-Game-Objects, A-Vehicles
+(+)Plasma cutters and other mining weapons can break multiple asteroid tiles at once again.
+(t)sat jul 01 23
+(u)Lord_Earthfire
+(p)14758
+(e)🪲🆕📦|C-Bug, C-Feature, A-Game-Objects
+(+)Fish can now be quickly stuffed into crates/lockers
 (t)fri jun 30 23
 (u)aloe
 (+)Syringe guns and similar fit in gun components now (the mechanics kind).
