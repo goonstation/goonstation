@@ -54,7 +54,7 @@
 	},
 /area/prefab/zoo)
 "k" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
 /area/prefab/zoo)
 "l" = (

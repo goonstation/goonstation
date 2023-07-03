@@ -306,7 +306,7 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aU" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/janitor_setpiece)
 "aV" = (

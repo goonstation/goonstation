@@ -316,7 +316,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		return state
 
 
-ABSTRACT_TYPE(/obj/item/gun/survival_rifle_barrel)
+ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/survival_rifle_barrel
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
