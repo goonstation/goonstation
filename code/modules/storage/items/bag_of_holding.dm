@@ -123,7 +123,7 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 		// implosion
 		if (2)
 			var/obj/dummy/artifact_boh_singulo_dummy/black_hole = new (T)
-			T.visible_message("<span class='alert'><B>The artifacts shink to nothing! UH OH.")
+			T.visible_message("<span class='alert'><B>The artifacts shrink to nothing! UH OH.")
 			playsound(T, 'sound/machines/singulo_start.ogg', 20, TRUE)
 			qdel(T)
 			qdel(user)
