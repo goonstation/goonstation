@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			parent.MarkGridForUpdate()
 			parent.UpdateIcon()
 		src.neutron_cross_section = 5.0
-		src.thermal_cross_section = 1.0
+		src.thermal_cross_section = 20.0
 		src.is_control_rod = FALSE
 
 	proc/extra_info()
