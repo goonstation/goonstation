@@ -78,6 +78,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\customization_styles.dm"
 #include "code\datums\datacore.dm"
 #include "code\datums\datalogger.dm"
+#include "code\datums\date_time.dm"
+#include "code\datums\datetime.dm"
 #include "code\datums\digital_filter.dm"
 #include "code\datums\disease.dm"
 #include "code\datums\disjoint_turf.dm"
