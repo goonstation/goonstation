@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "cp" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/north,
 /area/station/engine/inner)
 "dV" = (
@@ -37,7 +37,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "fi" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -88,14 +88,14 @@
 /area/station/engine/inner)
 "ib" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "ix" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -103,7 +103,7 @@
 /area/station/engine/inner)
 "jr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -111,7 +111,7 @@
 /area/station/engine/inner)
 "ko" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-4"
 	},
@@ -140,7 +140,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "mc" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
@@ -191,8 +191,8 @@
 	name = "Singularity Room";
 	req_access = null
 	},
-/obj/access_spawn/engineering_engine,
-/obj/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -254,7 +254,7 @@
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-8"
 	},
@@ -292,11 +292,11 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "tB" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/west,
 /area/station/engine/inner)
 "up" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown,
 /obj/cable/black,
 /obj/cable/brown{
@@ -309,7 +309,7 @@
 	can_rupture = 0;
 	dir = 10
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
@@ -335,7 +335,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "AQ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 4
 	},
@@ -361,8 +361,8 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "De" = (
-/obj/access_spawn/engineering_engine,
-/obj/firedoor_spawn,
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
@@ -415,7 +415,7 @@
 /area/station/engine/inner)
 "Mf" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -471,7 +471,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "QQ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
@@ -486,7 +486,7 @@
 /area/station/engine/inner)
 "RD" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold,
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "1-2"
 	},
@@ -516,7 +516,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "TM" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "2-4"
 	},
@@ -554,7 +554,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/inner)
 "WQ" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
@@ -564,7 +564,7 @@
 	can_rupture = 0;
 	dir = 6
 	},
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "2-8"
 	},
@@ -591,7 +591,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/inner)
 "ZF" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/crystal/reinforced,
 /obj/cable/brown{
 	icon_state = "4-8"
 	},
