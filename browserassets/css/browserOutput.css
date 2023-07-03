@@ -383,6 +383,7 @@ h1.alert, h2.alert {color: #000000;}
 .rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
+.rintercomai {color: #39397d}
 .rother {color: #800080;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
@@ -548,6 +549,7 @@ body.theme-dark .rmedical {color: #00bbff;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
+body.theme-dark .rintercomai {color: #7F7FE2}
 body.theme-dark .rother {color: #E896E5;}
 
 body.theme-dark .help {

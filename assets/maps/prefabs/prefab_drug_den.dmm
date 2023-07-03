@@ -90,7 +90,7 @@
 	icon_state = "lattice-dir";
 	tag = "icon-lattice-dir (EAST)"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "eN" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -113,7 +113,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "gy" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/drug_den)
 "gD" = (
@@ -121,7 +121,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "hC" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ii" = (
 /obj/lattice{
@@ -129,7 +129,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "iW" = (
 /obj/item/device/light/glowstick/green_on{
@@ -159,7 +159,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "kT" = (
 /obj/item/reagent_containers/syringe{
@@ -196,7 +196,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/prefab/drug_den)
 "mb" = (
-/turf/space,
+/turf/variableTurf/clear,
 /area/allowGenerate)
 "mE" = (
 /obj/grille/catwalk,
@@ -284,7 +284,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/drug_den/party)
 "sa" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/mapping_helper/wingrille_spawn/auto/tuff,
 /turf/simulated/floor/airless/plating,
 /area/prefab/drug_den/party)
 "sP" = (
@@ -293,7 +293,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "tp" = (
 /obj/machinery/deep_fryer{
@@ -309,7 +309,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "ub" = (
 /obj/machinery/light/incandescent/blueish{
@@ -346,7 +346,7 @@
 /obj/item/sponge{
 	pixel_y = 7
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "xK" = (
 /obj/item/reagent_containers/glass/beaker{
@@ -382,7 +382,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Ad" = (
 /obj/disposalpipe/segment{
@@ -399,7 +399,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Bd" = (
 /obj/decal/poster/wallsign/testsubject,
@@ -590,7 +590,7 @@
 	tag = "icon-lattice-dir (EAST)"
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Kw" = (
 /obj/table/reinforced/auto,
@@ -639,7 +639,7 @@
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "LQ" = (
 /obj/cable{
@@ -670,14 +670,14 @@
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "NW" = (
 /obj/rack,
 /obj/item/clothing/glasses/monocle{
 	pixel_x = -5
 	},
-/obj/item/spacecash/random/small{
+/obj/item/currency/spacecash/small{
 	pixel_x = 4;
 	pixel_y = -5
 	},
@@ -688,7 +688,7 @@
 	dir = 1;
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "OO" = (
 /mob/living/critter/small_animal/mouse/mad,
@@ -707,7 +707,7 @@
 	pixel_x = 4;
 	pixel_y = -7
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Qa" = (
 /obj/item/reagent_containers/food/snacks/donkpocket{
@@ -756,7 +756,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "Rf" = (
 /obj/machinery/light/incandescent/netural{
@@ -796,7 +796,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "TA" = (
 /obj/lattice{
@@ -804,7 +804,7 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/machinery/light/runway_light/delay5,
-/turf/space,
+/turf/variableTurf/clear,
 /area/noGenerate)
 "TN" = (
 /obj/cable{

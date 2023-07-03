@@ -479,7 +479,7 @@ toxic - poisons
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
 		if (dropped)
-			dropped.changeStatus("acid", 3 SECONDS) // this will probably bug out if someone manages to load it into a gun. problem for later
+			dropped.changeStatus("acid", 3 SECONDS, list("message" = null)) // this will probably bug out if someone manages to load it into a gun. problem for later
 
 //0.40
 /datum/projectile/bullet/blow_dart
@@ -1235,6 +1235,7 @@ datum/projectile/bullet/autocannon
 	window_pass = 0
 	icon_state = "40mm_lethal"
 	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
 	damage = 25
 	dissipation_delay = 20
 	cost = 1
@@ -1265,10 +1266,12 @@ datum/projectile/bullet/autocannon
 			if (src.has_grenade == 0)
 				if (istype(W,/obj/item/chem_grenade))
 					src.CHEM = W
+					src.damage = CHEM.launcher_damage
 					src.has_grenade = 1
 					return 1
 				else if (istype(W, /obj/item/old_grenade))
 					src.OLD = W
+					src.damage = OLD.launcher_damage
 					src.has_grenade = 1
 					return 1
 				else

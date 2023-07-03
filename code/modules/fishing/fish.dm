@@ -13,10 +13,13 @@ Fish lists:
 		Goldfish
 		Chub
 		Eel
-	Unimplemented:
 		Dace
 		Minnow
 		Pike
+		Arapaima
+		Rosefin Shiner
+		Catfish
+		Tiger Oscar
 
 Ocean saltwater fish:
 	Implemented:
@@ -29,6 +32,8 @@ Ocean saltwater fish:
 		Mahi-mahi
 		Shrimp
 		Sardine
+		Barracuda
+		Sailfish
 	Unimplemented:
 		Blue Marlin
 		Red Snapper
@@ -47,6 +52,8 @@ Aquarium saltwater fish:
 		Firefish
 		Yellow Tang
 		Mandarin Fish
+		Lionfish
+		Betta
 
 Alien/mutant/other fish:
 	Implemented:
@@ -54,11 +61,16 @@ Alien/mutant/other fish:
 		Eye fish
 		Void fish
 		Sun fish
+		Blobfish
+		Lava fish
+		Molten fish
+		Golden fish
+		Ling fish
+		Tree fish
 	Unimplemented:
 		Blood fish
-		Lava fish
-		Blobfish
 */
+
 // These catagories aren't used currently.
 #define FISH_CATEGORY_FRESHWATER "freshwater"
 #define FISH_CATEGORY_OCEAN "ocean"
@@ -183,6 +195,64 @@ Alien/mutant/other fish:
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_UNCOMMON
 
+/obj/item/fish/dace
+	name = "dace"
+	desc = "A surface-dwelling fish related to the carp. Became established after escaping from being used as a bait fish."
+	icon_state = "dace"
+	inhand_color = "#d1c40d"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
+
+/obj/item/fish/minnow
+	name = "minnow"
+	desc = "One of the most common bait fish, looks like this one got away! Until you caught it."
+	icon_state = "minnow"
+	inhand_color = "#b1c3dd"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/pike
+	name = "pike"
+	desc = "Named after the long and pointy weapon of war, the Pike features in the Finnish Kalevala, where it's jawbown in turned in to a magical kantele."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "pike"
+	inhand_color = "#24d10d"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_RARE
+
+/obj/item/fish/arapaima
+	name = "arapaima"
+	desc = "One of the largest freshwater fish as well as one of the oldest, with fossils for this species dating back 23 million years."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "arapaima"
+	inhand_color = "#9c5525"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_RARE
+
+/obj/item/fish/rosefin_shiner
+	name = "rosefin shiner"
+	desc = "A native to Virginia and Carolina, this fish likes clear freshwater pools and creeks. Take me home, rosefin shiner!"
+	icon_state = "rosefin_shiner"
+	inhand_color = "#2963b4"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_UNCOMMON
+
+/obj/item/fish/catfish
+	name = "catfish"
+	desc = "Found the whole world over, the humble catfish typically presents with their trademark whiskers, called barbels."
+	icon_state = "catfish"
+	inhand_color = "#503f29"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_COMMON
+
+/obj/item/fish/tiger_oscar
+	name = "tiger oscar"
+	desc = "Popular in both aquariums and kitchens, this fish was accidentally misclassified in 1831. Don't make that mistake again!"
+	icon_state = "tiger_oscar"
+	inhand_color = "#2e1306"
+	category = FISH_CATEGORY_FRESHWATER
+	value  = FISH_RARITY_UNCOMMON
+
 // Ocean saltwater fish
 
 /obj/item/fish/herring
@@ -259,7 +329,25 @@ Alien/mutant/other fish:
 	category = FISH_CATEGORY_OCEAN
 	value  = FISH_RARITY_COMMON
 
-// Aquarium saltwater fish
+/obj/item/fish/barracuda
+	name = "barracuda"
+	desc = "You gonna burn, burn, burn, burn, burn to the wick. Ooh, barracuda, oh, yeah."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "barracuda"
+	inhand_color = "#25669c"
+	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_RARE
+
+/obj/item/fish/sailfish
+	name = "sailfish"
+	desc = "A fearsome looking predator with a ferocious temper. Looks like you were up for the challenge!"
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "sailfish"
+	inhand_color = "#25419c"
+	category = FISH_CATEGORY_OCEAN
+	value  = FISH_RARITY_EPIC
+
+// Aquarium fish
 
 /obj/item/fish/clownfish
 	name = "clownfish"
@@ -341,6 +429,22 @@ Alien/mutant/other fish:
 	category = FISH_CATEGORY_AQUARIUM
 	value  = FISH_RARITY_RARE
 
+/obj/item/fish/lionfish
+	name = "lionfish"
+	desc = "With strong red and white stripes and armed with a full complement of venomous spines, you better be careful handling this one."
+	icon_state = "lionfish"
+	inhand_color = "#f03c05"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_RARE
+
+/obj/item/fish/betta
+	name = "betta"
+	desc = "This could be one of 73 species domesticated over 1000 years ago. Sadly used in fish-fights by less savory sorts."
+	icon_state = "betta"
+	inhand_color = "#f03c05"
+	category = FISH_CATEGORY_AQUARIUM
+	value  = FISH_RARITY_COMMON
+
 // adventure zone special fish
 
 //meatzone
@@ -350,6 +454,7 @@ Alien/mutant/other fish:
 	icon_state = "meat"
 	inhand_color = "#af2323"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 /*
 /obj/item/fish/blood_fish
 	name = "blood fish"
@@ -364,6 +469,16 @@ Alien/mutant/other fish:
 	icon_state = "eyefish"
 	inhand_color = "#f0f0f0"
 	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/item_box/googly_eyes
+
+/obj/item/fish/lingfish
+	name = "splashing horror"
+	desc = "A writhing, flailing mass of tissue pantomiming a sick caricature of a fish. You should probably just put this one back."
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "lingfish"
+	inhand_color = "#e08d6b"
+	value  = FISH_RARITY_EPIC
+	fillet_type = /mob/living/critter/blobman/meat
 
 //void
 /obj/item/fish/void_fish
@@ -391,20 +506,52 @@ Alien/mutant/other fish:
 	icon_state = "sun_fish"
 	inhand_color = "#ebde2d"
 	value  = FISH_RARITY_LEGENDARY
-/*
+
 //lava moon
 /obj/item/fish/lava_fish
 	name = "lava fish"
-	desc = "a blazing hot catch straight from the planet's core!"
-	icon_state = "bass_old"
+	desc = "A blazing hot catch straight from the planet's core!"
+	icon_state = "lavafish"
 	inhand_color = "#eb2d2d"
+	value  = FISH_RARITY_EPIC
+
+	New()
+		setProperty("flammable", 8)
+		return ..()
+
+/obj/item/fish/igneous_fish
+	name = "igneous fish"
+	desc = "A fish formed of cooled volcanic magma, neat! Still hot to handle though!"
+	icon_state = "moltenfish"
+	inhand_color = "#380c0c"
 	value  = FISH_RARITY_RARE
+
+	New()
+		setProperty("flammable", 6)
+		return ..()
 
 //blob
 /obj/item/fish/blobfish
-	name = "Blobfish"
+	name = "blobfish"
 	desc = "Looking good, blobfish."
-	icon_state = "bass_old"
+	icon_state = "blobfish"
 	inhand_color = "#da8fac"
 	value  = FISH_RARITY_RARE
-*/
+
+//other
+/obj/item/fish/real_goldfish
+	name = "prosperity pilchard"
+	desc = "A symbol of good fortune, this fish's shining scales are said to be extremely valuable!."
+	icon_state = "goldenfish"
+	inhand_color = "#f0ec08"
+	value  = FISH_RARITY_LEGENDARY
+	fillet_type = /obj/item/raw_material/gold
+
+/obj/item/fish/treefish
+	name = "arboreal bass"
+	desc = "TODO"
+	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
+	icon_state = "treefish"
+	inhand_color = "#22c912"
+	value  = FISH_RARITY_RARE
+	fillet_type = /obj/item/material_piece/organic/wood

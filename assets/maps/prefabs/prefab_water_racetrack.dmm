@@ -6,7 +6,7 @@
 /turf/variableTurf/clear,
 /area/space)
 "ac" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
 /area/prefab/raceway)
 "ad" = (
@@ -222,7 +222,7 @@
 	},
 /area/prefab/raceway)
 "aF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/prefab/raceway)
 "aG" = (
@@ -289,8 +289,8 @@
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "aP" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating/random,
 /area/prefab/raceway)
 "aQ" = (
@@ -451,7 +451,7 @@
 	},
 /area/prefab/raceway)
 "bn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/black,
 /area/prefab/raceway)
 "bo" = (

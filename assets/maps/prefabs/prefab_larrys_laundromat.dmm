@@ -254,7 +254,7 @@
 /turf/simulated/floor/twotone/green,
 /area/prefab/larrys_laundry)
 "yA" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/structure/woodwall{
 	icon_state = "woodwall2";
 	opacity = 0
@@ -349,30 +349,30 @@
 	dir = 8;
 	pixel_x = -10
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 2
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = -4;
 	pixel_x = 5
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 7;
 	pixel_x = 3
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 12;
 	pixel_x = 4
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 5;
 	pixel_x = 7
 	},
-/obj/item/spacecash/random/really_small{
+/obj/item/currency/spacecash/really_small{
 	pixel_y = 9;
 	pixel_x = -4
 	},
-/obj/item/spacecash/random/tourist,
+/obj/item/currency/spacecash/tourist,
 /turf/simulated/floor/twotone/black,
 /area/prefab/larrys_laundry)
 "Kp" = (
@@ -393,7 +393,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Mw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/prefab/larrys_laundry)
@@ -488,7 +488,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "XT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/prefab/larrys_laundry)
 "Yh" = (

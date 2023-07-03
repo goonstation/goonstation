@@ -292,7 +292,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_entered
 	execute(var/atom/owner, var/atom/movable/entering)
-		if (isobserver(entering) || isintangible(entering))
+		if (isobserver(entering) || isintangible(entering) || entering.anchored)
 			return
 		if(ON_COOLDOWN(entering, "telecrystal_warp", 1 SECOND))
 			return
@@ -309,7 +309,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/telecrystal_onattack
 	execute(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
 		var/turf/T = get_turf(attacked)
-		if(ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
+		if(attacked.anchored || ON_COOLDOWN(attacked, "telecrystal_warp", 1 SECOND))
 			return
 		if(prob(33))
 			if(istype(attacked) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
@@ -328,7 +328,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
-		if(ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
+		if(M.anchored || ON_COOLDOWN(M, "telecrystal_warp", 1 SECOND))
 			return
 		var/turf/T = get_turf(M)
 		if(probmult(5) && M && !isrestrictedz(T.z))
@@ -565,12 +565,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				return
 			lastTrigger = world.time
 			var/mob/mobenter = entering
+			logTheThing(LOG_COMBAT, mobenter, "soulsteel-possesses [owner] at [log_loc(owner)].")
 			if(mobenter.client)
 				var/mob/living/object/OB = new/mob/living/object(owner.loc, owner, mobenter)
 				OB.health = 8
 				OB.max_health = 8
 				OB.canspeak = 0
 				OB.show_antag_popup("soulsteel")
+
 		return
 
 /datum/materialProc/reflective_onbullet
@@ -584,7 +586,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(isitem(owner))
 			var/obj/item/I = owner
 			I.no_gravity = 1
-			I.AddComponent(/datum/component/holdertargeting/no_gravity)
+			I.AddComponent(/datum/component/loctargeting/no_gravity)
 			animate_levitate(owner)
 		return
 
