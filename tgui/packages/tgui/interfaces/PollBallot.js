@@ -36,19 +36,19 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
   );
 };
 
-const OptionControls = ({ isAdmin, act, optionId }) => {
+const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   if (!isAdmin) return null;
   return (
     <Stack>
       <Stack.Item>
-        <Button icon="pen" onClick={() => act('editOption', { optionId })} />
-        <Button.Confirm icon="trash" color="bad" onClick={() => act('deleteOption', { optionId })} />
+        <Button icon="pen" onClick={() => act('editOption', { pollId, optionId })} />
+        <Button.Confirm icon="trash" color="bad" onClick={() => act('deleteOption', { pollId, optionId })} />
       </Stack.Item>
     </Stack>
   );
 };
 
-const Ballot = ({ options, total_answers, act, pollId, isAdmin }) => {
+const Poll = ({ options, total_answers, act, pollId, isAdmin, playerId }) => {
   if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
@@ -58,6 +58,7 @@ const Ballot = ({ options, total_answers, act, pollId, isAdmin }) => {
             <Stack>
               <Stack.Item grow>
                 <Button.Checkbox
+                  checked={option.answers_player_ids.includes(playerId)}
                   onClick={() => act('vote', { pollId, optionId: option.id })}
                 >
                   {option.option}
@@ -73,7 +74,7 @@ const Ballot = ({ options, total_answers, act, pollId, isAdmin }) => {
               </Stack.Item>
             </Stack>
             <Stack.Item>
-              <ProgressBar value={option.answers_count / total_answers} />
+              <ProgressBar value={total_answers ? option.answers_count / total_answers : 0} />
             </Stack.Item>
           </Stack>
         </Stack.Item>
@@ -84,7 +85,7 @@ const Ballot = ({ options, total_answers, act, pollId, isAdmin }) => {
 
 export const PollBallot = (props, context) => {
   const { act, data } = useBackend(context);
-  const { isAdmin, polls } = data;
+  const { isAdmin, polls, playerId } = data;
 
   return (
     <Window title="Poll Ballot" width="750" height="800">
@@ -104,13 +105,14 @@ export const PollBallot = (props, context) => {
                   />
                 }>
                 <Stack vertical>
-                  <Ballot
+                  <Poll
                     options={poll.options}
                     total_answers={poll.total_answers}
                     act={act}
                     pollId={poll.id}
                     isAdmin={isAdmin}
                     pollStatus={poll.status}
+                    playerId={playerId}
                   />
                 </Stack>
               </Section>

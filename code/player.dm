@@ -4,6 +4,8 @@
 	var/key
 	/// the ckey of the client object that this datum is attached to
 	var/ckey
+	/// fetched on demand from the API, player's unique ID number
+	var/player_id
 	/// the client object that this datum is attached to
 	var/client/client
 	/// are they a mentor?
@@ -75,6 +77,23 @@
 			src.client.player = null
 			src.client = null
 		..()
+	/// fetch the player ID from the API
+	proc/fetch_player_id()
+		. = player_id
+		if (.)
+			return
+		var/datum/http_request/request = new
+		var/list/headers = list(
+			"Accept" = "application/json",
+			"Authorization" = config.goonhub_api_token,
+		)
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/players/stats?ckey=[ckey]", null, headers)
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+		var/list/data = json_decode(response.body)
+		player_id = data["data"]["id"]
+		. = player_id
 
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()

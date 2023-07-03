@@ -2,10 +2,10 @@ var/global/datum/poll_manager/poll_manager = new
 /// master poll controller for the server. Caches the results, syncs with api
 /datum/poll_manager
 	var/list/poll_data
-	var/list/cached_playerIds
 
 	/// fetch and cache the latest poll data from the API
 	proc/sync_polldata()
+		set waitfor = FALSE
 		var/datum/http_request/request = new
 		var/list/headers = list(
 			"Accept" = "application/json",
@@ -18,4 +18,29 @@ var/global/datum/poll_manager/poll_manager = new
 		if (rustg_json_is_valid(response.body))
 			poll_data = json_decode(response.body)
 
+	proc/sync_single_poll(var/pollId)
+		//set waitfor = FALSE
+		var/datum/http_request/request = new
+		var/list/headers = list(
+			"Accept" = "application/json",
+			"Authorization" = config.goonhub_api_token
+		)
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/polls/results/[pollId]", null, headers)
+		request.begin_async()
+		UNTIL(request.is_complete())
+		var/datum/http_response/response = request.into_response()
+		var/list/data
+		if (rustg_json_is_valid(response.body))
+			data = json_decode(response.body)
+			data = data["data"]
 
+		for (var/i in 1 to length(poll_data?["data"]))
+			if (poll_data["data"][i]["id"] != pollId)
+				continue
+			if (!data)
+				var/list/L = poll_data["data"]
+				L.Remove(list(poll_data["data"][i]))
+				poll_data["data"] = L
+				return
+			poll_data["data"][i] = data
+			break
