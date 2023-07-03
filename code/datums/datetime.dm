@@ -31,9 +31,7 @@ proc/fromIso8601(iso8601)
 
 	// Add the remaining days, hours, minutes, and seconds
 	totalDays += day - 1
-	var totalSeconds = totalDays * 86400 + hour * 3600 + minute * 60 + second
-
-	return totalSeconds SECONDS
+	return totalDays DAYS + hour HOURS + minute MINUTES + second SECONDS
 
 /// returns true if the year is divisible by 4, except for years that are divisible by 100. However, years that are divisible by 400 are also leap years.
 proc/isLeapYear(year)
@@ -47,7 +45,7 @@ proc/toIso8601(timeInByondFormat)
 
 /// Add time to a given BYOND time format
 proc/addTime(timeInByondFormat, years=0, months=0, days=0, hours=0, minutes=0, seconds=0)
-	return timeInByondFormat + (10 * (seconds + (minutes * 60) + (hours * 3600) + (days * 86400) + (months * 2592000) + (years * 31104000)))
+	return timeInByondFormat + (seconds SECONDS + (minutes MINUTES) + (hours HOURS) + (days DAYS) + (months DAYS * 30) + (years DAYS * 365))
 
 /// Subtract time from a given BYOND time format
 proc/subtractTime(timeInByondFormat, years=0, months=0, days=0, hours=0, minutes=0, seconds=0)
