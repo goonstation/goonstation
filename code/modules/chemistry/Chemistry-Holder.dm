@@ -423,17 +423,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 				if (!islist(C.required_reagents)) //This shouldn't happen but when practice meets theory...they beat the shit out of one another I guess
 					continue
 
-				if(C.required_temperature != -1)
-					if(C.required_temperature <= 0) //total_temperature needs to be lower than absolute value of this temp
-						if(abs(C.required_temperature) < total_temperature) continue //Not the right temp.
-					else if(C.required_temperature > total_temperature) continue
-					//Min / max temp intervals
-					if(total_temperature < C.min_temperature)
-						continue
-					else if(total_temperature > C.max_temperature) continue
-
-					// TODO: CONSIDER: reactions should probably occur if temp >= req temp not within bound of it
-					// Monkeys: Did this, just put a required_temperature as negative to make the reaction happen below a temp rather than above.
+				//Min / max temp intervals
+				if(total_temperature < C.min_temperature)
+					continue
+				else if(total_temperature > C.max_temperature) continue
 
 				var/total_matching_reagents = 0
 				var/created_volume = src.maximum_volume
@@ -584,7 +577,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			current_reagent.check_threshold()
 			if (current_reagent.disposed) //Caused some sort of infinite loop? gotta be safe.
 				reagent_list.Remove(reagent)
-				return 0
 			else
 				current_reagent.on_remove()
 				remove_possible_reactions(current_reagent.id) //Experimental structure
@@ -596,7 +588,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 				qdel(current_reagent)
 
-				return 0
+				handle_reactions() //we might have removed an inhibitor, check if we should react
+
+			return 0
 
 		return 1
 

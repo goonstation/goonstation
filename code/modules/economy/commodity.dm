@@ -65,6 +65,15 @@
 	upperfluc = 25
 	lowerfluc = -25
 
+/datum/commodity/fish
+	comname = "Fish"
+	comtype = /obj/item/fish
+	onmarket = 1
+	price = 50
+	baseprice = 50
+	upperfluc = 25
+	lowerfluc = -25
+
 /datum/commodity/herbs
 	comname = "Medical Herbs"
 	comtype = /obj/item/plant/herb
@@ -363,7 +372,7 @@
 
 /datum/commodity/boogiebot
 	comname = "Boogiebot"
-	comtype = /obj/critter/boogiebot
+	comtype = /mob/living/critter/small_animal/boogiebot
 	desc = "The latest in boogie technology!"
 	onmarket = 0
 	price = 5000

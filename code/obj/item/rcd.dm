@@ -286,7 +286,8 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_AIRLOCK)
 				// create_door handles all the other stuff.
-				create_door(A, user)
+				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+					create_door(A, user)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)

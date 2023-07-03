@@ -2655,7 +2655,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/engine2,
 		/datum/manufacture/engine3,
 		/datum/manufacture/pod/lock,
-		/datum/manufacture/beaconkit
+		/datum/manufacture/beaconkit,
+		/datum/manufacture/podgps
 	)
 
 /obj/machinery/manufacturer/uniform // add more stuff to this as needed, but it should be for regular uniforms the HoP might hand out, not tons of gimmicks. -cogwerks
@@ -2922,6 +2923,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
 		/datum/manufacture/flippers,
+#endif
+#ifdef MAP_OVERRIDE_OSHAN
+	/datum/manufacture/cable/reinforced,
 #endif
 		/datum/manufacture/mechanics/laser_mirror,
 		/datum/manufacture/mechanics/laser_splitter,

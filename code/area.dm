@@ -1357,10 +1357,11 @@ TYPEINFO(/area/diner)
 	name = "Bill E Bheezes"
 	icon_state = "red"
 
-/area/diner/cow
+/area/void_diner
 	name = "Void Diner"
 	icon_state = "purple"
 	requires_power = FALSE
+	sound_environment = 12
 	area_parallax_layers = list(
 		/atom/movable/screen/parallax_layer/void,
 		/atom/movable/screen/parallax_layer/void/clouds_1,
@@ -1512,6 +1513,10 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/larrys_laundry
 	name = "Larry's Laundry"
 	icon_state = "green"
+
+/area/prefab/mauxite_hideout
+	name = "hideout"
+	icon_state = "orange"
 
 // Sealab trench areas //
 
@@ -4127,6 +4132,12 @@ ABSTRACT_TYPE(/area/mining)
 				aiPlayer.triggerAlarm("Power", src, cameras, source)
 	return
 
+/// This might be really stupid, but I can't think of a better way
+/area/proc/get_z_level()
+	if (!length(src.contents))
+		return 0
+	var/turf/T = src.contents[1]
+	return T?.z
 
 /**
   * Causes a fire alert in the area if there is not one already set. Notifies AIs.
@@ -4147,6 +4158,8 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(C) == src)
 				cameras += C
 			LAGCHECK(LAG_HIGH)
+		if (src.get_z_level() != Z_LEVEL_STATION)
+			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.triggerAlarm("Fire", src, cameras, src)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])
@@ -4165,6 +4178,8 @@ ABSTRACT_TYPE(/area/mining)
 			if(get_area(F) == src)
 				F.alarm_active = FALSE
 				F.UpdateIcon()
+		if (src.get_z_level() != Z_LEVEL_STATION)
+			return
 		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
 			aiPlayer.cancelAlarm("Fire", src, src)
 		for (var/obj/machinery/computer/atmosphere/alerts/a as anything in machine_registry[MACHINES_ATMOSALERTS])

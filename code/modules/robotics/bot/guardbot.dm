@@ -1984,6 +1984,7 @@
 			task.arrest_target.handcuffs = new /obj/item/handcuffs/guardbot(task.arrest_target)
 			task.arrest_target.setStatus("handcuffed", duration = INFINITE_STATUS)
 			boutput(task.arrest_target, "<span class='alert'>[master] gently handcuffs you!  It's like the cuffs are hugging your wrists.</span>")
+			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(task.arrest_target,"combat")] at [log_loc(master)].")
 			task.arrest_target:set_clothing_icon_dirty()
 
 		if (length(task.arrested_messages))
@@ -3199,7 +3200,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						if (!has_contraband_permit)
 							. += perp.back.get_contraband() * 0.5
 
-				if(perp.mutantrace && perp.mutantrace.jerk)
+				if(perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!
 
