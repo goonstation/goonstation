@@ -197,6 +197,8 @@ TYPEINFO(/obj/machinery/conveyor) {
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
 	..()
+	if (isrestrictedz(src.z))
+		src.protected = TRUE
 
 	if(current_state > GAME_STATE_PREGAME)
 		SPAWN(0.1 SECONDS)
