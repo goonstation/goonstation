@@ -431,13 +431,21 @@
 /obj/item/paper/flockstatsnote,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"fm" = (
+"iW" = (
+/obj/mapping_helper/wingrille_spawn/flock,
+/obj/machinery/light/flock{
+	icon_state = "flock1";
+	dir = 8
+	},
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
+"nm" = (
 /turf/simulated/shuttle/wall/cockpit/flock{
 	icon_state = "shuttle-nose";
 	dir = 8
 	},
 /area/space)
-"mz" = (
+"ot" = (
 /obj/machinery/light/flock{
 	icon_state = "flock1";
 	dir = 8
@@ -445,16 +453,8 @@
 /obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"Ok" = (
+"JG" = (
 /obj/mapping_helper/wingrille_spawn/flock,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
-"Rg" = (
-/obj/mapping_helper/wingrille_spawn/flock,
-/obj/machinery/light/flock{
-	icon_state = "flock1";
-	dir = 8
-	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 
@@ -634,7 +634,7 @@ aa
 aa
 aa
 aa
-fm
+nm
 aa
 aa
 aa
@@ -981,8 +981,8 @@ aa
 aa
 aa
 aa
-Ok
-Ok
+JG
+JG
 ad
 ap
 ao
@@ -1013,11 +1013,11 @@ aa
 aa
 aa
 aa
-Ok
-Ok
-Ok
-Ok
-Ok
+JG
+JG
+JG
+JG
+JG
 ao
 ao
 aO
@@ -1045,11 +1045,11 @@ aa
 aa
 aa
 aa
-Ok
-Ok
+JG
+JG
 ad
 as
-Ok
+JG
 ao
 ao
 cP
@@ -1081,12 +1081,12 @@ ad
 ad
 ad
 as
-Ok
+JG
 ao
 ao
 aS
 ad
-Ok
+JG
 ad
 aT
 av
@@ -1113,7 +1113,7 @@ ad
 ad
 ad
 as
-Ok
+JG
 ao
 ao
 ao
@@ -1145,12 +1145,12 @@ ad
 ad
 ad
 as
-Ok
+JG
 ao
 ao
 aS
 ad
-Ok
+JG
 ad
 aT
 av
@@ -1177,7 +1177,7 @@ ad
 ad
 ad
 as
-Ok
+JG
 ao
 ao
 aS
@@ -1209,10 +1209,10 @@ ad
 ad
 ad
 as
-Ok
-Ok
+JG
+JG
 aw
-Ok
+JG
 ad
 ad
 ad
@@ -1238,15 +1238,15 @@ aa
 aa
 aa
 ad
-mz
-Rg
-Ok
-Ok
+ot
+iW
+JG
+JG
 ao
 ao
 ao
-Rg
-mz
+iW
+ot
 ad
 aa
 aa
@@ -1269,8 +1269,8 @@ aa
 aa
 aa
 aa
-Ok
-Ok
+JG
+JG
 ad
 ax
 bb
@@ -1278,8 +1278,8 @@ ao
 ao
 ax
 ad
-Ok
-Ok
+JG
+JG
 aa
 aa
 aa
@@ -1302,15 +1302,15 @@ aa
 aa
 ab
 ad
-Ok
+JG
 ad
 ad
-Ok
+JG
 aw
-Ok
+JG
 ad
 ad
-Ok
+JG
 ad
 aU
 aa
@@ -1334,15 +1334,15 @@ aa
 ac
 ad
 ad
-Ok
-Ok
+JG
+JG
 ad
 au
 bh
 bk
 ad
-Ok
-Ok
+JG
+JG
 ad
 ad
 aU

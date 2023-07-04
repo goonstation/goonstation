@@ -425,36 +425,36 @@
 /obj/lattice/flock,
 /turf/space,
 /area/space)
-"hY" = (
-/obj/mapping_helper/wingrille_spawn/flock,
-/turf/simulated/floor/shuttle/flock,
-/area/flock_trader)
+"mF" = (
+/turf/simulated/shuttle/wall/cockpit/flock{
+	icon_state = "shuttle-nose";
+	dir = 8
+	},
+/area/space)
 "pL" = (
 /obj/table/flock/auto,
 /obj/machinery/light/flock,
 /obj/item/paper/flockstatsnote,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"sF" = (
-/turf/simulated/shuttle/wall/cockpit/flock{
-	icon_state = "shuttle-nose";
-	dir = 8
-	},
-/area/space)
-"un" = (
-/obj/machinery/light/flock{
-	icon_state = "flock1";
-	dir = 8
-	},
+"um" = (
 /obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
-"JB" = (
+"Sz" = (
 /obj/mapping_helper/wingrille_spawn/flock,
 /obj/machinery/light/flock{
 	icon_state = "flock1";
 	dir = 8
 	},
+/turf/simulated/floor/shuttle/flock,
+/area/flock_trader)
+"Ui" = (
+/obj/machinery/light/flock{
+	icon_state = "flock1";
+	dir = 8
+	},
+/obj/mapping_helper/wingrille_spawn/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
 
@@ -491,7 +491,7 @@ aa
 aa
 aa
 aa
-sF
+mF
 aa
 aa
 aa
@@ -728,8 +728,8 @@ aa
 aa
 aa
 aa
-hY
-hY
+um
+um
 ad
 ap
 ao
@@ -750,11 +750,11 @@ aa
 aa
 aa
 aa
-hY
-hY
-hY
-hY
-hY
+um
+um
+um
+um
+um
 ao
 ao
 aO
@@ -772,11 +772,11 @@ aa
 aa
 aa
 aa
-hY
-hY
+um
+um
 ad
 as
-hY
+um
 ao
 ao
 pL
@@ -798,12 +798,12 @@ ad
 ad
 ad
 as
-hY
+um
 ao
 ao
 aS
 ad
-hY
+um
 ad
 aT
 av
@@ -820,7 +820,7 @@ ad
 ad
 ad
 as
-hY
+um
 ao
 ao
 ao
@@ -842,12 +842,12 @@ ad
 ad
 ad
 as
-hY
+um
 ao
 ao
 aS
 ad
-hY
+um
 ad
 aT
 av
@@ -864,7 +864,7 @@ ad
 ad
 ad
 as
-hY
+um
 ao
 ao
 aS
@@ -886,10 +886,10 @@ ad
 ad
 ad
 as
-hY
-hY
+um
+um
 aw
-hY
+um
 ad
 ad
 ad
@@ -905,15 +905,15 @@ aa
 aa
 aa
 ad
-un
-JB
-hY
-hY
+Ui
+Sz
+um
+um
 ao
 ao
 ao
-JB
-un
+Sz
+Ui
 ad
 aa
 aa
@@ -926,8 +926,8 @@ aa
 aa
 aa
 aa
-hY
-hY
+um
+um
 ad
 ax
 bb
@@ -935,8 +935,8 @@ ao
 ao
 ax
 ad
-hY
-hY
+um
+um
 aa
 aa
 aa
@@ -949,15 +949,15 @@ aa
 aa
 ab
 ad
-hY
+um
 ad
 ad
-hY
+um
 aw
-hY
+um
 ad
 ad
-hY
+um
 ad
 aU
 aa
@@ -971,15 +971,15 @@ aa
 ac
 ad
 ad
-hY
-hY
+um
+um
 ad
 au
 bh
 bk
 ad
-hY
-hY
+um
+um
 ad
 ad
 aU

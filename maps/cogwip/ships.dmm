@@ -962,6 +962,15 @@
 	icon_state = "floor2"
 	},
 /area/space)
+"dv" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
 "dw" = (
 /obj/grille/steel,
 /obj/window/reinforced,
@@ -3476,6 +3485,17 @@
 /obj/table/auto,
 /obj/machinery/microwave,
 /turf/simulated/floor/wood/two,
+/area/space)
+"kv" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/shuttlebay,
 /area/space)
 "kw" = (
 /obj/machinery/door/airlock/pyro/classic{
@@ -10274,18 +10294,11 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/space)
-"Cc" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"CM" = (
+"CZ" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
-	icon_state = "alt_heater-M"
+	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
@@ -10297,110 +10310,53 @@
 	},
 /area/space)
 "Di" = (
+/turf/simulated/shuttle/wall{
+	dir = 9;
+	icon_state = "wall3"
+	},
+/area/diner/tug)
+"Do" = (
+/turf/simulated/shuttle/wall{
+	desc = "This looks pretty dangerous.";
+	icon_state = "alt_heater";
+	name = "modified propulsion unit"
+	},
+/area/space)
+"Dt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Ea" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
 /area/space)
-"Dn" = (
-/obj/decal/cleanable/machine_debris,
-/obj/decal/floatingtiles{
-	icon_state = "floattiles5"
-	},
-/obj/decal/cleanable/blood/tracks,
-/obj/item/raw_material/shard/glass,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Dr" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 1;
-	icon_state = "alt_heater"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"Dw" = (
-/obj/mapping_helper/wingrille_spawn/reinforced/full,
-/turf/simulated/floor/black,
-/area/space)
-"DV" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 1;
-	icon_state = "alt_heater-L"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"Eg" = (
-/obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
+"EJ" = (
 /turf/simulated/shuttle/wall{
-	dir = 6;
+	dir = 8;
 	icon_state = "diagonalWall3"
 	},
+/area/noGenerate)
+"Fz" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/random,
 /area/space)
-"Ek" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/decal/fakeobjects/shuttleweapon/base,
-/turf/space,
-/area/space)
-"EG" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"EM" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/decal/fakeobjects/shuttleweapon/base,
-/turf/simulated/floor/plating,
-/area/space)
-"Fh" = (
+"FG" = (
 /obj/mapping_helper/wingrille_spawn/bulletproof,
-/obj/decal/fakeobjects/shuttleweapon/base{
-	dir = 8;
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 1;
 	icon_state = "alt_heater"
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"Fq" = (
-/obj/grille/catwalk{
-	dir = 10;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 10
-	},
-/area/space)
-"Fr" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
-"Ft" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/space)
-"FV" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/black,
-/area/space)
-"Gl" = (
-/obj/table/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/burger/moldy,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Gt" = (
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 4;
-	layer = 50
+"FP" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "wall3"
 	},
 /area/space)
 "Gy" = (
@@ -10410,76 +10366,112 @@
 /mob/living/critter/zombie/scientist,
 /turf/space,
 /area/space)
-"Gz" = (
-/obj/decal/floatingtiles{
-	icon_state = "floattiles2"
-	},
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "bloodydoor";
-	name = "broken airlock"
-	},
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"HB" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/noGenerate)
-"HH" = (
-/obj/grille/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5
-	},
-/area/space)
-"Ic" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/space)
-"Ik" = (
-/obj/decal/cleanable/cobweb2,
-/obj/item/device/transfer_valve/briefcase,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"It" = (
-/obj/grille/catwalk{
-	dir = 9;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 9
-	},
-/area/space)
-"IA" = (
+"GB" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"GX" = (
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/black,
 /area/space)
-"Jg" = (
+"HH" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"HJ" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (EAST)"
+	},
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 4;
+	layer = 50
+	},
+/area/space)
+"Ix" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
 	icon_state = "diagonalWall3"
 	},
 /area/space)
-"Ji" = (
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 2;
-	icon_state = "shuttlecock_mining";
-	plane = 5
+"IE" = (
+/turf/simulated/shuttle/wall{
+	dir = 10;
+	icon_state = "diagonalWall3"
 	},
 /area/space)
-"Jp" = (
+"IK" = (
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/area/diner/tug)
+"IL" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (EAST)"
+	},
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 8;
+	icon_state = "shuttlecock_mining"
+	},
+/area/space)
+"IN" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"IP" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/space)
+"IV" = (
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 4;
+	layer = 50
+	},
+/area/space)
+"IW" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
+/area/space)
+"IX" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Jd" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/decal/fakeobjects/shuttleweapon/base,
+/turf/space,
+/area/space)
+"Jg" = (
+/obj/item/storage/belt/hunter,
+/obj/item/clothing/under/misc/tourist,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Jj" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/floor/plating,
 /area/space)
 "Jv" = (
 /obj/decal/fakeobjects/pipe{
@@ -10506,165 +10498,55 @@
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/shuttlebay,
 /area/space)
-"Km" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir-b";
-	tag = "icon-lattice-dir-b (EAST)"
-	},
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 4;
-	layer = 50
-	},
-/area/space)
-"KV" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor,
-/area/space)
-"Le" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right,
-/obj/machinery/light/small{
-	base_state = "radio";
-	brightness = 1.1;
-	desc = "Are we live?";
-	icon_state = "radio0";
-	name = "sign";
-	pixel_y = -6;
-	removable_bulb = 0
-	},
-/turf/simulated/floor/black,
-/area/space)
-"LA" = (
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 1
-	},
-/area/space)
-"LF" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right{
-	dir = 8
-	},
-/turf/simulated/floor,
-/area/space)
-"LU" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "wall3"
-	},
-/area/space)
-"LZ" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
-"Mc" = (
-/obj/table/auto,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "old0";
-	name = "broken computer"
-	},
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Mt" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"My" = (
-/turf/simulated/shuttle/wall{
-	dir = 2;
-	icon_state = "diagonalWall3"
-	},
-/area/diner/tug)
-"Nf" = (
+"JN" = (
 /obj/grille/catwalk{
-	dir = 5
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"Nm" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/turf/unsimulated/floor/engine,
-/area/space)
-"NQ" = (
-/turf/simulated/shuttle/wall{
-	dir = 10;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
-"NX" = (
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Ob" = (
-/obj/grille/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"Ol" = (
-/obj/decal/cleanable/blood/tracks{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"Op" = (
-/obj/grille/catwalk{
-	dir = 9
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"OU" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-M"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"Pu" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir-b";
-	tag = "icon-lattice-dir-b (EAST)"
-	},
-/turf/simulated/shuttle/wall/cockpit{
-	dir = 8;
-	icon_state = "shuttlecock_mining"
-	},
-/area/space)
-"PZ" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"Qg" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/window_blinds/cog2/right{
 	dir = 4
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
 /area/space)
-"QU" = (
+"Kv" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttlebay,
+/area/space)
+"Ky" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/space)
+"KN" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Lo" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/decal/fakeobjects/shuttleweapon/base,
+/turf/simulated/floor/plating,
+/area/space)
+"LH" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"LU" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/fakeobjects/skeleton{
 	desc = "Gross.";
@@ -10676,12 +10558,155 @@
 /obj/item/clothing/gloves/latex,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"Sn" = (
-/obj/decal/cleanable/dirt,
+"Ml" = (
+/obj/decal/cleanable/robot_debris,
+/obj/machinery/bot/medbot/terrifying,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"SE" = (
+"MH" = (
+/obj/grille/catwalk{
+	dir = 6
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"Nr" = (
+/obj/mapping_helper/wingrille_spawn,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
+"NF" = (
 /obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"Ou" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/space)
+"OL" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/space)
+"Pg" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"PJ" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 8;
+	icon_state = "alt_heater"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"PM" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
+"PP" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/turf/simulated/floor/plating,
+/area/space)
+"PR" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/plating,
+/area/space)
+"QW" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/space)
+"Rd" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"Re" = (
+/obj/table/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Rh" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/space)
+"RE" = (
+/obj/decal/cleanable/dirt,
+/obj/item/electronics/capacitor,
+/obj/item/light/tube/blacklight,
+/obj/item/card_group/stg,
+/obj/storage/crate{
+	name = "Dented Crate"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"RM" = (
+/obj/decal/cleanable/machine_debris,
+/obj/decal/floatingtiles{
+	icon_state = "floattiles5"
+	},
+/obj/decal/cleanable/blood/tracks,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"RT" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/device/transfer_valve/briefcase,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Ss" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/simulated/floor/plating/airless,
+/area/space)
+"Sw" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/plating,
+/area/space)
+"Sx" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater-R"
+	},
 /turf/unsimulated/floor/plating,
 /area/space)
 "SN" = (
@@ -10697,131 +10722,7 @@
 	icon_state = "leadcap"
 	},
 /area/space)
-"Tm" = (
-/obj/grille/catwalk{
-	dir = 6;
-	icon_state = "catwalk_cross"
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 6
-	},
-/area/space)
-"TJ" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/turf/simulated/floor/plating,
-/area/space)
-"TR" = (
-/turf/simulated/shuttle/wall{
-	dir = 9;
-	icon_state = "wall3"
-	},
-/area/diner/tug)
-"Up" = (
-/turf/simulated/shuttle/wall{
-	desc = "This looks pretty dangerous.";
-	icon_state = "alt_heater";
-	name = "modified propulsion unit"
-	},
-/area/space)
-"UN" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 1;
-	icon_state = "alt_heater-M"
-	},
-/turf/simulated/floor/plating,
-/area/space)
-"US" = (
-/turf/simulated/shuttle/wall{
-	dir = 6;
-	icon_state = "diagonalWall3"
-	},
-/area/diner/tug)
-"UX" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon_state = "wall3_trans"
-	},
-/turf/simulated/floor/shuttlebay,
-/area/space)
-"VE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
-"VV" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
-	},
-/turf/unsimulated/floor/shuttlebay,
-/area/space)
-"Wm" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"Wv" = (
-/obj/grille/catwalk{
-	dir = 10
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1;
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"Wx" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 4;
-	icon_state = "alt_heater-L"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"WB" = (
-/obj/mapping_helper/wingrille_spawn/auto,
-/obj/machinery/shuttle/engine/heater{
-	dir = 8;
-	icon_state = "alt_heater-M"
-	},
-/turf/unsimulated/floor/plating,
-/area/space)
-"WP" = (
-/turf/simulated/shuttle/wall{
-	dir = 5;
-	icon_state = "diagonalWall3"
-	},
-/area/space)
-"WS" = (
-/obj/grille/catwalk{
-	dir = 6
-	},
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/space)
-"Xh" = (
-/obj/mapping_helper/wingrille_spawn,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/space)
-"Xs" = (
-/obj/decal/cleanable/robot_debris,
-/obj/machinery/bot/medbot/terrifying,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"XC" = (
+"SQ" = (
 /obj/securearea{
 	desc = "Blue, blue.";
 	icon_state = "med";
@@ -10832,55 +10733,154 @@
 	icon_state = "shuttlecock_busted"
 	},
 /area/space)
-"XK" = (
+"TM" = (
+/obj/mapping_helper/wingrille_spawn/bulletproof,
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 1;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/floor/plating,
+/area/space)
+"TN" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/engine,
+/area/space)
+"TZ" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/space)
+"Ur" = (
+/obj/grille/catwalk{
+	dir = 10
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1;
+	icon_state = "catwalk_cross"
+	},
+/area/space)
+"Uy" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/black,
+/area/space)
+"UC" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right,
+/obj/machinery/light/small{
+	base_state = "radio";
+	brightness = 1.1;
+	desc = "Are we live?";
+	icon_state = "radio0";
+	name = "sign";
+	pixel_y = -6;
+	removable_bulb = 0
+	},
+/turf/simulated/floor/black,
+/area/space)
+"UJ" = (
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 2;
+	icon_state = "shuttlecock_mining";
+	plane = 5
+	},
+/area/space)
+"UN" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/space)
+"Vu" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "old0";
+	name = "broken computer"
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Vz" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"VK" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space)
+"VU" = (
+/turf/simulated/shuttle/wall/cockpit{
+	dir = 1
+	},
+/area/space)
+"WK" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/turf/simulated/shuttle/wall{
+	dir = 6;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"Xk" = (
+/turf/simulated/shuttle/wall{
+	dir = 2;
+	icon_state = "diagonalWall3"
+	},
+/area/diner/tug)
+"Xq" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
-	dir = 8;
 	icon_state = "alt_heater-L"
 	},
 /turf/unsimulated/floor/plating,
 /area/space)
-"YB" = (
-/obj/mapping_helper/wingrille_spawn/auto/crystal,
-/turf/unsimulated/floor/plating/random,
+"XQ" = (
+/obj/mapping_helper/wingrille_spawn/auto,
+/turf/simulated/floor/black,
 /area/space)
-"YK" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
+"XX" = (
+/turf/simulated/shuttle/wall{
+	dir = 5;
+	icon_state = "diagonalWall3"
 	},
-/obj/indestructible/shuttle_corner{
+/area/space)
+"Yg" = (
+/turf/simulated/shuttle/wall{
+	dir = 8;
+	icon_state = "diagonalWall3"
+	},
+/area/space)
+"Zj" = (
+/obj/grille/catwalk{
+	dir = 5
+	},
+/turf/simulated/floor/airless/plating/catwalk{
 	dir = 4;
-	icon_state = "wall3_trans"
+	icon_state = "catwalk_cross"
 	},
-/obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/shuttlebay,
 /area/space)
-"Ze" = (
-/obj/mapping_helper/wingrille_spawn/bulletproof,
-/obj/decal/fakeobjects/shuttleengine{
+"Zs" = (
+/turf/simulated/floor/airless/plating/damaged2,
+/area/space)
+"Zu" = (
+/obj/grille/catwalk{
 	dir = 1;
-	icon_state = "alt_heater-R"
+	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/plating,
-/area/space)
-"Zf" = (
-/obj/item/storage/belt/hunter,
-/obj/item/clothing/under/misc/tourist,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"ZQ" = (
-/obj/structure/girder/displaced,
-/turf/simulated/floor/airless/plating/damaged2,
-/area/space)
-"ZZ" = (
-/obj/decal/cleanable/dirt,
-/obj/item/electronics/capacitor,
-/obj/item/light/tube/blacklight,
-/obj/item/card_group/stg,
-/obj/storage/crate{
-	name = "Dented Crate"
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
 /area/space)
 
 (1,1,1) = {"
@@ -11272,8 +11272,8 @@ aa
 aa
 aa
 eW
-Nm
-Nm
+TN
+TN
 gc
 aa
 aa
@@ -11599,9 +11599,9 @@ aa
 aa
 aa
 aa
-LZ
-Pu
-NQ
+Yg
+IL
+IE
 aa
 aa
 aa
@@ -11669,9 +11669,9 @@ aa
 aa
 eW
 ai
-YB
-YB
-YB
+Fz
+Fz
+Fz
 ai
 ai
 ai
@@ -11726,12 +11726,12 @@ aa
 aa
 aa
 aa
-SE
+PR
 fR
 cG
 cG
 gm
-SE
+PR
 aa
 aa
 aa
@@ -11750,11 +11750,11 @@ aa
 aa
 aa
 aa
-LZ
+Yg
 ee
 ee
 ee
-NQ
+IE
 aa
 aa
 aa
@@ -11982,9 +11982,9 @@ wQ
 wY
 ai
 ai
-YB
-YB
-YB
+Fz
+Fz
+Fz
 ai
 ai
 aa
@@ -12294,7 +12294,7 @@ ai
 yH
 yW
 zg
-YB
+Fz
 zn
 lw
 aa
@@ -12392,7 +12392,7 @@ ai
 ng
 nk
 np
-ZZ
+RE
 ai
 ny
 aa
@@ -12446,7 +12446,7 @@ ai
 yI
 vH
 vH
-YB
+Fz
 zo
 lw
 aa
@@ -12598,7 +12598,7 @@ ai
 yJ
 yX
 zh
-YB
+Fz
 zp
 lw
 aa
@@ -12695,7 +12695,7 @@ aa
 lD
 ai
 ai
-Gz
+LH
 ai
 ai
 ny
@@ -12803,11 +12803,11 @@ aa
 aa
 aa
 aa
-LZ
+Yg
 eE
 fH
 eE
-WP
+XX
 aa
 aa
 aa
@@ -12902,7 +12902,7 @@ ai
 yL
 yZ
 yL
-YB
+Fz
 zn
 lw
 aa
@@ -12941,7 +12941,7 @@ aa
 aa
 aa
 aa
-Fr
+TZ
 fT
 cG
 cG
@@ -12954,23 +12954,23 @@ aa
 aa
 aa
 ev
-HB
+EJ
 eG
 eI
 gJ
 lm
 me
-WP
+XX
 aa
 aa
 aa
 aa
 aa
-LZ
-UX
+Yg
+Rh
 rN
-Eg
-NQ
+WK
+IE
 aa
 aa
 aa
@@ -13054,7 +13054,7 @@ ai
 yM
 za
 wR
-YB
+Fz
 zp
 lw
 aa
@@ -13176,8 +13176,8 @@ aa
 aa
 eW
 ai
-YB
-YB
+Fz
+Fz
 ai
 tS
 ud
@@ -13478,7 +13478,7 @@ aa
 aa
 aa
 nY
-YB
+Fz
 tl
 tv
 tv
@@ -13562,19 +13562,19 @@ aa
 aa
 aa
 ev
-US
+IK
 eb
 eJ
 kW
 lp
 eB
-LU
+FP
 aa
 aa
 aa
 aa
 aa
-Jg
+Ix
 qS
 qS
 qS
@@ -13630,7 +13630,7 @@ aV
 aV
 aV
 bt
-YB
+Fz
 tm
 tw
 tF
@@ -13660,7 +13660,7 @@ vm
 ai
 vW
 ya
-YB
+Fz
 zi
 yp
 aa
@@ -13782,7 +13782,7 @@ aa
 aa
 aa
 nY
-YB
+Fz
 tn
 tx
 tG
@@ -13812,7 +13812,7 @@ ym
 yt
 ym
 yc
-YB
+Fz
 zj
 jk
 fK
@@ -13934,7 +13934,7 @@ aV
 aV
 aV
 bt
-YB
+Fz
 to
 ty
 tH
@@ -13964,7 +13964,7 @@ vm
 ai
 vW
 vW
-YB
+Fz
 zk
 yA
 aa
@@ -14020,9 +14020,9 @@ aa
 ev
 da
 ec
-My
+Xk
 hW
-TR
+Di
 ta
 aa
 aa
@@ -14086,7 +14086,7 @@ aa
 aa
 aa
 nY
-YB
+Fz
 tl
 tz
 tz
@@ -14163,7 +14163,7 @@ cG
 cG
 cG
 ga
-Fr
+TZ
 aa
 aa
 aa
@@ -14335,9 +14335,9 @@ aa
 aa
 aa
 aa
-LZ
+Yg
 rR
-NQ
+IE
 aa
 aa
 aa
@@ -14392,8 +14392,8 @@ aa
 aa
 eX
 ai
-YB
-YB
+Fz
+Fz
 ai
 tW
 ui
@@ -14574,7 +14574,7 @@ ai
 yQ
 wR
 tG
-YB
+Fz
 zn
 lw
 aa
@@ -14726,7 +14726,7 @@ ai
 yR
 wR
 wR
-YB
+Fz
 zp
 lw
 aa
@@ -14790,11 +14790,11 @@ aa
 aa
 aa
 aa
-LZ
-YK
+Yg
+kv
 rT
-VV
-NQ
+Kv
+IE
 aa
 aa
 aa
@@ -14957,11 +14957,11 @@ aa
 aa
 aa
 lQ
-It
-Op
+OL
+dv
 mB
-Op
-Fq
+dv
+IP
 lQ
 aa
 aa
@@ -15109,11 +15109,11 @@ aa
 aa
 aa
 lQ
-Wv
-Ob
+Ur
+Zu
 mB
-Ob
-WS
+Zu
+MH
 lQ
 aa
 aa
@@ -15261,11 +15261,11 @@ aa
 aa
 aa
 ai
-HH
-Nf
+Ou
+Zj
 mB
-Nf
-Tm
+Zj
+Ky
 ai
 aa
 aa
@@ -15398,7 +15398,7 @@ aa
 aa
 aa
 aa
-Jg
+Ix
 rB
 rB
 rB
@@ -15629,11 +15629,11 @@ tH
 tH
 tH
 ai
-YB
-YB
+Fz
+Fz
 ai
-YB
-YB
+Fz
+Fz
 ai
 aa
 eX
@@ -15808,9 +15808,9 @@ aa
 bS
 cT
 cb
-Jp
-Jp
-Jp
+IW
+IW
+IW
 cb
 cT
 cQ
@@ -15829,9 +15829,9 @@ co
 cf
 cb
 cT
-Jp
-Jp
-Jp
+IW
+IW
+IW
 co
 bU
 aa
@@ -15882,9 +15882,9 @@ aa
 aa
 aa
 aa
-Gz
+LH
 nD
-Sn
+KN
 ai
 ny
 aa
@@ -15956,7 +15956,7 @@ aa
 aa
 aa
 bS
-Fr
+TZ
 ca
 cU
 cn
@@ -15969,13 +15969,13 @@ ch
 dH
 dH
 dH
-EG
+Xq
 lg
 aa
 aa
 bY
 ef
-Ft
+UN
 el
 el
 ch
@@ -15986,7 +15986,7 @@ cU
 cU
 cU
 bZ
-Fr
+TZ
 bU
 aa
 aa
@@ -16036,7 +16036,7 @@ aa
 aa
 ai
 nE
-Zf
+Jg
 ai
 ny
 aa
@@ -16109,7 +16109,7 @@ aa
 bS
 cs
 cF
-Fr
+TZ
 cU
 cn
 dk
@@ -16121,13 +16121,13 @@ dC
 cz
 cz
 cz
-OU
+HH
 lg
 aa
 aa
 ci
 eg
-Ft
+UN
 el
 de
 dD
@@ -16137,7 +16137,7 @@ cU
 cU
 cU
 cU
-Fr
+TZ
 cw
 db
 bU
@@ -16273,13 +16273,13 @@ ch
 cp
 cA
 cp
-Wm
+GB
 lg
 aa
 aa
 cj
 eh
-Ft
+UN
 el
 el
 ch
@@ -16445,7 +16445,7 @@ cM
 cG
 es
 ch
-LA
+VU
 aa
 aa
 aa
@@ -16577,13 +16577,13 @@ ch
 dI
 dI
 dI
-EG
+Xq
 lg
 aa
 aa
 bY
 ef
-Di
+Ea
 cA
 cS
 ch
@@ -16717,7 +16717,7 @@ aa
 bR
 cv
 cF
-Fr
+TZ
 cU
 cn
 dk
@@ -16729,13 +16729,13 @@ dD
 de
 de
 de
-OU
+HH
 lg
 aa
 aa
 ci
 eg
-Di
+Ea
 cz
 cz
 dC
@@ -16745,7 +16745,7 @@ cU
 cU
 cU
 cU
-Fr
+TZ
 do
 ei
 bV
@@ -16868,7 +16868,7 @@ aa
 aa
 aa
 bR
-Fr
+TZ
 ca
 cU
 cn
@@ -16881,13 +16881,13 @@ ch
 dI
 dI
 dI
-Wm
+GB
 lg
 aa
 aa
 cj
 eh
-Di
+Ea
 cq
 cq
 ch
@@ -16898,7 +16898,7 @@ cU
 cU
 cU
 bZ
-Fr
+TZ
 bV
 aa
 aa
@@ -16988,7 +16988,7 @@ lR
 lR
 lR
 lR
-TJ
+PP
 lR
 ai
 fM
@@ -17024,9 +17024,9 @@ aa
 bR
 cQ
 cb
-Jp
-Jp
-Jp
+IW
+IW
+IW
 cb
 cQ
 cT
@@ -17045,9 +17045,9 @@ co
 cf
 cb
 cQ
-Jp
-Jp
-Jp
+IW
+IW
+IW
 co
 bV
 aa
@@ -17135,7 +17135,7 @@ aa
 aa
 aa
 af
-Dr
+FG
 au
 aA
 ts
@@ -17287,7 +17287,7 @@ aa
 aa
 aa
 af
-DV
+TM
 av
 bK
 aA
@@ -17300,10 +17300,10 @@ zz
 ai
 xn
 ai
-Fh
-TJ
-Fh
-TJ
+PJ
+PP
+PJ
+PP
 yB
 yG
 ly
@@ -17444,7 +17444,7 @@ ai
 ai
 aK
 ai
-TJ
+PP
 ai
 ai
 aJ
@@ -17458,9 +17458,9 @@ aA
 zG
 ai
 ai
-TJ
-TJ
-TJ
+PP
+PP
+PP
 gc
 aa
 aa
@@ -17613,7 +17613,7 @@ ar
 ar
 zf
 zm
-EM
+Lo
 bF
 aa
 aa
@@ -17742,7 +17742,7 @@ aa
 aa
 aa
 aa
-TJ
+PP
 ar
 ax
 aE
@@ -17753,7 +17753,7 @@ ba
 ba
 ba
 ba
-TJ
+PP
 ba
 ba
 ba
@@ -17894,7 +17894,7 @@ aa
 aa
 aa
 af
-Ze
+IN
 ar
 uW
 aE
@@ -17995,8 +17995,8 @@ aa
 oc
 oL
 pa
-Ol
-Dn
+Vz
+RM
 pN
 qf
 qf
@@ -18046,7 +18046,7 @@ aa
 aa
 aa
 af
-UN
+Pg
 ar
 uW
 aE
@@ -18057,14 +18057,14 @@ aE
 aE
 aE
 aE
-TJ
+PP
 aE
 bf
-TJ
+PP
 Da
 aE
 aE
-TJ
+PP
 bx
 aE
 aE
@@ -18198,7 +18198,7 @@ aa
 aa
 aa
 af
-DV
+TM
 ar
 uW
 aE
@@ -18350,7 +18350,7 @@ aa
 aa
 aa
 aa
-TJ
+PP
 ar
 ax
 aE
@@ -18361,7 +18361,7 @@ bb
 bb
 bb
 bb
-TJ
+PP
 bb
 bb
 bb
@@ -18389,7 +18389,7 @@ aa
 aa
 aa
 bO
-Gt
+IV
 bO
 aa
 aa
@@ -18451,16 +18451,16 @@ aa
 nT
 oc
 pb
-Xs
+Ml
 pA
-NX
+Zs
 oj
 oc
 qO
 rb
 ro
 rs
-Mc
+Vu
 oc
 oQ
 aa
@@ -18525,7 +18525,7 @@ by
 ar
 ar
 ar
-Ek
+Jd
 bF
 aa
 aa
@@ -18568,15 +18568,15 @@ aa
 bW
 bS
 cR
-XK
-WB
-PZ
+Jj
+Rd
+Sx
 ds
 cQ
 ds
-XK
-WB
-PZ
+Jj
+Rd
+Sx
 cI
 bU
 bW
@@ -18605,7 +18605,7 @@ nT
 oc
 oc
 pB
-Ik
+RT
 qh
 oc
 qP
@@ -18660,7 +18660,7 @@ ai
 ai
 aK
 ai
-TJ
+PP
 ai
 ai
 aJ
@@ -18674,9 +18674,9 @@ aA
 bH
 ai
 ai
-TJ
-TJ
-TJ
+PP
+PP
+PP
 gs
 aa
 aa
@@ -18807,7 +18807,7 @@ aa
 aa
 aa
 af
-Ze
+IN
 bk
 tj
 aA
@@ -18821,7 +18821,7 @@ ai
 aX
 ai
 xo
-TJ
+PP
 xo
 ai
 bu
@@ -18959,7 +18959,7 @@ aa
 aa
 aa
 af
-DV
+TM
 bp
 bJ
 ts
@@ -18995,11 +18995,11 @@ aa
 aa
 aZ
 cf
-Fr
+TZ
 co
 cP
 co
-Fr
+TZ
 cf
 bU
 aa
@@ -19116,7 +19116,7 @@ lR
 ai
 ai
 ai
-TJ
+PP
 at
 ai
 vH
@@ -19159,7 +19159,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cn
 cK
@@ -19167,7 +19167,7 @@ cK
 cK
 cn
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -19315,7 +19315,7 @@ dO
 cK
 cn
 cI
-Jp
+IW
 cR
 cn
 cK
@@ -19325,7 +19325,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cK
 cn
@@ -19339,7 +19339,7 @@ cZ
 cn
 cK
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -19368,7 +19368,7 @@ oc
 pU
 qk
 qy
-QU
+LU
 rg
 nV
 aa
@@ -19477,21 +19477,21 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cK
 cn
 di
-Fr
+TZ
 co
 dx
 co
-Fr
+TZ
 dF
 cn
 cK
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -19753,7 +19753,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cm
 cn
 cm
@@ -19761,7 +19761,7 @@ cm
 cm
 cn
 cm
-Jp
+IW
 aa
 aa
 aa
@@ -19823,7 +19823,7 @@ aa
 aa
 aa
 pW
-XC
+SQ
 qU
 aa
 aa
@@ -19905,7 +19905,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cm
 cn
 cm
@@ -19913,13 +19913,13 @@ cm
 cm
 cn
 cm
-Jp
+IW
 aa
 aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cK
 cK
@@ -19927,7 +19927,7 @@ cn
 cK
 cK
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -20061,7 +20061,7 @@ ce
 cm
 cn
 cI
-Jp
+IW
 cR
 cn
 cm
@@ -20071,7 +20071,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cK
 cK
@@ -20079,27 +20079,27 @@ cn
 cK
 cK
 cK
-Jp
+IW
 aa
 aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cn
 cn
 dj
-Fr
+TZ
 co
 dz
 co
-Fr
+TZ
 dG
 cn
 cn
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -20237,7 +20237,7 @@ aa
 aa
 aa
 aa
-Jp
+IW
 cK
 cn
 cn
@@ -20251,7 +20251,7 @@ cn
 cn
 cn
 cK
-Jp
+IW
 aa
 aa
 aa
@@ -20377,11 +20377,11 @@ aa
 aa
 bR
 cf
-Fr
+TZ
 co
 dY
 co
-Fr
+TZ
 cf
 bV
 aa
@@ -20482,7 +20482,7 @@ aa
 aa
 aa
 af
-Ze
+IN
 vI
 zy
 ai
@@ -20528,13 +20528,13 @@ aa
 aa
 aa
 aa
-Fr
+TZ
 dq
 du
 cG
 du
 dc
-Fr
+TZ
 aa
 aa
 aa
@@ -20634,7 +20634,7 @@ aa
 aa
 aa
 af
-UN
+Pg
 aA
 zz
 zA
@@ -20697,13 +20697,13 @@ aa
 bR
 cT
 co
-Jp
-Jp
-Jp
+IW
+IW
+IW
 co
-Jp
-Jp
-Jp
+IW
+IW
+IW
 co
 cT
 bV
@@ -20786,7 +20786,7 @@ aa
 aa
 aa
 af
-DV
+TM
 aC
 aC
 ai
@@ -20797,8 +20797,8 @@ aC
 ai
 ai
 ai
-TJ
-TJ
+PP
+PP
 ai
 gc
 aa
@@ -20921,8 +20921,8 @@ aa
 oc
 oL
 pa
-Ol
-Dn
+Vz
+RM
 pN
 qf
 qf
@@ -20970,9 +20970,9 @@ aa
 aa
 aa
 bR
-Mt
-CM
-Wx
+NF
+Sw
+CZ
 bT
 cW
 df
@@ -21251,7 +21251,7 @@ vW
 wO
 aE
 aE
-TJ
+PP
 aE
 aE
 aE
@@ -21377,16 +21377,16 @@ aa
 nT
 oc
 pb
-Xs
+Ml
 pA
-NX
+Zs
 oj
 oc
 qO
 rb
 ro
 rs
-Mc
+Vu
 oc
 oQ
 aa
@@ -21531,7 +21531,7 @@ nT
 oc
 oc
 pB
-Ik
+RT
 qh
 oc
 qP
@@ -21698,7 +21698,7 @@ aa
 aa
 aa
 af
-Ze
+IN
 vJ
 vJ
 ai
@@ -21709,8 +21709,8 @@ aH
 ai
 ai
 ai
-TJ
-TJ
+PP
+PP
 ai
 gs
 aa
@@ -21850,7 +21850,7 @@ aa
 aa
 aa
 af
-UN
+Pg
 vH
 vH
 wh
@@ -22002,7 +22002,7 @@ aa
 aa
 aa
 af
-DV
+TM
 vH
 vH
 ai
@@ -22294,7 +22294,7 @@ oc
 pU
 qk
 qy
-QU
+LU
 rg
 nV
 aa
@@ -22507,7 +22507,7 @@ jw
 jJ
 jV
 gO
-KV
+QW
 gO
 gO
 gO
@@ -22749,7 +22749,7 @@ aa
 aa
 aa
 pW
-XC
+SQ
 qU
 aa
 aa
@@ -22800,12 +22800,12 @@ aa
 hb
 gO
 gO
-FV
-FV
+XQ
+XQ
 gO
-FV
-FV
-FV
+XQ
+XQ
+XQ
 gO
 hA
 jL
@@ -23076,7 +23076,7 @@ af
 ai
 vH
 ai
-TJ
+PP
 gc
 aa
 aa
@@ -23099,17 +23099,17 @@ aa
 aa
 aa
 aa
-FV
-FV
+XQ
+XQ
 gO
 gO
 hA
 hQ
 ik
 hA
-Qg
-Qg
-Qg
+VK
+VK
+VK
 hA
 hA
 hA
@@ -23119,7 +23119,7 @@ ko
 ky
 kG
 kO
-FV
+XQ
 rC
 zu
 aa
@@ -23149,8 +23149,8 @@ mV
 sj
 sD
 ai
-Xh
-Xh
+Nr
+Nr
 ai
 ai
 tb
@@ -23250,7 +23250,7 @@ aa
 aa
 aa
 aa
-FV
+XQ
 gK
 gR
 hd
@@ -23258,7 +23258,7 @@ hp
 hA
 hR
 il
-IA
+Uy
 iN
 iQ
 jl
@@ -23373,7 +23373,7 @@ aa
 aa
 aa
 af
-Ze
+IN
 aH
 aH
 ai
@@ -23402,7 +23402,7 @@ aa
 aa
 aa
 gF
-FV
+XQ
 gL
 gS
 he
@@ -23410,7 +23410,7 @@ hq
 hB
 hS
 il
-IA
+Uy
 iO
 iQ
 jl
@@ -23424,7 +23424,7 @@ kz
 kH
 kH
 kT
-FV
+XQ
 li
 aa
 ls
@@ -23525,7 +23525,7 @@ aa
 aa
 aa
 af
-UN
+Pg
 aA
 aA
 wh
@@ -23554,7 +23554,7 @@ aa
 aa
 gE
 gG
-FV
+XQ
 gM
 gT
 hf
@@ -23562,7 +23562,7 @@ hr
 hA
 hT
 il
-IA
+Uy
 iP
 iQ
 jl
@@ -23576,7 +23576,7 @@ kA
 kI
 kP
 kU
-FV
+XQ
 lj
 lo
 lt
@@ -23610,7 +23610,7 @@ sQ
 sV
 ee
 ee
-Xh
+Nr
 aa
 aa
 aa
@@ -23677,7 +23677,7 @@ aa
 aa
 aa
 af
-DV
+TM
 aC
 aC
 ai
@@ -23706,7 +23706,7 @@ aa
 aa
 aa
 gH
-FV
+XQ
 gN
 gU
 hg
@@ -23728,7 +23728,7 @@ kz
 kH
 kH
 ho
-FV
+XQ
 yA
 aa
 lu
@@ -23762,8 +23762,8 @@ sR
 sW
 ee
 td
-Xh
-Ji
+Nr
+UJ
 aa
 aa
 aa
@@ -23775,7 +23775,7 @@ mh
 mv
 mF
 mv
-Up
+Do
 aa
 aa
 aa
@@ -23858,7 +23858,7 @@ aa
 aa
 aa
 aa
-FV
+XQ
 gO
 gV
 hh
@@ -23866,7 +23866,7 @@ hs
 hA
 hU
 il
-Le
+UC
 iR
 iQ
 jm
@@ -23914,7 +23914,7 @@ sS
 sV
 ee
 ed
-Xh
+Nr
 aa
 aa
 aa
@@ -23988,7 +23988,7 @@ af
 ai
 aA
 ai
-TJ
+PP
 gs
 aa
 aa
@@ -24011,17 +24011,17 @@ aa
 aa
 aa
 aa
-FV
-FV
+XQ
+XQ
 gO
 gO
 hA
 hV
 ik
 hA
-LF
-LF
-LF
+PM
+PM
+PM
 hA
 hA
 hA
@@ -24031,7 +24031,7 @@ ks
 kB
 kJ
 kQ
-FV
+XQ
 yG
 zu
 aa
@@ -24138,7 +24138,7 @@ aa
 aa
 aa
 eX
-TJ
+PP
 gs
 aa
 aa
@@ -24320,12 +24320,12 @@ aa
 hb
 gO
 gO
-FV
-FV
+XQ
+XQ
 gO
-FV
-FV
-FV
+XQ
+XQ
+XQ
 gO
 hA
 jL
@@ -24365,8 +24365,8 @@ sf
 sC
 sH
 ai
-Xh
-Xh
+Nr
+Nr
 ai
 ai
 tf
@@ -24635,7 +24635,7 @@ jF
 jR
 jZ
 gO
-KV
+QW
 gO
 gO
 gO
@@ -24705,7 +24705,7 @@ pr
 pH
 ai
 qq
-Gl
+Re
 qY
 ai
 ny
@@ -24855,7 +24855,7 @@ ai
 pg
 ps
 pI
-ZQ
+IX
 qr
 qr
 nt
@@ -25909,7 +25909,7 @@ aa
 mX
 aa
 aa
-Km
+HJ
 aa
 aa
 mX
@@ -26359,8 +26359,8 @@ aa
 aa
 aa
 bS
-Dw
-Dw
+GX
+GX
 co
 ca
 AJ
@@ -26370,8 +26370,8 @@ Ap
 Ao
 bZ
 co
-Dw
-Dw
+GX
+GX
 bU
 aa
 aa
@@ -26837,8 +26837,8 @@ aa
 aa
 aa
 BE
-Cc
-Cc
+Ss
+Ss
 BH
 aa
 aa
@@ -26989,8 +26989,8 @@ aa
 aa
 aa
 BE
-VE
-VE
+Dt
+Dt
 BH
 aa
 aa
@@ -27141,8 +27141,8 @@ aa
 aa
 aa
 BE
-Cc
-Cc
+Ss
+Ss
 BH
 aa
 aa
@@ -27293,8 +27293,8 @@ aa
 aa
 aa
 BE
-VE
-VE
+Dt
+Dt
 BH
 aa
 aa
@@ -27423,7 +27423,7 @@ aa
 aa
 aa
 zL
-Ic
+JN
 As
 As
 AG
@@ -27435,7 +27435,7 @@ aa
 AG
 As
 As
-Ic
+JN
 AB
 aa
 aa
@@ -27575,19 +27575,19 @@ aa
 aa
 aa
 zL
-Ic
+JN
 zK
 Ai
 AG
 fK
-Dw
+GX
 AR
-Dw
+GX
 fK
 AG
 zK
 Aq
-Ic
+JN
 AB
 aa
 aa
@@ -27727,7 +27727,7 @@ eA
 aa
 lE
 zL
-Ic
+JN
 zK
 zK
 AG
@@ -27739,7 +27739,7 @@ aa
 AG
 zK
 zK
-Ic
+JN
 AB
 eA
 aa
@@ -27879,19 +27879,19 @@ eP
 lB
 lF
 zL
-Ic
+JN
 zK
 An
 AG
 fK
-Dw
+GX
 AR
-Dw
+GX
 fK
 AG
 zK
 Ai
-Ic
+JN
 AB
 eP
 lB
@@ -28031,7 +28031,7 @@ aa
 zF
 aa
 zL
-Ic
+JN
 zK
 zK
 AG
@@ -28043,7 +28043,7 @@ aa
 AG
 zK
 zK
-Ic
+JN
 AB
 aa
 zF
@@ -28183,7 +28183,7 @@ aa
 zF
 aa
 zO
-Ic
+JN
 zK
 zK
 AG
@@ -28195,7 +28195,7 @@ Ar
 AG
 zK
 zK
-Ic
+JN
 AY
 aa
 zF
@@ -28335,7 +28335,7 @@ aa
 nn
 nd
 zP
-Ic
+JN
 zK
 Aq
 AG
@@ -28347,7 +28347,7 @@ Bj
 AG
 zK
 zK
-Ic
+JN
 zP
 nd
 no
@@ -28487,19 +28487,19 @@ aa
 aa
 aa
 zT
-Ic
+JN
 zK
 zK
 AG
-Dw
+GX
 AN
 Am
 Ap
-Dw
+GX
 AG
 zK
 zK
-Ic
+JN
 AZ
 aa
 aa
@@ -28643,15 +28643,15 @@ Af
 Ae
 Ae
 AG
-Dw
+GX
 Aj
 Am
 Ap
-Dw
+GX
 AG
 Ae
 Ae
-Ic
+JN
 AB
 aa
 aa
@@ -28791,19 +28791,19 @@ aa
 aa
 aa
 zL
-Ic
+JN
 zK
 Aq
 AG
-Dw
+GX
 Bh
 Am
 Ap
-Dw
+GX
 AG
 zK
 Aq
-Ic
+JN
 AB
 aa
 aa
@@ -28943,7 +28943,7 @@ aa
 aa
 aa
 zL
-Ic
+JN
 zK
 zK
 AG
@@ -28955,7 +28955,7 @@ ca
 AG
 zK
 zK
-Ic
+JN
 AB
 aa
 aa
@@ -29095,7 +29095,7 @@ eA
 aa
 lE
 zL
-Ic
+JN
 zK
 Ai
 AG
@@ -29107,7 +29107,7 @@ Bk
 AG
 zK
 zK
-Ic
+JN
 AB
 eA
 aa
@@ -29247,7 +29247,7 @@ eP
 lB
 lF
 zL
-Ic
+JN
 zK
 zK
 AG
@@ -29259,7 +29259,7 @@ Ae
 AG
 zK
 AH
-Ic
+JN
 AB
 eP
 lB
@@ -29399,7 +29399,7 @@ aa
 zF
 aa
 zL
-Ic
+JN
 zK
 zK
 AG
@@ -29411,7 +29411,7 @@ jk
 AG
 zK
 zK
-Ic
+JN
 AB
 aa
 zF
@@ -29551,7 +29551,7 @@ aa
 zF
 aa
 zO
-Ic
+JN
 zK
 zK
 AG
@@ -29563,7 +29563,7 @@ nY
 AG
 zK
 AI
-Ic
+JN
 AY
 aa
 zF
@@ -29703,7 +29703,7 @@ aa
 nn
 nd
 zP
-Ic
+JN
 zK
 zK
 AG
@@ -29715,7 +29715,7 @@ nY
 AG
 zK
 zK
-Ic
+JN
 zP
 nd
 no
@@ -29855,7 +29855,7 @@ aa
 aa
 aa
 zT
-Ic
+JN
 Av
 Av
 AG
@@ -29867,7 +29867,7 @@ nY
 AG
 Av
 Av
-Ic
+JN
 AZ
 aa
 aa
