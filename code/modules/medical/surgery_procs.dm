@@ -98,6 +98,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		patient.TakeDamage(surgeon.zone_sel.selecting, damage, 0)
 		take_bleeding_damage(patient, surgeon, damage)
 		create_blood_sploosh(patient)
+		display_slipup_image(surgeon, patient.loc)
 
 		patient.visible_message("<span class='alert'><b>Blood gushes from the incision!</b> That can't have been the correct thing to do!</span>")
 		return
@@ -1975,9 +1976,11 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	patient.TakeDamage(damage_target, damage_value, 0)
 	take_bleeding_damage(patient, surgeon, damage_value, surgery_bleed = 1)
 	create_blood_sploosh(patient)
+	display_slipup_image(surgeon, patient.loc)
 
+/proc/display_slipup_image(var/mob/surgeon, var/loc)
 	//Spawns an image above a patient when you slip up. Only the surgeon sees it.
-	if (!surgeon || !patient?.loc)
+	if (!surgeon || !loc)
 		return
 	if (surgeon.bioHolder.HasEffect("clumsy"))
 		var/slipup_icon_state = "slipup_clown1"
@@ -1986,6 +1989,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			slipup_icon_state = "slipup_clown3"
 		else if (prob(10))
 			slipup_icon_state = "slipup_clown2"
-		new/obj/decal/slipup_clumsy(patient.loc, slipup_icon_state, surgeon)
+		new/obj/decal/slipup_clumsy(loc, slipup_icon_state, surgeon)
 	else
-		new/obj/decal/slipup(patient.loc, "slipup", surgeon)
+		new/obj/decal/slipup(loc, "slipup", surgeon)
