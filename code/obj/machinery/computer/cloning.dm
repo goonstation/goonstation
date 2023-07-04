@@ -153,8 +153,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
-	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
-		var/obj/item/spacecash/cash = W
+	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")

@@ -99,7 +99,9 @@
 	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
 	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
-	A.fx_image.plane = PLANE_ABOVE_LIGHTING
+	A.fx_image.layer = 5
+	A.fx_image.blend_mode = BLEND_ADD
+	A.fx_image.plane = PLANE_LIGHTING
 
 	A.fx_fallback = new
 	A.fx_fallback.icon = src.icon
