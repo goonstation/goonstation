@@ -281,12 +281,6 @@ obj/item/reagent_containers/iv_drip/dead_exec
 			if(!isnull(R))// Proceed if scan was a success or user has been scanned previously, our broadcast is interfering with the existing scan.
 				boutput(H,"Link to cloning computer establised succesfully.")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
-				var/has_puritan = FALSE
-				var/datum/traitHolder/traits = R["traits"]
-				if(traits.hasTrait("puritan")) //Does the user's clone record have puritan?
-					has_puritan = TRUE
-				if(prob(20) && !has_puritan) //If the scan doesn't have puritan, roll a dice. Too uncommon to weaponise too common for general use.
-					traits.addTrait("puritan") // Signal has degraded. Did the player learn nothing from the prefab??
 
 //DECORATIVE OBJECTS
 

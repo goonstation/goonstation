@@ -42,7 +42,7 @@ You can press V to equip clothing or place equipment on your belt slot if possib
 If you have WASD Mode enabled, you can drop items by pressing Q.
 Don't wanna be spontaneously naked and drop everything on the ground? Click the inventory button with your item to quick swap clothing and equipment.
 Death isn't the end! There are many ways to be brought back to life and many things to do while a ghost!
-The medical computer can list a person's traits; no more accidental puritan cloning!
+The medical computer can list a person's traits!
 Want to help? Geneticists might have an interest in checking your genes for cool stuff! Hop down to medical research.
 Are you done for and yet your body just keeps on living? Use the 'succumb' command to hasten your demise so you can start observing.
 Looking for a job? Go to the Head of Personnel's desk for a job change, or ask over the radio if you can be of help.

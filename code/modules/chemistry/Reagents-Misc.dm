@@ -539,20 +539,13 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
 						G = find_ghost_by_key(B?.owner?.key)
-						var/is_puritan = 0
-						if(ismob(G))
-							for (var/trait as anything in G?.client.preferences.traitPreferences.traits_selected)
-								if(trait == "puritan")
-									is_puritan = 1
-						if(H.traitHolder.hasTrait("puritan"))
-							is_puritan = 1
-						if (came_back_wrong || H.decomp_stage || G?.mind?.get_player()?.dnr || is_puritan) //Wire: added the dnr condition here
+						if (came_back_wrong || H.decomp_stage || G?.mind?.get_player()?.dnr) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (G?.mind?.get_player()?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
 							H.make_jittery(1000)
 							SPAWN(rand(20, 100))
-								logTheThing(LOG_COMBAT, H, "is gibbed by puritan when resuscitated with strange reagent at [log_loc(H)].")
+								logTheThing(LOG_COMBAT, H, "is gibbed by when resuscitated with strange reagent at [log_loc(H)].")
 								H.gib()
 							return
 					else // else just get whoever's the mind

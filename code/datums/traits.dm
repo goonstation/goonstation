@@ -847,14 +847,6 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "chemresist"
 	points = -2
 
-/datum/trait/puritan
-	name = "Puritan"
-	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
-	id = "puritan"
-	points = 2
-	category = list("cloner_stuff")
-
-
 /datum/trait/survivalist
 	name = "Survivalist"
 	desc = "Food will heal you even if you are badly injured."

@@ -92,7 +92,6 @@
 		APPLY_ATOM_PROPERTY(H, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "corpse_spawn")
 		APPLY_ATOM_PROPERTY(H, PROP_MOB_SUPPRESS_DEATH_SOUND, "corpse_spawn")
 		H.death(FALSE)
-		H.traitHolder.addTrait("puritan")
 
 		if (src.no_decomp)
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_DECOMPOSITION, "corpse_spawn")

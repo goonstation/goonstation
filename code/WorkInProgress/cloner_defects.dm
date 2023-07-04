@@ -361,17 +361,6 @@ ABSTRACT_TYPE(/datum/cloner_defect/organ_damage)
 						"count" = rand(3, 5))
 		..()
 
-/// You become a puritan- no more clonings for you! (unless the docs are really solid)
-/datum/cloner_defect/puritan
-	name = "Rapid-Onset Puritanism"
-	desc = "Subject has developed an incompatibility to cloning methods."
-	severity = CLONER_DEFECT_SEVERITY_MAJOR
-	stackable = FALSE
-
-	on_add()
-		. = ..()
-		owner.traitHolder.addTrait("puritan")
-
 /datum/cloner_defect/arm_swap //! Left and right arms are swapped, making them both initially useless TODO actually implement
 	name = "Limb Discombobulation"
 	desc = "Subject's legs have been grown where their arms are supposed to be. Location of their arms is unknown."
