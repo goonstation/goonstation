@@ -101,7 +101,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "cn" = (
 /turf/simulated/wall/auto/shuttle{
@@ -252,13 +253,15 @@
 /area/centcom)
 "kq" = (
 /obj/decal/cleanable/vomit,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "kz" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "kB" = (
 /obj/indestructible/shuttle_corner{
@@ -507,7 +510,8 @@
 	},
 /area/centcom/outside)
 "uh" = (
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "uE" = (
 /obj/machinery/door/airlock/pyro/medical{
@@ -544,7 +548,8 @@
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "wB" = (
 /obj/stool/chair/blue{
@@ -601,7 +606,8 @@
 /area/centcom/outside)
 "yp" = (
 /obj/machinery/light/small/floor,
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "yr" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -753,12 +759,6 @@
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
-"DU" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/shuttle/escape/centcom)
 "Eh" = (
 /mob/living/critter/crunched,
 /turf/unsimulated/floor/void,
@@ -800,7 +800,8 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "EY" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -1052,7 +1053,8 @@
 /obj/machinery/sleeper/compact{
 	dir = 8
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "QC" = (
 /obj/machinery/light/small/floor,
@@ -1067,9 +1069,6 @@
 	dir = 8
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"Ry" = (
-/turf/unsimulated/floor/plating/damaged3,
 /area/shuttle/escape/centcom)
 "RT" = (
 /turf/unsimulated/floor/shuttlebay,
@@ -1090,16 +1089,14 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "Sp" = (
-/turf/unsimulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Tp" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"Ts" = (
-/turf/unsimulated/floor/plating/damaged2,
 /area/shuttle/escape/centcom)
 "TC" = (
 /obj/stool/chair/comfy/shuttle{
@@ -1141,7 +1138,8 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Vm" = (
 /obj/item/storage/wall/emergency{
@@ -1278,7 +1276,8 @@
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
 	},
-/turf/unsimulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Zn" = (
 /obj/decal/tile_edge/line/orange{
@@ -1300,7 +1299,8 @@
 	icon_state = "floor2"
 	},
 /obj/machinery/drainage/big,
-/turf/unsimulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 
 (1,1,1) = {"
@@ -1481,7 +1481,7 @@ kK
 lZ
 jn
 ez
-Ry
+Sp
 kq
 Rl
 NP
@@ -1570,7 +1570,7 @@ Cp
 Gh
 sT
 cW
-DU
+UD
 UD
 Rl
 sT
@@ -1592,13 +1592,13 @@ Si
 fK
 gy
 Gh
-DU
+UD
 Rl
-Ry
-Ts
+Sp
+Sp
 Sp
 sT
-Ry
+Sp
 Rl
 dM
 sT
@@ -1621,7 +1621,7 @@ fK
 jn
 Gh
 Gh
-Ts
+Sp
 Fo
 qE
 iT
@@ -1680,7 +1680,7 @@ Rl
 LT
 be
 eK
-Ry
+Sp
 ZT
 VO
 Cp
@@ -1703,8 +1703,8 @@ aM
 pV
 yr
 gN
-Ts
-Ts
+Sp
+Sp
 Rl
 jn
 kZ
@@ -1738,10 +1738,10 @@ Xr
 qE
 iT
 lS
-Ry
+Sp
 FK
 FK
-Ry
+Sp
 Rl
 kz
 jn
@@ -1794,7 +1794,7 @@ sT
 sT
 Rl
 Rl
-Ry
+Sp
 EG
 Sp
 Rl

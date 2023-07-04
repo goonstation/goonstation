@@ -2,7 +2,8 @@
 "a" = (
 /obj/submachine/chicken_incubator,
 /obj/item/reagent_containers/food/snacks/ingredient/egg,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/railing/reinforced,
@@ -11,11 +12,13 @@
 	},
 /area/dmm_suite/clear_area)
 "g" = (
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "h" = (
 /obj/chicken_nesting_box,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "o" = (
 /turf/simulated/floor/green/side{
@@ -67,11 +70,13 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "Q" = (
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "R" = (
 /obj/submachine/ranch_feed_grinder,
@@ -81,13 +86,15 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "Z" = (
 /obj/stool/chair/green{
 	dir = 1
 	},
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"

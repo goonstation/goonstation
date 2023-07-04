@@ -87,10 +87,8 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gibdown"
 	},
-/turf/simulated/floor/damaged1,
-/area/prefab/torpedo_deposit)
-"jN" = (
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "jS" = (
 /turf/simulated/floor/plating/random,
@@ -164,7 +162,8 @@
 /obj/decal/cleanable/robot_debris{
 	icon_state = "gib5"
 	},
-/turf/simulated/floor/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "pN" = (
 /obj/item/paper/book/from_file/torpedo,
@@ -256,7 +255,8 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "xu" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
@@ -295,7 +295,8 @@
 /area/noGenerate)
 "yI" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "zp" = (
 /obj/table/wood/auto,
@@ -336,16 +337,15 @@
 /turf/simulated/floor/plating/random,
 /area/prefab/torpedo_deposit)
 "BO" = (
-/turf/simulated/floor/damaged2,
-/area/prefab/torpedo_deposit)
-"Ch" = (
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "Cy" = (
 /obj/item/storage/wall/medical{
 	pixel_y = 32
 	},
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "DN" = (
 /obj/decal/poster/wallsign/hazard_caution,
@@ -384,7 +384,8 @@
 /area/prefab/torpedo_deposit)
 "FJ" = (
 /obj/item/storage/wall/random,
-/turf/simulated/floor/damaged4,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "GM" = (
 /obj/machinery/door/airlock/pyro/external{
@@ -521,7 +522,8 @@
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 32
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/torpedo_deposit)
 "Nw" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -838,7 +840,7 @@ cZ
 dg
 cZ
 Ns
-jN
+BO
 BO
 JE
 KT
@@ -860,7 +862,7 @@ pN
 yI
 jS
 Bx
-Ch
+BO
 Ee
 qH
 Kj

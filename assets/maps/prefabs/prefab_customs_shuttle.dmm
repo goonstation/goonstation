@@ -39,13 +39,15 @@
 /turf/variableTurf/floor,
 /area/noGenerate)
 "bY" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "cu" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "cA" = (
 /obj/table/wood/auto/desk,
@@ -147,7 +149,8 @@
 /area/noGenerate)
 "gR" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "hB" = (
 /obj/fluid_spawner{
@@ -299,9 +302,6 @@
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
-"sA" = (
-/turf/simulated/floor/damaged4,
-/area/prefab/crashed_hop_shuttle)
 "sG" = (
 /obj/item/storage/toilet,
 /turf/simulated/floor,
@@ -368,7 +368,8 @@
 /turf/simulated/floor/airless,
 /area/prefab/crashed_hop_shuttle)
 "vT" = (
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "wb" = (
 /obj/indestructible/shuttle_corner{
@@ -406,7 +407,8 @@
 /area/prefab/crashed_hop_shuttle)
 "xh" = (
 /obj/item/furniture_parts/comfy_chair,
-/turf/simulated/floor/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "xl" = (
 /turf/variableTurf/clear,
@@ -428,7 +430,8 @@
 /area/prefab/crashed_hop_shuttle)
 "yI" = (
 /obj/machinery/vending/cigarette,
-/turf/simulated/floor/damaged5,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "zh" = (
 /obj/mapping_helper/access/head_of_personnel,
@@ -599,7 +602,8 @@
 /turf/simulated/floor/sand,
 /area/prefab/crashed_hop_shuttle)
 "Kl" = (
-/turf/simulated/floor/airless/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless/plating,
 /area/noGenerate)
 "Lh" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -664,7 +668,8 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "OQ" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/crashed_hop_shuttle)
 "Pa" = (
 /obj/table/reinforced/bar/auto,
@@ -739,10 +744,6 @@
 	icon_state = "fgreen1"
 	},
 /area/prefab/crashed_hop_shuttle)
-"TN" = (
-/obj/item/furniture_parts/comfy_chair,
-/turf/simulated/floor/damaged1,
-/area/prefab/crashed_hop_shuttle)
 "Uh" = (
 /obj/lattice,
 /turf/variableTurf/floor,
@@ -757,7 +758,8 @@
 	pixel_y = -28
 	},
 /obj/item/furniture_parts/comfy_chair/blue,
-/turf/simulated/floor/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/crashed_hop_shuttle)
 "Vx" = (
 /obj/decoration/bookcase,
@@ -1129,7 +1131,7 @@ GO
 GO
 Ij
 eJ
-TN
+xh
 Zs
 cu
 Oo
@@ -1148,7 +1150,7 @@ xl
 Ij
 OE
 yI
-sA
+vT
 Dc
 jK
 tD

@@ -57,7 +57,8 @@
 /turf/simulated/floor/caution/corner/nw,
 /area/dmm_suite/clear_area)
 "s" = (
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/dmm_suite/clear_area)
 "w" = (
 /turf/simulated/floor/caution/east,

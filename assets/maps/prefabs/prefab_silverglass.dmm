@@ -13,9 +13,6 @@
 	dir = 1
 	},
 /area/prefab/silverglass)
-"bi" = (
-/turf/simulated/floor/airless/plating/damaged1,
-/area/prefab/silverglass/eats)
 "bn" = (
 /turf/simulated/floor/stairs/wide,
 /area/prefab/silverglass/bay)
@@ -133,19 +130,12 @@
 /obj/machinery/door/airlock/pyro,
 /turf/simulated/floor/sanitary,
 /area/prefab/silverglass)
-"eq" = (
-/turf/simulated/floor/airless/plating/damaged3,
-/area/prefab/silverglass/research)
 "eA" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/prefab/silverglass)
-"ff" = (
-/obj/structure/girder,
-/turf/simulated/floor/airless/plating/damaged3,
-/area/prefab/silverglass/research)
 "fk" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/airless/engine,
@@ -222,7 +212,8 @@
 /obj/stool/chair/office{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "hj" = (
 /obj/stool/bed,
@@ -411,7 +402,8 @@
 /area/prefab/silverglass)
 "nj" = (
 /obj/structure/girder,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "nP" = (
 /obj/machinery/drainage,
@@ -517,7 +509,8 @@
 	icon_state = "2-8"
 	},
 /obj/table/reinforced/auto,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "qg" = (
 /obj/machinery/door/airlock/pyro/glass/sci{
@@ -693,9 +686,6 @@
 	},
 /turf/simulated/floor/airless/grey,
 /area/prefab/silverglass/eats)
-"wT" = (
-/turf/simulated/floor/airless/plating/damaged2,
-/area/prefab/silverglass/research)
 "xt" = (
 /obj/item/storage/wall{
 	dir = 4;
@@ -744,7 +734,8 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "zb" = (
 /obj/cable{
@@ -894,11 +885,13 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "Ey" = (
 /obj/machinery/door/airlock/pyro/glass/sci,
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "EA" = (
 /obj/decal/cleanable/dirt/dirt2,
@@ -913,7 +906,8 @@
 /turf/simulated/floor/airless/solar,
 /area/noGenerate)
 "Fj" = (
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "Fx" = (
 /obj/item/screwdriver{
@@ -1064,7 +1058,8 @@
 /area/prefab/silverglass)
 "MB" = (
 /obj/grille/steel,
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "MR" = (
 /obj/cable,
@@ -1169,7 +1164,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/research)
 "OL" = (
 /obj/lattice{
@@ -1209,7 +1205,8 @@
 /area/prefab/silverglass/research)
 "QN" = (
 /obj/machinery/light_switch/east,
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/eats)
 "QU" = (
 /obj/cable{
@@ -1319,7 +1316,8 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/airless/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/eats)
 "TO" = (
 /turf/simulated/floor/green/side{
@@ -1356,7 +1354,8 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/eats)
 "UO" = (
 /obj/item/reagent_containers/food/drinks/drinkingglass/icing{
@@ -1543,13 +1542,15 @@
 /turf/simulated/floor/neutral/side,
 /area/prefab/silverglass)
 "Zx" = (
-/turf/simulated/floor/airless/plating/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/eats)
 "ZD" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/turf/simulated/floor/airless/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/airless/plating,
 /area/prefab/silverglass/eats)
 "ZF" = (
 /obj/cable{
@@ -1682,7 +1683,7 @@ do
 iH
 aF
 gW
-wT
+Fj
 Cv
 IS
 Cn
@@ -1733,7 +1734,7 @@ ZG
 (7,1,1) = {"
 ZG
 Xb
-eq
+Fj
 IS
 UF
 mM
@@ -1789,7 +1790,7 @@ ZG
 (9,1,1) = {"
 ZG
 Xb
-ff
+nj
 IS
 UF
 IS
@@ -1884,7 +1885,7 @@ Xb
 Xb
 TR
 Ww
-bi
+Zx
 pm
 TO
 iI

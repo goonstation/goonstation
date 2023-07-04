@@ -164,7 +164,8 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "oU" = (
 /obj/decal/fakeobjects{
@@ -703,7 +704,8 @@
 /obj/item/clothing/mask/breath,
 /obj/item/tank/air,
 /obj/item/device/light/flashlight,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "LF" = (
 /obj/machinery/atmospherics/binary/circulatorTemp,
@@ -808,7 +810,8 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/sequestered_cloner)
 "OY" = (
 /obj/cable{

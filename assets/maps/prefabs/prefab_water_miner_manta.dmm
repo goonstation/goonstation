@@ -192,7 +192,8 @@
 /obj/table/auto,
 /obj/item/sheet/steel/fullstack,
 /obj/item/sheet/steel/reinforced/fullstack,
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aP" = (
 /obj/machinery/light/small/floor/warm,
@@ -212,7 +213,8 @@
 /area/prefab/sea_mining)
 "aS" = (
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/scorched2,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "aT" = (
 /obj/table/auto,
@@ -350,7 +352,8 @@
 	dir = 9;
 	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/simulated/floor/damaged2,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor,
 /area/prefab/sea_mining)
 "rD" = (
 /obj/machinery/ore_cloud_storage_container,

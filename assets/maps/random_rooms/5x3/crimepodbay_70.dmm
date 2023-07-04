@@ -23,7 +23,8 @@
 /area/dmm_suite/clear_area)
 "f" = (
 /obj/machinery/portable_atmospherics/canister/air,
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/beacon_deployer/sketchy,

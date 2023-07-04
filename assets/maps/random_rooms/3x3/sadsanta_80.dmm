@@ -4,7 +4,8 @@
 	pixel_x = 6;
 	pixel_y = -10
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/item/match{
@@ -21,14 +22,16 @@
 	desc = "Goodness, how depressing.";
 	name = "dead greater domestic space-bee"
 	},
-/turf/simulated/floor/plating/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "n" = (
 /obj/decal/cleanable/leaves,
 /obj/shrub/dead{
 	pixel_y = 13
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "p" = (
 /obj/item/a_gift/festive{
@@ -38,7 +41,8 @@
 /obj/item/clothing/suit/space/santa{
 	pixel_x = -16
 	},
-/turf/simulated/floor/plating/damaged1,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -49,7 +53,8 @@
 /obj/item/a_gift/festive{
 	pixel_x = 9
 	},
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "K" = (
 /obj/item/matchbook{

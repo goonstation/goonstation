@@ -20,7 +20,8 @@
 	icon_state = "floor3"
 	},
 /mob/living/critter/zombie/scientist,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "aD" = (
 /obj/decal/fakeobjects/skeleton{
@@ -38,7 +39,8 @@
 /area/noGenerate)
 "aF" = (
 /obj/mapping_helper/wingrille_spawn/auto,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "aI" = (
 /obj/decal/cleanable/blood/splatter,
@@ -80,12 +82,14 @@
 "ba" = (
 /obj/decal/cleanable/machine_debris,
 /obj/item/pen/red,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bc" = (
 /obj/decal/cleanable/dirt,
 /obj/map/light/white,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bd" = (
 /obj/item/cable_coil/cut{
@@ -108,7 +112,8 @@
 "bg" = (
 /obj/decal/cleanable/molten_item,
 /obj/decal/cleanable/oil/streak,
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "bh" = (
 /obj/decal/cleanable/blood/splatter,
@@ -190,7 +195,8 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/turf/simulated/floor/airless/scorched,
+/obj/mapping_helper/turfs/burner,
+/turf/simulated/floor/airless,
 /area/noGenerate)
 "fe" = (
 /obj/indestructible/shuttle_corner{

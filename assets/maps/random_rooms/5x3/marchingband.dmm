@@ -24,7 +24,8 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "x" = (
-/turf/simulated/floor/plating/damaged3,
+/obj/mapping_helper/turfs/damager,
+/turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "z" = (
 /obj/table/wood/auto,
@@ -68,9 +69,6 @@
 	},
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
-/area/dmm_suite/clear_area)
-"I" = (
-/turf/simulated/floor/plating/damaged1,
 /area/dmm_suite/clear_area)
 "N" = (
 /obj/table/wood/auto,
@@ -141,6 +139,6 @@ z
 "}
 (5,1,1) = {"
 F
-I
+x
 B
 "}
