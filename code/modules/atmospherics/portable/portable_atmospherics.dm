@@ -170,5 +170,3 @@
 		balloon.UpdateIcon()
 		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
 		user.visible_message("<span class='notice'>[user] fills [balloon] from src.</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
-		return
-	return
