@@ -61,6 +61,21 @@
 	damage_slashing()
 	damage_blunt()
 
+/turf/simulated/floor/shuttle/yellow
+	icon_state = "floor2"
+
+/turf/simulated/floor/shuttle/white
+	icon_state = "floor3"
+
+/turf/simulated/floor/shuttle/red
+	icon_state = "floor4"
+
+/turf/simulated/floor/shuttle/purple
+	icon_state = "floor5"
+
+/turf/simulated/floor/shuttle/green
+	icon_state = "floor6"
+
 /turf/unsimulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
@@ -69,19 +84,20 @@
 	can_break = FALSE
 	can_burn = FALSE
 
-	hitby()
-		. = ..()
-	reagent_act()
-	bullet_act()
-	ex_act()
-	blob_act()
-	meteorhit()
-	damage_heat()
-	damage_corrosive()
-	damage_piercing()
-	damage_slashing()
-	damage_blunt()
+/turf/unsimulated/floor/shuttle/yellow
+	icon_state = "floor2"
 
+/turf/unsimulated/floor/shuttle/white
+	icon_state = "floor3"
+
+/turf/unsimulated/floor/shuttle/red
+	icon_state = "floor4"
+
+/turf/unsimulated/floor/shuttle/purple
+	icon_state = "floor5"
+
+/turf/unsimulated/floor/shuttle/green
+	icon_state = "floor6"
 
 TYPEINFO(/turf/simulated/wall/auto/shuttle)
 	connect_overlay = 1
