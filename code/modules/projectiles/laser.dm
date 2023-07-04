@@ -523,7 +523,7 @@ toxic - poisons
 		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
-		hit_type =  = DAMAGE_CUT
+		hit_type = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod
 			..()
