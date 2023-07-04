@@ -460,7 +460,6 @@ var/global/totally_random_jobs = FALSE
 			H.traitHolder.removeTrait("stowaway")
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
-			H.traitHolder.removeTrait("puritan")
 
 		H.Equip_Job_Slots(JOB)
 

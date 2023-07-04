@@ -282,48 +282,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (length(defects.active_cloner_defects) > 7)
 			src.occupant.unlock_medal("Quit Cloning Around")
 
-		src.mess = FALSE
-		var/is_puritan = FALSE
-		if (!isnull(traits) && src.occupant.traitHolder)
-			traits.copy_to(src.occupant.traitHolder)
-
-
-			#ifndef MAP_OVERRIDE_POD_WARS
-			if(src.occupant.traitHolder.hasTrait("puritan"))
-				is_puritan = TRUE
-
-			for (var/trait as anything in src.occupant?.client.preferences.traitPreferences.traits_selected)
-				if(trait == "puritan")
-					is_puritan = TRUE
-
-			if (is_puritan)
-				src.mess = TRUE
-				// Puritans have a bad time.
-				// This is a little different from how it was before:
-				// - Immediately take 250 tox and 100 random brute
-				// - 50% chance, per limb, to lose that limb
-				// - enforced premature_clone, which gibs you on death
-				// If you have a clone body that's been allowed to fully heal before
-				// cloning a puritan, you have a sliiiiiiiiiiight chance to get them
-				// out of deep critical health before they turn into chunky salsa
-				// This should be really rare to have happen, but I want to leave it in
-				// just in case someone manages to pull off a miracle save
-				src.occupant.bioHolder?.AddEffect("premature_clone")
-				src.occupant.take_toxin_damage(250)
-				random_brute_damage(src.occupant, 100, 0)
-				if (ishuman(src.occupant))
-					var/mob/living/carbon/human/P = src.occupant
-					if (P.limbs)
-						var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
-						for (var/limb in limbs)
-							if (prob(50))
-								P.limbs.sever(limb)
-			#endif
-
-		if (src.mess)
-			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
-		else
-			boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
+		boutput(src.occupant, "<span class='notice'><b>Clone generation process initiated.</b> This might take a moment, please hold.</span>")
 
 		if (clonename)
 			if (!src.perfect_clone && prob(15))
@@ -387,8 +346,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		if (!is_puritan)
-			src.occupant.changeStatus("paralysis", 10 SECONDS)
+		src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 #ifdef CLONING_IS_INSTANT
 		src.occupant.full_heal()
@@ -416,14 +374,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (src.occupant && src.occupant.loc == src)
 			// If we have a body inside the pod right now...
-
-			if (src.occupant.traitHolder && src.occupant.traitHolder.hasTrait("puritan"))
-				// puritans get punted out immediately
-				src.go_out(1)
-				src.connected_message("Clone Aborted: Genetic Structure Incompatible.", "warning")
-				src.send_pda_message("Clone Aborted: Genetic Structure Incompatible")
-				power_usage = 200
-				return ..()
 
 			if (src.clonehack == 1 && prob(10))
 				// Mindhack cloning modules make obnoxious noises.

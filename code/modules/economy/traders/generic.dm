@@ -150,21 +150,21 @@
 	comtype = /obj/item/cloneModule/speedyclone
 	amount = 1
 	price_boundary = list(8000,12000)
-	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are usless to our puritan crew.")
+	possible_names = list("We have these new-fangled cloning upgrade modules lying around.")
 
 /datum/commodity/trader/efficiencymodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/efficientclone
 	amount = 1
 	price_boundary = list(8000,12000)
-	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are useless to our puritan crew.")
+	possible_names = list("We have these new-fangled cloning upgrade modules lying around.")
 
 /datum/commodity/trader/dnamodule
 	comname = "Cloning upgrade system"
 	comtype = /obj/item/cloneModule/genepowermodule
 	amount = 1
 	price_boundary = list(8000,12000)
-	possible_names = list("We have these new-fangled cloning upgrade modules lying around, but they are useless to our puritan crew.")
+	possible_names = list("We have these new-fangled cloning upgrade modules lying around.")
 
 /datum/commodity/trader/ringtone_dogs
 	comname = "Wolf pack ringtone cartridge"

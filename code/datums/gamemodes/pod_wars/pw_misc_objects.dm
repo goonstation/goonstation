@@ -217,8 +217,6 @@
 
 		for(var/datum/mind/mind in to_search)
 			if((istype(mind.current, /mob/dead/observer) || isdead(mind.current)) && mind.current.client && !mind.get_player()?.dnr)
-				//prune puritan trait
-				mind.current?.traitHolder.removeTrait("puritan")
 				var/success = growclone(mind.current, mind.current.real_name, mind, mind.current?.bioHolder, traits=mind.current?.traitHolder.copy())
 				if (success && team)
 					SPAWN(1)
