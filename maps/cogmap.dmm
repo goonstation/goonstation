@@ -58569,9 +58569,6 @@
 /area/station/crew_quarters/baroffice)
 "rqR" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/power_monitor/smes{
-	name = "Engine Output Monitoring"
-	},
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -58579,6 +58576,9 @@
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-4"
+	},
+/obj/machinery/computer/power_monitor{
+	name = "Station Power Grid Monitoring"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
