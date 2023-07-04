@@ -153,7 +153,7 @@
 			if (fillfrom == "Cancel")
 				return
 			else if (fillfrom == "Liquid tank")
-				if (!src.reagents.total_volume && src.reagents)
+				if (src.reagents && !src.reagents.total_volume)
 					user.show_text("[src] is empty.", "red")
 					return
 				if (reagents && reagents.total_volume >= reagents.maximum_volume)
