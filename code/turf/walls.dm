@@ -161,7 +161,6 @@ TYPEINFO(/turf/simulated/wall)
 	src.add_fingerprint(user)
 	W.anchored = TRUE
 	boutput(user, "You attach \the [W] to [src].")
-	playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
