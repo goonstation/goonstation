@@ -119,11 +119,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 			src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 			return
 
-		else if (istype(W, /obj/item/wall_trophy/))
-			src.attach_item(user, W)
-			playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
-			return
-
 		/* ----- Deconstruction ----- */
 		if (src.d_state == 0 && issnippingtool(W))
 			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_CUTRERODS), user)

@@ -18,26 +18,25 @@ Subtypes:
 
 	event_handler_flags = NO_MOUSEDROP_QOL
 
-	//do we have something attached?
+	///do we have something attached?
 	var/item_added = FALSE
-	//what items are allowed to be attached?
+	///what items are allowed to be attached?
 	var/allowed_item = /obj/item/
-	//can we un anchor the object?
+	///can we un anchor the object?
 	var/can_unanchor = TRUE
-	//for spawning it with an item
-	var/initial_item = list()
-	//automatically anchors the item that gets attached to it
+	///for spawning it with an item
+	var/initial_item = null
+	///automatically anchors the item that gets attached to it
 	var/auto_anchor = FALSE
 
 	New()
 		..()
-		/*for mapping
-			checks for item in initial items and adds them to the trophy
+		/*for mapping, checks for item in initial items and adds them to the trophy
 
 		*/
 		BLOCK_SETUP(BLOCK_BOOK)
-		for (var/type in src.initial_item)
-			. = src.add_item(new type(src.loc))
+		if (initial_item)
+			. = src.add_item(new initial_item(src.loc))
 			if (!.)
 				stack_trace("Failed to add item to trophy with initial items. [identify_object(src)]- likely can not accept this kind of object")
 
@@ -85,9 +84,14 @@ Subtypes:
 
 
 	//attacked by item
-	attackby(var/obj/item/W, var/mob/user)
-		add_item(W, user)
+	attackby(var/obj/item/W, var/mob/user, click_params)
+		add_item(W, user, click_params)
 		return
+
+	//attaching trophy to the wall
+	afterattack(var/turf/simulated/wall/T, var/mob/user)
+		T.attach_item(user, src)
+		. = ..()
 
 	//unattaching the trophy from the wall
 	attack_hand(var/mob/user)
@@ -107,8 +111,3 @@ Subtypes:
 		name = "'Biggest catch' Fish Wall Mount"
 		desc = "This Wall Mount can be hung on a wall and display fish for everyone to see. Show off your catch!"
 		allowed_item = /obj/item/fish/
-
-		//allows player to regulate where to put it, some fish sprites look janky otherwise
-		attackby(var/obj/item/W, var/mob/user, click_params)
-			add_item(W, user, click_params)
-			return

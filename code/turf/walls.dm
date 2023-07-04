@@ -161,6 +161,7 @@ TYPEINFO(/turf/simulated/wall)
 	src.add_fingerprint(user)
 	W.anchored = TRUE
 	boutput(user, "You attach \the [W] to [src].")
+	playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 	return
 
 /turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
@@ -301,11 +302,6 @@ TYPEINFO(/turf/simulated/wall)
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
-	else if (istype(W, /obj/item/wall_trophy/))
-		src.attach_item(user, W)
-		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
-		return
-
 	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -382,11 +378,6 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if (istype(W, /obj/item/light_parts))
 		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
-		return
-
-	else if (istype(W, /obj/item/wall_trophy/))
-		src.attach_item(user, W)
-		playsound(W, 'sound/impact_sounds/Wood_Tap.ogg', 50, 1)
 		return
 
 	else if (isweldingtool(W))
