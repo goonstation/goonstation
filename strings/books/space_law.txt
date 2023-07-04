@@ -5,7 +5,7 @@ This Law Book, while important, is in its core just what it is: a fancy paper in
  Your primary duty onboard Nanotrasen stations is to protect the crew in good faith, and so you must always consider the circumstances of a crime. Hitting a crewmate accidentally while fighting a much bigger threat should probably be waived, while spilling lube near open airlocks should perhaps be prosecuted more harshly.<br>
 The accused's intent is just as important, and must be considered as well. The difference between Aggravated Assault and Attempted Murder can be very hard to ascertain, and, when in doubt, you should default to the less serious crime. <br><br>
 
-Always use your best judgment and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to advice of fellow officers and superiors. <br> <br>
+Always use your best judgment and common sense when arresting someone, don't get discouraged if the criminal begins to complain, but most importantly listen to the advice of fellow officers and superiors. <br> <br>
 
 As a Security Assistant, generally the same principles apply to you, but with half of the responsibility. Your primary role is to assist the Security team in the best way you can, whether that be through sorting out Security records, wardening any prisoners being held in the brig or manning the security cameras.<br>
 Despite what your fellow officers might tell you, supplying the Security team with alcohol is NOT within your role expectation and should NOT be done while on duty.<hr>
@@ -37,7 +37,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 			<ul style='list-style-type:circle'>
 				<li>To be in possession of a dangerous piece of contraband.<br>
 				<i>Includes variable types of weaponry and explosives.</i><br>
-                <i>Separate less than lethal weapons may be registred at security using contraband stickers for the purposes of exploration or self defense.</i><br>
+                <i>Separate less than lethal weapons may be registered at security using contraband stickers for the purposes of exploration or self defense.</i><br>
                 <i>The bartender's shotgun, and medical director's tranquilizer rifle are exempt from confiscation while being used in good faith.</i></li>
         </ul>
             <ul style='list-style-type:circle'>
@@ -50,7 +50,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
                 <i>This includes unsafe disposal and storage of explosives, weaponry and chemicals.</i>
 			</ul>
 		</li>
-		<li>Tresspass
+		<li>Trespass
 			<ul style='list-style-type:circle'>
 				<li>To be in an area which a person does not have access to without further malicious intent.</li>
 			</ul>
@@ -114,13 +114,13 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 		<li>Murder
 			<ul style='list-style-type:circle'>
 				<li>To maliciously kill someone</li>
-                <i>A harsher sentence should be applied when the victim is not reviveable, going up to 5 minutes but not exceeding it.</i>
+                <i>A harsher sentence should be applied when the victim is not revivable, going up to 5 minutes but not exceeding it.</i>
 			</ul>
 		</li>
 		<li>Industrial Sabotage
 			<ul style='list-style-type:circle'>
 				<li>To engage in maliciously destructive actions, seriously threatening the crew or the station</li>
-				<i>Bombing, flooding the hallways with harmful gases, subverting or attempting to subvert the sillicons, and other actions that could seriously injure multiple people at once, as well as actions that could prevent a department or the station as a whole from functioning entirely, all count as Grand Sabotage.</i>
+				<i>Bombing, flooding the hallways with harmful gases, subverting or attempting to subvert the silicons, and other actions that could seriously injure multiple people at once, as well as actions that could prevent a department or the station as a whole from functioning entirely, all count as Grand Sabotage.</i>
 			</ul>
 		</li>
         <li>Breaking and Entering into a protected area
@@ -144,7 +144,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 			<ul style='list-style-type:circle'>
 				<li>To assist the investigation during interrogation</li>
                 <i>Such assistance may include but is not limited to: a full confession, providing names of accomplices, revealing additional circumstances unknown to the investigation prior to the arrest.</i><br>
-                <i>A reduction for up to 50% of the sentence is recommended, depending on the helpfullness of the provided information, and the willingness to deliver it.</i>
+                <i>A reduction for up to 50% of the sentence is recommended, depending on the helpfulness of the provided information, and the willingness to deliver it.</i>
 			</ul>
 		</li>
 		<li>Surrender
@@ -179,7 +179,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
 			<ul style='list-style-type:circle'>
 				<li>To regain one's own will after being direct mind control of another person</li>
                 <i>Mind control includes misuse of AI laws, the use of mindhack devices and of revolutionary devices.</i><br>
-                <i>An immediate release is in order. All crimes committed by the controlled person or sillicon are to be transferred to the root actor.</i>
+                <i>An immediate release is in order. All crimes committed by the controlled person or silicon are to be transferred to the root actor.</i>
 			</ul>
 		</li>
         <li>Aiding and Abetting
@@ -213,7 +213,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
     <li>The criminal has proven to be uncontainable, appliable after the criminal has escaped the brig twice or more. </li>
     </ul>
         If a criminal has warranted execution and you believe they should be executed, the execution should be authorized by one of the following, in order of preference from most preferable to least preferable: the Head of Security, the NanoTrasen Security Consultant, the Captain.<br>
-    If all of the aformentionned personnel are not present on the shift, KIA, MIA, incapacitated or otherwise unresponsive, then any security officer can authorize an execution.<br>
+    If all the aforementioned personnel are not present on the shift, KIA, MIA, incapacitated or otherwise unresponsive, then any security officer can authorize an execution.<br>
     <i>Unresponsive personnel are personnel that have not responded for 3 minutes or more to a request to authorize an execution.</i>
 <hr>
 <h3> Engagement Protocol </h3>
