@@ -164,7 +164,7 @@
 		name = "Hunger"
 		icon_state = "hunger"
 		desc = "Hunger can be raised by eating various edible items, more complex dishes raise your hunger more."
-		depletion_rate = 0.078
+		depletion_rate = 0.0585 //reduced by 25% from 0.078
 		var/debuff = "hungry"
 		var/debuff_threshold = 25
 		var/debuffed = FALSE
@@ -193,7 +193,7 @@
 			name = "Thirst"
 			icon_state = "thirst"
 			desc = "Thirst can be raised by drinking various liquids. Certain liquids can also lower your thirst."
-			depletion_rate = 0.0909
+			depletion_rate = 0.068175 //reduced by 25% from 0.0909
 			debuff = "thirsty"
 
 			getWarningMessage()
@@ -248,7 +248,7 @@
 		name = "Hygiene"
 		icon_state = "hygiene"
 		desc = "Hygiene can be raised by either taking a shower or a bath."
-		depletion_rate = 0.061
+		depletion_rate = 0.0305 //reduced by 50% from 0.061
 
 		var/protection = 20
 
