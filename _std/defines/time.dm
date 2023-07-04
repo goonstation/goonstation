@@ -12,7 +12,7 @@
 // #define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
 #ifdef MAP_OVERRIDE_NADIR
 	// nadir has an 8 hour rotation, but is somewhat evenly lit by both shidd and fugg, as it's quite far from typhone (royal rings district)
-	// the redness increases as shidd rises, and the blueness (and greenness) increases as fugg rises. Still pretty dark most of the time though.
+	// the redness increases as fugg (Fugere) rises, and the blueness (and greenness) increases as Shidd (Šid) rises. Still pretty dark most of the time though.
 	// shidd and fugg are on opposite sides of the sky, so as one sets, the other rises.
 	// #define OCEAN_LIGHT  rgb(0,0,50)
 	#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 8 == 0) || (BUILD_TIME_HOUR - 16 == 0)
@@ -20,7 +20,7 @@
 	#elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 8 == 1) || (BUILD_TIME_HOUR - 16 == 1)
 		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 2) || (BUILD_TIME_HOUR - 8 == 2) || (BUILD_TIME_HOUR - 16 == 2)
-		#define OCEAN_LIGHT  rgb(0.10 *   0, 0.10 * 255, 1.00 * 100, 0.65 * 255) // noon (fugg) rgb(0,26,100), quite bluey
+		#define OCEAN_LIGHT  rgb(0.10 *   0, 0.10 * 255, 1.00 * 100, 0.65 * 255) // noon (shidd) rgb(0,26,100), quite bluey
 	#elif (BUILD_TIME_HOUR == 3) || (BUILD_TIME_HOUR - 8 == 3) || (BUILD_TIME_HOUR - 16 == 3)
 		#define OCEAN_LIGHT  rgb(0.10 *  64, 0.10 * 191, 1.00 *  88, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 4) || (BUILD_TIME_HOUR - 8 == 4) || (BUILD_TIME_HOUR - 16 == 4)
@@ -28,7 +28,7 @@
 	#elif (BUILD_TIME_HOUR == 5) || (BUILD_TIME_HOUR - 8 == 5) || (BUILD_TIME_HOUR - 16 == 5)
 		#define OCEAN_LIGHT  rgb(0.10 * 191, 0.10 *  64, 1.00 *  62, 0.65 * 255)
 	#elif (BUILD_TIME_HOUR == 6) || (BUILD_TIME_HOUR - 8 == 6) || (BUILD_TIME_HOUR - 16 == 6)
-		#define OCEAN_LIGHT  rgb(0.10 * 255, 0.10 *   0, 1.00 *  50, 0.65 * 255) // noon (shidd) rgb(26,0,50), some red tones, more purple
+		#define OCEAN_LIGHT  rgb(0.10 * 255, 0.10 *   0, 1.00 *  50, 0.65 * 255) // noon (fugg) rgb(26,0,50), some red tones, more purple
 	#elif (BUILD_TIME_HOUR == 7) || (BUILD_TIME_HOUR - 8 == 7) || (BUILD_TIME_HOUR - 16 == 7)
 		#define OCEAN_LIGHT  rgb(0.10 * 191, 0.10 *  64, 1.00 *  62, 0.65 * 255)
 	#endif
