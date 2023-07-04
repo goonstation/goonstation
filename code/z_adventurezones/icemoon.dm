@@ -39,6 +39,10 @@ Contents:
 			return
 		else ..()
 
+/turf/unsimulated/floor/arctic
+	can_burn = FALSE
+	can_break = FALSE
+
 /turf/unsimulated/floor/arctic/snow
 	name = "odd snow"
 	desc = "Frozen carbon dioxide. Neat."

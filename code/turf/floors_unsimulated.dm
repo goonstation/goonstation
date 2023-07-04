@@ -10,11 +10,10 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
-	// Below vars are only for adding damage/burn overlays
-	var/broken = FALSE
-	var/burnt = FALSE
-	var/reinforced = FALSE
 
+	// Below vars are only for adding damage/burn overlays
+	can_burn = TRUE
+	can_break = TRUE
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -33,62 +32,6 @@
 		else
 			return
 	..()
-
-/turf/unsimulated/floor/proc/break_tile(var/force_break)
-	if(!force_break)
-		if(src.reinforced)
-			return
-
-	if(broken)
-		return
-	var/image/damage_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
-		damage_overlay.alpha = 200
-	else
-		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
-		damage_overlay.alpha = 200
-	broken = TRUE
-	UpdateOverlays(damage_overlay,"damage")
-	src.UpdateIcon()
-
-/turf/unsimulated/floor/proc/burn_tile()
-	if(broken || burnt || reinforced) return
-	var/image/burn_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
-		burn_overlay.alpha = 200
-	else
-		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-		burnt = TRUE
-	UpdateOverlays(burn_overlay,"burn")
-	src.UpdateIcon()
-
-/turf/unsimulated/floor/proc/restore_tile()
-	if(intact)
-		return
-	setIntact(TRUE)
-	broken = 0
-	burnt = 0
-	icon = initial(icon)
-	if(icon_old)
-		icon_state = icon_old
-	else
-		icon_state = "floor"
-	UpdateOverlays(null,"burn")
-	UpdateOverlays(null,"damage")
-	src.UpdateIcon()
-	if (name_old)
-		name = name_old
-	levelupdate()
-
-/turf/unsimulated/floor/shuttle/burn_tile()
-	return
 
 /////////////////////////////////////////
 
@@ -706,7 +649,8 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
 
-	reinforced = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 	allows_vehicles = 1
 
 /turf/unsimulated/floor/engine/vacuum
@@ -1050,6 +994,8 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	icon_state = "glass_small"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/glassblock/large
 	icon_state = "glass_large"
@@ -1077,10 +1023,14 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /////////////////////////////////////////
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
+	can_burn = FALSE
+	can_break = FALSE
 
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0

@@ -378,6 +378,8 @@ SYNDICATE DRONE FACTORY AREAS
 	fullbright = 0
 	pathable = 0
 	can_replace_with_stuff = 1
+	can_break = FALSE
+	can_burn = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()

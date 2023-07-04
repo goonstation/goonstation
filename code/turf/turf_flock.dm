@@ -166,8 +166,6 @@ TYPEINFO(/turf/simulated/floor/feather)
 	icon_state = "floor-broken"
 	broken = TRUE
 
-
-
 // -----
 // WALL
 // -----
@@ -195,7 +193,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
-	var/broken = FALSE
+	broken = FALSE
 	var/on = FALSE
 
 	// update_icon()

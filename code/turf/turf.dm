@@ -63,6 +63,12 @@
 	var/turf_flags = 0
 	var/list/list/datum/disjoint_turf/connections
 
+	// Vars used for breaking and burning turfs, only used for floors at the moment
+	var/can_burn = FALSE
+	var/can_break = FALSE
+	var/broken = FALSE
+	var/burnt = FALSE
+
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 	flags = OPENCONTAINER | FPRINT
 
@@ -144,6 +150,60 @@
 
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
+
+	proc/break_tile(var/force)
+		if (!src.can_break && !force)
+			return
+		if (src.broken)
+			return
+		var/image/damage_overlay
+		if (!icon_old)
+			icon_old = icon_state
+		if (intact)
+			damage_overlay = image('icons/turf/floors.dmi', "damaged[pick(1,2,3,4,5)]")
+			damage_overlay.alpha = 200
+		else
+			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
+			damage_overlay.alpha = 200
+		src.broken = TRUE
+		UpdateOverlays(damage_overlay, "damage")
+		src.UpdateIcon()
+
+	proc/burn_tile(var/force)
+		if (!src.can_burn && !force)
+			return
+		if (src.burnt)
+			return
+		var/image/burn_overlay
+		if (!icon_old)
+			icon_old = icon_state
+		if (intact)
+			burn_overlay = image('icons/turf/floors.dmi', "floorscorched[pick(1,2)]")
+			burn_overlay.alpha = 200
+		else
+			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
+			burn_overlay.alpha = 200
+		src.burnt = TRUE
+		UpdateOverlays(burn_overlay, "burn")
+		src.UpdateIcon()
+
+	proc/restore_tile()
+		if(intact)
+			return
+		setIntact(TRUE)
+		src.broken = FALSE
+		src.burnt = FALSE
+		icon = initial(icon)
+		if(icon_old)
+			icon_state = icon_old
+		else
+			icon_state = "floor"
+		UpdateOverlays(null, "burn")
+		UpdateOverlays(null, "damage")
+		src.UpdateIcon()
+		if (name_old)
+			name = name_old
+		levelupdate()
 
 	proc/setIntact(var/new_intact_value)
 		if (new_intact_value)

@@ -29,6 +29,8 @@
 	allows_vehicles = 1
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_break = FALSE
+	can_burn = FALSE
 
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
