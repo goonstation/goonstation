@@ -81,6 +81,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -142,6 +143,9 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
+		#endif
 	)
 
 // medical doctor.

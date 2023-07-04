@@ -44,7 +44,6 @@ Contains:
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -310,9 +309,7 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-		return
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
 ////////////////////////////////////////////////////////////
 

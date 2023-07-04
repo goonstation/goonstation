@@ -738,7 +738,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						new /obj/critter/pig(src.loc)
+						new /mob/living/critter/small_animal/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
 							new /mob/living/critter/small_animal/mouse(src.loc)
@@ -786,7 +786,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				return
 			if("majorsummon")
 				var/summon = pick(
-					/obj/critter/zombie,
+					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
 					/obj/critter/martian/soldier,

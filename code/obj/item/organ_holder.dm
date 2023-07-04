@@ -1380,7 +1380,7 @@
 	cooldown = 0
 	last_cast = 0
 	preferred_holder_type = /datum/abilityHolder/organ
-	var/disabled = 0
+	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null

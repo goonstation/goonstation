@@ -565,7 +565,7 @@
 	},
 /area/centcom/outside)
 "qY" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
@@ -1064,7 +1064,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Ng" = (

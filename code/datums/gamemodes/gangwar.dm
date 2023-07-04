@@ -992,8 +992,8 @@ proc/broadcast_to_all_gangs(var/message)
 			return 0
 
 		//cash score
-		if (istype(item, /obj/item/spacecash))
-			var/obj/item/spacecash/S = item
+		if (istype(item, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/S = item
 			if (S.amount > 500)
 				boutput(user, "<span class='alert'><b>[src.name] beeps, it don't accept bills larger than 500[CREDIT_SIGN]!<b></span>")
 				return 0
@@ -1047,7 +1047,7 @@ proc/broadcast_to_all_gangs(var/message)
 	proc/cash_amount()
 		var/number = 0
 
-		for(var/obj/item/spacecash/S in contents)
+		for(var/obj/item/currency/spacecash/S in contents)
 			number += S.amount
 
 		return round(number)
@@ -1137,7 +1137,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 
-		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
+		if(istype(W,/obj/item/plant/herb/cannabis) || istype(W,/obj/item/gun) || istype(W,/obj/item/currency/spacecash) || (W.reagents != null && W.reagents.total_volume > 0))
 			if (insert_item(W,user))
 				user.visible_message("<span class='notice'>[user] puts [W] into [src]!</span>")
 			return

@@ -30,7 +30,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/bee,
 /mob/living/critter/plant/maneater/polymorph,
 /mob/living/critter/fermid/polymorph,
-/mob/living/critter/small_animal/crab_polymorph)
+/mob/living/critter/small_animal/crab/polymorph)
 
 /datum/targetable/spell/animal
 	name = "Baleful Polymorph" // todo: a decent name - done?

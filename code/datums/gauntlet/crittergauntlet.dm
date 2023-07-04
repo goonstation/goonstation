@@ -1131,7 +1131,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Zombie"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/zombie)
+		types = list(/mob/living/critter/zombie)
 
 	micromen
 		name = "Micro Man"
@@ -1221,7 +1221,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Floating Eyes"
 		point_cost = 0.01
 		count = 10
-		types = list(/obj/critter/floateye)
+		types = list(/mob/living/critter/small_animal/floateye)
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])

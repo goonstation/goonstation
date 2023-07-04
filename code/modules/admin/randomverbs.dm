@@ -560,15 +560,14 @@
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_BASE_GASES(T.air)
+			ZERO_GASES(T.air)
 #ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_BASE_GASES(T.air)
+			ZERO_ARCHIVED_GASES(T.air)
 			T.air.ARCHIVED(temperature) = null
 #endif
 			T.air.oxygen = MOLES_O2STANDARD
 			T.air.nitrogen = MOLES_N2STANDARD
 			T.air.fuel_burnt = 0
-			T.air.clear_trace_gases()
 			T.air.temperature = T20C
 			LAGCHECK(LAG_LOW)
 

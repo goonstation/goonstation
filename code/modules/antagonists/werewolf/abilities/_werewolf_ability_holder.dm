@@ -186,6 +186,7 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
+				M.sims?.affectMotive("Ravenous Hunger", healing * 5)
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
@@ -319,9 +320,28 @@
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
-		..()
+		. = ..()
 		awaken_time = rand(5, 10)*100
+		#ifdef RP_MODE
+		awaken_time *= 2
+		#endif
 		src.tainted_saliva_reservoir = new/datum/reagents(500)
+
+	transferOwnership(mob/newbody)
+		. = ..()
+		if (ishuman(newbody))
+			var/mob/living/carbon/human/H = newbody
+			if (H.sims)
+				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
+				qdel(H.sims)
+				H.sims = new /datum/simsHolder/rp/wolf(H)
+
+	onRemove()
+		. = ..()
+		var/mob/living/carbon/human/H = src.owner
+		if (istype(H.sims, /datum/simsHolder/rp/wolf))
+			qdel(H.sims)
+			H.sims = new /datum/simsHolder/rp(H)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()

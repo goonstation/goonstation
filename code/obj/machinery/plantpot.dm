@@ -495,6 +495,7 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.harvest_warning = 1
 			do_update_icon = TRUE
 			post_alert(list("event" = "harvestable", "plant" = src.current.name))
+			src.HYPplant_matured()
 		else if(harvest_warning && !HYPcheck_if_harvestable())
 			src.harvest_warning = 0
 			do_update_icon = TRUE
@@ -1427,6 +1428,14 @@ TYPEINFO(/obj/machinery/plantpot)
 		DNA.harvests = SDNA.harvests
 		DNA.potency = SDNA.potency
 		DNA.endurance = SDNA.endurance
+		// now we transfer gene dominance + recessiveness as well
+		DNA.d_species = SDNA.d_species
+		DNA.d_growtime = SDNA.d_growtime
+		DNA.d_harvtime = SDNA.d_harvtime
+		DNA.d_cropsize = SDNA.d_cropsize
+		DNA.d_harvests = SDNA.d_harvests
+		DNA.d_potency = SDNA.d_potency
+		DNA.d_endurance = SDNA.d_endurance
 		// we use the same list as the seed here, as new lists are created only on mutation to avoid making way more lists than we need
 		DNA.commuts = SDNA.commuts
 		if(SDNA.mutation)
@@ -1471,16 +1480,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health_warning = 0
 		src.harvest_warning = 0
 		src.contributors = list()
-		var/datum/plantgenes/DNA = src.plantgenes
-
-		DNA.growtime = 0
-		DNA.harvtime = 0
-		DNA.cropsize = 0
-		DNA.harvests = 0
-		DNA.potency = 0
-		DNA.endurance = 0
-		DNA.commuts = null
-		DNA.mutation = null
+		src.plantgenes.mutation?.HYPdestroyplant_proc_M(src)
+		src.plantgenes = new(random_alleles = FALSE)
 
 		src.generation = 0
 		UpdateIcon()
@@ -1530,6 +1531,9 @@ TYPEINFO(/obj/machinery/plantpot)
 			src.health -= damage_amount
 			return 1
 		else return 0
+
+	proc/HYPplant_matured()
+		src.plantgenes?.mutation?.HYPmatured_proc_M(src)
 
 // Hydroponics procs not specific to the plantpot start here.
 
