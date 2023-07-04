@@ -41,7 +41,6 @@ var/global/list/soundCache = list(
  	"sound/ambience/loop/Station_Background_Drone.ogg" = 'sound/ambience/loop/Station_Background_Drone.ogg',\
  	"sound/ambience/loop/Wind_Low.ogg" = 'sound/ambience/loop/Wind_Low.ogg',\
  	"sound/ambience/music/shoptheme.ogg" = 'sound/ambience/music/shoptheme.ogg',\
- 	"sound/ambience/music/v_office_beats.ogg" = 'sound/ambience/music/v_office_beats.ogg',\
  	"sound/ambience/music/VRtunes_edited.ogg" = 'sound/ambience/music/VRtunes_edited.ogg',\
  	"sound/ambience/music/VRtunes2.ogg" = 'sound/ambience/music/VRtunes2.ogg',\
  	"sound/ambience/nature/Biodome_Birds1.ogg" = 'sound/ambience/nature/Biodome_Birds1.ogg',\

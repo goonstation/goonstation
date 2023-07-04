@@ -204,6 +204,12 @@
 				else
 					return null
 
+		wolfy // for werewolves - depletes slower, but only regens hunger by feeding on humans
+			name = "Ravenous Hunger" // With the name changed, all the stuff that restores hunger won't restore this
+			icon_state = "ravenous"
+			desc = "Ravenous hunger can only be satiated by feeding on the living..."
+			depletion_rate = 0.039
+
 
 	social
 		name = "social"
@@ -646,6 +652,12 @@ var/global/datum/simsControl/simsController = new()
 			//addMotive(/datum/simsMotive/bladder)
 			//addMotive(/datum/simsMotive/energy)
 			//addMotive(/datum/simsMotive/sanity)
+
+		wolf
+			make_motives()
+				addMotive(/datum/simsMotive/hunger/wolfy)
+				addMotive(/datum/simsMotive/hunger/thirst)
+				addMotive(/datum/simsMotive/hygiene)
 
 	New(var/mob/living/L)
 		..()

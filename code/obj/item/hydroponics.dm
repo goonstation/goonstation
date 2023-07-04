@@ -478,6 +478,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 	rand_pos = 1
 	var/image/plantyboi //! The "plant" overlay of the plant
 	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
+	var/datum/plantgenes/genes //! The genes of the plant when it was plucked
+	var/grow_level = -1 //! The growth level of the plant when it was plucked
 
 	New()
 		..()
@@ -491,6 +493,8 @@ TYPEINFO(/obj/item/plantanalyzer)
 				if(p.growthmode == "weed")
 					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
+				src.genes = pot.plantgenes
+				src.grow_level = pot.grow_level
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2

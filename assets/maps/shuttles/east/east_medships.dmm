@@ -40,7 +40,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "aQ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "aZ" = (
@@ -142,7 +142,7 @@
 	hardened = 1
 	},
 /obj/machinery/light/small/floor,
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "eQ" = (

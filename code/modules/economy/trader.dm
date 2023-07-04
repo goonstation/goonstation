@@ -339,7 +339,7 @@
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
 
-					var/value = sold_item(tradetype, sellitem) * src.sellitem.amount
+					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
 					if(log_trades)
 						logTheThing(LOG_STATION, usr, "sold ([src.sellitem.amount])[sellitem.type] to [src] for [value] at [log_loc(get_turf(src))]")
 					qdel (src.sellitem)
@@ -535,8 +535,8 @@
 	///////////////////////////////////////////////
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
-	proc/sold_item(datum/commodity/C, obj/S)
-		. = C.price
+	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+		. = C.price * count
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -584,11 +584,11 @@
 				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
+						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
 						qdel(sellitem)
 						sold_string[sellitem.type] += sellitem.amount
 				if(log_trades && length(sold_string))
-					logTheThing(LOG_STATION, usr, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
+					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
 					if(account)
