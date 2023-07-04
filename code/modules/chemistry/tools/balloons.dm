@@ -183,7 +183,7 @@
 					qdel(src)
 
 			if ("Inhale")
-				if (src.tied == TRUE)
+				if (src.tied)
 					H.visible_message("<span class='alert'><B>[H] tries and fails to inhale the contents of [src]. Point and laugh!</B></span>",\
 					"<span class='alert'><b>You attempt inhale the contents of [src], but fail! It's tied off, goofball.</b></span>")
 					return /// janky fix, you can still fill from an atmos container if you somehow get breaths to be <5
