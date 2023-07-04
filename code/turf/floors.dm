@@ -222,82 +222,6 @@
 				src.burn_tile()
 				src.icon_old = null
 
-
-/////////////////////////////////////////
-
-/turf/simulated/floor/scorched
-	burnt = 1
-
-	New()
-		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/simulated/floor/scorched2
-	burnt = 1
-
-	New()
-		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/simulated/floor/damaged1
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged2
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged3
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged4
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/damaged5
-	step_material = "step_plating"
-	step_priority = STEP_PRIORITY_MED
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
 /////////////////////////////////////////
 
 /turf/simulated/floor/plating
@@ -308,39 +232,6 @@
 
 /turf/simulated/floor/plating/jen
 	icon_state = "plating_jen"
-
-/turf/simulated/floor/plating/scorched
-
-	New()
-		..()
-		burn_tile()
-
-/turf/simulated/floor/plating/damaged1
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/plating/damaged2
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/simulated/floor/plating/damaged3
-	broken = 1
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
 
 /////////////////////////////////////////
 

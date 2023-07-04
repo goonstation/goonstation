@@ -61,60 +61,17 @@
 			UpdateOverlays(burn_overlay,"burn")
 
 
-/turf/unsimulated/floor/scorched
+/turf/unsimulated/floor/burnt
 
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		src.burn_tile()
 
-/turf/unsimulated/floor/scorched2
-	New()
-		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched2")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/unsimulated/floor/damaged1
+/turf/unsimulated/floor/damaged
 
 	New()
 		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged2
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged3
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged4
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged4")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/damaged5
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"damaged5")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /////////////////////////////////////////
 
@@ -124,34 +81,17 @@
 	intact = FALSE
 	layer = PLATING_LAYER
 
-/turf/unsimulated/floor/plating/scorched
+/turf/unsimulated/floor/plating/burnt
 
 	New()
 		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		src.burn_tile()
 
-/turf/unsimulated/floor/plating/damaged1
+/turf/unsimulated/floor/plating/damaged
 
 	New()
 		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/plating/damaged2
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/plating/damaged3
-
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		UpdateOverlays(damage_overlay,"damage")
+		src.break_tile()
 
 /turf/unsimulated/floor/plating/random
 	New()
@@ -866,34 +806,6 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 	layer = PLATING_LAYER
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-
-/turf/unsimulated/floor/airless/plating/scorched
-	New()
-		..()
-		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
-
-/turf/unsimulated/floor/airless/plating/damaged1
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/airless/plating/damaged2
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
-
-/turf/unsimulated/floor/airless/plating/damaged3
-	New()
-		..()
-		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
-		UpdateOverlays(damage_overlay,"damage")
 
 //////////////
 
