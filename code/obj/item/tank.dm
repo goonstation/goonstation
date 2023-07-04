@@ -461,7 +461,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 3
+		src.air_contents.volume = 6
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
@@ -472,7 +472,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 6
+		src.air_contents.volume = 12
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
@@ -501,7 +501,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 8
+		src.air_contents.volume = 16
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
