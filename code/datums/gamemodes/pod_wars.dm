@@ -258,7 +258,6 @@ var/list/pw_rewards_tier3 = null
 //////////////////
 ///////////////pod_wars asteroids
 /turf/simulated/wall/auto/asteroid/pod_wars
-	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
 	hardness = 1

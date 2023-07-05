@@ -90,6 +90,10 @@
 			points_last = points
 			src.updateText(0, src.x_occupied, src.y_occupied)
 
+	/// Called just before we're removed from a mob
+	proc/onRemove()
+		return
+
 	proc/updateCounters()
 		// this is probably dogshit but w/e
 		if (!owner || !owner.client)
@@ -905,6 +909,8 @@
 #ifdef NO_COOLDOWNS
 		result = TRUE
 #endif
+		if (src.cooldown_after_action)
+			return // We call afterAction() when ending our action
 		// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
 		if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
 			doCooldown()
@@ -1088,6 +1094,12 @@
 	proc/afterCast()
 		return
 
+	/// Used for abilities with action bars which don't want to do cooldowns until after
+	proc/afterAction()
+		SHOULD_CALL_PARENT(TRUE)
+		doCooldown()
+		afterCast()
+
 	proc/Stat()
 		updateObject(holder.owner)
 		stat(null, object)
@@ -1216,6 +1228,7 @@
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
 				H.composite_owner = null
+				H.onRemove(src.owner)
 				holders -= H
 		updateButtons()
 

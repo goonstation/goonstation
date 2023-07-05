@@ -249,7 +249,7 @@
 	encase_in_web = 0
 	max_skins = 4
 	reacting = 0
-
+	no_stamina_stuns = TRUE
 	faction = FACTION_ICEMOON
 
 /mob/living/critter/spider/ice/nice

@@ -89,7 +89,7 @@
 		if (!istype(H))
 			boutput(src.holder.owner, "<span class='alert'>This creature is not compatible with our biology.</span>")
 			return FALSE
-		if (isnpcmonkey(H))
+		if (isnpc(H))
 			boutput(src.holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
 			return FALSE
 		if (H.bioHolder.HasEffect("husk"))

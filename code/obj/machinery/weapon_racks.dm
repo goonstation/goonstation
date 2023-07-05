@@ -228,7 +228,11 @@
 			return
 
 		src.add_fingerprint(user)
-		var/obj/item/myWeapon = locate(src.contained_weapon) in src
+		var/obj/item/myWeapon
+		for(var/obj/item/I in src)
+			if(valid_item(I))
+				myWeapon = I
+				break
 		if (myWeapon)
 			if (src.amount >= 1)
 				src.amount--
@@ -254,7 +258,7 @@
 	process() // Override the normal process proc with this:
 		if(recharges_contents)
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
-				if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
+				if(!valid_item(A)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
 				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 

@@ -56,7 +56,7 @@
 				if (iswizard(L))
 					continue
 				arcFlash(target, L, max(src.wattage / count, 1)) // adds some randomness to the damage
-				target.TakeDamage("chest", 0, burn_damage / count, 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, burn_damage / count, 0, DAMAGE_BURN)
 		else
 			elecflash(target,power = 2)
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")

@@ -8,6 +8,7 @@
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 2
+	icon = 'icons/obj/items/organs/lung.dmi'
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
@@ -57,7 +58,9 @@
 	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
+	///Return value indicates whether we have enough oxygen to breathe
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
+		. = FALSE
 		var/breath_moles = TOTAL_MOLES(breath)
 		if(breath_moles == 0)
 			breath_moles = ATMOS_EPSILON
@@ -87,6 +90,7 @@
 					donor.take_oxygen_deprivation(3 * mult/LUNG_COUNT)
 				update.show_oxy_indicator = TRUE
 			else 									// We're in safe limits
+				. = TRUE
 				donor.take_oxygen_deprivation(-6 * mult/LUNG_COUNT)
 				oxygen_used = breath.oxygen/6
 

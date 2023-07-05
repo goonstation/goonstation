@@ -46,6 +46,7 @@
 			boutput(user, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some fresh meat.</span>")
 			return FALSE
 
+// TODO move checks to canRunCheck(), add isNPC check
 /datum/action/bar/private/icon/werewolf_feast
 	duration = 10 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
