@@ -848,6 +848,7 @@
 	var/sticky = FALSE 							//! Targeting stays active after using this ability if this is TRUE and the ability isn't on cooldown.
 	var/ignore_sticky_cooldown = FALSE			//! If TRUE, Ability targeting will remain active even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 			//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/cooldown_after_action = FALSE			//! If TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
 
 	var/action_key_number = -1 					//! Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE 				//! If TRUE, the next number hotkey pressed will be bound to this.
