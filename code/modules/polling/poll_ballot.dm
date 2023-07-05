@@ -3,10 +3,13 @@
 	set name = "Player Polls"
 	set desc = "Cast your vote in a Goonstation poll"
 	set category = "Commands"
+	var/list/cooldowns
 	poll_ballot.ui_interact(mob)
 
 /datum/poll_ballot
-
+	var/rate_limit_counter = 0
+	/// soft cap to start forcing 1 second cooldown
+	var/const/rate_limit_soft_cap = 10
 /datum/poll_ballot/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
 
@@ -30,6 +33,12 @@
 	. = ..()
 	if (.)
 		return
+	if (!ON_COOLDOWN(ui.user.client.player, "poll_ballot_rate_limit_reset", 1 MINUTE))
+		rate_limit_counter = 0
+	if ((rate_limit_counter >= rate_limit_soft_cap) && ON_COOLDOWN(ui.user.client.player, "poll_ballot_rate_limit", (1 SECOND + (rate_limit_counter - rate_limit_soft_cap))))
+		boutput(ui.user, "<span class='alert'>You're doing that too often!</span>")
+		return
+	rate_limit_counter++
 	switch(action)
 		if("addPoll")
 			USR_ADMIN_ONLY
