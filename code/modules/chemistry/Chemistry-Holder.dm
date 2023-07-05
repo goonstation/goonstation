@@ -890,8 +890,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		return
 
 	proc/reagents_transferred()
-		if (my_atom)
-			my_atom.on_reagent_transfer()
+		my_atom?.on_reagent_transfer()
 		return
 
 	/// li'l tiny helper thing vOv
