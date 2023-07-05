@@ -836,9 +836,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		coil.setInsulator(getMaterial(materials["INS-1"]))
-		coil.setConductor(getMaterial(materials["CON-1"]))
+		coil.setInsulator(getMaterial(materials[item_paths[1]]))
+		coil.setConductor(getMaterial(materials[item_paths[2]]))
 		return 1
+
+/datum/manufacture/cable/reinforced
+	name = "Reinforced Cable Coil"
+	item_paths = list("INS-2", "pharosium")
+	item_outputs = list(/obj/item/cable_coil/reinforced)
+	time = 10 SECONDS
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"
@@ -2217,10 +2223,10 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Resource"
 
 
-/datum/manufacture/gps
+/datum/manufacture/podgps
 	name = "Ship's Navigation GPS"
-	item_paths = list("MET-1")
-	item_amounts = list(2)
+	item_paths = list("MET-1","CON-1")
+	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/shipcomponent/secondary_system/gps)
 	time = 12 SECONDS
 	create = 1

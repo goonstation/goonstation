@@ -286,6 +286,7 @@ var/global/list/mapNames = list(
 
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
+	goonhub_map = "https://cdn.discordapp.com/attachments/412381738510319626/1116907371999010836/output.png"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
@@ -459,7 +460,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
 		)
 
-	escape_dir = WEST
+	escape_dir = NORTH
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro

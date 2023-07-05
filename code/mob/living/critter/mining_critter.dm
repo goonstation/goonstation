@@ -50,6 +50,7 @@
 	ai_retaliate_patience = 2
 	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
 	add_abilities = list(/datum/targetable/critter/bite/fermid_bite, /datum/targetable/critter/sting/fermid)
+	no_stamina_stuns = TRUE
 
 	New()
 		..()
@@ -219,6 +220,7 @@
 				return
 			if(prob(40))
 				src.tamed = TRUE
+				src.ai_retaliates = FALSE
 				src.visible_message("[src] enjoyed the [I] and seems more docile!")
 				src.emote("burp")
 			src.aftereat()

@@ -501,7 +501,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))

@@ -14,8 +14,8 @@
 	layer = PIPE_LAYER
 
 	New()
-		initialize_directions = dir
 		..()
+		initialize_directions = dir
 
 	network_disposing(datum/pipe_network/reference)
 		if (network == reference)

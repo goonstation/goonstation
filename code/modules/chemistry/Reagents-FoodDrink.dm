@@ -95,9 +95,10 @@ datum
 				. = ..()
 				if(M.mob_flags & IS_BONEY)
 					. = FALSE
-					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
-					if(prob(15))
-						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+					if(!ON_COOLDOWN(M, "milk_heal", 1 DECI SECOND))
+						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
+						if(prob(15))
+							boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -2776,10 +2777,6 @@ datum
 
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O, /obj/critter/slug))
-					var/obj/critter/slug/S = O
-					S.visible_message("<span class='alert'>[S] shrivels up!</span>")
-					S.CritterDeath()
 				if(istype(O, /obj/decal/icefloor))
 					qdel(O)
 				..(O, volume)

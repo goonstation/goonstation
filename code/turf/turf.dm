@@ -166,6 +166,14 @@
 		if (length(src.camera_coverage_emitters))
 			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
 
+	proc/MakeCatwalk(var/obj/item/rods/rods)
+		if (rods)
+			rods.change_stack_amount(-1)
+
+		var/obj/grille/catwalk/catwalk = new
+		catwalk.setMaterial(rods?.material)
+		catwalk.set_loc(src)
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED
@@ -327,7 +335,7 @@ proc/generate_space_color()
 	)
 #endif
 
-/turf/space/update_icon(starlight_alpha=255)
+/turf/space/update_icon(starlight_alpha=255, starlight_color_override=null)
 	..()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
@@ -340,7 +348,7 @@ proc/generate_space_color()
 			starlight.plane = PLANE_LIGHTING
 			starlight.blend_mode = BLEND_ADD
 
-		starlight.color = src.color
+		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
 		UpdateOverlays(starlight, "starlight")
@@ -968,13 +976,6 @@ TYPEINFO(/turf/simulated)
 	stops_space_move = 1
 	text = "<font color=#aaa>."
 
-/turf/unsimulated/floor
-	name = "floor"
-	icon = 'icons/turf/floors.dmi'
-	icon_state = "plating"
-	text = "<font color=#aaa>."
-	plane = PLANE_FLOOR
-
 /turf/unsimulated/wall
 	name = "wall"
 	icon = 'icons/turf/walls.dmi'
@@ -1094,7 +1095,8 @@ TYPEINFO(/turf/simulated)
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
 		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		R.change_stack_amount(-1)
-		ReplaceWithLattice()
+		var/obj/lattice/lattice = new(src)
+		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
 		if (R.material)
 			src.setMaterial(C.material)
 		return

@@ -1211,6 +1211,27 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 3
 			icon = 'icons/obj/vending.dmi'
 			icon_state = "standard-frame"
+		scrap_handle
+			recipe_id = "scrap_handle"
+			craftedType = /obj/item/scrapweapons/parts/handle
+			name = "Scrap Handle"
+			sheet_cost = 1
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "handle"
+		scrap_blade
+			recipe_id = "scrap_blade"
+			craftedType = /obj/item/scrapweapons/parts/blade
+			name = "Scrap Blade"
+			sheet_cost = 3
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "blade"
+		scrap_shaft
+			recipe_id = "scrap_shaft"
+			craftedType = /obj/item/scrapweapons/parts/shaft
+			name = "Scrap Shaft"
+			sheet_cost = 2
+			icon = 'icons/obj/items/scrapweapons.dmi'
+			icon_state = "shaft"
 
 	glass
 		smallwindow
@@ -1254,7 +1275,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 
 	wood
 		fl_tiles
-			recipe_id = "fl_tiles_wood"
+			recipe_id = "fl_tiles"
 			craftedType = /obj/item/tile
 			name = "Floor Tile"
 			yield = 4
