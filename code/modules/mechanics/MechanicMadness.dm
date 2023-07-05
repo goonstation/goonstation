@@ -3075,9 +3075,11 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 	var/floorResults = FALSE
 
 	var/mode = "rng"
+	var/automode = "Both"
 	get_desc()
 		. = ..() // Please don't remove this again, thanks.
-		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoFloor: [floorResults ? "ON" : "OFF"]</span>"
+		. += "<br><span class='notice'>Current Mode: [mode] | A = [A] | B = [B] | AutoEvaluate: [autoEval ? "ON" : "OFF"] | AutoEvaluate Trig: [automode] \
+		| AutoFloor: [floorResults ? "ON" : "OFF"]</span>"
 	secure()
 		icon_state = "comp_arith1"
 	loosen()
@@ -3091,6 +3093,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",PROC_REF(setBManually))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",PROC_REF(setMode))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Evaluate",PROC_REF(toggleAutoEval))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Auto-Evaluate Trigger",PROC_REF(setAutoMode))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Auto-Floor",PROC_REF(toggleAutoFloor))
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
@@ -3114,6 +3117,10 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		tooltip_rebuild = 1
 		return 1
 
+	proc/setAutoMode(obj/item/W as obj, mob/user as mob)
+		automode = input("Which input will trigger Auto-Evaluate mode?","Trigger", automode) in list("A","B","Both")
+		tooltip_rebuild = 1
+		return 1
 	proc/toggleAutoEval(obj/item/W as obj, mob/user as mob)
 		src.autoEval = !src.autoEval
 		boutput(user, "<span class='notice'>Auto-Evaluate mode <b>[src.autoEval ? "ON" : "OFF"]</b>.</span>")
@@ -3132,7 +3139,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!isnull(text2num_safe(input.signal)))
 			A = text2num_safe(input.signal)
 			tooltip_rebuild = 1
-			if (autoEval)
+			if (autoEval && (findtext(automode,"Both") || findtext(automode,"A")))
 				src.evaluate()
 	proc/setB(var/datum/mechanicsMessage/input)
 		if(level == 2) return
@@ -3140,7 +3147,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (!isnull(text2num_safe(input.signal)))
 			B = text2num_safe(input.signal)
 			tooltip_rebuild = 1
-			if (autoEval)
+			if (autoEval && (findtext(automode,"Both") || findtext(automode,"B")))
 				src.evaluate()
 	proc/evaluate()
 		switch(mode)
@@ -3502,6 +3509,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", PROC_REF(removeItem))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", PROC_REF(sendValue))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send associations as signal", PROC_REF(sendMapAsSignal))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send indexed associations", PROC_REF(sendIndexValue))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", PROC_REF(setMode))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", PROC_REF(addItemManual))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", PROC_REF(removeItemManual))
@@ -3575,6 +3583,13 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
 		animate_flash_color_fill(src,"#00FF00",2, 2)
 
+	proc/sendIndexValue(var/datum/mechanicsMessage/input)
+		if (level == 2 || !input) return
+		LIGHT_UP_HOUSING
+		if (isnull(text2num(input.signal)) || (map.len < text2num(input.signal))) return
+		input.signal = map[map[text2num(input.signal)]]
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_MSG, input)
+		animate_flash_color_fill(src,"#00FF00",2, 2)
 	proc/sendMapAsSignal(var/datum/mechanicsMessage/input)
 		if (level == 2 || !input) return
 		LIGHT_UP_HOUSING
