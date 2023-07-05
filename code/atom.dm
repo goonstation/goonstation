@@ -945,8 +945,8 @@ TYPEINFO(/atom)
 /atom/proc/on_reagent_transfer()
 	return
 
- /atom/proc/Bumped(AM as mob|obj)
- 	SHOULD_NOT_SLEEP(TRUE)
+/atom/proc/Bumped(AM as mob|obj)
+	SHOULD_NOT_SLEEP(TRUE)
 	return
 
 /// override this instead of Bump
