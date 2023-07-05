@@ -10,21 +10,22 @@
 
 .Section__title {
   .IDComputer__DeptBox & {
-    background-color: darken(colors.$grey, 20%);
+    text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black, -1px 1px 1px black;
+    background-color: colors.$grey;
   }
   .IDComputer__DeptBox_color_blue & {
-    background-color: darken(colors.$blue, 20%);
+    background-color: colors.$blue;
   }
   .IDComputer__DeptBox_color_yellow & {
-    background-color: darken(colors.$yellow, 28%);
+    background-color: colors.$yellow;
   }
   .IDComputer__DeptBox_color_purple & {
-    background-color: darken(colors.$purple, 20%);
+    background-color: colors.$purple;
   }
   .IDComputer__DeptBox_color_red & {
-    background-color: darken(colors.$red, 20%);
+    background-color: colors.$red;
   }
   .IDComputer__DeptBox_color_green & {
-    background-color: darken(colors.$green, 20%);
+    background-color: colors.$green;
   }
 }
