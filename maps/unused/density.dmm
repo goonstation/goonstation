@@ -385,7 +385,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell 1"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aT" = (
@@ -400,7 +400,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Cell 2"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aV" = (
@@ -621,7 +621,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/access_spawn/hos,
+/obj/mapping_helper/access/hos,
 /turf/simulated/floor/red,
 /area/station/ai_monitored/armory)
 "bs" = (
@@ -670,7 +670,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	req_access = null
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "by" = (
@@ -680,7 +680,7 @@
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Security Lockers"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bA" = (
@@ -779,7 +779,7 @@
 	name = "Morgue";
 	req_access = null
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bJ" = (
@@ -1046,8 +1046,8 @@
 	name = "Morgue";
 	req_access = null
 	},
-/obj/access_spawn/security,
-/obj/access_spawn/chapel_office,
+/obj/mapping_helper/access/security,
+/obj/mapping_helper/access/chapel_office,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
 "cu" = (
@@ -1115,7 +1115,7 @@
 	dir = 4;
 	name = "CMDS - Security Block"
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "cG" = (
@@ -1265,10 +1265,10 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
-/obj/access_spawn/cargo,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
+/obj/mapping_helper/access/cargo,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "cV" = (
@@ -1355,10 +1355,10 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/cargo,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/cargo,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "dg" = (
@@ -1482,9 +1482,9 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/mining,
+/obj/mapping_helper/access/engineering,
+/obj/mapping_helper/access/engineering_mechanic,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/engine,
 /area/station/engine/elect)
 "dt" = (
@@ -2698,7 +2698,7 @@
 	req_access = null;
 	req_access_txt = "0"
 	},
-/obj/access_spawn/engineering,
+/obj/mapping_helper/access/engineering,
 /turf/simulated/floor/plating,
 /area/station/engine/core)
 "gm" = (
@@ -3213,7 +3213,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Janitor's Supply Closet"
 	},
-/obj/access_spawn/janitor,
+/obj/mapping_helper/access/janitor,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "hl" = (
@@ -3307,7 +3307,7 @@
 	name = "Customs";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -3350,7 +3350,7 @@
 	name = "Gas Storage";
 	req_access = null
 	},
-/obj/access_spawn/tox_storage,
+/obj/mapping_helper/access/tox_storage,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "hC" = (
@@ -3423,15 +3423,15 @@
 	name = "Bridge";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "hI" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Outdoor Bar"
 	},
-/obj/access_spawn/bar,
-/obj/access_spawn/kitchen,
+/obj/mapping_helper/access/bar,
+/obj/mapping_helper/access/kitchen,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "hJ" = (
@@ -4446,7 +4446,7 @@
 	name = "CMDS - Research Block";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "jF" = (
@@ -4462,7 +4462,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
-/obj/access_spawn/maint,
+/obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "jH" = (
@@ -4617,7 +4617,7 @@
 	name = "Toxins Lab";
 	req_access = null
 	},
-/obj/access_spawn/tox,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "jU" = (
@@ -4630,7 +4630,7 @@
 	name = "AI Chamber";
 	req_access = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
@@ -4690,7 +4690,7 @@
 	name = "CMDS - Medical Sector";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/garden)
 "kb" = (
@@ -4901,7 +4901,7 @@
 	name = "Research Sector";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/plating,
 /area/station/science/lobby)
 "ku" = (
@@ -4989,7 +4989,7 @@
 	name = "Telescience";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "kI" = (
@@ -5000,7 +5000,7 @@
 	name = "Chemistry";
 	req_access = null
 	},
-/obj/access_spawn/chemistry,
+/obj/mapping_helper/access/chemistry,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "kK" = (
@@ -5016,7 +5016,7 @@
 	name = "Artifact Research";
 	req_access = null
 	},
-/obj/access_spawn/research,
+/obj/mapping_helper/access/research,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "kM" = (
@@ -5614,8 +5614,8 @@
 	name = "Medical Research";
 	req_access = null
 	},
-/obj/access_spawn/robotics,
-/obj/access_spawn/medlab,
+/obj/mapping_helper/access/robotics,
+/obj/mapping_helper/access/medlab,
 /turf/simulated/floor/white,
 /area/station/medical/research)
 "lN" = (
@@ -5923,7 +5923,7 @@
 	name = "Operating Theater";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mx" = (
@@ -6018,7 +6018,7 @@
 	name = "Cryogenics";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "mK" = (
@@ -6130,7 +6130,7 @@
 	name = "Operating Theater";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "mT" = (
@@ -6154,7 +6154,7 @@
 	name = "Pathology";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "mV" = (
@@ -6325,7 +6325,7 @@
 	name = "Medbay";
 	req_access = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "np" = (

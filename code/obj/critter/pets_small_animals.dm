@@ -54,8 +54,6 @@
 	name = "Morty"
 	generic = 0
 
-ABSTRACT_TYPE(/obj/critter/dream_creature)
-
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 

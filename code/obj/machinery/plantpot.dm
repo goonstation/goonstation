@@ -1484,16 +1484,8 @@ TYPEINFO(/obj/machinery/plantpot)
 		src.health_warning = 0
 		src.harvest_warning = 0
 		src.contributors = list()
-		var/datum/plantgenes/DNA = src.plantgenes
-
-		DNA.growtime = 0
-		DNA.harvtime = 0
-		DNA.cropsize = 0
-		DNA.harvests = 0
-		DNA.potency = 0
-		DNA.endurance = 0
-		DNA.commuts = null
-		DNA.mutation = null
+		src.plantgenes.mutation?.HYPdestroyplant_proc_M(src)
+		src.plantgenes = new(random_alleles = FALSE)
 
 		src.generation = 0
 		UpdateIcon()
@@ -1545,7 +1537,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		else return 0
 
 	proc/HYPplant_matured()
-		src.plantgenes.mutation.HYPmatured_proc_M(src)
+		src.plantgenes?.mutation?.HYPmatured_proc_M(src)
 
 // Hydroponics procs not specific to the plantpot start here.
 
