@@ -412,7 +412,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,3)
-	if(prob(25))
+	if(prob(25 / radius))
 		grow()
 	switch (numb)
 		if (1)//Eats the turfs around it
@@ -450,7 +450,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/proc/BHolerip()
 	var/turf/sing_center = src.get_center()
-	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
+	for (var/turf/T in orange(radius+EVENT_GROWTH+0.5, sing_center))
 		if (prob(70))
 			continue
 
