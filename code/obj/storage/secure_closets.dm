@@ -836,7 +836,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 
 /obj/storage/secure/closet/civilian/ranch
 	name = "\improper Rancher supplies locker"
-	req_access = list(access_hydro)
+	req_access = list(access_ranch)
 	spawn_contents = list(/obj/item/paper/ranch_guide,\
 	/obj/item/fishing_rod/basic,\
 	/obj/item/storage/box/clothing/rancher,\
