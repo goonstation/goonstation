@@ -6855,9 +6855,7 @@
 /turf/unsimulated/floor/circuit/white,
 /area/moon/museum/west)
 "aBL" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "aBM" = (
 /obj/machinery/light,
@@ -7504,9 +7502,7 @@
 /area/moon/museum)
 "aEx" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "aEA" = (
 /obj/stool/chair,
@@ -9535,9 +9531,7 @@
 /obj/decal/cleanable/cobweb,
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/item/toy/figure,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "aNA" = (
 /turf/unsimulated/floor/specialroom/medbay,
@@ -16548,9 +16542,7 @@
 	dir = 6;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bji" = (
 /obj/reagent_dispensers/watertank,
@@ -19167,9 +19159,7 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bqD" = (
 /turf/unsimulated/floor/circuit,
@@ -19278,9 +19268,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bqT" = (
 /obj/decoration/syndiepc/syndiepc10,
@@ -19504,9 +19492,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/paper,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "brA" = (
 /obj/lattice{
@@ -19845,9 +19831,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb2,
 /obj/item/reagent_containers/food/drinks/noodlecup,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bsN" = (
 /obj/decal/cleanable/blood,
@@ -20115,7 +20099,7 @@
 "btO" = (
 /obj/landmark/spawner/loot,
 /obj/item/paper/businesscard/clowntown,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "btP" = (
 /obj/lattice{
@@ -20245,9 +20229,7 @@
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/molten_item,
 /obj/item/match,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "buy" = (
 /obj/decal/cleanable/blood,
@@ -20363,9 +20345,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "buX" = (
 /turf/unsimulated/floor/stairs/dark{
@@ -20526,9 +20506,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bvA" = (
 /obj/surgery_tray,
@@ -22299,7 +22277,7 @@
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/machine_debris,
 /obj/item/cell/charged,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "bDu" = (
 /obj/lattice{
@@ -25672,9 +25650,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bOZ" = (
 /obj/decal/cleanable/dirt,
@@ -27325,9 +27301,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "bVd" = (
 /turf/unsimulated/floor/carpet/red/fancy/edge/nw,
@@ -28829,9 +28803,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cas" = (
 /obj/table/reinforced/auto,
@@ -28958,9 +28930,7 @@
 "caN" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/beerkeg,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caO" = (
 /obj/decal/tile_edge/line/blue{
@@ -28968,9 +28938,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caP" = (
 /obj/indestructible/shuttle_corner{
@@ -28983,9 +28951,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caR" = (
 /obj/decal/cleanable/blood/tracks{
@@ -28996,9 +28962,7 @@
 "caS" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/food_box/lollipop,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caT" = (
 /obj/indestructible/shuttle_corner{
@@ -29012,9 +28976,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/paper,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caV" = (
 /obj/decal/tile_edge/line/blue{
@@ -29026,9 +28988,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "caW" = (
 /obj/stagebutton,
@@ -30052,7 +30012,7 @@
 /obj/table/auto,
 /obj/item/shaker/salt,
 /obj/item/kitchen/utensil/knife,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cfy" = (
 /turf/unsimulated/floor/orangeblack/side{
@@ -30373,9 +30333,7 @@
 	},
 /obj/item/scrap,
 /obj/decal/cleanable/saltpile,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cgJ" = (
 /obj/decal/fakeobjects{
@@ -30532,9 +30490,7 @@
 	icon_state = "line1"
 	},
 /obj/decal/cleanable/generic,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "chg" = (
 /obj/meatlight{
@@ -30850,9 +30806,7 @@
 	dir = 1;
 	icon_state = "line1"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cid" = (
 /obj/decal/fakeobjects/firealarm_broken{
@@ -32272,9 +32226,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cmq" = (
 /turf/unsimulated/floor/carpet/arcade,
@@ -34715,9 +34667,7 @@
 	},
 /obj/decal/cleanable/generic,
 /obj/decal/cleanable/ash,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cuR" = (
 /obj/machinery/computer/security{
@@ -34965,9 +34915,7 @@
 	desc = "A J-12 Bus Driving Unit. It looks like someone's given it several hard whacks on the brain-case with a blunt object.";
 	name = "Busted J-12 Bus Driver"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cvu" = (
 /turf/unsimulated/wall/auto/adventure/iomoon,
@@ -39203,15 +39151,13 @@
 /area/crater)
 "cGX" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cGY" = (
 /obj/machinery/sleeper{
 	dir = 8
 	},
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cGZ" = (
 /obj/machinery/secscanner,
@@ -39400,9 +39346,7 @@
 "cHy" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/item/shaker/mustard,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "cHB" = (
 /obj/item/device/audio_log/radioship/small,
@@ -39598,7 +39542,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cIe" = (
 /obj/decal/tile_edge/stripe/big{
@@ -39613,7 +39557,7 @@
 /obj/machinery/sleeper{
 	dir = 4
 	},
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cIg" = (
 /obj/decal/fakeobjects{
@@ -39853,7 +39797,7 @@
 /area/owlery/owleryhall)
 "cIM" = (
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cIN" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -40167,7 +40111,7 @@
 	dir = 4
 	},
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cJB" = (
 /obj/indestructible/shuttle_corner{
@@ -40186,14 +40130,14 @@
 "cJD" = (
 /obj/decal/cleanable/dirt,
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cJE" = (
 /obj/storage/closet/coffin/wood,
 /obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log,
 /obj/item/storage/pill_bottle/cyberpunk,
 /obj/item/crowbar,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cJF" = (
 /obj/shrub{
@@ -40207,7 +40151,7 @@
 /area/drone/office)
 "cJG" = (
 /obj/machinery/shitty_grill,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cJH" = (
 /obj/random_item_spawner/med_kit,
@@ -40389,7 +40333,7 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cKg" = (
 /obj/cable{
@@ -40409,7 +40353,7 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/chips,
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cKi" = (
 /obj/machinery/light/emergency{
@@ -41323,7 +41267,7 @@
 /obj/item/reagent_containers/food/drinks/juicer{
 	pixel_y = 12
 	},
-/turf/simulated/floor/white,
+/turf/unsimulated/floor/white,
 /area/shuttle/john/owlery)
 "cMR" = (
 /turf/space,
@@ -47737,9 +47681,7 @@
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "dcl" = (
 /obj/stool/chair/comfy/green{
@@ -54533,9 +54475,7 @@
 	dir = 8;
 	tag = ""
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "dEH" = (
 /turf/unsimulated/floor/carpet{
@@ -60318,9 +60258,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "eIF" = (
 /obj/decal/cleanable/blood/tracks,
@@ -60970,9 +60908,7 @@
 /area/sim/gunsim/lobby)
 "fth" = (
 /obj/mapping_helper/wingrille_spawn,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "ftm" = (
 /obj/decal/fakeobjects/pipe{
@@ -61341,9 +61277,7 @@
 	icon_state = "shuttle-embed";
 	pixel_y = -25
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
 "fSL" = (
 /obj/overlay{
