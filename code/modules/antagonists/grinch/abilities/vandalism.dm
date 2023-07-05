@@ -6,7 +6,7 @@
 	target_anything = FALSE
 	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 100
+	cooldown = 10 SECONDS
 	start_on_cooldown = 0
 	pointCost = 0
 	incapacitation_restriction = 0

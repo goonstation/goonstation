@@ -3,7 +3,7 @@
 	desc = "Opens nearby doors."
 	icon_state = "knock"
 	targeted = FALSE
-	cooldown = 100
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/KnockGrim.ogg'

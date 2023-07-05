@@ -3,7 +3,7 @@
 	desc = "Temporarily superpowers your body."
 	icon_state = "mutate"
 	targeted = FALSE
-	cooldown = 400
+	cooldown = 40 SECONDS
 	requires_robes = 1
 	offensive = 1
 	voice_grim = 'sound/voice/wizard/MutateGrim.ogg'

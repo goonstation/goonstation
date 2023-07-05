@@ -2192,7 +2192,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			var/datum/bioEffect/power/shoot_limb/sl = M.bioHolder.AddEffect("shoot_limb", do_stability=0)
 			sl.safety = 1
 			sl.altered = 1
-			sl.cooldown = 300
+			sl.cooldown = 30 SECONDS
 			sl.stun_mode = 1
 			var/datum/bioEffect/regenerator/r = M.bioHolder.AddEffect("regenerator", do_stability=0)
 			r.regrow_prob = 10

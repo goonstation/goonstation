@@ -3,7 +3,7 @@
 	desc = "Temporarily shield yourself from melee attacks and projectiles. It also absorbs some of the blast of explosions."
 	icon_state = "spellshield"
 	targeted = FALSE
-	cooldown = 600
+	cooldown = 60 SECONDS
 	requires_robes = 1
 	cooldown_staff = 1
 	voice_grim = 'sound/voice/wizard/MagicShieldGrim.ogg'

@@ -3,7 +3,7 @@
 	desc = "Teleports you to an area of your choice after a short delay."
 	icon_state = "teleport"
 	targeted = FALSE
-	cooldown = 450
+	cooldown = 45 SECONDS
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z

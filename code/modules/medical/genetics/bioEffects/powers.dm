@@ -5,7 +5,7 @@
 	msgGain = "You notice a strange cold tingle in your fingertips."
 	msgLose = "Your fingers feel warmer."
 	effectType = EFFECT_TYPE_POWER
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -119,7 +119,7 @@
 	id = "mattereater"
 	msgGain = "You feel hungry."
 	msgLose = "You don't feel quite so hungry anymore."
-	cooldown = 300
+	cooldown = 30 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 2
@@ -275,7 +275,7 @@
 	id = "jumpy"
 	msgGain = "Your leg muscles feel taut and strong."
 	msgLose = "Your leg muscles shrink back to normal."
-	cooldown = 30
+	cooldown = 3 SECONDS
 	probability = 99
 	blockCount = 4
 	blockGaps = 2
@@ -414,7 +414,7 @@
 	id = "polymorphism"
 	msgGain = "You don't feel entirely like yourself somehow."
 	msgLose = "You feel secure in your identity."
-	cooldown = 1800
+	cooldown = 180 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
@@ -506,7 +506,7 @@
 	id = "colorshift"
 	msgGain = "Your hair itches."
 	msgLose = "You feel more confident in your hair color."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
@@ -816,7 +816,7 @@
 	id = "immolate"
 	msgGain = "You suddenly feel rather hot."
 	msgLose = "You no longer feel uncomfortably hot."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -867,7 +867,7 @@
 	id = "melt"
 	msgGain = "You feel strange and jiggly."
 	msgLose = "You feel more solid."
-	cooldown = 1200
+	cooldown = 120 SECONDS
 	probability = 66
 	blockCount = 3
 	blockGaps = 2
@@ -939,7 +939,7 @@
 	id = "superfart"
 	msgGain = "You feel bloated and gassy."
 	msgLose = "You no longer feel gassy. What a relief!"
-	cooldown = 900
+	cooldown = 90 SECONDS
 	probability = 33
 	blockCount = 4
 	blockGaps = 3
@@ -1084,7 +1084,7 @@
 	curable_by_mutadone = 0
 
 	stability_loss = 0
-	cooldown = 200
+	cooldown = 20 SECONDS
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1096,7 +1096,7 @@
 	id = "eyebeams"
 	msgGain = "Your eyes ache and burn."
 	msgLose = "Your eyes stop aching."
-	cooldown = 80
+	cooldown = 8 SECONDS
 	probability = 33
 	blockCount = 3
 	blockGaps = 5
@@ -1168,7 +1168,7 @@
 	probability = 66
 	blockCount = 4
 	blockGaps = 4
-	cooldown = 600
+	cooldown = 60 SECONDS
 	msgGain = "You feel hype!"
 	msgLose = "You don't feel so pumped anymore."
 	stability_loss = 15
@@ -1224,7 +1224,7 @@
 	id = "midas"
 	msgGain = "Your fingers sparkle and gleam."
 	msgLose = "Your fingers return to normal."
-	cooldown = 300
+	cooldown = 30 SECONDS
 	probability = 99
 	blockCount = 2
 	blockGaps = 4
@@ -1335,7 +1335,7 @@
 	id = "healing_touch"
 	msgGain = "Your hands radiate a comforting aura."
 	msgLose = "The aura around your hands dissipates."
-	cooldown = 900
+	cooldown = 90 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/healing_touch
@@ -1414,7 +1414,7 @@
 	id = "dimension_shift"
 	msgGain = "You can see a faint blue light."
 	msgLose = "The blue light fades away."
-	cooldown = 900
+	cooldown = 90 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
@@ -1519,7 +1519,7 @@
 	id = "photokinesis"
 	msgGain = "Everything seems too dark!"
 	msgLose = "It's too bright!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 0
 	ability_path = /datum/targetable/geneticsAbility/photokinesis
@@ -1589,7 +1589,7 @@
 	id = "erebokinesis"
 	msgGain = "Everything seems too bright!"
 	msgLose = "It's too dark!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/erebokinesis
@@ -1635,7 +1635,7 @@
 	id = "fire_breath"
 	msgGain = "Your throat is burning!"
 	msgLose = "Your throat feels a lot better now."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 0
 	stability_loss = 10
 	ability_path = /datum/targetable/geneticsAbility/fire_breath
@@ -1692,7 +1692,7 @@
 	id = "brown_note"
 	msgGain = "You feel mischievous!"
 	msgLose = "You want to behave yourself again."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	blockCount = 1
 	blockGaps = 3
 	stability_loss = 15
@@ -2138,7 +2138,7 @@
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
 	msgLose = "You joints feel much better!"
-	cooldown = 600
+	cooldown = 60 SECONDS
 	occur_in_genepools = 1
 	probability = 10
 

@@ -281,7 +281,7 @@
 			person.restrain_time = TIME + restrainDuration
 
 /datum/item_special/rush
-	cooldown = 100
+	cooldown = 10 SECONDS
 	staminaCost = 25
 	image = "rush"
 	name = "Rush"
@@ -395,7 +395,7 @@
 		return
 
 /datum/item_special/throwing
-	cooldown = 10
+	cooldown = 1 SECONDS
 	staminaCost = 5
 	moveDelay = 0
 	moveDelayDuration = 0
@@ -729,7 +729,7 @@
 			P.name = "monkey"
 
 /datum/item_special/slam
-	cooldown = 50
+	cooldown = 5 SECONDS
 	staminaCost = 30
 	moveDelay = 10
 	moveDelayDuration = 20
@@ -850,7 +850,7 @@
 
 
 /datum/item_special/whirlwind
-	cooldown = 20
+	cooldown = 2 SECONDS
 	staminaCost = 15
 	restrainDuration = 1
 	image = "whirlwind"
@@ -1694,7 +1694,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		return
 
 /datum/item_special/nunchucks
-	cooldown = 30
+	cooldown = 3 SECONDS
 	staminaCost = 40
 	moveDelay = 5
 	moveDelayDuration = 5

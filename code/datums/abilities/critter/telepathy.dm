@@ -4,7 +4,7 @@
 /datum/targetable/critter/telepathy
   name = "Telepathy"
   desc = "Move your thoughts into the mind of another sapient being."
-  cooldown = 10
+  cooldown = 1 SECONDS
   targeted = TRUE
   target_anything = TRUE
 

@@ -4,7 +4,7 @@
 /datum/targetable/critter/powerkick
 	name = "Power Kick"
 	desc = "A powerful kick, sends people flying away from you and launches objects. Can force open doors and smash tables."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	icon_state = "power_kick"

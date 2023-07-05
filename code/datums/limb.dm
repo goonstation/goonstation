@@ -117,7 +117,7 @@
 /datum/limb/hitscan
 	var/brute = 5
 	var/burn = 0
-	var/cooldown = 30
+	var/cooldown = 3 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 
@@ -141,7 +141,7 @@
 		return 0
 
 /datum/limb/railgun
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 	is_on_cooldown()
@@ -193,7 +193,7 @@
 
 /datum/limb/arcflash
 	var/wattage = 15000
-	var/cooldown = 60
+	var/cooldown = 6 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 	is_on_cooldown()
@@ -294,7 +294,7 @@
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
 		current_shots = 3
-		cooldown = 30
+		cooldown = 3 SECONDS
 		reload_time = 200
 		muzzle_flash = "muzzle_flash"
 
@@ -302,7 +302,7 @@
 		proj = new/datum/projectile/bullet/abg
 		shots = 6
 		current_shots = 6
-		cooldown = 30
+		cooldown = 3 SECONDS
 		reload_time = 300
 		muzzle_flash = "muzzle_flash"
 
@@ -310,28 +310,28 @@
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
-		cooldown = 50
+		cooldown = 5 SECONDS
 		reload_time = 50
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
 		shots = 1
 		current_shots = 1
-		cooldown = 40
+		cooldown = 4 SECONDS
 		reload_time = 40
 
 	fire_elemental
 		proj = new/datum/projectile/bullet/flare
 		shots = 1
 		current_shots = 1
-		cooldown = 40
+		cooldown = 4 SECONDS
 		reload_time = 40
 
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1
 		current_shots = 1
-		cooldown = 40
+		cooldown = 4 SECONDS
 		reload_time = 300
 
 	spike
@@ -353,21 +353,21 @@
 		proj = new/datum/projectile/laser/light
 		shots = 1
 		current_shots = 1
-		cooldown = 30
+		cooldown = 3 SECONDS
 		reload_time = 30
 
 	cutter
 		proj = new/datum/projectile/laser/drill/cutter
 		shots = 1
 		current_shots = 1
-		cooldown = 30
+		cooldown = 3 SECONDS
 		reload_time = 30
 
 	disruptor
 		proj = new/datum/projectile/disruptor/high
 		shots = 1
 		current_shots = 1
-		cooldown = 40
+		cooldown = 4 SECONDS
 		reload_time = 40
 
 /datum/limb/mouth

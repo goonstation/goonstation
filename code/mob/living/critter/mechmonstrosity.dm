@@ -175,7 +175,7 @@
 	var/stealthy = 0
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 10
-	cooldown = 600
+	cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -212,7 +212,7 @@
 	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 14
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)
@@ -299,7 +299,7 @@
 	name = "Mechanically Animate"
 	desc = "After a short delay, convert a human corpse into a crawler."
 	cooldown = 0
-	var/actual_cooldown = 200
+	var/actual_cooldown = 20 SECONDS
 	icon_state = "pet"
 	targeted = TRUE
 	target_anything = TRUE
@@ -333,7 +333,7 @@
 	targeted = TRUE
 	target_nodamage_check = 1
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(mob/target)
 		if (!holder)

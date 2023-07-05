@@ -15,7 +15,7 @@
 	activ_text = "comes to life, projecting out a wall of force!"
 	deact_text = "shuts down, causing the forcefield to vanish!"
 	react_xray = list(13,60,95,11,"NONE")
-	var/cooldown = 80
+	var/cooldown = 8 SECONDS
 	var/field_radius = 3
 	var/field_time = 80
 	var/icon_state = "shieldsparkles"

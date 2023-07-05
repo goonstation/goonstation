@@ -3,7 +3,7 @@
 	desc = "Records the casters movement for 4 seconds after which the spell will fire and throw & heavily damage everyone in it's recorded Path."
 	icon_state = "bullc" // Vaguely matching placeholder.
 	targeted = FALSE
-	cooldown = 150
+	cooldown = 15 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1

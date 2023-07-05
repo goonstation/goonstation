@@ -3,7 +3,7 @@
 	desc = "Makes the victim temporarily unable to see."
 	icon_state = "blind"
 	targeted = TRUE
-	cooldown = 100
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1

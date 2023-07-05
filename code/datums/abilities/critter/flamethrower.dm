@@ -5,7 +5,7 @@
 	name = "Flamethrower"
 	icon_state = "fire_e_flamethrower"
 	desc = "Throw flames towards a target location up to three squares away."
-	cooldown = 150
+	cooldown = 15 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	var/throws = 0

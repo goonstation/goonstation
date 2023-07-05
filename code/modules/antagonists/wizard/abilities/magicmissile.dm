@@ -3,7 +3,7 @@
 	desc = "Attacks nearby foes with stunning projectiles."
 	icon_state = "missile"
 	targeted = FALSE
-	cooldown = 200
+	cooldown = 20 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1

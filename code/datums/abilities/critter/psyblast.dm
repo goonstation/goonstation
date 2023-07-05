@@ -4,7 +4,7 @@
 /datum/targetable/critter/psyblast
 	name = "Psyblast"
 	desc = "Unleash a powerful psychic blast at a human, knocking them out for a while."
-	cooldown = 300
+	cooldown = 30 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 

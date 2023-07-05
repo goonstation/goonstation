@@ -176,7 +176,7 @@
 	name = "Visit Hell."
 	desc = "Take a visit to hell or return to the living realm."
 	targeted = FALSE
-	cooldown = 50
+	cooldown = 5 SECONDS
 	var/turf/spawnturf = null
 
 	cast(atom/T)
@@ -311,7 +311,7 @@
 	name = "Capture target"
 	desc = "Drag a target into the eternal void."
 	targeted = TRUE
-	cooldown = 300
+	cooldown = 30 SECONDS
 	max_range = 1
 	var/grabtime = 65
 

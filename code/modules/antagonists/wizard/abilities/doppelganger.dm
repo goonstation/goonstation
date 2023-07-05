@@ -3,7 +3,7 @@
 	desc = "Creates a clone of you while temporarily making you undetectable. The clone keeps moving in whatever direction you were facing when you cast the spell."
 	icon_state = "doppelganger"
 	targeted = FALSE
-	cooldown = 300
+	cooldown = 30 SECONDS
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/DopplegangerGrim.ogg'

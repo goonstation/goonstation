@@ -484,7 +484,7 @@
 		return 0
 
 /datum/targetable/critter/bee_sting/queen
-	cooldown = 70
+	cooldown = 7 SECONDS
 	venom1 = "neurotoxin"
 	amt1 = 20
 	venom2 = "morphine"
@@ -496,7 +496,7 @@
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
 	icon_state = "bee_bite"
-	cooldown = 30
+	cooldown = 3 SECONDS
 	sound_bite = 'sound/impact_sounds/Flesh_Crush_1.ogg'
 	brute_damage = 4
 	var/list/bite_adjectives = list("tiny","eeny-weeny","minute","little","nubby")
@@ -513,7 +513,7 @@
 		return 0
 
 /datum/targetable/critter/bite/bee/queen
-	cooldown = 50
+	cooldown = 5 SECONDS
 	brute_damage = 10
 	bite_adjectives = list("rather large","big","expansive","proportionally small but still sizable")
 

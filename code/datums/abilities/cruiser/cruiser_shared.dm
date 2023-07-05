@@ -62,7 +62,7 @@
 	name = "Warp"
 	desc = "Warp to a beacon."
 	icon_state = "warp"
-	cooldown = 10
+	cooldown = 1 SECONDS
 	targeted = FALSE
 	target_anything = FALSE
 	lock_holder = FALSE
@@ -83,7 +83,7 @@
 	name = "Fire Weapons"
 	desc = "Fire the cruisers main weapons at the specified target."
 	icon_state = "cruiser_shoot"
-	cooldown = 10
+	cooldown = 1 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	sticky = 1
@@ -103,7 +103,7 @@
 	name = "Overload shield (90 Power/5)"
 	desc = "Overloads the cruiser's shields, providing increased shield regeneration even during sustained damage, for 15 seconds."
 	icon_state = "shieldboost"
-	cooldown = 200
+	cooldown = 20 SECONDS
 	targeted = FALSE
 	target_anything = FALSE
 	lock_holder = FALSE
@@ -122,7 +122,7 @@
 	name = "Overload weapons (90 Power/5)"
 	desc = "Overloads the cruiser's weapons, reducing cooldown times for 10 seconds."
 	icon_state = "weaponboost"
-	cooldown = 250
+	cooldown = 25 SECONDS
 	targeted = FALSE
 	target_anything = FALSE
 	lock_holder = FALSE
@@ -141,7 +141,7 @@
 	name = "Modulate shields (90 Power, Toggle)"
 	desc = "Continually modulates the frequency of the cruiser's shields while active, eliminating the weakness to energy weapons."
 	icon_state = "shieldmod"
-	cooldown = 10
+	cooldown = 1 SECONDS
 	targeted = FALSE
 	target_anything = FALSE
 	lock_holder = FALSE
@@ -179,7 +179,7 @@
 	name = "Ramming mode"
 	desc = "Enabled ramming mode."
 	icon_state = "ram"
-	cooldown = 100
+	cooldown = 10 SECONDS
 	targeted = FALSE
 	target_anything = FALSE
 	lock_holder = FALSE

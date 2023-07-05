@@ -7,7 +7,7 @@
 	target_nodamage_check = 1
 	shortcut_target_if_available = TRUE
 	max_range = 1
-	cooldown = 200
+	cooldown = 20 SECONDS
 	start_on_cooldown = 1
 	pointCost = 0
 	incapacitation_restriction = 1

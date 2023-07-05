@@ -39,7 +39,7 @@
 	desc = "Weave your own words into a fortune."
 	icon_state = "fortune"
 	targeted = FALSE
-	cooldown = 100
+	cooldown = 10 SECONDS
 
 	//backups just in case the fortune generation pools changed since 2016
 	var/list/fortune_mystical
@@ -283,7 +283,7 @@
 	desc = "Changes the color of your crystal ball."
 	icon_state = "omen"
 	targeted = FALSE
-	cooldown = 100
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -299,7 +299,7 @@
 	desc = "Brands a visible fortune."
 	icon_state = "brand"
 	targeted = TRUE
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner
@@ -366,7 +366,7 @@
 	desc = "Allows you to hear dead chat for 30 seconds."
 	icon_state = "medium"
 	targeted = FALSE
-	cooldown = 3000
+	cooldown = 300 SECONDS
 
 	cast(atom/target) //uses omen for the crystal ball animation and light, required setting the zoldorf to stat 2 to hear dead chat easily.
 		var/mob/zoldorf/user = holder.owner
@@ -465,7 +465,7 @@
 	desc = "Changes your soul color."
 	icon_state = "changecolor"
 	targeted = FALSE
-	cooldown = 100
+	cooldown = 10 SECONDS
 
 	cast(atom/target)
 		var/mob/zoldorf/user = holder.owner

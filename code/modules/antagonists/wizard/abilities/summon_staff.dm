@@ -4,7 +4,7 @@
 	desc = "Returns the staff to your active hand."
 	icon_state = "staff"
 	targeted = FALSE
-	cooldown = 600
+	cooldown = 60 SECONDS
 	requires_robes = 1
 	voice_grim = 'sound/voice/wizard/StaffGrim.ogg'
 	voice_fem = 'sound/voice/wizard/StaffFem.ogg'

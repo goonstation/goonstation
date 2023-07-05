@@ -62,7 +62,7 @@
 	name = "Psychic Stare"
 	desc = "After a medium delay, instantly devour a mob. You must stand still for this and maintain vision of the target."
 	cooldown = 0
-	var/actual_cooldown = 600
+	var/actual_cooldown = 60 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 

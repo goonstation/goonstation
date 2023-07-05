@@ -3,7 +3,7 @@
 	desc = "After a short delay, infect a human. If they are damaged enough or dead this will convert them instantly."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "critter_bite"
-	cooldown = 200
+	cooldown = 20 SECONDS
 	cooldown_after_action = TRUE
 	disabled = FALSE
 	targeted = TRUE

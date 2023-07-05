@@ -517,7 +517,7 @@
 /obj/ability_button/football_charge
 	name = "Rush"
 	icon_state = "rushon"
-	cooldown = 100
+	cooldown = 10 SECONDS
 	requires_equip = TRUE
 
 	ability_allowed()
@@ -539,9 +539,9 @@
 
 		if (ticker && istype(ticker.mode, /datum/game_mode/football))
 			if (the_mob.find_type_in_hand(/obj/item/football/the_big_one))
-				src.cooldown = 100
+				src.cooldown = 10 SECONDS
 			else
-				src.cooldown = 30
+				src.cooldown = 3 SECONDS
 
 		the_mob:rush()
 		icon_state = "rushoff"
@@ -566,7 +566,7 @@
 /obj/ability_button/scope_toggle_viewsize
 	name = "Toggle Scope Zoom"
 	icon_state = "airoff"
-	cooldown = 10
+	cooldown = 1 SECONDS
 
 	OnDrop()
 		if(usr.client.widescreen)

@@ -63,7 +63,7 @@
 	name = "Envelop"
 	desc = "After a short delay, instantly envelop a mob. You must stand still for this."
 	cooldown = 0
-	var/actual_cooldown = 200
+	var/actual_cooldown = 20 SECONDS
 	targeted = 1
 	target_anything = 1
 

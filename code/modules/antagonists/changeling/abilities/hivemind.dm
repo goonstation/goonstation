@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 	name = "Legworm"
 	desc = "Detach one of your legs and bring it to life using one of the members of your hivemind."
 	icon_state = "legworm"
-	cooldown = 1200
+	cooldown = 120 SECONDS
 	pointCost = 6
 	antag_role = ROLE_LEGWORM
 

@@ -177,7 +177,7 @@ var/HasturPresent = 0
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "hasturaura"
 	targeted = FALSE
-	cooldown = 500
+	cooldown = 50 SECONDS
 
 	cast()
 		for(var/mob/living/M in orange(300))
@@ -261,7 +261,7 @@ var/HasturPresent = 0
 
 
 /datum/limb/longtentacle
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 
@@ -328,7 +328,7 @@ var/HasturPresent = 0
 //TENTACLE LONG RANGE WHIP WITH STUN
 
 /datum/limb/longtentaclestun
-	var/cooldown = 50
+	var/cooldown = 5 SECONDS
 	var/next_shot_at = 0
 	var/image/default_obscurer
 

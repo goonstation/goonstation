@@ -1704,7 +1704,7 @@ datum/pathogeneffects/malevolent/farts/smoke
 	name = "Smoke Farts"
 	desc = "The infected individual occasionally farts reagent smoke."
 	rarity = RARITY_UNCOMMON
-	cooldown = 600
+	cooldown = 60 SECONDS
 	doInfect = 0 // the whole point is to not instantly infect a huge area, that's what got us into this mess >.>
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
@@ -1725,7 +1725,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 	name = "Plasma Farts"
 	desc = "The infected individual occasionally farts. Plasma."
 	rarity = RARITY_RARE
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
@@ -1754,7 +1754,7 @@ datum/pathogeneffects/malevolent/farts/co2
 	name = "CO2 Farts"
 	desc = "The infected individual occasionally farts. Carbon dioxide."
 	rarity = RARITY_RARE
-	cooldown = 600
+	cooldown = 60 SECONDS
 
 	fart(var/mob/M, var/datum/pathogen/origin, var/voluntary)
 		..()
@@ -1785,7 +1785,7 @@ datum/pathogeneffects/malevolent/farts/o2
 	desc = "The infected individual occasionally farts. Pure oxygen."
 	rarity = RARITY_COMMON
 	beneficial = 1
-	cooldown = 50
+	cooldown = 5 SECONDS
 	// ahahahah this is so stupid
 	// i have no idea what these numbers mean but i hope it's funny
 

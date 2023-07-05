@@ -121,7 +121,7 @@
 		icon_state = "stingfart"
 		venom_id = "fartonium"
 		inject_amount = 25
-		cooldown = 600
+		cooldown = 60 SECONDS
 
 	simethicone
 		name = "Anti-farting sting"
@@ -129,7 +129,7 @@
 		icon_state = "stingnofart"
 		venom_id = "anti_fart"
 		inject_amount = 25
-		cooldown = 600
+		cooldown = 60 SECONDS
 
 
 /datum/targetable/changeling/dna_target_select

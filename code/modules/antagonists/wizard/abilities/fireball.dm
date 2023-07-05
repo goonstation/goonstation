@@ -59,7 +59,7 @@
 	name = "Fireball"
 	icon_state = "fire-e-fireball"
 	desc = "Launches an explosive fireball at the target."
-	cooldown = 500
+	cooldown = 50 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 

@@ -3,7 +3,7 @@
 	desc = "Teleports a foe away."
 	icon_state = "warp"
 	targeted = TRUE
-	cooldown = 100
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1

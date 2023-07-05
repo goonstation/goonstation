@@ -2,7 +2,7 @@
 /datum/targetable/critter/mark
   name = "Mark"
   desc = "Focus your unyielding gaze on some poor soul."
-  cooldown = 600
+  cooldown = 60 SECONDS
   targeted = TRUE
   target_anything = TRUE
   icon_state = "mark"

@@ -5,7 +5,7 @@
 	targeted = FALSE
 	target_nodamage_check = 0
 	max_range = 0
-	cooldown = 2000
+	cooldown = 200 SECONDS
 	pointCost = 0
 	incapacitation_restriction = 2
 	can_cast_while_cuffed = TRUE

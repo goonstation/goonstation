@@ -4,7 +4,7 @@
 /datum/targetable/critter/writhe
 	name = "Writhe"
 	desc = "Writhe on the floor to damage and stun any nearby targets."
-	cooldown = 600
+	cooldown = 60 SECONDS
 	start_on_cooldown = 0
 	icon_state = "writhe"
 

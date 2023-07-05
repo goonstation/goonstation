@@ -3,7 +3,7 @@
 	desc = "Become incorporeal and move through walls."
 	icon_state = "phaseshift"
 	targeted = FALSE
-	cooldown = 300
+	cooldown = 30 SECONDS
 	requires_robes = 1
 	cooldown_staff = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z

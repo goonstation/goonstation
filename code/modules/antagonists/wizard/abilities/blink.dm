@@ -3,7 +3,7 @@
 	desc = "Teleport randomly to a nearby tile."
 	icon_state = "blink"
 	targeted = FALSE
-	cooldown = 100
+	cooldown = 10 SECONDS
 	requires_robes = 1
 	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 	voice_grim = 'sound/voice/wizard/BlinkGrim.ogg'

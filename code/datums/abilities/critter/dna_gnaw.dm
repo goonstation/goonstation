@@ -4,7 +4,7 @@
 /datum/targetable/critter/dna_gnaw
 	name = "Gnaw"
 	desc = "Sink your teeth into a mob in an attempt to rob them of some DNA."
-	cooldown = 200
+	cooldown = 20 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 	icon_state = "gnaw"

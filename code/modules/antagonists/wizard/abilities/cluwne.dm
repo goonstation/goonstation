@@ -4,7 +4,7 @@
 	icon_state = "clownrevenge"
 	targeted = TRUE
 	max_range = 1
-	cooldown = 1350
+	cooldown = 135 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1

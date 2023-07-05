@@ -2,7 +2,7 @@
 /datum/targetable/critter/shedtears
   name = "Shed Tears"
   desc = "Truly, the plight of the noble eyespider is a tragic one."
-  cooldown = 150
+  cooldown = 15 SECONDS
   start_on_cooldown = 0
   icon_state = "tears"
 

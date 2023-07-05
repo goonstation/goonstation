@@ -6,7 +6,7 @@
 	var/value = 100
 	var/last_life_value = 100
 	var/datum/simsHolder/holder
-	var/warning_cooldown = 100
+	var/warning_cooldown = 10 SECONDS
 	var/depletion_rate = 0.2
 	var/image/image_meter = null
 	var/image/image_change = null
@@ -141,7 +141,7 @@
 			var/warning = getWarningMessage()
 			if (warning)
 				showOwner(warning)
-				warning_cooldown = 100
+				warning_cooldown = 10 SECONDS
 		else
 			warning_cooldown--
 		onLife()

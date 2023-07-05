@@ -4,7 +4,7 @@
 	icon_state = "grasp"
 	targeted = TRUE
 	max_range = 1
-	cooldown = 600
+	cooldown = 60 SECONDS
 	requires_robes = 1
 	can_cast_from_container = FALSE
 	offensive = 1
