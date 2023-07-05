@@ -77,7 +77,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/create_blood_sploosh(var/T)
 	var/obj/itemspecialeffect/impact/E = new /obj/itemspecialeffect/impact/blood;\
 	if (E)
-		{E.setup(get_turf(T));}
+		E.setup(get_turf(T))
 
 /obj/item/proc/surgeryConfusion(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/damage as num)
 	if (!patient || !surgeon)
@@ -1970,7 +1970,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 
-//You messed up. Cause damage and spawn some indicators.
+///You messed up. Cause damage and spawn some indicators.
 /proc/do_slipup(var/mob/surgeon, var/mob/patient, var/damage_target, var/damage_value, var/fluff_text)
 	surgeon.visible_message("<span class='alert'><b>[surgeon][fluff_text]!</b></span>")
 	patient.TakeDamage(damage_target, damage_value, 0)
@@ -1978,8 +1978,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	create_blood_sploosh(patient)
 	display_slipup_image(surgeon, patient.loc)
 
+///Spawns an image above a patient when you slip up. Only the surgeon sees it.
 /proc/display_slipup_image(var/mob/surgeon, var/loc)
-	//Spawns an image above a patient when you slip up. Only the surgeon sees it.
 	if (!surgeon || !loc)
 		return
 	if (surgeon.bioHolder.HasEffect("clumsy"))
@@ -1989,6 +1989,6 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			slipup_icon_state = "slipup_clown3"
 		else if (prob(10))
 			slipup_icon_state = "slipup_clown2"
-		new/obj/decal/slipup_clumsy(loc, slipup_icon_state, surgeon)
+		new/obj/decal/slipup/clumsy(loc, slipup_icon_state, surgeon)
 	else
 		new/obj/decal/slipup(loc, "slipup", surgeon)
