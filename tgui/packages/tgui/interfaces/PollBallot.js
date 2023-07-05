@@ -2,7 +2,7 @@ import { useBackend } from '../backend';
 import { Button, ProgressBar, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
+const PollControls = ({ isAdmin, act, pollId, isExpired, multipleChoice, expiryDate }) => {
   return (
     <Stack>
       <Stack.Item>
@@ -14,10 +14,10 @@ const PollControls = ({ isAdmin, act, pollId, pollStatus, multipleChoice }) => {
           />
         ) : null}
         <Button
-          tooltip="Poll Status"
+          tooltip={expiryDate ? expiryDate : "No Expiration Date"}
           tooltipPosition="top"
-          color={pollStatus ? 'good' : 'bad'}
-          icon={pollStatus ? 'lock-open' : 'lock'}
+          color={isExpired ? 'bad' : 'good'}
+          icon={isExpired ? 'lock' : 'lock-open'}
         />
         {isAdmin ? (
           <>
@@ -48,7 +48,7 @@ const OptionControls = ({ isAdmin, act, pollId, optionId }) => {
   );
 };
 
-const Poll = ({ options, total_answers, act, pollId, isAdmin, playerId }) => {
+const Poll = ({ options, total_answers, act, pollId, isAdmin, isExpired, playerId }) => {
   if (!options || options.length === 0) return null;
   return (
     <Stack vertical>
@@ -58,6 +58,7 @@ const Poll = ({ options, total_answers, act, pollId, isAdmin, playerId }) => {
             <Stack>
               <Stack.Item grow>
                 <Button.Checkbox
+                  disabled={isExpired}
                   checked={option.answers_player_ids.includes(playerId)}
                   onClick={() => act('vote', { pollId, optionId: option.id })}
                 >
@@ -100,8 +101,9 @@ export const PollBallot = (props, context) => {
                     isAdmin={isAdmin}
                     act={act}
                     pollId={poll.id}
-                    pollStatus={poll.status}
+                    isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
                     multipleChoice={poll.multiple_choice}
+                    expiryDate={poll.expires_at}
                   />
                 }>
                 <Stack vertical>
@@ -111,7 +113,7 @@ export const PollBallot = (props, context) => {
                     act={act}
                     pollId={poll.id}
                     isAdmin={isAdmin}
-                    pollStatus={poll.status}
+                    isExpired={poll.expires_at && (new Date() > new Date(poll.expires_at))}
                     playerId={playerId}
                   />
                 </Stack>
