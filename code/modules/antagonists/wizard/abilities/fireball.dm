@@ -4,16 +4,17 @@
 	icon = 'icons/obj/wizard.dmi'
 	shot_sound = 'sound/effects/mag_fireballlaunch.ogg'
 	damage = 30
+	/// TRUE if we have sufficient spell power for a powerful fireball, FALSE otherwise. Defaults to TRUE for edge case uses.
+	var/has_spell_power = TRUE
 
 	is_magical = TRUE
 
 	on_hit(atom/hit, direction, var/obj/projectile/projectile)
 		var/turf/T = get_turf(hit)
-		if (projectile.mob_shooter && projectile.mob_shooter:wizard_spellpower(projectile.mob_shooter:abilityHolder:getAbility(/datum/targetable/spell/fireball)))
+		if (src.has_spell_power)
 			explosion_new(null, T, 3, 1.5, turf_safe = TRUE, range_cutoff_fraction = 0.75)
-		else if(projectile.mob_shooter)
-			if(prob(50))
-				explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
+		else
+			explosion_new(null, T, 2, 1.2, turf_safe = TRUE)
 			boutput(projectile.mob_shooter, "<span class='notice'>Your spell is weakened without a staff to channel it.</span>")
 		fireflash(T, 1, 1)
 
@@ -48,9 +49,10 @@
 			holder.owner.say("MHOL HOTTOV", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
+		var/obj/projectile/P = initialize_projectile_ST(holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
+			fb_proj.has_spell_power = src.wiz_holder.wizard_spellpower(src)
 			P.launch()
 
 /datum/targetable/critter/fireball

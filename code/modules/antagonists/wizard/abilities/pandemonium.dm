@@ -21,7 +21,7 @@
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
 
 		var/protectuser = 1
-		if (!holder.owner.wizard_spellpower(src))
+		if (!src.wiz_holder.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Without your staff to focus your spell, it may backfire!</span>")
 			protectuser = 0
 

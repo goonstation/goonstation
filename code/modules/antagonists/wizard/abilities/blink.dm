@@ -20,7 +20,7 @@
 		..()
 
 		var/accuracy = 3
-		if(holder.owner.wizard_spellpower(src))
+		if(src.wiz_holder.wizard_spellpower(src))
 			accuracy = 1
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")

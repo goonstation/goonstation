@@ -4,7 +4,7 @@
 	icon_state = "forcewall"
 	targeted = FALSE
 	cooldown = 20 SECONDS
-	requires_robes = 1
+	requires_robes = TRUE
 	can_cast_from_container = FALSE
 	voice_grim = 'sound/voice/wizard/ForcewallGrim.ogg'
 	voice_fem = 'sound/voice/wizard/ForcewallFem.ogg'
@@ -17,10 +17,10 @@
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("BRIXHUN MOHTYR", FALSE, maptext_style, maptext_colors)
 		..()
-		if(!holder.owner.wizard_spellpower(src))
+		if(!src.wiz_holder.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
-		playsound(holder.owner.loc, 'sound/effects/mag_forcewall.ogg', 25, 1, -1)
+		playsound(holder.owner, 'sound/effects/mag_forcewall.ogg', 25, 1, -1)
 		var/forcefield1
 		var/forcefield2
 		var/forcefield3
@@ -31,23 +31,23 @@
 			forcefield1 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y, holder.owner.z))
 			forcefield2 =  new /obj/forcefield(locate(holder.owner.x + 1, holder.owner.y, holder.owner.z))
 			forcefield3 =  new /obj/forcefield(locate(holder.owner.x - 1, holder.owner.y, holder.owner.z))
-			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x + 2, holder.owner.y, holder.owner.z))
-			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x - 2, holder.owner.y, holder.owner.z))
+			if (src.wiz_holder.wizard_spellpower(src))
+				forcefield4 =  new /obj/forcefield(locate(holder.owner.x + 2, holder.owner.y, holder.owner.z))
+				forcefield5 =  new /obj/forcefield(locate(holder.owner.x - 2, holder.owner.y, holder.owner.z))
 		else
 			forcefield1 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y, holder.owner.z))
 			forcefield2 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y + 1, holder.owner.z))
 			forcefield3 =  new /obj/forcefield(locate(holder.owner.x, holder.owner.y - 1, holder.owner.z))
-			if (holder.owner.wizard_spellpower(src)) forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
-			if (holder.owner.wizard_spellpower(src)) forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
+			if (src.wiz_holder.wizard_spellpower(src))
+				forcefield4 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y + 2,holder.owner.z))
+				forcefield5 =  new /obj/forcefield(locate(holder.owner.x,holder.owner.y - 2,holder.owner.z))
 
 		SPAWN(30 SECONDS)
 			qdel(forcefield1)
 			qdel(forcefield2)
 			qdel(forcefield3)
-			if (forcefield4)
-				qdel(forcefield4)
-			if (forcefield5)
-				qdel(forcefield5)
+			qdel(forcefield4)
+			qdel(forcefield5)
 
 /obj/forcefield
 	name = "Forcewall"

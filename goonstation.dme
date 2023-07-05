@@ -2027,7 +2027,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\string_cache.dm"
 #include "code\procs\string_picker.dm"
 #include "code\procs\waddle_walk.dm"
-#include "code\procs\waldo.dm"
 #include "code\procs\mobprocs\attacks.dm"
 #include "code\procs\mobprocs\chatprocs.dm"
 #include "code\procs\mobprocs\typing_indicator.dm"

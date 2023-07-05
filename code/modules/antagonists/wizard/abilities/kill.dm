@@ -37,7 +37,7 @@
 					boutput(holder.owner, "<span class='alert'>[target] seems to be warded from the effects!</span>")
 					return 1
 
-			if (holder.owner.wizard_spellpower(src))
+			if (src.wiz_holder.wizard_spellpower(src))
 				elecflash(holder.owner,power = 3)
 			else
 				elecflash(holder.owner,power = 2)

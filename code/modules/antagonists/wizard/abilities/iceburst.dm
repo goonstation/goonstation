@@ -3,10 +3,10 @@
 	desc = "Launches freezing bolts at nearby foes."
 	icon_state = "iceburst"
 	targeted = FALSE
-	cooldown = 200
-	requires_robes = 1
+	cooldown = 20 SECONDS
+	requires_robes = TRUE
 	can_cast_from_container = FALSE
-	offensive = 1
+	offensive = TRUE
 	voice_grim = 'sound/voice/wizard/IceBurstGrim.ogg'
 	voice_fem = 'sound/voice/wizard/IceBurstFem.ogg'
 	voice_other = 'sound/voice/wizard/IceBurstLoud.ogg'
@@ -30,7 +30,7 @@
 			holder.owner.say("NYTH ERRIN", FALSE, maptext_style, maptext_colors)
 		..()
 
-		if(!holder.owner.wizard_spellpower(src))
+		if(!src.wiz_holder.wizard_spellpower(src))
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		for (var/mob/living/M as mob in oview())
@@ -48,7 +48,7 @@
 				continue
 
 			playsound(holder.owner.loc, 'sound/effects/mag_iceburstlaunch.ogg', 25, 1, -1)
-			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
+			if ((!src.wiz_holder.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
 			SPAWN(0)
 				var/obj/overlay/A = new /obj/overlay( holder.owner.loc )
@@ -62,7 +62,7 @@
 				//A.sd_SetColor(0, 0.1, 0.8)
 				var/i
 				for(i=0, i<20, i++)
-					if (holder.owner.wizard_spellpower(src))
+					if (src.wiz_holder.wizard_spellpower(src))
 						if (!locate(/obj/decal/icefloor) in A.loc)
 							var/obj/decal/icefloor/B = new /obj/decal/icefloor(A.loc)
 							//B.sd_SetLuminosity(1)

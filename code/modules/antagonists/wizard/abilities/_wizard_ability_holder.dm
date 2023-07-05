@@ -1,5 +1,7 @@
 ////////////////////////////////////////////// Helper procs ////////////////////////////////////////////////////
 
+// These need to be their own procs on /mob so they can be called via signal send. DM lambdas when
+
 /mob/proc/emp_touchy(source, obj/item/I)
 	I.emp_act()
 
@@ -7,29 +9,8 @@
 	for(var/obj/item/I in src.equipped_list())
 		I.emp_act()
 
-/// Returns TRUE if we have enough magic power to cast a spell, FALSE if we don't.
-/mob/proc/wizard_spellpower(var/datum/targetable/spell/spell = null)
-	return FALSE
-
-/mob/living/critter/wizard_spellpower(var/datum/targetable/spell/spell = null)
-	var/magcount = 0
-	if (src.bioHolder.HasEffect("arcane_power") == 2)
-		magcount += 10
-	if (src.bioHolder.HasEffect("robed"))
-		return TRUE
-	for (var/obj/item/clothing/C in src.contents)
-		if (C.magical)
-			magcount += 1
-			if (istype(spell) && istype(C, /obj/item/clothing/gloves/ring/wizard))
-				var/obj/item/clothing/gloves/ring/wizard/WR = C
-				if (WR.ability_path == spell.type)
-					magcount += 10
-	if (src.find_type_in_hand(/obj/item/staff))
-		magcount += 2
-
-	return (magcount >= 4)
-
 // --------------------------------- Ability holder ---------------------------------------------------
+/// Minimum spell power to cast a wizard spell
 #define MINIMUM_SPELLPOWER 4
 /datum/abilityHolder/wizard
 	usesPoints = FALSE
@@ -87,6 +68,7 @@
 /// Minimum spell power required to cast something without an additional cooldown
 /datum/targetable/spell
 	preferred_holder_type = /datum/abilityHolder/wizard
+	var/datum/abilityHolder/wizard/wiz_holder	//!	Casted version of src.holder for convenience
 	var/requires_robes = FALSE					//! Does this spell require robes to cast?
 	var/offensive = FALSE						//! Is this spell offensive, i.e. for attacking/damaging people/the station?
 	var/cooldown_staff = FALSE					//! Should this spell have an increased (1.5x) cooldown if we cast without a staff?
@@ -110,9 +92,16 @@
 					cool /= 2
 				if (2)
 					cool = 1
-		if (src.cooldown_staff && !user.wizard_spellpower(src))
+		if (src.cooldown_staff && !src.wiz_holder.wizard_spellpower(src))
 			cool *= 1.5
 		return cool
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		if (istype(src.holder, /datum/abilityHolder/wizard))
+			src.wiz_holder = H
+		else
+			CRASH("Spell [identify_object(src)] attached to non-wizard holder [identify_object(H)]. This probably won't work.")
 
 	doCooldown(customCooldown)
 		var/on_cooldown = src.calculate_cooldown()

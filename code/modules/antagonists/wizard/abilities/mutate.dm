@@ -26,7 +26,7 @@
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_PASSIVE_WRESTLE, "empower")
 		APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_STAMINA_REGEN_BONUS, "empower", 5)
 		var/SPtime = 150
-		if (holder.owner.wizard_spellpower(src))
+		if (src.wiz_holder.wizard_spellpower(src))
 			SPtime = 300
 		else
 			boutput(holder.owner, "<span class='alert'>Your spell doesn't last as long without a staff to focus it!</span>")
