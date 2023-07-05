@@ -91,6 +91,7 @@ Alien/mutant/other fish:
 	hitsound = null // handled in attack() below
 	c_flags = ONBELT
 	attack_verbs = "slaps"
+	initial_volume = 50
 	edible = 0
 	doants = 0
 	custom_food = FALSE
@@ -109,6 +110,7 @@ Alien/mutant/other fish:
 /obj/item/reagent_containers/food/fish/New()
 	..()
 	src.setItemSpecial(/datum/item_special/swipe)
+	src.make_reagents()
 
 /obj/item/reagent_containers/food/fish/attack(mob/M, mob/user)
 	if(user?.bioHolder.HasEffect("clumsy") && prob(50))
@@ -118,6 +120,17 @@ Alien/mutant/other fish:
 	else
 		..()
 	playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1, -1)
+
+
+/obj/item/reagent_containers/food/fish/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+	src.fishing_upload_blacklisted = TRUE
+	src.desc += " The quality of this organical grown fish sadly doesn't compare to one catched in the wild."
+	HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+	return src
+
+/obj/item/reagent_containers/food/fish/proc/make_reagents()
+	src.reagents.add_reagent("fishoil",10)
+	return
 
 
 // Freshwater fish
@@ -131,18 +144,6 @@ Alien/mutant/other fish:
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/white
 	category = FISH_CATEGORY_FRESHWATER
 	value  = FISH_RARITY_COMMON
-
-/obj/item/reagent_containers/food/fish/botany
-	name = "botanical fish"
-	desc = "A curious type of fish, organical grown. You really should not see this..."
-
-	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
-		var/type = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
-		var/obj/item/reagent_containers/food/fish/newfish = new type(src.loc)
-		newfish.fishing_upload_blacklisted = TRUE
-		newfish.desc += " The quality of this organical grown fish sadly doesn't compare to one catched in the wild."
-		qdel(src)
-		return newfish
 
 /obj/item/reagent_containers/food/fish/salmon
 	name = "salmon"

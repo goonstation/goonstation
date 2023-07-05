@@ -1192,14 +1192,6 @@ TRAYS
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 
-/obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
-	New()
-		..()
-		SPAWN(0)
-			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
-			new fish(get_turf(src))
-			qdel(src)
-
 /obj/item/tongs
 	name = "tongs"
 	desc = "A device that allows you to use food items as if they were used in-hand, or get food items out of food boxes."
