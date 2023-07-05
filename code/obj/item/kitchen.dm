@@ -1192,11 +1192,11 @@ TRAYS
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
 
-/obj/item/fish/random // used by the Wholetuna Cordata plant
+/obj/item/reagent_containers/food/fish/random // used by the Wholetuna Cordata plant
 	New()
 		..()
 		SPAWN(0)
-			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
+			var/fish = pick(/obj/item/reagent_containers/food/fish/salmon,/obj/item/reagent_containers/food/fish/carp,/obj/item/reagent_containers/food/fish/bass)
 			new fish(get_turf(src))
 			qdel(src)
 

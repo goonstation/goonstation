@@ -239,7 +239,7 @@ TYPEINFO(/obj/item/fish_portal)
 	density = 1
 	layer = MOB_LAYER + 0.1
 	var/working = FALSE
-	var/allowed = list(/obj/item/fish)
+	var/allowed = list(/obj/item/reagent_containers/food/fish)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
@@ -255,7 +255,7 @@ TYPEINFO(/obj/item/fish_portal)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
-		for(var/obj/item/fish/P in src)
+		for(var/obj/item/reagent_containers/food/fish/P in src)
 			//No botany fish. Be a real angler and use that damn fishing rod
 			if (P.fishing_upload_blacklisted)
 				found_blacklisted_fish = TRUE
@@ -305,7 +305,7 @@ TYPEINFO(/obj/item/fish_portal)
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
-				for (var/obj/item/fish/F in S.contents)
+				for (var/obj/item/reagent_containers/food/fish/F in S.contents)
 					F.set_loc(src)
 					amtload++
 				S.UpdateIcon()
@@ -346,4 +346,4 @@ TYPEINFO(/obj/item/fish_portal)
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/fish)
+	can_hold = 	list(/obj/item/reagent_containers/food/fish)

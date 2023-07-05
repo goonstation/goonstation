@@ -16144,9 +16144,9 @@
 /area/evilreaver/genetics)
 "aWI" = (
 /obj/storage/closet/coffin,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/martian,
@@ -39397,9 +39397,9 @@
 /obj/storage/crate/freezer{
 	name = "Freezer"
 	},
-/obj/item/fish/salmon,
-/obj/item/fish/bass,
-/obj/item/fish/carp,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/carp,
 /obj/machinery/light/incandescent/cool,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 5;

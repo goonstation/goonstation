@@ -40507,7 +40507,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "rgB" = (
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;

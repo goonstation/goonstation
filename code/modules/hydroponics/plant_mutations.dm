@@ -503,7 +503,7 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/botany
+	crop = /obj/item/reagent_containers/food/fish/botany
 	dont_rename_crop = TRUE
 	special_proc_override = TRUE
 

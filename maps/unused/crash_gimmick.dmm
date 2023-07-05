@@ -9508,7 +9508,7 @@
 /obj/machinery/optable{
 	name = "Autopsy Table"
 	},
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /turf/simulated/floor/specialroom/freezer/blue{
 	broken = 1;
 	burnt = 1;
@@ -54711,11 +54711,11 @@
 /area/russian/radiation)
 "lKW" = (
 /obj/storage/crate/freezer,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/carp,
-/obj/item/fish/bass,
-/obj/item/fish/bass,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/carp,
+/obj/item/reagent_containers/food/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,

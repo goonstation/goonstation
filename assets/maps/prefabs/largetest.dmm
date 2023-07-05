@@ -6,23 +6,23 @@
 /turf/simulated/wall,
 /area/space)
 "c" = (
-/obj/item/fish/bass,
+/obj/item/reagent_containers/food/fish/bass,
 /turf/simulated/floor/airless,
 /area/space)
 "d" = (
-/obj/item/fish/carp,
+/obj/item/reagent_containers/food/fish/carp,
 /turf/simulated/floor/airless,
 /area/space)
 "e" = (
-/obj/item/fish/mahimahi,
+/obj/item/reagent_containers/food/fish/mahimahi,
 /turf/simulated/floor/airless,
 /area/space)
 "f" = (
-/obj/item/fish/red_herring,
+/obj/item/reagent_containers/food/fish/red_herring,
 /turf/simulated/floor/airless,
 /area/space)
 "g" = (
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /turf/simulated/floor/airless,
 /area/space)
 

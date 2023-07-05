@@ -55,7 +55,7 @@
 	},
 /area/space)
 "H" = (
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /turf/simulated/floor/plating/random,
 /area/space)
 "M" = (

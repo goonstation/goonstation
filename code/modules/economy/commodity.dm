@@ -67,7 +67,7 @@
 
 /datum/commodity/fish
 	comname = "Fish"
-	comtype = /obj/item/fish
+	comtype = /obj/item/reagent_containers/food/fish
 	onmarket = 1
 	price = 50
 	baseprice = 50
