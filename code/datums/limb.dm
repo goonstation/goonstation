@@ -55,9 +55,10 @@
 
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, 2, 9, 0, 0.7, 0) // 0.7x stamina damage. No crits.
-			msgs.damage_type = DAMAGE_BLUNT
-			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.flush(0)
+			if (msgs)
+				msgs.damage_type = DAMAGE_BLUNT
+				user.attack_effects(target, user.zone_sel?.selecting)
+				msgs.flush(0)
 
 			special_next = 0
 		else
@@ -503,7 +504,6 @@
 		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
-
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -604,7 +604,7 @@
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with zombie limbs at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
@@ -613,18 +613,19 @@
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(40))
+		if (prob(40) && ishuman(user))
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=3 SECONDS)
 		if (ishuman(target) && ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+			if (istype(H.mutantrace, /datum/mutantrace/zombie/can_infect))
 				target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
 		else if (issilicon(target))
 			special_attack_silicon(target, user)
 
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 
 /datum/limb/dualsaw
@@ -1526,7 +1527,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+		if (istype(target,/mob/living/critter/small_animal/trilobite))
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")
@@ -1578,7 +1579,37 @@
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("pummel", "pound", "mangle")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+/datum/limb/sword
+	help(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	disarm(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	grab(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (!user || !target)
+			return 0
+
+		if (!target.melee_attack_test(user))
+			return
+
+		if (no_logs != 1)
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a sword arm at [log_loc(user)].")
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		var/action = pick("stab", "slashe", "cut")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their sword!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)

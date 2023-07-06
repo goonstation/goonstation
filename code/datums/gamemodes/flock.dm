@@ -35,7 +35,7 @@
 
 /datum/game_mode/flock/post_setup()
 	for (var/datum/mind/flockmind in flockminds)
-		flockmind.add_antagonist(ROLE_FLOCKMIND)
+		flockmind.add_antagonist(ROLE_FLOCKMIND, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	. = ..()
 

@@ -24,7 +24,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 
 /datum/cookingrecipe/fishburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/burger/fishburger
 
@@ -1176,9 +1176,14 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/steak_ling
 
 /datum/cookingrecipe/fish_fingers
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/fish_fingers
+
+/datum/cookingrecipe/shrimp
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/shrimp
 
 /datum/cookingrecipe/bacon
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
@@ -1389,7 +1394,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/pie_fish
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	item3 = /obj/item/reagent_containers/food/snacks/plant/potato
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/pie/fish
@@ -1687,7 +1692,7 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/ingredient/meatpaste/
 
 /datum/cookingrecipe/fishpaste
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/ingredient/fishpaste/
 
@@ -1783,13 +1788,13 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/rice_ball
 
 /datum/cookingrecipe/nigiri_roll
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
 	cookbonus = 2
 	output = /obj/item/reagent_containers/food/snacks/nigiri_roll
 
 /datum/cookingrecipe/sushi_roll
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	item2 = /obj/item/reagent_containers/food/snacks/rice_ball
 	amt2 = 2
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/seaweed
