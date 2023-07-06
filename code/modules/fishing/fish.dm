@@ -516,9 +516,6 @@ Alien/mutant/other fish:
 	inhand_color = "#eb2d2d"
 	value  = FISH_RARITY_EPIC
 
-	New()
-		setProperty("flammable", 8)
-		return ..()
 
 /obj/item/reagent_containers/food/fish/igneous_fish
 	name = "igneous fish"
@@ -527,9 +524,6 @@ Alien/mutant/other fish:
 	inhand_color = "#380c0c"
 	value  = FISH_RARITY_RARE
 
-	New()
-		setProperty("flammable", 6)
-		return ..()
 
 //blob
 /obj/item/reagent_containers/food/fish/blobfish
