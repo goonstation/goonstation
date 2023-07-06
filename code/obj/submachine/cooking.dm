@@ -475,6 +475,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
+			src.recipes += new /datum/cookingrecipe/mapo_tofu_meat(src)
+			src.recipes += new /datum/cookingrecipe/mapo_tofu_synth(src)
 			src.recipes += new /datum/cookingrecipe/ramen_bowl(src)
 			src.recipes += new /datum/cookingrecipe/udon_bowl(src)
 			src.recipes += new /datum/cookingrecipe/curry_udon_bowl(src)
