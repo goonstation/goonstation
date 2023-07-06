@@ -412,7 +412,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /////////////////////////////////////////////Controls which "event" is called
 /obj/machinery/the_singularity/proc/event()
 	var/numb = rand(1,3)
-	if(prob(25 / radius))
+	if(prob(25 / max(radius, 1)))
 		grow()
 	switch (numb)
 		if (1)//Eats the turfs around it
