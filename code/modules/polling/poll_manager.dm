@@ -6,6 +6,7 @@ var/global/datum/poll_manager/poll_manager = new
 	/// fetch and cache the latest poll data from the API
 	proc/sync_polldata()
 		set waitfor = FALSE
+
 		var/datum/http_request/request = new
 		var/list/headers = list(
 			"Accept" = "application/json",
@@ -19,13 +20,12 @@ var/global/datum/poll_manager/poll_manager = new
 			poll_data = json_decode(response.body)
 
 	proc/sync_single_poll(var/pollId)
-		//set waitfor = FALSE
 		var/datum/http_request/request = new
 		var/list/headers = list(
 			"Accept" = "application/json",
 			"Authorization" = config.goonhub_api_token
 		)
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/polls/results/[pollId]", null, headers)
+		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/polls/[pollId]", null, headers)
 		request.begin_async()
 		UNTIL(request.is_complete())
 		var/datum/http_response/response = request.into_response()

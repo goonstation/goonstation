@@ -3,13 +3,13 @@
 	set name = "Player Polls"
 	set desc = "Cast your vote in a Goonstation poll"
 	set category = "Commands"
-	var/list/cooldowns
 	poll_ballot.ui_interact(mob)
 
 /datum/poll_ballot
 	var/rate_limit_counter = 0
 	/// soft cap to start forcing 1 second cooldown
 	var/const/rate_limit_soft_cap = 10
+
 /datum/poll_ballot/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
 
@@ -40,7 +40,7 @@
 		return
 	rate_limit_counter++
 	switch(action)
-		if("addPoll")
+		if("addPoll") //TODO server specific
 			USR_ADMIN_ONLY
 
 			var/question = tgui_input_text(ui.user, "Enter the poll question", "Add Poll", null, MAX_MESSAGE_LEN)
@@ -62,6 +62,29 @@
 			else
 				multiple_choice = FALSE
 
+			var/expiration_choice = tgui_input_list(ui.user, "Set an expiration date", "Add Poll",
+				list(
+					"None",
+					"Custom Minutes",
+					"Custom Hours",
+					"Custom Days",
+					"Custom ISO8601 Timestamp",
+					))
+			var/expires_at
+			switch (expiration_choice)
+				if ("Custom Minutes")
+					var/input = tgui_input_number(ui.user, "How many minutes?", "Add Poll", 1, 10000, 0)
+					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), minutes = input))
+				if ("Custom Hours")
+					var/input = tgui_input_number(ui.user, "How many hours?", "Add Poll", 1, 10000, 0)
+					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), hours = input))
+				if ("Custom Days")
+					var/input = tgui_input_number(ui.user, "How many days?", "Add Poll", 1, 10000, 0)
+					expires_at = toIso8601(addTime(subtractTime(world.realtime, hours = world.timezone), days = input))
+				if ("Custom ISO8601 Timestamp")
+					//todo
+					return
+
 			var/datum/http_request/request = new
 			var/list/headers = list(
 				"Accept" = "application/json",
@@ -72,7 +95,7 @@
 				"game_admin_ckey" = ui.user.ckey,
 				"question" = question,
 				"multiple_choice" = multiple_choice,
-				"expires_at" = null,
+				"expires_at" = expires_at,
 				"options" = options
 			)
 			body = json_encode(body)
