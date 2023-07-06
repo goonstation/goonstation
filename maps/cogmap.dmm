@@ -9770,6 +9770,11 @@
 /area/station/crew_quarters/catering)
 "aDp" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "aDq" = (
@@ -49988,6 +49993,11 @@
 	},
 /obj/cable/yellow{
 	icon_state = "1-2"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
