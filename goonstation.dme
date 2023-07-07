@@ -2008,6 +2008,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\command_alert.dm"
 #include "code\procs\computer_id.dm"
 #include "code\procs\currency_name.dm"
+#include "code\procs\datetime.dm"
 #include "code\procs\elecflash.dm"
 #include "code\procs\explosion_new.dm"
 #include "code\procs\export_data.dm"
