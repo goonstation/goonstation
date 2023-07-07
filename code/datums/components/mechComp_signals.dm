@@ -1,5 +1,6 @@
 #define DC_ALL "Disconnect All"
 #define CONNECT_COMP "Connect Component"
+#define START_LINK_PIANO "Start Linking Pianos"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
@@ -340,6 +341,22 @@ TYPEINFO(/datum/component/mechanics_holder)
 	if(connector)
 		src.link_devices(comsig_target, connector.connectee, user)
 		return TRUE
+	var/datum/component/auto_linker/linker = W.GetComponent(/datum/component/auto_linker)
+	if (linker && istype(comsig_target, /obj/player_piano))
+		var/obj/player_piano/piano_target = comsig_target
+		if (!piano_target.panel_exposed)
+			boutput(user, "<span class='alert'>Can't link without an exposed panel!</span>")
+			return TRUE
+		if (length(piano_target.linked_pianos))
+			boutput(user, "<span class='alert'>Can't link an already linked piano!</span>")
+			return TRUE
+		if (piano_target in linker.pianos)
+			boutput(user, "<span class='alert'>That piano is already stored!</span>")
+			return TRUE
+		piano_target.is_auto_linking = TRUE
+		linker.pianos.Add(piano_target)
+		boutput(user, "<span class='notice'>Stored piano.</span>")
+		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
 		if(hacked_door.panel_open)
@@ -406,3 +423,29 @@ TYPEINFO(/datum/component/mechanics_holder)
 /datum/component/mechanics_connector/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
 	. = ..()
+
+/datum/component/auto_linker
+	var/list/pianos
+
+/datum/component/auto_linker/Initialize(var/datum/component/mechanics_holder/C)
+	. = ..()
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(add_pianos))
+	src.pianos = list()
+
+/datum/component/auto_linker/proc/add_pianos(var/obj/item/thing, mob/user)
+	if (length(src.pianos) < 2)
+		boutput(user, "<span class='alert'>You must have at least two pianos to link!</span>")
+	else
+		boutput(user, "<span class='notice'>Linking pianos...</span>")
+		var/obj/player_piano/main_piano = src.pianos[1]
+		main_piano.add_pianos(src.pianos.Copy())
+		boutput(user, "<span class='notice'>Finished linking.</span>")
+
+	for (var/obj/player_piano/piano in src.pianos)
+		piano.is_auto_linking = FALSE
+	src.RemoveComponent()
+
+/datum/component/auto_linker/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_ITEM_ATTACK_SELF)
+	. = ..()
+
