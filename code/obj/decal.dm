@@ -824,40 +824,37 @@ obj/decal/fakeobjects/teleport_pad
 	plane = PLANE_NOSHADOW_ABOVE
 
 	New(var/location = null, var/state = null, var/mob/target = null)
-		if (!istype(src, /obj/decal/slipup/clumsy))
-			if(location)
-				src.set_loc(location)
-			else
-				src.set_loc(usr.loc)
-
-			var/new_state = "slipup"
-			if(state)
-				new_state = state
-
-			if (target)
-				var/image/image = image('icons/effects/effects.dmi', src, new_state)
-				target << image
-
-			var/matrix/original = matrix()
-			original.Scale(0.05)
-			src.transform = original
-
-			animate(src,transform = matrix(1, MATRIX_SCALE), time = 1 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
-			animate(time = 1 SECOND, alpha = 0, pixel_y = 8, easing = CIRCULAR_EASING)
-			SPAWN(2 SECONDS)
-				qdel(src)
-		..()
-
-/obj/decal/slipup/clumsy
-	pixel_x = -32
-	pixel_y = 16
-
-	New(var/location = null, var/state = null, var/mob/target = null)
 		if(location)
 			src.set_loc(location)
 		else
 			src.set_loc(usr.loc)
 
+		animate_slipup(src, state, target)
+		..()
+
+	proc/animate_slipup(var/obj/slipup_decal, var/state = null, var/mob/target = null)
+		var/new_state = "slipup"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/effects.dmi', src, new_state)
+			target << image
+
+		var/matrix/original = matrix()
+		original.Scale(0.05)
+		src.transform = original
+
+		animate(src,transform = matrix(1, MATRIX_SCALE), time = 1 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
+		animate(time = 1 SECOND, alpha = 0, pixel_y = 8, easing = CIRCULAR_EASING)
+		SPAWN(2 SECONDS)
+			qdel(src)
+
+/obj/decal/slipup/clumsy
+	pixel_x = -32
+	pixel_y = 16
+
+	animate_slipup(var/obj/decal/slipup_decal, var/state = null, var/mob/target = null)
 		var/new_state = "slipup_clown1"
 		if(state)
 			new_state = state
@@ -870,4 +867,3 @@ obj/decal/fakeobjects/teleport_pad
 		animate(pixel_y = 64, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
 		SPAWN(2 SECONDS)
 			qdel(src)
-		..()

@@ -74,10 +74,10 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else // if all else fails?
 		return 1 // head surgery is okay
 
-/proc/create_blood_sploosh(var/T)
-	var/obj/itemspecialeffect/impact/E = new /obj/itemspecialeffect/impact/blood;\
-	if (E)
-		E.setup(get_turf(T))
+/proc/create_blood_sploosh(var/turf/T)
+	var/obj/itemspecialeffect/impact/blood/blood_effect = new /obj/itemspecialeffect/impact/blood
+	if (blood_effect)
+		blood_effect.setup(get_turf(T))
 
 /obj/item/proc/surgeryConfusion(var/mob/living/carbon/human/patient as mob, var/mob/surgeon as mob, var/damage as num)
 	if (!patient || !surgeon)
