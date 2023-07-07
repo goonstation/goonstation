@@ -393,17 +393,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	if(trader)
 		trader.donate(user, gained_resources)
 
-///////////////////////////
-// FLOCK WINGRILLE SPAWNER
-///////////////////////////
-/obj/wingrille_spawn/flock
-	icon = 'icons/misc/featherzone.dmi'
-	icon_state = "wingrille"
-	win_path = "/obj/window/feather"
-	grille_path = "/obj/grille/flock"
-	full_win = 1
-	no_dirs = TRUE
-
 ////////////////////
 // FLOCKTRADER DOOR
 ////////////////////

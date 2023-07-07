@@ -17,6 +17,11 @@
 		I.UpdateIcon()
 	return I
 
+/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced
+	name = "reinforced cable coil"
+	amount = 300
+	item_type = /obj/item/cable_coil/reinforced
+
 /datum/robot/module_tool_creator/item_type/amount/glass_sheet
 	name = "glass sheets"
 	amount = 200
