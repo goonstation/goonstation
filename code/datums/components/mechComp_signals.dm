@@ -1,6 +1,5 @@
 #define DC_ALL "Disconnect All"
 #define CONNECT_COMP "Connect Component"
-#define START_LINK_PIANO "Start Linking Pianos"
 #define SET_SEND "Set Send-Signal"
 #define TOGGLE_MATCH "Toggle Exact Match"
 #define MECHFAILSTRING "You must be holding a Multitool to change Connections or Options."
