@@ -45322,9 +45322,11 @@
 /area/space)
 "tDY" = (
 /obj/table/reinforced/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = 17
+	},
 /obj/item/paper/book/from_file/dwainedummies{
-	pixel_x = 3;
-	pixel_y = 6
+	pixel_x = 4
 	},
 /turf/simulated/floor/black,
 /area/station/science/lobby{
@@ -54119,9 +54121,6 @@
 	})
 "xII" = (
 /obj/table/reinforced/auto,
-/obj/item/kitchen/food_box/donut_box{
-	pixel_y = -4
-	},
 /obj/machinery/light_switch/east,
 /obj/item/reagent_containers/food/drinks/mug{
 	pixel_x = 5;
