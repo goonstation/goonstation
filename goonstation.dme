@@ -950,6 +950,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\atmospherics\machinery\trinary\manifold_valve.dm"
 #include "code\modules\atmospherics\machinery\trinary\mixer.dm"
 #include "code\modules\atmospherics\machinery\trinary\retrofilter.dm"
+#include "code\modules\atmospherics\machinery\trinary\trinary_base.dm"
 #include "code\modules\atmospherics\machinery\unary\cold_sink.dm"
 #include "code\modules\atmospherics\machinery\unary\cryo_cell.dm"
 #include "code\modules\atmospherics\machinery\unary\freezer.dm"
