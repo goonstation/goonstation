@@ -237,7 +237,7 @@
 			if (istype(src.loc, /turf/space))
 				return
 			if (iscarbon(AM))
-				var/mob/M =	AM
+				var/mob/M = AM
 				LAZYLISTADDUNIQUE(M.attached_objs, src)
 				src.glide_size = M.glide_size
 				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
