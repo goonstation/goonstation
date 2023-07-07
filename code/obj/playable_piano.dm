@@ -368,6 +368,19 @@ TYPEINFO(/obj/player_piano)
 				linked_pianos -= p
 		linked_pianos += p
 
+	proc/add_pianos(var/list/pianos)
+		while (length(pianos))
+			var/obj/player_piano/current_piano = pianos[1]
+			pianos.Cut(1,2)
+			if (current_piano == null)
+				break
+			for (var/piano in pianos)
+				if (piano == null)
+					break
+				var/obj/player_piano/linking_piano = piano
+				current_piano.add_piano(linking_piano)
+				linking_piano.add_piano(current_piano)
+
 	verb/item_claim()
 		set name = "Claim Items"
 		set src in oview(1)
