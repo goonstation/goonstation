@@ -6,6 +6,7 @@
 	name = "chest"
 	organ_name = "chest"
 	desc = "Oh, crap."
+	icon = 'icons/obj/items/organs/chest.dmi'
 	icon_state = "chest_m"
 	edible = 0
 	max_damage = INFINITY

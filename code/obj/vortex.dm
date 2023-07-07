@@ -76,7 +76,8 @@
 				break
 		if(!interdicted)
 			if(derelict_mode)
-				horror_path = pick(/mob/living/critter/shade,
+				horror_path = pick(
+				/mob/living/critter/shade,
 				/mob/living/critter/shade,
 				/mob/living/critter/shade,
 				/mob/living/critter/shade,
@@ -95,11 +96,15 @@
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))
-					horror_path = pick(/obj/critter/gunbot/drone/buzzdrone,/obj/critter/gunbot/drone/buzzdrone, /mob/living/critter/aberration)
+					horror_path = pick(
+					/obj/critter/gunbot/drone/buzzdrone,
+					/obj/critter/gunbot/drone/buzzdrone,
+					/mob/living/critter/aberration)
 				if (was_eaten && prob(15))
-					horror_path = /obj/critter/blobman/meaty_martha
+					horror_path = /mob/living/critter/blobman/meat
 			else
-				horror_path = pick(/obj/critter/killertomato,
+				horror_path = pick(
+				/obj/critter/killertomato,
 				/obj/critter/spore,
 				/mob/living/critter/small_animal/rattlesnake,
 				/obj/critter/martian/warrior,
@@ -107,12 +112,17 @@
 				/obj/machinery/bot/secbot/emagged,
 				/obj/machinery/bot/medbot/mysterious/emagged,
 				/obj/machinery/bot/cleanbot/emagged,
-				/obj/critter/wasp/angry,
+				/mob/living/critter/small_animal/wasp/angry,
 				/mob/living/critter/small_animal/scorpion,
 				/mob/living/critter/mimic,
 				/mob/living/critter/fermid,
 				/mob/living/critter/bear)
 			var/obj/horror = new horror_path(src.loc)
+			if (ismobcritter(horror))
+				var/mob/living/critter/C = horror
+				C.faction |= FACTION_DERELICT
+				if (derelict_mode) // In disaster rounds we don't want wraith spawns fighting the local wildlife
+					C.faction |= FACTION_WRAITH
 			src.visible_message("<span class='alert'><b>[horror] emerges from the [src]!</b></span>","<span class='alert'>You hear a sharp buzzing noise.</span>")
 		else
 			SPAWN(rand(0.2 SECONDS, 2 SECONDS)) //desynchronize the visual/audible indication of interdiction in case of large batches of simultaneous vortexes

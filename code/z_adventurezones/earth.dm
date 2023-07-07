@@ -67,6 +67,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	aibm
 		ckey = "angriestibm"
 		name = "Office of AngriestIBM"
+	angel
+		ckey = "hauntmachine"
+		name = "Office of Angel"
 	aphtonites
 		ckey = ""
 		name = "Office of Aphtonites"
@@ -244,12 +247,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	varshie
 		ckey = "varshie"
 		name = "Office of Varshie"
-	virvatuli
-		ckey = "virvatuli"
-		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/music/v_office_beats.ogg'
-		sound_loop_vol = 90
-		sound_group = "virva_office"
 	walpvrgis
 		ckey = "walpvrgis"
 		name = "Office of Walpvrgis"
@@ -647,8 +644,13 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis
 	initial_reagents = "flockdrone_fluid"
-	New()
-		. = ..()
-		src.setMaterial(getMaterial("gnesisglass"))
+	default_material = "gnesisglass"
 
 /mob/living/critter/small_animal/crab/responsive
+
+
+/obj/item/reagent_containers/food/drinks/cola/efrem
+	#ifdef SECRETS_ENABLED
+	initial_reagents = list("cola"=10, "VHFCS"=10, "crime"=10)
+	#endif
+	name = "Bebop Cola"

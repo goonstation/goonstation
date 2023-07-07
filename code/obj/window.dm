@@ -26,12 +26,14 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/stab_resist = 0
 	var/corrode_resist = 0
 	var/temp_resist = 0
-	var/default_material = "glass"
 	var/default_reinforcement = null
 	var/reinf = 0 // cant figure out how to remove this without the map crying aaaaa - ISN
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	var/image/damage_image = null
+	default_material = "glass"
+	mat_changename = TRUE
+	uses_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -44,8 +46,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
-		if (default_material)
-			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
@@ -102,7 +102,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	disposing()
 		connect_image = null
 		density = 0
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles(need_rebuild=1, selfnotify=1)
 		. = ..()
 
 	Move()
@@ -524,23 +524,25 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	proc/update_nearby_tiles(need_rebuild, var/selfnotify = 0)
 		if(!air_master) return 0
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/target = get_step(source,dir)
+		var/list/turf/simulated/affected_simturfs = list()
+		if (issimulatedturf(src.loc))
+			affected_simturfs += src.loc
+		if (is_cardinal(src.dir) && issimulatedturf(get_step(src, src.dir)))
+			affected_simturfs += get_step(src, src.dir)
+		else if (!is_cardinal(src.dir))
+			for (var/neigh_dir in cardinal)
+				if (issimulatedturf(get_step(src, neigh_dir)))
+					affected_simturfs += get_step(src, neigh_dir)
 
 		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.groups_to_rebuild |= source.parent
+			for(var/turf/simulated/T in affected_simturfs)
+				if(T.parent) //Rebuild/update nearby group geometry
+					air_master.groups_to_rebuild |= T.parent
 				else
-					air_master.tiles_to_update |= source
-			if(istype(target))
-				if(target.parent)
-					air_master.groups_to_rebuild |= target.parent
-				else
-					air_master.tiles_to_update |= target
+					air_master.tiles_to_update |= T
 		else
-			if(istype(source)) air_master.tiles_to_update |= source
-			if(istype(target)) air_master.tiles_to_update |= target
+			for(var/turf/simulated/T in affected_simturfs)
+				air_master.tiles_to_update |= T
 
 		if (map_currently_underwater)
 			var/turf/space/fluid/n = get_step(src,NORTH)
@@ -556,8 +558,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if(istype(w))
 				w.tilenotify(src.loc)
 
-		if (selfnotify && istype(source))
-			source.selftilenotify() //for fluids
+		if (selfnotify && isturf(src.loc))
+			var/turf/T = src.loc
+			T.selftilenotify() //for fluids
 
 		return 1
 
@@ -970,134 +973,9 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
 	default_reinforcement = "bohrum"
+
 	the_tuff_stuff
 		explosion_resistance = 5
-
-/obj/wingrille_spawn
-	name = "window grille spawner"
-	icon = 'icons/obj/window.dmi'
-	icon_state = "wingrille"
-	density = 1
-	anchored = ANCHORED
-	invisibility = INVIS_ALWAYS
-	//layer = 99
-	pressure_resistance = 4*ONE_ATMOSPHERE
-	var/win_path = "/obj/window"
-	var/grille_path = "/obj/grille/steel"
-	var/full_win = 0 // adds a full window as well
-	var/no_dirs = 0 //ignore directional
-
-	New()
-		..()
-		if(current_state >= GAME_STATE_WORLD_INIT)
-			SPAWN(0)
-				initialize()
-
-	initialize()
-		. = ..()
-		src.set_up()
-		qdel(src)
-
-	proc/set_up()
-		if (!locate(text2path(src.grille_path)) in get_turf(src))
-			var/obj/grille/new_grille = text2path(src.grille_path)
-			new new_grille(src.loc)
-
-		if (!no_dirs)
-			for (var/dir in cardinal)
-				var/turf/T = get_step(src, dir)
-				if ((!locate(/obj/wingrille_spawn) in T) && (!locate(/obj/grille) in T))
-					var/obj/window/new_win = text2path("[src.win_path]/[dir2text(dir)]")
-					if(new_win)
-						new new_win(src.loc)
-					else
-						CRASH("Invalid path: [src.win_path]/[dir2text(dir)]")
-		if (src.full_win)
-			if(!no_dirs || !locate(text2path(src.win_path)) in get_turf(src))
-				// if we have directional windows, there's already a window (or windows) from directional windows
-				// only check if there's no window if we're expecting there to be no window so spawn a full window
-				var/obj/window/new_win = text2path(src.win_path)
-				new new_win(src.loc)
-
-	full
-		icon_state = "wingrille_f"
-		full_win = 1
-
-	reinforced
-		name = "reinforced window grille spawner"
-		icon_state = "r-wingrille"
-		win_path = "/obj/window/reinforced"
-
-		full
-			icon_state = "r-wingrille_f"
-			full_win = 1
-
-	crystal
-		name = "crystal window grille spawner"
-		icon_state = "p-wingrille"
-		win_path = "/obj/window/crystal"
-
-		full
-			icon_state = "p-wingrille_f"
-			full_win = 1
-
-	reinforced_crystal
-		name = "reinforced crystal window grille spawner"
-		icon_state = "pr-wingrille"
-		win_path = "/obj/window/crystal/reinforced"
-
-		full
-			icon_state = "pr-wingrille_f"
-			full_win = 1
-
-	bulletproof
-		name = "bulletproof window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/bulletproof"
-
-		full
-			name = "bulletproof window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-	hardened
-		name = "hardened window grille spawner"
-		icon_state = "br-wingrille"
-		win_path = "/obj/window/hardened"
-
-		full
-			name = "hardened window grille spawner"
-			icon_state = "br-wingrille"
-			icon_state = "b-wingrille_f"
-			full_win = 1
-
-
-	auto
-		name = "autowindow grille spawner"
-		win_path = "/obj/window/auto"
-		full_win = 1
-		no_dirs = 1
-		icon_state = "wingrille_f"
-
-		reinforced
-			name = "reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced"
-			icon_state = "r-wingrille_f"
-
-		crystal
-			name = "crystal autowindow grille spawner"
-			win_path = "/obj/window/auto/crystal"
-			icon_state = "p-wingrille_f"
-
-			reinforced
-				name = "reinforced crystal autowindow grille spawner"
-				win_path = "/obj/window/auto/crystal/reinforced"
-				icon_state = "pr-wingrille_f"
-
-		tuff
-			name = "tuff stuff reinforced autowindow grille spawner"
-			win_path = "/obj/window/auto/reinforced/the_tuff_stuff"
 
 //Cubicle walls! Also for the crunch. - from halloween.dm
 /obj/window/cubicle
@@ -1138,7 +1016,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
 		dir = 1
-		default_material = "metal"
+		default_material = "steel"
 
 // flock windows
 
@@ -1179,6 +1057,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		var/mob/living/critter/flock/drone/F = mover
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
+TYPEINFO(/obj/window/feather)
+	mat_appearances_to_ignore = list("gnesis")
 /obj/window/feather
 	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
@@ -1186,7 +1066,6 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	default_material = "gnesisglass"
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	health = 50 // as strong as reinforced glass, but not as strong as plasmaglass

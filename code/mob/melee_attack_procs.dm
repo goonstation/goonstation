@@ -23,8 +23,11 @@
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
+		else if (ishuman(M))
 			src.administer_CPR(M)
+		else
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)
@@ -680,11 +683,12 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
-	//set attack message
-	if(pre_armor_damage > 0 && damage <= 0 )
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
-	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+	if(!do_kick)
+		//set attack message
+		if(pre_armor_damage > 0 && damage <= 0 )
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target], but [target]'s armor blocks it!</B></span>"
+		else
+			msgs.base_attack_message = "<span class='alert'><B>[src] [do_punch ? src.punchMessage : "attacks"] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	//check godmode/sanctuary/etc
 	var/attack_resistance = msgs.target.check_attack_resistance()
@@ -1025,7 +1029,7 @@
 				var/mob/living/carbon/human/H = target
 				if (H.can_be_converted_to_the_revolution())
 					if (isrevolutionary(owner))
-						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
 							H.changeStatus("newcause", 5 SECONDS)
 							H.HealDamage("All", max(30 - H.health,0), 0)
 							H.HealDamage("All", 0, max(30 - H.health,0))

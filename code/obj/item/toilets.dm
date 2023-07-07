@@ -138,19 +138,20 @@ TYPEINFO(/obj/item/storage/toilet)
 /obj/item/storage/toilet/suicide_in_hand = 0
 /obj/item/storage/toilet/suicide(var/mob/living/carbon/human/user as mob)
 	if (!ishuman(user) || !user.organHolder)
-		return 0
+		return FALSE
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
+	if (!head) // they were already headless or something else odd happened, just abort
+		return FALSE
 	if (src.clogged >= 1 || src.storage.is_full())
 		head.set_loc(src.loc)
 		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		src.visible_message("<span class='notice'>[head] floats up out of the clogged [src.name]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
-				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
-				O.vomit()
+				var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)].</span>"
+				O.vomit(0, null, vomit_message)
 	else
 		var/list/emergeplaces = list()
 		for_by_tcl(T, /obj/item/storage/toilet)
@@ -163,9 +164,8 @@ TYPEINFO(/obj/item/storage/toilet)
 			head.visible_message("<span class='notice'>[head] emerges from [picked]!</span>")
 		for (var/mob/living/carbon/human/O in AIviewers(head, null))
 			if (prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
-				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
-				O.vomit()
+				var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>"
+				O.vomit(0, null, vomit_message)
 
 	playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 	health_update_queue |= user
@@ -183,9 +183,7 @@ TYPEINFO(/obj/item/storage/toilet)
 				src.storage.add_contents(new something(src))
 
 /obj/item/storage/toilet/random/gold // important!!
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"
 
 /obj/item/storage/toilet/random/escapetools
 	spawn_contents = list(/obj/item/wirecutters,\
@@ -197,7 +195,4 @@ TYPEINFO(/obj/item/storage/toilet)
 	name = "golden toilet"
 	icon_state = "toilet$$gold"
 	desc = "The result of years of stolen Nanotrasen funds."
-
-	New()
-		..()
-		src.setMaterial(getMaterial("gold"))
+	default_material = "gold"

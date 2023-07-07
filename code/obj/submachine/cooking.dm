@@ -667,6 +667,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
+			src.recipes += new /datum/cookingrecipe/shrimp(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
@@ -1126,9 +1127,9 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:UpdateIcon()
+				S.UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
-				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
+				S.tooltip_rebuild = 1
 			return
 		else
 			var/proceed = 0

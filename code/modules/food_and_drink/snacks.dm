@@ -935,7 +935,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		if(src.warm == DONK_WARM)
 			M.reagents?.add_reagent("honk_fart",15)
 		else
-			M.reagents?.add_reagent("simethicone",15)
+			M.reagents?.add_reagent("anti_fart",15)
 		..()
 
 	cooltime()
@@ -1022,8 +1022,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if(prob(30))
 					H.changeStatus("stunned", 2 SECONDS)
 					boutput(H, "<span class='alert'>[stinkString()]</span>")
-					H.visible_message("<span class='alert'>[H] vomits, unable to handle the fishy stank!</span>")
-					H.vomit()
+					var/vomit_message = "<span class='alert'>[H] vomits, unable to handle the fishy stank!</span>"
+					H.vomit(0, null, vomit_message)
 
 	disposing()
 		processing_items.Remove(src)
@@ -1040,8 +1040,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			switch(effect)
 				if(1 to 5)
 					boutput(M, "<span class='alert'>aaaaaAAAAA<b>AAAAAAAA</b></span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+					M.vomit(0, null, vomit_message)
 					M.changeStatus("weakened", 4 SECONDS)
 				if(6 to 10)
 					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
@@ -1114,16 +1114,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					else
 						boutput(user, "<span class='alert'><font size=4><B>HOLY FUCK THAT REEKS!!!!!</b></font></span>")
 						user.changeStatus("weakened", 8 SECONDS)
-						user.visible_message("<span class='alert'>[user] suddenly and violently vomits!</span>")
-						user.vomit()
+						var/vomit_message = "<span class='alert'>[user] suddenly and violently vomits!</span>"
+						user.vomit(0, null, vomit_message)
 				else
 					if(M.bioHolder.HasEffect("accent_swedish"))
 						boutput(M, "<span class='notice'>Hey, something smells good!</span>")
 					else
 						boutput(M, "<span class='alert'><font size=4><B>WHAT THE FUCK IS THAT SMELL!?</b></font></span>")
 						M.changeStatus("weakened", 4 SECONDS)
-						M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 
 /obj/item/reagent_containers/food/snacks/chips
 	name = "chips"
@@ -1535,6 +1535,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 0
 	food_effects = list("food_disease_resist")
+
+	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
+		switch(quality_status)
+			if("jumbo")
+				src.heal_amt *= 2
+				src.bites_left *= 2
+			if("rotten")
+				src.heal_amt = 0
+			if("malformed")
+				src.heal_amt += rand(-2,2)
+				src.bites_left += rand(-2,2)
+		if (src.bites_left < 1)
+			src.bites_left = 1
+		HYPadd_harvest_reagents(src,origin_plant,passed_genes,quality_status)
+		return src
 
 /obj/item/reagent_containers/food/snacks/mushroom/amanita
 	name = "space mushroom"
@@ -2060,6 +2075,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_burn", "food_sweaty", "food_tox")
 	meal_time_flags = MEAL_TIME_LUNCH
 
+/obj/item/reagent_containers/food/snacks/shrimp
+	name = "cooked shrimp meat"
+	desc = "A perfectly boiled shrimp meat ready to serve. Fancy!"
+	icon_state = "shrimp_meat_cooked"
+	bites_left = 1
+	heal_amt = 2
+	food_color = "#e14531"
+	food_effects = list("food_warm", "food_brute")
+
 /obj/item/reagent_containers/food/snacks/bakedpotato
 	name = "baked potato"
 	desc = "Would go good with some cheese or steak."
@@ -2469,7 +2493,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			boutput(user, "You wrap the seaweed around the rice ball. A good decision.")
 			new /obj/item/reagent_containers/food/snacks/rice_ball/onigiri(get_turf(user))
 			qdel(src)
-		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet_slice))
 			var/spawnloc = get_turf(src)
 			var/handspawn
 			if(istype(src.loc,/mob))
@@ -2478,12 +2502,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			src.set_loc(user)
 			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
 			switch(W.icon_state)
-				if("fillet-orange")
+				if("filletslice-orange")
 					nigiri.icon_state = "nigiri1"
-				if("fillet-pink")
+				if("filletslice-pink")
 					nigiri.icon_state = "nigiri2"
-				if("fillet-white")
+				if("filletslice-white")
 					nigiri.icon_state = "nigiri3"
+				if("filletslice-small")
+					nigiri.icon_state = "nigiri4"
+			user.u_equip(W)
+			qdel(W)
+			if(handspawn)
+				user.put_in_hand_or_drop(nigiri)
+			else
+				nigiri.set_loc(spawnloc)
+			qdel(src)
+		else if(istype(W, /obj/item/reagent_containers/food/snacks/shrimp))
+			var/spawnloc = get_turf(src)
+			var/handspawn
+			if(istype(src.loc,/mob))
+				user.u_equip(src)
+				handspawn = TRUE
+			src.set_loc(user)
+			var/obj/item/reagent_containers/food/snacks/nigiri_roll/nigiri = new /obj/item/reagent_containers/food/snacks/nigiri_roll
+			nigiri.icon_state = "nigiri_shrimp"
+			nigiri.desc = "A ball of sticky rice with a cooked shrimp on top."
 			user.u_equip(W)
 			qdel(W)
 			if(handspawn)
@@ -2592,7 +2635,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	New()
 		..()
-		src.icon_state = "nigiri[rand(1,3)]"
+		src.icon_state = "nigiri[rand(1,4)]"
 
 /obj/item/reagent_containers/food/snacks/riceandbeans
 	name = "rice and beans"
@@ -2721,7 +2764,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		reagents.add_reagent("saline",7)
 		reagents.add_reagent("charcoal",7)
 		reagents.add_reagent("anti_rad",7)
-		reagents.add_reagent("omnnizine",7)
+		reagents.add_reagent("omnizine",7)
 
 
 /obj/item/reagent_containers/food/snacks/greengoo
@@ -2822,7 +2865,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "holywater"=5)
+	initial_reagents = list("currypowder"=10, "capsaicin"=5, "water_holy"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry

@@ -55,10 +55,6 @@
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
 		return FALSE
 
-	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(M))
-		boutput(M, "<span class='alert'>You can't drink the blood of your own thralls!</span>")
-		return FALSE
-
 	if (isnpcmonkey(target))
 		boutput(M, "<span class='alert'>Drink monkey blood?! That's disgusting!</span>")
 		return FALSE
@@ -134,10 +130,13 @@
 			else
 				HH.blood_volume -= 20 * mult
 
-			//vampires heal, thralls don't
-			M.HealDamage("All", 3, 3)
-			M.take_toxin_damage(-1)
-			M.take_oxygen_deprivation(-1)
+			// Vampire TEG also uses this ability, prevent runtimes
+			if (ismob(src.owner))
+				//vampires heal, thralls don't
+				M.HealDamage("All", 3, 3)
+				M.take_toxin_damage(-1)
+				M.take_oxygen_deprivation(-1)
+
 			if (mult >= 1) //mult is only 1 or greater during a pointblank true suck
 				if (HH.blood_volume < 300 && prob(15))
 					if (!HH.getStatusDuration("paralysis"))
@@ -216,13 +215,6 @@
 
 	if (check_target_immunity(target) == 1)
 		target.visible_message("<span class='alert'><B>[M] bites [target], but fails to even pierce their skin!</B></span>")
-		return 0
-
-	var/mob/master = null
-	if(src.owner.mind && src.owner.mind.master)
-		master = ckey_to_mob(src.owner.mind.master)
-	if ((target.mind && target.mind.special_role == ROLE_VAMPTHRALL) && target.is_mentally_dominated_by(master))
-		boutput(M, "<span class='alert'>You can't drink the blood of your master's thralls!</span>")
 		return 0
 
 	if (isnpcmonkey(target))

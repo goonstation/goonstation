@@ -32,11 +32,11 @@ dmm_suite
 		props.info = tag
 		// Split Key/Model list into lines
 		var key_len
-		var /list/grid_models[0]
+		var/list/grid_models[0]
 		var startGridPos = findtext(dmm_text, "\n\n(1,1,") // Safe because \n not allowed in strings in dmm
 		var startData = findtext(dmm_text, "\"")
 		var linesText = copytext(dmm_text, startData + 1, startGridPos)
-		var /list/modelLines = splittext(linesText, regex("\n\""))
+		var/list/modelLines = splittext(linesText, regex("\n\""))
 		for(var/modelLine in modelLines) // "aa" = (/path{key = value; key = value},/path,/path)\n
 			var endQuote = findtext(modelLine, quote, 2, 0)
 			if(endQuote <= 1)
@@ -55,14 +55,14 @@ dmm_suite
 		var commentPathText = "[/obj/dmm_suite/comment]"
 		if(copytext(commentModel, 1, length(commentPathText)+1) == commentPathText)
 			var attributesText = copytext(commentModel, length(commentPathText)+2, -1) // Skip closing bracket
-			var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
+			var/list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
 			for(var/paddedAttribute in paddedAttributes)
 				var equalPos = findtextEx(paddedAttribute, "=")
 				var attributeKey = copytext(paddedAttribute, 1, equalPos-1)
 				var attributeValue = copytext(paddedAttribute, equalPos+3, -1) // Skip quotes
 				switch(attributeKey)
 					if("coordinates")
-						var /list/coords = splittext(attributeValue, comma_delim)
+						var/list/coords = splittext(attributeValue, comma_delim)
 						if(!coordX) coordX = text2num(coords[1])
 						if(!coordY)	coordY = text2num(coords[2])
 						if(!coordZ) coordZ = text2num(coords[3])
@@ -71,9 +71,9 @@ dmm_suite
 		if(!coordZ) coordZ = world.maxz+1
 		// Store quoted portions of text in text_strings, and replaces them with an index to that list.
 		var gridText = copytext(dmm_text, startGridPos)
-		var /list/gridLevels = list()
-		var /regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
-		var /list/coordShifts = list()
+		var/list/gridLevels = list()
+		var/regex/grid = regex(@{"\(([0-9]*),([0-9]*),([0-9]*)\) = \{"\n((?:\l*\n)*)"\}"}, "g")
+		var/list/coordShifts = list()
 		var/maxZFound = 1
 		while(grid.Find(gridText))
 			gridLevels.Add(copytext(grid.group[4], 1, -1)) // Strip last \n
@@ -85,8 +85,8 @@ dmm_suite
 		for(var/posZ = 1 to gridLevels.len)
 			var zGrid = gridLevels[posZ]
 			// Reverse Y coordinate
-			var /list/yReversed = text2list(zGrid, "\n")
-			var /list/yLines = list()
+			var/list/yReversed = text2list(zGrid, "\n")
+			var/list/yLines = list()
 			for(var/posY = yReversed.len to 1 step -1)
 				yLines.Add(yReversed[posY])
 			//
@@ -174,17 +174,17 @@ dmm_suite
 					originalStrings[indexText] = (match)
 			while(found)
 			// Identify each object's data, instantiate it, & reconstitues its fields.
-			var /list/turfStackTypes = list()
-			var /list/turfStackAttributes = list()
+			var/list/turfStackTypes = list()
+			var/list/turfStackAttributes = list()
 			for(var/areaDone = 0 to 1)
 				for(var/atomModel in splittext(models, comma_delim))
 					var bracketPos = findtext(atomModel, "{")
 					var atomPath = text2path(copytext(atomModel, 1, bracketPos))
-					var /list/attributes
+					var/list/attributes
 					if(bracketPos)
 						attributes = new()
 						var attributesText = copytext(atomModel, bracketPos+1, -1)
-						var /list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
+						var/list/paddedAttributes = splittext(attributesText, semicolon_delim) // "Key = Value"
 						for(var/paddedAttribute in paddedAttributes)
 							key_value_regex.Find(paddedAttribute)
 							attributes[key_value_regex.group[1]] = key_value_regex.group[2]
@@ -200,12 +200,12 @@ dmm_suite
 						turfStackAttributes[1] = attributes
 			// Layer all turf appearances into final turf
 			if(!turfStackTypes.len) return
-			var /turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
+			var/turf/topTurf = loadModel(turfStackTypes[1], turfStackAttributes[1], originalStrings, xcrd, ycrd, zcrd)
 			for(var/turfIndex = 2 to turfStackTypes.len)
-				var /mutable_appearance/underlay = new(turfStackTypes[turfIndex])
+				var/mutable_appearance/underlay = new(turfStackTypes[turfIndex])
 				loadModel(underlay, turfStackAttributes[turfIndex], originalStrings, xcrd, ycrd, zcrd)
 				topTurf.underlays.Add(underlay)
-				#ifdef RUNTIME_CHECKING
+				#ifdef CI_RUNTIME_CHECKING
 				if(!istype(topTurf, /turf/simulated/floor/airless/plating/catwalk))
 					CRASH("Duplicate turf at [xcrd],[ycrd],[zcrd] | [debug_id]")
 				#endif
@@ -216,14 +216,14 @@ dmm_suite
 				return
 			if((flags & DMM_LOAD_SPACE) && ispath(atomPath, /turf/space)) return //Dont load space
 			// Parse all attributes and create preloader
-			var /list/attributesMirror = list()
-			var /turf/location = locate(xcrd, ycrd, zcrd)
+			var/list/attributesMirror = list()
+			var/turf/location = locate(xcrd, ycrd, zcrd)
 			for(var/attributeName in attributes)
 				attributesMirror[attributeName] = loadAttribute(attributes[attributeName], strings)
-			var /dmm_suite/preloader/preloader = new(location, attributesMirror)
+			var/dmm_suite/preloader/preloader = new(location, attributesMirror)
 			// Begin Instanciation
 			// Handle Areas (not created every time)
-			var /atom/instance
+			var/atom/instance
 			if(ispath(atomPath, /area))
 				if(src.flags & DMM_BESPOKE_AREAS)
 					if(!(atomPath in src.area_cache))
@@ -297,7 +297,7 @@ turf
 
 atom/New(turf/newLoc)
     if(isturf(newLoc))
-        var /dmm_suite/preloader/preloader = newLoc.dmm_preloader
+        var/dmm_suite/preloader/preloader = newLoc.dmm_preloader
         if(preloader)
             newLoc.dmm_preloader = null
             preloader.load(src)
@@ -314,6 +314,6 @@ dmm_suite
 			. = ..()
 		proc
 			load(atom/newAtom)
-				var /list/attributesMirror = attributes // apparently this is faster
+				var/list/attributesMirror = attributes // apparently this is faster
 				for(var/attributeName in attributesMirror)
 					newAtom.vars[attributeName] = attributesMirror[attributeName]

@@ -1,8 +1,11 @@
 /datum/antagonist/salvager
 	id = ROLE_SALVAGER
 	display_name = ROLE_SALVAGER
+	antagonist_icon = "salvager"
+	uses_pref_name = FALSE
 
 	var/static/starting_freq = null
+	var/salvager_points
 
 	is_compatible_with(datum/mind/mind)
 		return ishuman(mind.current)
@@ -28,14 +31,16 @@
 			H.equip_if_possible(headset, H.slot_ears)
 		else
 			headset.protected_radio = TRUE
-		headset.frequency = src.pick_radio_freq()
-		H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
+
+		//headset.frequency = src.pick_radio_freq()
+		//H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
+
 		// Allow for Salvagers to have a secure channel
-		//headset.secure_frequencies = list("z" = R_FREQ_SYNDICATE)
-		//headset.secure_classes = list(RADIOCL_OTHER)
-		//headset.secure_colors = list("#a18146")
-		//headset.set_secure_frequency("z", src.pick_radio_freq())
-		//headset.desc += " The headset is covered in scratch marks and the screws look nearly stripped."
+		headset.secure_frequencies = list("z" = src.pick_radio_freq())
+		headset.secure_classes = list(RADIOCL_OTHER)
+		headset.secure_colors = list("#a18146")
+		headset.set_secure_frequency("z", src.pick_radio_freq())
+		headset.desc += " The headset is covered in scratch marks and the screws look nearly stripped."
 
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
@@ -54,6 +59,19 @@
 		H.equip_new_if_possible(/obj/item/weldingtool, H.slot_in_backpack)
 
 		H.traitHolder.addTrait("training_engineer")
+
+	add_to_image_groups()
+		. = ..()
+		var/image/image = image('icons/mob/antag_overlays.dmi', icon_state = src.antagonist_icon)
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.add_mind_mob_overlay(src.owner, image)
+		image_group.add_mind(src.owner)
+
+	remove_from_image_groups()
+		. = ..()
+		var/datum/client_image_group/image_group = get_image_group(ROLE_SALVAGER)
+		image_group.remove_mind_mob_overlay(src.owner)
+		image_group.remove_mind(src.owner)
 
 	assign_objectives()
 		new /datum/objective_set/salvager(src.owner, src)
@@ -82,6 +100,12 @@
 		. = sanitize_frequency(.)
 		starting_freq = .
 
+	handle_round_end(log_data)
+		var/list/dat = ..()
+		if (length(dat))
+			dat.Insert(2,"They collected [src.salvager_points] points worth of material.")
+		return dat
+
 /datum/job/special/salvager
 	name = "Salvager"
 	wages = 0
@@ -101,7 +125,7 @@
 		..()
 		if (!M)
 			return
-		M.mind?.add_antagonist(ROLE_SALVAGER)
+		M.mind?.add_antagonist(ROLE_SALVAGER, source = ANTAGONIST_SOURCE_ADMIN)
 		return
 
 // Stubs for the public

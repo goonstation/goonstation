@@ -57,6 +57,8 @@
 
 	var/datum/movement_controller/movement_controller
 
+	faction = FACTION_WRAITH
+
 	//////////////
 	// Wraith Overrides
 	//////////////
@@ -180,9 +182,6 @@
 			animate(src)
 			animate_levitate(src)
 		#endif
-
-		if (src.client)
-			src.antagonist_overlay_refresh(0, 0)
 
 		if (!src.abilityHolder)
 			src.abilityHolder = new /datum/abilityHolder/wraith(src)
@@ -665,15 +664,6 @@
 //////////////
 // Related procs and verbs
 //////////////
-
-// i am dumb - marq
-/mob/proc/wraithize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		src.mind.add_antagonist(ROLE_WRAITH)
-		return
-	return null
 
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new

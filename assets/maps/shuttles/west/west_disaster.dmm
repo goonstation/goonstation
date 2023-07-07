@@ -664,7 +664,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "vp" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -727,7 +727,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xq" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "xv" = (
@@ -1318,7 +1318,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Qs" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

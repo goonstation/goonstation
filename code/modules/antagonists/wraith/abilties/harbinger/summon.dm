@@ -57,13 +57,8 @@
 		var/datum/mind/lucky_dude = candidates[1]
 
 		//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-		if (lucky_dude.current)
-			var/mob/living/critter/wraith/nascent/P = new /mob/living/critter/wraith/nascent(T, W)
-			lucky_dude.transfer_to(P)
-			antagify(lucky_dude.current, null, 1)
-			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
-			usr.playsound_local(usr.loc, "sound/voice/wraith/ghostrespawn.ogg", 50, 0)
+		if (lucky_dude.add_subordinate_antagonist(ROLE_HARBINGER_SUMMON, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "harbinger summon", src.holder.owner)
-			boutput(P, "<span class='notice'><b>You have been respawned as a harbinger summon!</b></span>")
-			boutput(P, "<span class='alert'><b>[W] is your master! Use your abilities to choose a path! Work with your master to spread chaos!</b></span>")
+			message_admins("[lucky_dude.key] respawned as a harbinger summon for [src.holder.owner].")
+			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)

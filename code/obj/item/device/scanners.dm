@@ -374,6 +374,7 @@ TYPEINFO(/obj/item/device/analyzer/healthanalyzer)
 
 		user.visible_message("<span class='alert'><b>[user]</b> has analyzed [M]'s vitals.</span>",\
 		"<span class='alert'>You have analyzed [M]'s vitals.</span>")
+		playsound(src.loc , 'sound/items/med_scanner.ogg', 20, 0)
 		boutput(user, scan_health(M, src.reagent_scan, src.disease_detection, src.organ_scan, visible = 1))
 
 		scan_health_overhead(M, user)
@@ -697,7 +698,6 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 	icon_state = "recordtrak"
 	var/datum/db_record/active1 = null
 	var/datum/db_record/active2 = null
-	w_class = W_CLASS_NORMAL
 	item_state = "recordtrak"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	c_flags = ONBELT
@@ -757,6 +757,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				//Update Information
 				R["name"] = M.name
 				R["sex"] = M.gender
+				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
 				if (M.gloves)
 					R["fingerprint"] = "Unknown"
@@ -774,6 +775,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			//Update Information
 			src.active1["name"] = M.name
 			src.active1["sex"] = M.gender
+			src.active1["pronouns"] = M.get_pronouns().name
 			src.active1["age"] = M.bioHolder.age
 			/////Fingerprint record update
 			if (M.gloves)
@@ -1034,6 +1036,14 @@ TYPEINFO(/obj/item/device/appraisal)
 					if (T.crate_tag == C.delivery_destination)
 						sell_value = shippingmarket.appraise_value(C.contents, T.goods_buy, sell = 0)
 						out_text = "<strong>Prices from [T.name]</strong><br>"
+				for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+					if(C.delivery_destination == "REQ_THIRDPARTY")
+						out_text = "<strong>Cannot evaluate third-party sales.</strong><br>"
+					else if (RC.req_code == C.delivery_destination)
+						var/evaluated = RC.requisify(C,TRUE)
+						if(evaluated == "Contents sufficient for marked requisition.")
+							sell_value = RC.payout
+						out_text = "<strong>[evaluated]</strong><br>"
 
 			if (sell_value == -1)
 				// no trader on the crate

@@ -407,9 +407,8 @@ TYPEINFO(/obj/machinery/port_a_brig)
 				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
@@ -502,7 +501,7 @@ TYPEINFO(/obj/machinery/port_a_brig)
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
@@ -787,10 +786,10 @@ TYPEINFO(/obj/machinery/port_a_medbay)
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
-								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
@@ -847,7 +846,7 @@ TYPEINFO(/obj/machinery/vending/port_a_nanomed)
 	icon_state = "vend"
 	icon_deny = "vend-deny"
 	layer = FLOOR_EQUIP_LAYER1
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
 	anchored = UNANCHORED
 	p_class = 1.2

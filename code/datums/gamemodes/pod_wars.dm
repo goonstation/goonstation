@@ -101,6 +101,24 @@ var/list/pw_rewards_tier3 = null
 
 	return 1
 
+// Refactor this when pod wars roles are refactored into special role datums.
+/datum/game_mode/pod_wars/proc/setup_team_overlay(datum/mind/mind, overlay_icon_state)
+	var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+	var/datum/client_image_group/pod_wars_image_group = get_image_group(CLIENT_IMAGE_GROUP_POD_WARS)
+
+	// Add the player's team overlay to the general antagonist overlay image group, for Admin purposes.
+	if (antagonist_image_group.minds_with_associated_mob_image[mind])
+		antagonist_image_group.remove_mind_mob_overlay(mind)
+	antagonist_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+
+	// Add the player's mind and their team overlay to the Pod Wars image group.
+	if (!pod_wars_image_group.subscribed_minds_with_subcount[mind])
+		pod_wars_image_group.add_mind(mind)
+
+	if (pod_wars_image_group.minds_with_associated_mob_image[mind])
+		pod_wars_image_group.remove_mind_mob_overlay(mind)
+	pod_wars_image_group.add_mind_mob_overlay(mind, image('icons/mob/antag_overlays.dmi', icon_state = overlay_icon_state))
+
 /datum/game_mode/pod_wars/proc/add_latejoin_to_team(var/datum/mind/mind, var/datum/job/JOB)
 	if (istype(JOB, /datum/job/special/pod_wars/nanotrasen))
 		team_NT.members += mind
@@ -240,7 +258,6 @@ var/list/pw_rewards_tier3 = null
 //////////////////
 ///////////////pod_wars asteroids
 /turf/simulated/wall/auto/asteroid/pod_wars
-	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
 	hardness = 1

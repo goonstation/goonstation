@@ -25,8 +25,13 @@
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar
+	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy)
+	no_stamina_stuns = TRUE
 	var/is_king = FALSE
-	var/limb = /datum/limb/brullbar
+	var/limbpath = /datum/limb/brullbar
+	var/frenzypath = /datum/targetable/critter/frenzy
+
+	faction = FACTION_ICEMOON
 
 	attackby(obj/item/W as obj, mob/living/user as mob)
 		if (!isdead(src))
@@ -77,13 +82,13 @@
 		..()
 		var/datum/handHolder/HH = hands[1]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new src.limb
+		HH.limb = new src.limbpath
 		HH.icon_state = "handl"				// the icon state of the hand UI background
 		HH.limb_name = "left [is_king ? "king" : "" ] brullbar arm"
 
 		HH = hands[2]
 		HH.icon = 'icons/mob/hud_human.dmi'
-		HH.limb = new src.limb
+		HH.limb = new src.limbpath
 		HH.name = "right hand"
 		HH.suffix = "-R"
 		HH.icon_state = "handr"				// the icon state of the hand UI background
@@ -92,9 +97,6 @@
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/fadeout/brullbar)
-		abilityHolder.addAbility(/datum/targetable/critter/tackle)
-		abilityHolder.addAbility(/datum/targetable/critter/frenzy)
 		if (src.is_king) // kings are built like tanks
 			src.add_stam_mod_max("brullbar", 100)
 			APPLY_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY, "brullbar", 20)
@@ -111,20 +113,19 @@
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
 		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
+	valid_target(mob/living/C)
+		if (istype(C, /mob/living/critter/brullbar)) return FALSE //don't kill other brullbars
+		if (ishuman(C))
+			var/mob/living/carbon/human/H = C
+			if(!is_king && iswerewolf(H))
+				src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
+				step_away(src, H, 15)
+				src.set_dir(get_dir(src, H))
+				return FALSE
+		return ..()
+
 	seek_target(var/range = 9)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue
-			if (isintangible(C)) continue //don't attack what you can't touch
-			if (istype(C, /mob/living/critter/brullbar)) continue //don't kill other brullbars
-			if (ishuman(C))
-				var/mob/living/carbon/human/H = C
-				if(!is_king && iswerewolf(H))
-					src.visible_message("<span class='alert'><b>[src] backs away in fear!</b></span>")
-					step_away(src, H, 15)
-					src.set_dir(get_dir(src, H))
-					continue
-			. += C
+		. = ..()
 
 		if (length(.) && prob(10))
 			playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
@@ -140,7 +141,7 @@
 			. += M
 
 	critter_ability_attack(var/mob/target)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(src.frenzypath)
 		var/datum/targetable/critter/tackle = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
 		if (!tackle.disabled && tackle.cooldowncheck() && !is_incapacitated(target) && prob(30))
 			tackle.handleCast(target) // no return to wack people with the frenzy after the tackle sometimes
@@ -172,12 +173,12 @@
 			return
 
 	can_critter_attack()
+		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(src.frenzypath)
 		var/datum/targetable/critter/fadeout = src.abilityHolder.getAbility(/datum/targetable/critter/fadeout/brullbar)
-		var/datum/targetable/critter/frenzy = src.abilityHolder.getAbility(/datum/targetable/critter/frenzy)
 		return ..() && (!frenzy.disabled && !fadeout.disabled) // so they can't attack you while frenzying or while invisible (kinda)
 
 	proc/fuck_up_silicons(var/mob/living/silicon/silicon) // modified orginal object critter behaviour scream
-		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_silicon", 30 SECONDS))
+		if (isrobot(silicon) && !ON_COOLDOWN(src, "brullbar_messup_cyborg", 30 SECONDS))
 			var/mob/living/silicon/robot/cyborg = silicon
 			if (cyborg.part_head.ropart_get_damage_percentage() >= 85)
 				src.visible_message("<span class='alert'><B>[src] grabs [cyborg.name]'s head and wrenches it right off!</B></span>")
@@ -226,10 +227,12 @@
 	health_brute_vuln = 0.7
 	health_burn = 250
 	health_burn_vuln = 1.4
-	is_king = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/brullbar/king
 	right_arm = /obj/item/parts/human_parts/arm/right/brullbar/king
-	limb = /datum/limb/brullbar/king
+	add_abilities = list(/datum/targetable/critter/fadeout/brullbar, /datum/targetable/critter/tackle, /datum/targetable/critter/frenzy/king)
+	is_king = TRUE
+	limbpath = /datum/limb/brullbar/king
+	frenzypath = /datum/targetable/critter/frenzy/king
 
 	death()
 		..()

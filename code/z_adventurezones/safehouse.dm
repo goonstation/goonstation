@@ -92,6 +92,7 @@
 
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
+		bioHolder.ownerType = src.type
 		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
 		bioHolder.mobAppearance.customization_first_color = "#241200"
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
@@ -332,13 +333,13 @@ obj/item/reagent_containers/iv_drip/dead_exec
 
 	make_my_stuff()
 		..()
-		var/obj/item/spacecash/random/tourist/S1 = new /obj/item/spacecash/random/tourist
+		var/obj/item/currency/spacecash/tourist/S1 = new /obj/item/currency/spacecash/tourist
 		S1.setup(src, try_add_to_storage = TRUE)
-		var/obj/item/spacecash/random/tourist/S2 = new /obj/item/spacecash/random/tourist
+		var/obj/item/currency/spacecash/tourist/S2 = new /obj/item/currency/spacecash/tourist
 		S2.setup(src, try_add_to_storage = TRUE)
-		var/obj/item/spacecash/random/tourist/S3 = new /obj/item/spacecash/random/tourist
+		var/obj/item/currency/spacecash/tourist/S3 = new /obj/item/currency/spacecash/tourist
 		S3.setup(src, try_add_to_storage = TRUE)
-		var/obj/item/spacecash/random/tourist/S4 = new /obj/item/spacecash/random/tourist
+		var/obj/item/currency/spacecash/tourist/S4 = new /obj/item/currency/spacecash/tourist
 		S4.setup(src, try_add_to_storage = TRUE)
 
 /obj/decal/poster/wallsign/dead_exec_portrait

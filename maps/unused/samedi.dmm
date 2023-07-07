@@ -4889,12 +4889,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
-"akg" = (
-/obj/machinery/atmospherics/valve{
-	name = "Engineering Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage)
 "aki" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
@@ -5218,17 +5212,6 @@
 "ala" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage)
-"alb" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
@@ -5828,12 +5811,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
-"amj" = (
-/obj/machinery/atmospherics/valve{
-	name = "Hallway Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage)
 "amk" = (
 /obj/storage/secure/closet/command/chief_engineer,
 /turf/simulated/floor/yellow/side{
@@ -6184,12 +6161,6 @@
 	d2 = 2
 	},
 /obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/station/maintenance/storage)
-"and" = (
-/obj/machinery/atmospherics/valve{
-	name = "Quartermaster's Repressurization"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage)
 "ane" = (
@@ -12005,20 +11976,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
-"aAy" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "Catering Storage";
-	req_access_txt = "25;28;"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail/vertical,
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/catering)
 "aAz" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hangar/arrivals)
@@ -12768,7 +12725,7 @@
 "aCa" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 2;
-
+	
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -14377,22 +14334,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"aFE" = (
-/obj/machinery/atmospherics/pipe/simple{
-	icon_state = "intact";
-	level = 2
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	name = "Cold Storage";
-	req_access_txt = "25;28;"
-	},
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
-/turf/simulated/floor/stairs{
-	dir = 8
-	},
-/area/station/crew_quarters/catering)
 "aFF" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
@@ -14585,7 +14526,7 @@
 "aGa" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -16045,12 +15986,6 @@
 /obj/item/clothing/glasses/thermal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"aJo" = (
-/obj/machinery/atmospherics/valve{
-	name = "Brig Suppression System"
-	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "aJp" = (
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
@@ -17303,7 +17238,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aMc" = (
@@ -17712,12 +17647,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"aMU" = (
-/obj/machinery/atmospherics/valve{
-	name = "Chapel Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "aMV" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -17892,7 +17821,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aNp" = (
@@ -18299,21 +18228,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
-"aOn" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Hallway Repressurization"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "aOo" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -18525,7 +18439,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aOJ" = (
@@ -18874,12 +18788,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
-"aPx" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "aPy" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8
@@ -18977,7 +18885,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 4;
-
+	
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
@@ -19276,13 +19184,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/east)
-"aQz" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Medbay Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
 "aQA" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -19463,7 +19364,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aQT" = (
@@ -19475,7 +19376,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aQU" = (
@@ -19790,7 +19691,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRQ" = (
@@ -19803,7 +19704,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRR" = (
@@ -24469,7 +24370,7 @@
 "bbS" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 4;
-
+	
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -24497,21 +24398,6 @@
 	dir = 4
 	},
 /area/station/medical/medbay/pharmacy)
-"bbU" = (
-/obj/machinery/door/firedoor/pyro{
-	icon_state = "fdoor0";
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	icon_state = "door_closed";
-	name = "Patchy's Cabana";
-	req_access_txt = "5;25;"
-	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/east)
 "bbV" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
 	dir = 1;
@@ -26952,28 +26838,11 @@
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
-"bhe" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Escape Hallway Repressurization"
-	},
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/escape)
 "bhf" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1;
 	icon_state = "manifold";
 	level = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/escape)
-"bhg" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
@@ -27289,27 +27158,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"bhW" = (
-/obj/machinery/atmospherics/valve{
-	high_risk = 1;
-	name = "North Section Repressurization"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
-"bhX" = (
-/obj/machinery/atmospherics/valve{
-	name = "Cafeteria Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
 "bhY" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/machinery/light/small{
@@ -27542,13 +27390,6 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/escape)
-"bix" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "Hallway Repressurization"
-	},
-/turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "biy" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -28200,12 +28041,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
-"bjM" = (
-/obj/machinery/atmospherics/valve{
-	name = "Escape Dock Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/escape)
 "bjN" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28632,23 +28467,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/central)
-"bkF" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4;
-	name = "South Section Repressurization"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
-"bkG" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/central)
 "bkH" = (
 /obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 8;
@@ -28909,16 +28727,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
-"bll" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "Patchy's Cabana";
-	req_access_txt = "5;25;"
-	},
-/obj/access_spawn/medical,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/maintenance/west)
 "blm" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 4
@@ -33219,10 +33027,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/pool)
-"buX" = (
-/obj/critter/sealpup,
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "buY" = (
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -33893,10 +33697,6 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
-"bwI" = (
-/obj/critter/walrus,
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwJ" = (
@@ -35494,15 +35294,15 @@
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
 /obj/item/clothing/under/swimsuit/random,
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
-/obj/item/clothing/under/shorts/random{
+/obj/item/clothing/under/shorts/random_color{
 	name = "swimming trunks";
 	rand_pos = 1
 	},
@@ -37209,21 +37009,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
-"bEB" = (
-/obj/machinery/atmospherics/valve,
-/obj/landmark{
-	name = "blobstart"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/auxillary)
-"bEC" = (
-/obj/machinery/atmospherics/valve,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/auxillary)
 "bED" = (
 /obj/machinery/r_door_control/podbay{
 	id = "hangar_sciAtmos";
@@ -37421,12 +37206,6 @@
 	},
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
-"bFb" = (
-/obj/machinery/atmospherics/valve{
-	name = "Hallway Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/auxillary)
 "bFc" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
@@ -38117,28 +37896,6 @@
 	},
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
-"bGD" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	icon_state = "camera";
-	name = "autoname - SS13"
-	},
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/machinery/atmospherics/valve{
-	name = "Research Hall Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/auxillary)
-"bGE" = (
-/obj/machinery/atmospherics/valve{
-	name = "Research Quarters Repressurization"
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/auxillary)
 "bGF" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -39940,7 +39697,7 @@
 "bKF" = (
 /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
 	dir = 4;
-
+	
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -39954,20 +39711,6 @@
 	target_pressure = 1000
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
-"bKH" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/red,
 /area/station/science/lab)
 "bKI" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -40922,12 +40665,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
-"bMq" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/blue,
-/area/station/science/lab)
 "bMr" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 8;
@@ -41346,12 +41083,6 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
-"bNh" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
 "bNi" = (
 /obj/machinery/door_control{
 	id = "tox_vent1";
@@ -41381,12 +41112,6 @@
 /turf/simulated/floor/caution/north{
 	dir = 1
 	},
-/area/station/science/lab)
-"bNk" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/science/lab)
 "bNl" = (
 /obj/cable{
@@ -41643,12 +41368,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lab)
-"bNN" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/specialroom/cafeteria,
-/area/station/science/lab)
 "bNO" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	icon_state = "intact";
@@ -41692,17 +41411,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
-"bNT" = (
-/obj/machinery/door/firedoor/pyro,
-/obj/machinery/door/airlock/pyro{
-	name = "The Alchemist's Nook";
-	req_access_txt = "25"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/south)
 "bNU" = (
 /obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/plating,
@@ -41838,22 +41546,11 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/quarters_south)
-"bOk" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "bOl" = (
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-
+	
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -42021,17 +41718,6 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/station/science/lab)
-"bOB" = (
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
-	},
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
 "bOC" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -42042,15 +41728,6 @@
 	can_rupture = 0;
 	dir = 9;
 	icon_state = "intact"
-	},
-/turf/simulated/floor,
-/area/station/science/lab)
-"bOD" = (
-/obj/machinery/atmospherics/valve,
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
 	},
 /turf/simulated/floor,
 /area/station/science/lab)
@@ -42504,7 +42181,7 @@
 	pixel_y = 1
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -42589,12 +42266,6 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
-/area/station/science/lab)
-"bPJ" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
 /area/station/science/lab)
 "bPK" = (
 /obj/machinery/atmospherics/pipe/manifold{
@@ -43050,7 +42721,7 @@
 	pixel_y = 21
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/storage/crate/furnacefuel,
 /turf/simulated/floor/plating,
@@ -43102,15 +42773,6 @@
 	can_rupture = 0;
 	dir = 10;
 	icon_state = "intact"
-	},
-/turf/simulated/floor/grime,
-/area/station/science/lab)
-"bQJ" = (
-/obj/machinery/atmospherics/valve,
-/obj/cable{
-	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
 	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
@@ -43480,21 +43142,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/lab)
-"bRw" = (
-/obj/machinery/door/firedoor/pyro{
-	icon_state = "fdoor0";
-	dir = 4
-	},
-/obj/machinery/door/airlock/pyro{
-	dir = 4;
-	icon_state = "door_closed";
-	name = "The Alchemist's Nook";
-	req_access_txt = "25"
-	},
-/obj/access_spawn/research,
-/obj/access_spawn/bar,
-/turf/simulated/floor/black,
-/area/station/hallway/primary/south)
 "bRx" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1;
@@ -43866,7 +43513,7 @@
 "bSl" = (
 /obj/machinery/atmospherics/pipe/tank{
 	dir = 8;
-
+	
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -44175,20 +43822,6 @@
 "bSU" = (
 /obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
-"bSV" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	icon_state = "camera";
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/turf/simulated/floor/blue,
 /area/station/science/lab)
 "bSW" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -44824,7 +44457,7 @@
 /area/research_outpost/hangar)
 "bUk" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/shuttlebay,
 /area/research_outpost/hangar)
@@ -44876,7 +44509,7 @@
 /area/research_outpost)
 "bUp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -44987,12 +44620,6 @@
 	dir = 9
 	},
 /turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
-"bUC" = (
-/obj/machinery/atmospherics/valve{
-	dir = 4
-	},
-/turf/simulated/floor/red,
 /area/station/science/lab)
 "bUD" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -45814,21 +45441,21 @@
 "bWr" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4;
-
+	
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWs" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-
+	
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWt" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45983,7 +45610,7 @@
 "bWJ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 5;
-
+	
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -45993,7 +45620,7 @@
 "bWK" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-
+	
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners2";
@@ -46003,7 +45630,7 @@
 "bWL" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4;
-
+	
 	},
 /obj/machinery/light{
 	dir = 4;
@@ -46019,7 +45646,7 @@
 "bWM" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 10;
-
+	
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -46115,7 +45742,7 @@
 "bWZ" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1;
-
+	
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
@@ -46194,15 +45821,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/research_outpost)
-"bXl" = (
-/obj/machinery/atmospherics/valve,
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -26;
-	pixel_y = -1
-	},
-/turf/simulated/floor/plating,
-/area/research_outpost)
 "bXm" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -46230,7 +45848,7 @@
 /obj/table/auto,
 /obj/random_item_spawner/tools,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -46308,7 +45926,7 @@
 "bXw" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1;
-
+	
 	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
@@ -49279,6 +48897,47 @@
 	intact = 0
 	},
 /area/space)
+"cey" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
+"djQ" = (
+/mob/living/critter/small_animal/seal,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"dBh" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
+"dDa" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"dFT" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Engineering Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage)
+"dYN" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/landmark{
+	name = "blobstart"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary)
+"elU" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Hallway Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary)
 "enR" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49299,13 +48958,69 @@
 	dir = 9
 	},
 /area/station/science/teleporter)
-"eWI" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/drinks/bottle/tequila,
-/obj/item/card_group/plain,
-/obj/item/spacecash/hundred,
-/turf/simulated/floor/orangeblack,
-/area/listeningpost)
+"exU" = (
+/obj/machinery/atmospherics/pipe/simple{
+	icon_state = "intact";
+	level = 2
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	name = "Cold Storage";
+	req_access_txt = "25;28;"
+	},
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/stairs{
+	dir = 8
+	},
+/area/station/crew_quarters/catering)
+"ezK" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary)
+"eXQ" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "Hallway Repressurization"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
+"fBL" = (
+/obj/machinery/door/firedoor/pyro{
+	icon_state = "fdoor0";
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_closed";
+	name = "The Alchemist's Nook";
+	req_access_txt = "25"
+	},
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/south)
+"fEA" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
 "fFe" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -49320,6 +49035,96 @@
 	dir = 8
 	},
 /area/station/science/teleporter)
+"gfK" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"gmA" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	icon_state = "camera";
+	name = "autoname - SS13"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/machinery/atmospherics/binary/valve{
+	name = "Research Hall Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary)
+"grf" = (
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"gAy" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor,
+/area/station/science/lab)
+"hqX" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/blue,
+/area/station/science/lab)
+"huR" = (
+/obj/machinery/atmospherics/binary/valve{
+	high_risk = 1;
+	name = "North Section Repressurization"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
+"hCy" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2";
+	d1 = 1;
+	d2 = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage)
+"hUC" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Hallway Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage)
 "hVq" = (
 /obj/table/auto,
 /obj/item/device/radio/signaler,
@@ -49341,11 +49146,30 @@
 	dir = 1
 	},
 /area/station/science/teleporter)
+"hXg" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
+"iCo" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Quartermaster's Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/storage)
 "iTP" = (
 /obj/table/auto,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
+"iWC" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/card_group/plain,
+/obj/item/currency/spacecash/hundred,
+/turf/simulated/floor/orangeblack,
+/area/listeningpost)
 "kYE" = (
 /obj/table/auto,
 /obj/machinery/power/apc{
@@ -49390,6 +49214,16 @@
 	dir = 10
 	},
 /area/station/science/teleporter)
+"lkY" = (
+/mob/living/critter/small_animal/walrus,
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
+"mhm" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Chapel Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "mkh" = (
 /obj/machinery/light{
 	dir = 8;
@@ -49402,6 +49236,12 @@
 	dir = 8
 	},
 /area/station/engine/engineering/ce)
+"mOi" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Research Quarters Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/auxillary)
 "nhS" = (
 /obj/item/device/radio/headset/multifreq,
 /obj/item/device/radio/headset/multifreq,
@@ -49446,6 +49286,34 @@
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
+"nxt" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "South Section Repressurization"
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
+"nWx" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "Escape Hallway Repressurization"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
+"oqo" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Brig Suppression System"
+	},
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "oIY" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/protectStation,
@@ -49458,18 +49326,77 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai_upload)
+"oNm" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "Hallway Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
+"oUf" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "Medbay Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
+"oZW" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/cable{
+	icon_state = "4-8";
+	d1 = 4;
+	d2 = 8
+	},
+/turf/simulated/floor/grime,
+/area/station/science/lab)
+"poB" = (
+/obj/machinery/atmospherics/binary/valve,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -26;
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating,
+/area/research_outpost)
 "pQB" = (
 /obj/table/reinforced/auto,
 /turf/simulated/floor/blueblack{
 	dir = 4
 	},
 /area/station/turret_protected/ai_upload)
+"pWU" = (
+/obj/machinery/door/firedoor/pyro{
+	icon_state = "fdoor0";
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro{
+	dir = 4;
+	icon_state = "door_closed";
+	name = "Patchy's Cabana";
+	req_access_txt = "5;25;"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/east)
 "pZQ" = (
 /obj/table/auto,
 /obj/item/storage/box/PDAbox,
 /obj/item/disk/data/floppy/read_only/communications,
 /turf/simulated/floor/carpet/blue,
 /area/station/bridge)
+"qtW" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Escape Dock Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
+"rGV" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "Cafeteria Repressurization"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/central)
 "rTs" = (
 /obj/table/wood/auto,
 /obj/item/device/camera_viewer,
@@ -49479,6 +49406,20 @@
 /obj/item/pen,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"sNE" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "Catering Storage";
+	req_access_txt = "25;28;"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail/vertical,
+/obj/mapping_helper/access/kitchen,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "uaz" = (
 /obj/table/wood/auto,
 /obj/displaycase{
@@ -49493,6 +49434,65 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
+"vdD" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/escape)
+"vYu" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/blue,
+/area/station/science/lab)
+"wnh" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	icon_state = "camera";
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/turf/simulated/floor/red,
+/area/station/science/lab)
+"wAT" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "Patchy's Cabana";
+	req_access_txt = "5;25;"
+	},
+/obj/mapping_helper/access/medical,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/maintenance/west)
+"wFw" = (
+/obj/machinery/door/firedoor/pyro,
+/obj/machinery/door/airlock/pyro{
+	name = "The Alchemist's Nook";
+	req_access_txt = "25"
+	},
+/obj/disposalpipe/segment/vertical,
+/obj/mapping_helper/access/research,
+/obj/mapping_helper/access/bar,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/south)
+"xLm" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/science/lab)
+"xYR" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 
 (1,1,1) = {"
 aaa
@@ -71464,7 +71464,7 @@ bNK
 bNK
 bWM
 bWZ
-bXl
+poB
 bXw
 bRr
 bXY
@@ -81346,9 +81346,9 @@ aGA
 aGA
 aLJ
 axB
-aOn
+eXQ
 aPv
-aQz
+oUf
 aLr
 aSy
 aLz
@@ -81647,7 +81647,7 @@ aHT
 aJg
 aKt
 aLK
-aMU
+mhm
 aOo
 aPw
 aQA
@@ -81951,8 +81951,8 @@ aKu
 aLL
 ayP
 aCK
-aPx
-aPx
+hXg
+hXg
 aLr
 aSA
 aLz
@@ -81963,7 +81963,7 @@ aXt
 aYE
 aZC
 aZC
-bll
+wAT
 bdt
 beL
 bgd
@@ -82321,11 +82321,11 @@ bKE
 cbw
 bMn
 bNf
-bNN
+xLm
 bOy
-bNN
+xLm
 bOy
-bNN
+xLm
 bYp
 bSU
 bTN
@@ -82566,7 +82566,7 @@ aWp
 aWq
 aYG
 aLs
-bbU
+pWU
 baT
 bdv
 beL
@@ -82924,13 +82924,13 @@ bJf
 bKG
 bLA
 bYc
-bNh
+xYR
 bNP
 bOA
 bPH
 bOA
 bYl
-bNh
+xYR
 bMp
 bLA
 bYw
@@ -83223,19 +83223,19 @@ bGO
 bLl
 bFp
 bJQ
-bKH
+wnh
 bLB
-bMq
+vYu
 bNi
 bNQ
-bOB
+grf
 bPI
-bOB
+grf
 bNQ
 bYq
-bSV
+hqX
 bLB
-bUC
+cey
 bOv
 bVG
 bJf
@@ -83531,7 +83531,7 @@ bMr
 bNj
 bNR
 bOC
-bPJ
+gfK
 bQI
 bNR
 bSj
@@ -83830,13 +83830,13 @@ bJS
 bKJ
 bMP
 bND
-bOk
+gAy
 bOE
-bOD
+fEA
 bPK
-bQJ
+oZW
 bRx
-bNk
+dDa
 bPH
 bTO
 bPH
@@ -89194,7 +89194,7 @@ aDW
 aDW
 aGG
 aHX
-aJo
+oqo
 aKz
 aDW
 aNd
@@ -90954,8 +90954,8 @@ afR
 aix
 adm
 ake
-alb
-alb
+hCy
+hCy
 anc
 anQ
 aou
@@ -91258,7 +91258,7 @@ adm
 akf
 alc
 ami
-and
+iCo
 anR
 aov
 apl
@@ -91557,9 +91557,9 @@ agK
 ahD
 aiz
 aji
-akg
+dFT
 ald
-amj
+hUC
 ane
 ane
 aow
@@ -94087,7 +94087,7 @@ bDl
 bDE
 bDW
 bEs
-bNT
+wFw
 bFI
 bGw
 bHl
@@ -94994,7 +94994,7 @@ bCk
 bDZ
 cdE
 bEW
-bRw
+fBL
 bGz
 bHo
 bIc
@@ -96767,7 +96767,7 @@ bfm
 bgG
 bhV
 axt
-bkF
+nxt
 awj
 ays
 boi
@@ -96805,9 +96805,9 @@ cda
 bDH
 bEd
 bEA
-bFb
+elU
 bFO
-bGD
+gmA
 bHr
 bIi
 bIV
@@ -97067,7 +97067,7 @@ bcK
 bdT
 bfm
 bgH
-bhW
+huR
 bju
 bjv
 awj
@@ -97106,10 +97106,10 @@ aaa
 cdb
 bDH
 bEe
-bEB
+dYN
 bFc
 bFP
-bGE
+mOi
 bHs
 bIi
 bIW
@@ -97369,9 +97369,9 @@ bcL
 bdU
 bfn
 bgI
-bhX
+rGV
 bjv
-bkG
+dBh
 awj
 bmR
 ays
@@ -97408,7 +97408,7 @@ aaa
 cdb
 bDH
 bEf
-bEC
+ezK
 bFd
 bDH
 bGF
@@ -97945,7 +97945,7 @@ axY
 axR
 azp
 aAj
-aAy
+sNE
 aBY
 aDk
 aEq
@@ -98855,7 +98855,7 @@ aAY
 aAY
 aDn
 aEt
-aFE
+exU
 aHh
 aIx
 aJL
@@ -105837,7 +105837,7 @@ brp
 brt
 bti
 bud
-buX
+djQ
 buY
 buY
 bxi
@@ -106745,7 +106745,7 @@ brt
 bud
 buY
 buY
-buX
+djQ
 bxj
 bxU
 byF
@@ -107045,7 +107045,7 @@ brt
 bst
 btk
 bud
-buX
+djQ
 buY
 buY
 bxk
@@ -107349,7 +107349,7 @@ brt
 bud
 buY
 buY
-bwI
+lkY
 bxk
 bxU
 byG
@@ -114281,7 +114281,7 @@ bda
 ben
 bfE
 bhd
-bix
+oNm
 bjL
 bfD
 bLt
@@ -114582,9 +114582,9 @@ bbC
 bcZ
 bek
 bfD
-bhe
+nWx
 bhf
-bjM
+qtW
 bkW
 bmh
 bnl
@@ -115186,8 +115186,8 @@ bbE
 bcZ
 bek
 bfD
-bhg
-bhg
+vdD
+vdD
 bjO
 bfD
 bfD
@@ -129793,7 +129793,7 @@ bYX
 bYE
 bZo
 bZx
-eWI
+iWC
 bZT
 cai
 bYE

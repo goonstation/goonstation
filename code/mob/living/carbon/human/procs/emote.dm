@@ -33,15 +33,16 @@
 
 	var/maptext_out = 0
 	var/message = null
-	if (src.mutantrace)
-		var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
-		if(!islist(mutantrace_emote_stuff))
-			message = mutantrace_emote_stuff
-		else
-			if(length(mutantrace_emote_stuff) >= 1)
-				message = mutantrace_emote_stuff[1]
-			if(length(mutantrace_emote_stuff) >= 2)
-				maptext_out = mutantrace_emote_stuff[2]
+
+	var/list/mutantrace_emote_stuff = src.mutantrace.emote(act, voluntary)
+	if(!islist(mutantrace_emote_stuff))
+		message = mutantrace_emote_stuff
+	else
+		if(length(mutantrace_emote_stuff) >= 1)
+			message = mutantrace_emote_stuff[1]
+		if(length(mutantrace_emote_stuff) >= 2)
+			maptext_out = mutantrace_emote_stuff[2]
+
 	if (!message)
 		switch (lowertext(act))
 			// most commonly used emotes first for minor performance improvements
@@ -814,7 +815,7 @@
 					maptext_out = "<I>struggles to move</I>"
 				m_type = 1
 
-			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
+			if ("cough","hiccup","sigh","mumble","grumble","groan","moan","sneeze","wheeze","sniff","snore","whimper","noncontagiousyawn","yawn","choke","gasp","weep","sob","wail","whine","gurgle","gargle","wheeze","sputter","scoff",)
 				// basic audible single-word emotes
 				if (!muzzled)
 					if (lowertext(act) == "sigh" && prob(1)) act = "singh" //1% chance to change sigh to singh. a bad joke for drsingh fans.
@@ -828,12 +829,15 @@
 						var/obj/HK = new /obj/item/cloth/handkerchief/random(get_turf(src))
 						var/turf/T = get_edge_target_turf(src, pick(alldirs))
 						HK.throw_at(T, 5, 1)
+					else if (act == "noncontagiousyawn")
+						message = "<B>[src]</B> yawns."
+						maptext_out = "<I>yawns</I>"
 					else if (act == "yawn")
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
 						for (var/mob/living/carbon/C in view(5,get_turf(src)))
 							if (prob(5) && !ON_COOLDOWN(C, "contagious_yawn", 5 SECONDS))
-								C.emote("yawn")
+								C.emote("noncontagiousyawn")
 					else
 						message = "<B>[src]</B> [act]s."
 						maptext_out = "<I>[act]s</I>"
@@ -1776,8 +1780,8 @@
 
 							LAGCHECK(LAG_MED)
 							var/crabMax = 5
-							for (var/obj/critter/crab/party/responseCrab in range(7, src))
-								if (!responseCrab.alive)
+							for (var/mob/living/critter/small_animal/crab/party/responseCrab in range(7, src))
+								if (is_incapacitated(responseCrab))
 									continue
 								if (crabMax-- < 0)
 									break
@@ -1968,7 +1972,7 @@
 							else
 								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
-					else if ((src.charges >= 1) && (muzzled))
+					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> vomits in [his_or_her(src)] own mouth a bit.")
 						src.TakeDamage("head", 0, 50, 0, DAMAGE_BURN)
@@ -2236,11 +2240,7 @@
 				var/mob/living/carbon/human/H = null
 				if(ishuman(src))
 					H = src
-				var/obj/item/I = src.wear_id
-				if (istype(I, /obj/item/device/pda2))
-					var/obj/item/device/pda2/P = I
-					if(P.ID_card)
-						I = P.ID_card
+				var/obj/item/I = get_id_card(src.wear_id)
 				if(H && (!H.limbs.l_arm || !H.limbs.r_arm || H.restrained()))
 					src.show_text("You can't do that without free arms!")
 				else if((src.mind && (src.mind.assigned_role in list("Clown", "Staff Assistant", "Captain"))) || istraitor(H) || isconspirator(H) || isnukeop(H) || isnukeopgunbot(H) || istype(src.head, /obj/item/clothing/head/bighat/syndicate/) || istype(I, /obj/item/card/id/dabbing_license) || (src.reagents && src.reagents.has_reagent("puredabs")) || (src.reagents && src.reagents.has_reagent("extremedabs"))) //only clowns and the useless know the true art of dabbing
@@ -2377,7 +2377,6 @@
 /mob/living/carbon/human/proc/expel_fart_gas(var/oxyplasmafart)
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
-	gas.vacuum()
 	if(oxyplasmafart == 1)
 		gas.toxins += 1
 	if(oxyplasmafart == 2)

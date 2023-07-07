@@ -77,7 +77,7 @@ var/list/server_toggles_tab_verbs = list(
 /datum/admins/proc/togglespeechpopups,
 /datum/admins/proc/toggle_global_parallax,
 /datum/admins/proc/togglemonkeyspeakhuman,
-/datum/admins/proc/toggletraitorsseeeachother,
+/datum/admins/proc/toggle_antagonists_seeing_each_other,
 /datum/admins/proc/togglelatetraitors,
 /datum/admins/proc/togglesoundwaiting,
 /datum/admins/proc/adjump,
@@ -872,19 +872,28 @@ client/proc/toggle_ghost_respawns()
 	logTheThing(LOG_DIARY, usr, "toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled Monkey/Human communication [monkeysspeakhuman ? "on" : "off"]")
 
-/datum/admins/proc/toggletraitorsseeeachother()
+/datum/admins/proc/toggle_antagonists_seeing_each_other()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc = "Toggle traitors being able to see each other."
-	set name = "Toggle Traitors Seeing Each Other"
+	set desc = "Toggle all antagonists being able to see each other."
+	set name = "Toggle Antagonists Seeing Each Other"
 	NOT_IF_TOGGLES_ARE_OFF
-	traitorsseeeachother = !traitorsseeeachother
-	if (traitorsseeeachother)
-		boutput(world, "<B>Traitors can now see each other.</B>")
+	antagonists_see_each_other = !antagonists_see_each_other
+
+	var/datum/client_image_group/antagonist_image_group = get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS)
+	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+		if (antagonists_see_each_other)
+			antagonist_image_group.add_mind(antagonist_role.owner)
+		else
+			antagonist_image_group.remove_mind(antagonist_role.owner)
+
+	if (antagonists_see_each_other)
+		boutput(world, "<B>Antagonists can now see each other.</B>")
 	else
-		boutput(world, "<B>Traitors can no longer see each other.</B>")
-	logTheThing(LOG_ADMIN, usr, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].")
-	logTheThing(LOG_DIARY, usr, "toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"].", "admin")
-	message_admins("[key_name(usr)] toggled traitors seeing each other [traitorsseeeachother ? "on" : "off"]")
+		boutput(world, "<B>Antagonists can no longer see each other.</B>")
+
+	logTheThing(LOG_ADMIN, usr, "toggled antagonists seeing each other [antagonists_see_each_other ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled antagonists seeing each other [antagonists_see_each_other ? "on" : "off"].", "admin")
+	message_admins("[key_name(usr)] toggled antagonists seeing each other [antagonists_see_each_other ? "on" : "off"]")
 
 /datum/admins/proc/toggleautoending()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)

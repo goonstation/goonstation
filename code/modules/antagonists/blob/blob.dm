@@ -1,7 +1,9 @@
-/datum/antagonist/intangible/blob
+/datum/antagonist/mob/intangible/blob
 	id = ROLE_BLOB
 	display_name = "blob"
-	intangible_mob_path = /mob/living/intangible/blob_overmind
+	antagonist_icon = "blob"
+	mob_path = /mob/living/intangible/blob_overmind
+	uses_pref_name = FALSE
 
 	/// All mobs absorbed by this blob.
 	var/list/mob/absorbed_victims = list()

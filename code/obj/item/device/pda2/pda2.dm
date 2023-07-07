@@ -32,6 +32,7 @@
 	var/frequency = FREQ_PDA
 	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
+	var/scannable = TRUE // Whether this PDA is picked up when scanning for PDAs on the messenger
 
 	var/tmp/list/pdasay_autocomplete = list()
 
@@ -735,7 +736,7 @@
 
 
 /obj/item/device/pda2/verb/eject()
-	set name = "Eject ID"
+	set name = "Eject PDA ID"
 	set desc = "Eject the currently loaded ID card from this PDA."
 	set category = "Local"
 	set src in usr
