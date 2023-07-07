@@ -230,7 +230,7 @@
 
 		.["standard_jobs"] = list(
 			list(name = "Civilian", color = "blue", jobs = civilian_jobs),
-			list(name = "Supply and Maintainence", color = "yellow", jobs = engineering_jobs),
+			list(name = "Supply and Maintenance", color = "yellow", jobs = engineering_jobs),
 			list(name = "Research and Medical", color = "purple", jobs = research_jobs),
 			list(name = "Security", color = "red", jobs = security_jobs),
 			list(name = "Command", color = "green", jobs = command_jobs),
