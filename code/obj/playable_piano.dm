@@ -35,7 +35,6 @@ TYPEINFO(/obj/player_piano)
 	var/list/note_accidentals = list() //(s)harp,b(flat),N(none)
 	var/list/compiled_notes = list() //holds our compiled filenames for the note
 	var/list/linked_pianos = list() //list that stores our linked pianos, including the main one
-	var/list/pianos = list()
 
 	New()
 		..()
