@@ -47,9 +47,9 @@
 	air3.volume = 200
 
 /obj/machinery/atmospherics/trinary/initialize()
+	var/node1_connect = turn(dir, -180)
+	var/node2_connect = flipped ? turn(dir, 90) : turn(dir, -90)
 	var/node3_connect = dir
-	var/node1_connect = flipped ? turn(dir, 90) : turn(dir, -90)
-	var/node2_connect = turn(dir, -180)
 
 	for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
 		if(target.initialize_directions & get_dir(target,src))
@@ -69,27 +69,18 @@
 	UpdateIcon()
 
 /obj/machinery/atmospherics/trinary/disposing()
-	if (network1)
-		network1.air_disposing_hook(air1, air2, air3)
-	if (network2)
-		network2.air_disposing_hook(air1, air2, air3)
-	if (network3)
-		network3.air_disposing_hook(air1, air2, air3)
+	network1?.air_disposing_hook(air1, air2, air3)
+	network2?.air_disposing_hook(air1, air2, air3)
+	network3?.air_disposing_hook(air1, air2, air3)
 
-	if(node1)
-		node1.disconnect(src)
-		if (network1)
-			network1.dispose()
+	node1?.disconnect(src)
+	network1?.dispose()
 
-	if(node2)
-		node2.disconnect(src)
-		if (network2)
-			network2.dispose()
+	node2?.disconnect(src)
+	network2?.dispose()
 
-	if(node3)
-		node3.disconnect(src)
-		if (network3)
-			network3.dispose()
+	node3?.disconnect(src)
+	network3?.dispose()
 
 	node1 = null
 	node2 = null
