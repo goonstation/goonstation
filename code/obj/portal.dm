@@ -92,14 +92,12 @@
 
 	Bumped(mob/M as mob|obj)
 		//spatial interdictor: when something would enter a wormhole, it doesn't
-		//consumes 200 units of charge (100,000 joules) per wormhole interdicted
-		for_by_tcl(IX, /obj/machinery/interdictor)
-			if (IX.expend_interdict(200,src))
-				icon = 'icons/effects/effects.dmi'
-				icon_state = "sparks_attack"
-				playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-				density = 0
-				return
+		if (M.hasStatus("spatial_protection"))
+			icon = 'icons/effects/effects.dmi'
+			icon_state = "sparks_attack"
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+			density = 0
+			return
 		..()
 
 /obj/portal/afterlife
