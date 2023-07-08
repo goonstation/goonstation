@@ -200,7 +200,7 @@ Charges are cumulative, but the total brig timer may not exceed 5 minutes.
     <h3>Capital Punishment</h3>
     Only two forms of Capital Punishment are allowed onboard of NanoTrasen stations:
     <ul style='list-style-type:disc'>
-    <li>Exile from the station. Can be done either by throwing the criminal into space, letting them take enough internals to survive as well as a spacesuit, or by delivering the criminal to a neutral turf, such as the space dinner. After getting exiled, any sightings of the exiled on station should result in an immediate execution.
+    <li>Exile from the station. Can be done either by throwing the criminal into space, letting them take enough internals to survive as well as a spacesuit, or by delivering the criminal to a neutral turf, such as the space diner. After getting exiled, any sightings of the exiled on station should result in an immediate execution.
     </li>
     <li>Execution. The method should be quick and humane: preferably firing squad or spacing. It is encouraged to allow the criminal to say their last words before getting executed.
     </li>
