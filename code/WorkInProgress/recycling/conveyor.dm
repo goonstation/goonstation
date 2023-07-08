@@ -574,7 +574,7 @@ TYPEINFO(/obj/machinery/conveyor) {
 			else
 				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
-	else if (ispulsingtool(I) && !src.deconstructable)
+	else if (ispulsingtool(I) && src.deconstructable)
 		var/datum/component/mechanics_connector/connector = I.GetComponent(/datum/component/mechanics_connector)
 		if (!connector)
 			return ..()
@@ -987,7 +987,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 		src.get_new_id()
 
 	proc/get_new_id()
-		src.id = TIME // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
+		src.id = ckey("\ref[src]") // Create a new ID on the fly. It doesn't need to be readable, it just needs to be unique.
 		src.conveyors = list()
 
 	MouseDrop_T(dropped, mob/user)
