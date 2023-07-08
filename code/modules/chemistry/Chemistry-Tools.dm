@@ -681,3 +681,72 @@ proc/ui_describe_reagents(atom/A)
 
 	attackby(obj/item/reagent_containers/container, mob/user)
 		container.try_to_apply_lid(src, user)
+
+/obj/item/reagent_containers/glass/condenser
+	name = "chemical condenser"
+	desc = "A set of glass tubes useful for seperating reactants from products. Can be hooked up to many types of containers."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "condenser"
+	amount_per_transfer_from_this = 10
+	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
+	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
+	splash_all_contents = FALSE
+	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100
+	var/obj/item/current_container = null //! the container currently attached to the condenser
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if(over_object == src)
+			return
+		if (istype(over_object, /obj/item/reagent_containers) && (over_object.is_open_container()))
+			try_adding_container(over_object, usr)
+		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel)) //barrels don't need to be open for condensers because it would be annoying I think
+			try_adding_container(over_object, usr)
+
+	Move()
+		check_container_range()
+		..()
+
+	attack_hand(var/mob/user)
+		if(current_container)
+			remove_container()
+			boutput(user, "<span class='alert'>You remove the connection to the [src.name].</span>")
+		..()
+
+	proc/check_container_range()
+		if(current_container && GET_DIST(current_container, src) > 1)
+			remove_container()
+
+	proc/try_adding_container(var/obj/container, var/mob/user)
+		if (!istype(src.loc, /turf/) || !istype(container.loc, /turf/)) //if the condenser or container isn't on the floor you cannot hook it up
+			return
+		if (BOUNDS_DIST(src, user) > 0)
+			boutput(user, "<span class='alert'>The [src.name] is too for away for you to mess with it!</span>")
+			return
+		if (GET_DIST(container, src) > 1)
+			usr.show_text("The [src.name] is too far away from the [container.name]!", "red")
+			return
+		if(current_container)
+			boutput(user, "<span class='alert'>The [src.name] is already connected to the [current_container.name]!</span>")
+		else
+			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
+			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
+			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(check_container_range))
+			current_container = container
+
+	proc/remove_container()
+		UnregisterSignal(current_container, COMSIG_ATTACKHAND)
+		UnregisterSignal(current_container, COMSIG_MOVABLE_MOVED)
+		current_container = null
+
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+		if(!current_container) //if we have no beaker, dump the reagents into condenser
+			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+		else
+			var/remaining_container_space = current_container.reagents.maximum_volume - current_container.reagents.total_volume
+			if(remaining_container_space < amount) 																			//if there's more reagent to add than the beaker can hold...
+				current_container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.reagents.add_reagent(reagent, amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then backflow remaining chems into the condenser
+
+			else
+				current_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)

@@ -494,7 +494,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 									FG.skip_next_update = 1
 								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
 						if(C.result)
-							src.add_reagent(C.result, created_volume,, src.total_temperature)
+							src.add_reagent(C.result, created_volume,, src.total_temperature, chemical_reaction=TRUE)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.
 							src.update_total()
 							if (FG && FG.my_group && src.total_volume <= 0) //also evaporate safety here
@@ -546,7 +546,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			for (var/reagent in C.required_reagents)
 				src.remove_reagent(reagent, C.required_reagents[reagent] * speed / C.result_amount)
 			if (C.result)
-				src.add_reagent(C.result, speed,, src.total_temperature)
+				src.add_reagent(C.result, speed,, src.total_temperature, chemical_reaction=TRUE)
 			covered_cache = 0
 
 			if(my_atom?.loc) //We might be inside a thing, let's tell it we updated our reagents.
@@ -762,7 +762,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			temp_fluid_reagents.update_total()
 			fluid_turf.fluid_react(temp_fluid_reagents, temp_fluid_reagents.total_volume)
 
-	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0)
+	proc/add_reagent(var/reagent, var/amount, var/sdata, var/temp_new=T20C, var/donotreact = 0, var/donotupdate = 0, var/chemical_reaction = FALSE)
+		if(istype(my_atom, /obj/item/reagent_containers/glass/condenser) && chemical_reaction)
+			var/obj/item/reagent_containers/glass/condenser/condenser = my_atom
+			condenser.try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			return
 		if(!isnum(amount) || amount <= 0 || src.disposed)
 			return 1
 		var/added_new = 0

@@ -320,7 +320,7 @@ datum
 								smoke.set_up(1, 0, t)
 								smoke.start()
 				else
-					holder.add_reagent("steam", amount_to_boil, temp_new = holder.total_temperature)
+					holder.add_reagent("steam", amount_to_boil, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 
 		steam_condensation
 			name = "Steam Condensation"
@@ -2074,7 +2074,7 @@ datum
 			mix_phrase = "The mixture settles into a white powder."
 			result_amount = 1
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("hydrogen", created_volume * 2)
+				holder.add_reagent("hydrogen", created_volume * 2, chemical_reaction = TRUE)
 
 		mg_nh3_cl
 			name = "Magnesium-Ammonium Chloride"
@@ -2094,7 +2094,7 @@ datum
 			min_temperature = T0C + 150
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("ammonia", created_volume * 6)
+				holder.add_reagent("ammonia", created_volume * 6, chemical_reaction = TRUE)
 			mix_phrase = "The mixture bubbles aggressively."
 
 		silicate
@@ -2116,8 +2116,8 @@ datum
 			instant = 0
 			mix_phrase = "A small particulate forms into a tiny lattice."
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("oxygen", created_volume)
-				holder.add_reagent("salt", created_volume)
+				holder.add_reagent("oxygen", created_volume, chemical_reaction = TRUE)
+				holder.add_reagent("salt", created_volume, chemical_reaction = TRUE)
 
 		graphene_compound
 			name = "Graphene Hardening Compound"
@@ -2146,10 +2146,10 @@ datum
 			mix_phrase = "The hemolymph bubbles as a black precipitate falls out of the solution, denaturing into basic components."
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("meat_slurry", created_volume)// meat slurry, since animal tissue
-				holder.add_reagent("saline", 2*created_volume)//  saline-glucose solution, since blood
-				holder.add_reagent("spaceacillin", created_volume)//  spaceacillin, since hemolymph is used for bacterial tests IRL
-				holder.add_reagent("denatured_enzyme", created_volume)// and just some random biological chemicals for good measure
+				holder.add_reagent("meat_slurry", created_volume, chemical_reaction = TRUE)// meat slurry, since animal tissue
+				holder.add_reagent("saline", 2*created_volume, chemical_reaction = TRUE)//  saline-glucose solution, since blood
+				holder.add_reagent("spaceacillin", created_volume, chemical_reaction = TRUE)//  spaceacillin, since hemolymph is used for bacterial tests IRL
+				holder.add_reagent("denatured_enzyme", created_volume, chemical_reaction = TRUE)// and just some random biological chemicals for good measure
 
 		mutagen
 			name = "Unstable mutagen"
@@ -2299,14 +2299,14 @@ datum
 				var/temp = 0
 
 				temp = min(safrole,nitrogen,created_volume)
-				holder.add_reagent("space_drugs",temp)
+				holder.add_reagent("space_drugs",temp, chemical_reaction = TRUE)
 				safrole -= temp
 				holder.remove_reagent("safrole", temp)
 				nitrogen -= temp
 				holder.remove_reagent("nitrogen", temp)
 
-				holder.add_reagent("salbutamol",created_volume)
-				holder.add_reagent("water",created_volume)
+				holder.add_reagent("salbutamol",created_volume, chemical_reaction = TRUE)
+				holder.add_reagent("water",created_volume, chemical_reaction = TRUE)
 				return
 
 		lube
@@ -2357,12 +2357,11 @@ datum
 					if(holder.total_temperature > T20C)
 						var/extra_product = clamp((holder.total_temperature - T20C) / 10, 1, 15)
 						var/extra_heat = clamp(extra_product + 10, 10, 30)
-						if(istype(holder.my_atom, /obj/item/reagent_containers) && (holder.maximum_volume - holder.total_volume < extra_product)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
+						if(istype(holder.my_atom, /obj/item/reagent_containers) && (holder.maximum_volume <= holder.total_volume)) //not enough space for the extra sulfuric acid = beaker shattered + acid vapors leak out
 							var/obj/item/reagent_containers/container = holder.my_atom
-							holder.add_reagent("acid", (holder.maximum_volume - holder.total_volume), temp_new = holder.total_temperature) //fill out the remaining container space with acid
 							container.shatter()
 							return
-						holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature)
+						holder.add_reagent("acid", extra_product, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 						holder.temperature_reagents(holder.total_temperature + extra_heat)
 
 
@@ -2908,7 +2907,7 @@ datum
 							M:add_stam_mod_max("anima_drain", -25)
 					if(gathered >= 80)
 						reaction_loc.visible_message("<span class='alert'>[bicon(my_atom)] As the alchemy circle rips the life out of everyone close to it, energies escape it and settle in the [my_atom].</span>")
-						holder.add_reagent("anima",50)
+						holder.add_reagent("anima",50, chemical_reaction = TRUE)
 						if (!particleMaster.CheckSystemExists(/datum/particleSystem/swoosh, my_atom))
 							particleMaster.SpawnSystem(new /datum/particleSystem/swoosh(my_atom))
 					else
@@ -3076,7 +3075,7 @@ datum
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				// water byproduct
 				// some nitrification processes create additional water.
-				holder.add_reagent("water", created_volume,,holder.total_temperature)
+				holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
 				// disgusting
 				var/turf/location = pick(holder.covered_turf())
 				location.fluid_react_single("miasma", created_volume, airborne = 1)
@@ -3172,7 +3171,7 @@ datum
 			result_amount = 2
 			mix_phrase = "The mixture gives off a biting odor."
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("oxygen", created_volume,, holder.total_temperature)
+				holder.add_reagent("oxygen", created_volume,, holder.total_temperature, chemical_reaction = TRUE)
 
 		nitric_acid
 			name = "Nitric Acid"
@@ -3202,8 +3201,8 @@ datum
 			mix_phrase = "The mixture bubbles and white crystals form."
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
-				holder.add_reagent("water", created_volume, , holder.total_temperature)
+				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("water", created_volume, , holder.total_temperature, chemical_reaction = TRUE)
 
 		silver_fulminate
 			name = "Silver Fulminate"
@@ -3229,8 +3228,8 @@ datum
 			mix_phrase = "Silver hairlike strands of silver form in the mixture, and the mixture becomes more blue."
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("silver", created_volume*2, , holder.total_temperature)
-				holder.add_reagent("water", created_volume, , holder.total_temperature)
+				holder.add_reagent("silver", created_volume*2, , holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("water", created_volume, , holder.total_temperature, chemical_reaction = TRUE)
 
 		// 2 AgNO3 + Cu + (ethanol solvent) -> Cu(NO3)2 + 2 Ag
 		silver_nitrate_copper_nitrate_2
@@ -3242,8 +3241,8 @@ datum
 			mix_phrase = "Silver hairlike strands of silver form in the mixture, and the mixture becomes more blue."
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("silver", created_volume*2, , holder.total_temperature)
-				holder.add_reagent("ethanol", created_volume, , holder.total_temperature)
+				holder.add_reagent("silver", created_volume*2, , holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("ethanol", created_volume, , holder.total_temperature, chemical_reaction = TRUE)
 
 		// 2 AgNO3 + (heat) -> 2 Ag + O2 + 2 NO2
 		silver_nitrate_decomposition
@@ -3256,8 +3255,8 @@ datum
 			mix_phrase = "Silver specks form in the mixture as it decomposes."
 			hidden = TRUE
 			on_reaction(var/datum/reagents/holder, var/created_volume)
-				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature)
-				holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature)
+				holder.add_reagent("nitrogen_dioxide", created_volume, , holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("oxygen", created_volume/2, , holder.total_temperature, chemical_reaction = TRUE)
 
 		/*
 		weedkiller/weedkiller2
@@ -3539,10 +3538,10 @@ datum
 
 			on_reaction(var/datum/reagents/holder, var/created_volume)
 				// sewage is a catalyst and does not get used in the process
-				holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature)
+				holder.add_reagent("sewage", created_volume * 5,,holder.total_temperature, chemical_reaction = TRUE)
 				// Byproduct is some nutrients from the decomposted egg and some bacterials toxins
-				holder.add_reagent("poo", created_volume * 2,,holder.total_temperature)
-				holder.add_reagent("toxin", created_volume,,holder.total_temperature)
+				holder.add_reagent("poo", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("toxin", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
 				// the decomposition process create some unbearable stench
 				var/turf/location = pick(holder.covered_turf())
 				location.fluid_react_single("miasma", created_volume * 4, airborne = 1)
@@ -3740,7 +3739,7 @@ datum
 			reaction_speed = 1
 
 			on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
-				holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature)
+				holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 
 		hairgrownium
 			name = "Hairgrownium"
@@ -4297,7 +4296,7 @@ datum
 			mix_sound = 'sound/misc/fuse.ogg'
 
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("salt", created_volume * 2,,holder.total_temperature)
+				holder.add_reagent("salt", created_volume * 2,,holder.total_temperature, chemical_reaction = TRUE)
 
 		gypsum //H2SO4 + CaCO3 -> CaSO4 + H2O + CO2
 			name = "calcium sulfate"
@@ -4308,7 +4307,7 @@ datum
 			mix_phrase = "The mixture bubbles fervently."
 
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("water", created_volume,,holder.total_temperature)
+				holder.add_reagent("water", created_volume,,holder.total_temperature, chemical_reaction = TRUE)
 
 		chalk //"pastels also contain clays and oils for binding, and strong pigments" some website i found
 			name = "chalk"
@@ -4352,8 +4351,8 @@ datum
 			result_amount = 3
 			mix_phrase = "The white flakes turn into a white powder."
 			on_reaction(var/datum/reagents/holder, created_volume)
-				holder.add_reagent("water", created_volume / 3,,holder.total_temperature)
-				holder.add_reagent("sodium_sulfate", created_volume / 3,,holder.total_temperature)
+				holder.add_reagent("water", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE)
+				holder.add_reagent("sodium_sulfate", created_volume / 3,,holder.total_temperature, chemical_reaction = TRUE)
 
 		perfect_cement //lime, alumina, magnesia, iron (iii) oxide, calcium sulfate, sulfur trioxide
 			name = "perfect cement"
