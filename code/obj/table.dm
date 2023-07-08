@@ -618,6 +618,7 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	parts_type = /obj/item/furniture_parts/table/nanotrasen
+	default_material = "glass"
 
 	auto
 		auto = TRUE
