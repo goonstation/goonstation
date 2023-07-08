@@ -300,6 +300,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			jelly
 				name = "Jelly"
 				id = "jelly"
+			tied_back
+				name = "Tied Back"
+				id = "tied_back"
 		long
 			chub2_s
 				name = "Bang: Left"
