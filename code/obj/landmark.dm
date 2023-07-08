@@ -63,6 +63,121 @@ var/global/list/job_start_locations = list()
 			else
 				job_start_locations[src.name] += src.loc
 		..()
+/* ===== Station Jobs ===== */
+
+// Command
+
+/obj/landmark/start/captain
+	name = "Captain"
+	icon_state = "captain"
+
+/obj/landmark/start/head_of_personnel
+	name = "Head of Personnel"
+	icon_state = "head_of_personnel"
+
+/obj/landmark/start/head_of_security
+	name = "Head of Security"
+	icon_state = "head_of_security"
+
+/obj/landmark/start/medical_director
+	name = "Medical Director"
+	icon_state = "medical_director"
+
+/obj/landmark/start/research_director
+	name = "Research Director"
+	icon_state = "research_director"
+
+/obj/landmark/start/chief_engineer
+	name = "Chief Engineer"
+	icon_state = "chief_engineer"
+
+// Civillian
+
+/obj/landmark/start/assistant
+	name = "Staff Assistant"
+	icon_state = "assistant"
+
+/obj/landmark/start/clown
+	name = "Clown"
+	icon_state = "clown"
+
+/obj/landmark/start/chef
+	name = "Chef"
+	icon_state = "chef"
+
+/obj/landmark/start/bartender
+	name = "Bartender"
+	icon_state = "bartender"
+
+/obj/landmark/start/botanist
+	name = "Botanist"
+	icon_state = "botanist"
+
+/obj/landmark/start/rancher
+	name = "Rancher"
+	icon_state = "rancher"
+
+/obj/landmark/start/janitor
+	name = "Janitor"
+	icon_state = "janitor"
+
+/obj/landmark/start/chaplain
+	name = "Chaplain"
+	icon_state = "chaplain"
+
+// Engineering
+
+/obj/landmark/start/engineer
+	name = "Engineer"
+	icon_state = "engineer"
+
+/obj/landmark/start/miner
+	name = "Miner"
+	icon_state = "miner"
+
+/obj/landmark/start/quartermaster
+	name = "Quartermaster"
+	icon_state = "quartermaster"
+
+// Med/Sci
+
+/obj/landmark/start/medical_doctor
+	name = "Medical Doctor"
+	icon_state = "medical_doctor"
+
+/obj/landmark/start/geneticist
+	name = "Geneticist"
+	icon_state = "geneticist"
+
+/obj/landmark/start/roboticist
+	name = "Roboticist"
+	icon_state = "roboticist"
+
+/obj/landmark/start/scientist
+	name = "Scientist"
+	icon_state = "scientist"
+
+// Security
+/obj/landmark/start/security_officer
+	name = "Security Officer"
+	icon_state = "security_officer"
+
+/obj/landmark/start/security_assistant
+	name = "Security Assistant"
+	icon_state = "security_assistant"
+
+/obj/landmark/start/detective
+	name = "Detective"
+	icon_state = "detective"
+
+// Silicons
+/obj/landmark/start/AI
+	name = "AI"
+	icon_state = "ai"
+
+/obj/landmark/start/cyborg
+	name = "Cyborg"
+	icon_state = "cyborg"
 
 // actual landmarks follow
 // most of these are here just for backwards compatibility
