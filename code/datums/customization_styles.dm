@@ -279,9 +279,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			curtain
 				name = "Curtain"
 				id = "curtain"
-			leon
-				name = "Leon"
-				id = "leon"
+			scott
+				name = "Scott"
+				id = "scott"
 			curly_bob
 				name = "Curly Bob"
 				id = "curly_bob"
@@ -300,9 +300,6 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			jelly
 				name = "Jelly"
 				id = "jelly"
-			tied_back
-				name = "Tied Back"
-				id = "tied_back"
 		long
 			chub2_s
 				name = "Bang: Left"
