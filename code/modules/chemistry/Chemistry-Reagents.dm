@@ -328,6 +328,33 @@ datum
 					holder.remove_reagent(reagent_id, (amount * holder.reagent_list[reagent_id].flushing_multiplier))
 			return
 
+		//proc for stunning multiple limbs without having them overlap or stunning inexistent limbs
+		proc/numb_limb(var/mob/M, var/numbness_time, var/numb_amount = 1, var/random_order = TRUE, var/list/numb_limbs = list("numb_l_arm", "numb_l_leg", "numb_r_arm", "numb_r_leg"))
+			if(!ishuman(M))
+				return
+			var/mob/living/carbon/human/H = M
+			if(random_order)
+				shuffle_list(numb_limbs)
+			for (var/i in numb_limbs)
+				if (numb_amount < 1)
+					return
+				numb_amount -= 1  //only stuns the maximum defined amount of limbs
+				if (i == "numb_l_arm" && H.limbs?.l_arm)
+					M.setStatusMin(i, numbness_time)
+					continue
+				if (i == "numb_r_arm" && H.limbs?.r_arm)
+					M.setStatusMin(i, numbness_time)
+					continue
+				if (i == "numb_l_leg" && H.limbs?.l_leg)
+					M.setStatusMin(i, numbness_time)
+					continue
+				if (i == "numb_r_leg" && H.limbs?.r_leg)
+					M.setStatusMin(i, numbness_time)
+					continue
+				numb_amount +=1 //does not register a stunned limb if none is stunned, allowing it to find another
+								//or stopping as soon as it runs out of possible limbs to stun
+			return
+
 		// reagent state helper procs
 
 		proc/is_solid()

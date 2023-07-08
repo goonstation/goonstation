@@ -219,9 +219,9 @@
 
 	// Strange to have this so high up, but we're considered 'restrained' if we have a missing limb on our active hand
 	// thus the AI thinks it's cuffed or whatever and never does anything other than moving if it loses the active arm
-	if(!src.limbs.l_arm)
+	if(!src.limbs.l_arm || src.hasStatus("numb_l_arm"))
 		src.swap_hand(0)
-	else if(!src.limbs.r_arm)
+	else if(!src.limbs.r_arm || src.hasStatus("numb_r_arm"))
 		src.swap_hand(1)
 
 	if(!src.restrained() && !src.lying && !src.buckled)

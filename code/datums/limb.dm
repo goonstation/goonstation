@@ -44,6 +44,10 @@
 	proc/attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
 		if(!target) // fix runtime Cannot execute null.attack hand().
 			return
+		if(user.hand && user.hasStatus("numb_l_arm"))
+			return
+		if(!user.hand && user.hasStatus("numb_r_arm"))
+			return
 		target.Attackhand(user, params, location, control)
 
 	proc/harm(mob/living/target, var/mob/living/user)
