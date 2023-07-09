@@ -23,8 +23,8 @@
 	var/base_reaction_temp = T20C
 	var/reaction_temp_divider = 10
 
-	// Logs the contents of the reagent holder's container in addition to the reaction itself.
-	// Used for foam and smoke (Convair880).
+	/// Logs the contents of the reagent holder's container in addition to the reaction itself.
+	/// Used for foam and smoke (Convair880).
 	var/special_log_handling = 0
 
 	var/result_amount = 0
