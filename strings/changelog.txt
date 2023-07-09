@@ -1,4 +1,14 @@
 
+(t)sat jul 08 23
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
+(t)thu jul 06 23
+(u)Sian
+(p)14839
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Shrimps now butcher into raw shrimp meat.
+(+)Cooking a shrimp in the oven will now output cooked shrimp meat.
+(+)Cooked shrimp meat can be combined with a rice ball to make a shrimp nigiri roll.
 (t)tue jul 04 23
 (u)tarmunora
 (+)increase volume of microjetpacks and belt-sized oxygen tanks.
