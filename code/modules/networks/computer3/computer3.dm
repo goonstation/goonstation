@@ -987,6 +987,21 @@
 				src.power_change()
 				update_static_data(usr)
 			return
+
+		else if(istype(W, /obj/item/card/id))
+			var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
+			if (!dv)
+				src.Attackhand(user)
+				return
+
+			if (dv.authid)
+				boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+			else
+				usr.drop_item()
+				W.loc = src
+				dv.authid = W
+				update_static_data(usr)
+			return
 		else
 			src.Attackhand(user)
 		return
