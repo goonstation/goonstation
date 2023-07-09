@@ -2412,3 +2412,11 @@
 	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
 	maxDuration = 3 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
