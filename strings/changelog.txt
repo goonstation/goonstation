@@ -1,5 +1,7 @@
 
-(t)sat jul 01 23
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
 (u)tarmunora
 (+)Pancuronium stun delay increased to match neurotoxin.
 (t)thu jul 06 23

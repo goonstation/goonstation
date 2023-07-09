@@ -718,7 +718,7 @@
 #endif
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.<b>")
 		return
 
 	if(!src.canspeak)
@@ -1545,10 +1545,6 @@
 
 /mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
-		return
-
-	if (!ticker)
-		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
 	M.lastattacked = src

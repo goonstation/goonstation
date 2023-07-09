@@ -264,7 +264,7 @@
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
 				if(istype(I, /obj/item/currency/spacecash/buttcoin))
-					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+					boutput(user, "<span class='success'>Your transaction will complete anywhere within 10 to 10e27 minutes from now.</span>")
 				else
 					src.accessed_record["current_money"] += I.amount
 

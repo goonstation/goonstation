@@ -641,7 +641,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
-			boutput(user, "You can't think of anything else to do on this console...")
+			boutput(user, "<span class='alert'>You can't think of anything else to do on this console...</span>")
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
