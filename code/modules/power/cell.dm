@@ -38,8 +38,8 @@
 	name = "erebite power cell"
 	desc = "A small battery/generator unit powered by the unstable mineral Erebite. Do not expose to high temperatures or fire."
 	icon_state = "erebcell"
-	maxcharge = 20000
-	genrate = 10
+	maxcharge = 60000
+	genrate = 30
 	specialicon = 1
 
 /obj/item/cell/cerenkite
