@@ -7,6 +7,7 @@
 	organ_name = "eye"
 	desc = "Here's lookin' at you! Er, maybe not so much, anymore."
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/eye.dmi'
 	icon_state = "eye"
 	var/change_iris = 1
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()

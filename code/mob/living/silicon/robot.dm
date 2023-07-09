@@ -987,7 +987,7 @@
 					boutput(user, "You emag [src]'s interface.")
 				src.visible_message("<font color=red><b>[src]</b> buzzes oddly!</font>")
 				logTheThing(LOG_STATION, src, "[key_name(src)] is emagged by [key_name(user)] and loses connection to rack. Formerly [constructName(src.law_rack_connection)]")
-				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
+				src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 				update_appearance()
 				return 1
 			return 0
@@ -1282,7 +1282,7 @@
 					if (src.syndicate)
 						src.make_syndicate("brain added by [user]")
 					else if (src.emagged)
-						src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = null)
+						src.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED)
 
 				if (!src.emagged && !src.syndicate) // The antagonist proc does that too.
 					boutput(src, "<B>You are playing a Cyborg. You can interact with most electronic objects in your view.</B>")
@@ -1829,7 +1829,7 @@
 		if (isAI(other)) return 1
 		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if(!H.mutantrace || !H.mutantrace.exclusive_language)
+			if(!H.mutantrace.exclusive_language)
 				return 1
 		if (ishivebot(other)) return 1
 		return ..()

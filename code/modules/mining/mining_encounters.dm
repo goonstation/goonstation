@@ -244,9 +244,9 @@
 			/obj/storage/crate/trench_loot/weapons4,
 			)
 	var/static/list/enemies = list(
-			/mob/living/critter/small_animal/trilobite/ai_controlled,
-			/mob/living/critter/small_animal/hallucigenia/ai_controlled,
-			/mob/living/critter/small_animal/pikaia/ai_controlled
+			/mob/living/critter/small_animal/trilobite,
+			/mob/living/critter/small_animal/hallucigenia,
+			/mob/living/critter/small_animal/pikaia
 	)
 
 	generate(var/obj/magnet_target_marker/target)
@@ -916,7 +916,9 @@
 							if(6)
 								new /obj/grille/steel/broken(locate(S.x, S.y, S.z),0)
 							else
-								new /obj/lattice(locate(S.x, S.y, S.z),0)
+								var/obj/lattice/lattice = new /obj/lattice/auto/turf_attaching(locate(S.x, S.y, S.z))
+								var/dirmask = lattice.dirmask | rand(0, 1 | 2 | 4 | 8) // randomly add some directions to the lattice to make it look more broken
+								lattice.set_dirmask(dirmask)
 
 	var/num_items = rand(4,20)
 	var/datum/material/scrap_material = null

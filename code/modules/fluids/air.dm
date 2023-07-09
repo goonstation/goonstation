@@ -300,11 +300,7 @@ var/list/ban_from_airborne_fluid = list()
 			last_spread_was_blocked = 0
 
 		//air specific:
-		var/old_opacity = src.opacity
 		src.set_opacity(group.reagents.get_master_reagent_gas_opaque())
-		if(src.opacity != old_opacity)
-			var/turf/L = src.loc
-			if(istype(L)) L.opaque_atom_count += src.opacity ? 1 : -1
 
 	update_perspective_overlays() // fancy perspective overlaying
 		.= 0

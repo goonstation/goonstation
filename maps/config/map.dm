@@ -8,6 +8,9 @@
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "blank_underwater.dm"
 
+#elif defined(RANDOM_ROOM_RUNTIME_CHECKING)
+#include "blank.dm"
+
 // special modes
 #elif defined(MAP_OVERRIDE_CONSTRUCTION)
 #include "construction.dm"

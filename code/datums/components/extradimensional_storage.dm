@@ -95,11 +95,24 @@ TYPEINFO(/datum/component/extradimensional_storage)
 
 	var/obj/ladder/ladder = src.parent
 	ladder.unclimbable = TRUE
-	var/image/I = image(ladder.icon,ladder,"[ladder.icon_state]-extra")
+
+	var/image/I = image(icon(ladder.icon,"ladder_void"))
+	I.filters += filter(type="alpha",icon=icon(ladder.icon,"[ladder.icon_state]-extra"))
 	ladder.UpdateOverlays(I,"extradim")
 
 	RegisterSignal(src.parent, COMSIG_ATTACKHAND, PROC_REF(on_entered))
 	RegisterSignal(src.parent, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(on_disposing))
+
+/datum/component/extradimensional_storage/ladder/proc/change_overlay(icon/overlay_icon)
+	var/obj/ladder/ladder = src.parent
+
+	// cram the icon into the 32x32 space
+	overlay_icon.Scale(world.icon_size,world.icon_size)
+	var/image/I = image(overlay_icon)
+
+	I.filters += filter(type="alpha",icon=icon(ladder.icon,"[ladder.icon_state]-extra"))
+
+	ladder.UpdateOverlays(I,"extradim")
 
 /datum/component/extradimensional_storage/ladder/on_entered(atom/movable/thing,mob/user)
 	var/obj/ladder/ladder = src.parent
