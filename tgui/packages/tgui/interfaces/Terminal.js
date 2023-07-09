@@ -1,8 +1,8 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Flex, Input, Section, Stack } from '../components';
+import { Box, Button, Flex, Input, Section, Stack, Tooltip } from '../components';
 
-export const Terminal = (props, context) => {
+export const Terminal = (_props, context) => {
   const { act, data } = useBackend(context);
   const peripherals = data.peripherals || [];
   const { textInput } = "";
@@ -13,7 +13,23 @@ export const Terminal = (props, context) => {
     windowName,
     fontColor,
     bgColor,
+    doScrollBottom,
   } = data;
+
+  let handleScrollBottom = function () {
+    // There might be a better way than this setTimeout like fashion to run our js scroll code at the right time
+    // but I'm not familiar enough with Inferno hooks to find it
+    window.requestAnimationFrame(() => {
+      if (!doScrollBottom) {
+        return;
+      }
+      let terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
+      if (!terminalOutputScroll) {
+        return;
+      }
+      terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
+    });
+  };
 
   return (
     <Window
@@ -25,7 +41,7 @@ export const Terminal = (props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <Section backgroundColor={bgColor} scrollable fill>
+            <Section backgroundColor={bgColor} scrollable fill id="terminalOutput">
               <Box
                 fontFamily="Consolas"
                 fill
@@ -45,12 +61,23 @@ export const Terminal = (props, context) => {
                     value={textInput}
                     fluid
                     onChange={(e, value) => act('text', { value: value })}
+                    mr="0.5rem"
                   />
                 </Flex.Item>
                 <Flex.Item>
-                  <Button icon="power-off"
-                    color={TermActive ? "green" : "red"}
-                    onClick={() => act('restart')} />
+                  <Tooltip content="Enter">
+                    <Button icon="share"
+                      color={TermActive ? "green" : "red"}
+                      onClick={() => act('text')}
+                      mr="0.5rem" />
+                  </Tooltip>
+                </Flex.Item>
+                <Flex.Item>
+                  <Tooltip content="Restart">
+                    <Button icon="repeat"
+                      color={TermActive ? "green" : "red"}
+                      onClick={() => act('restart')} />
+                  </Tooltip>
                 </Flex.Item>
               </Flex>
             </Section>
@@ -74,6 +101,7 @@ export const Terminal = (props, context) => {
           </Stack.Item>
         </Stack>
       </Window.Content>
+      {handleScrollBottom()}
     </Window>
   );
 

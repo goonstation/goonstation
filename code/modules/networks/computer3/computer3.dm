@@ -10,6 +10,7 @@
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
+	var/do_scroll_bottom = FALSE
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
@@ -338,10 +339,11 @@
 
 	return
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
-  ui = tgui_process.try_update_ui(user, src, ui)
-  if(!ui)
-    ui = new(user, src, "Terminal")
-    ui.open()
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		src.do_scroll_bottom = TRUE
+		ui = new(user, src, "Terminal")
+		ui.open()
 
 /obj/machinery/computer3/ui_static_data(mob/user)
 	. = list()
@@ -362,15 +364,17 @@
 				.["peripherals"] += list(pdata)
 
 /obj/machinery/computer3/ui_data(mob/user)
- . = list(
-	"displayHTML" = src.temp, // display data
-	"TermActive" = src.active_program, // is the terminal running or restarting
-	"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
-	"windowName" = src.name,
-	"user" = user,
-	"fontColor" = src.setup_font_color, // display monochrome values
-	"bgColor" = src.setup_bg_color
-  )
+	. = list(
+		"displayHTML" = src.temp, // display data
+		"TermActive" = src.active_program, // is the terminal running or restarting
+		"fdisk" = src.diskette, // for showing if the internal diskette slot is filled
+		"windowName" = src.name,
+		"user" = user,
+		"fontColor" = src.setup_font_color, // display monochrome values
+		"bgColor" = src.setup_bg_color,
+		"doScrollBottom" = src.do_scroll_bottom
+	)
+	src.do_scroll_bottom = FALSE
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -477,6 +481,7 @@
 	if (src.temp_add)
 		src.temp += src.temp_add
 		src.temp_add = null
+		src.do_scroll_bottom = TRUE
 
 /obj/machinery/computer3/process()
 	if(status & BROKEN)
@@ -520,9 +525,7 @@
 			W.set_loc(src)
 			src.diskette = W
 			boutput(user, "You insert [W].")
-			if(user.using_dialog_of(src))
-				src.updateUsrDialog()
-				user << output(url_encode("Disk: <a href='byond://?src=\ref[src];disk=1'>Eject</a>"),"comp3.browser:setInternalDisk")
+			update_static_data(usr)
 			return
 		else if(src.diskette)
 			boutput(user, "<span class='alert'>There's already a disk inside!</span>")
@@ -534,9 +537,33 @@
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer3/proc/unscrew_monitor,\
 		list(W, user), W.icon, W.icon_state, null, null)
 
+	else if(istype(W, /obj/item/card/id))
+		var/obj/item/peripheral/card_scanner/dv = get_card_scanner()
+		if (!dv)
+			src.Attackhand(user)
+			return
+
+		if (dv.authid)
+			boutput(user, "<span class='alert'>There is already a card inserted!</span>")
+		else
+			usr.drop_item()
+			W.loc = src
+			dv.authid = W
+			update_static_data(usr)
+		return
+
 	else
 		src.Attackhand(user)
 	return
+
+/obj/machinery/computer3/proc/get_card_scanner()
+	. = locate(/obj/item/peripheral/card_scanner) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
+	if (!.)
+		. = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
 
 /obj/machinery/computer3/proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 	if(!ispath(setup_frame_type, /obj/computer3frame))
@@ -929,6 +956,7 @@
 				W.set_loc(src)
 				src.diskette = W
 				boutput(user, "You insert [W].")
+				update_static_data(usr)
 			else if(src.diskette)
 				boutput(user, "<span class='alert'>There's already a disk inside!</span>")
 			else if(!src.setup_has_internal_disk)
@@ -944,6 +972,7 @@
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
 			src.power_change()
+			update_static_data(usr)
 			return
 
 		else if (istype(W, /obj/item/cell))
@@ -956,6 +985,7 @@
 				src.cell = W
 				boutput(user, "You insert [W].")
 				src.power_change()
+				update_static_data(usr)
 			return
 		else
 			src.Attackhand(user)
