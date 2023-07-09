@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
-	max_health = 150
+	max_health = 160
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
@@ -596,7 +596,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
 	icon_state = "l_arm-sturdy"
-	max_health = 110
+	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
@@ -670,7 +670,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
 	icon_state = "r_arm-sturdy"
-	max_health = 110
+	max_health = 115
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
 
