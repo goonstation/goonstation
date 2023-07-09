@@ -37,7 +37,7 @@
 			if (A.irradiated)
 				//spatial interdictor: mitigate effect of radiation
 				//power expenditure is managed centrally by the interdictor
-				if (owner.!hasStatus("spatial_protection"))
+				if (!owner.hasStatus("spatial_protection"))
 					owner.take_radiation_dose((rand() * 0.3 SIEVERTS * A.irradiated * mult))
 
 		if (owner.bioHolder && ishuman(owner))
