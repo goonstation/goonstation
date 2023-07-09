@@ -98,7 +98,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	anchored = ANCHORED
 	density = 1
 	event_handler_flags = IMMUNE_SINGULARITY
-	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL
+	deconstruct_flags = DECON_NONE
 
 
 	pixel_x = -16
