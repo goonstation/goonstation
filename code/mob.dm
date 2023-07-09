@@ -585,7 +585,6 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 						var/atom/source = get_turf(tmob)
@@ -631,7 +630,6 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
