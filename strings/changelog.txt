@@ -1,4 +1,7 @@
 
+(t)sat jul 01 23
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
 (t)thu jul 06 23
 (u)Sian
 (p)14839
