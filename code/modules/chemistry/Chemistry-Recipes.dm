@@ -30,8 +30,10 @@
 	var/result_amount = 0
 	var/mix_phrase = "The solution begins to bubble."
 	var/mix_sound = 'sound/effects/bubbles.ogg'
-	var/drinkrecipe = 0
-	var/consume_all = 0 //If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
+	/// Is the result a drink?
+	var/drinkrecipe = FALSE
+	/// If set to 1, the recipe will consume ALL of its components instead of just proportional parts.
+	var/consume_all = 0
 
 	///should this reaction show up in anything player-facing that lists reactions. For secret repo chems, misc precursors, and for 'non-standard' reactions (stuff like voltagen arc, foam reacting with water, etc)
 	var/hidden = FALSE
@@ -488,7 +490,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture turns an offensive brown colour and begins fizzing."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	chocolate_milk
 		name = "Chocolate Milk"
@@ -498,7 +500,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture turns a nice brown color."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	strawberry_milk
 		name = "Strawberry Milk"
@@ -508,7 +510,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture turns a nice pink color."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	blue_milk
 		name = "Blue Milk"
@@ -518,7 +520,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture turns a pale blue color."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	milk_punch
 		name = "Milk Punch"
@@ -528,7 +530,7 @@
 		result_amount = 6
 		mix_phrase = "You wonder why you made this drink at all."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	milk_punch/milk_punch2
 		id = "milk_punch2"
@@ -543,7 +545,7 @@
 		result_amount = 5
 		mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	lipolicide // COGWERKS REPLACEMENT NOTES: FEN-PHEN? EPHEDRINE?
 		name = "Lipolicide"
@@ -601,7 +603,7 @@
 		result_amount = 4
 		mix_phrase = "The sugar dissolves into the lemon juice."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	limeade
 		name = "Limeade"
@@ -611,7 +613,7 @@
 		result_amount = 4
 		mix_phrase = "The sugar dissolves into the lime juice."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	halfandhalf
 		name = "Half and Half"
@@ -621,7 +623,7 @@
 		result_amount = 2
 		mix_phrase = "The tea and lemonade combine without much fuss."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	halfandhalf/halfandhalf2
 		id = "halfandhalf2"
@@ -641,7 +643,7 @@
 		result_amount = 2
 		mix_phrase = "The coffee and lemonade mix together. Damn fine."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	laurapalmer/laurapalmer2
 		id = "laurapalmer2"
@@ -655,7 +657,7 @@
 		required_reagents = list("egg" = 1, "milk" = 1, "sugar" = 1)
 		result_amount = 3
 		mix_phrase = "The eggs nog together. Pretend that \"nog\" is a verb."
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	honey_tea
 		name = "honey tea"
@@ -665,7 +667,7 @@
 		result_amount = 2
 		mix_phrase = "The tea somehow smells even nicer than before."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	mint_tea
 		name = "mint tea"
@@ -675,7 +677,7 @@
 		result_amount = 2
 		mix_phrase = "The tea somehow smells even more refreshing than before."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	sun_tea
 		name = "sun tea"
@@ -685,7 +687,7 @@
 		result_amount = 5
 		mix_phrase = "The tea takes on a sweet, summery smell."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	sweet_tea
 		name = "Sweet Tea"
@@ -695,7 +697,7 @@
 		result_amount = 2
 		mix_phrase = "The tea sweetens. Visually. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	catamount
 		name = "catamount"
@@ -704,7 +706,7 @@
 		required_reagents = list("juice_orange" = 1, "grenadine" = 1, "ginger_ale" = 4, "ice" = 2)
 		result_amount = 8
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	pine_ginger
 		name = "pine-ginger"
@@ -713,7 +715,7 @@
 		required_reagents = list("juice_pineapple" = 2, "ice" = 1, "ginger_ale" = 1)
 		result_amount = 4
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	sail_boat
 		name = "sail boat"
@@ -722,7 +724,7 @@
 		required_reagents = list("juice_lime" = 1, "ginger_ale" = 4, "ice" = 1)
 		result_amount = 6
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	vermont_breeze
 		name = "vermont breeze"
@@ -731,7 +733,7 @@
 		required_reagents = list("lemonade" = 4, "grenadine" = 1, "tonic" = 1)
 		result_amount = 6
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cafe_gele
 		name = "cafe gele"
@@ -740,7 +742,7 @@
 		required_reagents = list("coffee_fresh" = 6, "vanilla" = 1, "sugar" = 1)
 		result_amount = 8
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	sodawater
 		name = "soda water"
@@ -750,7 +752,7 @@
 		result_amount = 2
 		mix_phrase = "The water becomes soda water, club soda, sparkling water, mineral water, or possibly seltzer."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	simplesyrup
 		name = "simple syrup"
@@ -761,7 +763,7 @@
 		result_amount = 2
 		mix_phrase = "The sugar and water congeal in the heat into a gloopy syrup."
 		mix_sound = 'sound/impact_sounds/slimy_hit_3.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_wellerman
 		name = "Wellerman"
@@ -771,7 +773,7 @@
 		result_amount = 3
 		mix_phrase = "Soon may the Wellerman come. To bring us sugar and tea and rum."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_hardpunch
 		name = "Hard Punch"
@@ -781,7 +783,7 @@
 		result_amount = 5
 		mix_phrase = "This drink is so disgustingly sweet you start to get a headache from smelling it."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_kalimoxto
 		name = "Kalimoxto"
@@ -791,7 +793,7 @@
 		result_amount = 2
 		mix_phrase = "The drink mixes together in an oddly Basque way."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_derby
 		name = "Derby"
@@ -801,7 +803,7 @@
 		result_amount = 3
 		mix_phrase = "The drink becomes kind of generically named."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_horsesneck
 		name = "Horse's Neck"
@@ -811,7 +813,7 @@
 		result_amount = 3
 		mix_phrase = "The drink horses around."
 		mix_sound = 'sound/voice/horse.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_rose
 		name = "Rose"
@@ -821,7 +823,7 @@
 		result_amount = 3
 		mix_phrase = "A rose by any other name would probably have a lower alcohol content."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_seabreeze
 		name = "Sea Breeze"
@@ -831,7 +833,7 @@
 		result_amount = 3
 		mix_phrase = "The drink reminds you of the Oshan breeze."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_brassmonkey
 		name = "Brass Monkey"
@@ -841,7 +843,7 @@
 		result_amount = 3
 		mix_phrase = "The drink screeches!"
 		mix_sound = 'sound/voice/screams/monkey_scream.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_hotbutteredrum
 		name = "Hot Buttered Rum"
@@ -851,7 +853,7 @@
 		result_amount = 3
 		mix_phrase = "The drink becomes highly indulgent."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_fluffycritter
 		name = "Fluffy Critter"
@@ -861,7 +863,7 @@
 		result_amount = 4
 		mix_phrase = "The drink coos. Aww."
 		mix_sound = 'sound/voice/babynoise.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_michelada
 		name = "Michelada"
@@ -871,7 +873,7 @@
 		result_amount = 3
 		mix_phrase = "A tiny mariachi pops out of the container and doots at you before disappearing into the drink."
 		mix_sound = 'sound/musical_instruments/Bikehorn_2.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_gunfire
 		name = "Gunfire"
@@ -881,7 +883,7 @@
 		result_amount = 2
 		mix_phrase = "The drink makes an unconvincing gunshot noise."
 		mix_sound = 'sound/vox/shoot.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_espressomartini
 		name = "Espresso Martini"
@@ -891,7 +893,7 @@
 		result_amount = 4
 		mix_phrase = "James Bond would use his License To Kill."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_nicotini
 		name = "Nicotini"
@@ -909,7 +911,7 @@
 		result_amount = 2
 		mix_phrase = "The combination of the beer and lemonade makes you want to go cycling, for some reason."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_threemileislandicedtea
 		name = "Three Mile Island Iced Tea"
@@ -919,7 +921,7 @@
 		result_amount = 5
 		mix_phrase = "You swear you hear the sound of a nuclear bomb being pushed through an airlock."
 		mix_sound = 'sound/machines/decompress.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_citrus
 		name = "Triple Citrus"
@@ -929,7 +931,7 @@
 		result_amount = 3
 		mix_phrase = "The citrus juices begin to blend together."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_triple
 		name = "Triple Triple"
@@ -939,7 +941,7 @@
 		result_amount = 1 //this is pretty much a hellpoison.
 		mix_phrase = "The mixture can't seem to control itself and settle down!"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 		hidden = TRUE
 
 	cocktail_beach
@@ -964,7 +966,7 @@
 		result_amount = 2
 		mix_phrase = "The vodka and orange juice mix together nicely."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_bloodymary
 		name = "Bloody Mary"
@@ -974,7 +976,7 @@
 		result_amount = 2
 		mix_phrase = "The vodka and tomato juice mix together nicely."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_bloodyscary
 		name = "Bloody Scary"
@@ -984,7 +986,7 @@
 		result_amount = 2
 		mix_phrase = "The blood feverishly tries to escape the burn of the vodka, but eventually succumbs."
 		mix_sound = 'sound/impact_sounds/Flesh_Break_1.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_snakebite
 		name = "Snakebite"
@@ -994,7 +996,7 @@
 		result_amount = 2
 		mix_phrase = "The beer and cider mix into an appetizing drink."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_caipirinha
 		name = "Pineapple Caipirinha"
@@ -1004,7 +1006,7 @@
 		result_amount = 5
 		mix_phrase = "The vodka and pineapple juice mix together into a yellowish drink."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_piscosour
 		name = "Pisco Sour"
@@ -1014,7 +1016,7 @@
 		result_amount = 5
 		mix_phrase = "The egg white foams and floats atop the lime-colored drink."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_diesel
 		name = "Diesel"
@@ -1024,7 +1026,7 @@
 		result_amount = 2
 		mix_phrase = "The addition of the juice makes the drink even more appetizing and somehow even stronger."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_suicider
 		name = "Suicider"
@@ -1034,7 +1036,7 @@
 		result_amount = 4
 		mix_phrase = "The drinks and chemicals mix together, emitting a potent smell."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_boorbon
 		name = "BOOrbon"
@@ -1044,7 +1046,7 @@
 		result_amount = 2
 		mix_phrase = "The bourbon and ectoplasm mix together, forming a HORRIFYING BLEND."
 		mix_sound = 'sound/effects/ghostlaugh.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_grog
 		name = "Grog"
@@ -1055,7 +1057,7 @@
 		result_amount = 10
 		mix_phrase = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 		hidden = TRUE
 
 	cocktail_beepskybeer
@@ -1066,7 +1068,7 @@
 		result_amount = 2
 		mix_phrase = "The beer is filled briefly by thousands of brilliant, tiny electrical arcs before growing calm and dark."
 		mix_sound = 'sound/effects/sparks6.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cocktail_whiskey_sour
 		name = "Whiskey Sour"
@@ -1701,7 +1703,7 @@
 		result_amount = 4
 		mix_phrase = "The drink honks at you! What the fuck?"
 		mix_sound = 'sound/misc/drinkfizz_honk.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	cola
 		name = "cola"
@@ -1711,7 +1713,7 @@
 		result_amount = 2
 		mix_phrase = "The mixture begins to fizz."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	hot_toddy
 		name = "Hot Toddy"
@@ -1721,7 +1723,7 @@
 		result_amount = 3
 		mix_phrase = "The drink suddenly fills the room with a festive aroma."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	hot_toddy_halfnhalf
 		name = "Hot Toddy"
@@ -1731,7 +1733,7 @@
 		result_amount = 3
 		mix_phrase = "The drink suddenly fills the room with a festive aroma."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	bees_knees
 		name = "Bee's Knees"
@@ -1741,7 +1743,7 @@
 		result_amount = 3
 		mix_phrase = "You hear a faint buzz from the solution and your knees slightly ache."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	spiced_rum
 		name = "Spiced Rum"
@@ -1751,7 +1753,7 @@
 		result_amount = 2
 		mix_phrase = "You feel like you might have misunderstood the recipe."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	romulale
 		name = "Romulale"
@@ -1761,7 +1763,7 @@
 		result_amount = 4
 		mix_phrase = "A strong smell comes from the solution."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	phil_collins
 		name = "Phil Collins"
@@ -1771,7 +1773,7 @@
 		result_amount = 2
 		mix_phrase = "You can feel it coming in the air tonight. Oh lord."
 		mix_sound = 'sound/misc/PhilCollinsTom.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	duck_fart
 		name = "Duck Fart"
@@ -1781,7 +1783,7 @@
 		result_amount = 3
 		mix_phrase = "You hear a faint quack from the solution along with a pungent stench."
 		mix_sound = 'sound/voice/farts/fart3.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	pink_lemonade
 		name = "Pink lemonade"
@@ -1791,7 +1793,7 @@
 		result_amount = 2
 		mix_phrase = "You watch the pink colour dance around the container and slowly combine with the lemonade."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
-		drinkrecipe = 1
+		drinkrecipe = TRUE
 
 	squeeze
 		name = "Squeeze"
