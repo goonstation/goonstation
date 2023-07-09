@@ -34,7 +34,6 @@
 				L.bodytemperature = max(temp/3, L.bodytemperature)
 				LAGCHECK(LAG_REALTIME)
 			for(var/obj/critter/C in T)
-				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				SPAWN(0.5 SECONDS)

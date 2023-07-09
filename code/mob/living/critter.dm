@@ -91,6 +91,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 	var/last_life_process = 0
 	var/use_stunned_icon = 1
 
+	var/list/friends = list()
+
 	var/pull_w_class = W_CLASS_SMALL
 
 	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
@@ -1323,6 +1325,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (C in src.friends) return FALSE
 		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
@@ -1345,13 +1348,24 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				src.ai_attack_count = 0 //ability used successfully, reset the count
 				return
 		//default to a basic attack
-		if (src.critter_basic_attack(target))
-			src.ai_attack_count += 1
+		var/datum/handHolder/hand = src.get_active_hand()
+		if (hand.can_range_attack)
+			if (src.critter_range_attack(target))
+				src.ai_attack_count += 1
+		else
+			if (src.critter_basic_attack(target))
+				src.ai_attack_count += 1
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
 		src.set_a_intent(INTENT_HARM)
 		src.hand_attack(target)
+		return TRUE
+
+	/// How the critter should attack from range (Only applicable for ranged limbs)
+	proc/critter_range_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_range_attack(target)
 		return TRUE
 
 	///How the critter should use abilities, return TRUE to indicate ability usage success

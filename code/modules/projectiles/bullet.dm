@@ -479,7 +479,7 @@ toxic - poisons
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
 		if (dropped)
-			dropped.changeStatus("acid", 3 SECONDS) // this will probably bug out if someone manages to load it into a gun. problem for later
+			dropped.changeStatus("acid", 3 SECONDS, list("message" = null)) // this will probably bug out if someone manages to load it into a gun. problem for later
 
 //0.40
 /datum/projectile/bullet/blow_dart
