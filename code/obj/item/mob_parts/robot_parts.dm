@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 
 /obj/item/parts/robot_parts/head/standard
 	name = "standard cyborg head"
-	max_health = 175
+	max_health = 150
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/sheet))
 			var/obj/item/sheet/M = W
