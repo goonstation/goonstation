@@ -425,7 +425,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
 
@@ -504,7 +504,6 @@
 		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
-
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -605,7 +604,7 @@
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with zombie limbs at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
@@ -614,18 +613,19 @@
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(40))
+		if (prob(40) && ishuman(user))
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=3 SECONDS)
 		if (ishuman(target) && ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+			if (istype(H.mutantrace, /datum/mutantrace/zombie/can_infect))
 				target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
 		else if (issilicon(target))
 			special_attack_silicon(target, user)
 
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 
 /datum/limb/dualsaw
@@ -1436,7 +1436,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (isghostcritter(user) && ishuman(target) && target.health < 75)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.</span>")
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
@@ -1527,7 +1527,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+		if (istype(target,/mob/living/critter/small_animal/trilobite))
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")

@@ -208,5 +208,5 @@
 		..()
 
 	onInterrupt()
-		boutput(L, "You were interrupted, snapping your [region_name] back to the color it was!")
+		boutput(L, "<span class='alert'>You were interrupted, snapping your [region_name] back to the color it was!")
 		..()

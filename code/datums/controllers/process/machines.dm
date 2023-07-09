@@ -25,7 +25,7 @@
 
 	proc/d_print()
 		for(var/obj/machinery/machine in src.machines)
-			boutput(world,"[machine.name] : [machine.type]")
+			boutput(world,"<span class='admin'>[machine.name] : [machine.type]</span>")
 
 	doWork()
 		var/c = 0

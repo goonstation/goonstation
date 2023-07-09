@@ -4,8 +4,8 @@
 /// nulls a var if its value doesn't match the var's type
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
-#define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
-#define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
+#define ABSTRACT_TYPE(type) /_is_abstract ## type
+#define IS_ABSTRACT(type) text2path("/_is_abstract[type]")
 /*
 usage:
 

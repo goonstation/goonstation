@@ -60,6 +60,19 @@
 			attacked_proc_override = 0
 		return lasterr
 
+	//I'm continuing this bizzare naming convention only because not doing so would be worse
+	///When the plant matures
+	proc/HYPmatured_proc_M(var/obj/machinery/plantpot/POT)
+		return
+
+	///When the plant is destroyed or picked up by a trowel
+	proc/HYPdestroyplant_proc_M(var/obj/machinery/plantpot/POT)
+		return
+
+	///When the plant is put in a decorative pot
+	proc/HYPpotted_proc_M(var/obj/decorative_pot/POT, var/grow_level)
+		return
+
 // Tomato Mutations
 
 /datum/plantmutation/tomato/incendiary
@@ -744,6 +757,36 @@
 	name_prefix = "Glowstick "
 	iconmod = "TreeGlow"
 	crop = /obj/item/device/light/glowstick
+
+	proc/add_glow(obj/object)
+		object.add_simple_light("glowstick_tree", list(255, 0, 255, 100))
+		animate_rainbow_glow(object.simple_light, 5 SECONDS, 10 SECONDS)
+		var/image/glowverlay = object.SafeGetOverlayImage("glowverlay", 'icons/obj/hydroponics/plants_crop.dmi', "TreeGlow-glow")
+		if (istype(object, /obj/decorative_pot)) //*dies of cringe*
+			glowverlay.pixel_x = 2
+		glowverlay.plane = PLANE_ABOVE_LIGHTING
+		object.UpdateOverlays(glowverlay, "glowverlay", 0, 1)
+
+	proc/remove_glow(obj/object)
+		object.remove_simple_light("glowstick_tree")
+		object.UpdateOverlays(null, "glowverlay")
+
+	HYPmatured_proc_M(obj/machinery/plantpot/POT)
+		. = ..()
+		src.add_glow(POT)
+
+	HYPpotted_proc_M(obj/decorative_pot/POT, grow_level)
+		. = ..()
+		if (grow_level >= 4)
+			src.add_glow(POT)
+
+	HYPharvested_proc_M(obj/machinery/plantpot/POT, mob/user)
+		. = ..()
+		src.remove_glow(POT)
+
+	HYPdestroyplant_proc_M(obj/machinery/plantpot/POT, mob/user)
+		. = ..()
+		src.remove_glow(POT)
 
 //peanuuts
 

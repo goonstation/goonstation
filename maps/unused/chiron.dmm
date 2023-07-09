@@ -35,7 +35,7 @@
 	},
 /area/station/science/testchamber)
 "aae" = (
-/obj/wingrille_spawn/reinforced,
+/obj/mapping_helper/wingrille_spawn/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "aaf" = (
@@ -10486,11 +10486,9 @@
 	name = "Owlery"
 	})
 "atY" = (
-/obj/critter/owl{
-	aggressive = 0;
-	angertext = "hoots uncontrollably at";
-	atkcarbon = 1;
-	health = 10000;
+/mob/living/critter/small_animal/bird/owl{
+	health_brute = 200;
+	health_burn = 200;
 	name = "Hooty McOwlface"
 	},
 /turf/simulated/floor/grass/random,
@@ -32530,7 +32528,7 @@
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmK" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/space)
 "bmL" = (

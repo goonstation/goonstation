@@ -6,6 +6,7 @@
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
 	var/server_region = null
+	var/server_on_hub = TRUE
 
 	var/server_specific_configs = 0		// load extra config files (by port)
 
@@ -242,6 +243,10 @@
 			if ("serverregion")
 				config.server_region = value
 
+			if ("server_on_hub")
+				config.server_on_hub = text2num(value)
+				world.visibility = config.server_on_hub
+
 			if ("medalhub")
 				config.medal_hub = value
 
@@ -438,7 +443,7 @@
 			break
 
 	if (!mode_name)
-		boutput(world, "Failed to pick a random game mode.")
+		boutput(world, "<h1 class='alert>Failed to pick a random game mode.</h1>")
 		return null // This essentially will never happen (you'd have to not be able to choose any mode in secret), so it's okay to leave it null, I think
 
 	//boutput(world, "Returning mode [mode_name]")

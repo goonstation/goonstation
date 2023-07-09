@@ -763,7 +763,7 @@
 				return
 
 			if(signal.data["command"] == "report_pda")
-				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
+				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id || !src.master.scannable)
 					return
 
 				var/datum/signal/newsignal = get_free_signal()

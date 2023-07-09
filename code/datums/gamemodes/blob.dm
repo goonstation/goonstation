@@ -13,9 +13,9 @@
 	escape_possible = 0
 
 /datum/game_mode/blob/announce()
-	boutput(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")
-	boutput(world, "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>")
-	boutput(world, "You must kill it all while minimizing the damage to the station.")
+	boutput(world, "<b>The current game mode is - <font color='green'>Blob</font>!</b>")
+	boutput(world, "<b>A dangerous alien organism is rapidly spreading throughout the station!</b>")
+	boutput(world, "<b>You must kill it all while minimizing the damage to the station.</b>")
 
 /datum/game_mode/blob/pre_setup()
 	..()
