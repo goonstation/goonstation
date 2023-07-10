@@ -3924,9 +3924,7 @@
 /turf/simulated/floor/white,
 /area/station/hallway/primary/central)
 "alM" = (
-/obj/landmark{
-	name = "Artifact spawn"
-	},
+/obj/landmark/spawner/artifact,
 /turf/space,
 /area/space)
 "alN" = (
@@ -6279,10 +6277,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "asZ" = (
-/obj/landmark{
-	name = "blobstart";
-	pixel_x = -1
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
 "ata" = (
@@ -21047,10 +21042,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/kitchen)
 "bpT" = (
-/obj/landmark{
-	name = "blobstart";
-	pixel_x = -1
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bpU" = (
@@ -23701,10 +23693,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "bwb" = (
-/obj/landmark{
-	name = "blobstart";
-	pixel_x = -1
-	},
+/obj/landmark/antagonist/blob,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/science/lobby)
@@ -24298,10 +24287,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "blobstart";
-	pixel_x = -1
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bxr" = (

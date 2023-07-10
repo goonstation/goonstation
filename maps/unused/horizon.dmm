@@ -53665,9 +53665,6 @@
 	})
 "iLA" = (
 /obj/decal/cleanable/dirt/dirt2,
-/obj/landmark/start{
-	name = "Pathologist"
-	},
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
 	},

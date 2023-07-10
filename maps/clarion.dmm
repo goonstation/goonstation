@@ -25901,9 +25901,7 @@
 	},
 /area/station/hallway/primary/east)
 "hJk" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},

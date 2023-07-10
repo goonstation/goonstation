@@ -29137,9 +29137,6 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark/start{
-	name = "Pathologist"
-	},
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "bCC" = (

@@ -48553,16 +48553,6 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
-"iXx" = (
-/obj/landmark/start{
-	name = "Pathologist"
-	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
 "iXS" = (
 /obj/cable{
 	d1 = 4;
@@ -120612,7 +120602,7 @@ dZT
 dKt
 dRY
 dPF
-iXx
+dPZ
 bed
 dZT
 dGb

@@ -1800,9 +1800,7 @@
 "fd" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/pink,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "green2"
@@ -1883,9 +1881,7 @@
 /obj/window/south,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/blue,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	icon_state = "green2"
 	},
@@ -2243,9 +2239,7 @@
 /area/space)
 "go" = (
 /obj/stool/chair/comfy,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/carpet{
 	dir = 1;
 	icon_state = "blue2"

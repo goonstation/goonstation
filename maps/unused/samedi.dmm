@@ -11841,10 +11841,7 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/item/storage/secure/sbriefcase,
-/obj/landmark/start{
-	dir = 1;
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /obj/item/device/light/zippo{
 	pixel_x = -3;
 	pixel_y = -2

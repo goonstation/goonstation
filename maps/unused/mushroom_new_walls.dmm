@@ -18411,9 +18411,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "cgl" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /obj/machinery/light/small{
 	dir = 8;
@@ -22783,9 +22781,7 @@
 	},
 /area/station/turret_protected/AIsat)
 "hEo" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /obj/cable{
 	icon_state = "4-8"
@@ -29061,9 +29057,7 @@
 "oRk" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
@@ -31592,9 +31586,7 @@
 	},
 /area/station/science/lab)
 "rqo" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -33634,9 +33626,7 @@
 "tpe" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /obj/cable{
 	icon_state = "0-4"

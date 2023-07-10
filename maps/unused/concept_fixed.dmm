@@ -19747,9 +19747,7 @@
 "aMc" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters)
@@ -20834,9 +20832,7 @@
 "aNY" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /obj/machinery/alarm{
 	dir = 8;
@@ -21777,9 +21773,7 @@
 "aPB" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /obj/machinery/power/apc{
 	dir = 8;
@@ -25616,9 +25610,7 @@
 /area/station/hallway/primary/west)
 "aWz" = (
 /obj/item/storage/toilet,
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/hallway/primary/west)
@@ -26889,9 +26881,7 @@
 /turf/simulated/floor,
 /area/station/storage/primary)
 "aZq" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -28377,9 +28367,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/station/storage/primary)

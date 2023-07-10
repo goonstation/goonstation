@@ -3220,9 +3220,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
@@ -3237,9 +3235,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
@@ -3258,9 +3254,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
@@ -3717,22 +3711,16 @@
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "iA" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "iB" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "iC" = (
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/light{
 	tag = "icon-tube1 (EAST)";
 	icon_state = "tube1";
@@ -4051,9 +4039,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /turf/simulated/floor,
 /area/hallway/primary/east)
 "js" = (
@@ -4062,9 +4048,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/landmark/start{
-	name = "Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/east)
@@ -10428,9 +10412,7 @@
 	},
 /area/wizard_station)
 "xK" = (
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},
