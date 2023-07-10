@@ -19,7 +19,7 @@
 	src.air2 = null
 	qdel(src.air3)
 	src.air3 = null
-	UnsubscribeProcess()
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/update_icon(animation)
 	if(animation)
@@ -110,37 +110,35 @@
 /obj/machinery/atmospherics/trinary/manifold_valve/process()
 	..()
 	if(divert && (!node1 || !node3))
-		undivert()
+		src.undivert()
 	else if(!divert && (!node1 || !node2))
-		divert()
+		src.divert()
 
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
-	signal.data["tag"] = src.tag
+	signal.data["tag"] = src.id
 	signal.data["timestamp"] = air_master.current_cycle
 	signal.data["valve_diverting"] = src.divert
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 /obj/machinery/atmospherics/trinary/manifold_valve/return_network_air(datum/pipe_network/reference)
 	return null
 
 /obj/machinery/atmospherics/trinary/manifold_valve/receive_signal(datum/signal/signal)
-	if(signal.data["tag"] && (signal.data["tag"] != id))
+	if(signal.data["tag"] && (signal.data["tag"] != src.id))
 		return FALSE
 
 	switch(signal.data["command"])
 		if("valve_divert")
-			if(!divert)
-				divert()
+			if(!src.divert)
+				src.divert()
 
 		if("valve_undivert")
-			if(divert)
-				undivert()
+			if(src.divert)
+				src.undivert()
 
 		if("valve_toggle")
 			if(divert)
-				undivert()
+				src.undivert()
 			else
-				divert()
+				src.divert()
