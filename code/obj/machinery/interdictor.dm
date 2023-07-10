@@ -268,6 +268,9 @@
 		message_admins("Interdictor at ([log_loc(src)]) is missing a power cell. This is not supposed to happen, yell at kubius")
 		return
 	if(anchored)
+		if (src.resisted)
+			radstorm_interdict(src)
+			src.resisted = FALSE
 		if(intcap.charge < intcap.maxcharge && powered())
 			var/amount_to_add = min(round(intcap.maxcharge - intcap.charge, 10), src.chargerate)
 			if(amount_to_add)
