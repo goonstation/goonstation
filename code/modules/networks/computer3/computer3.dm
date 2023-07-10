@@ -413,7 +413,7 @@
 				update_static_data(usr)
 			else
 				//What type of drive are we?
-				if (findtext(params["card"],"/obj/item/peripheral/card_scanner"))
+				if (findtext(params["card"], "/obj/item/peripheral/card_scanner"))
 					//A card drive!
 					var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
 					if(dv.authid)
@@ -425,7 +425,7 @@
 						dv.authid = I
 					update_static_data(usr)
 
-				else if (params["card"] == "/obj/item/peripheral/drive")
+				else if (findtext(params["card"], "/obj/item/peripheral/drive"))
 					//A disk drive!
 					var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
 					if(dv.disk)
