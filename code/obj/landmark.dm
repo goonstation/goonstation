@@ -1,9 +1,8 @@
 
 var/global/list/list/turf/landmarks = list()
 
-proc/pick_landmark(name, default = LANDMARK_LATEJOIN)
+proc/pick_landmark(name, default = null)
 	if(!(name in landmarks))
-		logTheThing(LOG_DEBUG, src, "landmark [src] was not found in [landmarks] sending to [default].")
 		return default
 	return pick(landmarks[name])
 
