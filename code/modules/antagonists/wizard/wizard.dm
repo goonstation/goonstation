@@ -114,10 +114,8 @@
 		image_group.remove_mind(src.owner)
 
 	relocate()
-		if (!job_start_locations["wizard"])
-			boutput(src.owner.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
-		else
-			src.owner.current.set_loc(pick(job_start_locations["wizard"]))
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_WIZARD))
 
 	assign_objectives()
 		ticker.mode.bestow_objective(src.owner, /datum/objective/regular/assassinate, src)
