@@ -1,5 +1,9 @@
 
 (t)mon jul 10 23
+(u)Kubius
+(p)14863
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull has gone dark, and its second GardenGear is back.
 (u)tarmunora
 (*)Poisoned surgical tools only transfer poison during surgery.
 (u)Flappybat
