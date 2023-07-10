@@ -300,10 +300,6 @@
 	if(doupdateicon)
 		src.UpdateIcon()
 
-	if (src.resisted)
-		radstorm_interdict(src)
-		src.resisted = FALSE
-
 
 
 /**
@@ -339,13 +335,11 @@
 		return 1
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
-/obj/machinery/interdictor/proc/radstorm_interdict(var/target = null)
+/obj/machinery/interdictor/proc/radstorm_interdict()
 	var/use_cost = 350 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
 	if (!src.resisted) //Don't spend power if no one is around to protect
 		return
 	if (status & BROKEN || !src.canInterdict)
-		return 0
-	if (!target || !IN_RANGE(src,target,src.interdict_range))
 		return 0
 	if (!intcap)
 		src.stop_interdicting()
