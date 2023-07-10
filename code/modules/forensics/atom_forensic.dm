@@ -41,32 +41,32 @@
 	if (!(src.flags & FPRINT))
 		return
 	var/time = time2text(TIME, "hh:mm:ss")
+	// The actual print that we save to the player-visible prints list
+	var/seen_print
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		if(isnull(src.fingerprints))
+			src.fingerprints = list()
+
+		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
+			seen_print = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
+		else
+			seen_print = H.bioHolder.fingerprints
+
+		if (seen_print && !hidden_only)
+			src.fingerprints -= seen_print
+			if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
+				src.fingerprints -= src.fingerprints[1]
+			src.fingerprints += seen_print
+
 	if (!src.fingerprints_full)
 		src.fingerprints_full = list()
 	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
-		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME)
+		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
+		if (ishuman(M))
+			var/mob/living/carbon/human/H = M
+			src.fingerprints_full[time]["color"] = H.mind.color
 		src.fingerprintslast = M.key
-	if (hidden_only)
-		return
-	if (ishuman(M))
-		var/mob/living/carbon/human/H = M
-		var/list/L = src.fingerprints_full[time]
-		if (L)
-			L["color"] = H.mind.color
-		if(isnull(src.fingerprints))
-			src.fingerprints = list()
-		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			var/gloveprints = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
-			if (gloveprints)
-				src.fingerprints -= gloveprints
-				if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
-					src.fingerprints -= src.fingerprints[1]
-				src.fingerprints += gloveprints
-				return
-		src.fingerprints -= H.bioHolder.fingerprints
-		if(length(src.fingerprints) >= 6)
-			src.fingerprints -= src.fingerprints[1]
-		src.fingerprints += H.bioHolder.fingerprints
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
