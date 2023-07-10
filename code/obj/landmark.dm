@@ -1,8 +1,9 @@
 
 var/global/list/list/turf/landmarks = list()
 
-proc/pick_landmark(name, default=null)
+proc/pick_landmark(name, default = LANDMARK_LATEJOIN)
 	if(!(name in landmarks))
+		logTheThing(LOG_DEBUG, src, "landmark [src] was not found in [landmarks] sending to [default].")
 		return default
 	return pick(landmarks[name])
 
@@ -12,6 +13,7 @@ proc/pick_landmark(name, default=null)
 	icon_state = "x2"
 	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
+	layer = ABOVE_OBJ_LAYER
 	var/deleted_on_start = TRUE
 	var/add_to_landmarks = TRUE
 	var/data = null // data to associatively save with the landmark
@@ -63,121 +65,167 @@ var/global/list/job_start_locations = list()
 			else
 				job_start_locations[src.name] += src.loc
 		..()
+
 /* ===== Station Jobs ===== */
+
+/obj/landmark/start/job
+	icon = 'icons/map-editing/job_start.dmi'
 
 // Command
 
-/obj/landmark/start/captain
+/obj/landmark/start/job/captain
 	name = "Captain"
 	icon_state = "captain"
 
-/obj/landmark/start/head_of_personnel
+/obj/landmark/start/job/head_of_personnel
 	name = "Head of Personnel"
 	icon_state = "head_of_personnel"
 
-/obj/landmark/start/head_of_security
+/obj/landmark/start/job/head_of_security
 	name = "Head of Security"
 	icon_state = "head_of_security"
 
-/obj/landmark/start/medical_director
+/obj/landmark/start/job/medical_director
 	name = "Medical Director"
 	icon_state = "medical_director"
 
-/obj/landmark/start/research_director
+/obj/landmark/start/job/research_director
 	name = "Research Director"
 	icon_state = "research_director"
 
-/obj/landmark/start/chief_engineer
+/obj/landmark/start/job/chief_engineer
 	name = "Chief Engineer"
 	icon_state = "chief_engineer"
 
 // Civillian
 
-/obj/landmark/start/assistant
+/obj/landmark/start/job/assistant
 	name = "Staff Assistant"
 	icon_state = "assistant"
 
-/obj/landmark/start/clown
+/obj/landmark/start/job/clown
 	name = "Clown"
 	icon_state = "clown"
 
-/obj/landmark/start/chef
+/obj/landmark/start/job/chef
 	name = "Chef"
 	icon_state = "chef"
 
-/obj/landmark/start/bartender
+/obj/landmark/start/job/bartender
 	name = "Bartender"
 	icon_state = "bartender"
 
-/obj/landmark/start/botanist
+/obj/landmark/start/job/botanist
 	name = "Botanist"
 	icon_state = "botanist"
 
-/obj/landmark/start/rancher
+/obj/landmark/start/job/rancher
 	name = "Rancher"
 	icon_state = "rancher"
 
-/obj/landmark/start/janitor
+/obj/landmark/start/job/janitor
 	name = "Janitor"
 	icon_state = "janitor"
 
-/obj/landmark/start/chaplain
+/obj/landmark/start/job/chaplain
 	name = "Chaplain"
 	icon_state = "chaplain"
 
 // Engineering
 
-/obj/landmark/start/engineer
+/obj/landmark/start/job/engineer
 	name = "Engineer"
 	icon_state = "engineer"
 
-/obj/landmark/start/miner
+/obj/landmark/start/job/miner
 	name = "Miner"
 	icon_state = "miner"
 
-/obj/landmark/start/quartermaster
+/obj/landmark/start/job/quartermaster
 	name = "Quartermaster"
 	icon_state = "quartermaster"
 
 // Med/Sci
 
-/obj/landmark/start/medical_doctor
+/obj/landmark/start/job/medical_doctor
 	name = "Medical Doctor"
 	icon_state = "medical_doctor"
 
-/obj/landmark/start/geneticist
+/obj/landmark/start/job/geneticist
 	name = "Geneticist"
 	icon_state = "geneticist"
 
-/obj/landmark/start/roboticist
+/obj/landmark/start/job/roboticist
 	name = "Roboticist"
 	icon_state = "roboticist"
 
-/obj/landmark/start/scientist
+/obj/landmark/start/job/scientist
 	name = "Scientist"
 	icon_state = "scientist"
 
 // Security
-/obj/landmark/start/security_officer
+/obj/landmark/start/job/security_officer
 	name = "Security Officer"
 	icon_state = "security_officer"
 
-/obj/landmark/start/security_assistant
+/obj/landmark/start/job/security_assistant
 	name = "Security Assistant"
 	icon_state = "security_assistant"
 
-/obj/landmark/start/detective
+/obj/landmark/start/job/detective
 	name = "Detective"
 	icon_state = "detective"
 
 // Silicons
-/obj/landmark/start/AI
+/obj/landmark/start/job/AI
 	name = "AI"
 	icon_state = "ai"
 
-/obj/landmark/start/cyborg
+/obj/landmark/start/job/cyborg
 	name = "Cyborg"
 	icon_state = "cyborg"
+
+/* ===== Antagonist Starts ===== */
+
+/obj/landmark/antagonist
+	icon = 'icons/map-editing/antag_start.dmi'
+	add_to_landmarks = TRUE
+
+// Nuclear Operatives
+
+/obj/landmark/antagonist/operative
+	name = LANDMARK_SYNDICATE
+	icon_state = "operative"
+
+/obj/landmark/antagonist/operative/commander
+	name = LANDMARK_SYNDICATE_BOSS
+	icon_state = "commander"
+
+// Pirates
+
+/obj/landmark/antagonist/pirate
+	name = LANDMARK_PIRATE
+	icon_state = "pirate"
+
+/obj/landmark/antagonist/pirate/first_mate
+	name = LANDMARK_PIRATE_FIRST_MATE
+	icon_state = "first_mate"
+
+/obj/landmark/antagonist/pirate/captain
+	name = LANDMARK_PIRATE_CAPTAIN
+	icon_state = "pirate_captain"
+
+// Wizard
+
+/obj/landmark/antagonist/wizard
+	name = LANDMARK_WIZARD
+	icon_state = "wizard"
+
+// Blob
+
+/obj/landmark/antagonist/blob
+	name = LANDMARK_BLOBSTART
+	icon_state = "blob"
 
 // actual landmarks follow
 // most of these are here just for backwards compatibility
@@ -186,6 +234,22 @@ var/global/list/job_start_locations = list()
 	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
+
+/obj/landmark/pest
+	name = LANDMARK_PESTSTART
+	icon_state = "pest_start"
+
+/obj/landmark/observer
+	name = LANDMARK_OBSERVER
+	icon_state = "observer"
+
+/obj/landmark/telesci
+	name = LANDMARK_TELESCI
+	icon_state = "telesci"
+
+/obj/landmark/bill_spawn
+	name = LANDMARK_TWITCHY_BILL_RESPAWN
+	icon_state = "bill_spawn"
 
 /obj/landmark/cruiser_entrance
 	name = LANDMARK_CRUISER_ENTRANCE
@@ -215,12 +279,14 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
+	icon_state = "tutorial"
 
 /obj/landmark/shuttle_transit
-	name= LANDMARK_SHUTTLE_TRANSIT
+	name = LANDMARK_SHUTTLE_TRANSIT
 
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
+	icon_state = "halloween"
 
 /obj/landmark/asteroid_spawn_blocker //Blocks the creation of an asteroid on this tile, as you would expect
 	name = "asteroid blocker"
@@ -362,9 +428,9 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/spawner/loot
 	name = "Loot spawn"
+	icon_state = "loot"
 	type_to_spawn = /obj/storage/crate/loot
 	spawnchance = 10
-
 
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later
