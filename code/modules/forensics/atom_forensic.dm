@@ -35,7 +35,8 @@
 		return 0
 	return src.forensic_trace[key]
 
-/atom/proc/add_fingerprint(mob/living/M as mob, hidden_only = FALSE)
+/// Add a mob's fingerprint to something. If `hidden_only` is TRUE, only add to admin-visible prints.
+/atom/proc/add_fingerprint(mob/living/M, hidden_only = FALSE)
 	if (!ismob(M) || isnull(M.key))
 		return
 	if (!(src.flags & FPRINT))
@@ -45,8 +46,7 @@
 	var/seen_print
 	if (ishuman(M))
 		var/mob/living/carbon/human/H = M
-		if(isnull(src.fingerprints))
-			src.fingerprints = list()
+		LAZYLISTINIT(src.fingerprints)
 
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
 			seen_print = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
@@ -54,19 +54,23 @@
 			seen_print = H.bioHolder.fingerprints
 
 		if (seen_print && !hidden_only)
-			src.fingerprints -= seen_print
-			if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
-				src.fingerprints -= src.fingerprints[1]
-			src.fingerprints += seen_print
+			add_fingerprint_direct(seen_print)
 
-	if (!src.fingerprints_full)
-		src.fingerprints_full = list()
+	LAZYLISTINIT(src.fingerprints_full)
 	if (src.fingerprintslast != M.key) // don't really care about someone spam touching
 		src.fingerprints_full[time] = list("key" = M.key, "real_name" = M.real_name, "time" = time, "timestamp" = TIME, "seen_print" = seen_print)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			src.fingerprints_full[time]["color"] = H.mind.color
 		src.fingerprintslast = M.key
+
+/// Add a fingerprint to an atom directly. Doesn't interact with hidden prints at all
+/atom/proc/add_fingerprint_direct(print)
+	LAZYLISTINIT(src.fingerprints)
+	src.fingerprints -= print
+	if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
+		src.fingerprints -= src.fingerprints[1]
+	src.fingerprints += print
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
