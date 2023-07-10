@@ -9,7 +9,7 @@
 	var/on = FALSE
 	var/target_pressure = ONE_ATMOSPHERE
 	/// ID of the gas you wish to filter
-	var/filter_type = ""
+	var/filter_type = "toxins"
 
 /obj/machinery/atmospherics/trinary/filter/update_icon()
 	if(src.node1&&src.node2&&src.node3)
