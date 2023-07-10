@@ -1,4 +1,26 @@
 
+(t)sun jul 09 23
+(u)DeeDotVeeA
+(p)14823
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Clarion QM is now slightly more spacious.
+(u)aloe
+(+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
+(t)thu jul 06 23
+(u)Sian
+(p)14839
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Shrimps now butcher into raw shrimp meat.
+(+)Cooking a shrimp in the oven will now output cooked shrimp meat.
+(+)Cooked shrimp meat can be combined with a rice ball to make a shrimp nigiri roll.
+(t)tue jul 04 23
+(u)tarmunora
+(+)increase volume of microjetpacks and belt-sized oxygen tanks.
 (t)mon jul 03 23
 (u)RubberRats
 (p)14695

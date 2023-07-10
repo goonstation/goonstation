@@ -360,7 +360,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					inp = trim(strip_html_tags(inp))
 					if(length(inp))
 						defaultSignal = inp
-						boutput(user, "Signal set to [inp]")
+						boutput(user, "<span class='success'>The signal is now set to [inp].</span>")
 				if(DC_ALL)
 					WipeConnections()
 					if(istype(parent, /atom))

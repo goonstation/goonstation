@@ -33,6 +33,7 @@ radioactive - rips apart cells or some shit
 toxic - poisons
 */
 	damage_type = D_ENERGY // cogwerks - changed from piercing
+	hit_type = DAMAGE_BURN
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 50
 	//Can we pass windows
@@ -485,6 +486,7 @@ toxic - poisons
 	window_pass = 0
 	icon_state = ""
 	damage_type = D_SLASHING
+	hit_type = DAMAGE_STAB
 	damage = 45
 	cost = 1
 	brightness = 0
@@ -521,6 +523,7 @@ toxic - poisons
 		shot_sound = 'sound/machines/chainsaw.ogg'
 		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
+		hit_type = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod
 			..()
