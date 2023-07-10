@@ -83,7 +83,6 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
-		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/haircut)
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)
@@ -130,7 +129,6 @@
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double) // should be doable even in barbermode
-		AddComponent(/datum/component/transfer_on_attack)
 		AddComponent(/datum/component/barber/shave)
 		AddComponent(/datum/component/toggle_tool_use)
 		BLOCK_SETUP(BLOCK_KNIFE)

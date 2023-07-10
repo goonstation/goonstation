@@ -1,5 +1,7 @@
 
 (t)mon jul 10 23
+(u)tarmunora
+(*)Poisoned surgical tools only transfer poison during surgery.
 (u)Flappybat
 (p)14856
 (e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
