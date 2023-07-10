@@ -60,9 +60,7 @@
 /turf/space/fluid/acid/clear,
 /area/noGenerate)
 "dd" = (
-/obj/landmark{
-	name = "seafall"
-	},
+/obj/landmark/fall/sea/elevator,
 /turf/simulated/floor/plating,
 /area/shuttle/sea_elevator/lower)
 "dh" = (
