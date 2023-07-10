@@ -109,11 +109,7 @@
 
 /obj/machinery/atmospherics/trinary/manifold_valve/process()
 	..()
-	if(divert && (!node1 || !node3))
-		src.undivert()
-	else if(!divert && (!node1 || !node2))
-		src.divert()
-
+	
 	var/datum/signal/signal = get_free_signal()
 	signal.transmission_method = TRANSMISSION_RADIO
 	signal.data["tag"] = src.id
