@@ -8,6 +8,7 @@
 	icon_state = "interdictor"
 	power_usage = 1250 //drawn while interdiction field is active; charging is a separate usage value that can be concurrent
 	density = 1
+	var/resisted = FALSE //Changes if someone is being protected from a radstorm
 	anchored = UNANCHORED
 	req_access = list(access_engineering)
 
@@ -296,6 +297,10 @@
 	if(doupdateicon)
 		src.UpdateIcon()
 
+	if (src.resisted)
+		radstorm_interdict(src)
+		src.resisted = FALSE
+
 
 
 /**
@@ -332,7 +337,9 @@
 
 ///Specialized radiation storm interdiction proc that allows multiple protections under a single unified cost per process.
 /obj/machinery/interdictor/proc/radstorm_interdict(var/target = null)
-	var/use_cost = 400 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+	var/use_cost = 350 //how much it costs per machine tick to interdict radstorms, regardless of number of mobs protected
+	if (!src.resisted) //Don't spend power if no one is around to protect
+		return
 	if (status & BROKEN || !src.canInterdict)
 		return 0
 	if (!target || !IN_RANGE(src,target,src.interdict_range))
