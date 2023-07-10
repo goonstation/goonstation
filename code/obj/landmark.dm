@@ -297,7 +297,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
-	icon_state = "tutorial"
+	icon_state = "tutorial_start"
 
 /obj/landmark/ass_arena_spawn
 	name = LANDMARK_ASS_ARENA_SPAWN
@@ -516,6 +516,7 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/tutorial/flock_conversion
 	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
+	icon_state = "tutorial"
 
 /* ===== Falling Landmarks ===== */
 

@@ -6419,15 +6419,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"azx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/landmark{
-	name = "NASSA spawn"
-	},
-/turf/simulated/floor/plating/airless,
-/area/space)
 "azy" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -9398,14 +9389,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
-"aKB" = (
-/obj/landmark{
-	name = "NASSA spawn"
-	},
-/obj/disposalpipe/segment/mail,
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "aKC" = (
 /obj/disposalpipe/segment/mail,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -44172,12 +44155,6 @@
 /obj/machinery/disposal/small/east,
 /turf/simulated/floor/grime,
 /area/station/quartermaster/refinery)
-"sdc" = (
-/obj/landmark{
-	name = "SR Welder"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "sdt" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -69741,7 +69718,7 @@ aaa
 aaa
 aaa
 aaa
-azx
+aWz
 ajz
 ajz
 avq
@@ -76764,7 +76741,7 @@ eFB
 uyM
 bCl
 bzg
-sdc
+bis
 lNM
 bEL
 bEL
@@ -94216,7 +94193,7 @@ aDE
 aDE
 fny
 aJP
-aKB
+aKC
 aLu
 aMm
 gJr
