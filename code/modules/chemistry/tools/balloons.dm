@@ -229,11 +229,9 @@
 		src.smash()
 
 	proc/smash(var/atom/A)
+		if (!A)
+			A = src.loc
 		var/turf/T = get_turf(A)
-		if (src.reagents && src.reagents.total_volume < 10)
-			return
-		if (!T)
-			T = src.loc
 		if (src.reagents)
 			src.reagents.reaction(T)
 		if (T)
