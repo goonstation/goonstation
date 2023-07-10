@@ -630,8 +630,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		if (m == pw_team.commander)
 			continue 		//count em for active players, but don't display em here, they already got their name up there!
 		string += "<b>[m.current]</b> ([m.ckey])</b><br>"
-	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
-	boutput(world, "")	//L.something
+	boutput(world, "<h3 class='admin'>[active_players] active players/[length(pw_team.members)] total players.</h3>")
 
 
 

@@ -440,11 +440,11 @@
 	if (!health_shown)
 		health_shown = 1
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(src)
-		boutput(src, "Health status toggled on.")
+		boutput(src, "<span class='success'>Health status toggled on.</span>")
 	else
 		health_shown = 0
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(src)
-		boutput(src, "Health status toggled off.")
+		boutput(src, "<span class='alert'>Health status toggled off.</span>")
 
 /mob/dead/observer/verb/show_arrest()
 	set category = "Ghost"
