@@ -67,12 +67,12 @@
 			return
 		if (!user && usr)
 			user = usr
-		else if (!user && !user && ismob(src.loc))
+		else if (!user && ismob(src.loc))
 			user = src.loc
 		if (!ohshit)
 			ohshit = (src.reagents.total_volume /  (src.reagents.maximum_volume - 10)) * 33
 		if (prob(ohshit))
-			smash()
+			src.smash(user)
 			if (user)
 				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
 				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
@@ -228,15 +228,14 @@
 	ex_act(severity)
 		src.smash()
 
-	proc/smash(var/turf/T)
+	proc/smash(var/atom/A)
+		var/turf/T = get_turf(A)
 		if (src.reagents && src.reagents.total_volume < 10)
 			return
 		if (!T)
 			T = src.loc
 		if (src.reagents)
 			src.reagents.reaction(T)
-		if (ismob(T))
-			T = get_turf(T)
 		if (T)
 			T.visible_message("<span class='alert'>[src] bursts!</span>")
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
