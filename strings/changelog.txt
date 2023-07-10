@@ -1,5 +1,7 @@
 
 (t)sun jul 09 23
+(u)aloe &
+(+)*nod-ing while wearing a flipped-up welding mask now flips it down.
 (u)aloe
 (+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
 (t)sat jul 08 23
