@@ -1,12 +1,11 @@
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { Box, Button, Flex, Input, Section, Stack, Tooltip } from '../components';
 
 export const Terminal = (_props, context) => {
   const { act, data } = useBackend(context);
   const peripherals = data.peripherals || [];
-  const { textInput } = "";
-
+  const [textInput, setTextInput] = useLocalState(context, 'textInput', "");
   const {
     displayHTML,
     TermActive,
@@ -60,7 +59,12 @@ export const Terminal = (_props, context) => {
                     selfClear
                     value={textInput}
                     fluid
-                    onChange={(e, value) => act('text', { value: value })}
+                    onChange={(e, value) => { setTextInput(value); }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        act('text', { value: textInput });
+                      }
+                    }}
                     mr="0.5rem"
                   />
                 </Flex.Item>
@@ -68,7 +72,10 @@ export const Terminal = (_props, context) => {
                   <Tooltip content="Enter">
                     <Button icon="share"
                       color={TermActive ? "green" : "red"}
-                      onClick={() => act('text')}
+                      onClick={() => {
+                        act('text', { value: textInput });
+                        setTextInput("");
+                      }}
                       mr="0.5rem" />
                   </Tooltip>
                 </Flex.Item>

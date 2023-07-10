@@ -448,7 +448,7 @@
 				if(dv.disk)
 					usr.put_in_hand_or_eject(dv.disk)
 					dv.disk = null
-				else if(istype(I,/obj/item/card/id))
+				else if(istype(I,/obj/item/disk/data/tape))
 					usr.drop_item()
 					I.loc = src
 					dv.disk = I
