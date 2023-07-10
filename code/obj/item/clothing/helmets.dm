@@ -743,7 +743,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 		switch(emote)
 			if ("nod")
 				src.flip_down(source, silent=TRUE)
-				boutput(mob, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+				boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
