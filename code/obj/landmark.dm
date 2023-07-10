@@ -373,6 +373,8 @@ var/global/list/job_start_locations = list()
 
 /* ===== Spawner ===== */
 
+// TODO REMOVE ALL THIS REPLACE WITH SOMETHING SANE
+
 /obj/landmark/spawner
 	name = "spawner"
 	add_to_landmarks = FALSE
@@ -443,9 +445,22 @@ var/global/list/job_start_locations = list()
 	name = "monkeyspawn_inside"
 
 /obj/landmark/spawner/loot
-	name = "Loot spawn"
+	name = "Loot Spawn (10%)"
 	icon_state = "loot"
 	type_to_spawn = /obj/storage/crate/loot
+	spawnchance = 10
+
+/obj/landmark/spawner/artifact
+	name = "Artifact Spawn"
+	icon_state = "artifact"
+
+	spawn_the_thing()
+		Artifact_Spawn(get_turf(src))
+		qdel(src)
+
+/obj/landmark/spawner/artifact/one_in_ten
+	name = "Artifact Spawn (10%)"
+	icon_state = "artifact_10"
 	spawnchance = 10
 
 /* ===== LRT Landmarks ===== */
