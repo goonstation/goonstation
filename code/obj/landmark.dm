@@ -184,6 +184,25 @@ var/global/list/job_start_locations = list()
 	name = "Cyborg"
 	icon_state = "cyborg"
 
+// Gimmick / Job of the day
+
+// Podwars
+/obj/landmark/start/job/podwars/NT
+	name = "NanoTrasen Pod Pilot"
+	icon_state = "pod_nt"
+
+/obj/landmark/start/job/podwars/NT/commander
+	name = "NanoTrasen Commander"
+	icon_state = "pod_nt_commander"
+
+/obj/landmark/start/job/podwars/syndie
+	name = "Syndicate Pod Pilot"
+	icon_state = "pod_syndie"
+
+/obj/landmark/start/job/podwars/syndie/commander
+	name = "Syndicate Commander"
+	icon_state = "pod_syndie_commander"
+
 /* ===== Antagonist Starts ===== */
 
 /obj/landmark/antagonist
@@ -256,6 +275,10 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_OBSERVER
 	icon_state = "observer"
 
+/obj/landmark/kudzu
+	name = LANDMARK_KUDZUSTART
+	icon_state = "kudzu"
+
 /obj/landmark/arcadevr
 	name = LANDMARK_VR_ARCADE
 	icon_state = "arcade"
@@ -279,6 +302,10 @@ var/global/list/job_start_locations = list()
 /obj/landmark/ass_arena_spawn
 	name = LANDMARK_ASS_ARENA_SPAWN
 	icon_state = "x"
+
+/obj/landmark/bubs_job
+	name = LANDMARK_BUBS_BEE_JOB
+	icon_state = "bubs_job"
 
 /* ===== Misc ===== */
 
