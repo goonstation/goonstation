@@ -29902,7 +29902,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "bhC" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	flipped = 1;
 	frequency = 1225;

@@ -7946,7 +7946,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "sk" = (
-/obj/machinery/atmospherics/filter{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 1;
 	icon_state = "intact_on";
 	name = "Plasma filter";
@@ -8258,9 +8258,9 @@
 /turf/simulated/floor,
 /area/crew_quarters/cafeteria)
 "sV" = (
-/obj/machinery/atmospherics/filter{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 1;
-	filter_type = 3;
+	filter_type = "carbon_dioxide";
 	icon_state = "intact_on";
 	name = "Carbon Dioxide filter";
 	on = 1;
@@ -8487,9 +8487,9 @@
 /turf/simulated/floor,
 /area/atmos)
 "tx" = (
-/obj/machinery/atmospherics/filter{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 4;
-	filter_type = 2;
+	filter_type = "nitrogen";
 	icon_state = "intact_on";
 	name = "Nitrogen filter";
 	on = 1
@@ -8497,9 +8497,9 @@
 /turf/simulated/floor,
 /area/atmos)
 "ty" = (
-/obj/machinery/atmospherics/filter{
+/obj/machinery/atmospherics/trinary/filter{
 	dir = 4;
-	filter_type = 1;
+	filter_type = "oxygen";
 	icon_state = "intact_on";
 	name = "Oxygen filter";
 	on = 1
@@ -8547,7 +8547,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "tD" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1439;
 	icon_state = "intact_on";
@@ -8843,7 +8843,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "uk" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1439;
 	icon_state = "intact_on";
@@ -9110,7 +9110,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "uN" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1439;
 	icon_state = "intact_on";

@@ -24261,7 +24261,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/cdc)
 "gqY" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1225;
 	id_tag = "engine_combust";
@@ -76331,7 +76331,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge/research)
 "tuO" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1229;
 	id_tag = "toxin_intermix";

@@ -25557,7 +25557,7 @@
 /turf/simulated/floor/sanitary/blue,
 /area/station/medical/asylum/bathroom)
 "hJx" = (
-/obj/machinery/atmospherics/mixer/flipped{
+/obj/machinery/atmospherics/trinary/mixer/flipped{
 	frequency = 1274;
 	name = "Gas Mixer (Air Hookup)";
 	on = 1;

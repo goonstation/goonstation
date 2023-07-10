@@ -25642,7 +25642,7 @@
 	},
 /area/station/engine/hotloop)
 "bpQ" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1225;
 	id_tag = "engine_combust";
@@ -33806,7 +33806,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1274;
 	name = "Gas mixer (Air Hookup + Riot Gas)";

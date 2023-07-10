@@ -9784,7 +9784,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
 "aIr" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1225;
 	id_tag = "engine_combust";

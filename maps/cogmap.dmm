@@ -54993,7 +54993,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "ntQ" = (
-/obj/machinery/atmospherics/mixer/flipped{
+/obj/machinery/atmospherics/trinary/mixer/flipped{
 	dir = 1;
 	frequency = 1225;
 	id_tag = "engine_combust";

@@ -25020,7 +25020,7 @@
 	name = "Erebus Primary Zone"
 	})
 "YP" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 1;
 	frequency = 1225;
 	id_tag = "engine_combust";

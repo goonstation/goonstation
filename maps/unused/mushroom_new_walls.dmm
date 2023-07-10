@@ -35683,7 +35683,7 @@
 /area/station/quartermaster/office)
 "vuR" = (
 /obj/lattice,
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 8;
 	frequency = 1225;
 	id_tag = "engine_combust";

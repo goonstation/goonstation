@@ -38916,7 +38916,7 @@
 /turf/simulated/floor/red,
 /area/station/engine/hotloop)
 "bZr" = (
-/obj/machinery/atmospherics/mixer{
+/obj/machinery/atmospherics/trinary/mixer{
 	dir = 4;
 	frequency = 1225;
 	id_tag = "engine_combust";
