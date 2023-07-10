@@ -226,13 +226,27 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_BLOBSTART
 	icon_state = "blob"
 
-// actual landmarks follow
-// most of these are here just for backwards compatibility
+/* ===== Late Join ===== */
 
 /obj/landmark/start/latejoin
 	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
+
+/obj/landmark/latejoin_missile
+	name = "missile latejoin spawn marker"
+	name_override = LANDMARK_LATEJOIN_MISSILE
+	icon_state = "x"
+	dir = NORTH
+
+	New()
+		src.data = src.dir // save dir
+		..()
+	north
+		name = "missile latejoin spawn marker (north)"
+		dir = NORTH
+
+/* ===== Misc Spawn/Start ===== */
 
 /obj/landmark/pest
 	name = LANDMARK_PESTSTART
@@ -242,19 +256,48 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_OBSERVER
 	icon_state = "observer"
 
-/obj/landmark/telesci
-	name = LANDMARK_TELESCI
-	icon_state = "telesci"
+/obj/landmark/arcadevr
+	name = LANDMARK_VR_ARCADE
+	icon_state = "arcade"
 
 /obj/landmark/bill_spawn
 	name = LANDMARK_TWITCHY_BILL_RESPAWN
 	icon_state = "bill_spawn"
+
+/obj/landmark/halloween
+	name = LANDMARK_HALLOWEEN_SPAWN
+	icon_state = "halloween"
+
+/obj/landmark/battle_royale
+	name = LANDMARK_BATTLE_ROYALE_SPAWN
+	icon_state = "battle_royale"
+
+/obj/landmark/tutorial_start
+	name = LANDMARK_TUTORIAL_START
+	icon_state = "tutorial"
+
+/obj/landmark/ass_arena_spawn
+	name = LANDMARK_ASS_ARENA_SPAWN
+	icon_state = "x"
+
+/* ===== Misc ===== */
 
 /obj/landmark/cruiser_entrance
 	name = LANDMARK_CRUISER_ENTRANCE
 
 /obj/landmark/cruiser_center
 	name = LANDMARK_CRUISER_CENTER
+
+/obj/landmark/shuttle_transit
+	name = LANDMARK_SHUTTLE_TRANSIT
+
+/obj/landmark/telesci // Allowed turf marker for telesci
+	name = LANDMARK_TELESCI
+	icon_state = "telesci"
+
+/obj/landmark/samostrel // Hospital chaser warp landmarks
+	name = LANDMARK_SAMOSTREL_WARP
+	icon_state = "soviet"
 
 /obj/landmark/escape_pod_succ
 	name = LANDMARK_ESCAPE_POD_SUCCESS
@@ -275,17 +318,6 @@ var/global/list/job_start_locations = list()
 
 	west
 		dir = WEST
-
-/obj/landmark/tutorial_start
-	name = LANDMARK_TUTORIAL_START
-	icon_state = "tutorial"
-
-/obj/landmark/shuttle_transit
-	name = LANDMARK_SHUTTLE_TRANSIT
-
-/obj/landmark/halloween
-	name = LANDMARK_HALLOWEEN_SPAWN
-	icon_state = "halloween"
 
 /obj/landmark/asteroid_spawn_blocker //Blocks the creation of an asteroid on this tile, as you would expect
 	name = "asteroid blocker"
@@ -310,23 +342,6 @@ var/global/list/job_start_locations = list()
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD
 	icon_state = "magnet-shield"
-
-/obj/landmark/latejoin_missile
-	name = "missile latejoin spawn marker"
-	name_override = LANDMARK_LATEJOIN_MISSILE
-	icon_state = "x"
-	dir = NORTH
-
-	New()
-		src.data = src.dir // save dir
-		..()
-	north
-		name = "missile latejoin spawn marker (north)"
-		dir = NORTH
-
-/obj/landmark/ass_arena_spawn
-	name = LANDMARK_ASS_ARENA_SPAWN
-	icon_state = "x"
 
 /obj/landmark/interesting
 	// Use this to place cryptic clues to be picked up by the T-ray, because trying to remember which floortile you varedited is shit. For objects and mobs, just varedit.
@@ -355,6 +370,8 @@ var/global/list/job_start_locations = list()
 			if (prob(src.spawnchance))
 				Artifact_Spawn(get_turf(src))
 			..()
+
+/* ===== Spawner ===== */
 
 /obj/landmark/spawner
 	name = "spawner"
@@ -431,7 +448,8 @@ var/global/list/job_start_locations = list()
 	type_to_spawn = /obj/storage/crate/loot
 	spawnchance = 10
 
-// LONG RANGE TELEPORTER
+/* ===== LRT Landmarks ===== */
+
 // consider refactoring to be associative the other way around later
 
 /obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
@@ -456,6 +474,43 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/tutorial/flock_conversion
 	name = LANDMARK_TUTORIAL_FLOCK_CONVERSION
+
+/* ===== Falling Landmarks ===== */
+
+/obj/landmark/fall
+	icon_state = "fall"
+
+// Icemoon
+
+/obj/landmark/fall/ice
+	name = LANDMARK_FALL_ICE
+
+/obj/landmark/fall/ice/elevator
+	name = LANDMARK_FALL_ICE_ELE
+
+/obj/landmark/fall/ice/deep
+	name = LANDMARK_FALL_DEEP
+
+// Biodome
+
+/obj/landmark/fall/biodome
+	name = LANDMARK_FALL_BIO_ELE
+
+/obj/landmark/fall/biodome/ancient
+	name = LANDMARK_FALL_ANCIENT
+
+// Underwater
+
+/obj/landmark/fall/sea/elevator
+	name = LANDMARK_FALL_SEA
+
+/obj/landmark/fall/sea/polaris
+	name = LANDMARK_FALL_POLARIS
+
+/obj/landmark/fall/sea/marj
+	name = LANDMARK_FALL_MARJ
+
+/* ===== Visual Contents ===== */
 
 /obj/landmark/viscontents_spawn
 	name = "visual mirror spawn"
