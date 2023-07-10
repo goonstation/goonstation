@@ -1,4 +1,16 @@
 
+(t)sun jul 09 23
+(u)DeeDotVeeA
+(p)14823
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Clarion QM is now slightly more spacious.
+(u)aloe
+(+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
 (t)thu jul 06 23
 (u)Sian
 (p)14839

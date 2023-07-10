@@ -233,7 +233,7 @@ var/datum/event_controller/random_events
 
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
-		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if(usr?.client && !usr.client.holder) {boutput(usr, "<h3 class='admin'>Only administrators may use this command.</span>"); return}
 		if (href_list["TriggerEvent"] || href_list["TriggerMEvent"] || href_list["TriggerSEvent"] || href_list["TriggerStartEvent"])
 			var/datum/random_event/RE
 			if(href_list["TriggerEvent"])

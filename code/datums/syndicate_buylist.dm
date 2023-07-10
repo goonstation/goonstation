@@ -1006,6 +1006,14 @@ This is basically useless for anyone but miners.
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/megaphone
+	name = "Black Market Megaphone"
+	desc = "An illegal megaphone with the limiter taken off, and a loudener added. Not for the subtle."
+	item = /obj/item/megaphone/syndicate
+	cost = 5
+	vr_allowed = FALSE // no
+	job = list("Captain", "VIP", "Regional Director", "Inspector")
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
