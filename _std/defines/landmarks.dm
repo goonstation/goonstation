@@ -1,6 +1,4 @@
-
 // station landmarks
-
 #define LANDMARK_PESTSTART "peststart"
 #define LANDMARK_LATEJOIN "JoinLate"
 #define LANDMARK_LATEJOIN_MISSILE "latejoin missile"
@@ -73,15 +71,13 @@
 #define LANDMARK_LOBBY_STATUS "lobby_status"
 #define LANDMARK_LOBBY_TIMER "lobby_timer"
 
-// VR networks
-
+// VR network
 #define LANDMARK_VR_DET_NET "det_net"
 #define LANDMARK_VR_ARCADE "arcadevr"
 #define LANDMARK_VR_BOMBTEST "bombtest" // where the nerds spawn
 #define LANDMARK_VR_BOMB "bombtest-bomb" // Landmark where the ~vr bomb~ spawns. (just a landmark not a network id)
 
 // falling down holes
-
 #define LANDMARK_FALL_DEBUG "pit_debug" // locations to fall if you fucked up the warptarget on a hole_xy
 #define LANDMARK_FALL_ICE "icefall" // locations for people to fall if they enter the deep abyss on the ice moon
 #define LANDMARK_FALL_POLARIS "polarisfall" // locations for people to fall if they enter the deep in the trench
