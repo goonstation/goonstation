@@ -754,9 +754,7 @@
 	icon_state = "toilet";
 	dir = 8
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21

@@ -1385,9 +1385,7 @@
 	},
 /area/space)
 "Yy" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "YD" = (

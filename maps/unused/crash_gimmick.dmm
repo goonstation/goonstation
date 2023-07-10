@@ -520,9 +520,7 @@
 	},
 /area/russian/radiation)
 "aqT" = (
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -4450,9 +4448,7 @@
 	},
 /area/russian/radiation)
 "bed" = (
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -6594,9 +6590,7 @@
 /turf/space,
 /area/space)
 "bjE" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -7958,9 +7952,7 @@
 	icon_state = "bedsheet-red"
 	},
 /obj/item/storage/secure/sbriefcase,
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /obj/item/instrument/whistle,
 /obj/item/reagent_containers/food/drinks/bottle/bojackson,
 /turf/simulated/floor{
@@ -9320,9 +9312,7 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/darkblue{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -12006,9 +11996,7 @@
 	},
 /area/russian/radiation)
 "bEd" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -16131,9 +16119,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /obj/item/paper/book/from_file/guardbot_guide,
 /turf/simulated/floor/carpet/blue/fancy/edge/sw{
 	burnt = 1;
@@ -26590,9 +26576,7 @@
 	bcolor = "blue";
 	icon_state = "bedsheet-blue"
 	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
+/obj/landmark/start/job/medical_director,
 /obj/item/storage/secure/ssafe{
 	pixel_x = -28
 	},
@@ -31988,9 +31972,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/green/fancy/edge/east{
 	broken = 1;
@@ -32152,9 +32134,7 @@
 	bcolor = "pink";
 	icon_state = "bedsheet-pink"
 	},
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/purple/checker{
 	broken = 1;
@@ -38154,9 +38134,7 @@
 /turf/space,
 /area/space)
 "dPF" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38226,9 +38204,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/obj/landmark/start{
-	name = "Mechanic"
-	},
+/obj/landmark/start/job/engineer,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38241,9 +38217,7 @@
 	icon_state = "bot2";
 	tag = ""
 	},
-/obj/landmark/start{
-	name = "Medical Director"
-	},
+/obj/landmark/start/job/medical_director,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38254,9 +38228,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38382,9 +38354,7 @@
 	},
 /area/shuttle/arrival/station)
 "dTt" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38395,9 +38365,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
+/obj/landmark/start/job/assistant,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38498,9 +38466,7 @@
 	},
 /area/russian/radiation)
 "dXo" = (
-/obj/landmark/start{
-	name = "Chef"
-	},
+/obj/landmark/start/job/chef,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38516,9 +38482,7 @@
 /obj/decal/poster/wallsign/stencil/right/x{
 	pixel_x = 14
 	},
-/obj/landmark/start{
-	name = "Security Assistant"
-	},
+/obj/landmark/start/job/security_assistant,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38539,9 +38503,7 @@
 	},
 /area/shuttle/arrival/station)
 "dXT" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
+/obj/landmark/start/job/geneticist,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -38566,9 +38528,7 @@
 	},
 /area/russian/radiation)
 "dYp" = (
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/landmark/start/job/head_of_personnel,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -39279,12 +39239,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark/start{
-	name = "Staff Assistant"
-	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/start/job/assistant,
+/obj/landmark/bill_spawn,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -39559,9 +39515,7 @@
 	},
 /area/russian/radiation)
 "eTf" = (
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -41987,9 +41941,7 @@
 	},
 /area/russian/radiation)
 "fXc" = (
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -44810,9 +44762,7 @@
 /obj/machinery/shower{
 	dir = 8
 	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/sanitary/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -46629,9 +46579,7 @@
 	name = "left oven"
 	},
 /obj/item/device/radio/intercom/catering,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
@@ -46663,9 +46611,7 @@
 /area/russian/radiation)
 "ieB" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /obj/disposalpipe/segment/brig{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -53124,9 +53070,7 @@
 	},
 /area/russian/radiation)
 "lca" = (
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -54572,9 +54516,7 @@
 	},
 /area/russian/radiation)
 "lFQ" = (
-/obj/landmark/start{
-	name = "Head of Security"
-	},
+/obj/landmark/start/job/head_of_security,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -55763,9 +55705,7 @@
 /area/russian/radiation)
 "mhB" = (
 /obj/stool/chair/yellow,
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor/engine{
 	desc = " It is made of steel.";
 	name = "steel reinforced floor"
@@ -59170,9 +59110,7 @@
 	},
 /area/russian/radiation)
 "nJB" = (
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	desc = "";
@@ -66794,9 +66732,7 @@
 	},
 /area/built_zone)
 "rnw" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -67518,9 +67454,7 @@
 	bcolor = "yellow";
 	icon_state = "bedsheet-yellow"
 	},
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /turf/simulated/floor/yellowblack{
 	broken = 1;
 	desc = " It is made of steel.";
@@ -70317,9 +70251,7 @@
 	},
 /area/russian/radiation)
 "tcn" = (
-/obj/landmark/start{
-	name = "Rancher"
-	},
+/obj/landmark/start/job/rancher,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -71294,9 +71226,7 @@
 	},
 /area/russian/radiation)
 "tFA" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -72770,9 +72700,7 @@
 	},
 /area/russian/radiation)
 "uph" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /obj/machinery/light,
 /turf/unsimulated/floor{
 	desc = "";

@@ -6107,9 +6107,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "ayw" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/white/grime,
 /area/hospital)
 "ayx" = (
@@ -6339,9 +6337,7 @@
 	},
 /area/hospital)
 "azq" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/item/device/gps{
 	desc = "Why is this even here";
 	distress = 1
@@ -7405,9 +7401,7 @@
 	},
 /area/moon/museum)
 "aDR" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -7489,9 +7483,7 @@
 	},
 /area/moon/museum)
 "aEo" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/item/device/gps{
 	desc = "Why is this even here";
 	distress = 1
@@ -10486,9 +10478,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/plating,
 /area/upper_arctic/comms)
 "aQj" = (
@@ -14746,9 +14736,7 @@
 	},
 /area/crater/biodome/entry)
 "bdG" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/circuit,
 /area/crater/biodome/entry)
 "bdH" = (
@@ -14797,12 +14785,8 @@
 /area/lower_arctic/lower)
 "bdT" = (
 /obj/decal/fakeobjects/teleport_pad,
-/obj/landmark{
-	name = "telesci"
-	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
+/obj/landmark/telesci,
 /obj/item/device/gps,
 /turf/unsimulated/floor/circuit,
 /area/crater/biodome/entry)
@@ -15793,22 +15777,16 @@
 /area/upper_arctic/exterior/surface)
 "bhc" = (
 /obj/item/scrap,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhd" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhe" = (
 /obj/decal/fakeobjects/skeleton,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhf" = (
@@ -15906,9 +15884,7 @@
 /area/upper_arctic/exterior/surface)
 "bhv" = (
 /obj/decal/cleanable/oil,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhw" = (
@@ -15916,9 +15892,7 @@
 /obj/item/device/gps{
 	distress = 1
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhx" = (
@@ -16048,25 +16022,19 @@
 	dir = 9;
 	icon_state = "lattice-dir-b"
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhS" = (
 /obj/lattice,
 /obj/item/sheet/steel,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhT" = (
 /obj/decal/cleanable/machine_debris,
 /obj/decal/cleanable/oil,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhU" = (
@@ -18050,16 +18018,12 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 5
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/decal/cleanable/cobweb,
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnl" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 8;
@@ -18073,9 +18037,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 9
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bno" = (
@@ -18250,9 +18212,7 @@
 	icon_state = "intact_off";
 	name = "pump"
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -18263,9 +18223,7 @@
 	layer = 2;
 	name = "experiment pad"
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/item/device/gps{
 	distress = 1;
 	identifier = "M#_a71aAA6-ST-R";
@@ -18274,9 +18232,7 @@
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnC" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnD" = (
@@ -18401,15 +18357,11 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 6
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnW" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/decal/fakeobjects/pipe{
 	desc = "It seems to have been damaged somehow.";
 	dir = 4;
@@ -18423,9 +18375,7 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 10
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/engine,
 /area/marsoutpost)
 "bnY" = (
@@ -20096,11 +20046,6 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon)
-"btO" = (
-/obj/landmark/spawner/loot,
-/obj/item/paper/businesscard/clowntown,
-/turf/unsimulated/floor/white,
-/area/shuttle/john/owlery)
 "btP" = (
 /obj/lattice{
 	dir = 4;
@@ -27311,9 +27256,7 @@
 /area/syndicate_station/battlecruiser)
 "bVf" = (
 /obj/stool/chair/office/red,
-/obj/landmark{
-	name = "SR Syndicate-Spawn"
-	},
+/obj/landmark/antagonist/operative/commander,
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/syndicate_station/battlecruiser)
 "bVj" = (
@@ -29989,21 +29932,15 @@
 	},
 /area/meat_derelict/entry)
 "cfu" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/corner,
 /area/meat_derelict/entry)
 "cfv" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/side,
 /area/meat_derelict/entry)
 "cfw" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/corner{
 	dir = 8
 	},
@@ -30098,17 +30035,13 @@
 	},
 /area/meat_derelict/entry)
 "cfU" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 4
 	},
 /area/meat_derelict/entry)
 "cfW" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 8
 	},
@@ -30271,25 +30204,19 @@
 	},
 /area/meat_derelict/entry)
 "cgA" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/corner{
 	dir = 4
 	},
 /area/meat_derelict/entry)
 "cgB" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
 	},
 /area/meat_derelict/entry)
 "cgC" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/orangeblack/corner{
 	dir = 1
 	},
@@ -38610,9 +38537,7 @@
 	anchored = 0;
 	dir = 4
 	},
-/obj/landmark{
-	name = "Syndicate-Spawn"
-	},
+/obj/landmark/antagonist/operative,
 /turf/unsimulated/floor/carpet/red/fancy/edge/west,
 /area/syndicate_station/battlecruiser)
 "cFF" = (
@@ -39358,9 +39283,7 @@
 /obj/stool/chair/red{
 	dir = 8
 	},
-/obj/landmark{
-	name = "Syndicate-Spawn"
-	},
+/obj/landmark/antagonist/operative,
 /turf/unsimulated/floor/carpet/red/fancy/edge/east,
 /area/syndicate_station/battlecruiser)
 "cHD" = (
@@ -41441,9 +41364,7 @@
 /obj/stool/chair/red{
 	dir = 1
 	},
-/obj/landmark{
-	name = "Syndicate-Spawn"
-	},
+/obj/landmark/antagonist/operative,
 /turf/unsimulated/floor/carpet/red/fancy/edge/south,
 /area/syndicate_station/battlecruiser)
 "cNv" = (
@@ -47447,9 +47368,7 @@
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
 "dbt" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dbu" = (
@@ -47481,9 +47400,7 @@
 /obj/item/device/gps{
 	distress = 1
 	},
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
 "dbG" = (
@@ -50331,9 +50248,7 @@
 	dir = 8;
 	pixel_x = 16
 	},
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
 "djU" = (
@@ -50444,9 +50359,7 @@
 /area/wizard_station)
 "dkh" = (
 /obj/stool/bench/wooden,
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
 "dki" = (
@@ -67979,9 +67892,7 @@
 	},
 /obj/map/light/void,
 /obj/effect_sparker,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/item/device/gps{
 	distress = 1
 	},
@@ -68694,9 +68605,6 @@
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim/lobby)
 "nMz" = (
-/obj/landmark{
-	name = "IDEALLY THERE WOULD BE A LADDER HERE"
-	},
 /obj/ladder{
 	icon_state = "ladder_wall";
 	id = "iomoon";
@@ -72456,9 +72364,7 @@
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/south)
 "rFA" = (
-/obj/landmark/start{
-	name = "wizard"
-	},
+/obj/landmark/antagonist/wizard,
 /turf/unsimulated/floor/white,
 /area/wizard_station)
 "rFC" = (
@@ -73962,9 +73868,7 @@
 	},
 /area/void_diner)
 "tyt" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/railing/orange/reinforced,
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
@@ -74408,9 +74312,7 @@
 	icon_state = "blue"
 	})
 "udF" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -74522,9 +74424,7 @@
 "ukY" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/item/device/gps,
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/decal/residual_energy,
 /turf/unsimulated/floor/plating,
 /area/solarium)
@@ -75909,9 +75809,7 @@
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "vRc" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /turf/unsimulated/floor/plating,
 /area/solarium)
 "vRK" = (
@@ -76751,9 +76649,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "wHn" = (
-/obj/landmark{
-	name = "telesci"
-	},
+/obj/landmark/telesci,
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
@@ -78180,6 +78076,14 @@
 /obj/mapping_helper/access/owlcommand,
 /turf/unsimulated/floor/white,
 /area/owlery/office)
+"ybr" = (
+/obj/decal/tile_edge/line/blue{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/item/paper/businesscard/clowntown,
+/turf/unsimulated/floor/shuttle/yellow,
+/area/shuttle/john/owlery)
 "ybt" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
@@ -81394,7 +81298,7 @@ cFc
 cFc
 bqA
 cIf
-btO
+cIM
 cJA
 cJD
 cKh
@@ -81696,7 +81600,7 @@ cEJ
 caq
 bsL
 bVc
-caQ
+ybr
 caQ
 caQ
 caQ

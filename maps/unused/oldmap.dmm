@@ -482,9 +482,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "bu" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
@@ -573,9 +571,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "bE" = (
-/obj/landmark/start{
-	name = "Chief Engineer"
-	},
+/obj/landmark/start/job/chief_engineer,
 /turf/simulated/floor,
 /area/engine/engineering)
 "bF" = (
@@ -928,9 +924,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "cr" = (
-/obj/landmark/start{
-	name = "Head of Security"
-	},
+/obj/landmark/start/job/head_of_security,
 /turf/space,
 /area/space)
 "cs" = (
@@ -1214,9 +1208,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/north)
 "cU" = (
-/obj/landmark{
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/north)
@@ -1456,9 +1448,7 @@
 /turf/simulated/wall,
 /area/bridge)
 "du" = (
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/landmark/start/job/engineer,
 /turf/simulated/floor,
 /area/engine/engineering)
 "dv" = (
@@ -1825,9 +1815,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Head of Security"
-	},
+/obj/landmark/start/job/head_of_security,
 /turf/simulated/floor,
 /area/bridge)
 "ef" = (
@@ -2207,9 +2195,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Head of Personnel"
-	},
+/obj/landmark/start/job/head_of_personnel,
 /turf/simulated/floor,
 /area/bridge)
 "eV" = (
@@ -2992,9 +2978,7 @@
 /area/crew_quarters/captain)
 "gJ" = (
 /obj/stool/bed,
-/obj/landmark/start{
-	name = "Captain"
-	},
+/obj/landmark/start/job/captain,
 /obj/item/device/radio/intercom{
 	
 	},
@@ -4184,9 +4168,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "jH" = (
@@ -4273,9 +4255,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
 "jR" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/black,
 /area/medical/medbay)
 "jS" = (
@@ -4365,9 +4345,7 @@
 /turf/simulated/floor/white,
 /area/medical/research)
 "kb" = (
-/obj/landmark/start{
-	name = "Geneticist"
-	},
+/obj/landmark/start/job/geneticist,
 /turf/simulated/floor/white,
 /area/medical/research)
 "kc" = (
@@ -4678,9 +4656,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/courtroom)
 "kQ" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "kR" = (
@@ -4872,9 +4848,7 @@
 /turf/simulated/floor/white,
 /area/medical/medbay)
 "lj" = (
-/obj/landmark/start{
-	name = "Medical Doctor"
-	},
+/obj/landmark/start/job/medical_doctor,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
 	icon_state = "intact-f";
@@ -5267,9 +5241,7 @@
 /turf/simulated/floor/white,
 /area/medical/research)
 "lZ" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /turf/simulated/floor/white,
 /area/medical/research)
 "ma" = (
@@ -5449,9 +5421,7 @@
 /turf/simulated/floor/white,
 /area/medical/research)
 "mw" = (
-/obj/landmark/start{
-	name = "Roboticist"
-	},
+/obj/landmark/start/job/roboticist,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -5846,9 +5816,7 @@
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "nr" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor,
 /area/hallway/primary/central)
 "ns" = (
@@ -5883,9 +5851,7 @@
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nv" = (
-/obj/landmark{
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/white,
 /area/toxins/lab)
 "nw" = (
@@ -5918,9 +5884,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "nB" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "nC" = (
@@ -6012,9 +5976,7 @@
 	},
 /area/hallway/secondary/exit)
 "nQ" = (
-/obj/landmark{
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor,
 /area/hallway/secondary/exit)
 "nR" = (
@@ -6104,9 +6066,7 @@
 	d2 = 8
 	},
 /obj/machinery/atmospherics/pipe/simple,
-/obj/landmark{
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
@@ -6509,9 +6469,7 @@
 /turf/simulated/floor,
 /area/janitor)
 "oW" = (
-/obj/landmark/start{
-	name = "Janitor"
-	},
+/obj/landmark/start/job/janitor,
 /obj/machinery/camera{
 	c_tag = "Custodial Closet";
 	network = "SS13"
@@ -6809,9 +6767,7 @@
 /turf/simulated/floor,
 /area/janitor)
 "pA" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6;
 	icon_state = "intact-f";
@@ -7060,9 +7016,7 @@
 /turf/simulated/wall/r_wall,
 /area/hallway/secondary/exit)
 "qd" = (
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom{
@@ -7075,18 +7029,14 @@
 	})
 "qf" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Cyborg"
-	},
+/obj/landmark/start/job/cyborg,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom{
 	name = "Unemployment Office"
 	})
 "qg" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom{
 	name = "Unemployment Office"
@@ -7282,9 +7232,7 @@
 	})
 "qJ" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Chaplain"
-	},
+/obj/landmark/start/job/chaplain,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom{
 	name = "Unemployment Office"
@@ -7314,9 +7262,7 @@
 	d2 = 2
 	},
 /obj/stool,
-/obj/landmark/start{
-	name = "Quartermaster"
-	},
+/obj/landmark/start/job/quartermaster,
 /turf/simulated/floor,
 /area/crew_quarters/juryroom{
 	name = "Unemployment Office"
@@ -7585,9 +7531,7 @@
 /turf/simulated/floor,
 /area/security/main)
 "ru" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor,
 /area/security/main)
 "rv" = (
@@ -7799,15 +7743,11 @@
 /turf/simulated/floor,
 /area/security/main)
 "rT" = (
-/obj/landmark/start{
-	name = "Security Officer"
-	},
+/obj/landmark/start/job/security_officer,
 /turf/simulated/floor,
 /area/security/main)
 "rU" = (
-/obj/landmark/start{
-	name = "Detective"
-	},
+/obj/landmark/start/job/detective,
 /turf/simulated/floor,
 /area/security/main)
 "rV" = (
@@ -8643,9 +8583,7 @@
 	dir = 4;
 	initialize_directions = 11
 	},
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "tP" = (
@@ -8653,9 +8591,7 @@
 /area/crew_quarters/bar)
 "tQ" = (
 /obj/stool,
-/obj/landmark/start{
-	name = "Head of Security"
-	},
+/obj/landmark/start/job/head_of_security,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -8672,9 +8608,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "tS" = (
-/obj/landmark/start{
-	name = "Bartender"
-	},
+/obj/landmark/start/job/bartender,
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "tT" = (
@@ -8718,9 +8652,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/crew_quarters/bar)
 "tZ" = (
-/obj/landmark/start{
-	name = "Clown"
-	},
+/obj/landmark/start/job/clown,
 /obj/stool,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/specialroom/bar,
@@ -8955,9 +8887,7 @@
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
 "uw" = (
-/obj/landmark/start{
-	name = "Chef"
-	},
+/obj/landmark/start/job/chef,
 /turf/simulated/floor/white,
 /area/crew_quarters/cafeteria)
 "ux" = (
@@ -9140,9 +9070,7 @@
 /turf/simulated/floor,
 /area/atmos)
 "uP" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor,
 /area/atmos)
 "uQ" = (
@@ -9206,15 +9134,11 @@
 /turf/simulated/floor,
 /area/hydroponics)
 "vb" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
+/obj/landmark/start/job/botanist,
 /turf/simulated/floor,
 /area/hydroponics)
 "vc" = (
-/obj/landmark/start{
-	name = "Botanist"
-	},
+/obj/landmark/start/job/botanist,
 /obj/cable{
 	icon_state = "1-2";
 	d1 = 1;
@@ -9380,9 +9304,7 @@
 /turf/simulated/floor,
 /area/hydroponics)
 "vy" = (
-/obj/landmark{
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -9490,9 +9412,7 @@
 	d1 = 2;
 	d2 = 8
 	},
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/sanitary,
 /area/crew_quarters/kitchen)
 "vI" = (
@@ -12330,9 +12250,7 @@
 	icon_state = "0-2";
 	d2 = 2
 	},
-/obj/landmark/start{
-	name = "AI"
-	},
+/obj/landmark/start/job/AI,
 /turf/simulated/floor/circuit,
 /area/turret_protected/aisat_interior)
 "Ca" = (
@@ -14206,9 +14124,7 @@
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
 "Gl" = (
-/obj/landmark/start{
-	name = "Research Director"
-	},
+/obj/landmark/start/job/research_director,
 /turf/simulated/floor/white,
 /area/crew_quarters/hor)
 "Gm" = (
@@ -17270,9 +17186,7 @@
 /area/zeta/patients)
 "LT" = (
 /obj/stool/chair,
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/zeta/patients)
 "LU" = (
@@ -17481,9 +17395,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/zeta/patients)
 "Mn" = (
@@ -17603,9 +17515,7 @@
 /obj/stool/chair{
 	dir = 1
 	},
-/obj/landmark/start{
-	name = "Scientist"
-	},
+/obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/zeta/patients)
 "MA" = (
@@ -18957,9 +18867,7 @@
 /turf/simulated/floor/plating,
 /area/engine/miningoutpost)
 "Pu" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /turf/simulated/floor/caution/south,
 /area/engine/miningoutpost)
 "Pv" = (
@@ -19033,9 +18941,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "PD" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /turf/simulated/floor/caution/east,
 /area/engine/miningoutpost)
 "PE" = (
@@ -19045,9 +18951,7 @@
 /turf/simulated/floor,
 /area/engine/miningoutpost)
 "PF" = (
-/obj/landmark/start{
-	name = "Miner"
-	},
+/obj/landmark/start/job/miner,
 /obj/cable{
 	icon_state = "2-4";
 	d1 = 2;
