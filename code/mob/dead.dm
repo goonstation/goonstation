@@ -68,7 +68,6 @@
 /mob/dead/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
 
-
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)
 		src.show_text("<b>Deadchat is currently disabled.</b>")

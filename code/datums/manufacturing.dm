@@ -836,9 +836,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	modify_output(var/obj/machinery/manufacturer/M, var/atom/A,var/list/materials)
 		..()
 		var/obj/item/cable_coil/coil = A
-		coil.setInsulator(getMaterial(materials["INS-1"]))
-		coil.setConductor(getMaterial(materials["CON-1"]))
+		coil.setInsulator(getMaterial(materials[item_paths[1]]))
+		coil.setConductor(getMaterial(materials[item_paths[2]]))
 		return 1
+
+/datum/manufacture/cable/reinforced
+	name = "Reinforced Cable Coil"
+	item_paths = list("INS-2", "pharosium")
+	item_outputs = list(/obj/item/cable_coil/reinforced)
+	time = 10 SECONDS
 
 /datum/manufacture/RCD
 	name = "Rapid Construction Device"

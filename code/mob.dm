@@ -232,6 +232,8 @@
 	var/mob/observing = null
 	/// A list of emotes that trigger a special action for this mob
 	var/list/trigger_emotes = null
+	/// If TRUE then this mob won't be fully stunned by stamina stuns
+	var/no_stamina_stuns = FALSE
 
 	start_listen_modifiers = list("maptext")
 	start_listen_inputs = list("ears", "ooc", "looc")
@@ -937,7 +939,7 @@
 		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
-	boutput(src, "Retrieving your medal information...")
+	boutput(src, "<span class='hint'>Retrieving your medal information...</span>")
 
 	SPAWN(0)
 		var/list/output = list()
@@ -1961,8 +1963,8 @@
 		if (transfer_mind_to_owl)
 			src.make_critter(/mob/living/critter/small_animal/bird/owl, src.loc)
 		else
-			var/obj/critter/owl/O = new /obj/critter/owl(src.loc)
-			O.name = pick("Hooty Mc[src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
+			var/mob/living/critter/small_animal/bird/owl/owl = new /mob/living/critter/small_animal/bird/owl(src.loc)
+			owl.name = pick("Hooty Mc [src.real_name]", "Professor [src.real_name]", "Screechin' [src.real_name]")
 
 	if (!transfer_mind_to_owl && (src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
 		var/mob/dead/observer/newmob = ghostize()
@@ -3120,7 +3122,7 @@
 	if(target)
 		var/success = src.help_examine(target)
 		if(!success)
-			boutput(src, "Sadly \the [target] has no help message attached.")
+			boutput(src, "<span class='alert'>Sadly \the [target] has no help message attached.</span>")
 	else
 		boutput(src, {"<span class='helpmsg'>
 			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
@@ -3140,7 +3142,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /// Same as help_verb but this one except visible, added dynamically when requested by signals
 /atom/proc/help_verb_dynamic()
@@ -3153,7 +3155,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

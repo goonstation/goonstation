@@ -221,13 +221,13 @@ What can break when adding new gases:
 	TEG stats computer will ignore your new gas. Feel free to add it to reactor_stats.dm manually but good luck.
 */
 
-#define SPECIFIC_HEAT_PLASMA	200
-#define SPECIFIC_HEAT_O2		20
-#define SPECIFIC_HEAT_N2		20
-#define SPECIFIC_HEAT_CO2		30
+#define SPECIFIC_HEAT_PLASMA	150
+#define SPECIFIC_HEAT_O2		40
+#define SPECIFIC_HEAT_N2		50
+#define SPECIFIC_HEAT_CO2		40
 #define SPECIFIC_HEAT_FARTS 	69
-#define SPECIFIC_HEAT_RADGAS 	20
-#define SPECIFIC_HEAT_N2O		40
+#define SPECIFIC_HEAT_RADGAS 	5
+#define SPECIFIC_HEAT_N2O		60
 #define SPECIFIC_HEAT_AGENTB	300
 
 #define _APPLY_TO_GASES(PREF, SUFF, MACRO, ARGS...) \

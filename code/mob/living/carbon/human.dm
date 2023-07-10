@@ -167,6 +167,8 @@
 	blood_volume = 500
 	dna_to_absorb = 10
 
+	void_mindswappable = TRUE
+
 	var/datum/humanInventory/inventory = null
 
 	var/default_mutantrace = /datum/mutantrace/human
@@ -2330,10 +2332,8 @@
 				return
 			if (iswerewolf(src))
 				if (src.handcuffs.werewolf_cant_rip())
-					boutput(src, "<span class='alert'>You can't seem to rip apart these silver handcuffs. They burn!</span>")
-					src.TakeDamage("l_arm", 0, 2, 0, DAMAGE_BURN)
-					src.TakeDamage("r_arm", 0, 2, 0, DAMAGE_BURN)
-					return
+					boutput(src, "<span class='alert'><b>[src.handcuffs] burn you! They'll take a longer time to remove...</b></span>")
+					// no return, proceed as normal
 				else
 					src.visible_message("<span class='alert'><B>[src] rips apart the handcuffs with pure brute strength!</b></span>")
 					boutput(src, "<span class='notice'>You rip apart your handcuffs.</span>")

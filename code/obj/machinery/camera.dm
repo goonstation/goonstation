@@ -255,13 +255,9 @@
 				else
 					boutput(OAI, "Your connection to the camera has been lost.")
 		*/
-		var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
-		if (S)
-			if (S.current == src)
-				S.remove_dialog(O)
-				S.current = null
-				O.set_eye(null)
-				boutput(O, "The screen bursts into static.")
+		if(O.eye == src)
+			O.set_eye(null)
+			boutput(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)

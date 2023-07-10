@@ -1006,6 +1006,9 @@ TYPEINFO(/atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
+/atom/proc/on_reagent_transfer()
+	return
+
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)
 	return

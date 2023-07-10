@@ -425,7 +425,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
 
@@ -1436,7 +1436,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (isghostcritter(user) && ishuman(target) && target.health < 75)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.</span>")
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
@@ -1527,7 +1527,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+		if (istype(target,/mob/living/critter/small_animal/trilobite))
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")

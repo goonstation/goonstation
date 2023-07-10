@@ -143,6 +143,9 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
+		#endif
 	)
 
 // medical doctor.

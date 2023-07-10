@@ -52,6 +52,7 @@
 	skinresult = /obj/item/material_piece/bone
 	add_abilities = list(/datum/targetable/critter/tackle)
 	max_skins = 3
+	no_stamina_stuns = TRUE
 	var/hatcount = 1
 	var/revivalChance = 0 // Chance to revive when killed, out of 100. Wizard spell will set to 100, defaults to 0 because skeletons appear in telesci/other sources
 	var/revivalDecrement = 20 // Decreases revival chance each successful revival. Set to 0 and revivalChance=100 for a permanently reviving skeleton

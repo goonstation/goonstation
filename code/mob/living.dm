@@ -130,6 +130,8 @@
 	start_speech_outputs = list("spoken","equipped","ooc","looc")
 	start_listen_languages = list("english")
 
+	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	src.create_mob_silhouette()
 	..()
@@ -143,6 +145,9 @@
 		src.stamina_bar = new(src)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
+
+	if (src.isFlying)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 	SPAWN(0)
 		sleep_bubble.appearance_flags = RESET_TRANSFORM | PIXEL_SCALE
@@ -650,16 +655,7 @@
 		return ..()
 #endif
 
-
-
-
 	if (reverse_mode) message = reverse_text(message)
-
-
-
-
-
-
 
 	message = say_decorate(message)
 
@@ -794,9 +790,48 @@
 
 		var/popup_style = src.speechpopupstyle
 
-		if (src.find_type_in_hand(/obj/item/megaphone))
-			var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		if (megaphone)
 			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
+
+			popup_style += megaphone.maptext_size >= 12 ? "font-family: 'PxPlus IBM VGA9'" : "font-family: 'Small Fonts'"
+			maptext_color = megaphone.maptext_color
+
+		if(unique_maptext_style)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
+		else
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + popup_style + singing_italics)
+
+		if (megaphone)
+			chat_text.maptext_height *= 4 // have some extra space friend
+			chat_text.maptext_width *= 2
+			chat_text.maptext_x = (chat_text.maptext_x * 2) - 16 // keep centered
+
+		if(maptext_animation_colors)
+			oscillate_colors(chat_text, maptext_animation_colors)
+
+		if(chat_text)
+			chat_text.measure(src.client)
+			var/obj/chat_maptext_holder/holder = src.chat_text
+			if (is_decapitated_skeleton) // for skeleton heads
+				var/mob/living/carbon/human/H = src
+				var/datum/mutantrace/skeleton/S = H.mutantrace
+				if (S.head_tracker)
+					holder = S.head_tracker.chat_text
+			if (holder)
+				for(var/image/chat_maptext/I in holder.lines)
+					if(I != chat_text)
+						I.bump_up(chat_text.measured_height)
+
+	var/rendered = null
+	if (length(heard_a))
+		processed = saylist(messages[1], heard_a, olocs, thickness, italics, processed, assoc_maptext = chat_text)
+
+	if (length(heard_b))
+		processed = saylist(messages[2], heard_b, olocs, thickness, italics, processed, 1)
+
+	message = src.say_quote(messages[1])
+
 
 /*
 	if (italics)
@@ -1127,10 +1162,6 @@
 
 /mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
-		return
-
-	if (!ticker)
-		boutput(M, "You cannot interact with other people before the game has started.")
 		return
 
 	M.lastattacked = src
