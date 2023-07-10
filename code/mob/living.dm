@@ -787,9 +787,9 @@
 			else
 				listening = all_hearers(message_range, olocs[olocs.len])
 
-
-		var/popup_style = src.speechpopupstyle
 /* TODO turn all of this into modules
+		var/popup_style = src.speechpopupstyle
+
 		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
 		if (megaphone)
 			popup_style += "font-weight: bold; font-size: [megaphone.maptext_size]px; -dm-text-outline: 1px [megaphone.maptext_outline_color];"
