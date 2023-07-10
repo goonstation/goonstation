@@ -24,7 +24,6 @@
 #define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
 
 // nukies
-
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
 #define LANDMARK_SYNDICATE_BOSS "SR Syndicate-Spawn"
 #define LANDMARK_NUCLEAR_BOMB "Nuclear-Bomb"
@@ -41,10 +40,12 @@
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
 
 // Salvagers
-
 #define LANDMARK_SALVAGER "Salvager-Spawn"
 #define LANDMARK_SALVAGER_BEACON "Salvager-Beacon"
 #define LANDMARK_SALVAGER_TELEPORTER "Salvager-Tele"
+
+// Wizard
+#define LANDMARK_WIZARD "Wizard_Spawn"
 
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
@@ -59,7 +60,6 @@
 #define LANDMARK_ESCAPE_POD_SUCCESS "escape_pod_success" // escape pods go here when they don't fail
 #define LANDMARK_ASS_ARENA_SPAWN "ass_arena_spawn" // Ass Jam respawn arena spawns
 #define LANDMARK_MALF_GEAR_CLOSET "Malf-Gear-Closet"
-#define LANDMARK_AI_SAT "AI-Sat" // AI Satellite for AI MALF
 #define LANDMARK_TELEPORT_SCROLL "Teleport-Scroll" // waldo scrolls
 #define LANDMARK_AI_GUNBOT_SHUTTLE "AIgunbotshuttle" // MALF AI module thing
 #define LANDMARK_BIGBOOM "bigboom" // unfinished Manta event
@@ -67,6 +67,7 @@
 #define LANDMARK_TUTORIAL_FLOCK_CONVERSION "tutorial_flock_conversion"
 #define LANDMARK_CRUISER_ENTRANCE "cruiser_entrance"
 #define LANDMARK_CRUISER_CENTER "cruiser_center"
+
 // loading screen maptext landmarks
 #define LANDMARK_LOBBY_LEFTSIDE "lobby_leftside"
 #define LANDMARK_LOBBY_STATUS "lobby_status"
