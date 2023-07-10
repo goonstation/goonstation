@@ -6,6 +6,8 @@ export const Terminal = (_props, context) => {
   const { act, data } = useBackend(context);
   const peripherals = data.peripherals || [];
   const [textInput, setTextInput] = useLocalState(context, 'textInput', "");
+  const [textInputHistory, setTextInputHistory] = useLocalState(context, 'textInputHistory', []);
+  const [textInputHistoryIndex, setTextInputHistoryIndex] = useLocalState(context, 'textInputHistoryIndex', 0);
   const {
     displayHTML,
     TermActive,
@@ -14,6 +16,37 @@ export const Terminal = (_props, context) => {
     bgColor,
     doScrollBottom,
   } = data;
+
+  let navigateHistory = function (direction, DOMInput) {
+    let newIndex = textInputHistoryIndex + direction;
+    let hasMoreHistory = false;
+    if (direction > 0 && newIndex < textInputHistory.length) {
+      hasMoreHistory = true;
+    } else if (direction < 0 && newIndex >= 0) {
+      hasMoreHistory = true;
+    }
+    if (hasMoreHistory) {
+      setTextInput(textInputHistory[newIndex]);
+      // setTextInput *should* have been good enough but sometimes, after editing the input, it fails to update,
+      // so let's update the dom input directly just to be sure
+      DOMInput.value = textInputHistory[newIndex];
+      setTextInputHistoryIndex(newIndex);
+    } else if (direction > 0) {
+      // The last down arrow should clear the text field
+      setTextInput("");
+      DOMInput.value = "";
+      setTextInputHistoryIndex(textInputHistory.length);
+    }
+  };
+
+  let appendHistory = function (newText) {
+    if (textInputHistory[textInputHistory.length - 1] === newText) {
+      return;
+    }
+    textInputHistory.push(newText);
+    setTextInputHistory(textInputHistory);
+    setTextInputHistoryIndex(textInputHistoryIndex + 1);
+  };
 
   let handleScrollBottom = function () {
     // There might be a better way than this setTimeout like fashion to run our js scroll code at the right time
@@ -59,10 +92,19 @@ export const Terminal = (_props, context) => {
                     selfClear
                     value={textInput}
                     fluid
-                    onChange={(e, value) => { setTextInput(value); }}
+                    onInput={(e, value) => {
+                      setTextInput(value);
+                      setTextInputHistoryIndex(textInputHistory.length);
+                    }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         act('text', { value: textInput });
+                        appendHistory(textInput);
+                        setTextInput("");
+                      } else if (e.key === 'Up') {
+                        navigateHistory(-1, e.target);
+                      } else if (e.key === 'Down') {
+                        navigateHistory(1, e.target);
                       }
                     }}
                     mr="0.5rem"
@@ -74,6 +116,7 @@ export const Terminal = (_props, context) => {
                       color={TermActive ? "green" : "red"}
                       onClick={() => {
                         act('text', { value: textInput });
+                        appendHistory(textInput);
                         setTextInput("");
                       }}
                       mr="0.5rem" />
