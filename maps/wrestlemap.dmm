@@ -11452,9 +11452,7 @@
 	},
 /area/station/engine/inner)
 "eSP" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "eTf" = (
@@ -13600,9 +13598,7 @@
 	name = "Ringside Hallway"
 	})
 "fMM" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment/produce{
 	dir = 4
 	},
@@ -42295,9 +42291,7 @@
 /obj/stool/chair/office/red{
 	dir = 4
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/sec_foyer)
 "saf" = (

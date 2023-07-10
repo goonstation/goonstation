@@ -2442,9 +2442,7 @@
 /area/station/hallway/primary/central)
 "akl" = (
 /obj/stool/bench/green/auto,
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "akp" = (
@@ -7043,9 +7041,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/machinery/light/runway_light/delay3,
 /obj/machinery/atmospherics/pipe/vent,
 /obj/cable{
@@ -10294,9 +10290,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/stool/chair/blue{
 	dir = 8
 	},
@@ -17244,9 +17238,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northwest)
 "czX" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "cAo" = (
@@ -28731,9 +28723,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "hKT" = (
@@ -35275,9 +35265,7 @@
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "lkz" = (

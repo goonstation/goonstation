@@ -25739,10 +25739,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "enQ" = (
@@ -35574,10 +35571,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "lLB" = (
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -38734,10 +38728,7 @@
 /turf/simulated/floor,
 /area/station/janitor/office)
 "oev" = (
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "oez" = (
@@ -47323,10 +47314,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "umY" = (
-/obj/landmark{
-	icon_state = "generic-spawn";
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -47351,10 +47339,7 @@
 	c_tag_order = 999;
 	dir = 4
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-c"

@@ -1337,9 +1337,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/machinery/power/apc{
 	areastring = "Kitchen";
 	name = "Kitchen APC";
@@ -3661,9 +3659,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "afM" = (
@@ -8707,9 +8703,7 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aoP" = (
@@ -11446,9 +11440,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment{
 	dir = 8
 	},
@@ -11460,9 +11452,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "ata" = (
@@ -18805,9 +18795,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -19876,9 +19864,6 @@
 	d1 = 0;
 	d2 = 2;
 	icon_state = "0-2"
-	},
-/obj/landmark{
-	name = "AI-Sat"
 	},
 /obj/landmark/start/AI,
 /obj/machinery/door_control{
@@ -26969,9 +26954,7 @@
 /area/station/storage/warehouse)
 "baT" = (
 /obj/machinery/drone_recharger,
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/random_item_spawner/junk/few,
 /turf/simulated/floor/plating,
 /area/station/maintenance/storage{
@@ -28746,9 +28729,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "bfm" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
 /turf/unsimulated/floor{
 	desc = "";
@@ -28757,9 +28738,7 @@
 	},
 /area/shuttle/arrival/station)
 "bfn" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -28767,9 +28746,7 @@
 	},
 /area/shuttle/arrival/station)
 "bfo" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -28778,9 +28755,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bfp" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -28791,16 +28766,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bfq" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "bfr" = (
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/disposalpipe/segment/morgue,
 /obj/disposalpipe/segment/morgue{
 	dir = 8;
@@ -28809,9 +28780,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bfs" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	d1 = 0;
@@ -28821,9 +28790,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bft" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -31386,9 +31353,7 @@
 	dir = 5;
 	level = 2
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "blF" = (
@@ -31986,9 +31951,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 8
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bmN" = (
@@ -33582,9 +33545,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
 /turf/unsimulated/floor{
 	desc = "";
@@ -37475,9 +37436,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "bCm" = (
@@ -37490,9 +37449,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "bCn" = (
@@ -37548,9 +37505,7 @@
 /area/station/crew_quarters/fitness)
 "bCB" = (
 /obj/machinery/door/window/southleft,
-/obj/landmark{
-	name = "blobstart"
-	},
+/obj/landmark/antagonist/blob,
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
@@ -38631,9 +38586,7 @@
 	},
 /obj/item/storage/box/bacon_kit,
 /obj/decal/cleanable/dirt,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "bEI" = (
@@ -45561,9 +45514,7 @@
 	})
 "bSb" = (
 /obj/machinery/recharge_station,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -52380,9 +52331,7 @@
 /area/station/hangar/main)
 "cgs" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "cgt" = (
@@ -66988,9 +66937,7 @@
 /obj/item/storage/toilet{
 	dir = 4
 	},
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /obj/landmark/start/assistant,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
@@ -68109,9 +68056,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/solar/north)
 "oYq" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "oYx" = (
@@ -69341,9 +69286,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rXJ" = (

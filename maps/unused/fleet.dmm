@@ -8478,9 +8478,7 @@
 	name = "Dionysus Cryocore"
 	})
 "rU" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/landmark/start/latejoin,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/utility{

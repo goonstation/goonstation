@@ -9867,9 +9867,7 @@
 	},
 /area/shuttle/arrival/station)
 "aBU" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -12653,9 +12651,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "aJp" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
@@ -25261,9 +25257,7 @@
 	},
 /area/station/medical/robotics)
 "bph" = (
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"

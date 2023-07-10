@@ -226,9 +226,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "abj" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "abk" = (
@@ -978,9 +976,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor,
 /area/station/security/checkpoint)
 "aev" = (
@@ -1094,9 +1090,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aeV" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aeW" = (
@@ -5186,9 +5180,7 @@
 	},
 /area/station/engine/inner)
 "awo" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -18160,9 +18152,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "bSt" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bSJ" = (
@@ -22388,9 +22378,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload_foyer)
 "hgD" = (
@@ -31615,9 +31603,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/decal/cleanable/rust/jen,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)

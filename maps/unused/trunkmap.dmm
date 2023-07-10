@@ -15536,18 +15536,14 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aZC" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aZD" = (
@@ -17647,9 +17643,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "bgP" = (
@@ -21008,9 +21002,7 @@
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
 "bpN" = (
@@ -21034,9 +21026,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
 "bpP" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
 "bpQ" = (
@@ -23478,9 +23468,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "bvt" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bvu" = (
@@ -24699,9 +24687,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "byN" = (
@@ -25883,9 +25869,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/purple/side{
 	dir = 9
@@ -34642,9 +34626,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/security/prison)
 "xiq" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/quarters)
 "xmm" = (

@@ -2885,9 +2885,7 @@
 	},
 /area/shuttle/arrival/station)
 "afg" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -3769,9 +3767,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -6006,9 +6002,7 @@
 	},
 /area/shuttle/arrival/station)
 "akE" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "akF" = (
@@ -17390,9 +17384,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aJl" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/cable{
 	icon_state = "2-4";
 	d1 = 2;
@@ -17671,9 +17663,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -23217,9 +23207,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aUC" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aUD" = (
@@ -30344,9 +30332,7 @@
 	icon_state = "0-4";
 	pixel_y = 0
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "biw" = (

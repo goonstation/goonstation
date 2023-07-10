@@ -3712,9 +3712,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "ip" = (
@@ -6439,9 +6437,7 @@
 /turf/unsimulated/floor/carpet/grime,
 /area/station/crew_quarters/lounge)
 "nJ" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;

@@ -547,9 +547,7 @@
 	dir = 9;
 	level = 2
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "acJ" = (
@@ -3651,9 +3649,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
@@ -4671,9 +4667,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "apn" = (
@@ -14348,9 +14342,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -17505,9 +17497,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aXj" = (
@@ -35643,9 +35633,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "cfT" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
 	icon_state = "0-4"
@@ -35785,9 +35773,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cgp" = (
@@ -52620,9 +52606,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "lko" = (
@@ -56209,9 +56193,7 @@
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
 "oEu" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/medical)
 "oFJ" = (
@@ -66794,9 +66776,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/gas)
 "ymb" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

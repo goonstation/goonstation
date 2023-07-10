@@ -11606,9 +11606,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor{
 	icon_state = "nt_logo"
@@ -35098,9 +35096,7 @@
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "gtZ" = (
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/cable{
 	icon_state = "1-2"
 	},

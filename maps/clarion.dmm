@@ -8035,9 +8035,7 @@
 	},
 /area/station/solar/east)
 "aFp" = (
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fpurple2"

@@ -14309,10 +14309,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
 "aMt" = (
@@ -14325,10 +14322,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
 "aMv" = (
@@ -14399,10 +14393,7 @@
 /obj/shrub{
 	dir = 6
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/random,
 /area/station/crew_quarters/garden)
 "aMD" = (
@@ -16775,10 +16766,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aSU" = (
@@ -18298,10 +18286,7 @@
 /obj/shrub{
 	dir = 6
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aWV" = (
@@ -18528,10 +18513,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
 "aXA" = (
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/shrub{
 	dir = 6
 	},
@@ -19219,9 +19201,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -24187,10 +24167,7 @@
 /area/station/hangar/main)
 "bmw" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
@@ -28374,10 +28351,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/engine/engineering)
@@ -34135,10 +34109,7 @@
 /area/station/solar/north)
 "bJM" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -45183,10 +45154,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/arrival{
 	dir = 1
 	},
@@ -47001,10 +46969,7 @@
 	icon_state = "plant"
 	},
 /obj/disposalpipe/segment,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "crh" = (
@@ -49055,10 +49020,7 @@
 	icon_state = "plant"
 	},
 /obj/item/storage/wall/random,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "cwK" = (
@@ -50006,10 +49968,7 @@
 "czd" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "cze" = (
@@ -50409,10 +50368,7 @@
 /area/station/catwalk/south)
 "cAc" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/arrival{
 	dir = 5
 	},
@@ -52949,10 +52905,7 @@
 /area/station/crew_quarters/market)
 "cHf" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/orangeblack,
 /area/station/crew_quarters/market)
 "cHh" = (
@@ -53084,10 +53037,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
@@ -53169,10 +53119,7 @@
 /area/station/hallway/secondary/exit)
 "cHN" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/arrival{
 	dir = 6
@@ -55861,10 +55808,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "cOZ" = (
@@ -56643,10 +56587,7 @@
 	icon_state = "plant"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
@@ -59275,10 +59216,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/power/apc{
 	dir = 1;
 	name = "N APC";
@@ -61762,10 +61700,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -62457,10 +62392,7 @@
 /area/station/maintenance/solar/south)
 "dfX" = (
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -62587,10 +62519,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -66681,10 +66610,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment,
 /obj/shrub,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/purple/side{
 	dir = 9
 	},
@@ -67523,10 +67449,7 @@
 	dir = 1
 	},
 /mob/living/critter/small_animal/bird/owl,
-/obj/landmark{
-	icon_state = "kudzu-start";
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "gdv" = (

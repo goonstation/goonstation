@@ -25858,9 +25858,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "bDS" = (
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /obj/stool/chair/office{
 	dir = 4
 	},

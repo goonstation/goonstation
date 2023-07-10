@@ -6491,9 +6491,7 @@
 	dir = 5;
 	icon_state = "line1"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/north)
 "anV" = (
@@ -12135,9 +12133,7 @@
 /area/station/maintenance/central)
 "aBc" = (
 /obj/disposalpipe/segment,
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "aBd" = (
@@ -16229,9 +16225,7 @@
 /area/shuttle/arrival/station)
 "aKa" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/item/storage/wall/fire{
 	pixel_x = -28;
 	pixel_y = 3
@@ -16242,18 +16236,14 @@
 /area/shuttle/arrival/station)
 "aKb" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
 "aKc" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/item/storage/wall/emergency{
 	pixel_x = 28;
 	pixel_y = 3
@@ -16290,9 +16280,7 @@
 	d2 = 8;
 	icon_state = "1-8"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/arrivals)
 "aKg" = (
@@ -16857,9 +16845,7 @@
 /area/space)
 "aLp" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/decal/poster/wallsign/poster_human{
 	desc = "There's a picture of an important-looking fellow, with a caption above: 'THE ISLANDS OF THE FUTURE - Visit Beautiful Colonial Cluster SC-13 for Fun and Business'";
 	name = "propaganda poster";
@@ -17386,9 +17372,7 @@
 /turf/simulated/shuttle/wall,
 /area/shuttle/arrival/station)
 "aME" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -18117,9 +18101,7 @@
 	icon_state = "shrub";
 	dir = 1
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/east)
 "aOm" = (
@@ -18553,9 +18535,7 @@
 /area/station/maintenance/disposal)
 "aPk" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -24176,9 +24156,7 @@
 	icon_state = "plant";
 	dir = 1
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/escape{
 	icon_state = "escape";
 	dir = 1
@@ -39608,9 +39586,7 @@
 	icon_state = "shrub";
 	dir = 1
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/sandytile,
 /area/station/science/lobby)
 "bKU" = (
@@ -44915,9 +44891,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bVM" = (

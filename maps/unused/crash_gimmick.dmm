@@ -37905,9 +37905,7 @@
 	},
 /area/shuttle/arrival/station)
 "dIM" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -40073,9 +40071,7 @@
 	},
 /area/russian/radiation)
 "ffa" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},

@@ -75,9 +75,7 @@
 /obj/stool/chair{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aap" = (
@@ -104,9 +102,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aar" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aas" = (
@@ -3693,9 +3689,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ahi" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "ahj" = (
@@ -7812,9 +7806,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aoR" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aoS" = (
@@ -8622,9 +8614,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -15381,9 +15371,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "aEa" = (
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aEb" = (
@@ -20963,9 +20951,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "aOj" = (

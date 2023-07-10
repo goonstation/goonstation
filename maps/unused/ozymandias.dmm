@@ -10937,9 +10937,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/light{
 	dir = 8;
 	tag = ""
@@ -17439,9 +17437,7 @@
 	name = "Last Call Lounge"
 	})
 "eDt" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /turf/simulated/floor/neutral/side{
 	dir = 5
 	},
@@ -87663,20 +87659,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"wiB" = (
-/obj/stool/chair/comfy/shuttle{
-	dir = 4
-	},
-/obj/landmark{
-	name = "JoinLate"
-	},
-/turf/simulated/floor{
-	desc = "";
-	dir = 8;
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor6"
-	},
-/area/shuttle/arrival/station)
 "wiO" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/cereal_box,
@@ -95518,9 +95500,7 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -122179,9 +122159,9 @@ aJu
 ueC
 mfQ
 xmg
-wiB
+mfQ
 cVJ
-wiB
+mfQ
 xmg
 mfQ
 ueC
@@ -122481,9 +122461,9 @@ aJu
 jNY
 mfQ
 xmg
-wiB
-wiB
-wiB
+mfQ
+mfQ
+mfQ
 xmg
 mfQ
 jNY
@@ -123688,11 +123668,11 @@ xOX
 tgJ
 ueC
 vAr
-wiB
+mfQ
 xmg
 xmg
 xmg
-wiB
+mfQ
 eAO
 ueC
 tgJ
@@ -123990,11 +123970,11 @@ aJu
 aJu
 cBb
 mfQ
-wiB
-wiB
+mfQ
+mfQ
 xmg
 oUm
-wiB
+mfQ
 mfQ
 cBb
 aJu
@@ -124292,11 +124272,11 @@ aJu
 aJu
 wtO
 mfQ
-wiB
-wiB
+mfQ
+mfQ
 xmg
-wiB
-wiB
+mfQ
+mfQ
 mfQ
 wtO
 aJu
@@ -124594,11 +124574,11 @@ aJu
 aJu
 ueC
 xmg
-wiB
+mfQ
 xYe
 xmg
-wiB
-wiB
+mfQ
+mfQ
 xmg
 ueC
 aJu

@@ -350,9 +350,7 @@
 /obj/shrub{
 	dir = 6
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "abP" = (
@@ -9723,9 +9721,7 @@
 	icon = 'icons/obj/stationobjs.dmi';
 	icon_state = "plant"
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
@@ -32454,9 +32450,7 @@
 /obj/shrub{
 	dir = 1
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "jQX" = (
@@ -49216,9 +49210,7 @@
 /obj/shrub{
 	dir = 10
 	},
-/obj/landmark{
-	name = "kudzustart"
-	},
+/obj/landmark/kudzu,
 /turf/simulated/grass,
 /area/station/crew_quarters/garden)
 "paI" = (
@@ -76781,9 +76773,7 @@
 /obj/stool/chair/office/red{
 	dir = 8
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
+/obj/landmark/bubs_job,
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/arrivals)
 "xpv" = (
