@@ -51478,6 +51478,10 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/item/ammo/bullets/autocannon/seeker{
+	pixel_x = 7;
+	pixel_y = 7
+	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "wxN" = (
