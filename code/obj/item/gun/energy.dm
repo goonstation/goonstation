@@ -1740,6 +1740,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0
 	shoot_delay = 8 DECI SECONDS
 	spread_angle = 3
+	can_dual_wield = 0
 	var/extended = FALSE
 
 	New()

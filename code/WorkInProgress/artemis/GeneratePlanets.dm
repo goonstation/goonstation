@@ -69,7 +69,9 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Generate and cleanup region
 	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
-	region.clean_up(main_area=/area/map_gen/planet)
+	var/area/planet_area = new /area/map_gen/planet
+	planet_area.name = name
+	region.clean_up(main_area=planet_area)
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
