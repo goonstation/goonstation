@@ -11931,7 +11931,8 @@
 	name = "Detective's Office persistent notice board";
 	persistent_id = "detectives office"
 	},
-/obj/landmark/start/detective/turf/simulated/floor/wood/two,
+/obj/landmark/start/job/detective,
+/turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
 "fur" = (
 /obj/stool/chair/comfy/green{

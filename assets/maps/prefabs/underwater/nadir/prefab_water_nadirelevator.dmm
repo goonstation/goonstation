@@ -996,9 +996,7 @@
 /area/diner/kitchen)
 "Jv" = (
 /obj/submachine/chef_oven,
-/obj/landmark{
-	name = "shitty_bill_respawn"
-	},
+/obj/landmark/bill_spawn,
 /turf/simulated/floor/black/grime,
 /area/diner/kitchen)
 "JO" = (

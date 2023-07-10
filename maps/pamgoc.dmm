@@ -49679,7 +49679,7 @@
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/obj/landmark/start/detective,
+/obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "caH" = (

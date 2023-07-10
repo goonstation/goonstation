@@ -782,9 +782,7 @@
 /turf/simulated/floor/sanitary,
 /area/pirate_ship)
 "rI" = (
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "sd" = (
@@ -848,18 +846,14 @@
 /obj/stool/chair/office/yellow{
 	dir = 8
 	},
-/obj/landmark{
-	name = "Pirate-First-Mate-Spawn"
-	},
+/obj/landmark/antagonist/pirate/first_mate,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "tU" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 6
 	},
@@ -1217,9 +1211,7 @@
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
 /obj/machinery/light/incandescent/warm,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 10
 	},
@@ -1418,9 +1410,7 @@
 "DQ" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -1711,9 +1701,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 5
 	},
@@ -1798,9 +1786,7 @@
 "MH" = (
 /obj/item/clothing/suit/bedsheet/black,
 /obj/stool/bed,
-/obj/landmark{
-	name = "Pirate-Spawn"
-	},
+/obj/landmark/antagonist/pirate,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -1957,9 +1943,7 @@
 /area/pirate_ship)
 "PY" = (
 /obj/stool/chair/comfy/red,
-/obj/landmark{
-	name = "Pirate-Captain-Spawn"
-	},
+/obj/landmark/antagonist/pirate/captain,
 /turf/simulated/floor/orange,
 /area/pirate_ship)
 "Qd" = (
