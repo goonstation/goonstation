@@ -1619,7 +1619,7 @@
 /turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup3)
 "adT" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating/airless{
 	icon_state = "panelscorched"
@@ -5223,7 +5223,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/science/construction)
 "aoV" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/grey/whitegrime,
 /area/station/science/gen_storage)
 "aoW" = (
@@ -6158,7 +6158,7 @@
 /turf/simulated/floor/airless/solar,
 /area/space)
 "arl" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "arm" = (
@@ -6623,7 +6623,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "asy" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/random,
 /area/space)
 "asz" = (
@@ -9209,10 +9209,7 @@
 /area/station/crew_quarters/quartersB)
 "azy" = (
 /obj/table/wood/auto,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/quartersB)
 "azz" = (
@@ -13808,10 +13805,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aMe" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -17720,10 +17714,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/northwest)
 "aVW" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/light/small{
 	dir = 4;
 	pixel_x = 12
@@ -20022,7 +20013,7 @@
 /area/station/science/teleporter)
 "bbm" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -21407,7 +21398,7 @@
 /area/station/engine/elect)
 "beX" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg1"
@@ -22296,10 +22287,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 6
 	},
@@ -27934,10 +27922,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/storage/closet/welding_supply,
 /obj/item/extinguisher,
 /obj/decal/cleanable/dirt,
@@ -34561,10 +34546,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "bPi" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/item/paint_can/random,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
@@ -44096,10 +44078,7 @@
 /area/station/engine/substation/north)
 "cnj" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -45337,10 +45316,7 @@
 /area/station/crew_quarters/barber_shop)
 "cqk" = (
 /obj/decal/cleanable/generic,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
 "cql" = (
@@ -46373,7 +46349,7 @@
 /turf/simulated/floor/plating,
 /area/ghostdrone_factory)
 "cuj" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/carpet/grime,
 /area/ghostdrone_factory)
 "cul" = (
@@ -47688,7 +47664,7 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "cxK" = (
@@ -49025,7 +49001,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -49551,7 +49527,7 @@
 	icon_state = "delivery2";
 	tag = ""
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;

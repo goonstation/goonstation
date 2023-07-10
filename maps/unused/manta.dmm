@@ -1753,7 +1753,7 @@
 /turf/simulated/floor/stairs/wide/other,
 /area/diner/dining)
 "afW" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afX" = (
@@ -31225,10 +31225,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bJK" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/carpet,
 /area/station/science/restroom)
 "bJL" = (
@@ -31688,7 +31685,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/security/detectives_office_manta/detectives_bedroom)
 "bKU" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -31698,7 +31695,7 @@
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bKV" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/item/device/radio/intercom/science{
 	dir = 1
 	},

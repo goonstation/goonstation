@@ -872,7 +872,7 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating,
 /area/station/routing/eva{
 	name = "Router Cabinet"
@@ -1441,7 +1441,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "aes" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "aeu" = (
@@ -23797,7 +23797,7 @@
 /area/station/science/research_director)
 "bLC" = (
 /obj/machinery/networked/test_apparatus/heater,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/power/data_terminal,
 /obj/machinery/light{
 	dir = 8;
@@ -24131,7 +24131,7 @@
 	},
 /area/station/hangar/science)
 "bMD" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	icon_state = "0-2"
@@ -29917,7 +29917,7 @@
 /area/research_outpost/indigo_rye)
 "cjf" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/engine/vacuum,
 /area/research_outpost/indigo_rye)
 "cjg" = (
@@ -44366,7 +44366,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "lDg" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "lDB" = (
@@ -53316,7 +53316,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "sWh" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "sWi" = (

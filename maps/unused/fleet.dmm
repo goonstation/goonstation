@@ -2003,14 +2003,14 @@
 	})
 "et" = (
 /obj/machinery/networked/test_apparatus/heater,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "eu" = (
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/caution/westeast,

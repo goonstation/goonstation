@@ -3185,7 +3185,7 @@
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "KR" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/unsimulated/floor/martian,
 /area/evilreaver/security)
 "Mi" = (

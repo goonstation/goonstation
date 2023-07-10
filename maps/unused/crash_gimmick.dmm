@@ -2036,10 +2036,7 @@
 /area/russian/radiation)
 "aOs" = (
 /obj/table/wood/auto,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/carpet/purple/fancy{
 	broken = 1;
 	desc = " It is made of temp.";
@@ -14801,7 +14798,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space,
 /area/russian/radiation)
 "bVl" = (
@@ -22712,7 +22709,7 @@
 	icon_state = "delivery2";
 	tag = ""
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -23117,10 +23114,7 @@
 	},
 /area/russian/radiation)
 "cBB" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/disposalpipe/segment{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -28957,10 +28951,7 @@
 	},
 /area/russian/radiation)
 "cQg" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 9;
@@ -33174,7 +33165,7 @@
 /area/space)
 "ddL" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
@@ -36950,7 +36941,7 @@
 /turf/space,
 /area/space)
 "dCv" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment/bent/north,
 /turf/space,
 /area/space)
@@ -45997,10 +45988,7 @@
 	},
 /area/russian/radiation)
 "hNx" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/item/paint_can/random,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
@@ -49839,7 +49827,7 @@
 	},
 /area/russian/radiation)
 "jxD" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space,
 /area/space)
 "jxF" = (
@@ -57717,10 +57705,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
 	dir = 6
 	},
@@ -58129,10 +58114,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/storage/closet/welding_supply,
 /obj/item/extinguisher,
 /obj/decal/cleanable/dirt,
@@ -71961,7 +71943,7 @@
 /area/russian/radiation)
 "tUy" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space,
 /area/russian/radiation)
 "tUB" = (
@@ -73608,10 +73590,7 @@
 /area/russian/radiation)
 "uVa" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -75493,10 +75472,7 @@
 /area/russian/radiation)
 "vXS" = (
 /obj/decal/cleanable/generic,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	icon_state = "platingdmg2";

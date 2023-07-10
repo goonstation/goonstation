@@ -4776,11 +4776,11 @@
 	},
 /area/space)
 "mS" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged2,
 /area/space)
 "mT" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/space)
 "mU" = (
@@ -5295,7 +5295,7 @@
 /area/space)
 "oa" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged3,
 /area/space)
 "ob" = (
@@ -5808,7 +5808,7 @@
 /area/space)
 "py" = (
 /obj/item/cable_coil/cut,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
 "pz" = (

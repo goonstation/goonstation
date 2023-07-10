@@ -20,7 +20,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aae" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaf" = (
@@ -39282,7 +39282,7 @@
 /area/station/routing/depot)
 "bVL" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/station/routing/depot)
 "bVM" = (
@@ -58729,7 +58729,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -60552,7 +60552,7 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/cable,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/science/artifact)

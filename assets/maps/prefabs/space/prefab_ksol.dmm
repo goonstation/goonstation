@@ -474,7 +474,7 @@
 /area/noGenerate)
 "bi" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless,
 /area/noGenerate)
 "bj" = (

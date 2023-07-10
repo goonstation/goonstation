@@ -3779,7 +3779,7 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "bIh" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "bIm" = (
@@ -16806,7 +16806,7 @@
 	},
 /area/station/medical/medbay/treatment)
 "hsq" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -21010,7 +21010,7 @@
 /turf/simulated/floor/caution/west,
 /area/pasiphae/hangar)
 "jdt" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid/acid,
 /area/space)
 "jdA" = (
@@ -22235,7 +22235,7 @@
 	},
 /area/ghostdrone_factory)
 "jDV" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -27747,7 +27747,7 @@
 	},
 /area/station/science/chemistry)
 "lPK" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/recharger/wall/sticky{
 	dir = 1;
 	pixel_y = 26
@@ -53669,7 +53669,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "xEe" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"

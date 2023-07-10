@@ -17066,14 +17066,14 @@
 /turf/simulated/floor,
 /area/station/hangar/science)
 "byv" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_west"
 	},
 /area/station/hangar/science)
 "byw" = (
 /obj/machinery/light/emergency,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/engine,
 /area/station/hangar/science)
 "byx" = (

@@ -809,7 +809,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lobby)
 "acZ" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "adi" = (
@@ -1654,7 +1654,7 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/sw,
 /area/station/crew_quarters/hor)
 "agX" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1665,7 +1665,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/hor)
 "agY" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/window/reinforced{
 	dir = 1;
 	icon_state = "rwindow"
@@ -1673,7 +1673,7 @@
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/hor)
 "agZ" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/submachine/cargopad{
 	name = "Artifact Lab Pad"
 	},
@@ -19539,10 +19539,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/brig)
 "byF" = (
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
-	},
+/obj/landmark/spawner/artifact/one_in_ten,
 /obj/decal/cleanable/cobweb,
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -20731,10 +20728,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bDX" = (
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
-	},
+/obj/landmark/spawner/artifact/one_in_ten,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bDY" = (
@@ -20787,10 +20781,7 @@
 /obj/item/sheet/steel{
 	amount = 50
 	},
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
-	},
+/obj/landmark/spawner/artifact/one_in_ten,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bEk" = (
@@ -22403,7 +22394,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor,
 /area/station/science/artifact)
 "bJr" = (
@@ -32260,7 +32251,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "jsY" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "jtr" = (
@@ -46086,7 +46077,7 @@
 	},
 /area/station/crew_quarters/bar)
 "tne" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "tnl" = (
@@ -51943,7 +51934,7 @@
 /obj/grille/catwalk{
 	dir = 6
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable/yellow,
 /obj/cable/yellow{
 	icon_state = "0-4"

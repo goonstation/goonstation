@@ -2660,7 +2660,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "aKp" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aKq" = (
@@ -40337,7 +40337,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/grey,
 /area/station/science/artifact)
 "mnh" = (
@@ -55702,7 +55702,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "qWg" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
 "qWj" = (

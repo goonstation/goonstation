@@ -19254,7 +19254,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aLd" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aLe" = (
@@ -35062,7 +35062,7 @@
 	name = "Local Air Monitor";
 	pixel_y = -29
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor{
 	icon_state = "solarpanel";
 	name = "Artifact Analysis Pad";
@@ -36755,10 +36755,7 @@
 	icon_state = "0-4";
 	d2 = 4
 	},
-/obj/landmark/artifact{
-	name = "artifact spawner (10%)";
-	spawnchance = 10
-	},
+/obj/landmark/spawner/artifact/one_in_ten,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "cae" = (

@@ -743,10 +743,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "cr" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sanitary,
 /area/space)
 "cs" = (
@@ -842,10 +839,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sanitary,
 /area/space)
 "cI" = (

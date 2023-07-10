@@ -1662,7 +1662,7 @@
 	},
 /area/station/engine/elect)
 "aeB" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid,
 /area/space)
 "aeC" = (
@@ -2877,10 +2877,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "aiN" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aiO" = (
@@ -2892,10 +2889,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "aiQ" = (
@@ -3070,10 +3064,7 @@
 /area/station/crew_quarters/toilets)
 "ajn" = (
 /obj/machinery/drainage,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "ajo" = (
@@ -4737,7 +4728,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aol" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/door_control{
 	id = "research_podbay";
 	name = "Research Pod Bay Blast Door Control";
@@ -5084,7 +5075,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "apj" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -6801,10 +6792,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/maintenance/northeast)
 "aum" = (
@@ -10977,10 +10965,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aGC" = (
@@ -11174,10 +11159,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/damaged3,
 /area/station/storage/warehouse)
 "aHc" = (
@@ -13705,10 +13687,7 @@
 	},
 /obj/item/mop,
 /obj/item/reagent_containers/glass/bucket,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor/sanitary,
@@ -14538,7 +14517,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hangar/science)
 "aRC" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
 "aRD" = (
@@ -15495,14 +15474,14 @@
 /obj/crevice{
 	pixel_y = 30
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/lattice,
 /turf/simulated/floor/martian,
 /area/space)
 "aUA" = (
 /obj/decal/cleanable/cobweb2,
 /obj/item/scrap,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/space)
 "aUB" = (
@@ -15541,7 +15520,7 @@
 	},
 /area/space)
 "aUI" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating,
 /area/iss)
 "aUJ" = (
@@ -15980,7 +15959,7 @@
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
 "aWk" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/iss)
 "aWl" = (
@@ -16561,7 +16540,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/evilreaver/atmospherics)
 "aZc" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "aZd" = (
@@ -19695,7 +19674,7 @@
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 4
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
 "blc" = (
@@ -20429,7 +20408,7 @@
 /area/station/engine/elect)
 "bnp" = (
 /obj/item/cigbutt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/security)
 "bnq" = (
@@ -22430,10 +22409,7 @@
 /area/station/bridge)
 "btt" = (
 /obj/item/device/radio/beacon,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "btu" = (
@@ -22501,10 +22477,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btH" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "btI" = (
@@ -26297,10 +26270,7 @@
 "bFa" = (
 /obj/stool/bench/blue,
 /obj/machinery/light/small/floor/netural,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bFb" = (
@@ -28321,10 +28291,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "bLq" = (
@@ -32005,10 +31972,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bWx" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bWy" = (
@@ -32297,10 +32261,7 @@
 /area/station/maintenance/disposal)
 "bXl" = (
 /obj/item/crowbar,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "bXm" = (
@@ -35767,10 +35728,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjp" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "cjr" = (
@@ -41374,10 +41332,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "lPB" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "lQo" = (
@@ -45156,7 +45111,7 @@
 	},
 /area/station/medical/dome)
 "ueE" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor,
 /area/research_outpost/hangar)
@@ -45461,10 +45416,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "uTp" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "uTy" = (
@@ -45486,10 +45438,7 @@
 /turf/simulated/floor/blue,
 /area/research_outpost/toxins)
 "uWe" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "uYc" = (

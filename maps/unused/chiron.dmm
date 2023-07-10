@@ -4881,7 +4881,7 @@
 	},
 /area/station/science/artifact)
 "aiL" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/artifact)
@@ -5063,7 +5063,7 @@
 /area/station/science/bot_storage)
 "ajb" = (
 /obj/machinery/light,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/science/bot_storage)
@@ -9612,10 +9612,7 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/crew_quarters/bathroom)
 "asq" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/grass/random,
 /area/station/garden/owlery{
 	name = "Owlery"
@@ -11739,10 +11736,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "awD" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "awE" = (
@@ -12031,10 +12025,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/space)
 "axr" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -12145,10 +12136,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_east)
 "axD" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/disposalpipe/segment/brig{
 	dir = 4
 	},
@@ -12986,10 +12974,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "azs" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/bathroom)
 "azt" = (
@@ -13521,10 +13506,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "aAv" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "aAw" = (
@@ -15680,10 +15662,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_east)
 "aFn" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters_east)
 "aFo" = (
@@ -17382,10 +17361,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aJg" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
 "aJh" = (

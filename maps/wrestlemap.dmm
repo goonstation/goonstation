@@ -40,7 +40,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/eastwest,
 /area/station/engine/monitoring)
 "aah" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aai" = (
@@ -847,7 +847,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/medical/robotics)
 "apB" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/machinery/power/apc/autoname_west,
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable,
@@ -3889,7 +3889,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bHi" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/caution/corner/nw,
 /area/station/science/artifact)
 "bHk" = (
@@ -48630,7 +48630,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/luxury_seating)
 "uMq" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "uMx" = (

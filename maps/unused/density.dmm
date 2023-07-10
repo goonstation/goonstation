@@ -5242,7 +5242,7 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "ln" = (
@@ -5528,7 +5528,7 @@
 "lK" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/impact_pad,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"

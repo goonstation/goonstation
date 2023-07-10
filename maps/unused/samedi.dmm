@@ -627,7 +627,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/power)
 "abu" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "abv" = (
@@ -7072,10 +7072,7 @@
 /area/station/maintenance/storage)
 "apo" = (
 /obj/machinery/light,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/north)
 "app" = (
@@ -9183,10 +9180,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/north)
 "aub" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/caution/west,
 /area/station/quartermaster/office)
 "auc" = (
@@ -12280,10 +12274,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aBp" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/disposal,
 /obj/machinery/light/small{
 	dir = 8;
@@ -14824,10 +14815,7 @@
 	icon_state = "line1";
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/central)
 "aGU" = (
@@ -18663,10 +18651,7 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/east)
 "aPu" = (
@@ -19197,10 +19182,7 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/security/brig)
 "aQN" = (
@@ -20121,10 +20103,7 @@
 	icon_state = "plant";
 	dir = 1
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/central)
 "aSY" = (
@@ -22722,10 +22701,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/disposalpipe/segment/mail/vertical,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/east)
 "aYI" = (
@@ -26673,10 +26649,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/east)
 "bha" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/east)
 "bhb" = (
@@ -27752,10 +27725,7 @@
 	pixel_x = 10
 	},
 /obj/shrub,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/central)
 "bju" = (
@@ -31387,10 +31357,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "brB" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -31777,10 +31744,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/crew_quarters/pool)
 "bst" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/crew_quarters/pool)
 "bsu" = (
@@ -37193,7 +37157,7 @@
 	icon_state = "xtra_bigstripe-edge";
 	dir = 8
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -37204,7 +37168,7 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "bFv" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/cable{
 	icon_state = "0-2";
 	d2 = 2
@@ -39552,10 +39516,7 @@
 "bKK" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
@@ -39780,10 +39741,7 @@
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
 "bLf" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /turf/simulated/floor/sandytile,
 /area/station/hallway/primary/south)
 "bLg" = (
@@ -47652,10 +47610,7 @@
 	min_quality = 50;
 	name = "Maude"
 	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
+/obj/landmark/pest,
 /obj/item/seed/cannabis,
 /obj/cable{
 	icon_state = "0-2"

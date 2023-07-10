@@ -3,7 +3,7 @@
 /turf/simulated/wall/auto/asteroid/ice,
 /area/space)
 "aad" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aae" = (
@@ -3135,7 +3135,7 @@
 /turf/simulated/floor/airless/plating/damaged1,
 /area/station/wreckage)
 "aky" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless/damaged5,
 /area/station/wreckage)
 "akz" = (
@@ -36730,7 +36730,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets)
 "cja" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "cjb" = (
@@ -56954,7 +56954,7 @@
 	name = "S light switch";
 	pixel_y = -24
 	},
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/item/device/radio/intercom/cargo{
 	dir = 8
 	},
