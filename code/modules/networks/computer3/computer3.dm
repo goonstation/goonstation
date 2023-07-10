@@ -355,9 +355,11 @@
 		"contents" = src.diskette,
 		"label" = "Disk"
 		)))
-	for(var/obj/item/peripheral/periph in src.peripherals) // originally i had all this stuff in static data, but the buttons didnt update.
+	for (var/i in 1 to length(src.peripherals)) // originally i had all this stuff in static data, but the buttons didnt update.
+		var/obj/item/peripheral/periph = src.peripherals[i]
 		if(periph.setup_has_badge)
 			var/pdata = periph.return_badge() // reduces copy pasting
+			pdata["index"] = i
 			if(pdata)
 				var/bcolor = pdata["contents"]
 				pdata += list("color" = bcolor, "card" = periph.type)
@@ -409,77 +411,31 @@
 					I.loc = src
 					src.diskette = I
 				update_static_data(usr)
-			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/editor"))
-				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/editor) in src.peripherals
-				if(dv.authid)
-					usr.put_in_hand_or_eject(dv.authid)
-					dv.authid = null
-				else if(istype(I,/obj/item/card/id))
-					usr.drop_item()
-					I.loc = src
-					dv.authid = I
-				update_static_data(usr)
-			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/register"))
-				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/register) in src.peripherals
-				if(dv.authid)
-					usr.put_in_hand_or_eject(dv.authid)
-					dv.authid = null
-				else if(istype(I,/obj/item/card/id))
-					usr.drop_item()
-					I.loc = src
-					dv.authid = I
-				update_static_data(usr)
-			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner/clownifier"))
-				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner/clownifier) in src.peripherals
-				if(dv.authid)
-					usr.put_in_hand_or_eject(dv.authid)
-					dv.authid = null
-				else if(istype(I,/obj/item/card/id))
-					usr.drop_item()
-					I.loc = src
-					dv.authid = I
-				update_static_data(usr)
-			else if(findtext(params["card"],"/obj/item/peripheral/card_scanner"))
-				var/obj/item/peripheral/card_scanner/dv = locate(/obj/item/peripheral/card_scanner) in src.peripherals
-				if(dv.authid)
-					usr.put_in_hand_or_eject(dv.authid)
-					dv.authid = null
-				else if(istype(I,/obj/item/card/id))
-					usr.drop_item()
-					I.loc = src
-					dv.authid = I
-				update_static_data(usr)
-			else if(params["card"] == "/obj/item/peripheral/drive/tape_reader")
-				var/obj/item/peripheral/drive/tape_reader/dv = locate(/obj/item/peripheral/drive/tape_reader) in src.peripherals
-				if(dv.disk)
-					usr.put_in_hand_or_eject(dv.disk)
-					dv.disk = null
-				else if(istype(I,/obj/item/disk/data/tape))
-					usr.drop_item()
-					I.loc = src
-					dv.disk = I
-				update_static_data(usr)
-			else if(params["card"] == "/obj/item/peripheral/drive/cart_reader")
-				var/obj/item/peripheral/drive/cart_reader/dv = locate(/obj/item/peripheral/drive/cart_reader) in src.peripherals
-				if(dv.disk)
-					usr.put_in_hand_or_eject(dv.disk)
-					dv.disk = null
-				else if(istype(I,/obj/item/disk/data/cartridge))
-					usr.drop_item()
-					I.loc = src
-					dv.disk = I
-				update_static_data(usr)
-			else if(params["card"] == "/obj/item/peripheral/drive")
-				var/obj/item/peripheral/drive/dv = locate(/obj/item/peripheral/drive) in src.peripherals
-				if(dv.disk)
-					usr.put_in_hand_or_eject(dv.disk)
-					dv.disk = null
-				else if(istype(I,/obj/item/disk/data/floppy))
-					usr.drop_item()
-					I.loc = src
-					dv.disk = I
-				update_static_data(usr)
+			else
+				//What type of drive are we?
+				if (findtext(params["card"],"/obj/item/peripheral/card_scanner"))
+					//A card drive!
+					var/obj/item/peripheral/card_scanner/dv = src.peripherals[params["index"]]
+					if(dv.authid)
+						usr.put_in_hand_or_eject(dv.authid)
+						dv.authid = null
+					else if(istype(I, /obj/item/card/id))
+						usr.drop_item()
+						I.loc = src
+						dv.authid = I
+					update_static_data(usr)
 
+				else if (params["card"] == "/obj/item/peripheral/drive")
+					//A disk drive!
+					var/obj/item/peripheral/drive/dv = src.peripherals[params["index"]]
+					if(dv.disk)
+						usr.put_in_hand_or_eject(dv.disk)
+						dv.disk = null
+					else if(istype(I, dv.setup_disk_type))
+						usr.drop_item()
+						I.loc = src
+						dv.disk = I
+					update_static_data(usr)
 	. = TRUE
 
 /obj/machinery/computer3/updateUsrDialog()

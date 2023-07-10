@@ -100,7 +100,7 @@ export const Terminal = (_props, context) => {
                     fontFamily={peripheral.Clown ? "Comic Sans MS" : "Consolas"}
                     color={peripheral.color ? "green" : "grey"}
                     onClick={() => act('buttonPressed', {
-                      card: peripheral.card })}
+                      card: peripheral.card, index: peripheral.index })}
                   />
                 );
               })}
