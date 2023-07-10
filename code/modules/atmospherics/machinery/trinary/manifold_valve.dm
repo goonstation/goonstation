@@ -1,26 +1,25 @@
 
-/obj/machinery/atmospherics/manifold_valve
+/obj/machinery/atmospherics/trinary/manifold_valve
 	icon = 'icons/obj/atmospherics/manifold_valve.dmi'
 	icon_state = "manifold_valve0"
 
 	name = "manifold valve"
 	desc = "A pipe valve"
 
-	dir = SOUTH
-	initialize_directions = EAST|WEST|NORTH
+	var/divert = FALSE
 
-	var/divert = 0
-
-	var/obj/machinery/atmospherics/node1
-	var/obj/machinery/atmospherics/node2
-	var/obj/machinery/atmospherics/node3
-
-	var/datum/pipe_network/network_node1
-	var/datum/pipe_network/network_node2
-	var/datum/pipe_network/network_node3
-
-	var/frequency = "1439"
+	var/frequency = FREQ_AIR_ALARM_CONTROL
 	var/id = null
+
+	New()
+		..()
+		qdel(src.air1)
+		src.air1 = null
+		qdel(src.air2)
+		src.air2 = null
+		qdel(src.air3)
+		src.air3 = null
+		UnsubscribeProcess()
 
 	update_icon(animation)
 		if(animation)
@@ -29,130 +28,84 @@
 		else
 			icon_state = "manifold_valve[divert]"
 
-	New()
-		..()
-		UnsubscribeProcess()
-		switch(dir)
-			if(SOUTH)
-				initialize_directions = EAST|WEST|NORTH
-			if(NORTH)
-				initialize_directions = WEST|EAST|SOUTH
-			if(EAST)
-				initialize_directions = NORTH|SOUTH|WEST
-			if(WEST)
-				initialize_directions = SOUTH|NORTH|EAST
-
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node1)
-			network_node1 = new_network
+			network1 = new_network
 			if(!divert)
-				network_node2 = new_network
+				network3 = new_network
 			else
-				network_node3 = new_network
+				network2 = new_network
 		else if(reference == node2)
-			network_node2 = new_network
-			if(!divert)
-				network_node1 = new_network
-		else if(reference == node3)
-			network_node3 = new_network
+			network2 = new_network
 			if(divert)
-				network_node1 = new_network
+				network1 = new_network
+		else if(reference == node3)
+			network3 = new_network
+			if(!divert)
+				network1 = new_network
 
-		if(new_network.normal_members.Find(src))
-			return 0
+		if(src in new_network.normal_members)
+			return FALSE
 
 		new_network.normal_members += src
 
 		if(!divert)
 			if(reference == node1)
-				if(!isnull(node2))
-					return node2.network_expand(new_network, src)
-			else if(reference == node2)
+				if(!isnull(node3))
+					return node3.network_expand(new_network, src)
+			else if(reference == node3)
 				if(!isnull(node1))
 					return node1.network_expand(new_network, src)
 		else
 			if(reference == node1)
-				return node3.network_expand(new_network, src)
-			else if(reference == node3)
+				return node2.network_expand(new_network, src)
+			else if(reference == node2)
 				return node1.network_expand(new_network, src)
-
-		return null
-
-	disposing()
-		if(node1)
-			node1.disconnect(src)
-			if (network_node1)
-				network_node1.dispose()
-		if(node2)
-			node2.disconnect(src)
-			if (network_node2)
-				network_node2.dispose()
-		if(node3)
-			node3.disconnect(src)
-			if (network_node3)
-				network_node3.dispose()
-
-		node1 = null
-		node2 = null
-		node3 = null
-		network_node1 = null
-		network_node2 = null
-		network_node3 = null
-
-		..()
-
 	proc/divert()
+		if(divert)
+			return FALSE
 
-		if(divert) return 0
-
-		divert = 1
+		divert = TRUE
 		UpdateIcon()
 
-		if(network_node2)
-			network_node2.dispose()
-			network_node2 = null
+		network1?.dispose()
+		network1 = null
 
 		build_network()
 
-		if(network_node1&&network_node3)
-			network_node1.merge(network_node3)
-			network_node3 = network_node1
+		if(network1&&network2)
+			network1.merge(network2)
+			network2 = network1
 
-		if(network_node1)
-			network_node1.update = 1
-		else if(network_node3)
-			network_node3.update = 1
+		if(network1)
+			network1.update = TRUE
+		else if(network2)
+			network2.update = TRUE
 
-		return 1
+		return TRUE
 
 	proc/undivert()
-
 		if(!divert)
-			return 0
+			return FALSE
 
-		divert = 0
+		divert = FALSE
 		UpdateIcon()
 
-		if(network_node3)
-			network_node3.dispose()
-			network_node3 = null
+		network2?.dispose()
+		network2 = null
 
 		build_network()
 
-		if(network_node1&&network_node2)
-			network_node1.merge(network_node2)
-			network_node2 = network_node1
+		if(network1&&network3)
+			network3.merge(network1)
+			network1 = network3
 
-		if(network_node1)
-			network_node1.update = 1
-		else if(network_node2)
-			network_node2.update = 1
+		if(network1)
+			network1.update = TRUE
+		else if(network3)
+			network3.update = TRUE
 
-		return 1
-
-	attack_hand(mob/user)
-		..()
-
+		return TRUE
 
 	process()
 		..()
@@ -162,101 +115,20 @@
 			divert()
 
 		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.data["tag"] = tag
+		signal.transmission_method = TRANSMISSION_RADIO
+		signal.data["tag"] = src.tag
 		signal.data["timestamp"] = air_master.current_cycle
-		signal.data["valve_diverting"] = divert
+		signal.data["valve_diverting"] = src.divert
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-	initialize()
-		if(node1 && node2 && node3) return
-
-		var/node1_connect = turn(dir, 90)
-		var/node2_connect = turn(dir, -90)
-		var/node3_connect = turn(dir, 180)
-
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node1_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node1 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node2_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node2 = target
-				break
-
-		for(var/obj/machinery/atmospherics/target in get_step(src,node3_connect))
-			if(target.initialize_directions & get_dir(target,src))
-				node3 = target
-				break
-
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
-
-	build_network()
-		if(!network_node1 && node1)
-			network_node1 = new /datum/pipe_network()
-			network_node1.normal_members += src
-			network_node1.build_network(node1, src)
-
-		if(!network_node2 && node2)
-			network_node2 = new /datum/pipe_network()
-			network_node2.normal_members += src
-			network_node2.build_network(node2, src)
-
-		if(!network_node3 && node3)
-			network_node3 = new /datum/pipe_network()
-			network_node3.normal_members += src
-			network_node3.build_network(node3, src)
-
-	return_network(obj/machinery/atmospherics/reference)
-		build_network()
-
-		if(reference==node1)
-			return network_node1
-
-		if(reference==node2)
-			return network_node2
-
-		if(reference==node3)
-			return network_node3
-
-		return null
-
-	reassign_network(datum/pipe_network/old_network, datum/pipe_network/new_network)
-		if(network_node1 == old_network)
-			network_node1 = new_network
-		if(network_node2 == old_network)
-			network_node2 = new_network
-		if(network_node3 == old_network)
-			network_node3 = new_network
-
-		return 1
 
 	return_network_air(datum/pipe_network/reference)
 		return null
 
-	disconnect(obj/machinery/atmospherics/reference)
-		if(reference==node1)
-			network_node1.dispose()
-			network_node1 = null
-			node1 = null
-
-		else if(reference==node2)
-			network_node2.dispose()
-			network_node2 = null
-			node2 = null
-
-		else if(reference==node3)
-			network_node3.dispose()
-			network_node3 = null
-			node3 = null
-
-		return null
-
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
+			return FALSE
 
 		switch(signal.data["command"])
 			if("valve_divert")
