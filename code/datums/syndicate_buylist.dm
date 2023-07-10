@@ -978,7 +978,7 @@ This is basically useless for anyone but miners.
 
 /datum/syndicate_buylist/traitor/rose
 	name = "Poison rose"
-	item = /obj/item/plant/flower/rose/poisoned
+	item = /obj/item/clothing/head/flower/rose/poisoned
 	cost = 4
 	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
 	job = list("Mime")
