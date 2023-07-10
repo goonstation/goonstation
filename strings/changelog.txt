@@ -6,6 +6,7 @@
 (+)Nadir's breach hull has gone dark, and its second GardenGear is back.
 (u)tarmunora
 (*)Poisoned surgical tools only transfer poison during surgery.
+(+)Cyberlungs no longer grant stamina bonuses.
 (u)Flappybat
 (p)14856
 (e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
