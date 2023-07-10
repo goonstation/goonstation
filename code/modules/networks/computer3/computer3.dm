@@ -396,6 +396,12 @@
 			var/obj/item/I = usr.equipped() // how the old code did it
 			if(params["card"] == "internal") // the hacky magic floppy disk reader
 				if(src.diskette)
+					//Ai/cyborgs cannot press a physical button from a room away.
+					if((issilicon(usr) || isAI(usr)) && BOUNDS_DIST(src, usr) > 0)
+						boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
+						return
+					for(var/datum/computer/file/terminal_program/P in src.processing_programs)
+						P.disk_ejected(src.diskette)
 					usr.put_in_hand_or_eject(src.diskette)
 					src.diskette= null
 				else if(istype(I,/obj/item/disk/data/floppy))
