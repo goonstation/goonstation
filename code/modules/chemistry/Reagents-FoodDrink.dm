@@ -115,6 +115,39 @@ datum
 			bladder_value = -0.2
 			viscosity = 0.3
 
+		fooddrink/super_milk
+			// i thought it was funny
+			name = "super milk"
+			id = "super_milk"
+			description = "This milk is far more milky than should be possible."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_b = 255
+			fluid_g = 255
+			transparency = 255
+			thirst_value = 0.6
+			bladder_value = -0.2
+			viscosity = 0.3
+			var/list/flushed_reagents = list("capsaicin")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (!M)
+					M = holder.my_atom
+				if (M.get_toxin_damage() <= 25)
+					M.take_toxin_damage(-1 * mult)
+				flush(holder,5 * mult, flushed_reagents)
+				..()
+				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				. = ..()
+				if(M.mob_flags & IS_BONEY)
+					. = FALSE
+					if(!ON_COOLDOWN(M, "milk_heal", 1 DECI SECOND))
+						M.HealDamage("All", clamp(1 * volume, 0, 10), clamp(1 * volume, 0, 10)) //put a cap on instant healing
+						if(prob(15))
+							boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
+
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"

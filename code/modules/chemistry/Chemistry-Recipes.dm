@@ -504,6 +504,14 @@
 			smoke.set_up(1, 0, t)
 			smoke.start()
 
+	super_milk
+		name = "Super Milk"
+		id = "super_milk"
+		result = "super_milk"
+		required_reagents = list("milk" = 1, "milk_powder" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture concentrates."
+
 	bilk
 		name = "Bilk"
 		id = "bilk"
