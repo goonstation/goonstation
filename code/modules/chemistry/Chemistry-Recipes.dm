@@ -482,6 +482,28 @@
 		result_amount = 1
 		mix_phrase = "The paper chars, seperating into a silky black powder."
 
+	milk
+		name = "Milk"
+		id = "milk"
+		result = "milk"
+		required_reagents = list("milk_powder" = 1, "water" = 1)
+		result_amount = 1
+		mix_phrase = "The powder dissolves, turning the solution milky."
+
+	powder_milk
+		name = "Milk powder"
+		id = "milk_powder"
+		result = "milk_powder"
+		required_reagents = list("milk" = 1)
+		result_amount = 1
+		min_temperature = T0C + 100
+		mix_phrase = "The water boils away, leaving behind a white condensed powder."
+		on_reaction(datum/reagents/holder, created_volume)
+			. = ..()
+			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
+			smoke.set_up(1, 0, t)
+			smoke.start()
+
 	bilk
 		name = "Bilk"
 		id = "bilk"
