@@ -2916,7 +2916,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/mapo_tofu_meat
 	name = "bowl of mapo tofu"
-	desc = "A bowl of tender bean curd, noodles, and minced meat in a spicy oil suspension."
+	desc = "A bowl of tender bean curd, onions, and minced meat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu"
 	required_utensil = REQUIRED_UTENSIL_FORK
@@ -2928,7 +2928,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 /obj/item/reagent_containers/food/snacks/mapo_tofu_synth
 	name = "bowl of snyth mapo tofu"
-	desc = "A bowl of tender bean curd, noodles, and minced synthmeat in a spicy oil suspension."
+	desc = "A bowl of tender bean curd, onions, and minced synthmeat in a spicy oil suspension."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "mapo_tofu_synth"
 	required_utensil = REQUIRED_UTENSIL_FORK
