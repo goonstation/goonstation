@@ -575,7 +575,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 
 /mob/living/critter/small_animal/cat/jones
 	name = "Jones"
-	desc = "Jones the cat."
+	desc = "The captain's loyal-ish companion! They feel a bit cold to the touch."
 	health = 30
 	randomize_name = FALSE
 	randomize_look = FALSE
