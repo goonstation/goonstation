@@ -1000,7 +1000,9 @@ proc/debug_map_apc_count(delim,zlim)
 			var/temp = null
 			if(issimulatedturf(theTurf))
 				var/turf/simulated/sim = theTurf
-				if(sim.air)
+				if (sim.parent?.group_processing)
+					temp = sim.parent.air.temperature
+				else if(sim.air)
 					temp = sim.air.temperature
 			if(isnull(temp))
 				temp = theTurf.temperature
