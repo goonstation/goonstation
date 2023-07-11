@@ -24,7 +24,7 @@ TYPEINFO(/obj/player_piano)
 	var/is_looping = 0 //is the piano looping? 0 is no, 1 is yes, 2 is never more looping
 	var/panel_exposed = 0 //0 by default
 	var/is_busy = 0 //stops people from messing about with it when its working
-	var/is_auto_linking = FALSE //same as is_busy, but for auto linking
+	var/is_stored = FALSE //same as is_busy, but for automatic linking
 	var/song_length = 0 //the number of notes in the song
 	var/curr_note = 0 //what note is the song on?
 	var/list/note_input = "" //where input is stored
@@ -45,7 +45,7 @@ TYPEINFO(/obj/player_piano)
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(reset_piano))
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Start Linking Pianos", PROC_REF(start_linking_pianos))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Start Storing Pianos", PROC_REF(start_storing_pianos))
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
@@ -110,9 +110,6 @@ TYPEINFO(/obj/player_piano)
 			if (is_busy)
 				boutput(user, "You can't do that while the piano is running!")
 				return
-			if (is_auto_linking)
-				boutput(user, "<span class='alert'>This piano is being linked!</span>")
-				return
 			if (panel_exposed == 0)
 				user.visible_message("[user] starts prying off the piano's maintenance panel...", "You begin to pry off the maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 0)
@@ -128,7 +125,7 @@ TYPEINFO(/obj/player_piano)
 				boutput(user, "There's nothing to pry off of \the [src].")
 
 		else if (istype(W, /obj/item/plank)) //replacing panel
-			if (panel_exposed == 1 && W.name != "wooden plank" && !is_busy && !is_auto_linking)
+			if (panel_exposed == 1 && W.name != "wooden plank" && !is_busy && !is_stored)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
@@ -162,7 +159,7 @@ TYPEINFO(/obj/player_piano)
 			..()
 
 	attack_hand(var/mob/user)
-		if (is_busy || is_auto_linking)
+		if (is_busy || is_stored)
 			src.visible_message("<span class='alert'>\The [src] emits an angry beep!</span>")
 			return
 		var/mode_sel = input("Which mode would you like?", "Mode Select") as null|anything in list("Choose Notes", "Play Song")
@@ -188,8 +185,8 @@ TYPEINFO(/obj/player_piano)
 		ENSURE_TYPE(piano)
 		if (!piano)
 			return
-		if (is_multitool_auto_linking(usr))
-			boutput(usr, "<span class='alert'>You can't link pianos while auto-linking!</span>")
+		if (is_pulser_auto_linking(usr))
+			boutput(usr, "<span class='alert'>You can't link pianos manually while auto-linking!</span>")
 			return
 		if (piano == src)
 			boutput(usr, "<span class='alert'>You can't link a piano with itself!</span>")
@@ -215,20 +212,16 @@ TYPEINFO(/obj/player_piano)
 					return 1
 		return 0
 
-	proc/is_multitool_auto_linking(var/mob/M)
-		var/obj/item/device/multitool/held_item = null
-		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand))
-			held_item = M:l_hand
-		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand))
-			held_item = M:r_hand
+	proc/is_pulser_auto_linking(var/mob/M)
+		var/atom/held_item = null
+		if(hasvar(M, "l_hand") && ispulsingtool(M:l_hand)) held_item = M:l_hand
+		if(hasvar(M, "r_hand") && ispulsingtool(M:r_hand)) held_item = M:r_hand
 		if(hasvar(M, "module_states"))
 			for(var/atom/A in M:module_states)
 				if(ispulsingtool(A))
 					held_item = A
-
-		var/datum/component/auto_linker/linker = held_item.GetComponent(/datum/component/auto_linker)
-		if (linker)
-			return TRUE
+		if (held_item != null)
+			return SEND_SIGNAL(held_item, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)
 		return FALSE
 
 	proc/clean_input() //breaks our big input string into chunks
@@ -287,7 +280,7 @@ TYPEINFO(/obj/player_piano)
 		is_busy = 0
 
 	proc/ready_piano(var/is_linked) //final checks to make sure stuff is right, gets notes into a compiled form for easy playsounding
-		if (is_busy || is_auto_linking)
+		if (is_busy || is_stored)
 			return
 		is_busy = 1
 		if (note_volumes.len + note_octaves.len - note_names.len - note_accidentals.len)
@@ -339,7 +332,7 @@ TYPEINFO(/obj/player_piano)
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/set_notes(var/given_notes)
-		if (is_busy || is_auto_linking)
+		if (is_busy || is_stored)
 			return FALSE
 		if (length(note_input) > MAX_NOTE_INPUT)
 			return FALSE
@@ -349,7 +342,7 @@ TYPEINFO(/obj/player_piano)
 		return TRUE
 
 	proc/set_timing(var/time_sel)
-		if (is_busy || is_auto_linking)
+		if (is_busy || is_stored)
 			return FALSE
 		if (time_sel < MIN_TIMING || time_sel > MAX_TIMING)
 			return FALSE
@@ -360,11 +353,12 @@ TYPEINFO(/obj/player_piano)
 		src.visible_message("<span class='notice'>\The [src] grumbles and shuts down completely.</span>")
 		if (is_looping != 2 || disposing)
 			is_looping = 0
+		if (disposing)
+			is_stored = FALSE
 		song_length = 0
 		curr_note = 0
 		timing = 0.5
 		is_busy = 0
-		is_auto_linking = FALSE
 		note_input = ""
 		piano_notes = list()
 		note_volumes = list()
@@ -393,34 +387,6 @@ TYPEINFO(/obj/player_piano)
 				linked_pianos -= p
 		linked_pianos += p
 
-	proc/add_pianos(var/list/pianos)
-		while (length(pianos))
-			var/obj/player_piano/current_piano = pianos[1]
-			pianos.Cut(1,2)
-			if (current_piano == null)
-				break
-			for (var/piano in pianos)
-				if (piano == null)
-					break
-				var/obj/player_piano/linking_piano = piano
-				current_piano.add_piano(linking_piano)
-				linking_piano.add_piano(current_piano)
-				sleep(0.1 SECOND)
-
-	proc/start_linking_pianos(obj/item/W, mob/user)
-		if (!src.panel_exposed)
-			boutput(user, "<span class='alert'>Can't link without an exposed panel!</span>")
-			return
-		if (length(src.linked_pianos))
-			boutput(user, "<span class='alert'>Can't link an already linked piano!</span>")
-			return
-		W.AddComponent(/datum/component/auto_linker)
-		var/datum/component/auto_linker/linker = W.GetComponent(/datum/component/auto_linker)
-		boutput(user, "<span class='notice'>Now [W] is storing pianos to link. Use it in hand to link them.</span>")
-		src.is_auto_linking = TRUE
-		linker.pianos.Add(src)
-		boutput(user, "<span class='notice'>Stored piano.</span>")
-
 	verb/item_claim()
 		set name = "Claim Items"
 		set src in oview(1)
@@ -433,6 +399,10 @@ TYPEINFO(/obj/player_piano)
 		items_claimed = 1
 		src.visible_message("\The [src] spills out a key and a booklet! Nifty!")
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
+
+	proc/start_storing_pianos(obj/item/I, mob/user)
+		I.AddComponent(/datum/component/player_piano_auto_linker)
+		SEND_SIGNAL(I, COMSIG_START_STORING_PIANOS, src, user)
 
 #undef MIN_TIMING
 #undef MAX_TIMING
