@@ -71,11 +71,12 @@
 	if (length(src.pianos) < 2)
 		boutput(user, "<span class='alert'>You must have at least two pianos to link!</span>")
 		src.RemoveComponent()
-		return
+		return TRUE
 	boutput(user, "<span class='notice'>Linking pianos...</span>")
 	src.link_pianos()
 	boutput(user, "<span class='notice'>Finished linking.</span>")
 	src.RemoveComponent()
+	return TRUE
 
 /datum/component/player_piano_auto_linker/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_START_STORING_PIANOS)
