@@ -364,6 +364,9 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	sleep(1 SECOND)
 	var/i
 	for (i = 1, i < 10, i++)
+		if(isnull(src))
+			return
+		sleep(1 SECOND)
 		for (var/M in contents)
 			if (M in non_tray_contents)
 				continue
@@ -374,8 +377,9 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				L.TakeDamage("chest", 0, 30)
 				if (!isdead(L) && prob(25))
 					L.emote("scream")
-		sleep(1 SECOND)
 
+	if(isnull(src))
+		return
 	for (var/M in contents)
 		if (M in non_tray_contents)
 			continue
@@ -395,16 +399,17 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				ashes += 1
 		qdel(M)
 
-	if (src)
-		src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
-		src.locked = FALSE
-		power_usage = initial(power_usage)
-		playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
+	if(isnull(src))
+		return
+	src.visible_message("<span class='alert'>\The [src.name] finishes and shuts down.</span>")
+	src.locked = FALSE
+	power_usage = initial(power_usage)
+	playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 
-		while (ashes > 0)
-			make_cleanable( /obj/decal/cleanable/ash,src)
-			ashes -= 1
-		update() //get rid of the active sprite
+	while (ashes > 0)
+		make_cleanable( /obj/decal/cleanable/ash,src)
+		ashes -= 1
+	update() //get rid of the active sprite
 
 
 //-----------------------------------------------------
