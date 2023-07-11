@@ -1180,6 +1180,11 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/fish_fingers
 
+/datum/cookingrecipe/shrimp
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/shrimp
+	cookbonus = 4
+	output = /obj/item/reagent_containers/food/snacks/shrimp
+
 /datum/cookingrecipe/bacon
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 8

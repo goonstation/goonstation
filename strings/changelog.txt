@@ -1,4 +1,44 @@
 
+(t)tue jul 11 23
+(u)Amylizzle & Garash
+(p)14694
+(e)🆕🗺🎨🔧|C-Feature, A-Mapping, C-Sprites, A-Tooling
+(*)Cogmap now comes with a random engine type, or a rare chance to use the brand new NT Engine Teleportation System, which lets engineers select the engine they want to use.
+(t)mon jul 10 23
+(u)Kubius
+(p)14863
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's breach hull has gone dark, and its second GardenGear is back.
+(u)tarmunora
+(*)Poisoned surgical tools only transfer poison during surgery.
+(+)Cyberlungs no longer grant stamina bonuses.
+(u)Flappybat
+(p)14856
+(e)🗺⚖🤖|A-Mapping, C-Balance, A-Silicons
+(*)AI camera coverage of Cogmap1 maintenance has been significantly reduced.
+(t)sun jul 09 23
+(u)aloe
+(*)Added a new traitor item, the Fingerprinter. Costs 1 TC, is a little scanner that lets you read fingerprints off of things and plant them onto other things. Also gives you the names of the fingerprints owners and works with glove IDs.
+(u)aloe & Phrogge
+(+)*nod-ing while wearing a flipped-up welding mask now flips it down.
+(u)DeeDotVeeA
+(p)14823
+(e)🗺🔄|A-Mapping, C-Rework
+(+)Clarion QM is now slightly more spacious.
+(u)aloe
+(+)Gave the captain (and the gimmick leadership roles like VIP and RegDir) a new traitor item, the black market megaphone. It costs 5 TC and makes your text really, really large and annoying.
+(t)sat jul 08 23
+(u)aloe
+(+)Tripled the recharge rate and charge capacity of erebite power cells.
+(u)tarmunora
+(+)Pancuronium stun delay increased to match neurotoxin.
+(t)thu jul 06 23
+(u)Sian
+(p)14839
+(e)🎨🍝|C-Sprites, A-Catering
+(+)Shrimps now butcher into raw shrimp meat.
+(+)Cooking a shrimp in the oven will now output cooked shrimp meat.
+(+)Cooked shrimp meat can be combined with a rice ball to make a shrimp nigiri roll.
 (t)tue jul 04 23
 (u)tarmunora
 (+)increase volume of microjetpacks and belt-sized oxygen tanks.

@@ -669,6 +669,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
+			src.recipes += new /datum/cookingrecipe/shrimp(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
