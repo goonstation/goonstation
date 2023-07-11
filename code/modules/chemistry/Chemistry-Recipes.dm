@@ -501,7 +501,7 @@
 		on_reaction(datum/reagents/holder, created_volume)
 			. = ..()
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
-			smoke.set_up(1, 0, t)
+			smoke.set_up(1, 0, get_turf(src))
 			smoke.start()
 
 	super_milk
