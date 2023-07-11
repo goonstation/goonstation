@@ -2131,9 +2131,30 @@ datum
 			name = "Oil"
 			id = "oil"
 			result = "oil"
-			required_reagents = list("carbon" = 1, "hydrogen" = 1, "fuel" = 1)
-			result_amount = 3
+			required_reagents = list("carbon" = 0, "hydrogen" = 0, "fuel" = 1)
+			instant = FALSE
+			reaction_speed = 0.02 //very very slow by default, but much faster with heat
+			result_amount = 1
 			mix_phrase = "An iridescent black chemical forms in the container."
+
+			on_reaction(datum/reagents/holder)
+				if(holder.total_temperature > (T0C + 30)) //requires *some* outside heating to start reacting more quickly
+					var/temperature_over_30C = holder.total_temperature - (T0C + 30)
+					var/amount_of_oil_mixed = (temperature_over_30C * 0.5)/(temperature_over_30C + 40) //more heat = more oil more quickly, but with diminishing returns that never go over 0.5u per reaction
+					var/amount_of_fuel_to_use = amount_of_oil_mixed + clamp(0.1 * (1.1 ** temperature_over_30C), 0, 1) //more heat = exponentially more welding fuel used, clamped to 1u per reaction + however much oil is made
+					holder.add_reagent("oil", amount_of_oil_mixed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+					holder.remove_reagent("fuel", amount_of_fuel_to_use)
+
+		hydrogen_carbon_dissolve //made to interact with oil so you have to keep it 'fueled', change to make a unique chem that fades away instead if this is broken/weird later
+			name = "hydrogen_carbon_dissolving"
+			id = "hydrogen_carbon_dissolving"
+			required_reagents = list("carbon" = 1, "hydrogen" = 1)
+			inhibitors = list("fuel") //keep welding fuel to keep making oil
+			hidden = TRUE
+			instant = FALSE
+			reaction_speed = 2 //very very slow by default, but much faster with heat
+			result_amount = 1
+			mix_phrase = "The mixture begins to dissolve quickly."
 
 		hemodissolve // denaturing hemolymph
 			name = "Copper"
